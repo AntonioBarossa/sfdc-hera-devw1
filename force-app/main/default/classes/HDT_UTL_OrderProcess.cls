@@ -35,6 +35,37 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
     }
 
+    public static List<Order> updateChildOrderIvr(Map<String,Order> oldMap, Map<String,Order> newMap) {
+        List<String> orderParentList = new List<String>();
+        List<Order> childrenToUpdate = new List<Order>();
+        for(Order ord : newMap.values()) {
+            if(oldMap.get(ord.id).MethodSignedAccepted__c == null && ord.MethodSignedAccepted__c == 'IVR' && ord.SignedDate__c != null) {
+                orderParentList.add(ord.Id);
+            }
+        }
+
+        List<order> childOrder = orderQr.getChildOrdersByParentIds(orderParentList);
+        for(Order child : childOrder){
+            Order ord = new Order();
+            ord.id = child.id;
+            ord.SignedDate__c = newMap.get(child.ParentOrder__c).SignedDate__c;
+            ord.MethodSignedAccepted__c = 'IVR';
+            if (ord.ProcessType__c == 'Subentro Ele' || ord.ProcessType__c == 'Cambio Offerta Gas' || ord.ProcessType__c == 'Cambio Offerta Ele' || ord.ProcessType__c == 'Aggiunta Sconti o Bonus VAS Ele' || ord.ProcessType__c == 'Aggiunta Sconti o Bonus VAS Gas') {
+                ord.Phase__c = 'Comunicazione verso Heroku';
+                childrenToUpdate.add(ord);
+            } else if(ord.ProcessType__c == 'Switch in Ele' || ord.ProcessType__c == 'Switch in Gas') {
+                if (ord.WaiverRightAfterthought__c == 'No' && ord.WizardCompletedDate__c.daysBetween(Date.today()) > 14 ) {
+                    ord.Phase__c = 'In attesa tempi ripensamento';
+                } else {
+                    ord.Phase__c = 'Comunicazione verso Heroku';
+                }
+                childrenToUpdate.add(ord);
+            }
+
+        }
+        return childrenToUpdate;
+    }
+
     public static void checkSatisfationIndex(Map<Id,SObject> newMap, Map<Id,SObject> oldMap) {
         List<Account> accountsToUpdate = new List<Account>();
         for(Order newOrder : (List<Order>) newMap.values()) {
@@ -217,6 +248,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         if(ordersFullList != null && !ordersFullList.isEmpty()){
             childOrdersDocValid.addAll(ordersFullList);
+        }
+        List<Order> ivrChildren = updateChildOrderIvr(orderMapOld, orderMapNew);
+        if(ivrChildren != null && !ivrChildren.isEmpty()){
+            childOrdersDocValid.addAll(ivrChildren);
         }
         if (!childOrdersDocValid.isEmpty()) {
             orderSrv.updateRecords(childOrdersDocValid);
@@ -768,7 +803,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }   
 
         // recuperare l'activity per questi ordini
-        // Le activity sull'ordine potrebbero essere più di una. Bisogna prendere quella con record type "credit check ko" e Status__c "creata" e CreditCheckReason__c contiene  "Cattivo pagatore"
+        // Le activity sull'ordine potrebbero essere più di una. Bisogna prendere quella con record type "credit check ko" e wrts_prcgvr__Status__c "creata" e CreditCheckReason__c contiene  "Cattivo pagatore"
         if(!orderSetId.isEmpty()){
             system.debug('YYY 6 --->');
             List<wrts_prcgvr__Activity__c> actList = HDT_QR_ActivityCustom.getActivityListCrediCheck(orderSetId);
@@ -782,7 +817,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 actToUpdate.CreditCheckResolutionReason__c = ord.CreditCheckDescription__c;
                 actToUpdate.CreditCheckReason__c = ord.CreditCheckDescription__c;
                 actToUpdate.CreditCheckResults__c = ord.IncomingCreditCheckResult__c;
-                actToUpdate.Status__c = 'KO Risolto';
+                actToUpdate.wrts_prcgvr__Status__c = 'KO Risolto';
                 actListToUpdate.add(actToUpdate);
                 
                 if(ord.CreditCheckDescription__c.contains('Saldo debito cattivo pagatore')){
@@ -879,7 +914,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     activities = orderQr .getOpenActivitiesByOrderId(orderNew.Id);
                     for(wrts_prcgvr__Activity__c activity : activities)
                     {
-                        activity.Status__c = 'Annullata';
                         activity.wrts_prcgvr__Status__c = 'Completed';
                     }
                     HDT_UTL_DatabaseService.updateSObject(activities);

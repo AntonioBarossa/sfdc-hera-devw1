@@ -23,7 +23,7 @@ public with sharing class HDT_LC_CloneArticleTst {
         List<RecordType> result = HDT_LC_CloneArticle.getRecordTypeOptions();
         
         //ASSERTS
-        System.assertNotEquals(null, result);
+        System.assertNotEquals(null, result,'value of parameter is not matching');
         
     }
     
@@ -51,7 +51,7 @@ public with sharing class HDT_LC_CloneArticleTst {
         Knowledge__kav result = HDT_LC_CloneArticle.cloneArticle(kArt.Id, title, urlName, recordtypeId);
         
         //ASSERTS
-        System.assertNotEquals(kArt.Id, result.Id);
+        System.assertNotEquals(kArt.Id, result.Id,'value of parameter is not matching');
         
     }
     
@@ -74,7 +74,7 @@ public with sharing class HDT_LC_CloneArticleTst {
         Id result = HDT_LC_CloneArticle.redirectToArticle(kArt.Title, kArt.urlName);
         
         //ASSERTS
-        System.assertEquals(kArt.Id, result);
+        System.assertEquals(kArt.Id, result,'value of parameter is matching');
         
     }
     

@@ -15,9 +15,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
     private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
     private static HDT_QR_ContentDocumentLink contDocLinkQr = new HDT_QR_ContentDocumentLink();
+    private static HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
 
     @AuraEnabled
-    public static Map<String,Object> init(String Id){
+    public static Map<String,Object> init(String id){
         Map<String,Object> result = new Map<String,Object>();
 
         User user = HDT_QR_UserQueries.getCurrentUser(UserInfo.getUserId());
@@ -57,17 +58,26 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     }
 
     @AuraEnabled
+    @SuppressWarnings('PMD.AvoidDeeplyNestedIfStmts')
     public static void updateProcessStep(Order order,
         //INIZIO SVILUPPI EVERIS 
         Boolean isVolture,
         Boolean isRetroactive,
         Boolean isReading,
+        Boolean isUpdateStep,
         Date readingDate){
         //FINE SVILUPPI EVERIS
 
         System.debug('updateProcessStep: ' + order);
         System.debug('isVolture: '+isVolture);
 
+        Order currentOrder = new Order();
+            
+        /* If isUpdateStep query the currentOrder */
+        if(isUpdateStep != null && isUpdateStep == true)
+        {
+            currentOrder = voltureChangeQr.getOrderInfosById(order.Id)[0];
+        }
         //INIZIO SVILUPPI EVERIS CHECK VOLTURA
         if(isVolture != null && isVolture == true){
             // Order oldOrder = orderQr.getRecordById(order.Id);
@@ -84,7 +94,26 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             {
                 throw new AuraHandledException('Valorizzare campi obbligatori');
             }
+            /* Check Tipo Voltura "In Continuita"/"Recupero" ammesso solo se marcatura entrante/uscente e' "Persona Fisica"/"Persona Giuridica" */
+            if(order.VoltureType__c != null && order.VoltureType__c.equalsIgnoreCase('In Continuità'))
+            {
+                if(currentOrder.PreviousCustomer__r.Account.CustomerMarking__c != currentOrder.Account.CustomerMarking__c || !currentOrder.Account.CustomerMarking__c.containsIgnoreCase('Persona Fisica'))
+                {
+                    throw new AuraHandledException('Per Voltura \"' + order.VoltureType__c + '\", entrambi i clienti (uscente ed entrante) devono essere \"Persone Fisiche\"');
+                }
+            }
+            else if(order.VoltureType__c != null && order.VoltureType__c.equalsIgnoreCase('Incorporazione societaria'))
+            {
+                if(currentOrder.PreviousCustomer__r.Account.RecordType.DeveloperName != currentOrder.Account.RecordType.DeveloperName
+                    || !currentOrder.Account.RecordType.DeveloperName.containsIgnoreCase('HDT_RT_Business'))
+                {
+                    throw new AuraHandledException('Per Voltura \"' + order.VoltureType__c + '\", entrambi i clienti (uscente ed entrante) devono essere \"Persone Giuridiche\"');
+                }
+            }
             //@frpanico check "Data Decorrenza"
+            /**@frpanico 12/11/2021
+             * Update check VoltureType "Recupero" the date has been changed to 2015/08/31
+             */
             if(order.EffectiveDate__c != null)
             {
                 if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
@@ -93,9 +122,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                     {
                         throw new AuraHandledException('Impossibile inserire una data inferiore a 3 gg lavorativi');
                     }
-                    else if(order.VoltureType__c != null && order.VoltureType__c == 'Recupero' && order.EffectiveDate__c > Date.newInstance(2015, 10, 31))
+                    else if(order.VoltureType__c != null && order.VoltureType__c == 'Recupero' && order.EffectiveDate__c > Date.newInstance(2015, 08, 31))
                     {
-                        throw new AuraHandledException('Per Voltura di tipo \"Recupero\" è necessario inserire una data antecedente al 31/10/2015');
+                        throw new AuraHandledException('Per Voltura di tipo \"Recupero\" è necessario inserire una data antecedente al 31/08/2015');
                     }
                     else
                     {    
@@ -135,6 +164,19 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         exeChecks(order);
 
         orderSrv.updateRecord(order);
+    }
+
+    /* Wrapper Method */
+    @AuraEnabled
+    public static void updateProcessStep(Order order, 
+    Boolean isVolture,
+    Boolean isRetroactive,
+    Boolean isReading,
+    Date readingDate){
+
+        Boolean isUpdateStep = false;
+        updateProcessStep(order, isVolture, isRetroactive, isReading, isUpdateStep, readingDate);
+
     }
 
     private static void exeChecks(Order order){

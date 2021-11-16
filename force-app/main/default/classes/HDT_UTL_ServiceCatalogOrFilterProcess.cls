@@ -541,7 +541,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             System.debug('****2:' + accountFilterId);
             List<AccountStatementFilter__c> act = HDT_QR_AccountStatement.getFilter(accountFilterId);
             if(act != null && !act.isEmpty()){
-                List<Case> listCase = caseQr.getCaseByAccountid(act[0].Account__c,'Storno Rateizzazione');
+                List<Case> listCase = caseQr.getCaseByAccountid(act[0].Account__c,new Set<String>{'Storno Rateizzazione'});
                 if(listCase != null && !listCase.isEmpty()){
                     res = true;
                 }

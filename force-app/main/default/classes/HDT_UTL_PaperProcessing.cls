@@ -17,7 +17,7 @@ public with sharing class HDT_UTL_PaperProcessing {
             }
         }
         HDT_BA_PaperCampaignClosing ppBatch = new HDT_BA_PaperCampaignClosing(ppToBatch);
-        ID batchProcessId = Database.executeBatch(ppBatch);
+        Database.executeBatch(ppBatch);
     }
 
 
@@ -59,7 +59,7 @@ public with sharing class HDT_UTL_PaperProcessing {
         }
         //execute batch
         HDT_BA_PaperProcessing ppBatch = new HDT_BA_PaperProcessing(ppToBatch);
-        ID batchProcessId = Database.executeBatch(ppBatch, 10000);
+        Database.executeBatch(ppBatch, 10000);
 
         if (paperToUpdate.size() > 0) {
             HDT_SRV_PaperProcessing.updateRecords(paperToUpdate);
@@ -86,7 +86,7 @@ public with sharing class HDT_UTL_PaperProcessing {
         }
         //execute batch
         HDT_BA_PaperProcessing ppBatch = new HDT_BA_PaperProcessing(ppToBatch);
-        ID batchProcessId = Database.executeBatch(ppBatch, 10000);
+        Database.executeBatch(ppBatch, 10000);
         
         return paperToUpdate;
     }
@@ -102,7 +102,7 @@ public with sharing class HDT_UTL_PaperProcessing {
         }
         //execute batch
         HDT_BA_PaperProcessing ppBatch = new HDT_BA_PaperProcessing(ppToBatch);
-        ID batchProcessId = Database.executeBatch(ppBatch, 500);
+        Database.executeBatch(ppBatch, 500);
         HDT_SRV_PaperProcessing.updateRecords(newPaper);
     }
 
@@ -151,13 +151,12 @@ public with sharing class HDT_UTL_PaperProcessing {
         ContentVersion conDoc = contentVersionQr.getRecordById(cv.Id);
         
         //Create ContentDocumentLink
-        ContentDocumentLink cdl = contentDocumentLinkSrv.createRecord(paperProcessingId, conDoc.ContentDocumentId, 'I');
+        contentDocumentLinkSrv.createRecord(paperProcessingId, conDoc.ContentDocumentId, 'I');
         return cv.Id;
     }
 
 
     public static List<String> generateFile(Map<String,List<HDT_WRP_PaperProcessing>> mapLabCartListWrap){
-        List<String> csvFiles = new List<String>();
         List<ContentVersion> listContentVersion = new List<ContentVersion>();
         List<String> tableHeader = new List<String>{'codCliente','ragSociale','nome','cognome','codFiscale','pIva','resIndirizo','resCivico','resCap','resComune','resProv','codContratto','protocollo','dataLettera','servizio','codCa','codPodPdr','offerta','societa','dataAttivazione','impianto','frnIndirizzo','frnCivico','frnCap','frnComune','frnProv','tipoLettera','modalitaSpedizione','aggregazione','lotto','dataLotto','recIntestatario','recIndirizzo','recCivico','recCap','recComune','recProv','recNazione','raccoMittente','raccoIndirizzo','raccoCivico','raccoCap','raccoComune','raccoProv','campo2','campo3','campo4','campo5','campo6','campo7','campo8','campo9','campo10','campo11','campo12','campo13','campo14','campo15','campo16','campo17','campo18','campo19','campo20','campo21','campo22','campo23','campo24','campo25','campo26','campo27','campo28','campo29','campo30','campo31','campo32','campo33','campo34','campo35','campo36','campo37','campo38','campo39','campo40','CRM_communication_Id'};
         Map<String,String> relateIdWithTitle = new Map<String,String>();
@@ -176,8 +175,8 @@ public with sharing class HDT_UTL_PaperProcessing {
             }
 
             for (Map<String, Object> objMap : objMapList) {
-                for (String key2 : tableHeader) {
-                    Object value = objMap.get(key2);
+                for (String differentKey : tableHeader) {
+                    Object value = objMap.get(differentKey);
                     if (value == null) {
                         csvFile += ';';
                     } else {
@@ -201,8 +200,8 @@ public with sharing class HDT_UTL_PaperProcessing {
             //table body
             for (Map<String, Object> objMap : objMapList) {
                 csvFile += '<tr>';
-                for (String key2 : tableHeader) {
-                    Object value = objMap.get(key2);
+                for (String differentKey : tableHeader) {
+                    Object value = objMap.get(differentKey);
                     if (value == null) {
                         csvFile += '<td></td>';
                     } else {

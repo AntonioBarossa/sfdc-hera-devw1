@@ -45,7 +45,7 @@ export default class HdtInputFieldComboboxCanellation extends LightningElement {
         var RequestCancellationReason = [{
                 RequestCancellationReason: { 
                     recordType: this.recordType,
-                    commodity: this.commodity,
+                    commodity: ( this.commodity != null ? this.commodity : "" ),
                     processType: this.processType,
                     processTypeToCancell: this.processTypeToCancell
                 }

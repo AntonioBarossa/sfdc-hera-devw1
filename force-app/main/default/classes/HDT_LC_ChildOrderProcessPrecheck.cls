@@ -12,6 +12,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
+    private static HDT_QR_VoltureChangeManager  voltureChangeQr = new HDT_QR_VoltureChangeManager();
+    private static HDT_QR_AnagAlignment regionalAdditionalQr = new HDT_QR_AnagAlignment();
 
     @AuraEnabled
     public static List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> init(Order order){
@@ -70,49 +72,34 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
 
             switch on selectedProcessObject.get('recordType') {
                 //INIZIO SVILUPPI EVERIS
-                when 'HDT_RT_Voltura'{
+                when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'
+                {
+                    String sapCode = '';
                     //@frpanico predefault "Processo", "Sottoprocesso", "Tipo Voltura", "Codice Causale", "Data Decorrenza", "Contratto", "Codice Contratto"
                     List<Contract> contracts = contractQr.getContractFromServicePoint(order.ServicePoint__c);
-                    processType = 'Voltura';
+                    System.debug('Condition ' + !contracts.isEmpty());
+                    if(!contracts.isEmpty())
+                    {
+                        List<AccountContactRelation> exitingContacts = voltureChangeQr.getContactInfosByAccountId(contracts[0].AccountId);
+                        newOrder.PreviousCustomer__c = exitingContacts[0]?.ContactId;
+                        newOrder.ContractReference__c = contracts[0]?.Id;
+						sapCode = contracts[0].SAPContractCode__c;
+                    }
+                    processType = selectedProcessObject.get('recordType').equalsIgnoreCase('HDT_RT_Voltura') ? 'Voltura' : 'Voltura con Switch';
                     newOrder.Subprocess__c = 'Standard';
                     newOrder.VoltureType__c = 'Ordinaria';
                     processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
                     newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
-                    newOrder.ContractReference__c = contracts.size() > 0 
-                        ? contracts[0].Id
-                        : null;
-                    String sapCode = contracts.size() > 0
-                        ? contracts[0].SAPContractCode__c
-                        : '';
                     newOrder.SapContractCode__c = sapCode;
                     //@frpanico "Chiamata Arricchimento Dati" per ulteriori predefault
                     newOrder = callDataEnrichment(order.SAPImplantCode__c,sapCode,newOrder);
                     //newOrder = orderUtl.enrichOrder(newOrder);
                     //orderSrv.updateRecord(newOrder);
-                }
-                //FINE SVILUPPI EVERIS
-                //@frpanico 16/09/21 same predefaul logic needs to be applied to "Voltura con Switch"
-                //@frpanico check on processCode
-                when 'HDT_RT_VolturaConSwitch'
-                {
-                    HDT_QR_AnagAlignment regionalAdditionalQr = new HDT_QR_AnagAlignment();
-                    List<Contract> contracts = contractQr.getContractFromServicePoint(order.ServicePoint__c);
-                    processType = 'Voltura con Switch';
-                    newOrder.Subprocess__c = 'Standard';
-                    newOrder.VoltureType__c = 'Ordinaria';
-                    newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
-                    newOrder.ContractReference__c = contracts.size() > 0 
-                        ? contracts[0].Id
-                        : null;
-                    String sapCode = contracts.size() > 0
-                        ? contracts[0].SAPContractCode__c
-                        : '';
-                    newOrder.SapContractCode__c = sapCode;
-                    newOrder = callDataEnrichment(order.SAPImplantCode__c,sapCode,newOrder);
                     String tax = order.CommodityFormula__c == 'Energia Elettrica' ? newOrder.ExciseEle__c : newOrder.ExciseGAS__c;
                     String city = order.SupplyCity__c;
                     String region = '';
                     newOrder.RegionalAdditional__c = regionalAdditionalQr.findRegionalAdditional(tax, city, region);
+                    newOrder.ExciseRate__c = order.CommodityFormula__c == 'Energia Elettrica' ? voltureChangeQr.getExciseTranscode(tax)[0].Excise__c : null;
                 }
                 when 'HDT_RT_AttivazioneConModifica' {
                     newOrder.RequestOption__c = HDT_UTL_OrderFieldsAlignment.calculateRequestedOption(order.ImplantType__c, order.PowerRequested__c);
@@ -164,84 +151,36 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
 
         return servicePointList[0].RecordType.DeveloperName;
     }
-	
+	/**@frpanico 26/10/2021
+     * Modified method
+     * Instead of hardcoding and handling each single field of the response  
+     * An handler method is called
+     */
     @TestVisible
     private static Order callDataEnrichment(String servicePointCode, String contractCode, Order newOrder)
     {
-        try{
+        HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
+        List<Order> orderList = new List<Order>();
+        try
+        {
             String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(servicePointCode, contractCode);
             List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> positions = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
             positions = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)
                     JSON.deserialize(serializedResponse, List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>.class);
             
-            for(HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni position : positions){
-                //@frpanico Accise
-                if(position.campo.equalsIgnoreCase('IMPOSTE')){
-                    String condition = position.valore;
-                    if(position.valore.equalsIgnoreCase('E_IMPOST')){
-                        condition = 'Imposta usi domestici';
-                    } 
-                    List<PicklistEntry> entryListEle =
-                    ((SObject) (Type.forName('Schema.Order').newInstance())).getSobjectType().getDescribe().fields.getMap().get('ExciseEle__c').getDescribe().getPicklistValues();
-                    for(PicklistEntry entry : entryListEle){
+            Map<String,List<Object>> inputMap = new Map<String, List<Object>>
+            {
+                'posizioni' => positions,
+                'sobjList' => new List<Order>{newOrder}
+            };
 
-                        if(entry.getValue().containsIgnoreCase(condition)){
-            
-                            newOrder.ExciseEle__c = entry.getValue();                    
-                        }
-                    }
-                    List<PicklistEntry> entryListGas =
-                    ((SObject) (Type.forName('Schema.Order').newInstance())).getSobjectType().getDescribe().fields.getMap().get('ExciseGAS__c').getDescribe().getPicklistValues();
-                    for(PicklistEntry entry : entryListGas){
+             orderList = voltureChangeSrv.handleResponseDataEnrichment(inputMap);
 
-                        if(entry.getValue().containsIgnoreCase(condition)){
-            
-                            newOrder.ExciseGAS__c = entry.getValue();                    
-                        }
-                    }
-                }
-                //@frpanico RateCategory
-                if(position.campo.equalsIgnoreCase('CATEGORIATARIFFA'))
-                {
-                    newOrder.RateCategory__c = position.valore;
-                }
-                //@frpanico Iva
-                if(position.campo.equalsIgnoreCase('ALIQUOTAIVA'))
-                {
-                    String condition = position.valore;
-                    List<PicklistEntry> entryList =
-                    ((SObject) (Type.forName('Schema.Order').newInstance())).getSobjectType().getDescribe().fields.getMap().get('VAT__c').getDescribe().getPicklistValues();
-                    for(PicklistEntry entry : entryList){
-
-                        if(entry.getValue().containsIgnoreCase(condition)){
-            
-                            newOrder.VAT__c = entry.getValue();                    
-                        }
-                    }
-                }
-                //@frpanico CodiceAteco
-                if(position.campo.equalsIgnoreCase('CODICE_ATECO'))
-                {
-                    newOrder.AtecoCode__c = position.valore;
-                }
-                //@frpanico AddizionaleRegionale
-                if(position.campo.equalsIgnoreCase('ADDIZIONALEREGIONALE'))
-                {
-                    try
-                    {
-                        newOrder.RegionalAdditional__c = Decimal.valueOf(position.valore);
-                    }
-                    catch(Exception e)
-                    {
-                        System.debug('Exception : ' + e.getMessage() + ' at line: ' + e.getLineNumber());
-                    }
-                }
-            }
         } catch(Exception e){
-            System.debug('Arricchimento Dati fallito -> ' +e.getMessage());
+            return newOrder;
         } 
 
-        return newOrder;
+        return orderList[0];
     }
 
     @AuraEnabled
@@ -270,6 +209,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             }
 
             return childOrders.size() > 1 ? true : false;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static Map<String, Object> checkContendibilita(Order order){
+
+        try {
+            return HDT_SRV_QservHandler.handler(order);
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }

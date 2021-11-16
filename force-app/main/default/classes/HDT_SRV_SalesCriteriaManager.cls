@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_SRV_SalesCriteriaManager implements wrts_prcgvr.Interfaces_1_2.IApexCriteria {
 
     HDT_UTL_PostSalesCriteriaManager criteriaUtl = new HDT_UTL_PostSalesCriteriaManager();

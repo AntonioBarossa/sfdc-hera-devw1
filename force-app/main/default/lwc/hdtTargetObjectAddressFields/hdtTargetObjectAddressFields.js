@@ -33,15 +33,15 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api cap;
     @api via;
     @api civico;
-    @api estensCivico;
-    @api codComuneSAP;
-    @api codStradarioSAP;
-    @api CodiceLocalita;
-    @api Localita;
+    @api estenscivico;
+    @api codcomunesap;
+    @api codstradariosap;
+    @api codicelocalita;
+    @api localita;
     @api nazione;
     @api IndEstero = false ;
     @api aprimodal = false;
-    @api flagVerificato =false;
+    @api flagverificato =false;
     @track openmodel = false;
     @api viewNazione=false;
     @api viewStato=false;
@@ -343,7 +343,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
         this.theRecord['Comune']= event.detail['city1'];
     }
     if(event.detail['cityCode'] != null){
-        this.codComuneSAP=event.detail['cityCode'];
+        this.codcomunesap=event.detail['cityCode'];
         this.theRecord['Codice Comune SAP']= event.detail['cityCode'];
     }
     if(event.detail['region'] != null){
@@ -356,7 +356,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     }
     if(event.detail['streetCode'] != null){
         console.log('entra in streetCode ' + JSON.stringify(event.detail['streetCode']));
-        this.codStradarioSAP=event.detail['streetCode'];
+        this.codstradariosap=event.detail['streetCode'];
         this.theRecord['codStradarioSAP']= event.detail['streetCode'];
     }
     if(event.detail['cityPName'] != null){
@@ -369,7 +369,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
         this.codicelocalita=event.detail['cityPCode'];
         this.theRecord['Codice Localita']= event.detail['cityPCode'];
     }
-    if(this.codComuneSAP != null && this.codStradarioSAP != null && this.civico != null){
+    if(this.codcomunesap != null && this.codstradariosap != null && this.civico != null){
         this.disableVerifIndiButton = false;
     }
     else{
@@ -403,10 +403,10 @@ handleAddressFromAccount()
             this.provincia=data['Provincia'];
             this.cap=data['CAP'];
             this.stato=data['Stato']?.toUpperCase();
-			this.estensCivico=data['Est.Civico'];
-            this.codComuneSAP=data['Codice Comune SAP'];
-            this.codStradarioSAP=data['Codice Via Stradario SAP'];
-            this.flagVerificato=true;
+			this.estenscivico=data['Est.Civico'];
+            this.codcomunesap=data['Codice Comune SAP'];
+            this.codstradariosap=data['Codice Via Stradario SAP'];
+            this.flagverificato=true;
 
             this.theRecord['Via']= data['Via'];
             this.theRecord['Civico']= data['Civico'];
@@ -457,7 +457,7 @@ handleAddressValuesIfSap(servicepointretrieveddata){
             break;
             case 'SupplyStreetNumberExtension__c':
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
-                this.estensCivico = servicepointretrieveddata[key] ;
+                this.estenscivico = servicepointretrieveddata[key] ;
                 this.theRecord['Estens.Civico'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplyStreetNumber__c':
@@ -467,30 +467,30 @@ handleAddressValuesIfSap(servicepointretrieveddata){
             break;
             case 'SupplySAPCityCode__c':
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
-                this.codComuneSAP = servicepointretrieveddata[key] ;
+                this.codcomunesap = servicepointretrieveddata[key] ;
                 this.theRecord['Codice Comune SAP'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplySAPStreetCode__c':
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
-                this.codStradarioSAP = servicepointretrieveddata[key] ;
+                this.codstradariosap = servicepointretrieveddata[key] ;
                 this.theRecord['Codice Stradario SAP'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplyIsAddressVerified__c':
 
             console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
-            this.flagVerificato = servicepointretrieveddata[key] ;
+            this.flagverificato = servicepointretrieveddata[key] ;
             this.theRecord['Flag Verificato'] = servicepointretrieveddata[key] ;
 
             break;
             case 'SupplyPlace__c':
 
-            this.CodiceLocalita = servicepointretrieveddata[key] ;
+            this.codicelocalita = servicepointretrieveddata[key] ;
             this.theRecord['Localita'] = servicepointretrieveddata[key] ;
 
             break;
             case 'SupplyPlaceCode__c':
 
-            this.Localita = servicepointretrieveddata[key] ;
+            this.localita = servicepointretrieveddata[key] ;
             this.theRecord['Codice Localita'] = servicepointretrieveddata[key] ;
 
             break;
@@ -543,14 +543,14 @@ handleAddressValuesIfSap(servicepointretrieveddata){
              console.log('entra in data != undefined : ' + JSON.stringify(data));
                 this.via= data[1];
                 this.civico= data[2];
-                this.estensCivico= data[4];
+                this.estenscivico= data[4];
                 this.comune=data[0]; 
                 this.provincia=data[3];
                 this.cap=data[6];
                 this.stato=data[5].toUpperCase();
 
-                this.codComuneSAP = data[7] !== undefined ? data[7] : '';
-                this.codStradarioSAP = data[8] !== undefined ? data[8] : '';
+                this.codcomunesap = data[7] !== undefined ? data[7] : '';
+                this.codstradariosap = data[8] !== undefined ? data[8] : '';
                // this.IndEstero = data[10] !== undefined ? data[10] : false;
 
                 this.disableVerifIndiButton= false;
@@ -562,12 +562,12 @@ handleAddressValuesIfSap(servicepointretrieveddata){
             this.via= dataFornitura[1];
             this.civico= dataFornitura[2];
             this.provincia=dataFornitura[3];
-            this.estensCivico= dataFornitura[4];
+            this.estenscivico= dataFornitura[4];
             this.cap=dataFornitura[6];
             this.stato=dataFornitura[5].toUpperCase();
 
-            this.codComuneSAP = dataFornitura[7] !== undefined ? dataFornitura[7] : '';
-            this.codStradarioSAP = dataFornitura[8] !== undefined ? dataFornitura[8] : '';
+            this.codcomunesap = dataFornitura[7] !== undefined ? dataFornitura[7] : '';
+            this.codstradariosap = dataFornitura[8] !== undefined ? dataFornitura[8] : '';
            // this.IndEstero = dataFornitura[10] !== undefined ? dataFornitura[10] : false;
 
             this.disableVerifIndiButton= false;
@@ -577,14 +577,14 @@ handleAddressValuesIfSap(servicepointretrieveddata){
 
             this.theRecord['Via']= this.via;
             this.theRecord['Civico']= this.civico;
-            this.theRecord['Estens.Civico']= this.estensCivico;
+            this.theRecord['Estens.Civico']= this.estenscivico;
             this.theRecord['Comune']= this.comune;
             this.theRecord['Provincia']= this.provincia;
             this.theRecord['CAP']= this.cap;
             this.theRecord['Stato']= this.stato;
 
-            this.theRecord['CodiceComuneSAP'] = this.codComuneSAP;
-            this.theRecord['CodiceViaStradarioSAP'] = this.codStradarioSAP;
+            this.theRecord['CodiceComuneSAP'] = this.codcomunesap;
+            this.theRecord['CodiceViaStradarioSAP'] = this.codstradariosap;
             this.theRecord['IndirizzoEstero'] = this.IndEstero;
            // this.theRecord['Flag Verificato'] = this.FlagVerificato;
            this.theRecord['Flag Verificato'] = true;
@@ -607,7 +607,7 @@ handleAddressValuesIfSap(servicepointretrieveddata){
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         console.log('rowToSend ******' + JSON.stringify(this.rowToSend));
         this.preloading = false;
-        this.flagVerificato=true;
+        this.flagverificato=true;
         this.theRecord['Flag Verificato']= true;
         console.log('getSelectedServicePoint END');
     }
@@ -622,7 +622,7 @@ handleAddressValuesIfSap(servicepointretrieveddata){
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         console.log('rowToSend ******' + JSON.stringify(this.rowToSend));
         this.preloading = false;
-        this.flagVerificato=true;
+        this.flagverificato=true;
         this.theRecord['Flag Verificato']= true;
         console.log('getSelectedAddress END');
     }
@@ -969,7 +969,15 @@ handleAddressValues(servicepointretrieveddata){
                 this.stato = servicepointretrieveddata[key] ;
                 this.theRecord['Stato'] = servicepointretrieveddata[key] ;
             break;
+            case 'stato':
+                this.stato = servicepointretrieveddata[key] ;
+                this.theRecord['Stato'] = servicepointretrieveddata[key] ;
+            break;
             case 'Provincia':
+                this.provincia= servicepointretrieveddata[key] ;
+                this.theRecord['Provincia'] = servicepointretrieveddata[key] ;
+            break;
+            case 'provincia':
                 this.provincia= servicepointretrieveddata[key] ;
                 this.theRecord['Provincia'] = servicepointretrieveddata[key] ;
             break;
@@ -977,11 +985,23 @@ handleAddressValues(servicepointretrieveddata){
                 this.comune= servicepointretrieveddata[key] ;
                 this.theRecord['Comune'] = servicepointretrieveddata[key] ;
             break;
+            case 'comune':
+                this.comune= servicepointretrieveddata[key] ;
+                this.theRecord['Comune'] = servicepointretrieveddata[key] ;
+            break;
             case 'CAP':
                 this.cap = servicepointretrieveddata[key] ;
                 this.theRecord['CAP'] = servicepointretrieveddata[key] ;
             break;
+            case 'cap':
+                this.cap = servicepointretrieveddata[key] ;
+                this.theRecord['CAP'] = servicepointretrieveddata[key] ;
+            break;
             case 'Via':
+                this.via = servicepointretrieveddata[key] ;
+                this.theRecord['Via'] = servicepointretrieveddata[key] ;
+            break;
+            case 'via':
                 this.via = servicepointretrieveddata[key] ;
                 this.theRecord['Via'] = servicepointretrieveddata[key] ;
             break;
@@ -990,17 +1010,37 @@ handleAddressValues(servicepointretrieveddata){
                 this.civico = servicepointretrieveddata[key] ;
                 this.theRecord['Civico'] = servicepointretrieveddata[key] ;
             break;
+            case 'civico':
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.civico = servicepointretrieveddata[key] ;
+                this.theRecord['Civico'] = servicepointretrieveddata[key] ;
+            break;
             case 'EstensCivico':
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.estenscivico = servicepointretrieveddata[key] ;
+                this.theRecord['Estens.Civico'] = servicepointretrieveddata[key] ;
+            break;
+            case 'estensCivico':
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
                 this.estensCivico = servicepointretrieveddata[key] ;
                 this.theRecord['Estens.Civico'] = servicepointretrieveddata[key] ;
             break;
             case 'CodiceComuneSAP':
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.codcomunesap = servicepointretrieveddata[key] ;
+                this.theRecord['Codice Comune SAP'] = servicepointretrieveddata[key] ;
+            break;
+            case 'codiceComuneSAP':
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
                 this.codComuneSAP = servicepointretrieveddata[key] ;
                 this.theRecord['Codice Comune SAP'] = servicepointretrieveddata[key] ;
             break;
             case 'CodiceViaStradarioSAP':
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.codstradariosap = servicepointretrieveddata[key] ;
+                this.theRecord['Codice Via Stradario SAP'] = servicepointretrieveddata[key] ;
+            break;
+            case 'codiceViaStradarioSAP':
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
                 this.codStradarioSAP = servicepointretrieveddata[key] ;
                 this.theRecord['Codice Via Stradario SAP'] = servicepointretrieveddata[key] ;
@@ -1010,7 +1050,19 @@ handleAddressValues(servicepointretrieveddata){
                 this.theRecord['Indirizzo Estero'] = this.IndEstero;
 
             break;
+            case 'indirizzoEstero':
+                this.IndEstero = servicepointretrieveddata[key] ;
+                this.theRecord['Indirizzo Estero'] = this.IndEstero;
+
+            break;
             case 'FlagVerificato':
+
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.flagverificato = servicepointretrieveddata[key] ;
+                this.theRecord['Flag Verificato'] = this.flagverificato;
+
+            break;
+            case 'flagVerificato':
 
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
                 this.flagVerificato = servicepointretrieveddata[key] ;
@@ -1020,7 +1072,17 @@ handleAddressValues(servicepointretrieveddata){
             case 'AbilitaVerifica':
                 this.disableVerifIndiButton = servicepointretrieveddata[key];
             break;
+            case 'abilitaVerifica':
+                this.disableVerifIndiButton = servicepointretrieveddata[key];
+            break;
             case 'Localita':
+
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.localita = servicepointretrieveddata[key] ;
+                this.theRecord['Localita'] = this.localita;
+
+            break;
+            case 'localita':
 
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
                 this.Localita = servicepointretrieveddata[key] ;
@@ -1062,7 +1124,7 @@ handleCheckBoxChange(event){
             case 'Flag Verificato':
                 console.log('entra in Flag Verificato case');
 
-                this.flagVerificato =  event.target.checked;
+                this.flagverificato =  event.target.checked;
                 break;
         }
 
@@ -1078,8 +1140,8 @@ flagVerificatoFalse(){
     console.log('flagVerificatoFalse START');
     this.theRecord['Flag Verificato'] = false;
 
-    this.flagVerificato = false;
-    console.log('Flag Verificato : '+JSON.stringify(this.flagVerificato));
+    this.flagverificato = false;
+    console.log('Flag Verificato : '+JSON.stringify(this.flagverificato));
     console.log('flagVerificatoFalse END');
 }
 
@@ -1218,16 +1280,16 @@ handleChangeComune(event){
                 this.cap= event.target.value;
                 break;
             case 'Estens.Civico':
-                this.estensCivico = event.target.value;
+                this.estenscivico = event.target.value;
                 console.log('estensione civico'+ JSON.stringify(event.target.value));
                 break;
             case 'Codice Comune SAP':
-                this.codComuneSAP = event.target.value;
-                console.log('codComSAP'+ JSON.stringify(this.estensCivico));
+                this.codcomunesap = event.target.value;
+                console.log('codComSAP'+ JSON.stringify(this.estenscivico));
                 break;
             case 'Codice Via Stradario SAP':
-                this.codStradarioSAP = event.target.value;
-                console.log('codStradario'+ JSON.stringify(this.estensCivico));
+                this.codstradariosap = event.target.value;
+                console.log('codStradario'+ JSON.stringify(this.estenscivico));
                 break;
         }
         this.flagVerificatoFalse();
@@ -1249,7 +1311,7 @@ handleChangeIndirizz(event){
 
     
     if((event.target.value.length==5 && event.target.name =='Via')){
-        getAddressInd({street:event.target.value,cityCode:this.codComuneSAP}).then(data =>
+        getAddressInd({street:event.target.value,cityCode:this.codcomunesap}).then(data =>
             {
                 console.log("******HOLAHOLA:" + JSON.stringify(data));
                 if(data['statusCode'] == 200 && data['prestazione'].length > 0){
@@ -1313,16 +1375,16 @@ handleChangeIndirizz(event){
                 this.cap= event.target.value;
                 break;
             case 'Estens.Civico':
-                this.estensCivico = event.target.value;
+                this.estenscivico = event.target.value;
                 console.log('estensione civico'+ JSON.stringify(event.target.value));
                 break;
             case 'Codice Comune SAP':
-                this.codComuneSAP = event.target.value;
-                console.log('codComSAP'+ JSON.stringify(this.estensCivico));
+                this.codcomunesap = event.target.value;
+                console.log('codComSAP'+ JSON.stringify(this.estenscivico));
                 break;
             case 'Codice Via Stradario SAP':
-                this.codStradarioSAP = event.target.value;
-                console.log('codStradario'+ JSON.stringify(this.estensCivico));
+                this.codstradariosap = event.target.value;
+                console.log('codStradario'+ JSON.stringify(this.estenscivico));
                 break;
         }
         this.flagVerificatoFalse();
@@ -1372,13 +1434,13 @@ handleTextChange(event){
                 this.cap= event.target.value;
                 break;
             case 'Estens.Civico':
-                this.estensCivico = event.target.value;
+                this.estenscivico = event.target.value;
                 break;
             case 'Codice Comune SAP':
-                this.codComuneSAP = event.target.value;
+                this.codcomunesap = event.target.value;
                 break;
             case 'Codice Via Stradario SAP':
-                this.codStradarioSAP = event.target.value;
+                this.codstradariosap = event.target.value;
                 break;
             case 'Localita':
                 this.localit = event.target.value;
@@ -1388,7 +1450,7 @@ handleTextChange(event){
         
         this.wrapaddressobject = this.toObjectAddressInit(this.theRecord);
         console.log('wrapaddressobject -handleTextChange ********************'+ JSON.stringify(this.wrapaddressobject));
-        if(this.codComuneSAP != null && this.codStradarioSAP != null && this.civico != null){
+        if(this.codcomunesap != null && this.codstradariosap != null && this.civico != null){
             this.disableVerifIndiButton = false;
         }
         else{
@@ -1502,7 +1564,7 @@ disabledverifyFieldsAddressDisabled(){
             this.handleAddressValues(data);
             console.log('getInstanceWrapObject - getInstancewrapaddressobject Start '+ JSON.stringify(data));
             //this.wrapaddressobject = this.toObjectAddressInit(data);
-            if(this.codComuneSAP != null && this.codStradarioSAP != null && this.civico != null){
+            if(this.codcomunesap != null && this.codstradariosap != null && this.civico != null){
                 this.disableVerifIndiButton = false;
             }
             else{
@@ -1647,23 +1709,23 @@ disabledverifyFieldsAddressDisabled(){
      */
     handleAddressVerification(){
 
-        getAddressRev({modality:'S',cityCode:this.codComuneSAP,streetCode:this.codStradarioSAP,houseNumCode:this.civico}).then(data =>
+        getAddressRev({modality:'S',cityCode:this.codcomunesap,streetCode:this.codstradariosap,houseNumCode:this.civico}).then(data =>
             {
                 
                 console.log("******:" + JSON.stringify(data));
                 if(data['statusCode'] == 200 && data['prestazione'].length > 0){
                     console.log("Successoooooooooooo:" + JSON.stringify(data));
                     this.comune = data['prestazione'][0].city1;
-                    this.codComuneSAP = data['prestazione'][0].cityCode;
-                    this.codStradarioSAP = data['prestazione'][0].streetCode;
+                    this.codcomunesap = data['prestazione'][0].cityCode;
+                    this.codstradariosap = data['prestazione'][0].streetCode;
                     this.cap = data['prestazione'][0].postCode1;
                     this.via = data['prestazione'][0].street;
                     this.civico = data['prestazione'][0].houseNum1;
                     this.provincia = data['prestazione'][0].region;
                     
-                    console.log('******PREVERIF:' + this.flagVerificato);
-                    this.flagVerificato = true;
-                    console.log('******POSTVERIF:' + this.flagVerificato);
+                    console.log('******PREVERIF:' + this.flagverificato);
+                    this.flagverificato = true;
+                    console.log('******POSTVERIF:' + this.flagverificato);
 
                     this.theRecord['Via']= data['prestazione'][0].street;
                     this.theRecord['Civico']= data['prestazione'][0].houseNum1;
@@ -1755,7 +1817,7 @@ disabledverifyFieldsAddressDisabled(){
         }
         if((event.target.value.length >= 2 && event.target.value.length <=4)  && event.target.name == 'Via' && event.keyCode === 13){
 										   
-            getAddressInd({street:event.target.value,cityCode:this.codComuneSAP}).then(data =>
+            getAddressInd({street:event.target.value,cityCode:this.codcomunesap}).then(data =>
                 {
                     
 																		  

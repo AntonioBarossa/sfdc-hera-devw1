@@ -279,7 +279,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         {
                             fieldname: element,
                             required: mapFieldReq.get(element),
-                            value: null,
+                            value: this.servicePointRetrievedData[element],
                             disabled: false
                         }
                     )
@@ -585,6 +585,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValuesIfSap(this.servicePointRetrievedData);
 
                         this.getInstanceWrapObject(this.servicePointRetrievedData);
+
                     });
                 } else {
                     console.log('entra in else **********************');

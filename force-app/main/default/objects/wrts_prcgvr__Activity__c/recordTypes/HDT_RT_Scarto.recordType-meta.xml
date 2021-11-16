@@ -1946,6 +1946,14 @@
             <fullName>Verifiche Credito Business</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Inviare Legge 80</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Confermare Cambio Decorrenza</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>wrts_prcgvr__Priority__c</picklist>

@@ -133,7 +133,6 @@ public with sharing class HDT_UTL_CaseProcess {
                                         }
                                         activitiesOwnerId.add(activityId);
                                         activity.wrts_prcgvr__Status__c = 'Completed';
-                                        activity.Status__c = 'Annullata';
                                         //Notification Fire to activity's owner
                                         try{
                                             if(customNotif != null && activitiesOwnerId.size() > 0){
@@ -238,7 +237,7 @@ public with sharing class HDT_UTL_CaseProcess {
             List<CampaignMember> siblingMembers = HDT_QR_CampaignMember.getSiblingMembersByAccountId(accountIds, newCasesList[0].Campaign__r.Channel__c);
             List<String> campaignMembersIdList = new List<String>(new Map<String, CampaignMember>(siblingMembers).keySet());
             if (campaignMembersIdList.size()>0) {
-                List<CampaignMember> siblingsToUpdate = HDT_LC_CampaignsController.updateCampaignMembersStatus(campaignMembersIdList, 'Non Proposto Auto');
+                HDT_LC_CampaignsController.updateCampaignMembersStatus(campaignMembersIdList, 'Non Proposto Auto');
             }
         
 			campaignMemberSrv.updateRecords(membersToUpdate);
@@ -266,7 +265,6 @@ public with sharing class HDT_UTL_CaseProcess {
         }
         List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(caseIds, 'Case__c');
         for(ServiceRequest__c s: srvRequests){
-            ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
             s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(caseStatuses.get(s.Case__c), 'Case');
             sReqToUpdate.add(s);
         }

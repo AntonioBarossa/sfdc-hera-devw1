@@ -3,6 +3,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
+    private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
 
     @AuraEnabled
     public static List<SObject> getTableData(String activityId) {
@@ -68,7 +69,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
             Id = activityId,
-            Status__c = 'Esitata',
+            wrts_prcgvr__Status__c = 'Esitata',
             ContactResult__c	 = causalQuality
         ));
     }
@@ -76,19 +77,77 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
     @AuraEnabled
     public static void cancelContract(String ordId, String activityId, String causal){
 
-        String causalQuality = '';
+        List<String> notCancelPhase = new List<String>{
+            'Esito Ok da DL',
+            'Dati discordanti',
+            'Annullato',
+            'In lavorazione SAP',
+            'Errore lavorazione SAP',
+            'Completata',
+            'Esito OK da SII',
+            'Esito KO da SII',
+            'KO rilavorato',
+            'KO definitivo'
+        };
 
-        orderSrv.updateRecord(new Order(
-            Id = ordId,
-            Phase__c = 'Annullato',
-            CancellationReason__c = causal,
-            Status = 'Activated'
-        ));
+        List<String> notCancelNonBillable = new List<String>{
+            'Completata',
+            'Comunicazione verso Motore VAS OK',
+            'Accettato Motore VAS',
+            'Comunicazione verso Motore VAS'
+        };
 
-        activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
-            Id = activityId,
-            Status__c = 'Esitata',
-            ContactResult__c	 = 'Annullato'
-        ));
+        List<String> notCancelBillable = new List<String>{
+            'Comunicazione verso Heroku Ok',
+            'Completata',
+            'Comunicazione verso Heroku'
+        };
+
+        List<Order> ordToCheck = orderQr.getOrderForComfort(ordId);
+
+        if (notCancelPhase.contains(ordToCheck[0].Phase__c) || notCancelNonBillable.contains(ordToCheck[0].Phase__c) || notCancelBillable.contains(ordToCheck[0].Phase__c)) {
+            if ('Firma Falsa'.equalsIgnoreCase(causal) || 'Volontà estorta'.equalsIgnoreCase(causal)) {
+                activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
+                    Id = activityId,
+                    wrts_prcgvr__Status__c = 'Esitata',
+                    ContactResult__c	 = 'Annullato'
+                ));
+
+                RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
+                activitySrv.createRecord(new wrts_prcgvr__Activity__c(
+                    RecordTypeId= rc.Id,
+                    Cluster__c = 'Attivazioni',
+                    Process__c = transcodeProcessForActivity(ordToCheck[0].RecordType.DeveloperName) != null ? transcodeProcessForActivity(ordToCheck[0].RecordType.DeveloperName) : ordToCheck[0].ProcessType__c,
+                    Note__c = 'Non è stato possibile procedere all’annullamento, inserire un case di Annullamento contratti'
+                ));
+            }
+            throw new AuraHandledException('Non è possibile procedere all’annullamento, effettuare una richiesta di recesso');
+        } else {
+
+            orderSrv.updateRecord(new Order(
+                Id = ordId,
+                Phase__c = 'Annullato',
+                CancellationReason__c = causal,
+                Status = 'Activated'
+            ));
+
+            activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
+                Id = activityId,
+                wrts_prcgvr__Status__c = 'Esitata',
+                ContactResult__c	 = 'Annullato'
+            ));
+        }
+    }
+
+    private static String transcodeProcessForActivity(String orderRecordType){
+
+        Map<String,String> processActivityMap = new Map<String,String>{
+            'HDT_RT_SwitchIn' => 'Switch In',
+            'HDT_RT_CambioOfferta' => 'Cambio offerta',
+            'HDT_RT_VAS' => 'Segnalazioni VAS'
+        };
+
+        return processActivityMap.get(orderRecordType);
+
     }
 }

@@ -167,8 +167,7 @@ public inherited sharing class HDT_QR_Case {
             OwnedByUser__c,
             OwnerId,
             wrts_prcgvr__Status__c,
-            wrts_prcgvr__ActivityTemplate__r.Name,
-            Status__c
+            wrts_prcgvr__ActivityTemplate__r.Name
             FROM wrts_prcgvr__Activity__c
             WHERE wrts_prcgvr__Status__c = 'Not Started'
             AND Case__c IN :caseIds
@@ -227,6 +226,7 @@ public inherited sharing class HDT_QR_Case {
         }
         return nonReqContr;
     }
+    
     public Case getCaseRelated(String relatedOrder){
         Case nonReqContr = [SELECT Id,
             Phase__c,
@@ -254,9 +254,13 @@ public inherited sharing class HDT_QR_Case {
         }
         return childCases;
     }
-    public List<Case> getCaseByAccountid(String accountid, string type)
+    /**@frpanico 22/10/2021
+     * modified input parameter from String type to Set<String> types
+     * To query records with different types
+     */
+    public List<Case> getCaseByAccountid(String accountid, Set<String> types)
     {
-        return [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE AccountId = :accountid AND type = :type AND isClosed = false WITH SECURITY_ENFORCED];
+        return [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE AccountId = :accountid AND type IN :types AND isClosed = false WITH SECURITY_ENFORCED];
     }
 
 }

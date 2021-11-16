@@ -14,7 +14,7 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
 
         Map<String,wrts_prcgvr__Activity__c> mapActivities = new Map<String,wrts_prcgvr__Activity__c>(); //in order not to get duplicate activities associated to same Parent Order
 
-        List<CampaignMember> campaignMembersInsert = new List<CampaignMember>();
+        //List<CampaignMember> campaignMembersInsert = new List<CampaignMember>();
         Map<Id,CampaignMember> campaignMembersUpdate = new Map<Id,CampaignMember>();
 
         Map<String,Order> orderMap = new Map<String,Order>();
@@ -39,15 +39,15 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
             // system.debug('second check: ' + startDate.daysBetween(dueDate) == ord.ComfortCallDaysDue__c/2);
 
             if (ord.ComfortCallDaysDue__c == startDate.daysBetween(dueDate)) { //check number of days passed after being signed as quality
-                orderMap.put(ord.Id, ord);
+                orderMap.put(ord.ParentOrder__c, ord);
 
                 wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
                     RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
-                    Order__c = ord.Id,
+                    Order__c = ord.ParentOrder__c,
                     // Account__c = ord.AccountId, //should not be shown on Account related activities
                     IsClientInResolution153__c = true,
                     Type__c = 'Comfort Call',
-                    Status__c = 'Creata',
+                    wrts_prcgvr__Status__c = 'Creata',
                     OwnerId = comfortQualityQueId,
                     ActivatedDate__c = ord.ActivatedDate,
                     LoginChannel__c = ord.LoginChannel__c
@@ -115,12 +115,12 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
             system.debug('>> campaignMembersBulk: ' + campaignMembersBulk);
         }
 
-        system.debug('>> orderActivityMap.keySet: ' + orderActivityMap.keySet());
+        system.debug('>> mapActivities.keySet: ' + mapActivities.keySet());
 
 
         Map<Id,CampaignMember> notDuplicatedCampToIns = new Map<Id,CampaignMember>();
 
-        for (String ordId : orderActivityMap.keySet()) {
+        for (String ordId : mapActivities.keySet()) {
             if ( orderMap.get(ordId).Contact__c != null && !comfortCampaign.isEmpty()) {
 
                 Boolean isCmAlready = false;
@@ -138,21 +138,21 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
                 }
 
                 if (isCmAlready && cmAlreadyId != null) {
-                    if (orderActivityMap.get(ordId).Id != null) {
+                    if (mapActivities.get(ordId).Id != null) {
                         campaignMembersUpdate.put(cmAlreadyId,new CampaignMember(
                             Id = cmAlreadyId,
-                            RelatedActivity__c = orderActivityMap.get(ordId).Id
+                            RelatedActivity__c = mapActivities.get(ordId).Id
                         ));
                     }
 
                 } else {
-                    if (orderActivityMap.get(ordId).Id != null) {
+                    if (mapActivities.get(ordId).Id != null) {
 
                         notDuplicatedCampToIns.put(orderMap.get(ordId).Contact__c, new CampaignMember(
                             ContactId = orderMap.get(ordId).Contact__c,
                             CampaignId = comfortCampaign[0].Id,
                             PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
-                            RelatedActivity__c = orderActivityMap.get(ordId).Id
+                            RelatedActivity__c = mapActivities.get(ordId).Id
                         ));
                     }
                 }

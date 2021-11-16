@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>Costo unità originale della sottoscrizione al momento dell&apos;acquisto prima che i Programmi di Costo vengano applicati.</help>
+    <label>Costo Unità Originale</label>
+    <name>SBQQ__OriginalUnitCost__c</name>
+</CustomFieldTranslation>

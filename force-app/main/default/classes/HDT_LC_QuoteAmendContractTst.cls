@@ -43,7 +43,7 @@ public with sharing class HDT_LC_QuoteAmendContractTst {
         prodList[0].Name = 'POD';
         insert prodList;
 
-        List<SaleServiceItem__c> ssItemList = HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, oppList[0].Id, quoteList[0].Id, spList[0].Id);
+        HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, oppList[0].Id, quoteList[0].Id, spList[0].Id);
 
         List<SBQQ__QuoteLine__c> quoteLineList = HDT_UTL_DataFactoryTst.createQuoteLines(prodList[0].Id, quoteList[0].Id, 1, false);
         quoteLineList[0].BillingProfile__c = billProfList[0].Id;

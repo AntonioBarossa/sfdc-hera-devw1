@@ -1,12 +1,13 @@
 public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObject>, Database.Stateful {
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
+    private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
 
     public List<Order> ordersToUpdate = new List<Order>();
     public List<wrts_prcgvr__Activity__c> callActivities = new List<wrts_prcgvr__Activity__c>();
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         system.debug('HDT_BA_QualityCall - Start');
-        String query = 'SELECT Id,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c,AgencyCode__c,ActivatedDate,LoginChannel__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
+        String query = 'SELECT Id,IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
         return Database.getQueryLocator(query);
     }
 
@@ -15,9 +16,26 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         system.debug('>>orders: ' + orders);
         system.debug('>>orders count: ' + orders.size());
 
+        List<String> notCancelNonBillable = new List<String>{
+            'Completata',
+            'Comunicazione verso Motore VAS OK',
+            'Accettato Motore VAS',
+            'Comunicazione verso Motore VAS'
+        };
+
+        List<String> notCancelBillable = new List<String>{
+            'Comunicazione verso Heroku Ok',
+            'Completata',
+            'Comunicazione verso Heroku'
+        };
+
+        RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
+
+        List<wrts_prcgvr__Activity__c> activityVas = new List<wrts_prcgvr__Activity__c>();
+
         Map<String,wrts_prcgvr__Activity__c> mapActivitiesParent = new Map<String,wrts_prcgvr__Activity__c>(); //in order not to get duplicate activities associated to same Parent Order
 
-        List<CampaignMember> campaignMembersInsert = new List<CampaignMember>();
+        // List<CampaignMember> campaignMembersInsert = new List<CampaignMember>();
         // Set<CampaignMember> campaignMembersUpdateAdd = new Set<CampaignMember>();
         Map<Id,CampaignMember> campaignMembersUpdate = new Map<Id,CampaignMember>();
 
@@ -79,11 +97,31 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 
                 Order ordToUpd = new Order(Id = ord.Id);
 
-                if (ord.ActivityQualityToBeCanceled__c || isMonitoringList.contains(ord.AgencyCode__c)) {
+                if ((ord.ActivityQualityToBeCanceled__c || isMonitoringList.contains(ord.AgencyCode__c))
+                    && (ord.IsVAS__c && !notCancelNonBillable.contains(ord.Phase__c) && !notCancelBillable.contains(ord.Phase__c))) {
                     ordToUpd.Phase__c = 'Annullato';
                     ordToUpd.Status = 'Activated';
                 } else {
                     ordToUpd.QualityCall__c = false;
+                }
+
+                if ((ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c))
+                    || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))) {
+                    
+                    String ordIdToAssoc = ord.Id;
+
+                    system.debug('Keltin test last1: ' + ord.ParentOrder__c);
+                    system.debug('Keltin test last2: ' + ordersAlreadyAssigned.contains(ord.ParentOrder__c));
+
+                    if(ordersAlreadyAssigned.contains(ord.ParentOrder__c)){
+                        ordIdToAssoc = ord.ParentOrder__c;
+                    }
+                    activityVas.add(new wrts_prcgvr__Activity__c(
+                        RecordTypeId = rc.Id,
+                        Account__c = ord.AccountId,
+                        Order__c = ordIdToAssoc,
+                        wrts_prcgvr__Description__c = 'Non è stato possibile procedere all’annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS'
+                    ));
                 }
                 
                 ordersToUpdate.add(ordToUpd);
@@ -104,7 +142,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                                 RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
                                 // Account__c = ord.AccountId, //should not be shown on Account related activities
                                 Type__c = 'Quality Call',
-                                Status__c = 'Creata',
+                                wrts_prcgvr__Status__c = 'Creata',
                                 OwnerId = comfortQualityQueId,
                                 ActivatedDate__c = ord.ActivatedDate,
                                 LoginChannel__c = ord.LoginChannel__c
@@ -226,6 +264,10 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         system.debug('>>campaignMembersUpdate: ' + campaignMembersUpdate.values());
         if(!campaignMembersUpdate.isEmpty()){
             update campaignMembersUpdate.values();
+        }
+
+        if (!activityVas.isEmpty()) {
+            insert activityVas;
         }
 
     }

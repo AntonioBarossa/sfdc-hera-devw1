@@ -31,8 +31,10 @@ public class HDT_BA_ComfortCallTst {
             Id accId = accs[0].id;
             
             List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(2,false,accId);
-            for(Contact c : contacts)
+            for(Contact c : contacts) {
                 c.Company__c='MMS';
+            }
+
             insert contacts;
 			Id contactId = contacts[0].id;
             Id anotherContactId = contacts[1].id;
@@ -55,34 +57,33 @@ public class HDT_BA_ComfortCallTst {
             orders[0].Phase__c = 'In attesa conferma cliente';
             update orders;
             
-            Group g = new Group(Name = 'test', DeveloperName = 'HDT_QUE_ComfortQuality');
+            // Group g = new Group(Name = 'test', DeveloperName = 'HDT_QUE_ComfortQuality');
             
             List<Campaign> campaigns = HDT_UTL_DataFactoryTst.createCampaign(1,false);
             campaigns[0].Name = 'Comfort Campaign';
             insert campaigns;
-            Id campaignId = campaigns[0].id;
             
-            List<Order> orders2 = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
-            orders2[0].qualityCall__c = true;
-            orders2[0].DateComfortCall__c = System.today() - 3;
-            orders2[0].ComfortCallDaysDue__c = 6.2;
-            orders2[0].ParentOrder__c = parentOrderId;
-            orders2[0].Contact__c = anotherContactId;
-            insert orders2;
-            orders2[0].recordTypeId = constants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
-            orders2[0].Phase__c = 'In attesa conferma cliente';
-            update orders2;
+            List<Order> ordersDuplicate = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
+            ordersDuplicate[0].qualityCall__c = true;
+            ordersDuplicate[0].DateComfortCall__c = System.today() - 3;
+            ordersDuplicate[0].ComfortCallDaysDue__c = 6.2;
+            ordersDuplicate[0].ParentOrder__c = parentOrderId;
+            ordersDuplicate[0].Contact__c = anotherContactId;
+            insert ordersDuplicate;
+            ordersDuplicate[0].recordTypeId = constants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
+            ordersDuplicate[0].Phase__c = 'In attesa conferma cliente';
+            update ordersDuplicate;
   
         }
     }
     
     @isTest
-    static void test1(){
+    static void test(){
 
         Test.startTest();
         
         HDT_BA_ComfortCall cc = new HDT_BA_ComfortCall();        
-        Id batchId = Database.executeBatch(cc,200);
+        Database.executeBatch(cc,200);
         
         Test.stopTest();
         

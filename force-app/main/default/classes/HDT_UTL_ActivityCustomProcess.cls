@@ -5,12 +5,12 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
 
     public static void changeAssignRelatedRecord(List<wrts_prcgvr__Activity__c> triggernew , List<wrts_prcgvr__Activity__c> triggerold){
-        HDT_QR_Recordtype recQR = new HDT_QR_Recordtype();
-        String recordtypeid = recQR.getRecordTypeIdByName('HDT_RT_VisitaD2D');
+        HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
+        String recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_VisitaD2D');
         HDT_QR_Contact contactQr = new HDT_QR_Contact();
         HDT_SRV_Account accountSrv = new HDT_SRV_Account();
         Map<id,String> mapIdOwnerIdBef = new Map<Id,String>();
-        Map<id,String> mapIdOwnerIdAfter = new Map<Id,String>();
+        //Map<id,String> mapIdOwnerIdAfter = new Map<Id,String>();
         Map<id,String> mapContactIdOwner = new Map<Id,String>();
         String userId = userinfo.getuserid();
         List<Lead> listLead = new List<Lead>();
@@ -109,7 +109,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 activity.CreditCheckReason__c = order.CreditCheckDescription__c;
                 activity.Order__c = order.Id;                
                 activity.Contact__c = order.Contact__c;                                
-                activity.Status__c = 'Creata';                
+                activity.wrts_prcgvr__Status__c = 'Creata';                
                 activity.Note__c = order.CommentForDL__c;
                 activity.OwnerId = order.OwnerId;
                 activity.CvpId__c= order.CvpId__c;
@@ -147,7 +147,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 
         Set<Id> orderIdToAnnullamento = new Set<Id>();        
         for(wrts_prcgvr__Activity__c act : newActList){
-            if(act.Status__c == 'KO Definitivo'){
+            if(act.wrts_prcgvr__Status__c == 'KO Definitivo'){
                 orderIdToAnnullamento.add(act.Order__c);                 
             }
         }
@@ -189,7 +189,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
 
     // @Picchiri 15.06.21 Credit Check Gestione Esiti ed eventuali invocazione a chiamata Mulesoft
     public static wrts_prcgvr__Activity__c closeActivityCheck(wrts_prcgvr__Activity__c act){
-        act.Status__c = 'Chiusa'; 
+        act.wrts_prcgvr__Status__c = 'Chiusa'; 
         return act;       
     }
 
@@ -197,14 +197,14 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
     public static void creditCheckKoPrecedenteCliente(List<wrts_prcgvr__Activity__c> newActList, List<wrts_prcgvr__Activity__c> oldActList){
         system.debug('Start creditCheckKoPrecedenteCliente --->');
 
-        HDT_QR_Recordtype recQR = new HDT_QR_Recordtype();
-        Id recordtypeid = recQR.getRecordTypeIdByName('HDT_RT_CreditCheckKO');
+        HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
+        Id recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_CreditCheckKO');
         
         List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
         for(Integer i = 0; i < newActList.size(); i++){
             wrts_prcgvr__Activity__c act = newActList[i];
             wrts_prcgvr__Activity__c actOld = oldActList[i];
-            if(act.recordtypeid == recordtypeid && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && (act.CreditCheckResolutionReason__c == 'Dimostrata Estraneità' || act.CreditCheckResolutionReason__c == 'Saldo Pagato') && act.Status__c == 'KO Risolto'){                    
+            if(act.recordtypeid == recordtypeid && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && (act.CreditCheckResolutionReason__c == 'Dimostrata Estraneità' || act.CreditCheckResolutionReason__c == 'Saldo Pagato') && act.wrts_prcgvr__Status__c == 'KO Risolto'){                    
                 actListToRecheck.add(act);                    
             }
         }
@@ -244,7 +244,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 typeOfCommodity = 'GAS';
             }
             
-            HDT_WS_CreditCheck.HDT_VFC_InputWrapperDetail iwd = new HDT_WS_CreditCheck.HDT_VFC_InputWrapperDetail();
+            HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail iwd = new HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail();
             if(act.Order__r.ServicePoint__c != null && act.Order__r.ServicePoint__r.AnnualConsumptionStandardM3__c != null){
                 iwd.annualConsumption = String.valueOf(act.Order__r.ServicePoint__r.AnnualConsumptionStandardM3__c.format());
             }            
@@ -252,7 +252,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             
             system.debug('HDT_VFC_InputWrapperDetail ---> ' + JSON.serialize(iwd)); 
 
-            List<HDT_WS_CreditCheck.HDT_VFC_InputWrapperDetail> l = new List<HDT_WS_CreditCheck.HDT_VFC_InputWrapperDetail>();
+            List<HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail> l = new List<HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail>();
             l.add(iwd);
 
             // da testare 18/6/21 @Picchiri
@@ -263,7 +263,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
 
             system.debug('HDT_VFC_InputWrapperDetail 2 ---> ' + JSON.serialize(iwd)); 
 
-            HDT_WS_CreditCheck.HDT_VFC_InputWrapper iw = new HDT_WS_CreditCheck.HDT_VFC_InputWrapper();
+            HDT_WS_CreditCheckRequest iw = new HDT_WS_CreditCheckRequest();
             iw.sistema = 'eEnergy';
             iw.caso = 'Transazionale';
             iw.crmEntity = 'Order';
@@ -296,15 +296,15 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 iw.alternativeCustomerId = fiscalData;            
             }
             system.debug('act.Order__r.RecordType.DeveloperName ---> ' + JSON.serialize(iw)); 
-            HDT_WS_CreditCheck.callService(json.serialize(iw));
+            HDT_WS_CreditCheck.callService(iw);
         }
     }
     // END @Picchiri 15.06.21 
 
     // @Alessio Murru 
     // public static void manageStatusChangeCrediCheck(List<wrts_prcgvr__Activity__c> triggernew , List<wrts_prcgvr__Activity__c> triggerold){
-    //     HDT_QR_Recordtype recQR = new HDT_QR_Recordtype();
-    //     String recordtypeid = recQR.getRecordTypeIdByName('HDT_RT_CreditCheckKO');
+    //     HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
+    //     String recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_CreditCheckKO');
     //     Map<id,wrts_prcgvr__Activity__c> mapActivityNew = new Map<Id,wrts_prcgvr__Activity__c>();
     //     Map<id,wrts_prcgvr__Activity__c> mapActivityOld = new Map<Id,wrts_prcgvr__Activity__c>();
     //     List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
@@ -332,7 +332,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
     //         wrts_prcgvr__Activity__c actOld =  mapActivityOld.get(actId);
 
     //         // esegue il creditcheck su una singola activity
-    //         if(actOld.Status__c != actNew.Status__c && 'KO Forzato'.equalsIgnoreCase(actNew.Status__c)){ //il KO Forzato vale come chiusura? devo annullare anche l'order?                
+    //         if(actOld.wrts_prcgvr__Status__c != actNew.wrts_prcgvr__Status__c && 'KO Forzato'.equalsIgnoreCase(actNew.wrts_prcgvr__Status__c)){ //il KO Forzato vale come chiusura? devo annullare anche l'order?                
     //             actListToRecheck.add(actNew);
     //             listOrderBadPayer.add(actOld.Order__c);
     //         }
@@ -376,7 +376,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             List<Order> ordersToUpdate = new List<Order>();
             for (wrts_prcgvr__Activity__c activity : activities) {
                 if (activity.RecordTypeId == recordtypeid 
-                    && activity.Status__c == 'Non Esitata'
+                    && activity.wrts_prcgvr__Status__c == 'Non Esitata'
                     && isMonitoringList.contains(activity.Order__r.AgencyCode__c)) {
                     ordersToUpdate.add(new Order(
                         Id = activity.Order__c,

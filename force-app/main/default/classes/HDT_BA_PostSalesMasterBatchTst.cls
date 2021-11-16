@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    12/11/2021
+    Reason: Ottimizzazione a seguito di gestione Case Phase "In Bozza", Case Type "Blocco Sollecito/Interessi" e Knowledge Article
+*/
 @isTest
 public class HDT_BA_PostSalesMasterBatchTst {
     
@@ -6,6 +11,28 @@ public class HDT_BA_PostSalesMasterBatchTst {
         
         HDT_UTL_DataFactoryTst.pClickCasePhase();
 
+        String rtName = 'HDT_RT_VerificheGas';
+        String rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VerificheGas').getRecordTypeId();
+        String rtNamePianoRat = 'HDT_RT_PianoRateizzazione';
+        String rtIdPianRat = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PianoRateizzazione').getRecordTypeId();
+        String rtNameAutolettura = 'HDT_RT_Autolettura';
+        String rtIdAutolettura = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtNameAutolettura).getRecordTypeId();
+        String rtNamePostSales = 'HDT_RT_Domiciliazione';
+        String rtIdPostSales = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtNamePostSales).getRecordTypeId();
+        
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Attesa conferma preventivo cliente', 'Bozza', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Preventivo scaduto', 'Attesa conferma preventivo cliente', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Bozza Annullata', 'Bozza', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Pratica In Attesa', 'Bozza', rtIdPianRat, rtNamePianoRat,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito KO da SAP', 'Bozza', rtIdPianRat, rtNamePianoRat,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Pratica In Attesa', rtIdPianRat, rtNamePianoRat,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Completata', 'Pratica In Attesa', rtIdPianRat, rtNamePianoRat,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Bozza Annullata', 'Bozza', rtIdPianRat, rtNamePianoRat,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito KO da SAP', 'Pratica In Attesa', rtIdPianRat, rtNamePianoRat,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Bozza Annullata', 'Bozza', rtIdPostSales, rtNamePostSales,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Bozza Annullata', 'Bozza', rtIdAutolettura, rtNameAutolettura,'A','','','');
+        
+
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
         ordList[0].EffectiveDate__c = Date.today()-5;
@@ -13,10 +40,17 @@ public class HDT_BA_PostSalesMasterBatchTst {
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
-        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);        
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(5, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(3, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        Datetime oneDayAgo = Datetime.now().addDays(-5);
+        Test.setCreatedDate(caseList[3].Id, oneDayAgo);
+
+        Datetime oneMonthAgo = Datetime.now().addDays(-40);
+        Test.setCreatedDate(caseList[4].Id, oneMonthAgo);
+
         caseList[0].BillingProfile__c = billingProfileList[0].Id;
+        caseList[0].Phase__c = 'Attesa conferma preventivo cliente';
         caseList[0].QuotationValidityDate__c = Date.today()-5;
         caseList[0].Cluster__c = 'Verifiche';
         caseList[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VerificheGas').getRecordTypeId();
@@ -24,6 +58,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
         caseList[1].BillingProfile__c = billingProfileList[0].Id;
         caseList[1].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PianoRateizzazione').getRecordTypeId();
         caseList[1].Type = 'Piano Rateizzazione';
+        caseList[1].Phase__c = 'Pratica In Attesa';
         caseList[1].SuspensionDate__c = Date.today()-10;
         caseList[1].SuspensionDays__c = 5;
         caseList[1].DepositPaymentMode__c = 'Bonifico';
@@ -31,121 +66,101 @@ public class HDT_BA_PostSalesMasterBatchTst {
         caseList[2].BillingProfile__c = billingProfileList[0].Id;
         caseList[2].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PianoRateizzazione').getRecordTypeId();
         caseList[2].Type = 'Contratto Non Richiesto';
+        caseList[2].Phase__c = 'Pratica In Attesa';
         caseList[2].Order__c = ordList[0].Id;
-        insert caseList;
-        
-        
-        HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
-        String rtName = 'HDT_RT_VerificheGas';
-        String rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VerificheGas').getRecordTypeId();
-        String rtNamePianoRat = 'HDT_RT_PianoRateizzazione';
-        String rtIdPianRat = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PianoRateizzazione').getRecordTypeId();
-        
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Attesa conferma preventivo cliente', 'Bozza', rtId, rtName,'A','','','');
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Preventivo scaduto', 'Attesa conferma preventivo cliente', rtId, rtName,'A','','','');
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Pratica In Attesa', 'Bozza', rtIdPianRat, rtNamePianoRat,'A','','','');
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito KO da SAP', 'Pratica In Attesa', rtIdPianRat, rtNamePianoRat,'A','','','');
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Pratica In Attesa', rtIdPianRat, rtNamePianoRat,'A','','','');
+
+        caseList[3].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Autolettura').getRecordTypeId();
+        caseList[3].Cluster__c = 'Autolettura';        
+
+        caseList[4].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Domiciliazione').getRecordTypeId();
+        caseList[4].Cluster__c = 'Pagamenti';
+        update caseList;        
 
         Knowledge__kav kArt = new Knowledge__kav();
         kArt.Title = 'Test Original Title';
         kArt.urlName = 'original';
         kArt.ExpirationDate__c = Date.today()-5;
         insert kArt;
+    
+
+        CS_DaysToExpiration__c autoletturaCustomSetting = new CS_DaysToExpiration__c();
+        autoletturaCustomSetting.Name = 'Autolettura';
+        autoletturaCustomSetting.Type__c = 'Autolettura';
+        autoletturaCustomSetting.NumberOfDays__c = '1';
+        insert autoletturaCustomSetting;
+
+        CS_DaysToExpiration__c postSalesCustomSetting = new CS_DaysToExpiration__c();
+        postSalesCustomSetting.Name = 'PostSales';
+        postSalesCustomSetting.Type__c = 'PostSales';
+        postSalesCustomSetting.NumberOfDays__c = '30';
+        insert postSalesCustomSetting;
 
     }
 
     @IsTest
     static void testBatchExecution(){
 
-        Case cs = [SELECT Id, Phase__c FROM Case WHERE Type <> 'Piano Rateizzazione' LIMIT 1];
+        Case myCase1 = [SELECT Id, Phase__c FROM Case WHERE Type <> 'Piano Rateizzazione' LIMIT 1];
+        Case myCase2 = [SELECT Id, Phase__c, SuspensionEndDate__c, Type  FROM Case WHERE Type = 'Piano Rateizzazione'LIMIT 1];
+        Case myCase3 = [SELECT Id, Phase__c, Type  FROM Case WHERE Type = 'Contratto Non Richiesto' LIMIT 1];
+        Case myCase4 = [SELECT Id, Phase__c, Cluster__c FROM Case WHERE Phase__c = 'Bozza' and Cluster__c = 'Autolettura' LIMIT 1];
+        Case myCase5 = [SELECT Id, Phase__c, Cluster__c FROM Case WHERE Phase__c = 'Bozza' and Cluster__c = 'Pagamenti' LIMIT 1];
         
-        Test.startTest();
-
-        cs.Phase__c = 'Attesa conferma preventivo cliente';
-        update cs;
-
-        HDT_BA_PostSalesMasterBatch psm = new HDT_BA_PostSalesMasterBatch();
-        // Id batchId = Database.executeBatch(psm);
-
-        List<SObject> l = psm.start(null);
-        System.assert(l.size() > 0, 'l.size() = 0 or l == null');
-
-        psm.execute(null, l);
-
-        Test.stopTest();
-
-        Case updatedCase = [SELECT Id, Phase__c FROM Case WHERE Id =: cs.Id LIMIT 1];
-        System.assertEquals('Preventivo scaduto', updatedCase.Phase__c, 'Phase != Preventivo scaduto');
-
+        Knowledge__kav kArt = [SELECT Id, KnowledgeArticleId FROM Knowledge__kav LIMIT 1];
         
-    }
+        String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
+        Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
+        EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+        LocaleSidKey='en_US', ProfileId = p.Id,
+        TimeZoneSidKey='America/Los_Angeles',
+        UserName=uniqueUserName);
+        u.UserPermissionsKnowledgeUser = true;
+		insert u;
 
-    @IsTest
-    static void testBatchExecution2(){
+        HDT_UTL_DataFactoryTst.assignPermissionSet(u, 'HDT_UtentiPubblicatoriKnowledge', true);
 
-        Case cs = [SELECT Id, Phase__c, SuspensionEndDate__c, Type  FROM Case WHERE Type = 'Piano Rateizzazione'LIMIT 1];
+        System.runAs(u){
+            
+            Test.setMock(HttpCalloutMock.class, new HDT_BA_PostSalesMasterBatchTstMock());
 
-        cs.Phase__c = 'Pratica In Attesa';
-        update cs;
+            KbManagement.PublishingService.publishArticle(kArt.KnowledgeArticleId, true);
+    
+            Test.startTest();
 
-        Test.startTest();
+            HDT_BA_PostSalesMasterBatch psm = new HDT_BA_PostSalesMasterBatch();        
 
-        Test.setMock(HttpCalloutMock.class, new HDT_BA_PostSalesMasterBatchTstMock());
-        
-        System.debug('DEBUG ===>');
-        System.debug('DEBUG TIPO: ' + cs.Type);
-        System.debug('DEBUG FASE: ' + cs.Phase__c);
-        System.debug('DEBUG SUSP END DATE: ' + cs.SuspensionEndDate__c);
+            Database.executeBatch(psm);
 
-        HDT_BA_PostSalesMasterBatch psm = new HDT_BA_PostSalesMasterBatch();
-        // Id batchId = Database.executeBatch(psm);
+            Test.stopTest();
 
-        List<SObject> l = psm.start(null);
-        System.assert(l.size() > 0, 'l.size() = 0 or l == null');
+        }
 
-        psm.execute(null, l);
+        Case updatedCase1 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase1.Id LIMIT 1];
+        System.assertEquals('Preventivo scaduto', updatedCase1.Phase__c, 'Phase != Preventivo scaduto');
 
-        Test.stopTest();
+        Case updatedCase2 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase2.Id LIMIT 1];
+        System.assertEquals('Completata', updatedCase2.Phase__c, 'Phase != Pratica In Attesa');
 
-    }
+        Case updatedCase3 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase3.Id LIMIT 1];
+        System.assertEquals('Da Inviare', updatedCase3.Phase__c, 'Phase != Da Inviare');
 
-    @IsTest
-    static void testBatchExecution3(){
+        Case updatedCase4 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase4.Id LIMIT 1];
+        System.assertEquals('Bozza Annullata', updatedCase4.Phase__c, 'Phase != Bozza Annullata');
 
-        Case cs = [SELECT Id, Phase__c, Type  FROM Case WHERE Type = 'Contratto Non Richiesto' LIMIT 1];
+        Case updatedCase5 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase5.Id LIMIT 1];
+        System.assertEquals('Bozza Annullata', updatedCase5.Phase__c, 'Phase != Bozza Annullata');
 
-        
-        Test.startTest();
+        Knowledge__kav myArticle = [Select Id, PublishStatus from Knowledge__kav where Id =: kArt.Id];
+        System.assertEquals('Archived', myArticle.PublishStatus, 'PublishStatus != Archived');
 
-        cs.Phase__c = 'Pratica In Attesa';
-        update cs;
-
-        System.debug('DEBUG ===>');
-        System.debug('DEBUG TIPO: ' + cs.Type);
-        System.debug('DEBUG FASE: ' + cs.Phase__c);
-
-        HDT_BA_PostSalesMasterBatch psm = new HDT_BA_PostSalesMasterBatch();
-
-        // Id batchId = Database.executeBatch(psm);
-
-        List<SObject> l = psm.start(null);
-        System.assert(l.size() > 0, 'l.size() = 0 or l == null');
-
-        psm.execute(null, l);
-        
-        Test.stopTest();
-
-        Case updatedCase = [SELECT Id, Phase__c FROM Case WHERE Id =: cs.Id LIMIT 1];
-        System.assertEquals('Da Inviare', updatedCase.Phase__c, 'Phase != Da Inviare');
-        
     }
 
     public class HDT_BA_PostSalesMasterBatchTstMock implements HttpCalloutMock {
         public HTTPResponse respond(HTTPRequest request) {
             HttpResponse response = new HttpResponse();
             response.setHeader('Content-Type', 'application/json');
-            response.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"rdsRdo":"rds","tipoAttivita":"attivita","note":"nota","numeroBollettino":"98","importoTotale":"10.00","esito":"OK"}}');
+            response.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"rdsRdo":"rds","tipoAttivita":"Pratica avviata","note":"nota","numeroBollettino":"98","importoTotale":"10.00","esito":"OK"}}');
             response.setStatusCode(200);
             response.setStatus('OK');
             return response; 

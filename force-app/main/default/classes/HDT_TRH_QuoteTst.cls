@@ -14,9 +14,9 @@ public with sharing class HDT_TRH_QuoteTst{
 
 		System.runAs(internalUser){
 			List<Account> accs=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-			List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, accs[0].Id, 'Bozza');
-			List<Opportunity> opps=HDT_UTL_DataFactoryTst.createOpportunity(1, true);
-			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accs[0].Id, 'Bozza');
+			HDT_UTL_DataFactoryTst.createOrder(1, true, accs[0].Id, 'Bozza');
+			HDT_UTL_DataFactoryTst.createOpportunity(1, true);
+			HDT_UTL_DataFactoryTst.createSale(1, true, accs[0].Id, 'Bozza');
 		}
 	}
 

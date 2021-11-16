@@ -15,12 +15,7 @@ public class HDT_WS_CampagenDmDmpDataResponseTst {
         HDT_UTL_DataFactoryTst.createWebServiceConfiguration('CampagenDmDmpData','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
     }
     @isTest
-    static void test1(){
-        String runId = 'someid';
-        String status = '';
-        String fileType ='';
-        String errorMessage = 'some error message';
-        List<String> contentVersionIds = new List<String>();
+    static void test(){
         
         Test.startTest();
         

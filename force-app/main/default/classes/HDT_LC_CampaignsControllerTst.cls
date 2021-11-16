@@ -12,6 +12,8 @@ public with sharing class HDT_LC_CampaignsControllerTst {
 
     @TestSetup
     static void makeData(){
+    HDT_UTL_DataFactoryTst.pClickInstance();
+    HDT_UTL_DataFactoryTst.pClickOrderPhase();
     List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
     System.debug('acc: ' + accounts);
     List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].Id, 'Attiva');
@@ -686,8 +688,8 @@ CampaignMember member = new CampaignMember(
 
     Test.startTest();
     Boolean returnedBoolean = HDT_LC_CampaignsController.cancelAssignmentsOrder(ord.Id);
-    System.assertEquals(false, returnedBoolean, 'Returned False, is ok');
-    System.assertNotEquals(true, returnedBoolean, 'Returned False, is ok');
+    System.assertEquals(true, returnedBoolean, 'Returned False, is ok');
+    System.assertNotEquals(false, returnedBoolean, 'Returned False, is ok');
     Test.stopTest();
 
 }
@@ -856,9 +858,9 @@ CampaignMember member = new CampaignMember(
         listaIdProdotti.add(idsFound.Id);
     }
 
-    Id userID = [SELECT Id FROM User LIMIT 1].Id;
+    Id userId = [SELECT Id FROM User LIMIT 1].Id;
     Test.startTest();
-    String returnedUserName = HDT_LC_CampaignsController.getUserRole(userID);
+    String returnedUserName = HDT_LC_CampaignsController.getUserRole(userId);
     System.assertEquals(null, returnedUserName, 'User Id not  returned');
     Test.stopTest();
 
@@ -925,6 +927,44 @@ CampaignMember member = new CampaignMember(
 
 }
 
+    @isTest
+    static void testRequiredCampaignCheck(){
+        Campaign campaignRecord = [SELECT Id FROM Campaign LIMIT 1];
 
+        Test.startTest();
+        List<CampaignMember> campMembList = HDT_LC_CampaignsController.requiredCampaignCheck(campaignRecord.Id);
+        System.assertNotEquals(null, campMembList, 'campMemUp = null');
+        Test.stopTest();
+    }
+
+    @isTest
+    static void testGetCurrentAccount(){
+        Account accRecord = [SELECT Id FROM Account LIMIT 1];
+
+        Test.startTest();
+        Account acc = HDT_LC_CampaignsController.getCurrentAccount(accRecord.Id);
+        System.assertNotEquals(null, acc, 'acc = null');
+        Test.stopTest();
+    }
+
+    @isTest
+    static void testGetCampaignAndAccountByMember(){
+        List<Contact> contactList = [SELECT Id FROM Contact LIMIT 1];
+        List<Campaign> listCampaign = [SELECT Id FROM Campaign LIMIT 1];
+        List<CampaignMember> members = new List<CampaignMember>();
+        CampaignMember member = new CampaignMember(
+            ContactId = contactList[0].Id,
+            Status = 'Inviato',
+            CampaignId = listCampaign[0].Id
+        ); 
+        members.add(member); 
+        insert members;
+        List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
+
+        Test.startTest();
+        CampaignMember campMembTest = HDT_LC_CampaignsController.getCampaignAndAccountByMember(testMembers[0].Id);
+        System.assertNotEquals(null, campMembTest, 'campMembTest != null');
+        Test.stopTest();
+    }
 
 }

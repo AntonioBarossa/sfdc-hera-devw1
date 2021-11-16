@@ -137,7 +137,7 @@ public with sharing class HDT_UTL_DatabaseServiceNoShareTst {
         System.runAs(u) {
 
             try {
-                Boolean deleteTest = HDT_UTL_DatabaseServiceNoShare.deleteSObject(ld.Id);
+                HDT_UTL_DatabaseServiceNoShare.deleteSObject(ld.Id);
             }
             catch (Exception e) {
                 System.debug('Exception: '+ e);

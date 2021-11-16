@@ -398,12 +398,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         //FINE SVILUPPI EVERIS
         //INSERITE NUOVE VARIABILI, IsRetroactive e IsReading solo in avanzamento di sezione.  
         updateProcessStep(
-            {order: {Id: this.order.Id, Step__c: nextSectionStep, 
+            {order: {Id: orderId, Step__c: nextSectionStep, 
             ...this.sectionDataToSubmit,
             },
             isVolture: this.isVolture,
             isRetroactive: this.isRetroactive,
             isReading: this.isReading,
+            isUpdateStep: this.sectionDataToSubmit.length > 0,
             readingDate: this.readingCustomerDate
         }).then(data =>{
             if(this.isVolture){
@@ -911,13 +912,17 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 isReading: true,
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
             },
+            /**@frpanico 12/11/2021
+             * DM RN007 - La sezione "Dati precedente intestatario non deve essere visibile nel processo di SwitchIn"
+             * Commentata condizione switchIn nel field "processVisibility"
+             */
             {
                 step: 4,
                 label: 'Dati precedente intestatario',
                 name: 'datiPrecedenteIntestatario',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
+                processVisibility: /*this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' ||*/ this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data: [
                     //constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value)
                     new fieldData('Nome precedente intestatario','PreviousHolderFirstName__c', true, false, false, '',''),   
@@ -1838,8 +1843,44 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     }
                 ]
             },
+            /**@frpanico 12/11/2021 aggiunte sezioni Referente Cliente Finale, Dati Commerciali
+             * constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value)
+             */
             {
                 step: 9,
+                label: 'Referente Cliente Finale/Anagrafica',
+                name: 'primaryContact',
+                objectApiName: 'Contact',
+                recordId: this.order.ContractReference__c !== null ? this.order.ContractReference__c : null,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
+                data:
+                [
+                    new fieldData('Nome', 'FirstName',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Cognome', 'LastName',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Codice Fiscale', 'FiscalCode__c',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Telefono Cellulare', 'MobilePhone',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Telefono Fisso', 'HomePhone',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Email', 'Email',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Email PEC', 'CertifiedEmail__c',this.typeVisibility('both'),false,true,true,'')
+                ]
+            },
+            {
+                step: 10,
+                label: 'Dati Commerciali',
+                name: 'commercialData',
+                objectApiName: 'Order',
+                recordId: this.order.Id,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
+                data:
+                [
+                    new fieldData('Mercato', 'Market__c',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Contratto', 'SapContractCode__c',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Punto di Fornitura', 'ServicePoint__c',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Codice Ateco', 'AtecoCode__c',this.typeVisibility('both'),false,true,true,'')
+                ]
+            },
+            {
+                step: 11,
                 label:'Iva e accise',
                 name: 'ivaAccise',
                 objectApiName: 'Order',
@@ -1854,51 +1895,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data: [
-                    {
-                        'label': 'Flag Agevolazione IVA',
-                        'apiname': 'VATfacilitationFlag__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound',
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Flag Accise Agevolata',
-                        'apiname': 'FacilitationExcise__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound',
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'IVA',
-                        'apiname': 'VAT__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        // 'value': this.order.Vat__c,
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Accise Agevolata Ele',
-                        'apiname': 'ExciseEle__c',
-                        'typeVisibility': this.typeVisibility('ele'),
-                        'required': false,
-                        'disabled': true,
-                        // 'value': this.order.ExciseEle__c,
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Accise Agevolata Gas',
-                        'apiname': 'ExciseGAS__c',
-                        'typeVisibility': this.typeVisibility('gas'),
-                        'required': false,
-                        'disabled': true,
-                        // 'value': this.order.ExciseGas__c,
-                        'processVisibility': ''
-                    },
+                    new fieldData('Flag Agevolazione IVA','VATfacilitationFlag__c',this.typeVisibility('both'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound',''),
+                    new fieldData('Flag Accise Agevolata','FacilitationExcise__c',this.typeVisibility('both'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound',''),
+                    new fieldData('IVA','VAT__c',this.typeVisibility('both'),false, true,''),
+                    new fieldData('Accise Agevolata Ele','ExciseEle__c',this.typeVisibility('ele'),false,true,''),
+                    new fieldData('Accise Agevolata Gas','ExciseGAS__c',this.typeVisibility('gas'),false,true,''),
+                    new fieldData('Aliquota Accise','ExciseRate__c',this.typeVisibility('ele'),false,true,''),
+                    new fieldData('Addizionale Regionale', 'RegionalAdditional__c',this.typeVisibility('ele'),false,true,'')
                 ]
             },
             {

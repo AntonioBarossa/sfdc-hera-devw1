@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>N. tel. cellulare</label>
+    <label>Cellulare</label>
     <length>40</length>
     <required>false</required>
     <type>Text</type>

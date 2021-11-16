@@ -1,6 +1,10 @@
-public with sharing class HDT_TRH_NewsNotificationCenter {
+public with sharing class HDT_TRH_NewsNotificationCenter extends HDT_TRH_TriggerHandler {
 
     private static HDT_QR_Knowledge qrKb = new HDT_QR_Knowledge();
+
+    public override void beforeInsert(){
+        getPotentialDuplicate(Trigger.new);
+    }
 
     public static String getPotentialDuplicate(List<NewsNotificationCenter__c> newsConfig){
 

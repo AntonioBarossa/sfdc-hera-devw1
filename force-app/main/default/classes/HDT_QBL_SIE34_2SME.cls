@@ -17,7 +17,12 @@ public with sharing class HDT_QBL_SIE34_2SME implements Queueable  {
     public void execute(QueueableContext context) {
        String status                  = 'success'   ;
        String errorMessage            = ''          ;
-       //query PP(EE)OUT_PREVENTIVI_SME
+    
+       // Delete Start old File
+       String title                   = 'PP_OUT_PREVENTIVI_SME' ;
+       HDT_UTL_ContentVersion.deleteFiles(title)                ;
+       // Delete End old File
+       
        String conditionEle = ' WHERE Cluster__c =\'Preventivi\' AND Status =\'Closed\' AND LastModifiedDate >=:filterDate ';
        String queryEle    = 'SELECT BillingProfile__r.InvoicingCountry__c,BillingProfile__r.ContractAccountCode__c,Account.LastName__c,Account.BillingCity,Account.BillingPlace__c, Account.BillingPostalCode,Account.BillingState,Account.BillingStreetName__c,Account.BillingStreetNumberExtension__c, Account.BillingStreetNumber__c, Account.Category__c, Account.CustomerCode__c,'+
        'Account.CustomerType__c,Account.FirstName__c, Account.FiscalCode__c,Account.VATNumber__c,BillingProfile__r.BillSendingMethod__c, BillingProfile__r.InvoiceCertifiedEmailAddress__c,BillingProfile__r.InvoiceEmailAddress__c, BillingProfile__r.SendCertifiedEmailConsentDate__c,'+
@@ -56,9 +61,11 @@ public with sharing class HDT_QBL_SIE34_2SME implements Queueable  {
 
       
          if (String.isNotBlank(body)) {
-            contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'PP_OUT_PREVENTIVI_SME.txt','PP_OUT_PREVENTIVI_SME'));
+            contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'PP_OUT_PREVENTIVI_SME.txt',title));
          }
-         System.enqueueJob(new HDT_QBL_SIE34_2MM(runId,filterDate, fileType,contentVersionIds));
+
+         if(!Test.isRunningTest()) System.enqueueJob(new HDT_QBL_SIE34_2MM(runId,filterDate, fileType,contentVersionIds));
+
        } 
        catch (Exception e) {
           errorMessage=e.getMessage();

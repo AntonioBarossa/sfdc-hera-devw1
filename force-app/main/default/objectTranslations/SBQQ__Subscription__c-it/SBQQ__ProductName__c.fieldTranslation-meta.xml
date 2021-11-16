@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>Conserva il Nome Prodotto</help>
+    <label>Nome Prodotto</label>
+    <name>SBQQ__ProductName__c</name>
+</CustomFieldTranslation>

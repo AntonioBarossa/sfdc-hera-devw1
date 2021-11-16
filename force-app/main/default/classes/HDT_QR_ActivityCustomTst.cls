@@ -49,7 +49,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 
 			List<wrts_prcgvr__Activity__c> actCustoms=HDT_UTL_DataFactoryTst.createActivityCustom(2, false, accounts[0].Id);
 			actCustoms[0].ServicePoint__c=servpoints[0].Id;
-			actCustoms[0].Status__c='Creata';
+			actCustoms[0].wrts_prcgvr__Status__c='Creata';
 			actCustoms[0].Type__c='Approvazione Quote';
 			actCustoms[0].ServicePointCode__c='test';
 			actCustoms[0].Order__c=orders[0].Id;
@@ -60,7 +60,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 
 			actCustoms[1].Account__c=accounts[0].Id;
 			actCustoms[1].ServicePoint__c=servpoints[0].Id;
-			actCustoms[1].Status__c='Creata';
+			actCustoms[1].wrts_prcgvr__Status__c='Creata';
 			actCustoms[1].Type__c='Approvazione Quote';
 			actCustoms[1].ServicePointCode__c='test 2';
 			actCustoms[1].Order__c=orders[0].Id;
@@ -87,8 +87,8 @@ public with sharing class HDT_QR_ActivityCustomTst{
 		List<wrts_prcgvr__Activity__c> tActivity=HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePoint('Approvazione Quote', 'Creata', tAcc.Id, 'test');
 		System.debug('tActivity = '+tActivity);
 
-		System.assertEquals('Creata', tActivity[0].Status__c, 'query return is wrong');
-		System.assertNotEquals('', tActivity[0].Status__c, 'getRecordByTypeAndStatusAndAccountAndServicePoint did not work correctly');
+		System.assertEquals('Creata', tActivity[0].wrts_prcgvr__Status__c, 'query return is wrong');
+		System.assertNotEquals('', tActivity[0].wrts_prcgvr__Status__c, 'getRecordByTypeAndStatusAndAccountAndServicePoint did not work correctly');
 
 		Test.stopTest();
 	}
@@ -97,34 +97,34 @@ public with sharing class HDT_QR_ActivityCustomTst{
 	public static void testgetRecordById(){
 		Test.startTest();
 
-		wrts_prcgvr__Activity__c tActivityCust=[SELECT Id, Status__c
+		wrts_prcgvr__Activity__c tActivityCust=[SELECT Id, wrts_prcgvr__Status__c
 		                                        FROM wrts_prcgvr__Activity__c
-		                                        WHERE Status__c='Creata'
+		                                        WHERE wrts_prcgvr__Status__c='Creata'
 		                                        LIMIT 1];
 
 		List<wrts_prcgvr__Activity__c> tActivity=HDT_QR_ActivityCustom.getRecordById(tActivityCust.Id);
 		System.debug('tActivity = '+tActivity);
 
-		System.assertEquals('Creata', tActivity[0].Status__c, 'query return is wrong');
-		System.assertNotEquals('', tActivity[0].Status__c, 'getRecordById did not work correctly');
+		System.assertEquals('Creata', tActivity[0].wrts_prcgvr__Status__c, 'query return is wrong');
+		System.assertNotEquals('', tActivity[0].wrts_prcgvr__Status__c, 'getRecordById did not work correctly');
 
 		Test.stopTest();
 	}
 
 	@isTest
-	public static void testgetRecordByIdS(){
+	public static void testgetRecordByIds(){
 		Test.startTest();
 
-		List<wrts_prcgvr__Activity__c> tActivityCust=[SELECT Id, Status__c
+		List<wrts_prcgvr__Activity__c> tActivityCust=[SELECT Id, wrts_prcgvr__Status__c
 		                                              FROM wrts_prcgvr__Activity__c
-		                                              WHERE Status__c='Creata'
+		                                              WHERE wrts_prcgvr__Status__c='Creata'
 		                                              LIMIT 1];
 
 		wrts_prcgvr__Activity__c tActivity=HDT_QR_ActivityCustom.getRecordByIds(tActivityCust[0].Id);
 		System.debug('tActivity = '+tActivity);
 
-		System.assertEquals('Creata', tActivity.Status__c, 'query return is wrong');
-		System.assertNotEquals('', tActivity.Status__c, 'getRecordByIds- did not work correctly');
+		System.assertEquals('Creata', tActivity.wrts_prcgvr__Status__c, 'query return is wrong');
+		System.assertNotEquals('', tActivity.wrts_prcgvr__Status__c, 'getRecordByIds- did not work correctly');
 
 		Test.stopTest();
 	}
@@ -242,8 +242,8 @@ public with sharing class HDT_QR_ActivityCustomTst{
 			List<wrts_prcgvr__Activity__c> tActivity=HDT_QR_ActivityCustom.getActivityListCrediCheck(orderIds);
 			System.debug('tActivity = '+tActivity);
 
-			System.assertEquals('Creata', tActivity[0].Status__c, 'query return is wrong');
-			System.assertNotEquals(null, tActivity[0].Status__c, 'getActivityListCreditCheck did not work correctly');
+			System.assertEquals('Creata', tActivity[0].wrts_prcgvr__Status__c, 'query return is wrong');
+			System.assertNotEquals(null, tActivity[0].wrts_prcgvr__Status__c, 'getActivityListCreditCheck did not work correctly');
 
 		}
 		Test.stopTest();
@@ -260,7 +260,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 
 		System.runAs(tUser){
 
-			List<wrts_prcgvr__Activity__c> tActivityCust=[SELECT Id, Status__c, Type__c, ServicePointCode__c, ParentActivity__c
+			List<wrts_prcgvr__Activity__c> tActivityCust=[SELECT Id, wrts_prcgvr__Status__c, Type__c, ServicePointCode__c, ParentActivity__c
 			                                              FROM wrts_prcgvr__Activity__c
 			                                              WHERE ServicePointCode__c='test'
 			                                              LIMIT 1];
@@ -302,9 +302,9 @@ public with sharing class HDT_QR_ActivityCustomTst{
 
 		System.runAs(tUser){
 
-			List<wrts_prcgvr__Activity__c> tActivityCust=[SELECT Id, Status__c
+			List<wrts_prcgvr__Activity__c> tActivityCust=[SELECT Id, wrts_prcgvr__Status__c
 			                                              FROM wrts_prcgvr__Activity__c
-			                                              WHERE Status__c='Creata'
+			                                              WHERE wrts_prcgvr__Status__c='Creata'
 			                                              LIMIT 1];
 
 			List<wrts_prcgvr__Activity__c> tActivity=HDT_QR_ActivityCustom.getActivityByRecordId(tActivityCust[0].Id);

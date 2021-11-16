@@ -7,6 +7,8 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlertTst {
     @testSetup
     static void setup(){
 
+        HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
+
         Id adminUserProfileId = HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
 
         User internalUser = HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
@@ -19,17 +21,15 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlertTst {
 
         List<Account> testAcc =  HDT_UTL_DataFactoryTst.createAccountPartner(1, false , 'testact');
         testAcc[0].CompanyOwner__c  = 'HERA COMM';
-        //testAcc[0].owner.Name = 'Marco Arci';
         insert testAcc;
 
         id acctId = [SELECT id FROM Account WHERE id =: testAcc[0].id ].Id;
         
-        List<wrts_prcgvr__Activity__c> testActivity = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acctId);
-        //testActivity[0].owner.Name = 'Marco Arci';
-        testActivity[0].SuspensionDueDate__c = system.today(); 
-        testActivity[0].Status__c = 'Sospesa'; 
+        List<wrts_prcgvr__Activity__c> testActivity = HDT_UTL_DataFactoryTst.createActivityCustom(1,true,acctId);
+        testActivity[0].SuspensionDueDate__c = system.now().addMinutes(30);
+        testActivity[0].wrts_prcgvr__Status__c = 'Sospesa'; 
         testActivity[0].RecordTypeDevName__c  = 'HDT_RT_Scarto';
-        insert testActivity;         
+        update testActivity;         
          
         }
     }
@@ -42,7 +42,7 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlertTst {
         Database.executeBatch(sae);
         test.stopTest();
 
-        wrts_prcgvr__Activity__c q = [SELECT id, Name, ownerid  FROM  wrts_prcgvr__Activity__c WHERE Status__c = 'Sospesa' LIMIT 1];
+        wrts_prcgvr__Activity__c q = [SELECT id, Name, ownerid  FROM  wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c = 'Sospesa' LIMIT 1];
         id userName = q.ownerid;
         List<User> users = [SELECT id,Name,Email FROM User WHERE id =: userName ];
 
@@ -50,4 +50,5 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlertTst {
         system.assertNotEquals('', users[0].id , 'List of  users with ownerId of wrts_prcgvr__Activity__c is Empty' );
 
     }
+    
 }

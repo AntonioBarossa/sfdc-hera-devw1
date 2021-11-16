@@ -1,12 +1,13 @@
 public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Database.Batchable<wrts_prcgvr__Activity__c>, Database.AllowsCallouts {
+
     List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
     Map<String, String> usersEmail = new Map<String, String>();
     Map<wrts_prcgvr__Activity__c, User> activityOwner = new Map<wrts_prcgvr__Activity__c, User> ();
     public HDT_BA_SuspendedActivitiesEmailAlert() {
-        //old this.activities = [SELECT Id, Name, SuspensionDueDate__c, Status__c, OwnedByUser__c FROM wrts_prcgvr__Activity__c WHERE SuspensionDueDate__c = TODAY AND Status__c = 'Sospesa' WITH SECURITY_ENFORCED];
-        this.activities = [SELECT Id, Name, SuspensionDueDate__c, Status__c, OwnerId, Owner.Name 
+        //old this.activities = [SELECT Id, Name, SuspensionDueDate__c, wrts_prcgvr__Status__c, OwnedByUser__c FROM wrts_prcgvr__Activity__c WHERE SuspensionDueDate__c = TODAY AND wrts_prcgvr__Status__c = 'Sospesa' WITH SECURITY_ENFORCED];
+        this.activities = [SELECT Id, Name, SuspensionDueDate__c, wrts_prcgvr__Status__c, OwnerId, Owner.Name 
                            FROM wrts_prcgvr__Activity__c WHERE SuspensionDueDate__c = TODAY 
-                           AND Status__c = 'Sospesa' 
+                           AND wrts_prcgvr__Status__c = 'Sospesa' 
                            AND RecordType.DeveloperName = 'HDT_RT_Scarto'
                            WITH SECURITY_ENFORCED]; //Marco Arci
         system.debug('-----'+this.activities); //Marco arci debug temporaneo
@@ -56,4 +57,5 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Databa
     public void finish(Database.BatchableContext bc){
         System.debug('-------- finish batch');
     }
+    
 }

@@ -28,7 +28,7 @@ public with sharing class HDT_LC_AccountAlertsTst {
         HDT_UTL_DataFactoryTst.pClickCasePhase();
     }
     
-    
+
     //TESTS
     
     //getAccountAlerts

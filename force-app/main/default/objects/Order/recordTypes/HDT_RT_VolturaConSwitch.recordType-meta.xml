@@ -415,6 +415,10 @@
     <picklistValues>
         <picklist>CancellationReason__c</picklist>
         <values>
+            <fullName>Annullato per no conferma cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento da cliente</fullName>
             <default>false</default>
         </values>
@@ -2303,6 +2307,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Attesa Legge 80</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
@@ -2316,6 +2324,10 @@
         </values>
         <values>
             <fullName>OK SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica In Attesa</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2712,6 +2724,14 @@
         <picklist>SignatureMethod__c</picklist>
         <values>
             <fullName>Vocal Order</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cartacea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratto già firmato</fullName>
             <default>false</default>
         </values>
     </picklistValues>

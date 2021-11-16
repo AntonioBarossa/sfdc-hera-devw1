@@ -12,21 +12,21 @@
 public class HDT_WS_HerokuAddressSearchTst {
     
     @isTest
-    static void test1(){
+    static void test(){
         
         HDT_UTL_DataFactoryTst.createWebServiceConfiguration('VerifIndirizzo','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
         
         Test.startTest();
         
-        HDT_WS_HerokuAddressSearch h = new HDT_WS_HerokuAddressSearch();
-        HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse res1 = HDT_WS_HerokuAddressSearch.callServiceCom('city');
-        HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse res2 = HDT_WS_HerokuAddressSearch.callServiceInd('street','citycode');
-        HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse res3 = HDT_WS_HerokuAddressSearch.callServiceVer('modality','cityCode','streetCode','houseNumCode');
+        HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse resCom = HDT_WS_HerokuAddressSearch.callServiceCom('city');
+        HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse resInd = HDT_WS_HerokuAddressSearch.callServiceInd('street','citycode');
+        HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse resVer = HDT_WS_HerokuAddressSearch.callServiceVer('modality','cityCode','streetCode','houseNumCode');
+        HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse resMass = HDT_WS_HerokuAddressSearch.callServiceMass('city1' , 'street', 'houseNum1');
 
         HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj hPrestazione = new HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj();
         List<HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj> hPrestazioneList = new List<HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj>();
 		hPrestazioneList.add(hPrestazione);        
-        res1.prestazione = hPrestazioneList;
+        resCom.prestazione = hPrestazioneList;
         hPrestazione.city1 = 'city1';
         hPrestazione.street='street';
         hPrestazione.streetcode='streetcode';
@@ -42,11 +42,12 @@ public class HDT_WS_HerokuAddressSearchTst {
        
         Test.stopTest();
         
-    	System.assertEquals('region', res1.prestazione[0].region, 'Value of the field region not correctly set');
+    	System.assertEquals('region', resCom.prestazione[0].region, 'Value of the field region not correctly set');
         
-    	System.assertNotEquals(null, res3, 'callServiceVer did not work correctly');
-        System.assertNotEquals(null, res2, 'callServiceInd did not work correctly');
-        System.assertNotEquals(null, res1, 'callServiceCom did not work correctly');
+    	System.assertNotEquals(null, resVer, 'callServiceVer did not work correctly');
+        System.assertNotEquals(null, resInd, 'callServiceInd did not work correctly');
+        System.assertNotEquals(null, resCom, 'callServiceCom did not work correctly');
+        System.assertNotEquals(null, resMass, 'callServiceCom did not work correctly');
         
     }
 }

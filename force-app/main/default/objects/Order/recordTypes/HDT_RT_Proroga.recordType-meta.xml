@@ -251,6 +251,10 @@
     <picklistValues>
         <picklist>CancellationReason__c</picklist>
         <values>
+            <fullName>Annullato per no conferma cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento da cliente</fullName>
             <default>false</default>
         </values>
@@ -2518,6 +2522,10 @@
         </values>
         <values>
             <fullName>Vocal Order</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratto già firmato</fullName>
             <default>false</default>
         </values>
     </picklistValues>

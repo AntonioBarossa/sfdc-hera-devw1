@@ -8,8 +8,8 @@
 				IsAppointmentToEdit__c =TRUE,
 				NOT(
 								OR(
-												ISPICKVAL(Status__c, &quot;Appuntamento confermato&quot;),
-												ISPICKVAL(Status__c, &quot;Modifica confermata&quot;)
+												ISPICKVAL(wrts_prcgvr__Status__c, &quot;Appuntamento confermato&quot;),
+												ISPICKVAL(wrts_prcgvr__Status__c, &quot;Modifica confermata&quot;)
 								)
 				)
 )</errorConditionFormula>

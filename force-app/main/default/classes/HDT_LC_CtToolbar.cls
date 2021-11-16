@@ -1,6 +1,7 @@
 public with sharing class HDT_LC_CtToolbar {
     public static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
     public static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
+    private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
     //public static HDT_QR_ActivityCustom actQr = new HDT_QR_ActivityCustom();
     @auraEnabled
     public static boolean updateCampaignMember(String ecid,string campaignMember,string agent){
@@ -73,6 +74,8 @@ public with sharing class HDT_LC_CtToolbar {
         activity.wrts_prcgvr__Status__c = 'Aperta'; //Chiusa
         activity.RecordingLink__c = reiteklink;
         activity.order__c = ord.id;
+        activity.RecordTypeId = utlConstants.ACTIVITYCUSTOM_RECORDTYPEID_CHIAMATAOUTBOUND;
+
         activitySrv.createRecord(activity);
 
         if(ord != null){
@@ -97,6 +100,8 @@ public with sharing class HDT_LC_CtToolbar {
         activity.ClientNumber__c = clientNumber;
         activity.RecordingLink__c = registrationLink;
         activity.Ecid__c = ecid;
+        activity.RecordTypeId = utlConstants.ACTIVITYCUSTOM_RECORDTYPEID_CHIAMATAOUTBOUND;
+
         if (cm.ContactId != null) {
             activity.Contact__c = cm.ContactId;
         } else if(cm.LeadId != null) {
@@ -105,7 +110,8 @@ public with sharing class HDT_LC_CtToolbar {
         try {
             System.debug('###### activity #### ' +activity);
             System.debug('*******:TRYMETHOD4');
-            boolean cmRes = updateCampaignMember(ecid, campaignMemberId, agent);
+            // boolean cmRes = updateCampaignMember(ecid, campaignMemberId, agent);
+            updateCampaignMember(ecid, campaignMemberId, agent);
             System.debug('*******:TRYMETHOD5');
             return activitySrv.createRecord(activity);
         } catch (Exception e) {

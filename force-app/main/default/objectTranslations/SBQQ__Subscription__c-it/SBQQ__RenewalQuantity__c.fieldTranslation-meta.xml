@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>Quantità di prodotto di questa sottoscrizione che sarà rinnovata.</help>
+    <label>Quantità Rinnovo</label>
+    <name>SBQQ__RenewalQuantity__c</name>
+</CustomFieldTranslation>
