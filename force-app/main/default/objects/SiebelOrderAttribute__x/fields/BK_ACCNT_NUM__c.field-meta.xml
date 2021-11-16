@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>FST_NAME__c</fullName>
-    <description>FST_NAME</description>
-    <externalDeveloperName>FST_NAME</externalDeveloperName>
+    <fullName>BK_ACCNT_NUM__c</fullName>
+    <description>BK_ACCNT_NUM</description>
+    <externalDeveloperName>BK_ACCNT_NUM</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
-    <isNameField>true</isNameField>
+    <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Nome</label>
+    <label>Numero Conto</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

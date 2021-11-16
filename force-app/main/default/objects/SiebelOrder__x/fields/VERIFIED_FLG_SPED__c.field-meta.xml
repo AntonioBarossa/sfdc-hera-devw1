@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>FST_NAME__c</fullName>
-    <description>FST_NAME</description>
-    <externalDeveloperName>FST_NAME</externalDeveloperName>
+    <fullName>VERIFIED_FLG_SPED__c</fullName>
+    <description>VERIFIED_FLG_SPED</description>
+    <externalDeveloperName>VERIFIED_FLG_SPED</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
-    <isNameField>true</isNameField>
+    <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Nome</label>
-    <length>50</length>
+    <label>Indirizzo verificato [Spedizione]</label>
+    <length>1</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>FST_NAME__c</fullName>
-    <description>FST_NAME</description>
-    <externalDeveloperName>FST_NAME</externalDeveloperName>
+    <fullName>X_PAG_RAPP__c</fullName>
+    <description>X_PAG_RAPP</description>
+    <externalDeveloperName>X_PAG_RAPP</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
-    <isNameField>true</isNameField>
+    <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Nome</label>
-    <length>50</length>
+    <label>Pagatore Rappresentante</label>
+    <length>30</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>
