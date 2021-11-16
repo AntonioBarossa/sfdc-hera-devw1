@@ -37,7 +37,7 @@ const FIELDS = [
     'Order.DocSendingMethod__c',
     'Order.ShippingMail__c',
     'Order.PhoneNumber__c',
-	/* 'Order.CreatedBy.LoginChannel__c', */
+	'Order.CreatedBy.LoginChannel__c',
 	'Order.Channel__c',
     'Order.ShippingCity__c',
     'Order.ShippingCityCode__c',
