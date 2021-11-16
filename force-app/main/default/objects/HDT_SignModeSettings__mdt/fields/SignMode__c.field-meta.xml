@@ -30,6 +30,11 @@
                 <default>false</default>
                 <label>Cartacea</label>
             </value>
+            <value>
+                <fullName>Contratto già firmato</fullName>
+                <default>false</default>
+                <label>Contratto già firmato</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

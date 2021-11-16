@@ -20,6 +20,11 @@
         <default>false</default>
         <label>Vocal Order</label>
     </customValue>
+    <customValue>
+        <fullName>Contratto già firmato</fullName>
+        <default>false</default>
+        <label>Contratto già firmato</label>
+    </customValue>
     <masterLabel>Sign Mode</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

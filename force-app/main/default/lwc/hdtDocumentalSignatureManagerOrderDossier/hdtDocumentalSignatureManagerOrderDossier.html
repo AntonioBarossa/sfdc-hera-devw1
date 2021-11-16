@@ -4,19 +4,17 @@
             
             <lightning-layout>
                 <lightning-layout-item padding="horizontal-large" size="12">
-                    
-                    <lightning-record-edit-form record-id={orderParentRecord.Id} object-api-name="Order">
-                        <div class="slds-grid slds-wrap slds-m-top_small">
-                            <lightning-input-field disabled={disabledInput} data-id="ContractSigned__c" onchange={handleDataCollection} class="slds-size_1-of-2" field-name="ContractSigned__c" variant="label-stacked"></lightning-input-field>
-                            <lightning-input-field disabled={disabledInput} data-id="SignedDate__c" if:true={isVisibleSignedDate} onchange={handleDataCollection} class="slds-size_1-of-2" field-name="SignedDate__c" variant="label-stacked"></lightning-input-field>
-                        </div>
-                    </lightning-record-edit-form>
                     <template if:true={loading}>
                         <lightning-spinner variant="brand" alternative-text="Saving..." size="large"></lightning-spinner>
                     </template>
                     <template if:true={loadData}>
-                        <c-hdt-document-signature-manager disableinput={disabled} params={inputParams} onconfirmdata={handleConfirmData}></c-hdt-document-signature-manager>
+                        <c-hdt-document-signature-manager disableinput={disabled} params={inputParams} onconfirmdata={handleConfirmData} onsetrequiredfield={setDataFirmaRequired}></c-hdt-document-signature-manager>
                     </template>
+                    <lightning-record-edit-form record-id={orderParentRecord.Id} object-api-name="Order">
+                        <div class="slds-grid slds-wrap slds-m-top_small">
+                            <lightning-input-field disabled={disabledInput} data-id="SignedDate__c" if:true={isVisibleSignedDate} required={isVisibleSignedDate} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SignedDate__c" variant="label-stacked" value={actualSignedDate}></lightning-input-field>
+                        </div>
+                    </lightning-record-edit-form>
                 </lightning-layout-item>
             </lightning-layout>
             <div class="slds-clearfix slds-p-around_small">
