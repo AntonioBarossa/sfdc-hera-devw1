@@ -20,6 +20,10 @@ public inherited sharing class HDT_UTL_CaseCancellation {
                     toReturn.add(getListCanellationReason(inputs[0]));
                     return toReturn;
                 }
+                when 'createActivityForCase'{
+                    createActivityForCase(inputs[0]);
+                    return toReturn;
+                }
                 when else {
                     toReturn.add(new HDT_UTL_ResponseCancellationReason('KO','ERR-0000'));
                     return toReturn;
@@ -75,6 +79,12 @@ public inherited sharing class HDT_UTL_CaseCancellation {
             toReturn = new HDT_UTL_ResponseCancellationReason('KO','ERR-0002: ' +e.getMessage());
         }
         return toReturn;
+    }
+
+    public static void createActivityForCase(HDT_UTL_RequestCancellationReason input){
+        if (input != null && String.isNotBlank(input.recordId)){
+            HDT_UTL_Case.createActivity(input.recordId, input.description,input.templateName,input.type);
+        }
     }
 
     public class HDT_UTL_ResponseCancellationReason {
@@ -133,6 +143,15 @@ public inherited sharing class HDT_UTL_CaseCancellation {
 
         @InvocableVariable(label='Process Cancellation Reason' description='Process Cancellation Reason')
         public String processCancellationReason;
+
+        @InvocableVariable(label='Activity Type to Create' description='Activity Type to Create')
+        public String type;
+
+        @InvocableVariable(label='Activity Description to Create' description='Activity Description to Create')
+        public String description;
+
+        @InvocableVariable(label='Activity Template to Create' description='Activity Template to Create')
+        public String templateName;
     }
 
     public class HDT_UTL_Option{
