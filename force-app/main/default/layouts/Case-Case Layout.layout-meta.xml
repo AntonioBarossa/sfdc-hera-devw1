@@ -227,10 +227,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EnergyService__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>TemporaryConnectionStartDate__c</field>
             </layoutItems>
             <layoutItems>
