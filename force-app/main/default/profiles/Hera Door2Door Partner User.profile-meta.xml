@@ -20631,6 +20631,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.ListPriceName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.LoginGroup__c</field>
         <readable>true</readable>
