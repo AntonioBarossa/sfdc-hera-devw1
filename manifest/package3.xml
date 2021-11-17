@@ -1,30 +1,74 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_ServicePointRecordPage</members>
-        <name>FlexiPage</name>
+        <members>Account-CPQ Account Layout Service Console</members>
+        <members>Case-HDT_PraticaInVolo</members>
+        <members>Order-HDT_PraticaInVolo</members>
+        <members>SiebelActivity__x-SiebelActivity Layout</members>
+        <members>SiebelCustomer__x-SiebelCustomer Layout</members>
+        <members>SiebelOrderAttribute__x-SiebelOrderAttribute Layout</members>
+        <members>SiebelOrder__x-SiebelOrder Layout</members>
+        <name>Layout</name>
     </types>
     <types>
-        <members>HDT_MetersListColumnTable__mdt</members>
-        <members>HDT_QServicesTranscode__mdt</members>
-        <members>HDT_Request_Servizi_Q01Q02__mdt</members>
-        <members>HDT_ServicePointMetersList__mdt</members>
-        <name>CustomObject</name>
+        <members>HDT_TRH_ActivityCustom</members>
+        <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_VoltureChangeUtilitiesTst</members>
+        <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_ProcessingType</members>
-        <members>HDT_SignMode</members>
-        <name>GlobalValueSet</name>
+        <members>AccountStatementFilter__c.IsDigitalMarking__c</members>
+        <members>AccountStatementFilter__c.IsWrongFiscalData__c</members>
+        <members>BillingProfile__c.IsDigitalMarking__c</members>
+        <members>BillingProfile__c.IsWrongFiscalData__c</members>
+        <members>Interaction__c.IsDigitalMarking__c</members>
+        <members>Interaction__c.IsWrongFiscalData__c</members>
+        <members>SBQQ__Quote__c.ListPriceName__c</members>
+        <members>SiebelActivity__x.TARGET_OU_ID_SF__c</members>
+        <members>SiebelActivity__x.X_ORA_DL__c</members>
+        <members>SiebelContact__x.FST_NAME__c</members>
+        <members>SiebelContact__x.ROW_ID__c</members>
+        <members>SiebelContract__x.SERV_ACCT_SALESFORCE__c</members>
+        <members>SiebelOrderAttribute__x.BANK_BRANCH__c</members>
+        <members>SiebelOrderAttribute__x.BANK_NAME__c</members>
+        <members>SiebelOrderAttribute__x.BK_ACCNT_NAME__c</members>
+        <members>SiebelOrderAttribute__x.BK_ACCNT_NUM__c</members>
+        <members>SiebelOrderAttribute__x.PAYMT_METH_CD__c</members>
+        <members>SiebelOrderAttribute__x.X_ABI__c</members>
+        <members>SiebelOrderAttribute__x.X_CAB__c</members>
+        <members>SiebelOrderAttribute__x.X_CF_SOTTOSCRITTORE__c</members>
+        <members>SiebelOrderAttribute__x.X_CIN_IBAN__c</members>
+        <members>SiebelOrderAttribute__x.X_CIN__c</members>
+        <members>SiebelOrderAttribute__x.X_COGNOME_SOTTOSCRIT__c</members>
+        <members>SiebelOrderAttribute__x.X_COMUNE_BANCA__c</members>
+        <members>SiebelOrderAttribute__x.X_NOME_SOTTOSCRIT__c</members>
+        <members>SiebelOrderAttribute__x.X_PAESE__c</members>
+        <members>SiebelOrderAttribute__x.X_PAGAMENTO__c</members>
+        <members>SiebelOrderAttribute__x.X_PAG_RAPP__c</members>
+        <members>SiebelOrderAttribute__x.X_PROVINCIA_BANCA__c</members>
+        <members>SiebelOrder__x.ADDR_NUM_SPED__c</members>
+        <members>SiebelOrder__x.ADDR_SPED__c</members>
+        <members>SiebelOrder__x.ATTRIB_48__c</members>
+        <members>SiebelOrder__x.CITY_SPED__c</members>
+        <members>SiebelOrder__x.DISTRICT_SPED__c</members>
+        <members>SiebelOrder__x.PROVINCE_SPED__c</members>
+        <members>SiebelOrder__x.STATE_SPED__c</members>
+        <members>SiebelOrder__x.VERIFIED_FLG_SPED__c</members>
+        <members>SiebelOrder__x.X_ADDR_NUM_SUFF_SPED__c</members>
+        <members>SiebelOrder__x.X_ADDR_TYPE_SPED__c</members>
+        <members>SiebelOrder__x.X_ISTAT_LOC_SPED__c</members>
+        <members>SiebelOrder__x.X_ISTAT_VIA_SPED__c</members>
+        <members>SiebelOrder__x.X_STAIR_SPED__c</members>
+        <members>SiebelOrder__x.ZIPCODE_SPED__c</members>
+        <members>SiebelRds__x.CST_OU_ID_SALESFORCE__c</members>
+        <members>SiebelRds__x.SP_ASSET_ID__c</members>
+        <members>wrts_prcgvr__Activity__c.SuspensionDate__c</members>
+        <name>CustomField</name>
     </types>
     <types>
         <members>hdtChildOrderProcessDetails</members>
-        <members>hdtChildOrderProcessPrecheck</members>
         <members>hdtDocumentSignatureManager</members>
         <members>hdtDocumentalSignatureManagerOrderDossier</members>
-        <members>hdtFormAccountBusiness</members>
-        <members>hdtMetersListOnServicePoint</members>
-        <members>hdtOrderDossierWizardActions</members>
-        <members>hdtSelectionAddressResponse</members>
         <members>hdtTargetObjectAddressFields</members>
         <name>LightningComponentBundle</name>
     </types>
@@ -38,196 +82,6 @@
         <members>Hera System Integrator</members>
         <members>Hera Teleseller Partner User</members>
         <name>Profile</name>
-    </types>
-    <types>
-        <members>Hera_Service_Console</members>
-        <name>CustomApplication</name>
-    </types>
-    <types>
-        <members>HDT_FL_GestionePagamenti_BloccoSollecitoInteressi</members>
-        <members>HDT_FL_GestionePreventivi</members>
-        <members>HDT_FL_GestioneServizioQ02</members>
-        <name>Flow</name>
-    </types>
-    <types>
-        <members>wrts_prcgvr__Activity__c.HDT_VR_CreditCheck</members>
-        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_AppConfermato</members>
-        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_ModAppuntamento</members>
-        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_ObblNonAtoA</members>
-        <name>ValidationRule</name>
-    </types>
-    <types>
-        <members>Case.HDT_RT_AltriProcessiPagamenti</members>
-        <members>Order.HDT_RT_Attivazione</members>
-        <members>Order.HDT_RT_AttivazioneConModifica</members>
-        <members>Order.HDT_RT_CambioOfferta</members>
-        <members>Order.HDT_RT_CambioUso</members>
-        <members>Order.HDT_RT_ConnessioneConAttivazione</members>
-        <members>Order.HDT_RT_Default</members>
-        <members>Order.HDT_RT_FlyingRequest</members>
-        <members>Order.HDT_RT_OrderDossier</members>
-        <members>Order.HDT_RT_Proroga</members>
-        <members>Order.HDT_RT_ScontiBonus</members>
-        <members>Order.HDT_RT_Subentro</members>
-        <members>Order.HDT_RT_SwitchIn</members>
-        <members>Order.HDT_RT_TemporaneaNuovaAtt</members>
-        <members>Order.HDT_RT_VAS</members>
-        <members>Order.HDT_RT_Voltura</members>
-        <members>Order.HDT_RT_VolturaConSwitch</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Default</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Scarto</members>
-        <name>RecordType</name>
-    </types>
-    <types>
-        <members>Contact-Contact Layout</members>
-        <members>SBQQ__Subscription__c-SBQQ__Subscription Layout</members>
-        <members>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali2</members>
-        <members>wrts_prcgvr__Activity__c-HDT_CCheckNew</members>
-        <members>wrts_prcgvr__Activity__c-HDT_CCheckOld</members>
-        <members>wrts_prcgvr__Activity__c-HDT_ComfortQuality</members>
-        <members>wrts_prcgvr__Activity__c-HDT_ComunicazioniDistributore</members>
-        <members>wrts_prcgvr__Activity__c-HDT_GestioneAppuntamento</members>
-        <members>wrts_prcgvr__Activity__c-HDT_Protocollo</members>
-        <members>wrts_prcgvr__Activity__c-HDT_Scarti</members>
-        <name>Layout</name>
-    </types>
-    <types>
-        <members>HDT_BA_ActivityVoRefuse</members>
-        <members>HDT_BA_AppoitmentManagmentActivityTst</members>
-        <members>HDT_BA_ComfortCall</members>
-        <members>HDT_BA_CustomerLifeCycle</members>
-        <members>HDT_BA_Dependencies</members>
-        <members>HDT_BA_PostSalesMasterBatch</members>
-        <members>HDT_BA_PostSalesMasterBatchTst</members>
-        <members>HDT_BA_QualityCall</members>
-        <members>HDT_BA_QualityCallTst</members>
-        <members>HDT_BA_SuspendedActivitiesEmailAlert</members>
-        <members>HDT_BA_SuspendedActivitiesEmailAlertTst</members>
-        <members>HDT_BA_VasSupplierTable</members>
-        <members>HDT_LC_ActivityChildCreationController</members>
-        <members>HDT_LC_ActivityReassignmentTool</members>
-        <members>HDT_LC_CampaignsController</members>
-        <members>HDT_LC_ChildOrderProcessActions</members>
-        <members>HDT_LC_ChildOrderProcessDetails</members>
-        <members>HDT_LC_ChildOrderProcessPrecheck</members>
-        <members>HDT_LC_ChildOrderProcessPrecheckTst</members>
-        <members>HDT_LC_ConfigurePaymentMethodsTst</members>
-        <members>HDT_LC_ConfigureProduct</members>
-        <members>HDT_LC_MetersList</members>
-        <members>HDT_LC_MetersListTst</members>
-        <members>HDT_LC_OrderDossierWizardActions</members>
-        <members>HDT_LC_OrderDossierWizardActionsTst</members>
-        <members>HDT_LC_OrdersForComfortQualityList</members>
-        <members>HDT_LC_OrdersForComfortQualityListTst</members>
-        <members>HDT_QR_ActivityCustom</members>
-        <members>HDT_QR_ActivityCustomTst</members>
-        <members>HDT_QR_ActivityTst</members>
-        <members>HDT_QR_CampaignMemberAssigmentItem</members>
-        <members>HDT_QR_CampaignMemberTst</members>
-        <members>HDT_QR_Case</members>
-        <members>HDT_QR_MetersList</members>
-        <members>HDT_QR_Order</members>
-        <members>HDT_QR_PostSalesMasterBatch</members>
-        <members>HDT_SRV_AnagAlignment</members>
-        <members>HDT_SRV_MetersList</members>
-        <members>HDT_SRV_QservFlowResponseHandler</members>
-        <members>HDT_SRV_QservFlowResponseHandlerTst</members>
-        <members>HDT_SRV_QservHandler</members>
-        <members>HDT_SRV_QservHandlerMock</members>
-        <members>HDT_SRV_SaleServiceItemTst</members>
-        <members>HDT_SRV_ScriptManagerTst</members>
-        <members>HDT_SRV_VoltureChangeManager</members>
-        <members>HDT_UTL_ActivityCustom</members>
-        <members>HDT_UTL_ActivityCustomProcess</members>
-        <members>HDT_UTL_ActivityCustomProcessTst</members>
-        <members>HDT_UTL_ActivityProcess</members>
-        <members>HDT_UTL_CampaignMember</members>
-        <members>HDT_UTL_CaseProcess</members>
-        <members>HDT_UTL_CreateGenericRequestBody</members>
-        <members>HDT_UTL_GestAppAutomaticCreation</members>
-        <members>HDT_UTL_GestAppAutomaticCreationCase</members>
-        <members>HDT_UTL_OrderProcess</members>
-        <members>HDT_UTL_OrderProcessAssignmentTst</members>
-        <members>HDT_UTL_OrderProcessTst</members>
-        <members>HDT_UTL_Scarti</members>
-        <members>HDT_UTL_ScartiTst</members>
-        <members>HDT_UTL_VoltureChangeManager</members>
-        <members>HDT_UTL_VoltureChangeUtilities</members>
-        <members>HDT_VFC_ActivityReassignmentMassive_Tst</members>
-        <members>HDT_VFC_ForzaturaChiusuraCreditCheck</members>
-        <members>HDT_VFC_ForzaturaChiusuraCreditCheckTst</members>
-        <members>HDT_WRP_MetersList</members>
-        <members>HDT_WRP_VoltureChangeManager</members>
-        <members>HDT_WS_HTTPServiceCall</members>
-        <name>ApexClass</name>
-    </types>
-    <types>
-        <members>HDT_MetersListColumnTable__mdt.MetersList__c</members>
-        <members>HDT_MetersListColumnTable__mdt.Order__c</members>
-        <members>HDT_QServicesTranscode__mdt.HerokuField__c</members>
-        <members>HDT_QServicesTranscode__mdt.ObjectName__c</members>
-        <members>HDT_QServicesTranscode__mdt.SfdcField__c</members>
-        <members>HDT_Request_Servizi_Q01Q02__mdt.Field_Type__c</members>
-        <members>HDT_Request_Servizi_Q01Q02__mdt.Name__c</members>
-        <members>HDT_Request_Servizi_Q01Q02__mdt.Object_Name__c</members>
-        <members>HDT_Request_Servizi_Q01Q02__mdt.Standard_Value__c</members>
-        <members>HDT_Request_Servizi_Q01Q02__mdt.Value__c</members>
-        <members>HDT_ServicePointMetersList__mdt.EndPoint__c</members>
-        <members>HDT_SignModeSettings__mdt.SignMode__c</members>
-        <members>Order.Phase__c</members>
-        <members>Order.SignatureMethod__c</members>
-        <members>OrderItem.ProductCode__c</members>
-        <members>ServicePoint__c.IsDigitalMarking__c</members>
-        <members>ServicePoint__c.IsWrongFiscalData__c</members>
-        <members>wrts_prcgvr__Activity__c.RequestedCancellationDate__c</members>
-        <members>wrts_prcgvr__Activity__c.Type__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>SBQQ__Subscription__c-it</members>
-        <name>CustomObjectTranslation</name>
-    </types>
-    <types>
-        <members>HDT_AdminServiceDispatcher.Nuovo_Impianto_Gas</members>
-        <members>HDT_AdminServiceDispatcher.Rimozione_Impianto</members>
-        <members>HDT_MetersListColumnTable.assetNumber</members>
-        <members>HDT_MetersListColumnTable.materialDescription</members>
-        <members>HDT_QServicesTranscode.Aliquote_Iva_Case</members>
-        <members>HDT_QServicesTranscode.Anno_Fab_Case</members>
-        <members>HDT_QServicesTranscode.Annotazioni_Case</members>
-        <members>HDT_QServicesTranscode.Annotazioni_Order</members>
-        <members>HDT_QServicesTranscode.Categoria_Uso_Case</members>
-        <members>HDT_QServicesTranscode.Classe_Misuratore_Order</members>
-        <members>HDT_QServicesTranscode.Classe_Prelievo_Case</members>
-        <members>HDT_QServicesTranscode.Codice_Causale_Order</members>
-        <members>HDT_QServicesTranscode.Codice_Causale_Scarto_Order</members>
-        <members>HDT_QServicesTranscode.Codice_Remi_Order</members>
-        <members>HDT_QServicesTranscode.Codice_Scarto_Case</members>
-        <members>HDT_QServicesTranscode.Imp_Case</members>
-        <members>HDT_QServicesTranscode.Matr_Conv_Case</members>
-        <members>HDT_QServicesTranscode.Matr_Mis_Order</members>
-        <members>HDT_QServicesTranscode.Pod_Case</members>
-        <members>HDT_QServicesTranscode.Pod_Order</members>
-        <members>HDT_QServicesTranscode.Press_Mis_Case</members>
-        <members>HDT_QServicesTranscode.Service_Id_Dis_Case</members>
-        <members>HDT_QServicesTranscode.Service_Id_Dis_Order</members>
-        <members>HDT_Request_Servizi_Q01Q02.Cod_Fiscale_Case</members>
-        <members>HDT_Request_Servizi_Q01Q02.Cod_Presc</members>
-        <members>HDT_Request_Servizi_Q01Q02.Cod_Presc_Case</members>
-        <members>HDT_Request_Servizi_Q01Q02.Codice_Comune_UBI</members>
-        <members>HDT_Request_Servizi_Q01Q02.Localita_UBI</members>
-        <members>HDT_Request_Servizi_Q01Q02.Piva_Case</members>
-        <members>HDT_Request_Servizi_Q01Q02.Pod</members>
-        <members>HDT_Request_Servizi_Q01Q02.Process_Category</members>
-        <members>HDT_Request_Servizi_Q01Q02.Process_Category_Case</members>
-        <members>HDT_Request_Servizi_Q01Q02.Record_Id</members>
-        <members>HDT_Request_Servizi_Q01Q02.Record_Id_Case</members>
-        <members>HDT_Request_Servizi_Q01Q02.Rif_Rich_Case</members>
-        <members>HDT_Request_Servizi_Q01Q02.Sernr</members>
-        <members>HDT_Request_Servizi_Q01Q02.kmPOD_Case</members>
-        <members>HDT_ServicePointMetersList.MetersList</members>
-        <name>CustomMetadata</name>
     </types>
     <version>49</version>
 </Package>
