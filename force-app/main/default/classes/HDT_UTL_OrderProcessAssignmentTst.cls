@@ -29,7 +29,7 @@ private class HDT_UTL_OrderProcessAssignmentTst {
 
     List<wrts_prcgvr__Activity__c> activities= HDT_UTL_DataFactoryTst.createActivityCustom(1, false, accountList.get(0).Id);
     activities.get(0).Type__c = 'Gestione Switch in Ripristinatorio';
-    activities.get(0).Status__c = 'Creata';
+    activities.get(0).wrts_prcgvr__Status__c = 'Creata';
     activities.get(0).ServicePointCode__c = servicePointList.get(0).ServicePointCode__c;
 
     insert activities;

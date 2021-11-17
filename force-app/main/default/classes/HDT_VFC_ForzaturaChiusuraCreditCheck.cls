@@ -19,7 +19,7 @@ public inherited sharing class HDT_VFC_ForzaturaChiusuraCreditCheck implements D
         
         List<Id> idOrder = new List<Id>();
         for(wrts_prcgvr__Activity__c act : scope){
-            act.Status__c = 'KO Definitivo';
+            act.wrts_prcgvr__Status__c = 'KO Definitivo';
             idOrder.add(act.Order__c);
         }
         update scope;

@@ -42,7 +42,7 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreationCase implements w
             w.Contact__c = ca.ContactId;
             w.isAtoa__c = isAtoa;
             w.recordtypeid = rec;
-            w.status__c = 'Creata';
+            w.wrts_prcgvr__Status__c = 'Creata';
             w.ServicePoint__c = ca.ServicePoint__c;
 
             actSrv.createRecord(w);

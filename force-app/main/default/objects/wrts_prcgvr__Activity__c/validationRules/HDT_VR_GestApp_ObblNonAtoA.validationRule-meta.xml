@@ -4,7 +4,7 @@
     <active>true</active>
     <errorConditionFormula>AND(RecordType.DeveloperName = &quot;HDT_RT_DistributorAppointment&quot;,
     isAtoA__c = false,
-    NOT(ispickval(Status__c,&quot;Presa appuntamento in corso&quot;)),
+    NOT(ispickval(wrts_prcgvr__Status__c,&quot;Presa appuntamento in corso&quot;)),
     OR(ISCHANGED(AppointmentDate__c),
     ischanged(AppoitmentTimeSlotConfirmed__c)
 ))</errorConditionFormula>

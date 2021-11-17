@@ -69,7 +69,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
             Id = activityId,
-            Status__c = 'Esitata',
+            wrts_prcgvr__Status__c = 'Esitata',
             ContactResult__c	 = causalQuality
         ));
     }
@@ -109,7 +109,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             if ('Firma Falsa'.equalsIgnoreCase(causal) || 'Volontà estorta'.equalsIgnoreCase(causal)) {
                 activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
                     Id = activityId,
-                    Status__c = 'Esitata',
+                    wrts_prcgvr__Status__c = 'Esitata',
                     ContactResult__c	 = 'Annullato'
                 ));
 
@@ -133,7 +133,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
             activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
                 Id = activityId,
-                Status__c = 'Esitata',
+                wrts_prcgvr__Status__c = 'Esitata',
                 ContactResult__c	 = 'Annullato'
             ));
         }
