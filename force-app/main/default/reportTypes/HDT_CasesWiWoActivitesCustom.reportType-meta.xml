@@ -3,12 +3,12 @@
     <baseObject>Case</baseObject>
     <category>other</category>
     <deployed>true</deployed>
-    <description>Report type di Case con Activity</description>
+    <description>Case con o senza Activity Custom</description>
     <join>
-        <outerJoin>false</outerJoin>
+        <outerJoin>true</outerJoin>
         <relationship>Activities__r</relationship>
     </join>
-    <label>HDT_CasesWiActivities</label>
+    <label>HDT_CasesWiWoActivitesCustom</label>
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
@@ -62,6 +62,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Charge__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>UseChangeCharge__c</field>
             <table>Case</table>
         </columns>
@@ -73,6 +78,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>AgencyBranchPostOffice__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Concession__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -97,7 +107,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>SiebelData__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>YearManufactureMeter__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CancellationHerokuPracticeCode__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RevokedCancellation__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -127,12 +152,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>SiebelAttributeData__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>CriticalAttribute__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>SelfCertificationAcquisitionAsl__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SelfCertificationInstance__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -153,6 +188,16 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>TargetBillingProfile__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SaleBlock__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CalculationBlock__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -197,12 +242,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ChannelOfPayment__c</field>
+            <field>SupplyPostalCode__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>SupplyPostalCode__c</field>
+            <field>BillingPostalCode__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>InvoicingPostalCode__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -242,6 +292,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Category__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>ClientCategory__c</field>
             <table>Case</table>
         </columns>
@@ -253,6 +308,16 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>DisconnectibilityType__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SignalCategory__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ReasonAutoeletric__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -287,12 +352,27 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>GlobalMigrationKey__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>IbanCIN__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>SupplyStreetNumber__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>BillingStreetNumber__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>InvoicingStreetNumber__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -307,12 +387,42 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>AccountClass__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>WithdrawalClass__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SiebelMainInfo__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>CutomerAssisted__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>PraxidiaDissatisfiedCustomer__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>OneshotCustomer__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CustomerPay__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsSameReasonComplaint__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -326,7 +436,7 @@
             <table>Case</table>
         </columns>
         <columns>
-            <checkedByDefault>false</checkedByDefault>
+            <checkedByDefault>true</checkedByDefault>
             <field>Cluster__c</field>
             <table>Case</table>
         </columns>
@@ -342,12 +452,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CategoryCode__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>CausalCode__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CancellationReasonCode__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>AccountClassCode__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -362,12 +482,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>FiscalCode__c</field>
+            <field>DistributorCode__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>AccountFiscalCodeFormula__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>FiscalCode__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -383,6 +508,21 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>PayingTaxCode__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>BillingCityCode__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>InvoicingCityCode__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SupplyPlaceCode__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -417,6 +557,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>ServicePointCode__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>SalesCompanyCode__c</field>
             <table>Case</table>
         </columns>
@@ -427,7 +572,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>OfficeSubjectCode__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>SupplyStreetCode__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>BillingStreetCode__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>InvoicingStreetCode__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -447,6 +607,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CompanyOwner__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>FixedAmount__c</field>
             <table>Case</table>
         </columns>
@@ -458,6 +623,16 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>SupplyCity__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>BillingCity__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>InvoicingCity__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -517,6 +692,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>QuotationAcceptanceDate__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>ContractStartDate__c</field>
             <table>Case</table>
         </columns>
@@ -542,12 +722,27 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>SendCertifiedEmailConsentDate__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>DeceasedDate__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>EffectiveDate__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ChangeDate__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CompletedDocumentationDate__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -567,6 +762,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>EndDate__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>TemporaryConnectionEndDate__c</field>
             <table>Case</table>
         </columns>
@@ -582,7 +782,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>EndValidityDate__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>ClientIdentificationDate__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>StartDate__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -642,7 +852,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CustomerRequestDate__c</field>
+            <field>CancellationRequestDate__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -712,12 +922,42 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>ExistingInstallmentPlanUnpaid__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Description</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CancellationReasonDescription__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SignalSubCategoryDesc__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>VasStatusDescription__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DetailOne__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DetailTwo__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>BillDetail__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -747,6 +987,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>ElementDetail__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Email__c</field>
             <table>Case</table>
         </columns>
@@ -757,7 +1002,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>InvoiceCertifiedEmailAddress__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Error__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>IsEscalated</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Exemption__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -768,6 +1028,21 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>LitigationOutcome__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SignalOutcome__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>BillingStreetNumberExtension__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>InvoicingStreetNumberExtension__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -797,17 +1072,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>DocumentalPhase__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>PhaseTypeRequested__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>EconomicFeasibility__c</field>
+            <field>TecnicalPhase__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>TechnicalFeasibility__c</field>
+            <field>InvoicesInvolvedByStatement__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -823,6 +1103,21 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>IsVATGroupJoined__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ReminderFlag__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NotJust__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SurveySource__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -852,12 +1147,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CreatorGroup__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Iban__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>IbanIsForeign__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IntegrationId__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -872,17 +1177,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>DocumentAmount__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>DepositAmount__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>AmountToPayInInstallments__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DocumentAmount__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -927,6 +1232,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>ShipmentAddressAssign__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>DeliveryAddress__c</field>
             <table>Case</table>
         </columns>
@@ -937,17 +1247,42 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>AlternativeEmail__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>DelegateAddressEmail__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ShipmentAddressAssign__c</field>
+            <field>SupplyIsAddressVerified__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>SupplyIsAddressVerified__c</field>
+            <field>BillingIsAddressVerified__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsInvoicingVerified__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>InformativeCluster__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>InformativeType__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Interaction__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -977,7 +1312,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>PowerLimitation__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>SupplyPlace__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>BillingPlace__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>InvoicingPlace__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -997,12 +1347,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Market__c</field>
+            <field>IsMigrated__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>ComunicationMode__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SignMode__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1028,6 +1383,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>SendPaperlessCodeMode__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ElectronicInvoicingMethod__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1068,6 +1428,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NotJustMotivation__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SignalReason__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1117,6 +1482,21 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>ExternalTrader__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>BillingStreetName__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>InvoicingStreetName__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>NominativeHavingRightCeaseConcession__c</field>
             <table>Case</table>
         </columns>
@@ -1132,11 +1512,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NotJust__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Note__c</field>
             <table>Case</table>
         </columns>
@@ -1147,12 +1522,27 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>DistributorNote__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CancellationNote__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>PraxidiaNPS__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>IbanCIN_IBAN__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NumberOfPeople__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1217,7 +1607,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>NewMeterCode__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>NewAttempt__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>TensionOption__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1237,17 +1637,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>VATPayment__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Parent</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>FirstLevelOpinion__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>SecondLevelOpinion__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1258,6 +1653,21 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>VATGroup__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CertifiedEmail__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ElectronicInvoiceCertifiedEmailAddress__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ReminderCertifiedEmailAddress__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1292,11 +1702,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ExistingInstallmentPlanUnpaid__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>PODPDRFormula__c</field>
             <table>Case</table>
         </columns>
@@ -1307,7 +1712,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Station__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Power__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PowerContractualFormula__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1323,6 +1738,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>PowerRequested__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>FlyingRequest__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1347,6 +1767,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CareOf__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Priority__c</field>
             <table>Case</table>
         </columns>
@@ -1362,7 +1787,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>BillingProblem__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>ApprovalProcess__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CommercialProduct__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>HouseOwner__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1372,7 +1812,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>BillingProvince__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>InvoicingProvince__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>TriggerPoint__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RateCategory__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1403,6 +1858,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>DocumentResidue__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>MultiContractBill__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1442,6 +1902,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>PraxidiaResolution__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>OpinionRequestResponse__c</field>
             <table>Case</table>
         </columns>
@@ -1462,17 +1927,28 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Commodity__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Servizio_f</displayNameOverride>
             <field>CommodityFormula__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Commodity__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>EnergyService__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ServiceEnergy__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>MarketTypeCode__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1497,6 +1973,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>SignalSubCategory__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Subprocess__c</field>
             <table>Case</table>
         </columns>
@@ -1507,7 +1988,32 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>SplitPayment__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>SupplyCountry__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>BillingCountry__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>InvoicingCountry__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ProcessingStatus__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>VasStatus__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1528,6 +2034,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Subject</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Surface__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1572,6 +2083,16 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>DisasterType__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>HouseType__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>ConnectionType__c</field>
             <table>Case</table>
         </columns>
@@ -1602,6 +2123,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>ErrorType__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>SupplyType__c</field>
             <table>Case</table>
         </columns>
@@ -1622,6 +2148,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>KnowledgeClientCategory__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>AccountholderTypeBeneficiary__c</field>
             <table>Case</table>
         </columns>
@@ -1632,7 +2163,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>ProductTypeVAS__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>ComplaintType__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>UseCategory__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ImplantTypeFormula__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1657,7 +2203,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>DocumentalProcessType__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>TechnicalDataRequestType__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SignalType__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1668,6 +2224,21 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>UseTypeEnergy__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>XMLType__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>BillingStreetToponym__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>InvoicingStreetToponym__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1702,6 +2273,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>TotalRefund__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
             <field>Type</field>
             <table>Case</table>
         </columns>
@@ -1712,12 +2288,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>DocusignURL__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>SoldBy__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>PraxidiaVerbatim__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CommercialProductVersion__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1745,9 +2331,24 @@
             <field>SuppliedPhone</field>
             <table>Case</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>HoursOfUse__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>TemporaryConnectionStartDate__c</field>
+            <table>Case</table>
+        </columns>
         <masterLabel>Cases</masterLabel>
     </sections>
     <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>isSelfAppointment__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Account__c</field>
@@ -1756,6 +2357,31 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Id</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>wrts_prcgvr__ActivityTemplate__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>isAtoA__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RequiredOfficeActivity__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PraxidiaPostWorkAction__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>OperatorChange__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -1770,22 +2396,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>wrts_prcgvr__ActivityTemplate__c</field>
-            <table>Case.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Approved__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>isSelfAppointment__c</field>
+            <field>OwnedByUser__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>isAtoA__c</field>
+            <field>IsApprovalRequired__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Solicited__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -1795,7 +2421,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>OperatorChange__c</field>
+            <field>CampaignExecChannel__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Case__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -1805,12 +2436,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Mobile__c</field>
+            <field>PraxidiaPostWorkCause__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>BPCode__c</field>
+            <field>GlobalMigrationKey__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>AtecoCode__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -1820,17 +2456,57 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>HerokuPracticeCode__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>TaxesModule__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreditCheckReason__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreditCheckResolutionReason__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Mobile__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Cluster__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>BPCode__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>FiscalCode__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>AppointmentCompetence__c</field>
+            <field>ServicePointCode__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ConnectionID__c</field>
+            <field>CompanyOwner__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>AppointmentCompetence__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -1845,6 +2521,41 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CreatedByUsername__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>AppointmentDateToConfirm__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>EndDate__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>EffectiveDate__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>QAdTicketBookingTime__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ConnectionID__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CheckActivityBox__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>CreatedDate</field>
             <table>Case.Activities__r</table>
         </columns>
@@ -1855,7 +2566,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>AppointmentDateToConfirm__c</field>
+            <field>StartDate__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IBMUnicaCampaignCreationDate__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -1865,12 +2581,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>QAdTicketBookingTime__c</field>
-            <table>Case.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DistributorFirstDate__c</field>
+            <field>DateTimeRef__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -1880,7 +2591,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Distributor__c</field>
+            <field>CciaaData__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ReminderLastDate__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DistributorFirstDate__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Documentation__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -1890,7 +2616,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ActivityDuration__c</field>
+            <field>ActivityDurationFormula__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -1900,7 +2626,77 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Distributor__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SupplyData__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PersonalData__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DueDate__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IdentityDocument__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ActivityDuration__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>vActivityDurationFormula__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Email__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ActivityEndTime__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Signature__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>QAdCallID__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>QAdWorkstationID__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ActivityStartTime__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>AppointmentTimeSlotToConfirm__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PraxidiaPostWorkOutcome__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -1920,17 +2716,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>AppointmentTimeSlotToConfirm__c</field>
-            <table>Case.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>isManualAppoitment__c</field>
-            <table>Case.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>ActivityEndTime__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -1940,12 +2726,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>QAdCallID__c</field>
+            <field>IdSiebelActivity__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>QAdWorkstationID__c</field>
+            <field>EnvelopeId__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -1955,17 +2741,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ActivityStartTime__c</field>
-            <table>Case.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>CallStartTime__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>wrts_prcgvr__IsClosed__c</field>
+            <field>Interaction__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -1975,22 +2756,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>LastModifiedDate</field>
-            <table>Case.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Lead__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>URL__c</field>
-            <table>Case.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>QAdLogin__c</field>
+            <field>RecordingLink__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -2005,6 +2776,46 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CciaaSelfCertModule__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CraftsmenRegisterNumber__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>wrts_prcgvr__IsClosed__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedDate</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>URL__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>QAdLogin__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsServicePointCode__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsMigrated__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Reason__c</field>
             <table>Case.Activities__r</table>
         </columns>
@@ -2015,12 +2826,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>QAdTicketNumber__c</field>
+            <field>CallCenterNumber__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>wrts_prcgvr__ObjectId__c</field>
+            <field>ReminderCount__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ClientNumber__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CallingNumber__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -2030,17 +2851,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Owner</field>
-            <table>Case.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>VATNumber__c</field>
-            <table>Case.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>wrts_prcgvr__Phase__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -2055,7 +2866,42 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Product2__c</field>
+            <field>Place__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>wrts_prcgvr__Phase__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Owner</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>wrts_prcgvr__ObjectId__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>QAdTicketNumber__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ContractNumber__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CalledNumber__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Process__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -2070,17 +2916,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>wrts_prcgvr__IsRequired__c</field>
-            <table>Case.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Service__c</field>
-            <table>Case.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DistributorsSlot__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -2095,7 +2931,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>wrts_prcgvr__StatusIcon__c</field>
+            <field>AssociationStatute__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
@@ -2110,9 +2946,80 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>BillTransfer__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>wrts_prcgvr__StatusIcon__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DistributorsSlot__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>wrts_prcgvr__IsRequired__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RowIdSiebel__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Product2__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>ContactReason__c</field>
             <table>Case.Activities__r</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>OldCustomerAccount__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ManuallyReassigned__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Asset__c</field>
+            <table>Case.Activities__r</table>
+        </columns>
         <masterLabel>Activities</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account.Name</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account.CustomerCode__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account.Category__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account.Segment__c</field>
+            <table>Case</table>
+        </columns>
+        <masterLabel>Account</masterLabel>
+    </sections>
+    <sections>
+        <masterLabel>Attività(Custom)</masterLabel>
     </sections>
 </ReportType>
