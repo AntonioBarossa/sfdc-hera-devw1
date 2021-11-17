@@ -4,7 +4,7 @@
 */
 
 @isTest
-public class HDT_LC_ContactSelectionTst {    
+public class HDT_LC_ContactSelectionTst {
     @TestSetup
     static void setup(){
 
