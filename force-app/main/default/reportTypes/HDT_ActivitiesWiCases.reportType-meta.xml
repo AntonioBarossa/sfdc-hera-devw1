@@ -790,11 +790,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>TraceabilityCode__c</field>
-            <table>wrts_prcgvr__Activity__c.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>SupplyStreetCode__c</field>
             <table>wrts_prcgvr__Activity__c.Cases__r</table>
         </columns>

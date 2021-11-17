@@ -567,11 +567,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>TraceabilityCode__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>OfficeSubjectCode__c</field>
             <table>Case</table>
         </columns>
@@ -2234,11 +2229,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>BillingStreetToponym__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>InvoicingStreetToponym__c</field>
             <table>Case</table>
         </columns>
         <columns>

@@ -422,11 +422,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>TraceabilityCode__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>SupplyStreetCode__c</field>
             <table>Case</table>
         </columns>

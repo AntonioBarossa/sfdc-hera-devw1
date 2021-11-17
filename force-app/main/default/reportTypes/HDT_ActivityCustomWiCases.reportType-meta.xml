@@ -1830,11 +1830,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>InvoicingStreetToponym__c</field>
-            <table>wrts_prcgvr__Activity__c.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IsAlertActive__c</field>
             <table>wrts_prcgvr__Activity__c.Cases__r</table>
         </columns>
@@ -2561,11 +2556,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>TotalPaperless__c</field>
-            <table>wrts_prcgvr__Activity__c.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>TraceabilityCode__c</field>
             <table>wrts_prcgvr__Activity__c.Cases__r</table>
         </columns>
         <columns>
