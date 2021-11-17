@@ -85,7 +85,7 @@ public class HDT_BA_AttributesLeadTst {
             for(Case c : cases){
                 c.Lead__c = leads[i].id;
                 c.ContactId = contacts[i].id;
-                c.EnergyService__c = 'Si';
+                c.ServiceEnergy__c = 'Si';
                 c.Market__c = 'Libero';
                 c.Outcome__c = 'test';
                 c.Reason = 'Existing problem';

@@ -1,75 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Account-CPQ Account Layout Service Console</members>
-        <members>Case-HDT_PraticaInVolo</members>
-        <members>Order-HDT_PraticaInVolo</members>
-        <members>SiebelActivity__x-SiebelActivity Layout</members>
-        <members>SiebelCustomer__x-SiebelCustomer Layout</members>
-        <members>SiebelOrderAttribute__x-SiebelOrderAttribute Layout</members>
-        <members>SiebelOrder__x-SiebelOrder Layout</members>
+        <members>Case-Case Layout</members>
+        <members>CaseClose-Close Case Layout</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_TRH_ActivityCustom</members>
-        <members>HDT_UTL_OrderProcess</members>
-        <members>HDT_UTL_VoltureChangeUtilitiesTst</members>
+        <members>HDT_BA_AttributesContact</members>
+        <members>HDT_BA_AttributesLead</members>
+        <members>HDT_BA_AttributesLeadTst</members>
+        <members>HDT_BA_AttributesTest</members>
+        <members>HDT_LC_ContactSelectionTst</members>
+        <members>HDT_LC_ModificaContrattiBpTst</members>
+        <members>HDT_UTL_CaseCancellation</members>
+        <members>HDT_UTL_CaseCancellationTst</members>
+        <members>HDT_UTL_ServiceCatalogFieldFilter</members>
+        <members>HDT_UTL_ServiceCatalogFieldFilterTst</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>AccountStatementFilter__c.IsDigitalMarking__c</members>
-        <members>AccountStatementFilter__c.IsWrongFiscalData__c</members>
-        <members>BillingProfile__c.IsDigitalMarking__c</members>
-        <members>BillingProfile__c.IsWrongFiscalData__c</members>
-        <members>Interaction__c.IsDigitalMarking__c</members>
-        <members>Interaction__c.IsWrongFiscalData__c</members>
-        <members>SBQQ__Quote__c.ListPriceName__c</members>
-        <members>SiebelActivity__x.TARGET_OU_ID_SF__c</members>
-        <members>SiebelActivity__x.X_ORA_DL__c</members>
-        <members>SiebelContact__x.FST_NAME__c</members>
-        <members>SiebelContact__x.ROW_ID__c</members>
-        <members>SiebelContract__x.SERV_ACCT_SALESFORCE__c</members>
-        <members>SiebelOrderAttribute__x.BANK_BRANCH__c</members>
-        <members>SiebelOrderAttribute__x.BANK_NAME__c</members>
-        <members>SiebelOrderAttribute__x.BK_ACCNT_NAME__c</members>
-        <members>SiebelOrderAttribute__x.BK_ACCNT_NUM__c</members>
-        <members>SiebelOrderAttribute__x.PAYMT_METH_CD__c</members>
-        <members>SiebelOrderAttribute__x.X_ABI__c</members>
-        <members>SiebelOrderAttribute__x.X_CAB__c</members>
-        <members>SiebelOrderAttribute__x.X_CF_SOTTOSCRITTORE__c</members>
-        <members>SiebelOrderAttribute__x.X_CIN_IBAN__c</members>
-        <members>SiebelOrderAttribute__x.X_CIN__c</members>
-        <members>SiebelOrderAttribute__x.X_COGNOME_SOTTOSCRIT__c</members>
-        <members>SiebelOrderAttribute__x.X_COMUNE_BANCA__c</members>
-        <members>SiebelOrderAttribute__x.X_NOME_SOTTOSCRIT__c</members>
-        <members>SiebelOrderAttribute__x.X_PAESE__c</members>
-        <members>SiebelOrderAttribute__x.X_PAGAMENTO__c</members>
-        <members>SiebelOrderAttribute__x.X_PAG_RAPP__c</members>
-        <members>SiebelOrderAttribute__x.X_PROVINCIA_BANCA__c</members>
-        <members>SiebelOrder__x.ADDR_NUM_SPED__c</members>
-        <members>SiebelOrder__x.ADDR_SPED__c</members>
-        <members>SiebelOrder__x.ATTRIB_48__c</members>
-        <members>SiebelOrder__x.CITY_SPED__c</members>
-        <members>SiebelOrder__x.DISTRICT_SPED__c</members>
-        <members>SiebelOrder__x.PROVINCE_SPED__c</members>
-        <members>SiebelOrder__x.STATE_SPED__c</members>
-        <members>SiebelOrder__x.VERIFIED_FLG_SPED__c</members>
-        <members>SiebelOrder__x.X_ADDR_NUM_SUFF_SPED__c</members>
-        <members>SiebelOrder__x.X_ADDR_TYPE_SPED__c</members>
-        <members>SiebelOrder__x.X_ISTAT_LOC_SPED__c</members>
-        <members>SiebelOrder__x.X_ISTAT_VIA_SPED__c</members>
-        <members>SiebelOrder__x.X_STAIR_SPED__c</members>
-        <members>SiebelOrder__x.ZIPCODE_SPED__c</members>
-        <members>SiebelRds__x.CST_OU_ID_SALESFORCE__c</members>
-        <members>SiebelRds__x.SP_ASSET_ID__c</members>
-        <members>wrts_prcgvr__Activity__c.SuspensionDate__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
         <members>hdtChildOrderProcessDetails</members>
-        <members>hdtDocumentSignatureManager</members>
-        <members>hdtDocumentalSignatureManagerOrderDossier</members>
-        <members>hdtTargetObjectAddressFields</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
@@ -82,6 +32,10 @@
         <members>Hera System Integrator</members>
         <members>Hera Teleseller Partner User</members>
         <name>Profile</name>
+    </types>
+    <types>
+        <members>HDT_FL_GestioneAnnullamento</members>
+        <name>Flow</name>
     </types>
     <version>49</version>
 </Package>

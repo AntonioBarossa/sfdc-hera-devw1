@@ -922,7 +922,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'datiPrecedenteIntestatario',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Gas')) 
+                processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Gas') === 0) 
                                     || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data: [
                     //constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value)
