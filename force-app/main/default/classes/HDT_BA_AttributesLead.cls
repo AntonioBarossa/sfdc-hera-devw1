@@ -85,7 +85,7 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 			
 			
 			List<Lead> listLeadNotInChunk = [SELECT id,ContactReason__c,CreatedDate,InterestArea__c,Rating,Status,Email,
-			(SELECT id,ContactId,Contact.Email,Lead__c,Lead__r.email,ClientCategory__c,EarlyRecess__c,EnergyService__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,
+			(SELECT id,ContactId,Contact.Email,Lead__c,Lead__r.email,ClientCategory__c,EarlyRecess__c,ServiceEnergy__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,
 			ServicePoint__c,Status,SupplyType__c,Type FROM Cases__r)
 			FROM lead
 			WHERE (IsConverted=false)AND Status !='Expired' AND (Email IN:mapLeadByEmail.keySet() AND Email NOT IN:setEmailContactProcessed  AND Id NOT IN :mapLeadByEmail.values())  ORDER BY Email,CreatedDate];
