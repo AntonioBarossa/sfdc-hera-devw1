@@ -8,7 +8,7 @@
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
     <label>Id  Punto di Fornitura</label>
-    <length>15</length>
+    <length>100</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>
