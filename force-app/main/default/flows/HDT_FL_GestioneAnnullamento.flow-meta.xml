@@ -136,6 +136,7 @@
             <typeName>T__caseRecord</typeName>
             <typeValue>Case</typeValue>
         </dataTypeMappings>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>description</name>
             <value>

@@ -177,7 +177,9 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                                     return true;
                             });
                             console.log('out ' + JSON.stringify(temp));
-                            this.modalitaInvio = temp.sendMode;
+                            if (temp){
+                                this.modalitaInvio = temp.sendMode;
+                            }
                             this.sendMode = inputWrapper.sendMode;
                         } else if (this.defautlAgenciesManagement){
                             this.computeAgenciesDefault(setDefault);

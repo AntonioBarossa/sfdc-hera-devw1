@@ -428,6 +428,11 @@
                 <label>Annullamento - Esito OK da DL</label>
             </value>
             <value>
+                <fullName>Annullamento - Extra Sistema</fullName>
+                <default>false</default>
+                <label>Annullamento - Exrtra Sistema</label>
+            </value>
+            <value>
                 <fullName>Annullamento - Inviato al DL</fullName>
                 <default>false</default>
                 <label>Annullamento - Inviato al DL</label>

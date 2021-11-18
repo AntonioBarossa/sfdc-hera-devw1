@@ -332,13 +332,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         system.debug('Ricalcolo delle date da Trigger sugli ordini --> oldOrdersList : ' + JSON.serializePretty(oldOrdersList));
         List<Order> orderList = new List<Order>();                        
         Map<String,Boolean> mapAccountRes = HDT_UTL_SwtichInProcess.checkAccountOrderIsResidential(newOrdersList);
-        Boolean ricalculateDate = false;
         //IsSequanzialized__c
         Map<String,Order> mapOldOrder = new Map<String,Order>();
         for (Order oldOrder : oldOrdersList) {
             mapOldOrder.put(oldOrder.id,oldOrder);
         }
         for (Order newOrder : newOrdersList) {
+            Boolean ricalculateDate = false;
             //for (Order oldOrder : oldOrdersList) {
             Order oldOrder = mapOldOrder.get(newOrder.id);
             if(oldOrder != null){
