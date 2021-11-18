@@ -686,65 +686,65 @@ handleAddressValuesIfSap(servicepointretrieveddata){
                 
            
                     
-                    if(data.Comune != undefined){
-                        dataForTable += data.Comune;
-                        if(data.Comune!=', '){
+                    if(data.comune != undefined){
+                        dataForTable += data.comune;
+                        if(data.comune!=', '){
                             console.log('entra in Comune else : ');
                             dataForTable+=',';
                         }
                     }
-                    if(data.Via != undefined){
-                        dataForTable += data.Via;
-                        if(data.Via!=', '){
+                    if(data.via != undefined){
+                        dataForTable += data.via;
+                        if(data.via!=', '){
                             console.log('entra in Via else : ');
                             dataForTable+=',';
                         }
                     }
-                    if(data.Civico != undefined){
-                        dataForTable += data.Civico;
-                        if(data.Civico!=', '){
+                    if(data.civico != undefined){
+                        dataForTable += data.civico;
+                        if(data.civico!=', '){
                             console.log('entra in civico else : ');
                             dataForTable+=',';
                         }
                     }
-                    if(data.Provincia != undefined){
-                        dataForTable += data.Provincia;
-                        if(data.Provincia!=', '){
+                    if(data.provincia != undefined){
+                        dataForTable += data.provincia;
+                        if(data.provincia!=', '){
                             console.log('entra in Provincia else : ');
                             dataForTable+=',';
                         }
                     }
-                    if(data.EstensCivico != undefined){
-                        dataForTable += data.EstensCivico;
-                        if(data.EstensCivico!=', '){
+                    if(data.estensCivico != undefined){
+                        dataForTable += data.estensCivico;
+                        if(data.estensCivico!=', '){
                             console.log('entra in EstensCivico else : ');
                             dataForTable+=',';
                         }
                     }
-                    if(data.Stato != undefined){
-                        dataForTable += data.Stato;
-                        if(data.Stato!=', '){
+                    if(data.stato != undefined){
+                        dataForTable += data.stato;
+                        if(data.stato!=', '){
                             console.log('entra in Stato else : ');
                             dataForTable+=',';
                         }
                     }
-                    if(data.CAP != undefined){
-                        dataForTable += data.CAP ;
-                        if(data.CAP!=', '){
+                    if(data.cap != undefined){
+                        dataForTable += data.cap ;
+                        if(data.cap!=', '){
                             console.log('entra in CAP else : ');
                             dataForTable+=',';
                         }
                     }
-                    if(data.CodiceComuneSAP != undefined){
-                        dataForTable += data.CodiceComuneSAP;
-                        if(data.CodiceComuneSAP!=', '){
+                    if(data.codiceComuneSAP != undefined){
+                        dataForTable += data.codiceComuneSAP;
+                        if(data.codiceComuneSAP!=', '){
                             console.log('entra in CodiceComuneSAP else : ');
                             dataForTable+=',';
                         }
                     }
-                    if(data.CodiceViaStradarioSAP != undefined){
-                        dataForTable += data.CodiceViaStradarioSAP;
-                        if(data.CodiceViaStradarioSAP!=', '){
+                    if(data.codiceViaStradarioSAP != undefined){
+                        dataForTable += data.codiceViaStradarioSAP;
+                        if(data.codiceViaStradarioSAP!=', '){
                             console.log('entra in CodiceViaStradarioSAP else : ');
                             dataForTable+=' ';
                         }
@@ -794,32 +794,32 @@ handleAddressValuesIfSap(servicepointretrieveddata){
                     console.log('****count searchkey : '+  JSON.stringify(searchkey));
                     dataForTableForn ='';
                     console.log('****element INDIRIZZOFORNITURA: '+  JSON.stringify(element));
-                    if(element.Comune != undefined){
-                        dataForTableForn += element.Comune + ',';
+                    if(element.comune != undefined){
+                        dataForTableForn += element.comune + ',';
                     }
-                    if(element.Via != undefined){
-                        dataForTableForn += element.Via + ',';
+                    if(element.via != undefined){
+                        dataForTableForn += element.via + ',';
                     }
-                    if(element.Civico != undefined){
-                        dataForTableForn += element.Civico + ',';
+                    if(element.civico != undefined){
+                        dataForTableForn += element.civico + ',';
                     }
-                    if(element.Provincia != undefined){
-                        dataForTableForn += element.Provincia+ ',';
+                    if(element.provincia != undefined){
+                        dataForTableForn += element.provincia+ ',';
                     }
-                    if(element.EstensCivico != undefined){
-                        dataForTableForn += element.EstensCivico + ',';
+                    if(element.estensCivico != undefined){
+                        dataForTableForn += element.estensCivico + ',';
                     }
-                    if(element.Stato != undefined){
-                        dataForTableForn += element.Stato + ',';
+                    if(element.stato != undefined){
+                        dataForTableForn += element.stato + ',';
                     }
-                    if(element.CAP != undefined){
-                        dataForTableForn += element.CAP + ',';
+                    if(element.cap != undefined){
+                        dataForTableForn += element.cap + ',';
                     }
-                    if(element.CodiceComuneSAP != undefined){
-                        dataForTableForn += element.CodiceComuneSAP + ',';
+                    if(element.codiceComuneSAP != undefined){
+                        dataForTableForn += element.codiceComuneSAP + ',';
                     }
-                    if(element.CodiceViaStradarioSAP != undefined){
-                        dataForTableForn += element.CodiceViaStradarioSAP;
+                    if(element.codiceViaStradarioSAP != undefined){
+                        dataForTableForn += element.codiceViaStradarioSAP;
                     }
 
                     console.log('dataForTableForn lenght : ' + dataForTableForn.length);

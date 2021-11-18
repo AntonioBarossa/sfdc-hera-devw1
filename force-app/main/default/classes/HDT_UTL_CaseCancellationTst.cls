@@ -12,7 +12,17 @@ public with sharing class HDT_UTL_CaseCancellationTst {
     
     
     //TEST SETUP
-    
+    @TestSetup
+    static void makeData(){
+        HDT_UTL_DataFactoryTst.pClickInstance();
+        HDT_UTL_DataFactoryTst.createActivityTemplate(1,true);
+        List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseAutolettura(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+    }
     
     //TESTS
 
@@ -80,6 +90,22 @@ public with sharing class HDT_UTL_CaseCancellationTst {
 
             HDT_UTL_CaseCancellation.HDT_UTL_Option myClass = new HDT_UTL_CaseCancellation.HDT_UTL_Option('myLabel');
 
+            //TESTING - createActivityForCase
+            Case c = [SELECT id FROM Case];
+            myInput = new HDT_UTL_CaseCancellation.HDT_UTL_RequestCancellationReason();
+            myInput.recordId = c.Id;
+            myInput.method = 'createActivityForCase';
+            myInput.description = 'Gestione Manuale SAP';
+            myInput.type = 'Gestione Manuale SAP';
+            myInput.templateName = 'testActivityTemplate0';
+            inputs = new List<HDT_UTL_CaseCancellation.HDT_UTL_RequestCancellationReason>{myInput};
+            
+            HDT_UTL_CaseCancellation.dispatchMethod(inputs);
+            
+
+            //ASSERTS
+            List<wrts_prcgvr__Activity__c> activities = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE Case__c =: c.Id AND CausalError__c = :myInput.description AND Type__c =:myInput.type];
+            System.assert(!activities.isEmpty(), 'L\'attivity non è stata creata.');
 
         } catch(DmlException e) {
             System.debug('The following exception has occurred: ' + e.getMessage());
