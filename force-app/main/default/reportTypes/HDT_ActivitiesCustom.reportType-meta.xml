@@ -3,12 +3,8 @@
     <baseObject>wrts_prcgvr__Activity__c</baseObject>
     <category>other</category>
     <deployed>true</deployed>
-    <description>Report type di Activities (custom) con Account</description>
-    <join>
-        <outerJoin>false</outerJoin>
-        <relationship>Accounts__r</relationship>
-    </join>
-    <label>HDT_ActivitiesWiAccount</label>
+    <description>Report Type ActivityCustom</description>
+    <label>HDT_ActivitiesCustom</label>
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
@@ -17,12 +13,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Id</field>
+            <field>ParentActivity__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ParentActivity__c</field>
+            <field>Id</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
@@ -37,6 +33,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Agency__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Approved__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
@@ -47,7 +48,37 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Subject__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>OwnedByUser__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>isAtoA__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsApprovalRequired__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RequiredOfficeActivity__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Solicited__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PraxidiaPostWorkAction__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
@@ -62,7 +93,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Case__c</field>
+            <field>CampaignExecChannel__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CausalQualityComfortCall__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreditCheckReason__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
@@ -72,7 +113,37 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CreditCheckResolutionReason__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PraxidiaPostWorkCause__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Mobile__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>GlobalMigrationKey__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Cluster__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsClientInResolution153__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>AtecoCode__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
@@ -92,6 +163,26 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>HerokuPracticeCode__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ServicePointCode__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>TaxesModule__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CompanyOwner__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>AppointmentCompetence__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
@@ -107,12 +198,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CheckActivityBox__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>CreatedBy</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CreatedDate</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedByUsername__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
@@ -127,6 +228,31 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>StartDate__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>EndDate__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ContactDate__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IBMUnicaCampaignCreationDate__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>EffectiveDate__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>QAdTicketCallTime__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
@@ -137,7 +263,42 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>DateTimeRef__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>DistributorFirstDate__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DueDate__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>MalfunctionDate__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ReminderLastDate__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PersonalData__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CciaaData__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SupplyData__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
@@ -152,12 +313,32 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Documentation__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IdentityDocument__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>wrts_prcgvr__DueDate__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>ActivityDuration__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ActivityDurationFormula__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>vActivityDurationFormula__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
@@ -179,7 +360,12 @@
             <checkedByDefault>false</checkedByDefault>
             <field>CreditCheckResults__c</field>
             <table>wrts_prcgvr__Activity__c</table>
-        </columns>        
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PraxidiaPostWorkOutcome__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>AppoitmentTimeSlotConfirmed__c</field>
@@ -207,7 +393,27 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>ContactResult__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Signature__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IdSiebelActivity__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>QAdCallID__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>EnvelopeId__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
@@ -228,6 +434,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CallStartTime__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Interaction__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
@@ -257,6 +468,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>RecordingLink__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>QAdLogin__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
@@ -267,7 +483,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>IsServicePointCode__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>QAdMethod__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsMigrated__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CciaaSelfCertModule__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
@@ -277,7 +508,37 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CraftsmenRegisterNumber__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Note__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CallingNumber__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CalledNumber__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ClientNumber__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ContractNumber__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ReminderCount__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
@@ -287,12 +548,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>wrts_prcgvr__ObjectId__c</field>
+            <field>CallCenterNumber__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Order__c</field>
+            <field>ClosingNote__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>wrts_prcgvr__ObjectId__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
@@ -317,7 +583,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Place__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>wrts_prcgvr__Priority__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Process__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
@@ -328,6 +604,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>QuoteLine__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RowIdSiebel__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
@@ -367,6 +648,16 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>AssociationStatute__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>BillTransfer__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>WaitingTime__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
@@ -380,539 +671,178 @@
             <field>ContactReason__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
-        <masterLabel>Activities (Custom)</masterLabel>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>OldCustomerAccount__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ManuallyReassigned__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Asset__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <masterLabel>Activities</masterLabel>
     </sections>
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Id</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Owner.Username</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
-            <checkedByDefault>true</checkedByDefault>
-            <field>Name</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>AccountNumber</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Owner</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>RecordType</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Site</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>AccountSource</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>IsVATGroupJoined__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>AnnualRevenue</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>InterestArea__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>RegulatedMarketSelfCertification__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingAddress</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingCity</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingCountry</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingGeocodeAccuracy</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingLatitude</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingLongitude</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingState</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingStreet</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingPostalCode</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BPSAPModel__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Category__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>GlobalMigrationKey__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingStreetNumber__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CategoryCode__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CustomerCode__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>FiscalCode__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingCityCode__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingStreetCode__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>LastName__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>SBQQ__AssetQuantitiesCombined__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>SBQQ__CoTermedContractsCombined__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CompanyOwner__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BirthProvince__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>ConsentSignature__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>SBQQ__ContractCoTermination__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>SBQQ__CoTerminationEvent__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CreatedBy</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CreatedDate</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Jigsaw</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>VATGroupEndDate__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>VATGroupStartDate__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BirthDate__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>IsWrongFiscalData__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>SBQQ__DefaultOpportunity__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Description</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>IsDocumentAcquired__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>PrimaryEmail__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NumberOfEmployees</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingStreetNumberExtension__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Fax</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>FAX__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>VirtualSAPIban__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>SAPIntegrationID__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>SBQQ__IgnoreParentContractedPrices__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingAddressFormula__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingAddressIsForeign__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Industry</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BuildingApartment__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>LastActivityDate</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>LastModifiedBy</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>LastModifiedDate</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DataLimitation__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingPlace__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CustomerMarking__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>IsMigrated__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>ContactReason__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>FirstName__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BillingStreetName__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>SalesNumber__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Ownership</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Parent</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>VATNumber__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>VATGroup__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Phone</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>BuildingFloor__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>SBQQ__PreserveBundle__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>SBQQ__PriceHoldEnd__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
-        </columns>
-        <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>InterestProduct__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Owner.Id</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Profession__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Owner.LastName</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Rating</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Owner.Phone</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>BillingRegion__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Owner.Profile</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>SBQQ__RenewalModel__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Owner.Alias</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>SBQQ__RenewalPricingMethod__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Owner.UserRole</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RowIdSiebel__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Owner.FirstName</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>BuildingStairCase__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Owner.Email</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Segment__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Owner.IsActive</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Gender__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Owner.Title</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ShippingAddress</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Owner.Name</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ShippingCity</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>AssigneeType__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ShippingCountry</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>WorkGroup__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ShippingGeocodeAccuracy</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Queue__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ShippingLatitude</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>RuleChosenQueue__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
+        <masterLabel>Owner</masterLabel>
+    </sections>
+    <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ShippingLongitude</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Case__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ShippingState</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Case__c.Phase__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ShippingStreet</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Case__c.CancellationReason__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ShippingPostalCode</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Case__c.Reason__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Sic</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Case__c.DistributorName__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
+        <masterLabel>Case Parent</masterLabel>
+    </sections>
+    <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>SicDesc</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Order__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CustomerAccountStatus__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Order__c.CancellationReason__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>SBQQ__TaxExempt__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Order__c.IsVAS__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>TickerSymbol</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Order__c.VASType__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>DegreeOfStudies__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Order__c.Phase__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>BillingStreetToponym__c</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Order__c.DistributorFormula__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Type</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Order__c.EndDate</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Website</field>
-            <table>wrts_prcgvr__Activity__c.Accounts__r</table>
+            <field>Order__c.Channel__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
         </columns>
-        <masterLabel>Accounts</masterLabel>
+        <masterLabel>Order Parent</masterLabel>
+    </sections>
+    <sections>
+        <masterLabel>Attività(Custom)</masterLabel>
     </sections>
 </ReportType>

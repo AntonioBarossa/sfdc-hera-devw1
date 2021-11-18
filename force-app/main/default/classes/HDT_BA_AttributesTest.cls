@@ -122,7 +122,7 @@ public with sharing class HDT_BA_AttributesTest {
             mCase.Outcome__c='OK';
             mCase.Reason='New problem';
             mcase.EarlyRecess__c=false;
-            mcase.EnergyService__c='Si';
+            mcase.ServiceEnergy__c='Si';
             mcase.Market__c='Libero';
             mcase.Status='New'; 
             mCase.SalesCompany__c='test';

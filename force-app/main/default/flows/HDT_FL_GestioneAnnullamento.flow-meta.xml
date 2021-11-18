@@ -125,6 +125,53 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
+        <name>Crea_Attivit_Gestione_Manuale_SAP</name>
+        <label>Crea Attività Gestione Manuale SAP</label>
+        <locationX>1565</locationX>
+        <locationY>2861</locationY>
+        <actionName>HDT_UTL_CaseCancellation</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Annullato</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__caseRecord</typeName>
+            <typeValue>Case</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>description</name>
+            <value>
+                <stringValue>Gestione Manuale SAP</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>templateName</name>
+            <value>
+                <stringValue>Gestione Manuale SAP</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>Gestione Manuale SAP</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>method</name>
+            <value>
+                <stringValue>createActivityForCase</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>GetRecord.Id</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>NoteAnnullamento</name>
         <label>NoteAnnullamento</label>
         <locationX>799</locationX>
@@ -238,8 +285,8 @@
     <assignments>
         <name>Annullato</name>
         <label>Annullato</label>
-        <locationX>1493</locationX>
-        <locationY>2896</locationY>
+        <locationX>1368</locationX>
+        <locationY>2928</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -860,6 +907,28 @@
                 <targetReference>Bozza_Annullata</targetReference>
             </connector>
             <label>Bozza</label>
+        </rules>
+        <rules>
+            <name>Comunicazione_verso_Heroku_KO</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetRecord.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Comunicazione verso Heroku KO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetRecord.Cluster__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Autolettura</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Crea_Attivit_Gestione_Manuale_SAP</targetReference>
+            </connector>
+            <label>Comunicazione verso Heroku KO</label>
         </rules>
     </decisions>
     <decisions>
