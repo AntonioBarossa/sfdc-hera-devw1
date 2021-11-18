@@ -2,9 +2,6 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>SBQQ__Amend_Assets</customButtons>
     <customButtons>SBQQ__Renew_Assets</customButtons>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
     <excludeButtons>SendEmail</excludeButtons>
     <excludeButtons>XClean</excludeButtons>
@@ -91,6 +88,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>RecordTypeName__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ExternalPartnerNumber__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -289,7 +290,6 @@
         <relatedList>SiebelActivity__x.TARGET_OU_ID_SF__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>ExternalId</fields>
         <fields>ASSET_NUM__c</fields>
         <fields>IMPIANTO_COUNTRY__c</fields>
         <fields>IMPIANTO_PROD_CATG_CD__c</fields>
@@ -503,7 +503,6 @@
         <relatedList>DocumentSendTracking__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>ExternalId</fields>
         <fields>SR_NUM__c</fields>
         <fields>CREATED__c</fields>
         <fields>INS_PRODUCT__c</fields>
@@ -520,7 +519,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1l000000PnAW</masterLabel>
+        <masterLabel>00h3N000002MyGI</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
