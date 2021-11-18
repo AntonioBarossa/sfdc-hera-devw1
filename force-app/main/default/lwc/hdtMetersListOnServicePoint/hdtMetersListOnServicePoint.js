@@ -43,47 +43,44 @@ export default class HdtMetersListOnServicePoint extends LightningElement {
 
         getDataInContinuation({recordId: this.recordId})
         .then(result => {
-            console.log('>>> getDataFromContinuation: success');
+
+            console.log('>>> getDataFromContinuation:');
             console.log(result);
             this.error = false;
             var parsedResult = JSON.parse(result);
-            this.data = parsedResult.data;
+            console.log('>>> result: ' + parsedResult.status);
 
-            /*
-            this.data.push({assetNumber: '0000000000000001', materialDescription: 'Device Inforecord'});
-            this.data.push({assetNumber: '0000000000000003', materialDescription: 'Device Inforecord'});
-            this.data.push({assetNumber: '0000000000000004', materialDescription: 'Device Inforecord'});
-            this.data.push({assetNumber: '0000000000000005', materialDescription: 'Device Inforecord'});
-            this.data.push({assetNumber: '0000000000000006', materialDescription: 'Device Inforecord'});
-            this.data.push({assetNumber: '0000000000000007', materialDescription: 'Device Inforecord'});
-            this.data.push({assetNumber: '0000000000000008', materialDescription: 'Device Inforecord'});
-            this.data.push({assetNumber: '0000000000000880', materialDescription: 'Device Inforecord'});
-            this.data.push({assetNumber: '0000000000000888', materialDescription: 'Device Inforecord'});
-            this.data.push({assetNumber: '0000000000000555', materialDescription: 'Device Inforecord'});
-            this.data.push({assetNumber: '0000000000000044', materialDescription: 'Device Inforecord'});
-            this.data.push({assetNumber: '0000000000000333', materialDescription: 'Device Inforecord'});
-            this.data.push({assetNumber: '0000000000000222', materialDescription: 'Device Inforecord'});
-            this.data.push({assetNumber: '0000000000000999', materialDescription: 'Device Inforecord'});
-            */
+            switch (parsedResult.status) {
 
-            this.totalResult = parsedResult.data.length;
-            console.log('>>> this.data.length ' + this.data.length);
+                case 'success':
+                    this.data = parsedResult.data;
+                    this.totalResult = parsedResult.data.length;
+                    console.log('>>> this.data.length ' + this.data.length);
+        
+                    this.title = 'Elenco Misuratori (' + this.totalResult.toString() + ')';
+        
+                    if(this.totalResult > 10){
+                        this.tableHeightCss = 'full-table';
+                    } else {
+                        this.tableHeightCss = 'short-table';
+                    }
 
-            this.title = 'Elenco Misuratori (' + this.totalResult.toString() + ')';
+                    break;
 
-            if(this.totalResult > 10){
-                this.tableHeightCss = 'full-table';
-            } else {
-                this.tableHeightCss = 'short-table';
+                case 'failed':
+                    this.error = true;
+                    this.errorMessage = parsedResult.errorDetails[0].message;
+
             }
 
             this.spinner = false;
         })
         .catch(error => {
-            console.log('>>> ERROR: ' + error.body.message);
+            
             this.error = true;
             this.spinner = false;
-            this.errorMessage = error.body.message;
+            this.errorMessage = 'Errore durante la ricezione dei dati o nelle credenziali di accesso';
+            console.warn(error.body.message);
         });
     }
 
