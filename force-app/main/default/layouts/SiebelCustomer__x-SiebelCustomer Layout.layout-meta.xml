@@ -482,17 +482,6 @@
         <fields>CREATED__c</fields>
         <relatedList>SiebelDocumentLink__x.PAR_ROW_ID_ACCNT__c</relatedList>
     </relatedLists>
-    <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>ExternalId</fields>
-        <fields>OGGETTO_MSG__c</fields>
-        <fields>STATO_NOTIFICA__c</fields>
-        <fields>FLG_LETTO__c</fields>
-        <fields>DATA_INVIO__c</fields>
-        <relatedList>SiebelMsgNotifica__x.ID_BP__c</relatedList>
-        <sortField>DATA_INVIO__c</sortField>
-        <sortOrder>Desc</sortOrder>
-    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
