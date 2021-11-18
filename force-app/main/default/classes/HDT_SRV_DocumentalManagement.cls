@@ -474,8 +474,8 @@ public class HDT_SRV_DocumentalManagement{
 			if(record.getSobjectType() == Case.getSobjectType()){
 				//Settare phase del case in completata
 				record.put('Phase__c', 'Completata');
+				List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Case__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
 				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
-					List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Case__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
 					String privacyVersion;
 					/*
 						@Author: Davide Viola - 19/10/2021
@@ -505,11 +505,11 @@ public class HDT_SRV_DocumentalManagement{
 					}
 				}
 			}else{
+				List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Order__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
 				Boolean datiCatastaliCompilati = false;
 				//Boolean leggeOttantaCompilata = false; // TODO: come si chiamano i radio button della legge 80?
 				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
 					System.debug(LoggingLevel.DEBUG, 'Checking radiobutton: ' + JSON.serialize(singleRadio));
-					List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Order__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
 					String privacyVersion;
 					/*
 						@Author: Davide Viola - 19/10/2021
