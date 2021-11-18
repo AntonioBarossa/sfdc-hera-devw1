@@ -14,7 +14,6 @@
             <typeName>T__caseRecord</typeName>
             <typeValue>Case</typeValue>
         </dataTypeMappings>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>causalCode</name>
             <value>
@@ -73,7 +72,6 @@
             <typeName>T__caseRecord</typeName>
             <typeValue>Order</typeValue>
         </dataTypeMappings>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>causalCode</name>
             <value>
@@ -125,6 +123,52 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
+        <name>Crea_Attivit_Gestione_Manuale_SAP</name>
+        <label>Crea Attività Gestione Manuale SAP</label>
+        <locationX>1565</locationX>
+        <locationY>2861</locationY>
+        <actionName>HDT_UTL_CaseCancellation</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Annullato</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__caseRecord</typeName>
+            <typeValue>Case</typeValue>
+        </dataTypeMappings>
+        <inputParameters>
+            <name>description</name>
+            <value>
+                <stringValue>Gestione Manuale SAP</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>templateName</name>
+            <value>
+                <stringValue>Gestione Manuale SAP</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>Gestione Manuale SAP</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>method</name>
+            <value>
+                <stringValue>createActivityForCase</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>GetRecord.Id</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>NoteAnnullamento</name>
         <label>NoteAnnullamento</label>
         <locationX>799</locationX>
@@ -134,7 +178,6 @@
         <connector>
             <targetReference>AssegnaFormattazioneNote</targetReference>
         </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>cancellationNote</name>
             <value>
@@ -159,7 +202,6 @@
         <connector>
             <targetReference>AssegnaNoteAnnullamento</targetReference>
         </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>cancellationNote</name>
             <value>
@@ -174,7 +216,6 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <apiVersion>50.0</apiVersion>
     <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare</name>
         <label>Aggiorna Fase in Da Inviare</label>
@@ -238,8 +279,8 @@
     <assignments>
         <name>Annullato</name>
         <label>Annullato</label>
-        <locationX>1493</locationX>
-        <locationY>2896</locationY>
+        <locationX>1368</locationX>
+        <locationY>2928</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -467,13 +508,6 @@
         <locationX>1677</locationX>
         <locationY>2440</locationY>
         <assignmentItems>
-            <assignToReference>Annulla_Attivita.Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Annullata</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>Annulla_Attivita.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -489,13 +523,6 @@
         <label>Assegna Stato</label>
         <locationX>4606</locationX>
         <locationY>2846</locationY>
-        <assignmentItems>
-            <assignToReference>Annulla_Attivita_0.Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Annullata</stringValue>
-            </value>
-        </assignmentItems>
         <assignmentItems>
             <assignToReference>Annulla_Attivita_0.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -860,6 +887,28 @@
                 <targetReference>Bozza_Annullata</targetReference>
             </connector>
             <label>Bozza</label>
+        </rules>
+        <rules>
+            <name>Comunicazione_verso_Heroku_KO</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetRecord.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Comunicazione verso Heroku KO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetRecord.Cluster__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Autolettura</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Crea_Attivit_Gestione_Manuale_SAP</targetReference>
+            </connector>
+            <label>Comunicazione verso Heroku KO</label>
         </rules>
     </decisions>
     <decisions>
@@ -1265,7 +1314,6 @@
         <connector>
             <targetReference>Aggiorna_Fase_in_Da_Inviare</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Cluster__c</field>
             <operator>EqualTo</operator>
@@ -1307,7 +1355,6 @@
         <connector>
             <targetReference>Annulla_Attivita</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
         <filters>
             <field>Case__c</field>
             <operator>EqualTo</operator>
@@ -1342,7 +1389,6 @@
         <connector>
             <targetReference>Annulla_Attivita_0</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
         <filters>
             <field>Order__c</field>
             <operator>EqualTo</operator>
@@ -1377,7 +1423,6 @@
         <connector>
             <targetReference>Motivo_Annullamento_Screen</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1398,7 +1443,6 @@
         <connector>
             <targetReference>NoteAnnullamento</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1419,7 +1463,6 @@
         <connector>
             <targetReference>Quale_Processo</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1440,7 +1483,6 @@
         <connector>
             <targetReference>Assegna_Motivo_0_0_0</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1461,7 +1503,6 @@
         <connector>
             <targetReference>NoteAnnullamentoOrder</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1485,7 +1526,6 @@
         <faultConnector>
             <targetReference>Motivo_Annullamento_Screen_0_0</targetReference>
         </faultConnector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>ContractId</field>
             <operator>EqualTo</operator>
@@ -1513,7 +1553,6 @@
         <connector>
             <targetReference>Processo</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1534,7 +1573,6 @@
         <connector>
             <targetReference>getOrderAttivazione</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
         <filters>
             <field>SobjectType</field>
             <operator>EqualTo</operator>
@@ -1739,7 +1777,6 @@
                     <elementReference>GetRecord.Id</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1808,7 +1845,6 @@
                     <elementReference>GetRecord.RecordType.DeveloperName</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>DefaultReason</assignToReference>
@@ -1891,7 +1927,6 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1948,7 +1983,6 @@
                     <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>DefaultReason</assignToReference>
@@ -2031,7 +2065,6 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2094,7 +2127,6 @@
                     <elementReference>GetRecord.Type</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>DefaultReason</assignToReference>
@@ -2177,7 +2209,6 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2246,7 +2277,6 @@
                     <elementReference>GetOrder.CancellationReason__c</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>DefaultReason</assignToReference>
@@ -2323,7 +2353,6 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
