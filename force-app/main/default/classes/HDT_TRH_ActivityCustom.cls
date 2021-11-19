@@ -67,7 +67,9 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
         HDT_UTL_ActivityCustomProcess.cancelQualityNoResult(trigger.new,trigger.old);
         
        // marco.arci@webresults.it 01/09/2021 gestione scarti documentali
-       HDT_UTL_Scarti.updatePraticaForScartoDocumentale(trigger.new, trigger.old);
+       // NTTDATA 17/11/2021: commentato perchè non gestisce la casistica di più di 200 activity aggiornate da stessa DML (scoppia l'enqueueJob)
+       // Da capire se ha senso questo method o si può proprio rimuovere.
+       //HDT_UTL_Scarti.updatePraticaForScartoDocumentale(trigger.new, trigger.old);
 
         //f. defelice Chiusura case Proroga
         HDT_UTL_ActivityCustomProcess.closeSobjectOnActivityClosing(trigger.new, trigger.old);

@@ -154,6 +154,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelActivity__x.TODO_PLAN_END_DT__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelActivity__x.TODO_PLAN_START_DT__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelActivity__x.X_CANALE_CAMPAGNA__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -225,6 +235,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelActivity__x.X_ORA_DL_A__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelActivity__x.X_ORA_DL__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -329,6 +344,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelContact__x.END_DT__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelContact__x.FAX_PH_NUM__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -350,6 +370,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelContact__x.LAST_NAME__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelContact__x.LineageID_CONTACT__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelContact__x.LineageID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelContact__x.MODIFIEDDATE_AZURE_CONTACT__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -410,6 +445,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelContact__x.RESPONSIBILITY__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelContact__x.ROW_ID_CONTACT__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -735,6 +775,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelContract__x.IMPIANTO_ZIPCODE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelContract__x.LineageID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1100,6 +1145,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelCustomer__x.ASGN_PH_AC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelCustomer__x.ATTRIB_04__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1694,6 +1744,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelDocumentLink__x.NOME_FILE_DOWNLOAD__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelDocumentLink__x.PAR_ROW_ID_ACCNT__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1709,7 +1764,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelDocumentLink__x.ROW_ID_PK__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelDocumentLink__x.ROW_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelDocumentLink__x.SR_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1720,6 +1785,131 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelDocumentLink__x.X_TIPO_ALLEGATO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.ACTION__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.CANALE_INVIO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.CODICE_PAPERLESS__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.COD_CLI__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.DATA_EFFETTIVA_INVIO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.DATA_INVIO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.DESCR_ESITO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.EVENTO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.FLG_LETTO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.ID_BP_SALESFORCE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.ID_BP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.ID_ENTE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.ID_RICH_NOTIFICA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.LineageID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.MODIFIEDDATE_AZURE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.NOME_TEMPLATE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.OGGETTO_MSG__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.PORTALE_SOL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.RECAPITO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.REGOLA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.ROW_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.STATO_NOTIFICA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.TESTO_MSG__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.TIPO_NOTIFICA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelMsgNotifica__x.TOTALE_PAPERLESS__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1745,6 +1935,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelOrderAttribute__x.AZ_ImportDatetime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrderAttribute__x.BANK_BRANCH__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrderAttribute__x.BANK_NAME__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrderAttribute__x.BK_ACCNT_NAME__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrderAttribute__x.BK_ACCNT_NUM__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1789,12 +1999,87 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelOrderAttribute__x.PAYMT_METH_CD__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelOrderAttribute__x.ROW_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelOrderAttribute__x.TYPE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrderAttribute__x.X_ABI__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrderAttribute__x.X_CAB__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrderAttribute__x.X_CF_SOTTOSCRITTORE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrderAttribute__x.X_CIN_IBAN__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrderAttribute__x.X_CIN__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrderAttribute__x.X_COGNOME_SOTTOSCRIT__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrderAttribute__x.X_COMUNE_BANCA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrderAttribute__x.X_NOME_SOTTOSCRIT__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrderAttribute__x.X_PAESE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrderAttribute__x.X_PAGAMENTO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrderAttribute__x.X_PAG_RAPP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrderAttribute__x.X_PROVINCIA_BANCA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrder__x.ADDR_NUM_SPED__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrder__x.ADDR_SPED__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1834,7 +2119,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelOrder__x.ATTRIB_48__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelOrder__x.ATTRIB_51__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrder__x.CITY_SPED__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1855,6 +2150,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelOrder__x.DESC_TEXT__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrder__x.DISTRICT_SPED__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1944,6 +2244,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelOrder__x.PROVINCE_SPED__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelOrder__x.ROW_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1964,6 +2269,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelOrder__x.STATE_SPED__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelOrder__x.STATUS_CD__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1980,6 +2290,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelOrder__x.TIPO_POS_SUP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrder__x.VERIFIED_FLG_SPED__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrder__x.X_ADDR_NUM_SUFF_SPED__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrder__x.X_ADDR_TYPE_SPED__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2034,6 +2359,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelOrder__x.X_ISTAT_LOC_SPED__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrder__x.X_ISTAT_VIA_SPED__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelOrder__x.X_MAIL_DOC__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2069,7 +2404,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelOrder__x.X_STAIR_SPED__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelOrder__x.X_STAMPA_SIN_ANA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelOrder__x.ZIPCODE_SPED__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2204,7 +2549,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelRdo__x.ACR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelRdo__x.ACTION_CD__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.ADDR__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2229,42 +2584,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_03__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_04__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SiebelRdo__x.ATTRIB_05__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_06__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_07__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_08__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SiebelRdo__x.ATTRIB_09__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_10__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2275,26 +2600,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.ATTRIB_12__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_14__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_15__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_16__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_18__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2319,47 +2624,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_36__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_37__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_38__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_39__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_40__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SiebelRdo__x.ATTRIB_41__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_42__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SiebelRdo__x.ATTRIB_43__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_44__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2370,11 +2640,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.ATTRIB_46__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.ATTRIB_47__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2405,6 +2670,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.BL_STATUS_CD__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.CANCEL_REASON_CD__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2534,6 +2804,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelRdo__x.PROD_CATG_CD__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelRdo__x.PROD_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2625,6 +2900,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.UNB_MATRICOLA_CONT__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.VERIFIED_FLG__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2814,16 +3094,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_09__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_10__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SiebelRdo__x.X_ATTRIB_11__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2854,62 +3124,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_17__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_18__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SiebelRdo__x.X_ATTRIB_19__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.X_ATTRIB_20__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_21__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_22__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_23__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_24__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_25__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_26__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_27__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_28__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2924,42 +3144,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_31__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_32__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_33__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_34__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SiebelRdo__x.X_ATTRIB_35__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_36__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_37__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_38__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2974,27 +3159,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_41__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_42__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SiebelRdo__x.X_ATTRIB_43__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_44__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_45__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3025,21 +3190,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.X_ATTRIB_51__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_52__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_53__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRdo__x.X_ATTRIB_54__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3834,12 +3984,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelRdo__x.X_DT_INVIO_COMUNIC_MOROS_CLI__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelRdo__x.X_DT_PAGAM_CLI_MOROSO__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.X_DT_RIC_RICH_SCR_CLI_TRADER__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.X_DT_RIDUZIONE_POTENZA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.X_DT_STATO_RDO_PREV_ACCETTATO__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4505,6 +4670,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.X_LIMITATO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.X_LINE_CD__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6815,121 +6985,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRds__x.ROW_ID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_ATTRIB_03__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_ATTRIB_34__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_ATTRIB_35__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_ATTRIB_36__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_ATTRIB_37__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_ATTRIB_41__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_ATTRIB_47__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_CREATED_BY__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_CREATED__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_DESC_TEXT__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_LAST_UPD_BY__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_LAST_UPD__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_MOD_INVIO_DOC__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_OU_NUM__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_SR_NUM__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_X_COD_UFFICIO__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_X_COGNOME_BP_ALTERN__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_X_FLG_DELEGA__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_X_HER_DATA_CONSENSO_PEC__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_X_IND_BP_ALTERN_ID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_X_MAIL_PEC_FE__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_X_MOD_FATTURA__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SiebelRds__x.Rds_X_STAMPA_SIN_ANA__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9776,6 +9831,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>SiebelDocumentLink__x</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>SiebelMsgNotifica__x</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

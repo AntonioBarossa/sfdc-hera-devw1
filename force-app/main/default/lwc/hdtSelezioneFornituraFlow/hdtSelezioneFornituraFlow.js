@@ -35,7 +35,8 @@ export default class HdtSelezioneFornituraFlow extends SaleVas {
 
     contractsListcolumns = [
         {label: 'Tipo', fieldName: 'Type', type: 'text'},
-        {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
+ //     {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'}, 
+        {label: 'Codice Contratto SAP', fieldName: 'SAPContractCode', type: 'text'},
         {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
         {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
     ];
@@ -50,6 +51,7 @@ export default class HdtSelezioneFornituraFlow extends SaleVas {
             item.Type = this.contextObject;
             item.PodPdr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.ServicePointCode__c : '';
             item.ServicePointAddr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
+            item.SAPContractCode = item.SAPContractCode__c;
         });
         console.log(data)
         super.createTable(data);

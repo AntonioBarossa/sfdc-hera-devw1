@@ -167,11 +167,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CO__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IbanCAB__c</field>
             <table>Case</table>
         </columns>
@@ -288,11 +283,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>PraxidiaClarityandUnderstanding__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Cemetery__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -428,11 +418,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>SalesCompanyCode__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>TraceabilityCode__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1037,11 +1022,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ModeSendPaperlessCode__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>SendPaperlessCodeMode__c</field>
             <table>Case</table>
         </columns>
@@ -1098,11 +1078,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>FirstName__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NameBankOrPostOffice__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1208,16 +1183,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>ExistingInstallmentsPlanNumber__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>InstallmentPlanNumber__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DistributorServiceCode__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1712,11 +1677,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>TotalForInstallments__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>TotalPaidCustomer__c</field>
             <table>Case</table>
         </columns>
@@ -2121,11 +2081,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>QAdCallStatus__c</field>
-            <table>Case.Activities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Status__c</field>
             <table>Case.Activities__r</table>
         </columns>
         <columns>
