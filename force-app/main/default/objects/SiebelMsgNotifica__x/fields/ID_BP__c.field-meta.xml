@@ -10,7 +10,7 @@
     <label>Reference Cliente Archivio</label>
     <length>15</length>
     <referenceTo>SiebelCustomer__x</referenceTo>
-    <relationshipLabel>Alerts tracking</relationshipLabel>
-    <relationshipName>Alerts_tracking</relationshipName>
+    <relationshipLabel>Alert tracking</relationshipLabel>
+    <relationshipName>Alert_tracking</relationshipName>
     <type>ExternalLookup</type>
 </CustomField>
