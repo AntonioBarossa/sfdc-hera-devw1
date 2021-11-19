@@ -8,6 +8,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     private HDT_QR_Contract contractQr = new HDT_QR_Contract();
     private HDT_QR_Case caseQr = new HDT_QR_Case();
+    private HDT_QR_Order orderQr = new HDT_QR_Order();
     private HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
     private HDT_SRV_Order orderSrv = new HDT_SRV_Order();
 
@@ -401,6 +402,17 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             currentCase.Status = 'Closed';
         }
         updateFuture(JSON.serialize(currentCase));
+    }    
+    
+    public void updateDataFineConnessione(SObject inputCase){
+
+        Case myCase = (Case) inputCase;
+        Order myOrder = new Order();
+        myOrder.Id = myCase.Order__c;
+        myOrder.TemporaryConnectionEndDate__c = myCase.TemporaryConnectionEndDate__c;
+
+        HDT_UTL_DatabaseService.updateSObject(myOrder);
+
     }
 
     public void closeAnnullamentoExtraSistema(SObject inputCase)
@@ -417,4 +429,5 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         Case currentCase  = (Case) JSON.deserialize(serializedCase, Case.class);
         HDT_UTL_DatabaseService.updateSobject(currentCase);
     }
+
 }

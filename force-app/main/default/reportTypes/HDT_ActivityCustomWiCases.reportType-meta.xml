@@ -1008,11 +1008,11 @@
             <field>BillingStreetNumber__c</field>
             <table>wrts_prcgvr__Activity__c.Cases__r</table>
         </columns>
-        <columns>
+        <!-- <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>BillingStreetToponym__c</field>
             <table>wrts_prcgvr__Activity__c.Cases__r</table>
-        </columns>
+        </columns> -->
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CAInvoiceDisputed__c</field>
@@ -1548,11 +1548,11 @@
             <field>EndValidityDate__c</field>
             <table>wrts_prcgvr__Activity__c.Cases__r</table>
         </columns>
-        <columns>
+        <!-- <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>EnergyService__c</field>
             <table>wrts_prcgvr__Activity__c.Cases__r</table>
-        </columns>
+        </columns> -->
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>ErrorType__c</field>
