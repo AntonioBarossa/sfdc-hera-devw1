@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ID_BP__c</fullName>
+    <description>ID_BP</description>
+    <externalDeveloperName>ID_BP</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Reference Cliente Archivio</label>
+    <length>15</length>
+    <referenceTo>SiebelCustomer__x</referenceTo>
+    <relationshipLabel>Alerts tracking</relationshipLabel>
+    <relationshipName>Alerts_tracking</relationshipName>
+    <type>ExternalLookup</type>
+</CustomField>

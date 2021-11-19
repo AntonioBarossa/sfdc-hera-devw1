@@ -2635,11 +2635,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Status__c</field>
-            <table>Order.Activities_Custom__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>wrts_prcgvr__Status__c</field>
             <table>Order.Activities_Custom__r</table>
         </columns>
