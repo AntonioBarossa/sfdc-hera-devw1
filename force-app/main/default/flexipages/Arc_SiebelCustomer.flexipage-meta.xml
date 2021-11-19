@@ -163,7 +163,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>
-                    <value>Alerts_tracking__r</value>
+                    <value>Alert_tracking__r</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
@@ -180,7 +180,7 @@
                 <componentName>force:relatedListSingleContainer</componentName>
             </componentInstance>
         </itemInstances>
-        <name>Facet-42512823-ff4e-4299-9345-2a5da3c06df4</name>
+        <name>Facet-bd6b1efd-0046-4b79-8425-428b35147f89</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -274,7 +274,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-42512823-ff4e-4299-9345-2a5da3c06df4</value>
+                    <value>Facet-bd6b1efd-0046-4b79-8425-428b35147f89</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
