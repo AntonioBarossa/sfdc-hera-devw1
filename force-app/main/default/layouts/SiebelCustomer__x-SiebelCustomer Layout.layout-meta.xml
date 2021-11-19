@@ -468,8 +468,6 @@
         <fields>CREATED__c</fields>
         <fields>TODO_CD__c</fields>
         <fields>EVT_STAT_CD__c</fields>
-        <fields>SRA_SR_ID__c</fields>
-        <fields>ORDER_ITEM_ID__c</fields>
         <relatedList>SiebelActivity__x.TARGET_OU_ID__c</relatedList>
         <sortField>CREATED__c</sortField>
         <sortOrder>Desc</sortOrder>
@@ -481,6 +479,8 @@
         <fields>FILE_EXT__c</fields>
         <fields>CREATED__c</fields>
         <relatedList>SiebelDocumentLink__x.PAR_ROW_ID_ACCNT__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
@@ -499,7 +499,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000002UzQx</masterLabel>
+        <masterLabel>00h3N000002YL2f</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
