@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <apiVersion>50.0</apiVersion>
     <assignments>
         <name>Assegna_Motivo_Sospensione</name>
         <label>Assegna Motivo Sospensione</label>
@@ -82,13 +81,6 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Completed</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Activity.Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Chiusa</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -226,7 +218,6 @@
         <connector>
             <targetReference>Chiusura_Activity</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Case__c</field>
             <operator>EqualTo</operator>
@@ -247,7 +238,6 @@
         <connector>
             <targetReference>In_sospensione_o_chiusura</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -327,7 +317,6 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -371,7 +360,6 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -492,7 +480,6 @@
                     <elementReference>GetInputCase.RecordTypeId</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>

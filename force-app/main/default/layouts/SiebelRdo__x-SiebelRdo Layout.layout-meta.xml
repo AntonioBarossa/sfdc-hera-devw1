@@ -136,6 +136,10 @@
                 <behavior>Readonly</behavior>
                 <field>X_ATT_CON_MODIF__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PROD_CATG_CD__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -205,6 +209,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_VAL_SOC_VEND__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ACR__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -494,6 +502,10 @@
                 <behavior>Readonly</behavior>
                 <field>X_TIA_START_DT__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_DT_INVIO_COMUNIC_MOROS_CLI__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -536,6 +548,10 @@
                 <behavior>Readonly</behavior>
                 <field>X_DT_SWTCH_RICH_CLI_TRADER__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_DT_RIDUZIONE_POTENZA__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -568,10 +584,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_ATTRIB_03__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ATTRIB_36__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -656,6 +668,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_TENS_FASE__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CANCEL_REASON_CD__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -953,6 +969,10 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_LINE_CD__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ATTRIB_41__c</field>
@@ -1566,6 +1586,8 @@
         <fields>FILE_EXT__c</fields>
         <fields>CREATED__c</fields>
         <relatedList>SiebelDocumentLink__x.PAR_ROW_ID_ORDER__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

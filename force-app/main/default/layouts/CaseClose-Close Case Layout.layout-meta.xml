@@ -144,10 +144,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EnergyService__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>SalesCompany__c</field>
             </layoutItems>
             <layoutItems>
