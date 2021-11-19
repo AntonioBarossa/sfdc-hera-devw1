@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help></help>
+    <help>Per i prodotti MDQ, l&apos;importo dell&apos;aumento da Linea Quota per il segmento originale.</help>
     <label>Aumento Segmento (Amt)</label>
     <name>SBQQ__SegmentUpliftAmount__c</name>
 </CustomFieldTranslation>

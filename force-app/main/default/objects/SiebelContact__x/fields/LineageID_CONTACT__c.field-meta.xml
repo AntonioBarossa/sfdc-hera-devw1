@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>LineageID_CONTACT</label>
+    <label>LineageID (Contatto)</label>
     <length>200</length>
     <required>false</required>
     <type>Text</type>

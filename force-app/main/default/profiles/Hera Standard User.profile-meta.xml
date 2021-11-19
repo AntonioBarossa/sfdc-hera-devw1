@@ -125,6 +125,14 @@
     </classAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_MetersListColumnTable__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_ServicePointMetersList__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>AccountDataEnrichment__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -323,6 +331,10 @@
         <enabled>true</enabled>
         <name>HDT_UserInputFlow__mdt</name>
     </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_CallScriptValue__mdt</name>
+    </customMetadataTypeAccesses>
     <custom>true</custom>
     <customSettingAccesses>
         <enabled>true</enabled>
@@ -461,6 +473,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>MatriceRemiCode__c.VATNumberUdb__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ServicePoint__c.IsDigitalMarking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ServicePoint__c.IsWrongFiscalData__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -636,6 +658,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.RdsCodeSiebel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Interaction__c.IsDigitalMarking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Interaction__c.IsWrongFiscalData__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1871,6 +1903,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>BlackList__c.Pod__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AccountStatementFilter__c.IsDigitalMarking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AccountStatementFilter__c.IsWrongFiscalData__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3356,6 +3398,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AuthorizationFormText.SummaryAuthFormText</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>BillingProfile__c.IsDigitalMarking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>BillingProfile__c.IsWrongFiscalData__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15072,6 +15124,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>OrderItem.ProductCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>OrderItem.ProductFamily__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -20743,6 +20800,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Quote__c.ListAmountVAT__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.ListPriceName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -29942,9 +30004,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.RecordingLink__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -30009,6 +30071,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.StartDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.RequestedCancellationDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

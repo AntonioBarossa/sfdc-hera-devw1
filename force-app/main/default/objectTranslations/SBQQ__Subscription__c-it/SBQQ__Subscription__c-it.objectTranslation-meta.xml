@@ -18,7 +18,7 @@
     </fieldSets>
     <gender></gender>
     <layouts>
-        <layout>Subscription Layout</layout>
+        <layout>SBQQ__Subscription Layout</layout>
         <sections>
             <label></label>
             <section>Analisi Consumi</section>
@@ -43,18 +43,18 @@
             <label></label>
             <section>Pricing Info</section>
         </sections>
-        <sections>
+        <!--<sections>
             <label></label>
             <section>Renewal Info</section>
-        </sections>
+        </sections>-->
         <sections>
             <label></label>
             <section>Sconti</section>
         </sections>
-        <sections>
+        <!--<sections>
             <label></label>
             <section>Segment Info</section>
-        </sections>
+        </sections>-->
     </layouts>
     <nameFieldLabel></nameFieldLabel>
     <recordTypes>

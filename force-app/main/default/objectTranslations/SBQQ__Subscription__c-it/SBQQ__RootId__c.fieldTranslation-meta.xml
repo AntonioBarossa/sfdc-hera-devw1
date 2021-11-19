@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help></help>
+    <help>L&apos;ID della sottoscrizione o dell&apos;attività alla base del bundle che contiene questa sottoscrizione.</help>
     <label></label>
     <name>SBQQ__RootId__c</name>
 </CustomFieldTranslation>

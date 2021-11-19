@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    12/11/2021
+    Reason: Modifica per gestione Annullamento Case con Phase "In Bozza", Case con Type "Blocco Sollecito/Interessi" e inversione porzioni di codice Case/Knowledge Article
+*/
 public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.Batchable<SObject>, Database.AllowsCallouts {
 
 
@@ -8,12 +13,13 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         List<SObject> scope = new List<SObject>();
 
 
-        scope.addAll(postsalesQr.getExpiredArticle());
         scope.addAll(postsalesQr.getExpiredCase());
         scope.addAll(postsalesQr.getQuotationCase());
         scope.addAll(postsalesQr.getNonReqContract());
         scope.addAll(postsalesQr.getAutoletturaBozzaCase());
         scope.addAll(postsalesQr.getPostSalesBozzaCase());
+        scope.addAll(postsalesQr.getExpiredArticle());
+
 
 
         return scope;
@@ -52,11 +58,6 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
             switch on sobj{
 
-                when Knowledge__kav article{
-                    if(article.ExpirationDate__c != null){
-                        KbManagement.PublishingService.archiveOnlineArticle(article.KnowledgeArticleId,null);
-                    }
-                }
                 when Case currentCase{
                     
                     //ANNULLAMENTO CASE BOZZA AUTOLETTURA OLTRE SCADENZA
@@ -86,10 +87,10 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                     }
                     
                     
-                    if(currentCase.Type.equalsIgnoreCase('Piano Rateizzazione')){
+                    if(currentCase.Type.equalsIgnoreCase('Piano Rateizzazione') || currentCase.Type.equalsIgnoreCase('Blocco Sollecito/Interessi')){
                         SObject transition;
                         SObject action;
-                        String method = 'HDT_InstallmentPlans';
+                        String method = currentCase.Type.equalsIgnoreCase('Piano Rateizzazione') ? 'HDT_InstallmentPlans' : 'HDT_ReminderBlock';
                         Map<String, Object> args = new Map<String,Object>();
                         Case newCase = new Case();
                         newCase.Id = currentCase.Id;
@@ -103,7 +104,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                         responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) paymentsWs.execute(args);
 
                         //TO trigger Technical Phase
-                        HDT_UTL_DatabaseService.updateSObject(newCase);
+                        myCurrentCaseList.add(newCase);
                     }else if(currentCase.Cluster__c.equalsIgnoreCase('Preventivi') || currentCase.Cluster__c.equalsIgnoreCase('Verifiche')){
                         currentCase.Phase__c = 'Preventivo scaduto';
                         HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
@@ -123,7 +124,6 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                             if(relatedOrder.EffectiveDate__c < System.today()){
                                 currentCase.Phase__c = 'Da Inviare';
                                 //Fire del platform event per inviare il flusso ad Heroku
-                                //System.debug('# case da delegare ad un altro evento: ' + currentCase.size());
                                 HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
                                 event.SerializedCase__c = JSON.serialize(currentCase);
                                 Database.SaveResult sr = EventBus.publish(event);
@@ -136,13 +136,17 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                 }
                             }
                         }
+                    }                    
+                }
+                when Knowledge__kav article{
+                    if(article.ExpirationDate__c != null){
+                        KbManagement.PublishingService.archiveOnlineArticle(article.KnowledgeArticleId,null);
                     }
-                    
                 }
             }
         }
         if(!myCurrentCaseList.isEmpty()){
-            update myCurrentCaseList;
+            HDT_UTL_DatabaseService.updateSObject(myCurrentCaseList);
         }
     }
 

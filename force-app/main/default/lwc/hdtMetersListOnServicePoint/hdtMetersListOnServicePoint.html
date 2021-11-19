@@ -1,0 +1,49 @@
+<template>
+
+    <article class="slds-card slds-card_boundary">
+        <div class="slds-page-header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <lightning-icon icon-name="standard:planogram" alternative-text="Misuratori" title="Misuratori" size="small" ></lightning-icon>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <span>{title}</span>
+                    </h2>
+                </div>
+            </header>
+        </div>
+    
+        <template if:false={spinner} >
+            <div class="slds-card__body slds-m-top_none slds-border_top">
+                <template if:false={error} >
+                    <div class={tableHeightCss} >
+                        <lightning-datatable
+                                key-field="assetNumber"
+                                data={data}
+                                columns={columns}
+                                show-row-number-column
+                                hide-checkbox-column
+                        ></lightning-datatable>
+                    </div>
+                </template>
+                <template if:true={error} >
+                    <div class="slds-scoped-notification slds-media slds-media_center slds-theme_warning" role="status" style="border-radius: 5px;">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="utility:warning" alternative-text="warning" title="warning" ></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <p>{errorMessage}</p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+    
+        <template if:true={spinner} >
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+    
+    </article>
+
+</template>

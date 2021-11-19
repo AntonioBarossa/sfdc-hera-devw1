@@ -81,7 +81,7 @@
         </filters>
         <filters>
             <field>SkipUsernames__c</field>
-            <operator>EqualTo</operator>
+            <operator>Contains</operator>
             <value>
                 <elementReference>$User.Username</elementReference>
             </value>
@@ -109,7 +109,7 @@
         </filters>
         <filters>
             <field>SkipDueDateTime__c</field>
-            <operator>EqualTo</operator>
+            <operator>GreaterThan</operator>
             <value>
                 <elementReference>$Flow.CurrentDateTime</elementReference>
             </value>

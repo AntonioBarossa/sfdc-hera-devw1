@@ -269,7 +269,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     {
                         contractReference = contractQr.getContractAccountCompanyOwner(currentOrder.ContractReference__c);
                     }
-                    if(!String.isEmpty(contractReference.Id) && contractReference.Account.CompanyOwner__c.equalsIgnoreCase('Reseller'))
+                    if(!String.isEmpty(contractReference.Id) && !contractReference.Account.CompanyOwner__c.equalsIgnoreCase('HERA COMM'))
                     {
                         orderToUpdate.Phase__c = 'Esportazione VS Siebel';
                     }

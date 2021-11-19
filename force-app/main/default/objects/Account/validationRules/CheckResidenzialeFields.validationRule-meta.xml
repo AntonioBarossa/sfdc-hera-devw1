@@ -6,7 +6,9 @@
 					RecordType.DeveloperName = &quot;HDT_RT_Partner&quot;,
 					AND(ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;), IsSOL__c = true)), false,
 		
-			IF(AND(RecordType.DeveloperName = &quot;HDT_RT_Residenziale&quot;,  OR( AND(ISBLANK(FiscalCode__c),NOT(IsWrongFiscalData__c)), NOT(BillingIsAddressVerified__c) ,ISPICKVAL(Category__c, &quot;&quot;),ISPICKVAL(CustomerMarking__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),true , false)
+			IF(AND(RecordType.DeveloperName = &quot;HDT_RT_Residenziale&quot;,  OR( AND(ISBLANK(FiscalCode__c),NOT(IsWrongFiscalData__c)), 
+			
+			AND(NOT(BillingIsAddressVerified__c),IsMigrated__c = false) ,ISPICKVAL(Category__c, &quot;&quot;),ISPICKVAL(CustomerMarking__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),true , false)
 		)</errorConditionFormula>
     <errorMessage>I Seguenti campi devono essere popolati : Marcatura, Categoria, Codice fiscale , Indirizzo, Silos</errorMessage>
 </ValidationRule>

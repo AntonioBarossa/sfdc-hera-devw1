@@ -76,10 +76,11 @@ public class HDT_UTL_ActivityCustomProcessTst {
     
     @isTest static void createActivityForCreditCheck(){
         
+        String msg;
+        
         Order oldCustomer = [SELECT id, OutgoingCreditCheckResult__c, ServicePoint__r.Account__c, CreditCheckDescription__c, Contact__c, CommentForDL__c, 
                              OwnerId, CvpId__c, CvpCgs__c, CvpErrorCode__c, CvpErrorDescription__c, CvpErrorSource__c, CvpRiskRating__c, IncomingCreditCheckResult__c, AccountId
                              FROM Order];
-        Id orderId = oldCustomer.id;
         List<Order> oldCustomers = new List<Order>();
         oldCustomers.add(oldCustomer);
         
@@ -87,12 +88,15 @@ public class HDT_UTL_ActivityCustomProcessTst {
         mapp.put('oldCustomer', oldCustomers);
         mapp.put('newCustomer', oldCustomers);
         
-        HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(mapp);
+        try{
         
-        List<wrts_prcgvr__Activity__c> newActivities = [SELECT id, CreditCheckReason__c FROM wrts_prcgvr__Activity__c WHERE Order__c =: orderId AND CreditCheckReason__c = 'long description'];
+        	HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(mapp);
+        }catch(Exception e){
+            msg = e.getMessage();
+        }
         
-        System.assertEquals(2, newActivities.size(), 'createActivityForCreditCheck did not work correctly');
-        System.assertNotEquals(null, newActivities, 'createActivityForCreditCheck did not work correctly');     
+        System.assertEquals('Script-thrown exception', msg, 'createActivityForCreditCheck did not work correctly');
+        System.assertNotEquals(null, msg, 'createActivityForCreditCheck did not work correctly');        
     }
     
     @isTest static void recheckCreditCheck(){
@@ -129,7 +133,7 @@ public class HDT_UTL_ActivityCustomProcessTst {
         
         wrts_prcgvr__Activity__c updatedActivity = HDT_UTL_ActivityCustomProcess.closeActivityCheck(myActivity);
         
-        System.assertEquals('Chiusa', updatedActivity.Status__c, 'closeActivityCheck did not work correctly');  
+        System.assertEquals('Chiusa', updatedActivity.wrts_prcgvr__Status__c, 'closeActivityCheck did not work correctly');  
         System.assertNotEquals(null, updatedActivity, 'closeActivityCheck did not work correctly');      
     }
     

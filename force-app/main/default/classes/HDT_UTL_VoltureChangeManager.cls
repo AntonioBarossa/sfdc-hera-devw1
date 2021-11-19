@@ -168,22 +168,29 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             nazione => currentOrder.SupplyCountry__c
         };
 
+        /**@frpanico 12/11/2021
+         * Updated if statements
+         * If the field is not present in the response
+         * the check should not be performed
+         * Address check is done inside the voltureChangeUtils.addressCheck(addressCheckMap) method
+         */
+
         /* Tension Check */
-        if(voltureChangeUtils.getTension(tension) != currentOrder.VoltageLevel__c)
+        if(String.isNotEmpty(tension) && voltureChangeUtils.getTension(tension) != currentOrder.VoltageLevel__c)
         {
             returnMap.put('message', 'Valori tensione non corrispondenti');
             returnMap.put('result', false);
             return returnMap;
         }
         /* Power Available Check */
-        if(!voltureChangeUtils.powerCheck(powerAvailable, String.valueOf(currentOrder.PowerAvailable__c)))
+        if(String.isNotEmpty(powerAvailable) && !voltureChangeUtils.powerCheck(powerAvailable, String.valueOf(currentOrder.PowerAvailable__c)))
         {
             returnMap.put('message', 'Valori Potenza Disponibile non corrispondenti');
             returnMap.put('result', false);
             return returnMap;
         }
         /* Power Committed Check */
-        if(!voltureChangeUtils.powerCheck(powerCommitted, String.valueOf(currentOrder.PowerCommitted__c)))
+        if(String.isNotEmpty(powerCommitted) && !voltureChangeUtils.powerCheck(powerCommitted, String.valueOf(currentOrder.PowerCommitted__c)))
         {
             returnMap.put('message', 'Valori Potenza Impegnata non corrispondenti');
             returnMap.put('result', false);

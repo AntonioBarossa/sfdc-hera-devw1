@@ -1,8 +1,15 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    12/11/2021
+    Reason: Modifiche per gestione Annullamento Case con Phase "In Bozza", Case con Type "Blocco Sollecito/Interessi"
+*/
 public inherited sharing class HDT_QR_PostSalesMasterBatch {
 
     Date todayDate = System.today();
     String phaseInstallments = 'Pratica In Attesa';
     String typeInstallments = 'Piano Rateizzazione';
+    String dunningBlock = 'Blocco Sollecito/Interessi';
+    Set<String> typeSet = new Set<String>{typeInstallments,dunningBlock};
     String nonRequestedContract = 'Contratto Non Richiesto';
     String phaseQuotations = 'Attesa conferma preventivo cliente';
     String bozzaCase = 'Bozza';
@@ -32,7 +39,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         SuspensionEndDate__c
         FROM Case
         WHERE Phase__c = :this.phaseInstallments
-        AND Type = :this.typeInstallments
+        AND Type IN :this.typeSet
         AND SuspensionEndDate__c <= :this.todayDate
         WITH SECURITY_ENFORCED
         ];

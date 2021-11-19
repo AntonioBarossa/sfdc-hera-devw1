@@ -36,5 +36,20 @@ public inherited sharing class HDT_QR_CampaignMemberAssigmentItem {
             where CampaingMemberAssigment__c = :Id
             WITH SECURITY_ENFORCED
         ];
+    }
+
+    public List<CampaignMemberAssigmentItem__c> getItemsByAgency(List<Id> Ids) {
+        return [
+            SELECT 
+            Id,
+            Name,
+            Agency__c,
+            CampaingMemberAssigment__c,
+            PercentageAllocation__c,
+            ProcessingType__c
+            FROM CampaignMemberAssigmentItem__c
+            WHERE Agency__c IN :Ids
+            WITH SECURITY_ENFORCED
+        ];
     } 
 }

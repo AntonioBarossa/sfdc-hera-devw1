@@ -17,12 +17,14 @@ public with sharing class HDT_LC_DownloadAttachmentAzure {
             //    // Update contact phone number
             //    return '';
             // }
+            //START Modifica>>> marco.arci@webresults.it 10/11/21
             SiebelDocumentLink__x objectDLink = [SELECT NOME_FILE_DOWNLOAD__c, FILE_NAME__c, FILE_EXT__c FROM SiebelDocumentLink__x WHERE ID =:rId WITH SECURITY_ENFORCED LIMIT 1];
             Map<String,String> nameFile = new Map<String,String>();
             nameFile.put('NOME_FILE_DOWNLOAD__c', objectDLink.NOME_FILE_DOWNLOAD__c);
             nameFile.put('FILE_NAME__c', objectDLink.FILE_NAME__c);
             nameFile.put('FILE_EXT__c', objectDLink.FILE_EXT__c);
             return nameFile;
+            //END Modifica>>> marco.arci@webresults.it 10/11/21
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }

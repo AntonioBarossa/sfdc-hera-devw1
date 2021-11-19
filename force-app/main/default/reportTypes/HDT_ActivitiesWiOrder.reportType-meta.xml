@@ -357,11 +357,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Status__c</field>
-            <table>wrts_prcgvr__Activity__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>wrts_prcgvr__Status__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>

@@ -948,26 +948,6 @@ CampaignMember member = new CampaignMember(
     }
 
     @isTest
-    static void testGetScriptNameFromCampaign(){
-        List<Contact> contactList = [SELECT Id FROM Contact LIMIT 1];
-        List<Campaign> listCampaign = [SELECT Id FROM Campaign LIMIT 1];
-        List<CampaignMember> members = new List<CampaignMember>();
-        CampaignMember member = new CampaignMember(
-            ContactId = contactList[0].Id,
-            Status = 'Inviato',
-            CampaignId = listCampaign[0].Id
-        ); 
-        members.add(member); 
-        insert members;
-        List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
-
-        Test.startTest();
-        String testString = HDT_LC_CampaignsController.getScriptNameFromCampaign(testMembers[0].Id);
-        System.assertEquals(null, testString, 'testString != null');
-        Test.stopTest();
-    }
-
-    @isTest
     static void testGetCampaignAndAccountByMember(){
         List<Contact> contactList = [SELECT Id FROM Contact LIMIT 1];
         List<Campaign> listCampaign = [SELECT Id FROM Campaign LIMIT 1];

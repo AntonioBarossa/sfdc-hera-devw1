@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help></help>
+    <help>Indica come il prezzo per questa linea è calcolato. &quot;List&quot; = sottrare lo sconto dalla lista prezzo.</help>
     <label>Metodo Prezzatura</label>
     <name>SBQQ__PricingMethod__c</name>
     <picklistValues>

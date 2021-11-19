@@ -13,6 +13,7 @@ public inherited sharing class HDT_LC_CampaignsController {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_Product productQr = new HDT_QR_Product();
     private static HDT_SRV_Product productSrv = new HDT_SRV_Product();
+    private static HDT_QR_CampaignMemberAssigmentItem cmAssignmentItem = new HDT_QR_CampaignMemberAssigmentItem();
     
     @AuraEnabled(cacheable=true)
     public static List <CampaignMember> getCampaigns(String id, String objectName, String category, String channel) {
@@ -125,9 +126,15 @@ public inherited sharing class HDT_LC_CampaignsController {
     public static List<CampaignMember> assignCampaignMemberAgency(String campaignId, List<Id> toAssignObj){
         List<CampaignMember> allUnassignedMembers = campaignMemberQr.getUnassignedCampaignMembers(campaignId);
         List<CampaignMember> assignedMembers = new List<CampaignMember>();
+        List<CampaignMemberAssigmentItem__c> items = cmAssignmentItem.getItemsByAgency(toAssignObj);
+        Map<String,String> agencyProcessingTypeMap = new Map<String,String>();
+        for (CampaignMemberAssigmentItem__c item : items) {
+            agencyProcessingTypeMap.put((String)item.Agency__c, (String)item.ProcessingType__c);
+        }
         for (Id agencyId : toAssignObj) {
             CampaignMember cm = allUnassignedMembers[0];
             cm.Agency__c = agencyId;
+            cm.ProcessingType__c = agencyProcessingTypeMap.get((String)agencyId);
             assignedMembers.add(cm);
             allUnassignedMembers.remove(0);            
         }
@@ -417,12 +424,6 @@ public inherited sharing class HDT_LC_CampaignsController {
         return currentAccount ;
         
         
-    }
-
-    @AuraEnabled(cacheable=true)
-    public static String getScriptNameFromCampaign(String memberId){
-        List<CampaignMember> lcs = [select id, Campaign.ScriptConfig__r.Name from CampaignMember where id=:memberId WITH SECURITY_ENFORCED LIMIT 1];
-        return lcs.isEmpty()? '' : lcs[0].Campaign.ScriptConfig__r.Name;
     }
     
     @AuraEnabled(cacheable=true)

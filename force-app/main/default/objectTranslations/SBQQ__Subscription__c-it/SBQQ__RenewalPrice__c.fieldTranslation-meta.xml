@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help></help>
+    <help>Override del prezzo calcolato di default di questa sottoscrizione su una quota rinnovata. Se il metodo di prezzatura del rinnovo dell&apos;account è Uplift, l&apos;aumento si applica a questo prezzo di rinnovo.</help>
     <label>Prezzo Rinnovo</label>
     <name>SBQQ__RenewalPrice__c</name>
 </CustomFieldTranslation>

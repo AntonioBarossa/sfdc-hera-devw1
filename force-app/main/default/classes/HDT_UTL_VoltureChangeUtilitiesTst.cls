@@ -145,7 +145,7 @@ public with sharing class HDT_UTL_VoltureChangeUtilitiesTst {
     static void getTensionAtTst()
     {
         Test.startTest();
-        String result = voltureChangeUtilities.getTension(String.valueOf(HDT_UTL_VoltureChangeUtilities.atLimit));
+        String result = voltureChangeUtilities.getTension(String.valueOf(HDT_UTL_VoltureChangeUtilities.atLimit + 1));
         Test.stopTest();
         System.assertEquals('AT', result, 'Livello Tensione AT non calcolato correttamente');
     }

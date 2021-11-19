@@ -57,7 +57,7 @@ static void makeData(){
 
     List<wrts_prcgvr__Activity__c> actCust = HDT_UTL_DataFactoryTst.createActivityCustom(1, false, accList[0].Id);
     actCust[0].Order__c = orders[0].id;
-    actCust[0].Status__c = 'Creata';
+    actCust[0].wrts_prcgvr__Status__c = 'Creata';
     actCust[0].NewEmail__c = 'yes@no.it';
     actCust[0].NewMobile__c = '3334441122';
     actCust[0].DiscardCategory__c = 'Anonima';

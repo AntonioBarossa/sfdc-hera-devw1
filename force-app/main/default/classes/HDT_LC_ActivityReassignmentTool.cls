@@ -58,7 +58,8 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
                     'id' => user.Id,
                     'name' => user.Name,
                     'loginChannel' => user.LoginChannel__c,
-                    'workGroup' => user.CreatorGroup__c,
+                    // 'workGroup' => user.CreatorGroup__c,
+                    'workGroup' => null,
                     'agency' => user.UserCompany__c,
                     'icon' => 'standard:user'
                 });

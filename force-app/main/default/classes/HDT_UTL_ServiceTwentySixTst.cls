@@ -83,5 +83,15 @@ public class HDT_UTL_ServiceTwentySixTst {
         
         System.assertEquals('', res, 'getFieldValue did not work correctly');
         System.assertNotEquals(null, res, 'getFieldValue did not work correctly');                
-    }    		
+    }
+    
+    @isTest static void testGetFieldValue(){
+        
+        HDT_UTL_ServiceTwentySix service = new HDT_UTL_ServiceTwentySix();
+        
+        String res = service.getFieldValue('CustomCheck.test', null, null);
+        
+        System.assertEquals('', res, 'getFieldValue did not work correctly');
+        System.assertNotEquals(null, res, 'getFieldValue did not work correctly');
+    }
 }
