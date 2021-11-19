@@ -8,7 +8,7 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
         for(SBQQ__Subscription__c sub : newSubs){
             itemToSub.put(sub.SBQQ__OrderProduct__c, sub);
         }
-        Map<Id, OrderItem> itemsMap = new Map<Id, OrderItem>([SELECT id, Order.OrderReference__c, Order.ContractReference__c, Order.ServicePoint__c, Order.RecordType.DeveloperName FROM OrderItem WHERE Id IN :itemToSub.keySet() AND (Order.OrderReference__c!=null OR Order.ContractReference__c!=null OR Order.RecordType.DeveloperName='HDT_RT_ScontiBonus' ) WITH Security_Enforced ]);
+        Map<Id, OrderItem> itemsMap = new Map<Id, OrderItem>([SELECT id, Order.OrderReference__c, Order.ContractReference__c, Order.ServicePoint__c, Order.RecordType.DeveloperName FROM OrderItem WHERE Id IN :itemToSub.keySet() AND (Order.RecordType.DeveloperName='HDT_RT_ScontiBonus' OR (Order.RecordType.DeveloperName='HDT_RT_VAS' AND (Order.OrderReference__c!=null OR Order.ContractReference__c!=null)) ) WITH Security_Enforced ]);
         list<OrderItem> items = itemsMap.values();
         Map<id, id> itemToOrderOffer = new Map<id, id>();
         Map<id, id> itemToContract = new Map<id, id>();
