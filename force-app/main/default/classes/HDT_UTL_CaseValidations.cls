@@ -96,6 +96,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         {
             result = validatePreventivi(fields, currentCase);
         
+        }else if(caseType == 'Proroga Conn Temp')
+        {
+            result = validateEndDate(fields);
+        
         }else {
 
         result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
@@ -1162,6 +1166,23 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         if (newHasOptedOutOfEmail == currentHasOptedOutOfEmail && newHasOptedOutSoftSpam == currentHasOptedOutSoftSpam && 
             newMarketingPrivacy.equals(currentMarketingPrivacy) && newProfilingPrivacy.equals(currentProfilingPrivacy)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un consenso privacy per poter proseguire.'));
+        }
+
+        return result;
+    }
+
+    public String validateEndDate(String fields){
+
+        String startDateString = getFieldValue(fields, 'TemporaryConnectionStartDate__c');
+        String endDateString = getFieldValue(fields, 'TemporaryConnectionEndDate__c');
+
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+
+        Date startDate = Date.valueOf(startDateString);
+        Date endDate = Date.valueOf(endDateString);
+
+        if ( startDate <= System.today() || endDate <= startDate) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario che la data finale sia successiva alla data iniziale.'));
         }
 
         return result;
