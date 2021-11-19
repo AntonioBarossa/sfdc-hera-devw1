@@ -180,7 +180,7 @@
                 <componentName>force:relatedListSingleContainer</componentName>
             </componentInstance>
         </itemInstances>
-        <name>Facet-bd6b1efd-0046-4b79-8425-428b35147f89</name>
+        <name>Facet-42512823-ff4e-4299-9345-2a5da3c06df4</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -274,11 +274,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-bd6b1efd-0046-4b79-8425-428b35147f89</value>
+                    <value>Facet-42512823-ff4e-4299-9345-2a5da3c06df4</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Alerts Tracking</value>
+                    <value>Alert Tracking</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
             </componentInstance>
