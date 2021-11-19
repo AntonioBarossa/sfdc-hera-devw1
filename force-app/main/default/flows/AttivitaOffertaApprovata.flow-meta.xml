@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>52.0</apiVersion>
     <assignments>
         <name>Set_Fields</name>
         <label>Set_Fields</label>
@@ -14,7 +13,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Activity.Status__c</assignToReference>
+            <assignToReference>Get_Activity.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Chiusa</stringValue>
@@ -54,7 +53,6 @@
         <connector>
             <targetReference>Set_Fields</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>

@@ -14,7 +14,6 @@
             <typeName>T__caseRecord</typeName>
             <typeValue>Case</typeValue>
         </dataTypeMappings>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>causalCode</name>
             <value>
@@ -73,7 +72,6 @@
             <typeName>T__caseRecord</typeName>
             <typeValue>Order</typeValue>
         </dataTypeMappings>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>causalCode</name>
             <value>
@@ -181,7 +179,6 @@
         <connector>
             <targetReference>AssegnaFormattazioneNote</targetReference>
         </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>cancellationNote</name>
             <value>
@@ -206,7 +203,6 @@
         <connector>
             <targetReference>AssegnaNoteAnnullamento</targetReference>
         </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>cancellationNote</name>
             <value>
@@ -221,7 +217,6 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <apiVersion>50.0</apiVersion>
     <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare</name>
         <label>Aggiorna Fase in Da Inviare</label>
@@ -514,13 +509,6 @@
         <locationX>1677</locationX>
         <locationY>2440</locationY>
         <assignmentItems>
-            <assignToReference>Annulla_Attivita.Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Annullata</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>Annulla_Attivita.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -536,13 +524,6 @@
         <label>Assegna Stato</label>
         <locationX>4606</locationX>
         <locationY>2846</locationY>
-        <assignmentItems>
-            <assignToReference>Annulla_Attivita_0.Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Annullata</stringValue>
-            </value>
-        </assignmentItems>
         <assignmentItems>
             <assignToReference>Annulla_Attivita_0.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -1334,7 +1315,6 @@
         <connector>
             <targetReference>Aggiorna_Fase_in_Da_Inviare</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Cluster__c</field>
             <operator>EqualTo</operator>
@@ -1376,7 +1356,6 @@
         <connector>
             <targetReference>Annulla_Attivita</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
         <filters>
             <field>Case__c</field>
             <operator>EqualTo</operator>
@@ -1411,7 +1390,6 @@
         <connector>
             <targetReference>Annulla_Attivita_0</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
         <filters>
             <field>Order__c</field>
             <operator>EqualTo</operator>
@@ -1446,7 +1424,6 @@
         <connector>
             <targetReference>Motivo_Annullamento_Screen</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1467,7 +1444,6 @@
         <connector>
             <targetReference>NoteAnnullamento</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1488,7 +1464,6 @@
         <connector>
             <targetReference>Quale_Processo</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1509,7 +1484,6 @@
         <connector>
             <targetReference>Assegna_Motivo_0_0_0</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1530,7 +1504,6 @@
         <connector>
             <targetReference>NoteAnnullamentoOrder</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1554,7 +1527,6 @@
         <faultConnector>
             <targetReference>Motivo_Annullamento_Screen_0_0</targetReference>
         </faultConnector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>ContractId</field>
             <operator>EqualTo</operator>
@@ -1582,7 +1554,6 @@
         <connector>
             <targetReference>Processo</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1603,7 +1574,6 @@
         <connector>
             <targetReference>getOrderAttivazione</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
         <filters>
             <field>SobjectType</field>
             <operator>EqualTo</operator>
@@ -1808,7 +1778,6 @@
                     <elementReference>GetRecord.Id</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1877,7 +1846,6 @@
                     <elementReference>GetRecord.RecordType.DeveloperName</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>DefaultReason</assignToReference>
@@ -1960,7 +1928,6 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2017,7 +1984,6 @@
                     <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>DefaultReason</assignToReference>
@@ -2100,7 +2066,6 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2163,7 +2128,6 @@
                     <elementReference>GetRecord.Type</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>DefaultReason</assignToReference>
@@ -2246,7 +2210,6 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2315,7 +2278,6 @@
                     <elementReference>GetOrder.CancellationReason__c</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>DefaultReason</assignToReference>
@@ -2392,7 +2354,6 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
