@@ -477,10 +477,6 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>AZ_ImportDatetime__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_DELTA_CUMULATO__c</field>
             </layoutItems>
