@@ -4,11 +4,11 @@
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
             aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                 <div class="slds-modal__container">
-                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"  style="overflow: initial">
                         <template if:true={showSpinner}>
                             <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
                         </template>
-                        <lightning-card title="Gestione Documentazione Anticipata" icon-name="custom:custom12" size="small"> 
+                        <lightning-card title="Gestione Documentazione Anticipata" icon-name="custom:custom12"> 
                             <div class="slds-grid">
                                 <div class="slds-col slds-size_1-of-3">
                                     <lightning-combobox name="modalitaInvio" label="Modalità di invio documentazione" value={sendMode}
