@@ -2330,8 +2330,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
 
         // if (this.loginChannel === 'Sportello') {
-            this.template.querySelector('c-hdt-modulo-informativo-modal').handleShowModal();
-            this.template.querySelector('c-hdt-modulo-informativo-modal').initVariables({'tipoDoc': tipoDoc});
+            // this.template.querySelector('c-hdt-modulo-informativo-modal').handleShowModal();
+            // this.template.querySelector('c-hdt-modulo-informativo-modal').initVariables({'tipoDoc': tipoDoc});
+            this.template.querySelector('c-hdt-advance-document-manager').handleShowModal();
+            this.template.querySelector('c-hdt-advance-document-manager').initVariables({'tipoDoc': tipoDoc, 'canale': this.loginChannel});
         // } else {
         //     this.loading = true;
         //     var formParams = {     

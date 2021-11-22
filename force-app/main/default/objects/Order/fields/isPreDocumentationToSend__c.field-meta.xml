@@ -3,7 +3,7 @@
     <fullName>isPreDocumentationToSend__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Modulo da inviare</label>
+    <label>Documentazione Anticipata da inviare</label>
     <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>
