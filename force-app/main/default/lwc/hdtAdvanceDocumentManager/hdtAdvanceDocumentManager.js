@@ -23,20 +23,7 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
     @track phone;
     context = 'DocumentazioneAnticipata';
 
-    modalitaInvio = [
-        {
-        label:'Stampa Cartacea',
-        value:'Stampa Cartacea'
-        },
-        {
-            label:'E-Mail',
-            value:'E-Mail'
-        },
-        {
-            label:'SMS',
-            value:'SMS'
-        }
-    ];
+    @track modalitaInvio = [];
 
     @api
     handleShowModal(){
@@ -50,13 +37,39 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
         this.loginChannel = params.canale;
         console.log('tipoPlico: ' + this.tipoPlico);
         console.log('loginChannel: ' + this.loginChannel);
+
+        const modInvioSportello = [
+            {
+                label:'Stampa Cartacea',
+                value:'Stampa Cartacea'
+            }
+        ];
+
+        const modInvioMarketingCloud = [
+            {
+                label:'E-Mail',
+                value:'E-Mail'
+            },
+            {
+                label:'SMS',
+                value:'SMS'
+            }
+        ];
+
+        if (this.loginChannel != null && this.loginChannel !== undefined && this.loginChannel.localeCompare('Sportello')===0){
+            this.modalitaInvio = modInvioSportello.concat(modInvioMarketingCloud);
+        }else{
+            this.modalitaInvio = modInvioMarketingCloud;
+        }
+        console.log('initVariables mod invio: ' + JSON.stringify(this.modalitaInvio));
     }
     
     connectedCallback(){
+        console.log('hdtAdvanceDocumentManager connectedCallback()');
         this.recordId = this.order.Id;
-        console.log('order id ' + this.recordId);
         this.email = this.order.Email__c;
         this.phone = this.order.PhoneNumber__c;
+        console.log('order id ' + this.recordId);
     }
 
     handleChange(event){
