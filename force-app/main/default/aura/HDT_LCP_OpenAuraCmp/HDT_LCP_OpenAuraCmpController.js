@@ -38,6 +38,9 @@
         // id dell'Order
         var orderId = myPageRef.state.c__orderId;
 
+        // id dell'interaction
+        var interactionId = myPageRef.state.c__interactionId;
+
 
         console.log('# context -> '                 + context);
         console.log('# accId -> '                   + accId);
@@ -57,6 +60,7 @@
         console.log('# serviceRequestId -> '        + serviceRequestId);
         console.log('# compatibile -> '             + compatibile);
         console.log('# orderId -> '                  + orderId);
+        console.log('# InteractionId -> '                  + interactionId);
 
                 
         var workspaceAPI = component.find("workspace");
@@ -112,7 +116,8 @@
                         c__billingProfileId: billingProfileId,
                         c__serviceRequestId: serviceRequestId,
                         c__compatibile: compatibile,
-                        c__orderId: orderId
+                        c__orderId: orderId,
+                        c__interactionId: interactionId
                     }
                 },
                 focus: true

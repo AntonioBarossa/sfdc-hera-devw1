@@ -40,7 +40,9 @@
         var compatibile = myPageRef.state.c__compatibile; 
         
         // id dell'Order
-        var orderId = myPageRef.state.c__orderId;
+        var orderId = myPageRef.state.c__orderId;        
+        // id dell'Interaction
+        var interactionId = myPageRef.state.c__interactionId;
 
         console.log('# attribute to run flow #');
         console.log('# caseId -> ' + caseId);
@@ -62,8 +64,9 @@
         console.log('# serviceRequestId -> '        + serviceRequestId);
         console.log('# compatibile -> '             + compatibile);
         console.log('# orderId -> '             + orderId);
+        console.log('# interactionId -> '             + interactionId);
         console.log('# ----------------- #');
-
+        
         var workspaceAPI = component.find("workspace");
         var flow = component.find("flowData");
         var subTabToClose;
@@ -163,6 +166,9 @@
         }
         if(orderId != null){
             inputVariables.push({ name : 'OrderId', type : 'String', value : orderId});
+        }        
+        if(interactionId != null){
+            inputVariables.push({ name : 'InteractionId', type : 'String', value : orderId});
         }
 
         console.log('## inputVariables -> ');
