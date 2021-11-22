@@ -458,7 +458,8 @@ export default class HdtAccountStatementPicker extends LightningElement {
         this.documentResiudal = documentResidue;
 
         // Istanzia i campi da mostrare.
-        if( this.processType == 'Verifica pareggio Fittizio Canone RAI' ){
+        console.log('#CalculateAmount: processType -> ' + this.processType);
+        if( this.processType === 'Verifica Pareggio Fittizio Canone Rai' ){
             this.itemToShow = [ { Id: 'totalResiudal', label: 'Totale Residuo Fatture Selezionate', value: this.documentResiudal} ];
         } else {
             this.itemToShow = [ { Id: 'totalAmount', label: 'Totale Importo selezionato', value: this.amountWiFee},
