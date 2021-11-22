@@ -168,7 +168,7 @@
             inputVariables.push({ name : 'OrderId', type : 'String', value : orderId});
         }        
         if(interactionId != null){
-            inputVariables.push({ name : 'InteractionId', type : 'String', value : orderId});
+            inputVariables.push({ name : 'InteractionId', type : 'String', value : interactionId});
         }
 
         console.log('## inputVariables -> ');
