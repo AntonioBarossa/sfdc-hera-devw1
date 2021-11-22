@@ -418,9 +418,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
         console.log('CallBack start');
         this.deliberation = this.order.Deliberation__c;
-        this.service = this.order.ServicePoint__r.CommoditySector__c;
+        //this.service = this.order.ServicePoint__r.CommoditySector__c;
 
-        console.log('COMMODITY: ' + this.service);
+        //console.log('COMMODITY: ' + this.service);
 
         if (this.order.RecordType.DeveloperName === 'HDT_RT_Default') {
             console.log('enter default');
@@ -855,18 +855,25 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
      **/ 
 
     startCheckContendibilita(){
-
-        if((this.pickValue === 'Prima Attivazione' || this.pickValue === 'Subentro Gas') && this.service === 'Gas') {
+        this.checkCompatibilityProcess();
+        /*if((this.pickValue === 'Prima Attivazione' || this.pickValue === 'Subentro Gas') && this.service === 'Gas') {
             this.checkContendibilitaPodPdr();
         }else{
             this.checkCompatibilityProcess();
-        }
+        }*/
     }
 
     checkContendibilitaPodPdr(){
         this.loaded = false;
         let array = [];
-        checkContendibilita({order: this.order})
+        this.precheck = true;
+        this.loaded = true;
+        this.showEsitoCheck = true;
+        if(this.precheck === true)
+        {
+            this.checkCompatibilityProcess();
+        }
+        /*checkContendibilita({order: this.order})
             .then((result) => {
                 array = result;
                 console.log('checkContendibilita - Esito: ' + array['ESITO']);
@@ -890,6 +897,6 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                     mode: 'sticky'
                 });
                 this.dispatchEvent(toastErrorMessage);
-            });
+            });*/
     }
 }
