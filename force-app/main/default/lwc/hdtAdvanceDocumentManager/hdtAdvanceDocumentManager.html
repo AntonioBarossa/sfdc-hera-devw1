@@ -17,9 +17,16 @@
                                 </div>
                                 <div class="slds-col slds-size_1-of-8 slds-grow-none">
                                 </div>
-                                <div class="slds-col slds-size_1-of-3">
-                                    <lightning-input type="email" data-id="email" required={emailRequired} label="Email invio documentazione" value={email} disabled={enableEdit} pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" message-when-pattern-mismatch="Inserire un indirizzo e-mail valido."></lightning-input>
-                                </div>
+                                <template if:true={emailRequired}>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input type="email" data-id="email" required={emailRequired} label="Email invio documentazione" value={email} disabled={enableEdit} pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" message-when-pattern-mismatch="Inserire un indirizzo e-mail valido."></lightning-input>
+                                    </div>
+                                </template>
+                                <template if:true={smsRequired}>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input type="tel" data-id="sms" required={smsRequired} label="Cellulare invio documentazione" value={phone} disabled={enableEdit} pattern="[0-9]{9,10}" message-when-pattern-mismatch="Il cellulare deve contenere 9 o 10 cifre."></lightning-input>
+                                    </div>
+                                </template>
                             </div>
                         </lightning-card>
                     </div>

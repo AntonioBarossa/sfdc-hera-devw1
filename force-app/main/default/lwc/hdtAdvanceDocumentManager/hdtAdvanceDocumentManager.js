@@ -17,8 +17,10 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
     @track showModal;
     @track showSendButton = false;
     @track emailRequired = false;
+    @track smsRequired = false;
     @track showSpinner = false;
     @track email;
+    @track phone;
     context = 'DocumentazioneAnticipata';
 
     modalitaInvio = [
@@ -29,6 +31,10 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
         {
             label:'E-Mail',
             value:'E-Mail'
+        },
+        {
+            label:'SMS',
+            value:'SMS'
         }
     ];
 
@@ -48,7 +54,9 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
     
     connectedCallback(){
         this.recordId = this.order.Id;
-        console.log('order id' + this.recordId);
+        console.log('order id ' + this.recordId);
+        this.email = this.order.Email__c;
+        this.phone = this.order.PhoneNumber__c;
     }
 
     handleChange(event){
@@ -56,8 +64,13 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
             var modSpedizione = this.template.querySelector("lightning-combobox[data-id=modalitaSpedizione]").value;
             if(modSpedizione.localeCompare('E-Mail')===0){
                 this.emailRequired = true;
+                this.smsRequired = false;
+            }else if(modSpedizione.localeCompare('SMS')===0){
+                this.smsRequired = true;
+                this.emailRequired = false;
             }else{
                 this.emailRequired = false;
+                this.smsRequired = false;
                 const allValid = [...this.template.querySelectorAll('lightning-input')]
                     .reduce((validSoFar, inputCmp) => {
                                 inputCmp.reportValidity();
@@ -67,14 +80,10 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
         }catch(error){
             console.error(error);
         }
-        
     }
 
     checkForm(){
         try{
-            const email =this.template.querySelector("lightning-input[data-id=email]").value;
-            console.log('email: ' + email);
-            
             const comboValid = [...this.template.querySelectorAll('lightning-combobox')]
                 .reduce((validSoFar, inputCmp) => {
                             inputCmp.reportValidity();
@@ -98,17 +107,14 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
                         fields[IS_PRE_DOC_TO_SEND.fieldApiName] = true;
 
                         if (this.emailRequired === true){
+                            const email =this.template.querySelector("lightning-input[data-id=email]").value;
+                            console.log('email: ' + email);
                             fields[EMAIL_FIELD.fieldApiName] = email;
+                        }else if(this.smsRequired === true){
+                            const phone =this.template.querySelector("lightning-input[data-id=sms]").value;
+                            console.log('phone: ' + phone);
+                            fields[PHONE_NUMBER_FIELD.fieldApiName] = phone;
                         }
-/*                         switch (this.moduloSendTypeSelection) {
-                            case 'Email':
-                                break;
-                            case 'SMS':
-                                fields[PHONE_NUMBER_FIELD.fieldApiName] = this.sms;
-                                break;
-                            default:
-                                break;
-                        } */
 
                         const recordInput = { fields };
                         updateRecord(recordInput)
