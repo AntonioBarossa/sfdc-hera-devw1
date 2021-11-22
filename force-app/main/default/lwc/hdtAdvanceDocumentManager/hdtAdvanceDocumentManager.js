@@ -72,8 +72,8 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
 
     checkForm(){
         try{
-            var modSpedizione = this.template.querySelector("lightning-combobox[data-id=modalitaSpedizione]");
-            var email =this.template.querySelector("lightning-input[data-id=email]");
+            const email =this.template.querySelector("lightning-input[data-id=email]").value;
+            console.log('email: ' + email);
             
             const comboValid = [...this.template.querySelectorAll('lightning-combobox')]
                 .reduce((validSoFar, inputCmp) => {
@@ -94,9 +94,22 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
                     }else{
 
                         const fields = {};
-                        // TODO: salvare email/sms su order per marketing cloud.
-                        // fields[ID_FIELD.fieldApiName] = this.recordId;
-                        // fields[MOD_SPED.fieldApiName] = modSpedizione.value;
+                        fields[ID_ORDER_FIELD.fieldApiName] = this.order.Id;
+                        fields[IS_PRE_DOC_TO_SEND.fieldApiName] = true;
+
+                        if (this.emailRequired === true){
+                            fields[EMAIL_FIELD.fieldApiName] = email;
+                        }
+/*                         switch (this.moduloSendTypeSelection) {
+                            case 'Email':
+                                break;
+                            case 'SMS':
+                                fields[PHONE_NUMBER_FIELD.fieldApiName] = this.sms;
+                                break;
+                            default:
+                                break;
+                        } */
+
                         const recordInput = { fields };
                         updateRecord(recordInput)
                                 .then(() => {
