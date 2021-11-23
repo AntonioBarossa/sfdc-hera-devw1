@@ -82,7 +82,7 @@ public inherited sharing class HDT_QR_SearchPlug {
         if(objRes.isAccessible()){
 
             myQuote = [
-                SELECT Id, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c, CampaignName__c, CampaignEleggibilityGroup__c,
+                SELECT Id, ListPriceName__c, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c, CampaignName__c, CampaignEleggibilityGroup__c,
                        Market__c, Channel__c, CustomerMarking__c, CategoryTypeClient__c, SuperUser__c,
                        CompanyOwner__c, ClientAge__c, ConsumptionRangeEE__c, ConsumptionRangeGAS__c, PowerFlow__c,
                        ResidentDeliveryAddress__c, FriendCode__c, NewClient__c, Agency__c, UseCategory__c, MeterType__c
