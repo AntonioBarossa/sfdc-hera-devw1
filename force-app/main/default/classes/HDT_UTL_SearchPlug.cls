@@ -196,12 +196,14 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 
         Set<Id> idList = new Set<Id>();
         Set<Id> idToFilterByMunicipalities = new Set<Id>();
-        List<String> familyList = getFamilyList(quote);
+        List<String> familyList;
         List<String> statusList = new List<String>();
         statusList.add(Label.HDT_Sold);//'Vendibile'
 
+        Boolean saleIsEnabled = checkIfSaleIsEnabled();
         Boolean iAmSalesforceCpqAdmin = checkIfIamAsalesforceCpqAdmin();
         Boolean iAmAsuperUser = checkIfIamAsuperUser(quote.SuperUser__c);
+        familyList = getFamilyList(quote, saleIsEnabled);
         System.debug(LoggingLevel.DEBUG, '>>> iAmSalesforceCpqAdmin: ' + iAmSalesforceCpqAdmin + ' - iAmAsuperUser: ' + iAmAsuperUser);
 
         if(iAmSalesforceCpqAdmin && iAmAsuperUser){
@@ -391,19 +393,28 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         }
     }
 
-    public static List<String> getFamilyList(SBQQ__Quote__c quote){
+    private static Boolean checkIfSaleIsEnabled(){
+        HDT_EnableSaleForCPQ__mdt enableSaleForCPQ = HDT_EnableSaleForCPQ__mdt.getInstance('cpq');
+        System.debug('>>> sale is enabled? ' + enableSaleForCPQ.Enabled__c);
+        return enableSaleForCPQ.Enabled__c;
+        //return false;
+    }
+
+    public static List<String> getFamilyList(SBQQ__Quote__c quote, Boolean saleIsEnabled){
         List<String> sl = new List<String>();
 
-        //if(quote.ListPriceName__c.containsIgnoreCase('vas')){
-        //    sl.add('VAS Prodotto');
-        //    sl.add('VAS Servizio');
-        //} else {
-        //    sl.add('Offerta commerciale');
-        //}
-
-        sl.add('Offerta commerciale');
-        sl.add('VAS Prodotto');
-        sl.add('VAS Servizio');
+        if(saleIsEnabled){
+            if(quote.ListPriceName__c.containsIgnoreCase('vas')){
+                sl.add('VAS Prodotto');
+                sl.add('VAS Servizio');
+            } else {
+                sl.add('Offerta commerciale');
+            }
+        } else {
+            sl.add('Offerta commerciale');
+            sl.add('VAS Prodotto');
+            sl.add('VAS Servizio');
+        }
 
         return sl;
     }
