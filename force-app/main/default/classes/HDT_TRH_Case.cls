@@ -36,7 +36,6 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
             
         }
 
-        HDT_UTL_CaseProcess.updateServiceRequest(trigger.new, trigger.old);
 
         Boolean skipForCancellation = HDT_UTL_CaseProcess.manageCancellationProcess(trigger.new,Trigger.oldMap);
         if(!skipForCancellation){
@@ -48,6 +47,8 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
                 .bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});
 
+        HDT_UTL_CaseProcess.updateServiceRequest(trigger.new, trigger.old);
+        
         HDT_UTL_Dependencies.processSequentializationBefore(Trigger.newMap,Trigger.oldMap,'Case'); 
 
     }
