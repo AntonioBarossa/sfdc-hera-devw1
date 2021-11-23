@@ -196,7 +196,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 
         Set<Id> idList = new Set<Id>();
         Set<Id> idToFilterByMunicipalities = new Set<Id>();
-        List<String> familyList = getFamilyList();
+        List<String> familyList = getFamilyList(quote);
         List<String> statusList = new List<String>();
         statusList.add(Label.HDT_Sold);//'Vendibile'
 
@@ -274,14 +274,14 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             newClient = checkBooleanCriteria(quote.NewClient__c, criteria.NewClient__c);
             login = checkLoginGroup(criteria.LoginGroup__c);
 
-            System.debug(LoggingLevel.DEBUG, '>>> criteria productcode: ' + criteria.product__r.productcode);
-            System.debug(LoggingLevel.DEBUG, '>>> age: ' + age);
-            System.debug(LoggingLevel.DEBUG, '>>> consumptionRangeEe: ' + consumptionRangeEe);
-            System.debug(LoggingLevel.DEBUG, '>>> consumptionRangeGas: ' + consumptionRangeGas);
-            System.debug(LoggingLevel.DEBUG, '>>> powerRange: ' + powerRange);
-            System.debug(LoggingLevel.DEBUG, '>>> residentDeliveryAddress: ' + residentDeliveryAddress);
-            System.debug(LoggingLevel.DEBUG, '>>> newClient: ' + newClient);
-            System.debug(LoggingLevel.DEBUG, '>>> login: ' + login);
+            //System.debug(LoggingLevel.DEBUG, '>>> criteria productcode: ' + criteria.product__r.productcode);
+            //System.debug(LoggingLevel.DEBUG, '>>> age: ' + age);
+            //System.debug(LoggingLevel.DEBUG, '>>> consumptionRangeEe: ' + consumptionRangeEe);
+            //System.debug(LoggingLevel.DEBUG, '>>> consumptionRangeGas: ' + consumptionRangeGas);
+            //System.debug(LoggingLevel.DEBUG, '>>> powerRange: ' + powerRange);
+            //System.debug(LoggingLevel.DEBUG, '>>> residentDeliveryAddress: ' + residentDeliveryAddress);
+            //System.debug(LoggingLevel.DEBUG, '>>> newClient: ' + newClient);
+            //System.debug(LoggingLevel.DEBUG, '>>> login: ' + login);
 
             if(age && consumptionRangeEe && consumptionRangeGas && powerRange && residentDeliveryAddress && newClient && login){
 
@@ -391,11 +391,20 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         }
     }
 
-    public static List<String> getFamilyList(){
+    public static List<String> getFamilyList(SBQQ__Quote__c quote){
         List<String> sl = new List<String>();
+
+        //if(quote.ListPriceName__c.containsIgnoreCase('vas')){
+        //    sl.add('VAS Prodotto');
+        //    sl.add('VAS Servizio');
+        //} else {
+        //    sl.add('Offerta commerciale');
+        //}
+
         sl.add('Offerta commerciale');
         sl.add('VAS Prodotto');
         sl.add('VAS Servizio');
+
         return sl;
     }
 
