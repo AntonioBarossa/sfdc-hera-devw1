@@ -92,6 +92,10 @@
                 <behavior>Readonly</behavior>
                 <field>RecordTypeName__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ExternalPartnerNumber__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -282,13 +286,17 @@
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
         <fields>CREATED__c</fields>
         <fields>TODO_CD__c</fields>
         <fields>EVT_STAT_CD__c</fields>
         <relatedList>SiebelActivity__x.TARGET_OU_ID_SF__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ASSET_NUM__c</fields>
         <fields>IMPIANTO_COUNTRY__c</fields>
         <fields>IMPIANTO_PROD_CATG_CD__c</fields>
@@ -296,6 +304,8 @@
         <fields>END_DT__c</fields>
         <fields>X_SHIP_ADDR__c</fields>
         <relatedList>SiebelContract__x.SERV_ACCT_SALESFORCE__c</relatedList>
+        <sortField>START_DT__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
@@ -509,6 +519,17 @@
         <fields>SR_STAT_ID__c</fields>
         <relatedList>SiebelRds__x.CST_OU_ID_SALESFORCE__c</relatedList>
         <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>ExternalId</fields>
+        <fields>OGGETTO_MSG__c</fields>
+        <fields>STATO_NOTIFICA__c</fields>
+        <fields>FLG_LETTO__c</fields>
+        <fields>DATA_INVIO__c</fields>
+        <relatedList>SiebelMsgNotifica__x.ID_BP_SALESFORCE__c</relatedList>
+        <sortField>DATA_INVIO__c</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>

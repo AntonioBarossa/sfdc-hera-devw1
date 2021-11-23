@@ -130,10 +130,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Rds_MOD_INVIO_DOC__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>X_ATTRIB_118__c</field>
             </layoutItems>
             <layoutItems>
@@ -330,14 +326,6 @@
                 <behavior>Readonly</behavior>
                 <field>X_MESE_COMPETENZA__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Rds_ATTRIB_41__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Rds_X_MOD_FATTURA__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -446,10 +434,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_COD_UFFICIO__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Rds_X_HER_DATA_CONSENSO_PEC__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -900,14 +884,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Rds_ATTRIB_47__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Rds_ATTRIB_36__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>X_CF_BENEF__c</field>
             </layoutItems>
             <layoutItems>
@@ -954,10 +930,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Rds_ATTRIB_35__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>ATTRIB_40__c</field>
             </layoutItems>
             <layoutItems>
@@ -967,10 +939,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ATTRIB_45__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Rds_ATTRIB_37__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -1177,10 +1145,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Rds_DESC_TEXT__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>X_NUM_OCCUPANTI__c</field>
             </layoutItems>
             <layoutItems>
@@ -1374,10 +1338,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_ATTRIB_112__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Rds_CREATED_BY__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -1594,6 +1554,8 @@
         <fields>FILE_EXT__c</fields>
         <fields>CREATED__c</fields>
         <relatedList>SiebelDocumentLink__x.SR_ID__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
+        <members>Account_Service_Console</members>
         <members>Arc_SiebelCustomer</members>
         <name>FlexiPage</name>
     </types>
     <types>
-        <members>SiebelMsgNotifica__x</members>
-        <name>CustomObject</name>
-    </types>
-    <types>
-        <members>Case.HDT_RT_PreventiviEle</members>
-        <members>Case.HDT_RT_PreventiviGas</members>
-        <name>RecordType</name>
-    </types>
-    <types>
+        <members>Account-CPQ Account Layout Service Console</members>
+        <members>SiebelActivity__x-SiebelActivity Layout</members>
         <members>SiebelContract__x-SiebelContract Layout</members>
         <members>SiebelCustomer__x-SiebelCustomer Layout</members>
-        <members>SiebelMsgNotifica__x-SiebelMsgNotifica Layout</members>
+        <members>SiebelOrderAttribute__x-SiebelOrderAttribute Layout</members>
         <members>SiebelRdo__x-SiebelRdo Layout</members>
+        <members>SiebelRds__x-SiebelRds Layout</members>
+        <members>wrts_prcgvr__Activity__c-HDT_GestioneAppuntamento</members>
         <name>Layout</name>
     </types>
     <types>
@@ -25,63 +21,34 @@
         <name>PermissionSet</name>
     </types>
     <types>
-        <members>HDT_BA_ActivityDispatcher</members>
-        <members>HDT_BA_AttributesLead</members>
-        <members>HDT_LC_ContactSelection</members>
-        <members>HDT_QR_Contract</members>
-        <members>HDT_SRV_DocumentalManagement</members>
+        <members>HDT_LC_ChildOrderProcessPrecheckTst</members>
         <members>HDT_SRV_PostSalesManager</members>
-        <members>HDT_SRV_PostSalesManagerTst</members>
-        <members>HDT_UTL_CaseValidations</members>
-        <members>HDT_UTL_CaseValidationsTst</members>
+        <members>HDT_SRV_QservHandler</members>
         <members>HDT_UTL_PostSalesManager</members>
+        <members>HDT_UTL_SubscriptionProcess</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Case.Phase__c</members>
-        <members>SiebelMsgNotifica__x.ACTION__c</members>
-        <members>SiebelMsgNotifica__x.CANALE_INVIO__c</members>
-        <members>SiebelMsgNotifica__x.CODICE_PAPERLESS__c</members>
-        <members>SiebelMsgNotifica__x.COD_CLI__c</members>
-        <members>SiebelMsgNotifica__x.DATA_EFFETTIVA_INVIO__c</members>
-        <members>SiebelMsgNotifica__x.DATA_INVIO__c</members>
-        <members>SiebelMsgNotifica__x.DESCR_ESITO__c</members>
-        <members>SiebelMsgNotifica__x.EVENTO__c</members>
-        <members>SiebelMsgNotifica__x.FLG_LETTO__c</members>
+        <members>Order.isPreDocumentationToSend__c</members>
+        <members>Product2.VersionDescr__c</members>
+        <members>SiebelContract__x.IMPIANTO_INSTALL_DT__c</members>
+        <members>SiebelContract__x.LineageID__c</members>
         <members>SiebelMsgNotifica__x.ID_BP_SALESFORCE__c</members>
         <members>SiebelMsgNotifica__x.ID_BP__c</members>
-        <members>SiebelMsgNotifica__x.ID_ENTE__c</members>
-        <members>SiebelMsgNotifica__x.ID_RICH_NOTIFICA__c</members>
-        <members>SiebelMsgNotifica__x.LineageID__c</members>
-        <members>SiebelMsgNotifica__x.MODIFIEDDATE_AZURE__c</members>
-        <members>SiebelMsgNotifica__x.NOME_TEMPLATE__c</members>
-        <members>SiebelMsgNotifica__x.OGGETTO_MSG__c</members>
-        <members>SiebelMsgNotifica__x.PORTALE_SOL__c</members>
-        <members>SiebelMsgNotifica__x.RECAPITO__c</members>
-        <members>SiebelMsgNotifica__x.REGOLA__c</members>
-        <members>SiebelMsgNotifica__x.ROW_ID__c</members>
-        <members>SiebelMsgNotifica__x.STATO_NOTIFICA__c</members>
-        <members>SiebelMsgNotifica__x.TESTO_MSG__c</members>
-        <members>SiebelMsgNotifica__x.TIPO_NOTIFICA__c</members>
-        <members>SiebelMsgNotifica__x.TOTALE_PAPERLESS__c</members>
-        <members>SiebelRdo__x.ACR__c</members>
-        <members>SiebelRdo__x.ADDR__c</members>
-        <members>SiebelRdo__x.CANCEL_REASON_CD__c</members>
-        <members>SiebelRdo__x.PROD_CATG_CD__c</members>
-        <members>SiebelRdo__x.VERIFIED_FLG__c</members>
-        <members>SiebelRdo__x.X_DT_INVIO_COMUNIC_MOROS_CLI__c</members>
-        <members>SiebelRdo__x.X_DT_RIDUZIONE_POTENZA__c</members>
-        <members>SiebelRdo__x.X_DT_STATO_RDO_PREV_ACCETTATO__c</members>
-        <members>SiebelRdo__x.X_LINE_CD__c</members>
+        <members>SiebelRdo__x.X_ACR__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>SBQQ__Subscription__c-it</members>
-        <name>CustomObjectTranslation</name>
+        <members>HDT_LCP_OpenAuraCmp</members>
+        <members>HDT_LCP_RunFlowFromAura</members>
+        <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>hdtMetersListOnServicePoint</members>
-        <members>hdtSelezioneFornituraFlow</members>
+        <members>hdtAccountStatementPicker</members>
+        <members>hdtAdvanceDocumentManager</members>
+        <members>hdtChildOrderProcessDetails</members>
+        <members>hdtChildOrderProcessPrecheck</members>
+        <members>hdtModuloInformativoModal</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
@@ -96,18 +63,13 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_UserInputFlow.Attivazioni_Proroga_Conn_Temp</members>
+        <members>HDT_Request_Servizi_Q01Q02.Service_Id_Dis_Order</members>
+        <members>HDT_Request_Servizi_Q01Q02.Service_Id_Ven_Order</members>
         <name>CustomMetadata</name>
     </types>
     <types>
-        <members>AttivitaOffertaApprovata</members>
-        <members>AttivitaOffertaNonApprovata</members>
-        <members>HDT_FL_GestioneAnnullamento</members>
-        <members>HDT_FL_GestioneReclami_ChiusuraReclamo</members>
-        <members>HDT_FL_GestioneReclami_GestioneStampa</members>
-        <members>HDT_FL_GestioneReclami_RispostaParere</members>
-        <members>HDT_FL_PostSalesMasterDispatchSales</members>
-        <members>HDT_FL_ResumeActivity</members>
+        <members>HDT_FL_GestionePreventivi</members>
+        <members>HDT_FL_PostSalesMasterDispatch</members>
         <name>Flow</name>
     </types>
     <version>49</version>

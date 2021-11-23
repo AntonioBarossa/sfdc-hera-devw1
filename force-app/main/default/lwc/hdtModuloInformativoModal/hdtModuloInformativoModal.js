@@ -1,5 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { NavigationMixin } from 'lightning/navigation';
 import sendAdvanceDocumentation from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendAdvanceDocumentation';
 import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
@@ -9,7 +10,7 @@ import ID_ORDER_FIELD from '@salesforce/schema/Order.Id';
 import IS_PRE_DOC_TO_SEND from '@salesforce/schema/Order.isPreDocumentationToSend__c';
 import EMAIL_FIELD from '@salesforce/schema/Order.Email__c';
 
-export default class HdtModuloInformativoModal extends LightningElement {
+export default class HdtModuloInformativoModal extends NavigationMixin(LightningElement) {
 
     @api order; //HDT_QR_Order.getRecordById()
     email = '';
@@ -63,6 +64,7 @@ export default class HdtModuloInformativoModal extends LightningElement {
     @api
     initVariables(params){
         this.tipoDoc = params.tipoDoc;
+        console.log('tipoDoc: ' + this.tipoDoc);
     }
 
     handleCancel(){
@@ -204,12 +206,13 @@ export default class HdtModuloInformativoModal extends LightningElement {
 
         var formParams = {
             mode : 'Preview',
+            TipoPlico: this.tipoDoc,
             Archiviato : 'N',
         };
 
         previewDocumentFile({
             recordId: this.order.Id,
-            context: 'Order',
+            context: 'DocumentazioneAnticipata',
             formParams: JSON.stringify(formParams)
         }).then(result => {
             this.loading = false;

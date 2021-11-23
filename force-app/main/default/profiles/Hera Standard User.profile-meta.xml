@@ -125,6 +125,14 @@
     </classAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_Request_Servizi_Q01Q02__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_QServicesTranscode__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_MetersListColumnTable__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -334,6 +342,34 @@
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_CallScriptValue__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_AutomationToggle__mdt</name>
+    </customMetadataTypeAccesses>
+	    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_GenericDataEnrichmentTranscode__mdt</name>
+    </customMetadataTypeAccesses>
+	    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_MassiveFieldsObjectMap__mdt</name>
+    </customMetadataTypeAccesses>
+	    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_Request_Servizi_Q01Q02__mdt</name>
+    </customMetadataTypeAccesses>
+	    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_SelfReadingError__mdt</name>
+    </customMetadataTypeAccesses>
+	    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_ScriptPerCommOffer__mdt</name>
+    </customMetadataTypeAccesses>
+	    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_QServicesTranscode__mdt</name>
     </customMetadataTypeAccesses>
     <custom>true</custom>
     <customSettingAccesses>
@@ -16835,6 +16871,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.Version__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Product2.VersionDescr__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

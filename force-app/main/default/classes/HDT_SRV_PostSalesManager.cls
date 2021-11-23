@@ -71,6 +71,9 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
             when 'updateDataFineConnessione'{
                 psmUtl.updateDataFineConnessione(sender);
             }
+            when 'closeAnnullamentoExtraSistema'{
+                psmUtl.closeAnnullamentoExtraSistema(sender);
+            }
         }
 
         return null;
