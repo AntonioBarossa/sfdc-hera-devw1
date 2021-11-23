@@ -394,9 +394,9 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
     }
 
     private static Boolean checkIfSaleIsEnabled(){
-        HDT_EnableSaleForCPQ__mdt enableSaleForCPQ = HDT_EnableSaleForCPQ__mdt.getInstance('cpq');
-        System.debug('>>> sale is enabled? ' + enableSaleForCPQ.Enabled__c);
-        return enableSaleForCPQ.Enabled__c;
+        HDT_EnableSaleForCPQ__mdt enableSaleForCpq = HDT_EnableSaleForCPQ__mdt.getInstance('cpq');
+        System.debug('>>> sale is enabled? ' + enableSaleForCpq.Enabled__c);
+        return enableSaleForCpq.Enabled__c;
         //return false;
     }
 
