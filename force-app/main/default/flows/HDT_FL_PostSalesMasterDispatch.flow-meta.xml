@@ -2699,6 +2699,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Mobile__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
@@ -2797,6 +2803,12 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2901,6 +2913,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Mobile__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
@@ -2981,6 +2999,12 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3070,6 +3094,12 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3168,6 +3198,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ParentId</field>
             <value>
                 <elementReference>ParentRecordId</elementReference>
@@ -3248,6 +3284,12 @@
             <field>Email__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3358,6 +3400,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Note__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
@@ -3462,6 +3510,12 @@
             <field>DistributorNote__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3578,6 +3632,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ParentId</field>
             <value>
                 <elementReference>ParentRecordId</elementReference>
@@ -3691,6 +3751,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza</stringValue>
@@ -3765,6 +3831,12 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3863,6 +3935,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ParentId</field>
             <value>
                 <elementReference>ParentRecordId</elementReference>
@@ -3946,6 +4024,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ParentId</field>
             <value>
                 <elementReference>ParentRecordId</elementReference>
@@ -4002,6 +4086,12 @@
             <field>ContactId</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4067,6 +4157,12 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4171,6 +4267,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Order__c</field>
             <value>
                 <elementReference>OrderId</elementReference>
@@ -4272,6 +4374,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Order__c</field>
             <value>
                 <elementReference>OrderId</elementReference>
@@ -4340,6 +4448,12 @@
             <field>CompanyOwner__c</field>
             <value>
                 <elementReference>Get_Lead.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4414,6 +4528,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Lead__c</field>
             <value>
                 <elementReference>LeadId</elementReference>
@@ -4482,6 +4602,12 @@
             <field>CompanyOwner__c</field>
             <value>
                 <elementReference>Get_Lead.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4559,6 +4685,12 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4669,6 +4801,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Note__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
@@ -4776,6 +4914,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Mobile__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
@@ -4874,6 +5018,12 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4996,6 +5146,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ParentId</field>
             <value>
                 <elementReference>ParentRecordId</elementReference>
@@ -5100,6 +5256,12 @@
             <field>DistributorNote__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -5222,6 +5384,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Note__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
@@ -5341,6 +5509,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Note__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
@@ -5445,6 +5619,12 @@
             <field>DistributorNote__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -5555,6 +5735,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza Annullata</stringValue>
@@ -5659,6 +5845,12 @@
             <field>DistributorNote__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -5775,6 +5967,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ParentId</field>
             <value>
                 <elementReference>ParentRecordId</elementReference>
@@ -5885,6 +6083,12 @@
             <field>DistributorNote__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -6001,6 +6205,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ParentId</field>
             <value>
                 <elementReference>ParentRecordId</elementReference>
@@ -6102,6 +6312,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ParentId</field>
             <value>
                 <elementReference>ParentRecordId</elementReference>
@@ -6194,6 +6410,12 @@
             <field>DistributorNote__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -6298,6 +6520,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ParentId</field>
             <value>
                 <elementReference>ParentRecordId</elementReference>
@@ -6396,6 +6624,12 @@
             <field>DistributorNote__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -8865,6 +9099,13 @@
     </variables>
     <variables>
         <name>InputServicePointId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>InteractionId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
