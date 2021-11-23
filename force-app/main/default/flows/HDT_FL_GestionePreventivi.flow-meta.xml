@@ -3168,6 +3168,12 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
             <targetReference>Get_Input_Case</targetReference>
         </connector>
         <flowName>HDT_FL_GestioneServizioQ02</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <variables>
         <name>CorrispettivoVar</name>
