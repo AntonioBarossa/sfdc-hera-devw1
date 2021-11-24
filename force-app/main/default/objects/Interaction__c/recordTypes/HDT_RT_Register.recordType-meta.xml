@@ -18,7 +18,7 @@
     <picklistValues>
         <picklist>Status__c</picklist>
         <values>
-            <fullName>Bozza</fullName>
+            <fullName>Aperta</fullName>
             <default>false</default>
         </values>
         <values>

@@ -1,55 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Account_Service_Console</members>
-        <members>Arc_SiebelCustomer</members>
+        <members>Interaction__c.CloseInteraction</members>
+        <members>Interaction__c.CreateActivity</members>
+        <name>QuickAction</name>
+    </types>
+    <types>
+        <members>Interazione_Record_Page</members>
         <name>FlexiPage</name>
     </types>
     <types>
-        <members>Account-CPQ Account Layout Service Console</members>
-        <members>SiebelActivity__x-SiebelActivity Layout</members>
-        <members>SiebelContract__x-SiebelContract Layout</members>
-        <members>SiebelCustomer__x-SiebelCustomer Layout</members>
-        <members>SiebelOrderAttribute__x-SiebelOrderAttribute Layout</members>
-        <members>SiebelRdo__x-SiebelRdo Layout</members>
-        <members>SiebelRds__x-SiebelRds Layout</members>
-        <members>wrts_prcgvr__Activity__c-HDT_GestioneAppuntamento</members>
+        <members>HDT_EnableSaleForCPQ__mdt</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Interaction__c.HDT_RT_Register</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>Interaction__c-Interazione Layout</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_Archive</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>HDT_LC_ChildOrderProcessPrecheckTst</members>
-        <members>HDT_SRV_PostSalesManager</members>
-        <members>HDT_SRV_QservHandler</members>
-        <members>HDT_UTL_PostSalesManager</members>
-        <members>HDT_UTL_SubscriptionProcess</members>
+        <members>HDT_InteractionTst</members>
+        <members>HDT_QR_SearchPlug</members>
+        <members>HDT_TRH_Case</members>
+        <members>HDT_TRH_Interaction</members>
+        <members>HDT_UTL_SearchPlug</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Order.isPreDocumentationToSend__c</members>
-        <members>Product2.VersionDescr__c</members>
-        <members>SiebelContract__x.IMPIANTO_INSTALL_DT__c</members>
-        <members>SiebelContract__x.LineageID__c</members>
-        <members>SiebelMsgNotifica__x.ID_BP_SALESFORCE__c</members>
-        <members>SiebelMsgNotifica__x.ID_BP__c</members>
-        <members>SiebelRdo__x.X_ACR__c</members>
+        <members>HDT_EnableSaleForCPQ__mdt.Enabled__c</members>
+        <members>Interaction__c.Reason__c</members>
+        <members>Interaction__c.Status__c</members>
+        <members>SBQQ__Quote__c.PriceListVAS__c</members>
+        <members>wrts_prcgvr__Activity__c.InteractionReason__c</members>
+        <members>wrts_prcgvr__Activity__c.wrts_prcgvr__Status__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_LCP_OpenAuraCmp</members>
-        <members>HDT_LCP_RunFlowFromAura</members>
-        <name>AuraDefinitionBundle</name>
-    </types>
-    <types>
-        <members>hdtAccountStatementPicker</members>
-        <members>hdtAdvanceDocumentManager</members>
-        <members>hdtChildOrderProcessDetails</members>
-        <members>hdtChildOrderProcessPrecheck</members>
-        <members>hdtModuloInformativoModal</members>
-        <name>LightningComponentBundle</name>
+        <members>HDT_Interaction</members>
+        <name>ApexTrigger</name>
     </types>
     <types>
         <members>Admin</members>
@@ -63,14 +54,12 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_Request_Servizi_Q01Q02.Service_Id_Dis_Order</members>
-        <members>HDT_Request_Servizi_Q01Q02.Service_Id_Ven_Order</members>
-        <name>CustomMetadata</name>
+        <members>Hera_Service_Console</members>
+        <name>CustomApplication</name>
     </types>
     <types>
-        <members>HDT_FL_GestionePreventivi</members>
-        <members>HDT_FL_PostSalesMasterDispatch</members>
-        <name>Flow</name>
+        <members>HDT_EnableSaleForCPQ.cpq</members>
+        <name>CustomMetadata</name>
     </types>
     <version>49</version>
 </Package>

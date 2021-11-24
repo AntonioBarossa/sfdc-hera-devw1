@@ -38,6 +38,11 @@
                 <default>false</default>
                 <label>Chiusa</label>
             </value>
+            <value>
+                <fullName>Scartata</fullName>
+                <default>false</default>
+                <label>Scartata</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
