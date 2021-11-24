@@ -4,6 +4,16 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
     <label>Distributore</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Necessario inserire un Account Distributore</errorMessage>
+        <filterItems>
+            <field>Account.RecordType.DeveloperName</field>
+            <operation>equals</operation>
+            <value>HDT_RT_Distributore</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Service Points</relationshipLabel>
     <relationshipName>ServicePoints</relationshipName>
