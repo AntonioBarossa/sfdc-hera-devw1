@@ -595,7 +595,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if(orderMapOld.get(newOrder.id)!= null){
                 Order old= orderMapOld.get(newOrder.id);
                 if(newOrder.TecnicalPhase__c != null && newOrder.TecnicalPhase__c == old.TecnicalPhase__c && 
-                    (/*Eversi aggiunta fase*/newOrder.Phase__c == 'Voltura Rifiutata' || newOrder.Phase__c == 'Documentazione Validata'/*Eversi aggiunta fase*/ || newOrder.Phase__c=='Comunicazione verso Heroku' || newOrder.Phase__c=='Ripensamento - Da inviare' || newOrder.Phase__c=='Annullamento - Da inviare' || newOrder.Phase__c=='Preventivo Accettato')){
+                    (/*Eversi aggiunta fase*/newOrder.Phase__c == 'Voltura Rifiutata' || newOrder.Phase__c == 'Documentazione Validata'/*Eversi aggiunta fase*/ || newOrder.Phase__c=='Comunicazione verso Heroku' || newOrder.Phase__c=='Ripensamento - Da inviare' || newOrder.Phase__c=='Annullamento - Da inviare' || newOrder.Phase__c=='Preventivo Accettato' || newOrder.Phase__c=='Comunicazione Motore VAS' )){
                     newOrder.Phase__c = newOrder.TecnicalPhase__c;
                     newOrder.TecnicalPhase__c = null;
                 }

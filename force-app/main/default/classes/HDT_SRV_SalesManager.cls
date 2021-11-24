@@ -15,9 +15,21 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
     private static final String ORDER_PHASE_VAS_COMMUNICATION = 'Comunicazione Motore VAS';
     private static final String PHASE_SEQUENZIALIZZATO = 'Sequenzializzato';
     private static final String PHASE_KO_PRODOTTO = 'Cod. offerta non mappato';
+    private static final String PHASE_FIELD = 'Phase__c';
+    private static final String TECNICAL_PHASE_FIELD = 'TecnicalPhase__c';
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    private static boolean isPclickCallout = false;
+
+    global HDT_SRV_SalesManager(){
+        return;
+    }
+
+    public HDT_SRV_SalesManager(boolean pclickCallout){
+        isPclickCallout = pclickCallout;
+    }
+
     
     /**
     * @description Executes action invoked by Process Click
@@ -33,29 +45,23 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         SObject sender = (SObject) argsMap.get('sender');
 
         Id objectId = (Id) sender.get('Id');
+        if( (System.isFuture() || System.isBatch()) && method!='service26'){
+            return null;
+        }
 
         switch on method{
             when 'activation', 'deactivation', 'service26' {
                 Boolean limitQueueablesOk = Limits.getQueueableJobs() < Limits.getLimitQueueableJobs();
                 if(system.isQueueable()){// && !limitQueueablesOk){//removed so i won't burn a queable if this is a queueable job
                     asyncCalloutFuture(objectId, method);
-                }else if((!system.isBatch()) || limitQueueablesOk){
+                }else if(limitQueueablesOk){
                     system.enqueueJob(new HDT_QBL_AsycnronousCallout(
                         objectId, method
                         )
                     );
-                }
-                
-            }
-            when 'updatePhase'{
-                Order currentOrder = (Order) sender;
-                Boolean isServiceType = (currentOrder.VASType__c==VAS_SERVICE_TYPE);
-                String newPhase = isServiceType?ORDER_PHASE_WAIT_FOR_AFTERTHOUGHT:ORDER_PHASE_VAS_COMMUNICATION;
-
-                system.enqueueJob(new HDT_QBL_AsycnronousUpdate(
-                    objectId, newPhase
-                    )
-                );
+                }/*else{//gestione future servizio26
+                    HDT_UTL_PrClickDoubleTransaction.asyncCallouts.put(objectId, method);
+                }*/
             }
             when 'contracted'{
                 asyncUpdateContracted(objectId);
@@ -79,7 +85,11 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
     **/
     @future(callout=true)
     private static void asyncCalloutFuture(Id sobjectId, String method){
-        asyncCallout(sobjectId, method);
+        customCallout(sobjectId, method);
+    }
+
+    public void vasCustomCallouts(Id sobjectId, String method){
+        customCallout(sobjectId, method);
     }
 
     /**
@@ -88,7 +98,7 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
     * @param sobjectId  
     * @param method  
     **/
-    private static void asyncCallout(Id sobjectId, String method){
+    private static void customCallout(Id sobjectId, String method){
         HDT_WS_ArrichmentDataEntityResponse res;
         String newPhase;
         String errorDescription;
@@ -137,7 +147,8 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         //do UpdatePhase
 
         if(String.isNotBlank(newPhase)){ 
-            new HDT_QBL_AsycnronousUpdate().asyncronousUpdate(SobjectId, newPhase, errorDescription);
+            //new HDT_QBL_AsycnronousUpdate().asyncronousUpdate(SobjectId, newPhase, errorDescription);
+            updateVas(SobjectId, newPhase, errorDescription);
         }
     }
 
@@ -184,87 +195,34 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         * @param context  
         **/
         public void execute(QueueableContext context){
-            asyncCallout(sobjectId, method);
+            customCallout(sobjectId, method);
         }
     }
-    
-    /**
-    * @description Class for update DML in Queueable context
-    * @author gabriele.rota@webresults.it | 2021-07-12 
-    **/
-    public class HDT_QBL_AsycnronousUpdate implements Queueable {
-        private Id sobjectId{get;set;}
-        private String newPhase{get;set;}
-        
-        /**
-        * @description Constructor
-        * @author gabriele.rota@webresults.it | 2021-07-12 
-        **/
-        public HDT_QBL_AsycnronousUpdate(){
-            return;
-        }
 
-        /**
-        * @description Constructor with record id and new phase
-        * @author gabriele.rota@webresults.it | 2021-07-12 
-        * @param sobjectId  
-        * @param method  
-        **/
-        public HDT_QBL_AsycnronousUpdate(Id sobjectId, String newPhase){
-            this.sobjectId=sobjectId;
-            this.newPhase = newPhase;
-        }
-
-        /**
-        * @description Constructor with record id (string type) and new phase
-        * @author gabriele.rota@webresults.it | 2021-07-12 
-        * @param sobjectId  
-        * @param method  
-        **/
-        public HDT_QBL_AsycnronousUpdate(String sobjectId, String newPhase){
-            this((Id) sobjectId, newPhase);
-        }
-
-        /**
-        * @description Executes update
-        * @author gabriele.rota@webresults.it | 2021-07-12 
-        * @param context  
-        **/
-        public void execute(QueueableContext context){
-            asyncronousUpdate(sobjectId, newPhase, null);
+    private static void updateVas(Id sobjectId, String newPhase, String errorDescription){
+        Sobject sender;
+        String errorField;
+        String phaseField = isPclickCallout? TECNICAL_PHASE_FIELD : PHASE_FIELD;
+        switch on sobjectId.getSobjectType().getDescribe().getName() {
+            when 'Case' {
+                sender = (SObject) new Case();
+                errorField = 'DiscardDescription__c';
+            }
+            when 'Order' {
+                sender = (SObject) new Order();
+                errorField = 'DiscardReason__c';
+            }
+            when else {
+                throw new HDT_UTL_HeraException('Invalid sObject provided');
+            }
         }
         
-        /**
-        * @description Updates order/case record with given phase and Vas status
-        * @author gabriele.rota@webresults.it | 2021-07-12 
-        * @param sobjectId  
-        * @param newPhase  
-        * @param errorDescription  
-        **/
-        public void asyncronousUpdate(Id sobjectId, String newPhase, String errorDescription){
-            Sobject sender;
-            String errorField;
-            switch on sobjectId.getSobjectType().getDescribe().getName() {
-                when 'Case' {
-                    sender = (SObject) new Case();
-                    errorField = 'DiscardDescription__c';
-                }
-                when 'Order' {
-                    sender = (SObject) new Order();
-                    errorField = 'DiscardReason__c';
-                }
-                when else {
-                    throw new HDT_UTL_HeraException('Invalid sObject provided');
-                }
-            }
-            
-            sender.put('Id', sobjectId);
-            sender.put('Phase__c', newPhase);
-            if (String.isNotBlank(errorDescription)) {
-                sender.put(errorField, errorDescription);
-            }
-            Database.update(sender);
+        sender.put('Id', sobjectId);
+        sender.put(phaseField, newPhase);
+        if (String.isNotBlank(errorDescription)) {
+            sender.put(errorField, errorDescription);
         }
+        Database.update(sender);
     }
 
 }
