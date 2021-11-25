@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CommunicationId__c</fullName>
     <description>External id</description>
-    <externalId>false</externalId>
+    <externalId>true</externalId>
     <label>Id Comunicazione</label>
     <length>40</length>
     <required>false</required>
