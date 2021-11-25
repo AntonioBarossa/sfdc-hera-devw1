@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <height>250</height>
-    <label>Riprendi Bonus Commerciale</label>
+    <label>Riprendi Processo Sales</label>
     <lightningComponent>HDT_LCP_ResumeCommercialBonus</lightningComponent>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <type>LightningComponent</type>
