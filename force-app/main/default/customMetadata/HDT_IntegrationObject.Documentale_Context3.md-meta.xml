@@ -22,7 +22,7 @@
 },
 {
 &quot;objectName&quot;: &quot;Case&quot;,
-&quot;fields&quot;: &quot;Id, Cluster__c,Type,Origin,CaseNumber,Phase__c,CreatedDate,TensionOption__c,CommodityFormula__c,Amount__c,AddressFormula__c&quot;,
+&quot;fields&quot;: &quot;Id, Cluster__c,Type,Origin,CaseNumber,Phase__c,CreatedDate,TensionOption__c,Amount__c,AddressFormula__c,CommodityFormula__c&quot;,
 &quot;relation&quot;: &quot;Cases&quot;,
 &quot;condition&quot;:&quot;CreatedDate &gt; LAST_YEAR&quot;
 },
