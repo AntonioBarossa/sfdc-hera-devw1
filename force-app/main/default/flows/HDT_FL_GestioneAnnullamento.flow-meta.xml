@@ -136,7 +136,6 @@
             <typeName>T__caseRecord</typeName>
             <typeValue>Case</typeValue>
         </dataTypeMappings>
-        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>description</name>
             <value>
@@ -392,6 +391,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Fase_Annullamento_Extra_Sistema</name>
+        <label>Assegna Fase Annullamento Extra Sistema</label>
+        <locationX>1740</locationX>
+        <locationY>3043</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullamento - Extra Sistema</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Fase_Precedente</name>
         <label>Assegna Fase Precedente</label>
         <locationX>965</locationX>
@@ -421,6 +436,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Ripensamento_Da_inviare</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Fase_Precedente_Annullamento_Extra_Sistema</name>
+        <label>Assegna Fase Precedente Annullamento Extra Sistema</label>
+        <locationX>1742</locationX>
+        <locationY>2770</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.PreviousPhase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRecord.Phase__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Fase_Annullamento_Extra_Sistema</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -910,6 +941,21 @@
                 <targetReference>Crea_Attivit_Gestione_Manuale_SAP</targetReference>
             </connector>
             <label>Comunicazione verso Heroku KO</label>
+        </rules>
+        <rules>
+            <name>Pratica_non_gestita_per_il_DL</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetRecord.PhaseStory__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Pratica non gestita per il DL</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Fase_Precedente_Annullamento_Extra_Sistema</targetReference>
+            </connector>
+            <label>Pratica non gestita per il DL</label>
         </rules>
     </decisions>
     <decisions>
