@@ -245,6 +245,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_AppointmentAgenda</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_AppointmentAgendaTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_BillingProfileForm</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -690,6 +698,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QBL_BpCaRequest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QBL_DiscardDocusignEnvManagement</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1241,6 +1253,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_AppointmentAgenda</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_Attachment</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1725,6 +1741,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_AppointmentAgenda</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_BrandSalesCompany</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2149,6 +2169,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_WRP_Appuntamento</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_WRP_Attributes</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2246,6 +2270,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WRP_TechnicalOffer</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_AppointmentAgenda</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

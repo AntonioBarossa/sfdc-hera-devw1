@@ -1777,8 +1777,40 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Not Started</fullName>
+            <fullName>Not started</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Creata</fullName>
             <default>true</default>
+        </values>
+        <values>
+            <fullName>Presa appuntamento in corso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appuntamento confermato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appuntamento non eseguito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appuntamento eseguito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invio app.to SELF cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appuntamento di competenza Distributore</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
 </RecordType>
