@@ -461,14 +461,79 @@
                 <label>Risposta Inviata - Attesa Rettifica</label>
             </value>
             <value>
-                <fullName>Inviare Legge 80</fullName>
+                <fullName>Protocollo - Da tipizzare</fullName>
                 <default>false</default>
-                <label>Inviare Legge 80</label>
+                <label>Protocollo - Da tipizzare</label>
             </value>
             <value>
-                <fullName>Confermare Cambio Decorrenza</fullName>
+                <fullName>Protocollo - Attivazioni</fullName>
                 <default>false</default>
-                <label>Confermare Cambio Decorrenza</label>
+                <label>Protocollo - Attivazioni</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Voltura</fullName>
+                <default>false</default>
+                <label>Protocollo - Voltura</label>
+            </value>
+            <value>
+                <fullName>Protocollo - VAS</fullName>
+                <default>false</default>
+                <label>Protocollo - VAS</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Disattivazioni</fullName>
+                <default>false</default>
+                <label>Protocollo - Disattivazioni</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Preventivi</fullName>
+                <default>false</default>
+                <label>Protocollo - Preventivi</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Verifiche</fullName>
+                <default>false</default>
+                <label>Protocollo - Verifiche</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Reclami</fullName>
+                <default>false</default>
+                <label>Protocollo - Reclami</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Pagamenti</fullName>
+                <default>false</default>
+                <label>Protocollo - Pagamenti</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Morosità</fullName>
+                <default>false</default>
+                <label>Protocollo - Morosità</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Canone Rai</fullName>
+                <default>false</default>
+                <label>Protocollo - Canone Rai</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Fatturazione</fullName>
+                <default>false</default>
+                <label>Protocollo - Fatturazione</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Autolettura</fullName>
+                <default>false</default>
+                <label>Protocollo - Autolettura</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Modifiche Anagrafiche</fullName>
+                <default>false</default>
+                <label>Protocollo - Modifiche Anagrafiche</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Variazioni</fullName>
+                <default>false</default>
+                <label>Protocollo - Variazioni</label>
             </value>
         </valueSetDefinition>
     </valueSet>
