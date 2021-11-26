@@ -49,10 +49,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Channel__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>UseCategory__c</field>
             </layoutItems>
             <layoutItems>
@@ -100,10 +96,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Campaign__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

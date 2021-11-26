@@ -258,7 +258,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                                 orderToUpdate.Status = STATUS_SEQUENZIALIZZATO;
                                 orderToUpdate.Phase__c = PHASE_SEQUENZIALIZZATO;
                                 String orderRecordType = orderToUpdate.RecordTypeId;
-                                if(orderRecordType.equalsIgnoreCase(rtVas) && (orderToUpdate.OrderReference__c == null && orderToUpdate.ContractReference__c == null) && !(orderToUpdate.isTransition__c && srBlocking.Order__r.isTransition__c)){
+                                if(orderRecordType.equalsIgnoreCase(rtVas) && (orderToUpdate.OrderReference__c == null) /*&& orderToUpdate.ContractReference__c == null)*/ && !(orderToUpdate.isTransition__c && srBlocking.Order__r.isTransition__c)){
                                     valueToUpdate = false;
                                 }
                                 

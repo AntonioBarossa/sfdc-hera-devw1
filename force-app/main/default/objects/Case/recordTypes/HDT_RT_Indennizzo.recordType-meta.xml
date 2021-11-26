@@ -3189,7 +3189,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- <picklistValues>
         <picklist>EnergyService__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -3199,7 +3199,7 @@
             <fullName>Si</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues> -->
     <picklistValues>
         <picklist>ErrorType__c</picklist>
         <values>

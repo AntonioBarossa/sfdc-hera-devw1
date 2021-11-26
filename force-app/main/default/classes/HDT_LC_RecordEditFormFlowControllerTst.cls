@@ -27,7 +27,7 @@ public class HDT_LC_RecordEditFormFlowControllerTst {
         caseList[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Autolettura').getRecordTypeId();
         caseList[0].Phase__c  = 'Inviata a SAP';
         caseList[0].Type  = 'Autolettura da cliente';
-        caseList[0].Market__c = 'Libero';
+        //caseList[0].Market__c = 'Libero';
         caseList[0].SalesCompany__c = 'TestCompany';
 
         caseList[1].RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Informative').getRecordTypeId();
@@ -79,8 +79,8 @@ public class HDT_LC_RecordEditFormFlowControllerTst {
         
         String results = HDT_LC_RecordEditFormFlowController.prePopulateFields(caseToPopulate.Id, caseToCopy.Id);
 
-        Case updatedCase = [SELECT Id, Market__c, InformativeType__c, SalesCompany__c FROM Case WHERE Id =: caseToPopulate.Id LIMIT 1];
-        System.assertEquals('Libero', updatedCase.Market__c, 'Market__c != Libero');
+        Case updatedCase = [SELECT Id, /*Market__c,*/ InformativeType__c, SalesCompany__c FROM Case WHERE Id =: caseToPopulate.Id LIMIT 1];
+        //System.assertEquals('Libero', updatedCase.Market__c, 'Market__c != Libero');
         System.assertEquals('Autolettura da cliente', updatedCase.InformativeType__c, 'InformativeType__c != Autolettura da cliente');
 
         Test.stopTest();
