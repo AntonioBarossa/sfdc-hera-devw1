@@ -417,7 +417,8 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     public void closeAnnullamentoExtraSistema(SObject inputCase)
     {
-        Case currentCase = (Case)inputCase;
+        Case currentCase = new Case();
+        currentCase.Id = inputCase.Id;
         currentCase.Phase__c = 'Annullato';
         currentCase.Status = 'Closed';
         updateFuture(JSON.serialize(currentCase));

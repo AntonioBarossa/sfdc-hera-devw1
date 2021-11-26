@@ -12,7 +12,7 @@
     },
     {
         &quot;FieldName&quot; : &quot;ParentId&quot;,
-        &quot;Required&quot;   : true,
+        &quot;Required&quot;   : false,
         &quot;Column&quot;   : 1
     },
     {
