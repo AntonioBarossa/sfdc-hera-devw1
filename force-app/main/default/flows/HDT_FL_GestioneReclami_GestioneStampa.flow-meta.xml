@@ -10,7 +10,6 @@
         <connector>
             <targetReference>Indennizzo_Confermato</targetReference>
         </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>accountId</name>
             <value>
@@ -53,7 +52,6 @@
         <connector>
             <targetReference>LoopToUpdateInRIspostaInviata</targetReference>
         </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>currentCase</name>
             <value>
@@ -71,7 +69,6 @@
             <name>childCases</name>
         </outputParameters>
     </actionCalls>
-    <apiVersion>51.0</apiVersion>
     <assignments>
         <name>AggiornaFase</name>
         <label>AggiornaFase</label>
@@ -311,13 +308,6 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Completed</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ActivityToLoop.Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Chiusa</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -659,7 +649,6 @@
         <connector>
             <targetReference>AssegnaActivityToLoop</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Case__c</field>
             <operator>EqualTo</operator>
@@ -687,7 +676,6 @@
         <connector>
             <targetReference>CreateActivity</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
             <operator>EqualTo</operator>
@@ -708,7 +696,6 @@
         <connector>
             <targetReference>Screen_Documentale</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -729,7 +716,6 @@
         <connector>
             <targetReference>AssegnaCase</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -750,7 +736,6 @@
         <connector>
             <targetReference>CountContentDocumentLinkAfter</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>LinkedEntityId</field>
             <operator>EqualTo</operator>
@@ -771,7 +756,6 @@
         <connector>
             <targetReference>AssignSize</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>LinkedEntityId</field>
             <operator>EqualTo</operator>
@@ -792,7 +776,6 @@
         <connector>
             <targetReference>GetContentDocumentLinkInput</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -907,7 +890,6 @@
                     <elementReference>GetInputCase.Id</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -957,7 +939,6 @@
                     <elementReference>GetInputCase.ComplaintEntryChannel__c</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>

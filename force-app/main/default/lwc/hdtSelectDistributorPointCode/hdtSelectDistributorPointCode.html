@@ -1,36 +1,28 @@
 <template>
-       <template if:true={openFormDistributor}>
-           <lightning-record-edit-form style="border-style: solid;"  object-api-name={objectapiname} >
-               <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-               <div class="slds-modal__container">
-                   <header class="slds-modal__header">
-                       <span class="slds-text-heading_medium slds-hyphenate slds-m-left_xx-large">SELEZIONA DISTRIBUTORE</span>
-                   </header>
-                   <div style="background-color:rgb(243, 242, 242)">  
-                   <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
-                       <lightning-layout>
-                       <lightning-datatable selectable-row={disableCheckBoxDistributor} max-row-selection=1 class="table-section" key-field="id" data={tableDataDistributor} columns={columnsDistributor} onrowselection={getDistributor}></lightning-datatable>
-                  </lightning-layout>
-                  </div>
-               </div>
-                  <footer class="slds-modal__footer">
-                    <div class="slds-grid slds-grid_align-center">
-                        <div class="slds-col">
-                            <lightning-button onclick={previousPageDistributor} label="Previous" variant="neutral"></lightning-button>
+    <template if:true={openFormDistributor}>
+        <lightning-record-edit-form style="border-style: solid;" object-api-name={objectapiname}>
+            <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" 
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" >     
+                <div class="slds-backdrop slds-backdrop--open" id="backdrop">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <span class="slds-text-heading_medium slds-hyphenate">Seleziona Distributore</span>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                            <lightning-layout>
+                                <lightning-datatable selectable-row={disableCheckBoxDistributor} max-row-selection=1
+                                    class="table-section" key-field="id" data={tableDataDistributor}
+                                    columns={columnsDistributor} onrowselection={getDistributor}>
+                                </lightning-datatable>
+                            </lightning-layout>
                         </div>
-                        <div class="slds-col">
-                            <p style="font-size: 12px;margin:5px;">Page {getCurrentPageDistributor} / {totalPageDistributor}</p>
-                        </div>
-                        <div class="slds-col">
-                            <lightning-button onclick={nextPageDistributor} label="Next" variant="neutral"></lightning-button>
-                        </div>
+                        <footer class="slds-modal__footer">
+                            <lightning-button label="Chiudi" variant="neutral" onclick={closeDistributorForm}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <lightning-button label="Conferma" variant="brand" onclick={handleConfirmDistributor} class="slds-m-left_x-small"></lightning-button>
+                        </footer>
                     </div>
-                   <lightning-button label="Close" variant="neutral" onclick={closeDistributorForm}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
-                   <lightning-button label="Conferma" variant="success" onclick={handleConfirmDistributor}  class="slds-m-left_x-small" ></lightning-button>
-
-               </footer>
-               </div>
-               </section>
-           </lightning-record-edit-form>
-       </template>
+                </div>
+            </section>
+        </lightning-record-edit-form>
+    </template>
 </template>

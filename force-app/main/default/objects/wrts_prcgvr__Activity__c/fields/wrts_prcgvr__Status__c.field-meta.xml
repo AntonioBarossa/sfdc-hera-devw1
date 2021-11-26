@@ -78,6 +78,11 @@
                 <default>false</default>
                 <label>Appuntamento di competenza Distributore</label>
             </value>
+            <value>
+                <fullName>Scartata</fullName>
+                <default>false</default>
+                <label>Scartata</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -575,6 +575,43 @@ public class HDT_SRV_PostSalesManagerTst {
         
     }
 
+    @IsTest
+    static void updateDataFineConnessioneTst(){
+        
+        List<Order> myOrderList = [ SELECT Id FROM Order ];
+        Order myOrder = new Order();
+        myOrder.Id = myOrderList[0].Id;
+        myOrder.TemporaryConnectionEndDate__c = date.newInstance(2021, 11, 05);
+        
+        List<Case> myCaseList = [ SELECT Id, Order__c, AccountId FROM Case ];
+        Case myCase = new Case();
+        myCase.Id = myCaseList[0].Id;
+        myCase.TemporaryConnectionEndDate__c = date.newInstance(2021, 11, 06);
+        myCase.Order__c =  myOrder.Id;
+
+        List<SObject> updateList = new List<SObject>();
+        updateList.add(myCase);
+        updateList.add(myOrder);
+        update updateList;
+
+        Map<String,Object> argsMap = new Map<String,Object>();
+        argsMap.put('method','updateDataFineConnessione');
+        argsMap.put('sender', myCase );
+
+        Test.startTest();
+        
+        HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
+        psm.execute(argsMap);
+
+        Test.stopTest();
+        
+        List<Case> myCaseListUpdated = [ SELECT TemporaryConnectionEndDate__c, Order__r.TemporaryConnectionEndDate__c FROM Case WHERE Id = :myCase.Id ];
+
+        System.assertEquals( myCaseListUpdated[0].TemporaryConnectionEndDate__c, myCaseListUpdated[0].Order__r.TemporaryConnectionEndDate__c ,
+        'L\'update di TemporaryConnectionEndDate__c nel Order non è andato a buon fine');
+        
+    }
+
     //occorre mockare la chiamata al WS
     // @IsTest
     // static void sendDocumentFile(){

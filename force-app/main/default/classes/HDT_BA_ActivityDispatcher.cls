@@ -108,7 +108,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                 }
 
                 queue = queuesMap.get((String) rule.get(assignataryQueue));
-                queueUsage = queueUsageMap.get(queue.QueueId__c);
+                queueUsage = queueUsageMap.get(queue.Id);
                 if(queueUsage == null){
                     queueUsage = 0;
                 }
@@ -126,7 +126,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                         OwnerId = (Id) queue.QueueId__c
                     );
                     if(queue.DailyCapacity__c != null) {
-                        queueUsageMap.put(queue.QueueId__c, ++queueUsage);
+                        queueUsageMap.put(queue.Id, ++queueUsage);
                     }
                     processedActivitiesMap.put(processedActivity.Id, processedActivity);
                 }
@@ -163,8 +163,8 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     
     private Map<String,Decimal> getQueueUsageMap() {
         Map<String,Decimal> queueUsageMap = new Map<String,Decimal>();
-        for(AggregateResult count : [SELECT COUNT(Id), OwnerId FROM wrts_prcgvr__Activity__c WHERE Owner.Type = 'Queue' GROUP BY OwnerId]) {
-            queueUsageMap.put((String) count.get('OwnerId'), (Decimal) count.get('expr0'));
+        for(AggregateResult count : [SELECT COUNT(Id), Queue__c FROM wrts_prcgvr__Activity__c WHERE Queue__c != null AND CreatedDate = TODAY GROUP BY Queue__c]) {
+            queueUsageMap.put((String) count.get('Queue__c'), (Decimal) count.get('expr0'));
         }
         return queueUsageMap;
     }

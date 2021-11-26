@@ -2173,7 +2173,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- <picklistValues>
         <picklist>EnergyService__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -2183,7 +2183,7 @@
             <fullName>Si</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues> -->
     <picklistValues>
         <picklist>ErrorType__c</picklist>
         <values>
@@ -7725,26 +7725,30 @@
             <fullName>Annullamento - Da inviare</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Annullamento - Esito KO da DL</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Annullamento - Esito OK da DL</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullamento - Inviato al DL</fullName>
+            <fullName>Annullamento - Extra Sistema</fullName>
             <default>false</default>
         </values>
+        <!-- <values>
+            <fullName>Annullamento - Inviato al DL</fullName>
+            <default>false</default>
+        </values> -->
         <values>
             <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>

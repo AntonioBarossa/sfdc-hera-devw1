@@ -27,5 +27,6 @@ global with sharing class HDT_WS_InboundSol {
         }
         //RestContext.response.responseBody = Blob.valueOf(JSON.serialize(response));
         RestContext.response.headers.put('Content-Type', 'application/json');
+        RestContext.response.statusCode = 200;
     }
 }

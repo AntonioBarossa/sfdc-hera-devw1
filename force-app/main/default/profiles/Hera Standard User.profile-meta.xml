@@ -125,6 +125,22 @@
     </classAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_Request_Servizi_Q01Q02__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_QServicesTranscode__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_MetersListColumnTable__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_ServicePointMetersList__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>AccountDataEnrichment__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -322,6 +338,38 @@
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_UserInputFlow__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_CallScriptValue__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_AutomationToggle__mdt</name>
+    </customMetadataTypeAccesses>
+	    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_GenericDataEnrichmentTranscode__mdt</name>
+    </customMetadataTypeAccesses>
+	    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_MassiveFieldsObjectMap__mdt</name>
+    </customMetadataTypeAccesses>
+	    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_Request_Servizi_Q01Q02__mdt</name>
+    </customMetadataTypeAccesses>
+	    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_SelfReadingError__mdt</name>
+    </customMetadataTypeAccesses>
+	    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_ScriptPerCommOffer__mdt</name>
+    </customMetadataTypeAccesses>
+	    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_QServicesTranscode__mdt</name>
     </customMetadataTypeAccesses>
     <custom>true</custom>
     <customSettingAccesses>
@@ -8747,6 +8795,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DistributorPointCode__c.EndDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DistributorPointCode__c.StartDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DistributorPointCode__c.SkipDimensione__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DistributorPointCode__c.IsActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DistributorPointCode__c.Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -15970,6 +16038,11 @@
         <field>Product2.Billable__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.Cloned__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 <fieldPermissions>
         <editable>true</editable>
         <field>Product2.DefaulStartTime__c</field>
@@ -16823,6 +16896,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.Version__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Product2.VersionDescr__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20833,6 +20911,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.PowerFlow__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Quote__c.PriceListVAS__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -29263,6 +29346,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.AppointmentCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.AppointmentDuration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.MaxDateModificationAppointment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.MaxTimeModificationAppointment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIvaActivityCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32642,6 +32745,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>NewsNotificationCenter__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>OfferCreationStage__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

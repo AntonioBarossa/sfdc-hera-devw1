@@ -125,6 +125,52 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
+        <name>Crea_Attivit_Gestione_Manuale_SAP</name>
+        <label>Crea Attività Gestione Manuale SAP</label>
+        <locationX>1565</locationX>
+        <locationY>2861</locationY>
+        <actionName>HDT_UTL_CaseCancellation</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Annullato</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__caseRecord</typeName>
+            <typeValue>Case</typeValue>
+        </dataTypeMappings>
+        <inputParameters>
+            <name>description</name>
+            <value>
+                <stringValue>Gestione Manuale SAP</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>templateName</name>
+            <value>
+                <stringValue>Gestione Manuale SAP</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>Gestione Manuale SAP</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>method</name>
+            <value>
+                <stringValue>createActivityForCase</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>GetRecord.Id</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>NoteAnnullamento</name>
         <label>NoteAnnullamento</label>
         <locationX>799</locationX>
@@ -134,7 +180,7 @@
         <connector>
             <targetReference>AssegnaFormattazioneNote</targetReference>
         </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>cancellationNote</name>
             <value>
@@ -159,7 +205,7 @@
         <connector>
             <targetReference>AssegnaNoteAnnullamento</targetReference>
         </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>cancellationNote</name>
             <value>
@@ -174,7 +220,7 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <apiVersion>50.0</apiVersion>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare</name>
         <label>Aggiorna Fase in Da Inviare</label>
@@ -238,8 +284,8 @@
     <assignments>
         <name>Annullato</name>
         <label>Annullato</label>
-        <locationX>1493</locationX>
-        <locationY>2896</locationY>
+        <locationX>1368</locationX>
+        <locationY>2928</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -350,6 +396,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Fase_Annullamento_Extra_Sistema</name>
+        <label>Assegna Fase Annullamento Extra Sistema</label>
+        <locationX>1740</locationX>
+        <locationY>3043</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullamento - Extra Sistema</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Fase_Precedente</name>
         <label>Assegna Fase Precedente</label>
         <locationX>965</locationX>
@@ -379,6 +441,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Ripensamento_Da_inviare</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Fase_Precedente_Annullamento_Extra_Sistema</name>
+        <label>Assegna Fase Precedente Annullamento Extra Sistema</label>
+        <locationX>1742</locationX>
+        <locationY>2770</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.PreviousPhase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRecord.Phase__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Fase_Annullamento_Extra_Sistema</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -467,13 +545,6 @@
         <locationX>1677</locationX>
         <locationY>2440</locationY>
         <assignmentItems>
-            <assignToReference>Annulla_Attivita.Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Annullata</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>Annulla_Attivita.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -489,13 +560,6 @@
         <label>Assegna Stato</label>
         <locationX>4606</locationX>
         <locationY>2846</locationY>
-        <assignmentItems>
-            <assignToReference>Annulla_Attivita_0.Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Annullata</stringValue>
-            </value>
-        </assignmentItems>
         <assignmentItems>
             <assignToReference>Annulla_Attivita_0.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -860,6 +924,43 @@
                 <targetReference>Bozza_Annullata</targetReference>
             </connector>
             <label>Bozza</label>
+        </rules>
+        <rules>
+            <name>Comunicazione_verso_Heroku_KO</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetRecord.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Comunicazione verso Heroku KO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetRecord.Cluster__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Autolettura</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Crea_Attivit_Gestione_Manuale_SAP</targetReference>
+            </connector>
+            <label>Comunicazione verso Heroku KO</label>
+        </rules>
+        <rules>
+            <name>Pratica_non_gestita_per_il_DL</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetRecord.PhaseStory__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Pratica non gestita per il DL</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Fase_Precedente_Annullamento_Extra_Sistema</targetReference>
+            </connector>
+            <label>Pratica non gestita per il DL</label>
         </rules>
     </decisions>
     <decisions>
@@ -1739,7 +1840,6 @@
                     <elementReference>GetRecord.Id</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1808,7 +1908,6 @@
                     <elementReference>GetRecord.RecordType.DeveloperName</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>DefaultReason</assignToReference>
@@ -1891,7 +1990,6 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1948,7 +2046,6 @@
                     <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>DefaultReason</assignToReference>
@@ -2031,7 +2128,6 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2094,7 +2190,6 @@
                     <elementReference>GetRecord.Type</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>DefaultReason</assignToReference>
@@ -2177,7 +2272,6 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2246,7 +2340,6 @@
                     <elementReference>GetOrder.CancellationReason__c</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>DefaultReason</assignToReference>
@@ -2323,7 +2416,6 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>

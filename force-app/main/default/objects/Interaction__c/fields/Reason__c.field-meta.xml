@@ -7,6 +7,7 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>Status__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
@@ -21,5 +22,13 @@
                 <label>Protocollo Gestito</label>
             </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Chiusa</controllingFieldValue>
+            <valueName>Protocollo Gestito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Scartata</controllingFieldValue>
+            <valueName>Non lavorabile</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

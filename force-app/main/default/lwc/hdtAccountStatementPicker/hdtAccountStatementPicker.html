@@ -5,35 +5,20 @@
         </template>
         <lightning-accordion allow-multiple-sections-open active-section-name="selezionati">
             <lightning-accordion-section name="selezionati" label="Documenti selezionati">
-                <div class= "slds-grid slds-gutters">
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input 
-                            type="number"
-                            label="Totale Importo selezionato"
-                            value={amountWiFee}
-                            disabled="true"
-                            variant="label-stacked"
-                        ></lightning-input>
-                    </div>
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input 
-                        type="number"
-                        label="Totale Importo senza Canone Rai"
-                        value={amountWoFee}
-                        disabled="true"
-                        variant="label-stacked"
-                    ></lightning-input>
-                    </div>
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning-input 
-                        type="number"
-                        label="Totale Residuo Fatture Selezionate"
-                        value={documentResiudal}
-                        disabled="true"
-                        variant="label-stacked"
-                    ></lightning-input>
-                    </div>
-                    <div class="slds-col slds-size_1-of-4"></div>
+                <div class="slds-grid slds-gutters">
+                    <template for:each={itemToShow} for:item="item">
+                        <li key={item.Id}>
+                            <div class="slds-col">
+                                <lightning-input 
+                                type="number" 
+                                label={item.label} 
+                                value={item.value} 
+                                disabled="true"
+                                variant="label-stacked">
+                                </lightning-input>
+                            </div>
+                        </li>
+                    </template>
                 </div>
                 <template if:true={documents}>
                     <div style="height: 300px;">

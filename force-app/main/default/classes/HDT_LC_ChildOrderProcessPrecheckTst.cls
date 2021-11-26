@@ -506,7 +506,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
     static void testCheckContendibilita(){
 
         //setup
-        Order ord = [SELECT SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
+        Order ord = [SELECT SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c, SalesCompanyCode__c, DistributorCode__c, CommodityFormula__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
 
         //mock webservice call
         HttpResponse res = new HttpResponse();
@@ -529,10 +529,36 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
     }
 
     @IsTest
+    static void testCheckContendibilitaErrorFromHeroku(){
+
+        //setup
+        Order ord = [SELECT SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c, SalesCompanyCode__c, DistributorCode__c, CommodityFormula__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
+
+        //mock webservice call
+        HttpResponse res = new HttpResponse();
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody('{"responses":[{"header":{"requestId":"","requestTimestamp":null,"requestType":"CREA_RIC","fields":[{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":"postsales"}]},"code":null,"description":null,"objects":[{"fields":[{"fieldType":"TEXT","name":"errorMessage","value":"ERRORE"}],"id":null,"name":null,"objectType":null,"objects":null}]}]}');
+        res.setStatusCode(200);
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_QservHandlerMock(res));
+
+        //start test
+        Test.startTest();
+
+        Map<String, Object> resultMap = HDT_LC_ChildOrderProcessPrecheck.checkContendibilita(ord);
+
+        //assertions
+        System.assertEquals(false , resultMap.get('ESITO'), 'Esito != false');
+        System.assertEquals('ERRORE' , resultMap.get('DES_ERR_AEEG'), 'DES_ERR_AEEG != ERRORE');
+
+        Test.stopTest();
+        
+    }
+
+    @IsTest
     static void testCheckContendibilitaKo(){
 
         //setup
-        Order ord = [SELECT SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
+        Order ord = [SELECT SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c, SalesCompanyCode__c, DistributorCode__c, CommodityFormula__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
 
         //mock webservice call
         HttpResponse res = new HttpResponse();

@@ -103,5 +103,17 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
     */
     public void finish(Database.BatchableContext bc) {
         System.debug(LoggingLevel.DEBUG, 'Batch execution, for unlock records in the sequentialization processing, finished');
+        scheduleCallouts();
+    }
+
+    private void scheduleCallouts(){
+        DateTime now = Datetime.now();
+        String hour = String.valueOf(now.hour());
+        String min = String.valueOf(now.minute() + 2);
+        String ss = String.valueOf(now.second());
+
+        String fireTime = ss + ' ' + min + ' ' + hour + ' * * ? '+now.year();
+        Object instance = wrts_prcgvr.VersionManager.newClassInstance('AsyncJobBatchSchedule');
+        System.schedule('Async Callout retry '+now, fireTime, (Schedulable) instance);
     }
 }

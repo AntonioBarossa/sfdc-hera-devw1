@@ -477,10 +477,6 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>AZ_ImportDatetime__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_DELTA_CUMULATO__c</field>
             </layoutItems>
@@ -516,6 +512,8 @@
         <fields>CHAR_VAL__c</fields>
         <fields>X_EXPIRY_DATE__c</fields>
         <relatedList>SiebelContractAttribute__x.ASSET_ID__c</relatedList>
+        <sortField>ATTR_NAME__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

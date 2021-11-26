@@ -9,6 +9,7 @@
 global inherited sharing class HDT_UTL_PrClickDoubleTransaction implements wrts_prcgvr.Interfaces_1_0.IApexAction {
 
     private static Map<Id, String> idToNewPhase = new Map<Id, String>();
+    //public static Map<Id, String> asyncCallouts = new Map<Id, String>();
 
     /**
     * @description 
@@ -93,15 +94,30 @@ global inherited sharing class HDT_UTL_PrClickDoubleTransaction implements wrts_
         }
     }
 
+    /*@future(callout=true)
+    private static void asyncCalloutFuture(Id sobjectId, String method){
+        new HDT_SRV_SalesManager().vasCustomCallouts(sobjectId, method);
+    }*/
 
     public class HDT_QBL_BulkUpdate implements Queueable {
         private Map<Id, String> bulkMapForDoubleTransasction {get;set;}
+        private Map<Id, String> asyncCallouts {get;set;}
         public HDT_QBL_BulkUpdate(Map<Id, String> vasOrdersToUpdate){
             this.bulkMapForDoubleTransasction=vasOrdersToUpdate;
+        }
+        public HDT_QBL_BulkUpdate(Map<Id, String> vasOrdersToUpdate, Map<Id, String> asyncCallouts){
+            this.bulkMapForDoubleTransasction=vasOrdersToUpdate;
+            this.asyncCallouts=asyncCallouts;
         }
 
         public void execute(QueueableContext context){
             asyncBulkUpdate(bulkMapForDoubleTransasction);
+            /*if(this.asyncCallouts?.keySet()?.size()>0){//gestione future servizio26
+                system.debug('HDT_UTL_PrClickDoubleTransaction servizio 26 ');
+                for(Id sobjId : this.asyncCallouts.keySet()){
+                    asyncCalloutFuture(sobjId, this.asyncCallouts.get(sobjId));
+                }
+            }*/
         }
     }
 }
