@@ -402,6 +402,13 @@
                 <stringValue>Annullamento - Extra Sistema</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.NotCancellable__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_0</targetReference>
         </connector>
