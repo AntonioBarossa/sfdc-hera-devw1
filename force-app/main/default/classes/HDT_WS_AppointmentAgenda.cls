@@ -17,13 +17,16 @@ public with sharing class HDT_WS_AppointmentAgenda {
             
             Http http = new Http();
             HTTPResponse res = http.send(req);
+            System.debug(LoggingLevel.DEBUG, debugString + 'response ' +  res);
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
-            System.debug(LoggingLevel.DEBUG, debugString + 'response ' +  res.getBody());
+            System.debug(LoggingLevel.DEBUG, debugString + 'response body : ' +  res.getBody());
             if (responseBodyMap.containsKey('responseAppuntamento')) {
                 System.debug(LoggingLevel.DEBUG, debugString + 'response element ' +  JSON.serialize(responseBodyMap.get('responseAppuntamento')));
                 response = (HDT_WRP_Appuntamento.HDT_WRP_ResponseAppuntamento) JSON.deserialize(JSON.serialize(responseBodyMap.get('responseAppuntamento')), HDT_WRP_Appuntamento.HDT_WRP_ResponseAppuntamento.class);
             }
-            if (res.getStatusCode() < 200 || res.getStatusCode() > 300){
+            if (response == null){
+                errorResponse = 'Nessuno slot è stato ricevuto dal server';
+            }else if (res.getStatusCode() < 200 || res.getStatusCode() > 300){
                 //verificare se il campo response.errInvioDis ritorna la descrizione dell'errore;
                 errorResponse = 'Messaggio ricevuto dal server: '+response.errInvioDis+' [Status code: '+res.getStatusCode()+']';
             }        
