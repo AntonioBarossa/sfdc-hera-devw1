@@ -418,9 +418,11 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
         console.log('CallBack start');
         this.deliberation = this.order.Deliberation__c;
-        this.service = this.order.ServicePoint__r.CommoditySector__c;
 
-        console.log('COMMODITY: ' + this.service);
+        if (this.order.ServicePoint__c !== null && this.order.ServicePoint__c !== undefined){
+            this.service = this.order.ServicePoint__r.CommoditySector__c;
+            console.log('COMMODITY: ' + this.service);
+        }
 
         if (this.order.RecordType.DeveloperName === 'HDT_RT_Default') {
             console.log('enter default');
@@ -477,7 +479,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.options.push({label: label, value: this.order.ProcessType__c});
             this.selectedProcessObject = {processType: this.order.ProcessType__c, recordType: this.order.RecordType.DeveloperName}
             this.value = this.selectedProcessObject.processType;
-            this.checkCompatibilityProcess();
+            // this.checkCompatibilityProcess();
+            this.pickValue = this.value;
+            this.startCheckContendibilita();
         }
 
         this.creditCheckFields = [
@@ -855,10 +859,13 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
      **/ 
 
     startCheckContendibilita(){
-
+        console.log('PickList Value: ' + this.pickValue);
+        console.log('Service Value: ' + this.service);
         if((this.pickValue === 'Prima Attivazione' || this.pickValue === 'Subentro Gas') && this.service === 'Gas') {
+            console.log('Caso checkContendibilitaPodPdr');
             this.checkContendibilitaPodPdr();
         }else{
+            console.log('Caso checkCompatibilityProcess');
             this.checkCompatibilityProcess();
         }
     }
@@ -882,7 +889,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             })
             .catch(error => {
                 this.loaded = true;
-                console.log(error.body.message);
+                console.log('ERROR checkContendibilita: ' + error.body.message);
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
                     message: error.body.message,
