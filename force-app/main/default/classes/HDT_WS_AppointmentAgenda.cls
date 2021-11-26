@@ -9,7 +9,7 @@ public with sharing class HDT_WS_AppointmentAgenda {
         String errorResponse = '';
         try{
             HttpRequest req = new HttpRequest();
-            req.setEndpoint('Callout:HerokuEndpoint'+this.REQUEST_PATH);
+            req.setEndpoint('Callout:HerokuBasePath'+this.REQUEST_PATH);
             req.setMethod('POST');
             req.setBody(body);
             req.setHeader('Content-Type','application/json');
