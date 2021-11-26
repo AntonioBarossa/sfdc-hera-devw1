@@ -11,11 +11,6 @@
         <quickActionLayoutColumns>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>PetitionerAssigneeStructure__c</field>
-                <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
                 <field>Type__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>

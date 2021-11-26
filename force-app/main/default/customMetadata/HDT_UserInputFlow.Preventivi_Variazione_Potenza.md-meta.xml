@@ -9,7 +9,7 @@
 {&quot;FieldName&quot;:&quot;PowerLimitation__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;SelfCertificationInstance__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;AnnualConsumption__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
-{&quot;FieldName&quot;:&quot;UseTypeEnergy__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
+{&quot;FieldName&quot;:&quot;UseTypeEnergy__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;DistributorNote__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}
 ]</value>
     </values>

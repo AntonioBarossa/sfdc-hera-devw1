@@ -4159,6 +4159,11 @@
         <field>product2.CampaignEleggibilityGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.Cloned__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 <fieldPermissions>
         <editable>true</editable>
         <field>Product2.DefaulStartTime__c</field>
@@ -32702,6 +32707,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>NewsNotificationCenter__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>OfferCreationStage__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
