@@ -554,6 +554,31 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         
     }
 
+    static void testCheckContendibilitaErrorBypassFromHeroku(){
+
+        //setup
+        Order ord = [SELECT SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c, SalesCompanyCode__c, DistributorCode__c, CommodityFormula__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
+
+        //mock webservice call
+        HttpResponse res = new HttpResponse();
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody('{"responses":[{"header":{"requestId":"","requestTimestamp":null,"requestType":"CREA_RIC","fields":[{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":"postsales"}]},"code":null,"description":null,"objects":[{"fields":[{"fieldType":"TEXT","name":"errorMessage","value":"venditore"}],"id":null,"name":null,"objectType":null,"objects":null}]}]}');
+        res.setStatusCode(200);
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_QservHandlerMock(res));
+
+        //start test
+        Test.startTest();
+
+        Map<String, Object> resultMap = HDT_LC_ChildOrderProcessPrecheck.checkContendibilita(ord);
+
+        //assertions
+        System.assertEquals(true , resultMap.get('ESITO'), 'Esito != true');
+        System.assertEquals('venditore' , resultMap.get('DES_ERR_AEEG'), 'DES_ERR_AEEG != venditore');
+
+        Test.stopTest();
+        
+    }
+
     @IsTest
     static void testCheckContendibilitaKo(){
 
