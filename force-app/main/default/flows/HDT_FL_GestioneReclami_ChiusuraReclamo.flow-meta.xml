@@ -80,7 +80,7 @@
             <assignToReference>Get_Activity.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Completed</stringValue>
+                <stringValue>Chiusa</stringValue>
             </value>
         </assignmentItems>
         <connector>

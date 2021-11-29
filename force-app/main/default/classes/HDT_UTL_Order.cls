@@ -159,7 +159,7 @@ public inherited sharing class HDT_UTL_Order {
             if(listActivity != null && !listActivity.isEmpty()){
                 system.debug('DENTRO TRAVASO DATO DISCORDANTE 2');
                 wrts_prcgvr__Activity__c wr = listActivity[0];
-                wr.wrts_prcgvr__Status__c = 'Completed';
+                wr.wrts_prcgvr__Status__c = 'Chiusa';
                 //actSrv.updateRecord(wr);
                 Order oldOrder = orderQr.getRecordById(wr.order__c);
                 travasaOrder(oldOrder,newOrder);

@@ -39,7 +39,7 @@ export default class hdtVOActivityValidation extends LightningElement {
             );
         } else if (data) {
            // this.parentOrder = data;
-            this.showFunction = (data.fields.Type__c.value == 'Validazione Vocal Order' && data.fields.wrts_prcgvr__Status__c.value != 'Completed') ? true : false;
+            this.showFunction = (data.fields.Type__c.value == 'Validazione Vocal Order' && data.fields.wrts_prcgvr__Status__c.value != 'Chiusa') ? true : false;
         }
     }
 

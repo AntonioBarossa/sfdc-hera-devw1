@@ -812,7 +812,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         asyncJobRec = hpsmQr.getAsyncJobByJobItem(recordId);
 
         if(asyncJobRec != null){
-            if(asyncJobRec.wrts_prcgvr__Status__c == 'Completed'){
+            if(asyncJobRec.wrts_prcgvr__Status__c == 'Chiusa'){
 
                 result = 'OK';
 

@@ -24,11 +24,11 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
             insert order;
 
             List<wrts_prcgvr__Activity__c> activity = HDT_UTL_DataFactoryTst.createActivityCustom(2, false, accList[0].Id);
-            activity[0].wrts_prcgvr__Status__c = 'Not Started';
+            activity[0].wrts_prcgvr__Status__c = 'Aperta';
             activity[0].Type__c = 'Sportello';
             activity[0].Order__c = order[0].Id;
             insert activity[0];
-            activity[1].wrts_prcgvr__Status__c = 'Not Started';
+            activity[1].wrts_prcgvr__Status__c = 'Aperta';
             activity[1].Type__c = 'Gestione Agenzia';
             activity[1].ParentActivity__c = activity[0].Id;
             insert activity[1];

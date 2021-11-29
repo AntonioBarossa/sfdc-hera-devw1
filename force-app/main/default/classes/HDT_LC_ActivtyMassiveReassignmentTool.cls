@@ -11,7 +11,7 @@ public with sharing class HDT_LC_ActivtyMassiveReassignmentTool {
             }
             fieldsString = fieldsString.removeEnd(', ');
 
-            List<wrts_prcgvr__Activity__c> rows = Database.query('SELECT ' + fieldsString + ' FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c NOT IN (\'Chiusa\', \'Completed\') ORDER BY CreatedDate DESC LIMIT 1000');
+            List<wrts_prcgvr__Activity__c> rows = Database.query('SELECT ' + fieldsString + ' FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c NOT IN (\'Chiusa\') ORDER BY CreatedDate DESC LIMIT 1000');
 
             Map<String, Object> result = new Map<String,Object> {
                 'columns' => columns,
