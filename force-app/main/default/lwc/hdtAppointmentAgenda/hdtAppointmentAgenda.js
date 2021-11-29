@@ -68,7 +68,8 @@ export default class HdtAppointmentAgenda extends LightningElement {
         }
         if (data && this.params){
             this.activity = data;
-            if (this.activity.fields.AppointmentCode__c.value){
+            let stato = this.activity.fields.wrts_prcgvr__Status__c.value;
+            if (this.activity.fields.AppointmentCode__c.value && stato && stato.localeCompare('Presa appuntamento in corso') === 0){
                 this.labelButton = 'Altre Date';
                 this.addRecord({
                     codice : this.activity.fields.AppointmentCode__c.value,
@@ -90,9 +91,6 @@ export default class HdtAppointmentAgenda extends LightningElement {
                         this.newDateLabel = 'Cerca';
                     }else {
                         this.newDateLabel = 'Altre Date';
-                    }
-                    if (this.searchType.localeCompare('NewSlotModify') === 0){
-                        this.handleSearchMethod(this.activity.fields.AppointmentDate__c.value,this.activity.fields.AppoitmentTimeSlotConfirmed__c.value);
                     }
                 break;
                 case 'handleCancellation':
@@ -208,7 +206,10 @@ export default class HdtAppointmentAgenda extends LightningElement {
                 }
             }
             this.showSpinner = false;
-            this.searchType = 'NewSlot';
+            if (this.searchType.localeCompare('FirstSearch') === 0){
+                this.searchType = 'NewSlot';
+                this.newDateLabel = 'Altre Date';
+            }
         }).catch(error =>{
             this.showSpinner = false;
             this.showAlert('Attenzione',error.body.message,'error');
