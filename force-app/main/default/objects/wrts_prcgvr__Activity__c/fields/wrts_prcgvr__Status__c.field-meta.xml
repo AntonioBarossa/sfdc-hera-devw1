@@ -39,6 +39,46 @@
                 <label>Chiusa</label>
             </value>
             <value>
+                <fullName>Creata</fullName>
+                <default>false</default>
+                <label>Creata</label>
+            </value>
+            <value>
+                <fullName>Presa appuntamento in corso</fullName>
+                <default>false</default>
+                <label>Presa appuntamento in corso</label>
+            </value>
+            <value>
+                <fullName>Appuntamento confermato</fullName>
+                <default>false</default>
+                <label>Appuntamento confermato</label>
+            </value>
+            <value>
+                <fullName>Appuntamento non eseguito</fullName>
+                <default>false</default>
+                <label>Appuntamento non eseguito</label>
+            </value>
+            <value>
+                <fullName>Appuntamento eseguito</fullName>
+                <default>false</default>
+                <label>Appuntamento eseguito</label>
+            </value>
+            <value>
+                <fullName>Annullata</fullName>
+                <default>false</default>
+                <label>Annullata</label>
+            </value>
+            <value>
+                <fullName>Invio app.to SELF cliente</fullName>
+                <default>false</default>
+                <label>Invio app.to SELF cliente</label>
+            </value>
+            <value>
+                <fullName>Appuntamento di competenza Distributore</fullName>
+                <default>false</default>
+                <label>Appuntamento di competenza Distributore</label>
+            </value>
+            <value>
                 <fullName>Scartata</fullName>
                 <default>false</default>
                 <label>Scartata</label>
