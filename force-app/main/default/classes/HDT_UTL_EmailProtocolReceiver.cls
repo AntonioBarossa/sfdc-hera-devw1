@@ -1,4 +1,7 @@
 public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHandler {
+
+    private final static String TEMPORARY_COMPANYOWNER_DEFAULT = 'HERA COMM';
+
     public Messaging.InboundEmailResult handleInboundEmail(Messaging.InboundEmail email, Messaging.InboundEnvelope envelope) {
         try {
             HDT_SRV_ContentDocumentLink contentdocumentLink = new HDT_SRV_ContentDocumentLink();
@@ -79,6 +82,7 @@ public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
             activity.RecordTypeId = new HDT_QR_RecordType().getRecordTypeIdByName('HDT_RT_RegisterActivity');
             activity.Account__c = interaction.Account__c;
             activity.Contact__c = interaction.Contact__c;
+            activity.CompanyOwner__c = TEMPORARY_COMPANYOWNER_DEFAULT;
 
             Map<String,HDT_ProtocolSpecificEmail__mdt> mapEmailObj = new Map<String,HDT_ProtocolSpecificEmail__mdt>();
             for(HDT_ProtocolSpecificEmail__mdt specificEmail : HDT_ProtocolSpecificEmail__mdt.getAll().values()) {
