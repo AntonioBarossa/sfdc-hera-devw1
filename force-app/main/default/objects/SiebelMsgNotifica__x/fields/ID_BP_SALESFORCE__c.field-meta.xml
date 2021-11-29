@@ -10,7 +10,7 @@
     <length>15</length>
     <referenceTargetField>Account.RowIdSiebel__c</referenceTargetField>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>Alert tracking</relationshipLabel>
+    <relationshipLabel>Alert tracking Storico (Siebel)</relationshipLabel>
     <relationshipName>Alert_tracking</relationshipName>
     <type>IndirectLookup</type>
 </CustomField>

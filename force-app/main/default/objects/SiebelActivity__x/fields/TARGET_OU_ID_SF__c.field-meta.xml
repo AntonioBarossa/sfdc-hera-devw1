@@ -11,7 +11,7 @@
     <length>15</length>
     <referenceTargetField>Account.RowIdSiebel__c</referenceTargetField>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>Attività Siebel</relationshipLabel>
+    <relationshipLabel>Attività Storico (Siebel)</relationshipLabel>
     <relationshipName>SiebelActivity</relationshipName>
     <type>IndirectLookup</type>
 </CustomField>
