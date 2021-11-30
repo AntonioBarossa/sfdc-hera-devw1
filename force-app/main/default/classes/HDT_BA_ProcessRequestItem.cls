@@ -57,7 +57,7 @@ public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchabl
             //massiveItem.Status__c               = 'Errore'          ;
             //massiveItem.StatusDescription__c    = e.getMessage()    ;
             //update massiveItem;
-            cls.manageCatchException(batchSize, scope, e.getMessage());
+            cls.manageCatchException(batchSize, scope, e.getMessage() + 'at line [' + String.valueOf(e.getLineNumber()) + ']');
         }
     }
     public void finish(Database.BatchableContext bc){

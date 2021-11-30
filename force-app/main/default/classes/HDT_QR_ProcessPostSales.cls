@@ -1,13 +1,14 @@
 public with sharing class HDT_QR_ProcessPostSales {
 
     public static Id getRecordTypeId(String developerName){
-        return [
-            SELECT Id
-            FROM RecordType
-            WHERE DeveloperName = :developerName
-            WITH SECURITY_ENFORCED
-            LIMIT 1
-        ].Id;
+        //return [
+        //    SELECT Id
+        //    FROM RecordType
+        //    WHERE DeveloperName = :developerName
+        //    WITH SECURITY_ENFORCED
+        //    LIMIT 1
+        //].Id;
+        return Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(developerName).getRecordTypeId();
     }
 
     public static List<Contract> getContracts(Set<String> podSet, List<Contract> contractList){
