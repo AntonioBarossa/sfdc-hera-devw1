@@ -781,14 +781,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_QBL_SIE34_2SMEEE</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_QBL_SIE34_2SMEGas</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_QBL_SIE34_3</apexClass>
         <enabled>true</enabled>
     </classAccesses>
