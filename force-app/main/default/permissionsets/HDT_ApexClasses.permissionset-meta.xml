@@ -773,10 +773,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_QBL_SIE34_2MMGas</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_QBL_SIE34_2SME</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2142,10 +2138,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_FormatTextScriptTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_GenericSolHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
