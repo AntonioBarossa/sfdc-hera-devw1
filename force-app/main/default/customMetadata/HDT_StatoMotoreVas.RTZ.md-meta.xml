@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>OrderPhase__c</field>
-        <value xsi:type="xsd:string">Accettato Motore VAS</value>
+        <value xsi:type="xsd:string">Completata</value>
     </values>
     <values>
         <field>OrderStatus__c</field>
