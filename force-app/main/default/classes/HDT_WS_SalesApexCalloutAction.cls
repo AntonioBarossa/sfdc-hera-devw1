@@ -91,11 +91,11 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                 }
                 count++;
             }
-            for (integer i = indexOffieldToRemove.keyset().size() - 1 ; i >= 0 ; i--) {
+            for(integer i : indexOffieldToRemove.keyset()){
                 multirequestObj.requests[0].objects[i].fields.remove(indexOffieldToRemove.get(i));
             }
             for (integer i = indexOfObjectToRemove.size() - 1 ; i >= 0 ; i--) {
-                multirequestObj.requests[0].objects.remove(i);
+                multirequestObj.requests[0].objects.remove(indexOfObjectToRemove[i]);
             }
             /*for(integer i : indexOffieldToRemove.keyset()){
                 multirequestObj.requests[0].objects[i].fields.remove(indexOffieldToRemove.get(i));
