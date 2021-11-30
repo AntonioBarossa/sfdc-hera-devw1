@@ -1,0 +1,78 @@
+<template>
+  <article class="slds-card">
+    <template if:true={showSpinner}>
+      <div class="demo-only demo--inverse" style="height:300px;position:relative">
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+      </div>
+    </template>
+    <template if:false={showSpinner}>
+      <div class="slds-card__header slds-grid">
+        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+          <div class="slds-media__figure">
+            <span class="slds-icon_container slds-icon-standard-account" title="account">
+              <lightning-icon icon-name="standard:event" alternative-text="Event" title="Event"></lightning-icon>
+              <span class="slds-assistive-text">account</span>
+            </span>
+          </div>
+          <div class="slds-media__body">
+            <h2 class="slds-card__header-title">
+              Agenda
+            </h2>
+          </div>
+        </header>
+      </div>
+      <div class="slds-card__body slds-card__body_inner">
+        <lightning-accordion active-section-name="appointmentFormSection">
+          <lightning-accordion-section name="appointmentForm" label="Appuntamento Richiesto">
+            <div class="slds-form-element slds-form-element_compound">
+              <div class="slds-form-element__control">
+                <div class="slds-form-element__row">
+                  <div class="slds-size_1-of-3">
+                    <div class="slds-form-element slds-p-top_xx-small">
+                      <lightning-input name="newAppointment" data-id="newAppointment" required="true" label="Data appuntamento preferenziale" type = "date" ></lightning-input>
+                    </div>
+                  </div>
+                  <div class="slds-size_1-of-3">
+                    <div class="slds-form-element slds-p-top_xx-small">
+                      <lightning-combobox
+                        name="preferentialTime"
+                        data-id="preferentialTime"
+                        label="Fascia oraria preferenziale"
+                        required="true"
+                        placeholder="Select Progress"
+                        options={options}
+                      >
+                      </lightning-combobox>
+                    </div>
+                  </div>
+                  <div class="slds-size_1-of-3 slds-text-align_center">
+                    <div class="slds-form-element slds-p-top_large">
+                      <lightning-button variant="brand" label={newDateLabel} icon-name="utility:search" name="newDate" title="brand" onclick={handleClick} class="slds-m-right_medium" ></lightning-button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </lightning-accordion-section>
+        </lightning-accordion>
+        <lightning-accordion active-section-name="appointmentsSection">
+          <lightning-accordion-section name="appointments" label="Fasce orarie appuntamenti">
+            <div style="height: 300px;">
+              <lightning-datatable
+                data-id="dtAppointment"
+                key-field="codice"
+                data={records}
+                columns={columns}
+                max-row-selection = "1">
+              </lightning-datatable>
+            </div>
+          </lightning-accordion-section>
+        </lightning-accordion>
+      </div>
+      <footer class="slds-card__footer">
+        <lightning-button label="Indietro" name="Cancel" onclick={handleClick} ></lightning-button>
+        <lightning-button icon-name="utility:save" variant="brand" label="Conferma Appuntamento" name="Save" onclick={handleClick} class="slds-m-left_x-small" disabled={disableConfirmButton}></lightning-button>
+      </footer>   
+    </template> 
+</article>
+</template>
