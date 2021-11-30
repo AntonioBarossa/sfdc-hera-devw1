@@ -74,7 +74,7 @@ public with sharing class HDT_UTL_VasManagement {
             ContractReference__r.SAPContractCode__c,OrderReference__c,ContractReference__c,
             ContractReference__r.ServicePoint__r.ServicePointCode__c, OrderReference__r.ServicePointCodeFormula__c,
             SBQQ__Quote__r.SBQQ__ListAmount__c, SBQQ__Quote__r.SBQQ__TotalCustomerDiscountAmount__c, SBQQ__Quote__r.SBQQ__PriceBook__r.Name,
-            SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
+            SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c, ServicePointCode__c,
             (SELECT Quantity, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
                 DurationDay__c, PaymentMode__c, IVA__c,
                 Product2.Name, Product2.NumberRateMonthly__c, Product2.DescriptionSAP__c
@@ -104,9 +104,16 @@ public with sharing class HDT_UTL_VasManagement {
     * @param salesCompany 
     * @return String 
     **/
-    private static String getCompanyCode(String salesCompany){
-        List<HDT_HeraCompany__mdt> companies = [select CompanyCode__c from HDT_HeraCompany__mdt where SalesCompany__c=:salesCompany WITH SECURITY_ENFORCED];
-        return companies.isEmpty()? null : companies?.get(0)?.CompanyCode__c;
+    private static String getCompanyCode(String salesCompany, String servicePointCode){
+        if(STRING.isBlank(servicePointCode)){
+            return null;
+        }
+        List<ServicePoint__c> lpc = [Select Vendor__c from ServicePoint__c where ServicePointCode__c=:servicePointCode WITH SECURITY_ENFORCED LIMIT 1 ];
+        if(lpc.size()>0){
+            List<HDT_HeraCompany__mdt> companies = [select CompanyCode__c from HDT_HeraCompany__mdt where SalesCompany__c=:lpc[0].Vendor__c WITH SECURITY_ENFORCED];
+            return companies.isEmpty()? null : companies?.get(0)?.CompanyCode__c;
+        }
+        return null;
     }
 
     /**
@@ -131,7 +138,7 @@ public with sharing class HDT_UTL_VasManagement {
         * @param currentOrder 
         **/
         public HDT_WRP_VASReq(Order currentOrder) {
-            societa = getCompanyCode(currentOrder.SalesCompany__c);
+            societa = getCompanyCode(currentOrder.SalesCompany__c, currentOrder.ServicePointCode__c);
             //societa = currentOrder.SalesCompanyCode__c;
             partner = currentOrder.CustomerCode__c;
             codFiscale = currentOrder.CustomerFiscalCode__c;
