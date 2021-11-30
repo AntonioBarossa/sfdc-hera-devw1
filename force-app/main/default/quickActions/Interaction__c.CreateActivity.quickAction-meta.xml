@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldOverrides>
+        <field>CompanyOwner__c</field>
+        <formula>TEXT(Interaction__c.CompanyOwner__c)</formula>
+    </fieldOverrides>
+    <fieldOverrides>
         <field>Interaction__c</field>
         <formula>Interaction__c.Id</formula>
     </fieldOverrides>
@@ -21,12 +25,12 @@
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>CompanyOwner__c</field>
-                <uiBehavior>Required</uiBehavior>
+                <field>Account__c</field>
+                <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>Account__c</field>
+                <field>Note__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
@@ -40,11 +44,6 @@
                 <emptySpace>false</emptySpace>
                 <field>Process__c</field>
                 <uiBehavior>Required</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>Note__c</field>
-                <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>

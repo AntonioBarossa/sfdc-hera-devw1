@@ -5,6 +5,25 @@
     <description>Interazioni del cliente</description>
     <label>Interazione</label>
     <picklistValues>
+        <picklist>CompanyOwner__c</picklist>
+        <values>
+            <fullName>AAA-EBT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HERA COMM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reseller</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
             <fullName>Non lavorabile</fullName>
@@ -19,7 +38,7 @@
         <picklist>Status__c</picklist>
         <values>
             <fullName>Aperta</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Chiusa</fullName>

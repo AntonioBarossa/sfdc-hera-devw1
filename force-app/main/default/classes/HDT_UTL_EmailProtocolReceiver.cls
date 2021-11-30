@@ -16,11 +16,14 @@ public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
                 emailBody = email.plainTextBody;
             }
 
-            Interaction__c interaction = new Interaction__c();
-            interaction.Type__c = 'Digital';
-            interaction.ReceptionDate__c = Date.today();
-            interaction.BodyEmail__c = emailBody;
-            interaction.SubjectEmail__c = email.subject;
+            Interaction__c interaction = new Interaction__c(
+                Type__c = 'Digital',
+                ReceptionDate__c = Date.today(),
+                BodyEmail__c = emailBody,
+                SubjectEmail__c = email.subject,
+                SenderEmailAddress__c = email.fromAddress,
+                CompanyOwner__c = TEMPORARY_COMPANYOWNER_DEFAULT
+            );
 
             List<ContentVersion> listContent = new List<ContentVersion>();
             List<Contact> contacts = new HDT_QR_Contact().getContactByEmailAddress(email.fromAddress);
