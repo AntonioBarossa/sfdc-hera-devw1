@@ -19,6 +19,36 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public  Id recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
     public  Id recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
 
+    // --------- montors fix for bulk develop  ---------
+    public void setMassiveLoaderRequestItemList(list<MassiveLoaderRequestItem__c> requestItemList){
+
+        currentProcess = new HDT_WRP_ProcessEntities();
+        this.currentProcess.currentRequestItemList = requestItemList;   
+       
+        for(MassiveLoaderRequestItem__c item : this.currentProcess.currentRequestItemList){
+            if ( String.isBlank(item.MassiveLoaderRequest__r.ProcessType__c)) {
+                throw new HDT_WRP_ProcessEntitiesException( 'NullPointerExceptions','ProcessType can\'t be null');
+            }
+        }
+    
+        this.processName = this.currentProcess.currentRequestItemList[0].MassiveLoaderRequest__r.ProcessType__c;
+        HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(processName);
+        List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName);
+ 
+
+        mapHeaderByPosition = new Map<Integer, String>();
+        Integer count=0;
+        for (String temp : staticResources.get(0).Body.toString().remove('\r').remove('\n').split(',')) {
+           if (temp.containsIgnoreCase('*')) {
+                temp=temp.remove('*');
+                mapRequiredByPosition.put(count,temp);
+            }
+            mapHeaderByPosition.put(count,temp);
+            count++;
+        }
+    }
+    // --------- montors fix for bulk develop  ---------
+
     public void setMassiveLoaderRequestItem(MassiveLoaderRequestItem__c requestItem){
 
         currentProcess=new HDT_WRP_ProcessEntities();
@@ -71,6 +101,12 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
 
     }
    
+    // --------- montors fix for bulk develop  ---------
+    public virtual void manageCatchException(Integer batchSize, List<MassiveLoaderRequestItem__c> itemList, String message){
+        System.debug('manageCatchException');
+    }
+    // --------- montors fix for bulk develop  ---------
+
     /**
     * @description :
     * @param objName 
@@ -266,6 +302,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
       public ServicePoint__c              currentServicePoint           ;
       public BillingProfile__c            currentBillingProfile         ;
       public MassiveLoaderRequestItem__c  currentRequestItem            ;
+      public List<MassiveLoaderRequestItem__c>  currentRequestItemList  ;
       public AccountContactRelation       currentAccountContactRelation ;
       public Sale__c                      currentSale                   ;
       public OrderItem                    currentOrderItem              ;
