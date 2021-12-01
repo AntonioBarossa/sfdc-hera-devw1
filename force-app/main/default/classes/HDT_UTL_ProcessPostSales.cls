@@ -5,6 +5,7 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
 
     private Map<String, String> mapCaseFields;
     private Map<String, Integer> mapHPositionByeader;
+    private List<MassiveLoaderRequestItem__c> itemsToSave;
 
     public override void checks(){
         System.debug('checks');
@@ -43,8 +44,7 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
         Id recordTypeId;
         List<Case> caseToInsert = new List<Case>();
         List<String> itemIds = new List<String>();
-        List<MassiveLoaderRequestItem__c> itemErrorToSave;
-        itemErrorToSave = new List<MassiveLoaderRequestItem__c>();
+        itemsToSave = new List<MassiveLoaderRequestItem__c>();
 
         System.debug('>>> currentRequestItemList: ' + String.valueOf(currentProcess.currentCase));
 
@@ -57,8 +57,8 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
         List<String> dataSplitted;
         for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
             dataSplitted = item.Data__c.split(',');
-            accountIdSet.add(dataSplitted[1]);
-            podSet.add(dataSplitted[2]);
+            accountIdSet.add(dataSplitted[accountIdIndex]);
+            podSet.add(dataSplitted[podIndex]);
             itemRequestMap.put(item.Id, dataSplitted);
         }
 
@@ -94,7 +94,7 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
                 newCase.ServicePoint__c = contract.ServicePoint__c;
                 newCase.BillingProfile__c = contract.BillingProfile__c;
             } else {
-                itemErrorToSave.add(setErrorItem(itemId, 'pod non presente'));
+                itemsToSave.add(setErrorItem(itemId, 'pod non presente'));
                 continue;
             }
             
@@ -104,7 +104,7 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
             if(accountContactMap.containsKey(accountId)){
                 newCase.ContactId = accountContactMap.get(accountId);
             } else {
-                itemErrorToSave.add(setErrorItem(itemId, 'account non presente'));
+                itemsToSave.add(setErrorItem(itemId, 'account non presente'));
                 continue;
             }
 
@@ -116,27 +116,44 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
             newCase.CausalCode__c = 'D01';
 
             // only to test insert failure
-            //newCase.CareOf__c = 'abcdefghilmnopqrstuvzabcdefghilmnopqrstuvz';
+            if(tempSplitted[0]=='error')
+                newCase.CareOf__c = 'abcdefghilmnopqrstuvzabcdefghilmnopqrstuvz';
 
             try{
                 String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(tempSplitted[podIndex], null);
                 newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, newCase);
-                caseToInsert.add(newCase);
+                caseToInsert.add(newCase); 
                 itemIds.add(itemId);
             } catch(Exception e){
-                itemErrorToSave.add(setErrorItem(itemId, 'Errore arricchimento dati'));
+                itemsToSave.add(setErrorItem(itemId, 'Errore arricchimento dati # ' + e.getMessage() + ' [' + String.valueOf(e.getLineNumber()) + ']'));
             }
 
         }
         
+        System.debug('>>> before ' + caseToInsert.size());
+
         if(caseToInsert.size() > 0){
             //itemIds.addAll(itemRequestMap.keySet());
-            itemErrorToSave = databaseInsert(caseToInsert, itemIds, itemErrorToSave);
+            itemsToSave = databaseInsert(caseToInsert, itemIds, itemsToSave);
+
+            for(Integer n=0; n<caseToInsert.size(); n++){
+                if(String.isEmpty(caseToInsert[n].Id)){
+                    caseToInsert.remove(n);
+                }
+            }
+
         }
 
-        if(itemErrorToSave.size() > 0){
-            update itemErrorToSave;
-        }
+        System.debug('>>> after ' + caseToInsert.size());
+
+        //if(caseToInsert.size() > 0){
+        //    Map<Id, String> compatibilityMap = checkCompatibilityPostSales(caseToInsert);
+        //    System.debug('>>> compatibilityMap ' + String.valueOf(compatibilityMap));
+    //
+        //    if(!compatibilityMap.isEmpty()){
+        //        updateCaseNotCompatible(compatibilityMap.keySet());
+        //    }
+        //}
 
     }
 
@@ -146,6 +163,11 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
 
     public override void finalUpdate(){
         System.debug('finalUpdate');
+
+        if(itemsToSave.size() > 0){
+            update itemsToSave;
+        }
+
     }
 
     private void mapFieldsObject(){
@@ -157,7 +179,11 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
         }
     }
 
-    public static List<MassiveLoaderRequestItem__c> databaseInsert(List<Case> itemList, List<String> itemIds, List<MassiveLoaderRequestItem__c> itemErrorToSave){
+    public static List<MassiveLoaderRequestItem__c> databaseInsert(List<Case> itemList, List<String> itemIds, List<MassiveLoaderRequestItem__c> itemsToSave){
+
+        HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
+        saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
+        saveResponse.responseCaseList = new List<Case>();
 
         SObjectType objtype = Schema.getGlobalDescribe().get('Case');
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
@@ -169,25 +195,34 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
             for(Integer n=0; n<insertResults.size(); n++){
                 Database.SaveResult sr = insertResults[n];
 
+                MassiveLoaderRequestItem__c itemError;
                 if (!sr.isSuccess()) {
                     
-                    MassiveLoaderRequestItem__c itemError;
                     for(Database.Error err : sr.getErrors()) {
+                        System.debug('>>> ' + String.valueOf(String.valueOf(itemList[n].ServicePoint__c) + ' - item id ' + itemIds[n]));
+                        System.debug('>>> ' + ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']');
                         itemError = new MassiveLoaderRequestItem__c();
                         itemError.Id = itemIds[n];
                         itemError.Status__c = 'Errore';
                         itemError.StatusDescription__c = err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields();
-                        System.debug('>>> ' + String.valueOf(String.valueOf(itemList[n].ServicePoint__c) + ' - item id ' + itemIds[n]));
-                        System.debug('>>> ' + ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']');
-                        itemErrorToSave.add(itemError);
+                        itemsToSave.add(itemError);
                     }
-
+                } else {
+                    itemError = new MassiveLoaderRequestItem__c();
+                    itemError.Id = itemIds[n];
+                    itemError.Status__c = 'Chiuso';
+                    itemsToSave.add(itemError);
                 }
             }
         }
 
-        return itemErrorToSave;
+        return itemsToSave;
 
+    }
+
+    public class HDT_WRP_SaveResponse {
+        public List<MassiveLoaderRequestItem__c> reponseItemList;
+        public List<Case> responseCaseList;
     }
 
     private static MassiveLoaderRequestItem__c setErrorItem(String itemId, String message){
@@ -204,6 +239,79 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
             item.StatusDescription__c = message;
         }
         update itemList;
+    }
+
+    //only for test
+    public static Map<Id, String> checkCompatibilityPostSales(List<Case> csList){
+
+        List<ServiceRequest__c> srList = new List<ServiceRequest__c>();
+        List<ServiceRequest__c> srListToDelete = new List<ServiceRequest__c>();
+        Map<Id, String> caseIdToCompatibility = new Map<Id, String>();
+
+        try {
+            String compatibility = '';
+
+            ServiceRequest__c srvRequest;
+            for(Case cs : csList){
+                srvRequest = new ServiceRequest__c();
+                srvRequest.Case__c = cs.Id;
+                srvRequest.ServicePointCode__c= cs.PODPDRFormula__c;
+                srvRequest.Status__c = HDT_UTL_MatrixCompatibility.getStatus(cs.Status, 'Case');
+                srvRequest.CommoditySector__c= cs.CommodityFormula__c;
+                srvRequest.Type__c = 'Case';
+    
+                if(cs.ServicePoint__c != null){
+                    srvRequest.ServicePoint__c = cs.ServicePoint__c;
+                } else {
+                    srvRequest.Account__c = cs.AccountId;
+                    srvRequest.BillingProfile__c = cs.BillingProfile__c;
+                }
+    
+                srvRequest.ProcessType__c = 'Chiusura contatore - EE';
+                //srvRequest.ProcessType__c = HDT_UTL_MatrixCompatibility.getProcessType(cs.Type, 'Case', cs.CommodityFormula__c);
+                srList.add(srvRequest);
+            }
+
+            //ServiceRequest__c sReq = HDT_SRV_ServiceRequest.createRecord(srvRequest);
+            HDT_UTL_DatabaseService.insertSObject(srList);
+
+            for(ServiceRequest__c sReq : srList){
+                wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = HDT_UTL_MatrixCompatibility.checkCompatibility(sReq);
+
+                //list of incompatible records
+                if(!result.incompatibilities.isEmpty()){
+                    compatibility = HDT_UTL_MatrixCompatibility.getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
+                    caseIdToCompatibility.put(sReq.Case__c, compatibility);
+                    srListToDelete.add(sReq);
+                } else {
+                    caseIdToCompatibility.put(sReq.Case__c, '');
+                }
+            }
+            
+            if(srListToDelete.size() > 0){
+                HDT_UTL_DatabaseService.deleteSObject(srListToDelete);
+            }
+
+            return caseIdToCompatibility;
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    //only for test
+
+    public static void updateCaseNotCompatible(Set<Id> caseIdsSet){
+        List<Case> caseToUpdate = new List<Case>();
+        Case c;
+        for(Id caseId : caseIdsSet){
+            c = new Case();
+            c.Id = caseId;
+            c.Phase__c = 'Bozza Annullata';
+            c.Status = 'Closed';
+            c.CancellationReason__c = 'Processo incompatibile';
+            caseToUpdate.add(c);
+        }
+        HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
     }
 
 }
