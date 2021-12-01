@@ -3,6 +3,11 @@ public inherited sharing class HDT_TRH_EmailMessage extends HDT_TRH_TriggerHandl
     //public override void afterDelete(){}
     //public override void afterUndelete(){}
 
+    public override void beforeInsert(){
+
+        HDT_SRV_EmailMessage.checkBlacklistOneshot((List<EmailMessage>) Trigger.new);
+    }
+
     public override void afterInsert(){
 
         // Il controllo sul mittente va fatto in after insert, poichè in before insert il mittente sull'action del Case è ancora null.
