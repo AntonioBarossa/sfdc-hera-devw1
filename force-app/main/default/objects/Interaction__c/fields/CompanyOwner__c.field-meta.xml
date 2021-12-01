@@ -3,7 +3,7 @@
     <fullName>CompanyOwner__c</fullName>
     <externalId>false</externalId>
     <label>Company Owner</label>
-    <required>true</required>
+    <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
