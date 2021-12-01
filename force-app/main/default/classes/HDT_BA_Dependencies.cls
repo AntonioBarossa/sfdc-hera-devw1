@@ -108,8 +108,9 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
 
     private void scheduleCallouts(){
         DateTime now = Datetime.now();
+        now.addMinutes(2);
         String hour = String.valueOf(now.hour());
-        String min = String.valueOf(now.minute() + 2);
+        String min = String.valueOf(now.minute());
         String ss = String.valueOf(now.second());
 
         String fireTime = ss + ' ' + min + ' ' + hour + ' * * ? '+now.year();

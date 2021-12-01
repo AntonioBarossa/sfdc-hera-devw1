@@ -1,4 +1,104 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>wrts_prcgvr__Activity__c.HDT_ManageAppoinment</members>
+        <name>QuickAction</name>
+    </types>
+    <types>
+        <members>HDT_Activity_Default_Record_Page</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>SiebelMsgNotifica__x</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>HDT_ActivityType</members>
+        <name>GlobalValueSet</name>
+    </types>
+    <types>
+        <members>hdtAppointmentAgenda</members>
+        <members>hdtAppointmentHandler</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera Standard User OneShot</members>
+        <members>Hera Standard User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <members>Hera Teleseller Partner User</members>
+        <name>Profile</name>
+    </types>
+    <types>
+        <members>HDT_FL_GestioneAnnullamento</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>Individual.HDT_VR_CheckRemovalReason</members>
+        <members>Individual.HDT_VR_DisableBlacklistOneshot</members>
+        <name>ValidationRule</name>
+    </types>
+    <types>
+        <members>Case.HDT_RT_AltriProcessiPagamenti</members>
+        <members>Case.HDT_RT_Domiciliazione</members>
+        <members>Case.HDT_RT_PianoRateizzazione</members>
+        <members>Case.HDT_RT_PreventiviEle</members>
+        <members>Case.HDT_RT_PreventiviGas</members>
+        <members>Case.HDT_RT_Rimborso</members>
+        <members>Case.HDT_RT_VerificheEle</members>
+        <members>Case.HDT_RT_VerificheGas</members>
+        <members>Order.HDT_RT_OrderDossier</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>Individual-Prototipo_2</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_ApexClasses</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_BA_Dependencies</members>
+        <members>HDT_LC_AppointmentAgenda</members>
+        <members>HDT_LC_AppointmentAgendaTst</members>
+        <members>HDT_LC_ChildOrderProcessPrecheckTst</members>
+        <members>HDT_QR_Contact</members>
+        <members>HDT_QR_Task</members>
+        <members>HDT_SRV_AppointmentAgenda</members>
+        <members>HDT_SRV_QservHandler</members>
+        <members>HDT_TRH_Task</members>
+        <members>HDT_UTL_AppointmentAgenda</members>
+        <members>HDT_UTL_OrderFieldsAlignment</members>
+        <members>HDT_UTL_VasManagement</members>
+        <members>HDT_WRP_Appuntamento</members>
+        <members>HDT_WS_AppointmentAgenda</members>
+        <members>HDT_WS_SalesApexCalloutAction</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>Case.Phase__c</members>
+        <members>Order.Phase__c</members>
+        <members>PaperCommunication__c.CommunicationId__c</members>
+        <members>SiebelActivity__x.TARGET_OU_ID_SF__c</members>
+        <members>SiebelContract__x.SERV_ACCT_SALESFORCE__c</members>
+        <members>SiebelMsgNotifica__x.ID_BP_SALESFORCE__c</members>
+        <members>SiebelMsgNotifica__x.TOTALE_PAPERLESS__c</members>
+        <members>SiebelRds__x.CST_OU_ID_SALESFORCE__c</members>
+        <members>wrts_prcgvr__Activity__c.Type__c</members>
+        <members>wrts_prcgvr__Activity__c.wrts_prcgvr__Status__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>HDT_StatoMotoreVas.COFF</members>
+        <members>HDT_StatoMotoreVas.FATTURA_SD</members>
+        <members>HDT_StatoMotoreVas.OK_ODV</members>
+        <members>HDT_StatoMotoreVas.OK_PAREG</members>
+        <members>HDT_StatoMotoreVas.RTZ</members>
+        <name>CustomMetadata</name>
+    </types>
     <version>49</version>
 </Package>

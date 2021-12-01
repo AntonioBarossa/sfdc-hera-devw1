@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_VR_DisableBlacklistOneshot</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISBLANK(TEXT(OneshotBlacklistRemovalReason__c)), PRIORVALUE(OneshotBlacklist__c) = True &amp;&amp; OneshotBlacklist__c = False)</errorConditionFormula>
+    <errorDisplayField>OneshotBlacklistRemovalReason__c</errorDisplayField>
+    <errorMessage>Il campo “Motivazione Rimozione Blacklist” è obbligatorio se si vuole rimuove il flag della Blacklist Oneshot.</errorMessage>
+</ValidationRule>

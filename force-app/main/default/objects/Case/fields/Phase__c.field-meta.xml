@@ -812,6 +812,11 @@
                 <default>false</default>
                 <label>Disattivato</label>
             </value>
+            <value>
+                <fullName>Comunicazione EngageOne KO</fullName>
+                <default>false</default>
+                <label>Comunicazione EngageOne KO</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
