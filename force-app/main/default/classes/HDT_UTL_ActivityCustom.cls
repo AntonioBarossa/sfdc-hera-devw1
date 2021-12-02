@@ -224,5 +224,10 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         return res;
         //update act;
     }
+
+    @AuraEnabled(cacheable=true)
+    public static boolean isMandatoryComplete( String recordid ){
+        return HDT_QR_ActivityCustom.isActivityNotClosed(recordid);
+    }
     
 }

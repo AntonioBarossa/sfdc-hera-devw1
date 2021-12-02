@@ -1,4 +1,4 @@
-<aura:component implements="lightning:isUrlAddressable" >
+<aura:component implements="lightning:isUrlAddressable" controller="HDT_UTL_ActivityCustom" access="global">
     <aura:attribute name="recordid" type="String"/>
     <aura:attribute name="accid" type="String"/>
     <aura:attribute name="flowName" type="String"/>
@@ -47,6 +47,8 @@
 
     <!-- id dell'Interaction oggetto del processo. -->
     <aura:attribute name="interactionId" type="String"/>
+
+    <aura:attribute name="thereIsActivity" type="Boolean"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <lightning:workspaceAPI aura:id="workspace" />

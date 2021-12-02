@@ -175,7 +175,6 @@
         inputVariables.forEach(e => console.log('# ' + e.name + '- ' + e.value));
 
         flow.startFlow(flowName, inputVariables);
-
     },
     
     handleStatusChange : function (component, event) {
@@ -192,38 +191,6 @@
             var subTabToClose = component.get("v.subTabToClose");
             var enableRefresh = component.get('v.enableRefresh');
             var flowfinal = component.find("flowData");
-                
-            if(event.getParam("status") === "ERROR"){
-                //Sembra non esserci nella struttura dell'event il messaggio di errore
-                /*event: {
-                    "_name":"",
-                    "_source":{},
-                    "_params":{
-                        "status":"ERROR",
-                        "flowTitle":"Gestione Annullamento",
-                        "showHeader":true,
-                        "guid":"5576e83980290edaf4536891f79f179e6928cf-b934"
-                    },
-                    "target":null,
-                    "currentTarget":null}
-                */
-                console.log('Inside Error condition: ' + JSON.stringify(event));
-
-                var toastEvent = $A.get("e.force:showToast");
-                toastEvent.setParams({
-                    "title": "Errore",
-                    "message": "Non è stato possibile portare a termine le operazioni.\nSi prega di contattare l'Amministratore di sistema",
-                    "type" : "error"
-                });
-                toastEvent.fire();
-            }
-
-           
-            flowfinal.destroy();
-
-            console.log('# Refresh page -> ' + enableRefresh);
-
-            console.log('# close -> ' + subTabToClose + ' - refresh -> ' + accountTabId);
 
             //if(!enableRefresh){
             var outputVariables = event.getParam('outputVariables');
@@ -240,8 +207,64 @@
                     }
                 }
             }else{
-                newCaseId=component.get("v.recordid");
+                newCaseId=component.get("v.recordid"); 
             }
+
+            // check se id vuoto, se vuoto non c'è il controllo
+            if( newCaseId != null ){
+                if(event.getParam("status") === "ERROR"){
+                    //Sembra non esserci nella struttura dell'event il messaggio di errore
+                    /*event: {
+                        "_name":"",
+                        "_source":{},
+                        "_params":{
+                            "status":"ERROR",
+                            "flowTitle":"Gestione Annullamento",
+                            "showHeader":true,
+                            "guid":"5576e83980290edaf4536891f79f179e6928cf-b934"
+                        },
+                        "target":null,
+                        "currentTarget":null}
+                    */
+                    console.log('Inside Error condition: ' + JSON.stringify(event));
+    
+                    var action = component.get("c.isMandatoryComplete");
+                    action.setParams({
+                        "recordid" : component.get('v.recordid') 
+                    });
+                    action.setCallback(this, function(response) {
+                        var state = response.getState();
+                        if (state === "SUCCESS") {
+                            component.set("v.thereIsActivity", response.getReturnValue());
+                        }
+                    });
+                    $A.enqueueAction(action);
+    
+                    if( !component.get('v.thereIsActivity') ){
+                        var toastEvent = $A.get("e.force:showToast");
+                        toastEvent.setParams({
+                            "title": "Errore",
+                            "message": "Ci sono attività obbligatorie da completare.",
+                            "type" : "error"
+                        });
+                        toastEvent.fire();
+                    } else {
+                        var toastEvent = $A.get("e.force:showToast");
+                        toastEvent.setParams({
+                            "title": "Errore",
+                            "message": "Non è stato possibile portare a termine le operazioni.\nSi prega di contattare l'Amministratore di sistema",
+                            "type" : "error"
+                        });
+                        toastEvent.fire();
+                    }
+                }
+            }
+            
+            flowfinal.destroy();
+
+            console.log('# Refresh page -> ' + enableRefresh);
+
+            console.log('# close -> ' + subTabToClose + ' - refresh -> ' + accountTabId);
 
             console.log('# outputVariable -> '+outputVariables);
             console.log('# newCaseId -> '+newCaseId);

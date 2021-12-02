@@ -207,4 +207,23 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 			System.assertNotEquals(false, validaActivityDocument!=null, 'Return is wrong');
 		}
 	}
+
+	@isTest
+	public static void testisMandatoryComplete(){
+
+		test.startTest();
+
+		List<wrts_prcgvr__Activity__c> activities = [ SELECT Case__r.Id 
+														FROM wrts_prcgvr__Activity__c 
+														WHERE Case__r.Id != null 
+														LIMIT 1 
+		];
+
+		Boolean isClose = HDT_UTL_ActivityCustom.isMandatoryComplete( activities[0].Case__r.id );
+
+		System.assertEquals( isClose, true, 'isActivityNotClosed work correctly' );
+
+		test.stopTest();
+	
+	}
 }

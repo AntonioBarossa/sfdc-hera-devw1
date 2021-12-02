@@ -351,4 +351,20 @@ public with sharing class HDT_QR_ActivityCustomTst{
 		}
 		Test.stopTest();
 	}
+
+	
+	@isTest
+	static void testisActivityNotClosed(){
+		Test.startTest();
+
+		List<wrts_prcgvr__Activity__c> activities = [ SELECT Case__r.Id 
+														FROM wrts_prcgvr__Activity__c 
+														WHERE Case__r.Id != null 
+														LIMIT 1 ];
+		Boolean isClose = HDT_QR_ActivityCustom.isActivityNotClosed( activities[0].Case__r.id );
+
+		System.assertEquals( isClose, true, 'isActivityNotClosed work correctly' );
+
+		Test.stopTest();
+	}
 }
