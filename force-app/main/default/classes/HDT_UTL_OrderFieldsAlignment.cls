@@ -357,6 +357,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignQuote(Order orderToUpdate, String quoteId, Order order) {
 
+
         quoteSrv.checkReadAccess('SalesCompanyCode__c,SalesCompany__c');
         SBQQ__Quote__c quote = quoteQr.getRecordById(quoteId);
 
@@ -381,6 +382,20 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         List<OrderItem> mainItems = orderItemQr.getMainItem(orderToUpdate.Id);
         Set<String> sconti = HDT_UTL_OrderProcessAssignment.getFamilySconto();
+
+        
+        if(originalOrder.ServicePoint__c != null){
+            OrderItem mainScontiItem = null;
+            for(OrderItem item : mainItems){
+                if(sconti.contains(item.Product2.Family)){
+                    mainScontiItem=item;
+                    break;
+                }
+            }
+            if(mainScontiItem!=null){
+                mainItems= new List<OrderItem>{mainScontiItem};
+            }
+        }
         
         if((originalOrder.ServicePoint__c != null && !sconti.contains(mainItems[0].Product2.Family)) || mainItems.isEmpty()){
             return;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ID_BP_SALESFORCE__c</fullName>
+    <externalDeveloperName>ID_BP_SALESFORCE</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
@@ -9,7 +10,7 @@
     <length>15</length>
     <referenceTargetField>Account.RowIdSiebel__c</referenceTargetField>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>Alert tracking</relationshipLabel>
+    <relationshipLabel>Alert tracking Storico (Siebel)</relationshipLabel>
     <relationshipName>Alert_tracking</relationshipName>
     <type>IndirectLookup</type>
 </CustomField>

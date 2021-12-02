@@ -115,6 +115,87 @@
         <default>false</default>
         <label>Comfort Call</label>
     </customValue>
+    <customValue>
+        <fullName>Protocollo - Da tipizzare</fullName>
+        <default>false</default>
+        <label>Protocollo - Da tipizzare</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Attivazioni</fullName>
+        <default>false</default>
+        <label>Protocollo - Attivazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Voltura</fullName>
+        <default>false</default>
+        <label>Protocollo - Voltura</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - VAS</fullName>
+        <default>false</default>
+        <label>Protocollo - VAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Disattivazioni</fullName>
+        <default>false</default>
+        <label>Protocollo - Disattivazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Preventivi</fullName>
+        <default>false</default>
+        <label>Protocollo - Preventivi</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Verifiche</fullName>
+        <default>false</default>
+        <label>Protocollo - Verifiche</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Reclami</fullName>
+        <default>false</default>
+        <label>Protocollo - Reclami</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Pagamenti</fullName>
+        <default>false</default>
+        <label>Protocollo - Pagamenti</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Morosità</fullName>
+        <default>false</default>
+        <label>Protocollo - Morosità</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Canone Rai</fullName>
+        <default>false</default>
+        <label>Protocollo - Canone Rai</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Fatturazione</fullName>
+        <default>false</default>
+        <label>Protocollo - Fatturazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Autolettura</fullName>
+        <default>false</default>
+        <label>Protocollo - Autolettura</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Modifiche Anagrafiche</fullName>
+        <default>false</default>
+        <label>Protocollo - Modifiche Anagrafiche</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Variazioni</fullName>
+        <default>false</default>
+        <label>Protocollo - Variazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>Approvazione Quote</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Approvazione Quote</label>
+    </customValue>
     <description>Tipi Attività.</description>
     <masterLabel>Tipo Attività</masterLabel>
     <sorted>false</sorted>

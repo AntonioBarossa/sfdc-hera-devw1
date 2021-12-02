@@ -7885,6 +7885,10 @@
             <fullName>Sequenzializzato</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Comunicazione EngageOne KO</fullName>
+            <default>false</default>
+        </values>
         <!-- <values>
             <fullName>Ripensamento - Esito KO da SII</fullName>
             <default>false</default>

@@ -1,113 +1,107 @@
 public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHandler {
-    public Messaging.InboundEmailResult handleInboundEmail(Messaging.InboundEmail email, Messaging.InboundEnvelope envelope) {
-       Messaging.InboundEmailResult result = new Messaging.InboundEmailresult();
-       Date d = Date.today();
-       boolean b = false;
-       HDT_QR_Contact contactQr = new HDT_QR_Contact();
-       HDT_SRV_ContentDocumentLink contentdocumentLink = new HDT_SRV_ContentDocumentLink();
-       HDT_SRV_ContentVersion contentSrv = new HDT_SRV_ContentVersion();
-       HDT_QR_ContentVersion contentQr = new HDT_QR_ContentVersion();
-       HDT_SRV_Interaction intSrv = new HDT_SRV_Interaction();
-       HDT_SRV_ActivityCustom actSrv = new HDT_SRV_ActivityCustom();
-       HDT_QR_RecordType recordTypeQr = new HDT_QR_RecordType();
-       HDT_QR_Group groupQr = new HDT_QR_Group();
-       Interaction__c newInter = new Interaction__c();
-       String mess = '';
-       if(email.plainTextBody != null && email.plainTextBody.length() >= 32000){
-            mess = email.plainTextBody.substring(0,31999);
-            b = true;
-            System.debug('******EntroQui');
-       }else{
-            mess = email.plainTextBody;
-       }
-       newInter.Status__c = 'Bozza';
-       newInter.Type__c = 'Digital';
-       newInter.ReceptionDate__c = d;
-       newInter.BodyEmail__c = mess;
-       newInter.SubjectEmail__c = email.subject;
-       Group g = groupQR.getQueueByDevelopername('HDT_QUE_ActivityProtocollo');
-      list<ContentVersion> listContent = new List<ContentVersion>();
-      List<Contact> contacts = contactQr.getContactByEmailAddress(email.fromAddress);
-      if(contacts.size()==1){
-          newInter.Account__c = contacts[0].AccountId;
-          newInter.Contact__c = contacts[0].Id;
-      }
-      Interaction__c res = intSrv.createRecord(newInter);
-      if(b){
-        System.debug('HideAndSeek');
-        HDT_UTL_Note.createNoteAndAssign(newInter.id, 'Testo Troncato per Superamento Limite Caratteri', '');
-      }
-      if(email.textAttachments != null)
-      {
-          for (Messaging.Inboundemail.TextAttachment tAttachment : email.textAttachments) {
-              ContentVersion content = contentSrv.createRecordNoInsert(tAttachment.fileName,tAttachment.fileName,tAttachment.body);
-              //content.ParentId = res.Id;
-              listContent.add(content);
-          }
-      }
-      if(email.binaryAttachments != null)
-      {
-          for (Messaging.Inboundemail.BinaryAttachment bAttachment : email.binaryAttachments) {
-            ContentVersion content = contentSrv.createRecordNoInsert(bAttachment.fileName,bAttachment.fileName,bAttachment.body);
-            //content.ParentId = res.Id;
-            listContent.add(content);
-          }
-      }
-      if(!listContent.isEmpty()){
-        listContent = contentSrv.insertRecords(listContent);
-      }
-      List<ContentDocumentLink> contentDocumentList = new List<ContentDocumentLink>();
-      List<String> idContentVersion = new List<String>();
-      for(ContentVersion cv : listContent){
-         idContentVersion.add(cv.id);
-      }
-      if(!listContent.isEmpty()){
-         List<ContentVersion> contentWithDocument = contentQr.getRecordByIds(idContentVersion);
-         for(ContentVersion cv : contentWithDocument){
-            contentDocumentList.add(contentdocumentLink.createRecordNoInsert(res.Id, cv.ContentDocumentId, 'I'));
-         }
-         contentdocumentLink.insertRecords(contentDocumentList);
-      }
-      
-      System.debug('*****' + listContent);
-      EmailMessage newEmail = new EmailMessage(
-      FromAddress = email.fromAddress,
-      FromName = email.fromName,
-      ToAddress = email.toAddresses[0],
-      Subject = email.subject,
-      TextBody = mess,
-      //HtmlBody = email.htmlBody,
-      relatedToId  = res.Id ,
-      status = '0'
-      );
-      HDT_SRV_EmailMessage.insertEmailMessage(newEmail);
-      wrts_prcgvr__Activity__c activityCustom = new wrts_prcgvr__Activity__c();
-      activityCustom.Interaction__c = res.Id;
-      activityCustom.RecordTypeId = recordTypeQr.getRecordTypeIdByName('HDT_RT_RegisterActivity');
-      activityCustom.Account__c = res.Account__c;
-      activityCustom.Contact__c = res.Contact__c;
-      activityCustom.ownerid = g.id;
-      Map<String,HDT_ProtocolSpecificEmail__mdt> listMet = HDT_ProtocolSpecificEmail__mdt.getAll();
-      Map<String,HDT_ProtocolSpecificEmail__mdt> mapEmailObj = new Map<String,HDT_ProtocolSpecificEmail__mdt>();
-      for(String s : listMet.keyset()){
-          HDT_ProtocolSpecificEmail__mdt ob = listMet.get(s);
-          mapEmailObj.put(ob.email__c.toUpperCase(),ob);
-      }
-      System.debug('Prova:::');
-      if(mapEmailObj.get(email.toAddresses[0].toUpperCase())!=null){
-          HDT_ProtocolSpecificEmail__mdt specEmail= mapEmailObj.get(email.toAddresses[0].toUpperCase());
-          activityCustom.Cluster__c= specEmail.Cluster__c;
-          activityCustom.Process__c= specEmail.Process__c;
-         
-          System.debug('Prova2:::');
-      }
-      actSrv.createRecord(activityCustom);
-      System.debug('Prova3:::');
-       System.debug('Record Id: ' + res.Id);
 
-        result.success = true;
-        System.debug('************Debug:' + email);
-        return result;
+    private final static String TEMPORARY_COMPANYOWNER_DEFAULT = 'HERA COMM';
+
+    public Messaging.InboundEmailResult handleInboundEmail(Messaging.InboundEmail email, Messaging.InboundEnvelope envelope) {
+        try {
+            HDT_SRV_ContentDocumentLink contentdocumentLink = new HDT_SRV_ContentDocumentLink();
+            HDT_SRV_ContentVersion contentSrv = new HDT_SRV_ContentVersion();
+            String emailBody;
+            Boolean bodyTruncated = false;
+
+            if(email.plainTextBody != null && email.plainTextBody.length() > 31999) {
+                emailBody = email.plainTextBody.left(31999);
+                bodyTruncated = true;
+            } else {
+                emailBody = email.plainTextBody;
+            }
+
+            Interaction__c interaction = new Interaction__c(
+                Type__c = 'Digital',
+                ReceptionDate__c = Date.today(),
+                BodyEmail__c = emailBody,
+                SubjectEmail__c = email.subject,
+                SenderEmailAddress__c = email.fromAddress,
+                CompanyOwner__c = TEMPORARY_COMPANYOWNER_DEFAULT
+            );
+
+            List<ContentVersion> listContent = new List<ContentVersion>();
+            List<Contact> contacts = new HDT_QR_Contact().getContactByEmailAddress(email.fromAddress);
+            if(contacts.size() == 1) {
+                interaction.Contact__c = contacts[0].Id;
+                interaction.Account__c = contacts[0].AccountId;
+            }
+            interaction = new HDT_SRV_Interaction().createRecord(interaction);
+
+            if(bodyTruncated) {
+                HDT_UTL_Note.createNoteAndAssign(interaction.id, 'Testo Troncato per Superamento Limite Caratteri', '');
+            }
+
+            if(email.textAttachments != null) {
+                for (Messaging.Inboundemail.TextAttachment tAttachment : email.textAttachments) {
+                    ContentVersion content = contentSrv.createRecordNoInsert(tAttachment.fileName,tAttachment.fileName,tAttachment.body);
+                    //content.ParentId = interaction.Id;
+                    listContent.add(content);
+                }
+            }
+            if(email.binaryAttachments != null) {
+                for (Messaging.Inboundemail.BinaryAttachment bAttachment : email.binaryAttachments) {
+                    ContentVersion content = contentSrv.createRecordNoInsert(bAttachment.fileName,bAttachment.fileName,bAttachment.body);
+                    //content.ParentId = interaction.Id;
+                    listContent.add(content);
+                }
+            }
+            if(!listContent.isEmpty()) {
+                listContent = contentSrv.insertRecords(listContent);
+            }
+            List<ContentDocumentLink> contentDocumentList = new List<ContentDocumentLink>();
+            List<String> idContentVersion = new List<String>();
+            for(ContentVersion cv : listContent) {
+                idContentVersion.add(cv.id);
+            }
+            if(!listContent.isEmpty()) {
+                List<ContentVersion> contentWithDocument = new HDT_QR_ContentVersion().getRecordByIds(idContentVersion);
+                for(ContentVersion cv : contentWithDocument) {
+                    contentDocumentList.add(contentdocumentLink.createRecordNoInsert(interaction.Id, cv.ContentDocumentId, 'I'));
+                }
+                contentdocumentLink.insertRecords(contentDocumentList);
+            }
+
+            String toAddress = email.toAddresses == null || email.toAddresses.isEmpty() ? null : email.toAddresses[0];
+            EmailMessage newEmail = new EmailMessage(
+                FromAddress = email.fromAddress,
+                FromName = email.fromName,
+                ToAddress = toAddress,
+                Subject = email.subject,
+                TextBody = emailBody,
+                //HtmlBody = email.htmlBody,
+                relatedToId = interaction.Id ,
+                status = '0'
+            );
+            HDT_SRV_EmailMessage.insertEmailMessage(newEmail);
+
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+            activity.Interaction__c = interaction.Id;
+            activity.RecordTypeId = new HDT_QR_RecordType().getRecordTypeIdByName('HDT_RT_RegisterActivity');
+            activity.Account__c = interaction.Account__c;
+            activity.Contact__c = interaction.Contact__c;
+            activity.CompanyOwner__c = TEMPORARY_COMPANYOWNER_DEFAULT;
+
+            Map<String,HDT_ProtocolSpecificEmail__mdt> mapEmailObj = new Map<String,HDT_ProtocolSpecificEmail__mdt>();
+            for(HDT_ProtocolSpecificEmail__mdt specificEmail : HDT_ProtocolSpecificEmail__mdt.getAll().values()) {
+                mapEmailObj.put(specificEmail.Email__c.toUpperCase(), specificEmail);
+            }
+
+            if(mapEmailObj.get(toAddress) != null) {
+                HDT_ProtocolSpecificEmail__mdt specificEmail = mapEmailObj.get(toAddress.toUpperCase());
+                activity.Cluster__c = specificEmail.Cluster__c;
+                activity.Process__c = specificEmail.Process__c;
+            }
+            new HDT_SRV_ActivityCustom().createRecord(activity);
+        } catch (Exception e) {
+            e.setMessage(e.getMessage() + ' at line ' + e.getLineNumber());
+            throw e;
+        }
+        return null;
     }
-    
 }
