@@ -2177,7 +2177,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- <picklistValues>
         <picklist>EnergyService__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -2187,7 +2187,7 @@
             <fullName>Si</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues> -->
     <picklistValues>
         <picklist>ErrorType__c</picklist>
         <values>
@@ -7839,6 +7839,10 @@
         </values>
         <values>
             <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione EngageOne KO</fullName>
             <default>false</default>
         </values>
     </picklistValues>

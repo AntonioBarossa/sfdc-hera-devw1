@@ -29,12 +29,16 @@ public with sharing class HDT_SRV_QservHandler {
                                 transcodeMap.put('ESITO', true);
                             }else if ('DES_ERR_AEEG'.equals(field.name)){
                                 transcodeMap.put('DES_ERR_AEEG', field.value);
+                            }else if ('errorMessage'.equals(field.name) && ((field.value).containsIgnoreCase('venditore') || (field.value).containsIgnoreCase('distributore'))){
+                                System.debug(LoggingLevel.DEBUG, 'Error thrown: ' + field.value);
+                                transcodeMap.put('ESITO', true);
+                                transcodeMap.put('DES_ERR_AEEG', field.value);
+                                break;
                             }else if ('errorMessage'.equals(field.name) && (field.value != null || !String.isBlank(field.value))){
                                 System.debug(LoggingLevel.DEBUG, 'Error thrown: ' + field.value);
                                 transcodeMap.put('ESITO', false);
                                 transcodeMap.put('DES_ERR_AEEG', field.value);
                                 break;
-                                // throw new AuraHandledException(field.value);
                             }
 
                             if (field.name == transcodeConfig.HerokuField__c){
