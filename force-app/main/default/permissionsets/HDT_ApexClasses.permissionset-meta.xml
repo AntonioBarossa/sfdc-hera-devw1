@@ -1761,10 +1761,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_TRH_AssignmentRule</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_TRH_BillingProfile</apexClass>
         <enabled>true</enabled>
     </classAccesses>
