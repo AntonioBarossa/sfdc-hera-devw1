@@ -9,10 +9,10 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
 
     public override void checks(){
         System.debug('checks');
-        //mapFieldsObject();
-        //System.debug('>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
-        //System.debug('>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
-        //System.debug('>>> mapRequiredByPosition: ' + String.valueOf(mapRequiredByPosition));
+        mapFieldsObject();
+        System.debug('>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
+        System.debug('>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
+        System.debug('>>> mapRequiredByPosition: ' + String.valueOf(mapRequiredByPosition));
         //System.debug('>>> currentRequestItemList: ' + String.valueOf(currentProcess));
 
         HDT_QR_StaticResource qrStaticResource = new HDT_QR_StaticResource();
@@ -83,6 +83,28 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
 
             List<String> tempSplitted = itemRequestMap.get(itemId);
 
+            //Integer count=0;
+            //for (String tempField : tempSplitted) {
+
+            //    if ('null'.equalsIgnoreCase(tempField)) {
+            //       tempField = '';
+            //    }
+            //
+            //    if (mapRequiredByPosition.get(count) != null && String.isBlank(tempField)) {
+            //        System.debug('>>> throw new HDT_WRP_ProcessEntitiesException');
+            //       //throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field','Missing Required Field ' + mapHeaderByPosition.get(count));
+            //    }
+            //
+            //    if(String.isNotBlank(mapCaseFields.get(mapHeaderByPosition.get(count))) && String.isNotBlank(tempField)){
+            //        System.debug('>>> tempField: ' + tempField);
+            //        System.debug('>>> get mapHeaderByPosition' + mapHeaderByPosition.get(count));
+            //        System.debug('>>> get mapCaseFields' + mapCaseFields.get(mapHeaderByPosition.get(count)));
+            //        mapTypeField(currentProcess.currentCase, mapCaseFields, count, tempField);
+            //    }
+            //    
+            //}
+            //System.debug('>>> currentCase: ' + currentProcess.currentCase);
+
             newCase = new Case();
             newCase.RecordTypeId = recordTypeId;
 
@@ -125,35 +147,30 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
                 caseToInsert.add(newCase); 
                 itemIds.add(itemId);
             } catch(Exception e){
-                itemsToSave.add(setErrorItem(itemId, 'Errore arricchimento dati # ' + e.getMessage() + ' [' + String.valueOf(e.getLineNumber()) + ']'));
+                itemsToSave.add(setErrorItem(itemId, 'Errore arricchimento dati # '));
             }
 
         }
-        
-        System.debug('>>> before ' + caseToInsert.size());
 
         if(caseToInsert.size() > 0){
-            //itemIds.addAll(itemRequestMap.keySet());
-            itemsToSave = databaseInsert(caseToInsert, itemIds, itemsToSave);
+            //itemsToSave = databaseInsert(caseToInsert, itemIds, itemsToSave);
+            HDT_WRP_SaveResponse saveResponse = databaseInsert(caseToInsert, itemIds);
+            caseToInsert.clear();
 
-            for(Integer n=0; n<caseToInsert.size(); n++){
-                if(String.isEmpty(caseToInsert[n].Id)){
-                    caseToInsert.remove(n);
+            if(saveResponse.reponseItemList.size() > 0){
+                itemsToSave.addAll(saveResponse.reponseItemList);
+            }
+
+            if(saveResponse.savedCase.size() > 0){
+                Map<Id, String> compatibilityMap = checkCompatibilityPostSales(saveResponse.savedCase);
+                System.debug('>>> compatibilityMap ' + String.valueOf(compatibilityMap));
+
+                if(!compatibilityMap.isEmpty()){
+                    updateCaseNotCompatible(compatibilityMap.keySet());
                 }
             }
 
-        }
-
-        System.debug('>>> after ' + caseToInsert.size());
-
-        //if(caseToInsert.size() > 0){
-        //    Map<Id, String> compatibilityMap = checkCompatibilityPostSales(caseToInsert);
-        //    System.debug('>>> compatibilityMap ' + String.valueOf(compatibilityMap));
-    //
-        //    if(!compatibilityMap.isEmpty()){
-        //        updateCaseNotCompatible(compatibilityMap.keySet());
-        //    }
-        //}
+        }  
 
     }
 
@@ -179,11 +196,11 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
         }
     }
 
-    public static List<MassiveLoaderRequestItem__c> databaseInsert(List<Case> itemList, List<String> itemIds, List<MassiveLoaderRequestItem__c> itemsToSave){
-
+    //public static HDT_WRP_SaveResponse databaseInsert(List<Case> itemList, List<String> itemIds, List<MassiveLoaderRequestItem__c> itemsToSave){
+    public static HDT_WRP_SaveResponse databaseInsert(List<Case> itemList, List<String> itemIds){
         HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
         saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
-        saveResponse.responseCaseList = new List<Case>();
+        saveResponse.savedCase = new List<Case>();
 
         SObjectType objtype = Schema.getGlobalDescribe().get('Case');
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
@@ -205,24 +222,28 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
                         itemError.Id = itemIds[n];
                         itemError.Status__c = 'Errore';
                         itemError.StatusDescription__c = err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields();
-                        itemsToSave.add(itemError);
+                        //itemsToSave.add(itemError);
+                        saveResponse.reponseItemList.add(itemError);
                     }
                 } else {
                     itemError = new MassiveLoaderRequestItem__c();
                     itemError.Id = itemIds[n];
                     itemError.Status__c = 'Chiuso';
-                    itemsToSave.add(itemError);
+                    //itemsToSave.add(itemError);
+                    saveResponse.reponseItemList.add(itemError);
+                    saveResponse.savedCase.add(itemList[n]);
                 }
             }
         }
 
-        return itemsToSave;
+        //return itemsToSave;
+        return saveResponse;
 
     }
 
     public class HDT_WRP_SaveResponse {
         public List<MassiveLoaderRequestItem__c> reponseItemList;
-        public List<Case> responseCaseList;
+        public List<Case> savedCase;
     }
 
     private static MassiveLoaderRequestItem__c setErrorItem(String itemId, String message){
