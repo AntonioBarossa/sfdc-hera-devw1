@@ -10,9 +10,9 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
     public override void checks(){
         System.debug('checks');
         mapFieldsObject();
-        System.debug('>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
-        System.debug('>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
-        System.debug('>>> mapRequiredByPosition: ' + String.valueOf(mapRequiredByPosition));
+        //System.debug('>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
+        //System.debug('>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
+        //System.debug('>>> mapRequiredByPosition: ' + String.valueOf(mapRequiredByPosition));
         //System.debug('>>> currentRequestItemList: ' + String.valueOf(currentProcess));
 
         HDT_QR_StaticResource qrStaticResource = new HDT_QR_StaticResource();
@@ -24,7 +24,7 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
             mapHPositionByeader.put(temp, count);
             count++;
         }
-        System.debug('>>> mapHPositionByeader: ' + String.valueOf(mapHPositionByeader));
+        //System.debug('>>> mapHPositionByeader: ' + String.valueOf(mapHPositionByeader));
     }
 
     public override void getRecords(){
@@ -33,6 +33,8 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
 
     public override void registryCreation(){
         System.debug('registryCreation');
+
+        getLimitDetails('START registryCreation');
 
         Set<String> podSet = new Set<String>();
         Set<String> accountIdSet = new Set<String>();
@@ -46,13 +48,13 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
         List<String> itemIds = new List<String>();
         itemsToSave = new List<MassiveLoaderRequestItem__c>();
 
-        System.debug('>>> currentRequestItemList: ' + String.valueOf(currentProcess.currentCase));
+        //System.debug('>>> currentRequestItemList: ' + String.valueOf(currentProcess.currentCase));
 
         Integer podIndex = mapHPositionByeader.get('PodId');
         Integer accountIdIndex = mapHPositionByeader.get('AccountId');
 
-        System.debug('>>> podIndex: ' + podIndex);
-        System.debug('>>> accountIdIndex: ' + accountIdIndex);
+        //System.debug('>>> podIndex: ' + podIndex);
+        //System.debug('>>> accountIdIndex: ' + accountIdIndex);
 
         List<String> dataSplitted;
         for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
@@ -66,9 +68,9 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
         contractList = HDT_QR_ProcessPostSales.getContracts(podSet, contractList);
         accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
 
-        System.debug('>>> accountIdSet ' + String.valueOf(accountIdSet));
-        System.debug('>>> podSet ' + String.valueOf(podSet));
-        System.debug('>>> contractList ' + String.valueOf(contractList));
+        //System.debug('>>> accountIdSet ' + String.valueOf(accountIdSet));
+        //System.debug('>>> podSet ' + String.valueOf(podSet));
+        //System.debug('>>> contractList ' + String.valueOf(contractList));
 
         for(Contract singleContract : contractList){
             podContractMap.put(singleContract.ServicePoint__r.ServicePointCode__c, singleContract);
@@ -82,6 +84,9 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
         for(String itemId : itemRequestMap.keySet()){
 
             List<String> tempSplitted = itemRequestMap.get(itemId);
+
+            // Per ogni item della mappa itemRequestMap viene convertito il data__c in una lista (tempSplitted) e tramite il metodo mapTypeField la lista viene
+            // convertita nel custom obj indicato, in questo caso è currentProcess.currentCase
 
             //Integer count=0;
             //for (String tempField : tempSplitted) {
@@ -157,17 +162,20 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
             HDT_WRP_SaveResponse saveResponse = databaseInsert(caseToInsert, itemIds);
             caseToInsert.clear();
 
+            getLimitDetails('AFTER CASE CREATION & Enrichment');
+
             if(saveResponse.reponseItemList.size() > 0){
                 itemsToSave.addAll(saveResponse.reponseItemList);
             }
 
             if(saveResponse.savedCase.size() > 0){
                 Map<Id, String> compatibilityMap = checkCompatibilityPostSales(saveResponse.savedCase);
-                System.debug('>>> compatibilityMap ' + String.valueOf(compatibilityMap));
+                //System.debug('>>> compatibilityMap ' + String.valueOf(compatibilityMap));
 
                 if(!compatibilityMap.isEmpty()){
                     updateCaseNotCompatible(compatibilityMap.keySet());
                 }
+                getLimitDetails('AFTER Compatibility');
             }
 
         }  
@@ -216,8 +224,8 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
                 if (!sr.isSuccess()) {
                     
                     for(Database.Error err : sr.getErrors()) {
-                        System.debug('>>> ' + String.valueOf(String.valueOf(itemList[n].ServicePoint__c) + ' - item id ' + itemIds[n]));
-                        System.debug('>>> ' + ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']');
+                        //System.debug('>>> ' + String.valueOf(String.valueOf(itemList[n].ServicePoint__c) + ' - item id ' + itemIds[n]));
+                        //System.debug('>>> ' + ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']');
                         itemError = new MassiveLoaderRequestItem__c();
                         itemError.Id = itemIds[n];
                         itemError.Status__c = 'Errore';
@@ -335,4 +343,17 @@ public with sharing class HDT_UTL_ProcessPostSales extends  HDT_UTL_ProcessExecu
         HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
     }
 
+    public static void getLimitDetails(String stageName){
+        List<String> limitList = new List<String>();
+        limitList.add('>>> CpuTime: ' + String.valueOf(Limits.getCpuTime()) + ' of ' + String.valueOf(Limits.getLimitCpuTime()));
+        limitList.add('>>> DML: ' + String.valueOf(Limits.getDMLStatements()) + ' of ' + String.valueOf(Limits.getLimitDMLStatements()));
+        limitList.add('>>> HeapSize: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
+        limitList.add('>>> Queries: ' + String.valueOf(Limits.getQueries()) + ' of ' + String.valueOf(Limits.getLimitQueries()));
+
+        System.debug('---------------- ' + stageName + ' ----------------');
+        for(String s : limitList){
+            System.debug(s);
+        }
+
+    }
 }
