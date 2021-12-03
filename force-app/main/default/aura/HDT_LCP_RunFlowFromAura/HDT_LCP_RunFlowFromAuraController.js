@@ -224,39 +224,39 @@
                     "target":null,
                     "currentTarget":null}
                 */
-                    console.log('Inside Error condition: ' + JSON.stringify(event));
-    
-                    var action = component.get("c.isMandatoryComplete"); //start call
-                    action.setParams({
-                        "recordid" : component.get('v.recordid') 
-                    });
-                    action.setCallback(this, function(response) {
-                        var state = response.getState();
-                        if (state === "SUCCESS") {
-                            component.set("v.thereIsActivity", response.getReturnValue());
-                        }
-                        if( !component.get('v.thereIsActivity') ){  // error "management"
-                            var toastEvent = $A.get("e.force:showToast"); // activities-to-complete error
-                            toastEvent.setParams({
-                                "title": "Errore",
-                                "message": "Ci sono attività obbligatorie da completare.",
-                                "type" : "error"
-                            });
-                            toastEvent.fire();
-                        } else {                                    // standard error
-                            var toastEvent = $A.get("e.force:showToast");
-                            toastEvent.setParams({
-                                "title": "Errore",
-                                "message": "Non è stato possibile portare a termine le operazioni.\nSi prega di contattare l'Amministratore di sistema",
-                                "type" : "error"
-                            });
-                            toastEvent.fire();
-                        }
-                    });
-                    $A.enqueueAction(action);
+                console.log('Inside Error condition: ' + JSON.stringify(event));
 
-                    console.log('# thereIsActivity >>>> ' + component.get('v.thereIsActivity') );
-                }
+                var action = component.get("c.isMandatoryComplete"); //start call
+                action.setParams({
+                    "recordid" : component.get('v.recordid') 
+                });
+                action.setCallback(this, function(response) {
+                    var state = response.getState();
+                    if (state === "SUCCESS") {
+                        component.set("v.thereIsActivity", response.getReturnValue());
+                    }
+                    if( !component.get('v.thereIsActivity') ){  // error "management"
+                        var toastEvent = $A.get("e.force:showToast"); // activities-to-complete error
+                        toastEvent.setParams({
+                            "title": "Errore",
+                            "message": "Ci sono attività obbligatorie da completare.",
+                            "type" : "error"
+                        });
+                        toastEvent.fire();
+                    } else {                                    // standard error
+                        var toastEvent = $A.get("e.force:showToast");
+                        toastEvent.setParams({
+                            "title": "Errore",
+                            "message": "Non è stato possibile portare a termine le operazioni.\nSi prega di contattare l'Amministratore di sistema",
+                            "type" : "error"
+                        });
+                        toastEvent.fire();
+                    }
+                });
+                $A.enqueueAction(action);
+
+                console.log('# thereIsActivity >>>> ' + component.get('v.thereIsActivity') );
+        
             }
             
             flowfinal.destroy();
