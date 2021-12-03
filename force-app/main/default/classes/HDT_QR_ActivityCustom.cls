@@ -495,25 +495,26 @@ public inherited sharing class HDT_QR_ActivityCustom {
 
         public static boolean isActivityNotClosed( String recordid ){
 
-            List<AggregateResult> isACase =  [SELECT COUNT(Id) 
-                                                FROM wrts_prcgvr__Activity__c 
-                                                WHERE wrts_prcgvr__Activity__c.Case__r.Id = :recordid
-                                                WITH SECURITY_ENFORCED];
+            Id myRecordId = (Id)recordid;
 
-            if( (integer)isACase[0].get('expr0') > 0 ){
-                List<AggregateResult> activitiesNotClosed =  [SELECT COUNT(Id) 
-                                                                FROM wrts_prcgvr__Activity__c 
-                                                                WHERE wrts_prcgvr__Activity__c.Case__r.Id = :recordid
-                                                                AND wrts_prcgvr__IsClosed__c = false WITH SECURITY_ENFORCED];
-            
-                return (integer)activitiesNotClosed[0].get('expr0') > 0;
-            }else{
-                List<AggregateResult> activitiesNotClosed =  [SELECT COUNT(Id) 
-                                                                FROM wrts_prcgvr__Activity__c 
-                                                                WHERE wrts_prcgvr__Activity__c.Order__r.Id = :recordid
-                                                                AND wrts_prcgvr__IsClosed__c = false WITH SECURITY_ENFORCED];
-
-                return (integer)activitiesNotClosed[0].get('expr0') > 0;
+            switch on myRecordId.getSObjectType().getDescribe().getName() {
+                when 'Case' {		
+                    List<AggregateResult> activitiesNotClosed =  [SELECT COUNT(Id) 
+                                                                    FROM wrts_prcgvr__Activity__c 
+                                                                    WHERE wrts_prcgvr__Activity__c.Case__r.Id = :recordid
+                                                                    AND wrts_prcgvr__IsClosed__c = false WITH SECURITY_ENFORCED];
+                    return !((integer)activitiesNotClosed[0].get('expr0') > 0);
+                }	
+                when 'Order' {
+                    List<AggregateResult> activitiesNotClosed =  [SELECT COUNT(Id) 
+                                                                    FROM wrts_prcgvr__Activity__c 
+                                                                    WHERE wrts_prcgvr__Activity__c.Order__r.Id = :recordid
+                                                                    AND wrts_prcgvr__IsClosed__c = false WITH SECURITY_ENFORCED];
+                   return !((integer)activitiesNotClosed[0].get('expr0') > 0);
+                }
+                when else{
+                    return true;
+                }
             }
 
         }

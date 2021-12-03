@@ -177,21 +177,24 @@
         flow.startFlow(flowName, inputVariables);
     },
     
-    handleStatusChange : function (component, event) {
+    handleStatusChange : function (component, event, helper) {
     
        console.log('### EVENT STATUS: ' + event.getParam("status"));
        var workspaceAPI = component.find("workspace");
-
+ 
+        
        if(event.getParam("status") === "FINISHED" 
        || event.getParam("status") === "FINISHED_SCREEN"
        || event.getParam("status") === "ERROR") {
-
-            var accountTabId = component.get("v.accountTabId");
-            var leadTabId = component.get("v.leadTabId");
-            var subTabToClose = component.get("v.subTabToClose");
-            var enableRefresh = component.get('v.enableRefresh');
+			           
+            //var accountTabId = component.get("v.accountTabId");
+            //var leadTabId = component.get("v.leadTabId");
+            //var subTabToClose = component.get("v.subTabToClose");
+            //var enableRefresh = component.get('v.enableRefresh');
             var flowfinal = component.find("flowData");
-
+			flowfinal.destroy();
+           	component.set("v.isLoading", true);
+			console.log('#isLoading >>> ' + component.get("v.isLoading"));
             //if(!enableRefresh){
             var outputVariables = event.getParam('outputVariables');
             var outputVar;
@@ -232,9 +235,11 @@
                 });
                 action.setCallback(this, function(response) {
                     var state = response.getState();
+                    console.log('RESPONSE >>> ' + response.getState());
                     if (state === "SUCCESS") {
                         component.set("v.thereIsActivity", response.getReturnValue());
                     }
+                    console.log('# thereIsActivity >>>> ' + component.get('v.thereIsActivity') );
                     if( !component.get('v.thereIsActivity') ){  // error "management"
                         var toastEvent = $A.get("e.force:showToast"); // activities-to-complete error
                         toastEvent.setParams({
@@ -252,14 +257,17 @@
                         });
                         toastEvent.fire();
                     }
+                    helper.finishFlow(component, newCaseId);
                 });
                 $A.enqueueAction(action);
 
-                console.log('# thereIsActivity >>>> ' + component.get('v.thereIsActivity') );
+                
         
+            }else{
+                helper.finishFlow(component, newCaseId);
             }
             
-            flowfinal.destroy();
+            /*flowfinal.destroy();
 
             console.log('# Refresh page -> ' + enableRefresh);
 
@@ -366,7 +374,7 @@
                 });
 
 
-                /*workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
+                workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
                         console.log('# Refresh page -> ' + enableRefresh);
                         
                         console.log('# OK Refresh page #');
@@ -384,10 +392,10 @@
         
                 }).catch(function(error) {
                     console.log(error);
-                });*/
+                });
 
 
-            }
+            }*/
         }
     },
     onTabClosed : function(component, event, helper) {
