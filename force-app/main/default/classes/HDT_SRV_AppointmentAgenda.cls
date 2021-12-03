@@ -1,5 +1,9 @@
 public with sharing class HDT_SRV_AppointmentAgenda {
     
+    public string getActivity(Id activityId,List<String> fields){
+        return JSON.serialize(HDT_UTL_AppointmentAgenda.getActivity(activityId,String.join(fields,',')));
+    }
+    
     public string handleFirstSearch(Id activityId, Date preferedDate, String preferedTimeSlot){
         return this.handleSearch(activityId, preferedDate, preferedTimeSlot, HDT_UTL_AppointmentAgenda.requestType.FIRST_SEARCH);
     }

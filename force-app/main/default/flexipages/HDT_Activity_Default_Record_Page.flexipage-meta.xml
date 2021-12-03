@@ -166,7 +166,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_ManageAppoinment</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -184,18 +184,13 @@
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.AppointmentCompetence__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Vendita</rightValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Distributore</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Annullata</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.isSelfAppointment__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

@@ -79,9 +79,14 @@
                 <label>Appuntamento di competenza Distributore</label>
             </value>
             <value>
-                <fullName>Scartata</fullName>
+                <fullName>Modifica confermata</fullName>
                 <default>false</default>
-                <label>Scartata</label>
+                <label>Modifica confermata</label>
+            </value>
+            <value>
+                <fullName>Modifica appuntamento in corso</fullName>
+                <default>false</default>
+                <label>Modifica appuntamento in corso</label>
             </value>
         </valueSetDefinition>
     </valueSet>

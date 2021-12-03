@@ -1,10 +1,10 @@
 <template>
-    <template if:true={showAgenda}>
-        <c-hdt-appointment-agenda activityid={recordId} params={params} oncancelevent={cancelEvent} ></c-hdt-appointment-agenda>
-    </template>
-    <template if:false={showAgenda}>
-        <lightning-quick-action-panel header="Gestisci Appuntamento">
-            <template if:true={recordId}>
+    <template if:true={recordId}>
+        <template if:true={showAgenda}>
+            <c-hdt-appointment-agenda activityid={recordId} params={params} oncancelevent={cancelEvent} ></c-hdt-appointment-agenda>
+        </template>
+        <template if:false={showAgenda}>
+            <lightning-quick-action-panel header="Gestisci Appuntamento">
                 <div class="slds-modal__content" id="welcome-mat-403-content">
                     <div class="slds-welcome-mat">
                         <div class="slds-welcome-mat__content slds-grid">
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                 </div>
-            </template>
-        </lightning-quick-action-panel>
+            </lightning-quick-action-panel>
+        </template>
     </template>
 </template>

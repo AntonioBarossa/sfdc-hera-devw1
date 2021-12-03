@@ -1577,6 +1577,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_TRH_AppointmentAgendaEvent</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_TRH_Asset</apexClass>
         <enabled>true</enabled>
     </classAccesses>
