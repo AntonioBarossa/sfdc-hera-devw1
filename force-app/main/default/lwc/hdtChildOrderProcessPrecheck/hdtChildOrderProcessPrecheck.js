@@ -861,7 +861,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     startCheckContendibilita(){
         console.log('PickList Value: ' + this.pickValue);
         console.log('Service Value: ' + this.service);
-        if((this.pickValue === 'Prima Attivazione' || this.pickValue === 'Subentro Gas') && this.service === 'Gas') {
+        console.log('isTransition__c: ' + this.order.isTransition__c);
+        if((this.pickValue === 'Prima Attivazione' || this.pickValue === 'Subentro Gas') && this.service === 'Gas' && this.order.isTransition__c != true) {
             console.log('Caso checkContendibilitaPodPdr');
             this.checkContendibilitaPodPdr();
         }else{

@@ -161,7 +161,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
     public static List<wrts_prcgvr__Activity__c> getRecordByCaseId(String caseId) {
         return [
             SELECT
-            
+
             Id,
             Approved__c,
             Name,
@@ -492,4 +492,31 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     WITH SECURITY_ENFORCED 
             ];
         }
+
+        public static boolean isActivityNotClosed( String recordid ){
+
+            Id myRecordId = (Id)recordid;
+
+            switch on myRecordId.getSObjectType().getDescribe().getName() {
+                when 'Case' {		
+                    List<AggregateResult> activitiesNotClosed =  [SELECT COUNT(Id) 
+                                                                    FROM wrts_prcgvr__Activity__c 
+                                                                    WHERE wrts_prcgvr__Activity__c.Case__r.Id = :recordid
+                                                                    AND wrts_prcgvr__IsClosed__c = false WITH SECURITY_ENFORCED];
+                    return !((integer)activitiesNotClosed[0].get('expr0') > 0);
+                }	
+                when 'Order' {
+                    List<AggregateResult> activitiesNotClosed =  [SELECT COUNT(Id) 
+                                                                    FROM wrts_prcgvr__Activity__c 
+                                                                    WHERE wrts_prcgvr__Activity__c.Order__r.Id = :recordid
+                                                                    AND wrts_prcgvr__IsClosed__c = false WITH SECURITY_ENFORCED];
+                   return !((integer)activitiesNotClosed[0].get('expr0') > 0);
+                }
+                when else{
+                    return true;
+                }
+            }
+
+        }
+
 }
