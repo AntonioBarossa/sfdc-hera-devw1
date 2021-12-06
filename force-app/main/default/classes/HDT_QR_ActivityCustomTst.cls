@@ -354,7 +354,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 
 	
 	@isTest
-	static void testisActivityNotClosed(){
+	static void testisActivityNotClosedCase(){
 		Test.startTest();
 
 		List<wrts_prcgvr__Activity__c> activities = [ SELECT Case__r.Id 
@@ -362,6 +362,21 @@ public with sharing class HDT_QR_ActivityCustomTst{
 														WHERE Case__r.Id != null 
 														LIMIT 1 ];
 		Boolean isClose = HDT_QR_ActivityCustom.isActivityNotClosed( activities[0].Case__r.id );
+
+		System.assertEquals( isClose, true, 'isActivityNotClosed work correctly' );
+
+		Test.stopTest();
+	}
+
+	@isTest
+	static void testisActivityNotClosedOrder(){
+		Test.startTest();
+
+		List<wrts_prcgvr__Activity__c> activities = [ SELECT Order__r.Id 
+														FROM wrts_prcgvr__Activity__c 
+														WHERE Order__r.Id != null 
+														LIMIT 1 ];
+		Boolean isClose = HDT_QR_ActivityCustom.isActivityNotClosed( activities[0].Order__r.id );
 
 		System.assertEquals( isClose, true, 'isActivityNotClosed work correctly' );
 
