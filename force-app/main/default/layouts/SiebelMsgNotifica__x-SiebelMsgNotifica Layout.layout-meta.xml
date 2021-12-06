@@ -8,7 +8,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Alert Tracking</label>
+        <label>Alert tracking</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -138,7 +138,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7Z000001H7fi</masterLabel>
+        <masterLabel>00h3N000002xbdZ</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
