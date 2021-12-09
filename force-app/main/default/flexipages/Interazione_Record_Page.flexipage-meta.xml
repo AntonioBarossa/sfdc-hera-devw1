@@ -9,10 +9,15 @@
                         <valueListItems>
                             <value>Interaction__c.Catalogo_Servizi</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Aperta</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Account__r.Name}</leftValue>
+                                    <operator>NE</operator>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -81,6 +86,7 @@
                     <value>9</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -103,6 +109,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListContainer</componentName>
+                <identifier>force_relatedListContainer</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -113,6 +120,7 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.SenderEmailAddress__c</fieldItem>
+                <identifier>RecordSenderEmailAddress_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -122,6 +130,7 @@
                     <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.SubjectEmail__c</fieldItem>
+                <identifier>RecordSubjectEmail_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -131,6 +140,7 @@
                     <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.BodyEmail__c</fieldItem>
+                <identifier>RecordBodyEmail_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2f31a130-00f3-4d57-8c26-4d74d56464b2</name>
@@ -144,6 +154,7 @@
                     <value>Facet-2f31a130-00f3-4d57-8c26-4d74d56464b2</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column1</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-04bee8e3-f280-45ac-a7ee-8b65f4330f9e</name>
@@ -153,6 +164,7 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.Name</fieldItem>
+                <identifier>RecordNameField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -162,6 +174,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Type__c</fieldItem>
+                <identifier>RecordType_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -171,6 +184,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Status__c</fieldItem>
+                <identifier>RecordStatus_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -180,6 +194,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ReceptionDate__c</fieldItem>
+                <identifier>RecordReceptionDate_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -189,6 +204,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Account__c</fieldItem>
+                <identifier>RecordAccount_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -198,6 +214,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Contact__c</fieldItem>
+                <identifier>RecordContact_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-eff6d516-c515-4ec1-93f2-580ea7346010</name>
@@ -206,7 +223,48 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.CompanyOwner__c</fieldItem>
+                <identifier>RecordCompanyOwner_cField1</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Account__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Lead__r.LastName}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CompanyOwner__c</fieldItem>
+                <identifier>RecordCompanyOwner_cField2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Account__r.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Lead__r.LastName}</leftValue>
+                        <operator>EQUAL</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -216,6 +274,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Comment__c</fieldItem>
+                <identifier>RecordComment_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -225,6 +284,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Reason__c</fieldItem>
+                <identifier>RecordReason_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -234,6 +294,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ProtocolDate__c</fieldItem>
+                <identifier>RecordProtocolDate_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -243,6 +304,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Lead__c</fieldItem>
+                <identifier>RecordLead_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -252,6 +314,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.OwnerId</fieldItem>
+                <identifier>RecordOwnerIdField1</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-68e92ad6-b433-4319-b686-f56438a4d45c</name>
@@ -265,6 +328,7 @@
                     <value>Facet-eff6d516-c515-4ec1-93f2-580ea7346010</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -274,6 +338,7 @@
                     <value>Facet-68e92ad6-b433-4319-b686-f56438a4d45c</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column3</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-f2aa6f66-baef-4fcb-adc1-a8b2d92acd70</name>
@@ -287,6 +352,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CreatedById</fieldItem>
+                <identifier>RecordCreatedByIdField1</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-d4871748-7012-45da-8e48-5589f3390f6d</name>
@@ -300,6 +366,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.LastModifiedById</fieldItem>
+                <identifier>RecordLastModifiedByIdField1</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-f38aaa4f-0596-40dc-aa26-49a354671def</name>
@@ -313,6 +380,7 @@
                     <value>Facet-d4871748-7012-45da-8e48-5589f3390f6d</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column4</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -322,6 +390,7 @@
                     <value>Facet-f38aaa4f-0596-40dc-aa26-49a354671def</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column5</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-6e2f40fd-5189-42be-91b0-e49019a687de</name>
@@ -339,6 +408,7 @@
                     <value>Email</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection1</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
@@ -359,6 +429,7 @@
                     <value>Information</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -372,11 +443,13 @@
                     <value>System Information</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>force:recordDetailPanelMobile</componentName>
+                <identifier>force_recordDetailPanelMobile1</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -395,6 +468,7 @@
                     <value>Standard.Tab.relatedLists</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>relatedListsTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -412,6 +486,7 @@
                     <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>detailTab</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -422,10 +497,31 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p&gt;&lt;b style=&quot;font-size: 16px; color: rgb(0, 0, 0);&quot;&gt;ATTENZIONE:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;per poter utilizzare il Catalogo Servizi è necessario associare un Account.&lt;/span&gt;&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <identifier>flexipage_richText1</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Account__r.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>tabs</name>
                     <value>maintabs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -436,6 +532,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
+                <identifier>runtime_sales_activities_activityPanel</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -458,6 +555,7 @@
                     <value>Standard.Tab.activity</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>activityTab</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -472,6 +570,7 @@
                     <value>sidebartabs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset2</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
