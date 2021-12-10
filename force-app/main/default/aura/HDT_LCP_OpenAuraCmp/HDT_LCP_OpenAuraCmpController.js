@@ -59,8 +59,8 @@
         console.log('# billingProfileId -> '        + billingProfileId);
         console.log('# serviceRequestId -> '        + serviceRequestId);
         console.log('# compatibile -> '             + compatibile);
-        console.log('# orderId -> '                  + orderId);
-        console.log('# InteractionId -> '                  + interactionId);
+        console.log('# orderId -> '                 + orderId);
+        console.log('# InteractionId -> '           + interactionId);
 
                 
         var workspaceAPI = component.find("workspace");
@@ -83,6 +83,8 @@
                     if(element.pageReference.attributes.recordId=== accId){
                         parentId = element.tabId;
                     } else if(element.pageReference.attributes.recordId === leadId){
+                        parentId = element.tabId;
+                    } else if(element.pageReference.attributes.recordId === interactionId){
                         parentId = element.tabId;
                     }
                 }
