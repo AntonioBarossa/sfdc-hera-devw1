@@ -6,6 +6,7 @@
         	var workspaceAPI = component.find("workspace");
         	var accountTabId = component.get("v.accountTabId");
             var leadTabId = component.get("v.leadTabId");
+            var interactionTabId = component.get("v.interactionTabId");
             var subTabToClose = component.get("v.subTabToClose");
             var enableRefresh = component.get('v.enableRefresh');
 
@@ -38,6 +39,16 @@
                         then(function(response) {
                             workspaceAPI.refreshTab({
                                     tabId: leadTabId,
+                                    includeAllSubtabs: true
+                                }).catch(function(error) {
+                                    console.log(error);
+                                });
+                        });
+                    } else if(interactionTabId != null){
+                        workspaceAPI.focusTab({tabId : interactionTabId}).
+                        then(function(response) {
+                            workspaceAPI.refreshTab({
+                                    tabId: interactionTabId,
                                     includeAllSubtabs: true
                                 }).catch(function(error) {
                                     console.log(error);
