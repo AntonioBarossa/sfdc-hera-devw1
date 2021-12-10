@@ -125,7 +125,6 @@
         <connector>
             <targetReference>account_or_lead_decision</targetReference>
         </connector>
-        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>or</filterLogic>
         <filters>
             <field>Account__c</field>
