@@ -6591,11 +6591,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Priority__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.ProblemBehavior__c</field>
         <readable>true</readable>
     </fieldPermissions>
