@@ -13,7 +13,7 @@
                                 <criteria>
                                     <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                                     <operator>NE</operator>
-                                    <rightValue>Completed</rightValue>
+                                    <rightValue>Chiusa</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
@@ -296,7 +296,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -339,7 +339,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -382,7 +382,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -545,7 +545,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -567,7 +567,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -589,7 +589,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -611,7 +611,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -628,7 +628,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
@@ -655,7 +655,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -777,7 +777,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>

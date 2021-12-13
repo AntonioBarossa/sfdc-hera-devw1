@@ -19,7 +19,7 @@ public with sharing class HDT_BA_ActivityDispatcherTst {
         );
         insert queue;
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
-            wrts_prcgvr__Status__c = 'Not Started',
+            wrts_prcgvr__Status__c = 'Aperta',
             Type__c = 'Sportello',
             wrts_prcgvr__Priority__c = '1'
         );

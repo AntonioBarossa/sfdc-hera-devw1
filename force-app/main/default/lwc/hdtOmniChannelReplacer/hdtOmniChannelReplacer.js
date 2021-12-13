@@ -27,7 +27,7 @@ export default class hdtOmniChannelReplacer extends NavigationMixin(LightningEle
                             Lead__c: response.data.payload.Lead__c,
                             Account__c: response.data.payload.Account__c,
                             wrts_prcgvr__Status__c: response.data.payload.Status__c,
-                            completed: response.data.payload.Status__c == 'Completed'
+                            Chiusa: response.data.payload.Status__c == 'Chiusa'
                         });
                         // this.dispatchEvent(new CustomEvent('newactivity'));  // UNCOMMENT TO RE ENABLE NOTIFICATION IN UTILITY BAR
                         var activity = this.activities[0];
@@ -45,7 +45,7 @@ export default class hdtOmniChannelReplacer extends NavigationMixin(LightningEle
                             if(a.Id == response.data.payload.Id__c) {
                                 a.Account__c = response.data.payload.Account__c;
                                 a.wrts_prcgvr__Status__c = response.data.payload.Status__c;
-                                a.completed = a.wrts_prcgvr__Status__c == 'Completed';
+                                a.Chiusa = a.wrts_prcgvr__Status__c == 'Chiusa';
                             }
                         });
                     }
@@ -60,8 +60,8 @@ export default class hdtOmniChannelReplacer extends NavigationMixin(LightningEle
         this.activities = await getActivities({qadLogin: this.qadLogin});
         var counter = 0;
         this.activities.forEach(a => {
-            if(a.wrts_prcgvr__Status__c == 'Completed'){
-                a.completed = true;
+            if(a.wrts_prcgvr__Status__c == 'Chiusa'){
+                a.Chiusa = true;
                 counter++;
             } 
         });

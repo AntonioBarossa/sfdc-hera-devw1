@@ -24,7 +24,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 			result.contactId = activity.Contact__c;
 			result.leadId = activity.Lead__c;
 
-			if(activity.wrts_prcgvr__Status__c != 'Completed') {
+			if(activity.wrts_prcgvr__Status__c != 'Chiusa') {
 				if(String.isNotBlank(activity.BPCode__c)) {
 					result.preFilter = activity.BPCode__c;
 				} else if(String.isNotBlank(activity.FiscalCode__c)) {
