@@ -25,6 +25,12 @@
                 <default>false</default>
                 <label>Scartata</label>
             </value>
+            <value>
+                <fullName>Bozza</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Bozza</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

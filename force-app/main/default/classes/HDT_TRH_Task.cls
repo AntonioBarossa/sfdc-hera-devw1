@@ -16,7 +16,7 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
         // removeWhoId();  // NOT WORKING
     }
 
-    @SuppressWarnings('PMD.AvoidDebugStatements')
+    @SuppressWarnings('PMD.AvoidDebugStatements, PMD.AvoidDeeplyNestedIfStmts')
     private void doValidation() {
 
         Set<Id> contactIds = new Set<Id>();
@@ -71,6 +71,7 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
         }
 
         List<Contact> contacts = new List<Contact>();
+        Map<Id, Lead> leadsMap = new Map<Id, Lead>();
         Map<Id, String> leadsCompanyMap = new Map<Id, String>();
         Map<Id, String> leadsMobileMap = new Map<Id, String>();
         Map<Id, String> leadsPecMap = new Map<Id, String>();
@@ -81,6 +82,7 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
             HDT_QR_Task queryHandler = new HDT_QR_Task();
             Set<Id> individualIds = new Set<Id>();
             List<Lead> leads = queryHandler.getLeads(leadIds);
+            leadsMap = new Map<Id, Lead>(leads);
             Map<Id, Id> parentsMap = new Map<Id, Id>();
             for (Lead l : leads) {
                 leadsCompanyMap.put(l.IndividualId, l.Id);
@@ -102,8 +104,14 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
             if (t.IsSms__c == True) {
                 if (t.WhoId != null) {
                     if (t.WhoId.getSobjectType() == Contact.getSObjectType()) {
+                        if (contactsMap.get(t.WhoId).Individual.OneshotBlacklist__c == True) {
+                            t.addError('Impossibile inviare l\'SMS poichè il referente destinatario è inserito nella Blacklist Oneshot.');
+                        }
                         t.CompanyOwner__c = contactsMap.get(t.WhoId).CompanyOwner__c;
                     } else {
+                        if (leadsMap.get(t.WhoId) != null && leadsMap.get(t.WhoId).Individual.OneshotBlacklist__c == True) {
+                            t.addError('Impossibile inviare l\'SMS poichè il Lead destinatario è inserito nella Blacklist Oneshot.');
+                        }
                         t.CompanyOwner__c = leadsCompanyMap.get(t.WhoId);
                     }
                 } else {
@@ -133,8 +141,14 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
 
                 if (t.PecAddress__c == null && t.WhoId != null) {
                     if (t.WhoId.getSobjectType() == Contact.getSObjectType()) {
+                        if (contactsMap.get(t.WhoId).Individual.OneshotBlacklist__c == True) {
+                            t.addError('Impossibile inviare la PEC poichè il referente destinatario è inserito nella Blacklist Oneshot.');
+                        }
                         t.PecAddress__c = contactsMap.get(t.WhoId).CertifiedEmail__c;
                     } else {
+                        if (leadsMap.get(t.WhoId) != null && leadsMap.get(t.WhoId).Individual.OneshotBlacklist__c == True) {
+                            t.addError('Impossibile inviare la PEC poichè il Lead destinatario è inserito nella Blacklist Oneshot.');
+                        }
                         t.PecAddress__c = leadsPecMap.get(t.WhoId);
                     }
 

@@ -31,7 +31,8 @@ public inherited sharing class HDT_QR_Task {
             SELECT 
             Id, 
             CompanyOwner__c,
-            IndividualId
+            IndividualId,
+            Individual.OneshotBlacklist__c
             FROM Lead 
             WHERE 
             Id IN :ids

@@ -118,6 +118,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
                 if(String.isNotBlank(wrapperId)) {
                     activity.AssigneeType__c = 'Coda';
                     activity.Queue__c = wrapperId;
+                    activity.AssignedToQueueDate__c = Date.today();
                 }
 
                 activitiesToUpdate.add(activity);

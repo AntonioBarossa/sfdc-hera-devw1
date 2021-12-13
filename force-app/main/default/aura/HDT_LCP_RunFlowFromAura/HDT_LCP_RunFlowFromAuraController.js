@@ -82,6 +82,7 @@
             console.log('----------');
             var accountTabId;
             var leadTabId;
+            var interactionTabId;
             response.forEach((element) => {
                 if(element.pageReference.type === 'standard__recordPage'){                    
                     if(element.pageReference.attributes.recordId===accId){
@@ -93,6 +94,8 @@
                         //});
                     } else if(element.pageReference.attributes.recordId===leadId){
                         leadTabId = element.tabId;
+                    } else if(element.pageReference.attributes.recordId===interactionId){
+                        interactionTabId = element.tabId;
                     }
                 }
             });
@@ -102,6 +105,9 @@
 
             console.log('# leadTabId: ' + leadTabId);
             component.set("v.leadTabId", leadTabId);
+
+            console.log('# interactionTabId: ' + interactionTabId);
+            component.set("v.interactionTabId", interactionTabId);
             
             console.log('# subTabToClose: ' + subTabToClose);
             component.set("v.subTabToClose", subTabToClose);
@@ -175,24 +181,44 @@
         inputVariables.forEach(e => console.log('# ' + e.name + '- ' + e.value));
 
         flow.startFlow(flowName, inputVariables);
-
     },
     
-    handleStatusChange : function (component, event) {
+    handleStatusChange : function (component, event, helper) {
     
        console.log('### EVENT STATUS: ' + event.getParam("status"));
        var workspaceAPI = component.find("workspace");
-
+ 
+        
        if(event.getParam("status") === "FINISHED" 
        || event.getParam("status") === "FINISHED_SCREEN"
        || event.getParam("status") === "ERROR") {
-
-            var accountTabId = component.get("v.accountTabId");
-            var leadTabId = component.get("v.leadTabId");
-            var subTabToClose = component.get("v.subTabToClose");
-            var enableRefresh = component.get('v.enableRefresh');
+			           
+            //var accountTabId = component.get("v.accountTabId");
+            //var leadTabId = component.get("v.leadTabId");
+            //var subTabToClose = component.get("v.subTabToClose");
+            //var enableRefresh = component.get('v.enableRefresh');
             var flowfinal = component.find("flowData");
-                
+			flowfinal.destroy();
+           	component.set("v.isLoading", true);
+			console.log('#isLoading >>> ' + component.get("v.isLoading"));
+            //if(!enableRefresh){
+            var outputVariables = event.getParam('outputVariables');
+            var outputVar;
+            var newCaseId;
+
+            console.log('# recordid -> ' +component.get("v.recordid"));
+            if(outputVariables != null){      
+                for(var i = 0; i < outputVariables.length; i++) {
+                    outputVar = outputVariables[i];
+                    
+                    if(outputVar.name === "CaseId") {
+                        newCaseId = outputVar.value;
+                    }
+                }
+            }else{
+                newCaseId=component.get("v.recordid"); 
+            }
+
             if(event.getParam("status") === "ERROR"){
                 //Sembra non esserci nella struttura dell'event il messaggio di errore
                 /*event: {
@@ -209,39 +235,49 @@
                 */
                 console.log('Inside Error condition: ' + JSON.stringify(event));
 
-                var toastEvent = $A.get("e.force:showToast");
-                toastEvent.setParams({
-                    "title": "Errore",
-                    "message": "Non è stato possibile portare a termine le operazioni.\nSi prega di contattare l'Amministratore di sistema",
-                    "type" : "error"
+                var action = component.get("c.isMandatoryComplete"); //start call
+                action.setParams({
+                    "recordid" : component.get('v.recordid') 
                 });
-                toastEvent.fire();
-            }
+                action.setCallback(this, function(response) {
+                    var state = response.getState();
+                    console.log('RESPONSE >>> ' + response.getState());
+                    if (state === "SUCCESS") {
+                        component.set("v.thereIsActivity", response.getReturnValue());
+                    }
+                    console.log('# thereIsActivity >>>> ' + component.get('v.thereIsActivity') );
+                    if( !component.get('v.thereIsActivity') ){  // error "management"
+                        var toastEvent = $A.get("e.force:showToast"); // activities-to-complete error
+                        toastEvent.setParams({
+                            "title": "Errore",
+                            "message": "Ci sono attività obbligatorie da completare.",
+                            "type" : "error"
+                        });
+                        toastEvent.fire();
+                    } else {                                    // standard error
+                        var toastEvent = $A.get("e.force:showToast");
+                        toastEvent.setParams({
+                            "title": "Errore",
+                            "message": "Non è stato possibile portare a termine le operazioni.\nSi prega di contattare l'Amministratore di sistema",
+                            "type" : "error"
+                        });
+                        toastEvent.fire();
+                    }
+                    helper.finishFlow(component, newCaseId);
+                });
+                $A.enqueueAction(action);
 
-           
-            flowfinal.destroy();
+                
+        
+            }else{
+                helper.finishFlow(component, newCaseId);
+            }
+            
+            /*flowfinal.destroy();
 
             console.log('# Refresh page -> ' + enableRefresh);
 
             console.log('# close -> ' + subTabToClose + ' - refresh -> ' + accountTabId);
-
-            //if(!enableRefresh){
-            var outputVariables = event.getParam('outputVariables');
-            var outputVar;
-            var newCaseId;
-
-            console.log('# recordid -> ' +component.get("v.recordid"));
-            if(outputVariables != null){      
-                for(var i = 0; i < outputVariables.length; i++) {
-                    outputVar = outputVariables[i];
-                    
-                    if(outputVar.name === "CaseId") {
-                        newCaseId = outputVar.value;
-                    }
-                }
-            }else{
-                newCaseId=component.get("v.recordid");
-            }
 
             console.log('# outputVariable -> '+outputVariables);
             console.log('# newCaseId -> '+newCaseId);
@@ -344,7 +380,7 @@
                 });
 
 
-                /*workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
+                workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
                         console.log('# Refresh page -> ' + enableRefresh);
                         
                         console.log('# OK Refresh page #');
@@ -362,10 +398,10 @@
         
                 }).catch(function(error) {
                     console.log(error);
-                });*/
+                });
 
 
-            }
+            }*/
         }
     },
     onTabClosed : function(component, event, helper) {

@@ -148,6 +148,7 @@ public inherited sharing class HDT_QR_Contact {
             ContactCode__c,
             MobilePhone,
             IndividualId,
+            Individual.OneshotBlacklist__c,
             Fax,
             CertifiedEmail__c,
             MailingAddressFormula__c,
