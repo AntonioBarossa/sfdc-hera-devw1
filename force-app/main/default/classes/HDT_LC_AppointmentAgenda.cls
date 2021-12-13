@@ -2,6 +2,17 @@ public with sharing class HDT_LC_AppointmentAgenda {
     
     private static HDT_SRV_AppointmentAgenda srvAgenda = new HDT_SRV_AppointmentAgenda();
     
+    @AuraEnabled(cacheable=true)
+    public static String getActivity(String activityId,List<String> fields){
+        String response = '';
+        try{
+            response = srvAgenda.getActivity(activityId,fields);
+        }catch (exception e){
+            throw new AuraHandledException(e.getMessage());
+        }
+        return response;
+    }
+    
     @AuraEnabled
     public static String handleConfirm(String activityId,String appointmentCode) {
         String response = '';
