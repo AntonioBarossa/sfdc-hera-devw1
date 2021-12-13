@@ -4091,11 +4091,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.EnergyService__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.ErrorType__c</field>
         <readable>false</readable>
     </fieldPermissions>
