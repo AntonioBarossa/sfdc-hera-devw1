@@ -6567,11 +6567,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Priority__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.ProblemBehavior__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13626,6 +13621,16 @@
     <fieldPermissions> <!--Email 20/09/2021-->
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.CalledNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.UserCompany__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.CreatorGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
