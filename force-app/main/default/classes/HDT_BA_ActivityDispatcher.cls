@@ -163,7 +163,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     
     private Map<String,Decimal> getQueueUsageMap() {
         Map<String,Decimal> queueUsageMap = new Map<String,Decimal>();
-        for(AggregateResult count : [SELECT COUNT(Id), Queue__c FROM wrts_prcgvr__Activity__c WHERE Queue__c != null AND CreatedDate = TODAY GROUP BY Queue__c]) {
+        for(AggregateResult count : [SELECT COUNT(Id), Queue__c FROM wrts_prcgvr__Activity__c WHERE Queue__c != null AND AssignedToQueueDate__c = TODAY GROUP BY Queue__c]) {
             queueUsageMap.put((String) count.get('Queue__c'), (Decimal) count.get('expr0'));
         }
         return queueUsageMap;
