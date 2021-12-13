@@ -82,6 +82,7 @@
             console.log('----------');
             var accountTabId;
             var leadTabId;
+            var interactionTabId;
             response.forEach((element) => {
                 if(element.pageReference.type === 'standard__recordPage'){                    
                     if(element.pageReference.attributes.recordId===accId){
@@ -93,6 +94,8 @@
                         //});
                     } else if(element.pageReference.attributes.recordId===leadId){
                         leadTabId = element.tabId;
+                    } else if(element.pageReference.attributes.recordId===interactionId){
+                        interactionTabId = element.tabId;
                     }
                 }
             });
@@ -102,6 +105,9 @@
 
             console.log('# leadTabId: ' + leadTabId);
             component.set("v.leadTabId", leadTabId);
+
+            console.log('# interactionTabId: ' + interactionTabId);
+            component.set("v.interactionTabId", interactionTabId);
             
             console.log('# subTabToClose: ' + subTabToClose);
             component.set("v.subTabToClose", subTabToClose);
