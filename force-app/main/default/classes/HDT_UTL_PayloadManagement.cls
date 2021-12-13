@@ -1060,7 +1060,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
     /*
         Valorizza il driver ALLEGATI con la concatenazione di: codice società, codice offerta e versione offerta
         Driver necessario solo sui plichi contrattuali (quindi contesto Order) per far inserire ad Engage1 all'interno del plico
-        il file PDF statico il cui nome corrisponde al valore del driver.
+        il file PDF statico il cui nome corrisponde al valore del driver. Per Engage1 questo driver è obbligatorio e non può essere vuoto.
     */
     private String calculateDriverAllegati(Map<String,List<sObject>> inputs, Map<String,Object> formParams) {
         String context = (String) formParams.get('Contesto');
@@ -1068,22 +1068,25 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             return '';
         }
 
-        return '1070_HIZC_EE24_3012'; // TODO: rimuovere e scommentare codice sotto, dopo che creano il campo ProductCode__c sull'OrderItem.
-
-/*         List<SObject> offersList = inputs.get('ItemCommercialOffer');
+        List<SObject> offersList = inputs.get('ItemCommercialOffer');
         if (offersList.isEmpty()) {
             return '';
         }
 
-        String companyCode = calculateCompanyCode(inputs, formParams);
+        String productName = HDT_UTL_DocumentalManagement.getValue('ItemCommercialOffer', 'ProductName__c', 0, inputs, formParams);
         String productCode = HDT_UTL_DocumentalManagement.getValue('ItemCommercialOffer', 'ProductCode__c', 0, inputs, formParams);
         String productVersion = HDT_UTL_DocumentalManagement.getValue('ItemCommercialOffer', 'ProductVersion__c', 0, inputs, formParams);
+        // Per offerte di TEST (che non saranno in produzione) inseriamo un default, altrimenti non si riesce a generare il plico.
+        if (productName != null && productName.startsWith('TEST_')) {
+            return '1070_HIZC_EE24_3012';
+        }
 
+        String companyCode = calculateCompanyCode(inputs, formParams);
         if (String.isBlank(companyCode) || String.isBlank(productCode) || String.isBlank(productVersion)) {
             return '';
         }
-
-        return companyCode + '_' + productCode + '_' + productVersion; */
+        // Formato con gli underscore è concordato con Engage1.
+        return companyCode + '_' + productCode + '_' + productVersion;
     }
 
     // Restituisce la data nel formato richiesto da Engage1
