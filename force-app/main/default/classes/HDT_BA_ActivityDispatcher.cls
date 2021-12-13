@@ -122,6 +122,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                         WorkGroup__c = queue.Group__c,
                         AssigneeType__c = 'Coda',
                         Queue__c = queue.Id,
+                        AssignedToQueueDate__c = Date.today(),
                         RuleChosenQueue__c = queue.Id,
                         OwnerId = (Id) queue.QueueId__c
                     );
