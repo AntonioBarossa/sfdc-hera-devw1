@@ -6,16 +6,15 @@ import handleConfirm from '@salesforce/apex/HDT_LC_AppointmentAgenda.handleConfi
 import getActivity from '@salesforce/apex/HDT_LC_AppointmentAgenda.getActivity';
 
 const OBJECT_FIELDS =[
-    'wrts_prcgvr__Activity__c.MaxTimeModificationAppointment__c',
-    'wrts_prcgvr__Activity__c.MaxDateModificationAppointment__c',
-    'wrts_prcgvr__Activity__c.AppointmentCode__c',
-    'wrts_prcgvr__Activity__c.AppointmentDuration__c',
-    'wrts_prcgvr__Activity__c.AppoitmentTimeSlotConfirmed__c',
-    'wrts_prcgvr__Activity__c.AppointmentDate__c',
-    'wrts_prcgvr__Activity__c.AppointmentTimeSlotToConfirm__c',
-    'wrts_prcgvr__Activity__c.AppointmentDateToConfirm__c',
-    'wrts_prcgvr__Activity__c.wrts_prcgvr__Status__c'
-    
+    'MaxTimeModificationAppointment__c',
+    'MaxDateModificationAppointment__c',
+    'AppointmentCode__c',
+    'AppointmentDuration__c',
+    'AppoitmentTimeSlotConfirmed__c',
+    'AppointmentDate__c',
+    'AppointmentTimeSlotToConfirm__c',
+    'AppointmentDateToConfirm__c',
+    'wrts_prcgvr__Status__c'
 ];
 
 const COLUMNS = [
@@ -90,6 +89,8 @@ export default class HdtAppointmentAgenda extends LightningElement {
                     if (this.searchType.localeCompare('FirstSearch') === 0){
                         this.newDateLabel = 'Cerca';
                     }else {
+                        let defaultValue = this.getDataValueForSearch(this.activity.AppointmentDateToConfirm__c,this.activity.AppointmentTimeSlotToConfirm__c,this.searchType);
+                        this.handleSearchMethod(defaultValue.data,defaultValue.slot);
                         this.newDateLabel = 'Altre Date';
                     }
                 break;
@@ -104,7 +105,7 @@ export default class HdtAppointmentAgenda extends LightningElement {
     connectedCallback(){
         if (this.params){
             if (this.params.userCommunity === true){
-                this.isCommunity = this.params.userCommunity;
+                this.isCommunity = true;
             }
             this.fieldsToRetrieve = OBJECT_FIELDS;
         }
@@ -174,11 +175,15 @@ export default class HdtAppointmentAgenda extends LightningElement {
                 this.showAlert('Attenzione','Selezionare un appuntamento','error');
             }
         }else if (event.target.name === 'Cancel'){
-            this.showSpinner = true;
-            this.dispatchEvent(new CustomEvent('cancelevent',{detail : this.refreshRecord}));
+            this.closeModal();
         }else if (event.target.name === 'newDate'){
             this.getNewDate();
         }
+    }
+
+    closeModal(){
+        this.showSpinner = true;
+        this.dispatchEvent(new CustomEvent('cancelevent',{detail : this.refreshRecord}));
     }
 
     getNewDate(){
@@ -237,8 +242,12 @@ export default class HdtAppointmentAgenda extends LightningElement {
                     this.newDateLabel = 'Altre Date';
                     this.refreshRecord = true;
                 }
+                if (this.searchType.localeCompare('NewSlotModify') === 0){
+                    this.searchType = 'NewSlot';
+                }
             } 
         }).catch(error =>{
+            console.log('@@@@ error search ' + error);
             this.showSpinner = false;
             this.showAlert('Attenzione',error.body.message,'error');
         });
@@ -314,5 +323,47 @@ export default class HdtAppointmentAgenda extends LightningElement {
     formatData(dateToFormat){
         let dataToWork = dateToFormat.split('-');
         return dataToWork[2]+'/'+(dataToWork[1])+'/'+dataToWork[0];
+    }
+
+    getDataValueForSearch(appDaConf,slot,requestType){
+        console.log('@@@@appDaConf: ' + appDaConf);
+        console.log('@@@@slot: ' + slot);
+        console.log('@@@@requestType: ' + requestType);
+        if ((requestType === 'NewSlotModify') || (!appDaConf || ! slot)){
+            return this.getDefaultSearchValue();
+        }else{
+            let h = slot.split('/')[0]+':00';
+            let dateToWork = new Date(appDaConf+' '+h);
+            let milliseconds = dateToWork.getTime();
+            if (milliseconds < Date.now()){
+                console.log('@@@@Invio il default');
+                return this.getDefaultSearchValue();
+            }else{
+                console.log('@@@@Invio lo slot');
+                return { data: appDaConf, slot: slot}
+            }
+        }
+    }
+
+    getDefaultSearchValue(){
+        const d = new Date();
+        let m = d.getMonth() +1; 
+        let month = m < 10? '0'+m : m;
+        let day = d.getDate() < 10 ? '0'+d.getDate() : d.getDate(); 
+        let d1String = d.getFullYear()+'-'+month+'-'+ day;
+        console.log('@@@@d1String ' + d1String);
+        let d1 = new Date(d1String);
+        let h0 = (d.getHours() === 23)? 0 : d.getHours()+1;
+        let h1 = (h0===23)? 0 : h0 + 1;
+        if (h0<10){
+            h0 = '0'+h0;
+        }
+        h0 = h0 +':00';
+        if (h1<10 ){
+            h1 = '0'+h1;
+        }
+        h1 = h1 +':00';
+        console.log('@@@@response default ' + JSON.stringify({ data: d1, slot: (h0+'/'+h1)}));
+        return { data: d1, slot: (h0+'/'+h1)};
     }
 }

@@ -25,10 +25,11 @@ export default class HdtAppointmentHandler extends LightningElement{
 
     @wire(CurrentPageReference)
     getStateParameters(currentPageReference) {
-        console.log('@@@@currentpagereference');
-        if (currentPageReference) {
+        console.log('@@@@currentpagereference',JSON.stringify(currentPageReference));
+        if (currentPageReference && currentPageReference.state.c__activityId) {
+            console.log('@@@@gestione Community');
             this.recordId = currentPageReference.state.c__activityId;
-            this.isCommunity = currentPageReference.state.c__activityId ? true : false;
+            this.isCommunity = true;
         }
     }
 
