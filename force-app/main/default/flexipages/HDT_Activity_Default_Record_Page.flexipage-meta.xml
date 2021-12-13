@@ -693,7 +693,6 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtAppointmentHandler</componentName>
-                <identifier>c_hdtAppointmentHandler1</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
                     <criteria>
