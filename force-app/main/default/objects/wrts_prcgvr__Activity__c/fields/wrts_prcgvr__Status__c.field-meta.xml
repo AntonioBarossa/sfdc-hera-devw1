@@ -79,6 +79,11 @@
                 <label>Appuntamento di competenza Distributore</label>
             </value>
             <value>
+                <fullName>Scartata</fullName>
+                <default>false</default>
+                <label>Scartata</label>
+            </value>
+            <value>
                 <fullName>Modifica confermata</fullName>
                 <default>false</default>
                 <label>Modifica confermata</label>
