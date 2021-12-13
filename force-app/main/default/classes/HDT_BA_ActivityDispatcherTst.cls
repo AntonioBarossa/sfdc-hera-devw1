@@ -36,14 +36,15 @@ public with sharing class HDT_BA_ActivityDispatcherTst {
         
         //TESTING
         Test.startTest();
-        Database.executeBatch(new HDT_BA_ActivityDispatcher());
+        System.schedule('testjob', '0 0 1 ? * *', new HDT_SCH_ActivityDispatcherScheduler());
         Test.stopTest();
         
         //RETRIEVING DATA
-        AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob];
+        List<AsyncApexJob> a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob];
         
         //ASSERTS
-        System.assertEquals(0, a.NumberOfErrors, 'Batch fallito.');
+        System.assertEquals(0, a[0].NumberOfErrors, 'Schedulable fallito.');
+        System.assertEquals(0, a[1].NumberOfErrors, 'Batch fallito.');
         
     }
 }
