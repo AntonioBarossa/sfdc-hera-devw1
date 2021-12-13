@@ -9,30 +9,67 @@
                         <valueListItems>
                             <value>Interaction__c.Catalogo_Servizi</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Aperta</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Account__r.Name}</leftValue>
+                                    <operator>NE</operator>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Interaction__c.CreateActivity</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2 AND (3 OR 4 OR 5 OR 6)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Aperta</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_ProtocolManualActivities}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CompanyOwner__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>AAA-EBT</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CompanyOwner__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HERA COMM</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CompanyOwner__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>MMS</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CompanyOwner__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Reseller</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Interaction__c.CloseInteraction</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Aperta</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_ProtocolManualActivities}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -194,7 +231,46 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.CompanyOwner__c</fieldItem>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Account__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Lead__r.LastName}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CompanyOwner__c</fieldItem>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Account__r.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Lead__r.LastName}</leftValue>
+                        <operator>EQUAL</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -407,6 +483,61 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p&gt;&lt;b style=&quot;font-size: 16px; color: rgb(0, 0, 0);&quot;&gt;ATTENZIONE:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;per poter utilizzare il Catalogo Servizi è necessario associare un Account.&lt;/span&gt;&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Account__r.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 16px;&quot;&gt;ATTENZIONE:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;per poter creare Attività associate è necessario impostare un Company Owner.&lt;/span&gt;&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.CompanyOwner__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>AAA-EBT</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.CompanyOwner__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>HERA COMM</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.CompanyOwner__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>MMS</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.CompanyOwner__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Reseller</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
