@@ -195,7 +195,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.TrackingDiscardPhase__c = reqWrp.requestMap.get('FASE');
         }
         //END>> 23/08/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, ricezione fasi monitorate su reports
-        if(String.isBlank(reqWrp.requestMap.get('FASE')) && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita') && !method.equalsIgnoreCase('aggiornaRCU')){
+        if(String.isBlank(reqWrp.requestMap.get('FASE'))  && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita') && !method.equalsIgnoreCase('aggiornaRCU') && !method.equalsIgnoreCase('AggiornaAppuntamento')){
             //gestione scarti
             return caseUpdate;
         }

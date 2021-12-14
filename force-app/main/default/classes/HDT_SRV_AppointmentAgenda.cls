@@ -16,11 +16,19 @@ public with sharing class HDT_SRV_AppointmentAgenda {
         return this.handleSearch(activityId, preferedDate, preferedTimeSlot, HDT_UTL_AppointmentAgenda.requestType.EDIT);
     }
 
-    public String handleConfirm(Id activityId,String appointmentCode){
+    public String handleConfirm(Id activityId,String appointmentJson){
         HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento request = HDT_UTL_AppointmentAgenda.initAppointmentRequest(activityId, HDT_UTL_AppointmentAgenda.requestType.CONFIRM);
-        HDT_UTL_AppointmentAgenda.setAppointmentCode(request, appointmentCode);
+        Map<String,String> mapAppointment = (Map<String,String>) JSON.deserialize(appointmentJson, Map<String,String>.class);
+        HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento appointment = new HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento();
+        appointment.codiceApp = mapAppointment.get('codice');
+        appointment.appData = mapAppointment.get('data');
+        appointment.appFasciaOrario = mapAppointment.get('fascia');
+        appointment.zLimApp= mapAppointment.get('dataLimite');
+        appointment.zLimAppOra = mapAppointment.get('oraLimite');
+        appointment.zStimaDurApp = mapAppointment.get('stima');
+        HDT_UTL_AppointmentAgenda.setAppointmentCode(request, appointment.codiceApp);
         HDT_WRP_Appuntamento.HDT_WRP_ResponseAppuntamento response = HDT_UTL_AppointmentAgenda.executeCallout(request);
-        return HDT_UTL_AppointmentAgenda.manageResponse(response, activityId, HDT_UTL_AppointmentAgenda.requestType.CONFIRM);
+        return HDT_UTL_AppointmentAgenda.manageResponse(response, activityId, HDT_UTL_AppointmentAgenda.requestType.CONFIRM,appointment);
     }
 
     public String handleCancellation(Id activityId,String appointmentCode){

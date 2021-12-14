@@ -14,10 +14,10 @@ public with sharing class HDT_LC_AppointmentAgenda {
     }
     
     @AuraEnabled
-    public static String handleConfirm(String activityId,String appointmentCode) {
+    public static String handleConfirm(String activityId,String appointmentJson) {
         String response = '';
         try{
-            response = srvAgenda.handleConfirm(activityId,appointmentCode);
+            response = srvAgenda.handleConfirm(activityId,appointmentJson);
         }catch (exception e){
             throw new AuraHandledException(e.getMessage());
         }

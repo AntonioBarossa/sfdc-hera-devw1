@@ -116,7 +116,7 @@ export default class HdtAppointmentAgenda extends LightningElement {
         let row = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
         handleConfirm({
             activityId : this.activityid,
-            appointmentCode : row[0].codice
+            appointmentJson : JSON.stringify(row[0])
         }).then(result =>{
             if (!result){
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
