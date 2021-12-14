@@ -169,4 +169,41 @@ public with sharing class HDT_SRV_EmailMessage {
             System.debug(LoggingLevel.DEBUG, 'RESULT: ' + result);
         }
     }    
+
+    public static void checkBlacklistOneshot(List<EmailMessage> emailList){
+
+        List<String> receiverEmails = new List<String>();
+        for (EmailMessage email : emailList) {
+            if (email.Incoming == False) {
+                receiverEmails.add(email.ToAddress);
+            }
+        }
+
+        if (receiverEmails.isEmpty()) {
+            return;
+        }
+
+        List<ContactPointEmail> cpe = [SELECT Id, EmailAddress, ParentId FROM ContactPointEmail WHERE EmailAddress IN :receiverEmails WITH SECURITY_ENFORCED];
+        Map<String, Boolean> blacklistMap = new Map<String,Boolean>();
+        if (!cpe.isEmpty()) {
+            List<Id> parentIds = new List<Id>();
+            for (ContactPointEmail c : cpe) {
+                parentIds.add(c.ParentId);
+            }
+            List<Individual> individuals = [SELECT Id, OneshotBlacklist__c  FROM Individual WHERE Id IN :parentIds WITH SECURITY_ENFORCED];
+            Map<Id, Individual> individualsMap = new Map<Id,Individual>(individuals);
+            for (ContactPointEmail c : cpe) {
+                if (individualsMap.get(c.ParentId) != null) {
+                    blacklistMap.put(c.EmailAddress, individualsMap.get(c.ParentId).OneshotBlacklist__c);
+                }
+            }
+        }
+
+        for (EmailMessage email : emailList) {
+            if (blacklistMap.get(email.ToAddress) == True) {
+                email.addError('Impossibile inviare l\'E-Mail poichè il cliente destinatario è inserito nella Blacklist Oneshot.');
+            }
+        }
+
+    }
 }

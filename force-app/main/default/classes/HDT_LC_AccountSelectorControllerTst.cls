@@ -35,20 +35,20 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
         if(isAccount){
             //FISCAL CODE
             activity = new wrts_prcgvr__Activity__c(
-                wrts_prcgvr__Status__c = 'Not Started',
+                wrts_prcgvr__Status__c = 'Aperta',
                 Type__c = 'Sportello',
                 FiscalCode__c = 'Rossi'
             );
         } else if(isLead){
             //VAT NUMBER
             activity = new wrts_prcgvr__Activity__c(
-                wrts_prcgvr__Status__c = 'Not Started',
+                wrts_prcgvr__Status__c = 'Aperta',
                 Type__c = 'Sportello',
                 FiscalCode__c = '%LastNameTest%'
             );
         } else {
             activity = new wrts_prcgvr__Activity__c(
-                wrts_prcgvr__Status__c = 'Not Started',
+                wrts_prcgvr__Status__c = 'Aperta',
                 Type__c = 'Sportello',
                 Contact__c = contact.Id
             );

@@ -32,7 +32,7 @@ public class HDT_LC_ActivityIvaAcciseTst {
       Test.startTest();
       HDT_LC_ActivityIvaAccise.saveActivity(actCust[0], true);
       Test.stopTest();
-      List<wrts_prcgvr__Activity__c> expectedResponse = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c = 'Completed'];
+      List<wrts_prcgvr__Activity__c> expectedResponse = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c = 'Chiusa'];
       System.assertEquals(expectedResponse[0].Id, actCust[0].Id, 'The closed Activity wasnt updated');
       System.assertNotEquals(null, expectedResponse[0].Id, 'The closed Activity wasnt updated');    
     }

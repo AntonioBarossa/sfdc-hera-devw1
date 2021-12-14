@@ -1773,19 +1773,7 @@
     <picklistValues>
         <picklist>wrts_prcgvr__Status__c</picklist>
         <values>
-            <fullName>Completed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Not started</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Creata</fullName>
-            <default>true</default>
-        </values>
-        <values>
-            <fullName>Presa appuntamento in corso</fullName>
+            <fullName>Annullata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1793,7 +1781,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Appuntamento non eseguito</fullName>
+            <fullName>Appuntamento di competenza Distributore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1801,15 +1789,35 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullata</fullName>
+            <fullName>Appuntamento non eseguito</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Invio app.to SELF cliente</fullName>
+            <fullName>Completed</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Appuntamento di competenza Distributore</fullName>
+            <fullName>Creata</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Invio app%2Eto SELF cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica appuntamento in corso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica confermata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Started</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Presa appuntamento in corso</fullName>
             <default>false</default>
         </values>
     </picklistValues>

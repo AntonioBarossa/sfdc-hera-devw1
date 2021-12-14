@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>wrts_prcgvr__Activity__c.HDT_ManageAppoinment</members>
+        <members>Interaction__c.CreateActivity</members>
+        <members>wrts_prcgvr__Activity__c.CompleteActivity</members>
         <name>QuickAction</name>
     </types>
     <types>
+        <members>Alert_tracking_Record_Page</members>
+        <members>Arc_SiebelCustomer</members>
+        <members>Attributi_RDS_Siebel_Record_Page</members>
         <members>HDT_Activity_Default_Record_Page</members>
+        <members>Interazione_Record_Page</members>
         <name>FlexiPage</name>
     </types>
     <types>
-        <members>SiebelMsgNotifica__x</members>
+        <members>HDT_AppointmentSetting__mdt</members>
+        <members>HDT_PEV_AppointmentAgenda__e</members>
+        <members>SBQQ__ProductOption__c</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>HDT_ActivityType</members>
-        <name>GlobalValueSet</name>
-    </types>
-    <types>
+        <members>hdtActivityIvaAccise</members>
         <members>hdtAppointmentAgenda</members>
         <members>hdtAppointmentHandler</members>
+        <members>hdtChildOrderProcessPrecheck</members>
+        <members>hdtOmniChannelReplacer</members>
+        <members>hdtOrderDossierWizardActions</members>
+        <members>hdtVOActivityValidation</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
+        <members>Admin</members>
         <members>Hera Door2Door Partner User</members>
         <members>Hera M2M Integration User</members>
         <members>Hera Standard User OneShot</members>
@@ -32,72 +41,158 @@
         <name>Profile</name>
     </types>
     <types>
+        <members>HDT_FL_ActivityTrackerAccount</members>
+        <members>HDT_FL_ActivityTrackerActivity</members>
+        <members>HDT_FL_ActivityTrackerCase</members>
+        <members>HDT_FL_ActivityTrackerContact</members>
+        <members>HDT_FL_ActivityTrackerContactPointEmail</members>
+        <members>HDT_FL_ActivityTrackerContactPointPhone</members>
+        <members>HDT_FL_ActivityTrackerIndividual</members>
+        <members>HDT_FL_ActivityTrackerLead</members>
+        <members>HDT_FL_ActivityTrackerOpportunity</members>
+        <members>HDT_FL_ActivityTrackerOrder</members>
+        <members>HDT_FL_ActivityTrackerQuote</members>
         <members>HDT_FL_GestioneAnnullamento</members>
+        <members>HDT_FL_GestioneReclami</members>
+        <members>HDT_FL_GestioneReclami_ChiusuraReclamo</members>
+        <members>HDT_FL_GestioneReclami_GestioneStampa</members>
+        <members>HDT_FL_GestioneReclami_RispostaParere</members>
+        <members>HDT_FL_GestioneVariazioni</members>
+        <members>HDT_FL_Gestione_Modifiche_Anagrafiche_Esercizio_Diritti_Privacy</members>
+        <members>HDT_FL_InteractionCarryCompanyOwner</members>
+        <members>HDT_FL_PostSalesMasterDispatch</members>
+        <members>HDT_FL_PostSalesMasterDispatchSales</members>
         <name>Flow</name>
     </types>
     <types>
-        <members>Individual.HDT_VR_CheckRemovalReason</members>
-        <members>Individual.HDT_VR_DisableBlacklistOneshot</members>
+        <members>HDT_AppointmentSetting__mdt.CampiObbligatoriMap</members>
         <name>ValidationRule</name>
     </types>
     <types>
-        <members>Case.HDT_RT_AltriProcessiPagamenti</members>
-        <members>Case.HDT_RT_Domiciliazione</members>
-        <members>Case.HDT_RT_PianoRateizzazione</members>
-        <members>Case.HDT_RT_PreventiviEle</members>
-        <members>Case.HDT_RT_PreventiviGas</members>
-        <members>Case.HDT_RT_Rimborso</members>
-        <members>Case.HDT_RT_VerificheEle</members>
-        <members>Case.HDT_RT_VerificheGas</members>
-        <members>Order.HDT_RT_OrderDossier</members>
+        <members>Interaction__c.HDT_RT_Register</members>
         <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_RegisterActivity</members>
         <name>RecordType</name>
     </types>
     <types>
-        <members>Individual-Prototipo_2</members>
+        <members>HDT_AppointmentSetting__mdt-Layout Impostazione Appuntamenti</members>
+        <members>Interaction__c-Interazione Layout</members>
+        <members>SiebelMsgNotifica__x-SiebelMsgNotifica Layout</members>
         <name>Layout</name>
     </types>
     <types>
+        <members>HDT_AgentMatrixManagement</members>
         <members>HDT_ApexClasses</members>
+        <members>HDT_CampaignManager</members>
+        <members>HDT_EditPublicListView</members>
+        <members>HDT_MarketingCloud</members>
+        <members>HDT_SalesforceCPQAdmin</members>
+        <members>HDT_SalesforceCPQPartner</members>
+        <members>HDT_SalesforceCPQUser</members>
         <name>PermissionSet</name>
     </types>
     <types>
-        <members>HDT_BA_Dependencies</members>
+        <members>ConnectorEntityController</members>
+        <members>ConnectorEntityController_Test</members>
+        <members>HDT_AppointmentAgendaEventTest</members>
+        <members>HDT_BA_ActivityDispatcher</members>
+        <members>HDT_BA_ActivityDispatcherTst</members>
+        <members>HDT_BA_BlacklistOneshot</members>
+        <members>HDT_LC_AccountSelectorController</members>
+        <members>HDT_LC_AccountSelectorControllerTst</members>
+        <members>HDT_LC_ActivityIvaAccise</members>
+        <members>HDT_LC_ActivityIvaAcciseTst</members>
+        <members>HDT_LC_ActivityReassignmentTool</members>
+        <members>HDT_LC_ActivityReassignmentToolTst</members>
         <members>HDT_LC_AppointmentAgenda</members>
         <members>HDT_LC_AppointmentAgendaTst</members>
-        <members>HDT_LC_ChildOrderProcessPrecheckTst</members>
-        <members>HDT_QR_Contact</members>
-        <members>HDT_QR_Task</members>
+        <members>HDT_LC_CompleteCase</members>
+        <members>HDT_LC_CompleteCaseTst</members>
+        <members>HDT_LC_CopiaContratto</members>
+        <members>HDT_LC_OmniChannelReplacerController</members>
+        <members>HDT_LC_OrderDossierWizardActions</members>
+        <members>HDT_LC_RecordEditFormSales</members>
+        <members>HDT_LC_RecordEditFormSalesTst</members>
+        <members>HDT_QBL_AppointmentActivityUpdate</members>
+        <members>HDT_QR_ActivityCustom</members>
+        <members>HDT_QR_ActivityCustomTst</members>
+        <members>HDT_QR_Case</members>
+        <members>HDT_QR_HerokuPostSalesManager</members>
+        <members>HDT_QR_Order</members>
+        <members>HDT_SCH_ActivityDispatcherScheduler</members>
         <members>HDT_SRV_AppointmentAgenda</members>
-        <members>HDT_SRV_QservHandler</members>
-        <members>HDT_TRH_Task</members>
+        <members>HDT_SRV_AppointmentAgendaTst</members>
+        <members>HDT_SRV_BillableVasDeactivationTest</members>
+        <members>HDT_SRV_EmailMessage</members>
+        <members>HDT_SRV_HerokuPostSalesManagerTst</members>
+        <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_TRH_AppointmentAgendaEvent</members>
+        <members>HDT_TRH_EmailMessage</members>
+        <members>HDT_UTL_ActivityCustom</members>
+        <members>HDT_UTL_ActivityCustomProcess</members>
+        <members>HDT_UTL_ActivityCustomTst</members>
         <members>HDT_UTL_AppointmentAgenda</members>
-        <members>HDT_UTL_OrderFieldsAlignment</members>
-        <members>HDT_UTL_VasManagement</members>
-        <members>HDT_WRP_Appuntamento</members>
-        <members>HDT_WS_AppointmentAgenda</members>
-        <members>HDT_WS_SalesApexCalloutAction</members>
+        <members>HDT_UTL_AppointmentSetting</members>
+        <members>HDT_UTL_AppointmentSettingTest</members>
+        <members>HDT_UTL_CaseProcess</members>
+        <members>HDT_UTL_CaseProcessTst</members>
+        <members>HDT_UTL_EmailProtocolReceiver</members>
+        <members>HDT_UTL_GestAppAutomaticCreation</members>
+        <members>HDT_UTL_GestAppAutomaticCreationCase</members>
+        <members>HDT_UTL_HerokuPostSalesManager</members>
+        <members>HDT_UTL_Order</members>
+        <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_PayloadManagement</members>
+        <members>HDT_UTL_Scarti</members>
+        <members>HDT_UTL_ScartiTst</members>
+        <members>HDT_UTL_SwtichInProcessTest</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Case.Phase__c</members>
-        <members>Order.Phase__c</members>
-        <members>PaperCommunication__c.CommunicationId__c</members>
-        <members>SiebelActivity__x.TARGET_OU_ID_SF__c</members>
-        <members>SiebelContract__x.SERV_ACCT_SALESFORCE__c</members>
-        <members>SiebelMsgNotifica__x.ID_BP_SALESFORCE__c</members>
-        <members>SiebelMsgNotifica__x.TOTALE_PAPERLESS__c</members>
-        <members>SiebelRds__x.CST_OU_ID_SALESFORCE__c</members>
-        <members>wrts_prcgvr__Activity__c.Type__c</members>
+        <members>HDT_AppointmentSetting__mdt.Flag__c</members>
+        <members>HDT_AppointmentSetting__mdt.IsActive__c</members>
+        <members>HDT_AppointmentSetting__mdt.Type__c</members>
+        <members>HDT_AppointmentSetting__mdt.Value1__c</members>
+        <members>HDT_AppointmentSetting__mdt.Value2__c</members>
+        <members>HDT_AppointmentSetting__mdt.Value3__c</members>
+        <members>HDT_Informative_Configuration__mdt.notBilledList__c</members>
+        <members>HDT_PEV_AppointmentAgenda__e.Activity_JSON__c</members>
+        <members>Interaction__c.CompanyOwner__c</members>
+        <members>Interaction__c.SenderEmailAddress__c</members>
+        <members>Interaction__c.Status__c</members>
+        <members>Order.Cs1Outcome__c</members>
+        <members>SBQQ__ProductOption__c.PriceGas__c</members>
+        <members>SBQQ__ProductOption__c.Price__c</members>
+        <members>SBQQ__ProductOption__c.Status__c</members>
+        <members>SiebelRdsAttribute__x.ATTRIB_16__c</members>
+        <members>SiebelRdsAttribute__x.ATTRIB_17__c</members>
+        <members>SiebelRdsAttribute__x.ATTRIB_18__c</members>
+        <members>wrts_prcgvr__Activity__c.AppointmentOutcome__c</members>
+        <members>wrts_prcgvr__Activity__c.AssignedToQueueDate__c</members>
+        <members>wrts_prcgvr__Activity__c.CreatorGroup__c</members>
+        <members>wrts_prcgvr__Activity__c.UserCompany__c</members>
         <members>wrts_prcgvr__Activity__c.wrts_prcgvr__Status__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_StatoMotoreVas.COFF</members>
-        <members>HDT_StatoMotoreVas.FATTURA_SD</members>
-        <members>HDT_StatoMotoreVas.OK_ODV</members>
-        <members>HDT_StatoMotoreVas.OK_PAREG</members>
-        <members>HDT_StatoMotoreVas.RTZ</members>
+        <members>CasePriority</members>
+        <name>StandardValueSet</name>
+    </types>
+    <types>
+        <members>HDT_LCP_OpenAuraCmp</members>
+        <members>HDT_LCP_RunFlowFromAura</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>HDT_AppointmentAgendaEvent</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>HDT_ButtonDetails.EC7_1_RunFlowFromAuraInfo</members>
+        <members>HDT_Informative_Configuration.CanoneRai_1</members>
+        <members>HDT_Informative_Configuration.Fatturazione_1</members>
+        <members>HDT_Informative_Configuration.Fatturazione_5</members>
+        <members>HDT_IntegrationObject.Documentale_Context1</members>
         <name>CustomMetadata</name>
     </types>
     <version>49</version>

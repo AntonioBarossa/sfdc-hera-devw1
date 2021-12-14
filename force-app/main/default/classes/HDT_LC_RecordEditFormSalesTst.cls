@@ -49,7 +49,7 @@ public with sharing class HDT_LC_RecordEditFormSalesTst{
 			insert cases;
 			List<wrts_prcgvr__Activity__c> activities=HDT_UTL_DataFactoryTst.createActivityCustom(1, false, accounts[0].id);
 			activities[0].Case__c=cases[0].Id;
-			activities[0].wrts_prcgvr__status__c='Completed';
+			activities[0].wrts_prcgvr__status__c='Chiusa';
             activities[0].approved__c = 'Si';
 
 			insert activities;

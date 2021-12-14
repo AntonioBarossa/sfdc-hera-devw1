@@ -576,7 +576,7 @@ public class HDT_UTL_ScartiTst {
         
         List<wrts_prcgvr__Activity__c> relatedAct = [Select id,wrts_prcgvr__Status__c From wrts_prcgvr__Activity__c where NewEmail__c != 'yes@no.it'];
         
-        System.assertEquals('Not Started', relatedAct[0].wrts_prcgvr__Status__c, 'checkForEsitiIntermedi did not work correctly');
+        System.assertEquals('Aperta', relatedAct[0].wrts_prcgvr__Status__c, 'checkForEsitiIntermedi did not work correctly');
         System.assertNotEquals(null, relatedAct, 'checkForEsitiIntermedi did not work correctly');
         
     }
@@ -747,14 +747,14 @@ public class HDT_UTL_ScartiTst {
         }
         
         List<wrts_prcgvr__Activity__c> activityNew = [Select id, RecordTypeId, wrts_prcgvr__Status__c, DiscardCategory__c, Type__c, DiscardWorked__c from wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
-        activityNew[0].wrts_prcgvr__Status__c = 'Completed';
+        activityNew[0].wrts_prcgvr__Status__c = 'Chiusa';
         activityNew[0].RecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
         
         HDT_UTL_Scarti.handleEditButtonPress(activityNew, activityOldMap);
         
         List<wrts_prcgvr__Activity__c> activityAfter = [Select id, RecordTypeId, wrts_prcgvr__Status__c, DiscardCategory__c, Type__c, DiscardWorked__c from wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
         
-        System.assertEquals('Not Started', activityAfter[0].wrts_prcgvr__Status__c, 'handleEditButtonPress did not work correctly');
+        System.assertEquals('Aperta', activityAfter[0].wrts_prcgvr__Status__c, 'handleEditButtonPress did not work correctly');
         System.assertNotEquals(null, activityAfter[0].DiscardWorked__c, 'handleEditButtonPress did not work correctly');
     }
 }

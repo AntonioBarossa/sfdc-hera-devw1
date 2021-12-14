@@ -78,7 +78,7 @@ global with sharing class ConnectorEntityController {
 		try {
 			wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
 				Id = (String) attachdata.get('sf_activity_id'),
-				wrts_prcgvr__Status__c = 'Completed',
+				wrts_prcgvr__Status__c = 'Chiusa',
 				ActivityEndTime__c = Datetime.now(),
 				CallEndTime__c = Datetime.now(),
 				CallDuration__c = (Decimal) message.get('Duration'),

@@ -52,7 +52,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             sToCreate.recordtypeid = s.recordtypeid;
             sToCreate.approved__c = causale;
             sToCreate.type__c = 'Contratti/Bonus Commerciale';
-            s.wrts_prcgvr__status__c = 'Completed';
+            s.wrts_prcgvr__status__c = 'Chiusa';
             s.approved__c = causale;
 
             activityCustomSrv.updateRecord(s);
@@ -130,7 +130,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         Order ord = new Order();
         ord.id = act.order__c;
         if(validazione == 'Si'){
-            act.wrts_prcgvr__status__c = 'Completed';
+            act.wrts_prcgvr__status__c = 'Chiusa';
             res = true;
             ord.DocumentPackage__c = 'Validato';
             //ord.phase__c = 'Documentazione Gestita';
@@ -191,7 +191,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         act.validation__c = validazione;
         String res = '';
         if(validazione == 'Si'){
-            act.wrts_prcgvr__status__c = 'Completed';
+            act.wrts_prcgvr__status__c = 'Chiusa';
            // res = true;
             Order ord = new Order();
             ord.id = act.order__c;
@@ -204,8 +204,8 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             // Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
             List<wrts_prcgvr__Activity__c> actCusList =  HDT_QR_ActivityCustom.getRecordByOrderIdAndType(act.order__c,'Documenti non validati');
             if(actCusList != null && !actCusList.isEmpty()){
-                if(actCusList[0].wrts_prcgvr__status__c == 'Completed'){
-                    act.wrts_prcgvr__status__c = 'Completed';
+                if(actCusList[0].wrts_prcgvr__status__c == 'Chiusa'){
+                    act.wrts_prcgvr__status__c = 'Chiusa';
                     res = 'NoApprovata';
                 }
                 else{
@@ -223,6 +223,11 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         activityCustomSrv.updateRecord(act);
         return res;
         //update act;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static boolean isMandatoryComplete( String recordid ){
+        return recordId == null ? true : HDT_QR_ActivityCustom.isActivityNotClosed(recordid);
     }
     
 }

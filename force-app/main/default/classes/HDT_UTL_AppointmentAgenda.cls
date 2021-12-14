@@ -3,12 +3,13 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         CANCELLATION,CONFIRM,EDIT,NEW_SLOT,FIRST_SEARCH
     }
 
+    private static final String FIELDS_FOR_QUERY = 'Id,AppointmentCode__c,wrts_prcgvr__Status__c,Case__c,Order__c,Case__r.CaseNumber, Order__r.OrderNumber,Case__r.HerokuPracticeCode__c,Order__r.HerokuPracticeCode__c';
     private static final Set<String> STATE_FOR_APPMODE = new Set<String>{'APPUNTAMENTO CONFERMATO'};
     private static HDT_WS_AppointmentAgenda wsAgenda = new HDT_WS_AppointmentAgenda();
 
     public static HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento initAppointmentRequest(Id activityId,requestType requestMethod){
         HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento appointment = new HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento();
-        wrts_prcgvr__Activity__c activity = getActivity(activityId);
+        wrts_prcgvr__Activity__c activity = getActivity(activityId,FIELDS_FOR_QUERY);
         appointment.documentkey = activity.Case__c!= null ? activity.Case__r.HerokuPracticeCode__c : activity.Order__r.HerokuPracticeCode__c;
         appointment.rifRich = activity.Case__c!= null ? activity.Case__r.CaseNumber : activity.Order__r.OrderNumber;
         String modApp = '';
@@ -73,51 +74,217 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         return response;
     }
 
-    private static wrts_prcgvr__Activity__c getActivity(Id activityId){
-        String fields = 'Id,AppointmentCode__c,wrts_prcgvr__Status__c,Case__c,Order__c,Case__r.CaseNumber, Order__r.OrderNumber,Case__r.HerokuPracticeCode__c,Order__r.HerokuPracticeCode__c';
+    public static wrts_prcgvr__Activity__c getActivity(Id activityId,String fields){
         String objectName = 'wrts_prcgvr__Activity__c';
         List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords(fields, objectName, 'Id = \''+activityId+'\'');
         return (wrts_prcgvr__Activity__c)activities[0];
     }
 
     public static String manageResponse(HDT_WRP_Appuntamento.HDT_WRP_ResponseAppuntamento response,Id activityId,requestType requestMethod){
-        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-        activity.Id = activityId;
+        wrts_prcgvr__Activity__c activity;
         String responseString = '';
-        switch on requestMethod {
-            when FIRST_SEARCH {
-                HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento appuntamento = response.appuntamento[response.appuntamento.size()-1];
-                activity.AppointmentCode__c = appuntamento.codiceApp;
-                activity.AppointmentTimeSlotToConfirm__c = appuntamento.appFasciaOrario;
-                activity.AppointmentDateToConfirm__c = Date.valueOf(appuntamento.appData); 
-                activity.wrts_prcgvr__Status__c = 'Presa appuntamento in corso';
-                HDT_UTL_DatabaseService.updateSObject(activity);
-                responseString = JSON.serialize(response);
+        formatResponse(response);
+        if (requestMethod.equals(requestType.CANCELLATION)){
+            activity = new wrts_prcgvr__Activity__c();
+            activity.Id = activityId;
+            activity.wrts_prcgvr__Status__c = 'Annullata';
+            responseString = 'OK';
+        }else if ('0165'.equals(response.codFlusso)){
+            responseString = JSON.serialize(response);
+            if (requestMethod.equals(requestType.FIRST_SEARCH)){
+                activity = new wrts_prcgvr__Activity__c();
+                activity.Id = activityId;
+                switch on response.zGestApp {
+                    when '0' {
+                        HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento appuntamento = response.appuntamento[response.appuntamento.size()-1];
+                        activity.AppointmentCode__c = appuntamento.codiceApp;
+                        activity.AppointmentTimeSlotToConfirm__c = appuntamento.appFasciaOrario;
+                        activity.AppointmentDateToConfirm__c = Date.valueOf(formatDate(appuntamento.appData)); 
+                        activity.wrts_prcgvr__Status__c = 'Presa appuntamento in corso';
+                        activity.AppointmentCompetence__c = 'Vendita';
+                        /* Verificare se vengono inviati
+                        activity.MaxTimeModificationAppointment__c = appuntamento.zLimAppOra;
+                        activity.MaxDateModificationAppointment__c = Date.valueOf(formatDate(appuntamento.zLimApp));
+                        activity.AppointmentDuration__c = appuntamento.zStimaDurApp;
+                        */
+                            
+                    }
+                    when '1' {
+                        responseString = 'COMPETENZA DISTRIBUTORE';
+                        activity.AppointmentCompetence__c = 'Distributore';
+                        activity.wrts_prcgvr__Status__c = 'Appuntamento di competenza Distributore';
+                    }
+                }
             }
-            when NEW_SLOT {
-                responseString = JSON.serialize(response);
+        }else if ('0175'.equals(response.codFlusso)){
+            switch on response.desEsitoConf {
+                when '1' {
+                    HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento appuntamento = response.appuntamento[0];
+                    activity = getActivity(activityId,'Id,wrts_prcgvr__Status__c');
+                    activity.MaxTimeModificationAppointment__c = appuntamento.zLimAppOra;
+                    activity.MaxDateModificationAppointment__c = Date.valueOf(formatDate(appuntamento.zLimApp));
+                    activity.AppointmentCode__c = appuntamento.codiceApp;
+                    activity.AppoitmentTimeSlotConfirmed__c = appuntamento.appFasciaOrario;
+                    activity.AppointmentDuration__c = appuntamento.zStimaDurApp;
+                    activity.AppointmentDate__c = Date.valueOf(formatDate(appuntamento.appData));
+                    activity.wrts_prcgvr__Status__c = 'Appuntamento confermato'.equalsIgnoreCase(activity.wrts_prcgvr__Status__c)? 'Modifica confermata' : 'Appuntamento confermato';
+                    responseString = 'OK'; 
+                }
+                when '0' {
+                    responseString = 'ERRORE CONFERMA';
+                }
             }
-            when EDIT {
-                responseString = JSON.serialize(response);
-            }
-            when CONFIRM {
-                HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento appuntamento = response.appuntamento[0];
-                activity.MaxTimeModificationAppointment__c = appuntamento.zLimAppOra;
-                activity.MaxDateModificationAppointment__c = Date.valueOf(appuntamento.zLimApp);
-                activity.AppointmentCode__c = appuntamento.codiceApp;
-                activity.AppoitmentTimeSlotConfirmed__c = appuntamento.appFasciaOrario;
-                activity.AppointmentDuration__c = appuntamento.zStimaDurApp;
-                activity.AppointmentDate__c = Date.valueOf(appuntamento.appData);
-                activity.wrts_prcgvr__Status__c = 'Appuntamento confermato';
-                HDT_UTL_DatabaseService.updateSObject(activity);
-                responseString = 'OK';
-            }
-            when CANCELLATION {
-                activity.wrts_prcgvr__Status__c = 'Annullata';
-                HDT_UTL_DatabaseService.updateSObject(activity);
-                responseString = 'OK';
+        }else if ('0190'.equals(response.codFlusso)){
+            switch on response.desEsitoConf {
+                when '1' {
+                    responseString = JSON.serialize(response);
+                }
+                when '0' {
+                    responseString = 'ERRORE MODIFICA';
+                }
             }
         }
+        String esitoUpdate = updateActivity(activity);
+        if (String.isNotEmpty(esitoUpdate)){
+            responseString = esitoUpdate;
+        }
         return responseString;
+    }
+
+    public static String handleEventOutcome(String appCode, String outcome, String note){
+        String response = '';
+        Id rtId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_DistributorAppointment').getRecordTypeId();
+        String condition = 'AppointmentCode__c = \''+appCode+'\' AND RecordTypeId = \''+rtId+'\' AND wrts_prcgvr__Status__c NOT IN (\'Completed\',\'Annullata\')';
+        String fields = 'Id,wrts_prcgvr__Description__c,Order__c,Case__c,Distributor__c,ServicePoint__c,Account__c,Contact__c,isAtoa__c,RecordTypeId';
+        List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords(fields, 'wrts_prcgvr__Activity__c', condition);
+        if (activities != null && !activities.isEmpty()){
+            wrts_prcgvr__Activity__c activity = (wrts_prcgvr__Activity__c)activities[0];
+            Boolean activtyToCloneInCreated = false;
+            switch on outcome {
+                when '0'{
+                    //Chiudo quella vecchia e ne apro una nuova nel Queueable
+                    activity.wrts_prcgvr__Status__c = 'Annullata';
+                    activtyToCloneInCreated = true;
+                }
+                when '1','2','3'{
+                    activity.AppointmentCompetence__c = 'Distributore';
+                    activity.wrts_prcgvr__Status__c = 'Appuntamento di competenza Distributore';
+                }
+                when '4'{
+                    activity.wrts_prcgvr__Status__c = 'Appuntamento eseguito';
+                }
+                when else {
+                    activity = null;
+                    response = 'Codice esito non valido. (Valore ricevuto: \''+outcome+'\', valori consentiti: \'0\',\'1\',\'2\',\'3\',\'4\')';
+                }
+            }
+            if (activity != null){
+                activity.AppointmentResultCode__c  = Integer.valueOf(outcome);
+                if (String.isNotEmpty(activity.wrts_prcgvr__Description__c)){
+                    activity.wrts_prcgvr__Description__c += ' '+note;
+                }else{
+                    activity.wrts_prcgvr__Description__c = note;
+                }
+                System.enqueueJob(new HDT_QBL_AppointmentActivityUpdate(activity,activtyToCloneInCreated));
+            }
+        }else{
+            response = 'Appuntamento con codice \''+appCode+'\' non trovato.';
+        }
+        return response;
+    }
+
+    public static String handleSecondAppointmentConfirms(String processType, String codDistr, String appSlot, String appDate){
+        String response = '';
+        wrts_prcgvr__Activity__c activity;
+        String condition = '';
+        switch on processType.toUpperCase() {
+            when 'SALES' {
+                condition = 'Order__r.DistributorPracticeCode__c = \''+codDistr+'\'';
+            }
+            when 'POSTSALES' {
+                condition = 'Case__r.DistributorPracticeCode__c = \''+codDistr+'\'';
+            }
+            when else {
+                response = 'Tipo processo non gestito. (Valore ricevuto: \''+processType+'\', valori consentiti: \'sales\',\'postSales\')';
+            }
+        }
+        if (String.isNotEmpty(condition)){
+            try{
+                Id rtId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_DistributorAppointment').getRecordTypeId();
+                List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords('Id', 'wrts_prcgvr__Activity__c', condition + 'AND RecordTypeId = \''+rtId+'\' AND wrts_prcgvr__Status__c NOT IN (\'Completed\',\'Annullata\')');
+                if (activities != null && !activities.isEmpty()){
+                    activity = (wrts_prcgvr__Activity__c)activities[0];
+                    activity.AppointmentDate__c = Date.valueOf(formatDate(appDate));
+                    activity.AppoitmentTimeSlotConfirmed__c = appSlot;
+                    activity.wrts_prcgvr__Status__c = 'Appuntamento confermato';
+                    System.enqueueJob(new HDT_QBL_AppointmentActivityUpdate(activity));
+                }else {
+                    response = 'Nessun appuntamento associato al codice distributore \''+codDistr+'\'.';
+                }
+                
+            }catch(Exception e){
+                response = e.getMessage();
+            }
+        }
+        return response;
+    }
+
+    public static Map<String,String> herokuRequestConverter(Map<String,String> herokuRequestMap){
+        Map<String,String> newRequestMap = new Map<String,String>();
+        Map<String,String> herokuKeysMap = HDT_UTL_AppointmentSetting.getResponseKeysMap();
+        for (String oldKey : herokuKeysMap.keySet()){
+            if (herokuRequestMap.containsKey(oldKey) && String.isNotBlank(herokuRequestMap.get(oldKey))){
+                newRequestMap.put(herokuKeysMap.get(oldKey), herokuRequestMap.get(oldKey));
+            }
+        }
+        return newRequestMap;
+    }
+
+    public static String updateActivity(wrts_prcgvr__Activity__c activity){
+        String response = '';
+        boolean isCommunity = false;
+        if(activity != null){
+            if (UserInfo.getUserType().toUpperCase().contains('GUEST')){
+                isCommunity = true;
+            }
+            try{
+                if (isCommunity) {
+                    HDT_PEV_AppointmentAgenda__e activityEvent = new HDT_PEV_AppointmentAgenda__e();
+                    activityEvent.Activity_JSON__c = JSON.serialize(activity);
+                    Database.SaveResult sr = EventBus.publish(activityEvent);
+                    if (!sr.isSuccess()) {
+                        response = 'Error returned: ';
+                        for(Database.Error err : sr.getErrors()) {
+                            response += err.getStatusCode() +' - ' +err.getMessage()+'; ';
+                        }
+                    } 
+                }else{
+                    HDT_UTL_DatabaseService.updateSObject(activity);
+                }
+            }catch(Exception e){
+                response = e.getMessage();
+            }
+        }
+        return response;
+    }
+
+    private static String formatDate(String dateToWork){
+        String newDate = dateToWork;
+        if (String.isNotEmpty(dateToWork) && Pattern.matches('(0?[1-9]|[1-2][0-9]|[3][0-1])[//](0?[1-9]|[1][0-2])[//]\\d{4}', newDate)){
+            List<String> dateInArray = newDate.split('/');
+            String m = dateInArray[1].length() == 1? '0'+dateInArray[1]:dateInArray[1];
+            String g = dateInArray[0].length() == 1? '0'+dateInArray[0]:dateInArray[0];
+            newDate = dateInArray[2]+'-'+m+'-'+g;
+        }
+        return newDate;
+    }
+
+    private static void formatResponse(HDT_WRP_Appuntamento.HDT_WRP_ResponseAppuntamento response){
+        if (response != null && response.appuntamento != null){
+            for (HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento appuntamento : response.appuntamento){
+                appuntamento.appData = formatDate(appuntamento.appData);
+                appuntamento.zLimApp = formatDate(appuntamento.zLimApp);
+            }
+        }
     }
 }

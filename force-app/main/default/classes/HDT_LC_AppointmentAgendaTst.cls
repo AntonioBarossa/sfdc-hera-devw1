@@ -19,10 +19,6 @@ public with sharing class HDT_LC_AppointmentAgendaTst {
         orderWithPricebook[1].CommercialProduct__c=prods[0].Id;
         insert orderWithPricebook;
         List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, acctList[0].Id, 'Bozza');
-        /* List<PricebookEntry> pricebokEntry=HDT_UTL_DataFactoryTst.createPricebookEntry(prods, true, pricebookId);
-        List<OrderItem> orderItem=HDT_UTL_DataFactoryTst.createOrderItem(2, false, orderWithPricebook[0].Id, servPoints[0].Id, prods[0].Id, pricebokEntry[0].Id);
-        orderItem[1].OrderId=orderWithPricebook[1].Id;
-        insert orderItem; */
         List<Case> cases=HDT_UTL_DataFactoryTst.createCase(1, false, acctList[0].Id, contacts[0].Id, servPoints[0].Id, contracts[0].Id, orders[0].Id);
         cases[0].RecordTypeId=constants.CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO;
         cases[0].HerokuPracticeCode__c = 'TEST_SALESFORCE';
@@ -44,7 +40,7 @@ public with sharing class HDT_LC_AppointmentAgendaTst {
     public static void executeFirstSearch(){
         String methodName = 'executeFirstSearch: ';
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock(false));
+        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock('0165'));
         Test.startTest();
             HDT_LC_AppointmentAgenda.handleSearch(activity.Id, 'FirstSearch', Date.today(), '18:00/19:00');
         Test.stopTest();
@@ -56,29 +52,13 @@ public with sharing class HDT_LC_AppointmentAgendaTst {
     }
 
     @IsTest
-    public static void executeFirstSearchError(){
-        String methodName = 'executeFirstError: ';
-        wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
-        Boolean isAuraHandledException = false;
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock(true));
-        Test.startTest();
-            try{
-                HDT_LC_AppointmentAgenda.handleSearch(activity.Id, 'FirstSearch', Date.today(), '18:00/19:00');
-            }catch(AuraHandledException e){
-                isAuraHandledException = true;
-            }   
-        System.assertEquals(true, isAuraHandledException, methodName + 'Non è stata lanciata l\'eccezione.');
-        Test.stopTest();
-    }
-
-    @IsTest
     public static void executeNewSlot(){
         String methodName = 'executeNewSlot: ';
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         activity.wrts_prcgvr__Status__c = 'Presa appuntamento in corso';
         activity.AppointmentCode__c = '6666';
         update activity;
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock(false));
+        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock('0165'));
         Test.startTest();
             HDT_LC_AppointmentAgenda.handleSearch(activity.Id, 'NewSlot', Date.today(), '18:00/19:00');
         Test.stopTest();
@@ -88,31 +68,13 @@ public with sharing class HDT_LC_AppointmentAgendaTst {
     }
 
     @IsTest
-    public static void executeNewSlotError(){
-        String methodName = 'executeNewSlotError: ';
-        wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
-        activity.wrts_prcgvr__Status__c = 'Presa appuntamento in corso';
-        update activity;
-        Boolean isAuraHandledException = false;
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock(true));
-        Test.startTest();
-            try{
-                HDT_LC_AppointmentAgenda.handleSearch(activity.Id, 'NewSlot', Date.today(), '18:00/19:00');
-            }catch(AuraHandledException e){
-                isAuraHandledException = true;
-            }   
-            System.assertEquals(true, isAuraHandledException, methodName + 'Non è stata lanciata l\'eccezione.');
-        Test.stopTest();
-    }
-
-    @IsTest
     public static void executeNewSlotModify(){
         String methodName = 'executeNewSlotModify: ';
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         activity.wrts_prcgvr__Status__c = 'Appuntamento confermato';
         activity.AppointmentCode__c = '6666';
         update activity;
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock(false));
+        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock('0190'));
         Test.startTest();
             HDT_LC_AppointmentAgenda.handleSearch(activity.Id, 'NewSlotModify', Date.today(), '18:00/19:00');
         Test.stopTest();
@@ -122,55 +84,18 @@ public with sharing class HDT_LC_AppointmentAgendaTst {
     }
 
     @IsTest
-    public static void executeNewSlotModifyError(){
-        String methodName = 'executeNewSlotModify: ';
-        wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
-        activity.wrts_prcgvr__Status__c = 'Appuntamento confermato';
-        update activity;
-        Boolean isAuraHandledException = false;
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock(true));
-        Test.startTest();
-            try{
-                HDT_LC_AppointmentAgenda.handleSearch(activity.Id, 'NewSlotModify', Date.today(), '18:00/19:00');
-            }catch(AuraHandledException e){
-                isAuraHandledException = true;
-            }   
-            System.assertEquals(true, isAuraHandledException, methodName + 'Non è stata lanciata l\'eccezione.');
-        Test.stopTest();
-    }
-
-    @IsTest
     public static void executeHandleCancellation(){
         String methodName = 'executeHandleCancellation: ';
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         activity.wrts_prcgvr__Status__c = 'Presa appuntamento in corso';
         activity.AppointmentCode__c = '6666';
         update activity;
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock(false));
+        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock('xxx'));
         Test.startTest();
             HDT_LC_AppointmentAgenda.handleCancellation(activity.Id, '6666');
         Test.stopTest();
         activity = [SELECT Id,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         System.assertEquals('Annullata', activity.wrts_prcgvr__Status__c, methodName + 'Stato non settato correttamente');
-    }
-
-    @IsTest
-    public static void executeHandleCancellationError(){
-        String methodName = 'executeHandleCancellationError: ';
-        wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
-        activity.wrts_prcgvr__Status__c = 'Presa appuntamento in corso';
-        activity.AppointmentCode__c = '6666';
-        update activity;
-        Boolean isAuraHandledException = false;
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock(true));
-        Test.startTest();
-            try{
-                HDT_LC_AppointmentAgenda.handleCancellation(activity.Id, '6666');
-            }catch(AuraHandledException e){
-                isAuraHandledException = true;
-            }   
-            System.assertEquals(true, isAuraHandledException, methodName + 'Non è stata lanciata l\'eccezione.');
-        Test.stopTest();
     }
 
     @IsTest
@@ -180,7 +105,7 @@ public with sharing class HDT_LC_AppointmentAgendaTst {
         activity.wrts_prcgvr__Status__c = 'Presa appuntamento in corso';
         activity.AppointmentCode__c = '6666';
         update activity;
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock(false));
+        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock('0175'));
         Test.startTest();
             HDT_LC_AppointmentAgenda.handleConfirm(activity.Id, '6666');
         Test.stopTest();
@@ -194,8 +119,20 @@ public with sharing class HDT_LC_AppointmentAgendaTst {
     }
 
     @IsTest
-    public static void executeHandlehandleConfirmError(){
+    public static void executeGetActivity(){
         String methodName = 'executeHandlehandleConfirmError: ';
+        wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
+        Id recordId = activity.Id;
+        Test.startTest();
+            String response = HDT_LC_AppointmentAgenda.getActivity(recordId, new List<String>{'Id', 'wrts_prcgvr__Status__c'});
+            activity = (wrts_prcgvr__Activity__c)JSON.deserialize(response, wrts_prcgvr__Activity__c.class);
+            System.assertEquals(recordId, activity.Id, methodName + 'Non è stata lanciata l\'eccezione.');
+        Test.stopTest();
+    }
+
+    @IsTest
+    public static void executeErrorCall(){
+        String methodName = 'executeHandleCancellationError: ';
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         activity.wrts_prcgvr__Status__c = 'Presa appuntamento in corso';
         activity.AppointmentCode__c = '6666';
@@ -204,34 +141,54 @@ public with sharing class HDT_LC_AppointmentAgendaTst {
         Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock(true));
         Test.startTest();
             try{
-                HDT_LC_AppointmentAgenda.handleConfirm(activity.Id, '6666');
+                HDT_LC_AppointmentAgenda.handleCancellation(activity.Id, '6666');
             }catch(AuraHandledException e){
                 isAuraHandledException = true;
+            }
+            try{
+                HDT_LC_AppointmentAgenda.handleSearch(activity.Id, 'NewSlot', Date.today(), '18:00/19:00');
+                isAuraHandledException = false;
+            }catch(AuraHandledException e){
+                isAuraHandledException = isAuraHandledException;
+            }
+            try{
+                HDT_LC_AppointmentAgenda.handleConfirm(activity.Id, '6666');
+                isAuraHandledException = false;
+            }catch(AuraHandledException e){
+                isAuraHandledException = isAuraHandledException;
             }   
             System.assertEquals(true, isAuraHandledException, methodName + 'Non è stata lanciata l\'eccezione.');
         Test.stopTest();
     }
 
     public class HDT_LC_AppointmentAgendaMock implements HttpCalloutMock{
+        private String bodyString;
         private Boolean throwError;
 
+        public HDT_LC_AppointmentAgendaMock(String codiceFlusso){
+            this.throwError = false;
+            this.bodyString = '{"responseAppuntamento":{"codCaus" : "test" ,"codFlusso" : "'+ codiceFlusso + '" ,"desEsitoConf" : "1" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "0" ,"appuntamento" : [{"appData" : "2022-12-31","appFasciaOrario" : "15:00/16:00","codiceApp" : "2222","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "16:00/17:00","codiceApp" : "3333","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "17:00/18:00","codiceApp" : "4444","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "18:00/19:00","codiceApp" : "5555","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "19:00/20:00","codiceApp" : "6666","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"}]}}';
+        }
+
         public HDT_LC_AppointmentAgendaMock(Boolean errorCall){
-            this.throwError = errorCall;
+            this.throwError = true;
+            this.bodyString = '{"responseAppuntamento":{"codCaus" : "test" ,"codFlusso" : "x" ,"desEsitoConf" : "x" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "x" ,"appuntamento" : [{"appData" : "2022-12-31","appFasciaOrario" : "15:00/16:00","codiceApp" : "2222","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "16:00/17:00","codiceApp" : "3333","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "17:00/18:00","codiceApp" : "4444","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "18:00/19:00","codiceApp" : "5555","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "19:00/20:00","codiceApp" : "6666","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"}]}}';
         }
 
         public HTTPResponse respond(HTTPRequest request) {
             HttpResponse response = new HttpResponse();
             response.setHeader('Content-Type', 'application/json');
-            response.setBody('{"responseAppuntamento":{"codCaus" : "test" ,"codFlusso" : "x" ,"desEsitoConf" : "OK" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "x" ,"appuntamento" : [{"appData" : "2022-12-31","appFasciaOrario" : "15:00/16:00","codiceApp" : "2222","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "16:00/17:00","codiceApp" : "3333","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "17:00/18:00","codiceApp" : "4444","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "18:00/19:00","codiceApp" : "5555","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "19:00/20:00","codiceApp" : "6666","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"}]}}');
+            response.setBody(this.bodyString);
             if (this.throwError){
                 response.setStatusCode(403);
                 response.setStatus('ERROR');
             }else{
                 response.setStatusCode(200);
                 response.setStatus('OK');
-            }
-            
-            return response; 
+            } 
+            return response;
         }
     }
+
+    
 }

@@ -61,7 +61,10 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                         }
                     }
-                    
+                    if (mapRequestFields.get('METHOD')!= null){
+                        HDT_SRV_AppointmentAgenda agendaService = new HDT_SRV_AppointmentAgenda();
+                        agendaService.handleAppointmentUpdate(mapRequestFields);
+                    }
                     if(mapRequestFields.get('RECORD_ID')!= null && mapRequestFields.get('FASE')!= null){
                         //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                         String recordId = mapRequestFields.get('RECORD_ID');

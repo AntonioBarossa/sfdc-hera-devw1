@@ -2160,7 +2160,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <inputAssignments>
             <field>wrts_prcgvr__Status__c</field>
             <value>
-                <stringValue>Not Started</stringValue>
+                <stringValue>Aperta</stringValue>
             </value>
         </inputAssignments>
         <object>wrts_prcgvr__Activity__c</object>
