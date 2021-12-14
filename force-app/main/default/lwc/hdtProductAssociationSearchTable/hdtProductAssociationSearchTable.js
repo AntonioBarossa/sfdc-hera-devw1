@@ -9,7 +9,7 @@ const columns = [
     { label: 'Versione', fieldName: 'Version__c' },
     { label: 'Servizio', fieldName: 'Service__c' },
     { label: 'Descrizione prodotto', fieldName: 'DescriptionSAP__c' },
-    //{ label: 'Famiglia di prodotti', fieldName: 'Family'},
+    { label: 'Famiglia di prodotti', fieldName: 'Family'},
     { label: 'Categoria Famiglia', fieldName: 'CategoryFamily__c'},
     { label: 'Stato', fieldName: 'Status__c'}
 ];
@@ -32,6 +32,9 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     @api childRecordId;
     @api junctionObj;
     @api dmlContext;
+    @api recordData;
+    subtitle = '';
+    recordName = '';
     columns;
     counterText;
     counter;
@@ -94,6 +97,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     connectedCallback(){
         console.log('>>> PRODUCT OPTION OBJ: ' + this.junctionObj);
         console.log('>>> OBJ TYPE: ' + this.objType);
+        //console.log('>>> OBJ recordData: ' + JSON.stringify(this.recordData));
         //console.log('>>> LABELS: ' + JSON.stringify(this.labels));
 
         this.illustrationMessage = this.labels.cl_ResultText;
@@ -103,6 +107,15 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         this.label.closeTitle = this.labels.cl_Close;
         this.label.confirmFilterTitle = this.labels.cl_ConfirmFilterTitle;
 
+        switch (this.objType) {
+            case 'SBQQ__ProductOption__c':
+                this.icon = 'standard:product';
+                break;
+            case 'SBQQ__ConfigurationRule__c':
+                this.icon = 'custom:custom90';
+        }
+
+        this.recordName = this.recordData.fields.Name.value;
 
         switch (this.dmlContext) {
             case 'delete':
@@ -111,6 +124,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                 this.label.confirmSelectedBody = this.labels.cl_ConfimSelectBodyDelete;
                 this.label.closeBody = this.labels.cl_CloseDeleteBody;
                 this.label.confirmFilterBody = this.labels.cl_ConfirmFilterDeleteBody;
+                this.subtitle = 'Stai per eliminare le associazioni di:';
                 break;
             case 'insert':
                 this.mainTitle = this.labels.cl_CreateTitle;
@@ -118,6 +132,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                 this.label.confirmSelectedBody = this.labels.cl_ConfimSelectBody;
                 this.label.closeBody = this.labels.cl_CloseCreateBody;
                 this.label.confirmFilterBody = this.labels.cl_ConfirmFilterCreateBody;
+                this.subtitle = 'Stai per associare:';
         }
 
     }

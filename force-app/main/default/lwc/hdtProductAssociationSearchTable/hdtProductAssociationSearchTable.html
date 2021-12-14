@@ -23,6 +23,20 @@
 
         <div class="slds-card__body slds-card__body_inner" style="height: 80vh;" >
 
+            <!-- child Name -->
+            <div class="slds-section slds-is-open slds-border_top slds-m-top_small slds-m-bottom_small">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-truncate slds-p-horizontal_small" title="subtitle">{subtitle}</span>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content">
+                    <div class=" slds-m-left_small">
+                        <lightning-pill class="my-pill" label={recordName}>
+                            <lightning-icon icon-name={icon} alternative-text={icon}></lightning-icon>
+                        </lightning-pill>
+                    </div>
+                </div>
+            </div>
+
             <div class="slds-section slds-is-open slds-border_top slds-border_bottom slds-m-top_small slds-m-bottom_small">
                 <h3 class="slds-section__title slds-theme_shade">
                     <span class="slds-truncate slds-p-horizontal_small" title="filtro">Usa questi campi per filtrare i prodotti</span>
