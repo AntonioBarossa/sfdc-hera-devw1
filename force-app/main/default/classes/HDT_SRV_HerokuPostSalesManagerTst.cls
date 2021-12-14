@@ -96,7 +96,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
 
         wrts_prcgvr__AsyncJob__c asyncJob = new wrts_prcgvr__AsyncJob__c();
         asyncJob.wrts_prcgvr__JobItem__c = 'test';
-        asyncJob.wrts_prcgvr__Status__c = 'Completed';
+        asyncJob.wrts_prcgvr__Status__c = 'Chiusa';
         insert asyncJob;
 
     }

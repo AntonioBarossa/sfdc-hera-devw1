@@ -1,0 +1,8 @@
+<aura:component 
+    implements="force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
+    access="global">
+
+    <c:hdtAdvanceDocumentManager 
+        recordId="{!v.recordId}"
+        isLawEighty="true"></c:hdtAdvanceDocumentManager>
+</aura:component>

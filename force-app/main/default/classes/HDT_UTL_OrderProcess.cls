@@ -914,7 +914,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     activities = orderQr .getOpenActivitiesByOrderId(orderNew.Id);
                     for(wrts_prcgvr__Activity__c activity : activities)
                     {
-                        activity.wrts_prcgvr__Status__c = 'Completed';
+                        activity.wrts_prcgvr__Status__c = 'Chiusa';
                     }
                     HDT_UTL_DatabaseService.updateSObject(activities);
                 }

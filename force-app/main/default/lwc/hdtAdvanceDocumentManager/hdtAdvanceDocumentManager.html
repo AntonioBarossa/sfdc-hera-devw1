@@ -1,5 +1,5 @@
 <template>
-
+    <!-- Modal mode for "Gestione Documentazione Anticipata" -->
     <template if:true={showModal}>
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
             aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
@@ -8,7 +8,7 @@
                         <template if:true={showSpinner}>
                             <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
                         </template>
-                        <lightning-card title="Gestione Documentazione Anticipata" icon-name="custom:custom12"> 
+                        <lightning-card title={cardTitle} icon-name="custom:custom12"> 
                             <div class="slds-grid">
                                 <div class="slds-col slds-size_1-of-3">
                                     <lightning-combobox name="modalitaInvio" label="Modalità di invio documentazione" value={sendMode}
@@ -41,5 +41,33 @@
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </template>
+    <!-- Non modal mode for "Legge 80"-->
+    <div if:true={isLawEighty}>
+        <lightning-card title={cardTitle} icon-name="custom:custom12"> 
+            <div class="slds-grid slds-wrap slds-m-top_small">
+                <div class="slds-size_1-of-3">
+                    <lightning-input type="text" data-id="sendMode" disabled="true" label="Modalità Invio" value={modalitaInvio}></lightning-input>
+                </div>
+                <div class="slds-size_1-of-3"></div>
+                <div class="slds-size_1-of-3">
+                    <lightning-input type="text" data-id="signMode" disabled="true" label="Modalità Firma" value={signMode}></lightning-input>
+                </div>
+                <div  class="slds-size_1-of-3">
+                    <lightning-input type="email" data-id="email" required={emailRequired} label="Email invio documentazione" value={email} disabled="true" pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" message-when-pattern-mismatch="Inserire un indirizzo e-mail valido."></lightning-input>
+                </div>
+                <div  class="slds-size_1-of-3"></div>
+                <div  class="slds-size_1-of-3">
+                    <lightning-input type="tel" data-id="sms" required={smsRequired} label="Cellulare invio documentazione" value={phone} disabled="true" pattern="[0-9]{9,10}" message-when-pattern-mismatch="Il cellulare deve contenere 9 o 10 cifre."></lightning-input>
+                </div>
+            </div>
+        </lightning-card>
+        <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Annulla</button>
+            <button class="slds-button slds-button_brand" onclick={handlePreview} title="OK">Preview</button>
+            <template if:true={showSendButton}>
+                <button class="slds-button slds-button_brand" onclick={checkForm} title="OK">Invia e Archivia</button>
+            </template>
+        </footer>
+    </div>
 
 </template>

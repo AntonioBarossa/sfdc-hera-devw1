@@ -42,7 +42,7 @@ private class ConnectorEntityController_Test {
 		ConnectorEntityController.closeActivity(JSON.serialize(message));
 		
 		childActivity = [SELECT Id, wrts_prcgvr__Status__c, OperatorChange__c FROM wrts_prcgvr__Activity__c WHERE ParentActivity__c != null];
-		System.assertEquals('Completed', childActivity.wrts_prcgvr__Status__c, 'FAIL - ATTIVITà NON CHIUSA');
+		System.assertEquals('Chiusa', childActivity.wrts_prcgvr__Status__c, 'FAIL - ATTIVITà NON CHIUSA');
 		System.assert(childActivity.OperatorChange__c, 'FAIL - OPERATOR CHANGE FLAG NON SETTATO');
 		
 		String popDest = ConnectorEntityController.getPopDestination(childActivity.Id);
