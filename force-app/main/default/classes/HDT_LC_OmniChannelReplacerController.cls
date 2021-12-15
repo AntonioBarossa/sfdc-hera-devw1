@@ -26,7 +26,7 @@ public with sharing class HDT_LC_OmniChannelReplacerController {
             WHERE
                 QAdLogin__c =: QAdLogin AND
                 Type__c = 'Sportello' AND
-                (wrts_prcgvr__Status__c != 'Completed' OR CreatedDate = TODAY)
+                (wrts_prcgvr__Status__c != 'Chiusa' OR CreatedDate = TODAY)
             WITH SECURITY_ENFORCED
             ORDER BY
                 wrts_prcgvr__Status__c DESC,

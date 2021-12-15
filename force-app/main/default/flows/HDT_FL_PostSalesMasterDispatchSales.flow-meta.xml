@@ -320,11 +320,11 @@
                 <leftValueReference>getActivityToCheck.wrts_prcgvr__Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Completed</stringValue>
+                    <stringValue>Chiusa</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Fase_completed_0_0</targetReference>
+                <targetReference>Set_Fase_Chiusa_0_0</targetReference>
             </connector>
             <label>checkActivityClose</label>
         </rules>
@@ -1979,7 +1979,7 @@
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Set_Fase_completed_0_0</name>
+        <name>Set_Fase_Chiusa_0_0</name>
         <label>Set Fase in lavorazione</label>
         <locationX>1920</locationX>
         <locationY>4046</locationY>

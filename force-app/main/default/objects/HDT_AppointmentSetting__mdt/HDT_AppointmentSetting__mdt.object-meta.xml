@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Impostazioni di base per la gestione appuntamenti. Due tipi di record gestiti:
+1. Appuntamento AtoA: se esiste un record con value1 = al processo value2 = nome distributore value3 = Commodity Value4 = (SALES||POSTSALES) allora l&apos;attività di presa appuntamento avrà il flag isAtoA = flag.
+2. Map Heroku: mappatura delle chiavi della response Heroku (salvate nel value1), con le chiavi (salvate nel value2) della mappa utilizzata per la gestione responseHeroku utilizzata dalla HDT_UTL_AppointmentAgenda</description>
+    <label>Impostazione Appuntamenti</label>
+    <pluralLabel>Impostazioni Appuntamenti</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

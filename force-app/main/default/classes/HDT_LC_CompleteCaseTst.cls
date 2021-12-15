@@ -50,7 +50,7 @@ public class HDT_LC_CompleteCaseTst {
             
             List<wrts_prcgvr__Activity__c> activities =  HDT_UTL_DataFactoryTst.createActivityCustom(1,false,accId);
             for(wrts_prcgvr__Activity__c a : activities){
-                a.wrts_prcgvr__Status__c = 'Completed';
+                a.wrts_prcgvr__Status__c = 'Chiusa';
                 a.case__c = caseId;
             }
             insert activities;

@@ -145,7 +145,7 @@ export default class HdtActivityIvaAccise extends LightningElement {
     connectedCallback() {
         getActivity({recordId : this.recordId}).then(response =>{
             this.act = response;
-            if(response.wrts_prcgvr__Status__c == 'Completed'){
+            if(response.wrts_prcgvr__Status__c == 'Chiusa'){
                 this.isDisabledField = true;
                 this.dateConfirm = response.CompletationDateDocument__c;
             }

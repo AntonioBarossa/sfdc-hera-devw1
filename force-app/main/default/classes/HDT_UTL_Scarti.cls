@@ -982,7 +982,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         System.debug('handleEditButtonPress start');
         RecordType rtScarto = new HDT_QR_RecordType().getRecordType('HDT_RT_Scarto', 'wrts_prcgvr__Activity__c');
         for(wrts_prcgvr__Activity__c curAct : newActs){
-            if('Completed'.equalsIgnoreCase(curAct.wrts_prcgvr__Status__c)
+            if('Chiusa'.equalsIgnoreCase(curAct.wrts_prcgvr__Status__c)
                && curAct.wrts_prcgvr__Status__c != oldActsMap.get(curAct.Id).wrts_prcgvr__Status__c
                && rtScarto.Id == curAct.RecordTypeId){
         		System.debug('handleEditButtonPress found ' + curAct.Id);

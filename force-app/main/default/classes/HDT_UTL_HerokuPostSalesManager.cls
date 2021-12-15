@@ -442,6 +442,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             updateFuture(JSON.serialize(currentCase));
             return caseUpdate;
+        }else if (method.equalsIgnoreCase('AggiornaAppuntamento')){
+            HDT_SRV_AppointmentAgenda agendaService = new HDT_SRV_AppointmentAgenda();
+            agendaService.handleAppointmentUpdate(reqWrp.requestMap);
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
         }
@@ -812,7 +815,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         asyncJobRec = hpsmQr.getAsyncJobByJobItem(recordId);
 
         if(asyncJobRec != null){
-            if(asyncJobRec.wrts_prcgvr__Status__c == 'Completed'){
+            if(asyncJobRec.wrts_prcgvr__Status__c == 'Chiusa'){
 
                 result = 'OK';
 

@@ -4,7 +4,7 @@
     <description>Descrizione del prodotto come su DB SAP</description>
     <externalId>false</externalId>
     <label>Descrizione SAP</label>
-    <length>30</length>
+    <length>255</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <type>Text</type>

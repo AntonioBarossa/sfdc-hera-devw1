@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
+        <apexClass>HDT_AppointmentAgendaEventTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_BA_AccountBpCaCallout</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -745,6 +749,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QBL_AppointmentActivityUpdate</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QBL_BpCaRequest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1389,6 +1397,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_AppointmentAgendaTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_Attachment</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_BillableVasDeactivation</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1757,6 +1773,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_TRH_AppointmentAgendaEvent</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_TRH_Asset</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1942,6 +1962,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_AssetStatusVas</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_AppointmentSetting</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_AppointmentSettingTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

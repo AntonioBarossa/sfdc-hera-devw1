@@ -5,7 +5,7 @@
     <externalDeveloperName>FILE_NAME</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
-    <isNameField>false</isNameField>
+    <isNameField>true</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
     <label>Nome file</label>
     <length>200</length>
