@@ -40,6 +40,7 @@ export default class HdtManageRuleAssociation extends NavigationMixin(LightningE
 
     @api recordid;
     objApiName = 'SBQQ__ConfigurationRule__c';
+    recordData;
     configurationRuleObj;
     showWelcom = false;
     showSearchOffer = false;
@@ -65,21 +66,27 @@ export default class HdtManageRuleAssociation extends NavigationMixin(LightningE
 
     connectedCallback(){
         console.log('>>> RULE Id: ' + this.recordid);
-        this.enableCreate = true;
-        this.enableDelete = true;
-        this.showWelcom = true;
+        //this.enableCreate = true;
+        //this.enableDelete = true;
+        //this.showWelcom = true;
     }
 
-    //@wire(getRecord, { recordId: '$recordid', fields: ['Product2.Family', 'Product2.Status__c'] })
-    //wiredProduct({ error, data }) {
-    //    if (data) {
+    @wire(getRecord, { recordId: '$recordid', fields: ['SBQQ__ProductRule__c.Name'] })
+    wiredProduct({ error, data }) {
+        if (data) {
 
-    //    } else if (error) {
-    //        for(var key in error){
-    //            console.log('# Error -> ' + key + ' - ' + error[key]);
-    //        }
-    //    }
-    //}
+            this.recordData = data;
+
+            this.enableCreate = true;
+            this.enableDelete = true;
+            this.showWelcom = true;
+
+        } else if (error) {
+            for(var key in error){
+                console.log('# Error -> ' + key + ' - ' + JSON.stringify(error[key]));
+            }
+        }
+    }
 
     handleClick(event){
         console.log('### recordid -> ' + this.recordid);
