@@ -38,6 +38,9 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
     * Added signMode field
     */
     @track signMode;
+    /*@frpanico 15/12/2021
+    * Added fieldsObj object */
+    @track fieldsObj = [];
     @track showModal;
     @track showSendButton = false;
     @track emailRequired = false;
@@ -108,6 +111,11 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
                 this.email = data.fields.Email__c.value;
                 this.modalitaInvio = data.fields.DocSendingMethod__c.value;
                 this.signMode = data.fields.SignatureMethod__c.value;
+                this.fieldsObj.push({type: 'text', dataId: 'sendMode', disabled: true, label: 'Modalità Invio', value: this.modalitaInvio });
+                this.fieldsObj.push({type: 'text', dataId: 'signMode', disabled: true, label: 'Modalità Firma', value: this.signMode });
+                this.fieldsObj.push({type: 'email', dataId: 'email', disabled: true, label: 'Email invio documentazione', value: this.email });
+                this.fieldsObj.push({type: 'phone', dataId: 'phone', disabled: true, label: 'Cellulare invio documentazione', value: this.phone });
+                console.log('# fieldsObj >>> ' + JSON.stringify(this.fieldsObj));
             }    
         }
         else if(error)
