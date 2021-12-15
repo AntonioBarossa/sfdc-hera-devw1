@@ -8,12 +8,39 @@ import PHONE_NUMBER_FIELD from '@salesforce/schema/Order.PhoneNumber__c';
 import ID_ORDER_FIELD from '@salesforce/schema/Order.Id';
 import IS_PRE_DOC_TO_SEND from '@salesforce/schema/Order.isPreDocumentationToSend__c';
 import EMAIL_FIELD from '@salesforce/schema/Order.Email__c';
+/*@frpanico 14/12/2021 
+* Added DocSendingMehtod__c field
+* Added SignatureMethod__c field
+* Added getRecord and getFieldValue
+*/
+import DOC_SENDING_METHOD_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';
+import SIGNATURE_METHOD_FIELD from '@salesforce/schema/Order.SignatureMethod__c';
+import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+
+const fields = [PHONE_NUMBER_FIELD,EMAIL_FIELD,DOC_SENDING_METHOD_FIELD,SIGNATURE_METHOD_FIELD];
 
 export default class HdtAdvanceDocumentManager extends NavigationMixin(LightningElement) {
     @api recordId;
     @api order;
     @api tipoPlico;
     @api loginChannel;
+    /* @frpanico 14/12/2021
+    * Added variable to understand that the component 
+    * is being called from the "Legge 80" action
+    */
+    @api isLawEighty;
+    /* @frpanico 14/12/2021
+    * Added variable to understand that the component 
+    * is being called from the "Legge 80" action
+    */
+    @track cardTitle = 'Gestione Documentazione Anticipata';
+    /*@frpanico 14/12/2021
+    * Added signMode field
+    */
+    @track signMode;
+    /*@frpanico 15/12/2021
+    * Added fieldsObj object */
+    @track fieldsObj = [];
     @track showModal;
     @track showSendButton = false;
     @track emailRequired = false;
@@ -64,8 +91,50 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
         console.log('initVariables mod invio: ' + JSON.stringify(this.modalitaInvio));
     }
     
+    /*@frpanico 14/12/2021
+    * Added wire method to get field value
+    * It is meant to run only if the lwc is invoked from "Legge 80" Action
+    */
+    @wire(getRecord,{recordId: '$recordId', fields})
+    wiredRecord({error, data})
+    {
+        if(data)
+        {
+            if(this.isLawEighty)
+            {
+                console.log('# Phone >>> ' + data.fields.PhoneNumber__c.value);
+                console.log('# Email >>> ' + data.fields.Email__c.value);
+                console.log('# Modalita Invio >>> ' + data.fields.DocSendingMethod__c.value);
+                console.log('# Sign Mode >>> ' + data.fields.SignatureMethod__c.value);
+                this.order = data;
+                this.phone = data.fields.PhoneNumber__c.value;
+                this.email = data.fields.Email__c.value;
+                this.modalitaInvio = data.fields.DocSendingMethod__c.value;
+                this.signMode = data.fields.SignatureMethod__c.value;
+                this.fieldsObj.push({type: 'text', dataId: 'sendMode', disabled: true, label: 'Modalità Invio', value: this.modalitaInvio });
+                this.fieldsObj.push({type: 'text', dataId: 'signMode', disabled: true, label: 'Modalità Firma', value: this.signMode });
+                this.fieldsObj.push({type: 'email', dataId: 'email', disabled: true, label: 'Email invio documentazione', value: this.email });
+                this.fieldsObj.push({type: 'phone', dataId: 'phone', disabled: true, label: 'Cellulare invio documentazione', value: this.phone });
+                console.log('# fieldsObj >>> ' + JSON.stringify(this.fieldsObj));
+            }    
+        }
+        else if(error)
+        {
+            console.log(JSON.stringify(error));
+        }
+    }
+
+
+
     connectedCallback(){
-        console.log('hdtAdvanceDocumentManager connectedCallback()');
+        //console.log('hdtAdvanceDocumentManager connectedCallback()');
+        console.log('# isLawEighty >>> ' + this.isLawEighty);
+        if(this.isLawEighty)
+        {
+            this.cardTitle = "Gestione Legge 80"
+            console.log('# Record Id >>> ' + this.recordId);
+            return;
+        }
         this.recordId = this.order.Id;
         this.email = this.order.Email__c;
         this.phone = this.order.PhoneNumber__c;
