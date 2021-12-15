@@ -16,7 +16,13 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
 
         HDT_UTL_OrderProcess.updatePhase(trigger.new,trigger.old);
-        
+
+        /**@frpanico 15/12/2021 
+         * DM Voltura - Aggiunto metodo 
+         * gestione del ritorno da Docusign
+         * Voltura con Switch - EE
+        */
+        HDT_UTL_OrderProcess.updatePhaseForFirm(trigger.new);
         Boolean skipForCancellation = HDT_UTL_OrderProcess.manageCancellationProcess(trigger.new,Trigger.oldMap);
         if(!skipForCancellation){
             ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))

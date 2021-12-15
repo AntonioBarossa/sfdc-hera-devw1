@@ -388,6 +388,22 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
+                            <value>Order.HDT_DocumentManager</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>In Attesa Legge 80</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.ProcessType__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Voltura con Switch</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>CustomButton.Order.HDT_Ripensamento</value>
                             <visibilityRule>
                                 <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9</booleanFilter>
@@ -524,7 +540,7 @@
                         <valueListItems>
                             <value>Order.HDT_CloneCanceledOrder</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND (3 OR 4 OR 5)</booleanFilter>
+                                <booleanFilter>1 AND (2 OR 6) AND (3 OR 4 OR 5)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>EQUAL</operator>
@@ -549,6 +565,11 @@
                                     <leftValue>{!Record.CancellationReason__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Pratica errata</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Annullato SII</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
