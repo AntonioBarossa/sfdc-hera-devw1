@@ -673,4 +673,9 @@
         <default>false</default>
         <label>Switch Out per Voltura</label>
     </standardValue>
+    <standardValue>
+        <fullName>Associazione Utente Web</fullName>
+        <default>false</default>
+        <label>Associazione Utente Web</label>
+    </standardValue>
 </StandardValueSet>
