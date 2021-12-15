@@ -349,11 +349,11 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
         for (let i = 0; i < selected.length; i++){
             //if(!this.selectedIdList.contains(selected[i].Id)){
-                console.log("You selected: " + JSON.stringify(selected[i]));
+                //console.log("You selected: " + JSON.stringify(selected[i]));
                 this.selectedIdList.push(selected[i].Id);
             //}
         }
-        console.log('>>>> selectedIdList ' + JSON.stringify(this.selectedIdList));
+        //console.log('>>>> selectedIdList ' + JSON.stringify(this.selectedIdList));
     }
 
     confirmSelected(event){
