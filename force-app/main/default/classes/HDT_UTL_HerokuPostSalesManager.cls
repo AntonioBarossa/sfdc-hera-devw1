@@ -443,8 +443,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             updateFuture(JSON.serialize(currentCase));
             return caseUpdate;
         }else if (method.equalsIgnoreCase('AggiornaAppuntamento')){
+            currentCase.Id = recordId;
             HDT_SRV_AppointmentAgenda agendaService = new HDT_SRV_AppointmentAgenda();
-            agendaService.handleAppointmentUpdate(reqWrp.requestMap);
+            Map<String,String> clonedRequestMap = reqWrp.requestMap.clone();
+            clonedRequestMap.put('PROCESS_CATEGORY','postsales');
+            String responseMethod = agendaService.handleAppointmentUpdate(clonedRequestMap);
+            if (String.isNotEmpty(responseMethod)){
+                throw new HDT_UTL_RichPassException(responseMethod);
+            }
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
         }

@@ -61,11 +61,27 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                         }
                     }
-                    if (mapRequestFields.get('METHOD')!= null){
+                    if (mapRequestFields.get('METHOD')!= null && mapRequestFields.get('METHOD').equalsIgnoreCase('AggiornaAppuntamento')){
                         HDT_SRV_AppointmentAgenda agendaService = new HDT_SRV_AppointmentAgenda();
-                        agendaService.handleAppointmentUpdate(mapRequestFields);
-                    }
-                    if(mapRequestFields.get('RECORD_ID')!= null && mapRequestFields.get('FASE')!= null){
+                        Map<String,String> clonedMapRequestFields = mapRequestFields.clone();
+                        try{
+                            clonedMapRequestFields.put('PROCESS_CATEGORY','');
+                            for (HDT_WRP_MrrRequest.HDT_WRP_Field field : header.fields){
+                                if (field.name.equals('PROCESS_CATEGORY')){
+                                    clonedMapRequestFields.put(field.name,field.value);
+                                }
+                            }
+                        }catch (Exception e){
+                            throw new HDT_WS_MrrRequest.CustomMessageException(e.getMessage());
+                        }
+                        String responseMethod = agendaService.handleAppointmentUpdate(clonedMapRequestFields);
+                        if (String.isNotEmpty(responseMethod)){
+                            throw new HDT_WS_MrrRequest.CustomMessageException(responseMethod);
+                        }
+                        responseField.fieldType = 'TEXT';
+                    	responseField.name = 'ESITO';
+                    	responseField.value = 'OK';
+                    }else if(mapRequestFields.get('RECORD_ID')!= null && mapRequestFields.get('FASE')!= null){
                         //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                         String recordId = mapRequestFields.get('RECORD_ID');
                         Order ordRetrieved;
