@@ -1549,9 +1549,9 @@
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
-        <fields>ExternalId</fields>
         <fields>FILE_NAME__c</fields>
         <fields>FILE_EXT__c</fields>
+        <fields>FILE_SIZE__c</fields>
         <fields>CREATED__c</fields>
         <relatedList>SiebelDocumentLink__x.SR_ID__c</relatedList>
         <sortField>CREATED__c</sortField>
