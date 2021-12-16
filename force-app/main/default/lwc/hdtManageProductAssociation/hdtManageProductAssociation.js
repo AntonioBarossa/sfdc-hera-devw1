@@ -40,6 +40,7 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
 
     @api recordid;
     objApiName = 'SBQQ__ProductOption__c';
+    recordData;
     productOptionObj;
     showWelcom = false;
     showSearchOffer = false;
@@ -67,13 +68,14 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
         console.log('>>> PRODUCT OPTION Id: ' + this.recordid);
     }
 
-    @wire(getRecord, { recordId: '$recordid', fields: ['Product2.Family', 'Product2.Status__c'] })
+    @wire(getRecord, { recordId: '$recordid', fields: ['Product2.Name', 'Product2.Family', 'Product2.Status__c'] })
     wiredProduct({ error, data }) {
         if (data) {
             console.log('>>> PRODUCT OPTION Family -> ' + data.fields.Family.value);
-            console.log('>>> PRODUCT OPTION  status -> ' + data.fields.Status__c.value);
+            console.log('>>> PRODUCT OPTION Status -> ' + data.fields.Status__c.value);
+            console.log('>>> PRODUCT OPTION Name -> ' + data.fields.Name.value);
             
-            var notAvailableType = ['Offerta commerciale', 'VAS Prodotto', 'VAS Servizio'];
+            var notAvailableType = ['Offerta commerciale'];//, 'VAS Prodotto', 'VAS Servizio'];
             var availableStatusForCreation = ['In Sviluppo', 'Confermata', 'Vendibile', 'Scaduta'];
             var availableStatusForDeletion = ['In Sviluppo', 'Confermata'];
 
@@ -91,6 +93,8 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
             } else {
                 this.showWelcom = true;
             }
+
+            this.recordData = data;
 
         } else if (error) {
             for(var key in error){

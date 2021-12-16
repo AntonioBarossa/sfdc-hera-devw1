@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Recesso su Richesta Cliente</value>
+        <value xsi:type="xsd:string">Recesso su Richiesta Cliente</value>
     </values>
     <values>
         <field>ServiceRequestType__c</field>

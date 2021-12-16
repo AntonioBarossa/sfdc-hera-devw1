@@ -876,15 +876,31 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     }
     // FINE @Picchiri Credit check Date 15.06.21
 
-    public static void updatePhaseForFirm(List<Order> newListOrder){
-        System.debug('********:Debug');
-       /* for(Order ord1 : newListOrder){
-            if(ord1.phase__c == 'Documentazione da firmare' && ord1.DocumentalPhase__c == 'Plico firmato'){
-                ord1.phase__c = 'Documentazione Gestita';
-                ord1.status = 'Activated';
-                ord1.SignedDate__c = date.today();
-            } 
-        }*/
+    public static void updatePhaseForFirm(List<Order> newListOrder)
+    {
+        /*@frpanico 15/12/2021
+        * DM Voltura - Aggiunta gestione ritorno da Docusign
+        * per la Voltura Con Switch Ele nel caso di firma OTP
+        */
+        for(Order order: newListOrder)
+        {
+            if(order.ProcessType__c != null && order.ProcessType__c.equalsIgnoreCase('Voltura Con Switch')
+                && order.Commodity__c != null && order.Commodity__c.equalsIgnoreCase('Energia Elettrica')
+                && order.SignatureMethod__c != null && order.SignatureMethod__c.containsIgnoreCase('OTP'))
+            {
+                /**@frpanico 15/12/2021
+                 * Aggiunto controllo su Tecnical Phase 
+                 * Per non far girare al secondo passaggio il metodo
+                 * Verificato che la callout viene innescata
+                 */
+                if(order.DocumentalPhase__c != null && order.DocumentalPhase__c.equalsIgnoreCase('Plico firmato') 
+                    && order.Phase__c != null && order.Phase__c.equalsIgnoreCase('In Attesa Legge 80')
+                    && order.TecnicalPhase__c == null)
+                {
+                    order.Phase__c = 'Comunicazione verso Heroku';
+                }
+            }
+        }
     }
 
 
@@ -914,7 +930,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     activities = orderQr .getOpenActivitiesByOrderId(orderNew.Id);
                     for(wrts_prcgvr__Activity__c activity : activities)
                     {
-                        activity.wrts_prcgvr__Status__c = 'Completed';
+                        activity.wrts_prcgvr__Status__c = 'Chiusa';
                     }
                     HDT_UTL_DatabaseService.updateSObject(activities);
                 }

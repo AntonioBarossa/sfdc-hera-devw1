@@ -83,6 +83,16 @@
                 <default>false</default>
                 <label>Scartata</label>
             </value>
+            <value>
+                <fullName>Modifica confermata</fullName>
+                <default>false</default>
+                <label>Modifica confermata</label>
+            </value>
+            <value>
+                <fullName>Modifica appuntamento in corso</fullName>
+                <default>false</default>
+                <label>Modifica appuntamento in corso</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

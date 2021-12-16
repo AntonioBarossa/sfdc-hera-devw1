@@ -60,6 +60,10 @@
     <custom>false</custom>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_AppointmentSetting__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_Request_Servizi_Q01Q02__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -237,6 +241,10 @@
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_SelfReadings__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_SolSystemUser__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
@@ -5004,6 +5012,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.SecondaryContact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Interaction__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6680,11 +6693,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Priority</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.Priority__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

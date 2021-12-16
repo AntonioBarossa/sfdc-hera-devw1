@@ -122,6 +122,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                         WorkGroup__c = queue.Group__c,
                         AssigneeType__c = 'Coda',
                         Queue__c = queue.Id,
+                        AssignedToQueueDate__c = Date.today(),
                         RuleChosenQueue__c = queue.Id,
                         OwnerId = (Id) queue.QueueId__c
                     );
@@ -163,7 +164,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     
     private Map<String,Decimal> getQueueUsageMap() {
         Map<String,Decimal> queueUsageMap = new Map<String,Decimal>();
-        for(AggregateResult count : [SELECT COUNT(Id), Queue__c FROM wrts_prcgvr__Activity__c WHERE Queue__c != null AND CreatedDate = TODAY GROUP BY Queue__c]) {
+        for(AggregateResult count : [SELECT COUNT(Id), Queue__c FROM wrts_prcgvr__Activity__c WHERE Queue__c != null AND AssignedToQueueDate__c = TODAY GROUP BY Queue__c]) {
             queueUsageMap.put((String) count.get('Queue__c'), (Decimal) count.get('expr0'));
         }
         return queueUsageMap;
@@ -172,7 +173,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     public String getQuery(AssignmentRule__c rule) {
         Map<String,Object> ruleMap = rule.getPopulatedFieldsAsMap();
         // INITIALIZING QUERY'S STATIC PART
-        List<String> query = new List<String> {'SELECT Id, wrts_prcgvr__Priority__c FROM wrts_prcgvr__Activity__c WHERE Queued__c = false AND ManuallyReassigned__c = false AND wrts_prcgvr__Priority__c != null AND wrts_prcgvr__Status__c IN (\'Not Started\', \'Aperta\')'};
+        List<String> query = new List<String> {'SELECT Id, wrts_prcgvr__Priority__c FROM wrts_prcgvr__Activity__c WHERE Queued__c = false AND ManuallyReassigned__c = false AND wrts_prcgvr__Priority__c != null AND wrts_prcgvr__Status__c IN (\'Aperta\')'};
         String mapping;
         String value;
         String condition;

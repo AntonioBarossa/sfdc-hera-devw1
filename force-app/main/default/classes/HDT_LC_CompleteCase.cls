@@ -36,7 +36,7 @@ public with sharing class HDT_LC_CompleteCase {
                 if (cs.Phase__c != 'In Lavorazione') {
                     return 'Il case deve essere "In Lavorazione" per procedere con la chiusura';
                 }
-                if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__Status__c == 'Completed' ){
+                if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__Status__c == 'Chiusa' ){
                     Case caseToUpdate = new Case();
                     caseToUpdate.id = cs.Id;
                     caseToUpdate.Status = 'Closed';
@@ -44,7 +44,7 @@ public with sharing class HDT_LC_CompleteCase {
                     caseSrv.updateRecord(caseToUpdate);
                     return 'success';
                 }
-                else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__Status__c != 'Completed'){
+                else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__Status__c != 'Chiusa'){
                     return 'Per poter chiudere il case, l\'activity  deve essere in stato "Completato"';
                 } else {
                     return 'Il case non ha un activity associato';
