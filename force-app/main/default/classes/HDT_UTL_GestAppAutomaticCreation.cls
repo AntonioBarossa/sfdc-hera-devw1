@@ -1,7 +1,7 @@
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_prcgvr.Interfaces_1_0.IApexAction{
     
-    Map<String,Map<String,Boolean>> mapDistributorProcess = new Map<String,Map<String,Boolean>>
+    /* Map<String,Map<String,Boolean>> mapDistributorProcess = new Map<String,Map<String,Boolean>>
     { 'SubentrosuGdMchiuso' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
     'Attivazione' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
     'PrimaAttivazione' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
@@ -20,7 +20,7 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_
     'Sost.Contatorec/cliente' => new Map<String,Boolean>{'InRete' => true},
     'VerificadatialDL' => new Map<String,Boolean>{'InRete' => true}
 
-    };
+    }; */
     HDT_Qr_RecordType rcQr =  new  HDT_Qr_RecordType();
     HDT_SRV_ActivityCustom actSrv = new  HDT_SRV_ActivityCustom();
     global Object execute(Object args) {
@@ -32,8 +32,8 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_
         List<Order> ordList = [Select id,Sale__r.SalesContact__c,servicePoint__c,AccountId,ServicePoint__r.CommoditySector__c,ServicePoint__r.distributor__r.name from order where id =:idObject WITH SECURITY_ENFORCED];
         if(ordList != null && !ordList.isEmpty()){
             Order ord = ordList[0];
-            if('Gas'.equalsIgnoreCase(ord.ServicePoint__r.CommoditySector__c) && mapDistributorProcess.get(method) != null ){
-                boolean isAtoa = mapDistributorProcess.get(method).get(ord.ServicePoint__r.distributor__r.name) != null ? true : false;
+            HDT_AppointmentSetting__mdt conf = HDT_UTL_AppointmentSetting.getAtoaFlag(method, ord.ServicePoint__r.distributor__r.name, ord.ServicePoint__r.CommoditySector__c);
+            if(conf != null){
                 id rec = rcQr.getRecordTypeIdByName('HDT_RT_DistributorAppointment');
                 wrts_prcgvr__Activity__c w = new wrts_prcgvr__Activity__c();
                 w.order__c = ord.id;
@@ -41,7 +41,7 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_
                 w.servicePoint__c = ord.ServicePoint__c;
                 w.account__c = ord.AccountId;
                 w.contact__c = ord.Sale__r.SalesContact__c ;
-                w.isAtoa__c = isAtoa;
+                w.isAtoa__c = conf.Flag__c;
                 w.recordtypeid = rec;
                 w.wrts_prcgvr__Status__c = 'Creata';
 

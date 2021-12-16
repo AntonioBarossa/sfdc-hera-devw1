@@ -356,7 +356,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             type: 'Validazione Vocal Order'
         }).then(result => {
             console.log('*********2:' + JSON.stringify(result));
-            if(result != undefined && result != null && result.length > 0 && result[0].wrts_prcgvr__Status__c == 'Completed' && result[0].Validation__c == 'Si'){
+            if(result != undefined && result != null && result.length > 0 && result[0].wrts_prcgvr__Status__c == 'Chiusa' && result[0].Validation__c == 'Si'){
                 this.isVocalAndActivityNotClose = false;
             }
         })

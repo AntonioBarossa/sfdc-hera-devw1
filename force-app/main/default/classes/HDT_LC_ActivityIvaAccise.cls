@@ -11,7 +11,7 @@ public with sharing class HDT_LC_ActivityIvaAccise {
     public static void saveActivity(wrts_prcgvr__Activity__c act,boolean closeActivity){
         system.debug('********::' + act);
         if(closeActivity){
-            act.wrts_prcgvr__Status__c = 'Completed';
+            act.wrts_prcgvr__Status__c = 'Chiusa';
             act.ageing__c =  ((system.today()).daysBetween(Date.valueOf(act.CreatedDate)))*-1;
             act.CompletationDateDocument__c = system.today();
         }
@@ -35,7 +35,7 @@ public with sharing class HDT_LC_ActivityIvaAccise {
         try{
             wrts_prcgvr__Activity__c w = new wrts_prcgvr__Activity__c();
             w.id = actid;
-            w.wrts_prcgvr__Status__c = 'Not Started';
+            w.wrts_prcgvr__Status__c = 'Aperta';
             activitySRV.updateRecord(w);
             return true;
         }catch(Exception e){

@@ -21,7 +21,21 @@
             </lightning-button-group>
         </div>
 
-        <div class="slds-card__body slds-card__body_inner" style="height: 80vh;" >
+        <div class="slds-card__body slds-card__body_inner"  ><!--style="height: 80vh;"-->
+
+            <!-- child Name -->
+            <div class="slds-section slds-is-open slds-border_top slds-m-top_small slds-m-bottom_small">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-truncate slds-p-horizontal_small" title="subtitle">{subtitle}</span>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content">
+                    <div class=" slds-m-left_small">
+                        <lightning-pill class="my-pill" label={recordName}>
+                            <lightning-icon icon-name={icon} alternative-text={icon}></lightning-icon>
+                        </lightning-pill>
+                    </div>
+                </div>
+            </div>
 
             <div class="slds-section slds-is-open slds-border_top slds-border_bottom slds-m-top_small slds-m-bottom_small">
                 <h3 class="slds-section__title slds-theme_shade">
@@ -69,17 +83,17 @@
 
                         <div class="slds-grid slds-wrap slds-grid_align-center">
                             <!-- Filter Button -->
-                            <div class="slds-col slds-size_1-of-12 slds-m-left_small">
-                                <div class="slds-m-bottom_small">
+                            <div class="slds-col slds-size_2-of-9 slds-m-left_small">
+                                <div class="slds-m-bottom_small slds-align_absolute-center">
                                     <lightning-button label="Applica filtro" name="applyFilter" onclick={applyFilter} variant="neutral" icon-name="utility:search"></lightning-button>
                                 </div>
                             </div>
                             <!-- counter -->
-                            <div class="slds-col slds-size_1-of-12">
-                              <div if:true={showResultTable} class="slds-text-heading_small slds-border_bottom" >{counterText}{counter}</div>
+                            <div class="slds-col slds-size_2-of-9">
+                              <div if:true={showResultTable} class="slds-text-heading_small slds-border_bottom slds-m-left_large" >{counterText}{counter}</div>
                             </div>
                             <!-- Pagination buttons -->
-                            <div if:true={showPagination} class="slds-col slds-size_2-of-12 slds-m-left_large">
+                            <div if:true={showPagination} class="slds-col slds-size_2-of-9 slds-m-left_large">
                                 <lightning-button-group>
                                     <template if:true={hasPrev}>
                                             <lightning-button icon-name="utility:jump_to_left"
@@ -144,7 +158,7 @@
                     <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
                 </div>
 
-                <div if:false={showResultTable} class="slds-box" >
+                <div if:false={showResultTable} class="slds-box" style="height: 60vh;" >
                     <c-hdt-custom-illustration
                         message={illustrationMessage}
                         style-class="slds-text-heading_large"
@@ -155,7 +169,7 @@
                     <h3 class="slds-section__title slds-theme_shade">
                         <span class="slds-truncate slds-p-horizontal_small" title="filtro">{sectionTitle}</span>
                     </h3>
-                    <div if:false={spinner} aria-hidden="false" class="slds-section__content slds-border_bottom" style="height: 50vh;">
+                    <div if:false={spinner} aria-hidden="false" class="slds-section__content slds-border_bottom" style="height: 40vh;">
 
                         <lightning-datatable
                                 key-field="Id"
@@ -165,11 +179,8 @@
                                 selected-rows={selectedIdList}
                         ></lightning-datatable>
                     
-                    
                     </div>
-                    
-                </div> 
-        
+                </div>
         </div>
 
     </lightning-card>

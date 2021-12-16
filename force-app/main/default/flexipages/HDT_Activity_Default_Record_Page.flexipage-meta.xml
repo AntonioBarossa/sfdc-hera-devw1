@@ -13,7 +13,7 @@
                                 <criteria>
                                     <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                                     <operator>NE</operator>
-                                    <rightValue>Completed</rightValue>
+                                    <rightValue>Chiusa</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
@@ -163,42 +163,6 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
-                        <valueListItems>
-                            <value>wrts_prcgvr__Activity__c.HDT_ManageAppoinment</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Presa Appuntamento</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>HDT_RT_DistributorAppointment</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.isAtoA__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.AppointmentCompetence__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Vendita</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Annullata</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.isSelfAppointment__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>false</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -332,7 +296,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -375,7 +339,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -418,7 +382,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -581,7 +545,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -603,7 +567,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -625,7 +589,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -647,7 +611,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -664,7 +628,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
@@ -691,7 +655,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -726,6 +690,39 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>hdtAppointmentHandler</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Presa Appuntamento</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_DistributorAppointment</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.isAtoA__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.AppointmentCompetence__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Distributore</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Annullata</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>hdtAccountSelector</componentName>
@@ -780,7 +777,7 @@
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
+                        <rightValue>Chiusa</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>

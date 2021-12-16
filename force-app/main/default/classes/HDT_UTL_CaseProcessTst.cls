@@ -42,7 +42,7 @@ public with sharing class HDT_UTL_CaseProcessTst {
         insert child;
 
         List<wrts_prcgvr__Activity__c> myActivityList = HDT_UTL_DataFactoryTst.createActivityCustom(1, true, accList[0].Id);
-        myActivityList[0].wrts_prcgvr__Status__c  = 'Not Started';
+        myActivityList[0].wrts_prcgvr__Status__c  = 'Aperta';
         myActivityList[0].Case__c = child.Id;
         update myActivityList;
 

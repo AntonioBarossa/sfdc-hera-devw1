@@ -16,7 +16,8 @@
 											IF(CONTAINS(TEXT(ProcessType__c),&apos;VAS&apos;),&apos;Nuovi Bonus Contributi VAS&apos;,
 												IF(AND(ISPICKVAL(ProcessType__c,&apos;Voltura&apos;),ISPICKVAL(Subprocess__c,&apos;Standard&apos;)),&apos;Voltura&apos;,
 													IF(AND(ISPICKVAL(ProcessType__c,&apos;Voltura&apos;),ISPICKVAL(Subprocess__c,&apos;Con Autolettura&apos;)),&apos;Voltura con autolettura&apos;,
-														IF(AND(ISPICKVAL(ProcessType__c,&apos;Voltura&apos;),ISPICKVAL(Subprocess__c,&apos;Retroattiva&apos;)),&apos;Voltura retroattiva&apos;,TEXT(ProcessType__c))))))))))))))))</formula>
+														IF(AND(ISPICKVAL(ProcessType__c,&apos;Voltura&apos;),ISPICKVAL(Subprocess__c,&apos;Retroattiva&apos;)),&apos;Voltura retroattiva&apos;,
+																	IF(AND(CONTAINS(TEXT(ProcessType__c),&apos;Voltura con Switch&apos;),CONTAINS(TEXT(Phase__c),&apos;In Attesa Legge 80&apos;)),&apos;Legge 80 Voltura con switch&apos;,TEXT(ProcessType__c)))))))))))))))))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Tipo Processo Documentale</label>
     <required>false</required>

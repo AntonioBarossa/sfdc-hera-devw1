@@ -1,7 +1,7 @@
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_UTL_GestAppAutomaticCreationCase implements wrts_prcgvr.Interfaces_1_0.IApexAction{
     
-    Map<String,Map<String,Boolean>> mapDistributorProcess = new Map<String,Map<String,Boolean>>
+    /* Map<String,Map<String,Boolean>> mapDistributorProcess = new Map<String,Map<String,Boolean>>
     { 'SubentrosuGdMchiuso' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
     'Attivazione' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
     'PrimaAttivazione' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
@@ -20,7 +20,7 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreationCase implements w
     'Sost.Contatorec/cliente' => new Map<String,Boolean>{'InRete' => true},
     'VerificadatialDL' => new Map<String,Boolean>{'InRete' => true}
 
-    };
+    }; */
    // HDT_QT_RecordType rcQr =  new  HDT_QT_RecordType();
 
     global Object execute(Object args) {
@@ -32,15 +32,15 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreationCase implements w
         HDT_QR_Case caseQr= new HDT_QR_Case();
         HDT_SRV_ActivityCustom actSrv = new  HDT_SRV_ActivityCustom();
         Case ca = CaseQr.getRecordById(idObject);
-        if('Gas'.equalsIgnoreCase(ca.ServicePoint__r.CommoditySector__c) && mapDistributorProcess.get(method) != null ){
-            boolean isAtoa = mapDistributorProcess.get(method).get(ca.ServicePoint__r.distributor__r.name) != null ? true : false;
+        HDT_AppointmentSetting__mdt conf = HDT_UTL_AppointmentSetting.getAtoaFlag(method, ca.ServicePoint__r.distributor__r.name, ca.ServicePoint__r.CommoditySector__c);
+        if (conf != null){
             id rec = rcQr.getRecordTypeIdByName('HDT_RT_DistributorAppointment');
             wrts_prcgvr__Activity__c w = new wrts_prcgvr__Activity__c();
             w.case__c = ca.id;
             w.Distributor__c = ca.servicePoint__r.distributor__c;
             w.account__c = ca.AccountId;
             w.Contact__c = ca.ContactId;
-            w.isAtoa__c = isAtoa;
+            w.isAtoa__c = conf.Flag__c;
             w.recordtypeid = rec;
             w.wrts_prcgvr__Status__c = 'Creata';
             w.ServicePoint__c = ca.ServicePoint__c;

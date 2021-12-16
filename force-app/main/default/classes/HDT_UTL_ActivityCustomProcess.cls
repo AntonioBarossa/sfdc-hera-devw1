@@ -173,7 +173,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         Set<Id> sobjsId = new Set<Id>();
         Map<Id, wrts_prcgvr__Activity__c> oldActMap = new Map<Id, wrts_prcgvr__Activity__c>(oldActList);
         for(wrts_prcgvr__Activity__c act : newActList){
-            if(act.wrts_prcgvr__Status__c=='Completed' && oldActMap.get(act.id).wrts_prcgvr__Status__c=='Not Started'){
+            if(act.wrts_prcgvr__Status__c=='Chiusa' && oldActMap.get(act.id).wrts_prcgvr__Status__c=='Aperta'){
                 sobjsId.add((ID)act.wrts_prcgvr__ObjectId__c);
             }
         }

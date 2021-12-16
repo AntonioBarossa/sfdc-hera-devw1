@@ -24,11 +24,11 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
             insert order;
 
             List<wrts_prcgvr__Activity__c> activity = HDT_UTL_DataFactoryTst.createActivityCustom(2, false, accList[0].Id);
-            activity[0].wrts_prcgvr__Status__c = 'Not Started';
+            activity[0].wrts_prcgvr__Status__c = 'Aperta';
             activity[0].Type__c = 'Sportello';
             activity[0].Order__c = order[0].Id;
             insert activity[0];
-            activity[1].wrts_prcgvr__Status__c = 'Not Started';
+            activity[1].wrts_prcgvr__Status__c = 'Aperta';
             activity[1].Type__c = 'Gestione Agenzia';
             activity[1].ParentActivity__c = activity[0].Id;
             insert activity[1];
@@ -42,7 +42,7 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
 
         }
 
-        HDT_UTL_DataFactoryTst.assignPermissionSet(currentUser, 'HDT_OmniSupervisorPermissionSet', true);
+        // HDT_UTL_DataFactoryTst.assignPermissionSet(currentUser, 'HDT_OmniSupervisorPermissionSet', true);
 
         Id profileId = HDT_UTL_DataFactoryTst.getProfileId(constantsUtl.HERA_STANDARD_USER_NAME);
         User user = HDT_UTL_DataFactoryTst.createInternalUser(profileId, false);
@@ -88,7 +88,7 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
         Test.startTest();
 
         wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c LIMIT 1];
-        String returnedValue = HDT_LC_ActivityReassignmentTool.assignToMe(activity.Id);
+        String returnedValue = HDT_LC_ActivityReassignmentTool.assignToMe(new List<String>{activity.Id});
         System.assertEquals(null, returnedValue, 'ERRORE: ' + returnedValue);
 
         Test.stopTest();
@@ -113,11 +113,11 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
         User user = [SELECT Id FROM User WHERE Name = 'FirstName 1'];
         wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE ParentActivity__c != null LIMIT 1];
         
-        String result1 = HDT_LC_ActivityReassignmentTool.reassignActivity(activity.Id, user.Id, queue.Id, 'workGroup', 'agency');
+        String result1 = HDT_LC_ActivityReassignmentTool.reassignActivity(new List<String>{activity.Id}, user.Id, queue.Id, 'workGroup', 'agency');
 
         System.assertEquals(true, String.isNotBlank(result1), 'String was not supposed to be empty');
         
-        String result2 = HDT_LC_ActivityReassignmentTool.reassignActivity(activity.Id, user.Id, queue.Id, 'workGroup', 'MATCH SRL');
+        String result2 = HDT_LC_ActivityReassignmentTool.reassignActivity(new List<String>{activity.Id}, user.Id, queue.Id, 'workGroup', 'MATCH SRL');
 
         System.assertEquals(true, String.isBlank(result2), 'String was supposed to be empty');
 

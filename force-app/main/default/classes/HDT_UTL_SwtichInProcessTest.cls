@@ -28,7 +28,6 @@ public class HDT_UTL_SwtichInProcessTest {
                 // acc.BillingStreetName__c = currentCase.BillingStreetName__c;
                 // acc.BillingStreetNumber__c = currentCase.BillingStreetNumber__c;
                 // acc.BillingStreetNumberExtension__c = currentCase.BillingStreetNumberExtension__c;
-                // acc.BillingStreetToponym__c = currentCase.BillingStreetToponym__c;
                 // objToUpdate = acc;
             
 
