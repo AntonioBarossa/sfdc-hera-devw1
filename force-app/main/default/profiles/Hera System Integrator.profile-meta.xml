@@ -31432,7 +31432,7 @@
         <recordType>Case.HDT_RT_DocCopiaContratto</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_GenericheAttivazioni</layout>
         <recordType>Case.HDT_RT_GenericheAttivazioni</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -31448,7 +31448,7 @@
         <recordType>Case.HDT_RT_PostSalesVAS</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_GenericheAttivazioni</layout>
         <recordType>Case.HDT_RT_ProrogaTemporanea</recordType>
     </layoutAssignments>
     <layoutAssignments>
