@@ -46,6 +46,11 @@ public inherited sharing class HDT_LC_CloneCanceledOrder {
             currentOrder.MaxAfterthoughtDate__c = null;
             currentOrder.WizardCompletedDate__c = null;
             currentOrder.PrecheckResultSII__c = null;
+            /*@frpanico 16/12/2021 
+            * Aggiunto devalorizzazione del campo 
+            * CancellationRequestDate__c
+            */
+            currentOrder.CancellationRequestDate__c = null;
 
             List<ServiceRequest__c> servRequests = [SELECT Id FROM ServiceRequest__c WHERE Order__c=:orderId WITH SECURITY_ENFORCED];
             if (!servRequests.isEmpty()) {
