@@ -1013,7 +1013,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Potenza impegnata',
                     'apiname': 'PowerCommitted__c',
                     'typeVisibility': this.typeVisibility('ele'),
-                    'required': true,
+                    'required': false,
                     'disabled': true,
                     'value': '',
                     'processVisibility': ''
@@ -1022,7 +1022,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Potenza disponibile',
                     'apiname': 'PowerAvailable__c',
                     'typeVisibility': this.typeVisibility('ele'),
-                    'required': true,
+                    'required': false,
                     'disabled': true,
                     'value': '',
                     'processVisibility': ''
@@ -1031,7 +1031,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Potenza richiesta',
                     'apiname': 'PowerRequested__c',
                     'typeVisibility': this.typeVisibility('ele'),
-                    'required': true,
+                    'required': false,
                     'disabled': true,
                     'value': '',
                     'processVisibility': ''
@@ -1260,7 +1260,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Codice Ateco',
                     'apiname': 'AtecoCode__c',
                     'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
+                    'required': false,
                     'disabled': true,
                     'value': '',
                     'processVisibility': ''
