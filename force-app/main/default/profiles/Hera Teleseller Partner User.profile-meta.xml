@@ -24662,6 +24662,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SaleServiceItem__c.SupplyAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Sale__c.AccountFiscalCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
