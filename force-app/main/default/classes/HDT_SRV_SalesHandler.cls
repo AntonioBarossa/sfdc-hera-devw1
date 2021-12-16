@@ -381,6 +381,12 @@ public with sharing class HDT_SRV_SalesHandler {
                                 }
                             }
                             when 'Annullamento SII - Ricezione'{
+                                /*@frpanico 16/12/2021
+                                * Aggiunta CancellationRequestDate__c
+                                * Utilizzato per la determinazione della 
+                                * Funzionalita Clona
+                                */
+                                ord.CancellationRequestDate__c = System.today();
                                 ord.CancellationReasonCode__c = mapRequestFields.get('COD_CAUSALE');
                                 ord.CancellationNote__c = mapRequestFields.get('ANNOTAZIONI_ANN');
                                 String annotazioni = ord.CancellationNote__c != null? ord.CancellationNote__c:'';
