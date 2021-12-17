@@ -27248,6 +27248,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SaleServiceItem__c.SupplyAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Sale__c.AccountFiscalCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -33461,7 +33466,7 @@
         <recordType>Case.HDT_RT_DocCopiaContratto</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_GenericheAttivazioni</layout>
         <recordType>Case.HDT_RT_GenericheAttivazioni</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -33477,7 +33482,7 @@
         <recordType>Case.HDT_RT_PostSalesVAS</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_GenericheAttivazioni</layout>
         <recordType>Case.HDT_RT_ProrogaTemporanea</recordType>
     </layoutAssignments>
     <layoutAssignments>
