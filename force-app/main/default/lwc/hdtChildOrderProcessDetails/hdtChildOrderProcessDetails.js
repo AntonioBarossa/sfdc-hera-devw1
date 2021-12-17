@@ -999,7 +999,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 // Jira 354 30/08
-                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), false, (this.order.ProcessType__c=='Prima Attivazione Ele')?false:true, '',''),
+                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), true, (this.order.ProcessType__c=='Prima Attivazione Ele')?false:true, '',''),
                 {
                     'label': 'Consumi Anno',
                     'apiname': 'AnnualConsumption__c',
@@ -1134,7 +1134,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'MaxRequiredPotential__c',
                     'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
-                    'disabled': true,
+                    'disabled': false,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1259,9 +1259,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 {
                     'label': 'Codice Ateco',
                     'apiname': 'AtecoCode__c',
-                    'typeVisibility': this.typeVisibility('both'),
+                    'typeVisibility': this.typeVisibility('gas'),
                     'required': false,
-                    'disabled': true,
+                    'disabled': false,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1316,7 +1316,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'SecurityDepositExcluded__c',
                     'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'),
                     'required': false,
-                    'disabled': true,
+                    'disabled': false,
                     'value': 'N',
                     'processVisibility': ''
                 },
@@ -1896,9 +1896,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data: [
-                    new fieldData('Flag Agevolazione IVA','VATfacilitationFlag__c',this.typeVisibility('both'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound',''),
-                    new fieldData('Flag Accise Agevolata','FacilitationExcise__c',this.typeVisibility('both'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound',''),
-                    new fieldData('IVA','VAT__c',this.typeVisibility('both'),false, true,''),
+                    new fieldData('Flag Agevolazione IVA','VATfacilitationFlag__c',this.typeVisibility('both'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || ((this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound') && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta')  ,''),
+                    new fieldData('Flag Accise Agevolata','FacilitationExcise__c',this.typeVisibility('ele'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || ((this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound') && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta') ,''),
+                    new fieldData('IVA','VAT__c',this.typeVisibility('both'),false, false,''),
                     new fieldData('Accise Agevolata Ele','ExciseEle__c',this.typeVisibility('ele'),false,true,''),
                     new fieldData('Accise Agevolata Gas','ExciseGAS__c',this.typeVisibility('gas'),false,true,''),
                     new fieldData('Aliquota Accise','ExciseRate__c',this.typeVisibility('ele'),false,true,''),
