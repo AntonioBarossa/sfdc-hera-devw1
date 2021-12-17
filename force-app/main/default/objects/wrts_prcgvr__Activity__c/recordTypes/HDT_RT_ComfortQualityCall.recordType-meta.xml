@@ -973,11 +973,11 @@
         </values>
         <values>
             <fullName>Esitata</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
         <values>
             <fullName>Non Esitata</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
     </picklistValues>
 </RecordType>
