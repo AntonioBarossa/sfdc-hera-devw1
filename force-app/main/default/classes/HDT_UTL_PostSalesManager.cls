@@ -404,14 +404,14 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         updateFuture(JSON.serialize(currentCase));
     }    
     
-    public void updateDataFineConnessione(SObject inputCase){
+    public void updateDataFineContratto(SObject inputCase){
 
         Case myCase = (Case) inputCase;
-        Order myOrder = new Order();
-        myOrder.Id = myCase.Order__c;
-        myOrder.TemporaryConnectionEndDate__c = myCase.TemporaryConnectionEndDate__c;
+        Contract myContract = new Contract();
+        myContract.Id = myCase.Contract__c;
+        myContract.EndDate = myCase.TemporaryConnectionEndDate__c;
 
-        HDT_UTL_DatabaseService.updateSObject(myOrder);
+        HDT_UTL_DatabaseService.updateSObject(myContract);
 
     }
 

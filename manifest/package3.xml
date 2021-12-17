@@ -1,33 +1,65 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Order.HDT_DocumentManager</members>
-        <name>QuickAction</name>
+        <members>HDT_Activity_Default_Record_Page</members>
+        <members>HDT_Order_Default</members>
+        <name>FlexiPage</name>
     </types>
     <types>
-        <members>SiebelCustomer__x-SiebelCustomer Layout</members>
-        <members>SiebelRdo__x-SiebelRdo Layout</members>
-        <members>SiebelRds__x-SiebelRds Layout</members>
+        <members>SaleServiceItem__c.CPQ_Lookup</members>
+        <name>FieldSet</name>
+    </types>
+    <types>
+        <members>HDT_SolSystemUser__mdt</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Case.HDT_RT_AlertDisassociazioneUtenteWeb</members>
+        <members>Case.HDT_RT_Informative</members>
+        <members>Case.HDT_RT_ProrogaTemporanea</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_ComfortQualityCall</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>Case-HDT_GenericheAttivazioni</members>
+        <members>HDT_SolSystemUser__mdt-SOL System User Layout</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_SRV_ProductAssociation</members>
+        <members>HDT_ApexClasses</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_LC_CloneCanceledOrder</members>
+        <members>HDT_QR_VoltureChangeManager</members>
+        <members>HDT_SRV_DocumentalManagement</members>
+        <members>HDT_SRV_PostSalesManager</members>
+        <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_TRH_Account</members>
+        <members>HDT_TRH_Order</members>
+        <members>HDT_UTL_Account</members>
+        <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_PostSalesManager</members>
+        <members>HDT_WRP_DocumentalRequest</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Product2.DescriptionSAP__c</members>
-        <members>SiebelDocumentLink__x.FILE_NAME__c</members>
+        <members>Case.SecondaryContact__c</members>
+        <members>HDT_SolSystemUser__mdt.SkipCaseCreation__c</members>
+        <members>HDT_SolSystemUser__mdt.UserLoginEmail__c</members>
+        <members>Order.DocumentalProcessType__c</members>
+        <members>SaleServiceItem__c.SupplyAddress__c</members>
+        <members>wrts_prcgvr__Activity__c.wrts_prcgvr__Status__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_LCP_AdvanceDocumentManager</members>
-        <name>AuraDefinitionBundle</name>
+        <members>CaseType</members>
+        <name>StandardValueSet</name>
     </types>
     <types>
+        <members>hdtActivityIvaAccise</members>
         <members>hdtAdvanceDocumentManager</members>
-        <members>hdtManageProductAssociation</members>
-        <members>hdtManageRuleAssociation</members>
-        <members>hdtProductAssociationSearchTable</members>
+        <members>hdtChildOrderProcessDetails</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
@@ -42,13 +74,8 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_MatrixCompatibilityMap.CaseType100</members>
-        <members>HDT_MatrixCompatibilityMap.CaseType99</members>
+        <members>HDT_UserInputFlow.Attivazioni_Proroga_Conn_Temp</members>
         <name>CustomMetadata</name>
-    </types>
-    <types>
-        <members>Product2.DescriptionSAP_length_30</members>
-        <name>ValidationRule</name>
     </types>
     <version>49</version>
 </Package>

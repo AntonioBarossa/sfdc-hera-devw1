@@ -10430,6 +10430,10 @@
             <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Associazione Utente Web</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>TypeInstallmentPlan__c</picklist>

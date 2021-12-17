@@ -244,6 +244,10 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_SolSystemUser__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_ServiceCatalogProfileFilter__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -4969,6 +4973,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.AccountClassCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.SecondaryContact__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -25215,6 +25224,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SaleServiceItem__c.SupplyAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Sale__c.AccountFiscalCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -31418,7 +31432,7 @@
         <recordType>Case.HDT_RT_DocCopiaContratto</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_GenericheAttivazioni</layout>
         <recordType>Case.HDT_RT_GenericheAttivazioni</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -31434,7 +31448,7 @@
         <recordType>Case.HDT_RT_PostSalesVAS</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_GenericheAttivazioni</layout>
         <recordType>Case.HDT_RT_ProrogaTemporanea</recordType>
     </layoutAssignments>
     <layoutAssignments>
