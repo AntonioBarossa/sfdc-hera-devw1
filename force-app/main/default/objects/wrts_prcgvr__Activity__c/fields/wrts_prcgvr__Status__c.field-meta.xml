@@ -93,6 +93,16 @@
                 <default>false</default>
                 <label>Modifica appuntamento in corso</label>
             </value>
+            <value>
+                <fullName>Esitata</fullName>
+                <default>false</default>
+                <label>Esitata</label>
+            </value>
+            <value>
+                <fullName>Non Esitata</fullName>
+                <default>false</default>
+                <label>Non Esitata</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

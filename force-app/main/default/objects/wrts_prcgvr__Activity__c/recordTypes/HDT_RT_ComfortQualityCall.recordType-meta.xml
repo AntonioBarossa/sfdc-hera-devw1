@@ -971,5 +971,13 @@
             <fullName>Not Started</fullName>
             <default>true</default>
         </values>
+        <values>
+            <fullName>Esitata</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Non Esitata</fullName>
+            <default>true</default>
+        </values>
     </picklistValues>
 </RecordType>
