@@ -1088,25 +1088,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Status__c</picklist>
-        <values>
-            <fullName>Chiusa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione Inviata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Creata</fullName>
-            <default>true</default>
-        </values>
-        <values>
-            <fullName>Sospesa</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Subject__c</picklist>
         <values>
             <fullName>Acceso Piattaforme documentali</fullName>
