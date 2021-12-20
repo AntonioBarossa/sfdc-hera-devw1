@@ -12,7 +12,7 @@ public inherited sharing class HDT_QR_DistributorPointCode {
 	    List<DistributorPointCode__c> listDistributorPoint = new List<DistributorPointCode__c>();
 
         accountSrv.checkReadAccess('PointCode__c,Commodity__c,Account__c,OwnerId');
-	    listDistributorPoint = [SELECT Name, PointCode__c, Commodity__c, Account__r.Name, OwnerId FROM DistributorPointCode__c WHERE (PointCode__c =: code OR PointCode__c = null) AND Commodity__c =: commodity AND IsActive__c = true AND Comune__c =: comune WITH SECURITY_ENFORCED];
+	    listDistributorPoint = [SELECT Name, PointCode__c, Commodity__c, Account__r.Name, OwnerId FROM DistributorPointCode__c WHERE (PointCode__c =: code OR PointCode__c = null) AND Commodity__c =: commodity AND IsActive__c = true AND City__c =: comune WITH SECURITY_ENFORCED];
 	    return listDistributorPoint;
     }
 }
