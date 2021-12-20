@@ -193,9 +193,8 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     public static Boolean checkFieldCoerenceSpGas(String inputFieldJson){
 
         Boolean hasCoerence = false;
-        Map<String, String> inputFieldMap = new Map<String, String>();
+        Map<String, String> inputFieldMap = (Map<String, String>) JSON.deserializeUntyped(inputFieldJson);
 
-        inputFieldMap = (Map<String, String>) JSON.deserializeUntyped(inputFieldJson);
         hasCoerence = HDT_SRV_FieldCoerenceServicePoint.checkCoerence(inputFieldMap);
 
         return hasCoerence;
