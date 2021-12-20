@@ -9584,6 +9584,46 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>FieldCoerenceServicePoint__c.AccountCategory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FieldCoerenceServicePoint__c.Commodity__c </field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FieldCoerenceServicePoint__c.ImplantType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FieldCoerenceServicePoint__c.IsActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FieldCoerenceServicePoint__c.SupplyType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FieldCoerenceServicePoint__c.UseCategory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FieldCoerenceServicePoint__c.WithdrawalClass__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FieldCoerenceServicePoint__c.Taxes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>FUBProcessingItem__c.Campaign__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -24738,6 +24778,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SaleServiceItem__c.SupplyAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Sale__c.AccountFiscalCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -30180,11 +30225,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.Status__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ContactName__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -31142,7 +31182,7 @@
         <recordType>Case.HDT_RT_DocCopiaContratto</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_GenericheAttivazioni</layout>
         <recordType>Case.HDT_RT_GenericheAttivazioni</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -31158,7 +31198,7 @@
         <recordType>Case.HDT_RT_PostSalesVAS</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_GenericheAttivazioni</layout>
         <recordType>Case.HDT_RT_ProrogaTemporanea</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -31939,6 +31979,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>DiscardAnnullmentRule__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>FieldCoerenceServicePoint__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
