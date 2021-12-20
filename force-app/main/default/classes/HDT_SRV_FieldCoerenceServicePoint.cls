@@ -5,16 +5,16 @@
         
 public class HDT_SRV_FieldCoerenceServicePoint {
 
-    public static Boolean checkCoerence(Map<String, String> inputFieldMap){
+    public static Boolean checkCoerence(Map<String, Object> inputFieldMap){
 
         Boolean retVal = false;
-        String catCliente = inputFieldMap.get('CategoriaCliente');
-        String tipoFornitura = inputFieldMap.get('TipoFornitura');
-        String tipoImpianto = inputFieldMap.get('TipoImpianto');
-        String servizio = inputFieldMap.get('Servizio');
-        String profPrelievo = inputFieldMap.get('ProfiloPrelievo');
-        String catUso = inputFieldMap.get('CategoriaUso');
-        String imposta = inputFieldMap.get('Imposta');
+        String catCliente = (String) inputFieldMap.get('CategoriaCliente');
+        String tipoFornitura = (String) inputFieldMap.get('TipoFornitura');
+        String tipoImpianto = (String) inputFieldMap.get('TipoImpianto');
+        String servizio = (String) inputFieldMap.get('Servizio');
+        String profPrelievo = (String) inputFieldMap.get('ProfiloPrelievo');
+        String catUso = (String) inputFieldMap.get('CategoriaUso');
+        String imposta = (String) inputFieldMap.get('Imposta');
         String fields = 'Id';
         String conditions = 'AccountCategory__c = \'' +catCliente +'\' AND SupplyType__c = \'' +tipoFornitura +'\' AND ImplantType__c = \'' +tipoImpianto +'\' AND Commodity__c = \'' +servizio +'\' AND IsActive__c = true';
         List<FieldCoerenceServicePoint__c> fieldCoerenceList = new List<FieldCoerenceServicePoint__c>();
