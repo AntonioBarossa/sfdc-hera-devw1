@@ -242,4 +242,65 @@ public with sharing class HDT_UTL_Account {
         return varIso;
         
     }
+
+    public static String transcodeCustomerCategory(String category){
+        String categoryCode = '';
+
+        switch on category {
+            when 'Famiglie' {
+                categoryCode = 'Z001';
+            }
+            when 'Aziende Soho' {
+                categoryCode = 'Z002';
+            }
+            when 'Aziende SME' {
+                categoryCode = 'Z003';
+            }
+            when 'Enti' {
+                categoryCode = 'Z004';
+            }
+            when 'Grandi Condomini' {
+                categoryCode = 'Z005';
+            }
+            when 'Intercompany' {
+                categoryCode = 'Z006';
+            }
+            when 'Salvaguardia Aziende' {
+                categoryCode = 'Z007';
+            }
+            when 'Salvaguardia Enti' {
+                categoryCode = 'Z009';
+            }
+            when 'Aziende TOP' {
+                categoryCode = 'Z010';
+            }
+            when 'Piccoli Condomini' {
+                categoryCode = 'Z011';
+            }
+            when 'Societa Vendita Terze' {
+                categoryCode = 'Z012';
+            }
+            when 'Default gas' {
+                categoryCode = 'Z013';
+            }
+            when 'Comuni Territorio' {
+                categoryCode = 'Z016';
+            }
+            when 'FUI domestico' {
+                categoryCode = 'Z019';
+            }
+            when 'FUI non domestico' {
+                categoryCode = 'Z020';
+            }
+            when 'Reseller - Gruppo' {
+                categoryCode = 'Z030';
+            }
+            when 'Reseller - Extra Gruppo' {
+                categoryCode = 'Z031';
+            }
+        }
+
+        return categoryCode;
+    }
+
 }
