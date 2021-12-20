@@ -29,7 +29,7 @@ public with sharing class HDT_SRV_ScriptManagerTst {
         ordListChild[0].CommercialProductCode__c = 'TEST_OFFER_1';
         insert ordListChild;
         List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1, false, accList[0].id);
-        actList[0].SuspensionDueDate__c = system.now().addDays(1); 
+        actList[0].SuspensionDueDate__c = System.now().addDays(1).date(); 
         actList[0].wrts_prcgvr__Status__c = 'Sospesa'; 
         actList[0].Type__c = 'Quality Call'; 
         actList[0].RecordTypeDevName__c  = 'HDT_RT_Scarto';

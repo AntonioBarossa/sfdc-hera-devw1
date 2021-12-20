@@ -14,13 +14,15 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
  
         List<Account> listAcc = (List<Account>)trigger.new;
         for (Account tempAcc : listAcc) {
+            if (String.isNotBlank(tempAcc.Category__c) && String.isBlank(tempAcc.CategoryCode__c)) {
+                tempAcc.CategoryCode__c = HDT_UTL_Account.transcodeCustomerCategory(tempAcc.Category__c);
+            }
             if (!tempAcc.IsMigrated__c ) { //? viene specificato che non deve essere effettuata la modifica per i clienti migrati Bolzon
                 tempAcc.CustomerAccountStatus__c='Prospect';
             }
             if (tempAcc.recordtypeId==accRecordTypeResId && listDeniedRes.contains(tempAcc.CustomerMarking__c) ) {
              tempAcc.addError('Il valore selezionato per "Marcatura" non è coerente con il tipo di record selezionato');
             }
-       
             else if (tempAcc.recordtypeId==accRecordTypeBusId && listDeniedBus.contains(tempAcc.CustomerMarking__c) ) {
                  tempAcc.addError('Il valore selezionato per "Marcatura" non è coerente con il tipo di record selezionato');
             }
