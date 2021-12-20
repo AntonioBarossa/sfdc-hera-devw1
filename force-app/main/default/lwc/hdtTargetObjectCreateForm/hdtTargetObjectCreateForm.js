@@ -1136,10 +1136,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 checkFieldMap['CategoriaUso'] = this.allSubmitedFields['UseCategory__c'];
                 checkFieldMap['Imposta'] = imposta;
 
-                let checkFieldJson = JSON.stringify(checkFieldMap);
-
                 checkFieldCoerenceSpGas({
-                    inputFieldJson : checkFieldJson
+                    inputFieldMap : checkFieldMap
                 })
                 .then(hasCoerence => {
                     if(!hasCoerence){
