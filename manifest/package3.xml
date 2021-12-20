@@ -1,66 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_Activity_Default_Record_Page</members>
-        <members>HDT_Order_Default</members>
-        <name>FlexiPage</name>
-    </types>
-    <types>
-        <members>SaleServiceItem__c.CPQ_Lookup</members>
-        <name>FieldSet</name>
-    </types>
-    <types>
-        <members>HDT_SolSystemUser__mdt</members>
+        <members>FieldCoerenceServicePoint__c</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>Case.HDT_RT_AlertDisassociazioneUtenteWeb</members>
-        <members>Case.HDT_RT_Informative</members>
-        <members>Case.HDT_RT_ProrogaTemporanea</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Call</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_ChiamataOutbound</members>
         <members>wrts_prcgvr__Activity__c.HDT_RT_ComfortQualityCall</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_CommunicationReject</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Default</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationAccountLead</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationCase</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationGeneric</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationInteraction</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationOpportunity</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationOrder</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_GestioneIvaAccise</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_RegisterActivity</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Scarto</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Sportello</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_ValidazioneDocumentale</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_VisitaD2D</members>
         <name>RecordType</name>
     </types>
     <types>
-        <members>Case-HDT_GenericheAttivazioni</members>
-        <members>HDT_SolSystemUser__mdt-SOL System User Layout</members>
-        <name>Layout</name>
-    </types>
-    <types>
-        <members>HDT_ApexClasses</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>HDT_LC_CloneCanceledOrder</members>
-        <members>HDT_QR_VoltureChangeManager</members>
-        <members>HDT_SRV_DocumentalManagement</members>
-        <members>HDT_SRV_PostSalesManager</members>
-        <members>HDT_SRV_SalesHandler</members>
-        <members>HDT_TRH_Account</members>
-        <members>HDT_TRH_Order</members>
-        <members>HDT_UTL_Account</members>
-        <members>HDT_UTL_OrderProcess</members>
-        <members>HDT_UTL_PostSalesManager</members>
-        <members>HDT_WRP_DocumentalRequest</members>
+        <members>HDT_BA_SuspendedActivitiesEmailAlertTst</members>
+        <members>HDT_SRV_ScriptManagerTst</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Case.SecondaryContact__c</members>
-        <members>HDT_SolSystemUser__mdt.SkipCaseCreation__c</members>
-        <members>HDT_SolSystemUser__mdt.UserLoginEmail__c</members>
-        <members>Order.DocumentalProcessType__c</members>
-        <members>SaleServiceItem__c.SupplyAddress__c</members>
-        <members>wrts_prcgvr__Activity__c.wrts_prcgvr__Status__c</members>
+        <members>HDT_Taxes</members>
+        <name>GlobalValueSet</name>
+    </types>
+    <types>
+        <members>DistributorPointCode__c.City__c</members>
+        <members>FieldCoerenceServicePoint__c.AccountCategory__c</members>
+        <members>FieldCoerenceServicePoint__c.Commodity__c</members>
+        <members>FieldCoerenceServicePoint__c.ImplantType__c</members>
+        <members>FieldCoerenceServicePoint__c.IsActive__c</members>
+        <members>FieldCoerenceServicePoint__c.SupplyType__c</members>
+        <members>FieldCoerenceServicePoint__c.Taxes__c</members>
+        <members>FieldCoerenceServicePoint__c.UseCategory__c</members>
+        <members>FieldCoerenceServicePoint__c.WithdrawalClass__c</members>
+        <members>wrts_prcgvr__Activity__c.SuspensionDueDate__c</members>
         <name>CustomField</name>
-    </types>
-    <types>
-        <members>CaseType</members>
-        <name>StandardValueSet</name>
-    </types>
-    <types>
-        <members>hdtActivityIvaAccise</members>
-        <members>hdtAdvanceDocumentManager</members>
-        <members>hdtChildOrderProcessDetails</members>
-        <name>LightningComponentBundle</name>
     </types>
     <types>
         <members>Admin</members>
@@ -74,8 +62,12 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_UserInputFlow.Attivazioni_Proroga_Conn_Temp</members>
-        <name>CustomMetadata</name>
+        <members>HDT_FL_PostSalesMasterDispatchSales</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>wrts_prcgvr__Activity__c.HDT_VR_PastDate_DataScadenzaSospensione</members>
+        <name>ValidationRule</name>
     </types>
     <version>49</version>
 </Package>
