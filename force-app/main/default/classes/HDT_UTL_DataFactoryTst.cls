@@ -521,6 +521,33 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return servPointList;
 	}
 
+	/*
+		@Author:        Edoardo Zanatta
+		CreatedDate:    14/12/2021
+	*/
+	public static List<FieldCoerenceServicePoint__c> createFieldCoerenceServicePoint(Integer amount, Boolean doInsert, String commodity){
+
+		List<FieldCoerenceServicePoint__c> fieldCoerenceSpList=new List<FieldCoerenceServicePoint__c>();
+
+		for(Integer i=0; i<amount; i++){
+			
+			FieldCoerenceServicePoint__c fieldCsp = new FieldCoerenceServicePoint__c();
+
+			fieldCsp.Name = 'fieldCSPTest'+i;
+			fieldCsp.Commodity__c = commodity;
+			
+			fieldCoerenceSPList.add(fieldCsp);
+		}
+
+		if (doInsert){
+
+			insert fieldCoerenceSpList;
+		}
+
+		return fieldCoerenceSpList;
+	}
+
+
 	public static List<Contact> createContact(Integer amount, Boolean doInsert, Id accId){
 
 		List<Contact> contactList=new List<Contact>();
