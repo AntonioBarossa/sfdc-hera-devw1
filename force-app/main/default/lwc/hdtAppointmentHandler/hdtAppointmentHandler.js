@@ -23,17 +23,7 @@ export default class HdtAppointmentHandler extends LightningElement{
     showForm = false;
     hasRendered = false;
     @api isCommunity = false;
-    /* isCommunity = false; */
     @api recordId;
-
-    /* @wire(CurrentPageReference)
-    getStateParameters(currentPageReference) {
-        if (currentPageReference && currentPageReference.state.c__activityId) {
-            this.recordId = currentPageReference.state.c__activityId;
-            this.isCommunity = true;
-        }
-    } */
-
 
     @track tempList = [
         {label: 'Prendi Appuntamento ', name: 'newDate', iconName: 'utility:retail_execution', desc: 'Prendi un nuovo appuntamento con il DL', enable : false, visible : false},
