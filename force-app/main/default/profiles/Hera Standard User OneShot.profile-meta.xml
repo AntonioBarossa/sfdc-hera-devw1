@@ -13462,7 +13462,12 @@
         <field>wrts_prcgvr__Activity__c.CalledNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.CryptoActivityId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.AppointmentOutcome__c</field>
         <readable>true</readable>
