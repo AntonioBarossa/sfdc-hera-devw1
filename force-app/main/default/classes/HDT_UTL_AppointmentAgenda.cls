@@ -76,7 +76,13 @@ public with sharing class HDT_UTL_AppointmentAgenda {
 
     public static wrts_prcgvr__Activity__c getActivity(Id activityId,String fields){
         String objectName = 'wrts_prcgvr__Activity__c';
-        List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords(fields, objectName, 'Id = \''+activityId+'\'');
+        List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords(fields, objectName, 'Id = \''+String.escapeSingleQuotes(activityId)+'\'');
+        return (wrts_prcgvr__Activity__c)activities[0];
+    }
+
+    public static wrts_prcgvr__Activity__c getCryptoActivity(String cryptedId,String fields){
+        String objectName = 'wrts_prcgvr__Activity__c';
+        List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords(fields, objectName, 'CryptoActivityId__c = \''+String.escapeSingleQuotes(cryptedId)+'\'');
         return (wrts_prcgvr__Activity__c)activities[0];
     }
 
@@ -271,6 +277,25 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         return response;
     }
 
+    public static void setContactData(wrts_prcgvr__Activity__c activity,Contact cont){
+        if (cont != null){
+            String fiscalCode = (cont.FiscalCode__c != null && cont.FiscalCode__c.startsWithIgnoreCase('it'))? cont.FiscalCode__c.substring(2) : cont.FiscalCode__c;
+            if (String.isNotBlank(fiscalCode) && fiscalCode.isNumeric()){
+                activity.VATNumber__c = fiscalCode;
+            }else{
+                activity.VATNumber__c = (String.isNotBlank(cont.VATNumber__c) && cont.VATNumber__c.startsWithIgnoreCase('it'))? cont.VATNumber__c.substring(2) : cont.VATNumber__c;
+                activity.FiscalCode__c = cont.FiscalCode__c;
+            }
+        }
+    }
+
+    public static Blob criptId(Id idToCript){
+        Blob key = Crypto.generateAesKey(128);
+        Blob data = Blob.valueOf((String)idToCript);
+        System.debug('original Blob -->' +JSON.serialize(data));
+        return Crypto.encryptWithManagedIV('AES128', key, data);
+    }
+    
     private static String formatDate(String dateToWork){
         String newDate = dateToWork;
         if (String.isNotEmpty(dateToWork) && Pattern.matches('(0?[1-9]|[1-2][0-9]|[3][0-1])[//](0?[1-9]|[1][0-2])[//]\\d{4}', newDate)){

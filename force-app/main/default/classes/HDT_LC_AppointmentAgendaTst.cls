@@ -131,6 +131,18 @@ public with sharing class HDT_LC_AppointmentAgendaTst {
     }
 
     @IsTest
+    public static void executeCheckCryptId(){
+        String methodName = 'executeGetEncryptedIdy: ';
+        wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
+        Test.startTest();
+            String encryptedId = HDT_LC_AppointmentAgenda.getEncryptedId(activity.Id);
+            String activityJson = HDT_LC_AppointmentAgenda.getDecryptedId(encryptedId,new List<String>{'Id'});
+            wrts_prcgvr__Activity__c retrievedActivity = (wrts_prcgvr__Activity__c) JSON.deserialize(activityJson,wrts_prcgvr__Activity__c.class);
+            System.assertEquals(activity.Id, retrievedActivity.Id, methodName +'La decodifica non ha funzionato');
+        Test.stopTest();
+    }
+
+    @IsTest
     public static void executeErrorCall(){
         String methodName = 'executeHandleCancellationError: ';
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];

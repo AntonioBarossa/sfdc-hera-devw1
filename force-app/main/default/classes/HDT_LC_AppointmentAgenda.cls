@@ -56,4 +56,26 @@ public with sharing class HDT_LC_AppointmentAgenda {
         return response;
     }
 
+    @AuraEnabled
+    public static String getEncryptedId(String activityId) {
+        String response = '';
+        try{
+            response = srvAgenda.criptId(activityId);
+        }catch (exception e){
+            throw new AuraHandledException(e.getMessage());
+        }
+        return response;
+    }
+
+    @AuraEnabled
+    public static String getDecryptedId(String cryptedId,List<String> fields) {
+        String response = '';
+        try{
+            response = srvAgenda.getCryptoActivity(cryptedId,fields);
+        }catch (exception e){
+            throw new AuraHandledException(e.getMessage());
+        }
+        return response;
+    }
+
 }

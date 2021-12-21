@@ -3,7 +3,8 @@ import getActivity from '@salesforce/apex/HDT_LC_AppointmentAgenda.getActivity';
 import { CurrentPageReference } from 'lightning/navigation';
 import { refreshApex } from '@salesforce/apex';
 
-const NEW_DATE_VALID_STATE = ['Creata'];
+const NEW_DATE_VALID_STATE = ['Creata','Invio app.to SELF cliente'];
+const SELF_DATE_VALID_STATE = ['Creata'];
 const DELETE_DATE_VALID_STATE = ['Presa appuntamento in corso'];
 const EDIT_DATE_VALID_STATE = ['Appuntamento confermato','Modifica confermata'];
 const RESUME_DATE_VALID_STATE = ['Presa appuntamento in corso'];
@@ -19,26 +20,27 @@ const OBJECT_FIELDS =[
 
 export default class HdtAppointmentHandler extends LightningElement{
     showAgenda = false;
+    showForm = false;
     hasRendered = false;
-    isCommunity = false;
+    @api isCommunity = false;
+    /* isCommunity = false; */
     @api recordId;
 
-    @wire(CurrentPageReference)
+    /* @wire(CurrentPageReference)
     getStateParameters(currentPageReference) {
-        console.log('@@@@currentpagereference',JSON.stringify(currentPageReference));
         if (currentPageReference && currentPageReference.state.c__activityId) {
-            console.log('@@@@gestione Community');
             this.recordId = currentPageReference.state.c__activityId;
             this.isCommunity = true;
         }
-    }
+    } */
 
 
     @track tempList = [
-        {label: 'Prendi Appuntamento ', name: 'newDate', iconName: 'utility:retail_execution', desc: 'Prendi un nuovo appuntamento con il DL', enable : false},
-        {label: 'Modifica Appuntamento', name: 'editDate', iconName: 'utility:record_delete', desc: 'Modifica un appuntamento Confermato', enable : false},
-        {label: 'Annulla Appuntamento', name: 'deleteDate', iconName: 'utility:delete', desc: 'Annulla un appuntamento non ancora Confermato', enable : false},
-        {label: 'Riprendi Appuntamento', name: 'resumeDate', iconName: 'utility:record_delete', desc: 'Riprendi un appuntamento non confermato', enable : false}
+        {label: 'Prendi Appuntamento ', name: 'newDate', iconName: 'utility:retail_execution', desc: 'Prendi un nuovo appuntamento con il DL', enable : false, visible : false},
+        {label: 'Modifica Appuntamento', name: 'editDate', iconName: 'utility:record_delete', desc: 'Modifica un appuntamento Confermato', enable : false, visible : false},
+        {label: 'Annulla Appuntamento', name: 'deleteDate', iconName: 'utility:delete', desc: 'Annulla un appuntamento non ancora Confermato', enable : false, visible : false},
+        {label: 'Riprendi Appuntamento', name: 'resumeDate', iconName: 'utility:record_delete', desc: 'Riprendi un appuntamento non confermato', enable : false, visible : false},
+        {label: 'Appuntamento Self', name: 'selfDate', iconName: 'utility:record_delete', desc: 'Invia il link all\'utente per prendere l\'appuntamento in autonomia', enable : false, visible : false}
     ];
     @track params={};
     get stmtValue(){
@@ -47,11 +49,9 @@ export default class HdtAppointmentHandler extends LightningElement{
 
     @wire(getActivity,{activityId : '$recordId', fields: OBJECT_FIELDS })
     wiredActivity(value){
+        console.log('@@@@@isCommunity ' + this.isCommunity);
         this.wiredActivity = value;
         const { data, error } = value; 
-        console.log('@@@@wiredActivity ', this.recordId);
-        console.log('@@@@wiredActivity ', JSON.stringify(data));
-        console.log('@@@@wiredActivity ', JSON.stringify(error));
         if (data){
             this.activity = JSON.parse(data);
             this.tempList.forEach( item =>{
@@ -61,26 +61,34 @@ export default class HdtAppointmentHandler extends LightningElement{
                 if (this.activity.AppointmentCompetence__c != 'Distributore' && this.activity.isAtoA__c){
                     switch (itemName){
                         case 'newDate':
+                            item.visible = true;
                             if (NEW_DATE_VALID_STATE.indexOf(stato) != -1){
                                 enable = true;
                             }
                         break;
                         case 'editDate':
+                            item.visible = true;
                             let maxDayInMs = this.getMaxDateInMilliseconds(this.activity.MaxDateModificationAppointment__c,this.activity.MaxTimeModificationAppointment__c); 
                             let nowInMs = Date.now();
-                            console.log('@@@@maxDayInMs: ' + maxDayInMs);
-                            console.log('@@@@nowInMs: ' + nowInMs);
                             if (EDIT_DATE_VALID_STATE.indexOf(stato) != -1 && maxDayInMs != -1 && nowInMs < maxDayInMs){
                                 enable = true;
                             }
                         break;
                         case 'deleteDate':
+                            item.visible = true;
                             if (DELETE_DATE_VALID_STATE.indexOf(stato) != -1){
                                 enable = true;
                             }
                         break;
                         case 'resumeDate':
+                            item.visible = true;
                             if (RESUME_DATE_VALID_STATE.indexOf(stato) != -1){
+                                enable = true;
+                            }
+                        break;
+                        case 'selfDate':
+                            item.visible = !this.isCommunity;
+                            if (SELF_DATE_VALID_STATE.indexOf(stato) != -1){
                                 enable = true;
                             }
                         break;
@@ -89,6 +97,7 @@ export default class HdtAppointmentHandler extends LightningElement{
                 item.enable = enable; 
             });
             this.showAgenda = false;
+            this.showForm = false;
         }else if (error){
             console.error('status error: ' + error.status);
             console.error('status body: ' + JSON.stringify(error.body));
@@ -96,6 +105,7 @@ export default class HdtAppointmentHandler extends LightningElement{
     }
     
     clickOperation(event){
+        let showAgenda = true;
         switch (event.currentTarget.name){
             case 'newDate':
                 this.params ={
@@ -120,23 +130,31 @@ export default class HdtAppointmentHandler extends LightningElement{
                     searchType : 'NewSlot'
                 };
             break;
+            case 'selfDate':
+                showAgenda = false;
+            break;
         }
-        this.params = {...this.params,userCommunity : this.isCommunity};
-        this.showAgenda = true;
+        if (showAgenda){
+            this.params = {...this.params,userCommunity : this.isCommunity};
+            this.showAgenda = showAgenda;
+        }else{
+            this.showForm = true;
+        }
+        
     }
 
     cancelEvent(event){
         this.params = {};
-        console.log('@@@@this.org ' + event.detail);
         if(event.detail === true){
             if (this.isCommunity){
                 let myWiredActivity = this.wiredActivity;
                 setTimeout(function(){refreshApex(myWiredActivity)},5000);
             }else{
-                refreshApex(this.wiredActivity);
+                window.location.reload();
             }
         }else{
             this.showAgenda = false;
+            this.showForm = false;
         }
         
     }
@@ -147,9 +165,7 @@ export default class HdtAppointmentHandler extends LightningElement{
 
     //return date + time in ms
     getMaxDateInMilliseconds(dateToWork,timeToWork){
-        console.log('@@@@dateToWork/timeToWork ' +dateToWork + '/'+ timeToWork);
         let dateToFormat = dateToWork+' '+this.formatTime(timeToWork);
-        console.log('@@@@dateToFormat ' +dateToFormat);
         try{
             let d = new Date(dateToFormat);
             return d.getTime();
@@ -162,18 +178,14 @@ export default class HdtAppointmentHandler extends LightningElement{
     //formate time in 00:00:00:000
     formatTime(timeToFormat){
         if (timeToFormat){
-            console.log(timeToFormat);
             let timeInArray = timeToFormat.replace(' ','').split(':');
-            console.log('@@@@timeInArray ' +JSON.stringify(timeInArray));
             let formattedDate = '';
             timeInArray.forEach((item,index) => {
-                console.log('@@@@item ' + item);
                 if (index < 3){
                     item = (item.lenght === 1) ? '0'+item : item;
                     formattedDate += item + ':';
                 }
             });
-            console.log('@@@@formattedDate ' +formattedDate);
             if (timeInArray.length == 3){
                 return formattedDate.substring(0,formattedDate.length - 1);
             }else if (timeInArray.length == 2){

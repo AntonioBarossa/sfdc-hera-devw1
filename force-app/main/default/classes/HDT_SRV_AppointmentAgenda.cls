@@ -73,4 +73,16 @@ public with sharing class HDT_SRV_AppointmentAgenda {
         }
         return response;  
     }
+
+    public String criptId(Id idToCript){
+        return EncodingUtil.base64Encode(HDT_UTL_AppointmentAgenda.criptId(idToCript));
+    }
+
+    public String getCryptoActivity(String encryptedId,List<String> fields){
+        return JSON.serialize(HDT_UTL_AppointmentAgenda.getCryptoActivity(encryptedId,String.join(fields, ',')));
+    }
+
+    public void setContactData(wrts_prcgvr__Activity__c activity,Contact cont){
+        HDT_UTL_AppointmentAgenda.setContactData(activity, cont);
+    }
 }
