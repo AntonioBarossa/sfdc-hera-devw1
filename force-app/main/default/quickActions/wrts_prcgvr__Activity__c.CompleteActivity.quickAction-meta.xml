@@ -14,7 +14,7 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>wrts_prcgvr__Status__c</field>
-        <literalValue>Completed</literalValue>
+        <literalValue>Chiusa</literalValue>
     </fieldOverrides>
     <label>Completa Attività</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>

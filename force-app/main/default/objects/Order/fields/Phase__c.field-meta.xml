@@ -126,6 +126,11 @@
                 <label>Annullato</label>
             </value>
             <value>
+                <fullName>Annullato per Dati Discordanti</fullName>
+                <default>false</default>
+                <label>Annullato per Dati Discordanti</label>
+            </value>
+            <value>
                 <fullName>Annullato SII</fullName>
                 <default>false</default>
                 <label>Annullato SII</label>
@@ -656,6 +661,11 @@
                 <fullName>Voltura Rifiutata</fullName>
                 <default>false</default>
                 <label>Voltura Rifiutata</label>
+            </value>
+            <value>
+                <fullName>Comunicazione EngageOne KO</fullName>
+                <default>false</default>
+                <label>Comunicazione EngageOne KO</label>
             </value>
         </valueSetDefinition>
     </valueSet>

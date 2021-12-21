@@ -169,7 +169,7 @@ public inherited sharing class HDT_QR_Case {
             wrts_prcgvr__Status__c,
             wrts_prcgvr__ActivityTemplate__r.Name
             FROM wrts_prcgvr__Activity__c
-            WHERE wrts_prcgvr__Status__c = 'Not Started'
+            WHERE wrts_prcgvr__Status__c = 'Aperta'
             AND Case__c IN :caseIds
             WITH SECURITY_ENFORCED
             ];

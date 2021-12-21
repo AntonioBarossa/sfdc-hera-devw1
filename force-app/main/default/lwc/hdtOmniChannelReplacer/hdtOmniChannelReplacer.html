@@ -13,11 +13,11 @@
             <div key={activity.Id} data-id={activity.Id} data-accountid={activity.Account__c} data-index={index} class="slds-grid list-row slds-p-around_xx-small align-center" onclick={handleClick} onmouseover={handleMouseOver} onmouseout={handleMouseOut}>
                 <a href="javascript:void(0);" class="slds-box slds-box_link slds-media slds-size_8-of-8">
                     <div class="slds-grid align-center slds-grid_vertical-align-center">
-                        <div class="slds-col"> <template if:true={activity.completed}>
+                        <div class="slds-col"> <template if:true={activity.Chiusa}>
                                 <lightning-icon icon-name="standard:task2" alternative-text="Chiusa" title="Chiusa"
                                     slot="actions"></lightning-icon>
                             </template>
-                            <template if:false={activity.completed}>
+                            <template if:false={activity.Chiusa}>
                                 <lightning-icon icon-name="custom:custom53" alternative-text="In Attesa" title="In Attesa"
                                     slot="actions"></lightning-icon>
                             </template>

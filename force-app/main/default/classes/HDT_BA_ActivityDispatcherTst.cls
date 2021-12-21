@@ -19,7 +19,7 @@ public with sharing class HDT_BA_ActivityDispatcherTst {
         );
         insert queue;
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
-            wrts_prcgvr__Status__c = 'Not Started',
+            wrts_prcgvr__Status__c = 'Aperta',
             Type__c = 'Sportello',
             wrts_prcgvr__Priority__c = '1'
         );
@@ -36,14 +36,15 @@ public with sharing class HDT_BA_ActivityDispatcherTst {
         
         //TESTING
         Test.startTest();
-        Database.executeBatch(new HDT_BA_ActivityDispatcher());
+        System.schedule('testjob', '0 0 1 ? * *', new HDT_SCH_ActivityDispatcherScheduler());
         Test.stopTest();
         
         //RETRIEVING DATA
-        AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob];
+        List<AsyncApexJob> a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob];
         
         //ASSERTS
-        System.assertEquals(0, a.NumberOfErrors, 'Batch fallito.');
+        System.assertEquals(0, a[0].NumberOfErrors, 'Schedulable fallito.');
+        System.assertEquals(0, a[1].NumberOfErrors, 'Batch fallito.');
         
     }
 }

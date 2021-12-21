@@ -145,13 +145,12 @@ export default class HdtActivityIvaAccise extends LightningElement {
     connectedCallback() {
         getActivity({recordId : this.recordId}).then(response =>{
             this.act = response;
-            if(response.wrts_prcgvr__Status__c == 'Completed'){
+            if(response.wrts_prcgvr__Status__c == 'Chiusa'){
                 this.isDisabledField = true;
                 this.dateConfirm = response.CompletationDateDocument__c;
             }
             this.tentativi = this.act.NumberOfAttempt__c;
             console.log('*****:' + JSON.stringify(response));
-            console.log('*****:' + (response.Order__r != null && response.Order__r != undefined && response.Order__r.VATfacilitationFlag__c != null && response.Order__r.VATfacilitationFlag__c != undefined) ? response.Order__r.VATfacilitationFlag__c : false );
             this.showIva = (response.Order__r != null && response.Order__r != undefined && response.Order__r.VATfacilitationFlag__c != null && response.Order__r.VATfacilitationFlag__c != undefined) ? response.Order__r.VATfacilitationFlag__c : false ;
             this.showAccise = (response.Order__r != null && response.Order__r != undefined && response.Order__r.FacilitationExcise__c != null && response.Order__r.FacilitationExcise__c != undefined) ? response.Order__r.FacilitationExcise__c : false ;
             if(this.showAccise){

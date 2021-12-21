@@ -108,13 +108,8 @@ export default class HdtSelectDistributorPointCode extends LightningElement {
 
 
      getDistributor(event){
-
-        console.log('getDistributor START');
         
         let selectedRows = event.detail.selectedRows;
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
-        console.log('rowToSend*************************' + JSON.stringify(this.rowToSend));
-
-        console.log('getDistributor END');
      }
 }

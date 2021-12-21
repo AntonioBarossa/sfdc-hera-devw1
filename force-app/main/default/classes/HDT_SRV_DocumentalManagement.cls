@@ -696,8 +696,8 @@ public class HDT_SRV_DocumentalManagement{
 			String accountName = HDT_UTL_DocumentalManagement.getValue('PrimaryContact','Name',0,inputs,formParams);
 			String firstName = HDT_UTL_DocumentalManagement.getValue('PrimaryContact','FirstName',0,inputs,formParams);
 			String lastName = HDT_UTL_DocumentalManagement.getValue('PrimaryContact','LastName',0,inputs,formParams);
-			String userTimeZone = UserInfo.getTimeZone().getDisplayName(); 
 			String processTypeCase = HDT_UTL_DocumentalManagement.getValue('Case','DocumentalProcessType__c',0,inputs,formParams);
+			String cluster = HDT_UTL_DocumentalManagement.getValue('Case','Cluster__c',0,inputs,formParams);
 			String processType = 'Plico contrattuale';
 			Datetime today = Datetime.now(); 
 			String rds = String.isNotBlank(rdsCase)? rdsCase : rdsOrder;
@@ -712,13 +712,22 @@ public class HDT_SRV_DocumentalManagement{
 			customerInfo.emailSubject = 'HERA - ' + processType;
 			//@ealpi nuovi campi inviati
 			customerInfo.rds = rds;
-			customerInfo.dataCreazioneDocumento = today.format('yyyy-MM-dd HH:mm:ss');
-			customerInfo.dataCaricamentoDocumento = today.format('yyyy-MM-dd HH:mm:ss');
-			customerInfo.cognomeRagSociale = lastName;
-			customerInfo.nomeRagSoc = firstName;
+			customerInfo.dateCreationDocument = today.format('yyyy-MM-dd HH:mm:ss');
+			customerInfo.dateLoadingDocument = today.format('yyyy-MM-dd HH:mm:ss');
+			customerInfo.surnameCompanyName = lastName;
+			customerInfo.nameCompanyName = firstName;
 			if (formParams.containsKey('SettMerceologico')){
-				customerInfo.settoreMerceologico = (String)formParams.get('SettMerceologico');
+				customerInfo.commoditySector = (String)formParams.get('SettMerceologico');
 			}
+			String documentPrintType = '';
+			if (processType == 'Plico contrattuale'){
+				documentPrintType = 'C';
+			}else if (cluster == 'Preventivi' || cluster == 'Verifiche'){
+				documentPrintType = 'P';
+			}else if (cluster == 'Pagamenti'){
+				documentPrintType = 'D';
+			}
+			customerInfo.documentPrintType = documentPrintType;
 			signInfo.customerInfo = customerInfo;
 
 			//template

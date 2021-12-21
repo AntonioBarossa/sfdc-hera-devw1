@@ -555,7 +555,7 @@
             <assignToReference>Annulla_Attivita.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Completed</stringValue>
+                <stringValue>Chiusa</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -571,7 +571,7 @@
             <assignToReference>Annulla_Attivita_0.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Completed</stringValue>
+                <stringValue>Chiusa</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -1427,7 +1427,7 @@
             <field>wrts_prcgvr__Status__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Not Started</stringValue>
+                <stringValue>Aperta</stringValue>
             </value>
         </filters>
         <filters>
@@ -1462,7 +1462,7 @@
             <field>wrts_prcgvr__Status__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Not Started</stringValue>
+                <stringValue>Aperta</stringValue>
             </value>
         </filters>
         <filters>

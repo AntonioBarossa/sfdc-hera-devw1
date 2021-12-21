@@ -61,7 +61,10 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                         }
                     }
-                    
+                    if (mapRequestFields.get('METHOD')!= null){
+                        HDT_SRV_AppointmentAgenda agendaService = new HDT_SRV_AppointmentAgenda();
+                        agendaService.handleAppointmentUpdate(mapRequestFields);
+                    }
                     if(mapRequestFields.get('RECORD_ID')!= null && mapRequestFields.get('FASE')!= null){
                         //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                         String recordId = mapRequestFields.get('RECORD_ID');
@@ -378,6 +381,12 @@ public with sharing class HDT_SRV_SalesHandler {
                                 }
                             }
                             when 'Annullamento SII - Ricezione'{
+                                /*@frpanico 16/12/2021
+                                * Aggiunta CancellationRequestDate__c
+                                * Utilizzato per la determinazione della 
+                                * Funzionalita Clona
+                                */
+                                ord.CancellationRequestDate__c = System.today();
                                 ord.CancellationReasonCode__c = mapRequestFields.get('COD_CAUSALE');
                                 ord.CancellationNote__c = mapRequestFields.get('ANNOTAZIONI_ANN');
                                 String annotazioni = ord.CancellationNote__c != null? ord.CancellationNote__c:'';

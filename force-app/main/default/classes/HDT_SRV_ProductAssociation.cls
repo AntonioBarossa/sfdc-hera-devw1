@@ -81,6 +81,7 @@ public inherited sharing class HDT_SRV_ProductAssociation {
         System.debug(logginglevel.DEBUG, '>>> optionalSkuId: ' + optionalSkuId);
         System.debug(logginglevel.DEBUG, '>>> productOptionObj: ' + productOptionObj);
         System.debug(logginglevel.DEBUG, '>>> recordList: ' + recordList);
+        System.debug(logginglevel.DEBUG, '>>> recordList: ' + recordList.size());
         System.debug(logginglevel.DEBUG, '>>> executionType: ' + executionType);
         System.debug(logginglevel.DEBUG, '>>> filterString: ' + filterString);
         System.debug(logginglevel.DEBUG, '>>> dmlContext: ' + dmlContext);   

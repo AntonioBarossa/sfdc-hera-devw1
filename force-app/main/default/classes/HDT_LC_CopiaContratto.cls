@@ -112,7 +112,7 @@ public with sharing class HDT_LC_CopiaContratto {
         try{
             // HDT_QR_Case caseQr = new HDT_QR_Case();
             wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
-            s.wrts_prcgvr__status__c = 'Completed';
+            s.wrts_prcgvr__status__c = 'Chiusa';
             activitySrv.updateRecord(s);
            // Case c = caseQr.getRecordById(s.case__c);
             Case c = new Case();
@@ -130,7 +130,7 @@ public with sharing class HDT_LC_CopiaContratto {
     public static boolean chiudiAttivitNoCase(String recordId){
         try{
             wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
-            s.wrts_prcgvr__status__c = 'Completed';
+            s.wrts_prcgvr__status__c = 'Chiusa';
             activitySrv.updateRecord(s);
             return true;
         }

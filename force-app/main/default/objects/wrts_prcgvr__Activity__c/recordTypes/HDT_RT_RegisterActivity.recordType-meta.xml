@@ -204,6 +204,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>InteractionReason__c</picklist>
+        <values>
+            <fullName>Non lavorabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo Gestito</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>IwsDemand__c</picklist>
         <values>
             <fullName>HCMARCHE_AUTOLETTURA</fullName>
@@ -384,10 +395,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>Process__c</picklist>
-        <values><!--HRAWRM-446 07/09/2021-->
-            <fullName>Annullamento Prestazione</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Aggiunta Attacco</fullName>
             <default>false</default>
@@ -1191,21 +1198,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Status__c</picklist>
-        <values>
-            <fullName>Annullata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiusa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Creata</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Subject__c</picklist>
         <values>
             <fullName>Acceso Piattaforme documentali</fullName>
@@ -1818,95 +1810,63 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
-            <fullName>Contattare il cliente</fullName>
+            <fullName>Protocollo - Attivazioni</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Preavviso Cessazione</fullName>
+            <fullName>Protocollo - Autolettura</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullamento</fullName>
+            <fullName>Protocollo - Canone Rai</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Anticipo Appuntamento</fullName>
+            <fullName>Protocollo - Da tipizzare</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Disattivazioni</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Approvazione Offerte</fullName>
+            <fullName>Protocollo - Fatturazione</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Chiamata Callback</fullName>
+            <fullName>Protocollo - Modifiche Anagrafiche</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Chiamata inbound</fullName>
+            <fullName>Protocollo - Morosità</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Chiamata outbound</fullName>
+            <fullName>Protocollo - Pagamenti</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Comunicazione da DL</fullName>
+            <fullName>Protocollo - Preventivi</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Contratti%2FBonus Commerciale</fullName>
+            <fullName>Protocollo - Reclami</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Documentale%2FCopia Contratto</fullName>
+            <fullName>Protocollo - VAS</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Gestione Iva e Accise</fullName>
+            <fullName>Protocollo - Variazioni</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Gestione Switch in Ripristinatorio</fullName>
+            <fullName>Protocollo - Verifiche</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Gestione dati discordanti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Lavorazione Reclamo Post Survey</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Modifica Contratti PreAttivazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Presa Appuntamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Riapertura urgenti Errori DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesta appuntamento DL %28fermo sistemi%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesta informazioni appuntamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Segnalazioni VAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sollecito Distributore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sportello</fullName>
+            <fullName>Protocollo - Voltura</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1928,8 +1888,20 @@
     <picklistValues>
         <picklist>wrts_prcgvr__Status__c</picklist>
         <values>
-            <fullName>Not Started</fullName>
+            <fullName>Aperta</fullName>
             <default>true</default>
+        </values>
+        <values>
+            <fullName>Chiusa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scartata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospesa</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
 </RecordType>
