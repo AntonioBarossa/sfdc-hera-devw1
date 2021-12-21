@@ -45,20 +45,18 @@
     <div if:true={isLawEighty}>
         <lightning-card title={cardTitle} icon-name="custom:custom12"> 
             <div class="slds-grid slds-wrap slds-m-top_small">
-                <div class="slds-size_1-of-3">
-                    <lightning-input type="text" data-id="sendMode" disabled="true" label="Modalità Invio" value={modalitaInvio}></lightning-input>
-                </div>
-                <div class="slds-size_1-of-3"></div>
-                <div class="slds-size_1-of-3">
-                    <lightning-input type="text" data-id="signMode" disabled="true" label="Modalità Firma" value={signMode}></lightning-input>
-                </div>
-                <div  class="slds-size_1-of-3">
-                    <lightning-input type="email" data-id="email" required={emailRequired} label="Email invio documentazione" value={email} disabled="true" pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" message-when-pattern-mismatch="Inserire un indirizzo e-mail valido."></lightning-input>
-                </div>
-                <div  class="slds-size_1-of-3"></div>
-                <div  class="slds-size_1-of-3">
-                    <lightning-input type="tel" data-id="sms" required={smsRequired} label="Cellulare invio documentazione" value={phone} disabled="true" pattern="[0-9]{9,10}" message-when-pattern-mismatch="Il cellulare deve contenere 9 o 10 cifre."></lightning-input>
-                </div>
+                <template for:each={fieldsObj} for:item="field">                
+                    <lightning-input
+                        class="slds-size_1-of-2 slds-p-around_xx-small"
+                        variant="label-stacked" 
+                        key={field.dataId} 
+                        data-id={field.dataId} 
+                        type={field.type}
+                        disabled={field.disabled}
+                        value={field.value}
+                        label={field.label}
+                    ></lightning-input>
+                </template>
             </div>
         </lightning-card>
         <footer class="slds-modal__footer">

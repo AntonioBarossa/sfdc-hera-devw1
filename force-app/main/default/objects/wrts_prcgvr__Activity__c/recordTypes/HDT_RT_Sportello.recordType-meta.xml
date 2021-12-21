@@ -284,21 +284,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Status__c</picklist>
-        <values>
-            <fullName>Creata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Null</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sospesa</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>SuspensionReason__c</picklist>
         <values>
             <fullName>Approfondimenti in corso</fullName>

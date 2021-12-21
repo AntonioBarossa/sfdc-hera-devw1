@@ -44,6 +44,11 @@
 &quot;FieldName&quot;: &quot;Voltage__c&quot;,
 &quot;Required&quot;: true,
 &quot;Column&quot;: 2
+},
+{
+&quot;FieldName&quot;: &quot;UseTypeEnergy__c&quot;,
+&quot;Required&quot;: false,
+&quot;Column&quot;: 1
 }
 ]</value>
     </values>

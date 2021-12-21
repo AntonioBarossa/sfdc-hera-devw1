@@ -120,7 +120,7 @@
                                     <rightValue>HDT_RT_ComfortQualityCall</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.Status__c}</leftValue>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Non Esitata</rightValue>
                                 </criteria>

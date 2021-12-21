@@ -10570,6 +10570,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Social Studio</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sollecito Emissione Bolletta</fullName>
             <default>false</default>
         </values>
