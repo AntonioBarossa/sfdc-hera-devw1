@@ -6,7 +6,7 @@ import SMS_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.Mobile__c';
 import EMAIL_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.Email__c';
 import ID_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.Id';
 import STATUS_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.wrts_prcgvr__Status__c';
-import CRIPTO_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.CryptoActivityId__c';
+import CRIPTO_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.CustomRecordId__c';
 import SELF_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.isSelfAppointment__c';
 
 const SEND_OPTION = [{ label: 'SMS', value: 'sms' },{ label: 'EMAIL', value: 'email' }];

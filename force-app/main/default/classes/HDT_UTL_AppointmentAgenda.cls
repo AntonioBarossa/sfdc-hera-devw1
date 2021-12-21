@@ -82,7 +82,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
 
     public static wrts_prcgvr__Activity__c getCryptoActivity(String cryptedId,String fields){
         String objectName = 'wrts_prcgvr__Activity__c';
-        List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords(fields, objectName, 'CryptoActivityId__c = \''+String.escapeSingleQuotes(cryptedId)+'\'');
+        List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords(fields, objectName, 'CustomRecordId__c = \''+String.escapeSingleQuotes(cryptedId)+'\'');
         return (wrts_prcgvr__Activity__c)activities[0];
     }
 
