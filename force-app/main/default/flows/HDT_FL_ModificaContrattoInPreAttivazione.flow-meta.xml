@@ -5,7 +5,7 @@
         <name>AssignOutput</name>
         <label>AssignOutput</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -24,13 +24,33 @@
     <assignments>
         <name>AssignOutput_0</name>
         <label>AssignOutput</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>pod</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Pod_Pdr</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>AssignOutput_0_0</name>
+        <label>AssignOutput</label>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_Field_Form_0</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>headerOutput</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Header_0</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -70,7 +90,7 @@
         <description>Se case id null, il contratto non è presente e va prima creato</description>
         <name>CaseId_Present</name>
         <label>CaseId Present</label>
-        <locationX>182</locationX>
+        <locationX>380</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>SelPod</targetReference>
@@ -99,6 +119,28 @@
             <label>Retrieve Case</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Innesco_da_Lead</name>
+        <label>Innesco da Lead?</label>
+        <locationX>182</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Selezione_Modifiche_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Si</defaultConnectorLabel>
+        <rules>
+            <name>No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CaseRecived.Lead__c</leftValueReference>
+                <operator>IsNull</operator>
+            </conditions>
+            <connector>
+                <targetReference>Selezione_Modifiche</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
     <formulas>
         <name>Formula_Field_Form</name>
         <dataType>String</dataType>
@@ -106,9 +148,21 @@
 IF({!CaseRecived.Account.RecordType.DeveloperName}=&quot;HDT_RT_Residenziale&quot;, &quot; Pagamento Residenziale&quot;, &quot; Pagamento Non Residenziale&quot;), 3, &quot; Bolletta&quot;, 4, &quot; Pagamento e Fatturazione&quot;, &quot;&quot;)</expression>
     </formulas>
     <formulas>
+        <name>Formula_Field_Form_0</name>
+        <dataType>String</dataType>
+        <expression>&quot;Modifica Contr Preattivazione&quot; &amp; CASE({!Modifiche_Desiderate_0_0}, 1, IF({!CaseRecived.Account.RecordType.DeveloperName}=&quot;HDT_RT_Residenziale&quot;, &quot; Anagr Res&quot;, &quot; Anagr Non Res&quot;), 2, 
+IF({!CaseRecived.Account.RecordType.DeveloperName}=&quot;HDT_RT_Residenziale&quot;, &quot; Pagamento Residenziale&quot;, &quot; Pagamento Non Residenziale&quot;), 3, &quot; Bolletta&quot;, 4, &quot; Pagamento e Fatturazione&quot;, &quot;&quot;)</expression>
+    </formulas>
+    <formulas>
         <name>Header</name>
         <dataType>String</dataType>
         <expression>CASE({!Modifiche_Desiderate_0}, 1, &quot; Modifica dati contratto/dati anagrafici&quot;, 2, 
+&quot;Modifica modalità di pagamento&quot;, 3, &quot; Modifica modalità di invio bolletta e indirizzo di fatturazione&quot;, 4, &quot;Modifica modalità di pagamento e fatturazione&quot;, &quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>Header_0</name>
+        <dataType>String</dataType>
+        <expression>CASE({!Modifiche_Desiderate_0_0}, 1, &quot; Modifica dati contratto/dati anagrafici&quot;, 2, 
 &quot;Modifica modalità di pagamento&quot;, 3, &quot; Modifica modalità di invio bolletta e indirizzo di fatturazione&quot;, 4, &quot;Modifica modalità di pagamento e fatturazione&quot;, &quot;&quot;)</expression>
     </formulas>
     <interviewLabel>HDT_FL_ModificaContrattoInPreAttivazione {!$Flow.CurrentDateTime}</interviewLabel>
@@ -135,11 +189,11 @@ IF({!CaseRecived.Account.RecordType.DeveloperName}=&quot;HDT_RT_Residenziale&quo
     <recordLookups>
         <name>CaseRecived</name>
         <label>CaseRecived</label>
-        <locationX>50</locationX>
+        <locationX>182</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Selezione_Modifiche</targetReference>
+            <targetReference>Innesco_da_Lead</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -157,7 +211,7 @@ IF({!CaseRecived.Account.RecordType.DeveloperName}=&quot;HDT_RT_Residenziale&quo
         <name>UpdateCase</name>
         <label>UpdateCase</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <connector>
             <targetReference>AssignOutput</targetReference>
         </connector>
@@ -177,11 +231,35 @@ IF({!CaseRecived.Account.RecordType.DeveloperName}=&quot;HDT_RT_Residenziale&quo
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
+    <recordUpdates>
+        <name>UpdateCase_0</name>
+        <label>UpdateCase</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>AssignOutput_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>caseId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>Formula_Field_Form_0</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <screens>
         <name>Selezione_Modifiche</name>
         <label>Selezione Modifiche</label>
         <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -229,9 +307,59 @@ IF({!CaseRecived.Account.RecordType.DeveloperName}=&quot;HDT_RT_Residenziale&quo
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Selezione_Modifiche_0</name>
+        <label>Selezione Modifiche</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>UpdateCase_0</targetReference>
+        </connector>
+        <fields>
+            <name>Selezione_Modifiche_0_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Selezione_Modifiche_0_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Modifiche_Desiderate_0_0</name>
+                    <choiceReferences>ContrattoAnagrafica</choiceReferences>
+                    <dataType>Number</dataType>
+                    <fieldText>Tipo Modifica:</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>true</isRequired>
+                    <scale>0</scale>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Selezione_Modifiche_0_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>8</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>SelPod</name>
         <label>SelPod</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -286,7 +414,7 @@ IF({!CaseRecived.Account.RecordType.DeveloperName}=&quot;HDT_RT_Residenziale&quo
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>CaseId_Present</targetReference>
