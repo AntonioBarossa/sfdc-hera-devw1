@@ -4,7 +4,7 @@
     <description>Prezzo</description>
     <externalId>false</externalId>
     <label>Prezzo</label>
-    <precision>15</precision>
+    <precision>10</precision>
     <required>false</required>
     <scale>5</scale>
     <trackHistory>false</trackHistory>

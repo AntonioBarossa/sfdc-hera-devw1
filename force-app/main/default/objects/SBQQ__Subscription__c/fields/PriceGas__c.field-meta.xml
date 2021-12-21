@@ -4,9 +4,10 @@
     <description>Prezzo Bonus Gas.</description>
     <externalId>false</externalId>
     <label>Prezzo</label>
-    <precision>15</precision>
+    <precision>7</precision>
     <required>false</required>
-    <scale>5</scale>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Currency</type>
+    <type>Number</type>
+    <unique>false</unique>
 </CustomField>
