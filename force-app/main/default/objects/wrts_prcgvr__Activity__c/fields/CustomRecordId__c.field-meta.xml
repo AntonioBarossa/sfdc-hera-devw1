@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SecureRecordId__c</fullName>
+    <fullName>CustomRecordId__c</fullName>
     <description>Gestione appuntamento Self - Contiene l&apos;id del record per il link.</description>
     <externalId>false</externalId>
     <label>Record Id Sicuro</label>
