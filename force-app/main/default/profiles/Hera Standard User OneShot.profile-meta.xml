@@ -14737,7 +14737,12 @@
         <field>OrderItem.Activity__c</field>
         <readable>true</readable>
     </fieldPermissions>
- <fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.ProductDescriptionSAP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.DefaulStartTime__c</field>
         <readable>true</readable>
