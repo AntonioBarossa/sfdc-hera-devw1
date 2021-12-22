@@ -1,54 +1,90 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>FieldCoerenceServicePoint__c</members>
+        <members>Lead.Catalogo_Servizi</members>
+        <name>QuickAction</name>
+    </types>
+    <types>
+        <members>HDT_Activity_Default_Record_Page</members>
+        <members>HDT_GestioneAppuntamento</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>Product2</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Call</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_ChiamataOutbound</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_ComfortQualityCall</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_CommunicationReject</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Default</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationAccountLead</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationCase</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationGeneric</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationInteraction</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationOpportunity</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationOrder</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_GestioneIvaAccise</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_RegisterActivity</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Scarto</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Sportello</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_ValidazioneDocumentale</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_VisitaD2D</members>
+        <members>Order.HDT_RT_SwitchIn</members>
         <name>RecordType</name>
     </types>
     <types>
-        <members>HDT_BA_SuspendedActivitiesEmailAlertTst</members>
-        <members>HDT_SRV_ScriptManagerTst</members>
+        <members>Lead-Acquisizione Lead Layout</members>
+        <members>Lead-Lead Layout</members>
+        <members>Product2-CPQ Product Layout New</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_CampaignManager</members>
+        <members>HDT_EditPublicListView</members>
+        <members>HDT_MarketingCloud</members>
+        <members>HDT_SalesforceCPQAdmin</members>
+        <members>HDT_SalesforceCPQPartner</members>
+        <members>HDT_SalesforceCPQUser</members>
+        <members>Marketing_Cloud_Connected_App</members>
+        <members>Sales_User</members>
+        <members>TH_Permission_Set</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_LC_AppointmentAgenda</members>
+        <members>HDT_LC_AppointmentAgendaTst</members>
+        <members>HDT_LC_TargetObjectCreateForm</members>
+        <members>HDT_QR_Case</members>
+        <members>HDT_QR_DistributorPointCode</members>
+        <members>HDT_SRV_AppointmentAgenda</members>
+        <members>HDT_SRV_AppointmentAgendaTst</members>
+        <members>HDT_SRV_FieldCoerenceServicePoint</members>
+        <members>HDT_SRV_FieldCoerenceServicePointTst</members>
+        <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_UTL_AppointmentAgenda</members>
+        <members>HDT_UTL_DataFactoryTst</members>
+        <members>HDT_UTL_GestAppAutomaticCreation</members>
+        <members>HDT_UTL_GestAppAutomaticCreationCase</members>
+        <members>HDT_UTL_HerokuPostSalesManager</members>
+        <members>HDT_UTL_SubscriptionProcess</members>
+        <members>HDT_WS_ArrichmentDataEntityInvoker</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_Taxes</members>
-        <name>GlobalValueSet</name>
+        <members>Asset.PriceGas__c</members>
+        <members>Order.Phase__c</members>
+        <members>OrderItem.PriceGas__c</members>
+        <members>OrderItem.Price__c</members>
+        <members>OrderItem.ProductDescriptionSAP__c</members>
+        <members>Product2.PriceGas__c</members>
+        <members>Product2.Price__c</members>
+        <members>SBQQ__QuoteLine__c.PriceGas__c</members>
+        <members>SBQQ__QuoteLine__c.Price__c</members>
+        <members>SBQQ__Subscription__c.PriceGas__c</members>
+        <members>SBQQ__Subscription__c.Price__c</members>
+        <members>wrts_prcgvr__Activity__c.CustomRecordId__c</members>
+        <name>CustomField</name>
     </types>
     <types>
-        <members>DistributorPointCode__c.City__c</members>
-        <members>FieldCoerenceServicePoint__c.AccountCategory__c</members>
-        <members>FieldCoerenceServicePoint__c.Commodity__c</members>
-        <members>FieldCoerenceServicePoint__c.ImplantType__c</members>
-        <members>FieldCoerenceServicePoint__c.IsActive__c</members>
-        <members>FieldCoerenceServicePoint__c.SupplyType__c</members>
-        <members>FieldCoerenceServicePoint__c.Taxes__c</members>
-        <members>FieldCoerenceServicePoint__c.UseCategory__c</members>
-        <members>FieldCoerenceServicePoint__c.WithdrawalClass__c</members>
-        <members>wrts_prcgvr__Activity__c.SuspensionDueDate__c</members>
-        <name>CustomField</name>
+        <members>hdtAdvancedSearch</members>
+        <members>hdtAppointmentAgenda</members>
+        <members>hdtAppointmentAlert</members>
+        <members>hdtAppointmentCommunity</members>
+        <members>hdtAppointmentHandler</members>
+        <members>hdtAppointmentSelf</members>
+        <members>hdtChildOrderProcessDetails</members>
+        <members>hdtCreateTargetObject</members>
+        <members>hdtSelectDistributorPointCode</members>
+        <members>hdtSelfAppointmentPrivacy</members>
+        <members>hdtSupplySelection</members>
+        <members>hdtSupplySelectionFlow</members>
+        <members>hdtTargetObjectCreateForm</members>
+        <name>LightningComponentBundle</name>
     </types>
     <types>
         <members>Admin</members>
@@ -62,12 +98,15 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_FL_PostSalesMasterDispatchSales</members>
-        <name>Flow</name>
+        <members>HDT_IntegrationObject.Documentale_Context1</members>
+        <members>HDT_UserInputFlow.Modifica_Contratto_Preattivazione</members>
+        <members>HDT_UserInputFlow.Modifica_Contratto_Preattivazione_Res</members>
+        <name>CustomMetadata</name>
     </types>
     <types>
-        <members>wrts_prcgvr__Activity__c.HDT_VR_PastDate_DataScadenzaSospensione</members>
-        <name>ValidationRule</name>
+        <members>HDT_FL_ModificaContrattoInPreAttivazione</members>
+        <members>HDT_FL_PostSalesMasterDispatchSales</members>
+        <name>Flow</name>
     </types>
     <version>49</version>
 </Package>

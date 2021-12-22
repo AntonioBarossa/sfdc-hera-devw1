@@ -112,23 +112,23 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
     }
 
     @IsTest
-    public static void executeHandlehandleConfirm(){
-        String methodName = 'executeHandlehandleConfirm: ';
+    public static void executeHandleConfirm(){
+        String methodName = 'executeHandleConfirm: ';
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         activity.wrts_prcgvr__Status__c = 'Presa appuntamento in corso';
         activity.AppointmentCode__c = '6666';
         update activity;
         Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock('0175',true));
         Test.startTest();
-            agenda.handleConfirm(activity.Id, '6666');
+            agenda.handleConfirm(activity.Id, '{"data" : "31/12/2021","fascia" : "15:00/16:00","codice" : "2222","dataLimite" : "28/12/2021","oraLimite" : "19:00","stima" :"00:30:00"}');
         Test.stopTest();
         activity = [SELECT Id,AppointmentCode__c,wrts_prcgvr__Status__c,AppoitmentTimeSlotConfirmed__c,AppointmentDate__c,MaxDateModificationAppointment__c,MaxTimeModificationAppointment__c FROM wrts_prcgvr__Activity__c];
         System.assertEquals('Appuntamento confermato', activity.wrts_prcgvr__Status__c, methodName + 'Stato non settato correttamente');
         System.assertEquals('2222', activity.AppointmentCode__c, methodName + 'Codice Appuntamento non settato correttamente');
         System.assertEquals('15:00/16:00', activity.AppoitmentTimeSlotConfirmed__c, methodName + 'Fascia Oraria Preferita non settata');
-        System.assertEquals(Date.newInstance(2022, 12, 31), activity.AppointmentDate__c, methodName + 'Data appuntamento non settata correttamente');
-        System.assertEquals(Date.newInstance(2022, 12, 28), activity.MaxDateModificationAppointment__c, methodName + 'Data limite massimo cancellazione appuntamento non settata correttamente');
-        System.assertEquals('19:00:00', activity.MaxTimeModificationAppointment__c, methodName + 'Tempolimite massimo cancellazione appuntamento non settato correttamente');
+        System.assertEquals(Date.newInstance(2021, 12, 31), activity.AppointmentDate__c, methodName + 'Data appuntamento non settata correttamente');
+        System.assertEquals(Date.newInstance(2021, 12, 28), activity.MaxDateModificationAppointment__c, methodName + 'Data limite massimo cancellazione appuntamento non settata correttamente');
+        System.assertEquals('19:00', activity.MaxTimeModificationAppointment__c, methodName + 'Tempolimite massimo cancellazione appuntamento non settato correttamente');
     }
 
     @isTest
@@ -276,16 +276,63 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
     }
 
     @IsTest
-    public static void executeHandlehandleConfirmError(){
-        String methodName = 'executeHandlehandleConfirmError: ';
+    public static void executeHandleConfirmError(){
+        String methodName = 'executeHandleConfirmError: ';
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         activity.wrts_prcgvr__Status__c = 'Presa appuntamento in corso';
         activity.AppointmentCode__c = '6666';
         update activity;
         Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock('0175', false));
         Test.startTest();
-            String response = agenda.handleConfirm(activity.Id, '6666');   
+            String response = agenda.handleConfirm(activity.Id, '{"data" : "31/12/2021","fascia" : "15:00/16:00","codice" : "2222","dataLimite" : "28/12/2021","oraLimite" : "19:00","stima" :"00:30:00"}');   
             System.assertEquals('ERRORE CONFERMA', response, methodName + 'Non è stata lanciata l\'eccezione.');
+        Test.stopTest();
+    }
+
+    @IsTest
+    public static void executeCriptId(){
+        String methodName = 'executeCriptId: ';
+        wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
+        Test.startTest();
+            String encryptedId = agenda.criptId(activity.Id);
+            String activityJson = agenda.getCryptoActivity(encryptedId,new List<String>{'Id'});
+            wrts_prcgvr__Activity__c retrievedActivity = (wrts_prcgvr__Activity__c) JSON.deserialize(activityJson,wrts_prcgvr__Activity__c.class);
+            System.assertEquals(activity.Id, retrievedActivity.Id, 'La decodifica non ha funzionato');
+        Test.stopTest();
+    }
+
+    @IsTest
+    public static void executeSetContactData(){
+        String methodName = 'executeSetContactData: ';
+        wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
+        Test.startTest();
+            Contact cont = new Contact(FiscalCode__c = 'IT01234567891' , VATNumber__c ='');
+            agenda.setContactData(activity, cont);
+            System.assertEquals('01234567891', activity.VATNumber__c,methodName+'Scenario fiscal code = IT_PI non valido');
+            cont = new Contact(FiscalCode__c = '01234567891' , VATNumber__c ='');
+            agenda.setContactData(activity, cont);
+            System.assertEquals('01234567891', activity.VATNumber__c,methodName+'Scenario fiscal code = PI non valido');
+            cont = new Contact(FiscalCode__c = 'DFAVFE45T13S665T' , VATNumber__c ='');
+            agenda.setContactData(activity, cont);
+            System.assertEquals(cont.FiscalCode__c, activity.FiscalCode__c,methodName+'Scenario fiscal code = CF non valido');
+            cont = new Contact(FiscalCode__c = 'DFAVFE45T13S665T' , VATNumber__c ='01234567891');
+            agenda.setContactData(activity, cont);
+            System.assertEquals(cont.FiscalCode__c, activity.FiscalCode__c,methodName+'Scenario fiscal code = CF e PI valorizzato non valido (CF Non Valido)');
+            System.assertEquals(cont.VATNumber__c, activity.VATNumber__c,methodName+'Scenario fiscal code = CF e PI valorizzato non valido (PI Non Valido)');
+            cont = new Contact(FiscalCode__c = 'DFAVFE45T13S665T' , VATNumber__c ='IT01234567891');
+            agenda.setContactData(activity, cont);
+            System.assertEquals(cont.FiscalCode__c, activity.FiscalCode__c,methodName+'Scenario fiscal code = CF e PI valorizzato (con IT) non valido (CF Non Valido)');
+            System.assertEquals('01234567891', activity.VATNumber__c,methodName+'Scenario fiscal code = CF e PI valorizzato (con IT) non valido (PI Non Valido)');
+            cont = new Contact(FiscalCode__c = '' , VATNumber__c ='01234567891');
+            agenda.setContactData(activity, cont);
+            System.assertEquals(cont.VATNumber__c, activity.VATNumber__c,methodName+'Scenario Solo PI valorizzato non valido');
+            cont = new Contact(FiscalCode__c = '' , VATNumber__c ='01234567891');
+            agenda.setContactData(activity, cont);
+            System.assertEquals('01234567891', activity.VATNumber__c,methodName+'Scenario Solo PI (con IT) valorizzato non valido');
+            cont = new Contact(FiscalCode__c = '' , VATNumber__c ='');
+            agenda.setContactData(activity, cont);
+            System.assertEquals('', activity.FiscalCode__c,methodName+'Scenario partita iva e cf non valorizzati');
+            System.assertEquals('', activity.VATNumber__c,methodName+'Scenario partita iva e cf non valorizzati');
         Test.stopTest();
     }
 
