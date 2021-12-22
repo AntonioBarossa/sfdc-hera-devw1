@@ -25,6 +25,8 @@ public inherited sharing class HDT_QR_Case {
             CaseNumber,
             HerokuPracticeCode__c,
             /*** Sviluppo Gest Appuntamento */
+            Contact.FiscalCode__c,
+            Contact.VATNumber__c,
             ServicePoint__r.distributor__r.name,
             ServicePoint__r.distributor__c,
             ServicePoint__r.CommoditySector__c, //@Elfrida Kora,06/10/2021

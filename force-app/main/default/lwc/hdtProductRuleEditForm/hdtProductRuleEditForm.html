@@ -29,12 +29,12 @@
                     </h3>
                         <div aria-hidden="false" class="slds-section__content">
                             <div class="slds-grid slds-wrap">
-                                <div class="slds-col slds-size_1-of-2 slds-m-top_x-small slds-m-top_medium slds-m-bottom_medium">
+                                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-m-top_medium slds-m-bottom_medium">
                                     <lightning-input-field field-name="SBQQ__ProductRule__c" value={ruleId} disabled ></lightning-input-field>
                                 </div>
-                                <div class="slds-col slds-size_1-of-2 slds-m-top_x-small slds-m-top_medium slds-m-bottom_medium"></div>
+                                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-m-top_medium slds-m-bottom_medium"></div>
                                 <template iterator:it={fieldsList}>
-                                    <div key={it.value} class="slds-col slds-size_1-of-2 slds-m-top_x-small slds-m-top_medium slds-m-bottom_medium">  
+                                    <div key={it.value} class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-m-top_medium slds-m-bottom_medium">  
                                         <lightning-input-field key={it.value} field-name={it.value} ></lightning-input-field>
                                     </div>
                                 </template>

@@ -2062,6 +2062,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato per Dati Discordanti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato SII</fullName>
             <default>false</default>
         </values>

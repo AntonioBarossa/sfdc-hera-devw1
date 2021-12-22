@@ -4375,7 +4375,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.PriceBonusGas__c</field>
+        <field>Product2.PriceGas__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
