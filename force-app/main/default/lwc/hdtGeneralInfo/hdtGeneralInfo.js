@@ -121,11 +121,18 @@ export default class HdtGeneralInfo extends LightningElement {
             });
         }
         if (event.target.fieldName === 'Channel__c') {
+
+            this.template.querySelector("[data-id='Agency__c']").value = '';
+            this.template.querySelector("[data-id='CommercialId']").value = '';
+            this.template.querySelector("[data-id='VendorFirstName__c']").value = '';
+            this.template.querySelector("[data-id='VendorLastName__c']").value = '';
+            
             //this.template.querySelector("[data-id='Agency__c']").value = '';
             this.currentPage = 0;
             this.currentPage2 = 0; // reset page
             let Channel = this.template.querySelector('[data-name="Channel__c"]').value;
             this.ChannelSelection = event.target.value;
+
             if(Channel == null || Channel==''){
                 this.disabledAgency = true;
             }else{
@@ -133,10 +140,8 @@ export default class HdtGeneralInfo extends LightningElement {
             }
             if(Channel=='Back office'){
                 this.createTable(this.originalData);
-
             }else{
                 this.createTable([]);
-
             }
             if(Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound'){
                 this.isServiceCommissioning = true;
@@ -167,7 +172,6 @@ export default class HdtGeneralInfo extends LightningElement {
                 });
             } else {
                 this.hiddenAgency = false;
-                //this.template.querySelector("[data-id='SalesContactRole__c']").value = '';  
                 this.template.querySelector("[data-id='Agency__c']").value = '';
                 this.template.querySelector("[data-id='CommercialId']").value = '';
                 this.template.querySelector("[data-id='VendorFirstName__c']").value = '';
