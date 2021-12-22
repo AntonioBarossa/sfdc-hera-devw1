@@ -14,10 +14,10 @@ public with sharing class HDT_LC_AppointmentAgenda {
     }
     
     @AuraEnabled
-    public static String handleConfirm(String activityId,String appointmentCode) {
+    public static String handleConfirm(String activityId,String appointmentJson) {
         String response = '';
         try{
-            response = srvAgenda.handleConfirm(activityId,appointmentCode);
+            response = srvAgenda.handleConfirm(activityId,appointmentJson);
         }catch (exception e){
             throw new AuraHandledException(e.getMessage());
         }
@@ -50,6 +50,28 @@ public with sharing class HDT_LC_AppointmentAgenda {
                     response = srvAgenda.handleNewSlotModify(activityId,preferedDate,preferedTimeSlot);
                 }
             }
+        }catch (exception e){
+            throw new AuraHandledException(e.getMessage());
+        }
+        return response;
+    }
+
+    @AuraEnabled
+    public static String getEncryptedId(String activityId) {
+        String response = '';
+        try{
+            response = srvAgenda.criptId(activityId);
+        }catch (exception e){
+            throw new AuraHandledException(e.getMessage());
+        }
+        return response;
+    }
+
+    @AuraEnabled
+    public static String getDecryptedId(String cryptedId,List<String> fields) {
+        String response = '';
+        try{
+            response = srvAgenda.getCryptoActivity(cryptedId,fields);
         }catch (exception e){
             throw new AuraHandledException(e.getMessage());
         }

@@ -20,11 +20,10 @@ export default class hdtCreateTargetObject extends LightningElement {
     showCreateTargetObjectModal = false;
     showRecordTypeSelectionModal = false;
     get modalStatus(){
+        
         if(this.selectedservicepoint != undefined){
 
-
-            if(this.showCreateTargetObjectModal == false){
-
+            if(this.showCreateTargetObjectModal == false && (this.processtype == '' || this.processtype == undefined)){
                 this.showCreateTargetObjectModal = true;
             }
         }
@@ -32,20 +31,13 @@ export default class hdtCreateTargetObject extends LightningElement {
     }
 
     connectedCallback(){
-        console.log('****************************************this.disabledinput'+ this.disabledinput);
-        console.log('targetObject***'+ JSON.stringify(this.targetobject));
-        console.log('recordType***'+ JSON.stringify(this.recordType));
 
         getCustomSettingFieldsRequiredEle().then(data=>{
             this.rowSplitEle = data.FieldRequiredEle__c.split(",");
-            console.log('rowSplitEle****'+ JSON.stringify(this.rowSplitEle));
         });
         getCustomSettingFieldsRequiredGas().then(data=>{
-
             this.rowSplitGas = data.FieldRequiredGas__c.split(",");
-            console.log('rowSplitGas****'+ JSON.stringify(this.rowSplitGas));
         });
-        console.log('connect to hdtCreateTragetObject');
     }
     
     /**
@@ -92,7 +84,6 @@ export default class hdtCreateTargetObject extends LightningElement {
      */
     getRecordType(recordType){
         this.recordType = recordType;
-        console.log('hdtCreateTargetObject - getRecordType: ', JSON.stringify(this.recordType));
     }
 
     /**
@@ -100,8 +91,6 @@ export default class hdtCreateTargetObject extends LightningElement {
      * @param {*} event 
      */
     handleNext(event){
-
-        console.log('handleNext'+ JSON.stringify(event.detail));
 
         this.closeRecordTypeSelection();
         this.getRecordType(event.detail);
@@ -121,9 +110,6 @@ export default class hdtCreateTargetObject extends LightningElement {
      */
     handleConfirmServicePoint(event){
         let servicePoint = event.detail;
-
-        console.log('hdtCreateTargetObject - handleConfirmServicePoint: ', JSON.stringify(servicePoint));
-
         this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: servicePoint}));
     }
 }

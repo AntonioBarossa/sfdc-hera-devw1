@@ -63,7 +63,8 @@ export default class HdtAppointmentAgenda extends LightningElement {
     @wire(getActivity,{activityId : '$activityid',fields : '$fieldsToRetrieve'})
     wireRecord({error,data}){
         if (error){
-            console.log(error);
+            console.error('status error: ' + error.status);
+            console.error('status body: ' + JSON.stringify(error.body));
         }
         if (data && this.params){
             this.activity = JSON.parse(data);
@@ -116,7 +117,7 @@ export default class HdtAppointmentAgenda extends LightningElement {
         let row = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
         handleConfirm({
             activityId : this.activityid,
-            appointmentCode : row[0].codice
+            appointmentJson : JSON.stringify(row[0])
         }).then(result =>{
             if (!result){
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
@@ -135,33 +136,25 @@ export default class HdtAppointmentAgenda extends LightningElement {
     }
 
     deleteAppointment(){
-        console.log('@@@@delete Init');
         this.showSpinner = true;
         handleCancellation({
             activityId : this.activityid,
             appointmentCode : this.activity.AppointmentCode__c
         }).then(result =>{
-            console.log('@@@@delete Init data management ' + result);
             if (!result){
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
             }else if (result === 'OK'){
-                console.log('@@@@delete result OK');
                 this.showAlert('Operazione Riuscita','L\'appuntamento è stato annullato','success');
                 this.refreshPage(this.isCommunity);
             }else{
-                console.log('@@@@delete result fault');
                 this.showAlert('Errore',result,'error');
                 this.dispatchEvent(new CustomEvent('cancelevent',{detail : this.refreshRecord}));
             }
-            console.log('@@@@delete end data management');
         }).catch(error =>{
-            console.log('@@@@delete Init error management');
             this.showAlert('Errore',error.body.message,'error');
-            console.log('@@@@delete end error management');
             this.dispatchEvent(new CustomEvent('cancelevent',{detail : this.refreshRecord}));
         });
-        console.log('@@@@delete end');
     }
 
 
@@ -205,7 +198,6 @@ export default class HdtAppointmentAgenda extends LightningElement {
             preferedDate : appointment,
             preferedTimeSlot : preferentialTime
         }).then(result =>{
-            console.log('@@@@ result search ' + result);
             if (!result){
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
@@ -213,7 +205,8 @@ export default class HdtAppointmentAgenda extends LightningElement {
                 this.showAlert('Attenzione','Non è possibile modificare l\'appuntamento.','error');
                 this.showSpinner = false;
             }else if (result.localeCompare('COMPETENZA DISTRIBUTORE') === 0){
-                this.showAlert('Attenzione','L\'appuntamento è in carico al distributore, non è possibile proseguire con l\'azione effettuata.','error');
+                let messaggio = this.isCommunity? 'Non è possibile proseguire con la prenotazione mediante questa procedura, poichè l\'appuntamento è in carico del distributore che la conttatterà per fissare un appuntamento.' :'L\'appuntamento è in carico al distributore, non è possibile proseguire con l\'azione effettuata.';
+                this.showAlert('Attenzione',messaggio,'error');
                 this.refreshPage(this.isCommunity);
             }else{
                 let data = JSON.parse(result);
@@ -247,14 +240,12 @@ export default class HdtAppointmentAgenda extends LightningElement {
                 }
             } 
         }).catch(error =>{
-            console.log('@@@@ error search ' + error);
             this.showSpinner = false;
             this.showAlert('Attenzione',error.body.message,'error');
         });
     }
 
     checkForm(appointment,preferentialTime){
-        console.log('@@@@checkForm Init');
         let message = '';
         if (!appointment){
             message = 'Inserire il campo "Data appuntamento preferenziale"';
@@ -268,7 +259,6 @@ export default class HdtAppointmentAgenda extends LightningElement {
                 message = 'La data inserita è già scaduta';
             }
         }
-        console.log('@@@@checkForm - End' + message);
         return message;
     }
 
@@ -303,15 +293,11 @@ export default class HdtAppointmentAgenda extends LightningElement {
     }
 
     async refreshPage(flagCommunity){
-        console.log('@@@@refreshPage ' + flagCommunity);
         let userCommunity;
         if (!flagCommunity){
-            console.log('reload');
             setTimeout(function(){window.location.reload()},3000);
         }else{
-            console.log('@@@@return flag synch');
             userCommunity = flagCommunity;
-            console.log('@@@@dispatch event');
             this.dispatchEvent(new CustomEvent('cancelevent',{detail : true}));
         }
     }
@@ -326,9 +312,6 @@ export default class HdtAppointmentAgenda extends LightningElement {
     }
 
     getDataValueForSearch(appDaConf,slot,requestType){
-        console.log('@@@@appDaConf: ' + appDaConf);
-        console.log('@@@@slot: ' + slot);
-        console.log('@@@@requestType: ' + requestType);
         if ((requestType === 'NewSlotModify') || (!appDaConf || ! slot)){
             return this.getDefaultSearchValue();
         }else{
@@ -336,10 +319,8 @@ export default class HdtAppointmentAgenda extends LightningElement {
             let dateToWork = new Date(appDaConf+' '+h);
             let milliseconds = dateToWork.getTime();
             if (milliseconds < Date.now()){
-                console.log('@@@@Invio il default');
                 return this.getDefaultSearchValue();
             }else{
-                console.log('@@@@Invio lo slot');
                 return { data: appDaConf, slot: slot}
             }
         }
@@ -351,7 +332,6 @@ export default class HdtAppointmentAgenda extends LightningElement {
         let month = m < 10? '0'+m : m;
         let day = d.getDate() < 10 ? '0'+d.getDate() : d.getDate(); 
         let d1String = d.getFullYear()+'-'+month+'-'+ day;
-        console.log('@@@@d1String ' + d1String);
         let d1 = new Date(d1String);
         let h0 = (d.getHours() === 23)? 0 : d.getHours()+1;
         let h1 = (h0===23)? 0 : h0 + 1;
@@ -363,7 +343,6 @@ export default class HdtAppointmentAgenda extends LightningElement {
             h1 = '0'+h1;
         }
         h1 = h1 +':00';
-        console.log('@@@@response default ' + JSON.stringify({ data: d1, slot: (h0+'/'+h1)}));
         return { data: d1, slot: (h0+'/'+h1)};
     }
 }

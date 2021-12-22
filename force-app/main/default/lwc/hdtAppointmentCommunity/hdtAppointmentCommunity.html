@@ -1,0 +1,77 @@
+<template>
+    <c-hdt-appointment-handler if:true={showAgenda} is-community="true" record-id={recordId}></c-hdt-appointment-handler>
+    <template if:false={showAgenda}>
+        <lightning-quick-action-panel header="Gestisci Appuntamento">
+            <div class="slds-modal__content" id="welcome-mat-113-content">
+                <template if:true={showSpinner}>
+                    <div class="demo-only demo--inverse" style="height:300px;position:relative">
+                        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                    </div>
+                </template>
+                <c-hdt-appointment-alert if:true={showError} variant="error" is-dismissible="false">
+                    <h2>{message}</h2>
+                </c-hdt-appointment-alert>
+                <template if:true={showLogin}>
+                    <div class="slds-welcome-mat__tiles">
+                        <div class="slds-form-element slds-form-element_compound">
+                            <div class="slds-form-element__control">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-size_1-of-12 slds-p-top_medium"></div>
+                                    <div class="slds-size_10-of-12 slds-p-top_medium">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="form-element-03">
+                                            <abbr class="slds-required" title="required">* </abbr>
+                                            <div class="custom-input-label">Inserisci il codice fiscale o la partita iva di chi richiede la prestazione</div>
+                                            </label>
+                                            <div class="slds-form-element__control">
+                                            <input data-id="userData" type="text" id="form-element-03"  required="" class="slds-input" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-12 slds-p-top_medium"></div>
+                                </div>
+                                <div if:true={showPrivacy} class="slds-form-element__row">
+                                    <div class="slds-size_1-of-12 slds-p-top_medium"></div>
+                                    <div class="slds-size_10-of-12 slds-p-top_medium">
+                                        <div class="slds-form-element">
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-checkbox">
+                                                    <abbr class="slds-required" title="required">*</abbr>
+                                                    <input type="checkbox" name="options" id="checkbox-unique-id-72" value="checkbox-unique-id-72" disabled={disabledPrivacy} onchange={handlePrivacy}/>
+                                                    <label class="slds-checkbox__label" for="checkbox-unique-id-72">
+                                                        <span class="slds-checkbox_faux"></span>
+                                                        <span class="slds-form-element__label custom-checkbox-label">Ho preso visione dell'informativa sulla <a class="custom-link" target="_blank" href={privacyUrl} onclick={enablePrivacy}>privacy</a></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-12 slds-p-top_medium"></div>
+                                </div>
+                                <div class="slds-form-element__row">
+                                    <div class="slds-size_1-of-4 slds-p-top_medium"></div>
+                                    <div class="slds-size_2-of-4 slds-p-top_medium custom-format-checkbox slds-box custom-box slds-align_absolute-center">
+                                        <label class={robotClass} for="example-unique-id-194">
+                                            <input type="checkbox" onclick={changeRobotState} class="slds-assistive-text" id="example-unique-id-194" value="example-unique-id-194" />
+                                            <span if:false={iAmRobot} class="slds-icon_container slds-icon-utility-check slds-current-color" title="Description of icon when needed">
+                                                <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                                </svg>
+                                                <span class="slds-assistive-text">Add product</span>
+                                            </span>
+                                        </label>
+                                        <div class="custom-label">Non sono un robot</div>
+                                    </div>
+                                    <div class="slds-size_1-of-4 slds-p-top_medium"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-m-top_medium slds-p-bottom_small slds-text-align_center">
+                            <lightning-button disabled={disabledButton} variant="brand" label="Avanti" onclick={handleAuthenticate} class="slds-m-left_x-small" icon-name="utility:check"></lightning-button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </lightning-quick-action-panel>
+    </template>
+</template>

@@ -1198,21 +1198,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Status__c</picklist>
-        <values>
-            <fullName>Annullata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiusa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Creata</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Subject__c</picklist>
         <values>
             <fullName>Acceso Piattaforme documentali</fullName>
