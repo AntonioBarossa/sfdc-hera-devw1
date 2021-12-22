@@ -28,6 +28,11 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
         Map<id, id> itemToOrderOffer = new Map<id, id>();
         Map<id, id> itemToContract = new Map<id, id>();
         Map<id, id> itemToServicePoint = new Map<id, id>();
+        /**@frpanico 22/12/2021
+         * Dichiarata Map<String, Map<Id, Id>>
+         * per ricostruire la struttura della subscription
+         */
+        Map<String, Map<Id, Id>> itemsMapToSub = new Map<String, Map<Id,Id>>();
         for(OrderItem item : items){
             if(item.Order.OrderReference__c!=null){
                 itemToOrderOffer.put( item.Order.OrderReference__c, item.id);
@@ -38,6 +43,14 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
                 itemToServicePoint.put(item.Order.ServicePoint__c, item.id);
             }
         }
+
+        /**@frpanico 22/12/2021
+         * Popola la Map<String,Map<Id,Id>> 
+         * per ricostruire la struttura
+         */
+        itemsMapToSub.put('servicePoint', itemToServicePoint);
+        itemsMapToSub.put('contract', itemToContract);
+        itemsMapToSub.put('order', itemToOrderOffer);
 
         system.debug(itemToOrderOffer.keySet());
         if(!itemToOrderOffer.isEmpty()){
@@ -79,7 +92,7 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
             }
         }
 
-        recreateSubscriptionStructure(itemToSub, itemToServicePoint);
+        recreateSubscriptionStructure(itemToSub, itemsMapToSub);
         
     }
 
@@ -88,38 +101,56 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
     * Ricostruisce la struttura della subscription 
     * nel caso di: "Cambio Offerta"
     */
-    private static void recreateSubscriptionStructure(Map<Id, SBQQ__Subscription__c> itemToSub, Map<id, id> itemToServicePoint)
+    private static void recreateSubscriptionStructure(Map<Id, SBQQ__Subscription__c> itemToSub, Map<String, Map<id, id>> itemsMapToSub)
     {
         /* Get "Parent" subscription
         * Al momento viene gestito il caso di
         * "Aggiunta Bonus e Sconti"
         */
 
-        Set<String> allowedProcess = new Set<String>{'HDT_RT_CambioOfferta'};
+        //Set<String> allowedProcess = new Set<String>{'HDT_RT_CambioOfferta'};        
 
-        if(!itemToServicePoint.isEmpty())
+        Map<Id, Id> itemToServicePoint = itemsMapToSub.get('servicePoint');
+        Map<Id, Id> itemToContract = itemsMapToSub.get('contract');
+        Map<Id, Id> itemToOrderOffer = itemsMapToSub.get('order');
+
+        SObjectAccessDecision securityDecision = 
+            Security.stripInaccessible(accessType.READABLE, 
+            [SELECT Id,
+            SBQQ__Product__c,
+            SBQQ__Contract__r.SBQQ__Order__r.ServicePoint__c,
+            SBQQ__Contract__c,
+            SBQQ__Contract__r.SBQQ__Order__c
+            FROM SBQQ__Subscription__c
+            WHERE SBQQ__Contract__r.SBQQ__Order__r.ServicePoint__c IN :itemToServicePoint.keySet()
+            OR SBQQ__Contract__c IN :itemToContract.keySet()
+            OR SBQQ__Contract__r.SBQQ__Order__c IN :itemToOrderOffer.keySet()]);
+        for(SBQQ__Subscription__c parentSub : (List<SBQQ__Subscription__c>)securityDecision.getRecords())
         {
-            SObjectAccessDecision securityDecision = 
-                Security.stripInaccessible(accessType.READABLE, 
-                [SELECT Id,
-                SBQQ__Product__c,
-                SBQQ__Contract__r.SBQQ__Order__r.ServicePoint__c
-                FROM SBQQ__Subscription__c
-                WHERE SBQQ__Contract__r.SBQQ__Order__r.RecordType.DeveloperName IN :allowedProcess 
-                AND SBQQ__Contract__r.SBQQ__Order__r.ServicePoint__c IN :itemToServicePoint.keySet()]);
-            for(SBQQ__Subscription__c parentSub : (List<SBQQ__Subscription__c>)securityDecision.getRecords())
-            {
-                Id itemId = itemToServicePoint.get(parentSub.SBQQ__Contract__r.SBQQ__Order__r.ServicePoint__c);
-                SBQQ__Subscription__c sub = itemToSub.get(itemId);
-                if(sub != null)
-                {
-                    sub.SBQQ__RequiredByProduct__c = parentSub.SBQQ__Product__c;
-                    sub.SBQQ__RequiredById__c = parentSub.Id;
-                    sub.SBQQ__RootId__c = parentSub.Id;
-                }
+            List<SBQQ__Subscription__c> childSubs = new List<SBQQ__Subscription__c>();
 
+            if(!itemToServicePoint.isEmpty())
+            {
+                childSubs.add(itemToSub.get(itemToServicePoint.get(parentSub.SBQQ__Contract__r.SBQQ__Order__r.ServicePoint__c)));
             }
+            else if(!itemToContract.isEmpty())
+            {
+                childSubs.add(itemToSub.get(itemToContract.get(parentSub.SBQQ__Contract__c)));
+            }
+            else if(!itemToContract.isEmpty())
+            {
+                childSubs.add(itemToSub.get(itemToOrderOffer.get(parentSub.SBQQ__Contract__r.SBQQ__Order__c)));
+            }
+
+            for(SBQQ__Subscription__c sub : childSubs)
+            {
+                sub.SBQQ__RequiredByProduct__c = parentSub.SBQQ__Product__c;
+                sub.SBQQ__RequiredById__c = parentSub.Id;
+                sub.SBQQ__RootId__c = parentSub.Id;
+            }
+
         }
+        
     }
 
     public static void deleteContractsOnAfterInsert(){
