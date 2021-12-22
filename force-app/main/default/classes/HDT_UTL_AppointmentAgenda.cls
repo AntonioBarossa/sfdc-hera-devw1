@@ -76,11 +76,21 @@ public with sharing class HDT_UTL_AppointmentAgenda {
 
     public static wrts_prcgvr__Activity__c getActivity(Id activityId,String fields){
         String objectName = 'wrts_prcgvr__Activity__c';
-        List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords(fields, objectName, 'Id = \''+activityId+'\'');
+        List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords(fields, objectName, 'Id = \''+String.escapeSingleQuotes(activityId)+'\'');
+        return (wrts_prcgvr__Activity__c)activities[0];
+    }
+
+    public static wrts_prcgvr__Activity__c getCryptoActivity(String cryptedId,String fields){
+        String objectName = 'wrts_prcgvr__Activity__c';
+        List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords(fields, objectName, 'CustomRecordId__c = \''+String.escapeSingleQuotes(cryptedId)+'\'');
         return (wrts_prcgvr__Activity__c)activities[0];
     }
 
     public static String manageResponse(HDT_WRP_Appuntamento.HDT_WRP_ResponseAppuntamento response,Id activityId,requestType requestMethod){
+        return manageResponse(response,activityId,requestMethod,null);
+    }
+
+    public static String manageResponse(HDT_WRP_Appuntamento.HDT_WRP_ResponseAppuntamento response,Id activityId,requestType requestMethod,HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento appointment){
         wrts_prcgvr__Activity__c activity;
         String responseString = '';
         formatResponse(response);
@@ -119,14 +129,13 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         }else if ('0175'.equals(response.codFlusso)){
             switch on response.desEsitoConf {
                 when '1' {
-                    HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento appuntamento = response.appuntamento[0];
                     activity = getActivity(activityId,'Id,wrts_prcgvr__Status__c');
-                    activity.MaxTimeModificationAppointment__c = appuntamento.zLimAppOra;
-                    activity.MaxDateModificationAppointment__c = Date.valueOf(formatDate(appuntamento.zLimApp));
-                    activity.AppointmentCode__c = appuntamento.codiceApp;
-                    activity.AppoitmentTimeSlotConfirmed__c = appuntamento.appFasciaOrario;
-                    activity.AppointmentDuration__c = appuntamento.zStimaDurApp;
-                    activity.AppointmentDate__c = Date.valueOf(formatDate(appuntamento.appData));
+                    activity.MaxTimeModificationAppointment__c = appointment.zLimAppOra;
+                    activity.MaxDateModificationAppointment__c = Date.valueOf(formatDate(appointment.zLimApp));
+                    activity.AppointmentCode__c = appointment.codiceApp;
+                    activity.AppoitmentTimeSlotConfirmed__c = appointment.appFasciaOrario;
+                    activity.AppointmentDuration__c = appointment.zStimaDurApp;
+                    activity.AppointmentDate__c = Date.valueOf(formatDate(appointment.appData));
                     activity.wrts_prcgvr__Status__c = 'Appuntamento confermato'.equalsIgnoreCase(activity.wrts_prcgvr__Status__c)? 'Modifica confermata' : 'Appuntamento confermato';
                     responseString = 'OK'; 
                 }
@@ -268,6 +277,25 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         return response;
     }
 
+    public static void setContactData(wrts_prcgvr__Activity__c activity,Contact cont){
+        if (cont != null){
+            String fiscalCode = (cont.FiscalCode__c != null && cont.FiscalCode__c.startsWithIgnoreCase('it'))? cont.FiscalCode__c.substring(2) : cont.FiscalCode__c;
+            if (String.isNotBlank(fiscalCode) && fiscalCode.isNumeric()){
+                activity.VATNumber__c = fiscalCode;
+            }else{
+                activity.VATNumber__c = (String.isNotBlank(cont.VATNumber__c) && cont.VATNumber__c.startsWithIgnoreCase('it'))? cont.VATNumber__c.substring(2) : cont.VATNumber__c;
+                activity.FiscalCode__c = cont.FiscalCode__c;
+            }
+        }
+    }
+
+    public static Blob criptId(Id idToCript){
+        Blob key = Crypto.generateAesKey(128);
+        Blob data = Blob.valueOf((String)idToCript);
+        System.debug('original Blob -->' +JSON.serialize(data));
+        return Crypto.encryptWithManagedIV('AES128', key, data);
+    }
+    
     private static String formatDate(String dateToWork){
         String newDate = dateToWork;
         if (String.isNotEmpty(dateToWork) && Pattern.matches('(0?[1-9]|[1-2][0-9]|[3][0-1])[//](0?[1-9]|[1][0-2])[//]\\d{4}', newDate)){

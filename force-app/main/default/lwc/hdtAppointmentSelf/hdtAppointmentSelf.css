@@ -1,0 +1,9 @@
+.slds-modal__container {
+    max-width: 30rem !important;
+    min-width: 300px !important;
+    width: 30% !important;
+}
+
+.slds-modal {
+    overflow: auto !important;
+}

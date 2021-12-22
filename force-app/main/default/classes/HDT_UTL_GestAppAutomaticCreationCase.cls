@@ -1,6 +1,6 @@
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_UTL_GestAppAutomaticCreationCase implements wrts_prcgvr.Interfaces_1_0.IApexAction{
-    
+    private HDT_SRV_AppointmentAgenda agendaSrv = new HDT_SRV_AppointmentAgenda();
     /* Map<String,Map<String,Boolean>> mapDistributorProcess = new Map<String,Map<String,Boolean>>
     { 'SubentrosuGdMchiuso' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
     'Attivazione' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
@@ -44,7 +44,7 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreationCase implements w
             w.recordtypeid = rec;
             w.wrts_prcgvr__Status__c = 'Creata';
             w.ServicePoint__c = ca.ServicePoint__c;
-
+            agendaSrv.setContactData(w, ca.Contact);
             actSrv.createRecord(w);
 
         }

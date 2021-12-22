@@ -195,7 +195,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.TrackingDiscardPhase__c = reqWrp.requestMap.get('FASE');
         }
         //END>> 23/08/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, ricezione fasi monitorate su reports
-        if(String.isBlank(reqWrp.requestMap.get('FASE')) && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita') && !method.equalsIgnoreCase('aggiornaRCU')){
+        if(String.isBlank(reqWrp.requestMap.get('FASE'))  && String.isBlank(reqWrp.requestMap.get('ATTIVITA')) && !method.equalsIgnoreCase('AddAttivita') && !method.equalsIgnoreCase('aggiornaRCU') && !method.equalsIgnoreCase('AggiornaAppuntamento')){
             //gestione scarti
             return caseUpdate;
         }
@@ -443,8 +443,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             updateFuture(JSON.serialize(currentCase));
             return caseUpdate;
         }else if (method.equalsIgnoreCase('AggiornaAppuntamento')){
+            currentCase.Id = recordId;
             HDT_SRV_AppointmentAgenda agendaService = new HDT_SRV_AppointmentAgenda();
-            agendaService.handleAppointmentUpdate(reqWrp.requestMap);
+            Map<String,String> clonedRequestMap = reqWrp.requestMap.clone();
+            clonedRequestMap.put('PROCESS_CATEGORY','postsales');
+            String responseMethod = agendaService.handleAppointmentUpdate(clonedRequestMap);
+            if (String.isNotEmpty(responseMethod)){
+                throw new HDT_UTL_RichPassException(responseMethod);
+            }
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
         }
