@@ -13363,7 +13363,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Product2.PriceBonusGas__c</field>
+        <field>Product2.PriceGas__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
