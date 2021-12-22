@@ -16,13 +16,13 @@
             <br></br>
             <lightning-card title="Gestione Ordini Padri">
                 <template if:false={selectedOrder}>
-                    <lightning-datatable key-field="Id" data={ordersList} columns={columns}
+                    <lightning-datatable key-field="Id" data={ordersList} columns={columns} max-row-selection=1
                         selected-rows={selectedOrderValue} onrowselection={selectedRowHandler}></lightning-datatable>
                 </template>
                 <template if:true={selectedOrder}>
                     <template if:true={showSingleRow}>
 
-                        <lightning-datatable key-field="Id" data={selectedParentAsList} columns={columns}
+                        <lightning-datatable key-field="Id" data={selectedParentAsList} columns={columns} max-row-selection=0
                             selected-rows={selectedParentAsListRow} onrowselection={selectedRowHandler}>
                         </lightning-datatable>
                     </template>
@@ -135,15 +135,23 @@
                             disabled={isSaveButtonDisabled} icon-name="utility:save" variant="brand" label="Preview"
                             title="Preview action"></lightning-button>
                     </div>
-                </template>
-                <div
-                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                    <lightning-button onclick={handleAnnull} class="slds-m-left_x-small" icon-name="utility:save"
-                        variant="brand" label="Annulla" title="Annulla"></lightning-button>
-                    <lightning-button onclick={handleConfirmDraft} class="slds-m-left_x-small" icon-name="utility:save"
-                        variant="brand" label="Salva in Bozza" title="Salva in Bozza"></lightning-button>
-                    <lightning-button onclick={handleConfirm} class="slds-m-left_x-small" icon-name="utility:save"
-                        variant="brand" label="Conferma" title="Conferma"></lightning-button>
+                </template>                
+                <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
+                    <div class="actionsLeft">
+
+                    </div>
+                    <div class="actionsRight">
+                        <lightning-button
+                                class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                                variant="brand" type="button" label="Conferma" onclick={handleConfirm}>
+                            </lightning-button>
+                        <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                                variant="neutral" type="button" label="Salva in Bozza" onclick={handleConfirmDraft}>
+                            </lightning-button>
+                        <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
+                                variant="brand" type="button" label="Annulla" onclick={handleAnnull}>
+                            </lightning-button>
+                    </div>
                 </div>
             </template>
         </template>
