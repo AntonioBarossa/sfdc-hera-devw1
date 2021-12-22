@@ -8,7 +8,22 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
         for(SBQQ__Subscription__c sub : newSubs){
             itemToSub.put(sub.SBQQ__OrderProduct__c, sub);
         }
-        Map<Id, OrderItem> itemsMap = new Map<Id, OrderItem>([SELECT id, Order.OrderReference__c, Order.ContractReference__c, Order.ServicePoint__c, Order.RecordType.DeveloperName FROM OrderItem WHERE Id IN :itemToSub.keySet() AND (Order.RecordType.DeveloperName='HDT_RT_ScontiBonus' OR (Order.RecordType.DeveloperName='HDT_RT_VAS' AND (Order.OrderReference__c!=null OR Order.ContractReference__c!=null)) ) WITH Security_Enforced ]);
+        Map<Id, OrderItem> itemsMap = new Map<Id, OrderItem>(
+            [SELECT id, 
+            Order.OrderReference__c, 
+            Order.ContractReference__c, 
+            Order.ServicePoint__c, 
+            Order.RecordType.DeveloperName 
+            FROM OrderItem 
+            WHERE Id IN :itemToSub.keySet() 
+            AND (Order.RecordType.DeveloperName='HDT_RT_ScontiBonus' 
+                OR 
+                    (
+                    Order.RecordType.DeveloperName='HDT_RT_VAS' 
+                    AND (Order.OrderReference__c!=null OR Order.ContractReference__c!=null)
+                    ) 
+                ) 
+            WITH Security_Enforced ]);
         list<OrderItem> items = itemsMap.values();
         Map<id, id> itemToOrderOffer = new Map<id, id>();
         Map<id, id> itemToContract = new Map<id, id>();
@@ -63,7 +78,48 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
                 }   
             }
         }
+
+        recreateSubscriptionStructure(itemToSub, itemToServicePoint);
         
+    }
+
+    /*@frpanico 20/12/2021
+    * Aggiunto Modulo
+    * Ricostruisce la struttura della subscription 
+    * nel caso di: "Cambio Offerta"
+    */
+    private static void recreateSubscriptionStructure(Map<Id, SBQQ__Subscription__c> itemToSub, Map<id, id> itemToServicePoint)
+    {
+        /* Get "Parent" subscription
+        * Al momento viene gestito il caso di
+        * "Aggiunta Bonus e Sconti"
+        */
+
+        Set<String> allowedProcess = new Set<String>{'HDT_RT_CambioOfferta'};
+
+        if(!itemToServicePoint.isEmpty())
+        {
+            SObjectAccessDecision securityDecision = 
+                Security.stripInaccessible(accessType.READABLE, 
+                [SELECT Id,
+                SBQQ__Product__c,
+                SBQQ__Contract__r.SBQQ__Order__r.ServicePoint__c
+                FROM SBQQ__Subscription__c
+                WHERE SBQQ__Contract__r.SBQQ__Order__r.RecordType.DeveloperName IN :allowedProcess 
+                AND SBQQ__Contract__r.SBQQ__Order__r.ServicePoint__c IN :itemToServicePoint.keySet()]);
+            for(SBQQ__Subscription__c parentSub : (List<SBQQ__Subscription__c>)securityDecision.getRecords())
+            {
+                Id itemId = itemToServicePoint.get(parentSub.SBQQ__Contract__r.SBQQ__Order__r.ServicePoint__c);
+                SBQQ__Subscription__c sub = itemToSub.get(itemId);
+                if(sub != null)
+                {
+                    sub.SBQQ__RequiredByProduct__c = parentSub.SBQQ__Product__c;
+                    sub.SBQQ__RequiredById__c = parentSub.Id;
+                    sub.SBQQ__RootId__c = parentSub.Id;
+                }
+
+            }
+        }
     }
 
     public static void deleteContractsOnAfterInsert(){
