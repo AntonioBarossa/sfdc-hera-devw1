@@ -1,6 +1,6 @@
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_prcgvr.Interfaces_1_0.IApexAction{
-    
+    private HDT_SRV_AppointmentAgenda agendaSrv = new HDT_SRV_AppointmentAgenda();
     /* Map<String,Map<String,Boolean>> mapDistributorProcess = new Map<String,Map<String,Boolean>>
     { 'SubentrosuGdMchiuso' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
     'Attivazione' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
@@ -29,7 +29,7 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_
         SObject obj = (sObject) argsMap.get('sender');
         String idObject = (String)obj.get('Id');
         //HDT_QR_Order orderQr= new HDT_QR_Order();
-        List<Order> ordList = [Select id,Sale__r.SalesContact__c,servicePoint__c,AccountId,ServicePoint__r.CommoditySector__c,ServicePoint__r.distributor__r.name from order where id =:idObject WITH SECURITY_ENFORCED];
+        List<Order> ordList = [Select id,Sale__r.SalesContact__c,Sale__r.SalesContact__r.FiscalCode__c,Sale__r.SalesContact__r.VATNumber__c, servicePoint__c,AccountId,ServicePoint__r.CommoditySector__c,ServicePoint__r.distributor__r.name from order where id =:idObject WITH SECURITY_ENFORCED];
         if(ordList != null && !ordList.isEmpty()){
             Order ord = ordList[0];
             HDT_AppointmentSetting__mdt conf = HDT_UTL_AppointmentSetting.getAtoaFlag(method, ord.ServicePoint__r.distributor__r.name, ord.ServicePoint__r.CommoditySector__c);
@@ -44,7 +44,7 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_
                 w.isAtoa__c = conf.Flag__c;
                 w.recordtypeid = rec;
                 w.wrts_prcgvr__Status__c = 'Creata';
-
+                agendaSrv.setContactData(w, ord.Sale__r.SalesContact__r);
                 actSrv.createRecord(w);
 
             }

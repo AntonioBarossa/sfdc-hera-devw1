@@ -3808,7 +3808,12 @@
         <field>OrderItem.PowerFlow__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.ProductDescriptionSAP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.DefaulStartTime__c</field>
         <readable>true</readable>
@@ -16277,7 +16282,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Product2.PriceBonusGas__c</field>
+        <field>Product2.PriceGas__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -29216,7 +29221,12 @@
         <field>wrts_prcgvr__Activity__c.AssignedToQueueDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.CustomRecordId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.AppointmentOutcome__c</field>
         <readable>true</readable>

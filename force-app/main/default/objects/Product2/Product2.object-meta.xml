@@ -149,7 +149,7 @@
         <searchResultsAdditionalFields>Version__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Price__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>PriceBonusGas__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>PriceGas__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Percentage__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>DurationDay__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>DurationDayGas__c</searchResultsAdditionalFields>

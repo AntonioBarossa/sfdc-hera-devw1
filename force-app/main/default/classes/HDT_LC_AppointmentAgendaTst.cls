@@ -99,23 +99,23 @@ public with sharing class HDT_LC_AppointmentAgendaTst {
     }
 
     @IsTest
-    public static void executeHandlehandleConfirm(){
-        String methodName = 'executeHandlehandleConfirm: ';
+    public static void executeHandleConfirm(){
+        String methodName = 'executeHandleConfirm: ';
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         activity.wrts_prcgvr__Status__c = 'Presa appuntamento in corso';
         activity.AppointmentCode__c = '6666';
         update activity;
         Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock('0175'));
         Test.startTest();
-            HDT_LC_AppointmentAgenda.handleConfirm(activity.Id, '6666');
+            HDT_LC_AppointmentAgenda.handleConfirm(activity.Id, '{"data" : "31/12/2021","fascia" : "15:00/16:00","codice" : "2222","dataLimite" : "28/12/2021","oraLimite" : "19:00","stima" :"00:30:00"}');
         Test.stopTest();
         activity = [SELECT Id,AppointmentCode__c,wrts_prcgvr__Status__c,AppoitmentTimeSlotConfirmed__c,AppointmentDate__c,MaxDateModificationAppointment__c,MaxTimeModificationAppointment__c FROM wrts_prcgvr__Activity__c];
         System.assertEquals('Appuntamento confermato', activity.wrts_prcgvr__Status__c, methodName + 'Stato non settato correttamente');
         System.assertEquals('2222', activity.AppointmentCode__c, methodName + 'Codice Appuntamento non settato correttamente');
         System.assertEquals('15:00/16:00', activity.AppoitmentTimeSlotConfirmed__c, methodName + 'Fascia Oraria Preferita non settata');
-        System.assertEquals(Date.newInstance(2022, 12, 31), activity.AppointmentDate__c, methodName + 'Data appuntamento non settata correttamente');
-        System.assertEquals(Date.newInstance(2022, 12, 28), activity.MaxDateModificationAppointment__c, methodName + 'Data limite massimo cancellazione appuntamento non settata correttamente');
-        System.assertEquals('19:00:00', activity.MaxTimeModificationAppointment__c, methodName + 'Tempolimite massimo cancellazione appuntamento non settato correttamente');
+        System.assertEquals(Date.newInstance(2021, 12, 31), activity.AppointmentDate__c, methodName + 'Data appuntamento non settata correttamente');
+        System.assertEquals(Date.newInstance(2021, 12, 28), activity.MaxDateModificationAppointment__c, methodName + 'Data limite massimo cancellazione appuntamento non settata correttamente');
+        System.assertEquals('19:00', activity.MaxTimeModificationAppointment__c, methodName + 'Tempolimite massimo cancellazione appuntamento non settato correttamente');
     }
 
     @IsTest
@@ -127,6 +127,18 @@ public with sharing class HDT_LC_AppointmentAgendaTst {
             String response = HDT_LC_AppointmentAgenda.getActivity(recordId, new List<String>{'Id', 'wrts_prcgvr__Status__c'});
             activity = (wrts_prcgvr__Activity__c)JSON.deserialize(response, wrts_prcgvr__Activity__c.class);
             System.assertEquals(recordId, activity.Id, methodName + 'Non è stata lanciata l\'eccezione.');
+        Test.stopTest();
+    }
+
+    @IsTest
+    public static void executeCheckCryptId(){
+        String methodName = 'executeGetEncryptedIdy: ';
+        wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
+        Test.startTest();
+            String encryptedId = HDT_LC_AppointmentAgenda.getEncryptedId(activity.Id);
+            String activityJson = HDT_LC_AppointmentAgenda.getDecryptedId(encryptedId,new List<String>{'Id'});
+            wrts_prcgvr__Activity__c retrievedActivity = (wrts_prcgvr__Activity__c) JSON.deserialize(activityJson,wrts_prcgvr__Activity__c.class);
+            System.assertEquals(activity.Id, retrievedActivity.Id, methodName +'La decodifica non ha funzionato');
         Test.stopTest();
     }
 
