@@ -1,27 +1,32 @@
 public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_ProcessExecution {
 
     private Map<String, String> mapCaseFields;
-    private Map<String, Integer> mapHPositionByeader;
+    private Map<String, String> mapWrapperCaseFields;
+    //private Map<String, Integer> mapHPositionByeader;
     private List<MassiveLoaderRequestItem__c> itemsToSave;
 
     public override void checks(){
         System.debug('checks');
+
         mapFieldsObject();
+
         System.debug('>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
+        System.debug('>>> mapWrapperCaseFields: ' + String.valueOf(mapWrapperCaseFields));
+        System.debug('>>> mapHeaderForWrapper: ' + String.valueOf(mapHeaderForWrapper));
         System.debug('>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
         //System.debug('>>> mapRequiredByPosition: ' + String.valueOf(mapRequiredByPosition));
         //System.debug('>>> currentRequestItemList: ' + String.valueOf(currentProcess));
 
         HDT_QR_StaticResource qrStaticResource = new HDT_QR_StaticResource();
-        List<StaticResource> staticResources = qrStaticResource.getRecordByName('Disattivazioni');
+        List<StaticResource> staticResources = qrStaticResource.getRecordByName(this.processName);
 
-        mapHPositionByeader = new Map<String, Integer>();
-        Integer count=0;
-        for (String temp : staticResources.get(0).Body.toString().remove('\r').remove('\n').split(',')) {
-            mapHPositionByeader.put(temp, count);
-            count++;
-        }
-        System.debug('>>> mapHPositionByeader: ' + String.valueOf(mapHPositionByeader));
+        //mapHPositionByeader = new Map<String, Integer>();
+        //Integer count=0;
+        //for (String temp : staticResources.get(0).Body.toString().remove('\r').remove('\n').split(',')) {
+        //    mapHPositionByeader.put(temp, count);
+        //    count++;
+        //}
+        //System.debug('>>> mapHPositionByeader: ' + String.valueOf(mapHPositionByeader));
     }
 
     public override void getRecords(){
@@ -34,6 +39,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
         getLimitDetails('START registryCreation');
 
         Set<String> podSet = new Set<String>();
+        Set<String> contractCodeSet = new Set<String>();
         Set<String> accountIdSet = new Set<String>();
         List<Contract> contractList;
         Map<String, List<String>> itemRequestMap = new Map<String, List<String>>();
@@ -50,26 +56,33 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
         List<Order> orderList;
 
         //System.debug('>>> currentRequestItemList: ' + String.valueOf(currentProcess.currentCase));
+        //System.debug('>>> get mapCaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
+        //Integer podIndex = mapHPositionByeader.get('POD');
+        //Integer accountIdIndex = mapHPositionByeader.get('ACCOUNTID');
+        //Integer orderVolturaIndex = mapHPositionByeader.get('ORDER_VOLTURA');
 
-        Integer podIndex = mapHPositionByeader.get('POD');
-        Integer accountIdIndex = mapHPositionByeader.get('ACCOUNTID');
-        Integer orderVolturaIndex = mapHPositionByeader.get('ORDER_VOLTURA');
+        Integer podIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('POD'));
+        Integer contractIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CONTRATTO'));
+        Integer accountIdIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
+        Integer orderVolturaIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ORDER_VOLTURA'));
 
-        //System.debug('>>> podIndex: ' + podIndex);
-        //System.debug('>>> accountIdIndex: ' + accountIdIndex);
+        System.debug('>>> podIndex: ' + podIndex);
+        System.debug('>>> contractIndex: ' + contractIndex);
+        System.debug('>>> accountIdIndex: ' + accountIdIndex);
         System.debug('>>> orderVolturaIndex: ' + orderVolturaIndex);
 
         List<String> dataSplitted;
         for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
             dataSplitted = item.Data__c.split(',');
             accountIdSet.add(dataSplitted[accountIdIndex]);
-            podSet.add(dataSplitted[podIndex]);
+            //podSet.add(dataSplitted[podIndex]);
+            contractCodeSet.add(dataSplitted[contractIndex]);
             itemRequestMap.put(item.Id, dataSplitted);
             orderNumberList.add(dataSplitted[orderVolturaIndex]);
         }
 
         recordTypeId = HDT_QR_ProcessPostSales.getRecordTypeId('HDT_RT_Disattivazioni');
-        contractList = HDT_QR_ProcessPostSales.getContracts(podSet, contractList);
+        contractList = HDT_QR_ProcessPostSales.getContracts(contractCodeSet, contractList);
         accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
         orderList = HDT_QR_ProcessPostSales.getOrderByOrderNumber(orderList, orderNumberList);
 
@@ -84,7 +97,8 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
         }
 
         for(Contract singleContract : contractList){
-            podContractMap.put(singleContract.ServicePoint__r.ServicePointCode__c, singleContract);
+            //podContractMap.put(singleContract.ServicePoint__r.ServicePointCode__c, singleContract);
+            podContractMap.put(singleContract.SAPContractCode__c, singleContract);
         }
 
         for(AccountContactRelation singleRelation : accContRelationList){
@@ -95,11 +109,12 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
         for(String itemId : itemRequestMap.keySet()){
 
             List<String> tempSplitted = itemRequestMap.get(itemId);
-
+            newCase = new Case();
             // Per ogni item della mappa itemRequestMap viene convertito il data__c in una lista (tempSplitted) e tramite il metodo mapTypeField la lista viene
             // convertita nel custom obj indicato, in questo caso è currentProcess.currentCase
 
-            Integer count=0;
+            Integer count = 0;
+            String convertionError;
             for (String tempField : tempSplitted) {
 
                 if ('null'.equalsIgnoreCase(tempField)) {
@@ -112,26 +127,35 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
                 //}
             
                 if(String.isNotBlank(mapCaseFields.get(mapHeaderByPosition.get(count))) && String.isNotBlank(tempField)){
-                    System.debug('>>> tempField: ' + tempField);
-                    System.debug('>>> get mapHeaderByPosition: ' + mapHeaderByPosition.get(count));
-                    System.debug('>>> get mapCaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
-                    mapTypeField(currentProcess.currentCase, mapCaseFields, count, tempField);
+                    //System.debug('>>> tempField: ' + tempField);
+                    //System.debug('>>> get mapHeaderByPosition: ' + mapHeaderByPosition.get(count));
+                    //System.debug('>>> get mapCaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
+                    convertionError = mapTypeField(newCase, mapCaseFields, count, tempField);
+
+                    if(!String.isEmpty(convertionError)){
+                        // error happened -> exit
+                        break;
+                    }
                 }
                 count++;
             }
-            System.debug('>>> currentCase: ' + currentProcess.currentCase);
+
+            if(!String.isEmpty(convertionError)){
+                itemsToSave.add(setErrorItem(itemId, convertionError));
+                continue;
+            }
+
+            //System.debug('>>> currentCase: ' + newCase);
 
             //String processType = tempSplitted[mapHPositionByeader.get('PROCESSO')];
-
-            newCase = new Case();
-            newCase = currentProcess.currentCase;
+            //newCase = currentProcess.currentCase;
 
             newCase.RecordTypeId = recordTypeId;
 
             Contract contract;
             
-            if(podContractMap.containsKey(tempSplitted[podIndex])){
-                contract = podContractMap.get(tempSplitted[podIndex]);
+            if(podContractMap.containsKey(tempSplitted[contractIndex])){
+                contract = podContractMap.get(tempSplitted[contractIndex]);
                 newCase.Contract__c = contract.Id;
                 newCase.ServicePoint__c = contract.ServicePoint__c;
                 newCase.BillingProfile__c = contract.BillingProfile__c;
@@ -155,25 +179,28 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
             newCase.Cluster__c = 'Disattivazioni';
             newCase.Phase__c = 'Bozza';
             newCase.CompanyOwner__c = 'HERA COMM';
-            newCase.CausalCode__c = 'D01';
             
+            HDT_QR_CausalCodeCalculation causalCodeCalculation = new HDT_QR_CausalCodeCalculation();
+            HDT_CausalCodeCalculation__mdt causalCode;
+            causalCode = causalCodeCalculation.calculateCausalCode(this.processName, newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
+
+            if(causalCode != null){
+                newCase.CausalCode__c = causalCode.CausalCode__c;//'D01' for example
+            } else {
+                //do something -> record error
+            }
+            
+            // WrittenReceiptRequestDate__c
+            // CustomerRecessDate__c
+
             if(newCase.Type.equalsIgnoreCase('Recesso per Rifiuto Voltura')){
-                String currentOrderNum = tempSplitted[mapHPositionByeader.get('ORDER_VOLTURA')];
+                String currentOrderNum = tempSplitted[orderVolturaIndex];
                 if(orderIdMap.containsKey(currentOrderNum)){
                     newCase.VulturePracticeReference__c = orderIdMap.get(currentOrderNum);
                 } else {
                     System.debug('>>> NO ORDER FOUND');
                 }
             }
-
-            //values to set
-            // ServicePoint__c -- ok
-            // BillingProfile__c -- ok
-            // Contract__c -- ok
-            // RecordTypeId -- ok
-            // ContactId -- ok
-            // CausalCode__c --to set
-            // VulturePracticeReference__c -- ok
 
             // only to test insert failure
             if(tempSplitted[8]=='customError')
@@ -235,6 +262,15 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
         for(HDT_MassiveFieldsObjectMap__mdt temp : listCaseFields){
             mapCaseFields.put(temp.labelField__c, temp.nameField__c);
         }
+
+        // build wrapper case map
+        List<HDT_MassiveFieldsObjectMap__mdt> listWrapperCaseFields = getMapFieldsObject('WrapperCase', this.processName);
+        mapWrapperCaseFields = new Map<String, String>();
+
+        for(HDT_MassiveFieldsObjectMap__mdt temp : listWrapperCaseFields){
+            mapWrapperCaseFields.put(temp.labelField__c, temp.nameField__c);
+        }
+
     }
 
     //public static HDT_WRP_SaveResponse databaseInsert(List<Case> itemList, List<String> itemIds, List<MassiveLoaderRequestItem__c> itemsToSave){
@@ -393,47 +429,47 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
     public static void setDataForTest(){
         delete [select id from MassiveLoaderRequestItem__c where MassiveLoaderRequest__c ='a3d3O000000WlXDQA0'];
         delete [select id, createdby.name,createdbyid, CommodityFormula__c,ServicePoint__c from case where createddate = today and createdbyid = '0051X0000055rbNQAQ'];
-
+    
         List<MassiveLoaderRequestItem__c> itemsList = new List<MassiveLoaderRequestItem__c>();
         MassiveLoaderRequestItem__c item;
-
+    
         for(Integer n=0; n<20; n++){
             item = new MassiveLoaderRequestItem__c();
             item.MassiveLoaderRequest__c = 'a3d3O000000WlXDQA0';
             item.Status__c = 'In attesa di lavorazione';
             if(n>=0 && n<= 10){
-                item.Data__c = 'Chiusura Contatore,0011X00000owtvoQAA,IT001E32452366,x,x,x,x,x,errorArrich';
+                item.Data__c = 'Chiusura Contatore,0011X00000owtvoQAA,IT001E32452366,3019602323,2021-12-23,2021-11-23,2021-10-23,x,errorArrich';
             } else if(n>10 && n<=15){
                 switch on n {
                     when 11 {
-                        item.Data__c = 'Chiusura Contatore,0011X00000jcKXUQA2,IT001E00032928,x,x,x,x,00000155,success';
+                        item.Data__c = 'Chiusura Contatore,0011X00000jcKXUQA2,IT001E00032928,3019602323,2021-12-23,2021-11-23,2021-10-23,00000155,success';
                     }	
                     when 12 {
-                        item.Data__c = 'Recesso per altri motivi,0011X00000jcKXUQA2,IT001E00032928,x,x,x,x,00000157,success';
+                        item.Data__c = 'Recesso per altri motivi,0011X00000jcKXUQA2,IT001E00032928,3019602323,2021-12-23,2021-11-23,2021-10-23,00000157,success';
                     }
                     when 13 {
-                        item.Data__c = 'Recesso per rifiuto voltura,0011X00000jcKXUQA2,IT001E00032928,x,x,x,x,00000160,success';
+                        item.Data__c = 'Recesso per rifiuto voltura,0011X00000jcKXUQA2,IT001E00032928,3019602323,2021-12-23,2021-11-23,2021-10-23,00000160,success';
                     }
                     when 14 {
-                        item.Data__c = 'Chiusura Contatore,0011X00000jcKXUQA2,IT001E00032928,x,x,x,x,00000166,success';
+                        item.Data__c = 'Chiusura Contatore,0011X00000jcKXUQA2,IT001E00032928,3019602323,2021-12-23,2021-11-23,2021-10-23,00000166,success';
                     }
                     when 15 {
-                        item.Data__c = 'Chiusura Contatore,0011X00000jcKXUQA2,IT001E00032928,x,x,x,x,00000168,success';
+                        item.Data__c = 'Chiusura Contatore,0011X00000jcKXUQA2,IT001E00032928,3019602323,2021-12-23,2021-11-23,2021-10-23,00000168,success';
                     }
                 }
-
+    
             } else if(n>15){
-                item.Data__c = 'Chiusura Contatore,0011X00000jcKXUQA2,IT001E00032928,x,x,x,x,x,customError';
+                item.Data__c = 'Chiusura Contatore,0011X00000jcKXUQA2,IT001E00032928,3019602323,2021-12-23,2021-11-23,x,x,customError';
             }
             itemsList.add(item);
         }
         insert itemsList;
-
+    
         MassiveLoaderRequest__c mlr = new MassiveLoaderRequest__c();
         mlr.Id = 'a3d3O000000WlXDQA0';
         mlr.Status__c = 'In attesa di lavorazione';
         update mlr;
-
+    
     }
 
 }

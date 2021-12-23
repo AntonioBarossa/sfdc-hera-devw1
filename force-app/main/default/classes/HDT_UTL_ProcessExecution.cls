@@ -14,7 +14,8 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     
     //public  MassiveLoaderRequestItem__c varRequestItem;
     public  String processName;
-    public  Map<Integer, String> mapHeaderByPosition    = new  Map<Integer, String>(); 
+    public  Map<Integer, String> mapHeaderByPosition    = new  Map<Integer, String>();
+    public  Map<String, Integer> mapHeaderForWrapper    = new  Map<String, Integer>(); 
     public  Map<Integer, String> mapRequiredByPosition  = new  Map<Integer, String>(); 
     public  Id recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
     public  Id recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
@@ -44,6 +45,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
                 mapRequiredByPosition.put(count,temp);
             }
             mapHeaderByPosition.put(count,temp);
+            mapHeaderForWrapper.put(temp, count);
             count++;
         }
     }
@@ -119,29 +121,33 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
         return fieldTypeName;
     }
 
-    public void mapTypeField(SObject sObj,Map<String, String> mapSobjField,Integer position,String value){
+    public String mapTypeField(SObject sObj, Map<String, String> mapSobjField, Integer position, String value){
 
-
-        String typeField=getTypeField(String.valueOf(sObj.getSObjectType()),mapSobjField.get(mapHeaderByPosition.get(position)));
-        switch on typeField.toUpperCase() {
-            when 'BOOLEAN'  {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Boolean.valueOf(value));
+        try {
+            String typeField=getTypeField(String.valueOf(sObj.getSObjectType()),mapSobjField.get(mapHeaderByPosition.get(position)));
+            switch on typeField.toUpperCase() {
+                when 'BOOLEAN'  {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Boolean.valueOf(value));
+                }
+                when 'DOUBLE'  {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Decimal.valueOf(value));
+                }
+                when 'INTEGER'  {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Integer.valueOf(value));
+                }
+                when 'DATETIME'  {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Datetime.valueOf(value));
+                }
+                when 'DATE'  {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Date.valueOf(value));
+                }
+                when else {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),value);
+                }
             }
-             when 'DOUBLE'  {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Decimal.valueOf(value));
-             }
-             when 'INTEGER'  {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Integer.valueOf(value));
-             }
-             when 'DATETIME'  {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Datetime.valueOf(value));
-             }
-             when 'DATE'  {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Date.valueOf(value));
-             }
-            when else {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),value);
-            }
+            return null;
+        } catch (Exception e){
+            return e.getMessage() + ' - on filed [' + mapSobjField.get(mapHeaderByPosition.get(position)) + ']';
         }
     }
 
