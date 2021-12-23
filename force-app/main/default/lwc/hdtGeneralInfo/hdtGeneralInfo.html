@@ -7,50 +7,35 @@
                 <lightning-layout-item padding="horizontal-large" size="12">
                     <lightning-record-edit-form record-id={saleRecord.Id} object-api-name="Sale__c">
                         <div class="slds-grid slds-wrap slds-m-top_small">
-
                             <template if:true={isProfileTeleselling}>
-                                <lightning-combobox
-                                required
-                                data-id="Channel__c"
-                                data-name="Channel__c"
-                                name="progress"
-                                label="Canale"
-                                placeholder=""
-                                options={channelOptionsComm}
-                                onchange={handleChannelComm}
-                                class="slds-size_1-of-3"></lightning-combobox>
+                                <lightning-combobox required data-id="Channel__c" data-name="Channel__c" name="progress" label="Canale" placeholder="" options={channelOptionsComm} onchange={handleChannelComm}
+                                    class="slds-size_1-of-3"> </lightning-combobox> 
                             </template>
+
                             <template if:false={isProfileTeleselling}>
                                 <lightning-input-field required disabled={channelDisabled} onchange={handleDataCollection}
-                                class="slds-size_1-of-3" field-name="Channel__c" data-id="Channel__c" data-name="Channel__c"
-                                variant="label-stacked"  value={channelValue}></lightning-input-field>
+                                    class="slds-size_1-of-3" field-name="Channel__c" data-id="Channel__c" data-name="Channel__c" placeholder=""
+                                    variant="label-stacked"  value={channelValue}> </lightning-input-field> 
                             </template>
-                            
-                            <lightning-input-field disabled onchange={handleDataCollection} class="slds-size_1-of-3"
-                                field-name="CreatedBy__c" value={currentUserName} variant="label-stacked">
-                            </lightning-input-field>
-                            <lightning-input-field required disabled={disabledInput} onchange={handleDataCollection}
-                                class="slds-size_1-of-3" data-id="SalesContact__c" field-name="SalesContact__c"
-                                variant="label-stacked"></lightning-input-field>
-                            <lightning-input-field disabled class="slds-size_1-of-3" field-name="SalesContactRole__c"
-                                data-name="SalesContactRole__c" variant="label-stacked"></lightning-input-field>
-                            <lightning-input-field disabled required 
-                                class="slds-size_1-of-3" data-id="Agency__c" data-name="Agency__c"
-                                field-name="Agency__c" variant="label-stacked"></lightning-input-field>
-                            <lightning-input-field disabled required onchange={handleDataCollection}
-                                class="slds-size_1-of-3" data-id="CommercialId" field-name="CommercialId__c" variant="label-stacked">
-                            </lightning-input-field>
 
-                            <lightning-input-field disabled onchange={handleDataCollection}
-                            class="slds-size_1-of-3" field-name="VendorFirstName__c" data-id="VendorFirstName__c" variant="label-stacked">
-                            </lightning-input-field>
-                            <lightning-input-field disabled onchange={handleDataCollection}
-                            class="slds-size_1-of-3" field-name="VendorLastName__c" data-id="VendorLastName__c"  variant="label-stacked">
-                            </lightning-input-field>
+                            <lightning-input-field disabled onchange={handleDataCollection} class="slds-size_1-of-3"
+                                field-name="CreatedBy__c" value={currentUserName} variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field required disabled={disabledInput} onchange={handleDataCollection} placeholder=""
+                                class="slds-size_1-of-3" data-id="SalesContact__c" field-name="SalesContact__c" variant="label-stacked"></lightning-input-field>
                             
-                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection}
-                                class="slds-size_1-of-3" field-name="FriendCode__c" variant="label-stacked">
-                            </lightning-input-field>
+                            <lightning-input-field disabled class="slds-size_1-of-3" field-name="SalesContactRole__c" placeholder=""
+                                data-name="SalesContactRole__c" variant="label-stacked"> </lightning-input-field>
+                            <lightning-input-field disabled required placeholder=""
+                                class="slds-size_1-of-3" data-id="Agency__c" data-name="Agency__c" field-name="Agency__c" variant="label-stacked"> </lightning-input-field>
+                            <lightning-input-field disabled required onchange={handleDataCollection} placeholder=""
+                                class="slds-size_1-of-3" data-id="CommercialId" field-name="CommercialId__c" variant="label-stacked"></lightning-input-field>
+
+                            <lightning-input-field disabled onchange={handleDataCollection} placeholder=""
+                               class="slds-size_1-of-3" field-name="VendorFirstName__c" data-id="VendorFirstName__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled onchange={handleDataCollection} placeholder=""
+                              class="slds-size_1-of-3" field-name="VendorLastName__c" data-id="VendorLastName__c"  variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} placeholder=""
+                                class="slds-size_1-of-3" field-name="FriendCode__c" variant="label-stacked"></lightning-input-field>
 
                            <!-- <lightning-input-field disabled={disabledInput} onchange={handleDataCollection}
                                 class="slds-size_1-of-3" field-name="SalesCompany__c" variant="label-stacked">
