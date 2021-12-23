@@ -1,7 +1,5 @@
 public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHandler {
 
-    private final static String TEMPORARY_COMPANYOWNER_DEFAULT = 'HERA COMM';
-
     public Messaging.InboundEmailResult handleInboundEmail(Messaging.InboundEmail email, Messaging.InboundEnvelope envelope) {
         try {
             HDT_SRV_ContentDocumentLink contentdocumentLink = new HDT_SRV_ContentDocumentLink();
@@ -16,13 +14,19 @@ public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
                 emailBody = email.plainTextBody;
             }
 
+            Map<String,HDT_ProtocolSpecificEmail__mdt> mapEmailObj = new Map<String,HDT_ProtocolSpecificEmail__mdt>();
+            for(HDT_ProtocolSpecificEmail__mdt specificEmail : HDT_ProtocolSpecificEmail__mdt.getAll().values()) {
+                mapEmailObj.put(specificEmail.Email__c.toUpperCase(), specificEmail);
+            }
+            HDT_ProtocolSpecificEmail__mdt specificEmail = mapEmailObj.get(toAddress.toUpperCase());
+
             Interaction__c interaction = new Interaction__c(
                 Type__c = 'Digital',
                 ReceptionDate__c = Date.today(),
                 BodyEmail__c = emailBody,
                 SubjectEmail__c = email.subject,
                 SenderEmailAddress__c = email.fromAddress,
-                CompanyOwner__c = TEMPORARY_COMPANYOWNER_DEFAULT
+                CompanyOwner__c =  specificEmail.CompanyOwner__c
             );
 
             List<ContentVersion> listContent = new List<ContentVersion>();
@@ -80,23 +84,19 @@ public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
             );
             HDT_SRV_EmailMessage.insertEmailMessage(newEmail);
 
-            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-            activity.Interaction__c = interaction.Id;
-            activity.RecordTypeId = new HDT_QR_RecordType().getRecordTypeIdByName('HDT_RT_RegisterActivity');
-            activity.Account__c = interaction.Account__c;
-            activity.Contact__c = interaction.Contact__c;
-            activity.CompanyOwner__c = TEMPORARY_COMPANYOWNER_DEFAULT;
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
+                Interaction__c = interaction.Id,
+                RecordTypeId = new HDT_QR_RecordType().getRecordTypeIdByName('HDT_RT_RegisterActivity'),
+                Account__c = interaction.Account__c,
+                Contact__c = interaction.Contact__c,
+                Type__c = specificEmail.Type__c,
+                CompanyOwner__c = specificEmail.CompanyOwner__c
+            );
 
-            Map<String,HDT_ProtocolSpecificEmail__mdt> mapEmailObj = new Map<String,HDT_ProtocolSpecificEmail__mdt>();
-            for(HDT_ProtocolSpecificEmail__mdt specificEmail : HDT_ProtocolSpecificEmail__mdt.getAll().values()) {
-                mapEmailObj.put(specificEmail.Email__c.toUpperCase(), specificEmail);
+            if(activity.Account__c == null) {
+                activity.Type__c = 'Protocollo - Da tipizzare';
             }
 
-            if(mapEmailObj.get(toAddress) != null) {
-                HDT_ProtocolSpecificEmail__mdt specificEmail = mapEmailObj.get(toAddress.toUpperCase());
-                activity.Cluster__c = specificEmail.Cluster__c;
-                activity.Process__c = specificEmail.Process__c;
-            }
             new HDT_SRV_ActivityCustom().createRecord(activity);
         } catch (Exception e) {
             e.setMessage(e.getMessage() + ' at line ' + e.getLineNumber());
