@@ -34,4 +34,15 @@ public with sharing class HDT_QR_ProcessPostSales {
         return accContRelationList;
     }
 
+    public static List<Order> getOrderByOrderNumber(List<Order> orderList, List<String> orderNumberList){
+        orderList = new List<Order>();
+        orderList = [
+            SELECT Id, OrderNumber
+            FROM Order
+            WHERE OrderNumber IN :orderNumberList
+            WITH SECURITY_ENFORCED
+        ];
+        return orderList;
+    }
+
 }
