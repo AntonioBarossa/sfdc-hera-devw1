@@ -32,6 +32,10 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
          * Dichiarata Map<String, Map<Id, Id>>
          * per ricostruire la struttura della subscription
          */
+        /* @frpanico 23/12/2021
+        * Trovato bug per cui se due OrderItem creano Subscription
+        * Si sovrascrivono se riferiti allo stesso order, contrac o service point
+        */
         Map<String, Map<Id, Id>> itemsMapToSub = new Map<String, Map<Id,Id>>();
         for(OrderItem item : items){
             if(item.Order.OrderReference__c!=null){
