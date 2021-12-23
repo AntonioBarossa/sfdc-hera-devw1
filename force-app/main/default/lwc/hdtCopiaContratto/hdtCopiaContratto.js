@@ -90,15 +90,15 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     ];
 
     shippingFields=[
-        new fieldData(null, "BillingCity__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "BillingStreetName__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "BillingStreetNumber__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "BillingProvince__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "BillingStreetNumberExtension__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "BillingCountry__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "BillingPostalCode__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "BillingCityCode__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "BillingPlace__c", "slds-size_1-of-3 fieldsData")
+        new fieldData('Comune [Spedizione/Fatturazione]', "BillingCity__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData('Nome Via [Spedizione/Fatturazione]', "BillingStreetName__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData('Civico [Spedizione/Fatturazione]', "BillingStreetNumber__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData('Provincia [Spedizione/Fatturazione]', "BillingProvince__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData('Estens.Civico [Spedizione/Fatturazione]', "BillingStreetNumberExtension__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData('Stato [Spedizione/Fatturazione]', "BillingCountry__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData('CAP [Spedizione/Fatturazione]', "BillingPostalCode__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData('Codice ISTAT [Spedizione/Fatturazione]', "BillingCityCode__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData('Località [Spedizione/Fatturazione]', "BillingPlace__c", "slds-size_1-of-3 fieldsData")
     ];
 
 
@@ -556,14 +556,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     }
 
     populateCase(address, Case){
-        Case["InvoicingStreetName__c"] = address['Via'];
-        Case["InvoicingCity__c"] = address['Comune'];
-        Case["InvoicingPostalCode__c"] = address['CAP'];
-        Case["InvoicingCountry__c"] = address['Stato'];
-        Case["InvoicingProvince__c"] = address['Provincia'];
-        Case["InvoicingStreetNumberExtension__c"] =  address['Estens.Civico'];
-        Case["InvoicingStreetNumber__c"] = address['Civico'];
-        Case["InvoicingPlace__c"] = address['Localita'];
+        Case["DeliveryAddress__c"] = address['Via'] + ' ' + address['Civico'] + ' ' + address['Estens.Civico'] + ', ' + address['Comune'] + ' ' + address['Provincia'] + ', ' + address['CAP'] + ' ' +address['Stato'];
     }
 
     getAddress() {
