@@ -115,7 +115,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             Schema.DescribeSObjectResult objRes = objtype.getDescribe();
         
             if(objRes.isCreateable() && objRes.isUpdateable()){
-                HDT_UTL_DatabaseService.updateSObject(tecOff);
+                HDT_UTL_DatabaseService.upsertSObject(tecOff);
                 tecOffId = tecOff.Id;
             } else {
                 saveResponse.success = false;

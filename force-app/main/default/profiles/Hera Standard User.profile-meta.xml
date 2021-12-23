@@ -10693,17 +10693,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>HDT_ProtocolSpecificEmail__mdt.Cluster__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>HDT_ProtocolSpecificEmail__mdt.Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>HDT_ProtocolSpecificEmail__mdt.Process__c</field>
+        <field>HDT_ProtocolSpecificEmail__mdt.CompanyOwner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_ProtocolSpecificEmail__mdt.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -27047,6 +27047,11 @@
             <readable>true</readable>
         </fieldPermissions>
         <!--SFDC-OIG/OIM 17/09/2021-->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.HerokuUser__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>User.CreatorGroup__c</field> 

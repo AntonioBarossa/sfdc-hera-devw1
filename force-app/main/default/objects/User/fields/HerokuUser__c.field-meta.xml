@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HerokuUser__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Permette all&apos;utente di accedere al sistema Heroku</description>
+    <externalId>false</externalId>
+    <label>Heroku User</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>
