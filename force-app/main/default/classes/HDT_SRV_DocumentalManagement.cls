@@ -528,7 +528,7 @@ public class HDT_SRV_DocumentalManagement{
 							if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
 								DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
 								if (documentalActivity != null){
-									documentalActivity.AttachmentId__c = 'DATI_CATASTALI'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
+									documentalActivity.AttachmentCode__c = 'DATI_CATASTALI'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
 									documentalActivity.ActivityType__c = 'Allegati ricevuti';
 									documentalActivity.AttachmentDescription__c = 'Ritornato correttamente';
 									activitiesToCreate.add(documentalActivity);
@@ -541,7 +541,7 @@ public class HDT_SRV_DocumentalManagement{
 							if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
 								DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
 								if (documentalActivity != null){
-									documentalActivity.AttachmentId__c = 'LEGGE_80'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
+									documentalActivity.AttachmentCode__c = 'LEGGE_80'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
 									documentalActivity.ActivityType__c = 'Allegati ricevuti';
 									documentalActivity.AttachmentDescription__c = 'Ritornato correttamente';
 									activitiesToCreate.add(documentalActivity);
