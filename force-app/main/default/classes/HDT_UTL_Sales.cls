@@ -270,18 +270,18 @@ public with sharing class HDT_UTL_Sales {
                     }*/
                 }
                 else if(ord.phase__c == 'Documentazione da firmare'){
-                    if(ord.DocumentalPhase__c == 'Plico firmato'){
+                    if(ord.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
                         if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' )){
-                            ord.Phase__c = 'Documentazione da Validare';
+                            //ord.TecnicalPhase__c = 'Documentazione da Validare';
                             listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
-                            childToUpdate.add(ord);
+                            //childToUpdate.add(ord);
                         }
-                        else{
-                            ord.phase__c = 'Documentazione Gestita';
-                           // ord.status = 'Activated';
-                            ord.SignedDate__c = date.today();
-                            childToUpdate.add(ord);
-                        }
+                        // else{
+                        //     //ord.TecnicalPhase__c = 'Documentazione Gestita';
+                        //     //ord.status = 'Activated';
+                        //     //ord.SignedDate__c = date.today();
+                        //     //childToUpdate.add(ord);
+                        // }
                     } 
                 }
             }

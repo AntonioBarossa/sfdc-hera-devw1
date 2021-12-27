@@ -42,7 +42,11 @@ public inherited sharing class HDT_QR_Variations {
 
         List<ServicePoint__c> toReturnList = new List<ServicePoint__c>();
         try{
-            toReturnList = [SELECT Id 
+            toReturnList = [SELECT Id,
+            (SELECT Id 
+            FROM Cases__r 
+            WHERE Type = 'Modifica Tariffa Residente/Non Residente'
+            AND Resident__c = false) 
             FROM ServicePoint__c
             WHERE Id != :servicePointId
             AND CommoditySector__c = :commodity
