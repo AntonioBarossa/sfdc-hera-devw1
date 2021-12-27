@@ -523,6 +523,7 @@ public class HDT_SRV_DocumentalManagement{
 							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
 						}
 						// Verifica radiobutton nei moduli opzionali (dati catastali, legge 80, istanza 326)
+						// I nomi dei radiobutton sono presenti nel JSON che manda Docusign
 						if (singleRadio.groupName.equalsIgnoreCase('DTC_radio1')){
 							if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
 								DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
