@@ -264,7 +264,8 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
                     HDT_SRV_DocumentalManagement.logDocusignError(recordToUpdate, requestBody);
                 } else {
                     HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate,requestBody, transactionId);
-                    HDT_SRV_DocumentalManagement.createIntesaDocumentalActivity(recordToUpdate,requestBody,transactionId);
+                    // creazione act documentale spostata in updateSobjectFromDocusign
+                    //HDT_SRV_DocumentalManagement.createIntesaDocumentalActivity(recordToUpdate,requestBody,transactionId);
                 }
             }
         } catch (Exception ex) {
