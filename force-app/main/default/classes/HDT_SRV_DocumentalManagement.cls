@@ -370,7 +370,7 @@ public class HDT_SRV_DocumentalManagement{
 		}
 	}
 
-	public static void updateSobjectFromDocusign(SObject record,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody){
+	public static void updateSobjectFromDocusign(SObject record,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody, String envelopeId){
 		if(record != null){
 			String status = requestBody.status;
 			String cluster = (String)record.get('Cluster__c');
@@ -402,13 +402,12 @@ public class HDT_SRV_DocumentalManagement{
 				}
 			}else {
 				if(status.equalsIgnoreCase('completed')){
-					record.put('DocumentalPhase__c','Plico firmato');
+					// La DocumentalPhase__c per l'Order verrà valorizzata nel method handleRadioGroup() in base ai radio button (Legge 80 ecc.)
+					//record.put('DocumentalPhase__c','Plico firmato');
 					record.put('SignedDate__c', Date.today()); // data necessaria per far scattare logiche sui processi di vendita.
-				}/*else{
-					//Che fase documentale settare?
-				}*/
+				}
 			}
-			handleRadioGroup(record,listOfRadio);
+			handleRadioGroup(record,listOfRadio,envelopeId);
 			handleDataText(record,listOfData);
 			HDT_UTL_DatabaseService.upsertSObject(record);
 		}
@@ -434,7 +433,6 @@ public class HDT_SRV_DocumentalManagement{
 			if(status.equalsIgnoreCase('completed')){
 				DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(parentRecord,transactionId);
 				if (documentalActivity != null){
-					documentalActivity.ReturnDate__c = Date.today();
 					documentalActivity.ActivityType__c = 'Documentazione completa';
 					try {
 						HDT_UTL_DatabaseService.insertSObject(documentalActivity);
@@ -446,7 +444,7 @@ public class HDT_SRV_DocumentalManagement{
 		}
 	}
 
-	private static void handleRadioGroup(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio){
+	private static void handleRadioGroup(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio, String envelopeId){
 		if(listOfRadio != null && listOfRadio.size()>0){
 			String individualId;
 			if(record.getSobjectType() == Case.getSobjectType()){
@@ -472,11 +470,6 @@ public class HDT_SRV_DocumentalManagement{
 				List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Case__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
 				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
 					String privacyVersion;
-					/*
-						@Author: Davide Viola - 19/10/2021
-						Description: PMD -> Commentata variabile non utilizzata.
-					*/
-					//String privacyCompany;
 					for(DocumentalEnvelopeAttachment__c singleAttachment : (List<DocumentalEnvelopeAttachment__c>) attachmentList){
 						if(singleAttachment.AttachmentCode__c.indexOf('PRIVACY')>-1){
 							privacyVersion = singleAttachment.Version__c;
@@ -501,16 +494,18 @@ public class HDT_SRV_DocumentalManagement{
 				}
 			}else{
 				List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Order__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
-				Boolean datiCatastaliCompilati = false;
-				//Boolean leggeOttantaCompilata = false; // TODO: come si chiamano i radio button della legge 80?
+				Set<String> moduliOpzionaliMancanti = new Set<String>();
+				List<DocumentalActivity__c> activitiesToCreate = new List<DocumentalActivity__c>();
+				DocumentalActivity__c actOtpSign  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
+				if (actOtpSign != null){
+					actOtpSign.ActivityType__c = 'Plico Firmato OTP';
+					activitiesToCreate.add(actOtpSign);
+				}
+
 				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
 					System.debug(LoggingLevel.DEBUG, 'Checking radiobutton: ' + JSON.serialize(singleRadio));
 					String privacyVersion;
-					/*
-						@Author: Davide Viola - 19/10/2021
-						Description: PMD -> Commentata variabile non utilizzata.
-					*/
-					//String privacyCompany;
+					// TODO DA FIXARE: attachmentList è vuoto poichè il record in contesto è l'order padre, mentre gli attachment sono sotto gli order figli.
 					for(DocumentalEnvelopeAttachment__c singleAttachment : (List<DocumentalEnvelopeAttachment__c>) attachmentList){
 						if(singleAttachment.AttachmentCode__c.indexOf('PRIVACY')>-1){
 							privacyVersion = singleAttachment.Version__c;
@@ -527,16 +522,46 @@ public class HDT_SRV_DocumentalManagement{
 							individualRecord.PrivacyProfilingChoiceDate__c = Date.today(); 
 							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
 						}
-						// Verifica radiobutton nei modulo opzionali (dati catastali, legge 80)
-						if (singleRadio.groupName.equalsIgnoreCase('DTC_radio1') && singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
-							datiCatastaliCompilati = true;
+						// Verifica radiobutton nei moduli opzionali (dati catastali, legge 80, istanza 326)
+						if (singleRadio.groupName.equalsIgnoreCase('DTC_radio1')){
+							if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+								DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
+								if (documentalActivity != null){
+									documentalActivity.AttachmentId__c = 'DATI_CATASTALI'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
+									documentalActivity.ActivityType__c = 'Allegati ricevuti';
+									documentalActivity.AttachmentDescription__c = 'Ritornato correttamente';
+									activitiesToCreate.add(documentalActivity);
+								}
+							} else {
+								moduliOpzionaliMancanti.add(singleRadio.groupName);
+							}
 						}
+						if (singleRadio.groupName.equalsIgnoreCase('L80_radio')){
+							if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+								DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
+								if (documentalActivity != null){
+									documentalActivity.AttachmentId__c = 'LEGGE_80'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
+									documentalActivity.ActivityType__c = 'Allegati ricevuti';
+									documentalActivity.AttachmentDescription__c = 'Ritornato correttamente';
+									activitiesToCreate.add(documentalActivity);
+								}
+							} else {
+								moduliOpzionaliMancanti.add(singleRadio.groupName);
+							}
+						}
+						// TODO: gestire radio button per istanza 326
 					}
 				}
 				try {
-					if (datiCatastaliCompilati){ // TODO: gestire anche leggeOttantaCompilata
-						record.put('IsDocusignAttachment__c', True);
-						HDT_UTL_DatabaseService.updateSObject(record);
+					if (!moduliOpzionaliMancanti.isEmpty()) {
+						System.debug(LoggingLevel.DEBUG, 'Moduli opzionali NON compilati: ' + moduliOpzionaliMancanti);
+						record.put('DocumentalPhase__c','Plico firmato senza moduli opzionali');
+					} else {
+						record.put('DocumentalPhase__c','Plico firmato');
+					}
+					HDT_UTL_DatabaseService.updateSObject(record);
+					if (!activitiesToCreate.isEmpty()){
+						HDT_UTL_DatabaseService.insertSObject(activitiesToCreate);
 					}
 				}catch(Exception ex){
 					System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());

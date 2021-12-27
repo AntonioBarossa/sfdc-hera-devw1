@@ -243,7 +243,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				when 'Order','DocumentazioneAnticipata' {
 					documentalSendTracking.Order__c = (Id) requestId;
 					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
-					documentalSendTracking.SendMode__c = (String) processRecord.get('DocSendingMethod__c');
+					documentalSendTracking.SendMode__c = (String) processRecord.get('q');
 					documentalSendTracking.Receiver__c = (String) processRecord.get('ShippingMail__c');
 					documentalSendTracking.Type__c = 'Plico Contrattuale';
 				}
@@ -312,6 +312,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				}
 			}
 			documentalActivity.EnvelopeId__c = envelopeId;
+			documentalActivity.ReturnDate__c = Date.today();
 		} catch (Exception ex) {
 			System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivity ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
