@@ -71,7 +71,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
         }
 
         recordTypeId = HDT_QR_ProcessPostSales.getRecordTypeId('HDT_RT_Disattivazioni');
-        contractList = HDT_QR_ProcessPostSales.getContracts(contractCodeSet, contractList);
+        contractList = HDT_QR_ProcessPostSales.getContracts(contractList, contractCodeSet);
         accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
         orderList = HDT_QR_ProcessPostSales.getOrderByOrderNumber(orderList, orderNumberList);
 

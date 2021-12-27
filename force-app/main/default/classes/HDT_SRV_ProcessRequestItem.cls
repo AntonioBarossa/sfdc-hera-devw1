@@ -36,7 +36,7 @@ public without sharing class HDT_SRV_ProcessRequestItem {
             }
 
             Integer batchSize = Integer.valueOf(processPriorityMap.get(processWithPriority.ProcessType__c).BatchSize__c);
-            String processToRun = processPriorityMap.get(processWithPriority.ProcessType__c).MasterLabel;
+            String processToRun = processPriorityMap.get(processWithPriority.ProcessType__c).DeveloperName;
             System.debug('>>> new HDT_BA_ProcessRequestItem(' + processWithPriority.Id + ',' + batchSize + ',' + processToRun + ');');
             HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(processWithPriority.Id, batchSize, processToRun);
             Database.executeBatch(processReq, batchSize);

@@ -11,7 +11,7 @@ public with sharing class HDT_QR_ProcessPostSales {
         return Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(developerName).getRecordTypeId();
     }
 
-    public static List<Contract> getContracts(Set<String> codeSet, List<Contract> contractList){
+    public static List<Contract> getContracts(List<Contract> contractList, Set<String> codeSet){
         contractList = new List<Contract>();
         contractList = [
             SELECT Id, ServicePoint__c, BillingProfile__c, AccountId, ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c, SAPContractCode__c
@@ -44,6 +44,17 @@ public with sharing class HDT_QR_ProcessPostSales {
             WITH SECURITY_ENFORCED
         ];
         return orderList;
+    }
+
+    public static List<Case> getCaseByServicePointCode(List<Case> caseList, Set<String> podSet, String type){
+        caseList = new List<Case>();
+        caseList = [
+            SELECT Id, ParentId, ServicePoint__r.ServicePointCode__c
+            FROM Case
+            WHERE Type = :type
+            AND ServicePoint__r.ServicePointCode__c IN :podSet
+        ];
+        return caseList;
     }
 
 }
