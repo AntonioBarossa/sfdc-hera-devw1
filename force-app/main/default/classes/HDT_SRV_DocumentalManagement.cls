@@ -373,11 +373,6 @@ public class HDT_SRV_DocumentalManagement{
 	public static void updateSobjectFromDocusign(SObject record,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody){
 		if(record != null){
 			String status = requestBody.status;
-			/*
-				@Author: Davide Viola - 19/10/2021
-				Description: PMD -> Commentata variabile non utilizzata.
-			*/
-			//String processType = (String)record.get('DocumentalProcessType__c');
 			String cluster = (String)record.get('Cluster__c');
 			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio>();
 			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData>();
@@ -398,7 +393,7 @@ public class HDT_SRV_DocumentalManagement{
 					}
 					if ('Rimborso'.equalsIgnoreCase(caseType) || 'Piano Rateizzazione'.equalsIgnoreCase(caseType)){
 						HDT_UTL_Case.createActivity((Id)record.get('Id'), 'Validazione Firma OTP', 'Validazione Firma OTP', 'Validazione Firma OTP');
-					}				
+					}
 				}else{
 					//Che fase documentale settare?
 					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){
@@ -407,10 +402,10 @@ public class HDT_SRV_DocumentalManagement{
 				}
 			}else {
 				if(status.equalsIgnoreCase('completed')){
-					record.put('DocumentalPhase__c','Plico firmato');					
+					record.put('DocumentalPhase__c','Plico firmato');
 					record.put('SignedDate__c', Date.today()); // data necessaria per far scattare logiche sui processi di vendita.
 				}/*else{
-					//Che fase documentale settare?			
+					//Che fase documentale settare?
 				}*/
 			}
 			handleRadioGroup(record,listOfRadio);
