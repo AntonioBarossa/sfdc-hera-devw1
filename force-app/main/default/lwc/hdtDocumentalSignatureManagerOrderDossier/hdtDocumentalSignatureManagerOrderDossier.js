@@ -22,6 +22,7 @@ import ShippingProvince from '@salesforce/schema/Order.ShippingProvince__c';
 import ShippingCountry from '@salesforce/schema/Order.ShippingCountry__c';
 import ShippingStreetName from '@salesforce/schema/Order.ShippingStreetName__c';
 import SignedDate from '@salesforce/schema/Order.SignedDate__c';
+import ContractSigned from '@salesforce/schema/Order.ContractSigned__c';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import updateContactForScartoDocumentale from '@salesforce/apex/HDT_UTL_Scarti.updateContactForScartoDocumentale'; //costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
 
@@ -402,6 +403,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             this.dataToSubmit['ShippingStreetName__c'] = resultWrapper.addressWrapper.Via;
             fields[SignedDate.fieldApiName] = this.actualSignedDate;
             this.dataToSubmit['SignedDate__c'] = this.actualSignedDate;
+            fields[ContractSigned.fieldApiName] = resultWrapper.signMode.localeCompare(signModeFirmato) === 0;
             const recordInput = { fields };
            
             updateRecord(recordInput)
