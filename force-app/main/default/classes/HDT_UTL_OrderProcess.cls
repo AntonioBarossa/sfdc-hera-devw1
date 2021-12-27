@@ -1009,7 +1009,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             for(ServiceRequest__c s: srvRequests){
                 // ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
                 s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(orderStatuses.get(s.Order__c), 'Order');
-                sReqToUpdate.add(s);
+                if( s.Status__c === 'Activated' || s.Status__c === 'Annullato' ){
+                    sReqToUpdate.remove(s); //no need to catch exception, s is in the list
+                    HDT_SRV_ServiceRequest.deleteRecord(s);
+                }else{
+                    sReqToUpdate.add(s);
+                }
             }
             HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
         }

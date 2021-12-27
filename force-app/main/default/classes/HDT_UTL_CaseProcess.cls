@@ -266,7 +266,12 @@ public with sharing class HDT_UTL_CaseProcess {
         List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(caseIds, 'Case__c');
         for(ServiceRequest__c s: srvRequests){
             s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(caseStatuses.get(s.Case__c), 'Case');
-            sReqToUpdate.add(s);
+            if( s.Status__c === 'Closed' ){
+                sReqToUpdate.remove(s); //no need to catch exception, s is in the list
+                HDT_SRV_ServiceRequest.deleteRecord(s);
+            } else {
+                sReqToUpdate.add(s);
+            }
         }
         HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
     }
