@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Custom Metadata Type per la gestione della Scarti SAP</description>
+    <label>Gestione Scarti Sap</label>
+    <pluralLabel>Gestione Scarti Sap</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

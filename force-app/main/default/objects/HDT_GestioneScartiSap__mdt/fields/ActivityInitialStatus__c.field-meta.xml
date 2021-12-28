@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ActivityInitialStatus__c</fullName>
+    <description>Aperta | Chiusa (stato iniziale dell’activity da creare)</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Stato Iniziale Attività</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Aperta</fullName>
+                <default>true</default>
+                <label>Aperta</label>
+            </value>
+            <value>
+                <fullName>Chiusa</fullName>
+                <default>false</default>
+                <label>Chiusa</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
