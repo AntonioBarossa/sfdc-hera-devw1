@@ -1,44 +1,28 @@
-public with sharing class HDT_UTL_ProcessMorosita extends  HDT_UTL_ProcessExecution {
+public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_ProcessExecution {
 
     private Map<String, String> mapCaseFields;
     private Map<String, String> mapWrapperCaseFields;
     private List<MassiveLoaderRequestItem__c> itemsToSave;
+    private Id recordTypeId;
+    private Map<String, Id> podToCaseIdMap = new Map<String, Id>();
+    private Map<String, Contract> contractMap = new Map<String, Contract>();
+    private Map<String, List<String>> itemRequestMap = new Map<String, List<String>>();
+    private Set<String> accountIdSet = new Set<String>();
+    private Set<String> contractCodeSet = new Set<String>();
+    private Set<String> podSet = new Set<String>();
+    private Integer podIndex;
+    private Integer accountIdIndex;
+    private Integer contractIndex;
+
 
     public override void checks(){
         System.debug('checks');
         mapFieldsObject();
-    }
 
-    public override void getRecords(){
-        System.debug('getRecords');
-    }
+        podIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('POD'));
+        accountIdIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
+        contractIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CONTRATTO'));
 
-    public override void registryCreation(){
-        System.debug('registryCreation');
-
-        Map<String, List<String>> itemRequestMap = new Map<String, List<String>>();
-        Set<String> accountIdSet = new Set<String>();
-        Set<String> contractCodeSet = new Set<String>();
-        Set<String> podSet = new Set<String>();
-        List<Case> caseList;
-        List<String> podList;
-        List<Contract> contractList;
-        Map<String, Id> podToCaseIdMap = new Map<String, Id>();
-        Map<String, Contract> contractMap = new Map<String, Contract>();
-        HDT_QR_CausalCodeCalculation causalCodeCalculation = new HDT_QR_CausalCodeCalculation();
-        HDT_CausalCodeCalculation__mdt causalCode;
-        List<Case> caseToInsert = new List<Case>();
-        List<String> itemIds = new List<String>();
-        itemsToSave = new List<MassiveLoaderRequestItem__c>();
-
-        Id recordTypeId;
-        String type = 'Sospensione Fornitura';
-
-        Integer podIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('POD'));
-        Integer accountIdIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
-        Integer contractIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CONTRATTO'));
-
-        
         List<String> dataSplitted;
         for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
             dataSplitted = item.Data__c.split(',');
@@ -48,6 +32,12 @@ public with sharing class HDT_UTL_ProcessMorosita extends  HDT_UTL_ProcessExecut
             itemRequestMap.put(item.Id, dataSplitted);
         }
 
+    }
+
+    public override void getRecords(){
+        System.debug('getRecords');
+        List<Case> caseList;
+        List<Contract> contractList;
         caseList = HDT_QR_ProcessPostSales.getCaseByServicePointCode(caseList, podSet, 'Sospensione Fornitura');
         contractList = HDT_QR_ProcessPostSales.getContracts(contractList, contractCodeSet);
         recordTypeId = HDT_QR_ProcessPostSales.getRecordTypeId('HDT_RT_Morosita');
@@ -59,6 +49,19 @@ public with sharing class HDT_UTL_ProcessMorosita extends  HDT_UTL_ProcessExecut
         for(Contract contract : contractList){
             contractMap.put(contract.SAPContractCode__c, contract);
         }
+
+    }
+
+    public override void registryCreation(){
+        System.debug('registryCreation');
+
+        HDT_QR_CausalCodeCalculation causalCodeCalculation = new HDT_QR_CausalCodeCalculation();
+        HDT_CausalCodeCalculation__mdt causalCode;
+        List<Case> caseToInsert = new List<Case>();
+        List<String> itemIds = new List<String>();
+        itemsToSave = new List<MassiveLoaderRequestItem__c>();
+
+        String type = 'Sospensione Fornitura';
 
         Case newCase;
         for(String itemId : itemRequestMap.keySet()){

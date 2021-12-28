@@ -187,6 +187,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
                 caseToInsert.add(newCase); 
                 itemIds.add(itemId);
             } catch(Exception e){
+                System.debug('>>> arricchimentoError ' + e.getMessage());
                 itemsToSave.add(setErrorItem(itemId, 'Errore arricchimento dati # '));
             }
 
@@ -281,12 +282,13 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
                 if (!sr.isSuccess()) {
                     
                     for(Database.Error err : sr.getErrors()) {
-                        //System.debug('>>> ' + String.valueOf(String.valueOf(itemList[n].ServicePoint__c) + ' - item id ' + itemIds[n]));
-                        //System.debug('>>> ' + ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']');
+                        String errorMessage = err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields();
+                        System.debug('>>> ' + String.valueOf(String.valueOf(itemList[n].ServicePoint__c) + ' - item id ' + itemIds[n]));
+                        System.debug('>>> errorMessage ' + errorMessage);
                         itemError = new MassiveLoaderRequestItem__c();
                         itemError.Id = itemIds[n];
                         itemError.Status__c = 'Errore';
-                        itemError.StatusDescription__c = err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields();
+                        itemError.StatusDescription__c = errorMessage.abbreviate(250);
                         saveResponse.reponseItemList.add(itemError);
                     }
                 } else {
