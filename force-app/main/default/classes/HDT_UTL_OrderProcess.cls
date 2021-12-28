@@ -114,7 +114,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         for (Order order : newOrderList) {
             Order oldOrder= mapOrder.get(order.Id);
-            if(order.Phase__c!=oldOrder.Phase__c&&order.Phase__c=='Comunicazione Verso Heroku'&&order.isTransition__c==true){
+            if(order.Phase__c!=oldOrder.Phase__c
+            &&
+            /**@frpanico 28/12/2021 
+             * La Voltura parte in "Documentazione Validata" per voltura accettata
+             * E in "Voltura Rifiutata" per voltura rifiutata ma solo Gas
+            */
+            (order.Phase__c=='Comunicazione Verso Heroku'
+            || 
+                (
+                    order.ProcessType__c.equalsIgnoreCase('Voltura') 
+                    && (order.Phase__c.equalsIgnoreCase('Documentazione Validata') 
+                        || (order.Commodity__c.equalsIgnoreCase('Gas') && order.Phase__c.equalsIgnoreCase('Voltura Rifiutata')))
+                )
+            )
+            &&order.isTransition__c==true){
                 order.Phase__c='Esportazione VS Siebel';
             }
 
