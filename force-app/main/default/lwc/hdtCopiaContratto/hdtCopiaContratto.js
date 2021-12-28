@@ -11,14 +11,14 @@ import confirmAction2Draft from '@salesforce/apex/HDT_LC_CopiaContratto.confirmA
 import getListRecords from '@salesforce/apex/HDT_LC_ContactSelection.getListRecords';
 
 class fieldData{
-    constructor(label, apiname,cssClass, required, disabled, value, dataId) {
+    constructor(label, apiname,cssClass, required, disabled, value, name) {
         this.label = label;
         this.apiname=apiname;
         this.required=required;
         this.disabled=disabled;
         this.value=value;
         this.cssClass=cssClass;
-        this.dataId = dataId;
+        this.name = name;
     }
 }
 export default class HdtCopiaContratto extends NavigationMixin(LightningElement){
@@ -91,15 +91,15 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     ];
 
     shippingFields=[
-        new fieldData('Comune [Spedizione/Fatturazione]', "BillingCity__c", "slds-size_1-of-3 fieldsData", "InvoicingCity__c"),
-        new fieldData('Nome Via [Spedizione/Fatturazione]', "BillingStreetName__c", "slds-size_1-of-3 fieldsData", "InvoicingStreetName__c"),
-        new fieldData('Civico [Spedizione/Fatturazione]', "BillingStreetNumber__c", "slds-size_1-of-3 fieldsData", "InvoicingStreetNumber__c"),
-        new fieldData('Provincia [Spedizione/Fatturazione]', "BillingProvince__c", "slds-size_1-of-3 fieldsData", "InvoicingProvince__c"),
-        new fieldData('Estens.Civico [Spedizione/Fatturazione]', "BillingStreetNumberExtension__c", "slds-size_1-of-3 fieldsData", "InvoicingStreetNumberExtension__c"),
-        new fieldData('Stato [Spedizione/Fatturazione]', "BillingCountry__c", "slds-size_1-of-3 fieldsData", "InvoicingCountry__c"),
-        new fieldData('CAP [Spedizione/Fatturazione]', "BillingPostalCode__c", "slds-size_1-of-3 fieldsData", "InvoicingPostalCode__c"),
-        new fieldData('Codice ISTAT [Spedizione/Fatturazione]', "BillingCityCode__c", "slds-size_1-of-3 fieldsData", "InvoicingCityCode__c"),
-        new fieldData('Località [Spedizione/Fatturazione]', "BillingPlace__c", "slds-size_1-of-3 fieldsData", "InvoicingPlace__c")
+        new fieldData('Comune [Spedizione/Fatturazione]', "BillingCity__c", "slds-size_1-of-3 fieldsData",'','','', "InvoicingCity__c"),
+        new fieldData('Nome Via [Spedizione/Fatturazione]', "BillingStreetName__c", "slds-size_1-of-3 fieldsData", '','','',"InvoicingStreetName__c"),
+        new fieldData('Civico [Spedizione/Fatturazione]', "BillingStreetNumber__c", "slds-size_1-of-3 fieldsData", '','','',"InvoicingStreetNumber__c"),
+        new fieldData('Provincia [Spedizione/Fatturazione]', "BillingProvince__c", "slds-size_1-of-3 fieldsData", '','','',"InvoicingProvince__c"),
+        new fieldData('Estens.Civico [Spedizione/Fatturazione]', "BillingStreetNumberExtension__c", "slds-size_1-of-3 fieldsData", '','','',"InvoicingStreetNumberExtension__c"),
+        new fieldData('Stato [Spedizione/Fatturazione]', "BillingCountry__c", "slds-size_1-of-3 fieldsData", '','','',"InvoicingCountry__c"),
+        new fieldData('CAP [Spedizione/Fatturazione]', "BillingPostalCode__c", "slds-size_1-of-3 fieldsData", '','','',"InvoicingPostalCode__c"),
+        new fieldData('Codice ISTAT [Spedizione/Fatturazione]', "BillingCityCode__c", "slds-size_1-of-3 fieldsData", '','','',"InvoicingCityCode__c"),
+        new fieldData('Località [Spedizione/Fatturazione]', "BillingPlace__c", "slds-size_1-of-3 fieldsData", '','','',"InvoicingPlace__c")
     ];
 
 
@@ -224,15 +224,21 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     catchFieldsToSave(Case){
 
         console.log(Case);
-
-        this.template.querySelectorAll("lightning-input-field")?.forEach(elem=>{
+        let fieldsTemplate = this.template.querySelectorAll('lightning-input-field');
+        fieldsTemplate.forEach(element => 
+            {
+                console.log('Element Name: >>> ' + element.name);
+                console.log('Element value: >>> ' + element.value);
+            })
+        return;
+        /*this.template.querySelectorAll('lightning-input-field').forEach(elem=>{
             //console.log(JSON.stringify(elem));
             console.log('#data-id value: ' + elem.value);
             if(elem.getAttribute("data-id")!=null){
                 Case[elem.getAttribute("data-id")]= elem.value;
             }
             console.log(JSON.stringify(Case));
-        });
+        });*/
         console.log(Case);
         let address = this.getAddress();
         if(address){
@@ -410,6 +416,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
 
         console.log('*****:' + this.tipoCopia);
         let Case = this.catchFieldsToSave({Id: this.recordid});
+        return;
         if(this.tipoCopia != 'Copia della registrazione' &&  (this.selectedSend === undefined ||  this.selectedSend == null || this.selectedSend == '') ){
             const event = new ShowToastEvent({
                 message: 'Popolare i campi Obbligatori',
