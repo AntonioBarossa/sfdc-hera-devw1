@@ -144,9 +144,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 // LG Ripristino logica 18/09 FF
         System.debug('********LOL:' + orderParent);
         if(orderParent.Phase__c == 'In Lavorazione'){
-            if (orderParent.Channel__c == 'Sportello') {
-                orderToUpdate.Phase__c = 'Documentazione da inviare'; 
-            }
             if (orderParent.ContractSigned__c == false) {
                 orderToUpdate.Phase__c = 'Documentazione da inviare';
             } else {
