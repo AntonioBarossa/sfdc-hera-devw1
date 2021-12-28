@@ -1006,7 +1006,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
             List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(orderIds, 'Order__c');
-            List<ServiceRequest__c> srvRequestsToDelete;
+            List<ServiceRequest__c> srvRequestsToDelete = new List<ServiceRequest__c>();
             for(ServiceRequest__c s: srvRequests){
                 // ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
                 s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(orderStatuses.get(s.Order__c), 'Order');
@@ -1016,7 +1016,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     sReqToUpdate.add(s);
                 }
             }
-            HDT_SRV_ServiceRequest.deleteRecord(srvRequestsToDelete);
+            if (!srvRequestsToDelete.isEmpty()){
+                HDT_SRV_ServiceRequest.deleteRecord(srvRequestsToDelete);
+            }
             HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
         }
 
