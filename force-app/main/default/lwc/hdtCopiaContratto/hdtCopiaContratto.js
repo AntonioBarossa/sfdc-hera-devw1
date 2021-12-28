@@ -226,7 +226,8 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
         console.log(Case);
 
         this.template.querySelectorAll("lightning-input-field")?.forEach(elem=>{
-            console.log('#data-id value: ' + elem.getAttribute("data-id"));
+            //console.log(JSON.stringify(elem));
+            console.log('#data-id value: ' + elem.value);
             if(elem.getAttribute("data-id")!=null){
                 Case[elem.getAttribute("data-id")]= elem.value;
             }
