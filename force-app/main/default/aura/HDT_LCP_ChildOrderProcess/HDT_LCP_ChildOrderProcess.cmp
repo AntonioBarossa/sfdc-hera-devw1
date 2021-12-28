@@ -24,6 +24,10 @@
     <aura:attribute name="test" type='String' default="test"/>
     <aura:attribute name="mainOrderItem" type="OrderItem" />
     <aura:attribute name="analisiConsumi" type="OrderItem" />
+    <!--Gestione Scarti Complessi passati in c:hdtChildOrderProcessActions-->
+    <aura:attribute name="discardRework" type="Boolean"/>
+    <aura:attribute name="discardActivityToClose" type="String"/>
+    <!--Fine Modifiche Gestione Scarti Complessi-->
     <lightning:navigation aura:id="navService" />
     <lightning:workspaceAPI aura:id="workspace"/>
 
@@ -50,7 +54,7 @@
     </aura:if>
 
     <!-- <aura:if isTrue="{!v.order}"> --> <!-- commented for rendering problem in certain cases -->
-        <c:hdtChildOrderProcessActions order="{!v.order}" onredirecttoparent="{!c.handleRedirectToParent}" onredirect_attivazione_mod="{!c.handleRedirectAttivazioneMod}" lastStepNumber="{!v.lastStepNumber}" draftObject="{!v.draftObject}" lastStepData="{!v.lastStepData}" draftObjectApiName="{!v.draftObjectApiName}" diffDraftObjectApiName="{!v.diffDraftObjectApiName}" diffFields="{!v.diffFields}"></c:hdtChildOrderProcessActions>
+        <c:hdtChildOrderProcessActions order="{!v.order}" onredirecttoparent="{!c.handleRedirectToParent}" onredirect_attivazione_mod="{!c.handleRedirectAttivazioneMod}" lastStepNumber="{!v.lastStepNumber}" draftObject="{!v.draftObject}" lastStepData="{!v.lastStepData}" draftObjectApiName="{!v.draftObjectApiName}" diffDraftObjectApiName="{!v.diffDraftObjectApiName}" diffFields="{!v.diffFields}" activityIdToClose="{!v.discardActivityToClose}" discardRework="{!v.discardRework}"></c:hdtChildOrderProcessActions>
     <!-- </aura:if> -->
 
 </aura:component>
