@@ -595,7 +595,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if(orderMapOld.get(newOrder.id)!= null){
                 Order old= orderMapOld.get(newOrder.id);
                 if(newOrder.TecnicalPhase__c != null && newOrder.TecnicalPhase__c == old.TecnicalPhase__c && 
-                    (/*Eversi aggiunta fase*/newOrder.Phase__c == 'Voltura Rifiutata' || newOrder.Phase__c == 'Documentazione Validata'/*Eversi aggiunta fase*/ || newOrder.Phase__c=='Comunicazione verso Heroku' || newOrder.Phase__c=='Ripensamento - Da inviare' || newOrder.Phase__c=='Annullamento - Da inviare' || newOrder.Phase__c=='Preventivo Accettato' || newOrder.Phase__c=='Comunicazione Motore VAS' )){
+                    (/*Eversi aggiunta fase*/newOrder.Phase__c == 'Voltura Rifiutata' 
+                    || newOrder.Phase__c == 'Documentazione Validata'/*Eversi aggiunta fase*/ 
+                    || newOrder.Phase__c=='Comunicazione verso Heroku' 
+                    || newOrder.Phase__c=='Ripensamento - Da inviare' 
+                    || newOrder.Phase__c=='Annullamento - Da inviare' 
+                    || newOrder.Phase__c=='Preventivo Accettato' 
+                    || newOrder.Phase__c=='Comunicazione Motore VAS' 
+                    || newOrder.Phase__c=='Documentazione da firmare')){
                     newOrder.Phase__c = newOrder.TecnicalPhase__c;
                     newOrder.TecnicalPhase__c = null;
                 }
@@ -900,6 +907,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     order.Phase__c = 'Comunicazione verso Heroku';
                 }
             }
+            else if(order.phase__c.equalsIgnoreCase('Documentazione da firmare') && order.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
+                    if((order.Sale__r.Channel__c == 'Agenzie' || order.Sale__r.Channel__c == 'Business Agent') && (order.SignatureMethod__c == 'OTP Remoto' || order.SignatureMethod__c == 'OTP Coopresenza' )){
+                        order.TecnicalPhase__c = 'Documentazione da Validare';
+                        //listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
+                        //childToUpdate.add(ord);
+                    }
+                    else{
+                        order.TecnicalPhase__c = 'Documentazione Gestita';
+                        // ord.status = 'Activated';
+                        order.SignedDate__c = date.today();
+                        //childToUpdate.add(ord);
+                    }
+            }
         }
     }
 
@@ -1006,11 +1026,17 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
             List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(orderIds, 'Order__c');
+            List<ServiceRequest__c> srvRequestsToDelete;
             for(ServiceRequest__c s: srvRequests){
                 // ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
                 s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(orderStatuses.get(s.Order__c), 'Order');
-                sReqToUpdate.add(s);
+                if( s.Status__c == 'Activated' || s.Status__c == 'Annullato' ){
+                    srvRequestsToDelete.add(s);
+                } else {
+                    sReqToUpdate.add(s);
+                }
             }
+            HDT_SRV_ServiceRequest.deleteRecord(srvRequestsToDelete);
             HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
         }
 
