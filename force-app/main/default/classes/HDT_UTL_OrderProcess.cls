@@ -123,9 +123,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             (order.Phase__c=='Comunicazione Verso Heroku'
             || 
                 (
-                    order.ProcessType__c.equalsIgnoreCase('Voltura') 
+                    (order.ProcessType__c != null && order.ProcessType__c.equalsIgnoreCase('Voltura'))
                     && (order.Phase__c.equalsIgnoreCase('Documentazione Validata') 
-                        || (order.Commodity__c.equalsIgnoreCase('Gas') && order.Phase__c.equalsIgnoreCase('Voltura Rifiutata')))
+                        || ((order.Commodity__c != null && order.Commodity__c.equalsIgnoreCase('Gas')) && order.Phase__c.equalsIgnoreCase('Voltura Rifiutata')))
                 )
             )
             &&order.isTransition__c==true){
