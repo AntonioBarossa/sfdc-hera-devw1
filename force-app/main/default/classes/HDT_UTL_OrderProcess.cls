@@ -907,9 +907,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     order.Phase__c = 'Comunicazione verso Heroku';
                 }
             }
-            else if(order.RecordType.DeveloperName == 'HDT_RT_OrderDossier' 
-                && order.phase__c == 'Documentazione da firmare'){
-                if(order.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
+            else if(order.phase__c.equalsIgnoreCase('Documentazione da firmare') && order.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
                     if((order.Sale__r.Channel__c == 'Agenzie' || order.Sale__r.Channel__c == 'Business Agent') && (order.SignatureMethod__c == 'OTP Remoto' || order.SignatureMethod__c == 'OTP Coopresenza' )){
                         order.TecnicalPhase__c = 'Documentazione da Validare';
                         //listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
@@ -921,7 +919,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         order.SignedDate__c = date.today();
                         //childToUpdate.add(ord);
                     }
-                } 
             }
         }
     }
