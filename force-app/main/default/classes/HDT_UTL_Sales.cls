@@ -250,7 +250,7 @@ public with sharing class HDT_UTL_Sales {
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
                     else if((ord.Sale__r.Channel__c == 'Sportello') && ord.SignatureMethod__c == 'Cartacea' ){
-                        ord.Phase__c = 'Documentazione Gestita';
+                        ord.Phase__c = 'Documentazione da Firmare';
                        // ord.status = 'Activated';
                         childToUpdate.add(ord);
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));

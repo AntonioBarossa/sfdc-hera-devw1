@@ -27,6 +27,7 @@ import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import updateContactForScartoDocumentale from '@salesforce/apex/HDT_UTL_Scarti.updateContactForScartoDocumentale'; //costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
 
 const signModeFirmato = 'Contratto già firmato';
+const signModeCartacea = 'Cartacea';
 
 const FIELDS = [
     'Order.Id',
@@ -620,7 +621,11 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         }catch(e){
             console.error(e);
         }
-        this.isVisibleSignedDate = (signModeInit && signModeInit.localeCompare(signModeFirmato) === 0);
+        const channel = this.orderRecord.fields.Channel__c.value;
+        const isSportello = channel && channel.localeCompare('Sportello') === 0;
+        const isCartacea = signModeInit && signModeInit.localeCompare(signModeCartacea) === 0;
+        this.isVisibleSignedDate = ((isSportello && isCartacea) || signModeInit && signModeInit.localeCompare(signModeFirmato) === 0);
+
         if (!this.isVisibleSignedDate){
             this.actualSignedDate = null;
         }else{

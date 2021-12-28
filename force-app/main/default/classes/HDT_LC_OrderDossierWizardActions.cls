@@ -30,7 +30,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
          // orderToUpdate = HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate);
         // if (orderParent.ContractSigned__c == false) {
                 // LG Ripristino logica 18/09 FF
-        // TODO: se sportello bisogna andare in Documentazione da firmare e poi l'operatore avanza manualmente in Documentazione Gestita dopo la firma del cliente.
         if (orderParent.ContractSigned__c == false) {
             orderToUpdate.Phase__c = 'Documentazione da inviare';
         } else {
@@ -145,6 +144,9 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 // LG Ripristino logica 18/09 FF
         System.debug('********LOL:' + orderParent);
         if(orderParent.Phase__c == 'In Lavorazione'){
+            if (orderParent.Channel__c == 'Sportello') {
+                orderToUpdate.Phase__c = 'Documentazione da inviare'; 
+            }
             if (orderParent.ContractSigned__c == false) {
                 orderToUpdate.Phase__c = 'Documentazione da inviare';
             } else {
