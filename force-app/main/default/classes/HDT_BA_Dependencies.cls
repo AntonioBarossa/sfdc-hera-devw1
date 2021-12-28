@@ -24,7 +24,7 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
          
         String query = 'SELECT Id, Status__c, Case__c, Order__c, Type__c, NextPhase__c '
                     + 'FROM ServiceRequest__c '
-                    + 'WHERE DependOn__c = null
+                    + 'WHERE DependOn__c = null '
                     + 'AND Status__c = \''+String.escapeSingleQuotes(HDT_UTL_Dependencies.STATUS_SEQUENZIALIZZATO)+'\' '
                     + ' WITH SECURITY_ENFORCED';
 
