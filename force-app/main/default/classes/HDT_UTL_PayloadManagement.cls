@@ -1069,7 +1069,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
 
         List<SObject> offersList = inputs.get('ItemCommercialOffer');
-        if (offersList.isEmpty()) {
+        if (offersList == null || offersList.isEmpty()) {
             return '';
         }
 

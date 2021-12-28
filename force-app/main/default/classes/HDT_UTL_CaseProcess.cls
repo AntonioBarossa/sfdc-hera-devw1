@@ -264,10 +264,16 @@ public with sharing class HDT_UTL_CaseProcess {
             }
         }
         List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(caseIds, 'Case__c');
+        List<ServiceRequest__c> srvRequestsToDelete;
         for(ServiceRequest__c s: srvRequests){
             s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(caseStatuses.get(s.Case__c), 'Case');
-            sReqToUpdate.add(s);
+            if( s.Status__c == 'Closed' ){
+                srvRequestsToDelete.add(s);
+            } else {
+                sReqToUpdate.add(s);
+            }
         }
+        HDT_SRV_ServiceRequest.deleteRecord(srvRequestsToDelete);
         HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
     }
 
