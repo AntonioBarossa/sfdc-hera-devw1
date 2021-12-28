@@ -229,8 +229,10 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
             {
                 console.log('Element Name: >>> ' + element.name);
                 console.log('Element value: >>> ' + element.value);
+                if(element.value!=null){
+                    Case[element.name]= element.value;
+                }
             })
-        return;
         /*this.template.querySelectorAll('lightning-input-field').forEach(elem=>{
             //console.log(JSON.stringify(elem));
             console.log('#data-id value: ' + elem.value);
@@ -416,7 +418,6 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
 
         console.log('*****:' + this.tipoCopia);
         let Case = this.catchFieldsToSave({Id: this.recordid});
-        return;
         if(this.tipoCopia != 'Copia della registrazione' &&  (this.selectedSend === undefined ||  this.selectedSend == null || this.selectedSend == '') ){
             const event = new ShowToastEvent({
                 message: 'Popolare i campi Obbligatori',
