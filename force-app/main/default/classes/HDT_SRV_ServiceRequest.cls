@@ -55,6 +55,11 @@ public inherited sharing class HDT_SRV_ServiceRequest {
         HDT_UTL_DatabaseService.deleteSObject(srvRequest.Id);
     }
 
+    public static void deleteRecord(List<ServiceRequest__c> srvRequests){
+        //checkDeleteAccess(srvRequest);
+        HDT_UTL_DatabaseService.deleteSObject(srvRequest);
+    }
+
     public static List<ServiceRequest__c> updateRecord(List<ServiceRequest__c> srvRequests){
         HDT_UTL_DatabaseService.updateSObject(srvRequests);
         return srvRequests;
