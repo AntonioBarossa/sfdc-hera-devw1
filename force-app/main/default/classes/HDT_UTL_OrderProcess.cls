@@ -946,15 +946,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 		String oldPhase = orderOld.Phase__c;
         DateTime nowDateTime = DateTime.now();
 		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
-            if(orderNew.Cluster__c.equalsIgnoreCase('Volutra')){
-                Case nonReqContract = new Case();
-                HDT_QR_Case caseQr = new HDT_QR_Case(); 
-                nonReqContract = caseQr.getNonReqContrOrder(orderNew.Id);
-                if(!(String.isBlank(nonReqContract.Id))){
-                    nonReqContract.Phase__c = 'Completata';
-                    HDT_UTL_DatabaseService.updateSObject(nonReqContract);
-                }
-            }
             //@frpanico closes open activities on "Annullato" or "Ripensato"
             if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
             {                
@@ -971,6 +962,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 catch(Exception e)
                 {
                     System.debug('Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
+                }
+                if(orderNew.ProcessType__c != null && 
+                    (orderNew.ProcessType__c.containsIgnoreCase('Volutra') ||  orderNew.ProcessType__c.containsIgnoreCase('Cambio Offerta'))
+                    )
+                {
+                    Case nonReqContract = new Case();
+                    HDT_QR_Case caseQr = new HDT_QR_Case(); 
+                    nonReqContract = caseQr.getNonReqContrOrder(orderNew.Id);
+                    if(!(String.isBlank(nonReqContract.Id)))
+                    {
+                        nonReqContract.Phase__c = 'Completata';
+                        HDT_UTL_DatabaseService.updateSObject(nonReqContract);
+                    }
                 }
             }
             if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
