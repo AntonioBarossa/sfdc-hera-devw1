@@ -150,7 +150,7 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
 
         if(caseToInsert.size() > 0){
 
-            HDT_UTL_ProcessDisattivazioni.HDT_WRP_SaveResponse saveResponse = HDT_UTL_ProcessDisattivazioni.databaseInsert(caseToInsert, itemIds);
+            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(caseToInsert, itemIds);
             caseToInsert.clear();
 
             if(saveResponse.reponseItemList.size() > 0){
@@ -158,7 +158,7 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
             }
 
             if(saveResponse.savedCase.size() > 0){
-                Map<Id, String> compatibilityMap = HDT_UTL_ProcessDisattivazioni.checkCompatibilityPostSales(saveResponse.savedCase);
+                Map<Id, String> compatibilityMap = HDT_UTL_ProcessCommonOperations.checkCompatibilityPostSales(saveResponse.savedCase);
                 //System.debug('>>> compatibilityMap ' + String.valueOf(compatibilityMap));
 
                 //***************** */
@@ -169,7 +169,7 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
                 //compatibilityMap.remove(listkey[0]);
                 //***************** */
 
-                HDT_UTL_ProcessDisattivazioni.updateCaseAfterCompatibility(compatibilityMap, saveResponse.savedCase);
+                HDT_UTL_ProcessCommonOperations.updateCaseAfterCompatibility(compatibilityMap, saveResponse.savedCase);
 
             }
 

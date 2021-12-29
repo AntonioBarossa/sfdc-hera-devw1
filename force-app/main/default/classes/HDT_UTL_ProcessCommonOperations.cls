@@ -1,0 +1,137 @@
+public with sharing class HDT_UTL_ProcessCommonOperations {
+
+    public static HDT_WRP_SaveResponse databaseInsert(List<Case> itemList, List<String> itemIds){
+        HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
+        saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
+        saveResponse.savedCase = new List<Case>();
+
+        SObjectType objtype = Schema.getGlobalDescribe().get('Case');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+ 
+        if(objRes.isCreateable()){
+
+            List<Database.SaveResult> insertResults = Database.insert(itemList, false);
+
+            for(Integer n=0; n<insertResults.size(); n++){
+                Database.SaveResult sr = insertResults[n];
+
+                MassiveLoaderRequestItem__c itemError;
+                if (!sr.isSuccess()) {
+                    
+                    for(Database.Error err : sr.getErrors()) {
+                        String errorMessage = err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields();
+                        System.debug('>>> ' + String.valueOf(String.valueOf(itemList[n].ServicePoint__c) + ' - item id ' + itemIds[n]));
+                        System.debug('>>> errorMessage ' + errorMessage);
+                        itemError = new MassiveLoaderRequestItem__c();
+                        itemError.Id = itemIds[n];
+                        itemError.Status__c = 'Errore';
+                        itemError.StatusDescription__c = errorMessage.abbreviate(250);
+                        saveResponse.reponseItemList.add(itemError);
+                    }
+                } else {
+                    itemError = new MassiveLoaderRequestItem__c();
+                    itemError.Id = itemIds[n];
+                    itemError.Status__c = 'Chiuso';
+                    saveResponse.reponseItemList.add(itemError);
+                    saveResponse.savedCase.add(itemList[n]);
+                }
+            }
+        }
+
+        return saveResponse;
+
+    }
+
+    public static Map<Id, String> checkCompatibilityPostSales(List<Case> csList){
+
+        List<ServiceRequest__c> srList = new List<ServiceRequest__c>();
+        List<ServiceRequest__c> srListToDelete = new List<ServiceRequest__c>();
+        Map<Id, String> caseIdToCompatibility = new Map<Id, String>();
+
+        try {
+            String compatibility = '';
+
+            ServiceRequest__c srvRequest;
+            for(Case cs : csList){
+                srvRequest = new ServiceRequest__c();
+                srvRequest.Case__c = cs.Id;
+                srvRequest.ServicePointCode__c= cs.PODPDRFormula__c;
+                srvRequest.Status__c = HDT_UTL_MatrixCompatibility.getStatus(cs.Status, 'Case');
+                srvRequest.CommoditySector__c= cs.CommodityFormula__c;
+                srvRequest.Type__c = 'Case';
+    
+                if(cs.ServicePoint__c != null){
+                    srvRequest.ServicePoint__c = cs.ServicePoint__c;
+                } else {
+                    srvRequest.Account__c = cs.AccountId;
+                    srvRequest.BillingProfile__c = cs.BillingProfile__c;
+                }
+    
+                srvRequest.ProcessType__c = 'Chiusura contatore - EE';
+                srList.add(srvRequest);
+            }
+
+            HDT_UTL_DatabaseService.insertSObject(srList);
+
+            for(ServiceRequest__c sReq : srList){
+                wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = HDT_UTL_MatrixCompatibility.checkCompatibility(sReq);
+
+                System.debug('>>> ObjectCompatibility: ' + result);
+
+                //list of incompatible records
+                if(!result.incompatibilities.isEmpty()){
+                    compatibility = HDT_UTL_MatrixCompatibility.getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
+                    caseIdToCompatibility.put(sReq.Case__c, compatibility);
+                    srListToDelete.add(sReq);
+                } else {
+                    caseIdToCompatibility.put(sReq.Case__c, '');
+                }
+            }
+            
+            if(srListToDelete.size() > 0){
+                HDT_UTL_DatabaseService.deleteSObject(srListToDelete);
+            }
+
+            return caseIdToCompatibility;
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public static void updateCaseAfterCompatibility(Map<Id, String> incompatibleCaseIdSet, List<Case> savedCase){
+
+        for(Case c : savedCase){
+            if(incompatibleCaseIdSet.containsKey(c.Id)){
+                c.Phase__c = 'Bozza Annullata';
+                c.Status = 'Closed';
+                c.CancellationReason__c = 'Processo incompatibile';
+            } else {
+                c.Phase__c = 'Da Inviare';
+            }
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(savedCase);
+
+    }
+
+    public static void getLimitDetails(String stageName){
+        List<String> limitList = new List<String>();
+        limitList.add('>>> CpuTime: ' + String.valueOf(Limits.getCpuTime()) + ' of ' + String.valueOf(Limits.getLimitCpuTime()));
+        limitList.add('>>> DML: ' + String.valueOf(Limits.getDMLStatements()) + ' of ' + String.valueOf(Limits.getLimitDMLStatements()));
+        limitList.add('>>> HeapSize: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
+        limitList.add('>>> Queries: ' + String.valueOf(Limits.getQueries()) + ' of ' + String.valueOf(Limits.getLimitQueries()));
+
+        System.debug('---------------- ' + stageName + ' ----------------');
+        for(String s : limitList){
+            System.debug(s);
+        }
+
+    }
+
+    public class HDT_WRP_SaveResponse {
+        public List<MassiveLoaderRequestItem__c> reponseItemList;
+        public List<Case> savedCase;
+    }
+
+}
