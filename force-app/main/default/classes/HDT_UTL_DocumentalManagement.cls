@@ -312,6 +312,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				}
 			}
 			documentalActivity.EnvelopeId__c = envelopeId;
+			documentalActivity.ReturnDate__c = Date.today();
 		} catch (Exception ex) {
 			System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivity ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
