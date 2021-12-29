@@ -201,7 +201,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 Agency__c = sale.agency__c,
                 salesCompany__c = agc.get('nomeAgente'),
                 salesCompanyCode__c = agc.get('codiceAgente'),
-                Market__c = servicePoint.MarketOrigin__c,
+                //Market__c = servicePoint.MarketOrigin__c, // TODO WAVE 3: gestire altri tipi di mercato.
+                Market__c = 'Libero',
                 Channel__c = sale.Channel__c,
                 FriendCode__c = sale.FriendCode__c,
                 CampaignCode__c = sale.CampaignCode__c,
