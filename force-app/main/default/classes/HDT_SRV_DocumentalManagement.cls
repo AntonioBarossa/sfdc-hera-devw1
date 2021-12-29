@@ -1436,6 +1436,17 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 		}
 	}
 
+	// Aggiorna la fase del Case o Order a 'Comunicazione EngageOne KO'
+	public static void logDiscardPhase(Id idToUpdate) {
+		SObject objToUpdate = idToUpdate.getSObjectType().newSObject(idToUpdate);
+		objToUpdate.put('Phase__c', 'Comunicazione EngageOne KO');
+		try {
+			HDT_UTL_DatabaseService.updateSObject(objToUpdate);
+		} catch (Exception e) {
+			System.debug(LoggingLevel.DEBUG, 'exception at line ' + e.getLineNumber() + ' ' + e.getMessage());
+		}
+	}
+
 	public class HDT_WRP_SignModeConfiguration{
 		Map<String,String> signMode;
 		List<Map<String,String>> sendMode;

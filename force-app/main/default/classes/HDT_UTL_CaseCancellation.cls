@@ -63,13 +63,16 @@ public inherited sharing class HDT_UTL_CaseCancellation {
 
     public static HDT_UTL_ResponseCancellationReason getListCanellationReason(HDT_UTL_RequestCancellationReason input){
         HDT_UTL_ResponseCancellationReason toReturn;
+        String recordType = input.recordType != null ? input.recordType : '';
+        String commodity = input.commodity != null ? input.commodity : '';
+        String processTypeToCancell = input.processTypeToCancell != null ? input.processTypeToCancell : '';
         try{
             List<HDT_UTL_Option> listDescription = new List<HDT_UTL_Option>();
             List<HDT_ProcessCancellationReason__mdt> processCancellationReasons = Database.query('SELECT Process_Cancellation_Reason__c FROM HDT_ProcessCancellationReason__mdt WHERE (RecordType__c = NULL OR RecordType__c = \''
-            + String.escapeSingleQuotes(input.recordType) +'\') AND (Commodity__c = NULL OR Commodity__c = \''
-            + String.escapeSingleQuotes(input.commodity) +'\') AND Process_Type__c = \''
+            + String.escapeSingleQuotes(recordType) +'\') AND (Commodity__c = NULL OR Commodity__c = \''
+            + String.escapeSingleQuotes(commodity) +'\') AND Process_Type__c = \''
             + String.escapeSingleQuotes(input.processType) +'\' AND (Process_Type_to_Cancell__c = NULL OR Process_Type_to_Cancell__c = \''
-            + String.escapeSingleQuotes(input.processTypeToCancell) +'\') WITH SECURITY_ENFORCED');
+            + String.escapeSingleQuotes(processTypeToCancell) +'\') WITH SECURITY_ENFORCED');
             //List<HDT_ProcessCancellationReason__mdt> processCancellationReasons = Database.query(queryCmd);
             for(HDT_ProcessCancellationReason__mdt singleRecord : processCancellationReasons){
                 listDescription.add(new HDT_UTL_Option(singleRecord.Process_Cancellation_Reason__c));
