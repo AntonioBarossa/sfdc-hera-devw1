@@ -27,6 +27,12 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         }catch(Exception ex){
             resultMap.put('code','500');
         }
+
+        if (recordId != null && (result != '000' || resultMap.get('code') == '500')) {
+            System.debug(LoggingLevel.DEBUG, 'preview failed: ' + message);
+            HDT_SRV_DocumentalManagement.logDiscardPhase(recordId);
+        }
+
         return JSON.serialize(resultMap);
     }
     
