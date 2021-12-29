@@ -96,7 +96,7 @@
                             </template>
 
                             <template if:true={isSendEmail}>
-                                <lightning-input-field name="Email__c" field-name="ShippingMail__c" class="slds-size_1-of-5 fieldsData" value={ordChild.Contact__r.Email} required >
+                                <lightning-input-field name="Email__c" field-name="ShippingMail__c" class="slds-size_1-of-5 fieldsData" required >
                                 </lightning-input-field>
                                 <br></br>
                             </template>
@@ -119,7 +119,7 @@
                 <template if:true={ismessagevisible}>
                     <template if:true={firstRowChild}>
                         <lightning-record-edit-form record-id={firstRowChild.Id} object-api-name="Order">
-                            <lightning-input-field field-name="ShippingMail__c" class="slds-size_1-of-5 fieldsData" value={firstRowChild.Contact__r.Email} required name="Email__c">
+                            <lightning-input-field field-name="ShippingMail__c" class="slds-size_1-of-5 fieldsData" required name="Email__c">
                             </lightning-input-field>
                         </lightning-record-edit-form>
                     </template>
