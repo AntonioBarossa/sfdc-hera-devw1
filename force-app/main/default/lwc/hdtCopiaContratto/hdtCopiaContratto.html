@@ -70,14 +70,14 @@
                     <lightning-record-edit-form record-id={ordChild.Id} object-api-name="Order">
                         <div class="slds-grid slds-wrap slds-m-top_small">
                             <template if:true={isFirmato}>
-                                <lightning-input-field field-name="CustomerName__c" disabled
+                                <lightning-input-field name="CustomerName__c" data-id="CustomerName__c" field-name="CustomerName__c" disabled
                                     class="slds-size_1-of-5 fieldsData">
                                 </lightning-input-field>
-                                <lightning-input-field field-name="CustomerLastName__c" disabled
+                                <lightning-input-field name="CustomerLastName__c" field-name="CustomerLastName__c" disabled
                                     class="slds-size_1-of-5 fieldsData"> </lightning-input-field>
-                                <lightning-input-field field-name="CustomerFiscalCode__c" disabled
+                                <lightning-input-field name="CustomerFiscalCode__c" field-name="CustomerFiscalCode__c" disabled
                                     class="slds-size_1-of-5 fieldsData"> </lightning-input-field>
-                                <lightning-input-field field-name="CustomerVATNumber__c" disabled
+                                <lightning-input-field name="CustomerVATNumber__c" field-name="CustomerVATNumber__c" disabled
                                     class="slds-size_1-of-5 fieldsData"> </lightning-input-field>
                             </template>
                         </div>
@@ -86,14 +86,17 @@
                                     class="slds-size_5-of-12 fieldsData"> </lightning-input-field> -->
                                 <div class="slds-text-title slds-text-heading_large slds-m-bottom_large"><b>Indirizzi Spedizione</b><br/></div>
                                 <div class="slds-grid slds-wrap slds-m-top_small">
-                                    <template for:each={shippingFields} for:item="field" >
-                                        <lightning-input-field field-name={field.apiname} key={field.apiname} disabled class={field.cssClass}></lightning-input-field>
+                                    <template for:each={shippingFields} for:item="field">
+                                        <div class="slds-p-top_x-small slds-p-right_x-small slds-p-left_x-small slds-size_1-of-3" key={field.apiname}>
+                                            <label>{field.label}</label>
+                                            <lightning-input-field required name={field.name} variant="label-hidden" field-name={field.apiname} disabled></lightning-input-field>
+                                        </div>
                                     </template>
                                 </div>
                             </template>
 
                             <template if:true={isSendEmail}>
-                                <lightning-input-field field-name="ShippingMail__c" class="slds-size_1-of-5 fieldsData" value={ordChild.Contact__r.Email} required data-id="Email__c">
+                                <lightning-input-field name="Email__c" field-name="ShippingMail__c" class="slds-size_1-of-5 fieldsData" value={ordChild.Contact__r.Email} required >
                                 </lightning-input-field>
                                 <br></br>
                             </template>
@@ -116,7 +119,7 @@
                 <template if:true={ismessagevisible}>
                     <template if:true={firstRowChild}>
                         <lightning-record-edit-form record-id={firstRowChild.Id} object-api-name="Order">
-                            <lightning-input-field field-name="ShippingMail__c" class="slds-size_1-of-5 fieldsData" value={firstRowChild.Contact__r.Email} required data-id="Email__c">
+                            <lightning-input-field field-name="ShippingMail__c" class="slds-size_1-of-5 fieldsData" value={firstRowChild.Contact__r.Email} required name="Email__c">
                             </lightning-input-field>
                         </lightning-record-edit-form>
                     </template>

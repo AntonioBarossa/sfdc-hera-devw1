@@ -1045,6 +1045,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Email__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Lead__c</field>
             <value>
                 <elementReference>LeadId</elementReference>
@@ -1078,12 +1084,6 @@
             <field>ServicePoint__c</field>
             <value>
                 <elementReference>Order_preattivazione.ServicePoint__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SuppliedEmail</field>
-            <value>
-                <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1337,6 +1337,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Email__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Lead__c</field>
             <value>
                 <elementReference>LeadId</elementReference>
@@ -1364,12 +1370,6 @@
             <field>ServicePointCode__c</field>
             <value>
                 <elementReference>Inserire_Pod.pod</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SuppliedEmail</field>
-            <value>
-                <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

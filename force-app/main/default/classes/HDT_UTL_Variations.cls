@@ -8,17 +8,23 @@ public inherited sharing class HDT_UTL_Variations {
 
     public static Boolean modifyRate(String caseId){
 
-        System.debug(LoggingLevel.DEBUG, 'UTL_Variations start');
 
-        List<Case> otherCases = new List<Case>();
-        Boolean check;
-        Integer flag = 0;
-        Integer count = 0;
+        Boolean check = true;
         Case currentCase =  HDT_QR_Variations.getCaseInfo(caseId);
 
         List<ServicePoint__c> servicePoints = HDT_QR_Variations.queryServicePoint(currentCase.AccountId, currentCase.CommodityFormula__c, currentCase.ServicePoint__c);
 
-        List<Id> spIds= new List<Id>();
+        for(ServicePoint__c servicePoint : servicePoints)
+        {
+            if(servicePoint.Cases__r.size() == 0)
+            {
+                check = false;
+                break;
+            }
+        }
+
+
+        /*List<Id> spIds= new List<Id>();
 
         if(servicePoints.size() > 0){        
             for(ServicePoint__c sp : servicePoints){
@@ -52,8 +58,8 @@ public inherited sharing class HDT_UTL_Variations {
         } else {
             check = true;
         }
-        System.debug(LoggingLevel.DEBUG, 'UTL_Variations end');
-
+        
+        */
         return check;
     }
 

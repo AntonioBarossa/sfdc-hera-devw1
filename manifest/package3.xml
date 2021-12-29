@@ -1,47 +1,82 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>DistributorPointCode__c</members>
-        <members>FieldCoerenceServicePoint__c</members>
+        <members>wrts_prcgvr__Activity__c.HDT_CloseActivity</members>
+        <members>wrts_prcgvr__Activity__c.HDT_EditScartiComplessi</members>
+        <members>wrts_prcgvr__Activity__c.RiprendiAttivita</members>
+        <name>QuickAction</name>
+    </types>
+    <types>
+        <members>HDT_Activity_Default_Record_Page</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>HDT_GestioneScartiSap__mdt</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>Order-Switch in</members>
+        <members>HDT_GestioneScartiSap__mdt-Layout Gestione Scarti Sap</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_LC_OfferConfiguratorCtrlHelper</members>
-        <members>HDT_QR_DistributorPointCode</members>
-        <members>HDT_UTL_PayloadManagement</members>
+        <members>HDT_BA_Dependencies</members>
+        <members>HDT_LC_EditScartiComplessi</members>
+        <members>HDT_LC_EditScartiComplessiTst</members>
+        <members>HDT_LC_OrderDossierWizardActions</members>
+        <members>HDT_QR_Variations</members>
+        <members>HDT_SRV_DocumentalManagement</members>
+        <members>HDT_SRV_DocumentalManagementFacade</members>
+        <members>HDT_SRV_ServiceRequest</members>
+        <members>HDT_UTL_CaseProcess</members>
+        <members>HDT_UTL_CheckDiscardCreation</members>
+        <members>HDT_UTL_CheckProcessAnnullment</members>
+        <members>HDT_UTL_DocumentalManagement</members>
+        <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_Sales</members>
+        <members>HDT_UTL_Scarti</members>
+        <members>HDT_UTL_SubscriptionProcess</members>
+        <members>HDT_UTL_Variations</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_ProtocolSpecificEmail__mdt.CompanyOwner__c</members>
-        <members>HDT_ProtocolSpecificEmail__mdt.Email__c</members>
-        <members>HDT_ProtocolSpecificEmail__mdt.Type__c</members>
-        <members>User.HerokuUser__c</members>
+        <members>HDT_GestioneScartiSap__mdt.ActivityInitialStatus__c</members>
+        <members>HDT_GestioneScartiSap__mdt.ActivityToClose__c</members>
+        <members>HDT_GestioneScartiSap__mdt.Activity__c</members>
+        <members>HDT_GestioneScartiSap__mdt.CreateActivity__c</members>
+        <members>HDT_GestioneScartiSap__mdt.Phase__c</members>
+        <members>HDT_GestioneScartiSap__mdt.SkipPhaseManager__c</members>
         <name>CustomField</name>
     </types>
     <types>
+        <members>HDT_LCP_ChildOrderProcess</members>
+        <members>HDT_LCP_EditScartiComplessi</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>hdtChildOrderProcessActions</members>
         <members>hdtChildOrderProcessDetails</members>
         <members>hdtCopiaContratto</members>
-        <members>hdtGeneralInfo</members>
-        <members>hdtProductOptionEditForm</members>
-        <members>hdtProductRuleEditForm</members>
-        <members>hdtSupplySelection</members>
-        <members>hdtTargetObjectCreateForm</members>
+        <members>hdtDocumentalSignatureManagerOrderDossier</members>
+        <members>hdtOrderDossierWizardActions</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>Admin</members>
-        <members>Hera Door2Door Partner User</members>
-        <members>Hera M2M Integration User</members>
-        <members>Hera Standard User OneShot</members>
-        <members>Hera Standard User</members>
-        <members>Hera System Administrator</members>
-        <members>Hera System Integrator</members>
-        <members>Hera Teleseller Partner User</members>
-        <name>Profile</name>
+        <members>Hera_Service_Console</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+        <members>HDT_IntegrationObject.Documentale_Context1</members>
+        <name>CustomMetadata</name>
+    </types>
+    <types>
+        <members>HDT_FL_ActivityClosing</members>
+        <members>HDT_FL_ActivityEscalationNotifyClosure</members>
+        <members>HDT_FL_GestioneScartiComplessi</members>
+        <members>HDT_FL_PostSalesDiscardDispatch</members>
+        <members>HDT_FL_PostSalesMasterDispatchSales</members>
+        <members>HDT_PB_CaseCarryPriority</members>
+        <members>HDT_PB_OrderCarryPriority</members>
+        <name>Flow</name>
     </types>
     <version>49</version>
 </Package>
