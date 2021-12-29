@@ -218,6 +218,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             nextPhase = reqWrp.requestMap.get('FASE');
             storno = reqWrp.requestMap.get('STORNO');
             activity = reqWrp.requestMap.get('ATTIVITA');
+            //EVERIS: Gestione Scarti SAP
+            HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase);
         }
         if(method.equalsIgnoreCase('aggiornaRCU')){
             if(String.isBlank(codServizio) || String.isBlank(codPrestazione)){

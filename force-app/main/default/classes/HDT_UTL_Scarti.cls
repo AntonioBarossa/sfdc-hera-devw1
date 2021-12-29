@@ -1045,9 +1045,38 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         }    
     }
 
+    //EVERIS: Gestione Scarti SAP
     public static Boolean closeDiscardActivity(Id activityId){
         wrts_prcgvr__Activity__c activityToUpdate = new wrts_prcgvr__Activity__c(Id =  activityId, wrts_prcgvr__Status__c ='Chiusa', wrts_prcgvr__IsClosed__c = true, EndDate__c = Date.today());
         return HDT_UTL_DatabaseService.updateSObject(activityToUpdate);
     }
 
+    public static Boolean manageSapDiscard(List<SObject> newObjectList, Map<Id,SObject> oldObjectMap){
+        SObject newObject = newObjectList[0];
+        SObject oldObject = oldObjectMap.get((Id)newObject.get('Id'));
+        String newPhase = (String)newObject.get('Phase__c');
+        String oldPhase = (String)oldObject.get('Phase__c');
+
+        if (String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && !newPhase.equalsIgnoreCase(oldPhase)){
+            return HDT_UTL_GestioneScartiSap.skipPhaseManager(newPhase);
+        }
+        return false;
+    }
+
+    public static void handleHerokuResponse(Id objectId, String activityName, String fase){
+        if ((String.isNotBlank(fase) || String.isNotBlank(activityName)) && objectId != null){
+            Map<String,String> mapFieldValue = new Map<String,String>();
+            if (String.isNotBlank(activityName)){
+                mapFieldValue.put('Activity__c',activityName);
+            }
+            if (String.isNotBlank(fase)){
+                mapFieldValue.put('Phase__c',fase);
+            }
+            List<HDT_GestioneScartiSap__mdt> rules = HDT_UTL_GestioneScartiSap.getRuleFromActivity(mapFieldValue);
+            if (!rules.isEmpty()){
+                System.enqueueJob(new HDT_QBL_GestioneScartiSap(objectId,rules));
+            }
+        }
+    }
+    //EVERIS: END Gestione Scarti SAP
 }

@@ -23,9 +23,10 @@ public with sharing class HDT_LC_EditScartiComplessi {
     }
 
     @AuraEnabled
-    public static String resubmissionPractice(String orderId,String activityId){
+    public static String resubmissionPractice(String orderId,String activityId, String processType){
         String response;
-        Order orderToUpdate = new Order(Id = orderId,Phase__c = 'Comunicazione verso Heroku');
+        String fase = 'Voltura'.equalsIgnoreCase(processType) ? 'Documentazione Validata' : 'Comunicazione verso Heroku';
+        Order orderToUpdate = new Order(Id = orderId,Phase__c = fase);
         System.Savepoint sp = Database.setSavePoint();
         try {
             if (!HDT_UTL_DatabaseService.updateSObject(orderToUpdate)){
