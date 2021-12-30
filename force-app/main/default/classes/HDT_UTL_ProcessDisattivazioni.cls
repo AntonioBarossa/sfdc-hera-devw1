@@ -64,7 +64,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
 
         String rtDeveloperName = '';
         contractList = HDT_QR_ProcessPostSales.getContracts(contractList, contractCodeSet);
-        accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
+        accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationIdsList(accContRelationList, accountIdSet, 'Titolare');
         
         //System.debug('>>> accountIdSet ' + String.valueOf(accountIdSet));
         //System.debug('>>> podSet ' + String.valueOf(podSet));

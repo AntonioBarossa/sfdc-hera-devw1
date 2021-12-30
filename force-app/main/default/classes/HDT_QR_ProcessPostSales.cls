@@ -23,6 +23,18 @@ public with sharing class HDT_QR_ProcessPostSales {
         return contractList;
     }
 
+    public static List<AccountContactRelation> getAccountContactRelationIdsList(List<AccountContactRelation> accContRelationList, Set<String> accountIdSet, String Roles){
+        accContRelationList = new List<AccountContactRelation>();
+        accContRelationList = [
+            SELECT Id, AccountId, ContactId
+            FROM AccountContactRelation
+            WHERE AccountId IN: accountIdSet
+            AND Roles = :Roles
+            WITH SECURITY_ENFORCED
+        ];
+        return accContRelationList;
+    }
+
     public static List<AccountContactRelation> getAccountContactRelationList(List<AccountContactRelation> accContRelationList, Set<String> accountIdSet, String Roles){
         accContRelationList = new List<AccountContactRelation>();
         accContRelationList = [
@@ -59,18 +71,19 @@ public with sharing class HDT_QR_ProcessPostSales {
         return caseList;
     }
 
-    public static List<Contract> getContractsByContractAccountCode(List<Contract> contractList, Set<String> codeSet){
-        contractList = new List<Contract>();
-        //contractList = [
-        //    SELECT Id,BillingProfile__c.BillSendingMethod__c, BillingProfile__c.ElectronicInvoicingMethod__c, BillingProfile__c.InvoiceEmailAddress__c, BillingProfile__c.ElectronicInvoiceCertifiedEmailAddress__c,
-        //           BillingProfile__c.InvoiceCertifiedEmailAddress__c, BillingProfile__c.XMLType__c, BillingProfile__c.SendCertifiedEmailConsentDate__c, BillingProfile__c.OfficeSubjectCode__c, BillingProfile__c.CareOf__c,
-        //           BillingProfile__c.ReminderCertifiedEmailAddress__c, BillingProfile__c.ReminderFlag__c, BillingProfile__c.InvoicingCity__c, BillingProfile__c.InvoicingCountry__c, BillingProfile__c.InvoicingPlace__c, BillingProfile__c.InvoicingPostalCode__c,
-        //           BillingProfile__c.InvoicingProvince__c, BillingProfile__c.InvoicingStreetNumber__c, BillingProfile__c.InvoicingStreetName__c, BillingProfile__c.InvoicingStreetNumberExtension__c, BillingProfile__c.InvoicingAddressFormula__c  
-        //    FROM BillingProfile__c   
-        //    WHERE ContractAccountCode__c = :codeSet 
-        //    WITH SECURITY_ENFORCED
-        //];
-        return contractList;
+    public static List<BillingProfile__c> getBillingProfileByContractAccountCode(List<BillingProfile__c> billingProfileList, Set<String> codeSet){
+        billingProfileList = new List<BillingProfile__c>();
+        billingProfileList = [
+            SELECT Id,BillSendingMethod__c, ElectronicInvoicingMethod__c, InvoiceEmailAddress__c, ElectronicInvoiceCertifiedEmailAddress__c,
+                   InvoiceCertifiedEmailAddress__c, XMLType__c, SendCertifiedEmailConsentDate__c, OfficeSubjectCode__c, CareOf__c,
+                   ReminderCertifiedEmailAddress__c, ReminderFlag__c, InvoicingCity__c, InvoicingCountry__c, InvoicingPlace__c, InvoicingPostalCode__c,
+                   InvoicingProvince__c, InvoicingStreetNumber__c, InvoicingStreetName__c, InvoicingStreetNumberExtension__c, InvoicingAddressFormula__c,
+                   ContractAccountCode__c
+            FROM BillingProfile__c   
+            WHERE ContractAccountCode__c = :codeSet 
+            WITH SECURITY_ENFORCED
+        ];
+        return billingProfileList;
     }
 
 }
