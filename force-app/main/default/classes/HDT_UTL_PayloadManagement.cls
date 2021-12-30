@@ -378,8 +378,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
     }
 
     private String checkCommercialOffer(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
-        String offerName = HDT_UTL_DocumentalManagement.getValue('Order', 'ProductName__c', 0, inputs, formParams);//ProductName__c
-        String implantType = HDT_UTL_DocumentalManagement.getValue('Order', 'ImplantType__c', 0, inputs, formParams);//ImplantType__c
+        String offerName = HDT_UTL_DocumentalManagement.getValue('ItemCommercialOffer', 'ProductName__c', 0, inputs, formParams);
+        String implantType = HDT_UTL_DocumentalManagement.getValue('Order', 'ImplantType__c', 0, inputs, formParams);
         String result = '';
         if(String.isNotBlank(offerName)){
             if(offerName.indexOf('Sole Lune') > -1){
@@ -423,12 +423,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
         if(String.isNotBlank(offerName)){
             if(offerName.indexOf('Bonus') > -1){
-                result = 'X|';
+                result += 'X|';
             }else {
-                result = '|';
+                result += '|';
             }
             if(offerName.indexOf('Opzione Natura') > -1){
-                result = 'X';
+                result += 'X';
             }
         }else {
             result += '|';
