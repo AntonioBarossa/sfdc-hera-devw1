@@ -190,6 +190,18 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 						processRecord.put('Phase__c','Attesa conferma preventivo cliente');
 					}
 				}
+				// Oltre alla DocusignExpirationDate__c, settiamo anche il campo DocusignExpirationDate__c se necessario.
+				String signMode = (String) processRecord.get('SignMode__c');
+				if (signMode != null && signMode.containsIgnoreCase('OTP')) {
+					List<CS_DaysToExpiration__c> daysToExpiration = [SELECT NumberOfDays__c FROM CS_DaysToExpiration__c WHERE Type__c='BustaDocusign' WITH SECURITY_ENFORCED];
+					if (!daysToExpiration.isEmpty()) {
+						Integer numberOfDays = Integer.valueOf(daysToExpiration[0].NumberOfDays__c);
+						if (numberOfDays > 0) {
+							Date expirationDate = Date.today().addDays(numberOfDays);
+							processRecord.put('DocusignExpirationDate__c', expirationDate);
+						}
+					}
+				}
 			}
 		}else {
 			processRecord.put('DocumentalPhase__c','Errore composizione');
