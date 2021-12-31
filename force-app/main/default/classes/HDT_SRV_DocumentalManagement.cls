@@ -15,7 +15,6 @@ public class HDT_SRV_DocumentalManagement{
 		
 		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
 		String documentalContext = HDT_UTL_DocumentalManagement.getDocumentalContext(context);
-		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 1');
 		
 		//estrae Body da Documento (con Name = context) e lo formatta come HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure payloadStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration(documentalContext);
@@ -23,7 +22,6 @@ public class HDT_SRV_DocumentalManagement{
 		
 		//inserito per gestire la documentazione anticipata che si basa su single Order. Sfrutta il Context4 per recuperare la struttura del payload e il context5 per la struttura record
 		documentalContext = context.equalsIgnoreCase('DocumentazioneAnticipata')?'Context5':documentalContext;
-		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 2');
 		
 		//Viene estratto un Custom Metadata apposito identificato dal documentalContext. 
 		HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject integrationObjConfig =  HDT_UTL_IntegrationObject.getIntegrationObjectConfiguration('HDT_IntegrationObject__mdt', 'Id, JSON__c', 'DeveloperName = \'Documentale_'+ documentalContext + '\'', 'JSON__c');
@@ -37,7 +35,6 @@ public class HDT_SRV_DocumentalManagement{
 		//Restituisce una lista in cui, per ogni order è presente una mappa dove sono stati suddivisi per tipologia i record inseriti indistintamente in recordsList.
 		List<Map<String, List<sObject>>> recordObjectsListMap = HDT_UTL_DocumentalManagement.getRecordObjectsList(recordList, documentalContext);
 		formParamsMap.put('Contesto', context);
-		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 3');
 		
 		//sub-processing della lista di mappe realizzata al punto precedente.
 		//nuovo campo Customer Info settoreMerceologico
@@ -91,7 +88,6 @@ public class HDT_SRV_DocumentalManagement{
 		if (String.isNotEmpty(settoreMerceologico)){
 			formParamsMap.put('SettMerceologico',settoreMerceologico.substring(1));
 		}
-		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 4');
 		
 		body = composeJson(recordId, driverPayloadListMap, formParamsMap, recordObjectsListMap[0]);
 		System.debug(LoggingLevel.DEBUG, 'Body ' + body);
