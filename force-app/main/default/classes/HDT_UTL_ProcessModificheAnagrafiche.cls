@@ -8,7 +8,8 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
     private Set<String> contractCodeSet = new Set<String>();
     private Map<String, List<String>> itemRequestMap = new Map<String, List<String>>();
     private List<MassiveLoaderRequestItem__c> itemsToSave;
-    private Map<String, AccountContactRelation> accountContactMap = new Map<String, AccountContactRelation>();
+    private Case newCase;
+    private Map<String, AccountContactRelation> accountContactMap;
     private Map<String, BillingProfile__c> contractToBillProfMap = new Map<String, BillingProfile__c>();
     private List<AccountContactRelation> accContRelationList;
     private List<BillingProfile__c> billingProfileList;
@@ -19,7 +20,6 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
     public override void checks(){
         System.debug('checks');
         mapFieldsObject();
-        //setMap();
 
         System.debug('>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
         System.debug('>>> mapWrapperCaseFields: ' + String.valueOf(mapWrapperCaseFields));
@@ -33,7 +33,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
 
         List<String> dataSplitted;
         for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
-            dataSplitted = item.Data__c.split(',');
+            dataSplitted = item.Data__c.split(',', -1);
             accountIdSet.add(dataSplitted[accountIdIndex]);
             contractCodeSet.add(dataSplitted[contractIndex]);
             itemRequestMap.put(item.Id, dataSplitted);
@@ -43,6 +43,8 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
 
     public override void getRecords(){
         System.debug('getRecords');
+
+        accountContactMap = new Map<String, AccountContactRelation>();
 
         billingProfileList = HDT_QR_ProcessPostSales.getBillingProfileByContractAccountCode(billingProfileList, contractCodeSet);
         accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
@@ -70,7 +72,6 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
         List<String> itemIds = new List<String>();
         itemsToSave = new List<MassiveLoaderRequestItem__c>();
 
-        Case newCase;
         List<String> emptyCsvField;
         for(String itemId : itemRequestMap.keySet()){
 
@@ -79,17 +80,22 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
 
             Integer count = 0;
             String convertionError;
+            String setEmptyCsvFields;
             String csvHeader;
             String objField;
             emptyCsvField = new List<String>();
+
+            System.debug('>>> tempSplitted ' + tempSplitted.size());
+
             for (String tempField : tempSplitted) {
 
                 if ('null'.equalsIgnoreCase(tempField)) {
                    tempField = '';
                 }
-            
+                
                 csvHeader = mapHeaderByPosition.get(count);
                 objField = mapCaseFields.get(csvHeader);
+
                 //if (mapRequiredByPosition.get(count) != null && String.isBlank(tempField)) {
                 //    System.debug('>>> throw new HDT_WRP_ProcessEntitiesException');
                 //   //throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field','Missing Required Field ' + mapHeaderByPosition.get(count));
@@ -107,6 +113,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
 
                     if(!String.isEmpty(convertionError)){
                         // error happened -> exit
+                        System.debug('>>> break for loop...' + csvHeader + ' - ' + objField + ' - ' + tempField);
                         break;
                     }
                 }
@@ -121,7 +128,13 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
 
             if(emptyCsvField.size() > 0){
                 System.debug('>>> we need to set empty fields');
-                newCase = setEmptyCsvFields(emptyCsvField, newCase, accountContactMap.get(tempSplitted[accountIdIndex]));
+                convertionError = setEmptyCsvFields(emptyCsvField, newCase, tempSplitted[accountIdIndex]);
+
+                if(!String.isEmpty(convertionError)){
+                    itemsToSave.add(setErrorItem(itemId, convertionError));
+                    continue;
+                }
+
             }
 
             System.debug('>>> currentCase: ' + newCase);
@@ -152,26 +165,48 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
 
     }
 
-    private Case setEmptyCsvFields(List<String> emptyFieldToSet, Case caseToSet, AccountContactRelation accContRel){
+    private String setEmptyCsvFields(List<String> emptyFieldToSet, Case caseToSet, String accountId){
 
         System.debug('>>> setEmptyCsvFields');
-        Map<String, Object> fieldsToValue = accContRel.getPopulatedFieldsAsMap();
-        Account currentAccount = (Account)fieldsToValue.get('Account');
+        Map<String, Object> fieldsToValue;
+        String newValueToSet;
 
         HDT_MassiveFieldsObjectMap__mdt massiveFieldsObject;
+        AccountContactRelation accContRel;
         for(String emptyField : emptyFieldToSet){
             System.debug('>>> empty field to set -> ' + emptyField);
+
             massiveFieldsObject = sobjectMap.get(emptyField);
             System.debug('>>> massiveFieldsObject -> ' + massiveFieldsObject);
-            if(massiveFieldsObject.objectType__c.equalsIgnoreCase('Account')){
-                String newValueToSet = String.valueOf(currentAccount.get(massiveFieldsObject.labelField__c));
+
+            switch on massiveFieldsObject.objectType__c {
+                when 'Account' {
+                    if(accountContactMap.containsKey(accountId)){
+                        accContRel = accountContactMap.get(accountId);
+                        fieldsToValue = accContRel.getPopulatedFieldsAsMap();
+                        Account currentAccount = (Account)fieldsToValue.get('Account');
+                        newValueToSet = String.valueOf(currentAccount.get(massiveFieldsObject.labelField__c));
+                    } else {
+                        return 'Account non presente';
+                    }
+                }	
+                when 'Contact' {
+                    
+                }
+                when 'BillingProfile__c' {
+                    
+                }
+
+            }
+
+            if(!String.isEmpty(newValueToSet) && !String.isEmpty(massiveFieldsObject.labelField__c)){
                 System.debug('>>> new value to set: ' + newValueToSet + ' for -> ' + emptyField + ' [' + massiveFieldsObject.labelField__c + ']');
                 caseToSet.put(massiveFieldsObject.labelField__c, newValueToSet);
             }
 
         }
 
-        return caseToSet;
+        return null;
 
     }
 
@@ -265,11 +300,11 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
         List<MassiveLoaderRequestItem__c> itemsList = new List<MassiveLoaderRequestItem__c>();
         MassiveLoaderRequestItem__c item;
     
-        for(Integer n=0; n<1; n++){
+        for(Integer n=0; n<2; n++){
             item = new MassiveLoaderRequestItem__c();
             item.MassiveLoaderRequest__c = massiveLoaderRequestId;
             item.Status__c = 'In attesa di lavorazione';
-            item.Data__c = 'Variazione Anagrafica Cliente,0011X00000towDCQAY,,contoCode,3336560123,,,,,,Cartaceo,,,,,,,,,,,,,,,,,,,,ADAM,,,,,,,,,,,,,,,';//--0011X00000jcKXUQA2
+            item.Data__c = 'Variazione Anagrafica Cliente,0011X00000rL7Z6QAK,,contoCode,3336560123,,,,,,Cartaceo,,,,,,,,,,,,,,,,,,,,ADAM,,,,,,,,,,,,,,,';//--0011X00000jcKXUQA2
             itemsList.add(item);
         }
         insert itemsList;
