@@ -715,6 +715,9 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					Date today = Date.today();
 					resultToReturn = transformDate(today);
 				}
+				if(resultToReturn == 'noValue'){
+					resultToReturn = '';
+				}
 			}
 		}catch(Exception ex){
 			System.debug(LoggingLevel.DEBUG, 'for expressione '+expression + ' ' + ex.getMessage() + ' ' + ex.getLineNumber());

@@ -63,11 +63,20 @@ public class HDT_SRV_DataEnrichmentPostSalesTst {
         String result = c.getPicklistValue('Case', 'PhaseTypeAvailable__c', '0.8');
         System.assert('Monofase'.equals(result), 'result != Monofase');
 
-        String result2 = c.getPicklistValue('Case', 'PhaseTypeAvailable__c', '1.1');
-        System.assert('Trifase'.equals(result2), 'result != Monofase');
+        result = c.getPicklistValue('Case', 'PhaseTypeAvailable__c', '1.1');
+        System.assert('Trifase'.equals(result), 'result != Monofase');
 
-        String result3 = c.getPicklistValue('Case', 'Taxes__c', 'E_IMPOST');
-        System.assert('Imposta usi domestici'.equals(result3), 'result != Monofase');
+        result = c.getPicklistValue('Case', 'Taxes__c', 'E_IMPOST');
+        System.assert('Imposta usi domestici'.equals(result), 'result != Monofase');
+        
+        result = c.getPicklistValue('Case', 'TaxRate__c', '10');
+        System.assertEquals(result, 'Iva 22% Soc. del Gruppo (Cod. 10)', 'Match errato tra valori della picklist');
+        
+        result = c.getPicklistValue('Case', 'VATPercentage__c', '10');
+        System.assertEquals(result, 'SOCIETA\' DEL GRUPPO 22%-10', 'Match errato tra valori della picklist');
+        
+        result = c.getPicklistValue('Case', 'TaxRate__c', '22');
+        System.assert(String.isBlank(result), 'Match errato tra valori della picklist');
 
         Test.stopTest();
         
