@@ -3,7 +3,7 @@
     <fullName>ParentObject__c</fullName>
     <description>Oggetto a cui è legata l&apos;attività</description>
     <externalId>false</externalId>
-    <label>Oggetto padre</label>
+    <label>Oggetto padre (Deprecato)</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>

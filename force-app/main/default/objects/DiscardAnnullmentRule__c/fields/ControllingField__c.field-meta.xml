@@ -3,12 +3,11 @@
     <fullName>ControllingField__c</fullName>
     <description>Nome del field utilizzato dalla regola per fare il match.</description>
     <externalId>false</externalId>
-    <label>Campo controllante</label>
+    <label>Campo controllante (Deprecato)</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <controllingField>ParentObject__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
@@ -34,18 +33,5 @@
                 <label>DiscardReason__c​</label>
             </value>
         </valueSetDefinition>
-        <valueSettings>
-            <controllingFieldValue>Case</controllingFieldValue>
-            <valueName>DiscardDescription__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Case</controllingFieldValue>
-            <controllingFieldValue>Order</controllingFieldValue>
-            <valueName>Description</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Order</controllingFieldValue>
-            <valueName>DiscardReason__c</valueName>
-        </valueSettings>
     </valueSet>
 </CustomField>
