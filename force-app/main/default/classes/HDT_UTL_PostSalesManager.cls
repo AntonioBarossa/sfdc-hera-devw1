@@ -424,6 +424,21 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         updateFuture(JSON.serialize(currentCase));
     }
 
+    /**
+     * Crea l'associazione SOL per il processo di Associazione Utente Web.
+     * Nota: si assume che il contatto SOL sia salvato su Case.SecondaryContact__c e non Case.ContactId
+     */
+    public void createSolAcr(SObject inputCase) {
+        Case currentCase = (Case) inputCase;
+        AccountContactRelation solAcr = new AccountContactRelation();
+        solAcr.AccountId = currentCase.AccountId;
+        solAcr.ContactId = currentCase.SecondaryContact__c;
+        solAcr.IsActive = True;
+        solAcr.IsManagerSOL__c = True;
+        solAcr.Roles = 'Referente SOL-APP';
+        HDT_UTL_DatabaseService.insertSObject(solAcr);
+    }
+
     @Future
     private static void updateFuture(String serializedCase)
     {
