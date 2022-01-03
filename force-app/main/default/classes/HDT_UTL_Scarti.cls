@@ -1045,4 +1045,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         }    
     }
 
+    public static Boolean closeDiscardActivity(Id activityId){
+        wrts_prcgvr__Activity__c activityToUpdate = new wrts_prcgvr__Activity__c(Id =  activityId, wrts_prcgvr__Status__c ='Chiusa', wrts_prcgvr__IsClosed__c = true, EndDate__c = Date.today());
+        return HDT_UTL_DatabaseService.updateSObject(activityToUpdate);
+    }
+
 }

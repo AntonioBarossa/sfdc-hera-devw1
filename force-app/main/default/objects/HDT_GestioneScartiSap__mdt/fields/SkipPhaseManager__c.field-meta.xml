@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SkipPhaseManager__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Se true, effettuare cambio fase skippando il phase manager</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Salta Phase Manager</label>
+    <type>Checkbox</type>
+</CustomField>

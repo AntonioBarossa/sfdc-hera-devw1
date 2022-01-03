@@ -1,7 +1,7 @@
 ({
     helperInit : function(component,event,helper) {
         console.log('HDT_LCP_ChildOrderProcessHelper.helperInit');
-
+        component.set("v.discardRework", false);
         component.set('v.loading', true);
         try {
 
@@ -10,6 +10,12 @@
 
                 component.set("v.orderId", pageReference.state.c__orderId);
                 component.set("v.orderParentId", pageReference.state.c__orderParent);
+
+                //Gestione Scarti Complessi
+                let discardRework = (pageReference.state.c__discardRework === true)? true : false;
+                component.set("v.discardActivityToClose",pageReference.state.c__discardActivityToClose);
+                component.set("v.discardRework", discardRework);
+                //Fine Gestione Scarti Complessi
                 
             }
 

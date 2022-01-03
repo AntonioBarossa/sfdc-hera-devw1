@@ -137,7 +137,6 @@ export default class hdtSupplySelection extends LightningElement {
         return this.additionalFilter;
     }
 
-
     handleIsRicercaInSap(event){
         console.log('handleIsRicercaInSap START' + JSON.stringify(event));
         this.isRicercainSAP = event.detail;
@@ -151,9 +150,7 @@ export default class hdtSupplySelection extends LightningElement {
         this.serviceRequestId = event.detail.serviceRequestId;
         this.selectedServicePoint = event.detail;
         let contractNumber = this.selectedServicePoint['Contract Number'];
-
-        console.log('@Davide - contractNumber: ' +JSON.stringify(contractNumber));
-        //if()
+        
         getContractFromRow({cNumber:contractNumber,accountId:this.AccountId}).then(data=>{
             this.outputContract= data;
         });
@@ -172,11 +169,6 @@ export default class hdtSupplySelection extends LightningElement {
         }));																				 
 																		 
     }
-
-   
-
-    
-
 
     /**
 

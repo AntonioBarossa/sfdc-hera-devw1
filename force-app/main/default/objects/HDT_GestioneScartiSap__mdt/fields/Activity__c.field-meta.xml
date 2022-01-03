@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Process__c</fullName>
+    <fullName>Activity__c</fullName>
+    <description>ATTIVITA inviata da heroku</description>
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
-    <label>Process</label>
-    <length>50</length>
+    <label>Attività</label>
+    <length>255</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>

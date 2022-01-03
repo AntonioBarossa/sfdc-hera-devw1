@@ -15,7 +15,6 @@ public class HDT_SRV_DocumentalManagement{
 		
 		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
 		String documentalContext = HDT_UTL_DocumentalManagement.getDocumentalContext(context);
-		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 1');
 		
 		//estrae Body da Documento (con Name = context) e lo formatta come HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure payloadStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration(documentalContext);
@@ -23,7 +22,6 @@ public class HDT_SRV_DocumentalManagement{
 		
 		//inserito per gestire la documentazione anticipata che si basa su single Order. Sfrutta il Context4 per recuperare la struttura del payload e il context5 per la struttura record
 		documentalContext = context.equalsIgnoreCase('DocumentazioneAnticipata')?'Context5':documentalContext;
-		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 2');
 		
 		//Viene estratto un Custom Metadata apposito identificato dal documentalContext. 
 		HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject integrationObjConfig =  HDT_UTL_IntegrationObject.getIntegrationObjectConfiguration('HDT_IntegrationObject__mdt', 'Id, JSON__c', 'DeveloperName = \'Documentale_'+ documentalContext + '\'', 'JSON__c');
@@ -37,7 +35,6 @@ public class HDT_SRV_DocumentalManagement{
 		//Restituisce una lista in cui, per ogni order è presente una mappa dove sono stati suddivisi per tipologia i record inseriti indistintamente in recordsList.
 		List<Map<String, List<sObject>>> recordObjectsListMap = HDT_UTL_DocumentalManagement.getRecordObjectsList(recordList, documentalContext);
 		formParamsMap.put('Contesto', context);
-		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 3');
 		
 		//sub-processing della lista di mappe realizzata al punto precedente.
 		//nuovo campo Customer Info settoreMerceologico
@@ -91,7 +88,6 @@ public class HDT_SRV_DocumentalManagement{
 		if (String.isNotEmpty(settoreMerceologico)){
 			formParamsMap.put('SettMerceologico',settoreMerceologico.substring(1));
 		}
-		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 4');
 		
 		body = composeJson(recordId, driverPayloadListMap, formParamsMap, recordObjectsListMap[0]);
 		System.debug(LoggingLevel.DEBUG, 'Body ' + body);
@@ -370,14 +366,9 @@ public class HDT_SRV_DocumentalManagement{
 		}
 	}
 
-	public static void updateSobjectFromDocusign(SObject record,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody){
+	public static void updateSobjectFromDocusign(SObject record,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody, String envelopeId){
 		if(record != null){
 			String status = requestBody.status;
-			/*
-				@Author: Davide Viola - 19/10/2021
-				Description: PMD -> Commentata variabile non utilizzata.
-			*/
-			//String processType = (String)record.get('DocumentalProcessType__c');
 			String cluster = (String)record.get('Cluster__c');
 			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio>();
 			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData>();
@@ -398,7 +389,7 @@ public class HDT_SRV_DocumentalManagement{
 					}
 					if ('Rimborso'.equalsIgnoreCase(caseType) || 'Piano Rateizzazione'.equalsIgnoreCase(caseType)){
 						HDT_UTL_Case.createActivity((Id)record.get('Id'), 'Validazione Firma OTP', 'Validazione Firma OTP', 'Validazione Firma OTP');
-					}				
+					}
 				}else{
 					//Che fase documentale settare?
 					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){
@@ -407,13 +398,12 @@ public class HDT_SRV_DocumentalManagement{
 				}
 			}else {
 				if(status.equalsIgnoreCase('completed')){
-					record.put('DocumentalPhase__c','Plico firmato');					
+					// La DocumentalPhase__c per l'Order verrà valorizzata nel method handleRadioGroup() in base ai radio button (Legge 80 ecc.)
+					//record.put('DocumentalPhase__c','Plico firmato');
 					record.put('SignedDate__c', Date.today()); // data necessaria per far scattare logiche sui processi di vendita.
-				}/*else{
-					//Che fase documentale settare?			
-				}*/
+				}
 			}
-			handleRadioGroup(record,listOfRadio);
+			handleRadioGroup(record,listOfRadio,envelopeId);
 			handleDataText(record,listOfData);
 			HDT_UTL_DatabaseService.upsertSObject(record);
 		}
@@ -439,7 +429,6 @@ public class HDT_SRV_DocumentalManagement{
 			if(status.equalsIgnoreCase('completed')){
 				DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(parentRecord,transactionId);
 				if (documentalActivity != null){
-					documentalActivity.ReturnDate__c = Date.today();
 					documentalActivity.ActivityType__c = 'Documentazione completa';
 					try {
 						HDT_UTL_DatabaseService.insertSObject(documentalActivity);
@@ -451,7 +440,7 @@ public class HDT_SRV_DocumentalManagement{
 		}
 	}
 
-	private static void handleRadioGroup(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio){
+	private static void handleRadioGroup(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio, String envelopeId){
 		if(listOfRadio != null && listOfRadio.size()>0){
 			String individualId;
 			if(record.getSobjectType() == Case.getSobjectType()){
@@ -477,11 +466,6 @@ public class HDT_SRV_DocumentalManagement{
 				List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Case__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
 				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
 					String privacyVersion;
-					/*
-						@Author: Davide Viola - 19/10/2021
-						Description: PMD -> Commentata variabile non utilizzata.
-					*/
-					//String privacyCompany;
 					for(DocumentalEnvelopeAttachment__c singleAttachment : (List<DocumentalEnvelopeAttachment__c>) attachmentList){
 						if(singleAttachment.AttachmentCode__c.indexOf('PRIVACY')>-1){
 							privacyVersion = singleAttachment.Version__c;
@@ -506,16 +490,18 @@ public class HDT_SRV_DocumentalManagement{
 				}
 			}else{
 				List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Order__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
-				Boolean datiCatastaliCompilati = false;
-				//Boolean leggeOttantaCompilata = false; // TODO: come si chiamano i radio button della legge 80?
+				Set<String> moduliOpzionaliMancanti = new Set<String>();
+				List<DocumentalActivity__c> activitiesToCreate = new List<DocumentalActivity__c>();
+				DocumentalActivity__c actOtpSign  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
+				if (actOtpSign != null){
+					actOtpSign.ActivityType__c = 'Plico Firmato OTP';
+					activitiesToCreate.add(actOtpSign);
+				}
+
 				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
 					System.debug(LoggingLevel.DEBUG, 'Checking radiobutton: ' + JSON.serialize(singleRadio));
 					String privacyVersion;
-					/*
-						@Author: Davide Viola - 19/10/2021
-						Description: PMD -> Commentata variabile non utilizzata.
-					*/
-					//String privacyCompany;
+					// TODO DA FIXARE: attachmentList è vuoto poichè il record in contesto è l'order padre, mentre gli attachment sono sotto gli order figli.
 					for(DocumentalEnvelopeAttachment__c singleAttachment : (List<DocumentalEnvelopeAttachment__c>) attachmentList){
 						if(singleAttachment.AttachmentCode__c.indexOf('PRIVACY')>-1){
 							privacyVersion = singleAttachment.Version__c;
@@ -532,16 +518,47 @@ public class HDT_SRV_DocumentalManagement{
 							individualRecord.PrivacyProfilingChoiceDate__c = Date.today(); 
 							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
 						}
-						// Verifica radiobutton nei modulo opzionali (dati catastali, legge 80)
-						if (singleRadio.groupName.equalsIgnoreCase('DTC_radio1') && singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
-							datiCatastaliCompilati = true;
+						// Verifica radiobutton nei moduli opzionali (dati catastali, legge 80, istanza 326)
+						// I nomi dei radiobutton sono presenti nel JSON che manda Docusign
+						if (singleRadio.groupName.equalsIgnoreCase('DTC_radio1')){
+							if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+								DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
+								if (documentalActivity != null){
+									documentalActivity.AttachmentCode__c = 'DATI_CATASTALI'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
+									documentalActivity.ActivityType__c = 'Allegati ricevuti';
+									documentalActivity.AttachmentDescription__c = 'Ritornato correttamente';
+									activitiesToCreate.add(documentalActivity);
+								}
+							} else {
+								moduliOpzionaliMancanti.add(singleRadio.groupName);
+							}
 						}
+						if (singleRadio.groupName.equalsIgnoreCase('L80_radio')){
+							if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+								DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
+								if (documentalActivity != null){
+									documentalActivity.AttachmentCode__c = 'LEGGE_80'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
+									documentalActivity.ActivityType__c = 'Allegati ricevuti';
+									documentalActivity.AttachmentDescription__c = 'Ritornato correttamente';
+									activitiesToCreate.add(documentalActivity);
+								}
+							} else {
+								moduliOpzionaliMancanti.add(singleRadio.groupName);
+							}
+						}
+						// TODO: gestire radio button per istanza 326
 					}
 				}
 				try {
-					if (datiCatastaliCompilati){ // TODO: gestire anche leggeOttantaCompilata
-						record.put('IsDocusignAttachment__c', True);
-						HDT_UTL_DatabaseService.updateSObject(record);
+					if (!moduliOpzionaliMancanti.isEmpty()) {
+						System.debug(LoggingLevel.DEBUG, 'Moduli opzionali NON compilati: ' + moduliOpzionaliMancanti);
+						record.put('DocumentalPhase__c','Plico firmato senza moduli opzionali');
+					} else {
+						record.put('DocumentalPhase__c','Plico firmato');
+					}
+					HDT_UTL_DatabaseService.updateSObject(record);
+					if (!activitiesToCreate.isEmpty()){
+						HDT_UTL_DatabaseService.insertSObject(activitiesToCreate);
 					}
 				}catch(Exception ex){
 					System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
@@ -728,6 +745,15 @@ public class HDT_SRV_DocumentalManagement{
 				documentPrintType = 'D';
 			}
 			customerInfo.documentPrintType = documentPrintType;
+
+			List<CS_DaysToExpiration__c> daysToExpiration = [SELECT NumberOfDays__c FROM CS_DaysToExpiration__c WHERE Type__c='BustaDocusign' WITH SECURITY_ENFORCED];
+			if (!daysToExpiration.isEmpty() && Integer.valueOf(daysToExpiration[0].NumberOfDays__c) > 0) {
+				customerInfo.expireEnabled = true;
+				customerInfo.expireAfter = daysToExpiration[0].NumberOfDays__c;
+			} else {
+				customerInfo.expireEnabled = false;
+			}
+
 			signInfo.customerInfo = customerInfo;
 
 			//template
@@ -1412,6 +1438,17 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			HDT_UTL_DatabaseService.updateSObject(acc);
 		} catch(Exception ex) {
 			System.debug(LoggingLevel.DEBUG, 'DLM error: ' + ex.getMessage());
+		}
+	}
+
+	// Aggiorna la fase del Case o Order a 'Comunicazione EngageOne KO'
+	public static void logDiscardPhase(Id idToUpdate) {
+		SObject objToUpdate = idToUpdate.getSObjectType().newSObject(idToUpdate);
+		objToUpdate.put('Phase__c', 'Comunicazione EngageOne KO');
+		try {
+			HDT_UTL_DatabaseService.updateSObject(objToUpdate);
+		} catch (Exception e) {
+			System.debug(LoggingLevel.DEBUG, 'exception at line ' + e.getLineNumber() + ' ' + e.getMessage());
 		}
 	}
 

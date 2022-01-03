@@ -183,20 +183,10 @@ public with sharing class HDT_SRV_EmailMessage {
             return;
         }
 
-        List<ContactPointEmail> cpe = [SELECT Id, EmailAddress, ParentId FROM ContactPointEmail WHERE EmailAddress IN :receiverEmails WITH SECURITY_ENFORCED];
+        List<Contact> contacts = [SELECT Id, Email, IndividualId, Individual.OneshotBlacklist__c FROM Contact WHERE Email IN :receiverEmails WITH SECURITY_ENFORCED];
         Map<String, Boolean> blacklistMap = new Map<String,Boolean>();
-        if (!cpe.isEmpty()) {
-            List<Id> parentIds = new List<Id>();
-            for (ContactPointEmail c : cpe) {
-                parentIds.add(c.ParentId);
-            }
-            List<Individual> individuals = [SELECT Id, OneshotBlacklist__c  FROM Individual WHERE Id IN :parentIds WITH SECURITY_ENFORCED];
-            Map<Id, Individual> individualsMap = new Map<Id,Individual>(individuals);
-            for (ContactPointEmail c : cpe) {
-                if (individualsMap.get(c.ParentId) != null) {
-                    blacklistMap.put(c.EmailAddress, individualsMap.get(c.ParentId).OneshotBlacklist__c);
-                }
-            }
+        for (Contact c : contacts) {
+            blacklistMap.put(c.Email, c.Individual.OneshotBlacklist__c);
         }
 
         for (EmailMessage email : emailList) {
