@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ParentObject__c</fullName>
-    <description>Oggetto a cui è legata l&apos;attività</description>
+    <fullName>DiscardNoteReliability__c</fullName>
     <externalId>false</externalId>
-    <label>Oggetto padre (Deprecato)</label>
+    <label>Affidabilità Nota Scarto</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
@@ -12,14 +11,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Case</fullName>
-                <default>false</default>
-                <label>Case</label>
+                <fullName>Bassa</fullName>
+                <default>true</default>
+                <label>Bassa</label>
             </value>
             <value>
-                <fullName>Order</fullName>
+                <fullName>Alta</fullName>
                 <default>false</default>
-                <label>Order</label>
+                <label>Alta</label>
             </value>
         </valueSetDefinition>
     </valueSet>

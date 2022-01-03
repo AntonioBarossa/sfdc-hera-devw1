@@ -115,6 +115,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtHighlightsPanel</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>HDT_RT_Distributore</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>header</name>
