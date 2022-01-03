@@ -430,13 +430,23 @@ public inherited sharing class HDT_UTL_PostSalesManager{
      */
     public void createSolAcr(SObject inputCase) {
         Case currentCase = (Case) inputCase;
-        AccountContactRelation solAcr = new AccountContactRelation();
-        solAcr.AccountId = currentCase.AccountId;
-        solAcr.ContactId = currentCase.SecondaryContact__c;
-        solAcr.IsActive = True;
-        solAcr.IsManagerSOL__c = True;
-        solAcr.Roles = 'Referente SOL-APP';
-        HDT_UTL_DatabaseService.insertSObject(solAcr);
+        String accountId = currentCase.AccountId;
+        String contactId = currentCase.SecondaryContact__c;
+        HDT_QR_AccountContactRelation queryHandler = new HDT_QR_AccountContactRelation();
+        List<AccountContactRelation> currentAcr = queryHandler.getSolContactRelation(accountId, contactId);
+        if (!currentAcr.isEmpty()) {
+            AccountContactRelation solAcr = currentAcr[0];
+            solAcr.IsActive = True;
+            HDT_UTL_DatabaseService.updateSObject(solAcr);
+        } else {
+            AccountContactRelation solAcr = new AccountContactRelation();
+            solAcr.AccountId = accountId;
+            solAcr.ContactId = contactId;
+            solAcr.IsActive = True;
+            solAcr.IsManagerSOL__c = True;
+            solAcr.Roles = 'Referente SOL-APP';
+            HDT_UTL_DatabaseService.insertSObject(solAcr);
+        }
     }
 
     @Future
