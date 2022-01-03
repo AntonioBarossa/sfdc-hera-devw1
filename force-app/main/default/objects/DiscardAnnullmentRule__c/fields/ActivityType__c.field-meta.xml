@@ -23,9 +23,9 @@
                 <label>Esito KO da SAP</label>
             </value>
             <value>
-                <fullName>KO Pre-MDM</fullName>
+                <fullName>Esito KO pre-MDM</fullName>
                 <default>false</default>
-                <label>KO Pre-MDM</label>
+                <label>Esito KO pre-MDM</label>
             </value>
             <value>
                 <fullName>Annullamento SII</fullName>
@@ -55,7 +55,7 @@
             <controllingFieldValue>Richiesta lettura cliente</controllingFieldValue>
             <controllingFieldValue>Rimozione Impianto</controllingFieldValue>
             <controllingFieldValue>Risoluzione No Disalimentabile</controllingFieldValue>
-            <controllingFieldValue>Autolettura</controllingFieldValue>
+            <controllingFieldValue>Autolettura da cliente</controllingFieldValue>
             <controllingFieldValue>Chiusura Contatore</controllingFieldValue>
             <controllingFieldValue>Connessione con Attivazione</controllingFieldValue>
             <controllingFieldValue>Consegna copia chiave GdM</controllingFieldValue>
@@ -89,12 +89,12 @@
             <valueName>Esito KO da DL</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Autolettura</controllingFieldValue>
+            <controllingFieldValue>Autolettura da cliente</controllingFieldValue>
             <valueName>Esito KO da SAP</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Autolettura</controllingFieldValue>
-            <valueName>KO Pre-MDM</valueName>
+            <controllingFieldValue>Autolettura da cliente</controllingFieldValue>
+            <valueName>Esito KO pre-MDM</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
