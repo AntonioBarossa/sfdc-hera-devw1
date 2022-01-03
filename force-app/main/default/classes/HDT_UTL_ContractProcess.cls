@@ -35,7 +35,29 @@ public inherited sharing class HDT_UTL_ContractProcess {
                 }
             }
         }
+    }
 
+    public static void moveOut( Id recordId, string apiName ){
+
+        List<sObject> ids = new List<sObject>();
+        List<Contract> contrs = new List<Contract>();
+        Contract contr = new Contract();
+        String sObjType = recordId.getSObjectType().getDescribe().getName();
+
+        ids = Database.query('SELECT '+ apiName
+                           + ' FROM '+ sObjType
+                           + ' WHERE Id = :recordId ' 
+                           + ' WITH SECURITY_ENFORCED');
+
+        for (sObject sObj : ids) {
+            contr.Id = (Id)sObj.get(apiName); 
+            if ( contr.Id != null ){             
+                contr.Status = 'Cessato';
+                contr.EndDate = date.Today();
+            }
+            contrs.add(contr);
+        }
+        HDT_UTL_DatabaseService.updateSObject(contrs);
     }
 
 }

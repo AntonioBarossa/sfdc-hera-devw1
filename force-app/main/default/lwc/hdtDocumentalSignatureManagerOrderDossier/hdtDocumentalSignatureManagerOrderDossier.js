@@ -233,7 +233,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 } else if(this.orderRecord.fields.Account.value != null){
                     completeAddress = this.orderRecord.fields.Account.value.fields.BillingAddressFormula__c.value;
                     stato = this.orderRecord.fields.Account.value.fields.BillingCountry.value;
-                    //provincia = this.orderRecord.fields.Account.value.fields..value;
+                    provincia = this.orderRecord.fields.Account.value.fields.BillingState.value;
                     via  = this.orderRecord.fields.Account.value.fields.BillingStreetName__c.value;
                     cap = this.orderRecord.fields.Account.value.fields.BillingPostalCode.value;
                     comune  = this.orderRecord.fields.Account.value.fields.BillingCity.value;

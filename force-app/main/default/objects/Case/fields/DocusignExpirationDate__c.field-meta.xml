@@ -3,7 +3,7 @@
     <fullName>DocusignExpirationDate__c</fullName>
     <description>Data Scadenza Documento</description>
     <externalId>false</externalId>
-    <label>Data Scadenza Documento</label>
+    <label>Data Scadenza Busta Docusign</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

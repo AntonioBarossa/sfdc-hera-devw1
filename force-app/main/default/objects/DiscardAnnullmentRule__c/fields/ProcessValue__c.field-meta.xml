@@ -4,7 +4,7 @@
     <description>Valore da utilizzare per il controllo sul processo/cluster di appartenenza</description>
     <externalId>false</externalId>
     <label>Valore processo</label>
-    <required>true</required>
+    <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -133,9 +133,9 @@
                 <label>Risoluzione Punto Sospeso</label>
             </value>
             <value>
-                <fullName>Autolettura</fullName>
+                <fullName>Autolettura da cliente</fullName>
                 <default>false</default>
-                <label>Autolettura</label>
+                <label>Autolettura da cliente</label>
             </value>
             <value>
                 <fullName>Switch in Gas</fullName>
@@ -244,7 +244,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Case</controllingFieldValue>
-            <valueName>Autolettura</valueName>
+            <valueName>Autolettura da cliente</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Order</controllingFieldValue>

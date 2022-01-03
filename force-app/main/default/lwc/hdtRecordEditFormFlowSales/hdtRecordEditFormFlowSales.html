@@ -50,29 +50,30 @@
                 <div class="slds-form-element slds-m-top_small">
                     <lightning-input-field disabled={disabledInp} field-name="Note__c"></lightning-input-field>
                 </div>
+            </lightning-record-edit-form>
+
                <!-- <div class="slds-form-element slds-m-top_small">
                     <lightning-input-field field-name="ReassignmentReason__c" onchange={handleReassignmentReasonChange} >
                     </lightning-input-field>
                 </div> -->
-                <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
-                    <div class="actionsRight">
-                        <template if:true={showSubmitForApprovalButton}>
-                            <!--<lightning-button class="slds-m-top_x-small slds-m-bottom_x-small slds-p-left_x-small slds-float--right"
-                                variant="neutral" type="button" name="submitForApproval" label="Sottoponi ad approvazione" onclick={submitForApproval}>
-                            </lightning-button> -->
-                        </template>
-                        <lightning-button class="slds-m-top_x-small slds-m-bottom_x-small slds-p-left_x-small slds-float--right"
+            
+            <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
+                <div class="actionsLeft">
+
+                </div>
+                <div class="actionsRight">
+                    <lightning-button
+                            class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
                             variant="brand" type="button" name="savePractice" label="Conferma Pratica" disabled={disableConfirmButton} onclick={handleSave}>
                         </lightning-button>
-                        <lightning-button class="slds-m-top_x-small slds-m-bottom_x-small slds-p-left_x-small slds-float--right"
+                    <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
                             variant="neutral" type="button" name="saveDraft" label="Salva in Bozza" onclick={handleDraft}>
                         </lightning-button>
-                        <lightning-button class="slds-m-top_x-small slds-m-bottom_x-small slds-float--right" variant="brand"
-                            type="button" name="cancel" label="Annulla" onclick={handleCancel}>
+                    <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
+                            variant="brand" type="button" name="cancel" label="Annulla" onclick={handleCancel}>
                         </lightning-button>
-                    </div>
                 </div>
-            </lightning-record-edit-form>
+            </div>
         </div>
     </lightning-card>
 </template>

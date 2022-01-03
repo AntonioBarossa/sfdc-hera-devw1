@@ -15,7 +15,6 @@ public class HDT_SRV_DocumentalManagement{
 		
 		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
 		String documentalContext = HDT_UTL_DocumentalManagement.getDocumentalContext(context);
-		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 1');
 		
 		//estrae Body da Documento (con Name = context) e lo formatta come HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure payloadStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration(documentalContext);
@@ -23,7 +22,6 @@ public class HDT_SRV_DocumentalManagement{
 		
 		//inserito per gestire la documentazione anticipata che si basa su single Order. Sfrutta il Context4 per recuperare la struttura del payload e il context5 per la struttura record
 		documentalContext = context.equalsIgnoreCase('DocumentazioneAnticipata')?'Context5':documentalContext;
-		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 2');
 		
 		//Viene estratto un Custom Metadata apposito identificato dal documentalContext. 
 		HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject integrationObjConfig =  HDT_UTL_IntegrationObject.getIntegrationObjectConfiguration('HDT_IntegrationObject__mdt', 'Id, JSON__c', 'DeveloperName = \'Documentale_'+ documentalContext + '\'', 'JSON__c');
@@ -37,7 +35,6 @@ public class HDT_SRV_DocumentalManagement{
 		//Restituisce una lista in cui, per ogni order è presente una mappa dove sono stati suddivisi per tipologia i record inseriti indistintamente in recordsList.
 		List<Map<String, List<sObject>>> recordObjectsListMap = HDT_UTL_DocumentalManagement.getRecordObjectsList(recordList, documentalContext);
 		formParamsMap.put('Contesto', context);
-		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 3');
 		
 		//sub-processing della lista di mappe realizzata al punto precedente.
 		//nuovo campo Customer Info settoreMerceologico
@@ -91,7 +88,6 @@ public class HDT_SRV_DocumentalManagement{
 		if (String.isNotEmpty(settoreMerceologico)){
 			formParamsMap.put('SettMerceologico',settoreMerceologico.substring(1));
 		}
-		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 4');
 		
 		body = composeJson(recordId, driverPayloadListMap, formParamsMap, recordObjectsListMap[0]);
 		System.debug(LoggingLevel.DEBUG, 'Body ' + body);
@@ -749,6 +745,15 @@ public class HDT_SRV_DocumentalManagement{
 				documentPrintType = 'D';
 			}
 			customerInfo.documentPrintType = documentPrintType;
+
+			List<CS_DaysToExpiration__c> daysToExpiration = [SELECT NumberOfDays__c FROM CS_DaysToExpiration__c WHERE Type__c='BustaDocusign' WITH SECURITY_ENFORCED];
+			if (!daysToExpiration.isEmpty() && Integer.valueOf(daysToExpiration[0].NumberOfDays__c) > 0) {
+				customerInfo.expireEnabled = true;
+				customerInfo.expireAfter = daysToExpiration[0].NumberOfDays__c;
+			} else {
+				customerInfo.expireEnabled = false;
+			}
+
 			signInfo.customerInfo = customerInfo;
 
 			//template
@@ -1433,6 +1438,17 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			HDT_UTL_DatabaseService.updateSObject(acc);
 		} catch(Exception ex) {
 			System.debug(LoggingLevel.DEBUG, 'DLM error: ' + ex.getMessage());
+		}
+	}
+
+	// Aggiorna la fase del Case o Order a 'Comunicazione EngageOne KO'
+	public static void logDiscardPhase(Id idToUpdate) {
+		SObject objToUpdate = idToUpdate.getSObjectType().newSObject(idToUpdate);
+		objToUpdate.put('Phase__c', 'Comunicazione EngageOne KO');
+		try {
+			HDT_UTL_DatabaseService.updateSObject(objToUpdate);
+		} catch (Exception e) {
+			System.debug(LoggingLevel.DEBUG, 'exception at line ' + e.getLineNumber() + ' ' + e.getMessage());
 		}
 	}
 
