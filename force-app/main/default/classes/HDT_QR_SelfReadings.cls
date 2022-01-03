@@ -16,27 +16,14 @@ public inherited sharing class HDT_QR_SelfReadings {
         }
     }
 
-    /*public List<HDT_SelfReadingError__mdt> getDiscardConfiguration(String errorType, String errorCode) {
-        List<HDT_SelfReadingError__mdt> config = [SELECT Id, IsAutomaticDiscard__c FROM HDT_SelfReadingError__mdt WHERE Type__c = :errorType AND ErrorCode__c = :errorCode WITH SECURITY_ENFORCED];
-        return config;
-    }*/
-
-    public List<HDT_SelfReadingError__mdt> getDiscardConfigurations(Set<String> errorCodes) {
+    public List<DiscardAnnullmentRule__c> getDiscardConfigurations(Set<String> errorCodes) {
         List<String> errorTypes = new List<String>();
         errorTypes.add('Esito KO pre-MDM');
         errorTypes.add('Esito KO da SAP');
-        Map<Id, HDT_SelfReadingError__mdt> firstQuery = new Map<Id, HDT_SelfReadingError__mdt>([SELECT Id, ErrorCode__c, IsAutomaticDiscard__c,Description__c FROM HDT_SelfReadingError__mdt WHERE Type__c IN :errorTypes AND ErrorCode__c IN :errorCodes  WITH SECURITY_ENFORCED]);
-        Map<Id, HDT_SelfReadingError__mdt> secondQuery = new Map<Id, HDT_SelfReadingError__mdt>([SELECT Id, ErrorCode__c, IsAutomaticDiscard__c,Description__c FROM HDT_SelfReadingError__mdt WHERE Type__c IN :errorTypes AND Description__c IN :errorCodes  WITH SECURITY_ENFORCED]);
-        //List<HDT_SelfReadingError__mdt> configs = [SELECT Id, ErrorCode__c, IsAutomaticDiscard__c,Description__c FROM HDT_SelfReadingError__mdt WHERE Type__c IN :errorTypes AND (ErrorCode__c IN :errorCodes OR Description__c IN:errorCodes) WITH SECURITY_ENFORCED];
+        Map<Id, DiscardAnnullmentRule__c> firstQuery = new Map<Id, DiscardAnnullmentRule__c>([SELECT Id, DiscardCode__c, IsActive__c,ControllingValue__c FROM DiscardAnnullmentRule__c WHERE ActivityType__c IN :errorTypes AND DiscardCode__c IN :errorCodes  WITH SECURITY_ENFORCED]);
+        Map<Id, DiscardAnnullmentRule__c> secondQuery = new Map<Id, DiscardAnnullmentRule__c>([SELECT Id, DiscardCode__c, IsActive__c,ControllingValue__c FROM DiscardAnnullmentRule__c WHERE ActivityType__c IN :errorTypes AND ControllingValue__c IN :errorCodes  WITH SECURITY_ENFORCED]);
         firstQuery.putAll(secondQuery);
-        /*
-            @Author: Davide Viola - 19/10/2021
-            Description: PMD -> Commentata variabile non utilizzata.
-        */
-        //List<HDT_SelfReadingError__mdt> recordList = new List<HDT_SelfReadingError__mdt>();
-        /*for(HDT_SelfReadingError__mdt singleRecord : firstQuery){
-            recordList.add(singleRecord);
-        }*/
+
         System.debug(LoggingLevel.DEBUG, 'firstQuery.values() size:' + firstQuery.values().size());
         
         return firstQuery.values();
