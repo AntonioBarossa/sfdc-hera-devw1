@@ -1126,18 +1126,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>hdtActivityDetail</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Type__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Chiamata outbound</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-eb1a4c4d-1967-4b2b-9de4-0c82ceb7a564</value>
