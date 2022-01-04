@@ -4,6 +4,7 @@ import riassegna from '@salesforce/apex/HDT_UTL_ActivityCustom.riassegnaComCod';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import cambia from '@salesforce/apex/HDT_UTL_ActivityCustom.cambiaphaseComm';
 import { getRecordNotifyChange  } from 'lightning/uiRecordApi';
+import userId from '@salesforce/user/Id';
 
 export default class HdtCommercialRiassignButton extends LightningElement {
 
@@ -11,6 +12,7 @@ export default class HdtCommercialRiassignButton extends LightningElement {
     @api isRiassignButton = false;
     @api loading = false;
     @api isShowButtonRiassign = false;
+    @api isInApprovazione = false;
     @api isApproveFase = false;
     @api recordId;
     @api causale = '';
@@ -37,7 +39,12 @@ export default class HdtCommercialRiassignButton extends LightningElement {
                 this.isRiassignButton = true;
             }
             else if(result.Case__r.Phase__c == 'In Attesa Approvazione'){
-                this.isApproveFase = true;
+                if(result.OwnerId == userId && (result.ManuallyReassigned__c == true || result.Queued__c == true)){
+                    this.isApproveFase = true;
+                }else{
+                    console.log('***WORK IN PROGRESS****');
+                    this.isInApprovazione = true;
+                }
             }
             this.loading = false;
             /*
