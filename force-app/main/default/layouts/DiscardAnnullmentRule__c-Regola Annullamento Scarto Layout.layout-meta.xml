@@ -8,49 +8,29 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>ControllingValue__c</field>
+                <field>ProcessValue__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>ParentObject__c</field>
+                <field>ControllingValue__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IsActive__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>ActivityType__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>ControllingField__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>ProcessField__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>ProcessValue__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Name</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>IsActive__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>DiscardNoteReliability__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>DiscardCode__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>OwnerId</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -75,9 +55,10 @@
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
-        <customLabel>false</customLabel>
+        <customLabel>true</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
+        <label>Custom Links</label>
         <layoutColumns/>
         <layoutColumns/>
         <layoutColumns/>
@@ -85,10 +66,7 @@
     </layoutSections>
     <miniLayout>
         <fields>ControllingValue__c</fields>
-        <fields>ParentObject__c</fields>
         <fields>ActivityType__c</fields>
-        <fields>ControllingField__c</fields>
-        <fields>ProcessField__c</fields>
         <fields>ProcessValue__c</fields>
     </miniLayout>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -96,4 +74,10 @@
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
+    <summaryLayout>
+        <masterLabel>00h3N000002ljsH</masterLabel>
+        <sizeX>4</sizeX>
+        <sizeY>0</sizeY>
+        <summaryLayoutStyle>Default</summaryLayoutStyle>
+    </summaryLayout>
 </Layout>
