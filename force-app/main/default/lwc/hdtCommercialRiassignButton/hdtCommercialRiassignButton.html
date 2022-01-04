@@ -14,7 +14,8 @@
         <template if:true ={isShowButtonRiassign}>
             <lightning-button onclick={handleSave} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Sottoponi ad Approvazione" title="Riassegna"></lightning-button>
         </template>
-          </template>
+    </template>
+    <template if:true={isInApprovazione}> RIASSEGNARE LA PRATICA AD UN APPROVATORE </template>
     <template if:true={isApproveFase}>
         <lightning-button onclick={approve} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Approva" title="Riassegna"></lightning-button>
         <lightning-button onclick={reject} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Rigetta" title="Riassegna"></lightning-button>
