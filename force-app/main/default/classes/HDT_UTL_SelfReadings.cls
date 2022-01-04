@@ -293,21 +293,6 @@ public inherited sharing class HDT_UTL_SelfReadings {
         } 
     }
 
-    /*public static Boolean isAutomaticDiscard(String errorType, String errorCode) {
-        if (String.isBlank(errorType) || String.isBlank(errorCode)) {
-            return false;
-        }
-
-        HDT_QR_SelfReadings queryHandler = new HDT_QR_SelfReadings();
-        List<HDT_SelfReadingError__mdt> configs = queryHandler.getDiscardConfiguration(errorType, errorCode);
-
-        if (configs.isEmpty()) {
-            return false;
-        }
-
-        return configs[0].IsAutomaticDiscard__c;
-    }*/
-
     public static Map<String,Boolean> isAutomaticDiscard(Set<String> errorCodes) {
         if (errorCodes == null) {
             return null;
@@ -316,17 +301,17 @@ public inherited sharing class HDT_UTL_SelfReadings {
         Map<String, Boolean> isAutomaticDiscardMap = new Map<String, Boolean>();
 
         HDT_QR_SelfReadings queryHandler = new HDT_QR_SelfReadings();
-        List<HDT_SelfReadingError__mdt> configs = queryHandler.getDiscardConfigurations(errorCodes);
+        List<DiscardAnnullmentRule__c> configs = queryHandler.getDiscardConfigurations(errorCodes);
 
         if (configs.isEmpty()) {
             return null;
         }
 
-        for (HDT_SelfReadingError__mdt conf : configs) {
-            if(String.isNotBlank(conf.ErrorCode__c)){
-                isAutomaticDiscardMap.put(conf.ErrorCode__c, conf.IsAutomaticDiscard__c);
+        for (DiscardAnnullmentRule__c conf : configs) {
+            if(String.isNotBlank(conf.DiscardCode__c)){
+                isAutomaticDiscardMap.put(conf.DiscardCode__c, conf.IsActive__c);
             }else {
-                isAutomaticDiscardMap.put(conf.Description__c, conf.IsAutomaticDiscard__c);
+                isAutomaticDiscardMap.put(conf.ControllingValue__c, conf.IsActive__c);
             }
         }
 
