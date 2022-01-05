@@ -263,19 +263,20 @@ static void setup() {
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
     } ));
-    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false , salesList, 'HDT_RT_Voltura', new Map<String,Object>{
+    List<Order> orderVolturaCompletata = HDT_UTL_DataFactoryTst.createOrderWithParams(1, true , salesList, 'HDT_RT_Voltura', new Map<String,Object>{
       'AccountId' => accountList[0].Id,
       'Contact__c' => contactList[0].Id,
       'Phase__c' => 'Completata',
       'BillingProfile__c' => billingProfileList[0].Id,
       'ServicePoint__c' => servicePointList[0].Id,
       'ContractReference__c' => contractList[0].Id,
-      'ProcessType__c' => 'Voltura'
-    })); 
+      'ProcessType__c' => 'Voltura',
+      'Pricebook2Id' => pricebook.Id
+    });
     insert orders;
-    
+
     HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderCompletata[0].id, servicePointList[0].id, product2List[0].Id, pricebookentryList[0].id);
-   
+    HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderVolturaCompletata[0].id, servicePointList[0].id, product2List[0].Id, pricebookentryList[0].id);
   }
 
 
@@ -532,6 +533,7 @@ static void moveOutTest()
 {
     Order orderCompletata=[ SELECT  id,AccountId,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  
       FROM Order  WHERE Phase__c='Completata' AND RecordType.DeveloperName = 'HDT_RT_Voltura' LIMIT 1];
+    
     Test.startTest();
     try
     {
