@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Chiudi_Activity</name>
+        <label>Chiudi Activity</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <actionName>HDT_LC_EditScartiComplessi</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Imposta_Fase_Del_Case</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>input</name>
+            <value>
+                <elementReference>discardActivityId</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>53.0</apiVersion>
     <assignments>
         <name>Imposta_Fase_Del_Case</name>
         <label>Imposta Fase Del Case</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -67,7 +86,7 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <screens>
@@ -79,7 +98,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Imposta_Fase_Del_Case</targetReference>
+            <targetReference>Chiudi_Activity</targetReference>
         </connector>
         <fields>
             <name>Titolo</name>
@@ -168,5 +187,12 @@
         <value>
             <stringValue></stringValue>
         </value>
+    </variables>
+    <variables>
+        <name>discardActivityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>
