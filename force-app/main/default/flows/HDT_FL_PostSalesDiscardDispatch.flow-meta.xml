@@ -4,7 +4,7 @@
     <decisions>
         <name>Check_Cluster</name>
         <label>Check Cluster</label>
-        <locationX>754</locationX>
+        <locationX>842</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Schermata_di_errore</targetReference>
@@ -119,7 +119,7 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>754</locationX>
+        <locationX>842</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -140,7 +140,7 @@
     <recordLookups>
         <name>Get_Case_Id_From_Activity</name>
         <label>Get Case Id From Activity</label>
-        <locationX>754</locationX>
+        <locationX>842</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -163,7 +163,7 @@
     <screens>
         <name>Schermata_di_errore</name>
         <label>Schermata di errore</label>
-        <locationX>1458</locationX>
+        <locationX>1634</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -177,7 +177,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>628</locationX>
+        <locationX>716</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case_Id_From_Activity</targetReference>
@@ -187,7 +187,7 @@
     <subflows>
         <name>Arricchimento_Dati</name>
         <label>Arricchimento Dati</label>
-        <locationX>754</locationX>
+        <locationX>842</locationX>
         <locationY>398</locationY>
         <connector>
             <targetReference>Check_Cluster</targetReference>
@@ -215,9 +215,21 @@
     <subflows>
         <name>Gestione_Disattivazioni</name>
         <label>Gestione Disattivazioni</label>
-        <locationX>490</locationX>
+        <locationX>578</locationX>
         <locationY>638</locationY>
         <flowName>HDT_FL_GestioneDisattivazioni</flowName>
+        <inputAssignments>
+            <name>discardActivityId</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>discardRework</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>InputCase</name>
             <value>
@@ -229,7 +241,7 @@
     <subflows>
         <name>Gestione_Morosit</name>
         <label>Gestione Morosità</label>
-        <locationX>754</locationX>
+        <locationX>842</locationX>
         <locationY>638</locationY>
         <flowName>HDT_FL_GestioneScartiComplessi</flowName>
         <inputAssignments>
@@ -252,6 +264,18 @@
         <locationY>638</locationY>
         <flowName>HDT_FL_GestioneVerifiche</flowName>
         <inputAssignments>
+            <name>discardActivityId</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>discardRework</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>InputCase</name>
             <value>
                 <elementReference>caseId</elementReference>
@@ -262,7 +286,7 @@
     <subflows>
         <name>Gestione_Voltura</name>
         <label>Gestione Voltura</label>
-        <locationX>1018</locationX>
+        <locationX>1106</locationX>
         <locationY>638</locationY>
         <flowName>HDT_FL_GestioneScartiComplessi</flowName>
         <inputAssignments>
