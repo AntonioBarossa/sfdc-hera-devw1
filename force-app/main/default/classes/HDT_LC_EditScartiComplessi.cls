@@ -28,11 +28,11 @@ public with sharing class HDT_LC_EditScartiComplessi {
         Order orderToUpdate = new Order(Id = orderId,Phase__c = 'Comunicazione verso Heroku');
         System.Savepoint sp = Database.setSavePoint();
         try {
-            if (!HDT_UTL_DatabaseService.updateSObject(orderToUpdate)){
-                response = 'Errore nell\'aggiornamento della fase dell\'ordine.';   
-            }else if (!HDT_UTL_Scarti.closeDiscardActivity(activityId)){
+            if (!HDT_UTL_Scarti.closeDiscardActivity(activityId)){
                 response = 'Impossibile chiudere l\'attività di scarto';
                 Database.rollback(sp);
+            } else if (!HDT_UTL_DatabaseService.updateSObject(orderToUpdate)){
+                response = 'Errore nell\'aggiornamento della fase dell\'ordine.';
             }
         } catch (Exception e) {
             Database.rollback(sp);
