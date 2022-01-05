@@ -20,7 +20,7 @@ public with sharing class HDT_SRV_SalesHandler {
      * Added class instance
      */
     private static HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
-    private static final Set<String> moveOutProcesses = new Set<String>{'Cambio Uso','Voltura','Cambio Offerta'};
+    private static Set<String> moveOutProcesses = new Set<String>{'Cambio Uso','Voltura','Cambio Offerta'};
 
     public  HDT_WRP_MrrResponse.HDT_WRP_Response manageSalesProcessCategory(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem) {
         
