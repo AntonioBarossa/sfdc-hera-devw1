@@ -53,8 +53,8 @@
                         componentName: 'c:HDT_LCP_ChildOrderProcess',
                     },
                     state: {
-                        "c__orderParent": order.Id,
-                        "c__orderId" : order.ParentOrder__c,
+                        "c__orderParent": order.ParentOrder__c,
+                        "c__orderId" : order.Id,
                         "c__discardRework": true,
                         "c__discardActivityToClose" : recordId
                     }
