@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
+        <name>Close_Discard_Activity</name>
+        <label>Chiudi Activity Scarto</label>
+        <locationX>1414</locationX>
+        <locationY>3062</locationY>
+        <actionName>HDT_LC_EditScartiComplessi</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Update_Status_0_0_0_0</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>input</name>
+            <value>
+                <elementReference>discardActivityId</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>Submit_Request</name>
         <label>Submit Request</label>
         <locationX>182</locationX>
@@ -487,6 +506,31 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_Rilavorazione_Scarto</name>
+        <label>Rilavorazione Scarto?</label>
+        <locationX>1546</locationX>
+        <locationY>2942</locationY>
+        <defaultConnector>
+            <targetReference>Update_Status_0_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Wizard Normale</defaultConnectorLabel>
+        <rules>
+            <name>Wizard_Scarto</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>discardRework</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Close_Discard_Activity</targetReference>
+            </connector>
+            <label>Wizard Scarto</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Esito_Callout</name>
         <label>Esito Callout</label>
         <locationX>182</locationX>
@@ -517,7 +561,7 @@
         <locationX>1392</locationX>
         <locationY>2270</locationY>
         <defaultConnector>
-            <targetReference>Update_Status_0_0_0_0</targetReference>
+            <targetReference>Check_Rilavorazione_Scarto</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>OK</defaultConnectorLabel>
         <rules>
@@ -617,7 +661,7 @@
         <locationX>1546</locationX>
         <locationY>2030</locationY>
         <defaultConnector>
-            <targetReference>Update_Status_0_0_0_0</targetReference>
+            <targetReference>Check_Rilavorazione_Scarto</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
         <rules>
@@ -1014,7 +1058,7 @@
         <name>Update_Status_0_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>1546</locationX>
-        <locationY>2942</locationY>
+        <locationY>3278</locationY>
         <connector>
             <targetReference>Loading_Spinner_screen_0</targetReference>
         </connector>
@@ -1453,7 +1497,7 @@
         <name>Loading_Spinner_screen_0</name>
         <label>Loading Spinner screen</label>
         <locationX>1546</locationX>
-        <locationY>3062</locationY>
+        <locationY>3398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1520,6 +1564,23 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>discardActivityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>discardRework</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>email</name>

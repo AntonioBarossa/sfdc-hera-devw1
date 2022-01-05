@@ -817,6 +817,26 @@
                 <default>false</default>
                 <label>Comunicazione EngageOne KO</label>
             </value>
+            <value>
+                <fullName>Approvata</fullName>
+                <default>false</default>
+                <label>Approvata</label>
+            </value>
+            <value>
+                <fullName>Non Approvata</fullName>
+                <default>false</default>
+                <label>Non Approvata</label>
+            </value>
+            <value>
+                <fullName>Rifiutata</fullName>
+                <default>false</default>
+                <label>Rifiutata</label>
+            </value>
+            <value>
+                <fullName>Non Applicabile</fullName>
+                <default>false</default>
+                <label>Non Applicabile</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldOverrides>
-        <field>Case__c</field>
-        <formula>Case.Id</formula>
+        <field>Account__c</field>
+        <formula>Account.Id</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>CompanyOwner__c</field>
-        <formula>TEXT(Case.Account.CompanyOwner__c)</formula>
+        <formula>TEXT( Account.CompanyOwner__c )</formula>
     </fieldOverrides>
     <label>Escalation</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
@@ -33,7 +33,7 @@
         </quickActionLayoutColumns>
     </quickActionLayout>
     <targetObject>wrts_prcgvr__Activity__c</targetObject>
-    <targetParentField>Case__c</targetParentField>
-    <targetRecordType>wrts_prcgvr__Activity__c.HDT_RT_EscalationCase</targetRecordType>
+    <targetParentField>Account__c</targetParentField>
+    <targetRecordType>wrts_prcgvr__Activity__c.HDT_RT_EscalationAccountLead</targetRecordType>
     <type>Create</type>
 </QuickAction>
