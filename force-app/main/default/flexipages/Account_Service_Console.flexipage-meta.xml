@@ -34,7 +34,7 @@
                             <value>Account.HDT_VasOrders</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Account.Escalation</value>
+                            <value>Global.EscalationCmp</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
