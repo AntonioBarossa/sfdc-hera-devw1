@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>CloseDiscardActivity</name>
-        <label>CloseDiscardActivity</label>
-        <locationX>754</locationX>
-        <locationY>974</locationY>
-        <actionName>HDT_LC_EditScartiComplessi</actionName>
-        <actionType>apex</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>input</name>
-            <value>
-                <elementReference>InputCase</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <apiVersion>53.0</apiVersion>
     <decisions>
         <name>Check_Cluster</name>
@@ -51,9 +35,6 @@
                     <stringValue>Preventivi</stringValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>CloseDiscardActivity</targetReference>
-            </connector>
             <label>Preventivi</label>
         </rules>
         <rules>
@@ -111,14 +92,11 @@
                     <stringValue>Reclami</stringValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>CloseDiscardActivity</targetReference>
-            </connector>
             <label>Reclami</label>
         </rules>
     </decisions>
     <interviewLabel>PostSalesDiscardDispatch {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Gestione Scarti Post Sale</label>
+    <label>Gestione Scarti Post Sales</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -205,7 +183,7 @@
             <targetReference>Get_Case_Id_From_Activity</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Arricchimento_Dati</name>
         <label>Arricchimento Dati</label>
@@ -239,9 +217,6 @@
         <label>Gestione Disattivazioni</label>
         <locationX>490</locationX>
         <locationY>638</locationY>
-        <connector>
-            <targetReference>CloseDiscardActivity</targetReference>
-        </connector>
         <flowName>HDT_FL_GestioneDisattivazioni</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -256,14 +231,17 @@
         <label>Gestione Morosità</label>
         <locationX>754</locationX>
         <locationY>638</locationY>
-        <connector>
-            <targetReference>CloseDiscardActivity</targetReference>
-        </connector>
         <flowName>HDT_FL_GestioneScartiComplessi</flowName>
         <inputAssignments>
             <name>caseId</name>
             <value>
                 <elementReference>caseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>discardActivityId</name>
+            <value>
+                <elementReference>InputCase</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -272,9 +250,6 @@
         <label>Gestione Verifiche</label>
         <locationX>50</locationX>
         <locationY>638</locationY>
-        <connector>
-            <targetReference>CloseDiscardActivity</targetReference>
-        </connector>
         <flowName>HDT_FL_GestioneVerifiche</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -289,14 +264,17 @@
         <label>Gestione Voltura</label>
         <locationX>1018</locationX>
         <locationY>638</locationY>
-        <connector>
-            <targetReference>CloseDiscardActivity</targetReference>
-        </connector>
         <flowName>HDT_FL_GestioneScartiComplessi</flowName>
         <inputAssignments>
             <name>caseId</name>
             <value>
                 <elementReference>caseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>discardActivityId</name>
+            <value>
+                <elementReference>InputCase</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -311,6 +289,7 @@
         </value>
     </variables>
     <variables>
+        <description>Id dell&apos;activity di scarto (il nome InputCase è necessario per motivi di compatibilità con l&apos;aura component RunFlowFromAura).</description>
         <name>InputCase</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
