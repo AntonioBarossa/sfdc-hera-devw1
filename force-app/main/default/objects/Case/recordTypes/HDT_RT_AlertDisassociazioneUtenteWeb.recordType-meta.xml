@@ -7745,6 +7745,26 @@
             <fullName>Sequenzializzato</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>In Attesa Approvazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Approvata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rifiutata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Applicabile</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>

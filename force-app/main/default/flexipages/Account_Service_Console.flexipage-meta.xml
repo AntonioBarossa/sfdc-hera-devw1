@@ -33,6 +33,9 @@
                         <valueListItems>
                             <value>Account.HDT_VasOrders</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Account.Escalation</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -53,7 +56,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
-                    <value>9</value>
+                    <value>10</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
                 <visibilityRule>

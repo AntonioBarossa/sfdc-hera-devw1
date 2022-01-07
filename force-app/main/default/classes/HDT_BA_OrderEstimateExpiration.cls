@@ -13,6 +13,7 @@ public class HDT_BA_OrderEstimateExpiration implements Database.Batchable<SObjec
     public void execute(Database.BatchableContext bc, List<Order> scope) {
         for(Order o : scope){
             o.Phase__c='Preventivo scaduto';
+            o.Status = 'Annullato';
         }
         orderSrv.updateRecords(scope);
     }

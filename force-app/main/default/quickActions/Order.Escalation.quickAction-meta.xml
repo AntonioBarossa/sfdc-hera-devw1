@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldOverrides>
+        <field>CompanyOwner__c</field>
+        <formula>TEXT( Order.Account.CompanyOwner__c )</formula>
+    </fieldOverrides>
+    <fieldOverrides>
         <field>Order__c</field>
         <formula>Order.Id</formula>
     </fieldOverrides>
@@ -9,11 +13,6 @@
     <quickActionLayout>
         <layoutSectionStyle>TwoColumnsLeftToRight</layoutSectionStyle>
         <quickActionLayoutColumns>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>PetitionerAssigneeStructure__c</field>
-                <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Type__c</field>

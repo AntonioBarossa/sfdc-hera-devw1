@@ -28,7 +28,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>wrts_prcgvr__Activity__c.CompleteActivity</value>
+                            <value>wrts_prcgvr__Activity__c.HDT_CloseActivity</value>
                             <visibilityRule>
                                 <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                                 <criteria>
@@ -48,7 +48,7 @@
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>CONTAINS</operator>
+                                    <operator>EQUAL</operator>
                                     <rightValue>HDT_RT_Default</rightValue>
                                 </criteria>
                                 <criteria>
@@ -798,6 +798,15 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.wrts_prcgvr__Description__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.OpeningNote__c</fieldItem>
             </fieldInstance>
         </itemInstances>
@@ -1124,18 +1133,6 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentName>hdtActivityDetail</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Type__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Chiamata outbound</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>

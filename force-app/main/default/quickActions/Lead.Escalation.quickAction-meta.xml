@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldOverrides>
+        <field>CompanyOwner__c</field>
+        <formula>TEXT( Lead.CompanyOwner__c )</formula>
+    </fieldOverrides>
+    <fieldOverrides>
         <field>Lead__c</field>
         <formula>Lead.Id</formula>
     </fieldOverrides>

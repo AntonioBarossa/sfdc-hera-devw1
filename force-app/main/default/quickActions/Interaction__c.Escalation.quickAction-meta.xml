@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldOverrides>
+        <field>CompanyOwner__c</field>
+        <formula>IF( ISNULL(Interaction__c.Account__c), &apos;HERA COMM&apos;,  TEXT( Interaction__c.Account__r.CompanyOwner__c ) )</formula>
+    </fieldOverrides>
+    <fieldOverrides>
         <field>Interaction__c</field>
         <formula>Interaction__r.Id</formula>
     </fieldOverrides>

@@ -4,6 +4,10 @@
         <field>Case__c</field>
         <formula>Case.Id</formula>
     </fieldOverrides>
+    <fieldOverrides>
+        <field>CompanyOwner__c</field>
+        <formula>TEXT(Case.Account.CompanyOwner__c)</formula>
+    </fieldOverrides>
     <label>Escalation</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
     <quickActionLayout>
