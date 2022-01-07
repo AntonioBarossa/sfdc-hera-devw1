@@ -821,8 +821,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 
 	/*
 		Crea un record del tracciato dei dati catastali.
+		docusignData è una mappa creata a partire dalla classe HDT_WRP_DocusignNotify popolata dall'integrazione inbound con docusign.
+		childOrder è l'Order figlio del processo per il quale è stata richiesta la compilazione del modulo dei dati catastali.
 
-		Di seguito il tracciato AS-IS:
+		Di seguito il tracciato AS-IS della SIE dei dati catastali:
 
 		CODICE_OFFERTA					VARCHAR2(100)
 		IMPIANTO						VARCHAR2(100)
@@ -846,7 +848,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		CATEGORIA_CATASTALE				VARCHAR2(30)
 		SUPERFICIE_CATASTALE			NUMBER
 
-		Di seguito le transcodifiche AS-IS:
+		Di seguito le transcodifiche AS-IS implementate dalla SIE:
 
 		Transcodifica DESTINAZIONE_USO:
 		Val									decodifica
@@ -884,7 +886,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		1-26371887987/1-C45530S;4003560309;1;;20201006;99991231;;RAVENNA;RAVENNA;H199;RA;F;;46;632;.;E;24;3;;
 		1-27373306691/1-CKPCYMQ;4003141636;1;;20201111;99991231;;FAENZA;FAENZA;D458;RA;F;.;192;13;.;E;6;1;A/3;151
 	 */
-	public static LandRegistry__c createLandRegistryRecord(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData docusignData, Order childOrder) {
+	public static LandRegistry__c createLandRegistryRecord(Map<String, String> docusignData, Order childOrder) {
 		LandRegistry__c r = new LandRegistry__c();
 
 		if (docusignData == null || childOrder == null) {
