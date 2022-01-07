@@ -579,14 +579,17 @@ public class HDT_SRV_DocumentalManagement{
 		if(record != null && record.getSobjectType() == Case.getSobjectType()){
 			return;
 		}
-		Id recordId = (Id) record.get('Id');
 		List<LandRegistry__c> registries = new List<LandRegistry__c>();
+		Map<String, String> docusignData = new Map<String, String>();
 		for (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData singleData : listOfData) {
-			LandRegistry__c reg = new LandRegistry__c();
-			reg.Order__c = recordId;
-			// TODO: valorizzare campi oggetto con i valori che manda Intesa.
-			registries.add(reg);
+			docusignData.put(singleData.dataName, singleData.dataValue);
 		}
+
+		Order childOrder = new Order();
+		// TODO: ricavare childOrder a partire dall'id order presente in listOfData
+		LandRegistry__c reg = HDT_UTL_DocumentalManagement.createLandRegistryRecord(docusignData, childOrder);
+		// TODO: gestire scenario in cui due o più order figli hanno dati catastali (necessario creare più record su LandRegistry__c)
+		registries.add(reg);
 
 		if (!registries.isEmpty()){
 			try {
