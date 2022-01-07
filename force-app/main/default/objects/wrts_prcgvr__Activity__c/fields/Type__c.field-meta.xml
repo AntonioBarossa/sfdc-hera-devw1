@@ -550,6 +550,18 @@
                 <default>false</default>
                 <label>Esito KO da SII</label>
             </value>
+            <!-- CanoneRai creato da Mulesoft, utilizziamo una label BSN-friendly -->
+            <value>
+                <fullName>CanoneRai</fullName>
+                <default>false</default>
+                <label>Scarto Canone RAI</label>
+            </value>
+            <!-- BonusSociale creato da Mulesoft, utilizziamo una label BSN-friendly -->
+            <value>
+                <fullName>BonusSociale</fullName>
+                <default>false</default>
+                <label>Scarto Bonus Sociale</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
