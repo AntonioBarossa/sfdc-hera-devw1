@@ -895,6 +895,34 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 
 		// TODO: fill LandRegistry__c fields
 
+		//codice_offerta;
+		// impianto
+		r.ServicePoint__c = childOrder.ServicePoint__c;
+		// destinazione_uso
+		// r.DestinationUsage__c = ???? TODO: da dove prendere la destinazione d'uso? non sembra esserci nel modulo, nè sull'order nè sul service point.
+		// dt_ini_contratto;
+		r.StartDate__c = childOrder.EffectiveDate__c;
+		// codice_assenza_dati_catastali; 
+		// r.CodeMissingRegistryData__c = ??? TODO: da prendere dai radiobutton nel modulo e da transcodificare
+		// comune_amministrativo;
+		r.LegalCity__c = docusignData.get('DTC_comune_amm');
+		// comune_catastale;
+		r.RegistryCity__c = docusignData.get('DTC_comune_cat');
+		// codice_comune_catastale;
+		r.RegistryCityCode__c = docusignData.get('DTC_cod_comune');
+		// provincia_ubicazione;
+		// tipo_unita;
+		// sezione_urbana;
+		// foglio;
+		// particella;
+		// particella_tavolare;
+		// tipo_particella;
+		// subalterno;
+		// qualifica_titolare;
+		// Categoria_Catastale;
+		// Superficie_Catastale
+
+
 		return r;
 	}
 }
