@@ -1879,6 +1879,14 @@
             <fullName>Confermare Cambio Decorrenza</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>CanoneRai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BonusSociale</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>wrts_prcgvr__Priority__c</picklist>
