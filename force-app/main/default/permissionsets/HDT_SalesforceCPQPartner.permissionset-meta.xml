@@ -8738,21 +8738,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>DocumentalPayloadAdministration__c.Field_2__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DocumentalPayloadAdministration__c.Field_3__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DocumentalPayloadAdministration__c.Field_4__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>DocumentalPayloadAdministration__c.IsData__c</field>
         <readable>false</readable>
     </fieldPermissions>
