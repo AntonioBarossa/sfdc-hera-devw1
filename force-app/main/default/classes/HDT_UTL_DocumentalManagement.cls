@@ -818,4 +818,81 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		
 		return ''; // Non dovrebbe mai accadere.
 	}
+
+	/*
+		Crea un record del tracciato dei dati catastali.
+
+		Di seguito il tracciato AS-IS:
+
+		CODICE_OFFERTA					VARCHAR2(100)
+		IMPIANTO						VARCHAR2(100)
+		DESTINAZIONE_USO				VARCHAR2(30)
+		PROGRESSIVO_SAP					VARCHAR2(100)
+		DT_INI_CONTRATTO				DATE
+		CODICE_ASSENZA_DATI_CATASTALI	VARCHAR2(30)
+		COMUNE_AMMINISTRATIVO			VARCHAR2(100)
+		COMUNE_CATASTALE				VARCHAR2(100)
+		CODICE_COMUNE_CATASTALE			VARCHAR2(50)
+		PROVINCIA_UBICAZIONE			VARCHAR2(2)
+		TIPO_UNITA						VARCHAR2(50)
+		SEZIONE_URBANA					VARCHAR2(50)
+		FOGLIO							VARCHAR2(30)
+		PARTICELLA						VARCHAR2(50)
+		PARTICELLA_TAVOLARE				VARCHAR2(10)
+		TIPO_PARTICELLA					VARCHAR2(50)
+		SUBALTERNO						VARCHAR2(30)
+		QUALIFICA_TITOLARE				VARCHAR2(30)
+		ROW_ID_RDO						VARCHAR2(100)
+		CATEGORIA_CATASTALE				VARCHAR2(30)
+		SUPERFICIE_CATASTALE			NUMBER
+
+		Di seguito le transcodifiche AS-IS:
+
+		Transcodifica DESTINAZIONE_USO:
+		Val									decodifica
+		Uso abitativo						1
+		Immobile tenuto a disposizione		2
+		Uso commerciale						3
+		Locali adibiti a box				4
+		Altri usi							5
+
+		Transcodifica CODICE_ASSENZA_DATI_CATASTALI
+
+		Val								decodifica
+		da RD							0
+		Immobile non accatastato		1
+		Immobile non accatastabile		2
+
+		Transcodifica TIPO_UNITA
+		Val				decodifica
+		Fabbricato		F
+		Terreno			T
+
+		Transcodifica TIPO_PARTICELLA
+		Val				decodifica
+		Fondiario		F
+		Edificiale		E
+
+		Transcodifica QUALIFICA_TITOLARE
+		Val								decodifica
+		Proprietario					1
+		Usufruttuario					2
+		Locatario						3
+		Tit. altro diritto su immob.	4
+
+		Di seguito un estratto di tracciato AS-IS:
+		1-26371887987/1-C45530S;4003560309;1;;20201006;99991231;;RAVENNA;RAVENNA;H199;RA;F;;46;632;.;E;24;3;;
+		1-27373306691/1-CKPCYMQ;4003141636;1;;20201111;99991231;;FAENZA;FAENZA;D458;RA;F;.;192;13;.;E;6;1;A/3;151
+	 */
+	public static LandRegistry__c createLandRegistryRecord(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData docusignData, Order childOrder) {
+		LandRegistry__c r = new LandRegistry__c();
+
+		if (docusignData == null || childOrder == null) {
+			return r;
+		}
+
+		// TODO: fill LandRegistry__c fields
+
+		return r;
+	}
 }
