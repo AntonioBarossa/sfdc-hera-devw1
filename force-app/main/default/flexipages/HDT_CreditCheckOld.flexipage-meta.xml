@@ -7,7 +7,7 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>wrts_prcgvr__Activity__c.CompleteActivity</value>
+                            <value>wrts_prcgvr__Activity__c.HDT_CloseActivity</value>
                             <visibilityRule>
                                 <booleanFilter>1 OR 2 OR 3</booleanFilter>
                                 <criteria>
