@@ -545,6 +545,36 @@
                 <default>false</default>
                 <label>Protocollo - Variazioni</label>
             </value>
+            <value>
+                <fullName>Errore invio a SAP</fullName>
+                <default>false</default>
+                <label>Errore invio a SAP</label>
+            </value>
+            <value>
+                <fullName>Errore Lavorazione SAP</fullName>
+                <default>false</default>
+                <label>Errore Lavorazione SAP</label>
+            </value>
+            <value>
+                <fullName>Esito ricevuto su richiesta chiusa</fullName>
+                <default>false</default>
+                <label>Esito ricevuto su richiesta chiusa</label>
+            </value>
+            <value>
+                <fullName>Errore determinazione variante SAP</fullName>
+                <default>false</default>
+                <label>Errore determinazione variante SAP</label>
+            </value>
+            <value>
+                <fullName>Esito non elaborato</fullName>
+                <default>false</default>
+                <label>Esito non elaborato</label>
+            </value>
+            <value>
+                <fullName>Eliminato esito in scarto</fullName>
+                <default>false</default>
+                <label>Eliminato esito in scarto</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

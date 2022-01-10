@@ -15,9 +15,9 @@ public inherited sharing class HDT_UTL_GestioneScartiSap {
             List<String> partialCondition = new List<String>();
             for (String field : mapFieldValue.keySet()){
                 String value = String.escapeSingleQuotes(mapFieldValue.get(field));
-                partialCondition.add('field = \''+value+'\'');
+                partialCondition.add(field +' = \''+value+'\'');
             }
-            String query = 'SELECT Activity__c, CreateActivity__c, ActivityInitialStatus__c,ActivityToClose__c FROM HDT_UTL_GestioneScartiSap__mtd WHERE '+String.join(partialCondition, ' OR ')+' WITH SECURITY_ENFORCED';
+            String query = 'SELECT Activity__c, CreateActivity__c, ActivityInitialStatus__c,ActivityToClose__c FROM HDT_GestioneScartiSap__mdt WHERE '+String.join(partialCondition, ' AND ')+' WITH SECURITY_ENFORCED';
             response = Database.query(query);
         }
         return response;

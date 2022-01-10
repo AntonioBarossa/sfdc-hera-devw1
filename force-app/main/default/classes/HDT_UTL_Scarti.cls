@@ -14,13 +14,15 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     static final string SCARTODOCUMENTALEPOSTSALESTEMPLATENAME='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
     static final string SCARTODOCUMENTALESALESTEMPLATENAME='CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
     
+    /* 
+    //Gestione scarti SAP commentata per nuova gestione tramite custom metadata type 
     private Static final Set<String> TRACCIATURATYPES = new Set<String>{'Richiesta non identificata',
                                                                                  'Esito ricevuto su richiesta chiusa',
                                                                                  'Esito non elaborato',
                                                                                  'Errore invio a SAP',
                                                                                  'Eliminato esito in scarto',
                                                                                  'Errore determinazione variante SAP',
-                                                                                 'Errore Lavorazione SAP'};
+                                                                                 'Errore Lavorazione SAP'}; */
 
     static final Map<String, String> TRACCIAMENTOHEROKUSALES = new Map<String, String>{ 'Esito ricevuto su richiesta chiusa' => 'CBS_HER007__ESITO_RICEVUTO_SU_RICHIESTA_CHIUSA_SALES',
                                                                                         'Esito non elaborato' => 'CBS_HER006__ESITO_NON_ELABORATO_DA_DLSII_SALES',
@@ -215,7 +217,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : parsedResponseItem.objects){
                 for(HDT_WRP_MrrResponse.HDT_WRP_Field curField : curObj.fields){
                     system.debug('handleMRRInboundRequest curField: ' + curField.name + ' ' + curField.value);
-                    if('ATTIVITA'.equalsIgnoreCase(curField.name) && TRACCIATURATYPES.contains(curField.value)){
+                    /* 
+                    //Gestione scarti SAP commentata per nuova gestione tramite custom metadata type 
+                    if('ATTIVITA'.equalsIgnoreCase(curField.name) && TRACCIATURATYPES.contains(curField.value)){ */
+                    if('ATTIVITA'.equalsIgnoreCase(curField.name) && 'Richiesta non identificata'.equalsIgnoreCase(curField.value)){
                         Map<String,String> newData = new Map<String,String>();
                         for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){ newData.put(curField2.name, curField2.value); }
                         for(HDT_WRP_MrrRequest.HDT_WRP_Field curField3 : request.header.fields){ newData.put(curField3.name, curField3.value); }
@@ -266,22 +271,43 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @return Map<String, wrts_prcgvr__ActivityTemplate__c> name per template
     */
     public static Map<String, wrts_prcgvr__ActivityTemplate__c> getTemplatesMapByName(Set<String> names){
-        Map<String, wrts_prcgvr__ActivityTemplate__c> returnMap = new Map<String, wrts_prcgvr__ActivityTemplate__c>();
-        List<wrts_prcgvr__ActivityTemplate__c> queryResult = [SELECT Name,
-                                                                     wrts_prcgvr__Assignees__c,
-                                                                     wrts_prcgvr__Code__c,
-                                                                     wrts_prcgvr__DueDateField__c,
-                                                                     wrts_prcgvr__DueDateUnit__c,
-                                                                     wrts_prcgvr__DueDateValue__c,
-                                                                     wrts_prcgvr__FieldsTemplate__c,
-                                                                     wrts_prcgvr__IsRequired__c,
-                                                                     wrts_prcgvr__ObjectType__c,
-                                                                     wrts_prcgvr__Priority__c,
-                                                                     wrts_prcgvr__Subject__c
-                                                              FROM wrts_prcgvr__ActivityTemplate__c
-                                                              WHERE Name IN :names
-                                                              WITH SECURITY_ENFORCED];
+        return getTemplatesMapByName(names,null);
+    }
 
+    public static Map<String, wrts_prcgvr__ActivityTemplate__c> getTemplatesMapByName(Set<String> names, String objectType){
+        Map<String, wrts_prcgvr__ActivityTemplate__c> returnMap = new Map<String, wrts_prcgvr__ActivityTemplate__c>();
+        List<wrts_prcgvr__ActivityTemplate__c> queryResult;
+        if (String.isEmpty(objectType)){
+            queryResult = [SELECT Name,
+                                    wrts_prcgvr__Assignees__c,
+                                    wrts_prcgvr__Code__c,
+                                    wrts_prcgvr__DueDateField__c,
+                                    wrts_prcgvr__DueDateUnit__c,
+                                    wrts_prcgvr__DueDateValue__c,
+                                    wrts_prcgvr__FieldsTemplate__c,
+                                    wrts_prcgvr__IsRequired__c,
+                                    wrts_prcgvr__ObjectType__c,
+                                    wrts_prcgvr__Priority__c,
+                                    wrts_prcgvr__Subject__c
+                            FROM wrts_prcgvr__ActivityTemplate__c
+                            WHERE Name IN :names
+                            WITH SECURITY_ENFORCED];
+        }else{
+            queryResult = [SELECT Name,
+                                    wrts_prcgvr__Assignees__c,
+                                    wrts_prcgvr__Code__c,
+                                    wrts_prcgvr__DueDateField__c,
+                                    wrts_prcgvr__DueDateUnit__c,
+                                    wrts_prcgvr__DueDateValue__c,
+                                    wrts_prcgvr__FieldsTemplate__c,
+                                    wrts_prcgvr__IsRequired__c,
+                                    wrts_prcgvr__ObjectType__c,
+                                    wrts_prcgvr__Priority__c,
+                                    wrts_prcgvr__Subject__c
+                            FROM wrts_prcgvr__ActivityTemplate__c
+                            WHERE Name IN :names AND wrts_prcgvr__ObjectType__c =:objectType
+                            WITH SECURITY_ENFORCED];
+        }
         for(wrts_prcgvr__ActivityTemplate__c curTemplate : queryResult){
             returnMap.put(curTemplate.Name, curTemplate);
         }
@@ -297,9 +323,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     public static void createAttivitaTracciaturaHeroku(List<Map<String,String>> sourceData){
         System.debug('createAttivitaTracciaturaHeroku start' + sourceData);
         List<wrts_prcgvr__Activity__c> toInsert = new List<wrts_prcgvr__Activity__c>();
-        Map<String, Map<String,String>> dataForSalesHandlingByRecordIdField = new Map<String, Map<String,String>>();
+        /* Map<String, Map<String,String>> dataForSalesHandlingByRecordIdField = new Map<String, Map<String,String>>();
         Map<String, Map<String,String>> dataForKOSAPHandling = new Map<String, Map<String,String>>();
-
+ */
         for(Map<String,String> curData : sourceData){
             if('Richiesta non identificata'.equalsIgnoreCase(curData.get('ATTIVITA'))){
                 system.debug('anonima' + JSON.serializePretty(curData));
@@ -312,7 +338,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     }
                 }
                 toInsert.add(newAct);
-            }else if(TRACCIAMENTOHEROKUSALES.keySet().contains(curData.get('ATTIVITA')) && String.isNotBlank(curData.get('RECORD_ID'))){//va bene controllare solo su una mappa, tanto i keyset sono uguali
+            }/* 
+            //Gestione scarti SAP commentata per nuova gestione tramite custom metadata type 
+            else if(TRACCIAMENTOHEROKUSALES.keySet().contains(curData.get('ATTIVITA')) && String.isNotBlank(curData.get('RECORD_ID'))){//va bene controllare solo su una mappa, tanto i keyset sono uguali
                 system.debug('scarto transitorio' + JSON.serializePretty(curData));
                 if('sales'.equalsIgnoreCase(curData.get('PROCESS_CATEGORY'))){
                     dataForSalesHandlingByRecordIdField.put(curData.get('RECORD_ID'), curData);
@@ -334,10 +362,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             else if('Errore lavorazione SAP'.equalsIgnoreCase(curData.get('ATTIVITA')) && String.isNotBlank(curData.get('RECORD_ID'))){
                 system.debug('ko sap' + JSON.serializePretty(curData));
                 dataForKOSAPHandling.put(curData.get('RECORD_ID'), curData);
-            }
+            } */
         }
         
-        System.debug('createAttivitaTracciaturaHeroku dataForSalesHandlingByRecordIdField' + dataForSalesHandlingByRecordIdField);
+        /* System.debug('createAttivitaTracciaturaHeroku dataForSalesHandlingByRecordIdField' + dataForSalesHandlingByRecordIdField);
         if(!dataForSalesHandlingByRecordIdField.keySet().isEmpty()){
             Map<String, Map<String,String>> filanCollection = new Map<String, Map<String,String>>();
 
@@ -426,7 +454,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     toInsert.add(newAct);
                 }
             }
-        }
+        } 
+        //FINE Gestione scarti SAP commentata per nuova gestione tramite custom metadata type 
+        */
         
         System.debug('createAttivitaTracciaturaHeroku end' + toInsert);
         HDT_UTL_DatabaseService.insertSObject(toInsert);
@@ -441,10 +471,18 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @return wrts_prcgvr__Activity__c
     */
     public static wrts_prcgvr__Activity__c createActivityByObjectIdAndTemplateName(String objectId, String templateName){
+        return createActivityByObjectIdAndTemplateName(objectId,templateName,getObjectName(objectId));
+    }
+    public static wrts_prcgvr__Activity__c createActivityByObjectIdAndTemplateName(String objectId, String templateName, String objectType){
         system.debug('HDT_UTL_Scarti objectId ' + objectId);
         system.debug('HDT_UTL_Scarti templateName ' + templateName);
         try{
-            Map<String, wrts_prcgvr__ActivityTemplate__c> template = getTemplatesMapByName(new Set<String>{templateName});
+            Map<String, wrts_prcgvr__ActivityTemplate__c> template;
+            if (String.isEmpty(objectType)){ 
+                template = getTemplatesMapByName(new Set<String>{templateName});
+            }else{
+                template = getTemplatesMapByName(new Set<String>{templateName},objectType);
+            }
             system.debug('HDT_UTL_Scarti template ' + template);
             if(template.values().size() > 0){
                 wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
@@ -1046,9 +1084,13 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     }
 
     //EVERIS: Gestione Scarti SAP
-    public static Boolean closeDiscardActivity(Id activityId){
-        wrts_prcgvr__Activity__c activityToUpdate = new wrts_prcgvr__Activity__c(Id =  activityId, wrts_prcgvr__Status__c ='Chiusa', wrts_prcgvr__IsClosed__c = true, EndDate__c = Date.today());
+    public static Boolean updateCloseDiscardActivity(Id activityId){
+        wrts_prcgvr__Activity__c activityToUpdate = closeDiscardActivity(activityId);
         return HDT_UTL_DatabaseService.updateSObject(activityToUpdate);
+    }
+
+    public static wrts_prcgvr__Activity__c closeDiscardActivity(Id activityId){
+        return new wrts_prcgvr__Activity__c(Id =  activityId, wrts_prcgvr__Status__c ='Chiusa', wrts_prcgvr__IsClosed__c = true, EndDate__c = Date.today());
     }
 
     public static Boolean manageSapDiscard(List<SObject> newObjectList, Map<Id,SObject> oldObjectMap){
@@ -1077,6 +1119,18 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 System.enqueueJob(new HDT_QBL_GestioneScartiSap(objectId,rules));
             }
         }
+    }
+
+    public static String getObjectName(String objectId){
+        String objectName;
+        if(Schema.Case.SObjectType == ((Id)objectId).getSobjectType()){ 
+            objectName = 'Case';
+        }else if(Schema.Order.SObjectType == ((Id)objectId).getSobjectType()){
+            objectName = 'Order';
+        }else if(Schema.Account.SObjectType == ((Id)objectId).getSobjectType()){
+            objectName = 'Account';
+        }
+        return objectName;
     }
     //EVERIS: END Gestione Scarti SAP
 }

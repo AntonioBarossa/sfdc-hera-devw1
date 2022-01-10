@@ -31,7 +31,7 @@ public with sharing class HDT_LC_EditScartiComplessi {
         try {
             if (!HDT_UTL_DatabaseService.updateSObject(orderToUpdate)){
                 response = 'Errore nell\'aggiornamento della fase dell\'ordine.';   
-            }else if (!HDT_UTL_Scarti.closeDiscardActivity(activityId)){
+            }else if (!HDT_UTL_Scarti.updateCloseDiscardActivity(activityId)){
                 response = 'Impossibile chiudere l\'attività di scarto';
                 Database.rollback(sp);
             }
@@ -46,7 +46,7 @@ public with sharing class HDT_LC_EditScartiComplessi {
     public static List<String> closeDiscardActivity(List<String> input){
         String response;
         Id activityId = (Id)input[0];
-        if (!HDT_UTL_Scarti.closeDiscardActivity(activityId)){
+        if (!HDT_UTL_Scarti.updateCloseDiscardActivity(activityId)){
             response = 'Impossibile chiudere l\'attività di scarto';
         }
         return new List<String>{response};

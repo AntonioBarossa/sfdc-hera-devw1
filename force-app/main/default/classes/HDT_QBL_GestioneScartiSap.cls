@@ -38,16 +38,18 @@ public with sharing class HDT_QBL_GestioneScartiSap implements Queueable{
 
     private void closeActivities(List<wrts_prcgvr__Activity__c> activitiesToUpdate){
         for (wrts_prcgvr__Activity__c act : [SELECT Id From wrts_prcgvr__Activity__c WHERE (Order__c = :this.objectId OR Case__c = :this.objectId) AND wrts_prcgvr__Status__c != 'Chiusa' AND Type__c IN :this.activitiesToClose]){
-            act.wrts_prcgvr__Status__c = 'Chiusa';
-            activitiesToUpdate.add(act);
+            activitiesToUpdate.add(HDT_UTL_Scarti.closeDiscardActivity(act.Id));
         }
     }
 
     private void createActivities(List<wrts_prcgvr__Activity__c> activitiesToInsert){
         for (String templateName : this.activityToOpenStatoMap.keySet()){
-            wrts_prcgvr__Activity__c newAct = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName(this.objectId, templateName);
-            newAct.wrts_prcgvr__Status__c = this.activityToOpenStatoMap.get(templateName);
-            activitiesToInsert.add(newAct);
+            String objectType = HDT_UTL_Scarti.getObjectName(this.objectId);
+            wrts_prcgvr__Activity__c newAct = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName(this.objectId, templateName,objectType);
+            if (newAct != null){
+                newAct.wrts_prcgvr__Status__c = this.activityToOpenStatoMap.get(templateName);
+                activitiesToInsert.add(newAct);
+            }
         }
     }
 
