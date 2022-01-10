@@ -1,29 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>51.0</apiVersion>
+    <assignments>
+        <name>Assegna_Variabili</name>
+        <label>Assegna Variabili</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>getCaseFromIdIputVariable.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CalcolaCodiceCausale.CausalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCaseFromIdIputVariable.OperationCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CalcolaCodiceCausale.OperationCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCaseFromIdIputVariable.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCaseFromIdIputVariable.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+    </assignments>
     <decisions>
-        <name>Switch_Subflow</name>
-        <label>Switch Subflow</label>
-        <locationX>182</locationX>
-        <locationY>278</locationY>
-        <defaultConnector>
-            <targetReference>ErrorScreen_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Errore</defaultConnectorLabel>
+        <name>Quale_Azione</name>
+        <label>Quale Azione?</label>
+        <locationX>314</locationX>
+        <locationY>398</locationY>
+        <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
-            <name>Cluster_Generiche_Attivazioni</name>
+            <name>Conferma</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>RecordTypeName</leftValueReference>
+                <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>HDT_RT_GenericheAttivazioni</stringValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Selezione_Fornitura</targetReference>
+                <targetReference>CalcolaCodiceCausale</targetReference>
             </connector>
-            <label>Cluster Generiche Attivazioni</label>
+            <label>Conferma</label>
+        </rules>
+        <rules>
+            <name>Annulla</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annulla_Prestazione</targetReference>
+            </connector>
+            <label>Annulla</label>
         </rules>
     </decisions>
     <interviewLabel>HDT_FL_CambioUso {!$Flow.CurrentDateTime}</interviewLabel>
@@ -47,143 +110,88 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>Crea_Case</name>
-        <label>Crea Case</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
-        <connector>
-            <targetReference>Edit_Form</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>AccountId</field>
-            <value>
-                <elementReference>AccountId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Cluster__c</field>
-            <value>
-                <stringValue>Generiche Attivazioni</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>CompanyOwner__c</field>
-            <value>
-                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ContactId</field>
-            <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Contract__c</field>
-            <value>
-                <elementReference>Contract</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Phase__c</field>
-            <value>
-                <stringValue>Bozza</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>Get_RT_Generiche_Attivazioni.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ServicePoint__c</field>
-            <value>
-                <elementReference>ServicePointId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type</field>
-            <value>
-                <elementReference>ProcessType</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <recordLookups>
-        <name>Cerca_Contatto_Primario</name>
-        <label>Cerca Contatto Primario</label>
-        <locationX>182</locationX>
-        <locationY>158</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Switch_Subflow</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>AccountId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>AccountId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>IsActive</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>IsDirect</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>AccountContactRelation</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_RT_Generiche_Attivazioni</name>
-        <label>Get RT Generiche Attivazioni</label>
+        <name>CalcolaCodiceCausale</name>
+        <label>CalcolaCodiceCausale</label>
         <locationX>50</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Crea_Case</targetReference>
+            <targetReference>Assegna_Variabili</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>DeveloperName</field>
+            <field>Cluster__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>RecordTypeName</elementReference>
+                <elementReference>getCaseFromIdIputVariable.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getCaseFromIdIputVariable.Type</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getCaseFromIdIputVariable.Commodity__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RecordType</object>
+        <object>HDT_CausalCodeCalculation__mdt</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>getCaseFromIdIputVariable</name>
+        <label>getCaseFromIdIputVariable</label>
+        <locationX>314</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Edit_Form</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inputCaseId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Aggiorna_Case</name>
+        <label>Aggiorna Case</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <inputReference>getCaseFromIdIputVariable</inputReference>
+    </recordUpdates>
     <screens>
         <name>Edit_Form</name>
         <label>Edit Form</label>
-        <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationX>314</locationX>
+        <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Quale_Azione</targetReference>
+        </connector>
         <fields>
-            <name>EditFormNew2</name>
-            <extensionName>c:HDT_LCP_CambioUso</extensionName>
+            <name>hdtRecordEditForm</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>accountId</name>
+                <name>addContentDocument</name>
                 <value>
-                    <elementReference>AccountId</elementReference>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -193,15 +201,45 @@
                 </value>
             </inputParameters>
             <inputParameters>
+                <name>contentDocumentLabel</name>
+                <value>
+                    <stringValue>Aggiungi Documento Delegato (Se Necessario)</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
                 <name>draftButton</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>isRunFromFlow</name>
+                <name>labelDraftButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextStep</name>
+                <value>
+                    <stringValue>NEXT</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -211,21 +249,33 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>processType</name>
+                <name>previousButton</name>
                 <value>
-                    <elementReference>ProcessType</elementReference>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>recordId</name>
+                <name>processType</name>
                 <value>
-                    <elementReference>Crea_Case</elementReference>
+                    <stringValue>Generiche Attivazioni</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>saveButton</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>getCaseFromIdIputVariable.Id</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -235,69 +285,38 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <name>ErrorScreen_0</name>
-        <label>ErrorScreen_0</label>
-        <locationX>314</locationX>
-        <locationY>398</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>ErrorScreen</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(253, 0, 0);&quot;&gt;Attenzione! &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(253, 0, 0);&quot;&gt;Si è verificato un errore inaspettato!&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(253, 0, 0);&quot;&gt;Contatta l&apos;amministratore del sistema.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Cerca_Contatto_Primario</targetReference>
+            <targetReference>getCaseFromIdIputVariable</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
-        <name>Selezione_Fornitura</name>
-        <label>Selezione Fornitura</label>
-        <locationX>50</locationX>
-        <locationY>398</locationY>
-        <connector>
-            <targetReference>Get_RT_Generiche_Attivazioni</targetReference>
-        </connector>
-        <flowName>HDT_FL_SupplySelection</flowName>
+        <name>Annulla_Prestazione</name>
+        <label>Annulla Prestazione</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
-            <name>AccountId</name>
+            <name>InputCase</name>
             <value>
-                <elementReference>AccountId</elementReference>
+                <elementReference>inputCaseId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <elementReference>ProcessType</elementReference>
+                <stringValue>Annullamento Prestazione</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>TargetObject</name>
+            <name>sObjectRecordToCancell</name>
             <value>
-                <stringValue>Fornitura</stringValue>
+                <stringValue>Case</stringValue>
             </value>
         </inputAssignments>
-        <outputAssignments>
-            <assignToReference>Commodity</assignToReference>
-            <name>Commodity</name>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>Contract</assignToReference>
-            <name>Contract</name>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>ServicePointId</assignToReference>
-            <name>ServicePointId</name>
-        </outputAssignments>
     </subflows>
     <variables>
         <name>AccountId</name>
@@ -318,6 +337,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>inputCaseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
