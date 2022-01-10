@@ -9,7 +9,7 @@ public inherited sharing class HDT_SRV_IndemnityConfirmation {
         List<HDT_UTL_FlowOutputs> outputs = new List<HDT_UTL_FlowOutputs>();
         HDT_UTL_FlowOutputs output = new HDT_UTL_FlowOutputs();
 
-        Boolean flag = false;
+        //Boolean flag = false;
         
 
         String recordId = inputs[0].recordId;
@@ -20,22 +20,22 @@ public inherited sharing class HDT_SRV_IndemnityConfirmation {
 
         cases = indemnityQr.getOtherIndemnityCases(recordId, accountId, servicePointId, firstLevel, secondLevel);
 
-        if(cases.size() > 0){
+        // if(cases.size() > 0){
 
-            for(Case singleCase : cases){
+        //     for(Case singleCase : cases){
 
-                if((Date.valueOf(singleCase.CreatedDate) + 365) > System.today()){
+        //         if((Date.valueOf(singleCase.CreatedDate) + 365) > System.today()){
 
-                    flag = true;
-                    break;
+        //             flag = true;
+        //             break;
 
-                }
+        //         }
 
-            }
+        //     }
 
-        }
+        // }
 
-        output.indemnityNotConfirmed = flag;
+        output.indemnityNotConfirmed = cases.size() > 0;
 
         outputs.add(output);
 

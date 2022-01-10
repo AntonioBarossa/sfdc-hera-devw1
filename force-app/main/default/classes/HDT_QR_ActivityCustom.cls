@@ -138,6 +138,9 @@ public inherited sharing class HDT_QR_ActivityCustom {
         return [
             SELECT
             Id,
+            OwnerId,
+            ManuallyReassigned__c,
+            Queued__c,
             Account__c,
             wrts_prcgvr__Status__c,
             case__c,

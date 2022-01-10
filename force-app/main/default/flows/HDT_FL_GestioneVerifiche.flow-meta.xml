@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Chiudi_Activity_Scarto</name>
+        <label>Chiudi Activity Scarto</label>
+        <locationX>1589</locationX>
+        <locationY>1196</locationY>
+        <actionName>HDT_LC_EditScartiComplessi</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>input</name>
+            <value>
+                <elementReference>discardActivityId</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>Get_Amount_Quote</name>
         <label>Get Amount Quote</label>
         <locationX>688</locationX>
@@ -106,7 +125,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Case</targetReference>
+            <targetReference>Check_Rilavorazione_Scarto</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -218,7 +237,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Case</targetReference>
+            <targetReference>Check_Rilavorazione_Scarto</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -244,6 +263,31 @@
                 <targetReference>Gestione_Annullamento_Subflow_0</targetReference>
             </connector>
             <label>Annullare</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Rilavorazione_Scarto</name>
+        <label>Rilavorazione Scarto?</label>
+        <locationX>1322</locationX>
+        <locationY>1074</locationY>
+        <defaultConnector>
+            <targetReference>Aggiorna_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Wizard Normale</defaultConnectorLabel>
+        <rules>
+            <name>Wizard_Scarto</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>discardRework</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Chiudi_Activity_Scarto</targetReference>
+            </connector>
+            <label>Wizard Scarto</label>
         </rules>
     </decisions>
     <decisions>
@@ -472,7 +516,7 @@
             <label>Rapido</label>
         </rules>
     </decisions>
-    <description>Versione contenente il documentale</description>
+    <description>Adeguamenti per Gestione Scarti</description>
     <formulas>
         <name>processTypeFormula</name>
         <dataType>String</dataType>
@@ -558,8 +602,8 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>1338</locationX>
-        <locationY>1074</locationY>
+        <locationX>1330</locationX>
+        <locationY>1275</locationY>
         <connector>
             <targetReference>LoadSpinner</targetReference>
         </connector>
@@ -613,8 +657,8 @@
     <screens>
         <name>LoadSpinner</name>
         <label>LoadSpinner</label>
-        <locationX>1339</locationX>
-        <locationY>1236</locationY>
+        <locationX>1330</locationX>
+        <locationY>1440</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -955,6 +999,23 @@
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>discardActivityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>discardRework</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
     <variables>
         <name>FasePreventivo</name>
         <dataType>String</dataType>

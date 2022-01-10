@@ -30,7 +30,9 @@ public class HDT_BA_OrderEstimateExpirationTst {
             Id accId = accs[0].id;
             List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1,false,accId);
             for(Contact c : contacts)
+            {
                 c.Company__c='MMS';
+            }
             insert contacts;
             
             List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Preventivo Accettato');
@@ -46,7 +48,7 @@ public class HDT_BA_OrderEstimateExpirationTst {
     }
 
     @isTest
-    static void test(){
+    static void testSchedule(){
         
         String crono = '20 30 8 10 2 ?';
         
@@ -64,5 +66,18 @@ public class HDT_BA_OrderEstimateExpirationTst {
         
         List<AsyncApexJob> jobsApexBatch = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'BatchApex'];
     	System.assertEquals(1, jobsApexBatch.size(), 'expecting one apex batch job');
+    }
+
+    @IsTest
+    static void testRun()
+    {
+        Test.startTest();
+            String jobId = Database.executeBatch(new HDT_BA_OrderEstimateExpiration(), 200);
+        Test.stopTest();
+
+        List<Order> orderExpired = [SELECT Id, Phase__c, Status FROM Order];
+        System.assertNotEquals(null, jobId, 'Job non eseguito correttamente');
+        System.assertEquals('Preventivo scaduto', orderExpired[0].Phase__c, 'Fase non calcolata correttamente');
+        System.assertEquals('Annullato', orderExpired[0].Status, 'Status non calcolato correttamente');
     }
 }

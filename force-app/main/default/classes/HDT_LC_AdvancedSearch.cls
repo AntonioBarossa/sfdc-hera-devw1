@@ -533,35 +533,27 @@ public with sharing class HDT_LC_AdvancedSearch {
 		return fields;
 	}
 
-
-
-
-
-
 	@AuraEnabled(cacheable = true)
-	public static List<Map<String,String>> getForniture(String accountid,String additionalFilter) {
-		system.debug('getForniture START');
-		system.debug('additionalFilter' + additionalFilter);
+	public static List<Map<String, String>> getForniture(String accountid,String additionalFilter) {
+		
 		String fieldForniture = customSetting.OutputServicePoint__c;
-		system.debug('fieldForniture : ' + fieldForniture);
 		HDT_QR_Contract contractQr= new HDT_QR_Contract();
 		List<String> listField = fieldForniture != null ? fieldForniture.split(',') : new List<String>();
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
 
 		if(additionalFilter == null || additionalFilter== ''){
-			system.debug('entra in additionalFilter == null');
 			servicePoints = servicePointQr.getAccountServicePoints(accountid);
-		}else{
-			system.debug('entra in additionalFilter != null');
-
+		}
+		else{
 			servicePoints = servicePointQr.getAccountServicePointsWithFilter(accountid,additionalFilter);
 		}
-		system.debug('data get acc : ' + servicePoints);
+
 		String type='ServicePoint__c';
 		List<String> servicePointsCodes = new List<String>();
 		for(ServicePoint__c s :servicePoints){
 			servicePointsCodes.add(s.ServicePointCode__c);
 		}
+		
 		List<Contract> c = contractQr.getSapContractCode(servicePointsCodes);
 		Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
 		Schema.SObjectType leadSchema = schemaMap.get(type);
@@ -576,16 +568,10 @@ public with sharing class HDT_LC_AdvancedSearch {
 				
 				if(field.contains('__r')){
 					List<String> s = field.split('__r.');
-					system.debug('************:' + field + '-' + s);
-
-					if(sp.getSObject(s[0]+'__r')!=null){
-
-						
+					if(sp.getSObject(s[0]+'__r')!=null){						
 						value = (String)sp.getSObject(s[0]+'__r').get(s[1]);
-
 						label = fieldMap.get(s[0]+'__c').getDescribe().getLabel();
 					}
-
 				}
 				else{
 					value = (String)sp.get(field);
@@ -601,19 +587,16 @@ public with sharing class HDT_LC_AdvancedSearch {
 						label='Codice Contratto';
 						value=(String) con.SAPContractCode__c;
 						row.put(label,value);
-					}else{
+					}
+					else{
 						label='Codice Contratto';
 						value=' ';
 						row.put(label,value);
 					}
-
-				}
-				
+				}				
 			}
             customSp.add(row);
 		}
-		system.debug('getForniture END');
-
 		return customSp;
 	}
 

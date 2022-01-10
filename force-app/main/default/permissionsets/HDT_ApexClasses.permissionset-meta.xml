@@ -1813,6 +1813,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_TRH_DiscardAnnullmentRule</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_TRH_DocumentSendTracking</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1934,6 +1938,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_TRH_User</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_Accents</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

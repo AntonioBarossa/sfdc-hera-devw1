@@ -12,11 +12,23 @@
         </lightning-record-edit-form>
 
         <template if:true ={isShowButtonRiassign}>
-            <lightning-button onclick={handleSave} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Sottoponi ad Approvazione" title="Riassegna"></lightning-button>
+            <div class="slds-clearfix">
+                <div class="slds-float_right">Per Finalizzare Il Processo Riassegnare L'Attività</div>
+            </div><br></br>
+            <div class="slds-clearfix">
+                <div class="slds-float_right">
+                    <lightning-button onclick={handleSave} class="slds-m-left_x-small" variant="brand" label="Sottoponi ad Approvazione" title="Riassegna"></lightning-button>
+                </div>
+            </div>
         </template>
-          </template>
+    </template>
+    <template if:true={isInApprovazione}>
+        <div class="slds-align_absolute-center">Attività In Approvazione</div>            
+    </template>
     <template if:true={isApproveFase}>
-        <lightning-button onclick={approve} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Approva" title="Riassegna"></lightning-button>
-        <lightning-button onclick={reject} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Rigetta" title="Riassegna"></lightning-button>
+        <div class="slds-align_absolute-center">
+        <lightning-button onclick={approve} class="slds-m-left_x-small" variant="brand" label="Approva" title="Riassegna"></lightning-button>
+        <lightning-button onclick={reject} class="slds-m-left_x-small" variant="brand" label="Rigetta" title="Riassegna"></lightning-button>
+    </div>
     </template>
 </template>

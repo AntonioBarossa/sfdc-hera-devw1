@@ -249,12 +249,12 @@ public inherited sharing class HDT_LC_SaleVas {
             }
             when 'SUBS_FROM_CONTRACT'{ 
                 records = [SELECT Name, SBQQ__ProductName__c
-                    FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c=:searchString
+                    FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c=:searchString and SBQQ__Product__r.Family like 'VAS%'
                     WITH SECURITY_ENFORCED];
             }
             when 'ASSETS_FROM_CONTRACT'{
                 records = [SELECT Name, Product2.Name
-                    FROM Asset WHERE Contract__c=:searchString
+                    FROM Asset WHERE Contract__c=:searchString and Product2.Family like 'VAS%'
                     WITH SECURITY_ENFORCED];
             }
             //Segnalazioni VAS - END
