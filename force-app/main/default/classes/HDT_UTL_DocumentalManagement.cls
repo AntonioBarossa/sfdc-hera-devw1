@@ -903,7 +903,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		// dt_ini_contratto;
 		r.StartDate__c = childOrder.EffectiveDate__c;
 		// codice_assenza_dati_catastali; 
-		// r.CodeMissingRegistryData__c = ??? TODO: da prendere dai radiobutton nel modulo e da transcodificare
+		r.CodeMissingRegistryData__c = transcodeCodiceAssenzaDatiCatastali(docusignRadioGroups.get('DTC_radiocat'));
 		// comune_amministrativo;
 		r.LegalCity__c = docusignData.get('DTC_comune_amm');
 		// comune_catastale;
@@ -933,8 +933,28 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		// Superficie_Catastale
 		r.RegistrySurface__c = childOrder.SurfaceServed__c;
 
-
 		return r;
+	}
+
+	private static String transcodeCodiceAssenzaDatiCatastali(String docusignValue) {
+		String transcoded = '';
+
+		switch on docusignValue {
+			when 'Pulsante di opzione1' { // Immobile non ancora iscritto al Catasto
+				transcoded = '1';
+			}
+			when 'Pulsante di opzione2' { // Utenza non relativa ad un immobile ovvero immobile non iscrivibile in Catasto
+				transcoded = '2';
+			}
+			when 'Pulsante di opzione3' { // Fornitura temporanea di servizi
+				transcoded = '';  // valore non gestito da transcodifica AS-IS, per adesso lo ignoriamo.
+			}
+			when 'Pulsante di opzione4' { // Utenza per usi comuni o condominiali
+				transcoded = '';  // valore non gestito da transcodifica AS-IS, per adesso lo ignoriamo.
+			}
+		}
+
+		return transcoded;
 	}
 
 	private static String transcodeQualificaTitolare(String docusignValue) {
