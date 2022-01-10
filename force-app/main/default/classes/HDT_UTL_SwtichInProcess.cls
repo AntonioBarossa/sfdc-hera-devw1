@@ -79,7 +79,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
                 if (order.WaiverRightAfterthought__c == 'Si') { 
                     dateSentToSii = date.today();
                 }
-                else if(order.IsActivationEarly__c) {
+                else if(order.IsEarlyActivation__c) {
                     //DV: aggiungo controllo su campo "Attivazione Anticipata". Se messo a true, Data invio richiesta è valorizzata con la data di completamento wizard
                     dateSentToSii = order.WizardCompletedDate__c;
                 }
