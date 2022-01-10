@@ -721,7 +721,7 @@
                             <value>Case.HDT_CreateDistributorApointment</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Case.Escalation</value>
+                            <value>Global.EscalationCmp</value>
                             <visibilityRule>
                                 <booleanFilter>1 OR 2</booleanFilter>
                                 <criteria>

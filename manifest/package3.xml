@@ -1,28 +1,70 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Account.Escalation</members>
-        <members>Case.Escalation</members>
-        <members>Interaction__c.Escalation</members>
-        <members>Lead.Escalation</members>
-        <members>Order.Escalation</members>
-        <name>QuickAction</name>
-    </types>
-    <types>
         <members>Account_Service_Console</members>
         <members>HDT_Activity_Default_Record_Page</members>
+        <members>HDT_ComunicazioniDistributore</members>
+        <members>HDT_CreditCheckNew</members>
+        <members>HDT_CreditCheckOld</members>
         <members>HDT_General_Case_Record_Page</members>
+        <members>HDT_GestioneAppuntamento</members>
         <members>HDT_Order_Default</members>
         <name>FlexiPage</name>
     </types>
     <types>
-        <members>HDT_SelfReadingError__mdt</members>
-        <name>CustomObject</name>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Call</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_ChiamataOutbound</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_ComfortQualityCall</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_CommunicationReject</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_CreditCheckKO</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Default</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationAccountLead</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationCase</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationGeneric</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationInteraction</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationOpportunity</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationOrder</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_GestioneIvaAccise</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_KoPrecedeteCliente</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_RegisterActivity</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Scarto</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Sportello</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_ValidazioneDocumentale</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_VisitaD2D</members>
+        <name>RecordType</name>
     </types>
     <types>
-        <members>hdtAdvancedSearch</members>
-        <members>hdtChildOrderProcessPrecheck</members>
-        <members>hdtCommercialRiassignButton</members>
+        <members>Interaction__c-Interazione Layout</members>
+        <members>Lead-Acquisizione Lead Layout</members>
+        <members>Lead-Lead Layout</members>
+        <members>wrts_prcgvr__Activity__c-HDT_HCPoint</members>
+        <members>wrts_prcgvr__Activity__c-HDT_Sportello</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_OmniSupervisor</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_LC_ActivityReassignmentTool</members>
+        <members>HDT_LC_ActivityReassignmentToolTst</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>LandRegistry__c.OfferCode__c</members>
+        <members>LandRegistry__c.SAPImplantCodeFormula__c</members>
+        <members>Order.IsEarlyActivation__c</members>
+        <members>wrts_prcgvr__Activity__c.DiscardDescription__c</members>
+        <members>wrts_prcgvr__Activity__c.Type__c</members>
+        <members>wrts_prcgvr__Activity__c.wrts_prcgvr__Status__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>hdtCustomTable</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
@@ -37,73 +79,8 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_FL_Annullamento_Order_Padre_Figlio</members>
-        <members>HDT_FL_GestioneDisattivazioni</members>
-        <members>HDT_FL_GestioneScartiComplessi</members>
-        <members>HDT_FL_GestioneVerifiche</members>
-        <members>HDT_FL_PostSalesDiscardDispatch</members>
+        <members>HDT_FL_ActivityEscalationNotifyClosure</members>
         <name>Flow</name>
-    </types>
-    <types>
-        <members>Case.HDT_RT_AlertDisassociazioneUtenteWeb</members>
-        <name>RecordType</name>
-    </types>
-    <types>
-        <members>Case-HDT_AlertDisassociazioneUtenteWeb</members>
-        <members>DiscardAnnullmentRule__c-Regola Annullamento Scarto Layout</members>
-        <members>Interaction__c-Interazione Layout</members>
-        <name>Layout</name>
-    </types>
-    <types>
-        <members>HDT_AgentMatrixManagement</members>
-        <members>HDT_ApexClasses</members>
-        <members>HDT_CampaignManager</members>
-        <members>HDT_EditPublicListView</members>
-        <members>HDT_MarketingCloud</members>
-        <members>HDT_SalesforceCPQAdmin</members>
-        <members>HDT_SalesforceCPQPartner</members>
-        <members>HDT_SalesforceCPQUser</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>HDT_BA_ExpiredOrders</members>
-        <members>HDT_BA_OrderEstimateExpiration</members>
-        <members>HDT_BA_OrderEstimateExpirationTst</members>
-        <members>HDT_LC_AdvancedSearch</members>
-        <members>HDT_LC_EditScartiComplessi</members>
-        <members>HDT_LC_SaleVas</members>
-        <members>HDT_QR_AccountContactRelation</members>
-        <members>HDT_QR_ActivityCustom</members>
-        <members>HDT_QR_IndemnityConfirmation</members>
-        <members>HDT_QR_SelfReadings</members>
-        <members>HDT_QR_ServicePoint</members>
-        <members>HDT_SRV_IndemnityConfirmation</members>
-        <members>HDT_SRV_PostSalesManager</members>
-        <members>HDT_SRV_SalesHandler</members>
-        <members>HDT_SRV_SalesHandlerTst</members>
-        <members>HDT_TRH_ActivityCustom</members>
-        <members>HDT_TRH_DiscardAnnullmentRule</members>
-        <members>HDT_UTL_Accents</members>
-        <members>HDT_UTL_AccentsTst</members>
-        <members>HDT_UTL_HerokuPostSalesManager</members>
-        <members>HDT_UTL_PostSalesManager</members>
-        <members>HDT_UTL_SelfReadings</members>
-        <name>ApexClass</name>
-    </types>
-    <types>
-        <members>Case.Phase__c</members>
-        <members>DiscardAnnullmentRule__c.ProcessValue__c</members>
-        <members>wrts_prcgvr__Activity__c.DiscardDescription__c</members>
-        <members>wrts_prcgvr__Activity__c.Type__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>HDT_LCP_EditScartiComplessi</members>
-        <name>AuraDefinitionBundle</name>
-    </types>
-    <types>
-        <members>HDT_DiscardAnnullmentRule</members>
-        <name>ApexTrigger</name>
     </types>
     <version>49</version>
 </Package>
