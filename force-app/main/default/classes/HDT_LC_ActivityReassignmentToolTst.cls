@@ -55,7 +55,7 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
     private static void getAssignees() {
         Test.startTest();
 
-        PermissionSet permissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'HDT_OmniSupervisorPermissionSet'];
+        PermissionSet permissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'HDT_OmniSupervisor'];
         AggregateResult count = [SELECT COUNT(Id) FROM PermissionSetAssignment WHERE AssigneeId = :UserInfo.getUserId() AND PermissionSetId = :permissionSet.Id];
         if(count.get('expr0') == '0') {
             PermissionSetAssignment permissionSetAssignment = new PermissionSetAssignment(

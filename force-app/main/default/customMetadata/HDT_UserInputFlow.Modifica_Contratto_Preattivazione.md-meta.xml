@@ -24,11 +24,6 @@
     &quot;FieldName&quot;: &quot;VatNumber__c&quot;,
     &quot;Required&quot;: true,
     &quot;Column&quot;: 2
-  },
- {
-    &quot;FieldName&quot;: &quot;ServicePointCode__c&quot;,
-    &quot;Required&quot;: true,
-    &quot;Column&quot;: 2
   }
 ]</value>
     </values>

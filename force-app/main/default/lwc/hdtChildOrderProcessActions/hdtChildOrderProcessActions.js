@@ -4,6 +4,8 @@ import save from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.save';
 import saveDraft from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.saveDraft';
 import cancel from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.cancel';
 import calculateRate from '@salesforce/apex/HDT_UTL_Order.calculateRateCategory';
+//Metodo per risottomissione pratica dopo la gestione degli scarti complessi
+import resubmission from '@salesforce/apex/HDT_LC_EditScartiComplessi.resubmissionPractice';
 export default class hdtChildOrderProcessActions extends LightningElement {
     @api order;
     @api lastStepNumber;
@@ -14,6 +16,42 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     @api lastStepData;
     loading = false;
     isDialogVisible = false;
+
+    //Modifiche Gestione Scarti Complessi
+    @api discardRework;
+    @api activityIdToClose;
+    
+    handleResubmission(event){
+        console.log('@@@Entro in risottomissione ' +this.activityIdToClose);
+        console.log('@@@Entro in risottomissione ' +this.order.Id);
+        resubmission({
+            orderId : this.order.Id,
+            activityId : this.activityIdToClose
+        }).then(response => {
+            let _message = 'Risottomissione avvenuta con successo';
+            let _title = 'Success';
+            let _variant = 'success';
+            if (response){
+               _message = response;
+               _title = 'Error';
+               _variant = 'error'; 
+            }
+            const toastSuccessMessage = new ShowToastEvent({
+                title: _title,
+                message: _message,
+                variant: _variant
+            });
+            this.dispatchEvent(toastSuccessMessage);
+        }).catch(error =>{
+            const toastSuccessMessage = new ShowToastEvent({
+                title: 'Error',
+                message: error.body.message,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastSuccessMessage);
+        });
+    }
+    //Fine Modifiche Gestione Scarti Complessi
 
     get notBillableVas(){
         return this.order.RecordType.DeveloperName !== 'HDT_RT_VAS' || !this.order.IsBillableVas__c;

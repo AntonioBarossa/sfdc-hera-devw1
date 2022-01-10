@@ -110,8 +110,6 @@ export default class hdtSupplySelection extends LightningElement {
             });
 
         }
-
-        
         console.log('connectedCallback END');
     }
  
@@ -139,7 +137,6 @@ export default class hdtSupplySelection extends LightningElement {
         return this.additionalFilter;
     }
 
-
     handleIsRicercaInSap(event){
         console.log('handleIsRicercaInSap START' + JSON.stringify(event));
         this.isRicercainSAP = event.detail;
@@ -148,26 +145,23 @@ export default class hdtSupplySelection extends LightningElement {
      * Get selected service point
      */
     handleServicePointSelection(event){
+        
         this.isCompatible = event.detail.isCompatible;
         this.serviceRequestId = event.detail.serviceRequestId;
-        console.log('handleServicePointSelection' + JSON.stringify(event.detail));
         this.selectedServicePoint = event.detail;
         let contractNumber = this.selectedServicePoint['Contract Number'];
-        console.log('rowToSend for Contract'+ JSON.stringify(contractNumber));
+        
         getContractFromRow({cNumber:contractNumber,accountId:this.AccountId}).then(data=>{
             this.outputContract= data;
-            console.log('outputContract *******'+ JSON.stringify(data));
         });
 
-		   //Creato evento per intercettare sul flow Post Sales il Service Point selezionato
+		//Creato evento per intercettare sul flow Post Sales il Service Point selezionato
         this.dispatchEvent(new CustomEvent('servicepointselectionflow', {
             detail: event.detail
-        }));																				 
-																		 
+        }));																		 															 
     }
 
     handleServicePointSelectionCancel(event){
-        
 
 		   //Creato evento per intercettare sul flow Post Sales il Service Point selezionato
         this.dispatchEvent(new CustomEvent('servicepointselectionflow', {
@@ -175,11 +169,6 @@ export default class hdtSupplySelection extends LightningElement {
         }));																				 
 																		 
     }
-
-   
-
-    
-
 
     /**
 
@@ -217,9 +206,7 @@ export default class hdtSupplySelection extends LightningElement {
      * Dispatch confirmed service point
      */
     handleConfirmServicePoint(event){
-        console.log('handleConfirmServicePoint');
         let servicePoint = event.detail;
         this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: servicePoint}));
     }
-
 }

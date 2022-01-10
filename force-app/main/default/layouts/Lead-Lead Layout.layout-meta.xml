@@ -39,12 +39,10 @@
                 <behavior>Readonly</behavior>
                 <field>LeadSource</field>
             </layoutItems>
-            <!--Start HRAWRM-384 31-08-2021-->
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SourceDetail__c</field>
             </layoutItems>
-            <!--End HRAWRM-384 31-08-2021-->
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -202,24 +200,29 @@
             <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Lead.HDT_RecallMe</actionName>
+            <actionName>Lead.Catalogo_Servizi</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>Lead.HDT_RecallMe</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>2</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Convert</actionName>
             <actionType>StandardButton</actionType>
-            <sortOrder>2</sortOrder>
+            <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Lead.HDT_CalculateFiscalCode</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>3</sortOrder>
+            <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Clone</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>4</sortOrder>
+            <actionName>EscalationCmp</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>5</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -267,11 +270,8 @@
     <relatedLists>
         <excludeButtons>AddCampaign</excludeButtons>
         <fields>CAMPAIGN.NAME</fields>
-        <!--Start Matteo Bolzon-->
         <fields>CM.STATUS</fields>
         <fields>Category__c</fields>
-        <!--Start Matteo Bolzon-->
-
         <relatedList>RelatedCampaignList</relatedList>
     </relatedLists>
     <relatedLists>

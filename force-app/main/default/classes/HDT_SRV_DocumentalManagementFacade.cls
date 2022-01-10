@@ -27,6 +27,12 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         }catch(Exception ex){
             resultMap.put('code','500');
         }
+
+        if (recordId != null && (result != '000' || resultMap.get('code') == '500')) {
+            System.debug(LoggingLevel.DEBUG, 'preview failed: ' + message);
+            HDT_SRV_DocumentalManagement.logDiscardPhase(recordId);
+        }
+
         return JSON.serialize(resultMap);
     }
     
@@ -263,8 +269,9 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
                 if ((outcome == 'KO') || (outcome == 'OK' && requestBody.status == 'voided')){
                     HDT_SRV_DocumentalManagement.logDocusignError(recordToUpdate, requestBody);
                 } else {
-                    HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate,requestBody);
-                    HDT_SRV_DocumentalManagement.createIntesaDocumentalActivity(recordToUpdate,requestBody,transactionId);
+                    HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate,requestBody, transactionId);
+                    // creazione act documentale spostata in updateSobjectFromDocusign
+                    //HDT_SRV_DocumentalManagement.createIntesaDocumentalActivity(recordToUpdate,requestBody,transactionId);
                 }
             }
         } catch (Exception ex) {

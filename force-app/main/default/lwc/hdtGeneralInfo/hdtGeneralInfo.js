@@ -100,7 +100,6 @@ export default class HdtGeneralInfo extends LightningElement {
         if (event.target.fieldName === 'SalesContact__c') {
             this.saleContactRoles = '';
             getSaleContactRole({ accountId: this.saleRecord.Account__c, contactId: event.target.value }).then(data => {
-
                 if (data.length>0 && data[0].Roles !== undefined) {
                     this.saleContactRoles = data[0].Roles;
                     this.template.querySelector('[data-name="SalesContactRole__c"]').value = this.saleContactRoles;
@@ -110,7 +109,6 @@ export default class HdtGeneralInfo extends LightningElement {
                     this.template.querySelector('[data-name="SalesContactRole__c"]').value = this.saleContactRoles;
                     this.dataToSubmit['SalesContactRole__c'] = this.saleContactRoles;
                 }
-
             }).catch(error => {
                 console.log(error.body.message);
                 const toastErrorMessage = new ShowToastEvent({
@@ -123,23 +121,27 @@ export default class HdtGeneralInfo extends LightningElement {
             });
         }
         if (event.target.fieldName === 'Channel__c') {
+
+            this.template.querySelector("[data-id='Agency__c']").value = '';
+            this.template.querySelector("[data-id='CommercialId']").value = '';
+            this.template.querySelector("[data-id='VendorFirstName__c']").value = '';
+            this.template.querySelector("[data-id='VendorLastName__c']").value = '';
+            
             //this.template.querySelector("[data-id='Agency__c']").value = '';
             this.currentPage = 0;
             this.currentPage2 = 0; // reset page
             let Channel = this.template.querySelector('[data-name="Channel__c"]').value;
             this.ChannelSelection = event.target.value;
+
             if(Channel == null || Channel==''){
                 this.disabledAgency = true;
             }else{
                 this.disabledAgency = false;
             }
-            
             if(Channel=='Back office'){
                 this.createTable(this.originalData);
-
             }else{
                 this.createTable([]);
-
             }
             if(Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound'){
                 this.isServiceCommissioning = true;
@@ -147,7 +149,6 @@ export default class HdtGeneralInfo extends LightningElement {
             else{
                 this.isServiceCommissioning = false;
             }
-
             if (this.userRole !== 'HDT_BackOffice' && (Channel == 'Telefono' || Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound' || Channel == 'Sportello' )) {
                 //this.hiddenFilterAgent = true;
                 this.hiddenAgency = true;
@@ -158,7 +159,6 @@ export default class HdtGeneralInfo extends LightningElement {
                     this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
                     this.template.querySelector("[data-id='VendorFirstName__c']").value = data[0].AgentFirstName__c;
                     this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
-
                 }).catch(error => {
                     this.loaded = true;
                     console.log(error.body.message);
@@ -170,12 +170,12 @@ export default class HdtGeneralInfo extends LightningElement {
                     });
                     this.dispatchEvent(toastErrorMessage);
                 });
-
             } else {
                 this.hiddenAgency = false;
                 this.template.querySelector("[data-id='Agency__c']").value = '';
                 this.template.querySelector("[data-id='CommercialId']").value = '';
-
+                this.template.querySelector("[data-id='VendorFirstName__c']").value = '';
+                this.template.querySelector("[data-id='VendorLastName__c']").value = '';
             }
 
         }
@@ -601,15 +601,12 @@ export default class HdtGeneralInfo extends LightningElement {
             { label: 'Cognome Agente', fieldName: 'AgentLastName__c', type: 'text' },
             { label: 'Codice Agente', fieldName: 'AgentCode__c', type: 'text' },
             { label: 'Area Manager', fieldName: 'AreaManager__c', type: 'text' },
-
         ];
 
         console.log("Channel", Channel);
         console.log("this.selectedFromCompleteList.AgencyName__c", this.selectedFromCompleteList.AgencyName__c);
 
-
         getAgents({AgencyName:this.selectedFromCompleteList.AgencyName__c, Channel:Channel}).then(data => {
-            
 
             this.completeListAgent = [...data];
 
@@ -622,20 +619,16 @@ export default class HdtGeneralInfo extends LightningElement {
                     AgentLastName__c : item.AgentLastName__c,
                     AgentCode__c : item.AgentCode__c
                 });
-
             });
 
             if (this.completeListAgent.length > 0) {
                 console.log('getAgents: ', JSON.stringify(this.completeListAgent));
-
                 this.currentPage2 = 0;
                 this.createTable2(this.completeListAgent);
                 this.disabledNextAgency =true;
             } else {
                 this.showEmptyMessage = false;
             }
-
-
         }).catch(error => {
             console.log('Error: ', JSON.stringify(error));
             const toastErrorMessage = new ShowToastEvent({
@@ -645,7 +638,6 @@ export default class HdtGeneralInfo extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
         });
-
 
     }
 
@@ -735,28 +727,20 @@ export default class HdtGeneralInfo extends LightningElement {
     }
 
     handleBackPage(event) {
-
-
         this.showpage1 = true;
         this.showpage2 = false;
         this.handleAgencySelection();
         this.disabledNextAgency = false;
         this.disabledBack = true;
         this.disabledSave = true;
-
     }
 
     handleNextPage(event) {
-
-
         this.showpage1 = false;
         this.showpage2 = true;
         this.handleAdditionalFilter();
         this.disabledNextAgency = true;
         this.disabledBack = false;
-        
-
-
     }
 
     
@@ -776,12 +760,10 @@ export default class HdtGeneralInfo extends LightningElement {
                     });
                     if (found) return row;
                 })
-
             }
             self.createTable2(data); // redesign table
             self.currentPage2 = 0; // reset page
         }, 1000);
-
     }
 
     handleSearchAgentTableInput(event) {
@@ -790,7 +772,6 @@ export default class HdtGeneralInfo extends LightningElement {
             this.submitButtonStatus = false;
         } else {
             this.submitButtonStatus = true;
-
         }
     }
 
@@ -838,7 +819,6 @@ export default class HdtGeneralInfo extends LightningElement {
             this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
             this.template.querySelector("[data-id='VendorFirstName__c']").value = data[0].AgentFirstName__c;
             this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
-
         }).catch(error => {
             this.loaded = true;
             console.log(error.body.message);

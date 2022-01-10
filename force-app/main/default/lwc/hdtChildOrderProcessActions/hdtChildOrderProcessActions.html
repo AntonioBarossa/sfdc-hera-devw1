@@ -17,6 +17,9 @@
                 <li>
                     <!--EVERIS: Bottone riporato in brand come richiesto BSN-->
                     <lightning-button onclick={handleSave} class="slds-m-left_x-small" disabled={disabledSave} icon-name="utility:save" variant="brand" label="Conferma" title="Save action"></lightning-button>
+                </li><li>
+                    <!--EVERIS: Bottone riporato in brand come richiesto BSN-->
+                    <lightning-button onclick={handleResubmission} class="slds-m-left_x-small" if:true={discardRework} icon-name="utility:push" variant="brand" label="Risottometti Pratica" title="Resubmission action"></lightning-button>
                 </li>
             </ul>
             <c-hdt-confirmation-dialog-dropdown-manual

@@ -3,9 +3,9 @@
     <fullName>PriceGas__c</fullName>
     <externalId>false</externalId>
     <label>Prezzo</label>
-    <precision>18</precision>
+    <precision>15</precision>
     <required>false</required>
-    <scale>2</scale>
+    <scale>5</scale>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Currency</type>
