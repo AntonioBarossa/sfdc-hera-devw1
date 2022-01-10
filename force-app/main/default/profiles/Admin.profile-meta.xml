@@ -580,6 +580,11 @@
         <field>SiebelCommTracking__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.IsEarlyActivation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
      <fieldPermissions>
         <editable>true</editable>
         <field>Order.ResidentialStreetNumberExtension__c</field>

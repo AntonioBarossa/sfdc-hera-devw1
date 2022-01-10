@@ -562,6 +562,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.IsEarlyActivation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.Cs1Outcome__c</field>
         <readable>true</readable>
     </fieldPermissions>
