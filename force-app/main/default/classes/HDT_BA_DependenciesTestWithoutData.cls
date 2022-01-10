@@ -94,7 +94,6 @@ public with sharing class HDT_BA_DependenciesTestWithoutData {
         srSeq.Order__c = order.Id;
         srSeq.Type__c = HDT_UTL_Dependencies.TIPOLOGY_SALES;
         srSeq.Status__c = HDT_UTL_Dependencies.STATUS_SEQUENZIALIZZATO;
-        srSeq.DependOn__c = sr.Id;
         srSeq.NextPhase__c = PHASE_INC_NEXT;
         srSeq.ProcessType__c = PROCESS_TYPE;
         insert srSeq;
