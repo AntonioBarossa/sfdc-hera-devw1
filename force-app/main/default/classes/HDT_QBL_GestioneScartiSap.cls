@@ -18,7 +18,7 @@ public with sharing class HDT_QBL_GestioneScartiSap implements Queueable{
                 }
             }
         }else{
-            throw new GestioneScartiSapException('E\' necessario valorizzare l\'objectId con l\'Id dell\'Order o del Case che si sta lavorando');
+            throw new HDT_QBL_GestioneScartiSapException('E\' necessario valorizzare l\'objectId con l\'Id dell\'Order o del Case che si sta lavorando');
         }
         
     }
@@ -53,5 +53,5 @@ public with sharing class HDT_QBL_GestioneScartiSap implements Queueable{
         }
     }
 
-    public class GestioneScartiSapException extends Exception{}
+    public class HDT_QBL_GestioneScartiSapException extends Exception{}
 }
