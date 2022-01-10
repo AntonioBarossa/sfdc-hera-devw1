@@ -404,7 +404,7 @@ public class HDT_SRV_DocumentalManagement{
 				}
 			}
 			handleRadioGroup(record,listOfRadio,envelopeId);
-			handleDataText(record,listOfData);
+			handleLandRegistry(record,listOfData,listOfRadio);
 			HDT_UTL_DatabaseService.upsertSObject(record);
 		}
 	}
@@ -575,7 +575,7 @@ public class HDT_SRV_DocumentalManagement{
 			}
 		}
 	}
-	private static void handleDataText(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData){
+	private static void handleLandRegistry(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio){
 		if(record != null && record.getSobjectType() == Case.getSobjectType()){
 			return;
 		}
@@ -585,9 +585,17 @@ public class HDT_SRV_DocumentalManagement{
 			docusignData.put(singleData.dataName, singleData.dataValue);
 		}
 
+		// Mappa che contiene solo i radiobutton selezionati.
+		Map<String, String> docusignRadioGroups = new Map<String, String>();
+		for (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio) {
+			if(singleRadio.selected.equalsIgnoreCase('true')) {
+				docusignRadioGroups.put(singleRadio.groupName, singleRadio.value);
+			}
+		}
+
 		Order childOrder = new Order();
 		// TODO: ricavare childOrder a partire dall'id order presente in listOfData
-		LandRegistry__c reg = HDT_UTL_DocumentalManagement.createLandRegistryRecord(docusignData, childOrder);
+		LandRegistry__c reg = HDT_UTL_DocumentalManagement.createLandRegistryRecord(docusignData, docusignRadioGroups, childOrder);
 		// TODO: gestire scenario in cui due o più order figli hanno dati catastali (necessario creare più record su LandRegistry__c)
 		registries.add(reg);
 

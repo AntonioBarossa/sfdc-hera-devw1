@@ -886,7 +886,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		1-26371887987/1-C45530S;4003560309;1;;20201006;99991231;;RAVENNA;RAVENNA;H199;RA;F;;46;632;.;E;24;3;;
 		1-27373306691/1-CKPCYMQ;4003141636;1;;20201111;99991231;;FAENZA;FAENZA;D458;RA;F;.;192;13;.;E;6;1;A/3;151
 	 */
-	public static LandRegistry__c createLandRegistryRecord(Map<String, String> docusignData, Order childOrder) {
+	public static LandRegistry__c createLandRegistryRecord(Map<String, String> docusignData, Map<String, String> docusignRadioGroups, Order childOrder) {
 		LandRegistry__c r = new LandRegistry__c();
 
 		if (docusignData == null || childOrder == null) {
@@ -927,7 +927,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		// subalterno;
 		r.Subaltern__c = docusignData.get('DTC_sub');
 		// qualifica_titolare;
-		//r.Title__c =  // TODO: transodificare il radio group DTC_qualitadi
+		r.Title__c = transcodeQualificaTitolare(docusignRadioGroups.get('DTC_qualitadi'));
 		// Categoria_Catastale;
 		// r.RegistryCategory__c = ???? TODO: da dove prendere la categoria catastale? non sembra esserci nel modulo, nè sull'order nè sul service point.
 		// Superficie_Catastale
@@ -935,5 +935,29 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 
 
 		return r;
+	}
+
+	private static String transcodeQualificaTitolare(String docusignValue) {
+		String transcoded = '';
+
+		switch on docusignValue {
+			when 'Pulsante di opzione1' { // Proprietario
+				transcoded = '1';
+			}
+			when 'Pulsante di opzione2' { // Locatario
+				transcoded = '3';
+			}
+			when 'Pulsante di opzione3' { // Usufruttuario
+				transcoded = '2';
+			}
+			when 'Pulsante di opzione4' { // Titolare di altro diritto sull'immobile
+				transcoded = '4';
+			}
+			when 'Pulsante di opzione5' { // Rappresentante legale o volontario
+				transcoded = ''; // valore non gestito da transcodifica AS-IS, per adesso lo ignoriamo.
+			}
+		}
+
+		return transcoded;
 	}
 }
