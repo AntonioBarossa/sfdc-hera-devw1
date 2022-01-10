@@ -546,6 +546,23 @@
                 <label>Protocollo - Variazioni</label>
             </value>
             <value>
+                <fullName>Esito KO da SII</fullName>
+                <default>false</default>
+                <label>Esito KO da SII</label>
+            </value>
+            <!-- CanoneRai creato da Mulesoft, utilizziamo una label BSN-friendly -->
+            <value>
+                <fullName>CanoneRai</fullName>
+                <default>false</default>
+                <label>Scarto Canone RAI</label>
+            </value>
+            <!-- BonusSociale creato da Mulesoft, utilizziamo una label BSN-friendly -->
+            <value>
+                <fullName>BonusSociale</fullName>
+                <default>false</default>
+                <label>Scarto Bonus Sociale</label>
+            </value>
+            <value>
                 <fullName>Errore invio a SAP</fullName>
                 <default>false</default>
                 <label>Errore invio a SAP</label>

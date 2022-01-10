@@ -8,9 +8,10 @@ public with sharing class HDT_LC_EditScartiComplessi {
                 responseMap.put('objectId',recordId);
                 responseMap.put('objectType','Case');
             }else if(activity.Order__c != null){
-                if (!HDT_UTL_DatabaseService.updateSObject(new Order(Id =  activity.Order__c, Step__c = 3))){
-                    throw new AuraHandledException('Impossibile aggiornare l\'ordine.');
-                }
+                // commentato perchè non va bene 3 come step iniziale per tutti i processi (es. per HDT_RT_SwitchIn non va bene)
+                // if (!HDT_UTL_DatabaseService.updateSObject(new Order(Id =  activity.Order__c, Step__c = 3))){
+                //     throw new AuraHandledException('Impossibile aggiornare l\'ordine.');
+                // }
                 responseMap.put('objectType','Order');
                 responseMap.put('object',activity.Order__r);
             }else{
@@ -29,10 +30,10 @@ public with sharing class HDT_LC_EditScartiComplessi {
         Order orderToUpdate = new Order(Id = orderId,Phase__c = fase);
         System.Savepoint sp = Database.setSavePoint();
         try {
-            if (!HDT_UTL_DatabaseService.updateSObject(orderToUpdate)){
-                response = 'Errore nell\'aggiornamento della fase dell\'ordine.';   
-            }else if (!HDT_UTL_Scarti.updateCloseDiscardActivity(activityId)){
+            if (!HDT_UTL_Scarti.updateCloseDiscardActivity(activityId)){
                 response = 'Impossibile chiudere l\'attività di scarto';
+            } else if (!HDT_UTL_DatabaseService.updateSObject(orderToUpdate)){
+                response = 'Errore nell\'aggiornamento della fase dell\'ordine.';
                 Database.rollback(sp);
             }
         } catch (Exception e) {

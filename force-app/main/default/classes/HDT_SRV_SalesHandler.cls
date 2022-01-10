@@ -20,6 +20,7 @@ public with sharing class HDT_SRV_SalesHandler {
      * Added class instance
      */
     private static HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
+    private static Set<String> moveOutProcesses = new Set<String>{'Cambio Uso','Voltura','Cambio Offerta'};
 
     public  HDT_WRP_MrrResponse.HDT_WRP_Response manageSalesProcessCategory(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem) {
         
@@ -354,7 +355,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     when 'Connessione con Attivazione', 'Temporanea - Nuova Attivazione', 'Attivazione con Modifica'{
                                         redirectPreventivo=true;
                                     }
-                                }
+                                }                            
                                 //Start HRAWRM-657 21/09/2021
                                 List<Id> listRecordType = new List<Id>();
                                 Id rtSwitchIn           = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchIn').getRecordTypeId();
@@ -372,6 +373,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                 if(ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti') && redirectPreventivo){
                                     ord.Phase__c = 'Inviare preventivo';
                                 }else{
+                                    /**@frpanico 04/01/2022
+                                     * Aggiunto MoveOut
+                                    */
+                                    if(moveOutProcesses.contains(ordRetrieved.ProcessType__c))
+                                    {
+                                        HDT_UTL_ContractProcess.moveOut(ordRetrieved.Id, 'ContractReference__c');
+                                    }
                                     ord.Description = mapRequestFields.get('NOTA_HK');
                                     ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
                                     ord.OrderODV__c = mapRequestFields.get('VBELN');

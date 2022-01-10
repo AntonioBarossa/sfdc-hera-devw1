@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>53.0</apiVersion>
+    <assignments>
+        <description>Vado a popolare la variabile a True, così che posso uscire dal Flow</description>
+        <name>Exit_from_Flow_True</name>
+        <label>Exit from Flow True</label>
+        <locationX>578</locationX>
+        <locationY>815</locationY>
+        <assignmentItems>
+            <assignToReference>ExitFromFlow</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_on_child_Order</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Fase_in_Bozza_Annullata</name>
+        <label>Fase in Bozza Annullata</label>
+        <locationX>138</locationX>
+        <locationY>815</locationY>
+        <assignmentItems>
+            <assignToReference>Loop_on_child_Order.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Bozza Annullata</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Loop_on_child_Order.NotCancellable__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>True</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_on_child_Order</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Qui, tutti i figli sono in Bozza Annullata, pertanto vado a modificare anche la fase dell&apos;Ordine padre in Annullato</description>
+        <name>Update_Order_Dossier_With_Phase_Annullato</name>
+        <label>Update Order Dossier with Phase Annullato</label>
+        <locationX>182</locationX>
+        <locationY>1487</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Order_Dossier.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullato</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Order_Dossier</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Exit_From_Flow</name>
+        <label>Check Exit From Flow</label>
+        <locationX>50</locationX>
+        <locationY>1127</locationY>
+        <defaultConnector>
+            <targetReference>Update_Order_Childs</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>False</defaultConnectorLabel>
+        <rules>
+            <name>True</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ExitFromFlow</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>True</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Vado a controllare la Fase di ogni Order child</description>
+        <name>Check_Order_Phase</name>
+        <label>Check Order Phase</label>
+        <locationX>358</locationX>
+        <locationY>695</locationY>
+        <defaultConnector>
+            <targetReference>Exit_from_Flow_True</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NOT Draft</defaultConnectorLabel>
+        <rules>
+            <name>Draft</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_on_child_Order.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Bozza</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Fase_in_Bozza_Annullata</targetReference>
+            </connector>
+            <label>Draft</label>
+        </rules>
+        <rules>
+            <name>Bozza_Annullata_or_Annullato</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_on_child_Order.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Bozza Annullata</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_on_child_Order.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Annullato</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_on_child_Order</targetReference>
+            </connector>
+            <label>Bozza Annullata or Annullato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Order_RT_NOT_Equal_to_HTD_RT_OrderDossier</name>
+        <label>Order RT NOT Equal to HTD_RT_OrderDossier</label>
+        <locationX>248</locationX>
+        <locationY>335</locationY>
+        <defaultConnectorLabel>Order Father</defaultConnectorLabel>
+        <rules>
+            <name>Order_Child</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_OrderDossier</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Ordini_Figli</targetReference>
+            </connector>
+            <label>Order Child</label>
+        </rules>
+    </decisions>
+    <description>Flow per la gestione degli ordini in Fase Bozza Annullata o Annullato e del relativo Ordine Padre</description>
+    <interviewLabel>Annullamento Order Padre/Figlio {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Annullamento Order Padre/Figlio</label>
+    <loops>
+        <description>Ciclo sugli ordini figli, se trovo almeno un ordine che non abbia la fase Bozza Annullata o Annullato, esco dal flow</description>
+        <name>Loop_on_child_Order</name>
+        <label>Loop on child Order</label>
+        <locationX>50</locationX>
+        <locationY>575</locationY>
+        <collectionReference>Get_Ordini_Figli</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Check_Order_Phase</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Check_Exit_From_Flow</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Mi vado a prendere l&apos;Ordine Padre (HDT_RT_OrderDossier)</description>
+        <name>Get_Order_Dossier</name>
+        <label>Get Order Dossier</label>
+        <locationX>182</locationX>
+        <locationY>1367</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Order_Dossier_With_Phase_Annullato</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ParentOrder__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Ordini_Figli</name>
+        <label>Get Ordini Figli</label>
+        <locationX>50</locationX>
+        <locationY>455</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_on_child_Order</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentOrder__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ParentOrder__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Vado ad aggiornare gli ordini figli a cui ho appena modificato la Fase</description>
+        <name>Update_Order_Childs</name>
+        <label>Update Order Childs</label>
+        <locationX>182</locationX>
+        <locationY>1247</locationY>
+        <connector>
+            <targetReference>Get_Order_Dossier</targetReference>
+        </connector>
+        <inputReference>Get_Ordini_Figli</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Vado ad aggiornare l&apos;Ordine padre (HDT_RT_OrderDossier)</description>
+        <name>Update_Order_Dossier</name>
+        <label>Update Order Dossier</label>
+        <locationX>182</locationX>
+        <locationY>1607</locationY>
+        <inputReference>Get_Order_Dossier</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>122</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Order_RT_NOT_Equal_to_HTD_RT_OrderDossier</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>(1 OR 2) AND 3 AND 4</filterLogic>
+        <filters>
+            <field>Phase__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Bozza Annullata</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Phase__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Annullato</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ParentOrder__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NotCancellable__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Order</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Vado a mettere a true quando le condizioni mi devono far uscire dal flow</description>
+        <name>ExitFromFlow</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+</Flow>

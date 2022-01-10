@@ -1,15 +1,21 @@
 public inherited sharing class HDT_QR_IndemnityConfirmation {
+
+    private String indemnityCluster = 'Indennizzi';
+    private Date lastYear = System.today() - 365; 
     
     public List<Case> getOtherIndemnityCases(String recordId, String accountId, String servicePointId, String firstLevel, String secondLevel){
 
         return [SELECT Id,
         CreatedDate
         FROM Case
-        WHERE AccountId = :accountId
-        AND ServicePoint__c = :servicePointId
-        AND FirstLevelComplaintClassification__c = :firstLevel
-        AND SecondLevelComplaintClassification__c = :secondLevel
-        AND IndemnityConfirmed__c = true
+        WHERE
+        Cluster__c = :this.indemnityCluster
+        AND Parent.AccountId = :accountId
+        AND Parent.ServicePoint__c = :servicePointId
+        AND Parent.FirstLevelComplaintClassification__c = :firstLevel
+        AND Parent.SecondLevelComplaintClassification__c = :secondLevel
+        AND Parent.IndemnityConfirmed__c = true
+        AND CreatedDate > :this.lastYear
         WITH SECURITY_ENFORCED];
 
 

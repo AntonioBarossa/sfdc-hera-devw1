@@ -229,10 +229,12 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
         List<PicklistEntry> entryListEle =
         ((SObject) (Type.forName('Schema.' + objectName).newInstance())).getSobjectType().getDescribe().fields.getMap().get(fieldName).getDescribe().getPicklistValues();
         for(PicklistEntry entry : entryListEle){
-
+            // Per non matchare il testo 10% se condition = 10
+            if(entry.getValue().containsIgnoreCase(condition + '%')){
+                continue;
+            }
             if(entry.getValue().containsIgnoreCase(condition)){
-
-                result = entry.getValue();                    
+                result = entry.getValue();
             }
         }
         

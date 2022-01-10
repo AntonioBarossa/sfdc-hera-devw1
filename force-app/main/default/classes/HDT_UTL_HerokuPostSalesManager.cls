@@ -284,6 +284,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             if(STRING.isNotBlank(reqWrp.requestMap.get('NOTE_ERR'))){
                 currentCase.DiscardDescription__c=reqWrp.requestMap.get('NOTE_ERR');
+            } else if(STRING.isNotBlank(reqWrp.requestMap.get('DES_ERR_AEEG'))){
+                currentCase.DiscardDescription__c=reqWrp.requestMap.get('DES_ERR_AEEG');
+            } else if(STRING.isNotBlank(reqWrp.requestMap.get('TESTO_ERRR'))){
+                currentCase.DiscardDescription__c=reqWrp.requestMap.get('TESTO_ERRR');
             }
             if(currentPhase.indexOf('Annull') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
                 if(String.isBlank(recordCase.CancellationHerokuPracticeCode__c)){

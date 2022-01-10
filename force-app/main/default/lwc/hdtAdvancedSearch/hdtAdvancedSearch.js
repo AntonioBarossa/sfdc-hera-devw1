@@ -364,10 +364,8 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.preSelectedRows=[];
         this.isIncompatible= false;
         this.preloading = true;
-        console.log('executing query search'+ this.accountid);
-        console.log('additionlFilterFinal**********************************'+this.additionalFilterFinal)
         
-        getForniture({accountid:this.accountid,additionalFilter:this.additionalFilterFinal}).then(data =>{
+        getForniture({accountid:this.accountid, additionalFilter:this.additionalFilterFinal}).then(data =>{
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
@@ -380,7 +378,8 @@ export default class HdtAdvancedSearch extends LightningElement {
                 this.openmodel = true;
                 this.isLoaded = true;
                 this.serviceRequestId = null;
-            } else {
+            }
+            else {
                 this.alert('Dati tabella','Nessun record trovato','warn')
                 this.tableData = data;
             }

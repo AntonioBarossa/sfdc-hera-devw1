@@ -114,7 +114,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         for (Order order : newOrderList) {
             Order oldOrder= mapOrder.get(order.Id);
-            if(order.Phase__c!=oldOrder.Phase__c&&order.Phase__c=='Comunicazione Verso Heroku'&&order.isTransition__c==true){
+            if(order.Phase__c!=oldOrder.Phase__c
+            &&
+            /**@frpanico 28/12/2021 
+             * La Voltura parte in "Documentazione Validata" per voltura accettata
+             * E in "Voltura Rifiutata" per voltura rifiutata ma solo Gas
+            */
+            (order.Phase__c=='Comunicazione Verso Heroku'
+            || 
+                (
+                    (order.ProcessType__c != null && order.ProcessType__c.equalsIgnoreCase('Voltura'))
+                    && (order.Phase__c.equalsIgnoreCase('Documentazione Validata') 
+                        || ((order.Commodity__c != null && order.Commodity__c.equalsIgnoreCase('Gas')) && order.Phase__c.equalsIgnoreCase('Voltura Rifiutata')))
+                )
+            )
+            &&order.isTransition__c==true){
                 order.Phase__c='Esportazione VS Siebel';
             }
 
@@ -932,15 +946,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 		String oldPhase = orderOld.Phase__c;
         DateTime nowDateTime = DateTime.now();
 		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
-            if(orderNew.Cluster__c.equalsIgnoreCase('Volutra')){
-                Case nonReqContract = new Case();
-                HDT_QR_Case caseQr = new HDT_QR_Case(); 
-                nonReqContract = caseQr.getNonReqContrOrder(orderNew.Id);
-                if(!(String.isBlank(nonReqContract.Id))){
-                    nonReqContract.Phase__c = 'Completata';
-                    HDT_UTL_DatabaseService.updateSObject(nonReqContract);
-                }
-            }
             //@frpanico closes open activities on "Annullato" or "Ripensato"
             if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
             {                
@@ -957,6 +962,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 catch(Exception e)
                 {
                     System.debug('Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
+                }
+                if(orderNew.ProcessType__c != null && 
+                    (orderNew.ProcessType__c.containsIgnoreCase('Volutra') ||  orderNew.ProcessType__c.containsIgnoreCase('Cambio Offerta'))
+                    )
+                {
+                    Case nonReqContract = new Case();
+                    HDT_QR_Case caseQr = new HDT_QR_Case(); 
+                    nonReqContract = caseQr.getNonReqContrOrder(orderNew.Id);
+                    if(!(String.isBlank(nonReqContract.Id)))
+                    {
+                        nonReqContract.Phase__c = 'Completata';
+                        HDT_UTL_DatabaseService.updateSObject(nonReqContract);
+                    }
                 }
             }
             if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
@@ -1026,7 +1044,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
             List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(orderIds, 'Order__c');
-            List<ServiceRequest__c> srvRequestsToDelete;
+            List<ServiceRequest__c> srvRequestsToDelete = new List<ServiceRequest__c>();
             for(ServiceRequest__c s: srvRequests){
                 // ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
                 s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(orderStatuses.get(s.Order__c), 'Order');
@@ -1036,7 +1054,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     sReqToUpdate.add(s);
                 }
             }
-            HDT_SRV_ServiceRequest.deleteRecord(srvRequestsToDelete);
+            if (!srvRequestsToDelete.isEmpty()){
+                HDT_SRV_ServiceRequest.deleteRecord(srvRequestsToDelete);
+            }
             HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
         }
 

@@ -34,6 +34,10 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
             ((SObject) (Type.forName('Schema.'+objectName).newInstance())).getSobjectType().getDescribe().fields.getMap().get(fieldName).getDescribe().getPicklistValues();
 
         for(PicklistEntry entry : entryList){
+            // Per non matchare il testo 10% se condition = 10
+            if(entry.getValue().containsIgnoreCase(condition + '%')){
+                continue;
+            }
             if(entry.getValue().containsIgnoreCase(condition)){
                 result = entry.getValue();
             }

@@ -74,6 +74,9 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
             when 'closeAnnullamentoExtraSistema'{
                 psmUtl.closeAnnullamentoExtraSistema(sender);
             }
+            when 'createSolAcr'{
+                psmUtl.createSolAcr(sender);
+            }
         }
 
         return null;
