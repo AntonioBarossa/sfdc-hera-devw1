@@ -1,7 +1,6 @@
 public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_ProcessExecution {
 
     private Map<String, HDT_MassiveFieldsObjectMap__mdt> sobjectMap;
-    //private Map<String, Object> modAnagFieldMap;
     private Map<String, String> mapCaseFields;
     private Map<String, String> mapWrapperCaseFields;
     private Set<String> accountIdSet = new Set<String>();
@@ -128,7 +127,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
 
             if(emptyCsvField.size() > 0){
                 System.debug('>>> we need to set empty fields');
-                convertionError = setEmptyCsvFields(emptyCsvField, newCase, tempSplitted[accountIdIndex]);
+                convertionError = setEmptyCsvFields(emptyCsvField, newCase, tempSplitted[accountIdIndex], tempSplitted[contractIndex]);
 
                 if(!String.isEmpty(convertionError)){
                     itemsToSave.add(setErrorItem(itemId, convertionError));
@@ -161,18 +160,42 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
                 itemsToSave.addAll(saveResponse.reponseItemList);
             }
 
+            if(saveResponse.savedCase.size() > 0){
+                System.debug('>>> run CompatibilityPostSales');
+                Map<Id, String> compatibilityMap = HDT_UTL_ProcessCommonOperations.checkCompatibilityPostSales(saveResponse.savedCase);
+                System.debug('>>> compatibilityMap ' + String.valueOf(compatibilityMap));
+
+                //***************** */
+                // example to test Phase__c => Da Inviare           
+                //Set<Id> i = compatibilityMap.keySet();
+                //List<Id> listkey = new List<Id>();
+                //listkey.addAll(i);
+                //compatibilityMap.remove(listkey[0]);
+                //***************** */
+
+                HDT_UTL_ProcessCommonOperations.updateCaseAfterCompatibility(compatibilityMap, saveResponse.savedCase);
+
+                //if(!compatibilityMap.isEmpty()){
+                //    updateCaseNotCompatible(compatibilityMap.keySet());
+                //}
+
+                HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER Compatibility');
+
+            }
+
         }  
 
     }
 
-    private String setEmptyCsvFields(List<String> emptyFieldToSet, Case caseToSet, String accountId){
+    private String setEmptyCsvFields(List<String> emptyFieldToSet, Case caseToSet, String accountId, String contractAccountCode){
 
         System.debug('>>> setEmptyCsvFields');
         Map<String, Object> fieldsToValue;
-        String newValueToSet;
+        Object newValueToSet;
 
         HDT_MassiveFieldsObjectMap__mdt massiveFieldsObject;
         AccountContactRelation accContRel;
+        BillingProfile__c billingProfile;
         for(String emptyField : emptyFieldToSet){
             System.debug('>>> empty field to set -> ' + emptyField);
 
@@ -185,23 +208,36 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
                         accContRel = accountContactMap.get(accountId);
                         fieldsToValue = accContRel.getPopulatedFieldsAsMap();
                         Account currentAccount = (Account)fieldsToValue.get('Account');
-                        newValueToSet = String.valueOf(currentAccount.get(massiveFieldsObject.labelField__c));
+                        newValueToSet = currentAccount.get(massiveFieldsObject.labelField__c);
                     } else {
                         return 'Account non presente';
                     }
                 }	
                 when 'Contact' {
-                    
+                    if(accountContactMap.containsKey(accountId)){
+                        accContRel = accountContactMap.get(accountId);
+                        fieldsToValue = accContRel.getPopulatedFieldsAsMap();
+                        Contact currentContact = (Contact)fieldsToValue.get('Contact');
+                        newValueToSet = currentContact.get(massiveFieldsObject.labelField__c);
+                    } else {
+                        return 'Contatto non presente';
+                    }    
                 }
                 when 'BillingProfile__c' {
-                    
+                    if(contractToBillProfMap.containsKey(contractAccountCode)){
+                        billingProfile = contractToBillProfMap.get(contractAccountCode);
+                        fieldsToValue = billingProfile.getPopulatedFieldsAsMap();
+                        newValueToSet = fieldsToValue.get(massiveFieldsObject.labelField__c);
+                    } else {
+                        return 'BillingProfile non presente';
+                    }    
                 }
 
             }
 
-            if(!String.isEmpty(newValueToSet) && !String.isEmpty(massiveFieldsObject.labelField__c)){
+            if(newValueToSet != null && !String.isEmpty(massiveFieldsObject.nameField__c)){
                 System.debug('>>> new value to set: ' + newValueToSet + ' for -> ' + emptyField + ' [' + massiveFieldsObject.labelField__c + ']');
-                caseToSet.put(massiveFieldsObject.labelField__c, newValueToSet);
+                caseToSet.put(massiveFieldsObject.nameField__c, newValueToSet);
             }
 
         }
@@ -237,34 +273,19 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
 
     private void mapFieldsObject(){
 
-        //List<HDT_MassiveFieldsObjectMap__mdt> listCaseFields;
-        //List<HDT_MassiveFieldsObjectMap__mdt> listWrapperCaseFields;
-        List<HDT_MassiveFieldsObjectMap__mdt> allFieldForThisProcess;//++
+        List<HDT_MassiveFieldsObjectMap__mdt> allFieldForThisProcess;
 
         mapCaseFields = new Map<String, String>();
         mapWrapperCaseFields = new Map<String, String>();
 
-        //
         sobjectMap = new Map<String, HDT_MassiveFieldsObjectMap__mdt>();
 
-        //listCaseFields = getMapFieldsObject('Case', this.processName);
-        //listWrapperCaseFields = getMapFieldsObject('WrapperCase', this.processName);
-
-        //
         allFieldForThisProcess = [
             SELECT objectType__c, labelField__c, nameField__c, MasterLabel 
             FROM HDT_MassiveFieldsObjectMap__mdt 
             WHERE processType__c = :this.processName
             WITH SECURITY_ENFORCED
         ];
-
-        //for(HDT_MassiveFieldsObjectMap__mdt temp : listCaseFields){
-        //    mapCaseFields.put(temp.labelField__c, temp.nameField__c);
-        //}
-//
-        //for(HDT_MassiveFieldsObjectMap__mdt temp : listWrapperCaseFields){
-        //    mapWrapperCaseFields.put(temp.labelField__c, temp.nameField__c);
-        //}
 
         for(HDT_MassiveFieldsObjectMap__mdt temp : allFieldForThisProcess){
             if(temp.objectType__c.equalsIgnoreCase('WrapperCase')){
@@ -277,12 +298,6 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
         }
 
     }
-
-    //only for test
-    //private void setMap(){
-    //    List<StaticResource> staticResources = staticResourceQr.getRecordByName('modificheAnagraficaFieldMapping');
-    //    modAnagFieldMap = (Map<String, Object>) JSON.deserializeUntyped(staticResources[0].Body.toString());
-    //}
 
     public static void setDataForTest_ModificheAnagrafiche(){
 
@@ -304,7 +319,54 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
             item = new MassiveLoaderRequestItem__c();
             item.MassiveLoaderRequest__c = massiveLoaderRequestId;
             item.Status__c = 'In attesa di lavorazione';
-            item.Data__c = 'Variazione Anagrafica Cliente,0011X00000rL7Z6QAK,,contoCode,3336560123,,,,,,Cartaceo,,,,,,,,,,,,,,,,,,,,ADAM,,,,,,,,,,,,,,,';//--0011X00000jcKXUQA2
+            //item.Data__c = 'Variazione Anagrafica Cliente,0011X00000rL7Z6QAK,,200010613357,3336560123,3336560123,,,,,,,,,,,,,,,,,,,,,,,,,ADAM,,,,,,,,,,,,,,,';//--0011X00000jcKXUQA2
+            item.Data__c = '';
+            item.Data__c += 'Variazione Anagrafica Cliente,';// PROCESSO
+            item.Data__c += '0011X00000rL7Z6QAK,';// ACCOUNTID
+            item.Data__c += ',';// SOTTOPROCESSO
+            item.Data__c += '200010613357,';// CONTO_CONTRATTUALE
+            item.Data__c += '3336560123,';// TELEFONO
+            item.Data__c += '3336560123,';// CELLULARE
+            item.Data__c += ',';// EMAIL
+            item.Data__c += ',';// PEC
+            item.Data__c += ',';// MARCATURA
+            item.Data__c += ',';// FAX
+            item.Data__c += ',';// MOD_INVIO_BOLL
+            item.Data__c += ',';// MOD_INVIO_FATT_ELET
+            item.Data__c += ',';// EMAIL_INVIO_BOLL
+            item.Data__c += ',';// PEC_FATT_ELET
+            item.Data__c += ',';// PEC_INVIO_BOLL
+            item.Data__c += ',';// TIPO_XML
+            item.Data__c += ',';// DATA_CONSENSO_PEC
+            item.Data__c += ',';// CODICE_UFF_DEST
+            item.Data__c += ',';// PRESSO
+            item.Data__c += ',';// PEC_SOLLECITO
+            item.Data__c += 'false,';// FLAG_SOLLECITO
+            item.Data__c += ',';// SPED_COMUNE
+            item.Data__c += ',';// SPED_NAZIONE
+            item.Data__c += ',';// SPED_LOCALITA
+            item.Data__c += ',';// SPED_CAP
+            item.Data__c += ',';// SPED_PROVINCIA
+            item.Data__c += ',';// SPED_CIVICO
+            item.Data__c += ',';// SPED_VIA
+            item.Data__c += ',';// SPED_ESTENSIONE_CIV
+            item.Data__c += ',';// SPED_INDIRIZZO_COMPLETO
+            item.Data__c += 'ADAM,';// NOME
+            item.Data__c += ',';// COGNOME
+            item.Data__c += ',';// CODICE_FISCALE
+            item.Data__c += ',';// PARTIVA_IVA
+            item.Data__c += ',';// RES_COMUNE
+            item.Data__c += ',';// RES_NAZIONE
+            item.Data__c += ',';// RES_LOCALITA
+            item.Data__c += ',';// RES_CAP
+            item.Data__c += ',';// RES_PROVINCIA
+            item.Data__c += ',';// RES_CIVICO
+            item.Data__c += ',';// RES_VIA
+            item.Data__c += ',';// RES_INDIRIZZO_COMPLETO
+            item.Data__c += ',';// IVA_GRUPPO
+            item.Data__c += 'true,';// FLAG_IVA
+            item.Data__c += ',';// DATA_INIZIO_GIVA
+            item.Data__c += '';// DATA_FINE_GIVA
             itemsList.add(item);
         }
         insert itemsList;
