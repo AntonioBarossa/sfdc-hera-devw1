@@ -911,16 +911,27 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		// codice_comune_catastale;
 		r.RegistryCityCode__c = docusignData.get('DTC_cod_comune');
 		// provincia_ubicazione;
+		r.Province__c = childOrder.SupplyState__c;
 		// tipo_unita;
+		r.UnitType__c = docusignData.get('DTC_tipo_uni'); // Il modulo richiede l'inserimento di F o T, quindi non servono transcodifiche.
 		// sezione_urbana;
+		r.UrbanSection__c = docusignData.get('DTC_sezione');
 		// foglio;
+		r.Sheet__c = docusignData.get('DTC_foglio');
 		// particella;
+		r.ParticleSheet__c = docusignData.get('DTC_partic');
 		// particella_tavolare;
+		r.ParticleTable__c = docusignData.get('DTC_estens_partic');
 		// tipo_particella;
+		r.ParticleType__c = docusignData.get('DTC_tipo_partic');
 		// subalterno;
+		r.Subaltern__c = docusignData.get('DTC_sub');
 		// qualifica_titolare;
+		//r.Title__c =  // TODO: transodificare il radio group DTC_qualitadi
 		// Categoria_Catastale;
+		// r.RegistryCategory__c = ???? TODO: da dove prendere la categoria catastale? non sembra esserci nel modulo, nè sull'order nè sul service point.
 		// Superficie_Catastale
+		r.RegistrySurface__c = childOrder.SurfaceServed__c;
 
 
 		return r;
