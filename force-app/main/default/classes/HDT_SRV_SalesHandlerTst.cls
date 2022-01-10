@@ -150,6 +150,7 @@ static void setup() {
     List<Product2> product2List = HDT_UTL_DataFactoryTst.createProduct2(1, true);
     List<PricebookEntry> pricebookentryList= HDT_UTL_DataFactoryTst.createPricebookEntry(product2List, true, pricebook.Id);
     List<Contact> contactList= HDT_UTL_DataFactoryTst.createContact(1, true,accountList[0].id);
+    List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accountList[0].Id);
 
     List<Order> orders;
 
@@ -261,11 +262,21 @@ static void setup() {
       'Phase__c'=>'Annullamento - Esito KO da DL/SII',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } )); 
+    } ));
+    List<Order> orderVolturaCompletata = HDT_UTL_DataFactoryTst.createOrderWithParams(1, true , salesList, 'HDT_RT_Voltura', new Map<String,Object>{
+      'AccountId' => accountList[0].Id,
+      'Contact__c' => contactList[0].Id,
+      'Phase__c' => 'Completata',
+      'BillingProfile__c' => billingProfileList[0].Id,
+      'ServicePoint__c' => servicePointList[0].Id,
+      'ContractReference__c' => contractList[0].Id,
+      'ProcessType__c' => 'Voltura',
+      'Pricebook2Id' => pricebook.Id
+    });
     insert orders;
-    
+
     HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderCompletata[0].id, servicePointList[0].id, product2List[0].Id, pricebookentryList[0].id);
-   
+    HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderVolturaCompletata[0].id, servicePointList[0].id, product2List[0].Id, pricebookentryList[0].id);
   }
 
 
@@ -515,6 +526,27 @@ static void updateServicePointTest() {
     Test.stopTest();
 
     System.assertNotEquals(false, [SELECT IsMigrated__c FROM ServicePoint__c WHERE Id=:servicePoint.Id].IsMigrated__c,'The service point has been successfully updated!');
+}
+
+@IsTest
+static void moveOutTest()
+{
+    Order orderCompletata=[ SELECT  id,AccountId,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  
+      FROM Order  WHERE Phase__c='Completata' AND RecordType.DeveloperName = 'HDT_RT_Voltura' LIMIT 1];
+    
+    Test.startTest();
+    try
+    {
+      new TestBuilderCallManageSalesProcessCategory(orderCompletata,'Completata','NOTIF_ES',null); 
+    }
+    catch(Exception e)
+    {
+      System.assertEquals(true,e.getMessage().contains('List index out of bounds'),'Due to badvalue passed to updatedFrom ');
+    }
+    Test.stopTest();
+    List<Contract> contractList = [SELECT Id, Status, EndDate FROM Contract WHERE AccountId = :orderCompletata.AccountId];
+    System.assertEquals('Cessato', contractList[0].Status, 'Move Out: Status non corretto');
+    System.assertEquals(System.today(), contractList[0].EndDate, 'Move Out: EndDate non corretta');
 }
 
 }

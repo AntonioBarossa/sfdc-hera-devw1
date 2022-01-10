@@ -14,18 +14,8 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Completed</fullName>
-                <default>false</default>
-                <label>Completed</label>
-            </value>
-            <value>
-                <fullName>Not Started</fullName>
-                <default>true</default>
-                <label>Not Started</label>
-            </value>
-            <value>
                 <fullName>Aperta</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Aperta</label>
             </value>
             <value>
@@ -37,11 +27,6 @@
                 <fullName>Chiusa</fullName>
                 <default>false</default>
                 <label>Chiusa</label>
-            </value>
-            <value>
-                <fullName>Creata</fullName>
-                <default>false</default>
-                <label>Creata</label>
             </value>
             <value>
                 <fullName>Presa appuntamento in corso</fullName>
