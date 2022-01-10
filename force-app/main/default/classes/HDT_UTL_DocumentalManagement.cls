@@ -893,9 +893,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			return r;
 		}
 
-		// TODO: fill LandRegistry__c fields
-
 		//codice_offerta;
+		r.OfferCode__c = childOrder.OrderNumber;
 		// impianto
 		r.ServicePoint__c = childOrder.ServicePoint__c;
 		// destinazione_uso
