@@ -2446,6 +2446,14 @@
             <fullName>Verifiche Credito Business</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>CanoneRai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BonusSociale</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Validation__c</picklist>
@@ -2455,14 +2463,6 @@
         </values>
         <values>
             <fullName>Si</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CanoneRai</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BonusSociale</fullName>
             <default>false</default>
         </values>
     </picklistValues>
