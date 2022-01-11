@@ -4,7 +4,8 @@
 * @description Apex controller that returns list of customer in archive and in sf
 */
 
-public with sharing class HDT_LC_StoricizzazioneCliente {
+public with sharing class HDT_LC_ClientHistory {
+
     private static  Map<String, List<String>> mappingRoleToMarcatura = new Map<String, List<String>>{
         'HDT_BackOffice' => new List<String>{},
         'HDT_FrontOffice_AAAEBT' => new List<String>{'AAS Persona fisica','AAS Ditta individuale','AAS Azienda','AAS Parti comuni','AAS Condominio','AAS Associazione'},

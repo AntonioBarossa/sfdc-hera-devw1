@@ -1,15 +1,15 @@
 /**
- * Header of the class "HDT_LC_StoricizzazioneClienteTst"
+ * Header of the class "HDT_LC_ClientHistoryTst"
  * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
  * @version 1.0
- * @description: Apex Test Class of the relative Apex Class ""HDT_LC_StoricizzazioneCliente"
+ * @description: Apex Test Class of the relative Apex Class ""HDT_LC_ClientHistory"
  * @history
  * @Created 17/09/2021
  * Modified By:
  **/
 
 @isTest
-public class HDT_LC_StoricizzazioneClienteTst {    
+public class HDT_LC_ClientHistoryTst {    
     
     @isTest static void test(){
 
@@ -21,9 +21,9 @@ public class HDT_LC_StoricizzazioneClienteTst {
         
         system.runAs(u){        
             
-            new HDT_LC_StoricizzazioneCliente.HDT_LC_Link('testname','testvalue');
+            new HDT_LC_ClientHistory.HDT_LC_Link('testname','testvalue');
             
-            new HDT_LC_StoricizzazioneCliente.HDT_LC_Customer('Nome','CodiceFiscale', 'IVA', 'CodiceCliente', 'Id', 'isStoricizzato', 'NomeProprio');
+            new HDT_LC_ClientHistory.HDT_LC_Customer('Nome','CodiceFiscale', 'IVA', 'CodiceCliente', 'Id', 'isStoricizzato', 'NomeProprio');
             
             List<SiebelCustomer__x> siebels = new List<SiebelCustomer__x>();
             SiebelCustomer__x siebel = new SiebelCustomer__x(TAX_IDEN_NUM__c = 'taxtax', VAT_REGN_NUM__c = 'vat', OU_NUM__c = 'ou', ALIAS_NAME__c = 'sib');
@@ -32,12 +32,12 @@ public class HDT_LC_StoricizzazioneClienteTst {
 			HDT_UTL_ObjectManagerTst.setMock(new HDT_UTL_MockInterfaceOverrideTst(siebels));
         	Test.startTest();           
             
-            List<HDT_LC_StoricizzazioneCliente.HDT_LC_Customer> listaCustomer = HDT_LC_StoricizzazioneCliente.getExternalCustomer('taxtax', 'id', 'ASC', 'Codice Fiscale');
+            List<HDT_LC_ClientHistory.HDT_LC_Customer> listaCustomer = HDT_LC_ClientHistory.getExternalCustomer('taxtax', 'id', 'ASC', 'Codice Fiscale');
 
             Test.stopTest();
             
-            System.assertNotEquals(null, listaCustomer, 'HDT_LC_StoricizzazioneCliente did not work correctly');            
-            System.assertEquals(1, listaCustomer.size(), 'HDT_LC_StoricizzazioneCliente did not work correctly');
+            System.assertNotEquals(null, listaCustomer, 'HDT_LC_ClientHistory did not work correctly');            
+            System.assertEquals(1, listaCustomer.size(), 'HDT_LC_ClientHistory did not work correctly');
         }
     }        
 }
