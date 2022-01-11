@@ -100,16 +100,22 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>Edit</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>Edit</actionName>
+        <comment>Sovrascritta action Edit per non poter permettere l&apos;edit dalla vista dei Case nella Service Console</comment>
+        <content>HDT_LCP_DisableEditButtonStandard</content>
         <formFactor>Large</formFactor>
-        <type>Default</type>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>Edit</actionName>
+        <comment>Sovrascritta action Edit per non poter permettere l&apos;edit dalla vista dei Case nella Service Console</comment>
+        <content>HDT_LCP_DisableEditButtonStandard</content>
         <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
