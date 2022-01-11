@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_ProcessExecution {
 
     private Map<String, HDT_MassiveFieldsObjectMap__mdt> sobjectMap;
@@ -17,15 +18,15 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
     private Integer accountIdIndex;
 
     public override void checks(){
-        System.debug('checks');
+        System.debug(LoggingLevel.DEBUG, 'checks');
         mapFieldsObject();
 
-        System.debug('>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
-        System.debug('>>> mapWrapperCaseFields: ' + String.valueOf(mapWrapperCaseFields));
-        System.debug('>>> mapHeaderForWrapper: ' + String.valueOf(mapHeaderForWrapper));
-        System.debug('>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
+        System.debug(LoggingLevel.DEBUG, '>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
+        System.debug(LoggingLevel.DEBUG, '>>> mapWrapperCaseFields: ' + String.valueOf(mapWrapperCaseFields));
+        System.debug(LoggingLevel.DEBUG, '>>> mapHeaderForWrapper: ' + String.valueOf(mapHeaderForWrapper));
+        System.debug(LoggingLevel.DEBUG, '>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
 
-        System.debug('>>> sobjectMap: ' + String.valueOf(sobjectMap));
+        System.debug(LoggingLevel.DEBUG, '>>> sobjectMap: ' + String.valueOf(sobjectMap));
 
         accountIdIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
         contractIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CONTO_CONTRATTUALE'));
@@ -41,7 +42,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
     }
 
     public override void getRecords(){
-        System.debug('getRecords');
+        System.debug(LoggingLevel.DEBUG, 'getRecords');
 
         accountContactMap = new Map<String, AccountContactRelation>();
 
@@ -49,8 +50,8 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
         accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
         recordTypeId = HDT_QR_ProcessPostSales.getRecordTypeId('HDT_RT_VariazioneAnagraficaCliente');
 
-        //System.debug('>>> accountIdSet ' + String.valueOf(accountIdSet));
-        //System.debug('>>> billingProfileList ' + String.valueOf(billingProfileList));
+        //System.debug(LoggingLevel.DEBUG, '>>> accountIdSet ' + String.valueOf(accountIdSet));
+        //System.debug(LoggingLevel.DEBUG, '>>> billingProfileList ' + String.valueOf(billingProfileList));
 
         for(BillingProfile__c singleBillProf : billingProfileList){
             contractToBillProfMap.put(singleBillProf.ContractAccountCode__c, singleBillProf);
@@ -63,7 +64,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
     }
 
     public override void registryCreation(){
-        System.debug('registryCreation');
+        System.debug(LoggingLevel.DEBUG, 'registryCreation');
 
         HDT_UTL_ProcessCommonOperations.getLimitDetails('START registryCreation');
 
@@ -84,7 +85,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
             String objField;
             emptyCsvField = new List<String>();
 
-            System.debug('>>> tempSplitted ' + tempSplitted.size());
+            System.debug(LoggingLevel.DEBUG, '>>> tempSplitted ' + tempSplitted.size());
 
             for (String tempField : tempSplitted) {
 
@@ -96,23 +97,23 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
                 objField = mapCaseFields.get(csvHeader);
 
                 //if (mapRequiredByPosition.get(count) != null && String.isBlank(tempField)) {
-                //    System.debug('>>> throw new HDT_WRP_ProcessEntitiesException');
+                //    System.debug(LoggingLevel.DEBUG, '>>> throw new HDT_WRP_ProcessEntitiesException');
                 //   //throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field','Missing Required Field ' + mapHeaderByPosition.get(count));
                 //}
             
                 if(String.isNotBlank(objField)){//&& String.isNotBlank(tempField)
-                    System.debug('>>> CSV Header: ' + csvHeader + '; Case Field: ' + objField + '; value: ' + tempField);
+                    System.debug(LoggingLevel.DEBUG, '>>> CSV Header: ' + csvHeader + '; Case Field: ' + objField + '; value: ' + tempField);
                     
                     if(String.isNotBlank(tempField)){
                         convertionError = mapTypeField(newCase, mapCaseFields, count, tempField);
                     } else {
-                        System.debug('>>> ' + csvHeader + ' is empty!');
+                        System.debug(LoggingLevel.DEBUG, '>>> ' + csvHeader + ' is empty!');
                         emptyCsvField.add(csvHeader);
                     }
 
                     if(!String.isEmpty(convertionError)){
                         // error happened -> exit
-                        System.debug('>>> break for loop...' + csvHeader + ' - ' + objField + ' - ' + tempField);
+                        System.debug(LoggingLevel.DEBUG, '>>> break for loop...' + csvHeader + ' - ' + objField + ' - ' + tempField);
                         break;
                     }
                 }
@@ -126,7 +127,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
             }
 
             if(emptyCsvField.size() > 0){
-                System.debug('>>> we need to set empty fields');
+                System.debug(LoggingLevel.DEBUG, '>>> we need to set empty fields');
                 convertionError = setEmptyCsvFields(emptyCsvField, newCase, tempSplitted[accountIdIndex], tempSplitted[contractIndex]);
 
                 if(!String.isEmpty(convertionError)){
@@ -136,7 +137,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
 
             }
 
-            System.debug('>>> currentCase: ' + newCase);
+            System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + newCase);
 
             newCase.AccountId = tempSplitted[accountIdIndex];
             newCase.RecordTypeId = recordTypeId;
@@ -161,26 +162,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
             }
 
             if(saveResponse.savedCase.size() > 0){
-                System.debug('>>> run CompatibilityPostSales');
-                Map<Id, String> compatibilityMap = HDT_UTL_ProcessCommonOperations.checkCompatibilityPostSales(saveResponse.savedCase);
-                System.debug('>>> compatibilityMap ' + String.valueOf(compatibilityMap));
-
-                //***************** */
-                // example to test Phase__c => Da Inviare           
-                //Set<Id> i = compatibilityMap.keySet();
-                //List<Id> listkey = new List<Id>();
-                //listkey.addAll(i);
-                //compatibilityMap.remove(listkey[0]);
-                //***************** */
-
-                HDT_UTL_ProcessCommonOperations.updateCaseAfterCompatibility(compatibilityMap, saveResponse.savedCase);
-
-                //if(!compatibilityMap.isEmpty()){
-                //    updateCaseNotCompatible(compatibilityMap.keySet());
-                //}
-
-                HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER Compatibility');
-
+                HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedCase);
             }
 
         }  
@@ -189,7 +171,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
 
     private String setEmptyCsvFields(List<String> emptyFieldToSet, Case caseToSet, String accountId, String contractAccountCode){
 
-        System.debug('>>> setEmptyCsvFields');
+        System.debug(LoggingLevel.DEBUG, '>>> setEmptyCsvFields');
         Map<String, Object> fieldsToValue;
         Object newValueToSet;
 
@@ -197,10 +179,10 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
         AccountContactRelation accContRel;
         BillingProfile__c billingProfile;
         for(String emptyField : emptyFieldToSet){
-            System.debug('>>> empty field to set -> ' + emptyField);
+            System.debug(LoggingLevel.DEBUG, '>>> empty field to set -> ' + emptyField);
 
             massiveFieldsObject = sobjectMap.get(emptyField);
-            System.debug('>>> massiveFieldsObject -> ' + massiveFieldsObject);
+            System.debug(LoggingLevel.DEBUG, '>>> massiveFieldsObject -> ' + massiveFieldsObject);
 
             switch on massiveFieldsObject.objectType__c {
                 when 'Account' {
@@ -236,7 +218,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
             }
 
             if(newValueToSet != null && !String.isEmpty(massiveFieldsObject.nameField__c)){
-                System.debug('>>> new value to set: ' + newValueToSet + ' for -> ' + emptyField + ' [' + massiveFieldsObject.labelField__c + ']');
+                System.debug(LoggingLevel.DEBUG, '>>> new value to set: ' + newValueToSet + ' for -> ' + emptyField + ' [' + massiveFieldsObject.labelField__c + ']');
                 caseToSet.put(massiveFieldsObject.nameField__c, newValueToSet);
             }
 
@@ -247,7 +229,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
     }
 
     public override void finalUpdate(){
-        System.debug('finalUpdate');
+        System.debug(LoggingLevel.DEBUG, 'finalUpdate');
 
         if(itemsToSave.size() > 0){
             update itemsToSave;

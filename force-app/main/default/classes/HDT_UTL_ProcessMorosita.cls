@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_ProcessExecution {
 
     private Map<String, String> mapCaseFields;
@@ -16,7 +17,7 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
 
 
     public override void checks(){
-        System.debug('checks');
+        System.debug(LoggingLevel.DEBUG, 'checks');
         mapFieldsObject();
 
         podIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('POD'));
@@ -35,7 +36,7 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
     }
 
     public override void getRecords(){
-        System.debug('getRecords');
+        System.debug(LoggingLevel.DEBUG, 'getRecords');
         List<Case> caseList;
         List<Contract> contractList;
         caseList = HDT_QR_ProcessPostSales.getCaseByServicePointCode(caseList, podSet, 'Sospensione Fornitura');
@@ -53,7 +54,7 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
     }
 
     public override void registryCreation(){
-        System.debug('registryCreation');
+        System.debug(LoggingLevel.DEBUG, 'registryCreation');
 
         HDT_QR_CausalCodeCalculation causalCodeCalculation = new HDT_QR_CausalCodeCalculation();
         HDT_CausalCodeCalculation__mdt causalCode;
@@ -80,12 +81,12 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
                 }
             
                 //if (mapRequiredByPosition.get(count) != null && String.isBlank(tempField)) {
-                //    System.debug('>>> throw new HDT_WRP_ProcessEntitiesException');
+                //    System.debug(LoggingLevel.DEBUG, '>>> throw new HDT_WRP_ProcessEntitiesException');
                 //   //throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field','Missing Required Field ' + mapHeaderByPosition.get(count));
                 //}
             
                 if(String.isNotBlank(mapCaseFields.get(mapHeaderByPosition.get(count))) && String.isNotBlank(tempField)){
-                    System.debug('>>> tempField: ' + tempField + ' # Header: ' + mapHeaderByPosition.get(count) + ' # CaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
+                    System.debug(LoggingLevel.DEBUG, '>>> tempField: ' + tempField + ' # Header: ' + mapHeaderByPosition.get(count) + ' # CaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
                     convertionError = mapTypeField(newCase, mapCaseFields, count, tempField);
 
                     if(!String.isEmpty(convertionError)){
@@ -135,7 +136,7 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
                 //do something -> record error
             } 
 
-            System.debug('>>> newCase: ' + String.valueOf(newCase));
+            System.debug(LoggingLevel.DEBUG, '>>> newCase: ' + String.valueOf(newCase));
 
             try{
                 String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(tempSplitted[podIndex], null);
@@ -158,19 +159,7 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
             }
 
             if(saveResponse.savedCase.size() > 0){
-                Map<Id, String> compatibilityMap = HDT_UTL_ProcessCommonOperations.checkCompatibilityPostSales(saveResponse.savedCase);
-                //System.debug('>>> compatibilityMap ' + String.valueOf(compatibilityMap));
-
-                //***************** */
-                // example to test Phase__c => Da Inviare           
-                //Set<Id> i = compatibilityMap.keySet();
-                //List<Id> listkey = new List<Id>();
-                //listkey.addAll(i);
-                //compatibilityMap.remove(listkey[0]);
-                //***************** */
-
-                HDT_UTL_ProcessCommonOperations.updateCaseAfterCompatibility(compatibilityMap, saveResponse.savedCase);
-
+                HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedCase);
             }
 
         }  
@@ -178,7 +167,7 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
     }
 
     public override void finalUpdate(){
-        System.debug('finalUpdate');
+        System.debug(LoggingLevel.DEBUG, 'finalUpdate');
 
         if(itemsToSave.size() > 0){
             update itemsToSave;
@@ -202,14 +191,6 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
         for(HDT_MassiveFieldsObjectMap__mdt temp : listWrapperCaseFields){
             mapWrapperCaseFields.put(temp.labelField__c, temp.nameField__c);
         }
-    }
-
-    private static MassiveLoaderRequestItem__c setErrorItem(String itemId, String message){
-        MassiveLoaderRequestItem__c itemError = new MassiveLoaderRequestItem__c();
-        itemError.Id = itemId;
-        itemError.Status__c = 'Errore';
-        itemError.StatusDescription__c = message;
-        return itemError;
     }
 
     public override void manageCatchException(Integer batchSize, List<MassiveLoaderRequestItem__c> itemList, String message){

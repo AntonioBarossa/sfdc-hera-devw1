@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_UTL_ProcessCommonOperations {
 
     public static HDT_WRP_SaveResponse databaseInsert(List<Case> itemList, List<String> itemIds){
@@ -20,8 +21,8 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
                     
                     for(Database.Error err : sr.getErrors()) {
                         String errorMessage = err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields();
-                        System.debug('>>> ' + String.valueOf(String.valueOf(itemList[n].ServicePoint__c) + ' - item id ' + itemIds[n]));
-                        System.debug('>>> errorMessage ' + errorMessage);
+                        System.debug(LoggingLevel.DEBUG, '>>> ' + String.valueOf(String.valueOf(itemList[n].ServicePoint__c) + ' - item id ' + itemIds[n]));
+                        System.debug(LoggingLevel.DEBUG, '>>> errorMessage ' + errorMessage);
                         itemError = new MassiveLoaderRequestItem__c();
                         itemError.Id = itemIds[n];
                         itemError.Status__c = 'Errore';
@@ -42,7 +43,24 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
 
     }
 
-    public static Map<Id, String> checkCompatibilityPostSales(List<Case> csList){
+    public static void runCompatibility(List<Case> savedCase){
+        Map<Id, String> compatibilityMap = checkCompatibilityPostSales(savedCase);
+        //System.debug(LoggingLevel.DEBUG, '>>> compatibilityMap ' + String.valueOf(compatibilityMap));
+
+        //***************** */
+        // example to test Phase__c => Da Inviare           
+        //Set<Id> i = compatibilityMap.keySet();
+        //List<Id> listkey = new List<Id>();
+        //listkey.addAll(i);
+        //compatibilityMap.remove(listkey[0]);
+        //***************** */
+
+        updateCaseAfterCompatibility(compatibilityMap, savedCase);
+        getLimitDetails('AFTER Compatibility');
+
+    }
+    
+    private static Map<Id, String> checkCompatibilityPostSales(List<Case> csList){
 
         List<ServiceRequest__c> srList = new List<ServiceRequest__c>();
         List<ServiceRequest__c> srListToDelete = new List<ServiceRequest__c>();
@@ -55,9 +73,9 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
             for(Case cs : csList){
                 srvRequest = new ServiceRequest__c();
                 srvRequest.Case__c = cs.Id;
-                srvRequest.ServicePointCode__c= cs.PODPDRFormula__c;
+                srvRequest.ServicePointCode__c = cs.PODPDRFormula__c;
                 srvRequest.Status__c = HDT_UTL_MatrixCompatibility.getStatus(cs.Status, 'Case');
-                srvRequest.CommoditySector__c= cs.CommodityFormula__c;
+                srvRequest.CommoditySector__c = cs.CommodityFormula__c;
                 srvRequest.Type__c = 'Case';
     
                 if(cs.ServicePoint__c != null){
@@ -76,7 +94,7 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
             for(ServiceRequest__c sReq : srList){
                 wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = HDT_UTL_MatrixCompatibility.checkCompatibility(sReq);
 
-                System.debug('>>> ObjectCompatibility: ' + result);
+                System.debug(LoggingLevel.DEBUG, '>>> ObjectCompatibility: ' + result);
 
                 //list of incompatible records
                 if(!result.incompatibilities.isEmpty()){
@@ -99,7 +117,7 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
         }
     }
 
-    public static void updateCaseAfterCompatibility(Map<Id, String> incompatibleCaseIdSet, List<Case> savedCase){
+    private static void updateCaseAfterCompatibility(Map<Id, String> incompatibleCaseIdSet, List<Case> savedCase){
 
         for(Case c : savedCase){
             if(incompatibleCaseIdSet.containsKey(c.Id)){
@@ -122,7 +140,7 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
         limitList.add('>>> HeapSize: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
         limitList.add('>>> Queries: ' + String.valueOf(Limits.getQueries()) + ' of ' + String.valueOf(Limits.getLimitQueries()));
 
-        System.debug('---------------- ' + stageName + ' ----------------');
+        System.debug(LoggingLevel.DEBUG, '---------------- ' + stageName + ' ----------------');
         for(String s : limitList){
             System.debug(s);
         }

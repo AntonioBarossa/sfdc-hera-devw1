@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_ProcessExecution {
 
     private Map<String, String> mapCaseFields;
@@ -21,16 +22,16 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
     private Boolean isVolturaProcess;
 
     public override void checks(){
-        System.debug('checks');
+        System.debug(LoggingLevel.DEBUG, 'checks');
 
-        System.debug('>>> this.processName: ' + this.processName);
+        System.debug(LoggingLevel.DEBUG, '>>> this.processName: ' + this.processName);
 
         mapFieldsObject();
 
-        System.debug('>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
-        System.debug('>>> mapWrapperCaseFields: ' + String.valueOf(mapWrapperCaseFields));
-        System.debug('>>> mapHeaderForWrapper: ' + String.valueOf(mapHeaderForWrapper));
-        System.debug('>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
+        System.debug(LoggingLevel.DEBUG, '>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
+        System.debug(LoggingLevel.DEBUG, '>>> mapWrapperCaseFields: ' + String.valueOf(mapWrapperCaseFields));
+        System.debug(LoggingLevel.DEBUG, '>>> mapHeaderForWrapper: ' + String.valueOf(mapHeaderForWrapper));
+        System.debug(LoggingLevel.DEBUG, '>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
 
         isVolturaProcess = (this.processName == 'VolturaTecnica') ? true : false;
 
@@ -42,7 +43,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
             orderVolturaIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ORDER_VOLTURA'));
         }
 
-        System.debug('>>> Index: podIndex [' + podIndex + ']; contract [' + contractIndex + ']; accountId [' + accountIdIndex + ']; orderVoltura [' + orderVolturaIndex + ']');
+        System.debug(LoggingLevel.DEBUG, '>>> Index: podIndex [' + podIndex + ']; contract [' + contractIndex + ']; accountId [' + accountIdIndex + ']; orderVoltura [' + orderVolturaIndex + ']');
 
         List<String> dataSplitted;
         for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
@@ -60,16 +61,16 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
     }
 
     public override void getRecords(){
-        System.debug('getRecords');
+        System.debug(LoggingLevel.DEBUG, 'getRecords');
 
         String rtDeveloperName = '';
         contractList = HDT_QR_ProcessPostSales.getContracts(contractList, contractCodeSet);
         accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationIdsList(accContRelationList, accountIdSet, 'Titolare');
         
-        //System.debug('>>> accountIdSet ' + String.valueOf(accountIdSet));
-        //System.debug('>>> podSet ' + String.valueOf(podSet));
-        //System.debug('>>> contractList ' + String.valueOf(contractList));
-        //System.debug('>>> orderList ' + String.valueOf(orderList));
+        //System.debug(LoggingLevel.DEBUG, '>>> accountIdSet ' + String.valueOf(accountIdSet));
+        //System.debug(LoggingLevel.DEBUG, '>>> podSet ' + String.valueOf(podSet));
+        //System.debug(LoggingLevel.DEBUG, '>>> contractList ' + String.valueOf(contractList));
+        //System.debug(LoggingLevel.DEBUG, '>>> orderList ' + String.valueOf(orderList));
 
         if(!isVolturaProcess){
 
@@ -97,7 +98,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
     }
 
     public override void registryCreation(){
-        System.debug('registryCreation');
+        System.debug(LoggingLevel.DEBUG, 'registryCreation');
 
         HDT_UTL_ProcessCommonOperations.getLimitDetails('START registryCreation');
 
@@ -108,8 +109,8 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
         HDT_QR_CausalCodeCalculation causalCodeCalculation = new HDT_QR_CausalCodeCalculation();
         HDT_CausalCodeCalculation__mdt causalCode;
 
-        //System.debug('>>> currentRequestItemList: ' + String.valueOf(currentProcess.currentCase));
-        //System.debug('>>> get mapCaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
+        //System.debug(LoggingLevel.DEBUG, '>>> currentRequestItemList: ' + String.valueOf(currentProcess.currentCase));
+        //System.debug(LoggingLevel.DEBUG, '>>> get mapCaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
 
         Case newCase;
         for(String itemId : itemRequestMap.keySet()){
@@ -128,12 +129,12 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
                 }
             
                 //if (mapRequiredByPosition.get(count) != null && String.isBlank(tempField)) {
-                //    System.debug('>>> throw new HDT_WRP_ProcessEntitiesException');
+                //    System.debug(LoggingLevel.DEBUG, '>>> throw new HDT_WRP_ProcessEntitiesException');
                 //   //throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field','Missing Required Field ' + mapHeaderByPosition.get(count));
                 //}
             
                 if(String.isNotBlank(mapCaseFields.get(mapHeaderByPosition.get(count))) && String.isNotBlank(tempField)){
-                    System.debug('>>> tempField: ' + tempField + ' # Header: ' + mapHeaderByPosition.get(count) + ' # CaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
+                    System.debug(LoggingLevel.DEBUG, '>>> tempField: ' + tempField + ' # Header: ' + mapHeaderByPosition.get(count) + ' # CaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
                     convertionError = mapTypeField(newCase, mapCaseFields, count, tempField);
 
                     if(!String.isEmpty(convertionError)){
@@ -149,7 +150,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
                 continue;
             }
 
-            //System.debug('>>> currentCase: ' + newCase);
+            //System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + newCase);
 
             Contract contract;
             
@@ -194,7 +195,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
                 if(orderIdMap.containsKey(currentOrderNum)){
                     newCase.VulturePracticeReference__c = orderIdMap.get(currentOrderNum);
                 } else {
-                    System.debug('>>> NO ORDER FOUND');
+                    System.debug(LoggingLevel.DEBUG, '>>> NO ORDER FOUND');
                 }
             }
 
@@ -208,7 +209,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
                 caseToInsert.add(newCase); 
                 itemIds.add(itemId);
             } catch(Exception e){
-                System.debug('>>> arricchimentoError ' + e.getMessage());
+                System.debug(LoggingLevel.DEBUG, '>>> arricchimentoError ' + e.getMessage());
                 itemsToSave.add(setErrorItem(itemId, 'Errore arricchimento dati # '));
             }
 
@@ -228,25 +229,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
             }
 
             if(saveResponse.savedCase.size() > 0){
-                Map<Id, String> compatibilityMap = HDT_UTL_ProcessCommonOperations.checkCompatibilityPostSales(saveResponse.savedCase);
-                //System.debug('>>> compatibilityMap ' + String.valueOf(compatibilityMap));
-
-                //***************** */
-                // example to test Phase__c => Da Inviare           
-                //Set<Id> i = compatibilityMap.keySet();
-                //List<Id> listkey = new List<Id>();
-                //listkey.addAll(i);
-                //compatibilityMap.remove(listkey[0]);
-                //***************** */
-
-                HDT_UTL_ProcessCommonOperations.updateCaseAfterCompatibility(compatibilityMap, saveResponse.savedCase);
-
-                //if(!compatibilityMap.isEmpty()){
-                //    updateCaseNotCompatible(compatibilityMap.keySet());
-                //}
-
-                HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER Compatibility');
-
+                HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedCase);
             }
 
         }  
@@ -254,11 +237,11 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
     }
 
     //public override void makeProcess(){ // creazione processo
-    //    System.debug('makeProcess');
+    //    System.debug(LoggingLevel.DEBUG, 'makeProcess');
     //}
 
     public override void finalUpdate(){
-        System.debug('finalUpdate');
+        System.debug(LoggingLevel.DEBUG, 'finalUpdate');
 
         if(itemsToSave.size() > 0){
             update itemsToSave;
@@ -283,14 +266,6 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
             mapWrapperCaseFields.put(temp.labelField__c, temp.nameField__c);
         }
 
-    }
-
-    private static MassiveLoaderRequestItem__c setErrorItem(String itemId, String message){
-        MassiveLoaderRequestItem__c itemError = new MassiveLoaderRequestItem__c();
-        itemError.Id = itemId;
-        itemError.Status__c = 'Errore';
-        itemError.StatusDescription__c = message;
-        return itemError;
     }
 
     public override void manageCatchException(Integer batchSize, List<MassiveLoaderRequestItem__c> itemList, String message){
