@@ -1,22 +1,22 @@
 /**
- * Header of the class "HDT_LC_DownloadAttachmentAzureTst"
+ * Header of the class "HDT_LC_DownloadAttachmentArchiveTst"
  * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
  * @version 1.0
- * @description: Apex Test Class of the relative Apex Class "HDT_LC_DownloadAttachmentAzure"
+ * @description: Apex Test Class of the relative Apex Class "HDT_LC_DownloadAttachmentArchive"
  * @history
  * @Created 21/09/2021
  * Modified By:
  **/
 
 @isTest
-public class HDT_LC_DownloadAttachmentAzureTst {
+public class HDT_LC_DownloadAttachmentArchiveTst {
 
   @isTest
 	static void testGetUrlNameDocumentLink(){
         String msg;
         String targetId = 'test';
         try{
-        	HDT_LC_DownloadAttachmentAzure.getUrlNameDocumentLink(targetId);
+        	HDT_LC_DownloadAttachmentArchive.getUrlNameDocumentLink(targetId);
         }catch(Exception e){
             msg = e.getMessage();
         }
@@ -34,7 +34,7 @@ public class HDT_LC_DownloadAttachmentAzureTst {
         HDT_UTL_ObjectManagerTst.setMock(new HDT_UTL_MockInterfaceOverrideTst(docs));
         Test.startTest();
 
-        Boolean b = HDT_LC_DownloadAttachmentAzure.getExtensionFile('0031X00000jNwOpQAK');
+        Boolean b = HDT_LC_DownloadAttachmentArchive.getExtensionFile('0031X00000jNwOpQAK');
         
         Test.stopTest();
 
@@ -49,7 +49,7 @@ public class HDT_LC_DownloadAttachmentAzureTst {
         
         try{
 
-        HDT_LC_DownloadAttachmentAzure.getExtensionFile('0031X00000jNwOpQAK');
+        HDT_LC_DownloadAttachmentArchive.getExtensionFile('0031X00000jNwOpQAK');
             
         }catch(Exception e){
             msg = e.getMessage();
