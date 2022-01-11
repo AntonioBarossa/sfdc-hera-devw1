@@ -10,7 +10,7 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
 
         // Query su Case
         HDT_QR_Case caseQuery = new HDT_QR_Case();
-        String caseQueryFields = 'Id,Contract__c,Type,BillSendingMethod__c,Resident__c';
+        String caseQueryFields = 'Id,Contract__c,Type,BillSendingMethod__c,Resident__c,UseCategory__c';
         List<String> caseIds = new List<String>();
         caseIds.add(input.caseId);
         List<Case> cases = caseQuery.getRecordsById(caseIds, caseQueryFields);
@@ -56,7 +56,6 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
         queryFields = 'Id,BillSendingMethod__c,UseCategory__c,ResidentDeliveryAddress__c';
         queryString = 'SELECT ' + queryFields;
         fromString = ' FROM '+ objectName;
-        //whereString = ' WHERE ProductName__c =\''+ productName + '\''; // TODO DA FIXARE: la query va fatta per codice prodotto + versione prodotto, che vanno recuperati dalla query precedente sul Contract.
         whereString = ' WHERE Product__c =\''+ productId + '\'';//montors fix ++
         queryString = queryString + fromString + whereString; 
         System.debug('criteria query: ' + queryString);
@@ -76,6 +75,14 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
                     if (caseValue != criteria.ResidentDeliveryAddress__c) {
                         output.abortProcess = true;
                         output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con la variazione del campo Residente. Per poter procedere è necessario eseguire un cambio offerta.';
+                        outputList.add(output);
+                        return outputList;
+                    }
+                }
+                when 'Marcatura/Uso PdR' {
+                    if (criteria.UseCategory__c != null && !criteria.UseCategory__c.contains(caseRecord.UseCategory__c)) {
+                        output.abortProcess = true;
+                        output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con la variazione del campo Tipologia Uso. Per poter procedere è necessario eseguire un cambio offerta.';
                         outputList.add(output);
                         return outputList;
                     }
