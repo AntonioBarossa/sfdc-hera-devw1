@@ -59,7 +59,7 @@ public with sharing class HDT_LC_ClientHistory {
     *   List<String> vuoto: l'utente non ha alcun filtro
     *   List<String> popolato: la query verrà filtrata per le marcature restituite
     */
-    public static List<String> getMarcatureFromRole(){
+    public static List<String> getMarkingsFromRole(){
         String uRoleId = UserInfo.getUserRoleId();
 
         if (!Schema.sObjectType.UserRole.fields.DeveloperName.isAccessible()){
@@ -78,7 +78,7 @@ public with sharing class HDT_LC_ClientHistory {
  
         if ( searchKey != null && searchKey != '' && searchKey.length() > 5) {
 
-            List<String> marcaturePermesse = getMarcatureFromRole();
+            List<String> marcaturePermesse = getMarkingsFromRole();
             
             system.debug(marcaturePermesse);
             // se il ruolo non è presente nella mappa allora non ha alcun permesso di visualizzazione sugli account
