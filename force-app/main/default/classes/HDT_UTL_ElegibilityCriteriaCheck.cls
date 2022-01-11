@@ -10,7 +10,7 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
 
         // Query su Case
         HDT_QR_Case caseQuery = new HDT_QR_Case();
-        String caseQueryFields = 'Id,Contract__c,Type,BillSendingMethod__c,Resident__c,UseCategory__c';
+        String caseQueryFields = 'Id,Contract__c,Type,BillSendingMethod__c,Resident__c,UseCategory__c,PowerRequested__c';
         List<String> caseIds = new List<String>();
         caseIds.add(input.caseId);
         List<Case> cases = caseQuery.getRecordsById(caseIds, caseQueryFields);
@@ -53,7 +53,7 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
 
         // Query oggetto criteri eleggibilità
         objectName = 'EligibilityCriteria__c';
-        queryFields = 'Id,BillSendingMethod__c,UseCategory__c,ResidentDeliveryAddress__c';
+        queryFields = 'Id,BillSendingMethod__c,UseCategory__c,ResidentDeliveryAddress__c,PowerRangeMax__c';
         queryString = 'SELECT ' + queryFields;
         fromString = ' FROM '+ objectName;
         whereString = ' WHERE Product__c =\''+ productId + '\'';//montors fix ++
@@ -91,6 +91,14 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
                     if (caseRecord.BillSendingMethod__c != criteria.BillSendingMethod__c) {
                         output.abortProcess = true;
                         output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con la variazione del campo Modalità Invio Bolletta. Per poter procedere è necessario eseguire un cambio offerta.';
+                        outputList.add(output);
+                        return outputList;
+                    }
+                }
+                when 'Variazione Potenza' {
+                    if (criteria.PowerRangeMax__c > 0 && caseRecord.PowerRequested__c > criteria.PowerRangeMax__c) {
+                        output.abortProcess = true;
+                        output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con l\'aumento di potenza richiesto. Per poter procedere è necessario eseguire un cambio offerta.';
                         outputList.add(output);
                         return outputList;
                     }
