@@ -479,6 +479,35 @@
         </assignmentItems>
     </assignments>
     <assignments>
+        <name>Assegna_Case_Id_GenAtt</name>
+        <label>Assegna Case Id</label>
+        <locationX>12458</locationX>
+        <locationY>2006</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Assegna_Case_Id_GenAtt_0</name>
+        <label>Assegna Case Id</label>
+        <locationX>12722</locationX>
+        <locationY>2006</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_0</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Arricchimento_Dati_Notifiche_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Case_Id_Informative</name>
         <label>Assegna Case Id Informative</label>
         <locationX>7882</locationX>
@@ -861,7 +890,7 @@
     <assignments>
         <name>Set_Target_Legale</name>
         <label>Target = Legale Rappresentante</label>
-        <locationX>6056</locationX>
+        <locationX>6452</locationX>
         <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>TargetContact</assignToReference>
@@ -877,7 +906,7 @@
     <assignments>
         <name>Set_Target_Titolare</name>
         <label>Target = Titolare</label>
-        <locationX>6320</locationX>
+        <locationX>6716</locationX>
         <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>TargetContact</assignToReference>
@@ -1012,7 +1041,7 @@
     <decisions>
         <name>CaseLastTwoMinutes_Presente_0</name>
         <label>CaseLastTwoMinutes Presente?</label>
-        <locationX>6034</locationX>
+        <locationX>6430</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Cerca_Legale_Rappresentante</targetReference>
@@ -1141,7 +1170,7 @@
     <decisions>
         <name>Check_Legale_Rappresentante_o_Titolare</name>
         <label>Legale Rappresentante o Titolare?</label>
-        <locationX>6188</locationX>
+        <locationX>6584</locationX>
         <locationY>1070</locationY>
         <defaultConnector>
             <targetReference>Set_Target_Titolare</targetReference>
@@ -1364,7 +1393,7 @@
     <decisions>
         <name>Lead_o_Interaction</name>
         <label>Lead o Interaction?</label>
-        <locationX>6188</locationX>
+        <locationX>6584</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Cerca_Legale_Rappresentante</targetReference>
@@ -1784,6 +1813,38 @@
             </conditions>
             <connector>
                 <targetReference>Crea_Case_Annullamento_0_0_0</targetReference>
+            </connector>
+            <label>Non Compatibile</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0</name>
+        <label>Processo Compatibile?</label>
+        <locationX>12590</locationX>
+        <locationY>1766</locationY>
+        <defaultConnector>
+            <targetReference>Crea_Case_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Compatibile</defaultConnectorLabel>
+        <rules>
+            <name>Non_Compatibile_0_0_0_0_0_0_0_0_0_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Compatibile</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Crea_Case</targetReference>
             </connector>
             <label>Non Compatibile</label>
         </rules>
@@ -2303,7 +2364,7 @@
     <decisions>
         <name>Switch_Subflow</name>
         <label>Switch Subflow</label>
-        <locationX>6188</locationX>
+        <locationX>6584</locationX>
         <locationY>1406</locationY>
         <defaultConnector>
             <targetReference>ErrorScreen_0</targetReference>
@@ -2682,6 +2743,36 @@
             </connector>
             <label>Cluster Voltura</label>
         </rules>
+        <rules>
+            <name>Autoelettrica</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_PostSalesVas</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_RT_PostSalesVas</targetReference>
+            </connector>
+            <label>Autoelettrica</label>
+        </rules>
+        <rules>
+            <name>Cluster_Generiche_Attivazioni</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_GenericheAttivazioni</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selezione_Fornitura_0_0_0_0</targetReference>
+            </connector>
+            <label>Cluster Generiche Attivazioni</label>
+        </rules>
     </decisions>
     <formulas>
         <name>LastMinute</name>
@@ -2722,6 +2813,232 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Crea_Case</name>
+        <label>Crea Case</label>
+        <locationX>12458</locationX>
+        <locationY>1886</locationY>
+        <connector>
+            <targetReference>Assegna_Case_Id_GenAtt</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CancellationReason__c</field>
+            <value>
+                <stringValue>Processo incompatibile</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Generiche Attivazioni</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract__c</field>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DistributorNote__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza Annullata</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PhoneNumber__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Generiche_Attivazioni.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServicePoint__c</field>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServiceRequestID__c</field>
+            <value>
+                <elementReference>ServiceRequestId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedEmail</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedPhone</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Crea_Case_0</name>
+        <label>Crea Case</label>
+        <locationX>12722</locationX>
+        <locationY>1886</locationY>
+        <connector>
+            <targetReference>Assegna_Case_Id_GenAtt_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Generiche Attivazioni</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract__c</field>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DistributorNote__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PhoneNumber__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Generiche_Attivazioni.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServicePoint__c</field>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServiceRequestID__c</field>
+            <value>
+                <elementReference>ServiceRequestId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedEmail</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedPhone</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordCreates>
         <name>Crea_Case_Annullamento_0_0</name>
         <label>Crea Case Annullamento</label>
@@ -3014,6 +3331,119 @@
             <field>ServicePoint__c</field>
             <value>
                 <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Crea_Case_Autoelettrica</name>
+        <label>Crea Case Autoelettrica</label>
+        <locationX>12194</locationX>
+        <locationY>1646</locationY>
+        <connector>
+            <targetReference>Get_Case_Autoelettrica</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>PostSalesVas</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract__c</field>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DistributorNote__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>ParentRecordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PhoneNumber__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_PostSalesVas.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServicePoint__c</field>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServiceRequestID__c</field>
+            <value>
+                <elementReference>ServiceRequestId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedEmail</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedPhone</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -6787,7 +7217,7 @@
     <recordLookups>
         <name>Cerca_Contatto_Primario</name>
         <label>Cerca Contatto Primario</label>
-        <locationX>6188</locationX>
+        <locationX>6584</locationX>
         <locationY>950</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -6829,7 +7259,7 @@
     <recordLookups>
         <name>Cerca_Legale_Rappresentante</name>
         <label>Cerca Legale Rappresentante</label>
-        <locationX>6188</locationX>
+        <locationX>6584</locationX>
         <locationY>830</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -6866,6 +7296,27 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>AccountContactRelation</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Case_Autoelettrica</name>
+        <label>Get Case Autoelettrica</label>
+        <locationX>12194</locationX>
+        <locationY>1766</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Subflow_Segnalazioni_VAS</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Crea_Case_Autoelettrica</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -7163,6 +7614,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_RT_Generiche_Attivazioni</name>
+        <label>Get RT Generiche Attivazioni</label>
+        <locationX>12590</locationX>
+        <locationY>1646</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_GenericheAttivazioni</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_RT_Informative</name>
         <label>Get RT Informative</label>
         <locationX>7882</locationX>
@@ -7254,6 +7726,27 @@
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Case_Pagamenti</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RecordTypeName</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_RT_PostSalesVas</name>
+        <label>Get RT_PostSalesVas</label>
+        <locationX>12194</locationX>
+        <locationY>1526</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Case_Autoelettrica</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -7375,7 +7868,7 @@
     <recordLookups>
         <name>GetCaseLastMinute_0</name>
         <label>GetCaseLastMinute</label>
-        <locationX>6034</locationX>
+        <locationX>6430</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -7530,7 +8023,7 @@
     <screens>
         <name>ErrorScreen_0</name>
         <label>ErrorScreen_0</label>
-        <locationX>12194</locationX>
+        <locationX>12986</locationX>
         <locationY>1526</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -7575,7 +8068,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>6062</locationX>
+        <locationX>6458</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Lead_o_Interaction</targetReference>
@@ -7954,6 +8447,48 @@
             <name>ServicePointId</name>
             <value>
                 <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Arricchimento Dati</description>
+        <name>Arricchimento_Dati_Notifiche_0_0_0</name>
+        <label>Arricchimento Dati</label>
+        <locationX>12722</locationX>
+        <locationY>2126</locationY>
+        <connector>
+            <targetReference>Cambio_Uso_Fittizio</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Cambio_Uso_Fittizio</name>
+        <label>Cambio Uso Fittizio</label>
+        <locationX>12722</locationX>
+        <locationY>2246</locationY>
+        <flowName>HDT_FL_CambioUso</flowName>
+        <inputAssignments>
+            <name>inputCaseId</name>
+            <value>
+                <elementReference>CaseId</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -8575,6 +9110,60 @@
         </outputAssignments>
     </subflows>
     <subflows>
+        <name>Selezione_Fornitura_0_0_0_0</name>
+        <label>Selezione Fornitura</label>
+        <locationX>12590</locationX>
+        <locationY>1526</locationY>
+        <connector>
+            <targetReference>Get_RT_Generiche_Attivazioni</targetReference>
+        </connector>
+        <flowName>HDT_FL_SupplySelection</flowName>
+        <inputAssignments>
+            <name>AccountId</name>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputServicePointId</name>
+            <value>
+                <elementReference>InputServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>TargetObject</name>
+            <value>
+                <stringValue>Fornitura</stringValue>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>cancelCase</assignToReference>
+            <name>cancelCase</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>Commodity</assignToReference>
+            <name>Commodity</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>Contract</assignToReference>
+            <name>Contract</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServicePointId</assignToReference>
+            <name>ServicePointId</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServiceRequestId</assignToReference>
+            <name>ServiceRequestId</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
         <name>Selezione_Fornitura_Autolettura</name>
         <label>Selezione Fornitura</label>
         <locationX>7222</locationX>
@@ -9070,6 +9659,20 @@
             <name>InputCase</name>
             <value>
                 <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Subflow_Segnalazioni_VAS</name>
+        <label>Subflow Segnalazioni VAS</label>
+        <locationX>12194</locationX>
+        <locationY>1886</locationY>
+        <flowName>HDT_FL_SegnalazioniVAS</flowName>
+        <inputAssignments>
+            <name>Case</name>
+            <value>
+                <elementReference>Get_Case_Autoelettrica</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>

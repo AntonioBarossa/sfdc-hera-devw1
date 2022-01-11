@@ -113,22 +113,6 @@
             <stringValue>CBS_CRP001__CONTATTARE_IL_CLIENTE</stringValue>
         </value>
     </choices>
-    <choices>
-        <name>GiroContatoreDaGestire</name>
-        <choiceText>Giro contatore da gestire</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>CBS_AUT005__GIRO_CONTATORE_DA_GESTIRE</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>PreavvisoCessazione</name>
-        <choiceText>Preavviso Cessazione</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>CBS_MOR007__PREAVVISO_CESSAZIONE</stringValue>
-        </value>
-    </choices>
     <interviewLabel>HDT_FL_CreationManualActivity {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_CreationManualActivity</label>
     <processMetadataValues>
@@ -217,8 +201,6 @@
         <fields>
             <name>Tipologia</name>
             <choiceReferences>Contattareilcliente</choiceReferences>
-            <choiceReferences>PreavvisoCessazione</choiceReferences>
-            <choiceReferences>GiroContatoreDaGestire</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Tipologia</fieldText>
             <fieldType>DropdownBox</fieldType>
