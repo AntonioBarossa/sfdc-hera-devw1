@@ -35,7 +35,6 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
         String fromString = ' FROM '+ objectName;
         String controllingField = 'Id';
         String whereString = ' WHERE ' + controllingField + ' =\''+ contractId + '\'';
-        // TODO DA FIXARE: oltre al product name va recuperato anche il codice prodotto e il codice versione da usare nella query sotto su EligibilityCriteria__c
         //String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';//montors fix --
         String relatedQueryString = ',(SELECT SBQQ__Product__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';//montors fix ++
         queryString = queryString + relatedQueryString + fromString + whereString; 
