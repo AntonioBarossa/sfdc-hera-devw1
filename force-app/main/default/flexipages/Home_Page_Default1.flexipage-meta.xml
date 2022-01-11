@@ -8,7 +8,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>HDT_LCP_AccountGlobalAction</componentName>
+                <componentName>HDT_LCP_AccountSearchGlobalAction</componentName>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
