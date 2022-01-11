@@ -158,6 +158,15 @@ public inherited sharing class HDT_QR_SearchPlug {
 
     }
 
+    public static List<LoginGroupItem__c> getLoginGroupItemByUser(Id currentUserId){
+        return [
+            SELECT LoginGroup__c
+            FROM LoginGroupItem__c
+            WHERE Login__c = :currentUserId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     public static Integer getUserForLoginGroup(Id currentUserId, Id loginGroupId){
         return [
             SELECT count()

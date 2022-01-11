@@ -198,6 +198,8 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         Set<Id> idToFilterByMunicipalities = new Set<Id>();
         List<String> familyList;
         List<String> statusList = new List<String>();
+        List<LoginGroupItem__c> loginGroupItemList;
+        Set<Id> loginGroupSet = new Set<Id>();
         statusList.add(Label.HDT_Sold);//'Vendibile'
 
         Boolean saleIsEnabled = checkIfSaleIsEnabled();
@@ -266,6 +268,14 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         //  - LoginGroup__c
         Boolean age, consumptionRangeEe, consumptionRangeGas, powerRange, residentDeliveryAddress, newClient, login;
 
+        loginGroupItemList = HDT_QR_SearchPlug.getLoginGroupItemByUser(UserInfo.getUserId());
+
+        if(loginGroupItemList.size() > 0){
+            for(LoginGroupItem__c lgi : loginGroupItemList){
+                loginGroupSet.add(lgi.LoginGroup__c);
+            }
+        }
+
         for(EligibilityCriteria__c criteria : filteredEligibleCriteria){
             
             age = checkDecimalCriteria(criteria.ClientAgeMin__c , criteria.ClientAgeMax__c, quote.ClientAge__c);
@@ -274,7 +284,8 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             powerRange = checkDecimalCriteria(criteria.PowerRangeMin__c , criteria.PowerRangeMax__c, quote.PowerFlow__c);
             residentDeliveryAddress = checkBooleanCriteria(quote.ResidentDeliveryAddress__c, criteria.ResidentDeliveryAddress__c);
             newClient = checkBooleanCriteria(quote.NewClient__c, criteria.NewClient__c);
-            login = checkLoginGroup(criteria.LoginGroup__c);
+            //login = checkLoginGroup(criteria.LoginGroup__c);
+            login = checkLoginGroup(criteria.LoginGroup__c, loginGroupSet);
 
             //System.debug(LoggingLevel.DEBUG, '>>> criteria productcode: ' + criteria.product__r.productcode);
             //System.debug(LoggingLevel.DEBUG, '>>> age: ' + age);
@@ -296,7 +307,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             }
             
         }
-
+        System.debug(LoggingLevel.DEBUG, '>>>> Limits.getQueries: ' + Limits.getQueries() + ' of ' + Limits.getLimitQueries());
         System.debug(LoggingLevel.DEBUG, '>>>> criteri: ' + idToFilterByMunicipalities);
 
         //>>> FILTER - STEP 2 > FILTER ONLY Municipalities...
@@ -375,6 +386,20 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         }     
 
         return false;
+
+    }
+
+    public static Boolean checkLoginGroup(Id loginGroupId, Set<Id> loginGroupSet){
+
+        if(String.isEmpty(loginGroupId)){
+            return true;
+        }
+
+        if(loginGroupSet.size() > 0 && loginGroupSet.contains(loginGroupId)){
+            return true;
+        } else {
+            return false;
+        }
 
     }
 
