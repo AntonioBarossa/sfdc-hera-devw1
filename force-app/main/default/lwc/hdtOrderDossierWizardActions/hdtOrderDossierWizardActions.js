@@ -143,6 +143,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                                 }
                             );
                             this.previewExecuted = true;
+                            this.isPrintButtonDisabled = false;
                         }else{
                             this.loading = false;
                             this.showMessage('Attenzione',resultParsed.message,'error');
@@ -151,7 +152,6 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                         this.loading = false;
                         this.showMessage('Attenzione','Errore nella composizione del plico','error');
                     }
-                    this.isPrintButtonDisabled = false;
                 })
                 .catch(error => {
                     this.loading = false;
@@ -161,7 +161,6 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         }catch(error){
             console.error();
         }
-        this.isPrintButtonDisabled = false;
     }
 
     showMessage(title,message,variant){
