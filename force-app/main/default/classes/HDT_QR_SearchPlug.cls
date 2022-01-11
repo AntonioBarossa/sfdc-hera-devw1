@@ -167,14 +167,14 @@ public inherited sharing class HDT_QR_SearchPlug {
         ];
     }
 
-    public static Integer getUserForLoginGroup(Id currentUserId, Id loginGroupId){
-        return [
-            SELECT count()
-            FROM LoginGroupItem__c
-            WHERE LoginGroup__c = :loginGroupId AND Login__c = :currentUserId
-            WITH SECURITY_ENFORCED
-        ];
-    }
+    //public static Integer getUserForLoginGroup(Id currentUserId, Id loginGroupId){
+    //    return [
+    //        SELECT count()
+    //        FROM LoginGroupItem__c
+    //        WHERE LoginGroup__c = :loginGroupId AND Login__c = :currentUserId
+    //        WITH SECURITY_ENFORCED
+    //    ];
+    //}
 
     public static List<PermissionSetAssignment> getUserPermissionSets(List<PermissionSetAssignment> assignmentList, Id currentUserId, String permissionToCheck){
         assignmentList = new List<PermissionSetAssignment>();

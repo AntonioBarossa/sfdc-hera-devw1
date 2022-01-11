@@ -403,20 +403,20 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 
     }
 
-    public static Boolean checkLoginGroup(Id loginGroupId){
-
-        if(String.isEmpty(loginGroupId)){
-            return true;
-        }
-
-        Integer userPresence = HDT_QR_SearchPlug.getUserForLoginGroup(UserInfo.getUserId(), loginGroupId);
-
-        if(userPresence == 0){
-            return false;
-        } else {
-            return true;
-        }
-    }
+    //public static Boolean checkLoginGroup(Id loginGroupId){
+    //
+    //    if(String.isEmpty(loginGroupId)){
+    //        return true;
+    //    }
+    //
+    //    Integer userPresence = HDT_QR_SearchPlug.getUserForLoginGroup(UserInfo.getUserId(), loginGroupId);
+    //
+    //    if(userPresence == 0){
+    //        return false;
+    //    } else {
+    //        return true;
+    //    }
+    //}
 
     private static Boolean checkIfSaleIsEnabled(){
         HDT_EnableSaleForCPQ__mdt enableSaleForCpq = HDT_EnableSaleForCPQ__mdt.getInstance('cpq');
