@@ -404,7 +404,7 @@ public class HDT_SRV_DocumentalManagement{
 				}
 			}
 			handleRadioGroup(record,listOfRadio,envelopeId);
-			handleLandRegistry(record,listOfData,listOfRadio);
+			//handleLandRegistry(record,listOfData,listOfRadio);
 			HDT_UTL_DatabaseService.upsertSObject(record);
 		}
 	}
