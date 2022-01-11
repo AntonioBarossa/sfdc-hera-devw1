@@ -821,7 +821,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 
 	/*
 		Crea un record del tracciato dei dati catastali.
-		docusignData è una mappa creata a partire dalla classe HDT_WRP_DocusignNotify popolata dall'integrazione inbound con docusign.
+		docusignData e docusignRadioGroups sono mappa create a partire dalla classe HDT_WRP_DocusignNotify popolata dall'integrazione inbound con docusign.
 		childOrder è l'Order figlio del processo per il quale è stata richiesta la compilazione del modulo dei dati catastali.
 
 		Di seguito il tracciato AS-IS della SIE dei dati catastali:
