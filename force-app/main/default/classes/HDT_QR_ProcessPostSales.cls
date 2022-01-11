@@ -86,4 +86,13 @@ public with sharing class HDT_QR_ProcessPostSales {
         return billingProfileList;
     }
 
+    public static List<HDT_MassiveFieldsObjectMap__mdt> getMapFieldsObject(String processType){
+        return [
+            SELECT objectType__c, labelField__c, nameField__c, MasterLabel 
+            FROM HDT_MassiveFieldsObjectMap__mdt 
+            WHERE processType__c = :processType
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
 }

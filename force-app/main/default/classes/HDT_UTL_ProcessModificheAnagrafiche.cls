@@ -255,14 +255,6 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
 
     }
 
-    private static MassiveLoaderRequestItem__c setErrorItem(String itemId, String message){
-        MassiveLoaderRequestItem__c itemError = new MassiveLoaderRequestItem__c();
-        itemError.Id = itemId;
-        itemError.Status__c = 'Errore';
-        itemError.StatusDescription__c = message;
-        return itemError;
-    }
-
     public override void manageCatchException(Integer batchSize, List<MassiveLoaderRequestItem__c> itemList, String message){
         for(MassiveLoaderRequestItem__c item : itemList){
             item.Status__c = 'Errore';
@@ -279,13 +271,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
         mapWrapperCaseFields = new Map<String, String>();
 
         sobjectMap = new Map<String, HDT_MassiveFieldsObjectMap__mdt>();
-
-        allFieldForThisProcess = [
-            SELECT objectType__c, labelField__c, nameField__c, MasterLabel 
-            FROM HDT_MassiveFieldsObjectMap__mdt 
-            WHERE processType__c = :this.processName
-            WITH SECURITY_ENFORCED
-        ];
+        allFieldForThisProcess = HDT_QR_ProcessPostSales.getMapFieldsObject(this.processName);
 
         for(HDT_MassiveFieldsObjectMap__mdt temp : allFieldForThisProcess){
             if(temp.objectType__c.equalsIgnoreCase('WrapperCase')){
@@ -322,7 +308,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
             //item.Data__c = 'Variazione Anagrafica Cliente,0011X00000rL7Z6QAK,,200010613357,3336560123,3336560123,,,,,,,,,,,,,,,,,,,,,,,,,ADAM,,,,,,,,,,,,,,,';//--0011X00000jcKXUQA2
             item.Data__c = '';
             item.Data__c += 'Variazione Anagrafica Cliente,';// PROCESSO
-            item.Data__c += '0011X00000rL7Z6QAK,';// ACCOUNTID
+            item.Data__c += '0011X00000rL7Z6QAK,';// ACCOUNTID - 
             item.Data__c += ',';// SOTTOPROCESSO
             item.Data__c += '200010613357,';// CONTO_CONTRATTUALE
             item.Data__c += '3336560123,';// TELEFONO

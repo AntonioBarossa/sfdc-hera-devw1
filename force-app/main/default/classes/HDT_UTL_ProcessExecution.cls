@@ -51,32 +51,32 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     }
     // --------- montors fix for bulk develop  ---------
 
-    public void setMassiveLoaderRequestItem(MassiveLoaderRequestItem__c requestItem){
-
-        currentProcess=new HDT_WRP_ProcessEntities();
-        this.currentProcess.currentRequestItem=requestItem;   
-       
-
-        if ( String.isBlank( this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c)) {
-            throw new HDT_WRP_ProcessEntitiesException( 'NullPointerExceptions','ProcessType can\'t be null');
-        }
-    
-        this.processName= this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c;
-        HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(processName);
-        List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName);
- 
-
-        mapHeaderByPosition = new Map<Integer, String>();
-        Integer count=0;
-        for (String temp : staticResources.get(0).Body.toString().remove('\r').remove('\n').split(',')) {
-           if (temp.containsIgnoreCase('*')) {
-                temp=temp.remove('*');
-                mapRequiredByPosition.put(count,temp);
-            }
-            mapHeaderByPosition.put(count,temp);
-            count++;
-        }
-    }
+    //public void setMassiveLoaderRequestItem(MassiveLoaderRequestItem__c requestItem){
+    //
+    //    currentProcess=new HDT_WRP_ProcessEntities();
+    //    this.currentProcess.currentRequestItem=requestItem;   
+    //   
+    //
+    //    if ( String.isBlank( this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c)) {
+    //        throw new HDT_WRP_ProcessEntitiesException( 'NullPointerExceptions','ProcessType can\'t be null');
+    //    }
+    //
+    //    this.processName= this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c;
+    //    HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(processName);
+    //    List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName);
+    //
+    //
+    //    mapHeaderByPosition = new Map<Integer, String>();
+    //    Integer count=0;
+    //    for (String temp : staticResources.get(0).Body.toString().remove('\r').remove('\n').split(',')) {
+    //       if (temp.containsIgnoreCase('*')) {
+    //            temp=temp.remove('*');
+    //            mapRequiredByPosition.put(count,temp);
+    //        }
+    //        mapHeaderByPosition.put(count,temp);
+    //        count++;
+    //    }
+    //}
 
     public virtual void checks(){
         System.debug('checks');
@@ -343,5 +343,14 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
             this.Type      = varType;
             this.message   = varMessage;
         }
-    }    
+    }
+
+    public MassiveLoaderRequestItem__c setErrorItem(String itemId, String message){
+        MassiveLoaderRequestItem__c itemError = new MassiveLoaderRequestItem__c();
+        itemError.Id = itemId;
+        itemError.Status__c = 'Errore';
+        itemError.StatusDescription__c = message;
+        return itemError;
+    }
+
 }
