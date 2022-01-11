@@ -24,16 +24,17 @@ public with sharing class HDT_LC_EditScartiComplessi {
     }
 
     @AuraEnabled
-    public static String resubmissionPractice(String orderId,String activityId){
+    public static String resubmissionPractice(String orderId,String activityId, String processType){
         String response;
-        Order orderToUpdate = new Order(Id = orderId,Phase__c = 'Comunicazione verso Heroku');
+        String fase = 'Voltura'.equalsIgnoreCase(processType) ? 'Documentazione Validata' : 'Comunicazione verso Heroku';
+        Order orderToUpdate = new Order(Id = orderId,Phase__c = fase);
         System.Savepoint sp = Database.setSavePoint();
         try {
-            if (!HDT_UTL_Scarti.closeDiscardActivity(activityId)){
+            if (!HDT_UTL_Scarti.updateCloseDiscardActivity(activityId)){
                 response = 'Impossibile chiudere l\'attività di scarto';
-                Database.rollback(sp);
             } else if (!HDT_UTL_DatabaseService.updateSObject(orderToUpdate)){
                 response = 'Errore nell\'aggiornamento della fase dell\'ordine.';
+                Database.rollback(sp);
             }
         } catch (Exception e) {
             Database.rollback(sp);
@@ -46,7 +47,7 @@ public with sharing class HDT_LC_EditScartiComplessi {
     public static List<String> closeDiscardActivity(List<String> input){
         String response;
         Id activityId = (Id)input[0];
-        if (!HDT_UTL_Scarti.closeDiscardActivity(activityId)){
+        if (!HDT_UTL_Scarti.updateCloseDiscardActivity(activityId)){
             response = 'Impossibile chiudere l\'attività di scarto';
         }
         return new List<String>{response};

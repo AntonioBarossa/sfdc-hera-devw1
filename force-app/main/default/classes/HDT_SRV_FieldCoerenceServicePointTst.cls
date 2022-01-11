@@ -25,7 +25,7 @@ public class HDT_SRV_FieldCoerenceServicePointTst {
         myFieldCsp.AccountCategory__c = 'Famiglie';
         myFieldCsp.SupplyType__c = 'A-Domestico';
         myFieldCsp.ImplantType__c = '1001-Cottura cibi';
-        myFieldCsp.Taxes__c = 'Imposta Usi Domestici (Cod. G_ICD)';
+        myFieldCsp.Taxes__c = 'G_ICD';
         myFieldCsp.UseCategory__c = '001-Uso cottura cibi';
         myFieldCsp.WithdrawalClass__c = '001 - 7 giorni';
         update myFieldCsp;
@@ -59,7 +59,7 @@ public class HDT_SRV_FieldCoerenceServicePointTst {
         myFieldCsp.AccountCategory__c = 'Famiglie';
         myFieldCsp.SupplyType__c = 'A-Domestico';
         myFieldCsp.ImplantType__c = '1001-Cottura cibi';
-        myFieldCsp.Taxes__c = 'Imposta Usi Domestici (Cod. G_ICD)';
+        myFieldCsp.Taxes__c = 'G_ICD';
         myFieldCsp.UseCategory__c = '001-Uso cottura cibi';
         myFieldCsp.WithdrawalClass__c = '001 - 7 giorni';
         update myFieldCsp;
