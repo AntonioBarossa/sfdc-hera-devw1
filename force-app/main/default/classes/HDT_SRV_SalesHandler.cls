@@ -36,7 +36,7 @@ public with sharing class HDT_SRV_SalesHandler {
 
         switch on header.requestType {
             when 'NOTIF_ES'{
-
+                String activityName;
                 if (request.objects.get(0).fields.get(0) != null) {
 				
                     For(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
@@ -47,7 +47,8 @@ public with sharing class HDT_SRV_SalesHandler {
                     }
 
                     if (mapRequestFields.get('ATTIVITA') != null) {
-                        switch on mapRequestFields.get('ATTIVITA'){
+                        activityName = mapRequestFields.get('ATTIVITA');
+                        switch on activityName{
                             when 'Gestione Switch in Ripristinatorio'{
                                 HDT_UTL_ActivityCustom.createActivityWithParams(new Map<String,String>{
                                     'RecordTypeDeveloperName' => 'HDT_RT_AttivitaGestionali',
@@ -97,6 +98,8 @@ public with sharing class HDT_SRV_SalesHandler {
                         String nextPhase = mapRequestFields.get('FASE');
                         String finalCancellationPhase = '';
                         //EVERIS: EMD ANNULLAMENTO/RIPENSAMENTO
+                        //EVERIS: Gestione Scarti SAP
+                        HDT_UTL_Scarti.handleHerokuResponse(ordRetrieved.Id, activityName, nextPhase);
                         Order ord = new Order();
                         ord.Id = ordRetrieved.Id;
                         ord.Phase__c = mapRequestFields.get('FASE');

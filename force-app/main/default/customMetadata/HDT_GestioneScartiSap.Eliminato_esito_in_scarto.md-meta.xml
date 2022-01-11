@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Eliminato esito in scarto</label>
+    <protected>false</protected>
+    <values>
+        <field>ActivityInitialStatus__c</field>
+        <value xsi:type="xsd:string">Chiusa</value>
+    </values>
+    <values>
+        <field>ActivityToClose__c</field>
+        <value xsi:type="xsd:string">Esito ricevuto su richiesta chiusa</value>
+    </values>
+    <values>
+        <field>Activity__c</field>
+        <value xsi:type="xsd:string">Eliminato esito in scarto</value>
+    </values>
+    <values>
+        <field>CreateActivity__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Phase__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>SkipPhaseManager__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>
