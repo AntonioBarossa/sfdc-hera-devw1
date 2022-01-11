@@ -138,7 +138,7 @@
             <field>Commodity__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>getCaseFromIdIputVariable.Commodity__c</elementReference>
+                <elementReference>getCaseFromIdIputVariable.CommodityFormula__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -189,21 +189,9 @@
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>addContentDocument</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>cancelButton</name>
                 <value>
                     <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>contentDocumentLabel</name>
-                <value>
-                    <stringValue>Aggiungi Documento Delegato (Se Necessario)</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -257,7 +245,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Generiche Attivazioni</stringValue>
+                    <stringValue>Cambio Uso Tecnico</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
