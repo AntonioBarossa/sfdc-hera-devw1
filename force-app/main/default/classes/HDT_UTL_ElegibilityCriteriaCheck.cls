@@ -23,7 +23,6 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
         Id contractId = caseRecord.Contract__c;
 
         if (contractId == null) {
-            // TODO: se non ho un contratto sul case (es. sulle Domiciliazioni o sulle Mod. Anagrafiche) bisogna scorrersi tutti i contratti del cliente...
             outputList.add(output);
             return outputList;
         }
