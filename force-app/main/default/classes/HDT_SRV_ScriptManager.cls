@@ -28,7 +28,8 @@ public inherited sharing class HDT_SRV_ScriptManager {
         List<HDT_WRP_ScriptConfig> configs;
         switch on sObjectName {
             when 'Order' {
-                configs = getOrderScriptConfig(recordId);
+                // configs = getOrderScriptConfig(recordId);
+                configs = getOrderScriptFlows(recordId);
             }
             when 'wrts_prcgvr__Activity__c'{
                 configs = getActivityScriptConfig(recordId);
@@ -41,35 +42,98 @@ public inherited sharing class HDT_SRV_ScriptManager {
         checkScriptType(configs);
         return configs;
     }
-    
+
     /**
     * @description Get script name and target for given order
     * @author gabriele.rota@webresults.it | 2021-09-29 
     * @param orderParentId  
     * @return List<HDT_WRP_ScriptConfig>
     **/
-    private static List<HDT_WRP_ScriptConfig> getOrderScriptConfig(Id orderParentId){
+    // private static List<HDT_WRP_ScriptConfig> getOrderScriptConfig(Id orderParentId){
+
+    //     Order parentOrder = orderQr.getRecordById(orderParentId);
+    //     Set<String> offerCodes = new Set<String>();
+    //     for (Order childOrder:orderQr.getChildOrdersByParentId(orderParentId)) {
+
+    //         if (String.isNotBlank(childOrder.OrderReference__c)) {
+    //             continue;
+    //         }
+
+    //         if (String.isNotBlank(childOrder.CommercialProductCode__c)) {
+    //             offerCodes.add( childOrder.CommercialProductCode__c );
+    //         }
+    //     }
+
+    //     Set<String> scriptNames = getOrderScriptsFromMetadata(parentOrder.SignatureMethod__c, offerCodes);
+    //     List<HDT_WRP_ScriptConfig> configs = new List<HDT_WRP_ScriptConfig>();
+    //     for (String scriptName:scriptNames) {
+    //         configs.add(new HDT_WRP_ScriptConfig(orderParentId, scriptName));
+    //     }
+
+    //     return configs;
+    // }
+
+    @SuppressWarnings('PMD.AvoidDebugStatements')
+    private static List<HDT_WRP_ScriptConfig> getOrderScriptFlows(Id orderParentId){
 
         Order parentOrder = orderQr.getRecordById(orderParentId);
-
-        Set<String> offerCodes = new Set<String>();
-        for (Order childOrder:orderQr.getChildOrdersByParentId(orderParentId)) {
-
-            if (String.isNotBlank(childOrder.OrderReference__c)) {
-                continue;
-            }
-
-            if (String.isNotBlank(childOrder.CommercialProductCode__c)) {
-                offerCodes.add( childOrder.CommercialProductCode__c );
-            }
-        }
-
-        Set<String> scriptNames = getOrderScriptsFromMetadata(parentOrder.SignatureMethod__c, offerCodes);
         List<HDT_WRP_ScriptConfig> configs = new List<HDT_WRP_ScriptConfig>();
-        for (String scriptName:scriptNames) {
-            configs.add(new HDT_WRP_ScriptConfig(orderParentId, scriptName));
+        Set<String> offerCodes = new Set<String>();
+        Set<String> vasNames = new Set<String>();
+
+        try {
+            
+            for (Order childOrder : orderQr.getChildOrdersByParentId(orderParentId)) {
+    
+                if (String.isNotBlank(childOrder.OrderReference__c)) {
+                    continue;
+                }
+    
+                if('VAS'.equals(childOrder.ProcessType__c)){
+                    vasNames.add(childOrder.CommercialProduct__c);
+                    continue;
+                }
+    
+                if (String.isNotBlank(childOrder.CommercialProductCode__c)) {
+                    offerCodes.add(childOrder.CommercialProductCode__c);
+                }
+    
+            }
+    
+            List<AggregateResult> offerNames = [SELECT Product2.CategoryFamily__c FROM OrderItem WHERE Product2.ProductCode IN: offerCodes WITH SECURITY_ENFORCED GROUP BY Product2.CategoryFamily__c];
+    
+            String flowUrl = '';
+            String nomeOfferta = '';
+    
+            if (offerNames.size() > 0){
+                for (AggregateResult offerName : offerNames){
+                    for (HDT_ScriptPerCommOffer__mdt scriptPerOffer : scriptsMapping) {
+                        if (scriptPerOffer.Object__c == 'Order' && scriptPerOffer.SignatureMethod__c == parentOrder.SignatureMethod__c) {
+                            if (String.valueOf(offerName.get('CategoryFamily__c')).equalsIgnoreCase(scriptPerOffer.OfferName__c)) {
+                                flowUrl = '/flow/' + scriptPerOffer.ScriptFlowName__c +'?idOrdinePadreInput='+ orderParentId +'&offertaInput='+ String.valueOf(offerName.get('CategoryFamily__c')) +'';
+                                nomeOfferta = String.valueOf(offerName.get('CategoryFamily__c'));
+                                configs.add(new HDT_WRP_ScriptConfig(nomeOfferta, flowUrl));
+                            }
+                        }
+                    }
+                }
+            }else{
+    
+                HDT_ScriptPerCommOffer__mdt vasScriptConfig = [SELECT ScriptFlowName__c FROM HDT_ScriptPerCommOffer__mdt WHERE DeveloperName = 'VAS' WITH SECURITY_ENFORCED LIMIT 1];
+    
+                if (vasScriptConfig != null && vasNames.size() > 0){
+                    flowUrl = '/flow/' + vasScriptConfig.ScriptFlowName__c + '?idOrdinePadreInput='+ orderParentId;
+                    configs.add(new HDT_WRP_ScriptConfig('VAS', flowUrl));
+                }
+            }
+    
+            System.debug(LoggingLevel.DEBUG, 'returned configs list: ' + configs);
+            return configs;
+
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Si è verificato un errore: ' + e.getStackTraceString());
+            throw e;
         }
-        return configs;
     }
 
     /**
@@ -167,9 +231,18 @@ public inherited sharing class HDT_SRV_ScriptManager {
         @AuraEnabled public Id scriptTarget {get;set;}
         @AuraEnabled public Boolean isScriptDecisional {get;set;}
 
+        @AuraEnabled public String offerName {get;set;}
+        @AuraEnabled public String flowUrl {get;set;}
+
         public HDT_WRP_ScriptConfig(Id scrTarget, String scrName) {
             this.scriptTarget = scrTarget;
             this.scriptName = scrName;
         }
+
+        public HDT_WRP_ScriptConfig(String offerName, String flowUrl) {
+            this.offerName = offerName;
+            this.flowUrl = flowUrl;
+        }
     }
+
 }

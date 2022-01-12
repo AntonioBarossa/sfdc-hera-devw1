@@ -20,7 +20,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>HDT_LCP_AccountGlobalAction</componentName>
+                <componentName>HDT_LCP_AccountSearchGlobalAction</componentName>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.HDT_CP_Archive}</leftValue>

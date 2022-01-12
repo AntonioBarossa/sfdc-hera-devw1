@@ -4,8 +4,8 @@
     <assignments>
         <name>Add_House_Data</name>
         <label>Add House Data</label>
-        <locationX>578</locationX>
-        <locationY>2174</locationY>
+        <locationX>1370</locationX>
+        <locationY>2894</locationY>
         <assignmentItems>
             <assignToReference>Case.Surface__c</assignToReference>
             <operator>Assign</operator>
@@ -39,10 +39,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Case</name>
+        <label>Assign Case</label>
+        <locationX>732</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>Case</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_from_CaseId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Resume_Process_decision</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Link_Asset_0</name>
         <label>Link Asset</label>
-        <locationX>314</locationX>
-        <locationY>1934</locationY>
+        <locationX>1106</locationX>
+        <locationY>2654</locationY>
         <assignmentItems>
             <assignToReference>Case.AssetId</assignToReference>
             <operator>Assign</operator>
@@ -78,8 +94,8 @@
     <assignments>
         <name>Link_Subscription_0</name>
         <label>Link Subscription</label>
-        <locationX>710</locationX>
-        <locationY>1934</locationY>
+        <locationX>1502</locationX>
+        <locationY>2654</locationY>
         <assignmentItems>
             <assignToReference>Case.Subscription__c</assignToReference>
             <operator>Assign</operator>
@@ -122,8 +138,8 @@
     <assignments>
         <name>Set_Case</name>
         <label>Set Case</label>
-        <locationX>765</locationX>
-        <locationY>2822</locationY>
+        <locationX>1557</locationX>
+        <locationY>3542</locationY>
         <assignmentItems>
             <assignToReference>Case.SignalType__c</assignToReference>
             <operator>Assign</operator>
@@ -171,10 +187,56 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Case_Phase_Completata_e_Status_in_Chiuso</name>
+        <label>Set Case Phase Completata e Status in Chiuso</label>
+        <locationX>666</locationX>
+        <locationY>4646</locationY>
+        <assignmentItems>
+            <assignToReference>Case.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completata</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Case_Phase_e_Status_In_Lavorazione</name>
+        <label>Set Case Phase e Status In Lavorazione</label>
+        <locationX>930</locationX>
+        <locationY>4406</locationY>
+        <assignmentItems>
+            <assignToReference>Case.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Contract</name>
         <label>Set Contract</label>
-        <locationX>512</locationX>
-        <locationY>1454</locationY>
+        <locationX>1304</locationX>
+        <locationY>2174</locationY>
         <assignmentItems>
             <assignToReference>Case.Contract__c</assignToReference>
             <operator>Assign</operator>
@@ -189,8 +251,8 @@
     <assignments>
         <name>Set_Invoices</name>
         <label>Set Invoices</label>
-        <locationX>633</locationX>
-        <locationY>1118</locationY>
+        <locationX>1425</locationX>
+        <locationY>1838</locationY>
         <assignmentItems>
             <assignToReference>Case.BillNumber__c</assignToReference>
             <operator>Assign</operator>
@@ -205,8 +267,8 @@
     <assignments>
         <name>Set_Output</name>
         <label>Set Output</label>
-        <locationX>407</locationX>
-        <locationY>3158</locationY>
+        <locationX>732</locationX>
+        <locationY>4166</locationY>
         <assignmentItems>
             <assignToReference>UserInputFlow</assignToReference>
             <operator>Assign</operator>
@@ -214,12 +276,15 @@
                 <elementReference>Get_UserInputFlow_0.ProcessType__c</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Phase_Status</targetReference>
+        </connector>
     </assignments>
     <decisions>
         <name>Additional_Config</name>
         <label>Additional Config?</label>
-        <locationX>710</locationX>
-        <locationY>2054</locationY>
+        <locationX>1502</locationX>
+        <locationY>2774</locationY>
         <defaultConnector>
             <targetReference>Get_Primary_Contact_Relation</targetReference>
         </defaultConnector>
@@ -243,8 +308,8 @@
     <decisions>
         <name>Additional_Config0</name>
         <label>Additional Config?</label>
-        <locationX>765</locationX>
-        <locationY>878</locationY>
+        <locationX>1557</locationX>
+        <locationY>1598</locationY>
         <defaultConnector>
             <targetReference>Has_Sub_Asset_Selection</targetReference>
         </defaultConnector>
@@ -268,8 +333,8 @@
     <decisions>
         <name>Has_Sub_Asset_Selection</name>
         <label>Has Sub/Asset Selection?</label>
-        <locationX>765</locationX>
-        <locationY>1334</locationY>
+        <locationX>1557</locationX>
+        <locationY>2054</locationY>
         <defaultConnector>
             <targetReference>Get_Primary_Contact_Relation</targetReference>
         </defaultConnector>
@@ -298,10 +363,71 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Null_Control</name>
+        <label>Null Control</label>
+        <locationX>259</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Void</defaultConnectorLabel>
+        <rules>
+            <name>Void</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>InputCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>InputCase</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Void</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Phase_Status</name>
+        <label>Phase/Status?</label>
+        <locationX>732</locationX>
+        <locationY>4286</locationY>
+        <defaultConnector>
+            <targetReference>Set_Case_Phase_e_Status_In_Lavorazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>In_Lavorazione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Case.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Lavorazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Case.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Lavorazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Show_Fields</targetReference>
+            </connector>
+            <label>In Lavorazione/Bozza</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Resume_Process_decision</name>
         <label>Resume Process?</label>
-        <locationX>407</locationX>
-        <locationY>158</locationY>
+        <locationX>732</locationX>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Reporting_Type_Selection</targetReference>
         </defaultConnector>
@@ -310,10 +436,17 @@
             <name>Resume_Process</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>ResumeProcess</leftValueReference>
+                <leftValueReference>Case.Status</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <stringValue>In Lavorazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Case.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Lavorazione</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -323,10 +456,188 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Type_Screen_Decision</name>
+        <label>Type Screen Decision</label>
+        <locationX>1414</locationX>
+        <locationY>758</locationY>
+        <defaultConnectorLabel>Save in Draft</defaultConnectorLabel>
+        <rules>
+            <name>Annulla</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Type_button.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Type_button.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annullamento</targetReference>
+            </connector>
+            <label>Annulla</label>
+        </rules>
+        <rules>
+            <name>Avanti</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Type_button.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Type_button.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Reporting_Category_Selection</targetReference>
+            </connector>
+            <label>Avanti</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Type_Screen_Decision_0</name>
+        <label>Type Screen Decision</label>
+        <locationX>1414</locationX>
+        <locationY>998</locationY>
+        <defaultConnectorLabel>Save in Draft</defaultConnectorLabel>
+        <rules>
+            <name>Annulla_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Category_button.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Category_button.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annullamento_0</targetReference>
+            </connector>
+            <label>Annulla</label>
+        </rules>
+        <rules>
+            <name>Avanti_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Category_button.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Category_button.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Subcategory_Selection</targetReference>
+            </connector>
+            <label>Avanti</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Type_Screen_Decision_0_0</name>
+        <label>Type Screen Decision</label>
+        <locationX>1414</locationX>
+        <locationY>1238</locationY>
+        <defaultConnectorLabel>Save in Draft</defaultConnectorLabel>
+        <rules>
+            <name>Annulla_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Category_button.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Category_button.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annullamento_0_0</targetReference>
+            </connector>
+            <label>Annulla</label>
+        </rules>
+        <rules>
+            <name>Avanti_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Category_button.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Category_button.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Reporting_Reason_Records</targetReference>
+            </connector>
+            <label>Avanti</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>User_Decision</name>
+        <label>User Decision</label>
+        <locationX>534</locationX>
+        <locationY>4526</locationY>
+        <defaultConnector>
+            <targetReference>Set_Case_Phase_Completata_e_Status_in_Chiuso</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Pratica Confermata</defaultConnectorLabel>
+        <rules>
+            <name>Annullato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Category_button.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annullamento_0_0_0</targetReference>
+            </connector>
+            <label>Annulla</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Which_sObject_0</name>
         <label>Which sObject?</label>
-        <locationX>512</locationX>
-        <locationY>1694</locationY>
+        <locationX>1304</locationX>
+        <locationY>2414</locationY>
         <defaultConnector>
             <targetReference>Get_Subscription</targetReference>
         </defaultConnector>
@@ -513,8 +824,8 @@
     <recordLookups>
         <name>Get_Asset</name>
         <label>Get Asset</label>
-        <locationX>314</locationX>
-        <locationY>1814</locationY>
+        <locationX>1106</locationX>
+        <locationY>2534</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Link_Asset_0</targetReference>
@@ -532,10 +843,31 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Case_from_CaseId</name>
+        <label>Get Case from CaseId</label>
+        <locationX>259</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Null_Control</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Primary_Contact</name>
         <label>Get Primary Contact</label>
-        <locationX>765</locationX>
-        <locationY>2702</locationY>
+        <locationX>1557</locationX>
+        <locationY>3422</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_Case</targetReference>
@@ -555,8 +887,8 @@
     <recordLookups>
         <name>Get_Primary_Contact_Relation</name>
         <label>Get Primary Contact Relation</label>
-        <locationX>765</locationX>
-        <locationY>2582</locationY>
+        <locationX>1557</locationX>
+        <locationY>3302</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Primary_Contact</targetReference>
@@ -590,8 +922,8 @@
     <recordLookups>
         <name>Get_Reporting_Reason_Records</name>
         <label>Get Reporting Reason Records</label>
-        <locationX>765</locationX>
-        <locationY>638</locationY>
+        <locationX>1557</locationX>
+        <locationY>1358</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Description_And_Reason</targetReference>
@@ -625,8 +957,8 @@
     <recordLookups>
         <name>Get_Subscription</name>
         <label>Get Subscription</label>
-        <locationX>710</locationX>
-        <locationY>1814</locationY>
+        <locationX>1502</locationX>
+        <locationY>2534</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Link_Subscription_0</targetReference>
@@ -646,8 +978,8 @@
     <recordLookups>
         <name>Get_UserInputFlow_0</name>
         <label>Get UserInputFlow</label>
-        <locationX>407</locationX>
-        <locationY>3038</locationY>
+        <locationX>732</locationX>
+        <locationY>4046</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_Output</targetReference>
@@ -670,7 +1002,7 @@
         <name>Get_UserInputFlow_From_Case</name>
         <label>Get UserInputFlow From Case</label>
         <locationX>50</locationX>
-        <locationY>278</locationY>
+        <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_UserInputFlow_0</targetReference>
@@ -714,11 +1046,18 @@
             <field>UserInputFlow__c</field>
         </outputAssignments>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Case_0</name>
+        <label>Update Case</label>
+        <locationX>732</locationX>
+        <locationY>5078</locationY>
+        <inputReference>Case</inputReference>
+    </recordUpdates>
     <screens>
         <name>Asset_Subscription_Selection</name>
         <label>Asset/Subscription Selection</label>
-        <locationX>512</locationX>
-        <locationY>1574</locationY>
+        <locationX>1304</locationX>
+        <locationY>2294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -751,8 +1090,8 @@
     <screens>
         <name>Description_And_Reason</name>
         <label>Description And Reason</label>
-        <locationX>765</locationX>
-        <locationY>758</locationY>
+        <locationX>1557</locationX>
+        <locationY>1478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -819,19 +1158,63 @@
                 </conditions>
             </visibilityRule>
         </fields>
-        <showFooter>true</showFooter>
+        <fields>
+            <name>SignalReason_Button</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Reporting_Category_Selection</name>
         <label>Reporting Category Selection</label>
-        <locationX>765</locationX>
-        <locationY>398</locationY>
+        <locationX>1414</locationX>
+        <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Subcategory_Selection</targetReference>
+            <targetReference>Type_Screen_Decision_0</targetReference>
         </connector>
         <fields>
             <name>Reporting_Category</name>
@@ -841,19 +1224,69 @@
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
         </fields>
-        <showFooter>true</showFooter>
+        <fields>
+            <name>Category_button</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Reporting_Type_Selection</name>
         <label>Reporting Type Selection</label>
-        <locationX>765</locationX>
-        <locationY>278</locationY>
+        <locationX>1414</locationX>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Reporting_Category_Selection</targetReference>
+            <targetReference>Type_Screen_Decision</targetReference>
         </connector>
         <fields>
             <name>Reporting_Type</name>
@@ -863,14 +1296,64 @@
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
         </fields>
-        <showFooter>true</showFooter>
+        <fields>
+            <name>Type_button</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>ScreenSelezFatture</name>
         <label>ScreenSelezFatture</label>
-        <locationX>633</locationX>
-        <locationY>998</locationY>
+        <locationX>1425</locationX>
+        <locationY>1718</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -900,15 +1383,109 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Subcategory_Selection</name>
-        <label>Subcategory_Selection</label>
-        <locationX>765</locationX>
-        <locationY>518</locationY>
+        <name>Show_Fields</name>
+        <label>Show Fields</label>
+        <locationX>534</locationX>
+        <locationY>4406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_Reporting_Reason_Records</targetReference>
+            <targetReference>User_Decision</targetReference>
+        </connector>
+        <fields>
+            <name>Showing_Fields</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Segnalazioni VAS - Autoelettrica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>Case.RecordType.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelPreviousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Subcategory_Selection</name>
+        <label>Subcategory_Selection</label>
+        <locationX>1414</locationX>
+        <locationY>1118</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Type_Screen_Decision_0_0</targetReference>
         </connector>
         <fields>
             <name>Reporting_Subcategory</name>
@@ -918,17 +1495,167 @@
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
         </fields>
-        <showFooter>true</showFooter>
+        <fields>
+            <name>Subcategory_button</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>281</locationX>
+        <locationX>133</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Resume_Process_decision</targetReference>
+            <targetReference>Get_Case_from_CaseId</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Annullamento</name>
+        <label>Annullamento</label>
+        <locationX>314</locationX>
+        <locationY>878</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Autoelettrica</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annullamento_0</name>
+        <label>Annullamento</label>
+        <locationX>578</locationX>
+        <locationY>1118</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Autoelettrica</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annullamento_0_0</name>
+        <label>Annullamento</label>
+        <locationX>842</locationX>
+        <locationY>1358</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Autoelettrica</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annullamento_0_0_0</name>
+        <label>Annullamento</label>
+        <locationX>402</locationX>
+        <locationY>4646</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Autoelettrica</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>AdditionalConfig</name>
         <dataType>String</dataType>
@@ -977,6 +1704,13 @@
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>InputCase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
