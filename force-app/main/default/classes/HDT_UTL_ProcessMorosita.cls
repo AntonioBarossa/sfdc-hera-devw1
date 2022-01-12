@@ -121,11 +121,8 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
                 continue;
             }
 
-            newCase.RecordTypeId = recordTypeId;
-            newCase.Status = 'In Lavorazione';
             newCase.Cluster__c = 'Morosità';
-            newCase.Phase__c = 'Bozza';
-
+            newCase = HDT_UTL_ProcessCommonOperations.setCaseField(newCase, recordTypeId);
             // ContactId ???
 
             causalCode = causalCodeCalculation.calculateCausalCode(this.processName, newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 

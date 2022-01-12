@@ -174,11 +174,8 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
                 continue;
             }
 
-            newCase.RecordTypeId = recordTypeId;
-            newCase.Status = 'In Lavorazione';
             newCase.Cluster__c = 'Disattivazioni';
-            newCase.Phase__c = 'Bozza';
-            newCase.CompanyOwner__c = 'HERA COMM';
+            newCase = HDT_UTL_ProcessCommonOperations.setCaseField(newCase, recordTypeId);
             
             if(!String.isEmpty(contract.ServicePoint__r.CommoditySector__c)){
                 causalCode = causalCodeCalculation.calculateCausalCode(this.processName, newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 

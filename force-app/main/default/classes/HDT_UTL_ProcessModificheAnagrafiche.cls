@@ -140,11 +140,9 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
             System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + newCase);
 
             newCase.AccountId = tempSplitted[accountIdIndex];
-            newCase.RecordTypeId = recordTypeId;
-            newCase.Status = 'In Lavorazione';
             newCase.Cluster__c = 'Modifiche Anagrafiche';
-            newCase.Phase__c = 'Bozza';
-            newCase.CompanyOwner__c = 'HERA COMM';
+            newCase = HDT_UTL_ProcessCommonOperations.setCaseField(newCase, recordTypeId);
+
             caseToInsert.add(newCase); 
             itemIds.add(itemId);
         }

@@ -85,7 +85,8 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
                     srvRequest.BillingProfile__c = cs.BillingProfile__c;
                 }
     
-                srvRequest.ProcessType__c = 'Chiusura contatore - EE';
+                //srvRequest.ProcessType__c = 'Chiusura contatore - EE';
+                srvRequest.ProcessType__c = HDT_UTL_MatrixCompatibility.getProcessType(cs.Type, 'Case', cs.Commodity__c);
                 srList.add(srvRequest);
             }
 
@@ -107,7 +108,7 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
             }
             
             if(srListToDelete.size() > 0){
-                HDT_UTL_DatabaseService.deleteSObject(srListToDelete);
+                //HDT_UTL_DatabaseService.deleteSObject(srListToDelete);
             }
 
             return caseIdToCompatibility;
@@ -131,6 +132,15 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
 
         HDT_UTL_DatabaseService.updateSObject(savedCase);
 
+    }
+
+    public static Case setCaseField(Case newCase, Id recordTypeId){
+        newCase.RecordTypeId = recordTypeId;
+        newCase.Status = 'In Lavorazione';
+        newCase.Phase__c = 'Bozza';
+        newCase.CompanyOwner__c = 'HERA COMM';
+        newCase.Commodity__c = 'Energia Elettrica';
+        return newCase;
     }
 
     public static void getLimitDetails(String stageName){
