@@ -22,9 +22,12 @@ export default class HdtOrderScriptLauncher extends LightningElement {
 
             let loginChannel = this.order.fields.CreatedBy.value.fields.LoginChannel__c.value;
             let isChannelEnabled = (loginChannel==null || SCRIPT_ENABLED_CHANNELS.indexOf(loginChannel)>=0);
-
+            console.log('isChannelEnabled: ' + isChannelEnabled);
             let signatureMethod = this.order.fields.SignatureMethod__c.value;
+            console.log('signatureMethod: ' + signatureMethod);
             let isSignatureEnabled = (SCRIPT_SIGNATURE_METHODS.indexOf(signatureMethod)>=0);
+            console.log('isSignatureEnabled: ' + isSignatureEnabled);
+            console.log('Status Order: ' + this.order.fields.Status.value);
 
             return (this.order.fields.Status.value=='In Lavorazione' && isChannelEnabled && isSignatureEnabled);
         }
