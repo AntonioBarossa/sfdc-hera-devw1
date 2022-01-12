@@ -1,5 +1,6 @@
+@suppressWarnings('PMD.ApexSOQLInjection')
 public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
-    
+
     @InvocableMethod(label='Check Criterio Elegibilità')
     public static List<HDT_WRP_ElegibilityCriteriaCheckOutput> execute(List<HDT_WRP_ElegibilityCriteriaCheckInput> inputs){
         if(inputs==null || inputs.size()<=0) return null;
@@ -19,12 +20,17 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
             return outputList;
         }
 
+        List<String> contractIds = new List<String>();
         Case caseRecord = cases[0];
         Id contractId = caseRecord.Contract__c;
-
         if (contractId == null) {
-            outputList.add(output);
-            return outputList;
+            HDT_QR_Contract contractQueryHandler = new HDT_QR_Contract();
+            List<Contract> activeContracts = contractQueryHandler.getActiveRecordsByAccountId(caseRecord.AccountId);
+            for (Contract c : activeContracts) {
+                contractIds.add(c.Id);
+            }
+        } else {
+            contractIds.add(contractId);
         }
 
         // Query su Contract
@@ -33,40 +39,54 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
         String queryString = 'SELECT ' + queryFields;
         String fromString = ' FROM '+ objectName;
         String controllingField = 'Id';
-        String whereString = ' WHERE ' + controllingField + ' =\''+ contractId + '\'';
+        String whereString = ' WHERE ' + controllingField + ' IN :contractIds';
         //String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';//montors fix --
         String relatedQueryString = ',(SELECT SBQQ__Product__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';//montors fix ++
         queryString = queryString + relatedQueryString + fromString + whereString; 
-        System.debug('contract query: ' + queryString);
+        System.debug(LoggingLevel.DEBUG, 'contracts query ' + queryString);
 
-        List<sObject> contracts = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
-        if (contracts.isEmpty()){
+        List<sObject> recordList = new List<sObject>();
+        SObjectType objtype = Schema.getGlobalDescribe().get(objectName);
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe(); 
+        if (objRes.isAccessible()) {
+            recordList = Database.query(queryString);
+        }
+
+        if (recordList.isEmpty()){
             outputList.add(output);
             return outputList;
         }
 
-        Contract c = (Contract) contracts[0];
-        List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
-        //String productName = subscriptions[0].SBQQ__ProductName__c;//montors fix --
-        String productId = subscriptions[0].SBQQ__Product__c;//montors fix ++
+        List<String> productIds = new List<String>();
+        for (Integer i = 0; i < recordList.size(); i++) {
+            Contract c = (Contract) recordList[i];
+            List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
+            String productId = subscriptions[0].SBQQ__Product__c;
+            productIds.add(productId);
+        }
 
         // Query oggetto criteri eleggibilità
         objectName = 'EligibilityCriteria__c';
         queryFields = 'Id,BillSendingMethod__c,UseCategory__c,ResidentDeliveryAddress__c,PowerRangeMax__c';
         queryString = 'SELECT ' + queryFields;
         fromString = ' FROM '+ objectName;
-        whereString = ' WHERE Product__c =\''+ productId + '\'';//montors fix ++
+        whereString = ' WHERE Product__c IN :productIds';
         queryString = queryString + fromString + whereString; 
-        System.debug('criteria query: ' + queryString);
+        System.debug(LoggingLevel.DEBUG, 'criteria query: ' + queryString);
 
-        List<sObject> criterias = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
-        if (criterias.isEmpty()){
+        objtype = Schema.getGlobalDescribe().get(objectName);
+        objRes = objtype.getDescribe(); 
+        if (objRes.isAccessible()) {
+            recordList = Database.query(queryString);
+        }
+
+        if (recordList.isEmpty()){
             outputList.add(output);
             return outputList;
         }
 
-        for (Integer i = 0; i < criterias.size(); i++) {
-            EligibilityCriteria__c criteria = (EligibilityCriteria__c) criterias[i];
+        for (Integer i = 0; i < recordList.size(); i++) {
+            EligibilityCriteria__c criteria = (EligibilityCriteria__c) recordList[i];
 
             switch on caseRecord.Type {
                 when 'Modifica Tariffa Residente/Non Residente' {
