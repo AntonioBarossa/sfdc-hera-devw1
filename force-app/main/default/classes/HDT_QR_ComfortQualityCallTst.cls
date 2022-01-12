@@ -20,10 +20,11 @@ public with sharing class HDT_QR_ComfortQualityCallTst{
 			orders[0].Channel__c='testChannel';
 			orders[0].CustomerCategory__c='Aziende';
 			orders[0].MarketOrigin__c='Default';
+			orders[0].RecordTypeId = constants.ORDER_RECORDTYPEID_VAS;
 			insert orders;
 
 			List<ComfortQualityCall__c> comfQualCallList=HDT_UTL_DataFactoryTst.createComfortQualityCall(1, false);
-			comfQualCallList[0].Process__c='HDT_RT_Default';
+			comfQualCallList[0].Process__c='HDT_RT_Vas';
 			comfQualCallList[0].Channel__c=orders[0].Channel__c;
 			comfQualCallList[0].CustomerType__c=orders[0].CustomerCategory__c;
 			comfQualCallList[0].MarketType__c=orders[0].MarketOrigin__c;
