@@ -7694,6 +7694,10 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bozza</fullName>
             <default>true</default>
         </values>
