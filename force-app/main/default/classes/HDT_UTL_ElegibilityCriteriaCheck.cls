@@ -10,7 +10,7 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
 
         // Query su Case
         HDT_QR_Case caseQuery = new HDT_QR_Case();
-        String caseQueryFields = 'Id,Contract__c,Type,BillSendingMethod__c,Resident__c';
+        String caseQueryFields = 'Id,Contract__c,Type,BillSendingMethod__c,Resident__c,UseCategory__c,PowerRequested__c';
         List<String> caseIds = new List<String>();
         caseIds.add(input.caseId);
         List<Case> cases = caseQuery.getRecordsById(caseIds, caseQueryFields);
@@ -23,7 +23,6 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
         Id contractId = caseRecord.Contract__c;
 
         if (contractId == null) {
-            // TODO: se non ho un contratto sul case (es. sulle Domiciliazioni o sulle Mod. Anagrafiche) bisogna scorrersi tutti i contratti del cliente...
             outputList.add(output);
             return outputList;
         }
@@ -35,7 +34,6 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
         String fromString = ' FROM '+ objectName;
         String controllingField = 'Id';
         String whereString = ' WHERE ' + controllingField + ' =\''+ contractId + '\'';
-        // TODO DA FIXARE: oltre al product name va recuperato anche il codice prodotto e il codice versione da usare nella query sotto su EligibilityCriteria__c
         //String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';//montors fix --
         String relatedQueryString = ',(SELECT SBQQ__Product__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';//montors fix ++
         queryString = queryString + relatedQueryString + fromString + whereString; 
@@ -54,10 +52,9 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
 
         // Query oggetto criteri eleggibilità
         objectName = 'EligibilityCriteria__c';
-        queryFields = 'Id,BillSendingMethod__c,UseCategory__c,ResidentDeliveryAddress__c';
+        queryFields = 'Id,BillSendingMethod__c,UseCategory__c,ResidentDeliveryAddress__c,PowerRangeMax__c';
         queryString = 'SELECT ' + queryFields;
         fromString = ' FROM '+ objectName;
-        //whereString = ' WHERE ProductName__c =\''+ productName + '\''; // TODO DA FIXARE: la query va fatta per codice prodotto + versione prodotto, che vanno recuperati dalla query precedente sul Contract.
         whereString = ' WHERE Product__c =\''+ productId + '\'';//montors fix ++
         queryString = queryString + fromString + whereString; 
         System.debug('criteria query: ' + queryString);
@@ -81,10 +78,26 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
                         return outputList;
                     }
                 }
+                when 'Marcatura/Uso PdR' {
+                    if (criteria.UseCategory__c != null && !criteria.UseCategory__c.contains(caseRecord.UseCategory__c)) {
+                        output.abortProcess = true;
+                        output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con la variazione del campo Tipologia Uso. Per poter procedere è necessario eseguire un cambio offerta.';
+                        outputList.add(output);
+                        return outputList;
+                    }
+                }
                 when 'Variazione Anagrafica Cliente' {
                     if (caseRecord.BillSendingMethod__c != criteria.BillSendingMethod__c) {
                         output.abortProcess = true;
                         output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con la variazione del campo Modalità Invio Bolletta. Per poter procedere è necessario eseguire un cambio offerta.';
+                        outputList.add(output);
+                        return outputList;
+                    }
+                }
+                when 'Variazione Potenza' {
+                    if (criteria.PowerRangeMax__c > 0 && caseRecord.PowerRequested__c > criteria.PowerRangeMax__c) {
+                        output.abortProcess = true;
+                        output.abortProcessWarning = 'L\'offerta attiva sul contratto selezionato è incompatibile con l\'aumento di potenza richiesto. Per poter procedere è necessario eseguire un cambio offerta.';
                         outputList.add(output);
                         return outputList;
                     }
