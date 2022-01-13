@@ -145,6 +145,32 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
+        <name>Check_Criterio_Elegibilit</name>
+        <label>Check Criterio Elegibilità</label>
+        <locationX>1813</locationX>
+        <locationY>1463</locationY>
+        <actionName>HDT_UTL_ElegibilityCriteriaCheck</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_Criterio_superato</targetReference>
+        </connector>
+        <flowTransactionModel>NewTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>caseId</name>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>CheckCriteriEleggibilita</assignToReference>
+            <name>abortProcess</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>CheckEleggibilitaWarning</assignToReference>
+            <name>abortProcessWarning</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Opzione</name>
         <label>Predefault_CalcolaOpzione</label>
         <locationX>1184</locationX>
@@ -1094,8 +1120,8 @@
     <decisions>
         <name>Bozza_o_Continua</name>
         <label>Bozza o Continua?</label>
-        <locationX>1763</locationX>
-        <locationY>1494</locationY>
+        <locationX>2012</locationX>
+        <locationY>1410</locationY>
         <defaultConnectorLabel>Bozza</defaultConnectorLabel>
         <rules>
             <name>Continua</name>
@@ -1115,7 +1141,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Variazione_Portata</targetReference>
+                <targetReference>Check_Criterio_Elegibilit</targetReference>
             </connector>
             <label>Continua</label>
         </rules>
@@ -1140,6 +1166,31 @@
                 <targetReference>Annulla_Prestazione</targetReference>
             </connector>
             <label>Annulla</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Criterio_superato</name>
+        <label>Criterio superato?</label>
+        <locationX>1696</locationX>
+        <locationY>1587</locationY>
+        <defaultConnector>
+            <targetReference>Variazione_Portata</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Superato</defaultConnectorLabel>
+        <rules>
+            <name>Non_Superato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CheckCriteriEleggibilita</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Criteri_Eleggibilita</targetReference>
+            </connector>
+            <label>Non Superato</label>
         </rules>
     </decisions>
     <decisions>
@@ -2041,8 +2092,8 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
     <recordLookups>
         <name>Get_Input_Case_0</name>
         <label>Get Input Case</label>
-        <locationX>1768</locationX>
-        <locationY>1355</locationY>
+        <locationX>1816</locationX>
+        <locationY>1316</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Bozza_o_Continua</targetReference>
@@ -2836,6 +2887,75 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Screen_Criteri_Eleggibilita</name>
+        <label>Screen Criteri Eleggibilita</label>
+        <locationX>1921</locationX>
+        <locationY>1640</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Annulla_Prestazione</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayWarning</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Input_Case.Type}&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;{!CheckEleggibilitaWarning}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Alla pressione del tasto &quot;Conferma Pratica&quot; si procederà con l&apos;Annullamento della prestazione&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>flowNavButtons</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
         <locationX>1110</locationX>
@@ -3062,8 +3182,8 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>1960</locationX>
-        <locationY>1480</locationY>
+        <locationX>2206</locationX>
+        <locationY>1489</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3175,6 +3295,20 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>CheckCriteriEleggibilita</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CheckEleggibilitaWarning</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>CorrispettivoVar</name>
         <dataType>Number</dataType>
