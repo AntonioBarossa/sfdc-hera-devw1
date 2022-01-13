@@ -91,10 +91,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>DiscardReason__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>CausalCode__c</field>
             </layoutItems>
         </layoutColumns>
