@@ -388,13 +388,13 @@
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
-        <fields>CASES.STATUS</fields>
         <fields>Cluster__c</fields>
         <fields>CASES.TYPE</fields>
         <fields>Subprocess__c</fields>
-        <fields>ComplaintEntryChannel__c</fields>
+        <fields>MacroTopic__c</fields>
+        <fields>InformationDetail__c</fields>
         <fields>Phase__c</fields>
-        <fields>CREATEDBY_USER.ALIAS</fields>
+        <fields>ComplaintEntryChannel__c</fields>
         <fields>CASES.CLOSED_DATE</fields>
         <relatedList>RelatedCaseList</relatedList>
         <sortField>CASES.CREATED_DATE_DATE_ONLY</sortField>
