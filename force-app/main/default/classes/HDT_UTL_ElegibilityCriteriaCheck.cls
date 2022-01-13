@@ -23,7 +23,7 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
         List<String> contractIds = new List<String>();
         Case caseRecord = cases[0];
         Id contractId = caseRecord.Contract__c;
-        if (contractId == null) {
+        if (contractId == null && caseRecord.BillingProfile__c != null) {
             // Sulle modifiche angrafiche o sulle domiciliazioni non c'è la selezione del contratto.
             // Quindi ci scorriamo tutti i contratti del cliente e consideriamo quelli che hanno lo stesso Billing Profile che sta modificando il processo.
             HDT_QR_Contract contractQueryHandler = new HDT_QR_Contract();
