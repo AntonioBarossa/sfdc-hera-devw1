@@ -153,7 +153,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         }
         else if(orderParent.Phase__c == 'Registrazione  da validare'){
             orderToUpdate.Phase__c = 'Documentazione Gestita';
-            orderToUpdate.status = 'Activated';
+            orderToUpdate.status = 'Completed';
         }
         /**@frpanico 13/01/2022
          * Gestione casistica SignMode "Contratto gia Firmato"
@@ -161,7 +161,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         if(orderParent.SignMode__c != null && orderParent.SignMode__c.equalsIgnoreCase('Contratto già firmato'))
         {
             orderToUpdate.Phase__c = 'Documentazione Gestita';
-            orderToUpdate.status = 'Activated';
+            orderToUpdate.status = 'Completed';
         }
 
         //il campo SignMode è stato utilizzato per salvare il SignatureMethod dell'ultimo invio
