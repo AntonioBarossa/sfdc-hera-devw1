@@ -10399,6 +10399,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Recesso per Ripensamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Recesso su Richesta Cliente</fullName>
             <default>false</default>
         </values>

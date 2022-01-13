@@ -411,7 +411,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         return new Promise((resolve) => {
             this.preloading = true;
             this.isRicercainSAP= true;
-            this.searchInputValue = event;
+            /*this.searchInputValue = event;*/
             this.dispatchEvent(new CustomEvent('ricercainsap', {
                 detail: this.isRicercainSAP
             })); 

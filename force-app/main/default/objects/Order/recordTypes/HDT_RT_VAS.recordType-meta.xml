@@ -2053,6 +2053,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esportazione VS Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In attesa conferma cliente</fullName>
             <default>false</default>
         </values>
@@ -2383,6 +2387,10 @@
         </values>
         <values>
             <fullName>Vocal Order</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratto già firmato</fullName>
             <default>false</default>
         </values>
     </picklistValues>

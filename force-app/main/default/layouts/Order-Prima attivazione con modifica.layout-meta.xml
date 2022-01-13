@@ -103,10 +103,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ReasonDL__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Campaign__c</field>
             </layoutItems>
             <layoutItems>

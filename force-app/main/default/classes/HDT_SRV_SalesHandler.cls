@@ -213,7 +213,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 system.debug('TrackingDiscardPhase__c '+ord.TrackingDiscardPhase__c);
                             }
                             when 'Esito KO da DL' {
-                                ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
+                                ord.DiscardReason__c = mapRequestFields.get('TESTO_ERRR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
