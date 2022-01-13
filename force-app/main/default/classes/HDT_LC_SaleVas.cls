@@ -99,7 +99,7 @@ public inherited sharing class HDT_LC_SaleVas {
                 wrpRes.messRes = 'city';
             }
         }
-        if(HDT_UTL_Sales.isTransitionNoUp(sal)){
+        if(HDT_UTL_Sales.isTransitionVas(com, sal)){
             check = false;
             wrpRes.messRes = 'transitorio';
         }
