@@ -89,6 +89,7 @@ public inherited sharing class HDT_QR_Contract {
         contractSrv.checkReadAccess('Name,AccountId,ContractNumber,Status,SAPContractCode__c'); 
         return [
             SELECT
+            Id,
             Name,
             AccountId,			
             ContractNumber,
