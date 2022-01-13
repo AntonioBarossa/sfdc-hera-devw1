@@ -103,7 +103,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ReasonDL__c</field>
+                <field>DiscardReason__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
