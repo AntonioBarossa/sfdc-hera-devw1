@@ -4,7 +4,8 @@
 * @description Apex controller that returns list of customer in archive and in sf
 */
 
-public with sharing class HDT_LC_StoricizzazioneCliente {
+public with sharing class HDT_LC_ClientHistory {
+
     private static  Map<String, List<String>> mappingRoleToMarcatura = new Map<String, List<String>>{
         'HDT_BackOffice' => new List<String>{},
         'HDT_FrontOffice_AAAEBT' => new List<String>{'AAS Persona fisica','AAS Ditta individuale','AAS Azienda','AAS Parti comuni','AAS Condominio','AAS Associazione'},
@@ -58,7 +59,7 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
     *   List<String> vuoto: l'utente non ha alcun filtro
     *   List<String> popolato: la query verrà filtrata per le marcature restituite
     */
-    public static List<String> getMarcatureFromRole(){
+    public static List<String> getMarkingsFromRole(){
         String uRoleId = UserInfo.getUserRoleId();
 
         if (!Schema.sObjectType.UserRole.fields.DeveloperName.isAccessible()){
@@ -77,7 +78,7 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
  
         if ( searchKey != null && searchKey != '' && searchKey.length() > 5) {
 
-            List<String> marcaturePermesse = getMarcatureFromRole();
+            List<String> marcaturePermesse = getMarkingsFromRole();
             
             system.debug(marcaturePermesse);
             // se il ruolo non è presente nella mappa allora non ha alcun permesso di visualizzazione sugli account

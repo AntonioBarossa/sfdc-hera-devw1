@@ -1,12 +1,12 @@
 /**
- * @description HDT_LC_DownloadAttachmentAzure
+ * @description HDT_LC_DownloadAttachmentArchive
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
 
-public with sharing class HDT_LC_DownloadAttachmentAzure {
+public with sharing class HDT_LC_DownloadAttachmentArchive {
 
     /**
-     * @description HDT_LC_DownloadAttachmentAzure.getUrlNameDocumentLink
+     * @description HDT_LC_DownloadAttachmentArchive.getUrlNameDocumentLink
      * @param rId - String
      * @return String
      */
@@ -32,7 +32,7 @@ public with sharing class HDT_LC_DownloadAttachmentAzure {
 
 
     /**
-     * @description HDT_LC_DownloadAttachmentAzure.getExtensionFile
+     * @description HDT_LC_DownloadAttachmentArchive.getExtensionFile
      * @param rId - String
      * @return Boolean, se 'url' o '' = false, else = true
      */
