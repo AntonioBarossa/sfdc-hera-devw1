@@ -481,6 +481,11 @@
         <label>Recesso per rifiuto voltura - GAS</label>
     </customValue>
     <customValue>
+        <fullName>Recesso per Ripensamento - EE</fullName>
+        <default>false</default>
+        <label>Recesso per Ripensamento - EE</label>
+    </customValue>
+    <customValue>
         <fullName>Recesso su richiesta cliente - EE</fullName>
         <default>false</default>
         <label>Recesso su richiesta cliente - EE</label>
