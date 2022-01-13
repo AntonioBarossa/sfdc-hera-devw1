@@ -235,7 +235,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                              }
                                         }
                                         when 'Esito KO da DL' {
-                                            ord.ReasonDL__c = fieldValueResponse.get('TESTO_ERRR');
+                                            ord.DiscardReason__c = fieldValueResponse.get('TESTO_ERRR');
                                             //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
                                             ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
