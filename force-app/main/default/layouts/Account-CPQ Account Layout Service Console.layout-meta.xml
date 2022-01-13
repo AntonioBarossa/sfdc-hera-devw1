@@ -248,9 +248,9 @@
         <fields>Phase__c</fields>
         <fields>Sale__c</fields>
         <fields>Channel__c</fields>
+        <fields>CREATEDBY_USER.ALIAS</fields>
         <fields>ServicePointCodeFormula__c</fields>
         <fields>ProcessType__c</fields>
-        <fields>WizardCompletedDate__c</fields>
         <relatedList>RelatedOrderList</relatedList>
         <sortField>ORDERS.ORDER_NUMBER</sortField>
         <sortOrder>Desc</sortOrder>
@@ -539,7 +539,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000002MyGI</masterLabel>
+        <masterLabel>00h1j000002So66</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
