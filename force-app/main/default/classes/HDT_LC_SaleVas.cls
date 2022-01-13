@@ -322,7 +322,9 @@ public inherited sharing class HDT_LC_SaleVas {
      * @param sale
      */
     public static void handleActiveOrderConfirm(Order order, String supplyCity, Sale__c sale){
-        
+        /**@frpanico 13/01/2022
+         * Aggiunta gestione transitorio
+         */
         if (order.Id == null) {
             throw new AuraHandledException('Devi scegliere un ordine!');
         }
@@ -330,6 +332,7 @@ public inherited sharing class HDT_LC_SaleVas {
         if (isDuplicated(sale.Id, order.Id, 'order')) {
             throw new AuraHandledException('La quote con il riferimento di questo ordine esiste già!');
         }
+        List<Sale__c> currentSale = [SELECT Id, IsTransition__c FROM Sale__c WHERE Id = :sale.Id];
         String pdrCode = order.ServicePoint__r.ServicePointCode__c;
         pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
 
@@ -358,6 +361,7 @@ public inherited sharing class HDT_LC_SaleVas {
             Campaign__c = sale.Campaign__c,
             IsVAS__c = true,
             IsBillableVas__c = false,
+            IsTransition__c = currentSale[0].IsTransition__c,
             SBQQ__PricebookId__c = checkCommodityOrder(order.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
         ));
 

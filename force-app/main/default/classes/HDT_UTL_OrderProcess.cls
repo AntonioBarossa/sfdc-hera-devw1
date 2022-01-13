@@ -127,6 +127,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     && (order.Phase__c.equalsIgnoreCase('Documentazione Validata') 
                         || ((order.Commodity__c != null && order.Commodity__c.equalsIgnoreCase('Gas')) && order.Phase__c.equalsIgnoreCase('Voltura Rifiutata')))
                 )
+            || order.Phase__c == 'Comunicazione Motore VAS'
             )
             &&order.isTransition__c==true){
                 order.Phase__c='Esportazione VS Siebel';
