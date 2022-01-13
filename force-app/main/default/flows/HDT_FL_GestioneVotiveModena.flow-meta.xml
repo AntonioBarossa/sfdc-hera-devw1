@@ -46,7 +46,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>getActivityToCheck.Status__c</leftValueReference>
+                <leftValueReference>getActivityToCheck.wrts_prcgvr__Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Chiusa</stringValue>
