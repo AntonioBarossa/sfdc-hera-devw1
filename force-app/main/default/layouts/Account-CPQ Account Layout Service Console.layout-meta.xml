@@ -391,6 +391,9 @@
         <fields>Cluster__c</fields>
         <fields>CASES.TYPE</fields>
         <fields>Subprocess__c</fields>
+        <fields>MacroTopic__c</fields>
+        <fields>InformationDetail__c</fields>
+        <fields>Phase__c</fields>
         <fields>ComplaintEntryChannel__c</fields>
         <fields>CASES.CLOSED_DATE</fields>
         <relatedList>RelatedCaseList</relatedList>
