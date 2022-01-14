@@ -11,7 +11,7 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
 
         // Query su Case
         HDT_QR_Case caseQuery = new HDT_QR_Case();
-        String caseQueryFields = 'Id,Contract__c,Type,BillSendingMethod__c,Resident__c,UseCategory__c,PowerRequested__c';
+        String caseQueryFields = 'Id,BillingProfile__c,Contract__c,Type,BillSendingMethod__c,Resident__c,UseCategory__c,PowerRequested__c';
         List<String> caseIds = new List<String>();
         caseIds.add(input.caseId);
         List<Case> cases = caseQuery.getRecordsById(caseIds, caseQueryFields);
@@ -23,14 +23,23 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
         List<String> contractIds = new List<String>();
         Case caseRecord = cases[0];
         Id contractId = caseRecord.Contract__c;
-        if (contractId == null) {
+        if (contractId == null && caseRecord.BillingProfile__c != null) {
+            // Sulle modifiche angrafiche o sulle domiciliazioni non c'è la selezione del contratto.
+            // Quindi ci scorriamo tutti i contratti del cliente e consideriamo quelli che hanno lo stesso Billing Profile che sta modificando il processo.
             HDT_QR_Contract contractQueryHandler = new HDT_QR_Contract();
             List<Contract> activeContracts = contractQueryHandler.getActiveRecordsByAccountId(caseRecord.AccountId);
             for (Contract c : activeContracts) {
-                contractIds.add(c.Id);
+                if (c.BillingProfile__c == caseRecord.BillingProfile__c) {
+                    contractIds.add(c.Id);
+                }
             }
         } else {
             contractIds.add(contractId);
+        }
+
+        if (contractIds.isEmpty()){
+            outputList.add(output);
+            return outputList;
         }
 
         // Query su Contract
