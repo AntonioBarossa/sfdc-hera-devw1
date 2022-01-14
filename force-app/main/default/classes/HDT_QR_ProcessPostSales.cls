@@ -95,4 +95,13 @@ public with sharing class HDT_QR_ProcessPostSales {
         ];
     }
 
+    public static List<HDT_MassiveFieldsObjectMap__mdt> getMapFieldsObjectByDeveloperName(String devName){
+        return [
+            SELECT objectType__c, labelField__c, nameField__c, MasterLabel 
+            FROM HDT_MassiveFieldsObjectMap__mdt 
+            WHERE DeveloperName LIKE :devName
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
 }
