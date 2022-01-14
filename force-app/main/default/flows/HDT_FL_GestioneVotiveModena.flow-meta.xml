@@ -792,7 +792,7 @@
             <inputParameters>
                 <name>selectionType</name>
                 <value>
-                    <stringValue>BillingProfile</stringValue>
+                    <stringValue>Mod_Anagr_Dati_Recapito_Votiva_Modena</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
