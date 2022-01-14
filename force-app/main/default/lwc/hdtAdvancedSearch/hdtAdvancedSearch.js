@@ -391,16 +391,31 @@ export default class HdtAdvancedSearch extends LightningElement {
      * Calling Apex callWebService method
      * TODO this method is not finished yet need webserivce.
      */
+
+    searchInSAP(){
+        
+        this.callApi(this.searchInputValue).then(() => {
+            this.preloading = true;
+            this.closeModal();
+            if(this.serviceRequestId == null || (this.serviceRequestId != null && !this.isIncompatible)){
+                this.dispatchEvent(new CustomEvent('servicepointselection', {
+                    detail: this.rowToSend
+                }));
+                this.preloading = false;
+            }
+            this.confirmButtonDisabled = true;
+        });
+    }
+
     callApi(event){
         return new Promise((resolve) => {
             this.preloading = true;
             this.isRicercainSAP= true;
-            this.searchInputValue = event;
+            /*this.searchInputValue = event;*/
             this.dispatchEvent(new CustomEvent('ricercainsap', {
                 detail: this.isRicercainSAP
             })); 
-            callService({contratto:'', pod:this.searchInputValue}).then(data =>{
-                
+            callService({contratto:'', pod:this.searchInputValue}).then(data =>{                
                 if(data.statusCode=='200'){
                     this.responseArriccData = data;
                     extractDataFromArriccDataServiceWithExistingSp({sp:'',response:data}).then(datas =>{

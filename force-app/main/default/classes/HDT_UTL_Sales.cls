@@ -154,6 +154,34 @@ public with sharing class HDT_UTL_Sales {
         return mapRes;
     }
 
+    /**@frpanico 13/01/2022
+     * Introdotto metodo per il controllo transitorio
+     * per Vas da selezione Contratto/Order
+     */
+    public static Boolean isTransitionVas(String city, Sale__c sale)
+    {
+        Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+        List<City__c> listCity = HDT_QR_City.getRecordByComune(city);
+        if(listCity != null && !listCity.isEmpty() && listCity[0].Province__c != null)
+        {
+            String province = listCity[0].Province__c;
+            if(((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' 
+            || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) 
+            ||(!stabbedData.contains(province)))){
+                Sale__c s = new Sale__c(Id=sale.Id);
+                s.isTransition__c=true;
+                saleSrv.updateRecord(s);
+                return true;
+            }else{
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public static Boolean isTransition(ServicePoint__c sp, Sale__c sale){
 
         Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
