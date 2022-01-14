@@ -209,6 +209,10 @@
                 <behavior>Edit</behavior>
                 <field>IsActive</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NoOrderable__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
