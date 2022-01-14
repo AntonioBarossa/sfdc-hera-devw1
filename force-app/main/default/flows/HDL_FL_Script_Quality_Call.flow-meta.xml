@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <choices>
+        <name>Confermo_1</name>
+        <choiceText>Sono io / Glielo Passo</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Sono io / Glielo Passo</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Confermo_2</name>
+        <choiceText>Confermo</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Confermo</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>False_1</name>
+        <choiceText>Non è disponibile al momento</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Non è disponibile al momento</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>No_Choice_1</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NonConfermo_1</name>
+        <choiceText>No, non riconosco il contratto</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No, non riconosco il contratto</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NonConfermo_RB2_Choice1</name>
+        <choiceText>di non aver firmato il contratto</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>di non aver firmato il contratto</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NonConfermo_RB2_Choice2</name>
+        <choiceText>che il venditore ha assicurato che non sarebbe avvenuto un cambio fornitore</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>che il venditore ha assicurato che non sarebbe avvenuto un cambio fornitore </stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NonConfermo_RB2_Choice3</name>
+        <choiceText>di aver firmato solo per il passaggio a libero mercato del Gas e non per l&apos;energia</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>di aver firmato solo per il passaggio a libero mercato del Gas e non per l&apos;energia</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NonConfermo_RB2_Choice4</name>
+        <choiceText>che il venditore ha richiesto le firme solo per attestare l&apos;attività svolta presso l&apos;abitazione</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>che il venditore ha richiesto le firme solo per attestare l&apos;attività svolta presso l&apos;abitazione</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NonConfermo_RB2_Choice5</name>
+        <choiceText>che il venditore si è presentato come venditore di altra società</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>che il venditore si è presentato come venditore di altra società</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NonConfermo_RB2_Choice6</name>
+        <choiceText>che il venditore ha riferito che il passaggio era obbligatorio in quanto il suo attuale fornitore è stato acquisito</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>che il venditore ha riferito che il passaggio era obbligatorio in quanto il suo attuale fornitore è stato acquisito</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NonConfermo_RB2_Choice7</name>
+        <choiceText>che il sottoscrittore del contratto non è in grado di intendere e volere</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>che il sottoscrittore del contratto non è in grado di intendere e volere</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NonConfermo_RB2_Choice8</name>
+        <choiceText>che il Vas è gratuito o in omaggio</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>che il Vas è gratuito o in omaggio</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>RB1_Ripensamento_Choice_VE</name>
+        <choiceText>Ok procediamo</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Ok procediamo</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>RB1_Ripensamento_Choice_VE_2</name>
+        <choiceText>Non mi interessa</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Non mi interessa</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>RB_NonConfermoScreen_Choice1</name>
+        <choiceText>Volontà estorta</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Volontà estorta</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>RB_NonConfermoScreen_Choice2</name>
+        <choiceText>Firma falsa</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Firma falsa</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Ripensamento_1</name>
+        <choiceText>Confermo ma ci ho ripensato</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Confermo ma ci ho ripensato</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Si_Choice_1</name>
+        <choiceText>Si</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Si</stringValue>
+        </value>
+    </choices>
+    <decisions>
+        <name>Risposta_Decision</name>
+        <label>Risposta Decision</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>Non_Confermo_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Confermo</defaultConnectorLabel>
+        <rules>
+            <name>Confermo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RB_2</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Confermo_2</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Confermo_Screen</targetReference>
+            </connector>
+            <label>Confermo</label>
+        </rules>
+        <rules>
+            <name>Ripensamento</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RB_2</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Ripensamento_1</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Ripensamento_Screen</targetReference>
+            </connector>
+            <label>Ripensamento</label>
+        </rules>
+    </decisions>
+    <interviewLabel>HDL FL Script - Quality Call {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>HDL FL Script - Quality Call</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>GetCampaignMember</name>
+        <label>GetCampaignMember</label>
+        <locationX>314</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>GetOrder</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>idCampaignMemberInput</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CampaignMember</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetOrder</name>
+        <label>GetOrder</label>
+        <locationX>314</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Quality_Call</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCampaignMember.RelatedActivity__r.Order__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <screens>
+        <name>Confermo_Screen</name>
+        <label>Confermo_Screen</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Text_Confermo_1</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Bene, le chiedo di pazientare un altro secondo perchè devo verificare se abbiamo necessità che ci fornisca ulteriori informazioni in merito al contratto. (procedere a verificare sul campo CQ Negativa sulla customer info E RIPORTARE IL DATO DI SEGUITO SE VUOTO E&apos; NO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>RB_Confermo_1</name>
+            <choiceReferences>Si_Choice_1</choiceReferences>
+            <choiceReferences>No_Choice_1</choiceReferences>
+            <dataType>String</dataType>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Text_confermo_2</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Bene, la informo che la pratica è completa, la ringrazio per il tempo che mi ha dedicato e le do il benvenuto in HeraComm.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RB_Confermo_1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Si_Choice_1</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Non_Confermo_Screen</name>
+        <label>Non Confermo Screen</label>
+        <locationX>578</locationX>
+        <locationY>638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>NonConfermo_text4</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Bene, in questo caso dobbiamo procedere a rilevare una non conformità nei confronti del Consulente che la ha contattata al fine di prendere i dovuti provvedimenti&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Procederò ora alla registrazione della rilevazione da parte sua di una non conformità posta in essere dal nostro incaricato. Mi può raccontare in breve l&apos;accaduto?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: quindi in base a ciò che mi ha raccontato direi che possiamo concordare che si tratta di&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>RB_NonConfermoScreen_1</name>
+            <choiceReferences>RB_NonConfermoScreen_Choice1</choiceReferences>
+            <choiceReferences>RB_NonConfermoScreen_Choice2</choiceReferences>
+            <dataType>String</dataType>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>NonConfermo_text5</name>
+            <fieldText>&lt;p&gt;ed in particolare mi conferma di aver dichiarato che&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RB_NonConfermoScreen_1</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NonConfermo_RB2</name>
+            <choiceReferences>NonConfermo_RB2_Choice1</choiceReferences>
+            <choiceReferences>NonConfermo_RB2_Choice2</choiceReferences>
+            <choiceReferences>NonConfermo_RB2_Choice3</choiceReferences>
+            <choiceReferences>NonConfermo_RB2_Choice4</choiceReferences>
+            <dataType>String</dataType>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RB_NonConfermoScreen_1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>RB_NonConfermoScreen_Choice2</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>RB_NonConfermoScreen_2</name>
+            <choiceReferences>NonConfermo_RB2_Choice5</choiceReferences>
+            <choiceReferences>NonConfermo_RB2_Choice6</choiceReferences>
+            <choiceReferences>NonConfermo_RB2_Choice7</choiceReferences>
+            <choiceReferences>NonConfermo_RB2_Choice8</choiceReferences>
+            <dataType>String</dataType>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RB_NonConfermoScreen_1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>RB_NonConfermoScreen_Choice1</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NonConfermo_text6</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: si&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Bene, abbiamo terminato la registrazione. Provvederemo come da sua richiesta ad annullare il contratto e a segnalare l&apos;accaduto.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Quality_Call</name>
+        <label>Quality Call</label>
+        <locationX>314</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Risposta_Decision</targetReference>
+        </connector>
+        <fields>
+            <name>text_1</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Buon giorno, sono Nome e Cognome Operatore, la informo che la presente telefonata proviene dall&apos;Italia ed è registrata. La contatto dall&apos;ufficio Commerciale di&amp;nbsp;HCM&amp;nbsp;&amp;nbsp;in merito alle offerte di Energia Elettrica/Gas sottoscritte da poco dal Sig/Sig.ra&amp;nbsp;&amp;nbsp;{!GetOrder.Account.FirstName__c} {!GetOrder.Account.LastName__c}&amp;nbsp;. E&apos; in casa posso parlare con lui/lei cortesemente.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>RB_1</name>
+            <choiceReferences>Confermo_1</choiceReferences>
+            <choiceReferences>False_1</choiceReferences>
+            <dataType>String</dataType>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Text_2</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;:&amp;nbsp;Buon giorno, la contatto per informarLa che abbiamo ricevuto il contratto che ha recentemente sottoscritto e volevo avere da lei conferma che in data&amp;nbsp;{!$Flow.CurrentDate}&amp;nbsp;ha ricevuto la visita/telefonata del nostro Consulente Energetico il quale le ha proposto un contratto di fornitura per la sua abitazione. Me lo conferma?&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RB_1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Confermo_1</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>RB_2</name>
+            <choiceReferences>Confermo_2</choiceReferences>
+            <choiceReferences>Ripensamento_1</choiceReferences>
+            <choiceReferences>NonConfermo_1</choiceReferences>
+            <dataType>String</dataType>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RB_1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Confermo_1</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Ripensamento_Screen</name>
+        <label>Ripensamento_Screen</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>NonConfermo_Text1</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Se le può essere utile, al fine di prendere una più consapevole decisione, posso illustrarle nuovamente l’offerta commerciale o in alternativa possiamo al telefono registrare la sua volontà a esercitare il diritto di ripensamento. Come preferisce procedere in tal senso?&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>RipensamentoScreen_RB_1</name>
+            <choiceReferences>RB1_Ripensamento_Choice_VE</choiceReferences>
+            <choiceReferences>RB1_Ripensamento_Choice_VE_2</choiceReferences>
+            <dataType>String</dataType>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>NonConfermo_Text2</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Bene, in questo caso procediamo alla registrazione del suo diritto di ripensamento&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Procederò ora alla registrazione del suo diritto di ripensamento, esercitato ai sensi dell’art. 5.3 delle Condizioni Generali di Contratto Hera Comm. I dati personali raccolti durante la registrazione saranno utilizzati per annullare la richiesta di attivazione e potranno essere comunicati al distributore ai fini della disattivazione del servizio.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Le chiedo di indicarmi il suo nome, cognome ed il suo codice fiscale&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;:&amp;nbsp;&amp;nbsp;Nome Interlocutore - Fam&amp;nbsp;&amp;nbsp;Cognome Interlocutore - Fam&amp;nbsp;&amp;nbsp;Codice Fiscale Interlocutore - Fam&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Mi conferma che il nome e cognome ed il codice fiscale della persona intestataria della richiesta di attivazione sono&amp;nbsp;&lt;/p&gt;&lt;p&gt;{!GetOrder.Account.FirstName__c} {!GetOrder.Account.LastName__c} e {!GetOrder.Account.FiscalCode__c}&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: Si&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Mi conferma di essere autorizzato, a esercitare il diritto di ripensamento?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: Si&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Con la presente registrazione lei esercita il Diritto di Ripensamento riconosciuto dall’ art. 64 e ss del Decreto legislativo 6 settembre 2005 n. 206 (Codice del Consumo), e dall’art. 12 della Delibera Aeeg 104/10 (Codice di condotta commerciale per la vendita di energia elettrica e gas naturale ai clienti finali. Chiede quindi di esercitare il diritto di ripensamento in relazione alla Richiesta di Attivazione Servizi Energetici sottoscritta in data&amp;nbsp;09-10-2020&amp;nbsp;e relativa a EE punti di fornitura di Energia Elettrica e&amp;nbsp;GAS Punti di fornitura di Gas Metano.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: Si&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Mi conferma i dati comunicati?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: Si&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Prima di concludere la registrazione, mi conferma che oggi e’ il&amp;nbsp;&amp;nbsp;{!$Flow.CurrentDate}&amp;nbsp;?&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RipensamentoScreen_RB_1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>RB1_Ripensamento_Choice_VE_2</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>GetCampaignMember</targetReference>
+        </connector>
+    </start>
+    <status>Draft</status>
+    <variables>
+        <name>idCampaignMemberInput</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
