@@ -2108,6 +2108,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esportazione VS Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In attesa conferma cliente</fullName>
             <default>false</default>
         </values>

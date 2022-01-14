@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Check_Criterio_Eleggibilita</name>
         <label>Check Criterio Eleggibilita</label>
-        <locationX>2402</locationX>
-        <locationY>837</locationY>
+        <locationX>2391</locationX>
+        <locationY>901</locationY>
         <actionName>HDT_UTL_ElegibilityCriteriaCheck</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -123,8 +123,8 @@
     <decisions>
         <name>Check_Criterio_Eleggibilita_0</name>
         <label>Check Criterio Eleggibilita</label>
-        <locationX>2466</locationX>
-        <locationY>957</locationY>
+        <locationX>2560</locationX>
+        <locationY>1006</locationY>
         <defaultConnector>
             <targetReference>Refresh_Ruolo_Contatto</targetReference>
         </defaultConnector>
@@ -446,19 +446,19 @@
         </defaultConnector>
         <defaultConnectorLabel>Altri processi</defaultConnectorLabel>
         <rules>
-            <name>Variazione_Anagrafica_Cliente</name>
+            <name>ModificaDatidiRecapito</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Refresh_Case.Type</leftValueReference>
+                <leftValueReference>Refresh_Case.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Variazione Anagrafica Cliente</stringValue>
+                    <stringValue>Modifica Dati di Recapito</stringValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Check_Criterio_Eleggibilita</targetReference>
             </connector>
-            <label>Variazione Anagrafica Cliente</label>
+            <label>Modifica Dati di Recapito</label>
         </rules>
     </decisions>
     <formulas>
@@ -1789,7 +1789,7 @@ Inserisci manualmente i seguenti campi:</description>
             <targetReference>Query_Case</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
@@ -1824,8 +1824,8 @@ Inserisci manualmente i seguenti campi:</description>
     <subflows>
         <name>Gestione_Annullamento_0</name>
         <label>Gestione Annullamento</label>
-        <locationX>2447</locationX>
-        <locationY>1217</locationY>
+        <locationX>2519</locationX>
+        <locationY>1310</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

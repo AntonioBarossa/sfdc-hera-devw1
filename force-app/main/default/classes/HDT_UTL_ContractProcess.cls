@@ -44,8 +44,8 @@ public inherited sharing class HDT_UTL_ContractProcess {
         Contract contr = new Contract();
         String sObjType = recordId.getSObjectType().getDescribe().getName();
 
-        ids = Database.query('SELECT '+ apiName
-                           + ' FROM '+ sObjType
+        ids = Database.query('SELECT '+ String.escapeSingleQuotes(apiName)
+                           + ' FROM '+ String.escapeSingleQuotes(sObjType)
                            + ' WHERE Id = :recordId ' 
                            + ' WITH SECURITY_ENFORCED');
 
