@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Check_Criterio_Eleggibilita</name>
         <label>Check Criterio Eleggibilita</label>
-        <locationX>2402</locationX>
-        <locationY>837</locationY>
+        <locationX>2391</locationX>
+        <locationY>901</locationY>
         <actionName>HDT_UTL_ElegibilityCriteriaCheck</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -29,12 +29,12 @@
     <actionCalls>
         <name>Gestione_Allineamento_Anagrafica</name>
         <label>Gestione Allineamento Anagrafica</label>
-        <locationX>1106</locationX>
-        <locationY>363</locationY>
+        <locationX>1037</locationX>
+        <locationY>376</locationY>
         <actionName>HDT_SRV_AnagAlignment</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Set_Tipo_Processo_Allineamento_Anagrafica</targetReference>
+            <targetReference>Set_Tipo_Processo</targetReference>
         </connector>
         <dataTypeMappings>
             <typeName>T__inputCase</typeName>
@@ -91,24 +91,8 @@
     <assignments>
         <name>Set_Tipo_Processo</name>
         <label>Set Tipo Processo</label>
-        <locationX>937</locationX>
-        <locationY>283</locationY>
-        <assignmentItems>
-            <assignToReference>CustomMetadataProcessType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Query_Case.Type</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>InputFieldsModAnag</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Tipo_Processo_Allineamento_Anagrafica</name>
-        <label>Set Tipo Processo Allineamento Anagrafica</label>
-        <locationX>1437</locationX>
-        <locationY>363</locationY>
+        <locationX>925</locationX>
+        <locationY>199</locationY>
         <assignmentItems>
             <assignToReference>CustomMetadataProcessType</assignToReference>
             <operator>Assign</operator>
@@ -123,8 +107,8 @@
     <decisions>
         <name>Check_Criterio_Eleggibilita_0</name>
         <label>Check Criterio Eleggibilita</label>
-        <locationX>2466</locationX>
-        <locationY>957</locationY>
+        <locationX>2560</locationX>
+        <locationY>1006</locationY>
         <defaultConnector>
             <targetReference>Refresh_Ruolo_Contatto</targetReference>
         </defaultConnector>
@@ -311,6 +295,21 @@
             </connector>
             <label>Variazione Amministratore</label>
         </rules>
+        <rules>
+            <name>Esercizio_Diritti_Privacy</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esercizio Diritti Privacy</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Predefault_Data_Ricezione</targetReference>
+            </connector>
+            <label>Esercizio Diritti Privacy</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Check_Processo_2</name>
@@ -446,19 +445,19 @@
         </defaultConnector>
         <defaultConnectorLabel>Altri processi</defaultConnectorLabel>
         <rules>
-            <name>Variazione_Anagrafica_Cliente</name>
+            <name>ModificaDatidiRecapito</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Refresh_Case.Type</leftValueReference>
+                <leftValueReference>Refresh_Case.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Variazione Anagrafica Cliente</stringValue>
+                    <stringValue>Modifica Dati di Recapito</stringValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Check_Criterio_Eleggibilita</targetReference>
             </connector>
-            <label>Variazione Anagrafica Cliente</label>
+            <label>Modifica Dati di Recapito</label>
         </rules>
     </decisions>
     <formulas>
@@ -633,6 +632,30 @@
         <object>AccountContactRelation</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Predefault_Data_Ricezione</name>
+        <label>Predefault Data Ricezione</label>
+        <locationX>1316</locationX>
+        <locationY>409</locationY>
+        <connector>
+            <targetReference>Set_Tipo_Processo</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>WrittenReceiptRequestDate__c</field>
+            <value>
+                <elementReference>Query_Case.Interaction__r.ReceptionDate__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <recordUpdates>
         <name>Predefault_Dati_di_Contatto</name>
         <label>Predefault Dati di Contatto</label>
@@ -1824,8 +1847,8 @@ Inserisci manualmente i seguenti campi:</description>
     <subflows>
         <name>Gestione_Annullamento_0</name>
         <label>Gestione Annullamento</label>
-        <locationX>2447</locationX>
-        <locationY>1217</locationY>
+        <locationX>2519</locationX>
+        <locationY>1310</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
