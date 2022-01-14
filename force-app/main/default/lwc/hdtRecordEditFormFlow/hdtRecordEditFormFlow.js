@@ -418,7 +418,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         let payType = this.selector('PaymentType__c');
                         let workStatus = this.selector('WorkStatus__c');
                         console.log('#Valore payType -> ' + payType.value);
-                        if(reason.value.localeCompare('Assistenza Sociale') === 0 && payType != null){
+                        if(reason.value.localeCompare('Assistenza sociale (cliente)') === 0 && payType != null){
+                            payType.disabled = false;
+                            workStatus.disabled = true;
+                            workStatus.required = false;
+                            workStatus.value = '';
+                        }if(reason.value.localeCompare('Assistenza sociale (ente)') === 0 && payType != null){
                             payType.disabled = false;
                             workStatus.disabled = true;
                             workStatus.required = false;

@@ -125,12 +125,29 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         System.debug(LoggingLevel.DEBUG,getFieldValue(fields, 'Type'));
 
         if(caseType == 'Piano Rateizzazione'){
+            
+            String reason = getFieldValue(fields, 'Reason__c');
+            if(String.isNotBlank(reason) && reason.equals('Assistenza sociale (ente)')){
+                try{
+                    PermissionSetAssignment psa = [SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId= :UserInfo.getUserId() AND PermissionSet.Name = 'HDT_AssistenzaSocialeEnte'];
+                }catch(Exception e){
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Utente non abilitato ad Assistenza sociale (ente)'));
+                }  
+                String depositPaymentMode = getFieldValue(fields, 'DepositPaymentMode__c');
+                if(String.isNotBlank(depositPaymentMode) && depositPaymentMode.equals('Promessa di pagamento')) {
+                    try{
+                        PermissionSetAssignment psa = [SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId= :UserInfo.getUserId() AND PermissionSet.Name = 'HDT_PromessaPagamentoEnte'];
+                    }catch(Exception e){
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Utente non abilitato a promessa di paamento'));
+                    }  
+                }
+            }     
 
             Boolean attachmentManagement = (getFieldValue(fields, 'AttachmentManagement__c') != null && getFieldValue(fields, 'AttachmentManagement__c') != '')
                 ? Boolean.valueOf(getFieldValue(fields, 'AttachmentManagement__c'))
                 : null;
 
-            if(attachmentManagement != null ){
+            if(attachmentManagement != null && String.isBlank(result)){
                 //result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
                 if(attachmentManagement){
                     List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
