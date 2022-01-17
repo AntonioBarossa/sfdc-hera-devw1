@@ -163,7 +163,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
     public static String handleEventOutcome(String appCode, String outcome, String note){
         String response = '';
         Id rtId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_DistributorAppointment').getRecordTypeId();
-        String condition = 'AppointmentCode__c = \''+appCode+'\' AND RecordTypeId = \''+rtId+'\' AND wrts_prcgvr__Status__c NOT IN (\'Completed\',\'Annullata\')';
+        String condition = 'AppointmentCode__c = \''+appCode+'\' AND RecordTypeId = \''+rtId+'\' AND wrts_prcgvr__Status__c NOT IN (\'Annullata\')';
         String fields = 'Id,wrts_prcgvr__Description__c,Order__c,Case__c,Distributor__c,ServicePoint__c,Account__c,Contact__c,isAtoa__c,RecordTypeId';
         List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords(fields, 'wrts_prcgvr__Activity__c', condition);
         if (activities != null && !activities.isEmpty()){
@@ -220,7 +220,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         if (String.isNotEmpty(condition)){
             try{
                 Id rtId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_DistributorAppointment').getRecordTypeId();
-                List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords('Id', 'wrts_prcgvr__Activity__c', condition + 'AND RecordTypeId = \''+rtId+'\' AND wrts_prcgvr__Status__c NOT IN (\'Completed\',\'Annullata\')');
+                List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords('Id', 'wrts_prcgvr__Activity__c', condition + 'AND RecordTypeId = \''+rtId+'\' AND wrts_prcgvr__Status__c NOT IN (\'Annullata\')');
                 if (activities != null && !activities.isEmpty()){
                     activity = (wrts_prcgvr__Activity__c)activities[0];
                     activity.AppointmentDate__c = Date.valueOf(formatDate(appDate));

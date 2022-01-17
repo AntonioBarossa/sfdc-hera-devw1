@@ -198,7 +198,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
 
                                     switch on fieldValueResponse.get('FASE') {
                                         when 'Ammissibilità KO' {
-                                            ord.DiscardReason__c = fieldValueResponse.get('DES_ERR_AEEG');
+                                            ord.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(fieldValueResponse.get('DES_ERR_AEEG'));
                                             ord.CausalCode__c = fieldValueResponse.get('CODERR');
                                             //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
@@ -216,7 +216,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
                                             if( fieldValueResponse.get('DES_ERR_AEEG') != null) {
-                                                ord.DiscardReason__c = fieldValueResponse.get('DES_ERR_AEEG');
+                                                ord.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(fieldValueResponse.get('DES_ERR_AEEG'));
                                                 ord.CausalCode__c = fieldValueResponse.get('CODERR_AEEG');
                                             } else {
                                                 ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
@@ -235,7 +235,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                              }
                                         }
                                         when 'Esito KO da DL' {
-                                            ord.DiscardReason__c = fieldValueResponse.get('TESTO_ERRR');
+                                            ord.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(fieldValueResponse.get('TESTO_ERRR'));
                                             //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
                                             ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
@@ -267,7 +267,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             ord.PreviousCompany__c = fieldValueResponse.get('Z_RAGSOC_CC');
                                         }
                                         when 'Esito KO da SII' {
-                                            ord.PrecheckReasonSII__c = fieldValueResponse.get('TESTO_ERRR');
+                                            ord.PrecheckReasonSII__c = HDT_UTL_Accents.removeDiacritics(fieldValueResponse.get('TESTO_ERRR'));
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
                                             //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
 			                                ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
@@ -278,7 +278,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
 			                                ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
                                         }
                                         when 'Errore lavorazione SAP' {
-                                            ord.DiscardReason__c = fieldValueResponse.get('NOTE_ERR');
+                                            ord.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(fieldValueResponse.get('NOTE_ERR'));
                                             //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
                                         }
                                         when 'Completata' {
