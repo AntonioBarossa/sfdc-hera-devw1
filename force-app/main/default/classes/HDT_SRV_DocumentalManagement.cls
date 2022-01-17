@@ -759,10 +759,10 @@ public class HDT_SRV_DocumentalManagement{
 
 			List<CS_DaysToExpiration__c> daysToExpiration = [SELECT NumberOfDays__c FROM CS_DaysToExpiration__c WHERE Type__c='BustaDocusign' WITH SECURITY_ENFORCED];
 			if (!daysToExpiration.isEmpty() && Integer.valueOf(daysToExpiration[0].NumberOfDays__c) > 0) {
-				customerInfo.expireEnabled = true;
+				customerInfo.expireEnabled = 'true';
 				customerInfo.expireAfter = daysToExpiration[0].NumberOfDays__c;
 			} else {
-				customerInfo.expireEnabled = false;
+				customerInfo.expireEnabled = 'false';
 			}
 
 			signInfo.customerInfo = customerInfo;

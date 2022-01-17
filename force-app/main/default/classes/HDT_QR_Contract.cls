@@ -95,6 +95,7 @@ public inherited sharing class HDT_QR_Contract {
             ContractNumber,
             Status,
             ServicePoint__c,
+            BillingProfile__c,
             SAPContractCode__c,
             ServicePoint__r.ServicePointCode__c,
             ServicePoint__r.SupplyAddress__c,

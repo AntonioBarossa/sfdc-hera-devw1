@@ -29,12 +29,12 @@
     <actionCalls>
         <name>Gestione_Allineamento_Anagrafica</name>
         <label>Gestione Allineamento Anagrafica</label>
-        <locationX>1106</locationX>
-        <locationY>363</locationY>
+        <locationX>1037</locationX>
+        <locationY>376</locationY>
         <actionName>HDT_SRV_AnagAlignment</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Set_Tipo_Processo_Allineamento_Anagrafica</targetReference>
+            <targetReference>Set_Tipo_Processo</targetReference>
         </connector>
         <dataTypeMappings>
             <typeName>T__inputCase</typeName>
@@ -91,24 +91,8 @@
     <assignments>
         <name>Set_Tipo_Processo</name>
         <label>Set Tipo Processo</label>
-        <locationX>937</locationX>
-        <locationY>283</locationY>
-        <assignmentItems>
-            <assignToReference>CustomMetadataProcessType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Query_Case.Type</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>InputFieldsModAnag</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Tipo_Processo_Allineamento_Anagrafica</name>
-        <label>Set Tipo Processo Allineamento Anagrafica</label>
-        <locationX>1437</locationX>
-        <locationY>363</locationY>
+        <locationX>925</locationX>
+        <locationY>199</locationY>
         <assignmentItems>
             <assignToReference>CustomMetadataProcessType</assignToReference>
             <operator>Assign</operator>
@@ -310,6 +294,21 @@
                 <targetReference>Gestione_Variazione_Amministratore</targetReference>
             </connector>
             <label>Variazione Amministratore</label>
+        </rules>
+        <rules>
+            <name>Esercizio_Diritti_Privacy</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esercizio Diritti Privacy</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Predefault_Data_Ricezione</targetReference>
+            </connector>
+            <label>Esercizio Diritti Privacy</label>
         </rules>
     </decisions>
     <decisions>
@@ -633,6 +632,30 @@
         <object>AccountContactRelation</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Predefault_Data_Ricezione</name>
+        <label>Predefault Data Ricezione</label>
+        <locationX>1316</locationX>
+        <locationY>409</locationY>
+        <connector>
+            <targetReference>Set_Tipo_Processo</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>WrittenReceiptRequestDate__c</field>
+            <value>
+                <elementReference>Query_Case.Interaction__r.ReceptionDate__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <recordUpdates>
         <name>Predefault_Dati_di_Contatto</name>
         <label>Predefault Dati di Contatto</label>
@@ -1789,7 +1812,7 @@ Inserisci manualmente i seguenti campi:</description>
             <targetReference>Query_Case</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>

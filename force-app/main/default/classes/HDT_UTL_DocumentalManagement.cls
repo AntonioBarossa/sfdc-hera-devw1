@@ -129,6 +129,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					DocumentalEnvelopeAttachment__c envelope = new DocumentalEnvelopeAttachment__c();
 					envelope.AttachmentCode__c = singleAttachment.code;
 					envelope.Required__c = singleAttachment.mandatory == '1'? true:false;
+					envelope.IsDocusignSpecialTemplate__c = singleAttachment.signature == '1'? true:false;
 					envelope.Version__c = singleAttachment.version;
 					if(context.equalsIgnoreCase('Case')){
 						envelope.Case__c = recordId;
