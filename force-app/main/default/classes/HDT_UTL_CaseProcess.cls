@@ -164,6 +164,20 @@ public with sharing class HDT_UTL_CaseProcess {
                         nonReqContr.Phase__c = 'Completata';
                         HDT_UTL_DatabaseService.updateSObject(nonReqContr);
                     }
+                    /**@frpanico 17/01/2022
+                     * Annullamento activity al passaggio nella fase Annullato
+                     */
+                    List<wrts_prcgvr__Activity__c> activitiesToCancel = new List<wrts_prcgvr__Activity__c>();
+                    for(wrts_prcgvr__Activity__c activity : caseQr.getCaseActivities(new List<String>{caseNew.Id}))
+                    {
+                        activity.wrts_prcgvr__Status__c = 'Annullata';
+                        activitiesToCancel.add(activity);
+                    }
+                    if(!activitiesToCancel.isEmpty())
+                    {
+                        HDT_UTL_DatabaseService.updateSObject(activitiesToCancel);
+                    }
+
                 }
                 if(caseNew.Cluster__c == 'Autolettura'){
                     // Annullamento dopo l'invio al DL
