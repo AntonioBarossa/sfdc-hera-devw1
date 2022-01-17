@@ -187,6 +187,11 @@ public with sharing class HDT_UTL_Account {
                     update acc;
                 } // TODO gestire l'errore 
             }
+            /**@frpanico 17/01/2022
+             * Commentata parte di codice della creazione Account
+             * L'account viene creato in un secondo momento
+             * Per gestire correttamente nuova e vecchia marcatura.
+             */
             else if ( 'BP non rilevato'.equalsIgnoreCase(res.data.commenti)){
                 req=callBpCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
@@ -306,5 +311,15 @@ public with sharing class HDT_UTL_Account {
 
         return categoryCode;
     }
+
+    /**@frpanico 17/01/2022
+     * Creato metodo per la creazione del BP/CA
+     */
+    /*
+    public static void createBpCa(Account acc, Contact con)
+    {
+
+    }
+    */
 
 }
