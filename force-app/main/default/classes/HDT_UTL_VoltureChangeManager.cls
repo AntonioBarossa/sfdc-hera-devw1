@@ -113,7 +113,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
         orderToUpdate.SupplyCity__c = (String)fieldsMap.get('LOCALITA');
         orderToUpdate.SupplyState__c = (String)fieldsMap.get('PROV');
         orderToUpdate.SupplyCountry__c = (String)fieldsMap.get('NAZIONE');
-        orderToUpdate.DiscardReason__c = (String)fieldsMap.get('DES_ERR_AEEG');
+        orderToUpdate.DiscardReason__c = HDT_UTL_Accents.removeDiacritics((String)fieldsMap.get('DES_ERR_AEEG'));
         orderToUpdate.HerokuPracticeCode__c = (String)fieldsMap.get('COD_PRAT_UTENTE');
         orderToUpdate.DistributorPracticeCode__c = (String)fieldsMap.get('COD_PRAT_DISTR');
         /* Date Fields */
