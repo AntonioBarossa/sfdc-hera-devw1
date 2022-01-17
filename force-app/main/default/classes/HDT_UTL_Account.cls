@@ -315,11 +315,51 @@ public with sharing class HDT_UTL_Account {
     /**@frpanico 17/01/2022
      * Creato metodo per la creazione del BP/CA
      */
-    /*
-    public static void createBpCa(Account acc, Contact con)
+    
+    public static void createBpCa(List<AccountContactRelation> accountContactRelList)
     {
+        /**@frpanico 17/01/2022
+         * Se Account.CustomerMarking__c contiente "Condomini"
+         * Viene utilizzato l'accountContactRel dell'Amministratore di Condominio/Legale Rappresentante
+         * Altrimenti viene utilizzato quello titolare
+         */
+        for(AccountContactRelation accountContactRel : accountContactRelList)
+        {
 
+        }
     }
-    */
+    
+
+    private static Map<String, SObject> generateAccountContact(AccountContactRelation accountContactRel)
+    {
+        Map<String, SObject> accountContactMap = new Map<String, SObject>();
+        Account accountToMap = new Account();
+        Contact contactToMap = new Contact();
+        accountToMap.Id = accountContactRel.AccountId;
+        accountToMap.RecordTypeId = accountContactRel.Account.RecordTypeId;
+        accountToMap.Category__c = accountContactRel.Account.Category__c;
+        accountToMap.CustomerMarking__c = accountContactRel.Account.CustomerMarking__c;
+        accountToMap.FiscalCode__c = accountContactRel.Account.FiscalCode__c;
+        accountToMap.VatNumber__c = accountContactRel.Account.VatNumber__c;
+        accountToMap.BillingCity = accountContactRel.Account.BillingCity;
+        accountToMap.BillingCountry = accountContactRel.Account.BillingCountry;
+        accountToMap.BillingStreetToponym__c = accountContactRel.Account.BillingStreetToponym__c;
+        accountToMap.BillingPostalCode = accountContactRel.Account.BillingPostalCode;
+        accountToMap.BillingState = accountContactRel.Account.BillingState;
+        accountToMap.BillingStreetNumber__c = accountContactRel.Account.BillingStreetNumber__c;
+        accountToMap.BillingStreetName__c = accountContactRel.Account.BillingStreetName__c;
+        accountToMap.MobilePhone__c = accountContactRel.Account.MobilePhone__c;
+        accountToMap.BuildingFloor__c = accountContactRel.Account.BuildingFloor__c;
+        accountToMap.PrimaryEmail__c = accountContactRel.Account.PrimaryEmail__c;
+        accountToMap.VATGroup__c = accountContactRel.Account.VATGroup__c;
+        accountToMap.VATGroupStartDate__c = accountContactRel.Account.VATGroupStartDate__c;
+        accountToMap.VATGroupEndDate__c = accountContactRel.Account.VATGroupEndDate__c;
+        contactToMap.Id = accountContactRel.ContactId;
+        contactToMap.MobilePhone = accountContactRel.Contact.MobilePhone;
+        contactToMap.CertifiedEmail__c = accountContactRel.Contact.CertifiedEmail__c;
+        accountContactMap.put('Account', accountToMap);
+        accountContactMap.put('Contact', contactToMap);
+        return accountContactMap;
+    }
 
 }
