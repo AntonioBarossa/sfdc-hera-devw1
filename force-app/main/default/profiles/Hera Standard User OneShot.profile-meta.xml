@@ -9123,6 +9123,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DocumentalEnvelopeAttachment__c.IsDocusignSpecialTemplate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DocumentalEnvelopeAttachment__c.Case__c</field>
         <readable>true</readable>
     </fieldPermissions>
