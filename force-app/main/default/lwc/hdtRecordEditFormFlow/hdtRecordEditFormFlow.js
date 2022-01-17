@@ -5,6 +5,9 @@ import getFields from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.getF
 import validateRecord from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.validateRecord';
 import getContentDocs from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.getContentDocs';
 import { updateRecord } from 'lightning/uiRecordApi';
+import { getRecord } from 'lightning/uiRecordApi';
+
+import ASSISTED from '@salesforce/schema/Case.CutomerAssisted__c';
 
 export default class HdtRecordEditFormFlow extends LightningElement {
 
@@ -53,6 +56,15 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     //@track notificationType = '';
     //@track delay = 3000;
     @track show = false;
+
+    @track assisted;
+    @wire(getRecord, { recordId: '$recordId', fields: [ASSISTED] })
+    wiredRecord({ error, data }) {
+        if (data) {
+            this.assisted = data.fields.CutomerAssisted__c.value;
+        }
+    }
+
 
     @wire(getFields, { processType: '$processType' }) 
         wiredFieldsJSON ({ error, data }) {
@@ -404,6 +416,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
 
     installmentsLogic(){
+        console.log('Rec ' + this.assisted);
         let reasonObj =  this.objSelector('Reason__c');
         console.log('#Reason --> ' + JSON.stringify(reasonObj));
         let paymentType = this.objSelector('PaymentType__c');
@@ -419,12 +432,20 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         let workStatus = this.selector('WorkStatus__c');
                         console.log('#Valore payType -> ' + payType.value);
                         if(reason.value.localeCompare('Assistenza sociale (cliente)') === 0 && payType != null){
-                            payType.disabled = false;
+                            if(this.assisted){
+                                payType.disabled = true;
+                                payType.value = 'Totalmente dal Cliente';
+                            }
+                            else payType.disabled = false;
                             workStatus.disabled = true;
                             workStatus.required = false;
                             workStatus.value = '';
-                        }if(reason.value.localeCompare('Assistenza sociale (ente)') === 0 && payType != null){
-                            payType.disabled = false;
+                        }else if(reason.value.localeCompare('Assistenza sociale (ente)') === 0 && payType != null){
+                            if(this.assisted){
+                                payType.disabled = true;
+                                payType.value = 'In compartecipazione o totalmente da istituzioni pubbliche';
+                            }
+                            else payType.disabled = false;
                             workStatus.disabled = true;
                             workStatus.required = false;
                             workStatus.value = '';

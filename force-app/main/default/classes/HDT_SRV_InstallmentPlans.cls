@@ -102,15 +102,6 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
             currentCase.CutomerAssisted__c = customerAssisted.equalsIgnoreCase('Si');
         }
 
-        //Set PaymentType
-        String reason = installmentsQr.getCaseById(recordId).Reason__c;
-        if(customerAssisted && String.isNotBlank(reason) && reason.equals('Assistenza sociale (cliente)')){
-            currentCase.PaymentType__c = 'Totalmente dal Cliente';
-        }
-        else if(customerAssisted && String.isNotBlank(reason) && reason.equals('Assistenza sociale (ente)')){
-            currentCase.PaymentType__c = 'In compartecipazione o totalmente da istituzioni pubbliche';
-        }
-
         HDT_UTL_DatabaseService.updateSObject(currentCase);
 
     }

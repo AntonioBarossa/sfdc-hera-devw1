@@ -127,19 +127,14 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         if(caseType == 'Piano Rateizzazione'){
             
             String reason = getFieldValue(fields, 'Reason__c');
+
             if(String.isNotBlank(reason) && reason.equals('Assistenza sociale (ente)')){
-                try{
-                    PermissionSetAssignment psa = [SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId= :UserInfo.getUserId() AND PermissionSet.Name = 'HDT_AssistenzaSocialeEnte'];
-                }catch(Exception e){
-                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Utente non abilitato ad Assistenza sociale (ente)'));
-                }  
+                List<PermissionSetAssignment> psa = [SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId= :UserInfo.getUserId() AND PermissionSet.Name = 'HDT_AssistenzaSocialeEnte'];
+                if(psa.size()==0) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Utente non abilitato ad Assistenza sociale (ente)'));
                 String depositPaymentMode = getFieldValue(fields, 'DepositPaymentMode__c');
-                if(String.isNotBlank(depositPaymentMode) && depositPaymentMode.equals('Promessa di pagamento')) {
-                    try{
-                        PermissionSetAssignment psa = [SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId= :UserInfo.getUserId() AND PermissionSet.Name = 'HDT_PromessaPagamentoEnte'];
-                    }catch(Exception e){
-                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Utente non abilitato a promessa di paamento'));
-                    }  
+                if(String.isBlank(result) && String.isNotBlank(depositPaymentMode) && depositPaymentMode.equals('Promessa di pagamento')) {
+                    List<PermissionSetAssignment> psas = [SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId= :UserInfo.getUserId() AND PermissionSet.Name = 'HDT_PromessaPagamentoEnte'];
+                    if(psas.size()==0) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Utente non abilitato a promessa di paamento'));
                 }
             }     
 
