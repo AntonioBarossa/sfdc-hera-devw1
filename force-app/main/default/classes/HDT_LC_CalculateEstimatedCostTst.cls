@@ -15,17 +15,27 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
             
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
             List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-            
+            /*
             List<ServicePoint__c> points = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
             points[0].Distributor__c = acc[0].id;
-            insert points;
+            insert points; */
+
+            List<ServicePoint__c> servPointList=new List<ServicePoint__c>();
+            ServicePoint__c servPoint=new ServicePoint__c();
+            //servPoint.Distributor__c = acc[0].id;
+            servPoint.Name='testServicePoint';
+            servPoint.ServicePointCode__c='testServicePointCode';
+            servPoint.RecordTypeId = constants.SERVICEPOINT_RECORDTYPEID_PELETRICCO;
+            servPointList.add(servPoint);
+            insert servPointList;
             
             List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1, false, acc[0].Id, 'Bozza');
-            orders[0].ServicePoint__c = points[0].id;
+            orders[0].ServicePoint__c = servPointList[0].id;
             orders[0].RecordTypeId = constants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT;
+            orders[0].SupplyType__c = 'Domestico';
             orders[0].PowerRequested__c = 1.1;
             orders[0].PowerAvailable__c = 1.5;
-            insert orders;            
+            insert orders;
 
         }
 
@@ -42,7 +52,6 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
 
         
         System.assertEquals(1000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
-
         System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c, 'updateOrder did not work correctly');
 
         Test.stopTest();
@@ -74,7 +83,6 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
 
     
     System.assertEquals(1000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
-
     System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c, 'getExtimatedCost did not work correctly');
 
     Test.stopTest();
@@ -90,21 +98,29 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
                              FROM Order
                              WHERE Status = 'Draft'
                              LIMIT 1];
-        
+
         HDT_LC_CalculateEstimatedCost.HDT_WRP_ExtimatedCost ext = new HDT_LC_CalculateEstimatedCost.HDT_WRP_ExtimatedCost();
         ext.fixedQuotes = new HDT_CalcoloPreventivi__mdt();
-        ext.validityDate = 'yes';
-        ext.estimatedAmount = 1.1;
-        
+        /*
+        fixedQuotes.VAT__c >> 10.00
+        fixedQuotes.DistributorFixedQuote__c >> 0.00
+        fixedQuotes.PowerQuote__c >> 56.16
+        fixedQuotes.SellerFixedQuote__c >> 23.00
+        fixedQuotes.Type__c >> 'Domestico'
+        variableAmount >> -16.2864 
+        estimatedAmount >> 7.384960
+        estimatedAmount = estimatedAmount.setScale(2) >> 7.38
+        */
+
         Test.startTest();
         
         HDT_LC_CalculateEstimatedCost.getFixedQuotes(updateOrder, ext);
         HDT_LC_CalculateEstimatedCost.getExtimatedCost(updateOrder);
         
         Test.stopTest();
-               
+        
+        System.assertEquals(7.38, ext.estimatedAmount, 'EstimateAmount__c not correct!');
         System.assertEquals(1000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
-
         System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
         
     }
