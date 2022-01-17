@@ -7,14 +7,20 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
     private Set<String> accountIdSet = new Set<String>();
     private Set<String> contractCodeSet = new Set<String>();
     private Map<String, List<String>> itemRequestMap = new Map<String, List<String>>();
+    private Map<String, Contract> contractMap = new Map<String, Contract>();
+    private Map<String, Id> orderIdsMap = new Map<String, Id>();
     private Map<String, Id> recordTypeMap = new Map<String, Id>();
     private List<MassiveLoaderRequestItem__c> itemsToSave;
     private List<Contract> contractList;
+    private List<String> orderNumberList = new List<String>();
+    private List<Order> orderList = new List<Order>();
     private Case newCase;
     private Id recordTypeId;
     private Integer podIndex;
     private Integer contractIndex;
     private Integer accountIdIndex;
+    private Integer orderVolturaIndex;
+    private String RIF_VOLTURA = 'RIF_VOLTURA';
 
     public override void checks(){
         System.debug(LoggingLevel.DEBUG, 'checks');
@@ -31,12 +37,21 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
         contractIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CONTRATTO'));
         accountIdIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
 
+        if(mapWrapperCaseFields.containsKey(RIF_VOLTURA)){
+            if(mapHeaderForWrapper.containsKey(mapWrapperCaseFields.get(RIF_VOLTURA))){
+                orderVolturaIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get(RIF_VOLTURA));
+            }
+        }
+        
+
         List<String> dataSplitted;
         for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
             dataSplitted = item.Data__c.split(',', -1);
             accountIdSet.add(dataSplitted[accountIdIndex]);
             contractCodeSet.add(dataSplitted[contractIndex]);
             itemRequestMap.put(item.Id, dataSplitted);
+            if(orderVolturaIndex != null)
+                orderNumberList.add(dataSplitted[orderVolturaIndex]);
         }
 
     }
@@ -45,11 +60,150 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
         System.debug(LoggingLevel.DEBUG, 'getRecords');
 
         contractList = HDT_QR_ProcessPostSales.getContracts(contractList, contractCodeSet);
+        orderList = HDT_QR_ProcessPostSales.getOrderByOrderNumber(orderList, orderNumberList);
 
         recordTypeId = HDT_QR_ProcessPostSales.getRecordTypeId('HDT_RT_VariazioniEle');
         recordTypeMap.put('Energia Elettrica', recordTypeId);
         recordTypeId = HDT_QR_ProcessPostSales.getRecordTypeId('HDT_RT_VariazioniGas');
         recordTypeMap.put('Gas', recordTypeId);
+
+        for(Contract contr : contractList){
+            contractMap.put(contr.SAPContractCode__c, contr);
+        }
+
+        for(Order o : orderList){
+            orderIdsMap.put(o.OrderNumber, o.Id);
+        }
+
+    }
+
+    public override void registryCreation(){
+        System.debug(LoggingLevel.DEBUG, 'registryCreation');
+
+        HDT_UTL_ProcessCommonOperations.getLimitDetails('START registryCreation');
+
+        List<Case> caseToInsert = new List<Case>();
+        List<String> itemIds = new List<String>();
+        itemsToSave = new List<MassiveLoaderRequestItem__c>();
+
+        HDT_QR_CausalCodeCalculation causalCodeCalculation = new HDT_QR_CausalCodeCalculation();
+        HDT_CausalCodeCalculation__mdt causalCode;
+
+        //System.debug(LoggingLevel.DEBUG, '>>> currentRequestItemList: ' + String.valueOf(currentProcess.currentCase));
+        //System.debug(LoggingLevel.DEBUG, '>>> get mapCaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
+
+        Case newCase;
+        Id currentRecordTypeId;
+        for(String itemId : itemRequestMap.keySet()){
+
+            List<String> tempSplitted = itemRequestMap.get(itemId);
+            newCase = new Case();
+            // Per ogni item della mappa itemRequestMap viene convertito il data__c in una lista (tempSplitted) e tramite il metodo mapTypeField la lista viene
+            // convertita nel custom obj indicato, in questo caso è currentProcess.currentCase
+
+            Integer count = 0;
+            String convertionError;
+            for (String tempField : tempSplitted) {
+
+                if ('null'.equalsIgnoreCase(tempField)) {
+                   tempField = '';
+                }
+            
+                //if (mapRequiredByPosition.get(count) != null && String.isBlank(tempField)) {
+                //    System.debug(LoggingLevel.DEBUG, '>>> throw new HDT_WRP_ProcessEntitiesException');
+                //   //throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field','Missing Required Field ' + mapHeaderByPosition.get(count));
+                //}
+            
+                if(String.isNotBlank(mapCaseFields.get(mapHeaderByPosition.get(count))) && String.isNotBlank(tempField)){
+                    System.debug(LoggingLevel.DEBUG, '>>> tempField: ' + tempField + ' # Header: ' + mapHeaderByPosition.get(count) + ' # CaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
+                    convertionError = mapTypeField(newCase, mapCaseFields, count, tempField);
+
+                    if(!String.isEmpty(convertionError)){
+                        // error happened -> exit
+                        break;
+                    }
+                }
+                count++;
+            }
+
+            if(!String.isEmpty(convertionError)){
+                itemsToSave.add(setErrorItem(itemId, convertionError));
+                continue;
+            }
+
+            System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + newCase);
+            Contract contract;
+            
+            if(contractMap.containsKey(tempSplitted[contractIndex])){
+                contract = contractMap.get(tempSplitted[contractIndex]);
+                newCase.Contract__c = contract.Id;
+                newCase.ServicePoint__c = contract.ServicePoint__c;
+                newCase.BillingProfile__c = contract.BillingProfile__c;
+            } else {
+                itemsToSave.add(setErrorItem(itemId, 'pod non presente'));
+                continue;
+            }
+                        
+            if(!String.isEmpty(contract.ServicePoint__r.CommoditySector__c)){
+                causalCode = causalCodeCalculation.calculateCausalCode(this.processName, newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
+
+                if(causalCode != null){
+                    newCase.CausalCode__c = causalCode.CausalCode__c;//'D01' for example
+                } else {
+                    //do something -> record error
+                }
+
+                currentRecordTypeId = recordTypeMap.get(contract.ServicePoint__r.CommoditySector__c);
+            }
+
+            newCase.AccountId = tempSplitted[accountIdIndex];
+            newCase.Cluster__c = 'Variazioni';
+            newCase = HDT_UTL_ProcessCommonOperations.setCaseField(newCase, currentRecordTypeId);
+
+            if(newCase.Type.equalsIgnoreCase('Cambio contatore non registrato') && orderVolturaIndex != null){
+                String currentOrderNum = tempSplitted[orderVolturaIndex];
+                if(orderIdsMap.containsKey(currentOrderNum)){
+                    newCase.VulturePracticeReference__c = orderIdsMap.get(currentOrderNum);
+                } else {
+                    System.debug(LoggingLevel.DEBUG, '>>> NO ORDER FOUND');
+                }
+            }
+
+            try{
+                System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + newCase);
+                System.debug(LoggingLevel.DEBUG, '>>> pod: ' + tempSplitted[podIndex]);
+                String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(tempSplitted[podIndex], null);
+                System.debug(LoggingLevel.DEBUG, '>>> arricchimentoResponse: ' + arricchimentoResponse);
+                newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, newCase);
+                
+                caseToInsert.add(newCase); 
+                itemIds.add(itemId);
+            } catch(Exception e){
+                System.debug(LoggingLevel.DEBUG, '>>> arricchimentoError ' + e.getMessage());
+                itemsToSave.add(setErrorItem(itemId, 'Errore arricchimento dati # '));
+            }
+
+        }
+
+        if(caseToInsert.size() > 0){
+
+            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse;
+            saveResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(caseToInsert, itemIds);
+
+            caseToInsert.clear();
+
+            HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE CREATION & Enrichment');
+
+            if(saveResponse.reponseItemList.size() > 0){
+                itemsToSave.addAll(saveResponse.reponseItemList);
+            }
+
+            if(saveResponse.savedCase.size() > 0){
+                HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedCase);
+            }
+
+        }  
+
     }
 
     public override void finalUpdate(){
@@ -91,7 +245,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
 
     }
 
-    public static void setDataForTest_ModificheAnagrafiche(){
+    public static void setDataForTest(){
 
         Id massiveLoaderRequestId = 'a3d3O000000WwZOQA0';
 
@@ -112,16 +266,16 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
             item.MassiveLoaderRequest__c = massiveLoaderRequestId;
             item.Status__c = 'In attesa di lavorazione';
             item.Data__c = '';
-            item.Data__c += ',';// PROCESSO
-            item.Data__c += ',';// ACCOUNTID
+            item.Data__c += 'Cambio contatore non registrato,';// PROCESSO
+            item.Data__c += '0011X00000jcKXUQA2,';// ACCOUNTID
             item.Data__c += ',';// SOTTOPROCESSO
-            item.Data__c += ',';// POD
-            item.Data__c += ',';// CONTRATTO
+            item.Data__c += 'IT001E00032928,';// POD
+            item.Data__c += '3019602323,';// CONTRATTO
             item.Data__c += ',';// ELEMENTI_DETTAGLIO
             item.Data__c += ',';// SERVIZIO_ENERGIA
             item.Data__c += ',';// DATA_VARIAZIONE
             item.Data__c += ',';// MATRICOLA
-            item.Data__c += ',';// RIF_VOLTURA
+            item.Data__c += '00000157,';// RIF_VOLTURA
             item.Data__c += ',';// NOTE_DL
             item.Data__c += ',';// CORRETTORE
             item.Data__c += ',';// DATA_LETTURA
@@ -136,7 +290,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
             item.Data__c += ',';// VIA
             item.Data__c += ',';// CIVICO
             item.Data__c += ',';// ESTENSIONE_CIVICO
-            item.Data__c += ',';// CATEGORIA_USO
+            item.Data__c += '004-Uso tecnologico,';// CATEGORIA_USO
             item.Data__c += ',';// TIPO_FORNITURA
             item.Data__c += ',';// TIPO_IMPIANTO
             item.Data__c += ',';// IMPOSTE

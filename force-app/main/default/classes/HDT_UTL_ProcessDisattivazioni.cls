@@ -273,7 +273,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
         update itemList;
     }
 
-    public static void setDataForTest_Disattivazioni(){
+    public static void setDataForTest(){
         delete [SELECT Id FROM MassiveLoaderRequestItem__c WHERE MassiveLoaderRequest__c ='a3d3O000000WlXDQA0'];
         delete [
             SELECT Id, Type, AccountId, NotPerformedBefore__c, WrittenReceiptRequestDate__c, CustomerRecessDate__c, VulturePracticeReference__c,

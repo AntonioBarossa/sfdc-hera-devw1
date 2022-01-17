@@ -265,7 +265,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
 
     }
 
-    public static void setDataForTest_ModificheAnagrafiche(){
+    public static void setDataForTest(){
 
         Id massiveLoaderRequestId = 'a3d3O000000WuVqQAK';
 
