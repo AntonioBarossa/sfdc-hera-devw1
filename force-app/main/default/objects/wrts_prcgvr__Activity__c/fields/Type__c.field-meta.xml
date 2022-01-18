@@ -562,6 +562,11 @@
                 <default>false</default>
                 <label>Scarto Bonus Sociale</label>
             </value>
+            <value>
+                <fullName>Acconto scaduto non pagato da gestire</fullName>
+                <default>false</default>
+                <label>Acconto scaduto non pagato da gestire</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

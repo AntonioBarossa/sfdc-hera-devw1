@@ -2014,6 +2014,10 @@
     <picklistValues>
         <picklist>DepositPaymentMode__c</picklist>
         <values>
+            <fullName>Acconto Assistiti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bollettino postale</fullName>
             <default>false</default>
         </values>
@@ -2022,11 +2026,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Bonifico Paperless</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>POS Sportello</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Paperless</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Promessa di pagamento</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7665,6 +7677,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In compartecipazione o totalmente da istituzioni pubbliche</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Totalmente da Istituzioni Pubbliche</fullName>
             <default>false</default>
         </values>
@@ -7984,7 +8000,11 @@
     <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
-            <fullName>Assistenza Sociale</fullName>
+            <fullName>Assistenza sociale %28cliente%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistenza sociale %28ente%29</fullName>
             <default>false</default>
         </values>
         <values>

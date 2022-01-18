@@ -355,16 +355,15 @@
                 <label>Assistenza sociale (ente)</label>
             </value>
             <value>
+                <fullName>Assistenza sociale</fullName>
+                <default>false</default>
+                <label>Assistenza Sociale (DEPRECATO)</label>
+            </value>
+            <value>
                 <fullName>Agevolazioni non Energy indirette</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Agevolazioni non Energy indirette</label>
-            </value>
-            <value>
-                <fullName>Assistenza sociale</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Assistenza sociale</label>
             </value>
             <value>
                 <fullName>Bolletta Fuga H2O</fullName>
