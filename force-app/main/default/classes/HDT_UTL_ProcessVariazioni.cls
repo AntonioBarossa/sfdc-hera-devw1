@@ -170,11 +170,11 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
             }
 
             try{
-                System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + newCase);
-                System.debug(LoggingLevel.DEBUG, '>>> pod: ' + tempSplitted[podIndex]);
-                String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(tempSplitted[podIndex], null);
-                System.debug(LoggingLevel.DEBUG, '>>> arricchimentoResponse: ' + arricchimentoResponse);
-                newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, newCase);
+                //System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + newCase);
+                //System.debug(LoggingLevel.DEBUG, '>>> pod: ' + tempSplitted[podIndex]);
+                //String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(tempSplitted[podIndex], null);
+                //System.debug(LoggingLevel.DEBUG, '>>> arricchimentoResponse: ' + arricchimentoResponse);
+                //newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, newCase);
                 
                 caseToInsert.add(newCase); 
                 itemIds.add(itemId);
@@ -189,7 +189,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
 
             HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse;
             saveResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(caseToInsert, itemIds);
-
+            runAlignment(caseToInsert);
             caseToInsert.clear();
 
             HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE CREATION & Enrichment');
@@ -204,6 +204,18 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
 
         }  
 
+    }
+
+    private static void runAlignment(List<Case> caseList){
+        HDT_SRV_AnagAlignment.HDT_UTL_AnagAlignmentFlowInputs input;
+        List<String> returnStringList;
+        for(Case c : caseList){
+            input = new HDT_SRV_AnagAlignment.HDT_UTL_AnagAlignmentFlowInputs();
+            input.inputCase = c;
+            input.context = 'VARIAZIONI_INDIRIZZO_FORNITURA';
+            returnStringList = HDT_SRV_AnagAlignment.handleAnagAlignment(new List<HDT_SRV_AnagAlignment.HDT_UTL_AnagAlignmentFlowInputs>{input});
+            System.debug('>>> returnStringList: ' + returnStringList);
+        }
     }
 
     public override void finalUpdate(){
@@ -249,6 +261,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
 
         Id massiveLoaderRequestId = 'a3d3O000000WwZOQA0';
 
+        Set<Id> docId = new Set<Id>();
         delete [SELECT Id FROM MassiveLoaderRequestItem__c WHERE MassiveLoaderRequest__c = :massiveLoaderRequestId];
         delete [
             SELECT Id, Type, AccountId, NotPerformedBefore__c, WrittenReceiptRequestDate__c, CustomerRecessDate__c, VulturePracticeReference__c,
@@ -258,6 +271,21 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
             WHERE Createddate = today AND CreatedById = '0051X0000055rbNQAQ'
         ];
     
+        List<ContentDocumentLink> cdlList = [
+            SELECT Id, LinkedEntityId, ContentDocumentId
+            FROM ContentDocumentLink
+            WHERE LinkedEntityId = :massiveLoaderRequestId
+        ];
+
+        if(cdlList.size() > 0){
+            for(ContentDocumentLink c : cdlList){
+                docId.add(c.ContentDocumentId);
+            }
+
+            delete cdlList;
+            delete [SELECT Id FROM ContentDocument WHERE Id IN :docId];
+        }
+
         List<MassiveLoaderRequestItem__c> itemsList = new List<MassiveLoaderRequestItem__c>();
         MassiveLoaderRequestItem__c item;
     
@@ -266,7 +294,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
             item.MassiveLoaderRequest__c = massiveLoaderRequestId;
             item.Status__c = 'In attesa di lavorazione';
             item.Data__c = '';
-            item.Data__c += 'Cambio contatore non registrato,';// PROCESSO
+            item.Data__c += 'Variazione indirizzo di fornitura,';//'Cambio contatore non registrato,';// PROCESSO
             item.Data__c += '0011X00000jcKXUQA2,';// ACCOUNTID
             item.Data__c += ',';// SOTTOPROCESSO
             item.Data__c += 'IT001E00032928,';// POD
