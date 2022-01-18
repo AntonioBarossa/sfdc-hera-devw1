@@ -315,11 +315,25 @@ public with sharing class HDT_UTL_Account {
     /**@frpanico 17/01/2022
      * Creato metodo per la creazione del BP/CA
      */
-    /*
-    public static void createBpCa(Account acc, Contact con)
+    
+    public static void createBpCa(List<AccountContactRelation> accountContactRelList)
     {
-
+        /**@frpanico 17/01/2022
+         * Se presente accountContactRel Amm. Condominio/Legale Rappresentante
+         * Viene utilizzato l'accountContactRel dell'Amministratore di Condominio/Legale Rappresentante
+         * Altrimenti viene utilizzato quello titolare
+         */
+        for(AccountContactRelation accountContactRel : accountContactRelList)
+        {
+            break;
+        }
     }
-    */
+    
+
+    private static Map<String, SObject> generateAccountContact(AccountContactRelation accountContactRel)
+    {
+        Map<String, SObject> accountContactMap = new Map<String, SObject>();
+        return accountContactMap;
+    }
 
 }
