@@ -1055,6 +1055,24 @@
                 <fieldItem>Record.CreditCheckResolutionReason__c</fieldItem>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Account__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.OldCustomerAccount__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-1865a7d2-9cba-4b02-b8f6-1a02d2b4f89a</name>
         <type>Facet</type>
     </flexiPageRegions>

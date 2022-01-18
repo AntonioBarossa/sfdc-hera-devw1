@@ -3,5 +3,5 @@
     <fullName>HDT_VR_CreditCheck</fullName>
     <active>true</active>
     <errorConditionFormula>IF(OR(AND( $Permission.HDT_CP_EnableCreditCheck = false , RecordType.DeveloperName = &apos;HDT_RT_CreditCheckKO&apos;,	NOT( ISNEW() )	),	AND ( $Permission.HDT_CP_EnableCreditCheck = false , RecordType.DeveloperName = &apos;HDT_RT_CreditCheckKO&apos;,ISNEW(),  NOT( ISPICKVAL( wrts_prcgvr__Status__c , &apos;Creata&apos;) ) ) ) , true, false)</errorConditionFormula>
-    <errorMessage>Questo utente non dispone dei permessi per l&apos;activity CreditCheckKO</errorMessage>
+    <errorMessage>Questo utente non dispone dei permessi per l&apos;activity CreditCheckKO (Permission Set HDT_CP_EnableCreditCheck)</errorMessage>
 </ValidationRule>
