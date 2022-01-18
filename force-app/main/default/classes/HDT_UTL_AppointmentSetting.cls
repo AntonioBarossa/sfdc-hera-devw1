@@ -34,4 +34,19 @@ public with sharing class HDT_UTL_AppointmentSetting {
         }
         return response;
     }
+
+    public static Map<String,String> getQuickLink(String distributorName){
+        Map<String,String> response = new Map<String,String>();
+        try {
+            HDT_AppointmentSetting__mdt record = [SELECT Value2__c FROM HDT_AppointmentSetting__mdt WHERE IsActive__c = true AND Type__c = 'Quick Link' AND Value1__c =:distributorName WITH SECURITY_ENFORCED];
+            if (String.isEmpty(record.Value2__c)){
+                response.put('errorMessage','Nessun Link valido per il presente distributore.');
+            }else{
+                response.put('link',record.Value2__c);
+            }
+        }catch (Exception e){
+            response.put('errorMessage','Nessun Link valido per il presente distributore.');
+        }
+        return response;
+    }
 }
