@@ -220,6 +220,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             activity = reqWrp.requestMap.get('ATTIVITA');
             //EVERIS: Gestione Scarti SAP
             HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase);
+            //Gestione Esito Appuntamento;
+            HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
+            appService.updateExtraSystemAppointment(nextPhase, recordCase.Id);
+            //fine Gestione Esito Appuntamento;
         }
         if(method.equalsIgnoreCase('aggiornaRCU')){
             if(String.isBlank(codServizio) || String.isBlank(codPrestazione)){

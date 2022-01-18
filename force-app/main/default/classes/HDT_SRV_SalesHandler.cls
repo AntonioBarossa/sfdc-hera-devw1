@@ -213,6 +213,10 @@ public with sharing class HDT_SRV_SalesHandler {
                                 system.debug('TrackingDiscardPhase__c '+ord.TrackingDiscardPhase__c);
                             }
                             when 'Esito KO da DL' {
+                                //Gestione Esito Appuntamento;
+                                HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
+                                appService.updateExtraSystemAppointment('Esito KO da DL', ord.Id);
+                                //fine Gestione Esito Appuntamento;
                                 ord.DiscardReason__c = mapRequestFields.get('TESTO_ERRR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
@@ -221,6 +225,10 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.Description = mapRequestFields.get('ANNOTAZIONI');
                             }
                             when 'Esito OK da DL' {
+                                //Gestione Esito Appuntamento;
+                                HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
+                                appService.updateExtraSystemAppointment('Esito OK da DL', ord.Id);
+                                //fine Gestione Esito Appuntamento;
                                 HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
                                 utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
@@ -240,8 +248,6 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.ServicePoint__r.ServicePointCode__c = mapRequestFields.get('POD');
                                 }
                                 //End HRAWRM-657 21/09/2021
-                                
-                                
                                 switch on mapRequestFields.get('COD_FLUSSO'){
                                     when 'E150F'{
                                         utlTechData.handleE150Flow(mapRequestFields, ord);
