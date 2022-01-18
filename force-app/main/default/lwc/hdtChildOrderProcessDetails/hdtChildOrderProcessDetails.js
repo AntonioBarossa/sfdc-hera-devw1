@@ -891,6 +891,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('','Email__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','WithdrawalClass__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','AnnualConsumption__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','AnnualWithdrawal__c',this.typeVisibility('both'),true,false,'',''),
                     new fieldData('','Market__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','SupplyType__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','Commodity__c',this.typeVisibility('both'),false,true,'',''),
