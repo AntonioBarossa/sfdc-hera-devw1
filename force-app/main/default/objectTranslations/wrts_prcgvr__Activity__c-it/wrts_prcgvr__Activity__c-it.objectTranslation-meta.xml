@@ -126,14 +126,6 @@
     </validationRules>
     <validationRules>
         <errorMessage></errorMessage>
-        <name>HDT_VR_GestApp_ModAppuntamento</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage></errorMessage>
-        <name>HDT_VR_GestApp_ObblNonAtoA</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage></errorMessage>
         <name>HDT_VR_GestApp_Obbligatorieta</name>
     </validationRules>
     <validationRules>
