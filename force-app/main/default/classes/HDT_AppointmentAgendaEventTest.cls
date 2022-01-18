@@ -12,14 +12,14 @@ public with sharing class HDT_AppointmentAgendaEventTest {
     public static void createPlatformEvent(){
         String methodName = 'createPlatformEvent: ';
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
-        activity.wrts_prcgvr__Status__c = 'Completed';
+        activity.wrts_prcgvr__Status__c = 'Chiusa';
         HDT_PEV_AppointmentAgenda__e activityEvent = new HDT_PEV_AppointmentAgenda__e();
         activityEvent.Activity_JSON__c = JSON.serialize(activity);
         Test.startTest();
             Database.SaveResult sr = EventBus.publish(activityEvent);
         Test.stopTest();
         activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
-        System.assertEquals('Completed', activity.wrts_prcgvr__Status__c, methodName+'Cambio Stato non effettuato');    
+        System.assertEquals('Chiusa', activity.wrts_prcgvr__Status__c, methodName+'Cambio Stato non effettuato');    
     }
     
 }

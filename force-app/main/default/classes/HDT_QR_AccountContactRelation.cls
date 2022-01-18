@@ -282,4 +282,42 @@ public inherited sharing class HDT_QR_AccountContactRelation {
 
     // FINE SVILUPPI EVERIS
 
+    /**@frpanico 17/01/2022
+     * Aggiunto metodo per servizio Crea BpCa
+     */
+    public List<AccountContactRelation> getCreateBpCa(String AccountId)
+    {
+        return 
+        [
+        SELECT AccountId,
+        Account.RecordTypeId,
+        Account.Category__c,
+        Account.CustomerMarking__c,
+        Account.FiscalCode__c,
+        Account.VatNumber__c,
+        Account.BillingCity,
+        Account.BillingCountry,
+        Account.BillingStreetToponym__c,
+        Account.BillingPostalCode,
+        Account.BillingState,
+        Account.BillingStreetNumber__c,
+        Account.BillingStreetName__c,
+        Account.CustomerCode__c,
+        Account.MobilePhone__c,
+        Account.BuildingFloor__c,
+        Account.PrimaryEmail__c,
+        Account.VATGroup__c,
+        Account.VATGroupStartDate__c,
+        Account.VATGroupEndDate__c,
+        ContactId,
+        Contact.MobilePhone,
+        Contact.CertifiedEmail__c
+        FROM AccountContactRelation
+        WHERE Roles = 'Titolare'
+        OR Roles = 'Amministratore condominio'
+        OR Roles = 'Legale rappresentante'
+        WITH SECURITY_ENFORCED
+        ];
+    }
+
 }
