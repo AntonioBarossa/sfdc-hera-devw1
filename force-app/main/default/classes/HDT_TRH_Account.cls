@@ -14,6 +14,9 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
  
         List<Account> listAcc = (List<Account>)trigger.new;
         for (Account tempAcc : listAcc) {
+            if (String.isNotBlank(tempAcc.CustomerMarking__c) && String.isBlank(tempAcc.CustomerType__c)) {
+                tempAcc.CustomerType__c = HDT_UTL_Account.customerMarkingToCustomerType(tempAcc.CustomerMarking__c);
+            }
             if (String.isNotBlank(tempAcc.Category__c) && String.isBlank(tempAcc.CategoryCode__c)) {
                 tempAcc.CategoryCode__c = HDT_UTL_Account.transcodeCustomerCategory(tempAcc.Category__c);
             }
