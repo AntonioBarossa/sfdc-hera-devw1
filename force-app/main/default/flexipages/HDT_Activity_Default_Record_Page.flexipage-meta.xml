@@ -1079,7 +1079,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CreditCheckResults__c</fieldItem>
             </fieldInstance>
@@ -1095,6 +1095,15 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CreditCheckResolutionReason__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
                 <fieldItem>Record.RecordTypeId</fieldItem>
             </fieldInstance>
         </itemInstances>
@@ -1104,11 +1113,12 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.CreditCheckResolutionReason__c</fieldItem>
+                <fieldItem>Record.wrts_prcgvr__Status__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Reason__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
