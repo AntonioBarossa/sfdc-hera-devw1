@@ -109,11 +109,17 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
                    tempField = '';
                 }
             
-                //if (mapRequiredByPosition.get(count) != null && String.isBlank(tempField)) {
-                //    System.debug(LoggingLevel.DEBUG, '>>> throw new HDT_WRP_ProcessEntitiesException');
-                //   //throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field','Missing Required Field ' + mapHeaderByPosition.get(count));
-                //}
-            
+                if (mapRequiredByPosition.get(count) != null && String.isBlank(tempField)) {
+                    System.debug(LoggingLevel.DEBUG, '>>> throw new HDT_WRP_ProcessEntitiesException');
+                    //throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field', 'Missing Required Field: ' + mapHeaderByPosition.get(count));
+                    convertionError = 'Missing Required Field: ' + mapHeaderByPosition.get(count);
+                }
+
+                if(!String.isEmpty(convertionError)){
+                    // error happened -> exit
+                    break;
+                }
+
                 if(String.isNotBlank(mapCaseFields.get(mapHeaderByPosition.get(count))) && String.isNotBlank(tempField)){
                     System.debug(LoggingLevel.DEBUG, '>>> tempField: ' + tempField + ' # Header: ' + mapHeaderByPosition.get(count) + ' # CaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
                     convertionError = mapTypeField(newCase, mapCaseFields, count, tempField);
