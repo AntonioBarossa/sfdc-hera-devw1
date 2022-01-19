@@ -5208,6 +5208,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>DocumentPaymentMethod__c</field>
+            <value>
+                <elementReference>DocumentPaymentMethod</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Email__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
@@ -9199,6 +9205,13 @@
         <value>
             <booleanValue>false</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>DocumentPaymentMethod</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>IdContenitore</name>

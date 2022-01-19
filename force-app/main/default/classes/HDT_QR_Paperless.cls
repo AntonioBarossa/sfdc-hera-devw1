@@ -5,10 +5,11 @@ public inherited sharing class HDT_QR_Paperless {
         return [SELECT Id,
         CaseNumber,
         AccountCode__c,
-        BillingProfile__r.ContractAccountCode__c
-        FROM Case
+        BillingProfile__r.ContractAccountCode__c,
+        DocumentPaymentMethod__c 
+        FROM Case 
         WHERE Id = :recordId
-        WITH SECURITY_ENFORCED
+        WITH SECURITY_ENFORCED 
         LIMIT 1];
 
     }
