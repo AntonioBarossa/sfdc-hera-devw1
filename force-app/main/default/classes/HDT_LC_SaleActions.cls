@@ -220,6 +220,18 @@ public inherited sharing class HDT_LC_SaleActions {
         if (campaignMembersIdList.size()>0) {
             HDT_LC_CampaignsController.updateCampaignMembersStatus(campaignMembersIdList, 'Non Proposto Auto');
         }
+
+        /**@frpanico 17/01/2022
+         * Nel caso in cui l'account:
+         * Non abbia il Codice Cliente
+         * Se la vendita non e' a transitorio
+         * Se la marcatura non e' "D*-"
+         * Viene cambiata la marcatura in "D*-".
+         * In ogni caso, se l'account non ha il Codice Cliente
+         * viene chiamato il servizio di Crea BP/CA
+         */
+        
+
     }
 
     /**

@@ -966,6 +966,16 @@
         <label>Switch in Reseller</label>
     </customValue>
     <customValue>
+        <fullName>Switch Out per Voltura - EE</fullName>
+        <default>false</default>
+        <label>Switch Out per Voltura - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Switch Out per Voltura - GAS</fullName>
+        <default>false</default>
+        <label>Switch Out per Voltura - GAS</label>
+    </customValue>
+    <customValue>
         <fullName>Testo contratto in bolletta - EE</fullName>
         <default>false</default>
         <isActive>false</isActive>
