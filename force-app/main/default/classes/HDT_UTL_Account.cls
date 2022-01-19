@@ -307,4 +307,21 @@ public with sharing class HDT_UTL_Account {
         return categoryCode;
     }
 
+    public static String customerMarkingToCustomerType(String customerMarking){
+        String customerType = '';
+
+        if (customerMarking == null) {
+            return customerType;
+        }
+
+        // Logica ereditata dagli lwc hdtFormAccountBusiness e hdtFormAccountResidenziale
+        if (customerMarking.containsIgnoreCase('Persona fisica') || customerMarking.containsIgnoreCase('Ditta individuale')) {
+            customerType = 'Persona Fisica';
+        } else {
+            customerType = 'Organizzazione';
+        }
+
+        return customerType;
+    }
+
 }
