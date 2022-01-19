@@ -1861,7 +1861,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 label: 'Referente Cliente Finale/Anagrafica',
                 name: 'primaryContact',
                 objectApiName: 'Contact',
-                recordId: this.order.ContractReference__c !== null ? this.order.ContractReference__c : null,
+                recordId: this.order.Contact__c !== null ? this.order.Contact__c : null,
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data:
                 [
