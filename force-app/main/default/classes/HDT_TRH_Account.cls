@@ -14,7 +14,6 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
  
         List<Account> listAcc = (List<Account>)trigger.new;
         for (Account tempAcc : listAcc) {
-            System.debug('TRH_ACCOUNT ' + String.isNotBlank(tempAcc.CustomerMarking__c));
             if (String.isNotBlank(tempAcc.CustomerMarking__c) && String.isBlank(tempAcc.CustomerType__c)) {
                 tempAcc.CustomerType__c = HDT_UTL_Account.customerMarkingToCustomerType(tempAcc.CustomerMarking__c);
             }
@@ -37,13 +36,11 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
      }
  
      protected override void beforeUpdate() {
-        System.debug('TRH_ACCOUNT beforeUpdate');
          checkAccountName();
          createKpiExtension();
      }
  
      public override void afterUpdate(){
-        System.debug('TRH_ACCOUNT afterUpdate');
          manageAccountPartnerQueues();
      }
  
