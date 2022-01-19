@@ -2,7 +2,7 @@
 * Date: 18/01/2022
  */
 
-public class HDT_BA_SendOrderToSii implements Database.Batchable<sObject> {
+public with sharing class HDT_BA_SendOrderToSii implements Database.Batchable<sObject> {
 
     public Iterable<sObject> start(Database.BatchableContext bc) {
 
