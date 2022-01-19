@@ -1107,6 +1107,11 @@
                 <fieldItem>Record.RecordTypeId</fieldItem>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Note__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-2ec7406d-2c28-4619-94f8-33ab969318d6</name>
         <type>Facet</type>
     </flexiPageRegions>
