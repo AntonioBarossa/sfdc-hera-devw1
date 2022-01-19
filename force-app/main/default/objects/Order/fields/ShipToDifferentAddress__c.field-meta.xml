@@ -3,7 +3,7 @@
     <fullName>ShipToDifferentAddress__c</fullName>
     <description>Campo necessario per SII e Documentale per verificare la differenza tra indirizzo di residenza e fatturazione</description>
     <externalId>false</externalId>
-    <formula>Account.BillingAddressFormula__c &lt;&gt; BillingProfile__r.InvoicingAddressFormula__c</formula>
+    <formula>SupplyAddressFormula__c &lt;&gt; BillingProfile__r.InvoicingAddressFormula__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Indirizzo Differente</label>
     <trackHistory>false</trackHistory>
