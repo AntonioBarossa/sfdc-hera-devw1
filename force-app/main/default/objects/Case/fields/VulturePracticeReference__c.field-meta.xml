@@ -7,11 +7,16 @@
     <label>Riferimento Pratica Voltura</label>
     <lookupFilter>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3) OR (1 AND 4) OR 5</booleanFilter>
+        <booleanFilter>(1 AND 2) AND ((3 AND 4) OR (5 AND 6) OR (7 AND 8))</booleanFilter>
         <filterItems>
             <field>Order.ServicePoint__c</field>
             <operation>equals</operation>
             <valueField>$Source.ServicePoint__c</valueField>
+        </filterItems>
+        <filterItems>
+            <field>Order.ProcessType__c</field>
+            <operation>equals</operation>
+            <value>Voltura</value>
         </filterItems>
         <filterItems>
             <field>Order.NotRegisteredMeterCase__c</field>
@@ -24,14 +29,24 @@
             <value>Cambio contatore non registrato</value>
         </filterItems>
         <filterItems>
-            <field>Order.ProcessCode__c</field>
+            <field>$Source.Type</field>
             <operation>equals</operation>
-            <value>NV1</value>
+            <value>Recesso per Rifiuto Voltura</value>
         </filterItems>
         <filterItems>
-            <field>Order.ProcessType__c</field>
+            <field>Order.ProcessCode__c</field>
             <operation>equals</operation>
-            <value>Voltura</value>
+            <value>NG1</value>
+        </filterItems>
+        <filterItems>
+            <field>$Source.Type</field>
+            <operation>equals</operation>
+            <value>Recesso per Ripensamento</value>
+        </filterItems>
+        <filterItems>
+            <field>Order.Phase__c</field>
+            <operation>equals</operation>
+            <value>Voltura Rifiutata</value>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>

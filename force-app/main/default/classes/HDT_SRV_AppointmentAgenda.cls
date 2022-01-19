@@ -91,4 +91,8 @@ public with sharing class HDT_SRV_AppointmentAgenda {
     public void setContactData(wrts_prcgvr__Activity__c activity,Contact cont){
         HDT_UTL_AppointmentAgenda.setContactData(activity, cont);
     }
+
+    public void updateExtraSystemAppointment(String nextPhase,Id recordId){
+        HDT_UTL_AppointmentAgenda.updateExtraSystemAppointment(nextPhase,recordId);
+    }
 }

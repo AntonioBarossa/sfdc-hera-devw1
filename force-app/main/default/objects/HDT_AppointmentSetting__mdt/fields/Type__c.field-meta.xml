@@ -20,6 +20,11 @@
                 <default>false</default>
                 <label>Map Heroku</label>
             </value>
+            <value>
+                <fullName>Quick Link</fullName>
+                <default>false</default>
+                <label>Quick Link</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

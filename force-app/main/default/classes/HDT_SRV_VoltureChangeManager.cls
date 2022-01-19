@@ -163,4 +163,19 @@ public with sharing class HDT_SRV_VoltureChangeManager
         }
         return sobjList;
     }
+
+    /*Edoardo Zanatta 13/01/2022
+    
+    */    
+    public void orderPrecheckOk(Order myOrder){
+        
+        Date today = System.today();
+        
+            myOrder.Phase__c = myOrder.DateSentToSII__c > today ? 'In attesa tempi di ripensamento' : 'Comunicazione verso Heroku';
+
+            HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
+            platEvent.SerializedSobj__c = JSON.serialize(myOrder);
+            Eventbus.publish(platEvent);
+            
+    }
 }

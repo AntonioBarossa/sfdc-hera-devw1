@@ -30,6 +30,10 @@ public with sharing class HDT_UTL_Account {
         else if(a.recordtypeId == accRecordTypeIdBusiness){
             recordType = 'Organizzazione';
         }
+        /**@frpanico 13/01/2022
+         * aggiunta modifica per 
+         * ricerca correttamente clienti business
+         */
         req.codiceCausale            ='SRC';
         req.numeroSR                 = a.id;
         req.account.tipoAccount      = recordType;
@@ -37,8 +41,8 @@ public with sharing class HDT_UTL_Account {
         req.account.telefono         = c.MobilePhone;
         req.account.emailCont        = c.email;
         req.account.marcaturaCliente = a.customerMarking__c;
-        req.account.codiceFiscale    = c.fiscalCode__c;
-        req.account.partitaIva       = a.vatnumber__c;
+        req.account.codiceFiscale    = recordType == 'Organizzazione' ? a.vatnumber__c : c.fiscalCode__c;
+        req.account.partitaIva       = '';
         return req;
     }
     public static HDT_WS_RicCreBpCaRequest callBpCaCreate(Account a,contact c ){
@@ -183,6 +187,11 @@ public with sharing class HDT_UTL_Account {
                     update acc;
                 } // TODO gestire l'errore 
             }
+            /**@frpanico 17/01/2022
+             * Commentata parte di codice della creazione Account
+             * L'account viene creato in un secondo momento
+             * Per gestire correttamente nuova e vecchia marcatura.
+             */
             else if ( 'BP non rilevato'.equalsIgnoreCase(res.data.commenti)){
                 req=callBpCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
@@ -301,6 +310,30 @@ public with sharing class HDT_UTL_Account {
         }
 
         return categoryCode;
+    }
+
+    /**@frpanico 17/01/2022
+     * Creato metodo per la creazione del BP/CA
+     */
+    
+    public static void createBpCa(List<AccountContactRelation> accountContactRelList)
+    {
+        /**@frpanico 17/01/2022
+         * Se presente accountContactRel Amm. Condominio/Legale Rappresentante
+         * Viene utilizzato l'accountContactRel dell'Amministratore di Condominio/Legale Rappresentante
+         * Altrimenti viene utilizzato quello titolare
+         */
+        for(AccountContactRelation accountContactRel : accountContactRelList)
+        {
+            break;
+        }
+    }
+    
+
+    private static Map<String, SObject> generateAccountContact(AccountContactRelation accountContactRel)
+    {
+        Map<String, SObject> accountContactMap = new Map<String, SObject>();
+        return accountContactMap;
     }
 
 }

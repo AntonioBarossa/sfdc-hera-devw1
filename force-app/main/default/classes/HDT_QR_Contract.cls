@@ -89,14 +89,17 @@ public inherited sharing class HDT_QR_Contract {
         contractSrv.checkReadAccess('Name,AccountId,ContractNumber,Status,SAPContractCode__c'); 
         return [
             SELECT
+            Id,
             Name,
             AccountId,			
             ContractNumber,
             Status,
             ServicePoint__c,
+            BillingProfile__c,
             SAPContractCode__c,
             ServicePoint__r.ServicePointCode__c,
-            ServicePoint__r.SupplyAddress__c
+            ServicePoint__r.SupplyAddress__c,
+            ServicePoint__r.SupplyCity__c
             FROM
             Contract
             WHERE AccountId = :accountId									 

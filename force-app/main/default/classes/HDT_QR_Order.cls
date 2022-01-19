@@ -557,7 +557,8 @@ public inherited sharing class HDT_QR_Order {
             ProcessType__c,
             SBQQ__Quote__c,
             CommercialProductCode__c,
-            DocumentPackage__c
+            DocumentPackage__c,
+            CommercialProduct__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -847,7 +848,8 @@ public inherited sharing class HDT_QR_Order {
             ProcessType__c,
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
-            ServicePoint__r.SupplyAddress__c
+            ServicePoint__r.SupplyAddress__c,
+            ServicePoint__r.SupplyCity__c
             FROM
             Order
             WHERE AccountId = :accountId

@@ -163,7 +163,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
     public static String handleEventOutcome(String appCode, String outcome, String note){
         String response = '';
         Id rtId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_DistributorAppointment').getRecordTypeId();
-        String condition = 'AppointmentCode__c = \''+appCode+'\' AND RecordTypeId = \''+rtId+'\' AND wrts_prcgvr__Status__c NOT IN (\'Completed\',\'Annullata\')';
+        String condition = 'AppointmentCode__c = \''+appCode+'\' AND RecordTypeId = \''+rtId+'\' AND wrts_prcgvr__Status__c NOT IN (\'Annullata\')';
         String fields = 'Id,wrts_prcgvr__Description__c,Order__c,Case__c,Distributor__c,ServicePoint__c,Account__c,Contact__c,isAtoa__c,RecordTypeId';
         List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords(fields, 'wrts_prcgvr__Activity__c', condition);
         if (activities != null && !activities.isEmpty()){
@@ -220,7 +220,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         if (String.isNotEmpty(condition)){
             try{
                 Id rtId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_DistributorAppointment').getRecordTypeId();
-                List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords('Id', 'wrts_prcgvr__Activity__c', condition + 'AND RecordTypeId = \''+rtId+'\' AND wrts_prcgvr__Status__c NOT IN (\'Completed\',\'Annullata\')');
+                List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords('Id', 'wrts_prcgvr__Activity__c', condition + 'AND RecordTypeId = \''+rtId+'\' AND wrts_prcgvr__Status__c NOT IN (\'Completed\',\'Annullata\',\'Chiusa\',\'Appuntamento eseguito\',\'Appuntamento non eseguito\')');
                 if (activities != null && !activities.isEmpty()){
                     activity = (wrts_prcgvr__Activity__c)activities[0];
                     activity.AppointmentDate__c = Date.valueOf(formatDate(appDate));
@@ -295,6 +295,33 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         Blob data = Blob.valueOf((String)idToCript);
         System.debug('original Blob -->' +JSON.serialize(data));
         return Crypto.encryptWithManagedIV('AES128', key, data);
+    }
+
+    public static void updateExtraSystemAppointment(String nextPhase,Id recordId){
+        String objectName = 'wrts_prcgvr__Activity__c';
+        String stato;
+        if (nextPhase != null){
+            switch on nextPhase.toLowerCase() {
+                when 'esito ok da dl'{
+                    stato = 'Appuntamento eseguito';
+                }
+                when 'esito ko da dl'{
+                    stato = 'Appuntamento non eseguito';
+                }
+                when else {
+                    return;
+                }
+            }
+            Id rtId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_DistributorAppointment').getRecordTypeId();
+            List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords('Id', objectName, '(Case__c = \''+recordId+'\' OR Order__c = \''+recordId+'\') AND RecordTypeId = \''+rtId+'\' AND isAtoA__c = false AND wrts_prcgvr__Status__c NOT IN (\'Chiusa\',\'Annullata\',\'Appuntamento eseguito\',\'Appuntamento non eseguito\')');
+            if (!activities.isEmpty()){
+                for (Sobject activity : activities){
+                    activity.put('wrts_prcgvr__Status__c',stato);
+                    activity.put('IsAppointmentToEdit__c',false);
+                }
+                System.enqueueJob(new HDT_QBL_AppointmentActivityUpdate(activities));
+            }
+        }
     }
     
     private static String formatDate(String dateToWork){
