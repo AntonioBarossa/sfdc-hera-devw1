@@ -47,7 +47,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
 
         List<String> dataSplitted;
         for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
-            dataSplitted = item.Data__c.split(',');
+            dataSplitted = item.Data__c.split(splitCharacter);
             accountIdSet.add(dataSplitted[accountIdIndex]);
             contractCodeSet.add(dataSplitted[contractIndex]);
             itemRequestMap.put(item.Id, dataSplitted);
@@ -334,7 +334,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
     public static void setDataForTest_VolturaTecnica(){
 
         Id massiveLoaderRequestId = 'a3d3O000000WuVlQAK';
-
+        Set<Id> docId = new Set<Id>();
         delete [SELECT Id FROM MassiveLoaderRequestItem__c WHERE MassiveLoaderRequest__c = :massiveLoaderRequestId];
         delete [
             SELECT Id, Type, AccountId, NotPerformedBefore__c, WrittenReceiptRequestDate__c, CustomerRecessDate__c, VulturePracticeReference__c,
@@ -344,6 +344,21 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
             WHERE Createddate = today AND CreatedById = '0051X0000055rbNQAQ'
         ];
     
+        List<ContentDocumentLink> cdlList = [
+            SELECT Id, LinkedEntityId, ContentDocumentId
+            FROM ContentDocumentLink
+            WHERE LinkedEntityId = :massiveLoaderRequestId
+        ];
+
+        if(cdlList.size() > 0){
+            for(ContentDocumentLink c : cdlList){
+                docId.add(c.ContentDocumentId);
+            }
+
+            delete cdlList;
+            delete [SELECT Id FROM ContentDocument WHERE Id IN :docId];
+        }
+
         List<MassiveLoaderRequestItem__c> itemsList = new List<MassiveLoaderRequestItem__c>();
         MassiveLoaderRequestItem__c item;
     

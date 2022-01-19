@@ -46,7 +46,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
 
         List<String> dataSplitted;
         for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
-            dataSplitted = item.Data__c.split(',', -1);
+            dataSplitted = item.Data__c.split(splitCharacter, -1);
             accountIdSet.add(dataSplitted[accountIdIndex]);
             contractCodeSet.add(dataSplitted[contractIndex]);
             itemRequestMap.put(item.Id, dataSplitted);
@@ -295,40 +295,40 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
         List<MassiveLoaderRequestItem__c> itemsList = new List<MassiveLoaderRequestItem__c>();
         MassiveLoaderRequestItem__c item;
     
-        for(Integer n=0; n<2; n++){
+        for(Integer n=0; n<20; n++){
             item = new MassiveLoaderRequestItem__c();
             item.MassiveLoaderRequest__c = massiveLoaderRequestId;
             item.Status__c = 'In attesa di lavorazione';
             item.Data__c = '';
-            item.Data__c += 'Variazione indirizzo di fornitura,';//'Cambio contatore non registrato,';// PROCESSO
-            item.Data__c += '0011X00000jcKXUQA2,';// ACCOUNTID
-            item.Data__c += ',';// SOTTOPROCESSO
-            item.Data__c += 'IT001E00032928,';// POD
-            item.Data__c += '3019602323,';// CONTRATTO
-            item.Data__c += ',';// ELEMENTI_DETTAGLIO
-            item.Data__c += ',';// SERVIZIO_ENERGIA
-            item.Data__c += ',';// DATA_VARIAZIONE
-            item.Data__c += ',';// MATRICOLA
-            item.Data__c += '00000157,';// RIF_VOLTURA
-            item.Data__c += ',';// NOTE_DL
-            item.Data__c += ',';// CORRETTORE
-            item.Data__c += ',';// DATA_LETTURA
-            item.Data__c += ',';// DATA_VAR_RESIDENZA
-            item.Data__c += ',';// RESIDENTE
-            item.Data__c += ',';// INDIRIZZO_FORN
-            item.Data__c += ',';// COMUNE
-            item.Data__c += ',';// NAZIONE
-            item.Data__c += ',';// LOCALITA
-            item.Data__c += ',';// CAP
-            item.Data__c += ',';// PROVINCIA
-            item.Data__c += ',';// VIA
-            item.Data__c += ',';// CIVICO
-            item.Data__c += ',';// ESTENSIONE_CIVICO
-            item.Data__c += '004-Uso tecnologico,';// CATEGORIA_USO
-            item.Data__c += ',';// TIPO_FORNITURA
-            item.Data__c += ',';// TIPO_IMPIANTO
-            item.Data__c += ',';// IMPOSTE
-            item.Data__c += ',';// DATA_DECORRENZA
+            item.Data__c += 'Variazione indirizzo di fornitura|';// PROCESSO
+            item.Data__c += '0011X00000pJuhFQAS|';// ACCOUNTID
+            item.Data__c += '|';// SOTTOPROCESSO
+            item.Data__c += '4007190176|';// POD
+            item.Data__c += '3019671256|';// CONTRATTO
+            item.Data__c += '|';// ELEMENTI_DETTAGLIO
+            item.Data__c += '|';// SERVIZIO_ENERGIA
+            item.Data__c += '|';// DATA_VARIAZIONE
+            item.Data__c += '|';// MATRICOLA
+            item.Data__c += '|';// RIF_VOLTURA
+            item.Data__c += '|';// NOTE_DL
+            item.Data__c += '|';// CORRETTORE
+            item.Data__c += '|';// DATA_LETTURA
+            item.Data__c += '|';// DATA_VAR_RESIDENZA
+            item.Data__c += '|';// RESIDENTE
+            item.Data__c += 'VIA RANUCCI RENATO 1 , FERRARA FE, 44100 ITALIA|';// INDIRIZZO_FORN
+            item.Data__c += 'FERRARA|';// COMUNE
+            item.Data__c += 'ITALIA|';// NAZIONE
+            item.Data__c += '|';// LOCALITA
+            item.Data__c += '44100|';// CAP
+            item.Data__c += 'FE|';// PROVINCIA
+            item.Data__c += 'VIA RANUCCI RENATO|';// VIA
+            item.Data__c += '1|';// CIVICO
+            item.Data__c += '|';// ESTENSIONE_CIVICO
+            item.Data__c += '004-Uso tecnologico|';// CATEGORIA_USO
+            item.Data__c += '|';// TIPO_FORNITURA
+            item.Data__c += '|';// TIPO_IMPIANTO
+            item.Data__c += '|';// IMPOSTE
+            item.Data__c += '|';// DATA_DECORRENZA
             item.Data__c += ''; // IVA
             itemsList.add(item);
         }

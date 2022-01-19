@@ -11,7 +11,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public HDT_WRP_ProcessEntities              currentProcess                                                  ;
 
 
-    
+    public String splitCharacter = '\\|';
     //public  MassiveLoaderRequestItem__c varRequestItem;
     public  String processName;
     public  Map<Integer, String> mapHeaderByPosition    = new  Map<Integer, String>();
