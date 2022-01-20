@@ -41,6 +41,9 @@ export default class HdtContractSelectionFlow extends LightningElement {
                     }else{
                         filters = accountFilter;
                     }
+                    if (this.firstContract != null && this.firstContract !== undefined) {
+                        filters += ' AND SAPContractCode__c != \'' + this.firstContract + '\'';
+                    }
                     var params = '{"filters": "'+ filters +'","soslSearchTerm":"'+wiredResponse[0].Default_Search_Key__c +'", "objectName":"'+wiredResponse[0].sObject__c +'", "distinct":"'+wiredResponse[0].Distinct__c +'", "queryType":"'+wiredResponse[0].Query_Type__c +'", "fields":"'+wiredResponse[0].Fields__c+'"}';
                     this.queryParams = params;
                     this.maxRow = wiredResponse[0].Max_Rows__c;

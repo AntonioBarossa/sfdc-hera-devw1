@@ -298,7 +298,7 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>ASSET_NUM__c</fields>
-        <fields>IMPIANTO_COUNTRY__c</fields>
+        <fields>STATUS_CD__c</fields>
         <fields>IMPIANTO_PROD_CATG_CD__c</fields>
         <fields>START_DT__c</fields>
         <fields>END_DT__c</fields>
