@@ -271,7 +271,8 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.IbanCountry__c = oldOrder.IbanCountry__c;
         orderToUpdate.isDatoDiscordante__c = true;
         orderToUpdate.Contact__c = oldOrder.Contact__c;
-        update orderToUpdate;
+        orderToUpdate.OrderReference__c = oldOrder.Id;
+        HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
     }
 
 }
