@@ -176,12 +176,10 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
             }
 
             try{
-                //System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + newCase);
-                //System.debug(LoggingLevel.DEBUG, '>>> pod: ' + tempSplitted[podIndex]);
-                //String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(tempSplitted[podIndex], null);
-                //System.debug(LoggingLevel.DEBUG, '>>> arricchimentoResponse: ' + arricchimentoResponse);
-                //newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, newCase);
-                
+                String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(tempSplitted[podIndex], null);
+                System.debug(LoggingLevel.DEBUG, '>>> arricchimentoResponse: ' + arricchimentoResponse);
+                newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, newCase);
+                //newCase.Taxes__c = null;
                 caseToInsert.add(newCase); 
                 itemIds.add(itemId);
             } catch(Exception e){
@@ -198,7 +196,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
             runAlignment(caseToInsert);
             caseToInsert.clear();
 
-            HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE CREATION & Enrichment');
+            HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE CREATION / Enrichment / Alignment');
 
             if(saveResponse.reponseItemList.size() > 0){
                 itemsToSave.addAll(saveResponse.reponseItemList);
@@ -206,6 +204,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
 
             if(saveResponse.savedCase.size() > 0){
                 HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedCase);
+                HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE Compatibility');
             }
 
         }  
@@ -213,14 +212,33 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
     }
 
     private static void runAlignment(List<Case> caseList){
+
         HDT_SRV_AnagAlignment.HDT_UTL_AnagAlignmentFlowInputs input;
         List<String> returnStringList;
         for(Case c : caseList){
             input = new HDT_SRV_AnagAlignment.HDT_UTL_AnagAlignmentFlowInputs();
             input.inputCase = c;
-            input.context = 'VARIAZIONI_INDIRIZZO_FORNITURA';
-            returnStringList = HDT_SRV_AnagAlignment.handleAnagAlignment(new List<HDT_SRV_AnagAlignment.HDT_UTL_AnagAlignmentFlowInputs>{input});
-            System.debug('>>> returnStringList: ' + returnStringList);
+            input.context = setCorrectContext(c.Type);//'VARIAZIONI_INDIRIZZO_FORNITURA';
+
+            if(String.isEmpty(input.context)){
+                continue;
+            } else {
+                returnStringList = HDT_SRV_AnagAlignment.handleAnagAlignment(new List<HDT_SRV_AnagAlignment.HDT_UTL_AnagAlignmentFlowInputs>{input});
+                System.debug('>>> returnStringList: ' + returnStringList);
+            }
+
+        }
+    }
+
+    private static String setCorrectContext(String context){
+        if(context.equalsIgnoreCase(Label.VARIAZIONI_TARIFFA_RES_NONRES)) {
+            return 'VARIAZIONI_TARIFFA_RES_NONRES';
+        } else if(context.equalsIgnoreCase(Label.VARIAZIONI_INDIRIZZO_FORNITURA)){
+            return 'VARIAZIONI_INDIRIZZO_FORNITURA';
+        } else if(context.equalsIgnoreCase(Label.VARIAZIONI_MARCATURA_USO_PDR)) {
+            return 'VARIAZIONI_MARCATURA_USO_PDR';
+        } else {
+            return '';
         }
     }
 
@@ -303,7 +321,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
             item.Data__c += 'Variazione indirizzo di fornitura|';// PROCESSO
             item.Data__c += '0011X00000pJuhFQAS|';// ACCOUNTID
             item.Data__c += '|';// SOTTOPROCESSO
-            item.Data__c += '4007190176|';// POD
+            item.Data__c += '15750000008418|';// POD
             item.Data__c += '3019671256|';// CONTRATTO
             item.Data__c += '|';// ELEMENTI_DETTAGLIO
             item.Data__c += '|';// SERVIZIO_ENERGIA

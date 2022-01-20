@@ -297,28 +297,28 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
             item.MassiveLoaderRequest__c = 'a3d3O000000WlXDQA0';
             item.Status__c = 'In attesa di lavorazione';
             if(n>=0 && n<= 10){
-                item.Data__c = 'Chiusura Contatore,0011X00000owtvoQAA,IT001E32452366,3019602323,2021-12-23,2021-11-23,2021-10-23,x,errorArrich';
+                item.Data__c = 'Chiusura Contatore|0011X00000owtvoQAA|IT001E32452366|3019602323|2021-12-23|2021-11-23|2021-10-23|x|errorArrich';
             } else if(n>10 && n<=15){
                 switch on n {
                     when 11 {
-                        item.Data__c = 'Chiusura Contatore,0011X00000jcKXUQA2,IT001E00032928,3019602323,2021-12-23,2021-11-23,2021-10-23,00000155,success';
+                        item.Data__c = 'Chiusura Contatore|0011X00000jcKXUQA2|IT001E00032928|3019602323|2021-12-23|2021-11-23|2021-10-23|00000155|success';
                     }	
                     when 12 {
-                        item.Data__c = 'Recesso per altri motivi,0011X00000jcKXUQA2,IT001E00032928,3019602323,2021-12-23,2021-11-23,2021-10-23,00000157,success';
+                        item.Data__c = 'Recesso per altri motivi|0011X00000jcKXUQA2|IT001E00032928|3019602323|2021-12-23|2021-11-23|2021-10-23|00000157|success';
                     }
                     when 13 {
-                        item.Data__c = 'Recesso per rifiuto voltura,0011X00000jcKXUQA2,IT001E00032928,3019602323,2021-12-23,2021-11-23,2021-10-23,00000160,success';
+                        item.Data__c = 'Recesso per rifiuto voltura|0011X00000jcKXUQA2|IT001E00032928|3019602323|2021-12-23|2021-11-23|2021-10-23|00000160|success';
                     }
                     when 14 {
-                        item.Data__c = 'Chiusura Contatore,0011X00000jcKXUQA2,IT001E00032928,3019602323,2021-12-23,2021-11-23,2021-10-23,00000166,success';
+                        item.Data__c = 'Chiusura Contatore|0011X00000jcKXUQA2|IT001E00032928|3019602323|2021-12-23|2021-11-23|2021-10-23|00000166|success';
                     }
                     when 15 {
-                        item.Data__c = 'Chiusura Contatore,0011X00000jcKXUQA2,IT001E00032928,3019602323,2021-12-23,2021-11-23,2021-10-23,00000168,success';
+                        item.Data__c = 'Chiusura Contatore|0011X00000jcKXUQA2|IT001E00032928|3019602323|2021-12-23|2021-11-23|2021-10-23|00000168|success';
                     }
                 }
-    
+        
             } else if(n>15){
-                item.Data__c = 'Chiusura Contatore,0011X00000jcKXUQA2,IT001E00032928,3019602323,2021-12-23,2021-11-23,x,x,customError';
+                item.Data__c = 'Chiusura Contatore|0011X00000jcKXUQA2|IT001E00032928|3019602323|2021-12-23|2021-11-23|x|x|customError';
             }
             itemsList.add(item);
         }
