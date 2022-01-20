@@ -109,13 +109,15 @@ public with sharing class HDT_SRV_SalesHandler {
 
                         switch on mapRequestFields.get('FASE') {
                             when 'Ammissibilità KO' {
-                                ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
+                                ord.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('DES_ERR_AEEG'));
                                 ord.CausalCode__c = mapRequestFields.get('CODERR');
-                                ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG');
+                                //ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG'); campo sostituito
+                                ord.DiscardCodeHeroku__c = mapRequestFields.get('CODERR_AEEG');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.Description = mapRequestFields.get('ANNOTAZIONI');
 
+                                 /*
                                  if((ord.CausalCode__c == '032' || ord.CausalCode__c == '033')
                                      && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
                                          || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
@@ -123,7 +125,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                  )){
                                      ord.TecnicalPhase__c = 'Annullato';
                                      ord.Status = 'Annullato';
-                                 }
+                                 } */
                             }
                             when 'Ammissibilità OK' {
 
@@ -141,8 +143,9 @@ public with sharing class HDT_SRV_SalesHandler {
 
 
                                 if( mapRequestFields.get('DES_ERR_AEEG') != null) {
-                                    ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
-                                    ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG');
+                                    ord.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('DES_ERR_AEEG'));
+                                    //ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG'); campo sostituito
+                                    ord.DiscardCodeHeroku__c = mapRequestFields.get('CODERR_AEEG');
                                 } else {
                                     ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                                 }
@@ -213,14 +216,22 @@ public with sharing class HDT_SRV_SalesHandler {
                                 system.debug('TrackingDiscardPhase__c '+ord.TrackingDiscardPhase__c);
                             }
                             when 'Esito KO da DL' {
+                                //Gestione Esito Appuntamento;
+                                HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
+                                appService.updateExtraSystemAppointment('Esito KO da DL', ord.Id);
+                                //fine Gestione Esito Appuntamento;
                                 ord.DiscardReason__c = mapRequestFields.get('TESTO_ERRR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
-                                ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
+                                ord.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('DES_ERR_AEEG'));
                                 ord.Description = mapRequestFields.get('ANNOTAZIONI');
                             }
                             when 'Esito OK da DL' {
+                                //Gestione Esito Appuntamento;
+                                HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
+                                appService.updateExtraSystemAppointment('Esito OK da DL', ord.Id);
+                                //fine Gestione Esito Appuntamento;
                                 HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
                                 utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
@@ -240,8 +251,6 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.ServicePoint__r.ServicePointCode__c = mapRequestFields.get('POD');
                                 }
                                 //End HRAWRM-657 21/09/2021
-                                
-                                
                                 switch on mapRequestFields.get('COD_FLUSSO'){
                                     when 'E150F'{
                                         utlTechData.handleE150Flow(mapRequestFields, ord);
@@ -271,7 +280,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 }
                             }
                             when 'Esito KO da SII' {
-                                ord.PrecheckReasonSII__c = mapRequestFields.get('TESTO_ERRR');
+                                ord.PrecheckReasonSII__c =  HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('TESTO_ERRR'));
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
 			                    ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
@@ -340,7 +349,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
                             }
                             when 'Errore lavorazione SAP' {
-                                ord.DiscardReason__c = mapRequestFields.get('NOTE_ERR');
+                                ord.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('NOTE_ERR'));
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                             }
                             when 'Dati discordanti'{
@@ -438,6 +447,20 @@ public with sharing class HDT_SRV_SalesHandler {
                             updateFuture(JSON.serialize(ord));
                         }
                         //EVERIS: END ANNULLAMENTO/RIPENSAMENTO  
+                    }else if(mapRequestFields.get('RECORD_ID')!= null && String.isNotBlank(activityName)){
+                        //EVERIS: Gestione Scarti SAP Aggiunta logica creazione scarti se viene inviata solo l'attività
+                        String recordId = mapRequestFields.get('RECORD_ID');
+                        Order ordRetrieved;
+                        if(recordId instanceOf Id){
+                            ordRetrieved = orderQr.getRecordByOrderId(recordId)[0];
+                        }
+                        else {
+                            ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
+                        }
+                        HDT_UTL_Scarti.handleHerokuResponse(ordRetrieved.Id, activityName, '');
+                        responseField.fieldType = 'TEXT';
+                    	responseField.name = 'ESITO';
+                    	responseField.value = 'OK';
                     }else{
                         responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';

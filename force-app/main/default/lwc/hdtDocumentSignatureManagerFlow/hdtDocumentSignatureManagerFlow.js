@@ -428,7 +428,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 tipoPlico = 'RICH_RATEIZZAZIONE';
             }
             var discardOldEnvelope = false;
-            if (this.confirmData.signMode.localeCompare('OTP Remoto') === 0 && this.oldSignMode.localeCompare('OTP Coopresenza') === 0){
+            if (this.confirmData.signMode.localeCompare('OTP Remoto') === 0 && this.oldSignMode != null && this.oldSignMode.localeCompare('OTP Coopresenza') === 0){
                 discardOldEnvelope = true;
             }
             var formParams = {

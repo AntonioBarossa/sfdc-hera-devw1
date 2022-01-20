@@ -187,6 +187,11 @@ public with sharing class HDT_UTL_Account {
                     update acc;
                 } // TODO gestire l'errore 
             }
+            /**@frpanico 17/01/2022
+             * Commentata parte di codice della creazione Account
+             * L'account viene creato in un secondo momento
+             * Per gestire correttamente nuova e vecchia marcatura.
+             */
             else if ( 'BP non rilevato'.equalsIgnoreCase(res.data.commenti)){
                 req=callBpCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
@@ -305,6 +310,47 @@ public with sharing class HDT_UTL_Account {
         }
 
         return categoryCode;
+    }
+
+    public static String customerMarkingToCustomerType(String customerMarking){
+        String customerType = '';
+
+        if (customerMarking == null) {
+            return customerType;
+        }
+
+        // Logica ereditata dagli lwc hdtFormAccountBusiness e hdtFormAccountResidenziale
+        if (customerMarking.containsIgnoreCase('Persona fisica') || customerMarking.containsIgnoreCase('Ditta individuale')) {
+            customerType = 'Persona Fisica';
+        } else {
+            customerType = 'Organizzazione';
+        }
+
+        return customerType;
+    }
+
+    /**@frpanico 17/01/2022
+     * Creato metodo per la creazione del BP/CA
+     */
+    
+    public static void createBpCa(List<AccountContactRelation> accountContactRelList)
+    {
+        /**@frpanico 17/01/2022
+         * Se presente accountContactRel Amm. Condominio/Legale Rappresentante
+         * Viene utilizzato l'accountContactRel dell'Amministratore di Condominio/Legale Rappresentante
+         * Altrimenti viene utilizzato quello titolare
+         */
+        for(AccountContactRelation accountContactRel : accountContactRelList)
+        {
+            break;
+        }
+    }
+    
+
+    private static Map<String, SObject> generateAccountContact(AccountContactRelation accountContactRel)
+    {
+        Map<String, SObject> accountContactMap = new Map<String, SObject>();
+        return accountContactMap;
     }
 
 }

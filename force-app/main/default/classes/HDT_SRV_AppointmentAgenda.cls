@@ -56,7 +56,8 @@ public with sharing class HDT_SRV_AppointmentAgenda {
                     String codDistr = inputMap.get('distributorCode');
                     String appSlot = inputMap.get('appointmentSlot');
                     String appDate = inputMap.get('appointmentDate');
-                    response = HDT_UTL_AppointmentAgenda.handleSecondAppointmentConfirms(processType, codDistr, appSlot, appDate);
+                    String appCode = inputMap.get('appointmentCode');
+                    response = HDT_UTL_AppointmentAgenda.handleSecondAppointmentConfirms(processType, codDistr, appSlot, appDate, appCode);
                 }
                 when  '0210' {
                     String appCode = inputMap.get('appointmentCode');
@@ -79,10 +80,19 @@ public with sharing class HDT_SRV_AppointmentAgenda {
     }
 
     public String getCryptoActivity(String encryptedId,List<String> fields){
-        return JSON.serialize(HDT_UTL_AppointmentAgenda.getCryptoActivity(encryptedId,String.join(fields, ',')));
+        try{
+            return JSON.serialize(HDT_UTL_AppointmentAgenda.getCryptoActivity(encryptedId,String.join(fields, ',')));
+        }
+        catch (Exception e){
+            throw new HDT_UTL_HeraException('Appuntamento non trovato');        
+        }
     }
 
     public void setContactData(wrts_prcgvr__Activity__c activity,Contact cont){
         HDT_UTL_AppointmentAgenda.setContactData(activity, cont);
+    }
+
+    public void updateExtraSystemAppointment(String nextPhase,Id recordId){
+        HDT_UTL_AppointmentAgenda.updateExtraSystemAppointment(nextPhase,recordId);
     }
 }

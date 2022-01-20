@@ -578,70 +578,50 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     public static boolean checkDiscardAnnullmentRule(Id recordId, String activityType){
         System.debug('checkDiscardAnnullmentRule start recordId: ' + recordId + '; activityType: ' + activityType);
         Boolean outcome = false;
-        String parentObj;
-        if(Schema.Case.SObjectType == recordId.getSobjectType()){ 
-            parentObj = 'Case';
-        }
-        if(Schema.Order.SObjectType == recordId.getSobjectType()){
-            parentObj = 'Order';
-        }
+        
 
-        List<DiscardAnnullmentRule__c> rules = [SELECT ControllingField__c, ControllingValue__c, ProcessField__c, ProcessValue__c 
+        //Gestione Scarti SAP tolti i campi parent Object process field e controlling field
+        List<DiscardAnnullmentRule__c> rules = [SELECT ControllingValue__c, ProcessValue__c, DiscardNoteReliability__c
                                                 FROM DiscardAnnullmentRule__c
-                                                WHERE ParentObject__c = :parentObj
-                                                AND ActivityType__c = :activityType
+                                                WHERE ActivityType__c = :activityType
                                                 WITH SECURITY_ENFORCED];
 		
         System.debug('checkDiscardAnnullmentRule rules: ' + JSON.serializePretty(rules));
         if(!rules.isEmpty()){
-            String logicFields = '';
-            //START>>>modifica marco.arci@webresults.it
-            set<string> logicFieldsSet = new set<String>();
-            for(DiscardAnnullmentRule__c curRule : rules){
-                logicFieldsSet.add(curRule.ControllingField__c);
-                logicFieldsSet.add(curRule.ProcessField__c);
-            }
-            for(string currString : logicFieldsSet){
-                logicFields += ','+currString;
-            }
-			//END>>>modifica modifica marco.arci@webresults.it
-            system.debug('logicFields: '+logicFields);
+            String processField = '';
+            String ctrField = '';
             if(Schema.Case.SObjectType == recordId.getSobjectType()){
-                String queryString = 'SELECT Id' + logicFields + ' FROM Case WHERE Id = \'' + recordId + '\'';
-                system.debug('queryString: '+queryString);
-                List<Case> parentCase = Database.query(queryString);
+                //Gestione Scarti SAP il processField per il case è sempre il type ed il controlField è sempre il DiscardDescription
+                List<Case> parentCase = [SELECT Id,Type,DiscardDescription__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED];
                 if(!parentCase.isEmpty()){
-                    for(DiscardAnnullmentRule__c curRule : rules){
-                        String parentCaseProcField = String.valueOf(parentCase.get(0).get(curRule.ProcessField__c));
-                        String parentCaseContrField = String.valueOf(parentCase.get(0).get(curRule.ControllingField__c));
-                        if(String.isNotBlank(parentCaseProcField) && String.isNotBlank(parentCaseContrField)){
-                            if(curRule.ProcessValue__c.equalsIgnoreCase(parentCaseProcField) && parentCaseContrField.containsIgnoreCase(curRule.ControllingValue__c)){
-                                System.debug('checkDiscardAnnullmentRule found rule parentCaseProcField: ' + parentCaseProcField);
-                                System.debug('checkDiscardAnnullmentRule found rule parentCaseContrField: ' + parentCaseContrField);
-                                System.debug('checkDiscardAnnullmentRule found rule curRule.ProcessValue__c: ' + curRule.ProcessValue__c);
-                                System.debug('checkDiscardAnnullmentRule found rule curRule.ControllingField__c: ' + curRule.ControllingField__c);
-                                outcome = true;
-                                break;
-                            }
-                        }
-                    }
+                    processField = parentCase.get(0).Type;
+                    ctrField = parentCase.get(0).DiscardDescription__c;
                 }
             }
             if(Schema.Order.SObjectType == recordId.getSobjectType()){
-                String queryString = 'SELECT Id' + logicFields + ' FROM Order WHERE Id = \'' + recordId + '\'';
-                system.debug('queryString: '+queryString);
-                List<Order> parentOrder = Database.query(queryString);
+                //Gestione Scarti SAP il processField per l'order è sempre il type ed il controlField è sempre il DiscardReason
+                List<Order> parentOrder = [SELECT Id,ProcessType__c,DiscardReason__c FROM Order WHERE Id =:recordId WITH SECURITY_ENFORCED];
                 if(!parentOrder.isEmpty()){
-                    for(DiscardAnnullmentRule__c curRule : rules){
-                        String parentOrderProcField = String.valueOf(parentOrder.get(0).get(curRule.ProcessField__c));
-                        String parentOrderContrField = String.valueOf(parentOrder.get(0).get(curRule.ControllingField__c));
-                        if(curRule.ProcessValue__c.equalsIgnoreCase(parentOrderProcField) && parentOrderContrField.containsIgnoreCase(curRule.ControllingValue__c)){
-                            System.debug('checkDiscardAnnullmentRule found rule parentOrderProcField: ' + parentOrderProcField);
-        					System.debug('checkDiscardAnnullmentRule found rule parentOrderContrField: ' + parentOrderContrField);
-        					System.debug('checkDiscardAnnullmentRule found rule curRule.ProcessValue__c: ' + curRule.ProcessValue__c);
-        					System.debug('checkDiscardAnnullmentRule found rule curRule.ControllingField__c: ' + curRule.ControllingField__c);
-                            outcome = true;
-                            break;
+                    processField = parentOrder.get(0).ProcessType__c;
+                    ctrField = parentOrder.get(0).DiscardReason__c;
+                }
+            }
+            if (String.isNotEmpty(processField) && String.isNotEmpty(ctrField)){
+                for(DiscardAnnullmentRule__c curRule : rules){
+                    if(curRule.ProcessValue__c.equalsIgnoreCase(processField)){
+                        switch on curRule.DiscardNoteReliability__c {
+                            when 'Alta'{
+                                if (ctrField.equalsIgnoreCase(curRule.ControllingValue__c)){
+                                    outcome = true;
+                                    break;
+                                }
+                            }
+                            when 'Bassa' {
+                                if (ctrField.containsIgnoreCase(curRule.ControllingValue__c)){
+                                    outcome = true;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
@@ -1090,7 +1070,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     }
 
     public static wrts_prcgvr__Activity__c closeDiscardActivity(Id activityId){
-        return new wrts_prcgvr__Activity__c(Id =  activityId, wrts_prcgvr__Status__c ='Chiusa', wrts_prcgvr__IsClosed__c = true, EndDate__c = Date.today());
+        return new wrts_prcgvr__Activity__c(Id =  activityId, wrts_prcgvr__Status__c ='Chiusa', EndDate__c = Date.today());
     }
 
     public static Boolean manageSapDiscard(List<SObject> newObjectList, Map<Id,SObject> oldObjectMap){

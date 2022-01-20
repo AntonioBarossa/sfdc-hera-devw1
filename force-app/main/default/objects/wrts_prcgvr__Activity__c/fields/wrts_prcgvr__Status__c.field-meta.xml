@@ -29,6 +29,11 @@
                 <label>Chiusa</label>
             </value>
             <value>
+                <fullName>Creata</fullName>
+                <default>false</default>
+                <label>Creata</label>
+            </value>
+            <value>
                 <fullName>Presa appuntamento in corso</fullName>
                 <default>false</default>
                 <label>Presa appuntamento in corso</label>

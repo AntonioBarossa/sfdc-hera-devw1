@@ -9816,6 +9816,13 @@
         </value>
     </variables>
     <variables>
+        <name>DocumentPaymentMethod</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>IdContenitore</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
