@@ -52,7 +52,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Version__c</field>
+                <field>ProductCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>VersionFormula__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
