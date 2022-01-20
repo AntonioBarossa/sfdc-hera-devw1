@@ -2788,7 +2788,7 @@
       IF(CONTAINS({!ProcessType}, &quot;Votive Modena Pagamenti Morosità&quot;),&quot;Morosità&quot;,
 	  IF(CONTAINS({!ProcessType}, &quot;VOTIVE Modena/Subentro&quot;),&quot;Generiche Attivazioni&quot;,
 	  IF(CONTAINS({!ProcessType}, &quot;VOTIVE Modena/Nuovo contratto&quot;),&quot;Generiche Attivazioni&quot;,
-	  IF(CONTAINS({!ProcessType}, &quot;VOTIVE Modena/Intervento Riattivazione Luce&quot;),&quot;Generiche Attivazioni&quot;,
+	  IF(CONTAINS({!ProcessType}, &quot;VOTIVE Modena/Intervento Riattivazione luce&quot;),&quot;Generiche Attivazioni&quot;,
       IF(CONTAINS({!ProcessType}, &quot;Votive Modena Cessazione&quot;),&quot;Disattivazioni&quot;,&quot;&quot;
 )
 )
@@ -9814,6 +9814,13 @@
         <value>
             <booleanValue>false</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>DocumentPaymentMethod</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>IdContenitore</name>
