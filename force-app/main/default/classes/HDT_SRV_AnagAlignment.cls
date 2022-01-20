@@ -112,6 +112,8 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
                     anagAlignCase.Excises__c = transcodeExcises(triggerOrder);
                     anagAlignCase.RegionalAdditional__c = queryHandlerOrder.findRegionalAdditional(triggerOrder.ExciseGAS__c, triggerOrder.SupplyPlace__c, getRegion(triggerOrder.SupplyState__c));
+                    anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+
                     System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
                     anagAlignCase.Phase__c = 'Da Inviare';
                     HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
@@ -131,6 +133,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 updateAnagAlignmentCaseCustomerData(anagAlignCase);
                 anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
                 anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
+                anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
 
                 for (String field : dataEnrichmentFields) {
                     anagAlignCase.put(field, tempCase.get(field));
@@ -154,10 +157,12 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 updateAnagAlignmentCaseCustomerData(anagAlignCase);
                 anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
                 anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
+                anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
 
                 for (String field : dataEnrichmentFields) {
                     anagAlignCase.put(field, tempCase.get(field));
                 }
+
 
                 System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
                 anagAlignCase.Phase__c = 'Da Inviare';

@@ -8,7 +8,7 @@
 				    Account__c=&quot;&quot;,
 				    Contact__c=&quot;&quot;,
 				    AND(Case__c=&quot;&quot;, Order__c=&quot;&quot;),
-				    AND(NOT(ispickval(Status__c,&quot;Creata&quot;)),
+				    AND(NOT(ispickval(wrts_prcgvr__Status__c,&quot;Creata&quot;)),
 								    isblank(text(AppointmentCompetence__c)))
 				)
 )</errorConditionFormula>
