@@ -179,6 +179,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String codPraticaDl = reqWrp.requestMap.get('COD_PRAT_DISTR');
         String numPrev = reqWrp.requestMap.get('NUMPREV');
         String expectedExec = reqWrp.requestMap.get('TEMP_ES_PREV');
+        String codErrAeeg = reqWrp.requestMap.get('CODERR_AEEG');
         HDT_QR_HerokuPostSalesManager qrClass = new HDT_QR_HerokuPostSalesManager();
         //CHECK CROSS MINIMUM FIELD
         if(String.isBlank(method)){
@@ -218,6 +219,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             nextPhase = reqWrp.requestMap.get('FASE');
             storno = reqWrp.requestMap.get('STORNO');
             activity = reqWrp.requestMap.get('ATTIVITA');
+            //EVERIS: Gestione Scarti SAP
+            HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase);
+            //Gestione Esito Appuntamento;
+            HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
+            appService.updateExtraSystemAppointment(nextPhase, recordCase.Id);
+            //fine Gestione Esito Appuntamento;
         }
         if(method.equalsIgnoreCase('aggiornaRCU')){
             if(String.isBlank(codServizio) || String.isBlank(codPrestazione)){
@@ -281,11 +288,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE_ANN') + '\n' + noteAnn;
             }
             if(STRING.isNotBlank(reqWrp.requestMap.get('NOTE_ERR'))){
-                currentCase.DiscardDescription__c=reqWrp.requestMap.get('NOTE_ERR');
+                currentCase.DiscardDescription__c=HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('NOTE_ERR'));
             } else if(STRING.isNotBlank(reqWrp.requestMap.get('DES_ERR_AEEG'))){
-                currentCase.DiscardDescription__c=reqWrp.requestMap.get('DES_ERR_AEEG');
+                currentCase.DiscardDescription__c=HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('DES_ERR_AEEG'));
             } else if(STRING.isNotBlank(reqWrp.requestMap.get('TESTO_ERRR'))){
-                currentCase.DiscardDescription__c=reqWrp.requestMap.get('TESTO_ERRR');
+                currentCase.DiscardDescription__c=HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('TESTO_ERRR'));
             }
             if(currentPhase.indexOf('Annull') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
                 if(String.isBlank(recordCase.CancellationHerokuPracticeCode__c)){
@@ -469,6 +476,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }else if(!quotationType.equalsIgnoreCase('Analitico')){
                 currentCase.ExpectedExecutionTime__c = expectedExec;
             }
+        }
+        if (String.isNotBlank(codErrAeeg)){
+            currentCase.DiscardCodeHeroku__c = codErrAeeg;
         }
         caseUpdate.add(currentCase);
         HDT_UTL_DatabaseService.updateSObject(caseUpdate);

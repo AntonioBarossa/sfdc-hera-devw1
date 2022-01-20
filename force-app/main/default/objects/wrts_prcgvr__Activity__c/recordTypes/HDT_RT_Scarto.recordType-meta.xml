@@ -2454,6 +2454,30 @@
             <fullName>BonusSociale</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Eliminato esito in scarto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore determinazione variante SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito non elaborato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito ricevuto su richiesta chiusa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore invio a SAP</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Validation__c</picklist>

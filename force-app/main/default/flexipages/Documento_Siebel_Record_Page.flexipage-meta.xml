@@ -37,7 +37,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>hdtDownloadAttachmentAzure</componentName>
+                <componentName>hdtDownloadAttachmentArchive</componentName>
             </componentInstance>
         </itemInstances>
         <name>detailTabContent</name>

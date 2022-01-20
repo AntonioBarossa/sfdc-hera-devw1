@@ -83,7 +83,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         insert actList;
         String response;
         Test.startTest();
-            response = HDT_LC_EditScartiComplessi.resubmissionPractice(o.Id, actList[0].Id);
+            response = HDT_LC_EditScartiComplessi.resubmissionPractice(o.Id, actList[0].Id,'Attivazione');
         Test.stopTest();
         System.assertEquals(null, response, debugString + 'Il processo di risottomissione non ha funzionato');
         o = [SELECT Id,Phase__c FROM Order WHERE Id =:o.Id];
@@ -104,7 +104,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         Test.startTest();
             Boolean isException = false;
             try{
-                HDT_LC_EditScartiComplessi.resubmissionPractice(FAKE_ID, FAKE_ID);
+                HDT_LC_EditScartiComplessi.resubmissionPractice(FAKE_ID, FAKE_ID,'Attivazione');
             }catch(Exception e){
                 isException = true;
             }
@@ -139,7 +139,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         Test.startTest();
             String response;
             System.runAs(u){
-                response = HDT_LC_EditScartiComplessi.resubmissionPractice(o.Id, actList[0].Id);
+                response = HDT_LC_EditScartiComplessi.resubmissionPractice(o.Id, actList[0].Id,'Attivazione');
             }
             System.assertEquals('Errore nell\'aggiornamento della fase dell\'ordine.',response,debugString + 'gestione errore upload order non funzionante');
         Test.stopTest();
@@ -181,7 +181,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
             insert actList;
             String response;
             System.runAs(u){
-                response = HDT_LC_EditScartiComplessi.resubmissionPractice(o.Id, actList[0].Id);
+                response = HDT_LC_EditScartiComplessi.resubmissionPractice(o.Id, actList[0].Id,'Attivazione');
             }
             System.assertEquals('Impossibile chiudere l\'attività di scarto',response,debugString + 'gestione errore chiusura activity non funzionante');
         Test.stopTest();

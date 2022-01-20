@@ -25,7 +25,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
      */
     @AuraEnabled
     public static void save(Order order, Map<String,Object> lastStepData){
-        system.debug('START SAVE ORDER');
 
         /**@frpanico 25/10/2021
          * Get Current Order to perform cross check with the "orderToUpdate"
@@ -43,18 +42,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         /**@frpanico 25/10/2021
          * Spostato in alto la sezione di codice in cui vengono inseriti i dati dell'ultimo step
          */
-        system.debug('HDT_LC_ChildOrderProcessActions - save: ' + orderToUpdate);
-        system.debug('HDT_LC_ChildOrderProcessActions - lastStepData: ' + lastStepData);
-        if (lastStepData != null) {
-
+       if (lastStepData != null) {
             for (String lastStepField : lastStepData.keySet()) {
-                system.debug('keltin - lastStepField: ' + lastStepField);
-                system.debug('keltin - lastStepData.get(lastStepField): ' + lastStepData.get(lastStepField));
-
                 if (lastStepField == 'EffectiveDate__c') {
                     String dateString = String.valueOf(lastStepData.get(lastStepField));
                     orderToUpdate.put(lastStepField, date.valueOf(dateString));
-                } else {
+                }
+                else {
                     orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
                 }
             }
@@ -76,24 +70,22 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     // Documenti relativi alla Legge 80.
                     orderToUpdate.DocumentLow80__c = 'Richiesto';
                 }
-                System.debug('order.RecordType.DeveloperName' + order.RecordType.DeveloperName);
                 Decimal serCost = getFixedFee(order.id, order.RecordType.DeveloperName);
                 orderToUpdate.ServiceCost__c = serCost != null ? serCost.setScale(2) : null;
             }
             // Calculate Date @Picchiri 20/05/21
-            when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn   
-                system.debug('HDT_LC_ChildOrderProcessActions - save - HDT_RT_SwitchIn order : ' + JSON.serializepretty(order)); 
+            when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn
                 List<Order> listOrd = new List<Order>{order};            
                 Map<String,Boolean> mapAccountRes = HDT_UTL_SwtichInProcess.checkAccountOrderIsResidential(listOrd);
                 //17/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Decorrenza
                 orderToUpdate.IsActivationDeferred__c = order.IsActivationDeferred__c;
 
-                try {         
+                try {       
                     if(order.SignedDate__c != null){                    
                         orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);  // Data di decorrenza
-                        system.debug('Calcolo data max di decorrenza x 1');             
                     }
-                } catch (Exception e) { 
+                }
+                catch (Exception e) { 
                     throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
                 }
                 
@@ -104,95 +96,72 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 if (order.ProcessType__c == 'Switch in Ripristinatorio') {
                     orderToUpdate.DateSentToSII__c = Date.today();
                     orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
-                } else {
+                }
+                else {
                     if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') { // @Picchiri Only for residential customer
 
-                        // START Calculate Date @Picchiri 20/05/21 FOR RESIDENZIALE ACCOUNT
-                            
-                            // START 1 Calcolo Data Max Ripensamento       
-                            try { 
-                                if(order.SignedDate__c != null && mapAccountRes.get(order.AccountId)){
-                                    orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
-                                    system.debug('Calcolo data max di ripensamento xxx 1');             
-                                }                                                            
-                            } catch (Exception e) { 
-                                throw new AuraHandledException('Dati incompleti o errati per la generazione della data massima di ripensamento.');
-                            }                                                                 
-                            // END Calcolo Data Max Ripensamento               
-    
-                            // START 2 Calcolo data Invio richiesta al SII (Data di adempimento)    
-                            if(order.SignedDate__c == null){
-                                orderToUpdate.Status = 'In lavorazione';
-                                orderToUpdate.Phase__c = 'In attesa validazione' ;                        
+                        // START Calculate Date @Picchiri 20/05/21 FOR RESIDENZIALE ACCOUNT                            
+                        // START 1 Calcolo Data Max Ripensamento       
+                        try { 
+                            if(order.SignedDate__c != null && mapAccountRes.get(order.AccountId)){
+                                orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
+                            }                                                            
+                        } 
+                        catch (Exception e) { 
+                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data massima di ripensamento.');
+                        }                                                                 
+                        // END Calcolo Data Max Ripensamento               
+
+                        // START 2 Calcolo data Invio richiesta al SII (Data di adempimento)    
+                        if(order.SignedDate__c == null){
+                            orderToUpdate.Status = 'In lavorazione';
+                            orderToUpdate.Phase__c = 'In attesa validazione' ;                        
+                        }
+            
+                        try {    
+                            if(order.SignedDate__c != null && order.ProcessType__c != 'Cambio Offerta'){                         
+                                orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order); 
                             }
-                
-                            try {    
-                                if(order.SignedDate__c != null && order.ProcessType__c != 'Cambio Offerta'){                         
-                                    orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order); 
-                                    system.debug('Calcolo getDateSentToSii x 1');             
-                                }
-                            } catch (Exception e) { 
-                                throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
-                            }  
-                            
-                            // END Calcolo data Invio richiesta al SII (Data di adempimento)
-    
-                            // START Calcolo data inizio (Data attivazione contratto) - indicata solo nel documento di Fabiana
-                            //orderToUpdate.ActivatedDate = HDT_UTL_SwtichInProcess.getActivatedDate(order);
-                            // END Calcolo data inizio (Data attivazione contratto)
-    
-                            // START 3 Calcolo Data Decorrenza (EffectiveDate__c)                      
-                            
-                            // END Calcolo Data Decorrenza (EffectiveDate__c) 
-    
+                        }
+                        catch (Exception e) { 
+                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
+                        }                            
+                        // END Calcolo data Invio richiesta al SII (Data di adempimento)    
                         // END Calculate Date @Picchiri 20/05/21 FOR RESIDENZIALE ACCOUNT
     
-                        // Carta d’identità;
-                        // orderToUpdate.CIAccoutn__c = 'Richiesto';
-    
                         if (order.VolturaThirdTrader__c) {
                             orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
-                        }
-                        
-                    } else { // @Picchiri Only for not residential customer
+                        }                        
+                    }
+                    else { // @Picchiri Only for not residential customer
      
-                        // START Calculate Date @Picchiri 20/05/21 FOR NOT RESIDENZIALE ACCOUNT
-    
-                            // START Calcolo data invio richiesta (Data adempimento).
-                            try {   
-                                if(order.SignedDate__c != null && order.ProcessType__c != 'Cambio Offerta'){                          
-                                    orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
-                                    system.debug('Calcolo getDateSentToSii x 2');             
-                                }
-                            } catch (Exception e) { 
-                                throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
-                            }                                     
-                            // END Calcolo data invio richiesta (Data adempimento).
-    
-                            // START Calcolo data inizio (Data attivazione contratto) - indicata solo nel documento di Fabiana
-                            //orderToUpdate.ActivatedDate = HDT_UTL_SwtichInProcess.getActivatedDate(order);                                              
-                            // END Calcolo data inizio (Data attivazione contratto)
-                        
-                            // START 3 Calcolo Data Decorrenza (EffectiveDate__c) 
-                            try {
-                                if(order.SignedDate__c != null){
-                                    orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);   // Data di decorrenza
-                                    system.debug('Calcolo data decorrenza x 2');             
-                                }                                                             
-                            } catch (Exception e) { 
-                                throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
-                            }                       
-                            // END Calcolo Data Decorrenza (EffectiveDate__c)   
-    
+                        // START Calculate Date @Picchiri 20/05/21 FOR NOT RESIDENZIALE ACCOUNT    
+                        // START Calcolo data invio richiesta (Data adempimento).
+                        try {   
+                            if(order.SignedDate__c != null && order.ProcessType__c != 'Cambio Offerta'){                          
+                                orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
+                            }
+                        }
+                        catch (Exception e) { 
+                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
+                        }                                     
+                        // END Calcolo data invio richiesta (Data adempimento).
+                    
+                        // START 3 Calcolo Data Decorrenza (EffectiveDate__c) 
+                        try {
+                            if(order.SignedDate__c != null){
+                                orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);   // Data di decorrenza
+                            }                                                             
+                        }
+                        catch (Exception e) { 
+                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
+                        }                       
+                        // END Calcolo Data Decorrenza (EffectiveDate__c)    
                         // END Calculate Date @Picchiri 20/05/21 FOR NOT RESIDENZIALE ACCOUNT
-    
-                        //orderToUpdate.DateSentToSII__c = Date.today();
-    
+        
                         if (order.VolturaThirdTrader__c) {
                             orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
-                        }
-    
-                        // orderToUpdate.CILegalRepresentative__c = 'Richiesto';
+                        }    
                     }
                 }
 
@@ -245,14 +214,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
             //EVERIS: Aggiunto caso Voltura/Voltura Con Switch
             when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'{
-                System.debug('Order ' + order);
                 /* Document Validation */
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     /* Carta d’identità */
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
                     /* Documenti Legge 80 */
                     orderToUpdate.DocumentLow80__c = 'Richiesto';
-                } else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
+                }
+                else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                     // Carta identità
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
                     // Documenti relativi alla Legge 80
@@ -305,59 +274,40 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 }
             }
         }
-        
-        //comfort quality call start
-        system.debug('quality log 1 recordtype developername: ' + order.RecordType.DeveloperName);
-        system.debug('quality log 1 Channel__c: ' + order.Channel__c);
-        system.debug('quality log 1 MarketType__c: ' + order.MarketOrigin__c);
-        system.debug('quality log 1 CustomerCategory__c: ' + order.CustomerCategory__c);
-        system.debug('quality log 1 MarketOrigin__c: ' + order.MarketOrigin__c);
-        system.debug('quality log 1 SignatureMethod__c: ' + order.SignatureMethod__c);
 
         Boolean isVasProcess = order.RecordType.DeveloperName == 'HDT_RT_VAS';
-        system.debug('quality log 1 isVasProcess: ' + isVasProcess);
-
         List<ComfortQualityCall__c> comfortQualityList = new List<ComfortQualityCall__c>();
 
         if (order.RecordType.DeveloperName == 'HDT_RT_VAS') {
             comfortQualityList = HDT_QR_ComfortQualityCall.getRecordByOrderParamsVas(order);
-        } else {
+        }
+        else {
             comfortQualityList = HDT_QR_ComfortQualityCall.getRecordByOrderParams(order);
         }
 
-        system.debug('quality log 2: ' + comfortQualityList);
-
         if (!comfortQualityList.isEmpty()) {
-            system.debug('quality log 3: enter quality marker');
-            orderToUpdate.QualityCall__c = true;
 
+            ComfortQualityCall__c comforQualityRes = new ComfortQualityCall__c();
+            orderToUpdate.QualityCall__c = true;
             List<Order> orderChildComfort = orderQr.getChildOrdersByParentId(order.ParentOrder__c);
 
             if(orderChildComfort.size() > 1){ //if more than 1 child group activity comfort/quality by Parent
                 orderToUpdate.QualityCallUnique__c = true;
             }
 
-            ComfortQualityCall__c comforQualityRes = new ComfortQualityCall__c();
-
-            system.debug('DocSendingMethod__c comfort: ' + order.DocSendingMethod__c);
-
             if (comfortQualityList.size() > 1) {
-                system.debug('HDT_LC_ChildOrderProcessActions - Vas case enter');
                 for (ComfortQualityCall__c cqc : comfortQualityList) {
-                    system.debug('quality log 4 cqc.ComfortEnabled__c: ' + cqc.ComfortEnabled__c);
-                    system.debug('quality log 4 cqc.ComfortSignatureMethod__c: ' + cqc.ComfortSignatureMethod__c);
-                    system.debug('quality log 4 cqc.ComfortDocSendingChannel__c: ' + cqc.ComfortDocSendingChannel__c);
                     if(cqc.ComfortEnabled__c && cqc.ComfortSignatureMethod__c == order.SignatureMethod__c && cqc.ComfortDocSendingChannel__c == order.DocSendingMethod__c){
-                        system.debug('Keltin quality enter here is OK');
                         comforQualityRes = cqc;
                         break;
-                    } else if (cqc.QualityEnabled__c && cqc.QualitySignatureMethod__c == order.SignatureMethod__c) {
+                    }
+                    else if (cqc.QualityEnabled__c && cqc.QualitySignatureMethod__c == order.SignatureMethod__c) {
                         comforQualityRes = cqc;
                         break;
                     }
                 }
-                system.debug('HDT_LC_ChildOrderProcessActions - Vas case end: ' + comforQualityRes);
-            } else {
+            }
+            else {
                 comforQualityRes = comfortQualityList[0];
             }
 
@@ -365,74 +315,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 orderToUpdate.ComfortCallDaysDue__c = comforQualityRes.DaysComfort__c;
                 orderToUpdate.DateComfortCall__c = Date.today();
             }
-
         }
-
-        //@frpanico 16/09/21 logic for IVA, Accise and Addiz. Regionale for Voltura and Voltura con Switch
-        /*if(order.RecordType.DeveloperName == 'HDT_RT_Voltura' || order.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch')
-        {
-            //@frpanico query for currentRecord
-            Order currentOrder = orderQr.getRecordById(order.Id);
-            //@frpanico only for Energia Elettrica
-            //@frpanico VAT check
-            //@frpanico if VAT is null or blank ExciseRate and RegionalAdditional must be zero
-            if(currentOrder.CommodityFormula__c == 'Energia Elettrica')
-            {
-                if(orderToUpdate.VAT__c != null)
-                {
-                    if(orderToUpdate.VAT__c == '')
-                    {
-                        orderToUpdate.ExciseRate__c = 0.0;
-                        orderToUpdate.RegionalAdditional__c = 0.0;
-                    }
-                }
-                else if(currentOrder.VAT__c == null)
-                {
-                    orderToUpdate.ExciseRate__c = 0.0;
-                    orderToUpdate.RegionalAdditional__c = 0.0;
-                }
-                //@frpanico ExciseEle check
-                //@frpanico if ExciseEle is null or blank VAT__c and RegionalAdditional must be blank and zero
-                //@frpanico if ExciseEle is not null nor blank, ExciseRate value's got from HDT_ExciseTranscode__mdt
-                if(orderToUpdate.ExciseEle__c != null)
-                {
-                    if(orderToUpdate.ExciseEle__c == '')
-                    {
-                        orderToUpdate.VAT__C = '';
-                        orderToUpdate.RegionalAdditional__c = 0.0;
-                        orderToUpdate.ExciseRate__c = 0.0;
-                    }
-                    else 
-                    {
-                        HDT_ExciseTranscode__mdt exciseTranscode = new HDT_ExciseTranscode__mdt();
-                        exciseTranscode = orderQr.getExciseTranscode(orderToUpdate.ExciseEle__c);
-                        orderToUpdate.ExciseRate__c = exciseTranscode.Excise__c;
-                    }
-                }
-                else if(currentOrder.ExciseEle__c == null)
-                {
-                    orderToUpdate.VAT__C = '';
-                    orderToUpdate.RegionalAdditional__c = 0.0;
-                    orderToUpdate.ExciseRate__c = 0.0;
-                }
-                else if(currentOrder.ExciseEle__c != null && currentOrder.ExciseEle__c != '')
-                {
-                    HDT_ExciseTranscode__mdt exciseTranscode = new HDT_ExciseTranscode__mdt();
-                    exciseTranscode = orderQr.getExciseTranscode(currentOrder.ExciseEle__c);
-                    orderToUpdate.ExciseRate__c = exciseTranscode.Excise__c;
-                }
-                //@frpanico RegionalAdditional Check
-                //@frpanico if RegionalAdditional is null VAT and ExciseRate must be blank and zero
-                if(currentOrder.RegionalAdditional__c == null)
-                {
-                    orderToUpdate.VAT__C = '';
-                    orderToUpdate.RegionalAdditional__c = 0.0;
-                    orderToUpdate.ExciseRate__c = 0.0;
-                }
-            }
-        }*/
-        
-        system.debug('HDT_LC_ChildOrderProcessActions - lastStepData - after: ' + orderToUpdate);
 
         orderSrv.updateRecord(orderToUpdate);
         if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){

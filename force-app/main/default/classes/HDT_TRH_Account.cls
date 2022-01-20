@@ -14,9 +14,13 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
  
         List<Account> listAcc = (List<Account>)trigger.new;
         for (Account tempAcc : listAcc) {
+            // Logica spostata su flow HDT_FL_ActivityTrackerAccount poichè il trigger non scatta quando il Lead viene convertito in Account.
+            /* if (String.isNotBlank(tempAcc.CustomerMarking__c) && String.isBlank(tempAcc.CustomerType__c)) {
+                tempAcc.CustomerType__c = HDT_UTL_Account.customerMarkingToCustomerType(tempAcc.CustomerMarking__c);
+            }
             if (String.isNotBlank(tempAcc.Category__c) && String.isBlank(tempAcc.CategoryCode__c)) {
                 tempAcc.CategoryCode__c = HDT_UTL_Account.transcodeCustomerCategory(tempAcc.Category__c);
-            }
+            } */
             if (!tempAcc.IsMigrated__c ) { //? viene specificato che non deve essere effettuata la modifica per i clienti migrati Bolzon
                 tempAcc.CustomerAccountStatus__c='Prospect';
             }

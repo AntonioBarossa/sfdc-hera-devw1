@@ -38,7 +38,9 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 
 
         Boolean skipForCancellation = HDT_UTL_CaseProcess.manageCancellationProcess(trigger.new,Trigger.oldMap);
-        if(!skipForCancellation){
+        //EVERIS: Gestione Scarti SAP
+        Boolean skipForGestioneScarti = HDT_UTL_Scarti.manageSapDiscard(Trigger.new, Trigger.oldMap);
+	    if(!skipForCancellation && !skipForGestioneScarti){
         //Checks Phase Transition
             ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))
                     .beforeUpdate(new Map<String, Object> { 'oldObjects' => Trigger.old, 'newObjects' => Trigger.new });

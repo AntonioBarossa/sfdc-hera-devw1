@@ -129,6 +129,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					DocumentalEnvelopeAttachment__c envelope = new DocumentalEnvelopeAttachment__c();
 					envelope.AttachmentCode__c = singleAttachment.code;
 					envelope.Required__c = singleAttachment.mandatory == '1'? true:false;
+					envelope.IsDocusignSpecialTemplate__c = singleAttachment.signature == '1'? true:false;
 					envelope.Version__c = singleAttachment.version;
 					if(context.equalsIgnoreCase('Case')){
 						envelope.Case__c = recordId;
@@ -817,5 +818,166 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		}
 		
 		return ''; // Non dovrebbe mai accadere.
+	}
+
+	/*
+		Crea un record del tracciato dei dati catastali.
+		docusignData e docusignRadioGroups sono mappa create a partire dalla classe HDT_WRP_DocusignNotify popolata dall'integrazione inbound con docusign.
+		childOrder è l'Order figlio del processo per il quale è stata richiesta la compilazione del modulo dei dati catastali.
+
+		Di seguito il tracciato AS-IS della SIE dei dati catastali:
+
+		CODICE_OFFERTA					VARCHAR2(100)
+		IMPIANTO						VARCHAR2(100)
+		DESTINAZIONE_USO				VARCHAR2(30)
+		PROGRESSIVO_SAP					VARCHAR2(100)
+		DT_INI_CONTRATTO				DATE
+		CODICE_ASSENZA_DATI_CATASTALI	VARCHAR2(30)
+		COMUNE_AMMINISTRATIVO			VARCHAR2(100)
+		COMUNE_CATASTALE				VARCHAR2(100)
+		CODICE_COMUNE_CATASTALE			VARCHAR2(50)
+		PROVINCIA_UBICAZIONE			VARCHAR2(2)
+		TIPO_UNITA						VARCHAR2(50)
+		SEZIONE_URBANA					VARCHAR2(50)
+		FOGLIO							VARCHAR2(30)
+		PARTICELLA						VARCHAR2(50)
+		PARTICELLA_TAVOLARE				VARCHAR2(10)
+		TIPO_PARTICELLA					VARCHAR2(50)
+		SUBALTERNO						VARCHAR2(30)
+		QUALIFICA_TITOLARE				VARCHAR2(30)
+		ROW_ID_RDO						VARCHAR2(100)
+		CATEGORIA_CATASTALE				VARCHAR2(30)
+		SUPERFICIE_CATASTALE			NUMBER
+
+		Di seguito le transcodifiche AS-IS implementate dalla SIE:
+
+		Transcodifica DESTINAZIONE_USO:
+		Val									decodifica
+		Uso abitativo						1
+		Immobile tenuto a disposizione		2
+		Uso commerciale						3
+		Locali adibiti a box				4
+		Altri usi							5
+
+		Transcodifica CODICE_ASSENZA_DATI_CATASTALI
+
+		Val								decodifica
+		da RD							0
+		Immobile non accatastato		1
+		Immobile non accatastabile		2
+
+		Transcodifica TIPO_UNITA
+		Val				decodifica
+		Fabbricato		F
+		Terreno			T
+
+		Transcodifica TIPO_PARTICELLA
+		Val				decodifica
+		Fondiario		F
+		Edificiale		E
+
+		Transcodifica QUALIFICA_TITOLARE
+		Val								decodifica
+		Proprietario					1
+		Usufruttuario					2
+		Locatario						3
+		Tit. altro diritto su immob.	4
+
+		Di seguito un estratto di tracciato AS-IS:
+		1-26371887987/1-C45530S;4003560309;1;;20201006;99991231;;RAVENNA;RAVENNA;H199;RA;F;;46;632;.;E;24;3;;
+		1-27373306691/1-CKPCYMQ;4003141636;1;;20201111;99991231;;FAENZA;FAENZA;D458;RA;F;.;192;13;.;E;6;1;A/3;151
+	 */
+	public static LandRegistry__c createLandRegistryRecord(Map<String, String> docusignData, Map<String, String> docusignRadioGroups, Order childOrder) {
+		LandRegistry__c r = new LandRegistry__c();
+
+		if (docusignData == null || childOrder == null) {
+			return r;
+		}
+
+		//codice_offerta;
+		r.OfferCode__c = childOrder.OrderNumber;
+		// impianto
+		r.ServicePoint__c = childOrder.ServicePoint__c;
+		// destinazione_uso
+		// r.DestinationUsage__c = ???? TODO: da dove prendere la destinazione d'uso? non sembra esserci nel modulo, nè sull'order nè sul service point.
+		// dt_ini_contratto;
+		r.StartDate__c = childOrder.EffectiveDate__c;
+		// codice_assenza_dati_catastali; 
+		r.CodeMissingRegistryData__c = transcodeCodiceAssenzaDatiCatastali(docusignRadioGroups.get('DTC_radiocat'));
+		// comune_amministrativo;
+		r.LegalCity__c = docusignData.get('DTC_comune_amm');
+		// comune_catastale;
+		r.RegistryCity__c = docusignData.get('DTC_comune_cat');
+		// codice_comune_catastale;
+		r.RegistryCityCode__c = docusignData.get('DTC_cod_comune');
+		// provincia_ubicazione;
+		r.Province__c = childOrder.SupplyState__c;
+		// tipo_unita;
+		r.UnitType__c = docusignData.get('DTC_tipo_uni'); // Il modulo richiede l'inserimento di F o T, quindi non servono transcodifiche.
+		// sezione_urbana;
+		r.UrbanSection__c = docusignData.get('DTC_sezione');
+		// foglio;
+		r.Sheet__c = docusignData.get('DTC_foglio');
+		// particella;
+		r.ParticleSheet__c = docusignData.get('DTC_partic');
+		// particella_tavolare;
+		r.ParticleTable__c = docusignData.get('DTC_estens_partic');
+		// tipo_particella;
+		r.ParticleType__c = docusignData.get('DTC_tipo_partic');
+		// subalterno;
+		r.Subaltern__c = docusignData.get('DTC_sub');
+		// qualifica_titolare;
+		r.Title__c = transcodeQualificaTitolare(docusignRadioGroups.get('DTC_qualitadi'));
+		// Categoria_Catastale;
+		// r.RegistryCategory__c = ???? TODO: da dove prendere la categoria catastale? non sembra esserci nel modulo, nè sull'order nè sul service point.
+		// Superficie_Catastale
+		r.RegistrySurface__c = childOrder.SurfaceServed__c;
+
+		return r;
+	}
+
+	private static String transcodeCodiceAssenzaDatiCatastali(String docusignValue) {
+		String transcoded = '';
+
+		switch on docusignValue {
+			when 'Pulsante di opzione1' { // Immobile non ancora iscritto al Catasto
+				transcoded = '1';
+			}
+			when 'Pulsante di opzione2' { // Utenza non relativa ad un immobile ovvero immobile non iscrivibile in Catasto
+				transcoded = '2';
+			}
+			when 'Pulsante di opzione3' { // Fornitura temporanea di servizi
+				transcoded = '';  // valore non gestito da transcodifica AS-IS, per adesso lo ignoriamo.
+			}
+			when 'Pulsante di opzione4' { // Utenza per usi comuni o condominiali
+				transcoded = '';  // valore non gestito da transcodifica AS-IS, per adesso lo ignoriamo.
+			}
+		}
+
+		return transcoded;
+	}
+
+	private static String transcodeQualificaTitolare(String docusignValue) {
+		String transcoded = '';
+
+		switch on docusignValue {
+			when 'Pulsante di opzione1' { // Proprietario
+				transcoded = '1';
+			}
+			when 'Pulsante di opzione2' { // Locatario
+				transcoded = '3';
+			}
+			when 'Pulsante di opzione3' { // Usufruttuario
+				transcoded = '2';
+			}
+			when 'Pulsante di opzione4' { // Titolare di altro diritto sull'immobile
+				transcoded = '4';
+			}
+			when 'Pulsante di opzione5' { // Rappresentante legale o volontario
+				transcoded = ''; // valore non gestito da transcodifica AS-IS, per adesso lo ignoriamo.
+			}
+		}
+
+		return transcoded;
 	}
 }

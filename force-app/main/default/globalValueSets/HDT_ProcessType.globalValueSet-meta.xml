@@ -481,6 +481,11 @@
         <label>Recesso per rifiuto voltura - GAS</label>
     </customValue>
     <customValue>
+        <fullName>Recesso per Ripensamento - EE</fullName>
+        <default>false</default>
+        <label>Recesso per Ripensamento - EE</label>
+    </customValue>
+    <customValue>
         <fullName>Recesso su richiesta cliente - EE</fullName>
         <default>false</default>
         <label>Recesso su richiesta cliente - EE</label>
@@ -959,6 +964,16 @@
         <fullName>Switch in Reseller</fullName>
         <default>false</default>
         <label>Switch in Reseller</label>
+    </customValue>
+    <customValue>
+        <fullName>Switch Out per Voltura - EE</fullName>
+        <default>false</default>
+        <label>Switch Out per Voltura - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Switch Out per Voltura - GAS</fullName>
+        <default>false</default>
+        <label>Switch Out per Voltura - GAS</label>
     </customValue>
     <customValue>
         <fullName>Testo contratto in bolletta - EE</fullName>

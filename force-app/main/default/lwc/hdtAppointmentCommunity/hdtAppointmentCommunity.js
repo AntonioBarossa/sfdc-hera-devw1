@@ -81,7 +81,7 @@ export default class HdtAppointmentCommunity extends LightningElement {
     handleAuthenticate(event){
         let userData = this.template.querySelector("[data-id='userData']").value;
         if (this.validateInput(userData)){
-            //localStorage.setItem('activityId',this.recordId);
+            localStorage.setItem('activityId',this.recordId);
             this.setShowItem(false,true,false,false);
         }
     }

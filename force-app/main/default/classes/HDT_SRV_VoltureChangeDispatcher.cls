@@ -25,9 +25,12 @@ global with sharing class HDT_SRV_VoltureChangeDispatcher implements wrts_prcgvr
             {
                 voltureChangeSrv.handlePublishUpdate((Order)sender);
             }
+            when 'precheckOk'{
+
+                voltureChangeSrv.orderPrecheckOk((Order)sender);
+            }
         }
 
         return null;
     }
-
 }
