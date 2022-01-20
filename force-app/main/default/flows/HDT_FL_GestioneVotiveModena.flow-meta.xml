@@ -5,7 +5,7 @@
         <name>assignDatiPagante</name>
         <label>assignDatiPagante</label>
         <locationX>2558</locationX>
-        <locationY>1118</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>getMyCase.PayerDetails__c</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>AssignPhaseStatus</name>
         <label>AssignPhaseStatus</label>
         <locationX>2690</locationX>
-        <locationY>1358</locationY>
+        <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>getMyCase.Status</assignToReference>
             <operator>Assign</operator>
@@ -44,7 +44,7 @@
         <name>checkAnnull</name>
         <label>checkAnnull</label>
         <locationX>2558</locationX>
-        <locationY>1238</locationY>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>AssignPhaseStatus</targetReference>
         </defaultConnector>
@@ -106,7 +106,7 @@
         <name>Next_Step_VotivaModAnag_0_0</name>
         <label>Next Step?</label>
         <locationX>2228</locationX>
-        <locationY>758</locationY>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>getMyCase</targetReference>
         </defaultConnector>
@@ -255,7 +255,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>getActivityRecordType</targetReference>
+                <targetReference>Inserimento_Dati_Votiva_0_0</targetReference>
             </connector>
             <label>Intervento Riattivazione Luce/Subentro/Nuovo Contratto</label>
         </rules>
@@ -282,69 +282,6 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>createActivity</name>
-        <label>createActivity</label>
-        <locationX>2228</locationX>
-        <locationY>518</locationY>
-        <connector>
-            <targetReference>Inserimento_Dati_Votiva_0_0</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Account__c</field>
-            <value>
-                <elementReference>AccountId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Case__c</field>
-            <value>
-                <elementReference>GetCase.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>getActivityRecordType.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type__c</field>
-            <value>
-                <stringValue>Gestione Votive</stringValue>
-            </value>
-        </inputAssignments>
-        <object>wrts_prcgvr__Activity__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordLookups>
-        <name>getActivityRecordType</name>
-        <label>getActivityRecordType</label>
-        <locationX>2228</locationX>
-        <locationY>398</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>createActivity</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>HDT_RT_AttivitaGestionali</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>SobjectType</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>wrts_prcgvr__Activity__c</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RecordType</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordLookups>
         <name>GetCase</name>
         <label>GetCase</label>
@@ -370,7 +307,7 @@
         <name>getMyCase</name>
         <label>getMyCase</label>
         <locationX>2558</locationX>
-        <locationY>878</locationY>
+        <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Screen_Fatturazione</targetReference>
@@ -436,7 +373,7 @@
         <name>Update_Indirizzi_Fatturazione</name>
         <label>Update Indirizzi Fatturazione</label>
         <locationX>2690</locationX>
-        <locationY>1478</locationY>
+        <locationY>1238</locationY>
         <inputReference>getMyCase</inputReference>
     </recordUpdates>
     <screens>
@@ -543,7 +480,7 @@
         <name>Inserimento_Dati_Votiva_0_0</name>
         <label>Inserimento Dati Votiva</label>
         <locationX>2228</locationX>
-        <locationY>638</locationY>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -659,7 +596,7 @@
         <name>Screen_Fatturazione</name>
         <label>Screen Fatturazione</label>
         <locationX>2558</locationX>
-        <locationY>998</locationY>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -850,7 +787,7 @@
         <name>Gestione_Annullamento_0_0</name>
         <label>Gestione Annullamento</label>
         <locationX>1898</locationX>
-        <locationY>878</locationY>
+        <locationY>638</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -881,7 +818,7 @@
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>2426</locationX>
-        <locationY>1358</locationY>
+        <locationY>1118</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
