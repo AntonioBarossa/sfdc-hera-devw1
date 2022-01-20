@@ -330,7 +330,8 @@ public inherited sharing class HDT_QR_Order {
             CreateContractAccount__c,
             IbanCountry__c,
             CommercialProductVersion__c,
-            CommercialProductCode__c
+            CommercialProductCode__c,
+            IsEarlyActivation__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
