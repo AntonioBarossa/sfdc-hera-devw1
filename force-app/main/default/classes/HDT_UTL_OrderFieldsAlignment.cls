@@ -196,7 +196,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.isWinback__c = servicePoint.SwitchInWinback__c;
         orderToUpdate.SwitchOutDate__c = servicePoint.SwitchOutDate__c;
         orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
-        orderToUpdate.Market__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
+        //orderToUpdate.Market__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
+        orderToUpdate.Market__c =  'Libero';
         orderToUpdate.PowerAvailable__c = servicePoint.PowerAvailable__c;
         orderToUpdate.VoltageLevel__c = servicePoint.VoltageLevel__c;
         orderToUpdate.DisconnectibilityPhone__c = servicePoint.DisconnectibilityPhone__c;

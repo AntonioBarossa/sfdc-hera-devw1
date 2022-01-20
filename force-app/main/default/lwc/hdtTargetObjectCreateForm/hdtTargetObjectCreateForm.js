@@ -596,7 +596,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     this.handleCallServiceSap(this.selectedservicepoint);
                     this.servicePointRetrievedData = data[0];
                     this.oldServicePoint = data[0]; //keltin used for change use check
-                    console.log('servicePointRetriviedData: ******' + JSON.stringify(this.servicePointRetrievedData.RecordType.DeveloperName));
                     if (this.servicePointRetrievedData.RecordType.DeveloperName != undefined) {
                         switch (this.servicePointRetrievedData.RecordType.DeveloperName) {
                             case 'HDT_RT_Ele':
@@ -626,8 +625,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 this.manageFields();
                 console.log('fieldsData' + this.fieldsAddress);
             }
-            console.log('fieldsData' + this.fieldsAddress);
-            //fields have been loaded
             this.fieldsReady = true;
             this.loading = false;
         }).catch(error => {
@@ -639,28 +636,15 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
         });
-        // this.showForm=true;
     }
-
-
 
     @api
     getInstanceWrapObject(servicePointRetrievedData) {
-        console.log('getInstanceWrapObject - START');
-        console.log('getInstanceWrapObject - servicePointRetrievedData' + JSON.stringify(servicePointRetrievedData));
         this.allSubmitedFields = this.servicePointRetrievedData;
         this.allSubmitedFields.PowerRequested__c = null;
         getInstanceWrapAddressObject({ s: servicePointRetrievedData }).then(data => {
             this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValues(data);
-            console.log('getInstanceWrapObject - getInstanceWrapAddressObject Start ' + JSON.stringify(data));
-            //this.wrapAddressObject = this.toObjectAddressInit(data);
-
-            console.log('getInstanceWrapObject - wrapAddressObject' + JSON.stringify(this.wrapAddressObject));
-            //this.toObjectAddress();
-
         });
-
-        console.log('getInstanceWrapObject - END');
     }
 
 
@@ -668,7 +652,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      * Pre-fill Account__c field on render
      */
     renderedCallback() {
-        console.log('renderedCallback START + RECORDTYPEID' + this.recordType);
         if (this.fieldsReady) {
             if (this.selectedservicepoint == undefined) {
                 let accountField = this.template.querySelector('[data-name="Account__c"]');
@@ -1203,14 +1186,16 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
         this.loading = true;
         let addressRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
+
         if(this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].trim() != ''){
             if(addressRecord['Comune'] != undefined && addressRecord['Comune'].trim() != ''){
                 let codicePunto = this.allSubmitedFields['ServicePointCode__c'].trim();
-                let radicePunto = this.recordtype.label == 'Punto Elettrico' ? codicePunto.substring(0, 6) : codicePunto.substring(0, 4);
-                let comune = this.recordtype.label == 'Punto Elettrico' ? '' : addressRecord['Comune'];
+                let servizio = this.allSubmitedFields['CommoditySector__c'];
+                let radicePunto = servizio == 'Gas' ? codicePunto.substring(0, 4) : codicePunto.substring(0, 6);
+                let comune = servizio == 'Gas' ? addressRecord['Comune'] : '';
                 getDistributorPointCode({
                     code : radicePunto,
-                    commodity: this.commodity,
+                    commodity: servizio,
                     comune : comune
                 }).then(data => {
                     this.retrievedDistributor = data;
@@ -1292,25 +1277,16 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      * Get form title
      */
     get formTitle() {
-        console.log('formTitle START');
         let title = 'Service Point: ';
-        console.log('sp ******* formtitle' + JSON.stringify(this.selectedservicepoint));
 
         if (this.selectedservicepoint != undefined) {
-            console.log('entra in selectedServicePoint != undefined ');
-
             if (this.selectedservicepoint['Codice Punto'] != undefined) {
-                console.log('entra in selectedservicepoint codice punto');
-
                 title += this.selectedservicepoint['Codice Punto'];
             }
             else if (this.selectedservicepoint['Codice Punto'] == undefined) {
 
-
                 let sp = JSON.stringify(this.selectedservicepoint).split(',');
-
                 sp.forEach(element => {
-                    console.log('selectedservicepoint formtitle ' + element);
                     if (element.split(':')[0].includes('ServicePointCode__c')) {
                         title += element.split(':')[1];
                     }
@@ -1329,17 +1305,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('formTitle END');
         return title;
     }
-
-    /**
-     * Get save button name
-     */
-    /*get saveButtonName(){
-        if(this.selectedservicepoint != undefined){
-            return '';
-        } else {
-            return 'Salva';
-        }
-    }*/
 
     /**
      * Get verify address for update case
@@ -1410,12 +1375,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     }
 
     handleResponseHeroku(event) {
-        console.log('handleResponseHeroku event detail : ' + JSON.stringify(event.detail));
         this.herokuAddressResponse = event.detail;
-    }
-
-    handleDistributor(event) {
-        console.log('entra in addDistributor');
     }
 
     @api

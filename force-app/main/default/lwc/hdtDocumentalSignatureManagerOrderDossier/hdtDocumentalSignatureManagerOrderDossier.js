@@ -22,10 +22,12 @@ import ShippingProvince from '@salesforce/schema/Order.ShippingProvince__c';
 import ShippingCountry from '@salesforce/schema/Order.ShippingCountry__c';
 import ShippingStreetName from '@salesforce/schema/Order.ShippingStreetName__c';
 import SignedDate from '@salesforce/schema/Order.SignedDate__c';
+import ContractSigned from '@salesforce/schema/Order.ContractSigned__c';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import updateContactForScartoDocumentale from '@salesforce/apex/HDT_UTL_Scarti.updateContactForScartoDocumentale'; //costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
 
 const signModeFirmato = 'Contratto già firmato';
+const signModeCartacea = 'Cartacea';
 
 const FIELDS = [
     'Order.Id',
@@ -231,7 +233,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 } else if(this.orderRecord.fields.Account.value != null){
                     completeAddress = this.orderRecord.fields.Account.value.fields.BillingAddressFormula__c.value;
                     stato = this.orderRecord.fields.Account.value.fields.BillingCountry.value;
-                    //provincia = this.orderRecord.fields.Account.value.fields..value;
+                    provincia = this.orderRecord.fields.Account.value.fields.BillingState.value;
                     via  = this.orderRecord.fields.Account.value.fields.BillingStreetName__c.value;
                     cap = this.orderRecord.fields.Account.value.fields.BillingPostalCode.value;
                     comune  = this.orderRecord.fields.Account.value.fields.BillingCity.value;
@@ -402,6 +404,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             this.dataToSubmit['ShippingStreetName__c'] = resultWrapper.addressWrapper.Via;
             fields[SignedDate.fieldApiName] = this.actualSignedDate;
             this.dataToSubmit['SignedDate__c'] = this.actualSignedDate;
+            fields[ContractSigned.fieldApiName] = resultWrapper.signMode.localeCompare(signModeFirmato) === 0;
             const recordInput = { fields };
            
             updateRecord(recordInput)
@@ -618,7 +621,11 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         }catch(e){
             console.error(e);
         }
-        this.isVisibleSignedDate = (signModeInit && signModeInit.localeCompare(signModeFirmato) === 0);
+        const channel = this.orderRecord.fields.Channel__c.value;
+        const isSportello = channel && channel.localeCompare('Sportello') === 0;
+        const isCartacea = signModeInit && signModeInit.localeCompare(signModeCartacea) === 0;
+        this.isVisibleSignedDate = ((isSportello && isCartacea) || signModeInit && signModeInit.localeCompare(signModeFirmato) === 0);
+
         if (!this.isVisibleSignedDate){
             this.actualSignedDate = null;
         }else{

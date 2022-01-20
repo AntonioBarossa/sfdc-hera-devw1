@@ -311,6 +311,11 @@
         <label>Recesso per Rifiuto Voltura</label>
     </standardValue>
     <standardValue>
+        <fullName>Recesso per Ripensamento</fullName>
+        <default>false</default>
+        <label>Recesso per Ripensamento</label>
+    </standardValue>
+    <standardValue>
         <fullName>Recesso su Richesta Cliente</fullName>
         <default>false</default>
         <label>Recesso su Richesta Cliente</label>

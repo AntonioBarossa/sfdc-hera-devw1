@@ -182,6 +182,7 @@ export default class hdtSaleVas extends LightningElement {
                 item.Number = item.ContractNumber !== undefined ? item.ContractNumber : item.OrderNumber;
                 item.PodPdr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.ServicePointCode__c : '';
                 item.ServicePointAddr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
+                item.city = item.ServicePoint__c !== undefined ? item.ServicePoint__r.SupplyCity__c : '';
                 item.Process = item.ProcessType__c !== undefined ? item.ProcessType__c : '';
             });
 
@@ -264,7 +265,7 @@ export default class hdtSaleVas extends LightningElement {
         }).then(data =>{
             let dat = data;
 
-            if(dat.res){
+            if(dat.res || (dat.messRes === 'transitorio' && this.selectedOption !== 'VAS stand alone')){
                 confirmAction({
                     selectedOption:this.confirmedSelectedOption,
                     order:this.selectedOrder,
@@ -283,15 +284,26 @@ export default class hdtSaleVas extends LightningElement {
                     this.confirmedSelectedOption = '';
                     this.inputText = '';
                     this.totalPages = 0;
-        
-                    this.dispatchEvent(new CustomEvent('createvas'));
-                    const toastSuccessMessage = new ShowToastEvent({
-                        title: 'Successo',
-                        message: 'VAS confermato con successo',
-                        variant: 'success'
-                    });
-                    this.dispatchEvent(toastSuccessMessage);
-        
+                    if(dat.res)
+                    {
+                        this.dispatchEvent(new CustomEvent('createvas'));
+                        const toastSuccessMessage = new ShowToastEvent({
+                            title: 'Successo',
+                            message: 'VAS confermato con successo',
+                            variant: 'success'
+                        });
+                        this.dispatchEvent(toastSuccessMessage);
+                    }
+                    else
+                    {
+                        this.dispatchEvent(new CustomEvent('createvas'));
+                        const toastWarning = new ShowToastEvent({
+                            title: 'Warning',
+                            message: 'E stato creato un caso transitorio!',
+                            variant: 'warning'
+                        });
+                        this.dispatchEvent(toastWarning);
+                    }
                     this.dispatchEvent(new CustomEvent('salewizard__refreshproductstable', {
                         bubbles: true,
                         composed: true
@@ -336,6 +348,7 @@ export default class hdtSaleVas extends LightningElement {
     getSelectedOrder(event){
         let selectedRows = event.detail.selectedRows;
         this.selectedOrder = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
+        console.log('# SupplyCity >>> ' + JSON.stringify(this.selectedOrder.ServicePoint__r.SupplyCity__c));
     }
 
     getSelectedContract(event){
@@ -354,12 +367,19 @@ export default class hdtSaleVas extends LightningElement {
             // delete this.selectedFromCompleteList.Type;
             // delete this.selectedFromCompleteList.Number;
             this.selectedContract = this.selectedFromCompleteList;
+            this.inputText = this.selectedContract.ServicePoint__r.SupplyCity__c;
+            console.log('# Contract Selection: SupplyCity >>> ' + JSON.stringify(this.inputText));
             this.selectedOrder = {};
         } else if (this.selectedFromCompleteList.Type === 'Ordine') {
             this.confirmedSelectedOption = 'Ordini in corso';
             // delete this.selectedFromCompleteList.Type;
             // delete this.selectedFromCompleteList.Number;
-            this.selectedOrder = this.selectedFromCompleteList;
+            this.selectedOrder = this.selectedFromCompleteList;            
+            /**@frpanico
+             * Added this.inputTex for checkTransition
+             */
+            this.inputText = this.selectedOrder.ServicePoint__r.SupplyCity__c;
+            console.log('# Order Selection: SupplyCity >>> ' + JSON.stringify(this.inputText));
             this.selectedContract = {};
         }
     }

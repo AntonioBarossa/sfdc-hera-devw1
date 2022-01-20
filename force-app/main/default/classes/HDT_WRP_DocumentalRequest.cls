@@ -68,6 +68,8 @@ public class HDT_WRP_DocumentalRequest{
         public string rds { get; set; }
         public string documentPrintType { get; set; }
         public string commoditySector { get; set; }
+        public string expireAfter { get; set; }
+        public string expireEnabled { get; set; }
     }
 
     public class HDT_WRP_DocumentalTemplate

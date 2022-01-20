@@ -140,7 +140,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         //calculate fields based on commodity start
         Decimal consumptionRangeEle = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? servicePoint.AnnualConsumption__c : null;
         Decimal consumptionRangeGas = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.AnnualConsumption__c : null;
-        Decimal powerFlow = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? servicePoint.PowerContractual__c : servicePoint.MaxRequiredPotential__c;
+        Decimal powerFlow = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? servicePoint.PowerContractual__c : Decimal.valueOf(servicePoint.MaxRequiredPotential__c);
         String residentDeliveryAddress = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? (servicePoint.Resident__c == true ? 'Y' : 'N') : 'N';
         //calculate fields based on commodity end
 
@@ -201,7 +201,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 Agency__c = sale.agency__c,
                 salesCompany__c = agc.get('nomeAgente'),
                 salesCompanyCode__c = agc.get('codiceAgente'),
-                Market__c = servicePoint.MarketOrigin__c,
+                //Market__c = servicePoint.MarketOrigin__c, // TODO WAVE 3: gestire altri tipi di mercato.
+                Market__c = 'Libero',
                 Channel__c = sale.Channel__c,
                 FriendCode__c = sale.FriendCode__c,
                 CampaignCode__c = sale.CampaignCode__c,

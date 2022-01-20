@@ -1,13 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
+    <assignments>
+        <name>assignDatiPagante</name>
+        <label>assignDatiPagante</label>
+        <locationX>2558</locationX>
+        <locationY>1118</locationY>
+        <assignmentItems>
+            <assignToReference>getMyCase.PayerDetails__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Dati_Del_Pagante_Nome_Cognome_CF</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>checkAnnull</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignPhaseStatus</name>
+        <label>AssignPhaseStatus</label>
+        <locationX>2690</locationX>
+        <locationY>1358</locationY>
+        <assignmentItems>
+            <assignToReference>getMyCase.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getMyCase.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Indirizzi_Fatturazione</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>checkAnnull</name>
+        <label>checkAnnull</label>
+        <locationX>2558</locationX>
+        <locationY>1238</locationY>
+        <defaultConnector>
+            <targetReference>AssignPhaseStatus</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isAnnulla</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Annullamento_Subflow</targetReference>
+            </connector>
+            <label>isAnnulla</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Next_Step_VotivaModAnag</name>
         <label>Next Step?</label>
         <locationX>1370</locationX>
         <locationY>758</locationY>
         <defaultConnector>
-            <targetReference>Set_Fase_In_Lavorazione</targetReference>
+            <targetReference>Set_Fase_In_Lavorazione_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
         <rules>
@@ -39,9 +103,46 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Next_Step_VotivaModAnag_0_0</name>
+        <label>Next Step?</label>
+        <locationX>2228</locationX>
+        <locationY>758</locationY>
+        <defaultConnector>
+            <targetReference>getMyCase</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
+        <rules>
+            <name>Annullamento_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Annullamento_0_0</targetReference>
+            </connector>
+            <label>Annullamento</label>
+        </rules>
+        <rules>
+            <name>Salva_in_Bozza_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SaveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Salva in Bozza</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Quale_Processo_di_Votive</name>
         <label>Quale Processo di Votive?</label>
-        <locationX>974</locationX>
+        <locationX>1502</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Screen_Errore</targetReference>
@@ -129,6 +230,35 @@
             </connector>
             <label>Modifica Dati di Recapito</label>
         </rules>
+        <rules>
+            <name>Intervento_Riattivazione_Luce_Subentro_Nuovo_Contratto</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>VOTIVE Modena/Intervento Riattivazione luce</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>VOTIVE Modena/Subentro</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>VOTIVE Modena/Nuovo contratto</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>getActivityRecordType</targetReference>
+            </connector>
+            <label>Intervento Riattivazione Luce/Subentro/Nuovo Contratto</label>
+        </rules>
     </decisions>
     <description>Flow per il dispatch dei Case di Votive Modena</description>
     <interviewLabel>Gestione Votive Modena {!$Flow.CurrentDateTime}</interviewLabel>
@@ -152,14 +282,98 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>createActivity</name>
+        <label>createActivity</label>
+        <locationX>2228</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Inserimento_Dati_Votiva_0_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Account__c</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>GetCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>getActivityRecordType.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <stringValue>Gestione Votive</stringValue>
+            </value>
+        </inputAssignments>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>getActivityRecordType</name>
+        <label>getActivityRecordType</label>
+        <locationX>2228</locationX>
+        <locationY>398</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>createActivity</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_AttivitaGestionali</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>wrts_prcgvr__Activity__c</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>GetCase</name>
         <label>GetCase</label>
-        <locationX>974</locationX>
+        <locationX>1502</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Quale_Processo_di_Votive</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getMyCase</name>
+        <label>getMyCase</label>
+        <locationX>2558</locationX>
+        <locationY>878</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Screen_Fatturazione</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -198,7 +412,7 @@
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Set_Fase_In_Lavorazione</name>
+        <name>Set_Fase_In_Lavorazione_0_0_0</name>
         <label>Set Fase In Lavorazione</label>
         <locationX>1634</locationX>
         <locationY>878</locationY>
@@ -217,6 +431,13 @@
             </value>
         </inputAssignments>
         <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Indirizzi_Fatturazione</name>
+        <label>Update Indirizzi Fatturazione</label>
+        <locationX>2690</locationX>
+        <locationY>1478</locationY>
+        <inputReference>getMyCase</inputReference>
     </recordUpdates>
     <screens>
         <name>Inserimento_Dati_Votiva</name>
@@ -319,9 +540,109 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Inserimento_Dati_Votiva_0_0</name>
+        <label>Inserimento Dati Votiva</label>
+        <locationX>2228</locationX>
+        <locationY>638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Next_Step_VotivaModAnag_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>DTModAnag_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetCase.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>formModAnag_0_0</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva in bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextStep</name>
+                <value>
+                    <stringValue>NEXT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Votive Modena Attivazioni</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>CancelCase</assignToReference>
+                <name>cancelCase</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>SaveInDraft</assignToReference>
+                <name>saveInDraft</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Screen_Errore</name>
         <label>Screen Errore</label>
-        <locationX>1898</locationX>
+        <locationX>2954</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -332,6 +653,58 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Fatturazione</name>
+        <label>Screen Fatturazione</label>
+        <locationX>2558</locationX>
+        <locationY>998</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>assignDatiPagante</targetReference>
+        </connector>
+        <fields>
+            <name>headerNominativoPagante</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 20px; color: rgb(68, 68, 68);&quot;&gt;Inserisci Dati Pagante&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Dati_Del_Pagante_Nome_Cognome_CF</name>
+            <dataType>String</dataType>
+            <fieldText>Dati del pagante (Nome, Cognome, CF)</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>headerIndirizzoFatt</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 20px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Seleziona Indirizzo Fatturazione&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>checkAddress</name>
+            <extensionName>c:hdtTargetObjectAddressForFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>theCase</name>
+                <value>
+                    <elementReference>getMyCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>CancelCase</assignToReference>
+                <name>cancelCase</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>getMyCase</assignToReference>
+                <name>theCase</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
@@ -381,7 +754,7 @@
             <inputParameters>
                 <name>selectionType</name>
                 <value>
-                    <stringValue>BillingProfile</stringValue>
+                    <stringValue>Mod_Anagr_Dati_Recapito_Votiva_Modena</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -395,7 +768,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>848</locationX>
+        <locationX>1376</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetCase</targetReference>
@@ -474,6 +847,68 @@
         </inputAssignments>
     </subflows>
     <subflows>
+        <name>Gestione_Annullamento_0_0</name>
+        <label>Gestione Annullamento</label>
+        <locationX>1898</locationX>
+        <locationY>878</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>recordToCancell</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Annullamento_Subflow</name>
+        <label>Gestione Annullamento Subflow</label>
+        <locationX>2426</locationX>
+        <locationY>1358</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>recordToCancell</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Sublflow_Morosita</name>
         <label>Sublflow Morosita</label>
         <locationX>842</locationX>
@@ -488,8 +923,22 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
+        <name>AccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>CancelCase</name>
         <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>datiPagante</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>

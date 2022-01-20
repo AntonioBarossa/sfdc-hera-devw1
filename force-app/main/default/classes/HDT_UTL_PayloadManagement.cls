@@ -37,6 +37,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return calculateDriverAllegati(inputs,formParams);
                 }when 'handleAmountVas'{
                     return handleAmountVas(inputs,formParams);
+                }when 'handleFlagResident'{
+                    return handleFlagResident(inputs,formParams);
                 }
                 when else {
                     return '';
@@ -122,6 +124,26 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         return isPaperless;
     }
 
+    /**
+     * Transcodifica il flag Resident__c su Case e Order. Engage1 si aspetta due transcodifiche diverse: SI/NO per i plichi "ex-reitek", Si/No per i plichi normali.
+     */
+    private String handleFlagResident(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String residentTranscoded = '';
+        String context = (String) formParams.get('Contesto');
+        String signModeDriver = calculateSignModeDriver(inputs, formParams);
+        Boolean isPlicoReitek = String.isNotBlank(signModeDriver);
+
+        if (context == 'Order' && isPlicoReitek) { // plico "ex-Reitek", cioè firmato con vocal order
+            Boolean isResident = Boolean.valueOf(HDT_UTL_DocumentalManagement.getValue('Order', 'Resident__c', 0, inputs, formParams));
+            residentTranscoded = isResident ? 'SI' : 'NO';
+        } else { // plico "normale"
+            Boolean isResident = Boolean.valueOf(HDT_UTL_DocumentalManagement.getValue(context, 'Resident__c', 0, inputs, formParams));
+            residentTranscoded = isResident ? 'Si' : 'No';
+        }
+
+        return residentTranscoded;
+    }
+
     private String calculateCompanyCode(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         //TODO: Gestione Account e Estratto Conto
         String context = (String) formParams.get('Contesto');
@@ -185,6 +207,10 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
     private String getCompanyCode(String companyDesc){
         if(companyDesc==null || String.isBlank(companyDesc)){
             return '';
+        }
+
+        if (companyDesc == 'EstEnergy S.p.A.'){
+            companyDesc = 'ESTENERGY SPA';
         }
         
         String queryString = 'SELECT id,Label, CompanyCode__c from HDT_HeraCompany__mdt WHERE Label=\''+companyDesc+'\'';
@@ -378,8 +404,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
     }
 
     private String checkCommercialOffer(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
-        String offerName = HDT_UTL_DocumentalManagement.getValue('Order', 'ProductName__c', 0, inputs, formParams);//ProductName__c
-        String implantType = HDT_UTL_DocumentalManagement.getValue('Order', 'ImplantType__c', 0, inputs, formParams);//ImplantType__c
+        String offerName = HDT_UTL_DocumentalManagement.getValue('ItemCommercialOffer', 'ProductName__c', 0, inputs, formParams);
+        String implantType = HDT_UTL_DocumentalManagement.getValue('Order', 'ImplantType__c', 0, inputs, formParams);
         String result = '';
         if(String.isNotBlank(offerName)){
             if(offerName.indexOf('Sole Lune') > -1){
@@ -423,12 +449,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
         if(String.isNotBlank(offerName)){
             if(offerName.indexOf('Bonus') > -1){
-                result = 'X|';
+                result += 'X|';
             }else {
-                result = '|';
+                result += '|';
             }
             if(offerName.indexOf('Opzione Natura') > -1){
-                result = 'X';
+                result += 'X';
             }
         }else {
             result += '|';
@@ -1069,7 +1095,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
 
         List<SObject> offersList = inputs.get('ItemCommercialOffer');
-        if (offersList.isEmpty()) {
+        if (offersList == null || offersList.isEmpty()) {
             return '';
         }
 

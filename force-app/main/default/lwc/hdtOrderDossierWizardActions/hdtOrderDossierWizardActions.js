@@ -31,7 +31,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     isOrderPhaseToCheck = true;
     parentOrder;
     isVocalAndActivityNotClose = true;
-    enableDocumental = false;
+    enableDocumental = true;
 
 
     get disablePrintButtonFunction() {
@@ -59,9 +59,10 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             );
         } else if (data) {
             this.parentOrder = data;
-            var signed = this.parentOrder.fields.ContractSigned__c.value;
+            //var signed = this.parentOrder.fields.ContractSigned__c.value;
             this.signatureMethod = data.fields.SignatureMethod__c.value;
-            this.enableDocumental = !signed;
+            // 28/12/2021: commentata logica che disabilita il component documentale, poichè deve sempre essere visibile nel wizard.
+            //this.enableDocumental = !signed;
         }
     }
 
@@ -142,6 +143,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                                 }
                             );
                             this.previewExecuted = true;
+                            this.isPrintButtonDisabled = false;
                         }else{
                             this.loading = false;
                             this.showMessage('Attenzione',resultParsed.message,'error');
@@ -150,7 +152,6 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                         this.loading = false;
                         this.showMessage('Attenzione','Errore nella composizione del plico','error');
                     }
-                    this.isPrintButtonDisabled = false;
                 })
                 .catch(error => {
                     this.loading = false;
@@ -160,7 +161,6 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         }catch(error){
             console.error();
         }
-        this.isPrintButtonDisabled = false;
     }
 
     showMessage(title,message,variant){

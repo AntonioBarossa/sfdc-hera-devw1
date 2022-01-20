@@ -16,8 +16,19 @@ public inherited sharing class HDT_UTL_ProductAssociation {
         System.debug(logginglevel.DEBUG, '>>> FILTER PRODUCT: ' + String.valueOf(filterProduct));
 
         List<String> whereConditionList = new List<String>();
-        if(!String.isEmpty(filterProduct.Name)){
-            whereConditionList.add('Name LIKE \'%' + String.escapeSingleQuotes(filterProduct.Name) + '%\'');
+        Map<String, Object> fieldsToValue = filterProduct.getPopulatedFieldsAsMap();
+        
+        String currentValue = '';
+        for (String fieldName : fieldsToValue.keySet()){
+            currentValue = String.valueOf(fieldsToValue.get(fieldName));
+            if(!String.isEmpty(currentValue)){
+                whereConditionList.add(fieldName + ' = \'' + String.escapeSingleQuotes(currentValue) + '\'');
+            }
+        }
+
+        /*if(!String.isEmpty(filterProduct.Name)){
+            //whereConditionList.add('Name LIKE \'%' + String.escapeSingleQuotes(filterProduct.Name) + '%\'');
+            whereConditionList.add('Name = \'' + String.escapeSingleQuotes(filterProduct.Name) + '\'');
         }
 
         if(!String.isEmpty(filterProduct.TypeOffer__c)){
@@ -25,7 +36,8 @@ public inherited sharing class HDT_UTL_ProductAssociation {
         }
 
         if(!String.isEmpty(filterProduct.ProductCode)){
-            whereConditionList.add('ProductCode LIKE \'%' + String.escapeSingleQuotes(filterProduct.ProductCode) + '%\'');
+            //whereConditionList.add('ProductCode LIKE \'%' + String.escapeSingleQuotes(filterProduct.ProductCode) + '%\'');
+            whereConditionList.add('ProductCode = \'' + String.escapeSingleQuotes(filterProduct.ProductCode) + '\'');
         }
 
         //if(!String.isEmpty(filterProduct.Family)){
@@ -33,7 +45,8 @@ public inherited sharing class HDT_UTL_ProductAssociation {
         //}
 
         if(!String.isEmpty(filterProduct.Version__c)){
-            whereConditionList.add('Version__c LIKE \'%' + String.escapeSingleQuotes(filterProduct.Version__c) + '%\'');
+            //whereConditionList.add('Version__c LIKE \'%' + String.escapeSingleQuotes(filterProduct.Version__c) + '%\'');
+            whereConditionList.add('Version__c = \'' + String.escapeSingleQuotes(filterProduct.Version__c) + '\'');
         }
 
         if(!String.isEmpty(filterProduct.Status__c)){
@@ -41,7 +54,8 @@ public inherited sharing class HDT_UTL_ProductAssociation {
         }
 
         if(!String.isEmpty(filterProduct.DescriptionSAP__c)){
-            whereConditionList.add('DescriptionSAP__c LIKE \'%' + String.escapeSingleQuotes(filterProduct.DescriptionSAP__c) + '%\'');
+            //whereConditionList.add('DescriptionSAP__c LIKE \'%' + String.escapeSingleQuotes(filterProduct.DescriptionSAP__c) + '%\'');
+            whereConditionList.add('DescriptionSAP__c = \'' + String.escapeSingleQuotes(filterProduct.DescriptionSAP__c) + '\'');
         }
 
         if(!String.isEmpty(filterProduct.CategoryFamily__c)){
@@ -50,7 +64,7 @@ public inherited sharing class HDT_UTL_ProductAssociation {
 
         if(!String.isEmpty(filterProduct.Service__c)){
             whereConditionList.add('Service__c=\'' + String.escapeSingleQuotes(filterProduct.Service__c) + '\'');
-        }
+        }*/
 
         queryString += 'FROM Product2 ';
         queryString += 'WHERE ' + String.join(whereConditionList, op) + ' ';

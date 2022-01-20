@@ -30,7 +30,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
          // orderToUpdate = HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate);
         // if (orderParent.ContractSigned__c == false) {
                 // LG Ripristino logica 18/09 FF
-        // TODO: se sportello bisogna andare in Documentazione da firmare e poi l'operatore avanza manualmente in Documentazione Gestita dopo la firma del cliente.
         if (orderParent.ContractSigned__c == false) {
             orderToUpdate.Phase__c = 'Documentazione da inviare';
         } else {
@@ -147,14 +146,22 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         if(orderParent.Phase__c == 'In Lavorazione'){
             if (orderParent.ContractSigned__c == false) {
                 orderToUpdate.Phase__c = 'Documentazione da inviare';
-            } else {
+            } else{
                 orderToUpdate.Phase__c = 'Documentazione da validare';
                 //   orderToUpdate.Phase__c = 'Plico da inviare'; 
             }
         }
         else if(orderParent.Phase__c == 'Registrazione  da validare'){
             orderToUpdate.Phase__c = 'Documentazione Gestita';
-            orderToUpdate.status = 'Activated';
+            orderToUpdate.status = 'Completed';
+        }
+        /**@frpanico 13/01/2022
+         * Gestione casistica SignMode "Contratto gia Firmato"
+        */
+        if(orderParent.SignMode__c != null && orderParent.SignMode__c.equalsIgnoreCase('Contratto già firmato'))
+        {
+            orderToUpdate.Phase__c = 'Documentazione Gestita';
+            orderToUpdate.status = 'Completed';
         }
 
         //il campo SignMode è stato utilizzato per salvare il SignatureMethod dell'ultimo invio

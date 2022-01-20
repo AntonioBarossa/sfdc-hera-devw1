@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Phase__c</fullName>
     <externalId>false</externalId>
-    <label>Phase</label>
+    <label>Fase</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>
@@ -816,6 +816,26 @@
                 <fullName>Comunicazione EngageOne KO</fullName>
                 <default>false</default>
                 <label>Comunicazione EngageOne KO</label>
+            </value>
+            <value>
+                <fullName>Approvata</fullName>
+                <default>false</default>
+                <label>Approvata</label>
+            </value>
+            <value>
+                <fullName>Non Approvata</fullName>
+                <default>false</default>
+                <label>Non Approvata</label>
+            </value>
+            <value>
+                <fullName>Rifiutata</fullName>
+                <default>false</default>
+                <label>Rifiutata</label>
+            </value>
+            <value>
+                <fullName>Non Applicabile</fullName>
+                <default>false</default>
+                <label>Non Applicabile</label>
             </value>
         </valueSetDefinition>
     </valueSet>

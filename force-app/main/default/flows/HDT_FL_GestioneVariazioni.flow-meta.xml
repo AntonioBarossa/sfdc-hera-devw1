@@ -27,10 +27,36 @@
         </outputParameters>
     </actionCalls>
     <actionCalls>
+        <name>Check_Criterio_Eleggibilita_0</name>
+        <label>Check Criterio Eleggibilita</label>
+        <locationX>1694</locationX>
+        <locationY>1402</locationY>
+        <actionName>HDT_UTL_ElegibilityCriteriaCheck</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_Criteri_Eleggibilita_0</targetReference>
+        </connector>
+        <flowTransactionModel>NewTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>caseId</name>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>CheckCriteriEleggibilita</assignToReference>
+            <name>abortProcess</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>CheckEleggibilitaWarning</assignToReference>
+            <name>abortProcessWarning</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Crea_Allineamento_Anagrafica</name>
         <label>Crea Allineamento Anagrafica</label>
-        <locationX>1691</locationX>
-        <locationY>1361</locationY>
+        <locationX>1698</locationX>
+        <locationY>1813</locationY>
         <actionName>HDT_SRV_AnagAlignment</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -117,8 +143,8 @@
     <assignments>
         <name>Aggiorna_Fase_in_Attesa_Allineamento_RCU</name>
         <label>Aggiorna Fase in Attesa Allineamento RCU</label>
-        <locationX>1690</locationX>
-        <locationY>1518</locationY>
+        <locationX>1698</locationX>
+        <locationY>1995</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato_0_0_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1182,6 +1208,31 @@
             </conditions>
             <connector>
                 <targetReference>Screen_Criteri_Eleggibilita</targetReference>
+            </connector>
+            <label>Non Superato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Criteri_Eleggibilita_0</name>
+        <label>Check Criteri Eleggibilita</label>
+        <locationX>1687</locationX>
+        <locationY>1582</locationY>
+        <defaultConnector>
+            <targetReference>Crea_Allineamento_Anagrafica</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Superato</defaultConnectorLabel>
+        <rules>
+            <name>Non_Superato_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CheckCriteriEleggibilita</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Criteri_Eleggibilita_0</targetReference>
             </connector>
             <label>Non Superato</label>
         </rules>
@@ -2463,11 +2514,11 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>GetCaseAggiornato_0_0_0</name>
         <label>GetCaseAggiornato</label>
-        <locationX>1691</locationX>
-        <locationY>1218</locationY>
+        <locationX>1694</locationX>
+        <locationY>1228</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Crea_Allineamento_Anagrafica</targetReference>
+            <targetReference>Check_Criterio_Eleggibilita_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2812,8 +2863,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>1690</locationX>
-        <locationY>1681</locationY>
+        <locationX>1699</locationX>
+        <locationY>2191</locationY>
         <inputReference>GetCaseAggiornato_0_0_0</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -3317,6 +3368,75 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         </fields>
         <fields>
             <name>flowNavButtons</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Criteri_Eleggibilita_0</name>
+        <label>Screen Criteri Eleggibilita</label>
+        <locationX>1503</locationX>
+        <locationY>1674</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Annulla_Prestazione_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayWarning_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;{!CheckEleggibilitaWarning}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Alla pressione del tasto &quot;Conferma Pratica&quot; si procederà con l&apos;Annullamento della prestazione&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>flowNavButtons_0</name>
             <extensionName>c:hdtFlowNavigationButton</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>

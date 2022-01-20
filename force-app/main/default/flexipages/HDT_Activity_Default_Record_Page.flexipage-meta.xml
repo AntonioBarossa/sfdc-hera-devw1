@@ -9,7 +9,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.AssignToMe</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                                     <operator>NE</operator>
@@ -20,12 +20,17 @@
                                     <operator>NE</operator>
                                     <rightValue>HDT_RT_ChiamataOutbound</rightValue>
                                 </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>HDT_RT_Scarto</rightValue>
+                                </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>wrts_prcgvr__Activity__c.CompleteActivity</value>
+                            <value>wrts_prcgvr__Activity__c.HDT_CloseActivity</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -43,15 +48,25 @@
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>CONTAINS</operator>
+                                    <operator>EQUAL</operator>
                                     <rightValue>HDT_RT_Default</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_RegisterActivity</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Gestionale</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.Reminder</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <booleanFilter>((1 AND 2 AND 3) OR 4) AND 5 AND 6 AND 7</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>NE</operator>
@@ -66,6 +81,26 @@
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>HDT_RT_ChiamataOutbound</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_RegisterActivity</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Completed</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Chiusa</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Appuntamento eseguito</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -108,6 +143,27 @@
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>HDT_RT_ChiamataOutbound</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.wrts_prcgvr__Activity__c.RilavoraScarto</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_Scarto</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto transitorio</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Order__r.Phase__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Esportazione VS Siebel</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -160,6 +216,227 @@
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Approvazione Bonus Commerciale</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.HDT_EditScartiComplessi</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto complesso</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_Scarto</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.wrts_prcgvr__Activity__c.annullaPratica</value>
+                            <visibilityRule>
+                                <booleanFilter>(1 OR 2 OR 3) AND  4 AND 5</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Esito KO da DL</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>KO Fornitore</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto complesso</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Chiusa</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_Scarti</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.SospendiAttivita</value>
+                            <visibilityRule>
+                                <booleanFilter>(1 OR 2 OR 3 OR 4 OR 5 OR (7 AND 8)) AND 6 AND 9</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Esito KO da DL</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>KO Fornitore</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Documentale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Gestionale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Manuale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Sospesa</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto complesso</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Gestione dati discordanti</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_Scarto</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.RiprendiAttivita</value>
+                            <visibilityRule>
+                                <booleanFilter>(1 OR 2 OR 3 OR 4 OR 5 OR (7 AND 8 AND 9)) AND 6 AND 10</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Esito KO da DL</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>KO Fornitore</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Documentale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Gestionale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Manuale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sospesa</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto complesso</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Gestione dati discordanti</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto transitorio</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_Scarto</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.wrts_prcgvr__Activity__c.HDT_PrecedenteCliente</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_KoPrecedeteCliente</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.wrts_prcgvr__Activity__c.HDT_ScadutoBP</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_CreditCheckKO</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Edit</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_KoPrecedeteCliente</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_DistributorCommunication</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_CreditCheckKO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_RegisterActivity</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>ChangeOwnerOne</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_DistributorCommunication</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_CreditCheckKO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_KoPrecedeteCliente</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -472,20 +749,780 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Type__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Account__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Case__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Order__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-52a62b0f-0db8-4db8-a0eb-dde5537c7162</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.wrts_prcgvr__Status__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.wrts_prcgvr__Description__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.OpeningNote__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ClosingNote__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-89e09c30-566d-4833-be03-3b926e0c4b28</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
             <componentInstance>
-                <componentName>hdtActivityDetail</componentName>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-52a62b0f-0db8-4db8-a0eb-dde5537c7162</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-89e09c30-566d-4833-be03-3b926e0c4b28</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-eb1a4c4d-1967-4b2b-9de4-0c82ceb7a564</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AppointmentCode__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AppointmentDateToConfirm__c</fieldItem>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Type__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Chiamata outbound</rightValue>
+                        <leftValue>{!Record.isAtoA__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AppointmentTimeSlotToConfirm__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.isAtoA__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AppointmentDate__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AppoitmentTimeSlotConfirmed__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.URL__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.isSelfAppointment__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-92caf3f0-d634-4041-a98b-0e0f117d3553</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AppointmentCompetence__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.isSelfAppointment__c</fieldItem>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.AppointmentCompetence__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Vendita</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.isAtoA__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.MaxDateModificationAppointment__c</fieldItem>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Appuntamento confermato</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.isAtoA__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.MaxTimeModificationAppointment__c</fieldItem>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Appuntamento confermato</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.isAtoA__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AppointmentResultCode__c</fieldItem>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.AppointmentOutcome__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>1</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.AppointmentOutcome__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>0</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.AppointmentOutcome__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>2</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.AppointmentOutcome__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>3</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.AppointmentOutcome__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>4</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Note__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.isAtoA__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-b9b5c7cf-4a59-410a-b0ae-6275ef133cf3</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-92caf3f0-d634-4041-a98b-0e0f117d3553</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-b9b5c7cf-4a59-410a-b0ae-6275ef133cf3</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-04bdcb90-d514-454f-9739-893304ff9b28</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CreditCheckResults__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CreditCheckReason__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CreditCheckResolutionReason__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.RecordTypeId</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Note__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-2ec7406d-2c28-4619-94f8-33ab969318d6</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.wrts_prcgvr__Status__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Reason__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Account__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.OldCustomerAccount__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-1865a7d2-9cba-4b02-b8f6-1a02d2b4f89a</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-2ec7406d-2c28-4619-94f8-33ab969318d6</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-1865a7d2-9cba-4b02-b8f6-1a02d2b4f89a</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-abc13f34-1276-4e08-99d8-94b8f75d4523</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.DiscardDescription__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.FiscalCode__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ServicePointCode__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-409a8fcf-87d8-4898-ab11-dc1ea4565ed2</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.DiscardCode__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ExternalId__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CreatedByUsername__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-11abb66d-f5ac-4019-8ccd-da53a634cc7b</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-409a8fcf-87d8-4898-ab11-dc1ea4565ed2</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-11abb66d-f5ac-4019-8ccd-da53a634cc7b</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-acf547ff-952f-4198-a2d8-4fe8d2aba460</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ReminderCount__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-f92f59b7-7518-4adb-ae37-f8532ab079d4</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ReminderLastDate__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-b3465a46-aec8-4644-b6ae-baf5e27121aa</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-f92f59b7-7518-4adb-ae37-f8532ab079d4</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-b3465a46-aec8-4644-b6ae-baf5e27121aa</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-3261c2c2-fddf-4932-ba41-9e3235d067de</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.WorkGroup__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Queue__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.OwnerId</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-a122172c-02bb-4921-884e-6c5aa9b666da</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AssignmentRule__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.wrts_prcgvr__Priority__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-26fb2eaf-3b02-4253-a217-9933edf75253</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-a122172c-02bb-4921-884e-6c5aa9b666da</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-26fb2eaf-3b02-4253-a217-9933edf75253</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-48968a13-7701-4552-96ac-41cace52848f</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-eb1a4c4d-1967-4b2b-9de4-0c82ceb7a564</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Principale</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-04bdcb90-d514-454f-9739-893304ff9b28</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Dati Appuntamento</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_DistributorAppointment</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>force:detailPanel</componentName>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-abc13f34-1276-4e08-99d8-94b8f75d4523</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Dati Credit Check</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_CreditCheckKO</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>HDT_RT_KoPrecedeteCliente</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-acf547ff-952f-4198-a2d8-4fe8d2aba460</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Informazioni Scarto</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>CanoneRai</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BonusSociale</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-3261c2c2-fddf-4932-ba41-9e3235d067de</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Solleciti</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <visibilityRule>
+                    <booleanFilter>(1 AND 2 AND 3) OR 4</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Sportello</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>HDT_RT_Call</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>HDT_RT_Call</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_RegisterActivity</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-48968a13-7701-4552-96ac-41cace52848f</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Assegnazione</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Sportello</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>HDT_RT_Call</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>HDT_RT_ChiamataOutbound</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -528,6 +1565,24 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>hdtCommercialRiassignButton</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_DistributorCommunication</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Contratti/Bonus Commerciale</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -690,6 +1745,82 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>hdtAppointmentHandler</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Presa Appuntamento</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_DistributorAppointment</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.isAtoA__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.AppointmentCompetence__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Distributore</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Annullata</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>hdtAppointmentExtraSist</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_DistributorAppointment</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Presa Appuntamento</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.isAtoA__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Chiusa</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Annullata</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Appuntamento non eseguito</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Appuntamento eseguito</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>hdtAccountSelector</componentName>

@@ -7,12 +7,11 @@
 public inherited sharing class HDT_QR_ServicePoint {
 	
 	private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
-	String fieldSp =  'Id, Account__c, Account__r.Name, CommoditySector__c, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name,ImplantType__c,ImplantTypeTemp__c,MeterStatus__c,SupplyPlace__c';
+	String fieldSp =  'Id, Account__c, Account__r.Name, CommoditySector__c, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name, RecordType.Name, ImplantType__c, ImplantTypeTemp__c, MeterStatus__c, SupplyPlace__c';
 	/*
 	 * Query for Getting All Account Service Points
 	 */
 	public List<ServicePoint__c> getAccountServicePoints(String accountid) {
-		system.debug('accountId : '+ accountId);
 		contractSrv.checkReadAccess('Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name,');
 		List<ServicePoint__c> listSp = new List<ServicePoint__c>();
 		return listSp= [SELECT Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name,MeterStatus__c,CommoditySector__c,ImplantType__c,ImplantTypeTemp__c FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
@@ -24,7 +23,6 @@ public inherited sharing class HDT_QR_ServicePoint {
 	 * @return List<ServicePoint__c>
 	 */
 	public List<ServicePoint__c> getAddressFornitura(String accountid) {
-		system.debug('accountId : '+ accountId);
 		contractSrv.checkReadAccess('Account__c, SupplyStreet__c, SupplyStreetNumber__c, SupplyStreetNumberExtension__c, SupplyPlace__c, SupplyCity__c,SupplyProvince__c, SupplyPostalCode__c, SupplyCountry__c');
 		List<ServicePoint__c> listSp = new List<ServicePoint__c>();
 		return listSp= [SELECT Account__c, SupplyStreet__c, SupplyStreetNumber__c, SupplyStreetNumberExtension__c, SupplyPlace__c, SupplyCity__c,SupplyProvince__c, SupplyPostalCode__c, SupplyCountry__c,SupplySAPCityCode__c,SupplySAPStreetCode__c FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
@@ -37,17 +35,14 @@ public inherited sharing class HDT_QR_ServicePoint {
 	 * @return List<ServicePoint__c>
 	 */
 	public List<ServicePoint__c> getAccountServicePointsWithFilter(String accountid,String additionalFilter) {
-		system.debug('getAccountServicePointsWithFilter START');
-		contractSrv.checkReadAccess(fieldSp);
-		// String query;
-		List<ServicePoint__c> listSp = new List<ServicePoint__c>();
-		if(additionalFilter.contains('Commodity')){
-			listSp = Database.query('SELECT '+String.escapeSingleQuotes(fieldSp)+' FROM ServicePoint__c WHERE Account__c =: accountid '+ String.escapeSingleQuotes(additionalFilter));
-		}
-		//List<ServicePoint__c> listSP = [SELECT Id, Account__c, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__c,recordType.Name FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
-		system.debug('listSP : ************' + listSp);
-		system.debug('getAccountServicePointsWithFilter END');
 
+		List<ServicePoint__c> listSp = new List<ServicePoint__c>();
+
+		contractSrv.checkReadAccess(fieldSp);
+		if(additionalFilter.contains('Commodity')){
+			String query = 'SELECT ' +fieldSp +' FROM ServicePoint__c WHERE Account__c =: accountid ' +additionalFilter;
+			listSp = Database.query(String.escapeSingleQuotes(query).replace('\\', ''));
+		}
 		return listSp;
 	}
     
@@ -137,7 +132,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 		}else{
 			String addFilterReplaced = additionalFilter.replaceAll('CommoditySector__c', 'ServicePoint__r.CommoditySector__c');
 			system.debug('******************' + addFilterReplaced);
-			contracts = Database.query('SELECT Id, Name, ServicePoint__c,ContractNumber,SAPContractCode__c, ServicePoint__r.CommoditySector__c FROM Contract WHERE SAPContractCode__c =:code '+ String.escapeSingleQuotes(addFilterReplaced) +' LIMIT 1');
+			contracts = Database.query('SELECT Id, Name, ServicePoint__c,ContractNumber,SAPContractCode__c, ServicePoint__r.CommoditySector__c FROM Contract WHERE SAPContractCode__c =:code '+ String.escapeSingleQuotes(addFilterReplaced).replace('\\', '') +' LIMIT 1');
 		}
 		system.debug('List contracts'+contracts.toString());
 		String spCode ;

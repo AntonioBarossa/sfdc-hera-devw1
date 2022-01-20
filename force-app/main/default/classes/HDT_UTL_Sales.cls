@@ -154,6 +154,34 @@ public with sharing class HDT_UTL_Sales {
         return mapRes;
     }
 
+    /**@frpanico 13/01/2022
+     * Introdotto metodo per il controllo transitorio
+     * per Vas da selezione Contratto/Order
+     */
+    public static Boolean isTransitionVas(String city, Sale__c sale)
+    {
+        Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+        List<City__c> listCity = HDT_QR_City.getRecordByComune(city);
+        if(listCity != null && !listCity.isEmpty() && listCity[0].Province__c != null)
+        {
+            String province = listCity[0].Province__c;
+            if(((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' 
+            || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) 
+            ||(!stabbedData.contains(province)))){
+                Sale__c s = new Sale__c(Id=sale.Id);
+                s.isTransition__c=true;
+                saleSrv.updateRecord(s);
+                return true;
+            }else{
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public static Boolean isTransition(ServicePoint__c sp, Sale__c sale){
 
         Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
@@ -250,7 +278,7 @@ public with sharing class HDT_UTL_Sales {
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
                     else if((ord.Sale__r.Channel__c == 'Sportello') && ord.SignatureMethod__c == 'Cartacea' ){
-                        ord.Phase__c = 'Documentazione Gestita';
+                        ord.Phase__c = 'Documentazione da Firmare';
                        // ord.status = 'Activated';
                         childToUpdate.add(ord);
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
@@ -270,18 +298,18 @@ public with sharing class HDT_UTL_Sales {
                     }*/
                 }
                 else if(ord.phase__c == 'Documentazione da firmare'){
-                    if(ord.DocumentalPhase__c == 'Plico firmato'){
+                    if(ord.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
                         if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' )){
-                            ord.Phase__c = 'Documentazione da Validare';
+                            //ord.TecnicalPhase__c = 'Documentazione da Validare';
                             listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
-                            childToUpdate.add(ord);
+                            //childToUpdate.add(ord);
                         }
-                        else{
-                            ord.phase__c = 'Documentazione Gestita';
-                           // ord.status = 'Activated';
-                            ord.SignedDate__c = date.today();
-                            childToUpdate.add(ord);
-                        }
+                        // else{
+                        //     //ord.TecnicalPhase__c = 'Documentazione Gestita';
+                        //     //ord.status = 'Activated';
+                        //     //ord.SignedDate__c = date.today();
+                        //     //childToUpdate.add(ord);
+                        // }
                     } 
                 }
             }
@@ -301,7 +329,7 @@ public with sharing class HDT_UTL_Sales {
 
     public static Order validationActivityPhaseTransition(Order ord){
         List<wrts_prcgvr__Activity__c> listActivityToCreate = new List<wrts_prcgvr__Activity__c>();
-        //List<Order> childToUpdate = new List<Order>();
+        List<Order> childToUpdate = new List<Order>();
         Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
       //  List<String> orderParentToActivityDocument = new List<String>();
             if(ord.RecordType.DeveloperName == 'HDT_RT_OrderDossier'){ //&& ord.TecnicalPhase__c != null){
@@ -309,30 +337,30 @@ public with sharing class HDT_UTL_Sales {
                     if(ord.Sale__r.Channel__c == 'Teleselling Outbound' && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Registrazione  da validare';
                         listActivityToCreate.add(instanceActVocalOrd(ord.accountid,ord.id,rt));
-                      //  childToUpdate.add(ord);
+                        childToUpdate.add(ord);
                     }
                     else if(ord.Sale__r.Channel__c == 'Teleselling Outbound' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
                         ord.Phase__c = 'Documentazione da Firmare';
-                      //  childToUpdate.add(ord);
+                        childToUpdate.add(ord);
                     }
                     else if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' )){
                         ord.Phase__c = 'Documentazione da Firmare';
-                      //  childToUpdate.add(ord);
+                        childToUpdate.add(ord);
                         //tutti i figli per cui crearla
                         //orderParentToActivityDocument.add(ord.id);
                        //listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
                     else if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && ord.SignatureMethod__c == 'Cartacea' && ord.DocSendingMethod__c == 'Stampa Cartacea'){
                         ord.Phase__c = 'Documentazione da Validare';
-                      //  childToUpdate.add(ord);
+                        childToUpdate.add(ord);
                         //tutti i figli per cui crearla
                         //orderParentToActivityDocument.add(ord.id);
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
                     else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Documentazione Gestita';
-                      //  ord.status = 'Activated';
-                       // childToUpdate.add(ord);
+                        //ord.status = 'Activated';
+                        childToUpdate.add(ord);
                     }
                 /* else if(ord.Sale__r.Channel__c = 'Web' && ord.SignatureMethod__c == 'Vocal Order'){
                         
@@ -343,26 +371,26 @@ public with sharing class HDT_UTL_Sales {
                     }
                     else if((ord.Sale__r.Channel__c == 'HC Point' || ord.Sale__r.Channel__c == 'Sportello') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
                         ord.Phase__c = 'Documentazione da Firmare';
-                  //      childToUpdate.add(ord);
+                        childToUpdate.add(ord);
                     }
                     else if((ord.Sale__r.Channel__c == 'HC Point') && ord.SignatureMethod__c == 'Cartacea' && ord.DocSendingMethod__c == 'Stampa Cartacea'){
                         ord.Phase__c = 'Documentazione da Firmare';
-                   //     childToUpdate.add(ord);
+                        childToUpdate.add(ord);
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
                     else if((ord.Sale__r.Channel__c == 'Sportello') && ord.SignatureMethod__c == 'Cartacea' && ord.DocSendingMethod__c == 'Stampa Cartacea'){
                         ord.Phase__c = 'Documentazione Gestita';
                        // ord.status = 'Activated';
-                    //    childToUpdate.add(ord);
+                        childToUpdate.add(ord);
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
                     else if(ord.Sale__r.Channel__c == 'Vendita Condomini' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
                         ord.Phase__c = 'Documentazione da Firmare';
-                   //     childToUpdate.add(ord);
+                        childToUpdate.add(ord);
                     }
                     else if(ord.Sale__r.Channel__c == 'Back office' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
                         ord.Phase__c = 'Documentazione da Firmare';
-                    //    childToUpdate.add(ord);
+                        childToUpdate.add(ord);
                     }
                     /*else if(ord.Sale__r.Channel__c = 'HC Point' && ord.SignatureMethod__c == 'Cartacea'){
                         ord.phase__c = 'Plico Firmato da validare';
@@ -373,25 +401,27 @@ public with sharing class HDT_UTL_Sales {
                 else if(ord.phase__c == 'Documentazione da Firmare'){
                     if(ord.DocumentalPhase__c == 'Plico firmato'){
                         if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' )){
-                            ord.Phase__c = 'Documentazione da Validare';
+                            //ord.Phase__c = 'Documentazione da Validare';
                             listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                             //childToUpdate.add(ord);
                         }
                         else{
                             System.debug('*********DentroValidazione');
-                            ord.phase__c = 'Documentazione Gestita';
+                            //ord.phase__c = 'Documentazione Gestita';
                             //ord.status = 'Activated';
-                            ord.SignedDate__c = date.today();
+                            //ord.SignedDate__c = date.today();
                         }
                     } 
                 }
             }
-        //if(childToUpdate != null && !childToUpdate.isEmpty()){
-        //    update childToUpdate;
-        //}
-        /*if(listActivityToCreate != null && !listActivityToCreate.isEmpty()){
+        if(childToUpdate != null && !childToUpdate.isEmpty()){
+            SObjectAccessDecision securityDecision =  Security.stripInaccessible(AccessType.UPDATABLE, childToUpdate);
+            orderSrv.updateRecords(securityDecision.getRecords());
+        }
+        if(listActivityToCreate != null && !listActivityToCreate.isEmpty()){
+            activitySrv.createRecordWithFieldCheck(listActivityToCreate);
             //insert listActivityToCreate;
-        }*/
+        }
         return ord;
     }
 

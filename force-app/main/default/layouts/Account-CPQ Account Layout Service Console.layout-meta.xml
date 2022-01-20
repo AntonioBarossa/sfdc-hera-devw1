@@ -172,6 +172,16 @@
             <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>Account.cmor</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>8</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Account.socialBonus</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>9</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>HDT_SendSms</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
@@ -190,16 +200,6 @@
             <actionName>Account.raiFee</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Account.cmor</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>8</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Account.socialBonus</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>9</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -248,9 +248,9 @@
         <fields>Phase__c</fields>
         <fields>Sale__c</fields>
         <fields>Channel__c</fields>
+        <fields>CREATEDBY_USER.ALIAS</fields>
         <fields>ServicePointCodeFormula__c</fields>
         <fields>ProcessType__c</fields>
-        <fields>WizardCompletedDate__c</fields>
         <relatedList>RelatedOrderList</relatedList>
         <sortField>ORDERS.ORDER_NUMBER</sortField>
         <sortOrder>Desc</sortOrder>
@@ -298,7 +298,7 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>ASSET_NUM__c</fields>
-        <fields>IMPIANTO_COUNTRY__c</fields>
+        <fields>STATUS_CD__c</fields>
         <fields>IMPIANTO_PROD_CATG_CD__c</fields>
         <fields>START_DT__c</fields>
         <fields>END_DT__c</fields>
@@ -369,6 +369,7 @@
     </relatedLists>
     <relatedLists>
         <fields>ASSET.NAME</fields>
+        <fields>VasPracticeCode__c</fields>
         <fields>ASSET.SERIAL_NUMBER</fields>
         <fields>ASSET.INSTALL_DATE</fields>
         <fields>ASSET.QUANTITY</fields>
@@ -388,13 +389,13 @@
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
-        <fields>CASES.STATUS</fields>
         <fields>Cluster__c</fields>
         <fields>CASES.TYPE</fields>
         <fields>Subprocess__c</fields>
-        <fields>ComplaintEntryChannel__c</fields>
+        <fields>MacroTopic__c</fields>
+        <fields>InformationDetail__c</fields>
         <fields>Phase__c</fields>
-        <fields>CREATEDBY_USER.ALIAS</fields>
+        <fields>ComplaintEntryChannel__c</fields>
         <fields>CASES.CLOSED_DATE</fields>
         <relatedList>RelatedCaseList</relatedList>
         <sortField>CASES.CREATED_DATE_DATE_ONLY</sortField>
@@ -539,7 +540,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000002MyGI</masterLabel>
+        <masterLabel>00h1j000002So66</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
