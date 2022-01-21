@@ -308,10 +308,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ContractSigned__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>SignedDate__c</field>
             </layoutItems>
             <layoutItems>

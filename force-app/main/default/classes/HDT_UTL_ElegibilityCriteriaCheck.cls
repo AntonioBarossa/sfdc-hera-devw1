@@ -11,7 +11,7 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
 
         // Query su Case
         HDT_QR_Case caseQuery = new HDT_QR_Case();
-        String caseQueryFields = 'Id,BillingProfile__c,Contract__c,Type,BillSendingMethod__c,Resident__c,UseCategory__c,PowerRequested__c';
+        String caseQueryFields = 'Id,AccountId,BillingProfile__c,Contract__c,Type,BillSendingMethod__c,Resident__c,UseCategory__c,PowerRequested__c';
         List<String> caseIds = new List<String>();
         caseIds.add(input.caseId);
         List<Case> cases = caseQuery.getRecordsById(caseIds, caseQueryFields);

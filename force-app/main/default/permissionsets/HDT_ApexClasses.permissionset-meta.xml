@@ -2401,6 +2401,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_EligibilityCriteria</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_SecurityAccess</apexClass>
         <enabled>true</enabled>
     </classAccesses>

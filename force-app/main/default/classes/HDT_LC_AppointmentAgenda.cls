@@ -12,6 +12,15 @@ public with sharing class HDT_LC_AppointmentAgenda {
         }
         return response;
     }
+
+    @AuraEnabled(cacheable=true)
+    public static String getCommunityBaseUrl(){
+        Site site = [SELECT Id FROM Site WHERE Name = 'PrendiAppuntamento' WITH SECURITY_ENFORCED LIMIT 1];
+
+        String communityUrl = [SELECT SecureURL FROM SiteDetail WHERE DurableId =: site.Id WITH SECURITY_ENFORCED].SecureURL;
+        communityurl=communityUrl.substringBeforeLast('/');
+        return communityUrl;
+    }
     
     @AuraEnabled
     public static String handleConfirm(String activityId,String appointmentJson) {

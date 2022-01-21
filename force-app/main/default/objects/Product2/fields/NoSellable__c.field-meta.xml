@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NoSellable__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Utilizzato in UI per rendere un offerta non vendibile dal CM indipendentemente dallo stato</description>
+    <externalId>false</externalId>
+    <label>Non Vendibile</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

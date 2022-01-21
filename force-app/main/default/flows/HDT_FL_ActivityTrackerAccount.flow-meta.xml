@@ -4,8 +4,8 @@
     <assignments>
         <name>Set_Activity</name>
         <label>Set Activity</label>
-        <locationX>506</locationX>
-        <locationY>791</locationY>
+        <locationX>572</locationX>
+        <locationY>1463</locationY>
         <assignmentItems>
             <assignToReference>$Record.Activity__c</assignToReference>
             <operator>Assign</operator>
@@ -14,11 +14,59 @@
             </value>
         </assignmentItems>
     </assignments>
+    <assignments>
+        <name>Set_Codice_Categoria</name>
+        <label>Set Codice Categoria</label>
+        <locationX>308</locationX>
+        <locationY>671</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CategoryCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CategoryCodeTranscodeFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Predefault_Tipo_Cliente</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Tipo_Cliente</name>
+        <label>Set Tipo Cliente</label>
+        <locationX>176</locationX>
+        <locationY>1007</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CustomerType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Persona Fisica</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Activity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Tipo_Cliente_0</name>
+        <label>Set Tipo Cliente</label>
+        <locationX>440</locationX>
+        <locationY>1007</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CustomerType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Organizzazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Activity</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>activity_found</name>
         <label>Activity trovata?</label>
-        <locationX>374</locationX>
-        <locationY>671</locationY>
+        <locationX>440</locationX>
+        <locationY>1343</locationY>
         <defaultConnector>
             <targetReference>Set_Activity</targetReference>
         </defaultConnector>
@@ -37,12 +85,105 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Predefault_Codice_Categoria</name>
+        <label>Necessario Predefault Codice Categoria?</label>
+        <locationX>440</locationX>
+        <locationY>551</locationY>
+        <defaultConnector>
+            <targetReference>Check_Predefault_Tipo_Cliente</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CategoryCode__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Category__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Codice_Categoria</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Predefault_Tipo_Cliente</name>
+        <label>Necessario Predefault Tipo Cliente?</label>
+        <locationX>440</locationX>
+        <locationY>887</locationY>
+        <defaultConnector>
+            <targetReference>Activity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Persona_fisica</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CustomerType__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerMarking__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Persona fisica</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerMarking__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Ditta individuale</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Tipo_Cliente</targetReference>
+            </connector>
+            <label>Persona fisica</label>
+        </rules>
+        <rules>
+            <name>Organizzazione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CustomerType__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerMarking__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Tipo_Cliente_0</targetReference>
+            </connector>
+            <label>Organizzazione</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>ExistRecord</name>
         <label>ExistRecord?</label>
         <locationX>176</locationX>
         <locationY>431</locationY>
         <defaultConnector>
-            <targetReference>Activity</targetReference>
+            <targetReference>Check_Predefault_Codice_Categoria</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -58,7 +199,30 @@
             <label>Exist</label>
         </rules>
     </decisions>
-    <description>Links account created during active session to the session in question.</description>
+    <description>Aggiunta logica per predefaultare i campi Codice Categoria e Tipo Cliente, che sono obbligatori per tutti gli Account.</description>
+    <formulas>
+        <name>CategoryCodeTranscodeFormula</name>
+        <dataType>String</dataType>
+        <expression>CASE({!$Record.Category__c},
+&quot;Famiglie&quot;, &quot;Z001&quot;,
+&quot;Aziende Soho&quot;, &quot;Z002&quot;,
+&quot;Aziende SME&quot;, &quot;Z003&quot;,
+&quot;Enti&quot;, &quot;Z004&quot;,
+&quot;Grandi Condomini&quot;, &quot;Z005&quot;,
+&quot;Intercompany&quot;,&quot;Z006&quot;,
+&quot;Salvaguardia Aziende&quot;,&quot;Z007&quot;,
+&quot;Salvaguardia Enti&quot;,&quot;Z009&quot;,
+&quot;Aziende TOP&quot;,&quot;Z010&quot;,
+&quot;Piccoli Condomini&quot;,&quot;Z011&quot;,
+&quot;Societa Vendita Terze&quot;,&quot;Z012&quot;,
+&quot;Default gas&quot;,&quot;Z013&quot;,
+&quot;Comuni Territorio&quot;,&quot;Z016&quot;,
+&quot;FUI domestico&quot;,&quot;Z019&quot;,
+&quot;FUI non domestico&quot;,&quot;Z020&quot;,
+&quot;Reseller - Gruppo&quot;,&quot;Z030&quot;,
+&quot;Reseller - Extra Gruppo&quot;,&quot;Z031&quot;,
+null)</expression>
+    </formulas>
     <formulas>
         <name>today</name>
         <dataType>DateTime</dataType>
@@ -88,8 +252,8 @@
     <recordLookups>
         <name>Activity</name>
         <label>Activity</label>
-        <locationX>374</locationX>
-        <locationY>551</locationY>
+        <locationX>440</locationX>
+        <locationY>1223</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>activity_found</targetReference>

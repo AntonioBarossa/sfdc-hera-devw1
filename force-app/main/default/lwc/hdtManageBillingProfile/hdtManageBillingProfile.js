@@ -22,6 +22,11 @@ export default class hdtManageBillingProfile extends LightningElement {
     ];
 
     @api
+    disableManage(){
+        this.disabledInput = true;
+    }
+
+    @api
     getBillingProfileData(){
         this.loading = true;
         getBillingProfileList({accountId: this.accountId}).then(data =>{
