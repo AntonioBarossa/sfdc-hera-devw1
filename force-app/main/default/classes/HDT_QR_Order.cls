@@ -748,7 +748,7 @@ public inherited sharing class HDT_QR_Order {
     }
 
     
-    public List<Order> getRecordsByAccountIdCopContratto(String accountId,boolean contractSigned){
+    public List<Order> getRecordsByAccountIdCopContrattoFirmato(String accountId){
         return [
             SELECT
             Name,
@@ -767,7 +767,31 @@ public inherited sharing class HDT_QR_Order {
             WHERE AccountId = :accountId
             AND ParentOrder__c = null
             AND Status != 'Draft'
-            AND ContractSigned__c = :contractSigned
+            AND DocumentalPhase__c like '%Plico firmato%'
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Order> getRecordsByAccountIdCopContrattoNonFirmato(String accountId){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            OrderNumber,
+            Status,
+            Agency__c,
+            Market__c,
+            Channel__c,
+            FriendCode__c,
+            CampaignCode__c,
+            CreatedBy__c,
+            CreatedDate
+            FROM
+            Order
+            WHERE AccountId = :accountId
+            AND ParentOrder__c = null
+            AND Status != 'Draft'
+            AND (NOT DocumentalPhase__c like '%Plico firmato%')
             WITH SECURITY_ENFORCED
         ];
     }
