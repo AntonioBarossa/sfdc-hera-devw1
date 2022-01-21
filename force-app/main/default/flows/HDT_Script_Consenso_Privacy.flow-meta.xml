@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <formulas>
+        <name>SocietaVenditaFormula</name>
+        <dataType>String</dataType>
+        <expression>IF({!GetCase.SalesCompany__c} == &quot;Hera Comm S.p.A&quot;, &quot;Hera Comm con sede legale in via Molino Rosso 8 40026 Imola&quot;, 
+ IF({!GetCase.SalesCompany__c}  == &quot;Hera Comm Marche&quot;, &quot;Hera Comm Marche, società di vendita gas con sede a Urbino, via Sasso 120&quot;, 
+  IF({!GetCase.SalesCompany__c}  == &quot;EstEnergy S.p.A&quot;, &quot;Hera Comm NordEst, società di vendita di energia elettrica e gas con sede a Trieste, Via del Teatro, 5.&quot;, &quot;Hera Comm con sede legale in via Molino Rosso 8 40026 Imola&quot;)))</expression>
+    </formulas>
+    <interviewLabel>HDT Script - Introduzione {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>HDT Script - Consenso Privacy</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>GetCase</name>
+        <label>GetCase</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Screen_1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>idCaseInput</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <screens>
+        <name>Screen_1</name>
+        <label>Screen_1</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>text1</name>
+            <fieldText>&lt;p&gt;Registrazione consenso Privacy (Famiglie)&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Questa registrazione ha lo scopo di acquisire il suo consenso al trattamento dei dati a fini commerciali da parte della società&lt;/p&gt;&lt;ul&gt;&lt;li&gt;{!SocietaVenditaFormula}&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Le chiedo il suo nome e cognome, il suo Codice Fiscale e il suo codice cliente.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: (Nome e Cognome, Codice Fiscale, Codice cliente)&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: La informiamo che i consensi che le andremo a richiedere sono indipendenti dalle attività contrattuali e di assistenza. Mi conferma che acconsente attraverso la registrazione della presente telefonata?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: CONFERMO&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Conferisce il consenso al trattamento dei suoi dati per finalità promozionali e indagini di mercato tramite l&apos;utilizzo del telefono, compresi sistemi automatizzati di chiamata, di comunicazioni elettroniche, quali e-mail, SMS e MMS e della posta cartacea?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: [SI/NO]&lt;/p&gt;&lt;p&gt;Operatore: Conferisce il consenso al trattamento dei suoi dati per lo svolgimento di attività volte all&apos;analisi delle preferenze, abitudini e/o scelte di consumo al fine di offrirle prodotti e servizi più in linea con le sue esigenze?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: [SI/NO]&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: La informiamo anche che in ogni momento potrà richiedere o visionare l&apos;informativa privacy, disponibile presso il sito internet www.heracomm.com, verificare i suoi dati ed esercitare gli altri diritti previsti a sua favore dalla normativa sulla Privacy, per esercitare i quali potrà contattare il numero verde 800/999500 o inoltrare una e-mail a clienti.famiglie@gruppohera.it (per Hera Comm) / clienti.NE@gruppohera.it (per Hera Comm NordEst).&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Mi conferma che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;Cliente: CONFERMO&lt;/p&gt;&lt;p&gt;Operatore: Bene Sig./ra la registrazione è terminata.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>GetCase</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>idCaseInput</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
