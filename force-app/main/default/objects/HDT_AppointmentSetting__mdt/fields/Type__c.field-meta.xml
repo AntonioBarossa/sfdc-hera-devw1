@@ -25,6 +25,11 @@
                 <default>false</default>
                 <label>Quick Link</label>
             </value>
+            <value>
+                <fullName>Link Community</fullName>
+                <default>false</default>
+                <label>Link Community</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
