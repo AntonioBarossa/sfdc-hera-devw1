@@ -134,7 +134,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 String depositPaymentMode = getFieldValue(fields, 'DepositPaymentMode__c');
                 if(String.isBlank(result) && String.isNotBlank(depositPaymentMode) && depositPaymentMode.equals('Promessa di pagamento')) {
                     List<PermissionSetAssignment> psas = [SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId= :UserInfo.getUserId() AND PermissionSet.Name = 'HDT_PromessaPagamentoEnte'];
-                    if(psas.size()==0) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Utente non abilitato a promessa di paamento'));
+                    if(psas.size()==0) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Utente non abilitato a promessa di pagamento'));
                 }
             }     
 

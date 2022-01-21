@@ -8,6 +8,8 @@ import { updateRecord } from 'lightning/uiRecordApi';
 import { getRecord } from 'lightning/uiRecordApi';
 
 import ASSISTED from '@salesforce/schema/Case.CutomerAssisted__c';
+import TYPE from '@salesforce/schema/Case.Type';
+import ACCOUNTID from '@salesforce/schema/Case.AccountId';
 
 export default class HdtRecordEditFormFlow extends LightningElement {
 
@@ -58,10 +60,14 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @track show = false;
 
     @track assisted;
-    @wire(getRecord, { recordId: '$recordId', fields: [ASSISTED] })
+    @track type;
+    @track caseAccId;
+    @wire(getRecord, { recordId: '$recordId', fields: [ASSISTED,TYPE,ACCOUNTID] })
     wiredRecord({ error, data }) {
         if (data) {
             this.assisted = data.fields.CutomerAssisted__c.value;
+            this.type = data.fields.Type.value;
+            this.caseAccId = data.fields.AccountId.value;
         }
     }
 
@@ -385,6 +391,26 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         this.complaintsLogic();
         //PianoRata customizations
         this.installmentsLogic();
+        //Comunicazione pagamenti customizations
+        this.paymentLogic();
+    }
+
+    paymentLogic(){ 
+        if(this.type == 'Comunicazione Pagamento'){
+            let accountholderTypeBeneficiary = this.selector('AccountholderTypeBeneficiary__c');
+            console.log('#accountholderTypeBeneficiary : ' + accountholderTypeBeneficiary.value);
+            if(accountholderTypeBeneficiary != null){
+                let beneficiaryAccount = this.selector('BeneficiaryAccount__c');
+                if(accountholderTypeBeneficiary.value !== '' && accountholderTypeBeneficiary.value !== undefined && accountholderTypeBeneficiary !== null && accountholderTypeBeneficiary.value == 'Stesso Sottoscrittore'){
+                    beneficiaryAccount.disabled = true;
+                    console.log('#accountId : ' + this.caseAccId);
+                    beneficiaryAccount.value = this.caseAccId;
+                }else{
+                    beneficiaryAccount.disabled = false;
+                }
+            }
+        }
+
     }
 
     complaintsLogic(){
@@ -416,7 +442,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
 
     installmentsLogic(){
-        console.log('Rec ' + this.assisted);
+        console.log('Rec ' + this.type);
         let reasonObj =  this.objSelector('Reason__c');
         console.log('#Reason --> ' + JSON.stringify(reasonObj));
         let paymentType = this.objSelector('PaymentType__c');

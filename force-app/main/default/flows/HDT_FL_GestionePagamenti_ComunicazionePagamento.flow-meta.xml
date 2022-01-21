@@ -18,7 +18,7 @@
         <name>AssegnaVariabili</name>
         <label>AssegnaVariabili</label>
         <locationX>50</locationX>
-        <locationY>1238</locationY>
+        <locationY>2030</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -69,7 +69,7 @@
         <name>AssegnaVariabili_0</name>
         <label>AssegnaVariabili</label>
         <locationX>314</locationX>
-        <locationY>1118</locationY>
+        <locationY>1910</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -118,6 +118,54 @@
             <targetReference>Aggiornamento_Case_Fine_Bozza_0</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>No_Virtual_Account_Ass_0</name>
+        <label>No Virtual Account Ass</label>
+        <locationX>446</locationX>
+        <locationY>1118</locationY>
+        <assignmentItems>
+            <assignToReference>CaseInput.DocumentPaymentMethod__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No Virtual Account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case_Virtual_Account_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Virtual_Account_Ass_0</name>
+        <label>Virtual Account Ass</label>
+        <locationX>182</locationX>
+        <locationY>1118</locationY>
+        <assignmentItems>
+            <assignToReference>CaseInput.DocumentPaymentMethod__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Virtual Account</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case_Virtual_Account_0</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <name>No</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Si</name>
+        <choiceText>Si</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Si</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Case_In_Bozza_Question</name>
         <label>Case In Bozza?</label>
@@ -147,7 +195,7 @@
         <name>Comunicazione_Pagamento_o_Doppi_Pagamenti_Incassi</name>
         <label>Comunicazione Pagamento o Doppi Pagamenti/Incassi?</label>
         <locationX>182</locationX>
-        <locationY>998</locationY>
+        <locationY>1790</locationY>
         <defaultConnector>
             <targetReference>AssegnaVariabili_0</targetReference>
         </defaultConnector>
@@ -169,10 +217,74 @@
         </rules>
     </decisions>
     <decisions>
+        <name>IsVirtualAccount_0</name>
+        <label>IsVirtualAccount</label>
+        <locationX>314</locationX>
+        <locationY>998</locationY>
+        <defaultConnector>
+            <targetReference>No_Virtual_Account_Ass_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altro Conto</defaultConnectorLabel>
+        <rules>
+            <name>VirtualAccount_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Bonifico_effettuato_verso_il_Virtual_Account_0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Si</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Virtual_Account_Ass_0</targetReference>
+            </connector>
+            <label>VirtualAccount</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Modalit_Pagmento_SEPA_0</name>
+        <label>Modalità Pagmento è SEPA</label>
+        <locationX>512</locationX>
+        <locationY>758</locationY>
+        <defaultConnector>
+            <targetReference>Salva_In_Bozza_o_Conferma_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non SEPA</defaultConnectorLabel>
+        <rules>
+            <name>SEPA_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CaseInput.DocumentPaymentMethod__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SEPA</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Virtual_Account_0</targetReference>
+            </connector>
+            <label>SEPA</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Salva_In_Bozza_o_Conferma_0</name>
         <label>Salva In Bozza o Conferma?</label>
         <locationX>512</locationX>
-        <locationY>758</locationY>
+        <locationY>1550</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0</name>
@@ -251,7 +363,7 @@
         <name>CalcoloCodiceCausale</name>
         <label>CalcoloCodiceCausale</label>
         <locationX>50</locationX>
-        <locationY>1118</locationY>
+        <locationY>1910</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaVariabili</targetReference>
@@ -293,7 +405,7 @@
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
         <locationX>182</locationX>
-        <locationY>878</locationY>
+        <locationY>1670</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Comunicazione_Pagamento_o_Doppi_Pagamenti_Incassi</targetReference>
@@ -335,7 +447,7 @@
         <name>Aggiorna_In_Lavorazione</name>
         <label>Aggiorna In Lavorazione</label>
         <locationX>314</locationX>
-        <locationY>1238</locationY>
+        <locationY>2030</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -372,7 +484,7 @@
         <name>Aggiornamento_Case_Fine_Bozza</name>
         <label>Aggiornamento In Da Inviare</label>
         <locationX>50</locationX>
-        <locationY>1358</locationY>
+        <locationY>2150</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
@@ -387,6 +499,16 @@
             <targetReference>Loading_Screen_0</targetReference>
         </connector>
         <inputReference>GetCaseNonBozza</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Case_Virtual_Account_0</name>
+        <label>Update Case Virtual Account</label>
+        <locationX>314</locationX>
+        <locationY>1334</locationY>
+        <connector>
+            <targetReference>Salva_In_Bozza_o_Conferma_0</targetReference>
+        </connector>
+        <inputReference>CaseInput</inputReference>
     </recordUpdates>
     <screens>
         <name>Inserire_altri_documenti_0_0_0</name>
@@ -479,7 +601,7 @@
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
         <locationX>50</locationX>
-        <locationY>1478</locationY>
+        <locationY>2270</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -546,7 +668,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Salva_In_Bozza_o_Conferma_0</targetReference>
+            <targetReference>Modalit_Pagmento_SEPA_0</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader</name>
@@ -771,6 +893,29 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Virtual_Account_0</name>
+        <label>Virtual Account</label>
+        <locationX>314</locationX>
+        <locationY>878</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>IsVirtualAccount_0</targetReference>
+        </connector>
+        <fields>
+            <name>Bonifico_effettuato_verso_il_Virtual_Account_0</name>
+            <choiceReferences>Si</choiceReferences>
+            <choiceReferences>No</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Bonifico effettuato verso il Virtual Account</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
         <locationX>683</locationX>
         <locationY>0</locationY>
@@ -783,7 +928,7 @@
         <name>Annullamento_Prestazione_0</name>
         <label>Annullamento Prestazione</label>
         <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationY>1670</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

@@ -28,6 +28,10 @@ public inherited sharing class HDT_QR_Payments {
         CreatedDate,
         ExpirationDate__c,
         AccountCode__c,
+        PaymentDate__c,
+        DocumentPaymentMethod__c,
+        IbanABI__c,
+        BeneficiaryAccount__r.Name,
         BillingProfile__r.ContractAccountCode__c
         FROM Case
         WHERE Id = :recordId
