@@ -151,6 +151,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String city = '';
         String distributorName = '';
         String commodity = '';
+        String cluster = '';
         switch on context {
             when 'Order' {
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Order', 'SalesCompany__c', 0, inputs, formParams);
@@ -172,6 +173,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 city = HDT_UTL_DocumentalManagement.getValue('Case', 'SupplyCity__c', 0, inputs, formParams);
                 distributorName = HDT_UTL_DocumentalManagement.getValue('Case', 'DistributorName__c', 0, inputs, formParams);
                 commodity = HDT_UTL_DocumentalManagement.getValue('Case', 'CommodityFormula__c', 0, inputs, formParams);
+                cluster = HDT_UTL_DocumentalManagement.getValue('Case', 'Cluster__c', 0, inputs, formParams);
                 List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city, commodity);
                 if (cityExceptionList != null && cityExceptionList.size()>0) {
                     List<HDT_DistributorExceptionHC__mdt> distributorList = queryClass.getHcDistributorExceptionByName(distributorName);
@@ -180,6 +182,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     } else {
                         companyDesc = 'Hera Comm Marche';
                     }
+                }
+
+                // Su Engage1 i plichi dei preventivi sono configurati solo per la 1070.
+                if (companyDesc != 'Hera Comm S.p.A.' && (cluster == 'Verifiche' || cluster == 'Preventivi')) {
+                    companyDesc = 'Hera Comm S.p.A.';
                 }
             }
             when 'Account'{
