@@ -202,7 +202,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         return response;
     }
 
-    public static String handleSecondAppointmentConfirms(String processType, String codDistr, String appSlot, String appDate){
+    public static String handleSecondAppointmentConfirms(String processType, String codDistr, String appSlot, String appDate, String appCode){
         String response = '';
         wrts_prcgvr__Activity__c activity;
         String condition = '';
@@ -226,6 +226,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
                     activity.AppointmentDate__c = Date.valueOf(formatDate(appDate));
                     activity.AppoitmentTimeSlotConfirmed__c = appSlot;
                     activity.wrts_prcgvr__Status__c = 'Appuntamento confermato';
+                    activity.AppointmentCode__c=appCode;
                     System.enqueueJob(new HDT_QBL_AppointmentActivityUpdate(activity));
                 }else {
                     response = 'Nessun appuntamento associato al codice distributore \''+codDistr+'\'.';
