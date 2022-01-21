@@ -437,11 +437,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_LC_DownloadAttachmentAzure</apexClass>
+        <apexClass>HDT_LC_DownloadAttachmentArchive</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_LC_EditQuote</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_EditScartiComplessi</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -729,7 +733,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_LC_StoricizzazioneCliente</apexClass>
+        <apexClass>HDT_LC_ClientHistory</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -762,6 +766,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QBL_DocumentalManagement</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QBL_GestioneScartiSap</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2045,6 +2053,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_CheckDiscardCreation</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_CheckDocumentSelected</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2058,6 +2070,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_CheckPreviousPhase</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_CheckProcessAnnullment</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2186,6 +2202,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_GestionePrivacy</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_GestioneScartiSap</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2378,6 +2398,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_SearchPlugTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_EligibilityCriteria</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

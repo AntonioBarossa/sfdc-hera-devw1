@@ -20,18 +20,35 @@ import templateModal from './templateModal.html';
 import templateStandard from './templateStandard.html';
 
 import getScriptConfig from '@salesforce/apex/HDT_LC_HdtScriptManagementModal.getScriptConfig';
+// import getScriptFlows from '@salesforce/apex/HDT_LC_HdtScriptManagementModal.getScriptFlows';
+import SystemModstamp from '@salesforce/schema/Account.SystemModstamp';
+import getTechnicalOfferRecords from '@salesforce/apex/HDT_LC_OfferConfiguratorController.getTechnicalOfferRecords';
 
+// const columns = [
+//     {label: 'Nome Script', fieldName: 'scriptName', type: 'text'},
+//     {label: 'Stato', fieldName: 'status', type: 'text'},
+//     {type: 'button', initialWidth: 120, typeAttributes:{
+//             label: 'Avvia', 
+//             title: 'Avvia',
+//             name: 'startScript', 
+//             value: 'startScript',
+//             iconName: 'utility:call',
+//             disabled: {fieldName :'completed'}
+//         }
+//     }
+// ];
 const columns = [
-    {label: 'Nome Script', fieldName: 'scriptName', type: 'text'},
-    {label: 'Stato', fieldName: 'status', type: 'text'},
-    {type: 'button', initialWidth: 120, typeAttributes:{
+    {label: 'Script', fieldName: 'offerName', type: 'text'},
+    // {label: 'Stato', fieldName: 'status', type: 'text'},
+    {type: 'button', initialWidth: 200, typeAttributes:{
             label: 'Avvia', 
             title: 'Avvia',
             name: 'startScript', 
             value: 'startScript',
-            iconName: 'utility:call',
-            disabled: {fieldName :'completed'}
-        }
+            iconName: 'utility:call'/* ,
+            disabled: {fieldName :'completed'} */
+        },
+        cellAttributes: { alignment: 'center' }
     }
 ];
 
@@ -48,6 +65,7 @@ export default class HdtManageScriptModal extends LightningElement {
 
     scriptConfig;
     scriptConfigs;
+    isScriptNotEnded = false;
     columns = columns;
 
     render() {
@@ -68,6 +86,8 @@ export default class HdtManageScriptModal extends LightningElement {
         console.log("closeModal");
         this.openModal = false;
         this.dispatchEvent(new CustomEvent('close'));
+        this.scriptConfig = null;
+
     }
 
     confirmModal(evt){
@@ -77,7 +97,7 @@ export default class HdtManageScriptModal extends LightningElement {
 
         let scriptConfigs = this.scriptConfigs;
         scriptConfigs.forEach(scriptConfig => {
-            if (scriptConfig.scriptName === this.scriptConfig.scriptName) {
+            if (scriptConfig.offerName === this.scriptConfig.offerName) {
                 scriptConfig.status = 'Completato';
                 scriptConfig.completed = true;
             }
@@ -99,7 +119,7 @@ export default class HdtManageScriptModal extends LightningElement {
         if (this.recordId) {
             this.isLoading = true;
             getScriptConfig({recordId: this.recordId}).then(scriptConfigs => {
-                
+                console.log('scriptConfigs.length: ' + scriptConfigs.length);
                 if (scriptConfigs.length>0) {
                     scriptConfigs.forEach(scriptConfig => {
                         scriptConfig.status = 'Da Completare';

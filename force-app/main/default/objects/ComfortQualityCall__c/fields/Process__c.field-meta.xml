@@ -4,9 +4,32 @@
     <description>conterrà tutti i processi soggetti a comfort e a quality</description>
     <externalId>false</externalId>
     <label>Processo</label>
-    <length>50</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>HDT_RT_CambioOfferta</fullName>
+                <default>false</default>
+                <label>HDT_RT_CambioOfferta</label>
+            </value>
+            <value>
+                <fullName>HDT_RT_SwitchIn</fullName>
+                <default>false</default>
+                <label>HDT_RT_SwitchIn</label>
+            </value>
+            <value>
+                <fullName>HDT_RT_Vas</fullName>
+                <default>false</default>
+                <label>HDT_RT_Vas</label>
+            </value>
+            <value>
+                <fullName>HDT_RT_Voltura</fullName>
+                <default>false</default>
+                <label>HDT_RT_Voltura</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>

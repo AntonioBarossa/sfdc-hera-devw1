@@ -15,6 +15,7 @@
                         key-field="scriptName"
                         data={scriptConfigs}
                         hide-checkbox-column
+                        column-widths-mode="auto"
                         columns={columns}
                         onrowaction={handleRowAction}>
                     </lightning-datatable>
@@ -27,6 +28,12 @@
         </template>
 
         <template if:true={scriptConfig}>
+            <div style="height: 500px;padding-bottom: 20px;">
+                <iframe width="100%" height="100%" src={scriptConfig.flowUrl}></iframe>
+            </div>
+            <lightning-button variant="brand" label="Fine" title="Fine" onclick={confirmModal} class="slds-m-right_x-small" disabled={isScriptNotEnded}></lightning-button>
+        </template>
+        <!-- <template if:true={scriptConfig}>
             <template if:false={scriptConfig.isScriptDecisional}>
                 <c-hdt-manage-script-card script-process-name={scriptConfig.scriptName}
                     record-id={scriptConfig.scriptTarget}
@@ -47,8 +54,8 @@
                     onclose={closeModal}
                     onconfirm={confirmModal}>
                 </c-hdt-manage-script-decisional-card>
-            </template>
-        </template>
+            </template> 
+        </template> -->
     </div>
 
 </template>
