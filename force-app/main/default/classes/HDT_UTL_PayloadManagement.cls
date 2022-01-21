@@ -215,6 +215,10 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         if(companyDesc==null || String.isBlank(companyDesc)){
             return '';
         }
+
+        if (companyDesc == 'EstEnergy S.p.A.'){
+            companyDesc = 'ESTENERGY SPA';
+        }
         
         String queryString = 'SELECT id,Label, CompanyCode__c from HDT_HeraCompany__mdt WHERE Label=\''+companyDesc+'\'';
         String objectName = 'HDT_HeraCompany__mdt';
