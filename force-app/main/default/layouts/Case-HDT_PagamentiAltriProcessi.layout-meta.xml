@@ -39,6 +39,10 @@
                 <behavior>Readonly</behavior>
                 <field>SalesCompany__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>DocumentPaymentMethod__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
