@@ -14,9 +14,9 @@ public with sharing class HDT_LC_CopiaContratto {
         List<Order> listRes = new List<Order>();
         if(tipo == 'Copia contratto firmato'){
             
-            listRes = orderQr.getRecordsByAccountIdCopContratto(accountId,true);
+            listRes = orderQr.getRecordsByAccountIdCopContrattoFirmato(accountId);
         }else if(tipo == 'Copia contratto non firmato'){
-            listRes = orderQr.getRecordsByAccountIdCopContratto(accountId,false);
+            listRes = orderQr.getRecordsByAccountIdCopContrattoNonFirmato(accountId);
         }else if(tipo == 'Copia della registrazione'){
             listRes = orderQr.getRecordsByAccountIdCopContrattoSignatureMethod(accountid,'Vocal Order');
         }
@@ -77,9 +77,7 @@ public with sharing class HDT_LC_CopiaContratto {
                     c.phase__c = 'In Lavorazione';
                 }
                 else{
-                    c.status = 'closed';
-                    c.phase__c = 'Completata';
-                   // caseSRV.updateRecord(c); 
+                    c.phase__c = 'In Lavorazione';
                 }
             }
         }
