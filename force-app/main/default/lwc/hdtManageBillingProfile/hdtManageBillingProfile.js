@@ -2,6 +2,7 @@ import { LightningElement,api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getBillingProfileList from '@salesforce/apex/HDT_LC_ManageBillingProfile.getBillingProfileList';
 
+
 export default class hdtManageBillingProfile extends LightningElement {
     @api accountId;
     billingProfileData = [];
@@ -63,4 +64,5 @@ export default class hdtManageBillingProfile extends LightningElement {
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         this.dispatchEvent(new CustomEvent('selectedbillingprofile', {detail: this.rowToSend}));
     }
+
 }
