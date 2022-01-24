@@ -8509,6 +8509,11 @@
         <editable>true</editable>
         <field>Contract.OldWasteContract__c</field>
         <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.OldContractMoMi__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
