@@ -221,6 +221,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             activity = reqWrp.requestMap.get('ATTIVITA');
             //EVERIS: Gestione Scarti SAP
             HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase);
+            //Gestione Esito Appuntamento;
+            HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
+            appService.updateExtraSystemAppointment(nextPhase, recordCase.Id);
+            //fine Gestione Esito Appuntamento;
         }
         if(method.equalsIgnoreCase('aggiornaRCU')){
             if(String.isBlank(codServizio) || String.isBlank(codPrestazione)){
@@ -504,6 +508,15 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             updateFuture(JSON.serialize(currentCase));
         }else if(currentCase.Phase__c.equalsIgnoreCase('Validazione KO da DL')){
             currentCase.Phase__c = 'Annullato';
+            currentCase.Status = 'Closed';
+            updateFuture(JSON.serialize(currentCase));
+        /**@frpanico 21/01/2022
+         * Aggiunto completamento automatico
+         * per il processo di "Verifica dati al DL"
+         */
+        }else if(currentCase.Type.equalsIgnoreCase('Verifica Dati al DL') && currentCase.Phase__c.equalsIgnoreCase('Esito OK da DL'))
+        {
+            currentCase.Phase__c = 'Completata';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
         }

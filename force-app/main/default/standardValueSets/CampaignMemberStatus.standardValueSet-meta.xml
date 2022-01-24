@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>true</sorted>
+    <standardValue>
+        <fullName>App motivato scaduto</fullName>
+        <default>false</default>
+        <label>App motivato scaduto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Appuntamento telefonico di gruppo</fullName>
+        <default>false</default>
+        <label>Appuntamento telefonico di gruppo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Appuntamento telefonico motivato di grup</fullName>
+        <default>false</default>
+        <label>Appuntamento telefonico motivato di grup</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Appuntamento telefonico motivato persona</fullName>
+        <default>false</default>
+        <label>Appuntamento telefonico motivato persona</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Appuntamento telefonico personale</fullName>
+        <default>false</default>
+        <label>Appuntamento telefonico personale</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Attesa evento documentazione inviata</fullName>
+        <default>false</default>
+        <label>Attesa evento documentazione inviata</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Black List</fullName>
+        <default>false</default>
+        <label>Black List</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Cliente non coperto rete gas</fullName>
+        <default>false</default>
+        <label>Cliente non coperto rete gas</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Cliente rifiuta la vendita</fullName>
+        <default>false</default>
+        <label>Cliente rifiuta la vendita</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Conferma CC</fullName>
+        <default>false</default>
+        <label>Conferma CC</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Conferma e Recupero</fullName>
+        <default>false</default>
+        <label>Conferma e Recupero</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Conferma già avvenuta</fullName>
+        <default>false</default>
+        <label>Conferma già avvenuta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Conferma IVR</fullName>
+        <default>false</default>
+        <label>Conferma IVR</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Conferma IVR (chiusura non effettuata)</fullName>
+        <default>false</default>
+        <label>Conferma IVR (chiusura non effettuata)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Conferma MAIL</fullName>
+        <default>false</default>
+        <label>Conferma MAIL</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Conferma MAIL (chiusura non effettuata)</fullName>
+        <default>false</default>
+        <label>Conferma MAIL (chiusura non effettuata)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Conferma WEB</fullName>
+        <default>false</default>
+        <label>Conferma WEB</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Conferma WEB (chiusura non effettuata)</fullName>
+        <default>false</default>
+        <label>Conferma WEB (chiusura non effettuata)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contattato Blacklist</fullName>
+        <default>false</default>
+        <label>Contattato Blacklist</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contattato contratto altro operatore</fullName>
+        <default>false</default>
+        <label>Contattato contratto altro operatore</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contattato contratto recente Hera</fullName>
+        <default>false</default>
+        <label>Contattato contratto recente Hera</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contattato non interessato</fullName>
+        <default>false</default>
+        <label>Contattato non interessato</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contattato positivo - Bonus</fullName>
+        <default>false</default>
+        <label>Contattato positivo - Bonus</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contattato positivo - Cambio offerta</fullName>
+        <default>false</default>
+        <label>Contattato positivo - Cambio offerta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contattato positivo - Cambio offerta e v</fullName>
+        <default>false</default>
+        <label>Contattato positivo - Cambio offerta e v</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contattato positivo - Vendita VAS</fullName>
+        <default>false</default>
+        <label>Contattato positivo - Vendita VAS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contatto convertito in appuntamento moti</fullName>
+        <default>false</default>
+        <label>Contatto convertito in appuntamento moti</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contatto positivo - no vendita</fullName>
+        <default>false</default>
+        <label>Contatto positivo - no vendita</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contratto Accettato</fullName>
+        <default>false</default>
+        <label>Contratto Accettato</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Da poco con altro Gestore</fullName>
+        <default>false</default>
+        <label>Da poco con altro Gestore</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Dati errati documentazione</fullName>
+        <default>false</default>
+        <label>Dati errati documentazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Disconosce il numero</fullName>
+        <default>false</default>
+        <label>Disconosce il numero</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Errore caricamento</fullName>
+        <default>false</default>
+        <label>Errore caricamento</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Errore nella conferma del plico</fullName>
+        <default>false</default>
+        <label>Errore nella conferma del plico</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Esiti parziali</fullName>
+        <default>false</default>
+        <label>Esiti parziali</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Fax operatore</fullName>
+        <default>false</default>
+        <label>Fax operatore</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Forzato da aperto in manuale a contattab</fullName>
+        <default>false</default>
+        <label>Forzato da aperto in manuale a contattab</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Fuori Target</fullName>
+        <default>false</default>
+        <label>Fuori Target</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Gestito da MC</fullName>
+        <default>false</default>
+        <label>Gestito da MC</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Già Cliente</fullName>
+        <default>false</default>
+        <label>Già Cliente</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interessato HVAC</fullName>
+        <default>false</default>
+        <label>Interessato HVAC</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Inviato</fullName>
+        <default>false</default>
+        <label>Inviato</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Invio documentazione</fullName>
+        <default>false</default>
+        <label>Invio documentazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Invio Plico Whatsapp</fullName>
+        <default>false</default>
+        <label>Invio Plico Whatsapp</label>
+    </standardValue>
+    <standardValue>
+        <fullName>La proposta non è competitiva</fullName>
+        <default>false</default>
+        <label>La proposta non è competitiva</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Libero operatore</fullName>
+        <default>false</default>
+        <label>Libero operatore</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Lotto scaduto</fullName>
+        <default>false</default>
+        <label>Lotto scaduto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Non_Proposto</fullName>
+        <default>false</default>
+        <label>Non_Proposto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Non_Proposto_Auto</fullName>
+        <default>false</default>
+        <label>Non_Proposto_Auto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Non Conformita</fullName>
+        <default>false</default>
+        <label>Non Conformita</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Non interessato all&apos;offerta</fullName>
+        <default>false</default>
+        <label>Non interessato all&apos;offerta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Non lavorato operatore</fullName>
+        <default>false</default>
+        <label>Non lavorato operatore</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Non Proposto</fullName>
+        <default>false</default>
+        <label>Non Proposto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Non Proposto Auto</fullName>
+        <default>false</default>
+        <label>Non Proposto Auto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Numero errato operatore</fullName>
+        <default>false</default>
+        <label>Numero errato operatore</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Nuovo</fullName>
+        <default>false</default>
+        <label>Nuovo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Occupato operatore</fullName>
+        <default>false</default>
+        <label>Occupato operatore</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Positivo</fullName>
+        <default>false</default>
+        <label>Positivo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Prima attivazione</fullName>
+        <default>false</default>
+        <label>Prima attivazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Reg Non Conforme</fullName>
+        <default>false</default>
+        <label>Reg Non Conforme</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Reinvio documentazione</fullName>
+        <default>false</default>
+        <label>Reinvio documentazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Responded</fullName>
+        <default>false</default>
+        <label>Responded</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Riaggancia e rifiuta immediatamente il c</fullName>
+        <default>false</default>
+        <label>Riaggancia e rifiuta immediatamente il c</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Riapertura contatto</fullName>
+        <default>false</default>
+        <label>Riapertura contatto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Ricezione plico in corso</fullName>
+        <default>false</default>
+        <label>Ricezione plico in corso</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Rifiutato</fullName>
+        <default>false</default>
+        <label>Rifiutato</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Rimosso appuntamento dal contatto</fullName>
+        <default>false</default>
+        <label>Rimosso appuntamento dal contatto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Rinuncia contratto</fullName>
+        <default>false</default>
+        <label>Rinuncia contratto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Ripensamento Cliente</fullName>
+        <default>false</default>
+        <label>Ripensamento Cliente</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Risposta</fullName>
+        <default>false</default>
+        <label>Risposta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Scadenza piano di lavoro</fullName>
+        <default>false</default>
+        <label>Scadenza piano di lavoro</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Segreteria operatore</fullName>
+        <default>false</default>
+        <label>Segreteria operatore</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sent</fullName>
+        <default>false</default>
+        <label>Sent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Terminato per numero massimo di appuntam</fullName>
+        <default>false</default>
+        <label>Terminato per numero massimo di appuntam</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Terminato per numero massimo di esiti ab</fullName>
+        <default>false</default>
+        <label>Terminato per numero massimo di esiti ab</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Terminato per numero massimo di esiti de</fullName>
+        <default>false</default>
+        <label>Terminato per numero massimo di esiti de</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Terminato per numero massimo di esiti ne</fullName>
+        <default>false</default>
+        <label>Terminato per numero massimo di esiti ne</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Terminato per numero massimo di esiti oc</fullName>
+        <default>false</default>
+        <label>Terminato per numero massimo di esiti oc</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Terminato per numero massimo di esiti se</fullName>
+        <default>false</default>
+        <label>Terminato per numero massimo di esiti se</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Terminato per numero massimo di tentativ</fullName>
+        <default>false</default>
+        <label>Terminato per numero massimo di tentativ</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Titolare della fornitura non disponibile</fullName>
+        <default>false</default>
+        <label>Titolare della fornitura non disponibile</label>
+    </standardValue>
+    <standardValue>
+        <fullName>VENDITA EXTRA VO</fullName>
+        <default>false</default>
+        <label>VENDITA EXTRA VO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Verifica NC</fullName>
+        <default>false</default>
+        <label>Verifica NC</label>
+    </standardValue>
+</StandardValueSet>

@@ -891,6 +891,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('','Email__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','WithdrawalClass__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','AnnualConsumption__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','AnnualWithdrawal__c',this.typeVisibility('both'),true,false,'',''),
                     new fieldData('','Market__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','SupplyType__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','Commodity__c',this.typeVisibility('both'),false,true,'',''),
@@ -1860,7 +1861,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 label: 'Referente Cliente Finale/Anagrafica',
                 name: 'primaryContact',
                 objectApiName: 'Contact',
-                recordId: this.order.ContractReference__c !== null ? this.order.ContractReference__c : null,
+                recordId: this.order.Contact__c !== null ? this.order.Contact__c : null,
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data:
                 [

@@ -185,7 +185,7 @@ public with sharing class HDT_UTL_Sales {
     public static Boolean isTransition(ServicePoint__c sp, Sale__c sale){
 
         Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
-        if(((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(sp.SupplyProvince__c)))){
+        if(sp.SwitchInWinback__c || ((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(sp.SupplyProvince__c)))){
             Sale__c s = new Sale__c(Id=sale.Id);
             s.isTransition__c=true;
             saleSrv.updateRecord(s);
@@ -228,7 +228,7 @@ public with sharing class HDT_UTL_Sales {
     public static List<Order> validationActivityPhaseTransition(List<Order> orderNew){
         List<wrts_prcgvr__Activity__c> listActivityToCreate = new List<wrts_prcgvr__Activity__c>();
         List<Order> childToUpdate = new List<Order>();
-        Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
+        Id rt = rtQr.getRecordTypeIdByName('HDT_RT_Default','wrts_prcgvr__Activity__c');
       //  List<String> orderParentToActivityDocument = new List<String>();
         for(Order ord : orderNew){
             if(ord.RecordType.DeveloperName == 'HDT_RT_OrderDossier'){ //&& ord.TecnicalPhase__c != null){
@@ -429,7 +429,7 @@ public with sharing class HDT_UTL_Sales {
         return new wrts_prcgvr__Activity__c(account__c = accountid,wrts_prcgvr__Status__c= 'Aperta',order__c = orderid,type__c='Validazione Vocal Order',recordtypeid=recordtypeid, RecordingLink__c='https://herapresfdc.cloudando.com/ctreplay/externalView/search?filter={"filter":{"ecid":"saashrapp|1|123|17"},"sort":{"startTs":-1},"index":0}');
     }
     public static wrts_prcgvr__Activity__c instanceActValidazioneDocumentale(String accountid,String orderid,id recordtypeid){
-        return new wrts_prcgvr__Activity__c(account__c = accountid,wrts_prcgvr__Status__c= 'Aperta',order__c = orderid,type__c='Validazione Documentale',recordtypeid=recordtypeid);
+        return new wrts_prcgvr__Activity__c(account__c = accountid,wrts_prcgvr__Status__c= 'Aperta',wrts_prcgvr__IsRequired__c=true,order__c = orderid,type__c='Validazione Documentale',recordtypeid=recordtypeid);
     }
 
 }

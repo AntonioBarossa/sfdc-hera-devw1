@@ -14,9 +14,9 @@ public with sharing class HDT_LC_CopiaContratto {
         List<Order> listRes = new List<Order>();
         if(tipo == 'Copia contratto firmato'){
             
-            listRes = orderQr.getRecordsByAccountIdCopContratto(accountId,true);
+            listRes = orderQr.getRecordsByAccountIdCopContrattoFirmato(accountId);
         }else if(tipo == 'Copia contratto non firmato'){
-            listRes = orderQr.getRecordsByAccountIdCopContratto(accountId,false);
+            listRes = orderQr.getRecordsByAccountIdCopContrattoNonFirmato(accountId);
         }else if(tipo == 'Copia della registrazione'){
             listRes = orderQr.getRecordsByAccountIdCopContrattoSignatureMethod(accountid,'Vocal Order');
         }
@@ -45,7 +45,8 @@ public with sharing class HDT_LC_CopiaContratto {
         //c.id = caseId;
         c.CopyType__c = tipoFirma;
         c.Channel__c = tipoAttivita;
-        c.sendmode__c = tipoSend; 
+        c.sendmode__c = tipoSend;
+        c.order__c = orderParentId;  
         c.Status='In Lavorazione'; //HRAWRM-344 01/09/2021
         if(rc !=null){
             recTypeId= rc.Id;
@@ -77,9 +78,7 @@ public with sharing class HDT_LC_CopiaContratto {
                     c.phase__c = 'In Lavorazione';
                 }
                 else{
-                    c.status = 'closed';
-                    c.phase__c = 'Completata';
-                   // caseSRV.updateRecord(c); 
+                    c.phase__c = 'In Lavorazione';
                 }
             }
         }
