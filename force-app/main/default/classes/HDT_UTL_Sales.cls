@@ -185,7 +185,7 @@ public with sharing class HDT_UTL_Sales {
     public static Boolean isTransition(ServicePoint__c sp, Sale__c sale){
 
         Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
-        if(((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(sp.SupplyProvince__c)))){
+        if(sp.SwitchInWinback__c || ((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(sp.SupplyProvince__c)))){
             Sale__c s = new Sale__c(Id=sale.Id);
             s.isTransition__c=true;
             saleSrv.updateRecord(s);
