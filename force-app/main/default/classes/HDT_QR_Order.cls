@@ -767,7 +767,7 @@ public inherited sharing class HDT_QR_Order {
             WHERE AccountId = :accountId
             AND ParentOrder__c = null
             AND Status != 'Draft'
-            AND DocumentalPhase__c like '%Plico firmato%'
+            AND Phase__c = 'Documentazione Gestita'
             WITH SECURITY_ENFORCED
         ];
     }
@@ -791,7 +791,7 @@ public inherited sharing class HDT_QR_Order {
             WHERE AccountId = :accountId
             AND ParentOrder__c = null
             AND Status != 'Draft'
-            AND (NOT DocumentalPhase__c like '%Plico firmato%')
+            AND Phase__c != 'Documentazione Gestita'
             WITH SECURITY_ENFORCED
         ];
     }
