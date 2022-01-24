@@ -73,11 +73,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
         Order currentOrder = new Order();
             
-        /* If isUpdateStep query the currentOrder */
-        if(isUpdateStep != null && isUpdateStep == true)
-        {
-            currentOrder = voltureChangeQr.getOrderInfosById(order.Id)[0];
-        }
+        /* Query the currentOrder */
+        currentOrder = voltureChangeQr.getOrderInfosById(order.Id)[0];
         //INIZIO SVILUPPI EVERIS CHECK VOLTURA
         if(isVolture != null && isVolture == true){
             // Order oldOrder = orderQr.getRecordById(order.Id);
