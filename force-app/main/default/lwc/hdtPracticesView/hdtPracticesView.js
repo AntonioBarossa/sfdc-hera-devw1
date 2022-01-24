@@ -1,5 +1,6 @@
 import { LightningElement, api } from 'lwc';
-import callSap from '@salesforce/apexContinuation/HDT_LC_PracticesView.startRequest';
+//import callWebService from '@salesforce/apexContinuation/HDT_LC_PracticesView.startRequest';
+import callWebService from '@salesforce/apex/HDT_LC_PracticesView.callWebService';
 import getTableConfig from '@salesforce/apex/HDT_LC_PracticesView.getTableConfig';
 
 export default class HdtPracticesView extends LightningElement {
@@ -34,8 +35,8 @@ export default class HdtPracticesView extends LightningElement {
 
     connectedCallback(){
         console.log('# type: ' + this.type);
-        //this.getConfiguration();
-        //this.backendCall();
+        this.getConfiguration();
+        this.backendCall();
     }
 
     getConfiguration(){
@@ -47,24 +48,16 @@ export default class HdtPracticesView extends LightningElement {
 
             console.log('# getTableConfig #');
  
-            if(this.type != 'cmor'){
-                this.tableTitle = result.tables[0].tableTitle;
-                this.iconName = result.tables[0].iconName;
-                this.columns = result.tables[0].columns;
-                this.height1 = 'singleTable';
-            } else {
-                this.showSecondTable = true;
-                this.tableTitle = result.tables[0].tableTitle;
-                this.iconName = result.tables[0].iconName;
-                this.columns = result.tables[0].columns;
-                this.height1 = 'topTable';
+            this.showSecondTable = true;
+            this.tableTitle = result.tables[0].tableTitle;
+            this.iconName = result.tables[0].iconName;
+            this.columns = result.tables[0].columns;
+            this.height1 = 'topTable';
 
-                this.tableTitle2 = result.tables[1].tableTitle;
-                this.iconName2 = result.tables[1].iconName;
-                this.columns2 = result.tables[1].columns;
-                this.height2 = 'bottomTable';
-            } 
-
+            this.tableTitle2 = result.tables[1].tableTitle;
+            this.iconName2 = result.tables[1].iconName;
+            this.columns2 = result.tables[1].columns;
+            this.height2 = 'bottomTable';
 
         }).catch(error => {
             console.log('# error -> ' + error);
@@ -79,9 +72,12 @@ export default class HdtPracticesView extends LightningElement {
     backendCall(){
         console.log('# Get data from SAP #');
     
-        callSap({recordId: this.recordId, type: this.type}).then(result => {
-            console.log('# SAP result #');
-            var obj = JSON.parse(result);
+        callWebService({recordId: this.recordId, type: this.type}).then(result => {
+
+            this.showSecondTable = true;
+            this.data = result.details;
+            this.data2 = result.rate;
+            /*var obj = JSON.parse(result);
             console.log('# success: ' + obj.status);
 
             if(obj.status==='failed'){
@@ -98,11 +94,12 @@ export default class HdtPracticesView extends LightningElement {
                     this.data = obj.data.venditoreEntrante;
                     this.data2 = obj.data.venditoreUscente;
                 }
-            }
+            }*/
 
             this.showSpinner = false;
             
         }).catch(error => {
+            console.log('# error: ' + JSON.stringify(error));
             //var obj = JSON.parse(error.body.message);
             this.showError = true;
             //var s = '';

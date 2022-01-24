@@ -1,6 +1,7 @@
 public without sharing virtual class HDT_UTL_PracticesSupport {
 
     public String body;
+    public Object result;
 
     public virtual void execute(String body){
         this.body = body;

@@ -20,10 +20,10 @@ public inherited sharing class HDT_WRP_Practices {
         @AuraEnabled public Boolean sortable;
     }
 
-    public class HDT_WRP_RequestResponse {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
-        @AuraEnabled public String body;
+    public class HDT_WRP_Response {
+        public Boolean success;
+        public String message;
+        public String body;
     }
 
 }

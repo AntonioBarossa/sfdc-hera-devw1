@@ -6,7 +6,12 @@ public inherited sharing class HDT_LC_PracticesView {
         retObj = HDT_SRV_PracticesView.getTableConfigHelper(recordId, type, retObj);
         return retObj;
     }
-    
+ 
+    @AuraEnabled
+    public static Object callWebService(String recordId, String type) {
+        return HDT_SRV_PracticesView.callWebService(recordId, type);
+    }
+
     // Action method
     @AuraEnabled(continuation=true cacheable=true)
     public static Object startRequest(String recordId, String type) {

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Pratiche VAS</label>
+    <protected>false</protected>
+    <values>
+        <field>ApexClass__c</field>
+        <value xsi:type="xsd:string">HDT_UTL_VasPractices</value>
+    </values>
+    <values>
+        <field>Authorization__c</field>
+        <value xsi:type="xsd:string">Bearer 00D58000000KR1c!AQgAQEJ_nO0cjQ.Ope22DsqbrYoOkOdWuYEvsOIyFjWZEvfJmsLRBWYQMwPpQbkpfg0D542WtjUvnwJhX5CIIgoNN1RQnEW3</value>
+    </values>
+    <values>
+        <field>ColumnData__c</field>
+        <value xsi:type="xsd:string">[
+  {
+    &quot;tableTitle&quot;: &quot;Dettagli pratiche VAS&quot;,
+    &quot;iconName&quot;: &quot;standard:record_update&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;label&quot;: &quot;Pratica&quot;,
+        &quot;fieldName&quot;: &quot;practice&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Societa&quot;,
+        &quot;fieldName&quot;: &quot;company&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;RDS/Order&quot;,
+        &quot;fieldName&quot;: &quot;rds&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Codice Esito Pratica&quot;,
+        &quot;fieldName&quot;: &quot;practiceResultCode&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Esito pratica&quot;,
+        &quot;fieldName&quot;: &quot;descriptionResultCode&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Numero di rate&quot;,
+        &quot;fieldName&quot;: &quot;rateNumber&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Tipo Vas&quot;,
+        &quot;fieldName&quot;: &quot;vasType&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Importo Vas&quot;,
+        &quot;fieldName&quot;: &quot;vasImport&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Data invio ordine&quot;,
+        &quot;fieldName&quot;: &quot;orderSendingDate&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Data inserimento ordine&quot;,
+        &quot;fieldName&quot;: &quot;orderInsertDate&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Data di spedizione&quot;,
+        &quot;fieldName&quot;: &quot;shippingDateDdt&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Data di presunta consegna&quot;,
+        &quot;fieldName&quot;: &quot;expectedDeliveryDate&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Data di recesso&quot;,
+        &quot;fieldName&quot;: &quot;withdrawalDate&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Codice RFID&quot;,
+        &quot;fieldName&quot;: &quot;rfid&quot;,
+        &quot;initialWidth&quot;: 140
+      }
+    ]
+  },
+  {
+    &quot;tableTitle&quot;: &quot;Totale rate&quot;,
+    &quot;iconName&quot;: &quot;standard:record_update&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;label&quot;: &quot;Numero rata&quot;,
+        &quot;fieldName&quot;: &quot;rateNumber&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;label&quot;: &quot;Numero documento&quot;,
+        &quot;fieldName&quot;: &quot;document&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;label&quot;: &quot;Data di scadenza&quot;,
+        &quot;fieldName&quot;: &quot;expiryDate&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;label&quot;: &quot;Importo Rata&quot;,
+        &quot;fieldName&quot;: &quot;installmentAmount&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;label&quot;: &quot;Stato Rata&quot;,
+        &quot;fieldName&quot;: &quot;installmentStatus&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;label&quot;: &quot;Codice pratica&quot;,
+        &quot;fieldName&quot;: &quot;practice&quot;,
+        &quot;initialWidth&quot;: 160
+      }
+    ]
+  }
+]</value>
+    </values>
+    <values>
+        <field>Credential__c</field>
+        <value xsi:type="xsd:string">https://monted-dev-ed.my.salesforce.com/services/apexrest/practices</value>
+    </values>
+    <values>
+        <field>UseMock__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+</CustomMetadata>
