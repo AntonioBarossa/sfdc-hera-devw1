@@ -380,6 +380,19 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
         System.assertEquals('Creata', activity.wrts_prcgvr__Status__c, methodName + 'Lo stato è stato aggiornato, mentre doveva restare invariato.');
     }
 
+    @IsTest
+    public static void executeGetCommunityLink(){
+        String methodName = 'executeGetCommunityLink: ';
+        User u = [SELECT Id FROM User WHERE Profile.Name = 'HERA Standard User' AND IsActive = true LIMIT 1];
+        String link = agenda.getCommunityLink();
+        Test.startTest();
+            System.runAs(u){
+                System.assertEquals(link, agenda.getCommunityLink(), methodName + 'Il link non viene restituito');
+            }
+        Test.stopTest();
+        
+    }
+
     private static Map<String,String> createRequestHeroku(String processType,String codiceFlusso,String outcome, String codiceApp){
         Map<String,String> newMap = new Map<String,String>();
         Map<String,String> herokuKeysMap = HDT_UTL_AppointmentSetting.getResponseKeysMap();

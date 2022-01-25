@@ -354,6 +354,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>RateCategory__c.Fornitura__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>RateCategory__c.CalculatedValue__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8542,6 +8547,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.OldWasteContract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.OldContractMoMi__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22567,6 +22577,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Subscription__c.ProductCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Subscription__c.VersionFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -10,6 +10,18 @@ public inherited sharing class HDT_QR_RecordType {
         ].Id;
     }
 
+    public Id getRecordTypeIdByName(String developerName, String objectType)
+    {
+        return [
+            SELECT Id 
+            FROM RecordType 
+            WHERE DeveloperName = :developerName
+            AND SobjectType = :objectType
+            WITH SECURITY_ENFORCED 
+            LIMIT 1
+        ].Id;
+    }
+
     public List<Id> getRecordTypeIdsByNames(List<String> developerNames) {
 
         List<RecordType> recordTypes =  [
