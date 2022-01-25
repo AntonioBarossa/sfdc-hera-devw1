@@ -25,7 +25,30 @@
             }
             component.set("v.HideSpinner",false);
         });
-        $A.enqueueAction(action);  
+        $A.enqueueAction(action);
+
+        //ottenimento accountId dell'order - INIZIO 
+        var action2 = component.get("c.getOrderAccountId");
+        
+        action2.setParams({
+            'orderRecordId': component.get("v.recordId")
+        });
+        
+        action2.setCallback(this, function (response) {
+            var state = response.getState();
+            if (state === 'SUCCESS') {
+                component.set("v.accountId", response.getReturnValue());        
+                console.log('AccountId : '+ component.get("v.accountId"));        
+            }
+            else{
+                var errors = response.getError();  
+                console.log('Action fallita! '+JSON.stringify(errors));   
+                component.set("v.ErrorType",JSON.stringify(errors));
+                console.log(component.get("v.ErrorType"));
+            }
+        });
+        $A.enqueueAction(action2);
+        //ottenimento accountId dell'order - FINE
     },
 
     handleOnload: function(component, event, helper) {
@@ -170,5 +193,107 @@
         } else {
             component.set("v.notValid", false);
         }
+    },
+
+    ConsensoMarketingInserito_onChange: function(component, event, helper) {
+
+       if(component.find('ConsensoMarketingInserito').get('v.value') == 'No')
+       {
+            console.log("No");
+            component.set("v.ConsensoMarketingInserito_value", false);
+       }
+       else if(component.find('ConsensoMarketingInserito').get('v.value') == 'Si')
+       {
+            console.log("Si");
+            component.set("v.ConsensoMarketingInserito_value", true);
+
+       }
+    },
+
+    InvokeCase: function(component, event, helper) {
+        console.log('SONO ENTRATO NELL InvokeCase');
+        console.log('punto 1');
+        var myPageRef = component.get("v.pageReference");
+        console.log('punto 2');
+        var flowName = "HDT_FL_PostSalesMasterDispatch";
+        console.log('punto 3');
+        var processType = "Modifica Privacy";
+        console.log('punto 4');
+        var recordTypeName = "HDT_RT_GestionePrivacy";
+        console.log('punto 5');
+
+        // id dell'Order
+        var orderId = component.get("v.recordId");
+        var accountId = component.get("v.accountId");
+
+        console.log('punto 6');
+
+
+        console.log('# flowName -> '                + flowName);
+        console.log('# processType -> '             + processType);
+        console.log('# recordTypeName -> '          + recordTypeName);
+
+        console.log('# orderId -> '                 + orderId);
+                
+        var workspaceAPI = component.find("workspace");
+        console.log('punto 7');
+
+        var tabToClose;
+        workspaceAPI.getEnclosingTabId().then(function(tabId) {
+            console.log('# TabId To Close: ' + tabId);
+            tabToClose = tabId;
+        }).catch(function(error) {
+            console.log(error);
+        });
+        console.log('punto 8');
+
+        var parentId;
+        workspaceAPI.getAllTabInfo().then(function(response) {
+            console.log('----------');
+            response.forEach((element) => {
+                if(element.pageReference.type === 'standard__recordPage'){
+                    
+                    if(element.pageReference.attributes.recordId === orderId){
+                        parentId = element.tabId;
+                    }
+                }
+            });
+            console.log('----------');
+            console.log('# parentId -> ' + parentId);
+
+            workspaceAPI.openSubtab({
+                parentTabId: parentId,
+                pageReference: {
+                    type: 'standard__component',
+                    attributes: {
+                        componentName: 'c__HDT_LCP_OpenAuraCmp'
+                    },
+                    state: {
+                        c__accid: accountId,
+                        c__flowName: flowName,
+                        c__processType: processType,
+                        c__recordTypeName: recordTypeName,
+                        c__orderId: orderId
+                    }
+                },
+                focus: true
+            }).then(function(newTabId) {
+                console.log('# wizard tab id: ' + newTabId);
+                workspaceAPI.setTabLabel({ tabId: newTabId, label: 'Wizard' });
+                workspaceAPI.setTabIcon({ tabId: newTabId, icon: 'custom:custom83' });
+
+                workspaceAPI.closeTab({ tabId: tabToClose }).then(function(success) {
+                    if (success) {
+                        workspaceAPI.focusTab({tabId: newTabId});
+                    }
+                });
+            });
+
+        }).catch(function(error) {
+            console.log(error);
+        });
+
+        console.log('punto 9');
+
     }
 })
