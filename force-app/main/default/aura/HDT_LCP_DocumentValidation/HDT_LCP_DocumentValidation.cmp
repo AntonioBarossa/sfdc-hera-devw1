@@ -10,10 +10,14 @@
     <aura:attribute name="DocumentLow80" type="Boolean" default="true" />
     <aura:attribute name="AutorizationVolturaThirdTrader" type="Boolean" default="true" />
     <aura:attribute name="DocumentPackage" type="Boolean" default="true" />
+    <aura:attribute name="ConsensoMarketingInserito_value" type="Boolean" default="true" />
+    <aura:attribute name="ConsensoMarketingInserito_text" type="String" default="" />
     <aura:attribute name="formValid" type="Boolean" default="true"/>
     <aura:attribute name="HideSpinner" type="Boolean" default="true"/>
     <aura:attribute name="notValid" type="Boolean" default="false"/>
     <aura:attribute name="ordOBJ" type="Order"/>
+    <aura:attribute name="accountId" type="String" default=""/>
+    <lightning:workspaceAPI aura:id="workspace" />
     
 	<aura:renderif istrue="{!v.HideSpinner}">
 		<lightning:spinner alternativeText="Loading" size="medium" />
@@ -46,6 +50,28 @@
                     <lightning:inputField fieldName="AutorizationVolturaThirdTrader__c" aura:id="AutorizationVolturaThirdTrader" class="{!v.AutorizationVolturaThirdTrader == false ? 'slds-hide' : ''}" />
                     <lightning:inputField fieldName="DocumentPackage__c" aura:id="DocumentPackage" class="{!v.DocumentPackage == false ? 'slds-hide' : ''}" />
                 </lightning:recordEditForm>
+                <div class="slds-box">
+                    <div>
+                        <h5>Consenso Marketing Inserito</h5>
+                        <aura:if isTrue="{!v.ConsensoMarketingInserito_value == true}">
+                            <h6 style="font-size:11px;color:transparent">none</h6>
+                            <aura:set attribute="else" >
+                                <h6 style="font-size:11px;color:black">*Alla pressione del tasto 'OK' verrà innescato un Case di 'Modifica Privacy'</h6>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div style="margin-top:-13px;" class="slds-col slds-size_2-of-3">
+                                <lightning:select aura:id ="ConsensoMarketingInserito" onchange="{!c.ConsensoMarketingInserito_onChange}">
+                                    <option value="Si">Si</option>
+                                    <option value="No">No</option>
+                                </lightning:select>
+                        </div>
+                        <div style="margin-top:4px;" class="{!v.ConsensoMarketingInserito_value == true ? 'slds-col slds-size_1-of-3 slds-hide' : 'slds-col slds-size_1-of-3'}">
+                            <lightning:button label="OK" class="slds-button slds-button_neutral" variant="brand" onclick="{!c.InvokeCase}"/>
+                        </div>
+                      </div>                    
+                </div>
             </div>
         </lightning:card>
         <aura:set attribute="else" >
