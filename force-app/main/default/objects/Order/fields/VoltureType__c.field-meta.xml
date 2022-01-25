@@ -25,20 +25,14 @@
                 <label>Incorporazione societaria</label>
             </value>
             <value>
-                <fullName>In Continuità</fullName>
-                <default>false</default>
-                <label>In Continuità</label>
-            </value>
-            <value>
                 <fullName>Recupero</fullName>
                 <default>false</default>
                 <label>Recupero</label>
             </value>
             <value>
-                <fullName>Oridnaria</fullName>
+                <fullName>In continuità_si_addebito</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Oridnaria</label>
+                <label>In continuità_si_addebito</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -114,6 +114,8 @@ public inherited sharing class HDT_QR_Order {
             Username__c,
             SalesContact__r.Email,
             SalesContact__r.MobilePhone,
+            SalesContact__r.VATNumber__c,
+            SalesContact__r.FiscalCode__c,
             Sale__r.Channel__c,
             SwitchOutDate__c,
             Vat__c,
@@ -748,7 +750,7 @@ public inherited sharing class HDT_QR_Order {
     }
 
     
-    public List<Order> getRecordsByAccountIdCopContratto(String accountId,boolean contractSigned){
+    public List<Order> getRecordsByAccountIdCopContrattoFirmato(String accountId){
         return [
             SELECT
             Name,
@@ -767,7 +769,31 @@ public inherited sharing class HDT_QR_Order {
             WHERE AccountId = :accountId
             AND ParentOrder__c = null
             AND Status != 'Draft'
-            AND ContractSigned__c = :contractSigned
+            AND Phase__c = 'Documentazione Gestita'
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Order> getRecordsByAccountIdCopContrattoNonFirmato(String accountId){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            OrderNumber,
+            Status,
+            Agency__c,
+            Market__c,
+            Channel__c,
+            FriendCode__c,
+            CampaignCode__c,
+            CreatedBy__c,
+            CreatedDate
+            FROM
+            Order
+            WHERE AccountId = :accountId
+            AND ParentOrder__c = null
+            AND Status != 'Draft'
+            AND Phase__c != 'Documentazione Gestita'
             WITH SECURITY_ENFORCED
         ];
     }

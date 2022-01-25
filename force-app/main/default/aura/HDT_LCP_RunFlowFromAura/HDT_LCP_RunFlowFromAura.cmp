@@ -43,11 +43,11 @@
     <!--Attributo per esito Compatibilita-->
     <aura:attribute name="compatibile" type="Boolean"/>
 
-    <!-- id dell'Order oggetto del processo. -->
-    <aura:attribute name="orderId" type="String"/>
-
     <!-- id dell'Interaction oggetto del processo. -->
     <aura:attribute name="interactionId" type="String"/>
+
+    <!-- id dell'Order oggetto del processo. -->
+    <aura:attribute name="orderId" type="String"/>
 
     <!--Attributo per gestire la presenza di activity obbligatorie-->
     <aura:attribute name="thereIsActivity" type="Boolean"/>

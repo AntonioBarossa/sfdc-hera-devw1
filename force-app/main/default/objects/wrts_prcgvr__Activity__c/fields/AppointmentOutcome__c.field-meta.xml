@@ -3,7 +3,6 @@
     <fullName>AppointmentOutcome__c</fullName>
     <externalId>false</externalId>
     <formula>IF(AppointmentResultCode__c == 0,&quot;Mancato intervento Causa Cliente&quot;,IF(OR(AppointmentResultCode__c == 1,AppointmentResultCode__c == 2),&quot;Mancato intervento causa Distributore&quot;,IF(AppointmentResultCode__c == 3,&quot;Mancato intervento causa forza maggiore&quot;,IF(AppointmentResultCode__c == 4,&quot;Positivo&quot;,&quot;&quot;))))</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Esito Appuntamento</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

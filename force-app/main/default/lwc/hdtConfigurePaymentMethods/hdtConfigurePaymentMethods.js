@@ -9,8 +9,9 @@ export default class hdtConfigurePaymentMethods extends LightningElement {
     loading = false;
     currentStep = 4;
     isCloneButtonDisabled = true;
-    disabledInput = false;
-    
+    disabledInput;
+    myInput;
+
 
     get disabledInput(){
         let result = false;
@@ -25,23 +26,21 @@ export default class hdtConfigurePaymentMethods extends LightningElement {
         return result;
     }
 
-    get disabledInputs(){
-        let result = false;
-        disableMyButtons({sale:this.saleRecord}).then(data =>{
-            console.log('***********'+data+'*************');
+    @api 
+    getDisabledInput(mySale){
+        let result;
+        disableMyButtons({mySale}).then(data =>{
             if(data==true){
+                this.template.querySelector('c-hdt-create-billing-profile').disableCreate();
+                this.template.querySelector('c-hdt-apply-payment-method').disableApply();
+                this.template.querySelector('c-hdt-manage-billing-profile').disableManage();
+                this.isCloneButtonDisabled = true;
                 result = true;
-                this.disabledInput = true;
-            }else {
+            }else{
                 result = false;
             }
         });
-        console.log('**********************'+result+'******************');
-        return result;
     }
-
-
-    
 
     handleNewBillingProfileEvent(){
         this.selectedBillingProfile = {};
@@ -50,8 +49,9 @@ export default class hdtConfigurePaymentMethods extends LightningElement {
 
     handleSelectedBillingProfileEvent(event){
         this.selectedBillingProfile = {};
-        this.template.querySelector('c-hdt-apply-payment-method').enableApply();
         this.isCloneButtonDisabled = false;
+        this.getDisabledInput(this.saleRecord);
+        console.log('*********'+this.disabledInput);
         this.selectedBillingProfile = event.detail;
     }
 
