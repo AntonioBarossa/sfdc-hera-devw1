@@ -120,9 +120,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>ServicePointCode__c</field>
+            <field>ServicePoint__c</field>
             <value>
-                <elementReference>get_Contract.ServicePoint__r.ServicePointCode__c</elementReference>
+                <elementReference>get_Contract.ServicePoint__r.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
