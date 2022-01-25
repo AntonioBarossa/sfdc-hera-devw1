@@ -33975,7 +33975,7 @@
         <recordType>Order.HDT_RT_Proroga</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <layout>Order-Prima attivazione con modifica</layout>
         <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
     </layoutAssignments>
     <layoutAssignments>
