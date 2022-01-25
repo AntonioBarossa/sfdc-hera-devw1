@@ -486,7 +486,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.OwnerId</field>
         <field>RateCategory__c.Fornitura__c</field>
         <readable>true</readable>
     </fieldPermissions>
