@@ -99,4 +99,11 @@ public inherited sharing class HDT_LC_DocumentValidation {
             Phase__c = 'Annullato'
         ));
     }
+
+    @AuraEnabled
+    public static string getOrderAccountId(Id orderRecordId){
+        
+        Order o = [SELECT Id, AccountId FROM Order WHERE Id =: orderRecordId with SECURITY_ENFORCED];
+        return o.AccountId;
+    }
 }

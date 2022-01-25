@@ -183,9 +183,9 @@ public with sharing class HDT_UTL_Sales {
     }
 
     public static Boolean isTransition(ServicePoint__c sp, Sale__c sale){
-
+        List<ServicePoint__c> reseller = [SELECT isReseller__c, SupplyProvince__c FROM ServicePoint__c WHERE Id=:sp.Id WITH SECURITY_ENFORCED ];
         Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
-        if(sp.SwitchInWinback__c || ((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(sp.SupplyProvince__c)))){
+        if(reseller[0].isReseller__c || ((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(reseller[0].SupplyProvince__c)))){
             Sale__c s = new Sale__c(Id=sale.Id);
             s.isTransition__c=true;
             saleSrv.updateRecord(s);
@@ -195,9 +195,9 @@ public with sharing class HDT_UTL_Sales {
         }
     }
     public static Boolean isTransitionNoUp(ServicePoint__c sp, Sale__c sale){
-
+        //List<ServicePoint__c> reseller = [SELECT isReseller__c, SupplyProvince__c FROM ServicePoint__c WHERE Id=:sp.Id WITH SECURITY_ENFORCED ];
         Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
-        if(((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(sp.SupplyProvince__c)))){
+        if(sp.isReseller__c || ((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(sp.SupplyProvince__c)))){
             Sale__c s = new Sale__c(Id=sale.Id);
             s.isTransition__c=true;
            // saleSrv.updateRecord(s);

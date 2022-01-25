@@ -479,16 +479,18 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
     @isTest static void callDataEnrichmentException(){
         
         Order newOrder = [Select id From Order WHERE Name = 'testOrderName0'];
-            
+        
+        String result = '';
+
         Test.setMock(HttpCalloutMock.class, new HDT_WS_ArricchimentoDatiTempMock());
         Test.startTest();
         
-        Order result = HDT_LC_ChildOrderProcessPrecheck.callDataEnrichment('', '', newOrder);
+        HDT_LC_ChildOrderProcessPrecheck.callDataEnrichment('', '', JSON.serialize(newOrder));
         
         Test.stopTest();
         
-        System.assertEquals(newOrder, result, 'callDataEnrichment did not work correctly');
-        System.assertNotEquals(null, result, 'callDataEnrichment did not work correctly');
+
+        System.assertNotEquals('', result, 'callDataEnrichment did not work correctly');
         
     }
     

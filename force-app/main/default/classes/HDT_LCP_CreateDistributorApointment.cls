@@ -25,7 +25,7 @@ public with sharing class HDT_LCP_CreateDistributorApointment {
 
             System.debug('ObjectId ' + objectId);
             System.debug('objectType ' + objectType);
-            
+            HDT_SRV_AppointmentAgenda agendaSrv = new HDT_SRV_AppointmentAgenda();
             switch on objectType {
                 when 'Case' {
                     
@@ -38,7 +38,7 @@ public with sharing class HDT_LCP_CreateDistributorApointment {
                     newActivity.Contact__c = currentCase.ContactId;
                     newActivity.Case__c = currentCase.Id;
                     newActivity.Distributor__c = currentCase.ServicePoint__r.Distributor__c;
-
+                    agendaSrv.setContactData(newActivity, currentCase.Contact);
                 }
                 when 'Order' {
 
@@ -51,7 +51,7 @@ public with sharing class HDT_LCP_CreateDistributorApointment {
                     newActivity.Contact__c = currentOrder.Contact__c;
                     newActivity.Order__c = currentOrder.Id;
                     newActivity.Distributor__c = currentOrder.ServicePoint__r.Distributor__c;
-
+                    agendaSrv.setContactData(newActivity, currentOrder.SalesContact__r);
                 }
                 when else {
 
