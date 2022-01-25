@@ -8,6 +8,7 @@ public inherited sharing class HDT_WRP_Practices {
 
     public class HDT_WRP_TableMetadata {
         @AuraEnabled public String tableTitle;
+        @AuraEnabled public String tableName;
         @AuraEnabled public String iconName;
         @AuraEnabled public List<HDT_WRP_ColumnObj> columns;
     }
@@ -18,12 +19,6 @@ public inherited sharing class HDT_WRP_Practices {
         @AuraEnabled public Integer initialWidth;
         @AuraEnabled public String type;
         @AuraEnabled public Boolean sortable;
-    }
-
-    public class HDT_WRP_Response {
-        public Boolean success;
-        public String message;
-        public String body;
     }
 
 }

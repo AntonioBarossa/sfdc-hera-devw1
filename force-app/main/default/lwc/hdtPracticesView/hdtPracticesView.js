@@ -7,6 +7,7 @@ export default class HdtPracticesView extends LightningElement {
     data = [];
     columns;
     tableTitle;
+    tableName1;
     iconName;
     height1;
 
@@ -14,6 +15,7 @@ export default class HdtPracticesView extends LightningElement {
     data2 = [];
     columns2;
     tableTitle2;
+    tableName2;
     iconName2;
     height2;
 
@@ -29,14 +31,9 @@ export default class HdtPracticesView extends LightningElement {
     @api recordId;
     @api type;
 
-    get showSocialBonusButton(){
-        return this.type === 'socialBonus';
-    }
-
     connectedCallback(){
         console.log('# type: ' + this.type);
         this.getConfiguration();
-        this.backendCall();
     }
 
     getConfiguration(){
@@ -50,19 +47,20 @@ export default class HdtPracticesView extends LightningElement {
  
             this.showSecondTable = true;
             this.tableTitle = result.tables[0].tableTitle;
+            this.tableName1 = result.tables[0].tableName;
             this.iconName = result.tables[0].iconName;
             this.columns = result.tables[0].columns;
             this.height1 = 'topTable';
 
             this.tableTitle2 = result.tables[1].tableTitle;
+            this.tableName2 = result.tables[1].tableName;
             this.iconName2 = result.tables[1].iconName;
             this.columns2 = result.tables[1].columns;
             this.height2 = 'bottomTable';
-
+            this.backendCall();
         }).catch(error => {
-            console.log('# error -> ' + error);
+            console.log('# error -> ' + JSON.stringify(error));
             this.showError = true;
-            //{"status":500,"body":{"message":"No Customer Code!"},"headers":{}}
             this.showErrorMessage = error.body.message;
             this.showSpinner = false;
         });
@@ -75,27 +73,8 @@ export default class HdtPracticesView extends LightningElement {
         callWebService({recordId: this.recordId, type: this.type}).then(result => {
 
             this.showSecondTable = true;
-            this.data = result.details;
-            this.data2 = result.rate;
-            /*var obj = JSON.parse(result);
-            console.log('# success: ' + obj.status);
-
-            if(obj.status==='failed'){
-                console.log('# SAP result failed #');
-                this.showError = true;
-                console.log('>>> ' + obj.errorDetails[0].code + ' - ' + obj.errorDetails[0].message);
-                this.showErrorMessage = obj.errorDetails[0].message;
-                this.showSpinner = false;            
-            } else {
-                if(this.type != 'cmor'){
-                    this.data = obj.data.posizioni;
-                } else {
-                    this.showSecondTable = true;
-                    this.data = obj.data.venditoreEntrante;
-                    this.data2 = obj.data.venditoreUscente;
-                }
-            }*/
-
+            this.data = result[this.tableName1];
+            this.data2 = result[this.tableName2];
             this.showSpinner = false;
             
         }).catch(error => {
@@ -187,10 +166,6 @@ export default class HdtPracticesView extends LightningElement {
         } catch(e) {
             console.log(e);
         }
-    }
-
-    openKnowledgeArticle(){
-        console.log('apertura articolo knowledge con importi bonus sociale');
     }
 
 }

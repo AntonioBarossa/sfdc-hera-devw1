@@ -6,15 +6,6 @@
 
     <div if:true={showError} class="slds-text-align_center">
         <lightning-card>
-            <!--<lightning-icon icon-name="utility:wifi"
-                alternative-text="Warning!"
-                title="Warning"
-                size="large"
-            ></lightning-icon>
-
-        <div class="slds-box slds-box_x-small slds-m-top_x-large slds-text-heading_medium">
-            <p>{showErrorMessage}</p>
-        </div>-->
 
             <c-hdt-custom-illustration
                 message={showErrorMessage}
@@ -26,12 +17,6 @@
 
     <template if:false={showError} >
         <lightning-card  icon-name={iconName} title={tableTitle}>
-
-            <template if:true={showSocialBonusButton}>
-                <div class="slds-p-around_medium lgc-bg slds-p-left_small" slot="actions">
-                    <lightning-button label="Importo Bonus Sociale" onclick={openKnowledgeArticle}></lightning-button>
-                </div>
-            </template>
 
             <div class={height1} >
                 <lightning-datatable

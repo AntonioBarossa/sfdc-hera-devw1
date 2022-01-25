@@ -7,13 +7,6 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
         dataTable.details = new List<Object>();
         dataTable.rate = new List<Object>();
 
-        System.debug('# ' + this.body);
-
-        Map<String, Object> responseMap = (Map<String, Object>)JSON.deserializeUntyped(body);
-
-        Object statusResult = responseMap.get('status');
-        System.debug('>>> status: ' + String.valueOf(statusResult));
-
         List<Object> dataList = (List<Object>)responseMap.get('data');
         Map<String, Object> dataMap = (Map<String, Object>)dataList[0];
         List<Object> detailsList = (List<Object>)dataMap.get('details');
