@@ -24,6 +24,8 @@ export default class HdtAppointmentHandler extends LightningElement{
     showAgenda = false;
     showForm = false;
     hasRendered = false;
+    variant='offline';
+    alertMessage = 'Per prendere l\'appuntamento seleziona Prendi Appuntamento. Una volta confermato l\'appuntamento non sarà possibile modificarlo o annullarlo in autonomia ma sarà necessario contattare il servizio clienti. Ti ricordiamo che hai a disposizione 24 ore per prendere l\'appuntamento.';
     @api confirmed = false;
     @api isCommunity = false;
     @api recordId;
@@ -42,17 +44,17 @@ export default class HdtAppointmentHandler extends LightningElement{
 
     @wire(getActivity,{activityId : '$recordId', fields: OBJECT_FIELDS })
     wiredActivity(value){
-        console.log('@@@@@isCommunity ' + this.isCommunity);
-
         this.wiredActivity = value;
         const { data, error } = value; 
         if (data){
             this.activity = JSON.parse(data);
             let stato = this.activity.wrts_prcgvr__Status__c;
-            console.log('@@@@@stato ' + stato);
-
             if((stato=='Appuntamento confermato' || stato=='Modifica confermata') && this.isCommunity){
                 this.confirmed=true;
+            }
+            if(stato=='Appuntamento di competenza Distributore'){
+                this.alertMessage = 'L\'appuntamento è in carico al distributore che la contatterà per fissare un appuntamento.'
+                this.variant = 'error';
             }
             if(this.confirmed==false){
                 this.tempList.forEach( item =>{
@@ -98,8 +100,6 @@ export default class HdtAppointmentHandler extends LightningElement{
                     item.enable = enable; 
                 });
             }
-            console.log('@@@@@isConfirmed ' + this.confirmed);
-
             this.showAgenda = false;
             this.showForm = false;
         }else if (error){

@@ -394,6 +394,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('isVolture: '+this.isVolture);
         console.log('isRetroactive: '+this.isRetroactive);
         console.log('isReading: '+this.isReading)
+        console.log('isUpdateStep: '+this.sectionDataToSubmit.length > 0);
         let orderId = this.order.Id;
         //FINE SVILUPPI EVERIS
         //INSERITE NUOVE VARIABILI, IsRetroactive e IsReading solo in avanzamento di sezione.  
