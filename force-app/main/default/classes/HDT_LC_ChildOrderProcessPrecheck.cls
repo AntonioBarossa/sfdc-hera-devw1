@@ -91,8 +91,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
                     newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                     newOrder.SapContractCode__c = sapCode;
+                    newOrder.Id = orderId;
                     //@frpanico "Chiamata Arricchimento Dati" per ulteriori predefault
-                    newOrder = callDataEnrichment(order.SAPImplantCode__c,sapCode,newOrder);
+                    callDataEnrichment(order.SAPImplantCode__c,sapCode,JSON.serialize(newOrder));
                     //newOrder = orderUtl.enrichOrder(newOrder);
                     //orderSrv.updateRecord(newOrder);
                     String tax = order.CommodityFormula__c == 'Energia Elettrica' ? newOrder.ExciseEle__c : newOrder.ExciseGAS__c;
@@ -157,8 +158,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
      * An handler method is called
      */
     @TestVisible
-    private static Order callDataEnrichment(String servicePointCode, String contractCode, Order newOrder)
+    @Future(Callout = true)
+    private static void callDataEnrichment(String servicePointCode, String contractCode, String newOrderSerialized)
     {
+        Order newOrder = (Order)JSON.deserialize(newOrderSerialized, Order.class);
+        Order orderToUpdate = new Order();
+        orderToUpdate.Id = newOrder.Id;
         HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
         List<Order> orderList = new List<Order>();
         try
@@ -171,16 +176,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             Map<String,List<Object>> inputMap = new Map<String, List<Object>>
             {
                 'posizioni' => positions,
-                'sobjList' => new List<Order>{newOrder}
+                'sobjList' => new List<Order>{orderToUpdate}
             };
 
              orderList = voltureChangeSrv.handleResponseDataEnrichment(inputMap);
 
         } catch(Exception e){
-            return newOrder;
+            System.debug(LoggingLevel.DEBUG, 'Error');
         } 
 
-        return orderList[0];
+        HDT_UTL_DatabaseService.updateSObject(orderList);
     }
 
     @AuraEnabled

@@ -65,6 +65,7 @@ export default class HdtAppointmentSelf extends LightningElement {
         this.recordId = this.activityid;
         getCommunityBaseUrl()
         .then(result => {
+            console.log('@@@@@ baseUrl  ' + result);
             this.communityBasePath = result; 
         })
     }
@@ -117,10 +118,21 @@ export default class HdtAppointmentSelf extends LightningElement {
                     activityId : this.recordId
                 }).then((data) => {
                     fields[CRIPTO_FIELD.fieldApiName] = data;
-                    this.communityBasePath+="?c__activityId="+data;
-                    console.log("Krist  "+ data);
-                    fields[URL_FIELD.fieldApiName] = this.communityBasePath;
-                    formRecordEdit.submit(fields);
+                    if (this.communityBasePath.localeCompare('link inesistente') != 0){
+                        this.communityBasePath+="?c__activityId="+data;
+                        console.log("Krist  "+ data);
+                        fields[URL_FIELD.fieldApiName] = this.communityBasePath;
+                        formRecordEdit.submit(fields);
+                    }else{
+                        updateRecord = false;
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Errore',
+                                message: 'Attenzione! Mancano delle configurazioni per poter configurare l\'url per l\'appuntamento self. Contattare l\'amministratore.',
+                                variant: 'error'
+                            })
+                        );
+                    }
                     this.closeModal(updateRecord);
                 }).catch((error) => {
                     console.error(error);

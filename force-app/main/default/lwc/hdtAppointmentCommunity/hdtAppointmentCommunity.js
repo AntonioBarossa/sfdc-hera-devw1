@@ -46,6 +46,7 @@ export default class HdtAppointmentCommunity extends LightningElement {
                 this.setShowItem(false,true,false,false);
             }else{
                 console.log('gestione da autenticare');
+                this.setShowItem(true,false,false,false);
                 getDecryptedId({
                     cryptedId : currentPageReference.state.c__activityId,
                     fields : FIELDS_TO_RETRIEVE
@@ -63,7 +64,6 @@ export default class HdtAppointmentCommunity extends LightningElement {
                     this.message = JSON.stringify(error.body.message);
                     this.setShowItem(false,false,false,true);
                 })
-                this.setShowItem(false,false,true,false);
             }
         }else{
             this.message = 'Attenzione! Non è stato trovato nessun appuntamento';
