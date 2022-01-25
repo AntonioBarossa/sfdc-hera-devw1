@@ -59,4 +59,19 @@ public with sharing class HDT_LC_DocumentValidationTst {
     //         System.assertNotEquals(null, ord);
     //     Test.stopTest();
     // }
+
+    @isTest
+    static void testgetOrderAccountId(){
+        
+        Order ord = [SELECT id From Order LIMIT 1];
+        
+        Test.startTest();
+
+            String result;
+            result = HDT_LC_DocumentValidation.getOrderAccountId(ord.Id);
+
+        Test.stopTest();
+
+        System.assertNotEquals(null, result, 'getOrderAccountId did not work correctly');
+    }
 }
