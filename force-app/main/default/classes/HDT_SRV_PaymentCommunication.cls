@@ -23,7 +23,7 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
 
         modalitaPagamento = (currentCase.DocumentPaymentMethod__c.equalsIgnoreCase('Virtual Account'));
         Map<String, Object> caseMap;
-        if(String.valueOf(case.Type).equalsIgnoreCase('Promessa di Pagamento Ente')){
+        if(String.valueOf(currentCase.Type).equalsIgnoreCase('Promessa di Pagamento Ente')){
             caseMap = new Map<String, Object>{
                 'rds' => currentCase.CaseNumber,
                 'totale' => currentCase.TotalToPay__c,
@@ -32,6 +32,7 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
                 'modalitaPagamento' => modalitaPagamento,
                 'abi' => currentCase.IbanABI__c,
                 'intestatarioContoOrdinante' => currentCase.BeneficiaryAccount__r.Name,
+                'type' => currentCase.Type,
                 'comuneEnte' => currentCase.CityOrInstitution__c,
                 'note' => currentCase.Note__c
             };
@@ -43,7 +44,8 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
                 'dataPagamento' => currentCase.PaymentDate__c,
                 'modalitaPagamento' => modalitaPagamento,
                 'abi' => currentCase.IbanABI__c,
-                'intestatarioContoOrdinante' => currentCase.BeneficiaryAccount__r.Name
+                'intestatarioContoOrdinante' => currentCase.BeneficiaryAccount__r.Name,
+                'type' => currentCase.Type
             };
         }
 
