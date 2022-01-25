@@ -100,6 +100,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         {
             result = validateEndDate(fields);
         
+        }else if(caseType == 'Promessa di Pagamento Ente')
+        {
+            result = validatePromessaDiPagamentoENte(currentCase);
+        
         }else {
 
         result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
@@ -1261,6 +1265,17 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     public String getFieldValue(String fields, String fieldToGet){
         Map<String, Object> fieldsMap = (Map<String, Object>) JSON.deserializeUntyped(fields);
         return String.valueOf(fieldsMap.get(fieldToGet));
+    }
+
+    public String validatePromessaDiPagamentoENte(Case currentCase){
+        String result='';
+        List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+        if(attachedDocument.size() == 0){
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
+        }else{
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        }
+        return result;
     }
 
 }

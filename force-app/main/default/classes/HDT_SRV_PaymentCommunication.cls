@@ -1,6 +1,6 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_SRV_PaymentCommunication {
- 
+  
     HDT_QR_Payments paymentsQr = new HDT_QR_Payments();
     HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
 
@@ -22,15 +22,30 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
         System.debug(LoggingLevel.DEBUG, 'SRV_PaymentCommunication Documetns--> '+documents);
 
         modalitaPagamento = (currentCase.DocumentPaymentMethod__c.equalsIgnoreCase('Virtual Account'));
-        Map<String, Object> caseMap = new Map<String, Object>{
-            'rds' => currentCase.CaseNumber,
-            'totale' => currentCase.TotalToPay__c,
-            'residuo' => currentCase.TotalToPay__c,
-            'dataPagamento' => currentCase.PaymentDate__c,
-            'modalitaPagamento' => modalitaPagamento,
-            'abi' => currentCase.IbanABI__c,
-            'intestatarioContoOrdinante' => currentCase.BeneficiaryAccount__r.Name
-        };
+        Map<String, Object> caseMap;
+        if(String.valueOf(case.Type).equalsIgnoreCase('Promessa di Pagamento Ente')){
+            caseMap = new Map<String, Object>{
+                'rds' => currentCase.CaseNumber,
+                'totale' => currentCase.TotalToPay__c,
+                'residuo' => currentCase.TotalToPay__c,
+                'dataPagamento' => currentCase.PaymentDate__c,
+                'modalitaPagamento' => modalitaPagamento,
+                'abi' => currentCase.IbanABI__c,
+                'intestatarioContoOrdinante' => currentCase.BeneficiaryAccount__r.Name,
+                'comuneEnte' => currentCase.CityOrInstitution__c,
+                'note' => currentCase.Note__c
+            };
+        }else{
+            caseMap = new Map<String, Object>{
+                'rds' => currentCase.CaseNumber,
+                'totale' => currentCase.TotalToPay__c,
+                'residuo' => currentCase.TotalToPay__c,
+                'dataPagamento' => currentCase.PaymentDate__c,
+                'modalitaPagamento' => modalitaPagamento,
+                'abi' => currentCase.IbanABI__c,
+                'intestatarioContoOrdinante' => currentCase.BeneficiaryAccount__r.Name
+            };
+        }
 
         caseListMap.add(caseMap);
 

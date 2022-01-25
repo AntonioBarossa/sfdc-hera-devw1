@@ -44,6 +44,7 @@
             <controllingFieldValue>Attivazione Click&amp;Pay</controllingFieldValue>
             <controllingFieldValue>Richiesta Domiciliazione</controllingFieldValue>
             <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
+            <controllingFieldValue>Promessa di Pagamento Ente</controllingFieldValue>
             <valueName>Pagatore Alternativo</valueName>
         </valueSettings>
         <valueSettings>
@@ -52,6 +53,7 @@
             <controllingFieldValue>Richiesta Domiciliazione</controllingFieldValue>
             <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
             <controllingFieldValue>Rimborso</controllingFieldValue>
+            <controllingFieldValue>Promessa di Pagamento Ente</controllingFieldValue>
             <valueName>Stesso Sottoscrittore</valueName>
         </valueSettings>
         <valueSettings>
