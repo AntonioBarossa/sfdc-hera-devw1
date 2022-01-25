@@ -31818,8 +31818,24 @@
         <recordType>Order.HDT_RT_Voltura</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Order-Switch in</layout>
+        <recordType>Order.HDT_RT_VolturaConSwitch</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Order-Prima attivazione</layout>
         <recordType>Order.HDT_RT_Attivazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Cambio Offerta</layout>
+        <recordType>Order.HDT_RT_CambioUso</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Cambio Offerta</layout>
+        <recordType>Order.HDT_RT_CambioOfferta</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <recordType>Order.HDT_RT_Default</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-Prima attivazione con modifica</layout>
