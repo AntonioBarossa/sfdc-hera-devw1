@@ -611,36 +611,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>hdtDocumentActivityValidation</componentName>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-68773je6c26</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>active</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-68773je6c26</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Validazione Documenti</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-yfr30voptd</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
                 <componentName>hdtVOActivityValidation</componentName>
             </componentInstance>
         </itemInstances>
@@ -1224,7 +1194,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CreditCheckResults__c</fieldItem>
             </fieldInstance>
@@ -1240,7 +1210,21 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CreditCheckResolutionReason__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
                 <fieldItem>Record.RecordTypeId</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Note__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2ec7406d-2c28-4619-94f8-33ab969318d6</name>
@@ -1249,11 +1233,12 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.CreditCheckResolutionReason__c</fieldItem>
+                <fieldItem>Record.wrts_prcgvr__Status__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Reason__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1717,28 +1702,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>tabs</name>
-                    <value>Facet-yfr30voptd</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tabset</componentName>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Validazione Documentale</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Chiusa</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>tabs</name>
                     <value>Facet-834e85ed-900f-436e-9f7f-cb4f0cb5b10b</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
@@ -1912,7 +1875,7 @@
             <componentInstance>
                 <componentName>hdtAppointmentExtraSist</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
+                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
@@ -1947,6 +1910,11 @@
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Appuntamento eseguito</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Appuntamento di competenza Distributore</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

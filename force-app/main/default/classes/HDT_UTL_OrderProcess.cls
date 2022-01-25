@@ -990,7 +990,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 if((oldPhase.indexOf('Annullamento - ') == -1 && oldPhase.indexOf('Ripensamento - ') == -1)
                     || newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
                 {
-				    orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
+				    orderNew.PhaseStory__c = !String.isBlank(orderNew.PhaseStory__c) 
+                        ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c
+                        : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
                     return true;
                 }
                 return false;

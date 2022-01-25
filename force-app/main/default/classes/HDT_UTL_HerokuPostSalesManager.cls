@@ -510,6 +510,15 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.Phase__c = 'Annullato';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
+        /**@frpanico 21/01/2022
+         * Aggiunto completamento automatico
+         * per il processo di "Verifica dati al DL"
+         */
+        }else if(currentCase.Type.equalsIgnoreCase('Verifica Dati al DL') && currentCase.Phase__c.equalsIgnoreCase('Esito OK da DL'))
+        {
+            currentCase.Phase__c = 'Completata';
+            currentCase.Status = 'Closed';
+            updateFuture(JSON.serialize(currentCase));
         }
     }
     //se Annullamento SII - Ricezione e Storno N --> Aggiornare in Annullamento SII e dopo in Annullato SII

@@ -31,13 +31,14 @@ export default class HdtAppointmentExtraSist extends LightningElement {
     @track showConfirmDialog= false; //show confirm after confirm appointment
     @track showAppointmentModal= false; //show Modal after Edit Appointment
     @track showSpinner=true;
-    
+    showAppointmentField = false;
     
     activity = {};
     labelName;
     confermaAppuntamento = true;
     showComponent=false;
-    nextStato = 'Appuntamento confermato';
+    actualState;
+    messageConfirmDialog = 'Una volta confermato l\'appuntamento non sarà possibile ritornare allo stato creata. Continuare?';
 
     //campi record edit form
     slot;
@@ -76,8 +77,8 @@ export default class HdtAppointmentExtraSist extends LightningElement {
         } else if (data) {
             this.activity = data;
             console.log('@@@@data wired method ' + JSON.stringify(data));
-            let stato = this.activity.fields.wrts_prcgvr__Status__c.value;
-            if ((stato === 'Appuntamento confermato' || stato === 'Modifica confermata') && !this.activity.fields.IsAppointmentToEdit__c.value){
+            this.actualState = this.activity.fields.wrts_prcgvr__Status__c.value;
+            if ((this.actualState === 'Appuntamento confermato' || this.actualState === 'Modifica confermata') && !this.activity.fields.IsAppointmentToEdit__c.value){
                 console.log('@@@@ entro in if');
                 this.labelName = 'Modifica Appuntamento';
                 this.confermaAppuntamento = false;
@@ -88,13 +89,12 @@ export default class HdtAppointmentExtraSist extends LightningElement {
                     this.activity.fields.AppointmentCompetence__c.value,
                     this.activity.fields.AppointmentCode__c.value
                 );
-                let stato = this.activity.fields.wrts_prcgvr__Status__c.value;
-                if (stato === 'Modifica appuntamento in corso'){
-                    this.nextStato = 'Modifica confermata';
-                }
                 console.log('@@@@ entro in else');
                 this.labelName = 'Conferma Appuntamento';
                 this.confermaAppuntamento = true;
+            }
+            if (this.activity.fields.AppointmentCompetence__c.value === 'Vendita'){
+                this.showAppointmentField = true;
             }
             this.showSpinner= false; 
             console.log('@@@@fine data wired method');
@@ -107,13 +107,18 @@ export default class HdtAppointmentExtraSist extends LightningElement {
         if (event.detail.status){
             const fields = {};
             fields[ID_FIELD.fieldApiName] = this.activity.fields.Id.value;
-            fields[APP_CODE_FIELD.fieldApiName] = this.appCode;
-            fields[APP_COMP_FIELD.fieldApiName] = this.appComp;
-            fields[CONF_SLOT_FIELD.fieldApiName] = this.slot;
-            fields[CONF_APP_FIELD.fieldApiName] = this.appointment;
-            fields[STATUS_FIELD.fieldApiName] = this.nextStato;
             fields[APP_EDIT_FIELD.fieldApiName] = false;
             fields[NOTE_FIELD.fieldApiName] = '';
+            fields[APP_COMP_FIELD.fieldApiName] = this.appComp;
+            fields[APP_CODE_FIELD.fieldApiName] = this.appCode;
+            fields[CONF_SLOT_FIELD.fieldApiName] = this.slot;
+            fields[CONF_APP_FIELD.fieldApiName] = this.appointment;
+            if (!this.showAppointmentField){
+                fields[STATUS_FIELD.fieldApiName] = 'Appuntamento di competenza Distributore';
+            }else{
+                fields[STATUS_FIELD.fieldApiName] = (this.actualState === 'Modifica appuntamento in corso')? 'Modifica confermata' : 'Appuntamento confermato';
+            };
+            
 
 
             const recordInput = { fields };
@@ -160,11 +165,14 @@ export default class HdtAppointmentExtraSist extends LightningElement {
     handleSubmit(event){
         event.preventDefault(); 
         if (this.confermaAppuntamento){
-            let slot = this.template.querySelector("lightning-input[data-id='slotInput']").value; 
-            let appointment = this.template.querySelector("lightning-input[data-id='appointmentInput']").value; 
-            let appComp= this.template.querySelector("lightning-combobox[data-id='appCompInput']").value; 
-            let appCode = this.template.querySelector("lightning-input[data-id='appCodeInput']").value; 
-            if (this.setRecordFieldValue(appointment,slot,appComp,appCode) && this.notEmpty(appointment,slot,appComp,appCode)){
+            let appComp= this.template.querySelector("lightning-combobox[data-id='appCompInput']").value;
+            let slot = (this.showAppointmentField) ? this.template.querySelector("lightning-input[data-id='slotInput']").value : ''; 
+            let appointment = (this.showAppointmentField) ? this.template.querySelector("lightning-input[data-id='appointmentInput']").value : null;  
+            let appCode = (this.showAppointmentField) ? this.template.querySelector("lightning-input[data-id='appCodeInput']").value : ''; 
+            if (this.setRecordFieldValue(appointment,slot,appComp,appCode) && (this.notEmpty(appointment,slot,appComp,appCode))){
+                if (!this.showAppointmentField){
+                    this.messageConfirmDialog = 'Attenzione! L\'attività verrà impostata in carico al distributore e non sarà più possibile modificarla. Continuare?';
+                }
                 this.showConfirmDialog = true;
             }
         }else{
@@ -194,7 +202,7 @@ export default class HdtAppointmentExtraSist extends LightningElement {
         }   
     }
 
-    setRecordFieldValue(/* _note, */_appointemnt,_slot,_appComp,_appCode){
+    setRecordFieldValue(_appointemnt,_slot,_appComp,_appCode){
         console.log('@@@@@dentro set field value');
         if (this.checkSlot(_slot)){
             console.log('@@@@@dentro set field value if');
@@ -203,7 +211,6 @@ export default class HdtAppointmentExtraSist extends LightningElement {
             this.appointment = _appointemnt;
             this.appComp=_appComp;
             this.appCode=_appCode;
-            //this.note=_note;
             console.log('@@@@@dentro set field value con true');
             return true;
         }else{
@@ -227,12 +234,12 @@ export default class HdtAppointmentExtraSist extends LightningElement {
         if (!appointemnt){
             console.log('@@@@@not Empty appointent');
             message += 'Data Appuntamento Confermato; ';
-            response = false;
+            response = !this.showAppointmentField;
         }
         if (!slot){
             console.log('@@@@@not Empty slot');
             message += 'Fascia appuntamento confermato; ';
-            response = false;
+            response = !this.showAppointmentField;
         }
         if (!competenza){
             console.log('@@@@@not Empty competenza');
@@ -242,7 +249,7 @@ export default class HdtAppointmentExtraSist extends LightningElement {
         if (!codiceAppuntamento){
             console.log('@@@@@not Empty cod app');
             message+= 'Codice Appuntamento; ';
-            response = false;
+            response = !this.showAppointmentField;
         }
         if (!response){
             this.dispatchEvent(
@@ -260,5 +267,11 @@ export default class HdtAppointmentExtraSist extends LightningElement {
     closeModal(event){
         console.log('@@@@closeModal');
         this.showAppointmentModal = false;
+    }
+
+    changeValue(event){
+        console.log('@@@@change ' +event.detail.value);
+        console.log('@@@@change ' +JSON.stringify(event.detail));
+        this.showAppointmentField = (event.detail.value === 'Vendita');
     }
 }

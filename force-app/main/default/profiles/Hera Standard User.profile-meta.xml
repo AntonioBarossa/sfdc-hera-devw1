@@ -480,7 +480,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>RateCategory__c.Fornitura__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>RateCategory__c.CalculatedValue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.recordtypeid</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -491,6 +501,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>RateCategory__c.DistributorCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ManuallyReassigned__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8468,6 +8483,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.OldWasteContract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.OldContractMoMi__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22316,6 +22336,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SBQQ__Subscription__c.ProductCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__Subscription__c.VersionFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SBQQ__Subscription__c.Campaign__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -30493,6 +30523,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Agency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__AsyncJob__c.wrts_prcgvr__ApexClassName__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -31793,8 +31828,28 @@
         <recordType>Order.HDT_RT_Voltura</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Order-Switch in</layout>
+        <recordType>Order.HDT_RT_VolturaConSwitch</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Order-Prima attivazione</layout>
         <recordType>Order.HDT_RT_Attivazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Cambio Offerta</layout>
+        <recordType>Order.HDT_RT_CambioUso</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Cambio Offerta</layout>
+        <recordType>Order.HDT_RT_CambioOfferta</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <recordType>Order.HDT_RT_Default</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Prima attivazione con modifica</layout>
+        <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-Prima attivazione con modifica</layout>

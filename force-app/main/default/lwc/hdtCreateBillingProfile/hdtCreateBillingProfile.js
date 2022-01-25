@@ -9,6 +9,10 @@ export default class hdtCreateBillingProfile extends LightningElement {
     recordId = '';
 
     @api
+    disableCreate(){
+        this.disabledInput = true;
+    }
+    @api
     handleCloneEvent(cloneId){
         console.log('handleCloneEvent: ', cloneId);
         this.showForm = true;

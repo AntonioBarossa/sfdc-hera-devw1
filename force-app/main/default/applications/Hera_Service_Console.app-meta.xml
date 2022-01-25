@@ -562,7 +562,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>HDT_Order_Volture_Page</content>
+        <content>HDT_Order_Default</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Order</pageOrSobjectType>
         <recordType>Order.HDT_RT_Voltura</recordType>
@@ -571,7 +571,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>HDT_Order_Volture_Page</content>
+        <content>HDT_Order_Default</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Order</pageOrSobjectType>
         <recordType>Order.HDT_RT_Voltura</recordType>
@@ -589,7 +589,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>HDT_Order_Volture_Page</content>
+        <content>HDT_Order_Default</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Order</pageOrSobjectType>
         <recordType>Order.HDT_RT_Voltura</recordType>
@@ -598,7 +598,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>HDT_Order_Volture_Page</content>
+        <content>HDT_Order_Default</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Order</pageOrSobjectType>
         <recordType>Order.HDT_RT_Voltura</recordType>
@@ -706,7 +706,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>HDT_Order_Volture_Page</content>
+        <content>HDT_Order_Default</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Order</pageOrSobjectType>
         <recordType>Order.HDT_RT_Voltura</recordType>
@@ -715,7 +715,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>HDT_Order_Volture_Page</content>
+        <content>HDT_Order_Default</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Order</pageOrSobjectType>
         <recordType>Order.HDT_RT_Voltura</recordType>

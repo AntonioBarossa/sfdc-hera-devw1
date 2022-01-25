@@ -2,18 +2,13 @@
     <c-hdt-appointment-handler if:true={showAgenda} is-community="true" record-id={recordId}></c-hdt-appointment-handler>
     <template if:false={showAgenda}>
         <lightning-quick-action-panel header="Gestisci Appuntamento">
-            <div class="slds-modal__content" id="welcome-mat-113-content">
-                <template if:true={showSpinner}>
-                    <div class="demo-only demo--inverse" style="height:300px;position:relative">
-                        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
-                    </div>
-                </template>
-                <c-hdt-appointment-alert if:true={showError} variant="error" is-dismissible="false">
-                    <h2>{message}</h2>
-                </c-hdt-appointment-alert>
-                <template if:true={showLogin}>
-                    <div class="slds-welcome-mat__tiles">
-                        <div class="slds-form-element slds-form-element_compound">
+            <div class="slds-modal__content" id="welcome-mat-113-content">        
+                <div class="slds-welcome-mat__tiles">
+                    <div class="slds-form-element slds-form-element_compound">
+                        <c-hdt-appointment-alert if:true={showError} variant="error" is-dismissible="false">
+                            <h2>{message}</h2>
+                        </c-hdt-appointment-alert>
+                        <template if:true={showLogin}>
                             <div class="slds-form-element__control">
                                 <div class="slds-form-element__row">
                                     <div class="slds-size_1-of-12 slds-p-top_medium"></div>
@@ -65,12 +60,19 @@
                                     <div class="slds-size_1-of-4 slds-p-top_medium"></div>
                                 </div>
                             </div>
-                        </div>
+                        </template>
+                    </div>
+                    <template if:true={showLogin}>
                         <div class="slds-m-top_medium slds-p-bottom_small slds-text-align_center">
                             <lightning-button disabled={disabledButton} variant="brand" label="Avanti" onclick={handleAuthenticate} class="slds-m-left_x-small" icon-name="utility:check"></lightning-button>
                         </div>
-                    </div>
-                </template>
+                    </template>
+                    <template if:true={showSpinner}>
+                        <div class="demo-only demo--inverse" style="height:300px;position:relative">
+                            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                        </div>
+                    </template>
+                </div> 
             </div>
         </lightning-quick-action-panel>
     </template>
