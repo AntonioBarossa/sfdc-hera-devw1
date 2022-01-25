@@ -31544,6 +31544,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-Prima attivazione con modifica</layout>
+        <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Prima attivazione con modifica</layout>
         <recordType>Order.HDT_RT_AttivazioneConModifica</recordType>
     </layoutAssignments>
     <layoutAssignments>
