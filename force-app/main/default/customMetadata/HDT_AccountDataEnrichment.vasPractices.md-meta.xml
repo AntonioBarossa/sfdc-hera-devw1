@@ -15,6 +15,7 @@
         <value xsi:type="xsd:string">[
   {
     &quot;tableTitle&quot;: &quot;Dettagli pratiche VAS&quot;,
+    &quot;tableName&quot;: &quot;details&quot;,
     &quot;iconName&quot;: &quot;standard:record_update&quot;,
     &quot;columns&quot;: [
       {
@@ -91,6 +92,7 @@
   },
   {
     &quot;tableTitle&quot;: &quot;Totale rate&quot;,
+    &quot;tableName&quot;: &quot;rate&quot;,
     &quot;iconName&quot;: &quot;standard:record_update&quot;,
     &quot;columns&quot;: [
       {
