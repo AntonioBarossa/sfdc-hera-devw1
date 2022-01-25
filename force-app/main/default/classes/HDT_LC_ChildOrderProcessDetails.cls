@@ -73,11 +73,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
         Order currentOrder = new Order();
             
-        /* If isUpdateStep query the currentOrder */
-        if(isUpdateStep != null && isUpdateStep == true)
-        {
-            currentOrder = voltureChangeQr.getOrderInfosById(order.Id)[0];
-        }
+        /* Query the currentOrder */
+        currentOrder = voltureChangeQr.getOrderInfosById(order.Id)[0];
         //INIZIO SVILUPPI EVERIS CHECK VOLTURA
         if(isVolture != null && isVolture == true){
             // Order oldOrder = orderQr.getRecordById(order.Id);
@@ -262,7 +259,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                 metas = [SELECT QuoteType__c, OperationCode__c FROM QuoteManagement__c 
                     WHERE CausalCode__c=:ord.ProcessCode__c AND VendDist__c =:distributor AND VoltageRequired__c =:ord.VoltageLevel__c
                         AND ( EnergyUseType__c= :ord.UseTypeEnergy__c OR EnergyUseType__c='')
-                        AND PowerRequired__c=:powerRange AND ComparePotRi__c=:checkPrPc AND Operation_type__c =:ord.recordType.DeveloperName
+                        AND PowerRequired__c=:powerRange AND (ComparePotRi__c=:checkPrPc OR ComparePotRi__c='') AND Operation_type__c =:ord.recordType.DeveloperName
                     WITH SECURITY_ENFORCED
                     ORDER BY EnergyUseType__c NULLS LAST
                 ];

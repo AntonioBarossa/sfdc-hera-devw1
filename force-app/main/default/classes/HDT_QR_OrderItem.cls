@@ -17,6 +17,11 @@ public inherited sharing class HDT_QR_OrderItem {
         Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
         famils.add('VAS Prodotto');
         famils.add('VAS Servizio');
+        /**@frpanico 21/01/2022
+         * Aggiunta famiglia VAS Fatturabili
+         * Per includere gli order di Analisi Consumi
+         */
+        famils.add('VAS Fatturabili');
         return [
             SELECT
             ServicePoint__c,
