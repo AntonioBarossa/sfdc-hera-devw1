@@ -9799,7 +9799,7 @@
         <field>Event.WhoId</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+    <!-- <fieldPermissions>
         <editable>true</editable>
         <field>FulfillmentDateMatrix__c.ActivationDate__c</field>
         <readable>true</readable>
@@ -9838,7 +9838,7 @@
         <editable>true</editable>
         <field>FulfillmentDateMatrix__c.VoltageLevel__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions> -->
     <!-- <fieldPermissions>
         <editable>true</editable>
         <field>FieldCoerenceServicePoint__c.AccountCategory__c</field>
@@ -32146,7 +32146,7 @@
         <object>DiscardAnnullmentRule__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    <objectPermissions>
+    <!-- <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
@@ -32154,7 +32154,7 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>FulfillmentDateMatrix__c</object>
         <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
+    </objectPermissions> -->
     <!-- <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
