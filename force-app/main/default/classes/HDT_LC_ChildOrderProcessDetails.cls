@@ -269,7 +269,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                     WHERE RequestedPhase__c =:ord.RequestPhase__c AND ConnectionType__c=:ord.ConnectionType__c 
                         AND CausalCode__c=:ord.ProcessCode__c AND VendDist__c =:distributor AND VoltageRequired__c =:ord.VoltageLevel__c
                         AND ( EnergyUseType__c= :ord.UseTypeEnergy__c OR EnergyUseType__c='')
-                        AND PowerRequired__c=:powerRange AND ComparePotRi__c=:checkPrPc AND Operation_type__c =:ord.recordType.DeveloperName
+                        AND PowerRequired__c=:powerRange AND (ComparePotRi__c=:checkPrPc OR ComparePotRi__c= '' ) AND Operation_type__c =:ord.recordType.DeveloperName
                     WITH SECURITY_ENFORCED
                     ORDER BY EnergyUseType__c NULLS LAST
                 ];

@@ -3150,6 +3150,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>MarketingPrivacyAcquired__c</picklist>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Volture__c</picklist>
         <values>
             <fullName>Con Autolettura</fullName>
