@@ -8,7 +8,7 @@
         visible={showConfirmDialog}
         onclick={handleConfirmDialogClick}
         title="Attenzione!" 
-        message="Una volta confermato l'appuntamento non sarà possibile ritornare allo stato creata. Continuare"
+        message={messageConfirmDialog}
         cancel-label="No"
         confirm-label="Sì"
         original-message="Risposta Appuntamento Confermato">
@@ -28,28 +28,26 @@
                         <template if:true={confermaAppuntamento}>
                             <div class="slds-form-element__row">
                                 <div class="slds-size_2-of-3 slds-p-top_medium">
-                                    <!--lightning-input-field field-name="AppointmentDate__c" required="true" value={appointment}> </lightning-input-field-->
-                                    <lightning-input data-id='appointmentInput' type="date" label="Data Appuntamento Confermato" value={appointment} required="true"></lightning-input>
+                                    <lightning-combobox data-id="appCompInput" placeholder="nessuno" label="Competenza Appuntamento" value={appComp} options={optionsComp} required="true" onchange={changeValue}></lightning-combobox>
                                 </div>
                             </div>
-                            <div class="slds-form-element__row">
-                                <div class="slds-size_2-of-3 slds-p-top_medium">
-                                    <!--lightning-input-field field-name="AppoitmentTimeSlotConfirmed__c" required="true" value={slot}> </lightning-input-field-->
-                                    <lightning-input data-id='slotInput' type="text" label="Fascia appuntamento confermato" placeholder = "hh:mm/hh:mm" value={slot} required="true"></lightning-input>
+                            <template if:true={showAppointmentField}>
+                                <div class="slds-form-element__row">
+                                    <div class="slds-size_2-of-3 slds-p-top_medium">
+                                        <lightning-input data-id='appointmentInput' type="date" label="Data Appuntamento Confermato" value={appointment} required="true"></lightning-input>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="slds-form-element__row">
-                                <div class="slds-size_2-of-3 slds-p-top_medium">
-                                    <!--lightning-input-field field-name="AppointmentCompetence__c" required="true" value={appComp}> </lightning-input-field-->
-                                    <lightning-combobox data-id="appCompInput" placeholder="nessuno" label="Competenza Appuntamento" value={appComp} options={optionsComp} required="true"></lightning-combobox>
+                                <div class="slds-form-element__row">
+                                    <div class="slds-size_2-of-3 slds-p-top_medium">
+                                        <lightning-input data-id='slotInput' type="text" label="Fascia appuntamento confermato" placeholder = "hh:mm/hh:mm" value={slot} required="true"></lightning-input>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="slds-form-element__row">
-                                <div class="slds-size_2-of-3 slds-p-top_medium">
-                                    <!--lightning-input-field field-name="AppointmentCode__c" required="true" value={appCode}> </lightning-input-field-->
-                                    <lightning-input data-id='appCodeInput' type="text" label="Codice Appuntamento" value={appCode} required="true"></lightning-input>
+                                <div class="slds-form-element__row">
+                                    <div class="slds-size_2-of-3 slds-p-top_medium">
+                                        <lightning-input data-id='appCodeInput' type="text" label="Codice Appuntamento" value={appCode} required="true"></lightning-input>
+                                    </div>
                                 </div>
-                            </div>
+                            </template>
                         </template>
                         <template if:false={confermaAppuntamento}>
                             <div class="slds-form-element__row">

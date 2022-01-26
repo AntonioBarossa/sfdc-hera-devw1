@@ -64,6 +64,22 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.HDT_CloseManualActivity</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_Scarto</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Manuale</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>wrts_prcgvr__Activity__c.Reminder</value>
                             <visibilityRule>
                                 <booleanFilter>((1 AND 2 AND 3) OR 4) AND 5 AND 6 AND 7</booleanFilter>
@@ -1730,7 +1746,7 @@
             <componentInstance>
                 <componentName>hdtAppointmentExtraSist</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
+                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
@@ -1765,6 +1781,11 @@
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Appuntamento eseguito</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Appuntamento di competenza Distributore</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

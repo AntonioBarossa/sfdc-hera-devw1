@@ -9,11 +9,11 @@ export default class hdtConfigurePaymentMethods extends LightningElement {
     loading = false;
     currentStep = 4;
     isCloneButtonDisabled = true;
-    disabledInput = true;
+    disabledInput;
     myInput;
 
 
-    /*get disabledInput(){
+    get disabledInput(){
         let result = false;
         disableBotton({idAcc:this.accountId,sale:this.saleRecord}).then(data =>{
             if(data==true && this.saleRecord.CurrentStep__c != this.currentStep){
@@ -24,39 +24,15 @@ export default class hdtConfigurePaymentMethods extends LightningElement {
             }
         });
         return result;
-    }*/
+    }
 
-    /*@api
-    get disabledInput(){
-        if(this.disabledInput){
-            myInput = true;
-        } else {
-            myInput = false;
-        }
-        return myInput;
-    }*/
-
-    /*set disabledInput(myInput){
-        if(myInput){
-            this.disabledInput = true;
-        }else if(!myInput){
-            disableMyButtons({sale:this.saleRecord}).then(data =>{
-                if(data==true){
-                    this.disabledInput = true;
-                    this.template.querySelector('c-hdt-manage-billing-profile').disableManage();
-                    this.isCloneButtonDisabled = true;
-                }else{
-                    this.disabledInput = false;
-                }
-            });
-        }
-    }*/
-
-    get disabledInput(){
+    @api 
+    getDisabledInput(mySale){
         let result;
-        disableMyButtons({sale:this.saleRecord}).then(data =>{
+        disableMyButtons({mySale}).then(data =>{
             if(data==true){
-                this.disabledInput = true;
+                this.template.querySelector('c-hdt-create-billing-profile').disableCreate();
+                this.template.querySelector('c-hdt-apply-payment-method').disableApply();
                 this.template.querySelector('c-hdt-manage-billing-profile').disableManage();
                 this.isCloneButtonDisabled = true;
                 result = true;
@@ -64,7 +40,6 @@ export default class hdtConfigurePaymentMethods extends LightningElement {
                 result = false;
             }
         });
-        return result;
     }
 
     handleNewBillingProfileEvent(){
@@ -74,8 +49,8 @@ export default class hdtConfigurePaymentMethods extends LightningElement {
 
     handleSelectedBillingProfileEvent(event){
         this.selectedBillingProfile = {};
-        this.disabledInput = false;
         this.isCloneButtonDisabled = false;
+        this.getDisabledInput(this.saleRecord);
         console.log('*********'+this.disabledInput);
         this.selectedBillingProfile = event.detail;
     }

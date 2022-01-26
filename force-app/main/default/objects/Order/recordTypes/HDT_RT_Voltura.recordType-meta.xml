@@ -3129,7 +3129,7 @@
     <picklistValues>
         <picklist>VoltureType__c</picklist>
         <values>
-            <fullName>In Continuità</fullName>
+            <fullName>In continuità_si_addebito</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3146,6 +3146,17 @@
         </values>
         <values>
             <fullName>Recupero</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>MarketingPrivacyAcquired__c</picklist>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
             <default>false</default>
         </values>
     </picklistValues>

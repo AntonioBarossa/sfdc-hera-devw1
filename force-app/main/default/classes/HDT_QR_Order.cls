@@ -114,6 +114,8 @@ public inherited sharing class HDT_QR_Order {
             Username__c,
             SalesContact__r.Email,
             SalesContact__r.MobilePhone,
+            SalesContact__r.VATNumber__c,
+            SalesContact__r.FiscalCode__c,
             Sale__r.Channel__c,
             SwitchOutDate__c,
             Vat__c,
@@ -767,7 +769,7 @@ public inherited sharing class HDT_QR_Order {
             WHERE AccountId = :accountId
             AND ParentOrder__c = null
             AND Status != 'Draft'
-            AND DocumentalPhase__c like '%Plico firmato%'
+            AND Phase__c = 'Documentazione Gestita'
             WITH SECURITY_ENFORCED
         ];
     }
@@ -791,7 +793,7 @@ public inherited sharing class HDT_QR_Order {
             WHERE AccountId = :accountId
             AND ParentOrder__c = null
             AND Status != 'Draft'
-            AND (NOT DocumentalPhase__c like '%Plico firmato%')
+            AND Phase__c != 'Documentazione Gestita'
             WITH SECURITY_ENFORCED
         ];
     }

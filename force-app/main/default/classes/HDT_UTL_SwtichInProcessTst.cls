@@ -43,7 +43,7 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 			orders[1].ServicePoint__c=servPoints[0].Id;
 			insert orders;
 
-			List<HDT_FulfillmentDateMatrix__c> fullfillDateMtx=HDT_UTL_DataFactoryTst.createFullfillmentDateMatrix(1, false);
+			List<FulfillmentDateMatrix__c> fullfillDateMtx=HDT_UTL_DataFactoryTst.createFullfillmentDateMatrix(1, false);
 			fullfillDateMtx[0].OriginMarket__c='Libero';
 			fullfillDateMtx[0].ProcessType__c='Switch In';
 			fullfillDateMtx[0].Commodity__c='Energia Elettrica';
@@ -177,8 +177,8 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 			                       FROM Order
 			                       WHERE Name='testOrderName1'];
 
-			List<HDT_FulfillmentDateMatrix__c> tFulDatMat=[SELECT Id, Name, OriginMarket__c, Commodity__c, VoltageLevel__c, SupplyType__c, FulfillmentDateFrom__c, FulfillmentDateTo__c, ActivationDate__c, ProcessType__c
-			                                               FROM HDT_FulfillmentDateMatrix__c
+			List<FulfillmentDateMatrix__c> tFulDatMat=[SELECT Id, Name, OriginMarket__c, Commodity__c, VoltageLevel__c, SupplyType__c, FulfillmentDateFrom__c, FulfillmentDateTo__c, ActivationDate__c, ProcessType__c
+			                                               FROM FulfillmentDateMatrix__c
 			                                               WHERE Name='testFulDatMx0'
 			                                               LIMIT 1];
 

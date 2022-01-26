@@ -18,10 +18,8 @@
                         </template>
                         <template if:false={confirmed}>
                             <template if:true={isCommunity}>
-                                <c-hdt-appointment-alert variant="offline" is-dismissible="false">
-                                    <h2>Per prendere l'appuntamento seleziona Prendi Appuntamento.
-                                        Una volta confermato l'appuntamento non sarà possibile modificarlo o annullarlo in autonomia ma sarà necessario contattare il servizio clienti.
-                                        Ti ricordiamo che hai a disposizione 24 ore per prendere l'appuntamento.</h2>
+                                <c-hdt-appointment-alert variant={variant} is-dismissible="false">
+                                    <h2>{alertMessage}</h2>
                                 </c-hdt-appointment-alert>
                             </template>
                             <div class="slds-welcome-mat">
