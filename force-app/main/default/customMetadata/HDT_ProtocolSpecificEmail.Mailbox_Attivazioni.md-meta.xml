@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Mailbox Attivazioni</label>
+    <protected>false</protected>
+    <values>
+        <field>CompanyOwner__c</field>
+        <value xsi:type="xsd:string">HERA COMM</value>
+    </values>
+    <values>
+        <field>Email__c</field>
+        <value xsi:type="xsd:string">hera.attivazioni@t-e86um9fj0n2gggf3s9oxkqp7pw9ofa4uwyp2lbvuz2kst6n1a.3n-8mtouaa.cs128.apex.sandbox.s</value>
+    </values>
+    <values>
+        <field>Type__c</field>
+        <value xsi:type="xsd:string">Protocollo - Attivazioni</value>
+    </values>
+</CustomMetadata>
