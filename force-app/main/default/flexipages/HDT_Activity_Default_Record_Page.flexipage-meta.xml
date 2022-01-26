@@ -30,7 +30,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_CloseActivity</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
+                                <booleanFilter>(1 OR 2 OR 3 OR 4 OR 5 OR 6) AND 7 AND 8 AND 9</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -61,12 +61,27 @@
                                     <operator>EQUAL</operator>
                                     <rightValue>Gestionale</rightValue>
                                 </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Completed</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Chiusa</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Annullata</rightValue>
+                                </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_CloseManualActivity</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -76,6 +91,21 @@
                                     <leftValue>{!Record.DiscardCategory__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Manuale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Completed</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Chiusa</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Annullata</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -781,6 +811,24 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.wrts_prcgvr__Status__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.ActivityOutcome__c</fieldItem>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_Scarto</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Manuale</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1865,6 +1913,49 @@
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Chiamata outbound</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>wrts_prcgvr__Activity__c.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>AttachedContentDocuments</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 OR (2 AND 3)</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_DistributorCommunication</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_Scarto</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Manuale</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
