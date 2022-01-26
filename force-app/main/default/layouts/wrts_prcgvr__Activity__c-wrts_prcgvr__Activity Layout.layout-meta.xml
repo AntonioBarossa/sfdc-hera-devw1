@@ -26,10 +26,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>wrts_prcgvr__ActivityTemplate__c</field>
             </layoutItems>
             <layoutItems>
