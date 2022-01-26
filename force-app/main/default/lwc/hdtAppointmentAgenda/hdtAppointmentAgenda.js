@@ -105,7 +105,7 @@ export default class HdtAppointmentAgenda extends LightningElement {
     
     connectedCallback(){
         if (this.params){
-            if (this.params.userCommunity === true){
+            if (this.params.userCommunity){
                 this.isCommunity = true;
             }
             this.fieldsToRetrieve = OBJECT_FIELDS;
@@ -205,7 +205,7 @@ export default class HdtAppointmentAgenda extends LightningElement {
                 this.showAlert('Attenzione','Non è possibile modificare l\'appuntamento.','error');
                 this.showSpinner = false;
             }else if (result.localeCompare('COMPETENZA DISTRIBUTORE') === 0){
-                let messaggio = this.isCommunity? 'Non è possibile proseguire con la prenotazione mediante questa procedura, poichè l\'appuntamento è in carico del distributore che la conttatterà per fissare un appuntamento.' :'L\'appuntamento è in carico al distributore, non è possibile proseguire con l\'azione effettuata.';
+                let messaggio = this.isCommunity? 'Non è possibile proseguire con la prenotazione mediante questa procedura, poichè l\'appuntamento è in carico al distributore che la contatterà per fissare un appuntamento.' :'L\'appuntamento è in carico al distributore, non è possibile proseguire con l\'azione effettuata.';
                 this.showAlert('Attenzione',messaggio,'error');
                 this.refreshPage(this.isCommunity);
             }else{
@@ -279,6 +279,7 @@ export default class HdtAppointmentAgenda extends LightningElement {
     }
 
     showAlert(_title,_message,_variant){
+        console.log('is community ' + this.isCommunity);
         if (this.isCommunity){
             alert(_message);
         }else{

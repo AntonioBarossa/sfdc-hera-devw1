@@ -3,8 +3,8 @@ public with sharing class HDT_UTL_AppointmentSettingTest {
     @IsTest
     public static void executeGetAtoaFlag(){
         Test.startTest();
-            System.assertEquals(true, HDT_UTL_AppointmentSetting.getAtoaFlag('SubentrosuGdMchiuso','INRETE DIST. ENER.-13R0000000','Gas').Flag__c, 'Il metodo non ha restituito vero vero');
-            System.assertEquals(false, HDT_UTL_AppointmentSetting.getAtoaFlag('SubentrosuGdMchiuso','Distributore non presente','commidity non presente').Flag__c, 'Il metodo non ha restituito vero vero');
+            System.assertEquals(true, HDT_UTL_AppointmentSetting.getAtoaFlag('SubentrosuGdMchiuso','INRETE DIST. ENER.-13R0000000','Gas',null).Flag__c, 'Il metodo non ha restituito vero vero');
+            System.assertEquals(null, HDT_UTL_AppointmentSetting.getAtoaFlag('SubentrosuGdMchiuso','Distributore non presente','commidity non presente',null), 'Il metodo non ha restituito vero vero');
         Test.stopTest();
 
     }
@@ -24,6 +24,14 @@ public with sharing class HDT_UTL_AppointmentSettingTest {
             if (!qlList.isEmpty()){
                 System.assertEquals(HDT_UTL_AppointmentSetting.getQuickLink(qlList[0].Value1__c).get('link'), qlList[0].Value2__c, 'Gestione link presente non funzionante');
             }
+        Test.stopTest();
+    }
+
+    @IsTest
+    public static void executeGetCommunityLink(){
+        Test.startTest();
+            HDT_UTL_AppointmentSetting.getCommunityLink(UserInfo.getOrganizationId());
+            System.assertEquals(HDT_UTL_AppointmentSetting.getCommunityLink('Nome Errato'), 'link inesistente', 'Gestione get Community non funzionante');
         Test.stopTest();
     }
 }
