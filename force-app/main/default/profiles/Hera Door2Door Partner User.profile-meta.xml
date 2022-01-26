@@ -8764,6 +8764,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DiscardAnnullmentRule__c.DiscardNote__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DiscardAnnullmentRule__c.IsActive__c</field>
         <readable>true</readable>
     </fieldPermissions>
