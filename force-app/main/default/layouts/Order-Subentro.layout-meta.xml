@@ -91,10 +91,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ReasonDL__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>CausalCode__c</field>
             </layoutItems>
         </layoutColumns>
@@ -336,10 +332,6 @@
         <editHeading>true</editHeading>
         <label>Metodo di firma - Canale di Invio</label>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ContractSigned__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SignedDate__c</field>

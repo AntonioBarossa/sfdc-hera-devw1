@@ -132,7 +132,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 		}else{
 			String addFilterReplaced = additionalFilter.replaceAll('CommoditySector__c', 'ServicePoint__r.CommoditySector__c');
 			system.debug('******************' + addFilterReplaced);
-			contracts = Database.query('SELECT Id, Name, ServicePoint__c,ContractNumber,SAPContractCode__c, ServicePoint__r.CommoditySector__c FROM Contract WHERE SAPContractCode__c =:code '+ String.escapeSingleQuotes(addFilterReplaced) +' LIMIT 1');
+			contracts = Database.query('SELECT Id, Name, ServicePoint__c,ContractNumber,SAPContractCode__c, ServicePoint__r.CommoditySector__c FROM Contract WHERE SAPContractCode__c =:code '+ String.escapeSingleQuotes(addFilterReplaced).replace('\\', '') +' LIMIT 1');
 		}
 		system.debug('List contracts'+contracts.toString());
 		String spCode ;

@@ -1,0 +1,75 @@
+<template>
+    <template if:true={showSpinner}>
+        <div class="demo-only demo--inverse" style="height:300px;position:relative">
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+    </template>
+    <c-hdt-confirmation-dialog 
+        visible={showConfirmDialog}
+        onclick={handleConfirmDialogClick}
+        title="Attenzione!" 
+        message={messageConfirmDialog}
+        cancel-label="No"
+        confirm-label="Sì"
+        original-message="Risposta Appuntamento Confermato">
+    </c-hdt-confirmation-dialog>
+    <c-hdt-appointment-modal
+        visible={showAppointmentModal}
+        title="Attenzione!"
+        onclick={closeModal}
+        message="Attenzione! L'attività di appuntamento deve essere assegnata manualmente per continuare con la lavorazione."
+        label-name="Ok">
+    </c-hdt-appointment-modal>
+    <template if:true={showForm}>
+        <lightning-quick-action-panel header="Appuntamento Extra Sistema">
+            <lightning-record-edit-form object-api-name='wrts_prcgvr__Activity__c' record-id={recordId} onsubmit={handleSubmit}>
+                <div class="slds-form-element slds-form-element_compound">
+                    <div class="slds-form-element__control">
+                        <template if:true={confermaAppuntamento}>
+                            <div class="slds-form-element__row">
+                                <div class="slds-size_2-of-3 slds-p-top_medium">
+                                    <lightning-combobox data-id="appCompInput" placeholder="nessuno" label="Competenza Appuntamento" value={appComp} options={optionsComp} required="true" onchange={changeValue}></lightning-combobox>
+                                </div>
+                            </div>
+                            <template if:true={showAppointmentField}>
+                                <div class="slds-form-element__row">
+                                    <div class="slds-size_2-of-3 slds-p-top_medium">
+                                        <lightning-input data-id='appointmentInput' type="date" label="Data Appuntamento Confermato" value={appointment} required="true"></lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-form-element__row">
+                                    <div class="slds-size_2-of-3 slds-p-top_medium">
+                                        <lightning-input data-id='slotInput' type="text" label="Fascia appuntamento confermato" placeholder = "hh:mm/hh:mm" value={slot} required="true"></lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-form-element__row">
+                                    <div class="slds-size_2-of-3 slds-p-top_medium">
+                                        <lightning-input data-id='appCodeInput' type="text" label="Codice Appuntamento" value={appCode} required="true"></lightning-input>
+                                    </div>
+                                </div>
+                            </template>
+                        </template>
+                        <template if:false={confermaAppuntamento}>
+                            <div class="slds-form-element__row">
+                                <div class="slds-size_2-of-3 slds-p-top_medium">
+                                    <lightning-input-field field-name="Note__c" required="true"> </lightning-input-field>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <div class="slds-m-top_medium slds-text-align_center">
+                <lightning-button
+                        variant="brand"
+                        icon-name="utility:save"
+                        class="slds-m-top_small slds-m-left_x-small"
+                        type="submit"
+                        onsubmit={handleSubmit}
+                        onsuccess={handleSuccess}
+                        label={labelName}
+                    ></lightning-button>
+                </div>
+            </lightning-record-edit-form>
+        </lightning-quick-action-panel>
+    </template>
+</template>

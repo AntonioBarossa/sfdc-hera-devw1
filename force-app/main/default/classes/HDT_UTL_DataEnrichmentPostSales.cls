@@ -28,6 +28,9 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         String billingProfileCode;
         String billingProfilesfdcField;
         String billingProfileId;
+        String contractSapCode;
+        String contractSfdcField;
+        String contractId;
         String modInvioBolletta;
         String pecBolletta;
         String emailBolletta;
@@ -85,6 +88,14 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                             when 'getBillingProfileIdBySapCode'{
                                 billingProfilesfdcField = transcodeConfig.SfdcField__c;
                                 billingProfileCode = position.valore;
+                            }
+                            when 'getContractIdBySapCode'{
+                                contractSfdcField = transcodeConfig.SfdcField__c;
+                                String caseContractLookup = (String) currentCase.get(contractSfdcField);
+                                // Transcodifichiamo solo se il Case non ha già un contratto, altrimenti facciamo una query inutile sul Contract.
+                                if (String.isBlank(caseContractLookup)){
+                                    contractSapCode = position.valore;
+                                }
                             }
                             when 'getCaliber'{
                                 transcodeMap.put(transcodeConfig.SfdcField__c, 
@@ -172,6 +183,16 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
             System.debug(LoggingLevel.DEBUG, 'Errore Ereditare campi SP -> ' + e.getMessage());
         }
 
+        // Contract
+        try{
+            if (String.isNotBlank(contractSapCode)){
+                Contract c = depsQr.getContractData(contractSapCode);
+                contractId = c.Id;
+                transcodeMap.put(contractSfdcField, contractId);
+            }
+        } catch(Exception e){
+            System.debug(LoggingLevel.DEBUG, 'Errore Set Lookup Contract -> ' + e.getMessage());
+        }
 
         //SALESCOMPANY
         salesCompanyCode = (String) transcodeMap.get('SalesCompanyCode__c');

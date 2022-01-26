@@ -191,6 +191,7 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         this.showCreateOffer = true;
         this.showWelcom = false;
         this.showEditForm = true;
+        this.showSearchOffer = false;
         this.hiddenClass = 'slds-hide';
     }
 

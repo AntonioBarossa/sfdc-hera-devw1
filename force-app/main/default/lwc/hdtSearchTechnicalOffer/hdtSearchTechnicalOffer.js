@@ -157,8 +157,8 @@ export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningEl
                 if(result){
                     console.log('# success #');
                     console.log('# Offer cloned id -> ' + result);
-                    //this.goToRecord(result, 'TechnicalOffer__c');
-                    this.goBackToRecord();
+                    //this.goBackToRecord();
+                    this.redirectToNewOffer(result);
                 } else {
                     this.error.show = true;
                     this.error.message = 'An error occurred!';
@@ -169,6 +169,15 @@ export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningEl
                 this.error.message = error.body.message;
                 this.spinnerObj.spinner = false;
             });
+    }
+
+    redirectToNewOffer(clonedOfferId){
+        console.log('# redirectToNewOffer #');
+        const redirectToOffer = new CustomEvent("redirecttooffer", {
+            detail:  {id: clonedOfferId, rate: this.rateObj.rateName, temp: this.rateObj.rateTemplate}
+        });
+        // Dispatches the event.
+        this.dispatchEvent(redirectToOffer);
     }
 
     goToRecord(recId, objName){

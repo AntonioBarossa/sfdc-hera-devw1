@@ -3,6 +3,8 @@ import getActivity from '@salesforce/apex/HDT_LC_AppointmentAgenda.getActivity';
 import { CurrentPageReference } from 'lightning/navigation';
 import { refreshApex } from '@salesforce/apex';
 
+
+
 const NEW_DATE_VALID_STATE = ['Creata','Invio app.to SELF cliente'];
 const SELF_DATE_VALID_STATE = ['Creata'];
 const DELETE_DATE_VALID_STATE = ['Presa appuntamento in corso'];
@@ -22,9 +24,12 @@ export default class HdtAppointmentHandler extends LightningElement{
     showAgenda = false;
     showForm = false;
     hasRendered = false;
+    variant='offline';
+    alertMessage = 'Per prendere l\'appuntamento seleziona Prendi Appuntamento. Una volta confermato l\'appuntamento non sarà possibile modificarlo o annullarlo in autonomia ma sarà necessario contattare il servizio clienti. Ti ricordiamo che hai a disposizione 24 ore per prendere l\'appuntamento.';
+    @api confirmed = false;
     @api isCommunity = false;
     @api recordId;
-
+    
     @track tempList = [
         {label: 'Prendi Appuntamento ', name: 'newDate', iconName: 'utility:retail_execution', desc: 'Prendi un nuovo appuntamento con il DL', enable : false, visible : false},
         {label: 'Modifica Appuntamento', name: 'editDate', iconName: 'utility:record_delete', desc: 'Modifica un appuntamento Confermato', enable : false, visible : false},
@@ -39,53 +44,62 @@ export default class HdtAppointmentHandler extends LightningElement{
 
     @wire(getActivity,{activityId : '$recordId', fields: OBJECT_FIELDS })
     wiredActivity(value){
-        console.log('@@@@@isCommunity ' + this.isCommunity);
         this.wiredActivity = value;
         const { data, error } = value; 
         if (data){
             this.activity = JSON.parse(data);
-            this.tempList.forEach( item =>{
-                let itemName = item.name;
-                let enable = false;
-                let stato = this.activity.wrts_prcgvr__Status__c;
-                if (this.activity.AppointmentCompetence__c != 'Distributore' && this.activity.isAtoA__c){
-                    switch (itemName){
-                        case 'newDate':
-                            item.visible = true;
-                            if (NEW_DATE_VALID_STATE.indexOf(stato) != -1){
-                                enable = true;
-                            }
-                        break;
-                        case 'editDate':
-                            item.visible = true;
-                            let maxDayInMs = this.getMaxDateInMilliseconds(this.activity.MaxDateModificationAppointment__c,this.activity.MaxTimeModificationAppointment__c); 
-                            let nowInMs = Date.now();
-                            if (EDIT_DATE_VALID_STATE.indexOf(stato) != -1 && maxDayInMs != -1 && nowInMs < maxDayInMs){
-                                enable = true;
-                            }
-                        break;
-                        case 'deleteDate':
-                            item.visible = true;
-                            if (DELETE_DATE_VALID_STATE.indexOf(stato) != -1){
-                                enable = true;
-                            }
-                        break;
-                        case 'resumeDate':
-                            item.visible = true;
-                            if (RESUME_DATE_VALID_STATE.indexOf(stato) != -1){
-                                enable = true;
-                            }
-                        break;
-                        case 'selfDate':
-                            item.visible = !this.isCommunity;
-                            if (SELF_DATE_VALID_STATE.indexOf(stato) != -1){
-                                enable = true;
-                            }
-                        break;
-                    }
-                } 
-                item.enable = enable; 
-            });
+            let stato = this.activity.wrts_prcgvr__Status__c;
+            if((stato=='Appuntamento confermato' || stato=='Modifica confermata') && this.isCommunity){
+                this.confirmed=true;
+            }
+            if(stato=='Appuntamento di competenza Distributore'){
+                this.alertMessage = 'L\'appuntamento è in carico al distributore che la contatterà per fissare un appuntamento.'
+                this.variant = 'error';
+            }
+            if(this.confirmed==false){
+                this.tempList.forEach( item =>{
+                    let itemName = item.name;
+                    let enable = false;
+                    
+                    if (this.activity.AppointmentCompetence__c != 'Distributore' && this.activity.isAtoA__c){
+                        switch (itemName){
+                            case 'newDate':
+                                item.visible = true;
+                                if (NEW_DATE_VALID_STATE.indexOf(stato) != -1){
+                                    enable = true;
+                                }
+                            break;
+                            case 'editDate':
+                                item.visible = !this.isCommunity;
+                                let maxDayInMs = this.getMaxDateInMilliseconds(this.activity.MaxDateModificationAppointment__c,this.activity.MaxTimeModificationAppointment__c); 
+                                let nowInMs = Date.now();
+                                if (EDIT_DATE_VALID_STATE.indexOf(stato) != -1 && maxDayInMs != -1 && nowInMs < maxDayInMs){
+                                    enable = true;
+                                }
+                            break;
+                            case 'deleteDate':
+                                item.visible = true;
+                                if (DELETE_DATE_VALID_STATE.indexOf(stato) != -1){
+                                    enable = true;
+                                }
+                            break;
+                            case 'resumeDate':
+                                item.visible = true;
+                                if (RESUME_DATE_VALID_STATE.indexOf(stato) != -1){
+                                    enable = true;
+                                }
+                            break;
+                            case 'selfDate':
+                                item.visible = !this.isCommunity;
+                                if (SELF_DATE_VALID_STATE.indexOf(stato) != -1){
+                                    enable = true;
+                                }
+                            break;
+                        }
+                    } 
+                    item.enable = enable; 
+                });
+            }
             this.showAgenda = false;
             this.showForm = false;
         }else if (error){

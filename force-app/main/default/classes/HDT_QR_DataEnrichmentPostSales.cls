@@ -89,5 +89,14 @@ public with sharing class HDT_QR_DataEnrichmentPostSales {
 
     }
 
+    public Contract getContractData(String sapContractCode){
 
+        List<Contract> contracts = [SELECT Id
+        FROM Contract
+        WHERE SAPContractCode__c = :sapContractCode
+        WITH SECURITY_ENFORCED
+        ];
+
+        return contracts.isEmpty() ? new Contract() : contracts[0];
+    }
 }

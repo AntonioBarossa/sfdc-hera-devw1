@@ -40,6 +40,7 @@ public inherited sharing class HDT_QR_Case {
             PODPDRFormula__c,
             Phase__c,
             Type,
+            SalesCompanyCode__c,
             RecordType.DeveloperName
             FROM Case
             where Id = :Id
@@ -171,7 +172,7 @@ public inherited sharing class HDT_QR_Case {
             wrts_prcgvr__Status__c,
             wrts_prcgvr__ActivityTemplate__r.Name
             FROM wrts_prcgvr__Activity__c
-            WHERE wrts_prcgvr__Status__c = 'Aperta'
+            WHERE (wrts_prcgvr__Status__c != 'Chiusa' OR wrts_prcgvr__Status__c != 'Annullata')
             AND Case__c IN :caseIds
             WITH SECURITY_ENFORCED
             ];

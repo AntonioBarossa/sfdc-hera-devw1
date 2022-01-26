@@ -295,6 +295,13 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         Test.startTest();
             String encryptedId = agenda.criptId(activity.Id);
+            try{
+                String activityJson = agenda.getCryptoActivity(encryptedId,new List<String>{'Id'});
+            }catch(Exception e){
+
+            }
+            activity.CustomRecordId__c = encryptedId;
+            update activity;
             String activityJson = agenda.getCryptoActivity(encryptedId,new List<String>{'Id'});
             wrts_prcgvr__Activity__c retrievedActivity = (wrts_prcgvr__Activity__c) JSON.deserialize(activityJson,wrts_prcgvr__Activity__c.class);
             System.assertEquals(activity.Id, retrievedActivity.Id, 'La decodifica non ha funzionato');
@@ -334,6 +341,56 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
             System.assertEquals('', activity.FiscalCode__c,methodName+'Scenario partita iva e cf non valorizzati');
             System.assertEquals('', activity.VATNumber__c,methodName+'Scenario partita iva e cf non valorizzati');
         Test.stopTest();
+    }
+
+    @IsTest
+    public static void executeUpdateExtraSystemAppointmentKO(){
+        String methodName = 'executeUpdateExtraSystemAppointmentKO: ';
+        wrts_prcgvr__Activity__c activity = [SELECT Id, Case__c FROM wrts_prcgvr__Activity__c];
+        activity.isAtoA__c = false;
+        update activity;
+        Test.startTest();
+            agenda.updateExtraSystemAppointment('Esito KO da DL', activity.Case__c);
+            activity = [SELECT Id, Case__c,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
+        Test.stopTest();
+        System.assertEquals('Appuntamento non eseguito', activity.wrts_prcgvr__Status__c, methodName + 'Lo stato dell\'activity non è stato correttamente aggiornato.');
+    }
+
+    @IsTest
+    public static void executeUpdateExtraSystemAppointmentOK(){
+        String methodName = 'executeUpdateExtraSystemAppointmentOK: ';
+        wrts_prcgvr__Activity__c activity = [SELECT Id, Case__c FROM wrts_prcgvr__Activity__c];
+        activity.isAtoA__c = false;
+        update activity;
+        Test.startTest();
+            agenda.updateExtraSystemAppointment('Esito OK da DL', activity.Case__c);
+            activity = [SELECT Id, Case__c,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
+        Test.stopTest();
+        System.assertEquals('Appuntamento eseguito', activity.wrts_prcgvr__Status__c, methodName + 'Lo stato dell\'activity non è stato correttamente aggiornato.');
+    }
+
+    @IsTest
+    public static void executeUpdateExtraSystemAppointmentNoState(){
+        String methodName = 'executeUpdateExtraSystemAppointmentNoState: ';
+        wrts_prcgvr__Activity__c activity = [SELECT Id, Case__c FROM wrts_prcgvr__Activity__c];
+        Test.startTest();
+            agenda.updateExtraSystemAppointment('Ammissibilità OK', activity.Case__c);
+            activity = [SELECT Id, Case__c,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
+        Test.stopTest();
+        System.assertEquals('Creata', activity.wrts_prcgvr__Status__c, methodName + 'Lo stato è stato aggiornato, mentre doveva restare invariato.');
+    }
+
+    @IsTest
+    public static void executeGetCommunityLink(){
+        String methodName = 'executeGetCommunityLink: ';
+        User u = [SELECT Id FROM User WHERE Profile.Name = 'HERA Standard User' AND IsActive = true LIMIT 1];
+        String link = agenda.getCommunityLink();
+        Test.startTest();
+            System.runAs(u){
+                System.assertEquals(link, agenda.getCommunityLink(), methodName + 'Il link non viene restituito');
+            }
+        Test.stopTest();
+        
     }
 
     private static Map<String,String> createRequestHeroku(String processType,String codiceFlusso,String outcome, String codiceApp){

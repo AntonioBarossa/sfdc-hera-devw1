@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>53.0</apiVersion>
+    <interviewLabel>HDT Script - Anagrafica {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>HDT Script - Captive Clienti</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <screens>
+        <name>Screen</name>
+        <label>Screen</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>text1</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;CLIENTI CHE NON HANNO RISPOSTO. CONTATTI LISTA REITEK&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Dopo aver verificato in siebel se indirizzo email/sms è corretto, al momento del contatto dire al cliente:&amp;nbsp;&lt;/p&gt;&lt;p&gt;Cerchiamo di iniziare la telefonata con riferimenti personali (cliente da anno X, tipo di offerta..) per fargli capire che siamo davvero Hera.&lt;/p&gt;&lt;p&gt;&lt;b&gt;IN RETE&lt;/b&gt;&lt;/p&gt;&lt;p&gt;«Gentile sig… la chiamiamo per conto del Servizio Clienti di Hera. Nei giorni scorsi le abbiamo mandato una mail/sms con alcune brevi domande per comprendere e soddisfare al meglio le sue esigenze e quelle di tutti i nostri clienti. Le è capitato di vederlo? Volevamo capire se è soddisfatto del servizio di Hera e parlare insieme della sua situazione.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A)	Nel caso di risposte positive (cliente soddisfatto): la ringraziamo per la sua fiducia e le ricordo inoltre che per qualsiasi altra necessità può attivare i Servizi Online o scaricare la nuova App MyHera che permettono di gestire, con comodità, 24 ore su 24, servizi e forniture.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;B)	Nel caso di risposte negative (cliente insoddisfatto) legate a processi /normative:&amp;nbsp;&lt;/p&gt;&lt;p&gt;1.	Verifichiamo prima la problematica, forniamo delucidazioni e comunichiamogli che la prendiamo in carico. Attivare ciò che è necessario per risolvere il problema del cliente.&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;2.	Dopo aver risolto la problematica o se fornisce solo un feedback sulla sua esperienza allora proporre script tipo:&lt;/p&gt;&lt;p&gt;•	La ringrazio per il suo suggerimento che riteniamo utile per le prossime azioni di sviluppo e miglioramento. Hera vuole fare anche qualcosa di tangibile per cercare di soddisfare sempre i propri clienti, per questo:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;se il cliente ha un’altra offerta: «le propongo di attivare l’ offerta di punta che si chiama HIZ e con l’occasione le posso attivare anche un bonus con il quale le regaliamo 30 euro di sconto per punto di fornitura che le verranno riconosciuti nelle prossime bollette«;&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Se il cliente ha HIZ dire: «le offro un bonus con il quale le regaliamo 30 euro di sconto per punto di fornitura che le verranno riconosciuti nelle prossime bollette”&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;b&gt;EXTRA RETE:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;«Gentile sig… la chiamiamo per conto del Servizio Clienti di Hera. Le ricordiamo che siamo il terzo operatore sul mercato e il nostro servizio clienti è sempre a sua disposizione. Nei giorni scorsi le abbiamo mandato una mail/sms con alcune brevi domande per comprendere e soddisfare al meglio le sue esigenze e quelle di tutti i nostri clienti. Le è capitato di vederlo? Volevamo capire se è soddisfatto del servizio di Hera e parlare insieme della sua situazione.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;C)	Nel caso di risposte positive (cliente soddisfatto): la ringraziamo per la sua fiducia e le ricordo inoltre che per qualsiasi altra necessità può attivare i Servizi Online o scaricare la nuova App MyHera che permettono di gestire, con comodità, 24 ore su 24, servizi e forniture.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;D)	Nel caso di risposte negative (cliente insoddisfatto) legate a processi /normative:&amp;nbsp;&lt;/p&gt;&lt;p&gt;1.	Verifichiamo prima la problematica, forniamo delucidazioni e comunichiamogli che la prendiamo in carico. Attivare ciò che è necessario per risolvere il problema del cliente.&lt;/p&gt;&lt;p&gt;2.	Dopo aver risolto la problematica o se fornisce solo un feedback sulla sua esperienza allora proporre captive tipo&lt;/p&gt;&lt;p&gt;•	La ringrazio per il suo suggerimento che riteniamo utile per le prossime azioni di sviluppo e miglioramento. Hera vuole fare anche qualcosa di tangibile per cercare di soddisfare sempre i propri clienti, per questo:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;se il cliente ha un’altra offerta: «le propongo di attivare l’offerta di punta che si chiama HIZ e con l’occasione le posso attivare anche un bonus con il quale le regaliamo 30 euro di sconto per punto di fornitura che le verranno riconosciuti nelle prossime bollette«;&lt;/li&gt;&lt;li&gt;Z dire: «le offro un bonus con il quale le regaliamo 30 euro di sconto per punto di fornitura che le verranno riconosciuti nelle prossime bollette”&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Screen</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+</Flow>

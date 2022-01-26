@@ -12,6 +12,11 @@ public with sharing class HDT_LC_AppointmentAgenda {
         }
         return response;
     }
+
+    @AuraEnabled(cacheable=true)
+    public static String getCommunityBaseUrl(){
+        return srvAgenda.getCommunityLink();
+    }
     
     @AuraEnabled
     public static String handleConfirm(String activityId,String appointmentJson) {

@@ -1185,15 +1185,14 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     populateDistributor(){
 
         this.loading = true;
-        let recType = (this.recordtype.label == '' || this.recordtype.label == undefined) ? this.allSubmitedFields['RecordType']['DeveloperName'] : this.recordtype.label;
         let addressRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
 
         if(this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].trim() != ''){
             if(addressRecord['Comune'] != undefined && addressRecord['Comune'].trim() != ''){
                 let codicePunto = this.allSubmitedFields['ServicePointCode__c'].trim();
-                let radicePunto = (recType == 'Punto Elettrico' || recType == 'HDT_RT_Ele') ? codicePunto.substring(0, 6) : codicePunto.substring(0, 4);
                 let servizio = this.allSubmitedFields['CommoditySector__c'];
-                let comune = (recType == 'Punto Elettrico' || recType == 'HDT_RT_Ele') ? '' : addressRecord['Comune'];
+                let radicePunto = servizio == 'Gas' ? codicePunto.substring(0, 4) : codicePunto.substring(0, 6);
+                let comune = servizio == 'Gas' ? addressRecord['Comune'] : '';
                 getDistributorPointCode({
                     code : radicePunto,
                     commodity: servizio,

@@ -1,12 +1,14 @@
 import { LightningElement,api,wire,track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getActivity from '@salesforce/apex/HDT_LC_AppointmentAgenda.getActivity';
+import getCommunityBaseUrl from '@salesforce/apex/HDT_LC_AppointmentAgenda.getCommunityBaseUrl';
 import getEncryptedId from '@salesforce/apex/HDT_LC_AppointmentAgenda.getEncryptedId';
 import SMS_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.Mobile__c';
 import EMAIL_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.Email__c';
 import ID_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.Id';
 import STATUS_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.wrts_prcgvr__Status__c';
 import CRIPTO_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.CustomRecordId__c';
+import URL_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.URL__c';
 import SELF_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.isSelfAppointment__c';
 
 const SEND_OPTION = [{ label: 'SMS', value: 'sms' },{ label: 'EMAIL', value: 'email' }];
@@ -16,7 +18,9 @@ const OBJECT_FIELDS =[
     'Mobile__c',
     'Contact__c',
     'Contact__r.Email',
-    'Contact__r.MobilePhone'
+    'Contact__r.MobilePhone',
+    'CustomRecordId__c',
+    'URL__c'
 ];
 
 export default class HdtAppointmentSelf extends LightningElement {
@@ -30,6 +34,7 @@ export default class HdtAppointmentSelf extends LightningElement {
     disabledRadio = true;
     activity = {};
     default = {'email' : '','mobile':''};
+    communityBasePath;
 
     @wire(getActivity,{activityId : '$recordId',fields : '$fieldsToRetrieve'})
     wireRecord({error,data}){
@@ -58,6 +63,11 @@ export default class HdtAppointmentSelf extends LightningElement {
     connectedCallback(){
         this.fieldsToRetrieve = OBJECT_FIELDS;
         this.recordId = this.activityid;
+        getCommunityBaseUrl()
+        .then(result => {
+            console.log('@@@@@ baseUrl  ' + result);
+            this.communityBasePath = result; 
+        })
     }
 
     get isEmail(){
@@ -108,7 +118,21 @@ export default class HdtAppointmentSelf extends LightningElement {
                     activityId : this.recordId
                 }).then((data) => {
                     fields[CRIPTO_FIELD.fieldApiName] = data;
-                    formRecordEdit.submit(fields);
+                    if (this.communityBasePath.localeCompare('link inesistente') != 0){
+                        this.communityBasePath+="?c__activityId="+data;
+                        console.log("Krist  "+ data);
+                        fields[URL_FIELD.fieldApiName] = this.communityBasePath;
+                        formRecordEdit.submit(fields);
+                    }else{
+                        updateRecord = false;
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Errore',
+                                message: 'Attenzione! Mancano delle configurazioni per poter configurare l\'url per l\'appuntamento self. Contattare l\'amministratore.',
+                                variant: 'error'
+                            })
+                        );
+                    }
                     this.closeModal(updateRecord);
                 }).catch((error) => {
                     console.error(error);
