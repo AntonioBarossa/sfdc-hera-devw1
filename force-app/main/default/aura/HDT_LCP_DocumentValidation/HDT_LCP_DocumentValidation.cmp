@@ -29,7 +29,7 @@
                 Validazione Documenti
             </aura:set>
             <aura:set attribute="footer">
-                <lightning:button type="button" name="Submit" label="Conferma" variant="brand" onclick='{!c.handleSubmit}' />
+                <lightning:button aura:id="ConfermaBtn" type="button" name="Submit" label="Conferma" variant="brand" onclick='{!c.handleSubmit}' />
                 <lightning:button type="button" name="Cancel" label="Annulla" onclick='{!c.handleCancel}' />
             </aura:set>
             <div class="">
@@ -68,7 +68,7 @@
                                 </lightning:select>
                         </div>
                         <div style="margin-top:4px;" class="{!v.ConsensoMarketingInserito_value == true ? 'slds-col slds-size_1-of-3 slds-hide' : 'slds-col slds-size_1-of-3'}">
-                            <lightning:button label="OK" class="slds-button slds-button_neutral" variant="brand" onclick="{!c.InvokeCase}"/>
+                            <lightning:button label="OK" class="slds-button slds-button_neutral" variant="brand" onclick="{!c.OKBtn}"/>
                         </div>
                       </div>                    
                 </div>
