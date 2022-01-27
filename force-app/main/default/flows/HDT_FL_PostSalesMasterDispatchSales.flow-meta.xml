@@ -2430,6 +2430,11 @@
             <targetReference>Next_Step_0</targetReference>
         </connector>
         <fields>
+            <name>modificaPagamentoFatturazioneHeader</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Modifica modalità di Pagamento e Fatturazione&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
             <name>test</name>
             <extensionName>c:hdtModificaContrattiBillingProfile</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -2463,7 +2468,7 @@
             </outputParameters>
         </fields>
         <showFooter>false</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Screen_Disattivazione</name>
