@@ -98,18 +98,20 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                     activity.CreditCheckResults__c = order.OutgoingCreditCheckResult__c;
                     activity.Account__c = order.ServicePoint__r.Account__c; 
                     activity.OldCustomerAccount__c=ordersToGetOldCustomer.get(order.Id).ServicePoint__r?.Account__c;
+                    activity.Type__c = 'KO Precedente Cliente';
                 }
                         
                 if(typeCustomer == 'newCustomer'){ // Nuovo cliente // entrante
                     activity.RecordTypeId = rtNewCustomer;                     
                     activity.CreditCheckResults__c = order.IncomingCreditCheckResult__c;
                     activity.Account__c = order.AccountId; 
+                    activity.Type__c = 'KO Credit Check';
                 }
 
                 activity.CreditCheckReason__c = order.CreditCheckDescription__c;
                 activity.Order__c = order.Id;                
                 activity.Contact__c = order.Contact__c;                                
-                activity.wrts_prcgvr__Status__c = 'Creata';                
+                activity.wrts_prcgvr__Status__c = 'Aperta';                
                 activity.Note__c = order.CommentForDL__c;
                 activity.OwnerId = order.OwnerId;
                 activity.CvpId__c= order.CvpId__c;
