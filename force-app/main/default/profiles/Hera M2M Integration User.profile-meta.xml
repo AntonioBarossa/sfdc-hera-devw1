@@ -12896,6 +12896,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.MarketingPrivacyAcquired__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.IsChangeSalesCompany__c</field>
         <readable>true</readable>
     </fieldPermissions>
