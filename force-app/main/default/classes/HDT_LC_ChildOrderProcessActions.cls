@@ -319,10 +319,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
         orderSrv.updateRecord(orderToUpdate);
         if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
-            //CONTROLLARE QUI LA CREAZIONE DELL'ATTIVITA'
-
-
-            /*********** */
             HDT_LC_ChildOrderProcessDetails.createActivityAccise(orderToUpdate.FacilitationExcise__c,orderToUpdate.VATfacilitationFlag__c,orderToUpdate.id,orderToUpdate.accountid);
         }
 
