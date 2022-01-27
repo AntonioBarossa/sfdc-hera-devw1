@@ -2,7 +2,7 @@
 * Date: 18/01/2022
  */
 @SuppressWarnings('PMD.AvoidDebugStatements')
-public with sharing class HDT_BA_SendOrderToSii implements Database.Batchable<sObject> {
+public with sharing class HDT_BA_SendOrderToSii implements Database.Batchable<sObject>, Database.AllowsCallouts {
 
     public Iterable<sObject> start(Database.BatchableContext bc) {
 
