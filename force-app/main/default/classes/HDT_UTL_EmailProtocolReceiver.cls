@@ -16,17 +16,19 @@ public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
                 emailBody = email.plainTextBody;
             }
 
+            // MAIL SEMPRE INOLTRATE DA ACCOUNT HERA - NECESSARIO ESTRARRE MITENTE ORIGINALE
+            String senderAddress = emailBody.left(300).substringBetween('Da: ', ' ');
             Interaction__c interaction = new Interaction__c(
                 Type__c = 'Digital',
                 ReceptionDate__c = Date.today(),
                 BodyEmail__c = emailBody,
                 SubjectEmail__c = email.subject,
-                SenderEmailAddress__c = email.fromAddress,
+                SenderEmailAddress__c = senderAddress /*email.fromAddress*/,
                 CompanyOwner__c = TEMPORARY_COMPANYOWNER_DEFAULT
             );
 
             List<ContentVersion> listContent = new List<ContentVersion>();
-            List<Contact> contacts = new HDT_QR_Contact().getContactByEmailAddress(email.fromAddress);
+            List<Contact> contacts = new HDT_QR_Contact().getContactByEmailAddress(senderAddress /*email.fromAddress*/);
             if(contacts.size() == 1) {
                 interaction.Contact__c = contacts[0].Id;
                 interaction.Account__c = contacts[0].AccountId;
@@ -68,17 +70,18 @@ public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
             }
 
             String toAddress = email.toAddresses == null || email.toAddresses.isEmpty() ? null : email.toAddresses[0];
-            EmailMessage newEmail = new EmailMessage(
-                FromAddress = email.fromAddress,
-                FromName = email.fromName,
-                ToAddress = toAddress,
-                Subject = email.subject,
-                TextBody = emailBody,
-                //HtmlBody = email.htmlBody,
-                relatedToId = interaction.Id ,
-                status = '0'
-            );
-            HDT_SRV_EmailMessage.insertEmailMessage(newEmail);
+            // VERIFICARE SE NECESSARIO SALVARE LA MAIL COME EMAILMESSAGE
+            // EmailMessage newEmail = new EmailMessage(
+            //     FromAddress = senderAddress /*email.fromAddress*/,
+            //     FromName = email.fromName,
+            //     ToAddress = toAddress,
+            //     Subject = email.subject,
+            //     TextBody = emailBody,
+            //     //HtmlBody = email.htmlBody,
+            //     relatedToId = interaction.Id ,
+            //     status = '0'
+            // );
+            // HDT_SRV_EmailMessage.insertEmailMessage(newEmail);
 
             wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
             activity.Interaction__c = interaction.Id;
