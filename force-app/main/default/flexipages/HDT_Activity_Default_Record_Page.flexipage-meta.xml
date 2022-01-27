@@ -7,6 +7,48 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.Fermo_Sistemi</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_DistributorAppointment</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.isAtoA__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.isManualAppoitment__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.Ripresa_Sistema</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_DistributorAppointment</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.isAtoA__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.isManualAppoitment__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>wrts_prcgvr__Activity__c.AssignToMe</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2 AND 3</booleanFilter>
@@ -225,6 +267,62 @@
                                     <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Non Esitata</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.RiprendiAttivita</value>
+                            <visibilityRule>
+                                <booleanFilter>(1 OR 2 OR 3 OR 4 OR 5 OR (7 AND 8 AND 9)) AND 6 AND 10</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Esito KO da DL</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>KO Fornitore</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Documentale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Gestionale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Manuale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sospesa</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto complesso</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Gestione dati discordanti</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto transitorio</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_Scarto</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -483,6 +581,47 @@
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>HDT_RT_KoPrecedeteCliente</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.Quick_Link</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Presa Appuntamento</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.isAtoA__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_DistributorAppointment</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.Comunicazioni_Distributore</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_DistributorAppointment</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.HDT_CloseDistributorComunication</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_DistributorCommunication</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -947,8 +1086,14 @@
             <fieldInstance>
                 <fieldItem>Record.URL__c</fieldItem>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.isSelfAppointment__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.isAtoA__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
