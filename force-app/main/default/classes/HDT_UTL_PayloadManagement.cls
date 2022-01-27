@@ -345,6 +345,16 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 supplyType = HDT_UTL_DocumentalManagement.getValue('Case', 'SupplyType__c', 0, inputs, formParams);
                 cluster = HDT_UTL_DocumentalManagement.getValue('Case', 'Cluster__c', 0, inputs, formParams);
             }
+            when 'Order'
+            {
+                amount = HDT_UTL_DocumentalManagement.getValue('Order', 'EstimateAmount__c', 0, inputs, formParams);
+                fixedAmount = HDT_UTL_DocumentalManagement.getValue('Order', 'PowerQuote__c', 0, inputs, formParams);
+                variableAmount = HDT_UTL_DocumentalManagement.getValue('Order', 'PowerQuote__c', 0, inputs, formParams);
+                iva = HDT_UTL_DocumentalManagement.getValue('Order', 'VAT__c', 0, inputs, formParams);
+                caseType = HDT_UTL_DocumentalManagement.getValue('Case', 'ProcessType__c', 0, inputs, formParams);
+                supplyType = HDT_UTL_DocumentalManagement.getValue('Case', 'SupplyType__c', 0, inputs, formParams);
+                cluster = HDT_UTL_DocumentalManagement.getValue('Case', 'Cluster__c', 0, inputs, formParams);
+            }
             when else {
                 isElse = true;
                 //quotationType = ''; //da ordine manca il campo
@@ -368,7 +378,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
             totalAmount = amountDouble + ivaAmount;
 
-            if(String.isBlank(variableAmount) && String.isBlank(fixedAmount) && context.equalsIgnoreCase('Case') && cluster.equalsIgnoreCase('Preventivi')){
+            if(String.isBlank(variableAmount) && String.isBlank(fixedAmount) 
+                && (context.equalsIgnoreCase('Case') || context.equalsIgnoreCase('Order')) 
+                && (cluster.equalsIgnoreCase('Preventivi') || caseType.equalsIgnoreCase('Temporanea - Nuova Attivazione'))){
                 //variableAmount è l'importo prestazione calcolato come amount - fixedAmount
                 //fixed amount è solo quotaVend se Variazione potenza dom sennò è quotaDistr + quotaVend| Se l'offerta è Placet togliere la quota Vend
                 if(caseType.contains('Potenza') && supplyType.equalsIgnoreCase('Domestico')){
