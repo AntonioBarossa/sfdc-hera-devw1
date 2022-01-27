@@ -49,7 +49,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
                 Order o = new Order(
                     Id = childOrd.Id,
-                    Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Documentazione Validata' : (checkRequiredDocs(childOrd) ? 'Documentazione Validata': 'In attesa validazione')
+                    Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Comunicazione verso Heroku' : (checkRequiredDocs(childOrd) ? 'Comunicazione verso Heroku': 'In attesa validazione')
                 );
                 if(quoteIdsMap.containsKey(childOrd.SBQQ__Quote__c)){
                     o.isMultipleQuoteOffer__c=true;
