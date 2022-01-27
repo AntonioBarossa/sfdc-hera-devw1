@@ -74,4 +74,16 @@ public with sharing class HDT_LC_DocumentValidationTst {
 
         System.assertNotEquals(null, result, 'getOrderAccountId did not work correctly');
     }
+
+    @isTest
+    static void testupdateOrder(){
+        Order ord = [SELECT id, Instance326__c, DocumentLow80__c, CIAccoutn__c, MarketingPrivacyAcquired__c From Order LIMIT 1];
+        
+        Test.startTest();   
+            HDT_LC_DocumentValidation.updateOrder(ord);
+        Test.stopTest();
+
+        System.assertNotEquals(null, ord, 'updateOrder did not work correctly');
+
+    }
 }

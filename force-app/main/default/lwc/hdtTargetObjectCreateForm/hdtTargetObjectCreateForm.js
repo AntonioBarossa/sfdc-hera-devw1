@@ -463,7 +463,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (element.split(':')[0].includes('ServicePointCode__c')) {
                 servicePointCode = element.split(':')[1];
             }
-
         });
 
         let lenght = servicePointCode.length;
@@ -482,43 +481,33 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     extractDataFromArriccDataServiceWithExistingSp({ sp: sp, response: data }).then(datas => {
                         this.isSap = true;
                         this.servicePointRetrievedData = datas[0];
+                        this.oldServicePoint = datas[0];
 
                         switch (this.servicePointRetrievedData['CommoditySector__c']) {
                             case 'Energia Elettrica':
                                 this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldEle__c : (this.customSettings.FieldEle__c == null || this.customSettings.FieldEle__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldEle__c));
-
                                 this.fieldsDataReqRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredEle__c : (this.customSettings.FieldRequiredEle__c == null || this.customSettings.FieldRequiredEle__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredEle__c));
                                 break;
                             case 'Gas':
-
                                 this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldGas__c : (this.customSettings.FieldGas__c == null || this.customSettings.FieldGas__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldGas__c));
-
                                 this.fieldsDataReqRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredGas__c : (this.customSettings.FieldRequiredGas__c == null || this.customSettings.FieldRequiredGas__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredGas__c));
                                 break;
                         }
 
-
                         this.fieldsData = this.toArray(this.fieldsDataRaw);
                         this.fieldsDataReq = this.toArray(this.fieldsDataReqRaw);
                         this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
-
                         this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValuesIfSap(this.servicePointRetrievedData);
-
                         this.getInstanceWrapObject(this.servicePointRetrievedData);
-
                     });
-                } 
+                }
                 else {
-                    console.log('entra in else **********************');
                     extractDataFromArriccDataServiceWithExistingSp({ sp: this.servicePointRetrievedData, response: data }).then(datas => {
-                        console.log('datas*************************' + JSON.stringify(datas));
-
                         this.servicePointRetrievedData = datas[0];
+                        this.oldServicePoint = datas[0];
 
-                        console.log('servicePointRetriviedData commodity: ******' + JSON.stringify(this.servicePointRetrievedData['CommoditySector__c']));
                         switch (this.servicePointRetrievedData['CommoditySector__c']) {
                             case 'Energia Elettrica':
-                                console.log('entra in energia elettrica');
                                 this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldEle__c : (this.customSettings.FieldEle__c == null || this.customSettings.FieldEle__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldEle__c));
                                 this.fieldsDataReqRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredEle__c : (this.customSettings.FieldRequiredEle__c == null || this.customSettings.FieldRequiredEle__c == null ? this.customSettings.FieldGeneric__c : this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredEle__c));
                                 break;
@@ -530,9 +519,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
                         this.fieldsData = this.toArray(this.fieldsDataRaw);
                         this.fieldsDataReq = this.toArray(this.fieldsDataReqRaw);
-                        console.log('fieldsDataObject before handleCallServiceSap' + JSON.stringify(this.fieldsDataObject));
                         this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
-                        console.log('fieldsDataObject after handleCallServiceSap' + JSON.stringify(this.fieldsDataObject));
                         this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValuesIfSap(this.servicePointRetrievedData);
 
                         this.getInstanceWrapObject(this.servicePointRetrievedData);
@@ -595,7 +582,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
                     this.handleCallServiceSap(this.selectedservicepoint);
                     this.servicePointRetrievedData = data[0];
-                    this.oldServicePoint = data[0]; //keltin used for change use check
                     if (this.servicePointRetrievedData.RecordType.DeveloperName != undefined) {
                         switch (this.servicePointRetrievedData.RecordType.DeveloperName) {
                             case 'HDT_RT_Ele':

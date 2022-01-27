@@ -106,4 +106,9 @@ public inherited sharing class HDT_LC_DocumentValidation {
         Order o = [SELECT Id, AccountId FROM Order WHERE Id =: orderRecordId with SECURITY_ENFORCED];
         return o.AccountId;
     }
+
+    @AuraEnabled
+    public static void updateOrder(Order ord){
+        orderSrv.updateRecord(ord);
+    }
 }

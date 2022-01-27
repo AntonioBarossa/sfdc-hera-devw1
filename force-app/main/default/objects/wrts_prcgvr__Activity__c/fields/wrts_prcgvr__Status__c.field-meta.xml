@@ -93,6 +93,11 @@
                 <default>false</default>
                 <label>Non Esitata</label>
             </value>
+            <value>
+                <fullName>Comunicazione inviata</fullName>
+                <default>false</default>
+                <label>Comunicazione inviata</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
