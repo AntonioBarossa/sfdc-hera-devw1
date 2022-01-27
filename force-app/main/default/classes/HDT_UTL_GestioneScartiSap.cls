@@ -12,13 +12,26 @@ public inherited sharing class HDT_UTL_GestioneScartiSap {
     public static List<HDT_GestioneScartiSap__mdt> getRuleFromActivity(Map<String,String> mapFieldValue){ 
         List<HDT_GestioneScartiSap__mdt> response = new List<HDT_GestioneScartiSap__mdt>();
         if (mapFieldValue != null && !mapFieldValue.isEmpty()){
-            List<String> partialCondition = new List<String>();
-            for (String field : mapFieldValue.keySet()){
-                String value = String.escapeSingleQuotes(mapFieldValue.get(field));
-                partialCondition.add(field +' = \''+value+'\'');
+            List<HDT_GestioneScartiSap__mdt> allRules = HDT_GestioneScartiSap__mdt.getAll().values();
+            Integer sizeRule = 0;
+            //Questo For aggiunge alla response le regole con il più alto numero di campi uguali
+            for (HDT_GestioneScartiSap__mdt rule : allRules){
+                List<String> ruleKey = new List<String>(); 
+                for (String field : mapFieldValue.keySet()){
+                    String valueToSearch = mapFieldValue.get(field);
+                    if (valueToSearch.equalsIgnoreCase((String)rule.get(field))){
+                        ruleKey.add(field);
+                    }
+                }
+                Integer newSizeRule = ruleKey.size();
+                if (!ruleKey.isEmpty() && newSizeRule >= sizeRule){
+                    if (newSizeRule > sizeRule){
+                        sizeRule = newSizeRule;
+                        response = new List<HDT_GestioneScartiSap__mdt>();
+                    }
+                    response.add(rule);
+                }
             }
-            String query = 'SELECT Activity__c, CreateActivity__c, ActivityInitialStatus__c,ActivityToClose__c FROM HDT_GestioneScartiSap__mdt WHERE '+String.join(partialCondition, ' AND ')+' WITH SECURITY_ENFORCED';
-            response = Database.query(query);
         }
         return response;
     }

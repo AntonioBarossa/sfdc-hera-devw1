@@ -889,9 +889,15 @@ TODO: Formula da adeguare in Wave 2.</description>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
-            <name>hdtSpinnerFlow</name>
-            <extensionName>c:hdtSpinnerFlow</extensionName>
+            <name>NavigationSpinner</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
             <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputParameters>
                 <name>recordId</name>
                 <value>

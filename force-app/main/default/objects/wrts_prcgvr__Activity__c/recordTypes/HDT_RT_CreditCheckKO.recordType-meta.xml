@@ -2251,16 +2251,8 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
-            <fullName>Approvazione Offerte</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Giro contatore da gestire</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Lavorazione Reclamo Post Survey</fullName>
-            <default>false</default>
+            <fullName>KO Credit Check</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>

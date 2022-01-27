@@ -71,13 +71,25 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
         map<String,String> mapReturn = new Map<String,String>();
         try {
                 String id = checkLogin(username,password).id;
+                String documentRecordId;
+                List<DocumentalActivity__c> dc = new List<DocumentalActivity__c>();
+                List<DocumentSendTracking__c> dst = new List<DocumentSendTracking__c>();
                 if(id == orderId){
                     HDT_LC_CanaleIVRNoShare qrsha = new HDT_LC_CanaleIVRNoShare();
-                    DocumentalActivity__c dc = qrsha.getActivityByOrder(orderId);
+                    dc.add(qrsha.getActivityByOrder(orderId));
                     //mapReturn.put('base64','UFJPVkFET1dOTE9BRFBST1ZB');
                     //String s = HDT_LC_DocumentSignatureManager.showOriginalDocument(dc.id);
                 // System.debug('*********:'+ s);
-                    mapReturn = qrsha.getPlico(dc.id); 
+                    if(dc != null)
+                    {
+                        dst.add(qrsha.getDocumentalSendTracking(orderId));
+                        documentRecordId = !dst.isEmpty() ? dst[0].Id : '';
+                    }
+                    else
+                    {
+                        documentRecordId = dc[0].Id;
+                    }
+                    mapReturn = qrsha.getPlico(documentRecordId); 
                     System.debug('*********:'+ mapReturn);//(Map<String,String>)JSON.deserialize(s, Map<String,String>.class);
                 /*  Order ord = orderQr.getRecordById(orderId);
                     String recordId = ord.DocumentalActivity__c;
