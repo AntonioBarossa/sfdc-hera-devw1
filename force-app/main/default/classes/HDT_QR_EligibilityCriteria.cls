@@ -55,7 +55,7 @@ public inherited sharing class HDT_QR_EligibilityCriteria {
         crtiteriaToClone = [
             SELECT Id, Name,
                    OriginMarket__c,CategoryTypeClient__c,LoginGroup__c, ResidentDeliveryAddress__c,CompanyOwner__c,
-                   Campaign__c,PromoCode__c,Channel__c,ClientMarker__c,Login__c, NewClient__c,Agency__c,UseCategory__c,
+                   //Campaign__c,PromoCode__c,Channel__c,ClientMarker__c,Login__c, NewClient__c,Agency__c,UseCategory__c,
                    EquipmenType__c,ClientAgeMin__c,ConsumptionRangeEEmin__c,ConsumptionRangeGASmin__c,PowerRangeMin__c,
                    ClientAgeMax__c,ConsumptionRangeEEmax__c,ConsumptionRangeGASmax__c,PowerRangeMax__c,EligibleForAllCities__c,
                    CampaignName__c,
