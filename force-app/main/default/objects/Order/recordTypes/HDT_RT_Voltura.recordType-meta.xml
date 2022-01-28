@@ -2150,6 +2150,10 @@
         <values>
             <fullName>Documentazione Validata</fullName>
             <default>false</default>
+        </values>        
+        <values>
+            <fullName>Errore invio a DL/SII</fullName>
+            <default>false</default>
         </values>
         <values>
             <fullName>Errore lavorazione SAP</fullName>
@@ -3128,10 +3132,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>VoltureType__c</picklist>
-        <values>
-            <fullName>In continuità_si_addebito</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Incorporazione societaria</fullName>
             <default>false</default>

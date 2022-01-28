@@ -2174,6 +2174,10 @@
         <values>
             <fullName>Documentazione Validata</fullName>
             <default>false</default>
+        </values>        
+        <values>
+            <fullName>Errore invio a DL/SII</fullName>
+            <default>false</default>
         </values>
         <values>
             <fullName>Errore lavorazione SAP</fullName>
