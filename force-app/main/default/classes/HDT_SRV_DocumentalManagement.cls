@@ -404,6 +404,7 @@ public class HDT_SRV_DocumentalManagement{
 				}
 			}
 			handleRadioGroup(record,listOfRadio,envelopeId);
+			// TODO: rimuovere commento
 			//handleLandRegistry(record,listOfData,listOfRadio);
 			HDT_UTL_DatabaseService.upsertSObject(record);
 		}

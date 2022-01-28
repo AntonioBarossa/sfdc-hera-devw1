@@ -1173,17 +1173,15 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     public String validateEndDate(String fields){
 
-        String startDateString = getFieldValue(fields, 'TemporaryConnectionStartDate__c');
         String endDateString = getFieldValue(fields, 'TemporaryConnectionEndDate__c');
 
         String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
-        Date startDate = Date.valueOf(startDateString);
         Date endDate = Date.valueOf(endDateString);
 
-        if ( startDate <= System.today() || endDate <= startDate) {
+        /*if (endDate < startDate) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario che la data finale sia successiva alla data iniziale.'));
-        }
+        }*/
 
         return result;
     }
