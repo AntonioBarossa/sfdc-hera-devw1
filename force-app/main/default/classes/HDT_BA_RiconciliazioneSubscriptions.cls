@@ -16,7 +16,6 @@ public with sharing class HDT_BA_RiconciliazioneSubscriptions implements Databas
     }
 
     public void execute(Database.BatchableContext bc, List<SBQQ__Subscription__c> scope){
-        System.debug('scope: ' + scope.size());
         List<SBQQ__Subscription__c> clones = new List<SBQQ__Subscription__c>();
         for(SBQQ__Subscription__c sub : scope){
             SBQQ__Subscription__c clone= sub.clone(false,true,false,true);
@@ -24,13 +23,11 @@ public with sharing class HDT_BA_RiconciliazioneSubscriptions implements Databas
             clone.SBQQ__RootId__c = oldContToNew.get(sub.SBQQ__Contract__r.SAPContractCode__c).Id;
             clones.add(clone);
         }
-        System.debug('clones: ' + clones.size());
-
         insert clones;
         
     }
     public void finish(Database.BatchableContext bc){
-        System.debug('End Batch');
+        System.debug(LoggingLevel.DEBUG,'End Batch');
 
     }
     
