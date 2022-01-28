@@ -50,7 +50,7 @@ public class HDT_UTL_SearchPlugTst {
         criteria.CompanyOwnerOperator__c = 'includesAll';
         criteria.CampaignName__c = null;
         criteria.PromoCode__c = null;
-        //criteria.Agency__c = null;
+        criteria.Agency__c = null;
         criteria.UseCategory__c = null;
         criteria.EquipmenType__c = null;
         criteriaList.add(criteria);
