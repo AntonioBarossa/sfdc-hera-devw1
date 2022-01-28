@@ -8,25 +8,46 @@
         const that = this;
         workspaceAPI.getFocusedTabInfo().then(function(response) {
             let focusedTabId = response.parentTabId;
-            workspaceAPI.openSubtab({
-                parentTabId: focusedTabId,
-                url: url,
-                focus: true
-            }).then(function(response) {
-                console.log('@@@@then openSubTab');
-                workspaceAPI.setTabLabel({
-                    tabId: response,
-                    label: "Processo PostSales"
+            if (focusedTabId){
+                workspaceAPI.openSubtab({
+                    parentTabId: focusedTabId,
+                    url: url,
+                    focus: true
+                }).then(function(response) {
+                    console.log('@@@@then openSubTab');
+                    workspaceAPI.setTabLabel({
+                        tabId: response,
+                        label: "Processo PostSales"
+                    });
+                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
+                    dismissActionPanel.fire();
+                })
+                .catch(function(error) {
+                    console.log('@@@@catch openSubTab');
+                    that.showAllert(component,JSON.stringify(error),'error','Attenzione!');
+                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
+                    dismissActionPanel.fire();
                 });
-                var dismissActionPanel = $A.get("e.force:closeQuickAction");
-                dismissActionPanel.fire();
-            })
-            .catch(function(error) {
-                console.log('@@@@catch openSubTab');
-                that.showAllert(component,JSON.stringify(error),'error','Attenzione!');
-                var dismissActionPanel = $A.get("e.force:closeQuickAction");
-                dismissActionPanel.fire();
-            });
+            }else{
+                workspaceAPI.openTab({
+                    url: url,
+                    focus: true
+                }).then(function(response) {
+                    console.log('@@@@then openSubTab');
+                    workspaceAPI.setTabLabel({
+                        tabId: response,
+                        label: "Processo PostSales"
+                    });
+                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
+                    dismissActionPanel.fire();
+                })
+                .catch(function(error) {
+                    console.log('@@@@catch openSubTab');
+                    that.showAllert(component,JSON.stringify(error),'error','Attenzione!');
+                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
+                    dismissActionPanel.fire();
+                });
+            }
         })
         .catch(function(error) {
             console.log('@@@@catch getFocusTabInfo');
@@ -45,36 +66,68 @@
             let order = component.get('v.order');
             let focusedTabId = response.parentTabId;
             console.log('@@@@getFocusTabInfo ' + order.Id +'/'+order.ParentOrder__c+'/'+focusedTabId );
-            workspaceAPI.openSubtab({
-                parentTabId: focusedTabId,
-                pageReference: {
-                    type: 'standard__component',
-                    attributes: {
-                        componentName: 'c:HDT_LCP_ChildOrderProcess',
+            if (focusedTabId){
+                workspaceAPI.openSubtab({
+                    parentTabId: focusedTabId,
+                    pageReference: {
+                        type: 'standard__component',
+                        attributes: {
+                            componentName: 'c:HDT_LCP_ChildOrderProcess',
+                        },
+                        state: {
+                            "c__orderParent": order.ParentOrder__c,
+                            "c__orderId" : order.Id,
+                            "c__discardRework": true,
+                            "c__discardActivityToClose" : recordId
+                        }
                     },
-                    state: {
-                        "c__orderParent": order.ParentOrder__c,
-                        "c__orderId" : order.Id,
-                        "c__discardRework": true,
-                        "c__discardActivityToClose" : recordId
-                    }
-                },
-                focus: true
-            }).then(function(response) {
-                console.log('@@@@then openSubTab');
-                workspaceAPI.setTabLabel({
-                    tabId: response,
-                    label: "Processo ordine individuale"
+                    focus: true
+                }).then(function(response) {
+                    console.log('@@@@then openSubTab');
+                    workspaceAPI.setTabLabel({
+                        tabId: response,
+                        label: "Processo ordine individuale"
+                    });
+                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
+                    dismissActionPanel.fire();
+                })
+                .catch(function(error) {
+                    console.log('@@@@catch openSubTab');
+                    that.showAllert(component,JSON.stringify(error),'error','Attenzione!');
+                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
+                    dismissActionPanel.fire();
                 });
-                var dismissActionPanel = $A.get("e.force:closeQuickAction");
-                dismissActionPanel.fire();
-            })
-            .catch(function(error) {
-                console.log('@@@@catch openSubTab');
-                that.showAllert(component,JSON.stringify(error),'error','Attenzione!');
-                var dismissActionPanel = $A.get("e.force:closeQuickAction");
-                dismissActionPanel.fire();
-            });
+            }else{
+                workspaceAPI.openTab({
+                    pageReference: {
+                        type: 'standard__component',
+                        attributes: {
+                            componentName: 'c:HDT_LCP_ChildOrderProcess',
+                        },
+                        state: {
+                            "c__orderParent": order.ParentOrder__c,
+                            "c__orderId" : order.Id,
+                            "c__discardRework": true,
+                            "c__discardActivityToClose" : recordId
+                        }
+                    },
+                    focus: true
+                }).then(function(response) {
+                    console.log('@@@@then openSubTab');
+                    workspaceAPI.setTabLabel({
+                        tabId: response,
+                        label: "Processo ordine individuale"
+                    });
+                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
+                    dismissActionPanel.fire();
+                })
+                .catch(function(error) {
+                    console.log('@@@@catch openSubTab');
+                    that.showAllert(component,JSON.stringify(error),'error','Attenzione!');
+                    var dismissActionPanel = $A.get("e.force:closeQuickAction");
+                    dismissActionPanel.fire();
+                });
+            }
         })
         .catch(function(error) {
             console.log('@@@@catch getFocusTabInfo');

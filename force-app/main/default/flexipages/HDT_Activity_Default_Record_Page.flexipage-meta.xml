@@ -72,7 +72,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_CloseActivity</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2 OR 3 OR (4 AND (8 OR 9)) OR 5 OR 6) AND 7</booleanFilter>
+                                <booleanFilter>(1 OR 2 OR 3 OR (4 AND 8 AND 9) OR 5 OR 6 OR 10) AND 7</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -110,13 +110,18 @@
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>EQUAL</operator>
+                                    <operator>NE</operator>
                                     <rightValue>Validazione Documentale</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>EQUAL</operator>
+                                    <operator>NE</operator>
                                     <rightValue>Validazione Vocal Order</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_AttivitaGestionali</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
