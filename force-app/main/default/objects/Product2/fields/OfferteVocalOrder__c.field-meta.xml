@@ -52,6 +52,11 @@
                 <label>Nuova Impronta Zero Casa Luce</label>
             </value>
             <value>
+                <fullName>Nuova Impronta Zero Lavoro Gas</fullName>
+                <default>false</default>
+                <label>Nuova Impronta Zero Lavoro Gas</label>
+            </value>
+            <value>
                 <fullName>Nuova Impronta Zero Lavoro Luce</fullName>
                 <default>false</default>
                 <label>Nuova Impronta Zero Lavoro Luce</label>

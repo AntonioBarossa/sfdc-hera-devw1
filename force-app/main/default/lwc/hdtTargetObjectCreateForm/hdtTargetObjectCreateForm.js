@@ -91,7 +91,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @api retrievedDistributor = {};
     @api commodity = '';
     @api processtype;
-    oldServicePoint = {}; //keltin used for change use check
+    @track oldSupplyType = '';
     
     /**
      * Handle save button availability
@@ -262,7 +262,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     )
                 }
                 else {
-                    console.log('entra in else ++++' + JSON.stringify(element));
                     fieldsDataObject.push(
                         {
                             fieldname: element,
@@ -437,7 +436,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     toObjectAddressInit(data) {
 
         let fieldsDataObject = [];
-        console.log('');
         Object.keys(data).forEach(keys => {
             fieldsDataObject.push(
                 {
@@ -481,7 +479,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     extractDataFromArriccDataServiceWithExistingSp({ sp: sp, response: data }).then(datas => {
                         this.isSap = true;
                         this.servicePointRetrievedData = datas[0];
-                        this.oldServicePoint = datas[0];
+                        this.oldSupplyType = datas[0].SupplyType__c;
 
                         switch (this.servicePointRetrievedData['CommoditySector__c']) {
                             case 'Energia Elettrica':
@@ -504,7 +502,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 else {
                     extractDataFromArriccDataServiceWithExistingSp({ sp: this.servicePointRetrievedData, response: data }).then(datas => {
                         this.servicePointRetrievedData = datas[0];
-                        this.oldServicePoint = datas[0];
+                        this.oldSupplyType = datas[0].SupplyType__c;
 
                         switch (this.servicePointRetrievedData['CommoditySector__c']) {
                             case 'Energia Elettrica':
@@ -603,13 +601,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         variant: 'error'
                     });
                     this.dispatchEvent(toastErrorMessage);
-                    console.log('error****' + error.message);
                 });
 
-            } else {
-                console.log(this.selectedservicepoint + 'selectedServicePoint');
+            }
+            else {
                 this.manageFields();
-                console.log('fieldsData' + this.fieldsAddress);
             }
             this.fieldsReady = true;
             this.loading = false;
@@ -662,14 +658,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     handleFillFieldsButtonAvailability(fieldName, fieldValue) {
         if (fieldName == 'ServicePointCode__c') {
-
             this.servicePointCode = fieldValue;
             if (this.servicePointCode.length > 13 && this.selectedservicepoint == undefined) {
                 this.fillFieldsDataDisabled = false;
-            } else {
+            }
+            else {
                 this.fillFieldsDataDisabled = true;
             }
-
         }
     }
 
@@ -698,7 +693,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         //25/08/2021 - gabriele.rota@webresults.it - Switch Flag Resident in base a Tipo Fornitura
         if (event.target.fieldName == 'SupplyType__c') {
             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
-        }
+        }        
     }
 
     /**
@@ -1348,7 +1343,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.newServicePoint = data;
             this.isSap = false;
             this.dispatchEvent(new CustomEvent('newservicepoint', { detail: this.newServicePoint }));
-            this.dispatchEvent(new CustomEvent('confirmservicepoint', { detail: { newServicePoint: this.newServicePoint, oldServicePoint: this.oldServicePoint } })); //keltin used for change use check
+            this.dispatchEvent(new CustomEvent('confirmservicepoint', { detail: { newServicePoint: this.newServicePoint, oldSupplyType: this.oldSupplyType } })); //keltin used for change use check
         }).catch(error => {
             this.loading = false;
             const toastErrorMessage = new ShowToastEvent({

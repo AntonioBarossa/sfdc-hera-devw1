@@ -106,9 +106,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     newOrder.RequestOption__c = HDT_UTL_OrderFieldsAlignment.calculateRequestedOption(order.ImplantType__c, order.PowerRequested__c);
                 }
                 when 'HDT_RT_TemporaneaNuovaAtt' {
-                    newOrder.RequestOption__c = null;
                     newOrder.ConnectionType__c = null;
                 }
+                when 'HDT_RT_SwitchIn' {
+                    newOrder.PowerRequested__c  = order.PowerCommitted__c;
+                }
+
             }
 
             switch on processType {
