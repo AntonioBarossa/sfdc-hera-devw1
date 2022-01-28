@@ -1,8 +1,8 @@
 /*Author: Edoardo Zanatta
 * Date: 18/01/2022
  */
-
-public with sharing class HDT_BA_SendOrderToSii implements Database.Batchable<sObject> {
+@SuppressWarnings('PMD.AvoidDebugStatements')
+public with sharing class HDT_BA_SendOrderToSii implements Database.Batchable<sObject>, Database.AllowsCallouts {
 
     public Iterable<sObject> start(Database.BatchableContext bc) {
 
@@ -15,23 +15,18 @@ public with sharing class HDT_BA_SendOrderToSii implements Database.Batchable<sO
 
     public void execute(Database.BatchableContext bc, List<Order> scope){
 
-        for(Order allOrder : scope){
-            allOrder.Phase__c = 'Comunicazione verso Heroku';
-        }
+        List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> orderToSendList = new List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>();
 
-        update scope;
+        for(Order ord : scope){
+            ord.Phase__c = 'Comunicazione verso Heroku';
+            HDT_PEV_VoltureChangeManagerUpdateSObj__e orderToSend = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
+            orderToSend.SerializedSobj__c = JSON.serialize(ord);
+            orderToSendList.add(orderToSend);
+        }
+        Eventbus.publish(orderToSendList);
     }
     
     public void finish(Database.BatchableContext bc){
-        
-        DateTime now = Datetime.now();
-        now.addMinutes(2);
-        String hour = String.valueOf(now.hour());
-        String min = String.valueOf(now.minute());
-        String ss = String.valueOf(now.second());
-
-        String fireTime = ss + ' ' + min + ' ' + hour + ' * * ? '+now.year();
-        Object instance = wrts_prcgvr.VersionManager.newClassInstance('AsyncJobBatchSchedule');
-        System.schedule('Async Callout retry '+now, fireTime, (Schedulable) instance);
+        System.debug(LoggingLevel.DEBUG, 'Batch SendOrderToSii Completed');
     }    
 }

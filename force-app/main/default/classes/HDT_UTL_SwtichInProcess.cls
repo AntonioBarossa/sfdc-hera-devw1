@@ -130,7 +130,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
             }
             // CALCOLATO DATA SU SEQUEN O NO
             if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
-                List<HDT_FulfillmentDateMatrix__c> afterthoughtDays = [SELECT ActivationDate__c FROM HDT_FulfillmentDateMatrix__c WHERE
+               List<FulfillmentDateMatrix__c> afterthoughtDays = [SELECT ActivationDate__c FROM FulfillmentDateMatrix__c WHERE
                     OriginMarket__c =: order.MarketOrigin__c AND 
                     Commodity__c =: order.ServicePoint__r.CommoditySector__c AND 
                     VoltageLevel__c =: order.VoltageLevel__c AND 
@@ -147,7 +147,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
             else{
                 if(order.RecessNotice__c == null){
 
-                    List<HDT_FulfillmentDateMatrix__c> afterthoughtDays2 = [SELECT ActivationDate__c FROM HDT_FulfillmentDateMatrix__c WHERE 
+                    List<FulfillmentDateMatrix__c> afterthoughtDays2 = [SELECT ActivationDate__c FROM FulfillmentDateMatrix__c WHERE 
                         OriginMarket__c =: order.MarketOrigin__c AND 
                         Commodity__c =: order.ServicePoint__r.CommoditySector__c AND
                         VoltageLevel__c =: order.VoltageLevel__c AND

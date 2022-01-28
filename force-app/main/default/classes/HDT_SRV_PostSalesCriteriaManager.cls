@@ -16,18 +16,17 @@ global inherited sharing class HDT_SRV_PostSalesCriteriaManager implements wrts_
         String method = (String) argsMap.get('method');
         SObject sender = (SObject) argsMap.get('record');
 
-        Case currentCase = (Case) sender;
         Boolean result;
 
         switch on method{
             when 'distributorManagement'{
-                result = criteriaUtl.distributorManagement(currentCase.PhaseStory__c);
+                result = criteriaUtl.distributorManagement((String)sender.get('PhaseStory__c'));
             }
             when 'secondAdmissibility'{
-                result = criteriaUtl.secondAdmissibility(currentCase.PhaseStory__c);
+                result = criteriaUtl.secondAdmissibility((String)sender.get('PhaseStory__c'));
             }
             when 'notExecWorks'{
-                result = criteriaUtl.notExecWorks(currentCase.PhaseStory__c);
+                result = criteriaUtl.notExecWorks((String)sender.get('PhaseStory__c'));
             }
         }
 

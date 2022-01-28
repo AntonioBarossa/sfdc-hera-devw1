@@ -140,6 +140,11 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             new HDT_WRP_Process('Switch In Gas', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, true, false),
             new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','VT1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, false), // Disattivato Stato SP Attivo HRAWRM-862
             new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','VTG', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas', false, false, false),// Disattivato Stato SP Attivo HRAWRM-862
+            /**@frpanico 25/01/2022
+             * Add Voltura con Switch Reseller
+             */
+            new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','VT1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, true), // Disattivato Stato SP Attivo HRAWRM-862
+            new HDT_WRP_Process('Voltura con Switch', 'HDT_RT_VolturaConSwitch','VTG', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', false, false, false, false, 'HDT_RT_Gas', false, false, true),// Disattivato Stato SP Attivo HRAWRM-862
             new HDT_WRP_Process('Switch in Reseller', 'HDT_RT_SwitchIn','', new Set<String>{'Attivo'}, new Set<String>(), 'Si', null, false, false, false, null, false, false, true),//temporarily commented
             new HDT_WRP_Process('Voltura', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', false, false, false, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Voltura', 'HDT_RT_Voltura','', new Set<String>{'Attivo'}, new Set<String>{'Libero','Regolamentato'}, null, false, false, false, false, 'HDT_RT_Gas', false, false, false)
@@ -178,16 +183,17 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         //isReseller=false;
         isAmendmentAllowed=isAmendmentAllowed||isScontiBonus(ord);
 
-        system.debug('getAvailableProcesses - isOwnAccount: ' + isOwnAccount);
-        system.debug('getAvailableProcesses - plugPresence: ' + plugPresence);
-        system.debug('getAvailableProcesses - isChangeUse: ' + isChangeUse);
-        system.debug('getAvailableProcesses - marketOrigin: ' + ord.MarketOrigin__c);
-        system.debug('getAvailableProcesses - isSwitchInRipristinatorio: ' + isSwitchInRipristinatorio(ord));
-        system.debug('getAvailableProcesses - isAttivazioneConModifica: ' + isAttivazioneConModifica(ord));
-        system.debug('getAvailableProcesses - commodity: ' + ord.ServicePoint__r.RecordType.DeveloperName);
-        system.debug('getAvailableProcesses - meterStatus: ' + ord.ServicePoint__r.MeterStatus__c);
-        system.debug('getAvailableProcesses - isAmendmentAllowed: ' + ord.SBQQ__Quote__r.AmendmentAllowed__c);
-        system.debug('getAvailableProcesses - isSwitchOut: ' + ord.IsWinback__c);
+        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isOwnAccount: ' + isOwnAccount);
+        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - plugPresence: ' + plugPresence);
+        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isChangeUse: ' + isChangeUse);
+        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - marketOrigin: ' + ord.MarketOrigin__c);
+        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isSwitchInRipristinatorio: ' + isSwitchInRipristinatorio(ord));
+        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAttivazioneConModifica: ' + isAttivazioneConModifica(ord));
+        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - commodity: ' + ord.ServicePoint__r.RecordType.DeveloperName);
+        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - meterStatus: ' + ord.ServicePoint__r.MeterStatus__c);
+        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAmendmentAllowed: ' + ord.SBQQ__Quote__r.AmendmentAllowed__c);
+        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isWinBack: ' + ord.IsWinback__c);
+        system.debug(LoggingLevel.DEBUG, 'getAvailableProcesses - isReseller: ' +isReseller);
 
         for (HDT_WRP_Process process : allProcesses) {
             if (

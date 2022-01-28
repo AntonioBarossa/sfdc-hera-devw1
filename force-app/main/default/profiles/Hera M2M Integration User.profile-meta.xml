@@ -8871,6 +8871,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DiscardAnnullmentRule__c.DiscardNote__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DiscardAnnullmentRule__c.IsActive__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9799,6 +9804,46 @@
         <field>Event.WhoId</field>
         <readable>true</readable>
     </fieldPermissions>
+    <!-- <fieldPermissions>
+        <editable>true</editable>
+        <field>FulfillmentDateMatrix__c.ActivationDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FulfillmentDateMatrix__c.Commodity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FulfillmentDateMatrix__c.FulfillmentDateFrom__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FulfillmentDateMatrix__c.FulfillmentDateTo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FulfillmentDateMatrix__c.OriginMarket__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FulfillmentDateMatrix__c.ProcessType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FulfillmentDateMatrix__c.SupplyType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>FulfillmentDateMatrix__c.VoltageLevel__c</field>
+        <readable>true</readable>
+    </fieldPermissions> -->
     <!-- <fieldPermissions>
         <editable>true</editable>
         <field>FieldCoerenceServicePoint__c.AccountCategory__c</field>
@@ -12847,6 +12892,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.AccountholderTypeBeneficiary__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.MarketingPrivacyAcquired__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -30118,6 +30168,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.RecordingLink__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.InteractionReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -31862,7 +31917,7 @@
         <recordType>Order.HDT_RT_Proroga</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <layout>Order-Prima attivazione con modifica</layout>
         <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -32101,6 +32156,15 @@
         <object>DiscardAnnullmentRule__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <!-- <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>FulfillmentDateMatrix__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions> -->
     <!-- <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
