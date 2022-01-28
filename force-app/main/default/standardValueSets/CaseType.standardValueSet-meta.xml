@@ -132,6 +132,11 @@
         <fullName>Disassociazione Utente Web</fullName>
         <default>false</default>
         <label>Disassociazione Utente Web</label>
+    </standardValue>    
+    <standardValue>
+        <fullName>Documentale/Copia Contratto</fullName>
+        <default>false</default>
+        <label>Documentale/Copia Contratto</label>
     </standardValue>
     <standardValue>
         <fullName>Doppi Pagamenti/Incassi</fullName>
@@ -239,6 +244,16 @@
         <fullName>Modifica Layout di dettaglio</fullName>
         <default>false</default>
         <label>Modifica Layout di dettaglio</label>
+    </standardValue>    
+    <standardValue>
+        <fullName>Modifica Contr Preattivazione Pagamento Residenziale</fullName>
+        <default>false</default>
+        <label>Modifica Contr Preattivazione Pagamento Residenziale</label>
+    </standardValue>    
+    <standardValue>
+        <fullName>Modifica Contr Preattivazione Anagr Res</fullName>
+        <default>false</default>
+        <label>Modifica Contr Preattivazione Anagr Res</label>
     </standardValue>
     <standardValue>
         <fullName>Modifica Portale SOL Gestione Energia</fullName>
