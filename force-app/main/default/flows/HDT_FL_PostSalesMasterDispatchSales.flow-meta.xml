@@ -1284,6 +1284,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>TemporaryConnectionStartDate__c</field>
+            <value>
+                <elementReference>Get_Contract_Proroga.StartDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Type</field>
             <value>
                 <elementReference>ProcessType</elementReference>
@@ -2709,7 +2715,7 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>1530</locationX>
