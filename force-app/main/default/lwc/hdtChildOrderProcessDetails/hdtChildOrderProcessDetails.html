@@ -88,7 +88,7 @@
                                 <div class="slds-clearfix slds-p-around_small">
                                     <div class="slds-float_right">
                                         <template if:true={section.hasCalculateButton}>
-                                            <c-hdt-calculate-estimated-cost record-id={section.recordId} order={orderWithData} ></c-hdt-calculate-estimated-cost>
+                                            <c-hdt-calculate-estimated-cost record-id={section.recordId} oncalculatecost={getFieldsForEstimatedCost}></c-hdt-calculate-estimated-cost>
                                         </template>
                                         <template if:true={section.hasIvaAcciseUploadButton}>
                                             <c-hdt-upload-documents title="Carica Documenti Iva e Accise" record-id={order.Id} accepted-formats={acceptedFormatsIvaAcciseUpload} description="ivaAccise"></c-hdt-upload-documents>
