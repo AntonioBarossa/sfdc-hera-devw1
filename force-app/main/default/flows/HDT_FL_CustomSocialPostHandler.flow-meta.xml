@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>54.0</apiVersion>
+    <apiVersion>53.0</apiVersion>
     <assignments>
         <description>Inserisco i valori &quot;Social&quot; nel Case del SocialPost e assegno al case il record type &quot;Altre Informative&quot;</description>
         <name>Inserimento_valori_Social_Case_SocialPost</name>
