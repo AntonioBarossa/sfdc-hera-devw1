@@ -67,7 +67,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track lastStepData = {};
     loginChannel;
     get orderWithData(){
-        return { ...this.order, ...this.sectionDataToSubmit };
+       console.log('#Order With Data >>> ' +JSON.stringify(this.sectionDataToSubmit));
+       return {...this.order, ...this.sectionDataToSubmit};
     }
     get previousTraderOptions(){ return [
         {"label":"ENEL ENERGIA SPA-10V0000006","value":"ENEL ENERGIA SPA-10V0000006"},
@@ -461,6 +462,40 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
         });
+    }
+
+    @api
+    getFieldsForEstimatedCost()
+    {
+        let wrpOrder = {};
+        wrpOrder["Id"] = this.order.Id;
+        wrpOrder["RecordTypeId"] = this.order.RecordTypeId;
+        wrpOrder["ConnectionType__c"] = this.checkFieldAvailable("ConnectionType__c") !== '' ? this.checkFieldAvailable("ConnectionType__c") : this.order["ConnectionType__c"];
+        wrpOrder["RequestPhase__c"] = this.checkFieldAvailable("RequestPhase__c") !== '' ? this.checkFieldAvailable("RequestPhase__c") : this.order["RequestPhase__c"];
+        wrpOrder["ProcessCode__c"] = this.order["ProcessCode__c"];
+        wrpOrder["DistributorFormula__c"] = this.order["DistributorFormula__c"];
+        wrpOrder["PowerRequested__c"] = this.checkFieldAvailable("PowerRequested__c") !== '' ? this.checkFieldAvailable("PowerRequested__c") : this.order["PowerRequested__c"];
+        wrpOrder["PowerAvailable__c"] = this.checkFieldAvailable("PowerAvailable__c") !== '' ? this.checkFieldAvailable("PowerAvailable__c") : this.order["PowerAvailable__c"];
+        wrpOrder["VoltageLevel__c"] = this.checkFieldAvailable("VoltageLevel__c") !== '' ? this.checkFieldAvailable("VoltageLevel__c") : this.order["VoltageLevel__c"];
+        wrpOrder["PowerCommitted__c"] = this.checkFieldAvailable("PowerCommitted__c") !== '' ? this.checkFieldAvailable("PowerCommitted__c") : this.order["PowerCommitted__c"];
+        wrpOrder["UseTypeEnergy__c"] = this.checkFieldAvailable("UseTypeEnergy__c") !== '' ? this.checkFieldAvailable("UseTypeEnergy__c") : this.order["UseTypeEnergy__c"];
+        this.template.querySelector('c-hdt-calculate-estimated-cost').order = wrpOrder;
+        this.template.querySelector('c-hdt-calculate-estimated-cost').getQuoteType();
+    }
+
+    checkFieldAvailable(fieldApiName)
+    {
+        console.log('#fieldName >>> ' + fieldApiName);
+        if(this.template.querySelector(`[data-id=${fieldApiName}]`) !== null 
+            && (this.template.querySelector(`[data-id=${fieldApiName}]`).value === ''|| this.template.querySelector(`[data-id=${fieldApiName}]`).value === null))
+        {
+            return '';
+        }
+        else
+        {
+            return this.template.querySelector(`[data-id=${fieldApiName}]`).value;
+        }
+        
     }
 
     handleNext(event){
