@@ -2168,6 +2168,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esecuzione Appuntamento KO</fullName>
             <default>false</default>
         </values>
@@ -2185,6 +2189,10 @@
         </values>
         <values>
             <fullName>Esportazione VS Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flusso bloccato in assenza del precedente</fullName>
             <default>false</default>
         </values>
         <values>
