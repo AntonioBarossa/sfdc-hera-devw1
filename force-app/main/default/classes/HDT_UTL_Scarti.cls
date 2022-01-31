@@ -231,10 +231,13 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                         for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
                             if('RECORD_ID'.equalsIgnoreCase(curField2.name)){
                                 if(curField2.value.length() == 18 ){
+                                    wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c(DiscardCategory__c = 'Tracciatura');
+                                    tempAct.wrts_prcgvr__ObjectId__c = curField2.value;   
                                     if(Schema.Case.SObjectType == Id.valueOf(curField2.value).getSobjectType()){
-                                        wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c(DiscardCategory__c = 'Tracciatura');
                                         tempAct.Case__c = curField2.value;
-                                        tempAct.wrts_prcgvr__ObjectId__c = curField2.value;
+                                        dataForCheckEsitiIntermedi.add(tempAct);
+                                    }else if(Schema.Order.SObjectType == Id.valueOf(curField2.value).getSobjectType()){
+                                        tempAct.Order__c = curField2.value;
                                         dataForCheckEsitiIntermedi.add(tempAct);
                                     }
                                 }

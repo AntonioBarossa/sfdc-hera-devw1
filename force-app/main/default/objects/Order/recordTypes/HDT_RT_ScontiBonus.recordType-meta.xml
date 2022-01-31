@@ -2046,10 +2046,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
-        <values>
+<!--         <values>
             <fullName>Amm%2E Precheck OK SII</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
@@ -2058,30 +2058,30 @@
             <fullName>Ammissibilità OK</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Annullamento SII - Ricezione</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Annullato SII</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Bozza</fullName>
             <default>true</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Bozza Annullata</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Completata</fullName>
             <default>false</default>
@@ -2106,10 +2106,10 @@
             <fullName>Documentazione Validata</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Errore lavorazione SAP</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Esito KO da DL</fullName>
             <default>false</default>
@@ -2122,34 +2122,34 @@
             <fullName>In Lavorazione</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+<!--         <values>
             <fullName>In attesa conferma cliente</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>In attesa tempi di ripensamento</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>In sequenzializzazione</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
-        <values>
+ <!--        <values>
             <fullName>OK SAP</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Sequenzializzato</fullName>
             <default>false</default>
