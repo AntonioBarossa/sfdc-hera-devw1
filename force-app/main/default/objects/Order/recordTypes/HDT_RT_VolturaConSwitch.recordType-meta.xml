@@ -2316,10 +2316,10 @@
             <fullName>Caricamento KO</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Chiuso</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Completata</fullName>
             <default>false</default>
@@ -2388,14 +2388,14 @@
             <fullName>In sequenzializzazione</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>KO Rilavorato</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>OK SAP</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Pratica In Attesa</fullName>
             <default>false</default>

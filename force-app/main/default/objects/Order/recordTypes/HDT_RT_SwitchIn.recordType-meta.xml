@@ -2107,10 +2107,10 @@
             <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Annullamento - Revocato</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
             <default>false</default>
@@ -2127,10 +2127,10 @@
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Annullato per Dati Discordanti</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullato SII</fullName>
             <default>false</default>
@@ -2179,10 +2179,10 @@
             <fullName>Documentazione Validata</fullName>
             <default>false</default>
         </values>        
-        <values>
+<!--         <values>
             <fullName>Errore invio a DL/SII</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Errore lavorazione SAP</fullName>
             <default>false</default>
