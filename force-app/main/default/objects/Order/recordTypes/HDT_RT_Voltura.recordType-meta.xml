@@ -3156,6 +3156,14 @@
             <fullName>Recupero</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>In continuità_si_addebito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In continuità_no_addebito</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>MarketingPrivacyAcquired__c</picklist>
