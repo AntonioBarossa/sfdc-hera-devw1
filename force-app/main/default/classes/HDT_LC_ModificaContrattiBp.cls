@@ -18,11 +18,11 @@ public inherited sharing class HDT_LC_ModificaContrattiBp {
                     fieldsNotMapped.add(field);
                 }
             }
-            if(fieldsNotMapped.isEmpty()){
+            //if(fieldsNotMapped.isEmpty()){
                 caseSrv.updateRecord(c);
-            }else{
-                throw new HDT_LC_ModificaContrattiBpException('Unmapped fields '+String.join(fieldsNotMapped, ' ,'));
-            }
+            //}else{
+                //throw new HDT_LC_ModificaContrattiBpException('Unmapped fields '+String.join(fieldsNotMapped, ' ,'));
+            //}
         } catch (Exception e) {
             system.debug(e.getMessage());
             throw new AuraHandledException(e.getMessage());

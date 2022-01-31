@@ -91,8 +91,18 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             {
                 throw new AuraHandledException('Valorizzare campi obbligatori');
             }
+            /**@frpanico 31/01/2022
+             * Aggiunto controllo se
+             * In continuita_no_addebito
+             * La voltura deve essere gas
+             */
+            if(order.VoltureType__c != null && order.VoltureType__c.equalsIgnoreCase('In continuità_no_addebito') 
+                && !currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Gas'))
+            {
+                throw new AuraHandledException('Per poter selezionare \"' + order.VoltureType__c + '\" è necessario un punto di fornitura Gas');   
+            }
             /* Check Tipo Voltura "In Continuita"/"Recupero" ammesso solo se marcatura entrante/uscente e' "Persona Fisica"/"Persona Giuridica" */
-            if(order.VoltureType__c != null && order.VoltureType__c.equalsIgnoreCase('In Continuità'))
+            if(order.VoltureType__c != null && order.VoltureType__c.containsIgnoreCase('In Continuità'))
             {
                 if(currentOrder.PreviousCustomer__r.Account.CustomerMarking__c != currentOrder.Account.CustomerMarking__c || !currentOrder.Account.CustomerMarking__c.containsIgnoreCase('Persona Fisica'))
                 {

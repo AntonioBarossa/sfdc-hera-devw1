@@ -1075,7 +1075,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'PowerRequested__c',
                     'typeVisibility': this.typeVisibility('ele'),
                     'required': false,
-                    'disabled': false,
+                    'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn',
                     'value': '',
                     'processVisibility': ''
                 },

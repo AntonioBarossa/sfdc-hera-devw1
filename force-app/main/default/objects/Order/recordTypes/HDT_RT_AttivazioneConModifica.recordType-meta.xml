@@ -2047,14 +2047,14 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
-        <values>
+<!--         <values>
             <fullName>Accettazione pagamento a DL</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+<!--         <values>
             <fullName>Amm%2E Precheck OK SII</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
@@ -2063,14 +2063,14 @@
             <fullName>Ammissibilità OK</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Ammissibilità conformità KO</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Ammissibilità conformità OK</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullamento - Ammissibilità KO</fullName>
             <default>false</default>
@@ -2103,7 +2103,7 @@
             <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Annullamento - Revocato</fullName>
             <default>false</default>
         </values>
@@ -2118,19 +2118,19 @@
         <values>
             <fullName>Annullamento dal SII</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Annullato SII</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Attesa conferma preventivo cliente</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Bozza</fullName>
             <default>true</default>
@@ -2155,11 +2155,11 @@
             <fullName>Comunicazione verso Heroku OK</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Conferma Appuntamento KO</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+<!--         <values>
             <fullName>DL Documentazione completa</fullName>
             <default>false</default>
         </values>
@@ -2170,7 +2170,7 @@
         <values>
             <fullName>DL documentazione incompleta</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Da Inviare</fullName>
             <default>false</default>
@@ -2186,44 +2186,52 @@
         <values>
             <fullName>Errore lavorazione SAP</fullName>
             <default>false</default>
-        </values>
+        </values>        
         <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
+            <default>false</default>
+        </values>
+<!--         <values>
             <fullName>Esecuzione Appuntamento KO</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Esecuzione Appuntamento OK</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Esito KO da DL</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Esito KO da SII</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Esito OK da DL</fullName>
             <default>false</default>
         </values>
-        <values>
+ <!--        <values>
             <fullName>Esito OK da SII</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+<!--         <values>
             <fullName>Gestione appuntamento su portale DL</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+ <!--        <values>
             <fullName>In Lavorazione</fullName>
             <default>false</default>
-        </values>
+        </values> -->
+        <values>
+            <fullName>Flusso bloccato in assenza del precedente</fullName>
+            <default>false</default>
+        </values>        
         <values>
             <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>In attesa appuntamento DL</fullName>
             <default>false</default>
         </values>
@@ -2238,27 +2246,27 @@
         <values>
             <fullName>In attesa tempi di ripensamento</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>In sequenzializzazione</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Invio allegato a DL</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+<!--         <values>
             <fullName>OK SAP</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Preventivo Accettato</fullName>
             <default>false</default>
@@ -2315,10 +2323,10 @@
             <fullName>Ripensamento - Inviato al SII</fullName>
             <default>false</default>
         </values>
-        <values>
+ <!--        <values>
             <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Ripensato</fullName>
             <default>false</default>

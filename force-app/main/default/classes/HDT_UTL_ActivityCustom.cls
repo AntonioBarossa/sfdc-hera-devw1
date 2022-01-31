@@ -4,6 +4,7 @@
 * @description Class that holds util functions for wrts_prcgvr__Activity__c
 * @history Keltin Mesonjesi – 18/06/2021 – Created class
 */
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ActivityCustom {
     
     private FINAL static string APPOINTMENTDEVELOPERNAME = 'HDT_RT_DistributorAppointment';
@@ -33,10 +34,10 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             c.phase__c	='In Attesa Approvazione';
             c.ReassignmentReason__c = causale;
             caseSrv.updateRecord(c);
-            system.debug('*******trueComm');
+            System.debug(LoggingLevel.DEBUG,'*******trueComm');
             return true;
         }catch(exception e){
-            system.debug('*******falseComm:' + e);
+            System.debug(LoggingLevel.DEBUG,'*******falseComm:' + e);
             return false;
         }
         
@@ -59,20 +60,20 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             //activityCustomSrv.createRecord(sToCreate);
             Case c = caseQr.getRecordById(s.case__c);
             c.phase__c	='In Lavorazione';
-            update c;
+            caseSrv.updateRecord(c);
            // caseSrv.updateRecord(c);
             return true;
         }
         catch(Exception e){
-            system.debug(e);
+            System.debug(LoggingLevel.DEBUG,e);
             return false;
         }
     }
 
     public static void createActivityWithParams(Map<String,String> params){
 
-        system.debug('HDT_UTL_ActivityCustom START');
-        system.debug('HDT_UTL_ActivityCustom params: ' + params);
+        System.debug(LoggingLevel.DEBUG,'HDT_UTL_ActivityCustom START');
+        System.debug(LoggingLevel.DEBUG,'HDT_UTL_ActivityCustom params: ' + params);
 
         List<Account> accountListRetrieved = new List<Account>();
 
@@ -94,7 +95,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             HerokuPracticeCode__c = params.get('HerokuPracticeCode__c')
         ));
 
-        system.debug('HDT_UTL_ActivityCustom END');
+        System.debug(LoggingLevel.DEBUG,'HDT_UTL_ActivityCustom END');
     }
 
 
@@ -106,8 +107,8 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     * @return String
     */
     public static String getRecordTypeId(String recordTypeDeveloperName){
-        system.debug('HDT_UTL_ActivityCustom - getRecordTypeId START');
-        system.debug('HDT_UTL_ActivityCustom - recordTypeDeveloperName: ' + recordTypeDeveloperName);
+        System.debug(LoggingLevel.DEBUG,'HDT_UTL_ActivityCustom - getRecordTypeId START');
+        System.debug(LoggingLevel.DEBUG,'HDT_UTL_ActivityCustom - recordTypeDeveloperName: ' + recordTypeDeveloperName);
 
         List<Schema.RecordTypeInfo> recordTypes = wrts_prcgvr__Activity__c.SObjectType.getDescribe().getRecordTypeInfos();
         String recordTypeId = '';
@@ -117,8 +118,8 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             }
         }
 
-        system.debug('HDT_UTL_ActivityCustom - getRecordTypeId END');
-        system.debug('HDT_UTL_ActivityCustom - recordTypeId: ' + recordTypeId);
+        System.debug(LoggingLevel.DEBUG,'HDT_UTL_ActivityCustom - getRecordTypeId END');
+        System.debug(LoggingLevel.DEBUG,'HDT_UTL_ActivityCustom - recordTypeId: ' + recordTypeId);
 
         return recordTypeId;
     }
@@ -146,6 +147,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         //update act;
     }
 
+    @SuppressWarnings('PMD.CyclomaticComplexity')
     @AuraEnabled
     public static void updateTimeRefAppointment(List<wrts_prcgvr__Activity__c> oldList,List<wrts_prcgvr__Activity__c> newList){
         Map<String,wrts_prcgvr__Activity__c> mapOld = new Map<String,wrts_prcgvr__Activity__c>();
@@ -186,15 +188,16 @@ public inherited sharing class HDT_UTL_ActivityCustom {
 
     @AuraEnabled
     public static String validaActivityDocument(String recordid, String validazione){
-        wrts_prcgvr__Activity__c act = HDT_QR_ActivityCustom.getRecordByIdValidation(recordid);
+        wrts_prcgvr__Activity__c oldActivity = HDT_QR_ActivityCustom.getRecordByIdValidation(recordid);
         
-        act.validation__c = validazione;
+        oldActivity.validation__c = validazione;
         String res = '';
+        //Modifica del 28/01/2022 in ogni caso questa activity viene chiusa
+        oldActivity.wrts_prcgvr__status__c = 'Chiusa';
         if(validazione == 'Si'){
-            act.wrts_prcgvr__status__c = 'Chiusa';
            // res = true;
             Order ord = new Order();
-            ord.id = act.order__c;
+            ord.id = oldActivity.order__c;
             ord.DocumentPackage__c = 'Validato';
             ord.phase__c = 'Documentazione Gestita';
             ord.status = 'Activated';
@@ -202,7 +205,10 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         }
         else{
             // Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
+            /* 
             List<wrts_prcgvr__Activity__c> actCusList =  HDT_QR_ActivityCustom.getRecordByOrderIdAndType(act.order__c,'Documenti non validati');
+            Modifica del 28/01/2022 --> l'apertura di un activity di provochera la chiusura dell'attuale ed il componentino sarà presente
+            per creare una nuova o gestire la documentazione. 
             if(actCusList != null && !actCusList.isEmpty()){
                 if(actCusList[0].wrts_prcgvr__status__c == 'Chiusa'){
                     act.wrts_prcgvr__status__c = 'Chiusa';
@@ -218,11 +224,15 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 wrts_prcgvr__Activity__c act2 = new wrts_prcgvr__Activity__c(account__c = act.account__c,wrts_prcgvr__Status__c= 'Aperta',order__c = act.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali'),RequestedCancellationDate__c=dataAnnullRich);
                 activityCustomSrv.createRecord(act2);
                 res = 'Creata';
-            }    
+            }  */ 
+            Date d = System.today();
+            Date dataAnnullRich = d.addDays(30); 
+            wrts_prcgvr__Activity__c newActivity = new wrts_prcgvr__Activity__c(account__c = oldActivity.account__c,wrts_prcgvr__Status__c= 'Aperta',order__c = oldActivity.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali'),RequestedCancellationDate__c=dataAnnullRich);
+            activityCustomSrv.createRecord(newActivity);
+            res = 'Creata';  
          }
-        activityCustomSrv.updateRecord(act);
+        activityCustomSrv.updateRecord(oldActivity);
         return res;
-        //update act;
     }
 
     @AuraEnabled(cacheable=true)
