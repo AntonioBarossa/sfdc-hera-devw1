@@ -1,11 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <description>Inserisco i valori &quot;Social&quot; nel Case del SocialPost e assegno al case il record type &quot;Altre Informative&quot;</description>
+        <name>Inserimento_valori_Social_Case_SocialPost</name>
+        <label>Inserimento valori Social e Record Type &quot;Altre Informative&quot;</label>
+        <locationX>270</locationX>
+        <locationY>815</locationY>
+        <assignmentItems>
+            <assignToReference>Case_SocialPost.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Social</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case_SocialPost.Channel__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Social</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case_SocialPost.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_RecordType_Altre_Informative_0.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case_SocialPost</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Condizione per verificare che ci siano i valori &quot;Social&quot; nei campi chiamati in causa, ovvero, Cluster e Canale, e verificare che il case abbia il record type &quot;Altre Informative&quot;.</description>
+        <name>Ci_sono_valori_Social</name>
+        <label>Valori &quot;Social&quot; e Record Type &quot;Altre Informative&quot;?</label>
+        <locationX>182</locationX>
+        <locationY>695</locationY>
+        <defaultConnector>
+            <targetReference>Inserimento_valori_Social_Case_SocialPost</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NO</defaultConnectorLabel>
+        <rules>
+            <name>Ci_sono_valori_Social_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Case_SocialPost.Cluster__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Social</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Case_SocialPost.Channel__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Social</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Case_SocialPost.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_RecordType_Altre_Informative_0.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Esiste_un_Attivita_correlata_al_Case_0_0_0</targetReference>
+            </connector>
+            <label>SI</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Esiste_un_Attivita_correlata_al_Case_0_0_0</name>
         <label>Esiste un&apos;Attività correlata al Case?</label>
         <locationX>182</locationX>
-        <locationY>455</locationY>
+        <locationY>1151</locationY>
         <defaultConnector>
             <targetReference>Creazione_Attivita_Gestione_Richiesta_Social_0_0_0</targetReference>
         </defaultConnector>
@@ -51,7 +122,7 @@
         <name>Creazione_Attivita_Gestione_Richiesta_Social_0_0</name>
         <label>Creazione Attività Integrazione Richiesta Social</label>
         <locationX>50</locationX>
-        <locationY>575</locationY>
+        <locationY>1271</locationY>
         <inputAssignments>
             <field>Case__c</field>
             <value>
@@ -77,7 +148,7 @@
         <name>Creazione_Attivita_Gestione_Richiesta_Social_0_0_0</name>
         <label>Creazione Attività Gestione Richiesta Social</label>
         <locationX>314</locationX>
-        <locationY>575</locationY>
+        <locationY>1271</locationY>
         <inputAssignments>
             <field>Case__c</field>
             <value>
@@ -100,7 +171,7 @@
         <locationY>335</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Esiste_un_Attivita_correlata_al_Case_0_0_0</targetReference>
+            <targetReference>Case_SocialPost</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -136,6 +207,65 @@
         <queriedFields>Id</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <description>Ottengo il record del Case correlato al SocialPost</description>
+        <name>Case_SocialPost</name>
+        <label>Case SocialPost</label>
+        <locationX>182</locationX>
+        <locationY>455</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_RecordType_Altre_Informative_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Cluster__c</queriedFields>
+        <queriedFields>Channel__c</queriedFields>
+        <queriedFields>RecordTypeId</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_RecordType_Altre_Informative_0</name>
+        <label>Get RecordType Altre Informative</label>
+        <locationX>182</locationX>
+        <locationY>575</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Ci_sono_valori_Social</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_AltreInformative</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Aggiorno il case del SocialPost inserendo nei Campi &quot;Cluster&quot; e &quot;Canale&quot; i valori &quot;Social&quot;</description>
+        <name>Update_Case_SocialPost</name>
+        <label>Update Case SocialPost</label>
+        <locationX>270</locationX>
+        <locationY>935</locationY>
+        <connector>
+            <targetReference>Esiste_un_Attivita_correlata_al_Case_0_0_0</targetReference>
+        </connector>
+        <inputReference>Case_SocialPost</inputReference>
+    </recordUpdates>
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
@@ -146,5 +276,5 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>
