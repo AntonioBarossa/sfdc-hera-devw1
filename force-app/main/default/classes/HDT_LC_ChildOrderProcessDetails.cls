@@ -106,7 +106,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
              * La voltura deve essere gas
              */
             if(order.VoltureType__c != null && order.EffectiveDate__c != null 
-            && order.VoltureType__c.equalsIgnoreCase('Recupero') && !(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3)))
+            && order.VoltureType__c.equalsIgnoreCase('Recupero') && order.EffectiveDate__c >= orderSrv.addBusinessDay(System.today(),3))
             {
                 throw new AuraHandledException('Per poter selezionare \"' + order.VoltureType__c + '\" è necessario inserire una data decorrenza antecedente al 31/08/2015');   
             }
@@ -153,13 +153,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                     order.RetroactiveDate__c = null;
                     order.Subprocess__c = 'Standard';
                 }    
-            }
-            /**@frpanico 31/01/2022
-            * Aggiunto controllo su Data Decorrenza nulla
-            */
-            else
-            {
-                throw new AuraHandledException('Valorizzare Data Decorrenza');
             }
             //@frpanico check "Voltura con Autolettura"
             if(isReading != null && isReading == true && isRetroactive != null && isRetroactive == false)
