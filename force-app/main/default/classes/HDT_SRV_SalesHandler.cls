@@ -420,6 +420,12 @@ public with sharing class HDT_SRV_SalesHandler {
                                             throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating Billing Profile, VKONT Already not Unique - '+e.getMessage());
                                         }
                                     }
+                                    //Modifica HRADRT_GV 31/01/2022 - Inizio
+                                    if(ordRetrieved.ProcessType__c.containsIgnoreCase('Subentro') || ordRetrieved.ProcessType__c.containsIgnoreCase('Voltura')){
+                                        mapRequestFields.put('NuovoAccount',ordRetrieved.AccountId);
+                                    }
+                                    //Modifica HRADRT_GV 31/01/2022 - Fine
+
                                     HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
                                     utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
                                     utlTechData.handleCompletata(mapRequestFields);
