@@ -2047,10 +2047,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
-        <values>
+<!--         <values>
             <fullName>Amm%2E Precheck OK SII</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
@@ -2091,11 +2091,11 @@
             <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>
         </values>
-        <values>
+ <!--        <values>
             <fullName>Annullamento - Revocato</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+ <!--        <values>
             <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
             <default>false</default>
         </values>
@@ -2106,19 +2106,19 @@
         <values>
             <fullName>Annullamento dal SII</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Annullato SII</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+<!--         <values>
             <fullName>Attesa conferma preventivo cliente</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Bozza</fullName>
             <default>true</default>
@@ -2247,10 +2247,10 @@
             <fullName>Ripensamento - Inviato al SII</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Ripensato</fullName>
             <default>false</default>
