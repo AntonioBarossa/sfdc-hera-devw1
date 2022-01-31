@@ -219,8 +219,21 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             nextPhase = reqWrp.requestMap.get('FASE');
             storno = reqWrp.requestMap.get('STORNO');
             activity = reqWrp.requestMap.get('ATTIVITA');
+            String errDescr = reqWrp.requestMap.get('NOTE_ERR')!=null ? reqWrp.requestMap.get('NOTE_ERR') : '';
+            String utenza = reqWrp.requestMap.get('UTENZA')!=null ? reqWrp.requestMap.get('UTENZA') : '';
+            String cmp = reqWrp.requestMap.get('CMP')!=null ? reqWrp.requestMap.get('CMP') : '';
+            String dataElab = reqWrp.requestMap.get('DATA_ELABORAZIONE')!=null ? reqWrp.requestMap.get('DATA_ELABORAZIONE') : '';
+            System.debug('NOTE_ERR -> ' + errDescr);
+            System.debug('utenza -> ' + utenza);
+            System.debug('cmp -> ' + cmp);
+            System.debug('dataElab -> ' + dataElab);
+            Map<String, String> mapActivityField = new Map<String, String>();
+            mapActivityField.put('NOTE_ERR',errDescr);
+            mapActivityField.put('UTENZA',utenza);
+            mapActivityField.put('CMP',cmp);
+            mapActivityField.put('DATA_ELABORAZIONE',dataElab);
             //EVERIS: Gestione Scarti SAP
-            HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase);
+            HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase,mapActivityField);
             //Gestione Esito Appuntamento;
             HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
             appService.updateExtraSystemAppointment(nextPhase, recordCase.Id);
