@@ -2107,10 +2107,10 @@
             <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Annullamento - Revocato</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
             <default>false</default>
@@ -2127,10 +2127,10 @@
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Annullato per Dati Discordanti</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullato SII</fullName>
             <default>false</default>
@@ -2188,6 +2188,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO da DL</fullName>
             <default>false</default>
         </values>
@@ -2205,6 +2209,10 @@
         </values>
         <values>
             <fullName>Esportazione VS Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flusso bloccato in assenza del precedente</fullName>
             <default>false</default>
         </values>
         <values>
