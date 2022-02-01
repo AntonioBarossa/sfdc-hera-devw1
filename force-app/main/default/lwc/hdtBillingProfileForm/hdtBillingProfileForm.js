@@ -779,7 +779,7 @@ export default class hdtBillingProfileForm extends LightningElement {
         if(this.saveErrorMessage.length === 0){
             return true;
         }else{
-            return saveErrorMessage;
+            return this.saveErrorMessage[0];
         }
 
     }

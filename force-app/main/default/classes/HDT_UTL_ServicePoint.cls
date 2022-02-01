@@ -12,10 +12,10 @@ public with sharing class HDT_UTL_ServicePoint {
     private static HDT_SRV_ServicePoint serviceSrv = new HDT_SRV_ServicePoint();
     
     @AuraEnabled
-    public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response ){
+    public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response){
         
         ServicePoint__c spNew = new ServicePoint__c();
-        if(sp!= null){
+        if(sp != null){
             spNew = sp;
         }
         
@@ -116,7 +116,7 @@ public with sharing class HDT_UTL_ServicePoint {
         }
         if(mapRes.get('DISTRIBUTORE')!=null && !String.isBlank(mapRes.get('DISTRIBUTORE'))){
             Account a = accountQr.getAccountByDistributorKey(mapRes.get('DISTRIBUTORE'));
-            spNew.Distributor__c = a.id;
+            spNew.Distributor__c = a.Id != null ? a.Id : ((sp != null && sp.Distributor__c != null) ? sp.Distributor__c : null);
         }
         if(mapRes.get('POD')!=null && !String.isBlank(mapRes.get('POD'))){
             spNew.ServicePointCode__c   = mapRes.get('POD');
@@ -282,10 +282,10 @@ public with sharing class HDT_UTL_ServicePoint {
     }
     
     @AuraEnabled
-    public static List<String> objectToList(HDT_WRP_AddressObject Wrap){
+    public static List<String> objectToList(HDT_WRP_AddressObject wrap){
         
         List<String> listFields = new List<String>();
-        String stringWrap = JSON.serialize(Wrap);
+        String stringWrap = JSON.serialize(wrap);
         listFields = (List<String>)JSON.deserializeUntyped(stringWrap);
         
         return listFields;        
@@ -354,8 +354,8 @@ public with sharing class HDT_UTL_ServicePoint {
     
     public static void blockblankonfield(List<ServicePoint__c> oldList , List<ServicePoint__c> newList){
         Map<String,ServicePoint__c> oldMap = new Map<String,Servicepoint__c>();
-        for(ServicePoint__c srvO : oldList){
-            oldMap.put(srvO.id,srvO);
+        for(ServicePoint__c srvOld : oldList){
+            oldMap.put(srvOld.id,srvOld);
         }
         for(ServicePoint__c srv : newList){
             if(srv.SupplyType__c == null || srv.ImplantType__c == null){ 

@@ -279,6 +279,7 @@ public inherited sharing class HDT_QR_Order {
             ConnectionMandate__c,
             SelfCertificationConnection__c,
             MeterClass__c,
+            Caliber__c,
             PrecheckResultSII__c,
             WithdrawalClass__c,
             DistributorCode__c,
