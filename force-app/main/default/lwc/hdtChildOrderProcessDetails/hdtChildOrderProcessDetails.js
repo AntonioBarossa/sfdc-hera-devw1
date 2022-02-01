@@ -191,7 +191,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 }
             }
         }
-
+        if(this.currentSectionName === 'dettaglioImpianto')
+        {
+            if(event.target.fieldName === 'Caliber__c' && event.target.value !== undefined && event.targe.value !== null)
+            {
+                this.handleShowInviaModulistica(event.target.value);
+            }
+        }
         let draftData = this.sectionDataToSubmit;
         draftData.Id = this.currentSectionRecordId;
         if(this.lastStepNumber === this.currentSection.step) {
@@ -224,9 +230,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
     } 
 
-    handleShowInviaModulistica(){
+    handleShowInviaModulistica(caliber = ''){
         if(this.order.ServicePoint__c !== undefined && this.order.ServicePoint__r.MeterClass__c !== undefined){
-            let meterClass = this.order.ServicePoint__r.MeterClass__c;
+            let meterClass = caliber !== '' ? caliber : this.order.ServicePoint__r.MeterClass__c;
             let meterNum = meterClass.match(/\d+/)[0];
             if ((this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
@@ -498,6 +504,17 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         
     }
 
+    showMessage(title,message,variant)
+    {
+        this.loading = false;
+        const toastErrorMessage = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: variant,
+        });
+    this.dispatchEvent(toastErrorMessage);
+    }
+
     handleNext(event){
         this.loading = true;
         let currentSectionName = event.currentTarget.value;
@@ -519,6 +536,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
         if(currentSectionName === 'indirizzoSpedizione'){
             this.handleWrapAddressObjectSpedizione();
+        }
+        if(currentSectionName === 'processVariables'){
+           if(this.checkFieldAvailable('AnnualWithdrawal__c') === '')
+           {
+               this.showMessage('Errore', 'Popolare il campo Prelievo Annuo', 'error');
+               return;
+           }
         }
         if(currentSectionName === 'dettaglioImpianto'){
             if(this.template.querySelector("[data-id='SurfaceServed__c']") !== null 
@@ -1209,7 +1233,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 },
                 {
                     'label': 'Classe Contatore',
-                    'apiname': 'MeterClass__c',
+                    'apiname': 'Caliber__c',
                     'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
                     'disabled': true,

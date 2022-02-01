@@ -82,7 +82,7 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
 
     checksAndSave(){
         const targetObjectFlow =this.template.querySelector('c-hdt-target-object-address-for-flow');
-        let validity=targetObjectFlow.validate();        
+        let validity=targetObjectFlow.validate();
         if(validity.isValid){
             //jump address controls on parent lwc, we already done it on targetObjectFlow
             this.isForeignAddress=false;
@@ -90,9 +90,9 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
             //end jump
             //this.dataToSubmit['Account__c'] = this.accountId;
             this.dataToSubmit['IbanCountry__c'] = this.dataToSubmit['PaymentMethod__c'] == 'RID' ? 'IT' : '';
-            const billingProfileForm =this.template.querySelector('c-hdt-billing-profile-form');
-            let isValidFields = billingProfileForm.validFields();
-            if(this.saveInDraft || isValidFields){
+            let isValidFields = this.validFields();
+            console.log('*******validFields result= ************ ' + JSON.stringify(isValidFields));
+            if(this.saveInDraft || isValidFields===true){
                 this.loading = true;
                 //vai con la popolazione order, this.dataToSubmit da trasformare in case
                 //utilizza un metodo apex, controlla che il field api name sia nel case altrimenti lancia una auraExc
@@ -119,8 +119,7 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
                         message: errorMessage,
-                        variant: 'error',
-                        mode: 'sticky'
+                        variant: 'error'
                     });
                     this.dispatchEvent(toastErrorMessage);
                 });
@@ -128,8 +127,7 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
                 const toastErrorMessageValidFields = new ShowToastEvent({
                     title: 'Errore',
                     message: isValidFields,
-                    variant: 'error',
-                    mode: 'sticky'
+                    variant: 'error'
                 });
                 this.dispatchEvent(toastErrorMessageValidFields);
             }

@@ -97,10 +97,20 @@ public with sharing class HDT_SRV_SalesHandler {
                         String previousPhase = ordRetrieved.Phase__c;
                         String nextPhase = mapRequestFields.get('FASE');
                         String finalCancellationPhase = '';
+                        String errDescr = mapRequestFields.get('NOTE_ERR')!=null ? mapRequestFields.get('NOTE_ERR') : '';
+                        String utenza = mapRequestFields.get('UTENZA')!=null ? mapRequestFields.get('UTENZA') : '';
+                        String cmp = mapRequestFields.get('CMP')!=null ? mapRequestFields.get('CMP') : '';
+                        String dataElab = mapRequestFields.get('DATA_ELABORAZIONE')!=null ? mapRequestFields.get('DATA_ELABORAZIONE') : '';
+                        Map<String, String> mapActivityField = new Map<String, String>();
+                        mapActivityField.put('NOTE_ERR',errDescr);
+                        mapActivityField.put('UTENZA',utenza);
+                        mapActivityField.put('CMP',cmp);
+                        mapActivityField.put('DATA_ELABORAZIONE',dataElab);
+
                         //EVERIS: EMD ANNULLAMENTO/RIPENSAMENTO
                         //EVERIS: Gestione Scarti SAP
-                        HDT_UTL_Scarti.handleHerokuResponse(ordRetrieved.Id, activityName, nextPhase);
-                        Order ord = new Order();
+                        HDT_UTL_Scarti.handleHerokuResponse(ordRetrieved.Id, activityName, nextPhase, mapActivityField);
+                        Order ord = new Order(); 
                         ord.Id = ordRetrieved.Id;
                         ord.Phase__c = mapRequestFields.get('FASE');
                         //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
@@ -465,6 +475,15 @@ public with sharing class HDT_SRV_SalesHandler {
                     }else if(mapRequestFields.get('RECORD_ID')!= null && String.isNotBlank(activityName)){
                         //EVERIS: Gestione Scarti SAP Aggiunta logica creazione scarti se viene inviata solo l'attività
                         String recordId = mapRequestFields.get('RECORD_ID');
+                        String errDescr = mapRequestFields.get('NOTE_ERR')!=null ? mapRequestFields.get('NOTE_ERR') : '';
+                        String utenza = mapRequestFields.get('UTENZA')!=null ? mapRequestFields.get('UTENZA') : '';
+                        String cmp = mapRequestFields.get('CMP')!=null ? mapRequestFields.get('CMP') : '';
+                        String dataElab = mapRequestFields.get('DATA_ELABORAZIONE')!=null ? mapRequestFields.get('DATA_ELABORAZIONE') : '';
+                        Map<String, String> mapActivityField = new Map<String, String>();
+                        mapActivityField.put('NOTE_ERR',errDescr);
+                        mapActivityField.put('UTENZA',utenza);
+                        mapActivityField.put('CMP',cmp);
+                        mapActivityField.put('DATA_ELABORAZIONE',dataElab);
                         Order ordRetrieved;
                         if(recordId instanceOf Id){
                             ordRetrieved = orderQr.getRecordByOrderId(recordId)[0];
@@ -472,7 +491,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         else {
                             ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
                         }
-                        HDT_UTL_Scarti.handleHerokuResponse(ordRetrieved.Id, activityName, '');
+                        HDT_UTL_Scarti.handleHerokuResponse(ordRetrieved.Id, activityName, '', mapRequestFields);
                         responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';
                     	responseField.value = 'OK';
