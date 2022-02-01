@@ -226,7 +226,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     handleShowInviaModulistica(){
         if(this.order.ServicePoint__c !== undefined && this.order.ServicePoint__r.MeterClass__c !== undefined){
-            let meterClass = this.order.ServicePoint__r.MeterClass__c;
+            let meterClass = (this.order.Caliber__c !== undefined && this.order.Caliber__c !== null) ? this.order.Caliber__c : this.order.ServicePoint__r.MeterClass__c;
             let meterNum = meterClass.match(/\d+/)[0];
             if ((this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
@@ -498,7 +498,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         
     }
 
-    showMesssage(title,message,variant)
+    showMessage(title,message,variant)
     {
         const toastErrorMessage = new ShowToastEvent({
             title: title,
@@ -533,7 +533,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(currentSectionName === 'processVariables'){
            if(this.checkFieldAvailable('AnnualWithdrawal__c') === '')
            {
-               this.showMesssage('Errore', 'Popolare il campo Prelievo Annuo', 'error');
+               this.showMessage('Errore', 'Popolare il campo Prelievo Annuo', 'error');
                return;
            }
         }
@@ -1226,7 +1226,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 },
                 {
                     'label': 'Classe Contatore',
-                    'apiname': 'MeterClass__c',
+                    'apiname': 'Caliber__c',
                     'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
                     'disabled': true,
