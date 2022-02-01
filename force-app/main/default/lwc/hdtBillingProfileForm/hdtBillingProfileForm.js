@@ -19,7 +19,7 @@ export default class hdtBillingProfileForm extends LightningElement {
     @track tipologiaIntestatarioFields = [];
     wrapAddressObject = {};
     dataToSubmit = {};
-    saveErrorMessage = [];
+    @api saveErrorMessage = [];
     cloneObject = {};
     isVerifiedAddress = false;
     isForeignAddress = false;
@@ -776,7 +776,11 @@ export default class hdtBillingProfileForm extends LightningElement {
 
         console.log('Validation END: ', this.saveErrorMessage.length === 0);
 
-        return this.saveErrorMessage.length === 0;
+        if(this.saveErrorMessage.length === 0){
+            return true;
+        }else{
+            return this.saveErrorMessage[0];
+        }
 
     }
 

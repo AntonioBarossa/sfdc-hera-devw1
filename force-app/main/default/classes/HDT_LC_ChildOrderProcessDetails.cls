@@ -91,8 +91,27 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             {
                 throw new AuraHandledException('Valorizzare campi obbligatori');
             }
+            /**@frpanico 31/01/2022
+             * Aggiunto controllo
+             * Su Voltura in Recupero
+             */
+            if(order.VoltureType__c != null && order.VoltureType__c.equalsIgnoreCase('In continuità_no_addebito') 
+            && !currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Gas'))
+            {
+            throw new AuraHandledException('Per poter selezionare \"' + order.VoltureType__c + '\" è necessario un punto di fornitura Gas');   
+            }
+            /**@frpanico 31/01/2022
+             * Aggiunto controllo se
+             * In continuita_no_addebito
+             * La voltura deve essere gas
+             */
+            if(order.VoltureType__c != null && order.EffectiveDate__c != null 
+            && order.VoltureType__c.equalsIgnoreCase('Recupero') && order.EffectiveDate__c >= orderSrv.addBusinessDay(System.today(),3))
+            {
+                throw new AuraHandledException('Per poter selezionare \"' + order.VoltureType__c + '\" è necessario inserire una data decorrenza antecedente al 31/08/2015');   
+            }
             /* Check Tipo Voltura "In Continuita"/"Recupero" ammesso solo se marcatura entrante/uscente e' "Persona Fisica"/"Persona Giuridica" */
-            if(order.VoltureType__c != null && order.VoltureType__c.equalsIgnoreCase('In Continuità'))
+            if(order.VoltureType__c != null && order.VoltureType__c.containsIgnoreCase('In Continuità'))
             {
                 if(currentOrder.PreviousCustomer__r.Account.CustomerMarking__c != currentOrder.Account.CustomerMarking__c || !currentOrder.Account.CustomerMarking__c.containsIgnoreCase('Persona Fisica'))
                 {
@@ -133,8 +152,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                 {
                     order.RetroactiveDate__c = null;
                     order.Subprocess__c = 'Standard';
-                }
-            } 
+                }    
+            }
             //@frpanico check "Voltura con Autolettura"
             if(isReading != null && isReading == true && isRetroactive != null && isRetroactive == false)
             {

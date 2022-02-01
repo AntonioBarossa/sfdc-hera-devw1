@@ -294,6 +294,11 @@
                 <label>Errore lavorazione SAP</label>
             </value>
             <value>
+                <fullName>Errore tecnico invio a SAP</fullName>
+                <default>false</default>
+                <label>Errore tecnico invio a SAP</label>
+            </value>
+            <value>
                 <fullName>Esecuzione Appuntamento KO</fullName>
                 <default>false</default>
                 <label>Esecuzione Appuntamento KO</label>
@@ -339,6 +344,11 @@
                 <fullName>Esportazione VS Siebel</fullName>
                 <default>false</default>
                 <label>Esportazione VS Siebel</label>
+            </value>
+            <value>
+                <fullName>Flusso bloccato in assenza del precedente</fullName>
+                <default>false</default>
+                <label>Flusso bloccato in assenza del precedente</label>
             </value>
             <value>
                 <fullName>Gestione appuntamento su portale DL</fullName>

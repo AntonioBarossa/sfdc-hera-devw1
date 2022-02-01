@@ -90,7 +90,9 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
             //end jump
             //this.dataToSubmit['Account__c'] = this.accountId;
             this.dataToSubmit['IbanCountry__c'] = this.dataToSubmit['PaymentMethod__c'] == 'RID' ? 'IT' : '';
-            if(this.saveInDraft || this.validFields()){
+            let isValidFields = this.validFields();
+            console.log('*******validFields result= ************ ' + JSON.stringify(isValidFields));
+            if(this.saveInDraft || isValidFields===true){
                 this.loading = true;
                 //vai con la popolazione order, this.dataToSubmit da trasformare in case
                 //utilizza un metodo apex, controlla che il field api name sia nel case altrimenti lancia una auraExc
@@ -117,11 +119,17 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
                         message: errorMessage,
-                        variant: 'error',
-                        mode: 'sticky'
+                        variant: 'error'
                     });
                     this.dispatchEvent(toastErrorMessage);
                 });
+            }else{
+                const toastErrorMessageValidFields = new ShowToastEvent({
+                    title: 'Errore',
+                    message: isValidFields,
+                    variant: 'error'
+                });
+                this.dispatchEvent(toastErrorMessageValidFields);
             }
         }else{
             targetObjectFlow.alert('Dati tabella', validity.errorMessage, 'error');
