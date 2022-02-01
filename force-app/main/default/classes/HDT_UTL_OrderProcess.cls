@@ -652,13 +652,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         //listObjToUpdate.add(sp);
                     mapObjToUpdate.put(sp.Id, sp);
                 }
+                /**@frpanico 01/02/2022
+                 * Commentata errata operativita'
+                 * Sovrascrive il codice CA con il codice contratto
+                 */
+                /*
                 if (String.isNotBlank( String.valueOf( temp.BillingProfile__c))) {
-                    if (String.isNotBlank((temp.SapContractCode__c) )) {
+                    if (String.isNotBlank((temp.SapContractCode__c) )) {    
                         BillingProfile__c bill=new BillingProfile__c(id=temp.BillingProfile__c ,ContractAccountCode__c=temp.SapContractCode__c);
                         //listObjToUpdate.add(bill);
                         mapObjToUpdate.put(bill.id, bill);
                     }
                 }
+                */
             }
         }
         if(!mapObjToUpdate.values().isEmpty()){

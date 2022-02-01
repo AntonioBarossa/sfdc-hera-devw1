@@ -2478,6 +2478,10 @@
             <fullName>Errore invio a SAP</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Busta Docusign non consegnata</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Validation__c</picklist>

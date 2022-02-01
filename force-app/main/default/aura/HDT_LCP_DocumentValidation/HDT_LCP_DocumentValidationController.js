@@ -133,7 +133,8 @@
         let DocumentLow80 = component.find('DocumentLow80').get('v.value');
         let AutorizationVolturaThirdTrader = component.find('AutorizationVolturaThirdTrader').get('v.value');
         let DocumentPackage = component.find('DocumentPackage').get('v.value');
-
+        //Picklist Consenso Marketing Inserito
+        let ConsensoMarketing = component.find('ConsensoMarketingInserito').get('v.value');
         let checkArray = [CIAccoutn, QuickQuote, ChamberCommerceRegistration, Instance326, DocumentLow80, AutorizationVolturaThirdTrader, DocumentPackage];
 
         console.log('checkArray: ' + checkArray);
@@ -150,6 +151,7 @@
             order.DocumentLow80__c = DocumentLow80;
             order.AutorizationVolturaThirdTrader__c = AutorizationVolturaThirdTrader;
             order.DocumentPackage__c = DocumentPackage;
+            order.MarketingPrivacyAcquired__c = ConsensoMarketing;
             order.Id = component.get("v.recordId");
             component.set("v.ordOBJ",order);
             var action = component.get("c.saveValidation");
@@ -197,37 +199,66 @@
 
     ConsensoMarketingInserito_onChange: function(component, event, helper) {
 
+       let ConfermaButton = component.find("ConfermaBtn");
+
        if(component.find('ConsensoMarketingInserito').get('v.value') == 'No')
        {
-            console.log("No");
             component.set("v.ConsensoMarketingInserito_value", false);
+            ConfermaButton.set("v.disabled", true);
        }
        else if(component.find('ConsensoMarketingInserito').get('v.value') == 'Si')
        {
-            console.log("Si");
             component.set("v.ConsensoMarketingInserito_value", true);
-
+            ConfermaButton.set("v.disabled", false);
        }
     },
 
+    OKBtn: function(component, event, helper) {
+        console.log("SONO ENTRATO NELL OKBtn");
+        let button = event.getSource();
+        button.set('v.disabled',true);
+        let order = {};
+        let CIAccoutn = component.find('CIAccoutn').get('v.value');
+        let Instance326 = component.find('Instance326').get('v.value');
+        let DocumentLow80 = component.find('DocumentLow80').get('v.value');
+        let ConsensoMarketing = component.find('ConsensoMarketingInserito').get('v.value');
+
+        order.CIAccoutn__c = CIAccoutn;
+        order.Instance326__c = Instance326;
+        order.DocumentLow80__c = DocumentLow80;
+        order.MarketingPrivacyAcquired__c = ConsensoMarketing;
+        order.Id = component.get("v.recordId");
+        component.set("v.ordOBJ",order);
+        var action = component.get("c.updateOrder");
+        action.setParams({'ord': component.get("v.ordOBJ")});
+        action.setCallback(this,function(response){
+            var state = response.getState();
+            if (state === "SUCCESS") {        
+                console.log('update fatto');
+                $A.get("e.force:closeQuickAction").fire();
+                $A.get('e.force:refreshView').fire(); 
+                var InvokeCase = component.get('c.InvokeCase');
+                $A.enqueueAction(InvokeCase);  
+                console.log('passato InvokeCase');              
+            }
+            button.set('v.disabled',false); 
+        });
+        $A.enqueueAction(action);
+
+    },
+
     InvokeCase: function(component, event, helper) {
-        console.log('SONO ENTRATO NELL InvokeCase');
-        console.log('punto 1');
+        console.log('SONO ENTRATO NELL INVOKE CASE');
+
         var myPageRef = component.get("v.pageReference");
-        console.log('punto 2');
         var flowName = "HDT_FL_PostSalesMasterDispatch";
-        console.log('punto 3');
         var processType = "Modifica Privacy";
-        console.log('punto 4');
         var recordTypeName = "HDT_RT_GestionePrivacy";
-        console.log('punto 5');
 
         // id dell'Order
         var orderId = component.get("v.recordId");
+        // accountId dell'Order
         var accountId = component.get("v.accountId");
-
-        console.log('punto 6');
-
 
         console.log('# flowName -> '                + flowName);
         console.log('# processType -> '             + processType);
@@ -236,7 +267,6 @@
         console.log('# orderId -> '                 + orderId);
                 
         var workspaceAPI = component.find("workspace");
-        console.log('punto 7');
 
         var tabToClose;
         workspaceAPI.getEnclosingTabId().then(function(tabId) {
@@ -293,7 +323,7 @@
             console.log(error);
         });
 
-        console.log('punto 9');
-
     }
+
+
 })

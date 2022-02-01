@@ -8,7 +8,7 @@
 			IF(CONTAINS(TEXT(ProcessType__c),&apos;Cambio Offerta&apos;),&apos;Cambio offerta&apos;,
 				IF(CONTAINS(TEXT(ProcessType__c),&apos;Cambio Uso&apos;),&apos;Cambio uso&apos;,
 					IF(ISPICKVAL(ProcessType__c,&apos;Connessione con Attivazione&apos;),&apos;Connessione con attivazione&apos;,
-						IF(ISPICKVAL(ProcessType__c,&apos;Switch in Reseller&apos;),&apos;Switch In Reseller&apos;,
+						IF(ISPICKVAL(ProcessType__c,&apos;Switch in Reseller&apos;),&apos;Switch In&apos;,
 							IF(CONTAINS(TEXT(ProcessType__c),&apos;Switch in&apos;),&apos;Switch In&apos;,
 								IF(ISPICKVAL(ProcessType__c,&apos;Proroga Temporanea&apos;),&apos;Proroga Connessione Temporanea&apos;,
 									IF(ISPICKVAL(ProcessType__c,&apos;Temporanea - Nuova Attivazione&apos;),&apos;Temporanea-Nuova attivazione&apos;,

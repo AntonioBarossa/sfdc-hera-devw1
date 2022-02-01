@@ -61,21 +61,21 @@ export default class hdtSaleServiceContainer extends LightningElement {
     }
 
     handleConfirmServicePointEvent(event){
-        console.log('hdtSaleServiceContainer - handleConfirmServicePointEvent: ', JSON.stringify(event.detail.newServicePoint));
 
         if(event.detail.newServicePoint !== undefined) {
             this.servicePoint = event.detail.newServicePoint;
-        } else {
+        }
+        else {
             this.servicePoint = event.detail;
         }
 
-        let oldServicePoint = {};
+        let oldSupplyType = '';
 
-        if(event.detail.oldServicePoint !== undefined) {
-            oldServicePoint = event.detail.oldServicePoint;
+        if(event.detail.oldSupplyType !== undefined) {
+            oldSupplyType = event.detail.oldSupplyType;
         }
 
-        createSaleServiceItemTile({servicePoint:this.servicePoint, sale:this.saleRecord, oldServicePoint: oldServicePoint}).then(data =>{
+        createSaleServiceItemTile({servicePoint:this.servicePoint, sale:this.saleRecord, oldSupplyType: oldSupplyType}).then(data =>{
 
             this.refreshTileData();
             this.dispatchEvent(new CustomEvent('newtile'));

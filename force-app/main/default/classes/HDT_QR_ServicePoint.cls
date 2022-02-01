@@ -7,14 +7,14 @@
 public inherited sharing class HDT_QR_ServicePoint {
 	
 	private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
-	String fieldSp =  'Id, Account__c, Account__r.Name, CommoditySector__c, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name, RecordType.Name, ImplantType__c, ImplantTypeTemp__c, MeterStatus__c, SupplyPlace__c';
+	String fieldSp =  'Id, Account__c, Account__r.Name, CommoditySector__c, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__c, Distributor__r.Name, RecordType.Name, ImplantType__c, ImplantTypeTemp__c, MeterStatus__c, SupplyPlace__c';
 	/*
 	 * Query for Getting All Account Service Points
 	 */
 	public List<ServicePoint__c> getAccountServicePoints(String accountid) {
-		contractSrv.checkReadAccess('Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name,');
+		contractSrv.checkReadAccess('Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__c, Distributor__r.Name,recordType.Name,');
 		List<ServicePoint__c> listSp = new List<ServicePoint__c>();
-		return listSp= [SELECT Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name,MeterStatus__c,CommoditySector__c,ImplantType__c,ImplantTypeTemp__c FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
+		return listSp= [SELECT Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__c, Distributor__r.Name,recordType.Name,MeterStatus__c,CommoditySector__c,ImplantType__c,ImplantTypeTemp__c FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
 	}
 	
 	/**
