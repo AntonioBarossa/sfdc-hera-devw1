@@ -182,7 +182,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 ordersToUpdate.add(
                     new Order(
                         Id = childOrd.Id,
-                        Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Documentazione Validata' : (checkRequiredDocs(childOrd) ? 'Documentazione Validata': 'In attesa validazione')
+                        Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Comunicazione verso Heroku' : (checkRequiredDocs(childOrd) ? 'Comunicazione verso Heroku': 'In attesa validazione')
                     )
                 );
             }

@@ -167,6 +167,13 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
                 }
             }
         }
+
+        //Modifica HRADRT_GV 31/01/2022 - Inizio
+        if (!String.isBlank(mapRequestFields.get('NuovoAccount'))) {
+            sp.Account__c = mapRequestFields.get('NuovoAccount');
+        }
+        //Modifica HRADRT_GV 31/01/2022 - Fine
+
         sp.Status__c='Impianto compl. in funzione';
         updateServicePoint();
     }
