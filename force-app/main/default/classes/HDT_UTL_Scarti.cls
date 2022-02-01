@@ -1085,7 +1085,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
 
         for(Sobject obj : newObjectList){
             SObject oldObj = oldObjectMap.get((Id)obj.get('Id'));
-            String phaseStrory = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+(String)oldObj.get('PhaseStory__c');
+            String phaseStoryOld = oldObj.get('PhaseStory__c') != null ? (String)oldObj.get('PhaseStory__c') : '';
+            String phaseStrory = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+phaseStoryOld;
             obj.put('PhaseStory__c',phaseStrory);
         }
  
@@ -1099,7 +1100,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         if ((String.isNotBlank(fase) || String.isNotBlank(activityName)) && objectId != null){
             Map<String,String> mapFieldValue = new Map<String,String>();
             if (String.isNotBlank(activityName)){
-                mapFieldValue.put('Activity__c',activityName);
+                mapFieldValue.put('Activity__c',activityName); 
             }
             if (String.isNotBlank(fase)){
                 mapFieldValue.put('Phase__c',fase);
