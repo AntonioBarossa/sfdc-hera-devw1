@@ -95,7 +95,7 @@ public with sharing class HDT_UTL_Accents {
                 text = text.replaceAll(patterns.get(letter), letter);
             }
         }
-        return text;
+        return text.replace('"', '').replace('\'', ' ').replace('  ',' ');
     }
 
 }
