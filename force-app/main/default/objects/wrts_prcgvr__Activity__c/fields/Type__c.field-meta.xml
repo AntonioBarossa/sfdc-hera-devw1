@@ -602,6 +602,11 @@
                 <default>false</default>
                 <label>Eliminato esito in scarto</label>
             </value>
+            <value>
+                <fullName>Busta Docusign non consegnata</fullName>
+                <default>false</default>
+                <label>Busta Docusign non consegnata</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
