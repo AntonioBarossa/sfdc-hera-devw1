@@ -376,5 +376,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
         return ord;
     }
-    //EVERIS
+    
+    @AuraEnabled
+    public static boolean isPreventivo(Order ord){
+        
+        boolean result;
+        List<Order> ords = [SELECT QuotationType__c FROM Order WHERE Id =:ord.Id WITH SECURITY_ENFORCED];
+        return result = ( !ords.isEmpty() && ords[0].QuotationType__c != null && !String.isBlank(ords[0].QuotationType__c) )? true:false;
+
+    }
+
 }

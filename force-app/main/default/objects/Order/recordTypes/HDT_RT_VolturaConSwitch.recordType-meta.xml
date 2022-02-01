@@ -2346,6 +2346,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In sequenzializzazione</fullName>
             <default>false</default>
         </values>

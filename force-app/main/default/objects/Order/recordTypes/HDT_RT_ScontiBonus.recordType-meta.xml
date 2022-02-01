@@ -2223,10 +2223,10 @@
             <fullName>Documentazione Validata</fullName>
             <default>false</default>
         </values>
-<!--         <values>
+        <values>
             <fullName>Errore lavorazione SAP</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>Esito KO da DL</fullName>
             <default>false</default>
