@@ -7159,6 +7159,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.TemporaryConnectionStartDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.TensionOption__c</field>
         <readable>true</readable>
     </fieldPermissions>

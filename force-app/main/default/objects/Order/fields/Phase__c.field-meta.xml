@@ -282,11 +282,21 @@
                 <fullName>Documentazione Validata</fullName>
                 <default>false</default>
                 <label>Documentazione Validata</label>
+            </value>        
+            <value>
+                <fullName>Errore invio a DL/SII</fullName>
+                <default>false</default>
+                <label>Errore invio a DL/SII</label>
             </value>
             <value>
                 <fullName>Errore lavorazione SAP</fullName>
                 <default>false</default>
                 <label>Errore lavorazione SAP</label>
+            </value>
+            <value>
+                <fullName>Errore tecnico invio a SAP</fullName>
+                <default>false</default>
+                <label>Errore tecnico invio a SAP</label>
             </value>
             <value>
                 <fullName>Esecuzione Appuntamento KO</fullName>
@@ -334,6 +344,11 @@
                 <fullName>Esportazione VS Siebel</fullName>
                 <default>false</default>
                 <label>Esportazione VS Siebel</label>
+            </value>
+            <value>
+                <fullName>Flusso bloccato in assenza del precedente</fullName>
+                <default>false</default>
+                <label>Flusso bloccato in assenza del precedente</label>
             </value>
             <value>
                 <fullName>Gestione appuntamento su portale DL</fullName>

@@ -67,7 +67,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track lastStepData = {};
     loginChannel;
     get orderWithData(){
-        return { ...this.order, ...this.sectionDataToSubmit };
+       console.log('#Order With Data >>> ' +JSON.stringify(this.sectionDataToSubmit));
+       return {...this.order, ...this.sectionDataToSubmit};
     }
     get previousTraderOptions(){ return [
         {"label":"ENEL ENERGIA SPA-10V0000006","value":"ENEL ENERGIA SPA-10V0000006"},
@@ -225,7 +226,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     handleShowInviaModulistica(){
         if(this.order.ServicePoint__c !== undefined && this.order.ServicePoint__r.MeterClass__c !== undefined){
-            let meterClass = this.order.ServicePoint__r.MeterClass__c;
+            let meterClass = (this.order.Caliber__c !== undefined && this.order.Caliber__c !== null) ? this.order.Caliber__c : this.order.ServicePoint__r.MeterClass__c;
             let meterNum = meterClass.match(/\d+/)[0];
             if ((this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
@@ -463,6 +464,50 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         });
     }
 
+    @api
+    getFieldsForEstimatedCost()
+    {
+        let wrpOrder = {};
+        wrpOrder["Id"] = this.order.Id;
+        wrpOrder["RecordTypeId"] = this.order.RecordTypeId;
+        wrpOrder["ConnectionType__c"] = this.checkFieldAvailable("ConnectionType__c") !== '' ? this.checkFieldAvailable("ConnectionType__c") : this.order["ConnectionType__c"];
+        wrpOrder["RequestPhase__c"] = this.checkFieldAvailable("RequestPhase__c") !== '' ? this.checkFieldAvailable("RequestPhase__c") : this.order["RequestPhase__c"];
+        wrpOrder["ProcessCode__c"] = this.order["ProcessCode__c"];
+        wrpOrder["DistributorFormula__c"] = this.order["DistributorFormula__c"];
+        wrpOrder["PowerRequested__c"] = this.checkFieldAvailable("PowerRequested__c") !== '' ? this.checkFieldAvailable("PowerRequested__c") : this.order["PowerRequested__c"];
+        wrpOrder["PowerAvailable__c"] = this.checkFieldAvailable("PowerAvailable__c") !== '' ? this.checkFieldAvailable("PowerAvailable__c") : this.order["PowerAvailable__c"];
+        wrpOrder["VoltageLevel__c"] = this.checkFieldAvailable("VoltageLevel__c") !== '' ? this.checkFieldAvailable("VoltageLevel__c") : this.order["VoltageLevel__c"];
+        wrpOrder["PowerCommitted__c"] = this.checkFieldAvailable("PowerCommitted__c") !== '' ? this.checkFieldAvailable("PowerCommitted__c") : this.order["PowerCommitted__c"];
+        wrpOrder["UseTypeEnergy__c"] = this.checkFieldAvailable("UseTypeEnergy__c") !== '' ? this.checkFieldAvailable("UseTypeEnergy__c") : this.order["UseTypeEnergy__c"];
+        this.template.querySelector('c-hdt-calculate-estimated-cost').order = wrpOrder;
+        this.template.querySelector('c-hdt-calculate-estimated-cost').getQuoteType();
+    }
+
+    checkFieldAvailable(fieldApiName)
+    {
+        console.log('#fieldName >>> ' + fieldApiName);
+        if(this.template.querySelector(`[data-id=${fieldApiName}]`) !== null 
+            && (this.template.querySelector(`[data-id=${fieldApiName}]`).value === ''|| this.template.querySelector(`[data-id=${fieldApiName}]`).value === null))
+        {
+            return '';
+        }
+        else
+        {
+            return this.template.querySelector(`[data-id=${fieldApiName}]`).value;
+        }
+        
+    }
+
+    showMessage(title,message,variant)
+    {
+        const toastErrorMessage = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: variant,
+        });
+    this.dispatchEvent(toastErrorMessage);
+    }
+
     handleNext(event){
         this.loading = true;
         let currentSectionName = event.currentTarget.value;
@@ -484,6 +529,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
         if(currentSectionName === 'indirizzoSpedizione'){
             this.handleWrapAddressObjectSpedizione();
+        }
+        if(currentSectionName === 'processVariables'){
+           if(this.checkFieldAvailable('AnnualWithdrawal__c') === '')
+           {
+               this.showMessage('Errore', 'Popolare il campo Prelievo Annuo', 'error');
+               return;
+           }
         }
         if(currentSectionName === 'dettaglioImpianto'){
             if(this.template.querySelector("[data-id='SurfaceServed__c']") !== null 
@@ -1040,7 +1092,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'PowerRequested__c',
                     'typeVisibility': this.typeVisibility('ele'),
                     'required': false,
-                    'disabled': false,
+                    'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn',
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1174,7 +1226,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 },
                 {
                     'label': 'Classe Contatore',
-                    'apiname': 'MeterClass__c',
+                    'apiname': 'Caliber__c',
                     'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
                     'disabled': true,
