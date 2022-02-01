@@ -1079,9 +1079,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     public static Boolean manageSapDiscard(List<SObject> newObjectList, Map<Id,SObject> oldObjectMap){
         SObject newObject = newObjectList[0];
         SObject oldObject = oldObjectMap.get((Id)newObject.get('Id'));
-        String newPhase = (String)newObject.get('Phase__c');
-        String oldPhase = (String)oldObject.get('Phase__c');
-
+        String newPhase = newObject.get('Phase__c') != null ? (String)newObject.get('Phase__c') : '';
+        String oldPhase = oldObject.get('Phase__c') != null ?  (String)oldObject.get('Phase__c') : '';
         if (String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && !newPhase.equalsIgnoreCase(oldPhase)){
             DateTime nowDateTime = DateTime.now();
             String phaseStoryOld = oldObject.get('PhaseStory__c') != null ? (String)oldObject.get('PhaseStory__c') : '';
