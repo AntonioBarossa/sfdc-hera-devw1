@@ -223,10 +223,6 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String utenza = reqWrp.requestMap.get('UTENZA')!=null ? reqWrp.requestMap.get('UTENZA') : '';
             String cmp = reqWrp.requestMap.get('CMP')!=null ? reqWrp.requestMap.get('CMP') : '';
             String dataElab = reqWrp.requestMap.get('DATA_ELABORAZIONE')!=null ? reqWrp.requestMap.get('DATA_ELABORAZIONE') : '';
-            System.debug('NOTE_ERR -> ' + errDescr);
-            System.debug('utenza -> ' + utenza);
-            System.debug('cmp -> ' + cmp);
-            System.debug('dataElab -> ' + dataElab);
             Map<String, String> mapActivityField = new Map<String, String>();
             mapActivityField.put('NOTE_ERR',errDescr);
             mapActivityField.put('UTENZA',utenza);
