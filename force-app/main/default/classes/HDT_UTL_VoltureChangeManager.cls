@@ -299,5 +299,23 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             return Integer.valueOf(posizione.valore);    
         }
     }
+    /**@frpanico 01/02/2022 
+     * Introduced method
+     * to perform process check
+     * The map contains four key/value pairs
+     * ('orderNew',inserted field)
+     * ('currentOrder',retrieved order)
+     * ('isReading', input booleans)
+     * ('isRetroactive', input booleans)
+     * ('readingDate', reading date for readings)
+    */
+    public HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck processCheck(Map<String,Object> checkMap)
+    {
+        Order orderNew = (Order) checkMap.get('orderNew');
+        Order currentOrder = (Order) checkMap.get('currentOrder');
+        Boolean isReading = (Boolean) checkMap.get('isReading');
+        Boolean isRetroactive = (Boolean) checkMap.get('isRetroactive');
+        Date readingDate = (Date) checkMap.get('readingDate');
+    }
 
 }

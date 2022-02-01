@@ -506,6 +506,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     showMessage(title,message,variant)
     {
+        this.loading = false;
         const toastErrorMessage = new ShowToastEvent({
             title: title,
             message: message,
