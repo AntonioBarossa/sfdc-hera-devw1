@@ -24,6 +24,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>MarketingPrivacyAcquired__c</picklist>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>AggregateBilling__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -2043,7 +2054,7 @@
             <fullName>Accettato Motore Vas</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Amm%2E Precheck OK SII</fullName>
             <default>false</default>
         </values>
@@ -2054,19 +2065,19 @@
         <values>
             <fullName>Annullamento SII - Ricezione</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Annullato SII</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Attesa conferma preventivo cliente</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Bozza</fullName>
             <default>true</default>
@@ -2135,22 +2146,22 @@
             <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Ko prodotto vas</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Motore vas ko</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Preventivo Accettato</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Preventivo rifiutato</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Quality Call KO</fullName>
             <default>false</default>
@@ -2159,10 +2170,10 @@
             <fullName>Quality Call OK</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Richiesta preventivo</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Ripensato</fullName>
             <default>false</default>

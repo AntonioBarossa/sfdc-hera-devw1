@@ -182,6 +182,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                         
                         if('OK'.equalsIgnoreCase(fieldValueResponse.get('result'))){
                             System.debug('********INSIDE RESULT OK');
+                            ord.DiscardReason__c = '';
+                            ord.Description = '';
                             if(fieldValueResponse.get('FASE') != null){
                                 System.debug('********INSIDE FASE NOT NULL');
                                 //ord.Phase__c = fieldValueResponse.get('FASE');

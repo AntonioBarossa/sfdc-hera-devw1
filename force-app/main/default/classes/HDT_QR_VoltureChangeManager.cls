@@ -249,7 +249,8 @@ public with sharing class HDT_QR_VoltureChangeManager {
             [SELECT PreviousCustomer__r.Account.CustomerMarking__c,
             PreviousCustomer__r.Account.RecordType.DeveloperName,
             Account.CustomerMarking__c,
-            Account.RecordType.DeveloperName
+            Account.RecordType.DeveloperName,
+            ServicePoint__r.CommoditySector__c
             FROM Order
             WHERE Id = :orderId]);
     

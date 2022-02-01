@@ -2047,10 +2047,10 @@
             <fullName>Accettazione Voltura</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Amm%2E Precheck OK SII</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
@@ -2091,11 +2091,11 @@
             <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>
         </values>
-        <values>
+ <!--        <values>
             <fullName>Annullamento - Revocato</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+<!--         <values>
             <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
             <default>false</default>
         </values>
@@ -2106,15 +2106,15 @@
         <values>
             <fullName>Annullamento dal SII</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Annullato SII</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Bozza</fullName>
             <default>true</default>
@@ -2150,9 +2150,17 @@
         <values>
             <fullName>Documentazione Validata</fullName>
             <default>false</default>
+        </values>        
+        <values>
+            <fullName>Errore invio a DL/SII</fullName>
+            <default>false</default>
         </values>
         <values>
             <fullName>Errore lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2168,13 +2176,17 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In attesa validazione</fullName>
+            <fullName>Flusso bloccato in assenza del precedente</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>In Attesa Legge 80</fullName>
+            <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
+<!--         <values>
+            <fullName>In Attesa Legge 80</fullName>
+            <default>false</default>
+        </values> -->
         <values>
             <fullName>Inviato al SII</fullName>
             <default>false</default>
@@ -2183,14 +2195,14 @@
             <fullName>KO Definitivo</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>KO Rilavorato</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+<!--         <values>
             <fullName>Pratica In Attesa</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Ripensamento - Ammissibilità KO</fullName>
             <default>false</default>
@@ -2223,10 +2235,10 @@
             <fullName>Ripensamento - Inviato al SII</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Ripensato</fullName>
             <default>false</default>
@@ -3129,10 +3141,6 @@
     <picklistValues>
         <picklist>VoltureType__c</picklist>
         <values>
-            <fullName>In continuità_si_addebito</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Incorporazione societaria</fullName>
             <default>false</default>
         </values>
@@ -3146,6 +3154,25 @@
         </values>
         <values>
             <fullName>Recupero</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In continuità_si_addebito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In continuità_no_addebito</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>MarketingPrivacyAcquired__c</picklist>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
             <default>false</default>
         </values>
     </picklistValues>

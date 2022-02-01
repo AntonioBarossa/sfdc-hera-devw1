@@ -7,7 +7,7 @@
     <label>Riferimento Pratica Voltura</label>
     <lookupFilter>
         <active>true</active>
-        <booleanFilter>(1 AND 2) AND ((3 AND 4) OR (5 AND 6) OR (7 AND 8))</booleanFilter>
+        <booleanFilter>(1 AND 2) AND ((3 AND 4) OR (5 AND 6) OR (7 AND 8) OR 9)</booleanFilter>
         <filterItems>
             <field>Order.ServicePoint__c</field>
             <operation>equals</operation>
@@ -47,6 +47,11 @@
             <field>Order.Phase__c</field>
             <operation>equals</operation>
             <value>Voltura Rifiutata</value>
+        </filterItems>
+        <filterItems>
+            <field>$Source.Cluster__c</field>
+            <operation>equals</operation>
+            <value>Autolettura</value>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>

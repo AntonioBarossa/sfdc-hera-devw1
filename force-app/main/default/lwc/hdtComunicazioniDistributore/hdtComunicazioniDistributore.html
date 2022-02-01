@@ -1,0 +1,42 @@
+<template>
+    <template if:true={recordId}>
+            <lightning-quick-action-panel header="Comunicazioni Distributore">
+                <div class="slds-modal__content" id="welcome-mat-403-content">
+                        <div class="slds-welcome-mat">
+                            <div class="slds-welcome-mat__content slds-grid">
+                                <template if:true={showSpinner}>
+                                    <div class="slds-welcome-mat__tiles slds-size_1-of-1 demo-only demo--inverse" style="height:300px">
+                                        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                                    </div>
+                                </template>
+                                <template if:false={showSpinner}>
+                                <ul class="slds-welcome-mat__tiles slds-size_1-of-1">
+                                    <template iterator:it={stmtValue} >
+                                                <li data-id={it.value.name} id={it.value.name} data-label={it.value.label} key={it.value.name} class="slds-welcome-mat__tile  slds-m-left_small" >
+                                                    <a href="javascript:void(0);" class="slds-box slds-box_link slds-media" name={it.value.name} onclick={clickOperation}>
+                                                        <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center">
+                                                            <div class="slds-welcome-mat__tile-figure">
+                                                            <div class="slds-welcome-mat__tile-icon-container">
+                                                                <span class="slds-icon_container">
+                                                                    <lightning-icon icon-name={it.value.iconName} alternative-text={it.value.label} title={it.value.label} ></lightning-icon>
+                                                                </span>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-media__body">
+                                                            <div class="slds-welcome-mat__tile-body">
+                                                            <h3 class="slds-welcome-mat__tile-title">{it.value.label}</h3>
+                                                            <p class="slds-welcome-mat__tile-description">{it.value.desc}</p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                    </template>
+                                </ul>
+                                </template>
+                            </div>
+                        </div>
+                </div>
+            </lightning-quick-action-panel>
+    </template>
+</template>
