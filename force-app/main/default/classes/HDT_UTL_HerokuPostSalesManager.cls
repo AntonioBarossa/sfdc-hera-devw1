@@ -288,11 +288,19 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE_ANN') + '\n' + noteAnn;
             }
             if(STRING.isNotBlank(reqWrp.requestMap.get('NOTE_ERR'))){
-                currentCase.DiscardDescription__c=HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('NOTE_ERR'));
-            } else if(STRING.isNotBlank(reqWrp.requestMap.get('DES_ERR_AEEG'))){
-                currentCase.DiscardDescription__c=HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('DES_ERR_AEEG'));
-            } else if(STRING.isNotBlank(reqWrp.requestMap.get('TESTO_ERRR'))){
-                currentCase.DiscardDescription__c=HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('TESTO_ERRR'));
+                currentCase.DiscardDescription__c=HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('NOTE_ERR')) + '\n';
+            }
+            if(STRING.isNotBlank(reqWrp.requestMap.get('DES_ERR_AEEG'))){
+                String discardDescription = currentCase.DiscardDescription__c != null?currentCase.DiscardDescription__c:'';
+                currentCase.DiscardDescription__c= discardDescription + HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('DES_ERR_AEEG')) +  '\n';
+            }
+            if(STRING.isNotBlank(reqWrp.requestMap.get('TESTO_ERRR'))){
+                String discardDescription = currentCase.DiscardDescription__c != null?currentCase.DiscardDescription__c:'';
+                currentCase.DiscardDescription__c = discardDescription + HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('TESTO_ERRR'));
+            }
+            if(STRING.isNotBlank(reqWrp.requestMap.get('ANNOTAZIONI'))){
+                String discardDescription = currentCase.DiscardDescription__c != null?currentCase.DiscardDescription__c:'';
+                currentCase.DiscardDescription__c = discardDescription + HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('ANNOTAZIONI'));
             }
             if(currentPhase.indexOf('Annull') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
                 if(String.isBlank(recordCase.CancellationHerokuPracticeCode__c)){

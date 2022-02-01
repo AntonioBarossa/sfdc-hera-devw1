@@ -2126,11 +2126,11 @@
 <!--         <values>
             <fullName>Annullato SII</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Attesa conferma preventivo cliente</fullName>
             <default>false</default>
-        </values> -->
+        </values> 
         <values>
             <fullName>Bozza</fullName>
             <default>true</default>
@@ -2159,6 +2159,10 @@
             <fullName>Conferma Appuntamento KO</fullName>
             <default>false</default>
         </values> -->
+        <values>
+            <fullName>Dati Tecnici Ricevuti</fullName>
+            <default>false</default>
+        </values>
 <!--         <values>
             <fullName>DL Documentazione completa</fullName>
             <default>false</default>
@@ -2187,7 +2191,7 @@
             <fullName>Errore lavorazione SAP</fullName>
             <default>false</default>
         </values>        
-        <values>
+         <values>
             <fullName>Errore tecnico invio a SAP</fullName>
             <default>false</default>
         </values>
@@ -2259,6 +2263,10 @@
             <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Inviare preventivo</fullName>
+            <default>false</default>
+        </values>
 <!--         <values>
             <fullName>Invio allegato a DL</fullName>
             <default>false</default>
@@ -2289,6 +2297,10 @@
         </values>
         <values>
             <fullName>Richiesta preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Preventivo extra sistema</fullName>
             <default>false</default>
         </values>
         <values>
