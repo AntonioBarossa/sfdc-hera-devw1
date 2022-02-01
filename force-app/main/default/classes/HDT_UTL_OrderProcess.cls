@@ -926,12 +926,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         DateTime nowDateTime = DateTime.now();
 		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
             //@frpanico closes open activities on "Annullato" or "Ripensato"
-            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
+            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out') || newPhase.containsIgnoreCase('Annullamento SII'))
             {                
                 List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
                 try
                 {
-                    activities = orderQr .getOpenActivitiesByOrderId(orderNew.Id);
+                    activities = orderQr.getOpenActivitiesByOrderId(orderNew.Id);
                     for(wrts_prcgvr__Activity__c activity : activities)
                     {
                         activity.wrts_prcgvr__Status__c = 'Chiusa';
@@ -956,7 +956,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     }
                 }
             }
-            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
+            if(newPhase.containsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
             {
                 orderNew.Status = 'Annullato';
             }
@@ -964,9 +964,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              * Si entra nello skip soltanto se la fase di partenza non e' di annullamento
              * Dunque non sono previste activity
              */
-			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
+			if(newPhase.indexOf('Annullamento') > -1 || newPhase.containsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
                 if((oldPhase.indexOf('Annullamento - ') == -1 && oldPhase.indexOf('Ripensamento - ') == -1)
-                    || newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+                    || newPhase.containsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
                 {
 				    orderNew.PhaseStory__c = !String.isBlank(orderNew.PhaseStory__c) 
                         ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c

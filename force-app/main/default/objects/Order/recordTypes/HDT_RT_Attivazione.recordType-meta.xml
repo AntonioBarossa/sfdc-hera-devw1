@@ -133,7 +133,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G1%2C6 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G10</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G10 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -141,7 +149,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G100 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G100 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G1000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1000 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1000 Turbina</fullName>
             <default>false</default>
         </values>
         <values>
@@ -149,11 +173,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G16 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G160</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>G160 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G1600</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1600 Pistoni rot%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -165,7 +209,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G2%2C5 pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G25 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -173,7 +225,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G250 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250G Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -181,7 +249,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G40 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G40 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G400 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G400 Turbina</fullName>
             <default>false</default>
         </values>
         <values>
@@ -189,7 +273,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G4000 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -197,9 +289,34 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G65 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G650</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>G650 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G650 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6500</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
     </picklistValues>
     <picklistValues>
         <picklist>CancellationReasonDescription__c</picklist>
@@ -2047,11 +2164,11 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
-<!--         <values>
+        <values>
           <fullName>Accettazione pagamento a DL</fullName>
             <default>false</default>
         </values>
-        <values>
+ <!--   <values>
             <fullName>Amm%2E Precheck OK SII</fullName>
             <default>false</default>
         </values> -->
@@ -2063,14 +2180,14 @@
             <fullName>Ammissibilità OK</fullName>
             <default>false</default>
         </values>
-<!--         <values>
+        <values>
             <fullName>Ammissibilità conformità KO</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Ammissibilità conformità OK</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>Annullamento - Ammissibilità KO</fullName>
             <default>false</default>
@@ -2103,10 +2220,10 @@
             <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>
         </values>
-  <!--                   <values>
+<!--    <values>
             <fullName>Annullamento - Revocato</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
             <default>false</default>
@@ -2118,29 +2235,37 @@
         <values>
             <fullName>Annullamento dal SII</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
-<!--         <values>
+        <values>
             <fullName>Annullato SII</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>Bozza</fullName>
             <default>true</default>
         </values>
-<!--         <values>
+        <values>
             <fullName>Bozza Annullata</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>Caricamento KO</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Caricamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel OK</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2163,18 +2288,18 @@
             <fullName>Dati Tecnici Ricevuti</fullName>
             <default>false</default>
         </values>
-<!--         <values>
+        <values>
             <fullName>DL Documentazione completa</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>DL accertamento OK</fullName>
             <default>false</default>
         </values>
-<!--         <values>
+        <values>
             <fullName>DL documentazione incompleta</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>Da Inviare</fullName>
             <default>false</default>
@@ -2219,38 +2344,38 @@
             <fullName>Flusso bloccato in assenza del precedente</fullName>
             <default>false</default>
         </values>
-<!--         <values>
+        <values>
             <fullName>Gestione appuntamento su portale DL</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
         </values>
-<!--         <values>
+        <values>
             <fullName>In attesa appuntamento DL</fullName>
             <default>false</default>
-        </values> -->
- <!--        <values>
+        </values>
+        <values>
             <fullName>In attesa esecuzione appuntamento</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
-<!--         <values>
+        <values>
             <fullName>In sequenzializzazione</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
-<!--         <values>
+        <values>
             <fullName>Invio allegato a DL</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>Ripensamento - Ammissibilità KO</fullName>
             <default>false</default>
