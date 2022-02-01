@@ -96,6 +96,12 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
         Map<Id,Case> mapCaseInAnnulato = new Map<Id,Case>([SELECT Id FROM Case WHERE Phase__c = 'Annullato' AND Id IN :caseIdSet]); 
         caseIdSet = null;
         // TODO: verificare quanti record ci passa mulesoft per non sforare i limiti di sfdc.
+        Id actRecordTypeId;
+        try {
+            actRecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByName().get('HDT_RT_Scarto').getRecordTypeId();
+        } catch (Exception ex) {
+            System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_WS_SelfReadingsOutcome metodo handleRequest ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+        }
         for (HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData outcomeData : data) {
 
             if (String.isBlank(outcomeData.caseId)) {
@@ -156,7 +162,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                     errorDescriptionAct = errorDescriptionAct + ' ' + outcomeData.errorCode;
                 }
                 System.debug(LoggingLevel.DEBUG, 'Switching on Case Phase: ' + caseToUpdate.Phase__c);
-                
+
                 switch on caseToUpdate.Phase__c {
                     when 'Esito KO da SAP' {
                         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
@@ -164,6 +170,10 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                         activity.Case__c = caseToUpdate.Id;
                         activity.wrts_prcgvr__Description__c = outcomeData.errorDescription + ' ' + outcomeData.errorCode;
                         activity.Type__c = 'Esito KO da SAP';
+                        activity.DiscardCategory__c = 'Scarto complesso';
+                        if(String.isnotblank(actRecordTypeId)){
+                            activity.RecordTypeId=actRecordTypeId;
+                        }
                         activitiesToCreate.add(activity);
                     }
                     when 'Esito KO pre-MDM' {
@@ -172,6 +182,10 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                         activity.Case__c = caseToUpdate.Id;
                         activity.wrts_prcgvr__Description__c = outcomeData.errorDescription + ' ' + outcomeData.errorCode;
                         activity.Type__c = 'Esito KO pre-MDM';
+                        activity.DiscardCategory__c = 'Scarto complesso';
+                        if(String.isnotblank(actRecordTypeId)){
+                            activity.RecordTypeId=actRecordTypeId;
+                        }
                         activitiesToCreate.add(activity);
                     }
                 }

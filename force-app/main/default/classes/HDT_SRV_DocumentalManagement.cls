@@ -1,5 +1,5 @@
-@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveClassLength, PMD.ExcessivePublicCount')
-public class HDT_SRV_DocumentalManagement{
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveClassLength, PMD.ExcessivePublicCount, PMD.CyclomaticComplexity, PMD.AvoidDeeplyNestedIfStmts, PMD.NcssMethodCount, PMD.ExcessiveParameterList')
+public with sharing class  HDT_SRV_DocumentalManagement{
 	
 	public static String generateRequest(String recordId, String context, String formParams){
 		
