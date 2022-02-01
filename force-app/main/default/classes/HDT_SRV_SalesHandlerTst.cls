@@ -14,46 +14,35 @@ private class HDT_SRV_SalesHandlerTst {
       if(paramsBool==null) {
          paramsBool=new Map<String,Boolean>{'withRunId'=>false,'withoutObjects'=>false,'withImpPrevDist'=>false,'withDesErrAeeg'=>false};
       }
-      RestResponse res = new RestResponse();
-      res.statusCode = 200;
-      RestContext.response = res;
-
-      HDT_WRP_MrrRequest.HDT_WRP_Request request=new HDT_WRP_MrrRequest.HDT_WRP_Request();
-      HDT_WRP_MrrRequest.HDT_WRP_Header header=new HDT_WRP_MrrRequest.HDT_WRP_Header();
-      header.requestType=requestType;
-
+        RestResponse res = new RestResponse();
+        res.statusCode = 200;
+        RestContext.response = res;
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Request request=new HDT_WRP_MrrRequest.HDT_WRP_Request();
+        HDT_WRP_MrrRequest.HDT_WRP_Header header=new HDT_WRP_MrrRequest.HDT_WRP_Header();
+        header.requestType=requestType;
+		HDT_WRP_MrrRequest.HDT_WRP_Field field=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        HDT_WRP_MrrRequest.HDT_WRP_Field field3=new HDT_WRP_MrrRequest.HDT_WRP_Field();
      // For Pass the RICH_PASS and NOTIF_ES else    
-      if(phase=='RICH_PASS'||phase=='NOTIF_ES'){
-        HDT_WRP_MrrRequest.HDT_WRP_Field field=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+      if(requestType=='RICH_PASS'||requestType=='NOTIF_ES'){
         field.name='ATTIVITA';
         field.value=null;
-        List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList=new List<HDT_WRP_MrrRequest.HDT_WRP_Field> ();
-        fieldList.add(null);
-        fieldList.add(field);
-        HDT_WRP_MrrRequest.HDT_WRP_Object obj=new HDT_WRP_MrrRequest.HDT_WRP_Object();
-        obj.fields=fieldList;
-        List<HDT_WRP_MrrRequest.HDT_WRP_Object> objList=new List<HDT_WRP_MrrRequest.HDT_WRP_Object> ();
-        objList.add(obj);
-        request.header=header;
-        request.objects=objList;
       }else{
         // create fields
-        HDT_WRP_MrrRequest.HDT_WRP_Field field=new HDT_WRP_MrrRequest.HDT_WRP_Field();
         field.name='ATTIVITA';
         field.value='Gestione Switch in Ripristinatorio';
+        field3.name='CODERR_AEEG';
+        field3.value='032';
+        if(phase=='Ammissibilità OK'){
+          field3.value='034';
+        	}
+      	}
         HDT_WRP_MrrRequest.HDT_WRP_Field field1=new HDT_WRP_MrrRequest.HDT_WRP_Field();
         field1.name='RECORD_ID';
         field1.value=order.Id;
         HDT_WRP_MrrRequest.HDT_WRP_Field field2=new HDT_WRP_MrrRequest.HDT_WRP_Field();
         field2.name='FASE';
         field2.value=phase;
-        HDT_WRP_MrrRequest.HDT_WRP_Field field3=new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        field3.name='CODERR_AEEG';
-        field3.value='032';
-        if(phase=='Ammissibilità OK'){
-          field3.value='034';
-        }
-        
         HDT_WRP_MrrRequest.HDT_WRP_Field field4=new HDT_WRP_MrrRequest.HDT_WRP_Field();
         field4.name='IMP_PREV_DIST';
         field4.value='10';
@@ -91,7 +80,14 @@ private class HDT_SRV_SalesHandlerTst {
         field13.value='badvalue';//To throw List index out of bounds 
         HDT_WRP_MrrRequest.HDT_WRP_Field field14=new HDT_WRP_MrrRequest.HDT_WRP_Field();
         field14.name='NOTE_ANN';
-        field14.value='note';//To throw List index out of bounds 
+        field14.value='note';//To throw List index out of bounds
+        HDT_WRP_MrrRequest.HDT_WRP_Field field15=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field15.name='TESTO_ERRR';
+        field15.value='ok';//To throw List index out of bounds 
+        HDT_WRP_MrrRequest.HDT_WRP_Field field16=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field16.name='ANNOTAZIONI';
+        field16.value='ok';//To throw List index out of bounds 
+
           
         List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList=new List<HDT_WRP_MrrRequest.HDT_WRP_Field> ();
         fieldList.add(field);
@@ -102,8 +98,7 @@ private class HDT_SRV_SalesHandlerTst {
         if(paramsBool.get('withImpPrevDist')!=null && paramsBool.get('withImpPrevDist')==true) fieldList.add(field4);
         fieldList.add(field5);
         fieldList.add(field6);
-        System.debug('paramsBool.get("withDesErrAeeg")!=null '+paramsBool.get('withDesErrAeeg')!=null);
-        if(paramsBool.get('withDesErrAeeg')!=null && paramsBool.get('withDesErrAeeg')==true) fieldList.add(field7);
+		fieldList.add(field7);
         fieldList.add(field8);
         fieldList.add(field9);
         System.debug('paramsBool.get("withRunId")!=null '+paramsBool.get('withRunId')!=null);
@@ -114,13 +109,15 @@ private class HDT_SRV_SalesHandlerTst {
         fieldList.add(field12);
         fieldList.add(field13);
         fieldList.add(field14);
-          obj.fields=fieldList;
+        fieldList.add(field15);
+        fieldList.add(field16);
+        obj.fields=fieldList;
         List<HDT_WRP_MrrRequest.HDT_WRP_Object> objList=new List<HDT_WRP_MrrRequest.HDT_WRP_Object> ();
         objList.add(obj);
         request.header=header;
+        request.objects=objList;
         System.debug('paramsBool.get("withoutObjects")!=null '+paramsBool.get('withoutObjects')!=null);
         if(paramsBool.get('withoutObjects')==null || paramsBool.get('withoutObjects')==false) request.objects=objList;
-     }
       
       /* Configuration of response */
       HDT_WRP_MrrResponse.HDT_WRP_Object objResponse =new HDT_WRP_MrrResponse.HDT_WRP_Object();
