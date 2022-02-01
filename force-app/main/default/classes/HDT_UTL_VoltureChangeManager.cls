@@ -316,6 +316,8 @@ public with sharing class HDT_UTL_VoltureChangeManager {
         Boolean isReading = (Boolean) checkMap.get('isReading');
         Boolean isRetroactive = (Boolean) checkMap.get('isRetroactive');
         Date readingDate = (Date) checkMap.get('readingDate');
+
+        return null;
     }
 
 }
