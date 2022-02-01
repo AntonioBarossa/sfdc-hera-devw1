@@ -498,6 +498,16 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         
     }
 
+    showMesssage(title,message,variant)
+    {
+        const toastErrorMessage = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: variant,
+        });
+    this.dispatchEvent(toastErrorMessage);
+    }
+
     handleNext(event){
         this.loading = true;
         let currentSectionName = event.currentTarget.value;
@@ -519,6 +529,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
         if(currentSectionName === 'indirizzoSpedizione'){
             this.handleWrapAddressObjectSpedizione();
+        }
+        if(currentSectionName === 'processVariables'){
+           if(this.checkFieldAvailable('AnnualWithdrawal__c') === '')
+           {
+               this.showMesssage('Errore', 'Popolare il campo Prelievo Annuo', 'error');
+               return;
+           }
         }
         if(currentSectionName === 'dettaglioImpianto'){
             if(this.template.querySelector("[data-id='SurfaceServed__c']") !== null 
