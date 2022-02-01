@@ -192,7 +192,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
         if(caseToInsert.size() > 0){
 
             HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse;
-            saveResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(caseToInsert, itemIds);
+            saveResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(caseToInsert, itemIds, 'Case');
             runAlignment(caseToInsert);
             caseToInsert.clear();
 
@@ -202,8 +202,8 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
                 itemsToSave.addAll(saveResponse.reponseItemList);
             }
 
-            if(saveResponse.savedCase.size() > 0){
-                HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedCase);
+            if(saveResponse.savedObject.size() > 0){
+                HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedObject);
                 HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE Compatibility');
             }
 

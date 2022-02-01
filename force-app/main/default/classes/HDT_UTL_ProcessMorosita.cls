@@ -148,15 +148,15 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
 
         if(caseToInsert.size() > 0){
 
-            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(caseToInsert, itemIds);
+            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(caseToInsert, itemIds, 'Case');
             caseToInsert.clear();
 
             if(saveResponse.reponseItemList.size() > 0){
                 itemsToSave.addAll(saveResponse.reponseItemList);
             }
 
-            if(saveResponse.savedCase.size() > 0){
-                HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedCase);
+            if(saveResponse.savedObject.size() > 0){
+                HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedObject);
             }
 
         }  

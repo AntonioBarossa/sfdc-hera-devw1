@@ -1,12 +1,12 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_UTL_ProcessCommonOperations {
 
-    public static HDT_WRP_SaveResponse databaseInsert(List<Case> itemList, List<String> itemIds){
+    public static HDT_WRP_SaveResponse databaseInsert(List<sObject> itemList, List<String> itemIds, String sObjectType){
         HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
         saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
-        saveResponse.savedCase = new List<Case>();
+        saveResponse.savedObject = new List<sObject>();
 
-        SObjectType objtype = Schema.getGlobalDescribe().get('Case');
+        SObjectType objtype = Schema.getGlobalDescribe().get(sObjectType);
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
  
         if(objRes.isCreateable()){
@@ -21,7 +21,6 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
                     
                     for(Database.Error err : sr.getErrors()) {
                         String errorMessage = err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields();
-                        System.debug(LoggingLevel.DEBUG, '>>> ' + String.valueOf(String.valueOf(itemList[n].ServicePoint__c) + ' - item id ' + itemIds[n]));
                         System.debug(LoggingLevel.DEBUG, '>>> errorMessage ' + errorMessage);
                         itemError = new MassiveLoaderRequestItem__c();
                         itemError.Id = itemIds[n];
@@ -34,7 +33,7 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
                     itemError.Id = itemIds[n];
                     itemError.Status__c = 'Chiuso';
                     saveResponse.reponseItemList.add(itemError);
-                    saveResponse.savedCase.add(itemList[n]);
+                    saveResponse.savedObject.add(itemList[n]);
                 }
             }
         }
@@ -159,7 +158,7 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
 
     public class HDT_WRP_SaveResponse {
         public List<MassiveLoaderRequestItem__c> reponseItemList;
-        public List<Case> savedCase;
+        public List<sObject> savedObject;
     }
 
 }

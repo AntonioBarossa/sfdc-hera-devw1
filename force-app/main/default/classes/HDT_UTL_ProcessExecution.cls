@@ -20,6 +20,8 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public  Id recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
     public  Id recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
 
+    public List<Id> accountIdList = new List<Id>();
+
     // --------- montors fix for bulk develop  ---------
     public void setMassiveLoaderRequestItemList(list<MassiveLoaderRequestItem__c> requestItemList){
 
@@ -225,28 +227,28 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
         currentProcess.currentServiceRequest.ProcessType__c= HDT_UTL_MatrixCompatibility.getProcessType(currentProcess.currentChildOrder.ProcessType__c, 'Order', String.valueOf(currentProcess.currentServicePoint.CommoditySector__c));
     }
 
-    public  void verifyAccountAddress(){
-        HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse resp= HDT_WS_HerokuAddressSearch.callServiceMass(
-            currentProcess.currentAccount.BillingCity,
-            currentProcess.currentAccount.BillingStreetName__c,
-            currentProcess.currentAccount.BillingStreetNumber__c
-        );
-
-        List<HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj> listPrestazioni=resp.prestazione;
-        HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj retObj=analizeRespVerifyAddress(listPrestazioni,currentProcess.currentAccount.BillingCity,currentProcess.currentAccount.BillingStreetName__c, currentProcess.currentAccount.BillingStreetNumber__c,currentProcess.currentAccount.BillingPostalCode);
-        
-        if (retObj!=null ) {
-            currentProcess.currentAccount.BillingCity                   = retObj.city1;
-            currentProcess.currentAccount.BillingCityCode__c            = retObj.cityCode;
-            currentProcess.currentAccount.BillingStreetName__c          = retObj.street;
-            currentProcess.currentAccount.BillingPlaceCode__c           = retObj.cityPCode;
-            currentProcess.currentAccount.BillingPlace__c               = retObj.cityPName;
-            currentProcess.currentAccount.BillingIsAddressVerified__c   = true;
-        }
-        else {
-            currentProcess.currentAccount.BillingIsAddressVerified__c   = false;
-        }  
-    }
+    //public  void verifyAccountAddress(){
+    //    HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse resp= HDT_WS_HerokuAddressSearch.callServiceMass(
+    //        currentProcess.currentAccount.BillingCity,
+    //        currentProcess.currentAccount.BillingStreetName__c,
+    //        currentProcess.currentAccount.BillingStreetNumber__c
+    //    );
+//
+    //    List<HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj> listPrestazioni=resp.prestazione;
+    //    HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj retObj=analizeRespVerifyAddress(listPrestazioni,currentProcess.currentAccount.BillingCity,currentProcess.currentAccount.BillingStreetName__c, currentProcess.currentAccount.BillingStreetNumber__c,currentProcess.currentAccount.BillingPostalCode);
+    //    
+    //    if (retObj!=null ) {
+    //        currentProcess.currentAccount.BillingCity                   = retObj.city1;
+    //        currentProcess.currentAccount.BillingCityCode__c            = retObj.cityCode;
+    //        currentProcess.currentAccount.BillingStreetName__c          = retObj.street;
+    //        currentProcess.currentAccount.BillingPlaceCode__c           = retObj.cityPCode;
+    //        currentProcess.currentAccount.BillingPlace__c               = retObj.cityPName;
+    //        currentProcess.currentAccount.BillingIsAddressVerified__c   = true;
+    //    }
+    //    else {
+    //        currentProcess.currentAccount.BillingIsAddressVerified__c   = false;
+    //    }  
+    //}
 
     /** 
     * @description confronta gli indirizzi che restituisce il servizio con l'indirizzo in input  
