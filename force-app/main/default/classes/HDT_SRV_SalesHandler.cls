@@ -116,10 +116,17 @@ public with sharing class HDT_SRV_SalesHandler {
                         //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
                         ord.ExternalUserCompany__c = mapRequestFields.get('CMP');
                         //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
-
+                        Set<String> discardReasonSet = new Set<String>();
+                        discardReasonSet.add(HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('DES_ERR_AEEG')));
+                        discardReasonSet.add(HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('TESTO_ERRR')));
+                        discardReasonSet.add(HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('ANNOTAZIONI')));
+                        discardReasonSet.remove('');
+                        String discardReasonString = String.join((Iterable<String>)discardReasonSet, ' \n');
                         switch on mapRequestFields.get('FASE') {
                             when 'Ammissibilità KO' {
-                                ord.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('DES_ERR_AEEG'));
+                                
+
+                                ord.DiscardReason__c = discardReasonString;
                                 ord.CausalCode__c = mapRequestFields.get('CODERR');
                                 //ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG'); campo sostituito
                                 ord.DiscardCodeHeroku__c = mapRequestFields.get('CODERR_AEEG');
@@ -230,11 +237,11 @@ public with sharing class HDT_SRV_SalesHandler {
                                 HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
                                 appService.updateExtraSystemAppointment('Esito KO da DL', ord.Id);
                                 //fine Gestione Esito Appuntamento;
-                                ord.DiscardReason__c = mapRequestFields.get('TESTO_ERRR');
+                                ord.DiscardReason__c = discardReasonString;
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
-                                ord.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('DES_ERR_AEEG'));
+                                //ord.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('DES_ERR_AEEG'));
                                 ord.Description = mapRequestFields.get('ANNOTAZIONI');
                             }
                             when 'Esito OK da DL' {
@@ -290,7 +297,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 }
                             }
                             when 'Esito KO da SII' {
-                                ord.PrecheckReasonSII__c =  HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('TESTO_ERRR'));
+                                ord.DiscardReason__c =  discardReasonString;
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
 			                    ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
@@ -317,6 +324,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 if(mapRequestFields.get('ANNOTAZIONI_ANN') != null && mapRequestFields.get('ANNOTAZIONI_ANN') != '')
                                 {
                                     ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('ANNOTAZIONI_ANN') + '\n' + cancellationNote;
+                                    ord.DiscardReason__c = mapRequestFields.get('ANNOTAZIONI_ANN');
                                 }
                                 if(previousPhase.indexOf('Ripensamento') >-1){
                                     nextPhase = nextPhase.replace('Annullamento', 'Ripensamento');
@@ -352,6 +360,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     if(mapRequestFields.get('NOTE_ANN') != null && mapRequestFields.get('NOTE_ANN') != '')
                                     {
                                         ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('NOTE_ANN') + '\n' + cancellationNote;
+                                        ord.DiscardReason__c = mapRequestFields.get('NOTE_ANN');
                                     }
                                 }else if(previousPhase.indexOf('Ripensamento') > -1) {
                                     ord.Phase__c = 'Ripensamento - Esito KO da SII';
@@ -359,12 +368,12 @@ public with sharing class HDT_SRV_SalesHandler {
                                 //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
                             }
                             when 'Errore lavorazione SAP' {
-                                ord.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('NOTE_ERR'));
+                                ord.DiscardReason__c = discardReasonString;
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                             }
                             when 'Dati discordanti'{
                                 ord.phase__c = mapRequestFields.get('FASE');
-                                ord.DiscardReason__c = mapRequestFields.get('TESTO_ERR');
+                                ord.DiscardReason__c = discardReasonString;
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                             }
                             when 'Completata' {
@@ -421,6 +430,12 @@ public with sharing class HDT_SRV_SalesHandler {
                                             throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating Billing Profile, VKONT Already not Unique - '+e.getMessage());
                                         }
                                     }
+                                    //Modifica HRADRT_GV 31/01/2022 - Inizio
+                                    if(ordRetrieved.ProcessType__c.containsIgnoreCase('Subentro') || ordRetrieved.ProcessType__c.containsIgnoreCase('Voltura')){
+                                        mapRequestFields.put('NuovoAccount',ordRetrieved.AccountId);
+                                    }
+                                    //Modifica HRADRT_GV 31/01/2022 - Fine
+
                                     HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
                                     utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
                                     utlTechData.handleCompletata(mapRequestFields);
