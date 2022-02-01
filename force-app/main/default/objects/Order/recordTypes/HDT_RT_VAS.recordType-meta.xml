@@ -2087,6 +2087,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Caricamento KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Completata</fullName>
             <default>false</default>
         </values>
@@ -2146,10 +2154,10 @@
             <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
-<!--         <values>
+        <values>
             <fullName>Ko prodotto vas</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>Motore vas ko</fullName>
             <default>false</default>

@@ -2176,6 +2176,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Dati Tecnici Ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Documentazione Validata</fullName>
             <default>false</default>
         </values>        
