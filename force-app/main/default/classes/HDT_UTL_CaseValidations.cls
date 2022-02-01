@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.CyclomaticComplexity')
 public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseValidationInterface {
 
     HDT_QR_CaseValidations caseValidationQr = new HDT_QR_CaseValidations();
@@ -1179,9 +1180,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         Date endDate = Date.valueOf(endDateString);
 
-        /*if (endDate < startDate) {
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario che la data finale sia successiva alla data iniziale.'));
-        }*/
+        if ( endDate <= System.today()) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario che la data finale sia successiva ad oggi.'));
+        }
 
         return result;
     }
