@@ -45,9 +45,10 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
     openModal() {
         // to open modal set isModalOpen track value as true
         //this.isModalOpen = true;
-        
-        this.getQuoteType();
-        console.log(this.recordId);
+        console.log('#Order >>>' +JSON.stringify(this.order));
+        this.dispatchEvent(new CustomEvent('calculatecost',{detail: ''}));
+        /*this.getQuoteType();
+        console.log(this.recordId);*/
     }
 
     closeModal() {
@@ -96,8 +97,10 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
         );
     }
 
+    @api
     async getQuoteType(){
         let wrapper;
+        console.log('#OrderFilledWithNewMethod >>> ' + JSON.stringify(this.order));
         try{
             wrapper = await getQuoteTypeMtd({ord:this.order});
             this.operationCode=wrapper.quoteCode;

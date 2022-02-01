@@ -380,7 +380,10 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
             if(String.isBlank(variableAmount) && String.isBlank(fixedAmount) 
                 && (context.equalsIgnoreCase('Case') || context.equalsIgnoreCase('Order')) 
-                && (cluster.equalsIgnoreCase('Preventivi') || caseType.equalsIgnoreCase('Temporanea - Nuova Attivazione'))){
+                && (cluster.equalsIgnoreCase('Preventivi') 
+                || caseType.equalsIgnoreCase('Temporanea - Nuova Attivazione')
+                || caseType.equalsIgnoreCase('Prima Attivazione con modifica')
+                || caseType.equalsIgnoreCase('Connessione con Attivazione'))){
                 //variableAmount è l'importo prestazione calcolato come amount - fixedAmount
                 //fixed amount è solo quotaVend se Variazione potenza dom sennò è quotaDistr + quotaVend| Se l'offerta è Placet togliere la quota Vend
                 if(caseType.contains('Potenza') && supplyType.equalsIgnoreCase('Domestico')){

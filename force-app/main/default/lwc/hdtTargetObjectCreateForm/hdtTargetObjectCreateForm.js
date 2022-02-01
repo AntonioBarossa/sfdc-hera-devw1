@@ -92,6 +92,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @api commodity = '';
     @api processtype;
     @track oldSupplyType = '';
+    @track spCodeChanged = false;
     
     /**
      * Handle save button availability
@@ -174,7 +175,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.selectedservicepoint != undefined && this.processtype == '') {
 
                 if (element == 'CommoditySector__c') {
-                    console.log('entra in Punto Elettrico CommoditySector__c');
                     fieldsDataObject.push(
                         {
                             fieldname: element,
@@ -429,7 +429,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
             }
         });
-
         return fieldsDataObject;
     }
 
@@ -593,7 +592,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     }
                     this.manageFields();
                     this.getInstanceWrapObject(this.servicePointRetrievedData);
-
                 }).catch(error => {
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
@@ -693,7 +691,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         //25/08/2021 - gabriele.rota@webresults.it - Switch Flag Resident in base a Tipo Fornitura
         if (event.target.fieldName == 'SupplyType__c') {
             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
-        }        
+        }
+        if (event.target.fieldName == 'ServicePointCode__c') {
+            this.spCodeChanged = true;
+        }
     }
 
     /**
@@ -1168,42 +1169,48 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.loading = true;
         let addressRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
 
-        if(this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].trim() != ''){
-            if(addressRecord['Comune'] != undefined && addressRecord['Comune'].trim() != ''){
-                let codicePunto = this.allSubmitedFields['ServicePointCode__c'].trim();
-                let servizio = this.allSubmitedFields['CommoditySector__c'];
-                let radicePunto = servizio == 'Gas' ? codicePunto.substring(0, 4) : codicePunto.substring(0, 6);
-                let comune = servizio == 'Gas' ? addressRecord['Comune'] : '';
-                getDistributorPointCode({
-                    code : radicePunto,
-                    commodity: servizio,
-                    comune : comune
-                }).then(data => {
-                    this.retrievedDistributor = data;
-                    if (data.length > 1) {
-                        this.booleanFormDistributor = true;
-                        this.loading = false;
-                    }
-                    else {
-                        data.forEach(element => {                        
-                            this.recordDistributorPointCode = element.Account__r.Id;
-                        });
-                        this.isDistributor = true;
-                        this.allSubmitedFields['Distributor__c'] = this.recordDistributorPointCode;
-                        this.servicePointRetrievedData.Distributor__c = this.recordDistributorPointCode;
-                        this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
-                        this.save();
-                    }
-                });
+        if(this.spCodeChanged || this.allSubmitedFields['Distributor__c'] == undefined || this.allSubmitedFields['Distributor__c'].trim() == ''){
+
+            if(this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].trim() != ''){
+                if(addressRecord['Comune'] != undefined && addressRecord['Comune'].trim() != ''){
+                    let codicePunto = this.allSubmitedFields['ServicePointCode__c'].trim();
+                    let servizio = this.allSubmitedFields['CommoditySector__c'];
+                    let radicePunto = servizio == 'Gas' ? codicePunto.substring(0, 4) : codicePunto.substring(0, 6);
+                    let comune = servizio == 'Gas' ? addressRecord['Comune'] : '';
+                    getDistributorPointCode({
+                        code : radicePunto,
+                        commodity: servizio,
+                        comune : comune
+                    }).then(data => {
+                        this.retrievedDistributor = data;
+                        if (data.length > 1) {
+                            this.booleanFormDistributor = true;
+                            this.loading = false;
+                        }
+                        else {
+                            data.forEach(element => {
+                                this.recordDistributorPointCode = element.Account__r.Id;
+                            });
+                            this.isDistributor = true;
+                            this.allSubmitedFields['Distributor__c'] = this.recordDistributorPointCode;
+                            this.servicePointRetrievedData.Distributor__c = this.recordDistributorPointCode;
+                            this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
+                            this.save();
+                        }
+                    });
+                }
+                else {
+                    this.loading = false;
+                    this.alert('Errore', 'E\' necessario inserire il Comune per poter procedere al salvataggio', 'error');
+                }
             }
             else {
                 this.loading = false;
-                this.alert('Errore', 'E\' necessario inserire il Comune per poter procedere al salvataggio', 'error');
+                this.alert('Errore', 'E\' necessario inserire il Codice Punto per poter procedere al salvataggio', 'error');
             }
         }
-        else {
-            this.loading = false;
-            this.alert('Errore', 'E\' necessario inserire il Codice Punto per poter procedere al salvataggio', 'error');
+        else{
+            this.save();
         }
     }
 
@@ -1283,7 +1290,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         else {
             title += this.recordtype.label;
         }
-        console.log('formTitle END');
         return title;
     }
 
@@ -1343,7 +1349,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.newServicePoint = data;
             this.isSap = false;
             this.dispatchEvent(new CustomEvent('newservicepoint', { detail: this.newServicePoint }));
-            this.dispatchEvent(new CustomEvent('confirmservicepoint', { detail: { newServicePoint: this.newServicePoint, oldSupplyType: this.oldSupplyType } })); //keltin used for change use check
+            this.dispatchEvent(new CustomEvent('confirmservicepoint', { detail: { newServicePoint: this.newServicePoint, oldSupplyType: this.oldSupplyType } }));
         }).catch(error => {
             this.loading = false;
             const toastErrorMessage = new ShowToastEvent({

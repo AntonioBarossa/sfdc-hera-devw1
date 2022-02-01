@@ -946,6 +946,10 @@
             <fullName>Voltura</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Social</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Commodity__c</picklist>
