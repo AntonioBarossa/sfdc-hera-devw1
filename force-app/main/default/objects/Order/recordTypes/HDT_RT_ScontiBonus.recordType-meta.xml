@@ -2058,22 +2058,22 @@
             <fullName>Ammissibilità OK</fullName>
             <default>false</default>
         </values>
-<!--         <values>
+        <values>
             <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Annullamento SII - Ricezione</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
-<!--         <values>
+        <values>
             <fullName>Annullato SII</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>Bozza</fullName>
             <default>true</default>
