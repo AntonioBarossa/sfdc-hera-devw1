@@ -839,6 +839,42 @@
                 <fieldItem>Record.Order__c</fieldItem>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.ClosedByUsername__c</fieldItem>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_Scarto</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Chiusa</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.UserCompany__c</fieldItem>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_Scarto</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Chiusa</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-52a62b0f-0db8-4db8-a0eb-dde5537c7162</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -895,6 +931,24 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ClosingNote__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.EndDate__c</fieldItem>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_Scarto</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Chiusa</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-89e09c30-566d-4833-be03-3b926e0c4b28</name>
