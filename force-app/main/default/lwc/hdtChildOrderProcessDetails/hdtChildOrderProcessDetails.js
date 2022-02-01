@@ -191,7 +191,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 }
             }
         }
-
+        if(this.currentSectionName === 'dettaglioImpianto')
+        {
+            if(event.target.fieldName === 'Caliber__c' && event.target.value !== undefined && event.targe.value !== null)
+            {
+                this.handleShowInviaModulistica(event.target.value);
+            }
+        }
         let draftData = this.sectionDataToSubmit;
         draftData.Id = this.currentSectionRecordId;
         if(this.lastStepNumber === this.currentSection.step) {
@@ -224,9 +230,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
     } 
 
-    handleShowInviaModulistica(){
+    handleShowInviaModulistica(caliber = ''){
         if(this.order.ServicePoint__c !== undefined && this.order.ServicePoint__r.MeterClass__c !== undefined){
-            let meterClass = (this.order.Caliber__c !== undefined && this.order.Caliber__c !== null) ? this.order.Caliber__c : this.order.ServicePoint__r.MeterClass__c;
+            let meterClass = caliber !== '' ? caliber : this.order.ServicePoint__r.MeterClass__c;
             let meterNum = meterClass.match(/\d+/)[0];
             if ((this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
