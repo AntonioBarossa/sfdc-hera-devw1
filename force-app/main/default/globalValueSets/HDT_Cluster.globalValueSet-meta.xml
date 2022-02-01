@@ -110,6 +110,11 @@
         <default>false</default>
         <label>Voltura</label>
     </customValue>
+    <customValue>
+        <fullName>Social</fullName>
+        <default>false</default>
+        <label>Social</label>
+    </customValue>
     <masterLabel>Cluster</masterLabel>
-    <sorted>true</sorted>
+    <sorted>false</sorted>
 </GlobalValueSet>

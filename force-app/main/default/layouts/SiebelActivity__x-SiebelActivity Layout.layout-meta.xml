@@ -70,6 +70,14 @@
                 <behavior>Readonly</behavior>
                 <field>X_ORA_DL_A__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>X_NUMERO__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>X_CALL_DURATION__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -231,10 +231,13 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                         for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
                             if('RECORD_ID'.equalsIgnoreCase(curField2.name)){
                                 if(curField2.value.length() == 18 ){
+                                    wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c(DiscardCategory__c = 'Tracciatura');
+                                    tempAct.wrts_prcgvr__ObjectId__c = curField2.value;   
                                     if(Schema.Case.SObjectType == Id.valueOf(curField2.value).getSobjectType()){
-                                        wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c(DiscardCategory__c = 'Tracciatura');
                                         tempAct.Case__c = curField2.value;
-                                        tempAct.wrts_prcgvr__ObjectId__c = curField2.value;
+                                        dataForCheckEsitiIntermedi.add(tempAct);
+                                    }else if(Schema.Order.SObjectType == Id.valueOf(curField2.value).getSobjectType()){
+                                        tempAct.Order__c = curField2.value;
                                         dataForCheckEsitiIntermedi.add(tempAct);
                                     }
                                 }
@@ -1078,25 +1081,33 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         SObject oldObject = oldObjectMap.get((Id)newObject.get('Id'));
         String newPhase = (String)newObject.get('Phase__c');
         String oldPhase = (String)oldObject.get('Phase__c');
+        DateTime nowDateTime = DateTime.now();
 
+        for(Sobject obj : newObjectList){
+            SObject oldObj = oldObjectMap.get((Id)obj.get('Id'));
+            String phaseStoryOld = oldObj.get('PhaseStory__c') != null ? (String)oldObj.get('PhaseStory__c') : '';
+            String phaseStrory = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+phaseStoryOld;
+            obj.put('PhaseStory__c',phaseStrory);
+        }
+ 
         if (String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && !newPhase.equalsIgnoreCase(oldPhase)){
             return HDT_UTL_GestioneScartiSap.skipPhaseManager(newPhase);
         }
         return false;
     }
 
-    public static void handleHerokuResponse(Id objectId, String activityName, String fase){
+    public static void handleHerokuResponse(Id objectId, String activityName, String fase, Map<String,String> mapActivityField){
         if ((String.isNotBlank(fase) || String.isNotBlank(activityName)) && objectId != null){
             Map<String,String> mapFieldValue = new Map<String,String>();
             if (String.isNotBlank(activityName)){
-                mapFieldValue.put('Activity__c',activityName);
+                mapFieldValue.put('Activity__c',activityName); 
             }
             if (String.isNotBlank(fase)){
                 mapFieldValue.put('Phase__c',fase);
             }
             List<HDT_GestioneScartiSap__mdt> rules = HDT_UTL_GestioneScartiSap.getRuleFromActivity(mapFieldValue);
             if (!rules.isEmpty()){
-                System.enqueueJob(new HDT_QBL_GestioneScartiSap(objectId,rules));
+                System.enqueueJob(new HDT_QBL_GestioneScartiSap(objectId,rules,mapActivityField));
             }
         }
     }

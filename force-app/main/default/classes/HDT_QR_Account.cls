@@ -172,7 +172,8 @@ public inherited sharing class HDT_QR_Account {
         return [
             SELECT
             Id,
-            Name
+            Name,
+            Category__c
             FROM Account 
             WHERE CustomerCode__c = :customerCode
             WITH SECURITY_ENFORCED

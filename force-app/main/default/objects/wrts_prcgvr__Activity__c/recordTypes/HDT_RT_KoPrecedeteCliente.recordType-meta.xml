@@ -2255,12 +2255,8 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
-            <fullName>Approvazione Offerte</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Giro contatore da gestire</fullName>
-            <default>false</default>
+            <fullName>KO Precedente Cliente</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>
