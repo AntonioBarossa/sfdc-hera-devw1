@@ -70,7 +70,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
        // Da capire se ha senso questo method o si può proprio rimuovere.
        //HDT_UTL_Scarti.updatePraticaForScartoDocumentale(trigger.new, trigger.old);
 
-        //f. defelice Chiusura case Proroga
+        //f. defelice Chiusura case Proroga Temp
         //HDT_UTL_ActivityCustomProcess.closeSobjectOnActivityClosing(trigger.new, trigger.old);
         HDT_UTL_ActivityCustom.checkForMandatoryAttachment((Map<Id, wrts_prcgvr__Activity__c>) trigger.newMap);
 
