@@ -20,7 +20,6 @@
                                                     id="input"
                                                     value={searchTerm}
                                                     onclick={handleClick}
-                                                    onblur={inblur}
                                                     onchange={onChange}
                                                     variant="label-hidden"
                                                     autocomplete="off"
@@ -29,15 +28,17 @@
                                 </div>
                             </template>
                         </div>
-                        <div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+                        <div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox" tabindex="0" onblur={inblur} >
                             <ul class="slds-listbox slds-listbox_vertical" role="presentation">
                                 <template for:each={options} for:item="item">
                                     <li key={item.id} onclick={onSelect} data-id={item.id} data-name={item.name} data-code={item.code} role="presentation">
-                                        <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option">
+                                        <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" title={item.name}>
                                             <lightning-icon class="slds-icon slds-icon--small slds-icon-text-default" icon-name={iconName} alternative-text={objName} size="small"></lightning-icon>
                                             <span class="slds-media__body"><!--<span class="slds-truncate">{item.name} | {item.code}</span>-->
-                                                <span class="slds-listbox__option-text slds-listbox__option-text_entity">{item.name}</span>
-                                                <span if:true={item.bDetail} class="slds-listbox__option-meta slds-listbox__option-meta_entity">{item.detail}</span>
+                                                <span class="slds-listbox__option-text slds-listbox__option-text_entity" >{item.name}</span>
+                                                <span if:true={item.bDetail} class="slds-listbox__option-meta slds-listbox__option-meta_entity" >
+                                                    <lightning-formatted-text value={item.detail} linkify ></lightning-formatted-text>
+                                                </span>
                                             </span>
                                         </span>
                                     </li>

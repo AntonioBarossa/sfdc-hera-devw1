@@ -84,7 +84,7 @@ public inherited sharing class HDT_LC_CustomLookupController {
                 if(enableDetails){
                     obj.detail = '';
                     for(String key : fieldMap.keySet()){
-                        obj.detail += fieldMap.get(key) + ': ' + (String)so.get(key) + ' | ';
+                        obj.detail += fieldMap.get(key) + ': ' + (String)so.get(key) + ' \n ';
                     }
                 }
 
