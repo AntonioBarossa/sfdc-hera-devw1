@@ -20,8 +20,8 @@ public inherited sharing class HDT_QR_SelfReadings {
         List<String> errorTypes = new List<String>();
         errorTypes.add('Esito KO pre-MDM');
         errorTypes.add('Esito KO da SAP');
-        Map<Id, DiscardAnnullmentRule__c> firstQuery = new Map<Id, DiscardAnnullmentRule__c>([SELECT Id, DiscardCode__c, IsActive__c,ControllingValue__c FROM DiscardAnnullmentRule__c WHERE ActivityType__c IN :errorTypes AND DiscardCode__c IN :errorCodes  WITH SECURITY_ENFORCED]);
-        Map<Id, DiscardAnnullmentRule__c> secondQuery = new Map<Id, DiscardAnnullmentRule__c>([SELECT Id, DiscardCode__c, IsActive__c,ControllingValue__c FROM DiscardAnnullmentRule__c WHERE ActivityType__c IN :errorTypes AND ControllingValue__c IN :errorCodes  WITH SECURITY_ENFORCED]);
+        Map<Id, DiscardAnnullmentRule__c> firstQuery = new Map<Id, DiscardAnnullmentRule__c>([SELECT Id, DiscardCode__c, IsActive__c,ControllingValue__c FROM DiscardAnnullmentRule__c WHERE ProcessValue__c = 'Autolettura' AND ActivityType__c IN :errorTypes AND DiscardCode__c IN :errorCodes AND IsActive__c = true  WITH SECURITY_ENFORCED]);
+        Map<Id, DiscardAnnullmentRule__c> secondQuery = new Map<Id, DiscardAnnullmentRule__c>([SELECT Id, DiscardCode__c, IsActive__c,ControllingValue__c FROM DiscardAnnullmentRule__c WHERE ProcessValue__c = 'Autolettura' AND ActivityType__c IN :errorTypes AND ControllingValue__c IN :errorCodes AND IsActive__c = true  WITH SECURITY_ENFORCED]);
         firstQuery.putAll(secondQuery);
 
         System.debug(LoggingLevel.DEBUG, 'firstQuery.values() size:' + firstQuery.values().size());

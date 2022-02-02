@@ -597,6 +597,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         List<DiscardAnnullmentRule__c> rules = [SELECT ControllingValue__c, ProcessValue__c, DiscardNoteReliability__c
                                                 FROM DiscardAnnullmentRule__c
                                                 WHERE ActivityType__c = :activityType
+                                                AND IsActive__c = true
                                                 WITH SECURITY_ENFORCED];
 		
         system.debug(LoggingLevel.DEBUG, 'checkDiscardAnnullmentRule rules: ' + JSON.serializePretty(rules));
