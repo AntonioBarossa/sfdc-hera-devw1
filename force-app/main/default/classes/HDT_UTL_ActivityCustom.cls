@@ -185,6 +185,23 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         }
     }
 
+    @AuraEnabled
+    public static string rejectActivityDocument(String recordId, String noteChiusura){
+        try {
+            wrts_prcgvr__Activity__c oldActivity = HDT_QR_ActivityCustom.getRecordByIdValidation(recordId);
+            system.debug('Krist: '+oldActivity);
+            Date d = System.today();
+            Date dataAnnullRich = d.addDays(30); 
+            wrts_prcgvr__Activity__c newActivity = new wrts_prcgvr__Activity__c(account__c = oldActivity.account__c,wrts_prcgvr__Status__c= 'Aperta',order__c = oldActivity.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali'),RequestedCancellationDate__c=dataAnnullRich, ClosingNote__c=noteChiusura);
+            activityCustomSrv.createRecord(newActivity);
+            String res = 'Creata';  
+            activityCustomSrv.updateRecord(oldActivity);
+            return res;
+
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
 
     @AuraEnabled
     public static String validaActivityDocument(String recordid, String validazione){
