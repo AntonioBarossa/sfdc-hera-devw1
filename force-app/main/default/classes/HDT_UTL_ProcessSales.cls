@@ -142,7 +142,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
                         switch on sobjectMap.get(csvHeader).objectType__c {
                             when 'Account' {
-                                if(enableCreateAccount)
+                                //if(enableCreateAccount)
                                     convertionError = mapTypeField(account, mapAllFields, count, tempField);
                             }
                             when 'BillingProfile__c' {
@@ -202,7 +202,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             saveResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(accountToInsert, itemIds, 'Account');
             accountToInsert.clear();
 
-            System.debug('>>>saveResponse.savedObject ' + saveResponse.savedObject);
+            System.debug('>>> saveResponse.savedObject ' + saveResponse.savedObject);
+            System.debug('>>> saveResponse.itemIdToAccountId: ' + saveResponse.itemIdToAccountId);
 
             for(sObject obj : saveResponse.savedObject){
                 if(obj.getSObjectType()==Schema.Account.getSObjectType()){
@@ -215,10 +216,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             if(saveResponse.reponseItemList.size() > 0){
                 itemsToSave.addAll(saveResponse.reponseItemList);
             }
-
-            ///if(saveResponse.savedCase.size() > 0){
-            ///    HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedCase);
-            ///}
 
         }  
 
@@ -350,12 +347,12 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             tempList.add(''); // PrefTelefono
             tempList.add(''); // EstensCivico
             tempList.add(''); // AltroTelefono
-            tempList.add('12345678'); // PI
+            tempList.add('12345679'); // PI - 12345678
             tempList.add(''); // Cellulare
-            tempList.add('SXSRLA45H28H5'); // CF
+            tempList.add('SXSRLA45H28H6'); // CF - SXSRLA45H28H5
             tempList.add(''); // Sesso
             tempList.add(''); // PrefCell
-            tempList.add('1003616210'); // CSN
+            tempList.add('1003616211'); // CSN - 1003616210
 
             // -- Billing Profile
             tempList.add('sono un numero'); // NumeroConto

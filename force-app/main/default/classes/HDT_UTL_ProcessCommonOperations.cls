@@ -5,6 +5,7 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
         HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
         saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
         saveResponse.savedObject = new List<sObject>();
+        saveResponse.itemIdToAccountId = new Map<Id, Id>();
 
         SObjectType objtype = Schema.getGlobalDescribe().get(sObjectType);
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
@@ -34,6 +35,7 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
                     itemError.Status__c = 'Chiuso';
                     saveResponse.reponseItemList.add(itemError);
                     saveResponse.savedObject.add(itemList[n]);
+                    saveResponse.itemIdToAccountId.put(itemIds[n], sr.getId());
                 }
             }
         }
@@ -159,6 +161,7 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
     public class HDT_WRP_SaveResponse {
         public List<MassiveLoaderRequestItem__c> reponseItemList;
         public List<sObject> savedObject;
+        public Map<Id, Id> itemIdToAccountId;
     }
 
 }
