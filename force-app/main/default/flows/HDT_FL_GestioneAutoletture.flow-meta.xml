@@ -37,6 +37,56 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <actionCalls>
+        <name>Close_Discard_Activity</name>
+        <label>Close Discard Activity</label>
+        <locationX>2148</locationX>
+        <locationY>255</locationY>
+        <actionName>HDT_LC_EditScartiComplessi</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_Type</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>input</name>
+            <value>
+                <elementReference>discardActivityId</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>selfReading</name>
+        <label>selfReading</label>
+        <locationX>2653</locationX>
+        <locationY>228</locationY>
+        <actionName>HDT_UTL_Scarti</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Spinner</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>methodName</name>
+            <value>
+                <stringValue>selfReading</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>objectId</name>
+            <value>
+                <elementReference>discardActivityId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>templateName</name>
+            <value>
+                <elementReference>GetDiscardActivity.Type__c</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
         <name>Assign_codice_causale_da_switch</name>
@@ -73,8 +123,8 @@
     <decisions>
         <name>Autolettura_da_processo_check</name>
         <label>Autolettura da processo?</label>
-        <locationX>780</locationX>
-        <locationY>440</locationY>
+        <locationX>788</locationX>
+        <locationY>396</locationY>
         <defaultConnector>
             <targetReference>Set_Codice_Venditore</targetReference>
         </defaultConnector>
@@ -87,6 +137,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>discardRework</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -178,6 +235,21 @@
         <locationY>549</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
+            <name>discard_Rework</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>discardRework</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetDiscardActivity</targetReference>
+            </connector>
+            <label>discard Rework</label>
+        </rules>
+        <rules>
             <name>Autolettura_da_cliente</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
@@ -251,7 +323,7 @@
     <decisions>
         <name>Check_Service_Point</name>
         <label>Check Service Point</label>
-        <locationX>636</locationX>
+        <locationX>634</locationX>
         <locationY>562</locationY>
         <defaultConnector>
             <targetReference>Cerca_Processi_di_vendita_elegibili</targetReference>
@@ -271,6 +343,50 @@
                 <targetReference>Invalid_Case_Screen</targetReference>
             </connector>
             <label>Service Point KO</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Type</name>
+        <label>Check Type</label>
+        <locationX>2304</locationX>
+        <locationY>195</locationY>
+        <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
+        <rules>
+            <name>Check_Preliminari_KO</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetDiscardActivity.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Check preliminari KO</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Phase</targetReference>
+            </connector>
+            <label>Check Preliminari KO</label>
+        </rules>
+        <rules>
+            <name>KO_MDM_or_SAP</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>GetDiscardActivity.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito KO da SAP</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetDiscardActivity.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito KO pre-MDM</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>selfReading</targetReference>
+            </connector>
+            <label>KO MDM or SAP</label>
         </rules>
     </decisions>
     <formulas>
@@ -431,6 +547,30 @@ TODO: Formula da adeguare in Wave 2.</description>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetDiscardActivity</name>
+        <label>GetDiscardActivity</label>
+        <locationX>2143</locationX>
+        <locationY>376</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Close_Discard_Activity</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>discardActivityId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__Activity__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Case__c</queriedFields>
+        <queriedFields>Type__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -599,7 +739,7 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordUpdates>
         <name>Set_Fase_Attesa_check_preliminari</name>
         <label>Set Fase Attesa check preliminari</label>
-        <locationX>2552</locationX>
+        <locationX>2529</locationX>
         <locationY>441</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
@@ -658,6 +798,30 @@ TODO: Formula da adeguare in Wave 2.</description>
             <field>ReadingDate__c</field>
             <value>
                 <elementReference>ReadingCustomerDateFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Case_Phase</name>
+        <label>Update Case Phase</label>
+        <locationX>2809</locationX>
+        <locationY>69</locationY>
+        <connector>
+            <targetReference>Spinner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetDiscardActivity.Case__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Attesa check preliminari</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -912,7 +1076,7 @@ TODO: Formula da adeguare in Wave 2.</description>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>47</locationX>
+        <locationX>70</locationX>
         <locationY>542</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
@@ -956,6 +1120,26 @@ TODO: Formula da adeguare in Wave 2.</description>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>discardActivityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>discardRework</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>InputCase</name>

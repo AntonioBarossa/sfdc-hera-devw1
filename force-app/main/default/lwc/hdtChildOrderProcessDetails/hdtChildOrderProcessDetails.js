@@ -13,6 +13,7 @@ import sendAdvanceDocumentation from '@salesforce/apex/HDT_LC_DocumentSignatureM
 //FINE SVILUPPI EVERIS
 import createActivityAccise from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.createActivityAccise'
 import getQuoteTypeMtd from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getQuoteTypeMtd';
+import isPreventivo from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.isPreventivo';
 // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
 import ConsumptionsCorrectionType__c from '@salesforce/schema/Case.ConsumptionsCorrectionType__c';
@@ -191,7 +192,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 }
             }
         }
-
+        if(this.currentSectionName === 'dettaglioImpianto')
+        {
+            if(event.target.fieldName === 'Caliber__c' && event.target.value !== undefined && event.targe.value !== null)
+            {
+                this.handleShowInviaModulistica(event.target.value);
+            }
+        }
         let draftData = this.sectionDataToSubmit;
         draftData.Id = this.currentSectionRecordId;
         if(this.lastStepNumber === this.currentSection.step) {
@@ -224,9 +231,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
     } 
 
-    handleShowInviaModulistica(){
+    handleShowInviaModulistica(caliber = ''){
         if(this.order.ServicePoint__c !== undefined && this.order.ServicePoint__r.MeterClass__c !== undefined){
-            let meterClass = (this.order.Caliber__c !== undefined && this.order.Caliber__c !== null) ? this.order.Caliber__c : this.order.ServicePoint__r.MeterClass__c;
+            let meterClass = caliber !== '' ? caliber : this.order.ServicePoint__r.MeterClass__c;
             let meterNum = meterClass.match(/\d+/)[0];
             if ((this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
@@ -500,6 +507,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     showMessage(title,message,variant)
     {
+        this.loading = false;
         const toastErrorMessage = new ShowToastEvent({
             title: title,
             message: message,
@@ -750,6 +758,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         mode: 'sticky'
                     });
                 this.dispatchEvent(toastErrorMessage);
+                return;
+            }
+            if( !isPreventivo(order) ){
+                showMessage('Errore','Preventivo non calcolato','error');
                 return;
             }
         }
