@@ -944,6 +944,7 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getRecordByOrderNumber(String orderNumber){
         return [SELECT id,
         phase__c,
+        Status,
         PrecheckResultSII__c,
         ProcessType__c,
         BillingProfile__c, 

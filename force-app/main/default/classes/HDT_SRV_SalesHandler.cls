@@ -393,7 +393,8 @@ public with sharing class HDT_SRV_SalesHandler {
                                  * Aggiunta gestione 
                                  * Annullato -Errore Lavorazione SAP - Annullato
                                  */
-                                else if(previousPhase.equalsIgnoreCase(erroreLavorazioneSapPhase) && ordRetrieved.Status.equalsIgnoreCase(annullatoStatus))
+                                else if((previousPhase.equalsIgnoreCase(erroreLavorazioneSapPhase) || previousPhase.equalsIgnoreCase(annullatoPhase))
+                                    && ordRetrieved.Status.equalsIgnoreCase(annullatoStatus))
                                 {
                                     ord.Phase__c = annullatoPhase;
                                 }
