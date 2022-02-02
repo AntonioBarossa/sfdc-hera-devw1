@@ -60,7 +60,7 @@ public inherited sharing class HDT_LC_CustomLookupController {
         }
 
         myQuery += ' ORDER BY LastModifiedDate DESC';
-        myQuery += ' LIMIT 5';
+        myQuery += ' LIMIT 20';
 
         System.debug(LoggingLevel.DEBUG, '# myQuery -> ' + myQuery);
 
