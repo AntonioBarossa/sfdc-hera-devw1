@@ -2055,6 +2055,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Registrazione da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Plico Firmato da inviare</fullName>
             <default>false</default>
         </values>
