@@ -1090,18 +1090,13 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     public static Boolean manageSapDiscard(List<SObject> newObjectList, Map<Id,SObject> oldObjectMap){
         SObject newObject = newObjectList[0];
         SObject oldObject = oldObjectMap.get((Id)newObject.get('Id'));
-        String newPhase = (String)newObject.get('Phase__c');
-        String oldPhase = (String)oldObject.get('Phase__c');
-        DateTime nowDateTime = DateTime.now();
-
-        for(Sobject obj : newObjectList){
-            SObject oldObj = oldObjectMap.get((Id)obj.get('Id'));
-            String phaseStoryOld = oldObj.get('PhaseStory__c') != null ? (String)oldObj.get('PhaseStory__c') : '';
-            String phaseStrory = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+phaseStoryOld;
-            obj.put('PhaseStory__c',phaseStrory);
-        }
- 
+        String newPhase = newObject.get('Phase__c') != null ? (String)newObject.get('Phase__c') : '';
+        String oldPhase = oldObject.get('Phase__c') != null ?  (String)oldObject.get('Phase__c') : '';
         if (String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && !newPhase.equalsIgnoreCase(oldPhase)){
+            DateTime nowDateTime = DateTime.now();
+            String phaseStoryOld = oldObject.get('PhaseStory__c') != null ? (String)oldObject.get('PhaseStory__c') : '';
+            String phaseStrory = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+phaseStoryOld;
+            newObject.put('PhaseStory__c',phaseStrory);
             return HDT_UTL_GestioneScartiSap.skipPhaseManager(newPhase);
         }
         return false;

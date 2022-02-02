@@ -72,6 +72,16 @@
                 <label>Rimozione Impianto</label>
             </value>
             <value>
+                <fullName>Cambio Offerta Gas</fullName>
+                <default>false</default>
+                <label>Cambio Offerta Gas</label>
+            </value>
+            <value>
+                <fullName>Cambio Offerta Ele</fullName>
+                <default>false</default>
+                <label>Cambio Offerta Ele</label>
+            </value>
+            <value>
                 <fullName>Consegna copia chiave GdM</fullName>
                 <default>false</default>
                 <label>Consegna copia chiave GdM</label>

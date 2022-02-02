@@ -128,54 +128,6 @@
     <picklistValues>
         <picklist>Caliber__c</picklist>
         <values>
-            <fullName>100</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>100 Volt</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>230 Volt</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>30</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>4</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>400 Volt</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>50</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>8</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DIR Biorario</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DIR Monorario</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DIR Orario</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Elettronico</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>G1%2C6</fullName>
             <default>false</default>
         </values>
@@ -363,6 +315,7 @@
             <fullName>G6500</fullName>
             <default>false</default>
         </values>
+    </picklistValues>
     </picklistValues>
     <picklistValues>
         <picklist>CancellationReasonDescription__c</picklist>
@@ -2390,6 +2343,10 @@
         </values>
         <values>
             <fullName>In attesa validazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
         </values>
         <values>

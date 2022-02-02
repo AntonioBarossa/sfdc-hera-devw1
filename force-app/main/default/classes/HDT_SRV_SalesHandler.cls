@@ -377,68 +377,79 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                             }
                             when 'Completata' {
-
-                                Boolean redirectPreventivo = false;
-                                switch on ordRetrieved.ProcessType__c{
-                                    when 'Connessione con Attivazione', 'Temporanea - Nuova Attivazione', 'Attivazione con Modifica'{
-                                        redirectPreventivo=true;
-                                    }
-                                }                            
-                                //Start HRAWRM-657 21/09/2021
-                                List<Id> listRecordType = new List<Id>();
-                                Id rtSwitchIn           = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchIn').getRecordTypeId();
-                                Id rtChangeOffer        = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_CambioOfferta').getRecordTypeId();
-                                Id rtVultureWithSwitch  = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId();
-                                listRecordType.add(rtSwitchIn);
-                                listRecordType.add(rtChangeOffer);
-                                listRecordType.add(rtVultureWithSwitch);
-
-                                if (!listRecordType.contains(ord.recordtypeId ) && String.isNotBlank(mapRequestFields.get('DT_CREA'))  ) {
-                                    ord.EffectiveDate__c = date.valueOf( mapRequestFields.get('DT_CREA')); //? per tutti i processi tranne RecordType.Name in ('SwitchIn','Cambio Offerta','Voltura Con Switch')
+                                /**@frapnico 01/02/2022
+                                 * Aggiunta gestione KO
+                                 * Skip Azioni
+                                 */
+                                if(previousPhase.indexOf('KO') > -1)
+                                {
+                                    ord.Phase__c = previousPhase;
+                                    ord.Status = 'Completed';
                                 }
-                                //End HRAWRM-657 21/09/2021
-
-                                if(ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti') && redirectPreventivo){
-                                    ord.Phase__c = 'Inviare preventivo';
-                                }else{
-                                    /**@frpanico 04/01/2022
-                                     * Aggiunto MoveOut
-                                    */
-                                    if(moveOutProcesses.contains(ordRetrieved.ProcessType__c))
-                                    {
-                                        HDT_UTL_ContractProcess.moveOut(ordRetrieved.Id, 'ContractReference__c');
-                                    }
-                                    ord.Description = mapRequestFields.get('NOTA_HK');
-                                    ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
-                                    ord.OrderODV__c = mapRequestFields.get('VBELN');
-                                    ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
-                                    ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
-                                    ord.Status='Activated';
-                                    
-                                    if(mapRequestFields.get('VKONT') != null) {
-                                        ord.ContractAccountCode__c = mapRequestFields.get('VKONT');
-
-                                        BillingProfile__c billingProfile = new BillingProfile__c();
-                                        billingProfile.Id = ordRetrieved.BillingProfile__c;
-                                        billingProfile.ContractAccountCode__c = mapRequestFields.get('VKONT');
-                                        
-                                        HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
-                                        try{
-                                            billingProfileSrv.updateRecord(billingProfile);
-                                        }catch(Exception e){
-                                            system.debug('Exception Update Billing Profile');
-                                            throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating Billing Profile, VKONT Already not Unique - '+e.getMessage());
+                                else 
+                                {
+                                    Boolean redirectPreventivo = false;
+                                    switch on ordRetrieved.ProcessType__c{
+                                        when 'Connessione con Attivazione', 'Temporanea - Nuova Attivazione', 'Attivazione con Modifica'{
+                                            redirectPreventivo=true;
                                         }
-                                    }
-                                    //Modifica HRADRT_GV 31/01/2022 - Inizio
-                                    if(ordRetrieved.ProcessType__c.containsIgnoreCase('Subentro') || ordRetrieved.ProcessType__c.containsIgnoreCase('Voltura')){
-                                        mapRequestFields.put('NuovoAccount',ordRetrieved.AccountId);
-                                    }
-                                    //Modifica HRADRT_GV 31/01/2022 - Fine
+                                    }                            
+                                    //Start HRAWRM-657 21/09/2021
+                                    List<Id> listRecordType = new List<Id>();
+                                    Id rtSwitchIn           = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchIn').getRecordTypeId();
+                                    Id rtChangeOffer        = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_CambioOfferta').getRecordTypeId();
+                                    Id rtVultureWithSwitch  = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId();
+                                    listRecordType.add(rtSwitchIn);
+                                    listRecordType.add(rtChangeOffer);
+                                    listRecordType.add(rtVultureWithSwitch);
 
-                                    HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
-                                    utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
-                                    utlTechData.handleCompletata(mapRequestFields);
+                                    if (!listRecordType.contains(ord.recordtypeId ) && String.isNotBlank(mapRequestFields.get('DT_CREA'))  ) {
+                                        ord.EffectiveDate__c = date.valueOf( mapRequestFields.get('DT_CREA')); //? per tutti i processi tranne RecordType.Name in ('SwitchIn','Cambio Offerta','Voltura Con Switch')
+                                    }
+                                    //End HRAWRM-657 21/09/2021
+
+                                    if(ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti') && redirectPreventivo){
+                                        ord.Phase__c = 'Inviare preventivo';
+                                    }else{
+                                        /**@frpanico 04/01/2022
+                                         * Aggiunto MoveOut
+                                        */
+                                        if(moveOutProcesses.contains(ordRetrieved.ProcessType__c))
+                                        {
+                                            HDT_UTL_ContractProcess.moveOut(ordRetrieved.Id, 'ContractReference__c');
+                                        }
+                                        ord.Description = mapRequestFields.get('NOTA_HK');
+                                        ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
+                                        ord.OrderODV__c = mapRequestFields.get('VBELN');
+                                        ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
+                                        ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                        ord.Status='Activated';
+                                        
+                                        if(mapRequestFields.get('VKONT') != null) {
+                                            ord.ContractAccountCode__c = mapRequestFields.get('VKONT');
+
+                                            BillingProfile__c billingProfile = new BillingProfile__c();
+                                            billingProfile.Id = ordRetrieved.BillingProfile__c;
+                                            billingProfile.ContractAccountCode__c = mapRequestFields.get('VKONT');
+                                            
+                                            HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
+                                            try{
+                                                billingProfileSrv.updateRecord(billingProfile);
+                                            }catch(Exception e){
+                                                system.debug('Exception Update Billing Profile');
+                                                throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating Billing Profile, VKONT Already not Unique - '+e.getMessage());
+                                            }
+                                        }
+                                        //Modifica HRADRT_GV 31/01/2022 - Inizio
+                                        if(ordRetrieved.ProcessType__c.containsIgnoreCase('Subentro') || ordRetrieved.ProcessType__c.containsIgnoreCase('Voltura')){
+                                            mapRequestFields.put('NuovoAccount',ordRetrieved.AccountId);
+                                        }
+                                        //Modifica HRADRT_GV 31/01/2022 - Fine
+
+                                        HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
+                                        utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
+                                        utlTechData.handleCompletata(mapRequestFields);
+                                    }
                                 }
                             }
                             when 'Annullamento SII - Ricezione'{

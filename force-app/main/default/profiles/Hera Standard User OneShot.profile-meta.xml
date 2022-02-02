@@ -581,6 +581,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.IsExportSIE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.MarketingPrivacyAcquired__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8779,11 +8784,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DiscardAnnullmentRule__c.DiscardCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DiscardAnnullmentRule__c.DiscardNote__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
