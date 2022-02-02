@@ -21,6 +21,9 @@ public with sharing class HDT_SRV_SalesHandler {
      */
     private static HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
     private static Set<String> moveOutProcesses = new Set<String>{'Cambio Uso','Voltura','Cambio Offerta'};
+    private static String erroreLavorazioneSapPhase = 'Errore lavorazione SAP';
+    private static String annullatoPhase = 'Annullato';
+    private static String annullatoStatus = 'Annullato';
 
     public  HDT_WRP_MrrResponse.HDT_WRP_Response manageSalesProcessCategory(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem) {
         
@@ -386,7 +389,15 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.Phase__c = previousPhase;
                                     ord.Status = 'Completed';
                                 }
-                                else 
+                                /**@frpanico 02/02/2022
+                                 * Aggiunta gestione 
+                                 * Annullato -Errore Lavorazione SAP - Annullato
+                                 */
+                                else if(previousPhase.equalsIgnoreCase(erroreLavorazioneSapPhase) && ordRetrieved.Status.equalsIgnoreCase(annullatoStatus))
+                                {
+                                    ord.Phase__c = annullatoPhase;
+                                }
+                                else
                                 {
                                     Boolean redirectPreventivo = false;
                                     switch on ordRetrieved.ProcessType__c{
