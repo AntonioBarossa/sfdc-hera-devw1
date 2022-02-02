@@ -169,13 +169,11 @@
             <value>
                 <fullName>Caricamento Siebel KO</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Caricamento Siebel KO</label>
             </value>
             <value>
                 <fullName>Caricamento Siebel OK</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Caricamento Siebel OK</label>
             </value>
             <value>
@@ -567,7 +565,6 @@
             <value>
                 <fullName>Registrazione da validare</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Registrazione da validare</label>
             </value>
             <value>

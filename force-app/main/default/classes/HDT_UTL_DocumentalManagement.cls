@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveParameterList')
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveParameterList, PMD.ExcessiveClassLength, PMD.CyclomaticComplexity, PMD.ExcessivePublicCount, PMD.AvoidDeeplyNestedIfStmts, PMD.NcssMethodCount')
 public inherited sharing class HDT_UTL_DocumentalManagement {
 	public static List<Map<String,List<sObject>>> getRecordObjectsList(List<SObject> recordsList, String context){
 		/*
@@ -285,30 +285,53 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		if ('35'.equals(errorMessage)){
 			errorMessage = 'Indirizzo Email non valido.';
 			activityType = 'Busta Docusign non consegnata.';
-		}
-		try {
-			String sObjName = requestId.getSObjectType().getDescribe().getName();
-			DocumentalActivity__c documentalActivity = new DocumentalActivity__c ();
-			switch on sObjName {
-				when 'Case' {
-					documentalActivity.CaseId__c = (Id) requestId;
-					//System.debug(LoggingLevel.DEBUG, '### Account Id: '+processRecord.get('AccountId'));
+			try{
+				String sObjName = requestId.getSObjectType().getDescribe().getName();
+				wrts_prcgvr__Activity__c activityBusta = new wrts_prcgvr__Activity__c ();
+				Id actRecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByName().get('HDT_RT_Scarto').getRecordTypeId();
+				switch on sObjName {
+					when 'Case' {
+						activityBusta.Case__c = (Id) requestId;
+					}
+					when 'Order' {
+						activityBusta.Order__c = (Id) requestId;
+					}
 				}
-				when 'Order' {
-					documentalActivity.OrderId__c = (Id) requestId;
-				}
+				activityBusta.RecordTypeId=actRecordTypeId;
+				activityBusta.wrts_prcgvr__Description__c='Indirizzo Email non valido.';
+				activityBusta.DiscardCategory__c = 'Scarto complesso';
+				activityBusta.Type__c='Busta Docusign non consegnata';
+				HDT_UTL_DatabaseService.insertSObject(activityBusta);
+				
+			} catch (Exception ex) {
+				System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivityForError ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 			}
-			documentalActivity.EnvelopeId__c = envelopeId;
-			documentalActivity.ErrorDescription__c = String.isNotBlank(errorMessage) ? errorMessage : 'Errore Firma OTP';
-			documentalActivity.ActivityType__c = activityType;
-			/*
-				@Author: Davide Viola - 20/10/2021
-				Description: PMD -> Commentata variabile non utilizzata.
-			*/
-			/*Boolean result = */HDT_UTL_DatabaseService.insertSObject(documentalActivity);
-		} catch (Exception ex) {
-			System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivityForError ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+		}else{
+			try {
+				String sObjName = requestId.getSObjectType().getDescribe().getName();
+				DocumentalActivity__c documentalActivity = new DocumentalActivity__c ();
+				switch on sObjName {
+					when 'Case' {
+						documentalActivity.CaseId__c = (Id) requestId;
+						//System.debug(LoggingLevel.DEBUG, '### Account Id: '+processRecord.get('AccountId'));
+					}
+					when 'Order' {
+						documentalActivity.OrderId__c = (Id) requestId;
+					}
+				}
+				documentalActivity.EnvelopeId__c = envelopeId;
+				documentalActivity.ErrorDescription__c = String.isNotBlank(errorMessage) ? errorMessage : 'Errore Firma OTP';
+				documentalActivity.ActivityType__c = activityType;
+				/*
+					@Author: Davide Viola - 20/10/2021
+					Description: PMD -> Commentata variabile non utilizzata.
+				*/
+				/*Boolean result = */HDT_UTL_DatabaseService.insertSObject(documentalActivity);
+			} catch (Exception ex) {
+				System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivityForError ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+			}
 		}
+
 	}
 	
 	public static DocumentalActivity__c initDocumentalActivity(sObject parentRecord,String envelopeId){
