@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>company_owner_default_set</name>
+        <label>Assegna Company Owner Default</label>
+        <locationX>308</locationX>
+        <locationY>551</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>HERA COMM</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>placeholder_email_assignment</name>
+        <label>Salva Email Placeholder</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Email</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>placeholder@email.it</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>company_owner_set_decision</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>company_owner_set_decision</name>
+        <label>Silos Impostato?</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>company_owner_default_set</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>company_owner_set_decision_yes_outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CompanyOwner__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>SI</label>
+        </rules>
+    </decisions>
+    <interviewLabel>Lead - Social Assegna Company Owner {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Social Studio - Gestisci Lead</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>placeholder_email_assignment</targetReference>
+        </connector>
+        <object>Lead</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
