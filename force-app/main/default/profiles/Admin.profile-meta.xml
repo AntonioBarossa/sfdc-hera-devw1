@@ -37489,6 +37489,10 @@
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>DiscardAnnullmentRule__c</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Interaction__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
