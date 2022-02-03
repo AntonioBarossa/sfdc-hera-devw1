@@ -1240,8 +1240,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Classe Contatore',
                     'apiname': 'Caliber__c',
                     'typeVisibility': this.typeVisibility('gas'),
-                    'required': true,
-                    'disabled': true,
+                    'required': false,
+                    'disabled': false,
                     'value': '',
                     'processVisibility': ''
                 },
