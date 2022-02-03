@@ -1296,6 +1296,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>UseTypeEnergy__c</field>
+            <value>
+                <elementReference>Get_Contract_Proroga.SBQQ__Order__r.UseTypeEnergy__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Voltage__c</field>
             <value>
                 <elementReference>Get_Contract_Proroga.SBQQ__Order__r.VoltageLevel__c</elementReference>
