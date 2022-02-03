@@ -17,13 +17,16 @@
                     component.set('v.order', data.object);
                     helper.openWizardForOrder(component,event);
                 }
-            }else if (state === "ERROR") {
+            }else if (response.getState() === "ERROR") {
+                console.log('@@@@ERROR ');
                 var errors = response.getError();
                 if (errors && errors[0] && errors[0].message) {
-                    helper.showAlert(component,errors[0].message,'error','Attenzione!');
+                    helper.showAllert(component,errors[0].message,'error','Attenzione!');
+                    $A.get("e.force:closeQuickAction").fire();
                 }
             }
         });
         $A.enqueueAction(action);
+        
     }
 })
