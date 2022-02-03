@@ -13,14 +13,14 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
     private Map<String, List<String>> itemRequestMap = new Map<String, List<String>>();
     private List<MassiveLoaderRequestItem__c> itemsToSave;
-    private Account account;
-    private Contact contact;
-    private BillingProfile__c billingProfile;
-    private ServicePoint__c servicePoint;
-    private Map<String, AccountContactRelation> accountContactMap;
-    private Map<String, BillingProfile__c> contractToBillProfMap = new Map<String, BillingProfile__c>();
-    private List<AccountContactRelation> accContRelationList;
-    private List<BillingProfile__c> billingProfileList;
+    //private Account account;
+    private HDT_WRP_sObject obj;
+    //private BillingProfile__c billingProfile;
+    //private ServicePoint__c servicePoint;
+    //private Map<String, AccountContactRelation> accountContactMap;
+    private Map<Id, HDT_WRP_sObject> itemIdToWrapperMap = new Map<Id, HDT_WRP_sObject>();
+    //private List<AccountContactRelation> accContRelationList;
+    //private List<BillingProfile__c> billingProfileList;
     private Id recordTypeId;
     private Integer csnIndex;
     //private Integer fiscalCodeIndex;
@@ -100,12 +100,13 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         for(String itemId : itemRequestMap.keySet()){
 
             List<String> tempSplitted = itemRequestMap.get(itemId);
-            account = new Account();
-            contact = new Contact();
-
-            billingProfile = new BillingProfile__c();
-            servicePoint = new ServicePoint__c();
-
+            
+            obj = new HDT_WRP_sObject();
+            obj.account = new Account();
+            obj.contact = new Contact();
+            obj.billingProfile = new BillingProfile__c();
+            obj.servicePoint = new ServicePoint__c();
+            
             Integer count = 0;
             String convertionError;
             String csvHeader;
@@ -113,7 +114,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             System.debug(LoggingLevel.DEBUG, '>>> tempSplitted ' + tempSplitted.size());
 
-            enableCreateAccount = (String.isEmpty(tempSplitted[csnIndex])) ? true : false;
+            enableCreateAccount = true;//(String.isEmpty(tempSplitted[csnIndex])) ? true : false;
             enableCreateBillingProfile = (String.isEmpty(tempSplitted[contoContrattualeIndex])) ? true : false;
             enableCreateServicePoint = (String.isEmpty(tempSplitted[codicePuntoIndex])) ? true : false;
 
@@ -142,16 +143,19 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
                         switch on sobjectMap.get(csvHeader).objectType__c {
                             when 'Account' {
-                                //if(enableCreateAccount)
-                                    convertionError = mapTypeField(account, mapAllFields, count, tempField);
+                                if(enableCreateAccount){
+                                    convertionError = mapTypeField(obj.account, mapAllFields, count, tempField);
+                                }
                             }
                             when 'BillingProfile__c' {
-                                if(enableCreateBillingProfile)
-                                    convertionError = mapTypeField(billingProfile, mapAllFields, count, tempField);
+                                if(enableCreateBillingProfile){
+                                    convertionError = mapTypeField(obj.billingProfile, mapAllFields, count, tempField);
+                                }
                             }
                             when 'ServicePoint__c' {
-                                if(enableCreateServicePoint)
-                                    convertionError = mapTypeField(servicePoint, mapAllFields, count, tempField);
+                                if(enableCreateServicePoint){
+                                    convertionError = mapTypeField(obj.servicePoint, mapAllFields, count, tempField);
+                                }
                             }
                         }
                         
@@ -172,49 +176,93 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 continue;
             }
 
-            System.debug(LoggingLevel.DEBUG, '>>> currentAccount: ' + account);
-            System.debug(LoggingLevel.DEBUG, '>>> currentBillingProfile: ' + billingProfile);
-            System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + servicePoint);
+            System.debug(LoggingLevel.DEBUG, '>>> currentAccount: ' + obj.account);
+            System.debug(LoggingLevel.DEBUG, '>>> currentBillingProfile: ' + obj.billingProfile);
+            System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + obj.servicePoint);
 
-            account.RecordTypeId = recordTypeId;
-            account.IsWrongFiscalData__c = false;
-            account.BillingCityCode__c = 'Roma';
-            //account.GlobalMigrationKey__c = '1';
+            obj.account.RecordTypeId = recordTypeId;
+            obj.account.IsWrongFiscalData__c = false;
+            obj.account.BillingCityCode__c = 'Roma';
 
-            accountToInsert.add(account); 
-            itemIds.add(itemId);
+            createContact();
+            itemIdToWrapperMap.put(itemId, obj);
 
-            //createContact();
-            //contact.GlobalMigrationKey__c = '1';
-            //
-            //Account accReference = new Account();
-            //accReference.GlobalMigrationKey__c = '1';
-            //
-            //contact.Account = accReference;
-            //accountToInsert.add(contact); 
-
-            //System.debug(LoggingLevel.DEBUG, '>>> currentContact: ' + contact);
         }
 
-        if(accountToInsert.size() > 0){
+        if(itemIdToWrapperMap.size() > 0){
 
-            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse;
-            saveResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(accountToInsert, itemIds, 'Account');
-            accountToInsert.clear();
+            HDT_WRP_sObject itObj;
+            for(Id itemId : itemIdToWrapperMap.keySet()){
+                itObj = itemIdToWrapperMap.get(itemId);
+                if(itObj.account.Id == null){
+                    itemIds.add(itemId);
+                    accountToInsert.add(itObj.account);
+                }
+            }
 
-            System.debug('>>> saveResponse.savedObject ' + saveResponse.savedObject);
-            System.debug('>>> saveResponse.itemIdToAccountId: ' + saveResponse.itemIdToAccountId);
+            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveAccountResponse;
+            saveAccountResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(accountToInsert, itemIds, 'Account');
 
-            for(sObject obj : saveResponse.savedObject){
+            System.debug('>>> saveAccountResponse.savedObject ' + saveAccountResponse.savedObject);
+            System.debug('>>> saveAccountResponse.itemIdToAccountId: ' + saveAccountResponse.itemIdToAccountId);
+            
+            for(sObject obj : saveAccountResponse.savedObject){
                 if(obj.getSObjectType()==Schema.Account.getSObjectType()){
                     accountIdList.add((Id)obj.get('Id'));
                 }
             }
 
-            HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE CREATION & Enrichment');
+            itemIds.clear();
+            itemIds = new List<String>();
 
-            if(saveResponse.reponseItemList.size() > 0){
-                itemsToSave.addAll(saveResponse.reponseItemList);
+            List<Contact> saveContactList = new List<Contact>();
+            List<BillingProfile__c> saveBillProfList = new List<BillingProfile__c>();
+            List<ServicePoint__c> saveServPointList = new List<ServicePoint__c>();
+
+            HDT_WRP_sObject iterationObj;
+            Id accountId;
+            List<Id> accountIdsList = new List<Id>();
+            for(Id itemId : itemIdToWrapperMap.keySet()){
+                iterationObj = itemIdToWrapperMap.get(itemId);
+                accountId = saveAccountResponse.itemIdToAccountId.get(itemId);
+                iterationObj.contact.AccountId = accountId;
+                iterationObj.billingProfile.Account__c = accountId;
+                iterationObj.servicePoint.Account__c = accountId;
+
+                System.debug(LoggingLevel.DEBUG, '>>> currentBillingProfile: ' + iterationObj.billingProfile);
+                System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + iterationObj.servicePoint);
+                System.debug(LoggingLevel.DEBUG, '>>> currentContact: ' + iterationObj.contact);
+
+                saveContactList.add(iterationObj.contact);
+                saveBillProfList.add(iterationObj.billingProfile);
+                saveServPointList.add(iterationObj.servicePoint);
+                itemIds.add(itemId);
+                accountIdsList.add(accountId);
+            }
+
+            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveContactResponse;
+            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveBillProfResponse;
+            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveServPointResponse;
+
+            saveContactResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(saveContactList, itemIds, 'Contact');
+            saveBillProfResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(saveBillProfList, itemIds, 'BillingProfile__c');
+            saveServPointResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(saveServPointList, itemIds, 'ServicePoint__c');
+
+            List<AccountContactRelation> acrList = new List<AccountContactRelation>();
+            acrList = [
+                SELECT Id, Roles
+                FROM AccountContactRelation
+                WHERE AccountId IN :accountIdsList
+            ];
+            for(AccountContactRelation acr : acrList){
+                acr.Roles = 'Titolare';
+            }
+            update acrList;
+
+            HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER OBJs CREATION');
+
+            if(saveAccountResponse.reponseItemList.size() > 0){
+                itemsToSave.addAll(saveAccountResponse.reponseItemList);
             }
 
         }  
@@ -246,36 +294,43 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     }
 
     private void createContact(){
-        contact.DegreeOfStudies__c = account.DegreeOfStudies__c;
-        contact.CompanyOwner__c = account.CompanyOwner__c;
-        contact.LastName = account.LastName__c;
-        contact.Gender__c = account.Gender__c;
-        contact.FirstName = account.FirstName__c;
-        contact.Birthdate = account.BirthDate__c;
-        contact.FiscalCode__c = account.FiscalCode__c;
-        contact.Birthcity__c = account.BirthProvince__c;
-        contact.MobilePhonePrefix__c = account.MobilePhonePrefix__c;
-        contact.Phone = account.Phone;
-        contact.MobilePhone = account.MobilePhone__c;
-        contact.Email = account.PrimaryEmail__c;
-        contact.PhonePrefix__c = account.PhonePrefix__c;
-        contact.Fax = account.FAX__c;                       
-        contact.Profession__c = account.Profession__c;             
-        contact.MailingCity = account.BillingCity;           
-        contact.MailingCityCode__c = account.BillingCityCode__c;                  
-        contact.MailingCountry = account.BillingCountry;              
-        contact.MailingPostalCode = account.BillingPostalCode;                 
-        contact.MailingState = account.BillingState;            
-        contact.MailingStreet = account.BillingStreet;             
-        contact.MailingStreetName__c = account.BillingStreetName__c;                    
-        contact.MailingStreetCode__c = account.BillingStreetCode__c;                    
-        contact.MailingStreetNumber__c = account.BillingStreetNumber__c;                      
-        contact.MailingStreetNumberExtension__c = account.BillingStreetNumberExtension__c;                               
-        contact.MailingStreetToponym__c = account.BillingStreetToponym__c;                       
-        contact.MailingRegion__c = account.BillingRegion__c;                
-        contact.MailingPlace__c = account.BillingPlace__c;                
-        contact.MailingPlaceCode__c = account.BillingPlaceCode__c;                    
-        contact.MailingIsAddressVerified__c = account.BillingIsAddressVerified__c; 
+        obj.contact.DegreeOfStudies__c = obj.account.DegreeOfStudies__c;
+        obj.contact.CompanyOwner__c = obj.account.CompanyOwner__c;
+        obj.contact.LastName = obj.account.LastName__c;
+        obj.contact.Gender__c = obj.account.Gender__c;
+        obj.contact.FirstName = obj.account.FirstName__c;
+        obj.contact.Birthdate = obj.account.BirthDate__c;
+        obj.contact.FiscalCode__c = obj.account.FiscalCode__c;
+        obj.contact.Birthcity__c = obj.account.BirthProvince__c;
+        obj.contact.MobilePhonePrefix__c = obj.account.MobilePhonePrefix__c;
+        obj.contact.Phone = obj.account.Phone;
+        obj.contact.MobilePhone = obj.account.MobilePhone__c;
+        obj.contact.Email = obj.account.PrimaryEmail__c;
+        obj.contact.PhonePrefix__c = obj.account.PhonePrefix__c;
+        obj.contact.Fax = obj.account.FAX__c;                       
+        obj.contact.Profession__c = obj.account.Profession__c;             
+        obj.contact.MailingCity = obj.account.BillingCity;           
+        obj.contact.MailingCityCode__c = obj.account.BillingCityCode__c;                  
+        obj.contact.MailingCountry = obj.account.BillingCountry;              
+        obj.contact.MailingPostalCode = obj.account.BillingPostalCode;                 
+        obj.contact.MailingState = obj.account.BillingState;            
+        obj.contact.MailingStreet = obj.account.BillingStreet;             
+        obj.contact.MailingStreetName__c = obj.account.BillingStreetName__c;                    
+        obj.contact.MailingStreetCode__c = obj.account.BillingStreetCode__c;                    
+        obj.contact.MailingStreetNumber__c = obj.account.BillingStreetNumber__c;                      
+        obj.contact.MailingStreetNumberExtension__c = obj.account.BillingStreetNumberExtension__c;                               
+        obj.contact.MailingStreetToponym__c = obj.account.BillingStreetToponym__c;                       
+        obj.contact.MailingRegion__c = obj.account.BillingRegion__c;                
+        obj.contact.MailingPlace__c = obj.account.BillingPlace__c;                
+        obj.contact.MailingPlaceCode__c = obj.account.BillingPlaceCode__c;                    
+        obj.contact.MailingIsAddressVerified__c = obj.account.BillingIsAddressVerified__c;
+    }
+
+    private class HDT_WRP_sObject {
+        private Account account;
+        private Contact contact;
+        private BillingProfile__c billingProfile;
+        private ServicePoint__c servicePoint;
     }
 
     public static void setDataForTest(){
@@ -293,6 +348,18 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         delete [
             SELECT Id
             FROM Contact
+            WHERE Createddate = today AND CreatedById = '0051X0000055rbNQAQ'
+        ];
+
+        delete [
+            SELECT Id
+            FROM BillingProfile__c
+            WHERE Createddate = today AND CreatedById = '0051X0000055rbNQAQ'
+        ];
+
+        delete [
+            SELECT Id
+            FROM ServicePoint__c
             WHERE Createddate = today AND CreatedById = '0051X0000055rbNQAQ'
         ];
 
@@ -315,11 +382,15 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         MassiveLoaderRequestItem__c item;
     
         List<String> tempList;
-        for(Integer n=0; n<1; n++){
+        String iteration = '';
+        for(Integer n=0; n<20; n++){
             item = new MassiveLoaderRequestItem__c();
             item.MassiveLoaderRequest__c = massiveLoaderRequestId;
             tempList = new List<String>();
             item.Status__c = 'In attesa di lavorazione';
+
+            iteration = String.valueOf(n);
+
             // -- Account / Contact
             tempList.add('true'); // FlagVerificato
             tempList.add(''); // FAX
@@ -347,12 +418,12 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             tempList.add(''); // PrefTelefono
             tempList.add(''); // EstensCivico
             tempList.add(''); // AltroTelefono
-            tempList.add('12345679'); // PI - 12345678
+            tempList.add('1234567' + iteration); // PI - 12345678
             tempList.add(''); // Cellulare
-            tempList.add('SXSRLA45H28H6'); // CF - SXSRLA45H28H5
+            tempList.add('SXSRLA45H28H' + iteration); // CF - SXSRLA45H28H5
             tempList.add(''); // Sesso
             tempList.add(''); // PrefCell
-            tempList.add('1003616211'); // CSN - 1003616210
+            tempList.add('100361621' + iteration); // CSN - 1003616210
 
             // -- Billing Profile
             tempList.add('sono un numero'); // NumeroConto
