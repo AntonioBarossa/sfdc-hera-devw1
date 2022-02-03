@@ -5,7 +5,7 @@
         <name>company_owner_default_set</name>
         <label>Assegna Company Owner Default</label>
         <locationX>308</locationX>
-        <locationY>551</locationY>
+        <locationY>767</locationY>
         <assignmentItems>
             <assignToReference>$Record.CompanyOwner__c</assignToReference>
             <operator>Assign</operator>
@@ -17,8 +17,8 @@
     <assignments>
         <name>placeholder_email_assignment</name>
         <label>Salva Email Placeholder</label>
-        <locationX>176</locationX>
-        <locationY>311</locationY>
+        <locationX>264</locationX>
+        <locationY>431</locationY>
         <assignmentItems>
             <assignToReference>$Record.Email</assignToReference>
             <operator>Assign</operator>
@@ -34,7 +34,7 @@
         <name>company_owner_set_decision</name>
         <label>Silos Impostato?</label>
         <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationY>647</locationY>
         <defaultConnector>
             <targetReference>company_owner_default_set</targetReference>
         </defaultConnector>
@@ -50,6 +50,45 @@
                 </rightValue>
             </conditions>
             <label>SI</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>contact_info_present_decision</name>
+        <label>Dato di Contatto Presente?</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <defaultConnector>
+            <targetReference>placeholder_email_assignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>contact_info_present_decision_yes</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Phone</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.MobilePhone</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>company_owner_set_decision</targetReference>
+            </connector>
+            <label>Si</label>
         </rules>
     </decisions>
     <interviewLabel>Lead - Social Assegna Company Owner {!$Flow.CurrentDateTime}</interviewLabel>
@@ -77,7 +116,7 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>placeholder_email_assignment</targetReference>
+            <targetReference>contact_info_present_decision</targetReference>
         </connector>
         <object>Lead</object>
         <recordTriggerType>Create</recordTriggerType>
