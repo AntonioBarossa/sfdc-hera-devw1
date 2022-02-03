@@ -552,7 +552,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
            }
         }
         if(currentSectionName === 'dettaglioImpianto'){
-            if(this.checkFieldAvailable('MaxRequiredPotential__c', true) === '')
+            if(this.typeVisibility('gas') && this.checkFieldAvailable('MaxRequiredPotential__c', true) === '')
             {
                 this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
                 return;
