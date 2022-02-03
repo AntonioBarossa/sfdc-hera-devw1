@@ -262,11 +262,11 @@ public inherited sharing class HDT_LC_ConfigureProduct {
             List<SBQQ__QuoteLine__c> quoteLinesActive = quoteLineQr.getActiveRecords(sale.Id);
             for(SBQQ__QuoteLine__c line : quoteLinesActive){
                 if(line.SBQQ__Product__c != null && line.SBQQ__Product__r.Status__c == 'Scaduta' ){//line.SBQQ__Product__r.EndDate__c < date.today()){
-                    listId.add(line.id);
+                    listId.add(line.id);                //segna i SBQQ__QuoteLine__c "Scaduti"
                     checkIsPresent.put(line.id,true);
                 }
             }
-            if(!listId.isEmpty()){
+            if(!listId.isEmpty()){ //per i SBQQ__QuoteLine__c Scaduti
                 List<wrts_prcgvr__Activity__c> listActivity = HDT_QR_ActivityCustom.getRecordByOrderLine(listId);
                 System.debug('*****DEBUGActivity:' + listActivity);
                 Set<String> quoteToUpdateId = new Set<String>();
@@ -277,7 +277,7 @@ public inherited sharing class HDT_LC_ConfigureProduct {
                 System.debug('*****DEBUGActivity2:' + orderLineActivity);
                 for(SBQQ__QuoteLine__c line : quoteLinesActive){
                     if(checkIsPresent.get(line.id)!= null){
-                        if(orderLineActivity.get(line.id) != null){
+                        if(orderLineActivity.get(line.id) != null){ //"if" not needed???
                             System.debug('*****DEBUGActivityDENTROIF:' + line);
                             if(orderLineActivity.get(line.id) != null &&  orderLineActivity.get(line.id).approved__c != 'Si'){
                                 resp.responseError += (resp.responseError == '' ? line.sbqq__product__r.Name : ',' + line.sbqq__product__r.Name);
