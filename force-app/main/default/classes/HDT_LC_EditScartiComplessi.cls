@@ -4,7 +4,7 @@ public with sharing class HDT_LC_EditScartiComplessi {
         Map<String,Object> responseMap = new Map<String,Object>();
         Boolean hasOwnership = true;
         try {
-            wrts_prcgvr__Activity__c activity = (wrts_prcgvr__Activity__c)HDT_QR_GenericQuery.getGenericRecords('Id,Case__c, OwnerId, Order__c,Order__r.ParentOrder__c, Order__r.AccountId,Order__r.ServicePoint__r.Account__c, Order__r.ServicePoint__r.CommoditySector__c,Order__r.RecordType.DeveloperName, Order__r.SwitchOutDate__c', 'wrts_prcgvr__Activity__c', 'Id =\''+recordId+'\'')[0];
+            wrts_prcgvr__Activity__c activity = (wrts_prcgvr__Activity__c)HDT_QR_GenericQuery.getGenericRecords('Id,Case__c, Type__c, OwnerId, Order__c,Order__r.ParentOrder__c,Order__r.ParentOrder__r.AccountId, Order__r.ParentOrder__r.Sale__c,Order__r.Sale__c, Order__r.AccountId,Order__r.ServicePoint__r.Account__c, Order__r.ServicePoint__r.CommoditySector__c,Order__r.RecordType.DeveloperName, Order__r.SwitchOutDate__c', 'wrts_prcgvr__Activity__c', 'Id =\''+recordId+'\'')[0];
             if(activity.OwnerId!= Userinfo.getUserId()){
                 hasOwnership=false;
             }
@@ -13,9 +13,15 @@ public with sharing class HDT_LC_EditScartiComplessi {
                     responseMap.put('objectId',recordId);
                     responseMap.put('objectType','Case');
                 }else if(activity.Order__c != null){
-                    setStep(activity);
-                    responseMap.put('objectType','Order');
-                    responseMap.put('object',activity.Order__r);
+                    if(activity.Type__c.equals('Busta Docusign non consegnata')){
+                        responseMap.put('object',activity);
+                        responseMap.put('objectType','wrts_prcgvr__Activity__c');
+                    }
+                    else {
+                        setStep(activity);
+                        responseMap.put('objectType','Order');
+                        responseMap.put('object',activity.Order__r);
+                    }
                 }else{
                     throw new AuraHandledException('Attività Non Valida');
                 }
