@@ -760,10 +760,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
                 return;
             }
-            if( !isPreventivo(order) ){
-                showMessage('Errore','Preventivo non calcolato','error');
+            isPreventivo({ord:this.order}).then(result=>{
+                this.loading=false;
+            }).catch(error=>{
+                this.showMessage('Errore','Preventivo non calcolato','error');
                 return;
-            }
+            });
         }
         if(currentSectionName === 'ivaAccise'){
             let errorMessageIvaAccise = '';
