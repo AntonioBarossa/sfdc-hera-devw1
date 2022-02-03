@@ -2054,10 +2054,10 @@
             <fullName>Registrazione  da validare</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Registrazione da validare</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Plico Firmato da inviare</fullName>
             <default>false</default>
