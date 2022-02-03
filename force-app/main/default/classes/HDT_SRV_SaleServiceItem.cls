@@ -133,7 +133,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         //calculate fields based on commodity start
         Decimal consumptionRangeEle = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? servicePoint.AnnualConsumption__c : null;
         Decimal consumptionRangeGas = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.AnnualConsumption__c : null;
-        Decimal powerFlow = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? servicePoint.PowerContractual__c : Decimal.valueOf(servicePoint.MaxRequiredPotential__c);
+        Decimal powerFlow = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? servicePoint.PowerContractual__c : servicePoint.MaxRequiredPotential__c;
         String residentDeliveryAddress = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? (servicePoint.Resident__c == true ? 'Y' : 'N') : 'N';
         //calculate fields based on commodity end
 
