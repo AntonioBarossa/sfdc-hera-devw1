@@ -17,25 +17,32 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
             for(Integer n=0; n<insertResults.size(); n++){
                 Database.SaveResult sr = insertResults[n];
 
-                MassiveLoaderRequestItem__c itemError;
-                if (!sr.isSuccess()) {
-                    
-                    for(Database.Error err : sr.getErrors()) {
-                        String errorMessage = err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields();
-                        System.debug(LoggingLevel.DEBUG, '>>> errorMessage ' + errorMessage);
-                        itemError = new MassiveLoaderRequestItem__c();
-                        itemError.Id = itemIds[n];
-                        itemError.Status__c = 'Errore';
-                        itemError.StatusDescription__c = errorMessage.abbreviate(250);
-                        saveResponse.reponseItemList.add(itemError);
-                    }
-                } else {
-                    itemError = new MassiveLoaderRequestItem__c();
-                    itemError.Id = itemIds[n];
-                    itemError.Status__c = 'Chiuso';
-                    saveResponse.reponseItemList.add(itemError);
+                if(sr.isSuccess()) {
+
+                    MassiveLoaderRequestItem__c itemSuccess;
+                    itemSuccess = new MassiveLoaderRequestItem__c();
+                    itemSuccess.Id = itemIds[n];
+                    itemSuccess.Status__c = 'Chiuso';
+                    saveResponse.reponseItemList.add(itemSuccess);
                     saveResponse.savedObject.add(itemList[n]);
                     saveResponse.itemIdToAccountId.put(itemIds[n], sr.getId());
+
+                } else {
+
+                    MassiveLoaderRequestItem__c itemError;
+                    itemError = new MassiveLoaderRequestItem__c();
+                    itemError.Id = itemIds[n];
+                    itemError.Status__c = 'Errore';
+
+                    String errorMessage = '';
+                    for(Database.Error err : sr.getErrors()) {
+                        errorMessage += '[' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + '] ';
+                        System.debug(LoggingLevel.DEBUG, '>>> errorMessage ' + errorMessage);
+                    }
+
+                    itemError.StatusDescription__c = errorMessage.abbreviate(250);
+                    saveResponse.reponseItemList.add(itemError);
+                    
                 }
             }
         }
