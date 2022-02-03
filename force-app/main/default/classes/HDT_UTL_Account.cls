@@ -342,33 +342,29 @@ public with sharing class HDT_UTL_Account {
                 }
             }
         }
-        //HRADTR_GV Modifiche 03/02/2022 - Inizio
         //CustomerMarking D* and update
         Account acc = checkCustomerMarking( (Account)accountContactMap.get('Account') , saleId );
         Contact cont = (Contact)accountContactMap.get('Contact');
-
-        List<SObject> listToUpdate = new List<SObject>();//HRADTR_GV
+      
+        //HRADTR_GV Modifiche 03/02/2022 - Inizio
+        List<SObject> listToUpdate = new List<SObject>();
         HDT_WS_RicCreBpCaRequest   req;
         HDT_WS_RichCreBpCaResponse resCreate;
         req = callBpCaCreate(acc,cont);
         resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
         if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
             acc.CustomerCode__c = resCreate.data.codiceBP;
-            listToUpdate.add(acc); //HRADTR_GV
-            // HDT_UTL_DatabaseService.updateSObject( acc ); //HRADTR_GV
+            listToUpdate.add(acc); 
         } // TODO gestire l'errore 
 
-        // if(('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) || 'Piccoli Condomini'.equalsIgnoreCase(acc.Category__c)) && isAmministratore ){
-            if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) && isAmministratore ){ //HRADTR_GV
-            // req = callBpCaCreate(acc,cont); //HRADTR_GV
-            req = callAmCaCreate(acc,cont); //HRADTR_GV
+            if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) && isAmministratore ){
+            req = callAmCaCreate(acc,cont);
             resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
             if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
                 cont.ContactCode__c = resCreate.data.codiceBP;
-                // HDT_UTL_DatabaseService.updateSObject( acc ); //HRADTR_GV
-                listToUpdate.add(cont); //HRADTR_GV
+                listToUpdate.add(cont); 
             } // TODO gestire l'errore 
-            HDT_UTL_DatabaseService.updateSObject( listToUpdate ); //HRADTR_GV
+            HDT_UTL_DatabaseService.updateSObject( listToUpdate ); 
 
         }
         //HRADTR_GV Modifiche 03/02/2022 - Fine
