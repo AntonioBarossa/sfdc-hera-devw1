@@ -31860,11 +31860,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.RecordingLink__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.AssignedToQueueDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -37486,6 +37481,10 @@
     </recordTypeVisibilities>
     <tabVisibilities>
         <tab>CampaignMemberLeadAssigment__c</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>DiscardAnnullmentRule__c</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
