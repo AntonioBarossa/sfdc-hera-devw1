@@ -136,7 +136,7 @@ export default class LookupLwc extends LightningElement {
     inblur() {
         console.log("# inblur #");
         // eslint-disable-next-line @lwc/lwc/no-async-operation
-        this.blurTimeout = setTimeout(() =>  {this.boxClass = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-has-focus'}, 300);
+        this.blurTimeout = setTimeout(() =>  {this.boxClass = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-has-focus'}, 100);
     }
 
     onSelect(event) {
