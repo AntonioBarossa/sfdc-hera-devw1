@@ -35,6 +35,9 @@
                     <stringValue>Preventivi</stringValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Gestione_Preventivi</targetReference>
+            </connector>
             <label>Preventivi</label>
         </rules>
         <rules>
@@ -303,6 +306,32 @@
                 <elementReference>InputCase</elementReference>
             </value>
         </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Preventivi</name>
+        <label>Gestione Preventivi</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <flowName>HDT_FL_GestionePreventivi</flowName>
+        <inputAssignments>
+            <name>discardActivityId</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>discardRework</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>caseId</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
         <name>Gestione_Verifiche</name>

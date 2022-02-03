@@ -2220,7 +2220,7 @@
             <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>
         </values>
-<!--    <values>
+        <!-- <values>
             <fullName>Annullamento - Revocato</fullName>
             <default>false</default>
         </values> -->
@@ -2235,7 +2235,7 @@
         <values>
             <fullName>Annullamento dal SII</fullName>
             <default>false</default>
-        </values>
+        </values> 
         <values>
             <fullName>Annullato</fullName>
             <default>false</default>

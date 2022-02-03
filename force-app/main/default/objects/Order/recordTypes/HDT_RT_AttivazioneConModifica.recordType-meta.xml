@@ -2220,10 +2220,10 @@
             <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>
         </values>
-<!--         <values>
+        <!-- <values>
             <fullName>Annullamento - Revocato</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
             <default>false</default>
@@ -2235,15 +2235,15 @@
         <values>
             <fullName>Annullamento dal SII</fullName>
             <default>false</default>
-        </values> -->
+        </values> 
         <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
-<!--         <values>
+        <values>
             <fullName>Annullato SII</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>Attesa conferma preventivo cliente</fullName>
             <default>false</default>

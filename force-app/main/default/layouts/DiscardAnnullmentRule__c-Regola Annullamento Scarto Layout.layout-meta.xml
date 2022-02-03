@@ -26,10 +26,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>DiscardNote__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
                 <field>DiscardNoteReliability__c</field>
             </layoutItems>
             <layoutItems>
