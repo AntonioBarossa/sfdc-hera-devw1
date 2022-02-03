@@ -1,48 +1,421 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
+        <members>Account.Crea_Distributore</members>
+        <members>Crea_Distributore2</members>
+        <members>wrts_prcgvr__Activity__c.Comunicazioni_Distributore</members>
+        <members>wrts_prcgvr__Activity__c.Fermo_Sistemi</members>
+        <members>wrts_prcgvr__Activity__c.HDT_CloseDistributorComunication</members>
+        <members>wrts_prcgvr__Activity__c.HDT_CloseManualActivity</members>
+        <members>wrts_prcgvr__Activity__c.HDT_ResumeActivity</members>
+        <members>wrts_prcgvr__Activity__c.Quick_Link</members>
+        <members>wrts_prcgvr__Activity__c.Ripresa_Sistema</members>
+        <members>wrts_prcgvr__Activity__c.SospendiAttivita</members>
+        <name>QuickAction</name>
+    </types>
+    <types>
         <members>HDT_Activity_Default_Record_Page</members>
         <name>FlexiPage</name>
     </types>
     <types>
-        <members>OrderItem-SBQQ__CPQ Order Product Layout</members>
-        <members>Product2-CPQ Product Layout New</members>
-        <name>Layout</name>
+        <members>FulfillmentDateMatrix__c</members>
+        <members>HDT_AppointmentSetting__mdt</members>
+        <members>HDT_CreateBpCa__mdt</members>
+        <name>CustomObject</name>
     </types>
     <types>
-        <members>HDT_ApexClasses</members>
-        <name>PermissionSet</name>
+        <members>Order.Order_Compact_Layout</members>
+        <name>CompactLayout</name>
     </types>
     <types>
-        <members>HDT_QR_RecordType</members>
-        <members>HDT_QR_SearchPlug</members>
-        <members>HDT_SCH_ActivityDispatcherScheduler</members>
-        <members>HDT_SCH_CustomerLifeCycleScheduler</members>
-        <members>HDT_UTL_EligibilityCriteria</members>
-        <members>HDT_UTL_Order</members>
-        <members>HDT_UTL_PayloadManagement</members>
-        <members>HDT_UTL_Sales</members>
-        <members>HDT_UTL_SearchPlug</members>
-        <name>ApexClass</name>
+        <members>HDT_Cluster</members>
+        <members>HDT_OriginMarket</members>
+        <members>HDT_Voltage</members>
+        <name>GlobalValueSet</name>
     </types>
     <types>
-        <members>Product2.NoOrderable__c</members>
-        <members>Product2.NoSellable__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
+        <members>hdtApplyPaymentMethod</members>
+        <members>hdtAppointmentAgenda</members>
+        <members>hdtAppointmentCommunity</members>
+        <members>hdtAppointmentExtraSist</members>
+        <members>hdtAppointmentHandler</members>
+        <members>hdtAppointmentQuickLink</members>
+        <members>hdtAppointmentSelf</members>
+        <members>hdtAppointmentStopSystem</members>
+        <members>hdtBillingProfileForm</members>
+        <members>hdtCalculateEstimatedCost</members>
+        <members>hdtChildOrderProcessActions</members>
+        <members>hdtChildOrderProcessDetails</members>
+        <members>hdtComunicazioniDistributore</members>
         <members>hdtConfigurePaymentMethods</members>
-        <members>hdtCreateNewTechnicalOffer</members>
+        <members>hdtCreateBillingProfile</members>
+        <members>hdtCustomLookup</members>
+        <members>hdtDocumentActivityValidation</members>
+        <members>hdtFormAccountBusiness</members>
+        <members>hdtFormAccountResidenziale</members>
         <members>hdtManageBillingProfile</members>
-        <members>hdtSearchTechnicalOffer</members>
+        <members>hdtModificaContrattiBillingProfile</members>
+        <members>hdtRecordEditFormFlowSales</members>
+        <members>hdtResumeActivity</members>
+        <members>hdtSaleServiceContainer</members>
+        <members>hdtSelezFornituraFlow</members>
+        <members>hdtTargetObjectCreateForm</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
+        <members>wrts_prcgvr__Activity__c.annullaPratica</members>
+        <name>WebLink</name>
+    </types>
+    <types>
+        <members>Admin</members>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera M2M Integration User</members>
         <members>Hera Standard User OneShot</members>
         <members>Hera Standard User</members>
         <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
         <members>Hera Teleseller Partner User</members>
         <name>Profile</name>
+    </types>
+    <types>
+        <members>HDL_FL_VO_Script_Hera_Bebe</members>
+        <members>HDL_FL_VO_Script_Hera_Etapiu</members>
+        <members>HDL_FL_VO_Script_Mini_VO</members>
+        <members>HDL_FL_VO_Script_Placet</members>
+        <members>HDL_FL_VO_Script_Simply_Hera</members>
+        <members>HDL_FL_VO_Scripts_Prezzo_Fisso_Leggero</members>
+        <members>HDL_FL_VO_Scripts_Prezzo_Sicurezza</members>
+        <members>HDT_FL_ActivityClosing</members>
+        <members>HDT_FL_ContrattiBonusCommerciale</members>
+        <members>HDT_FL_CustomSocialPostHandler</members>
+        <members>HDT_FL_GestioneAnnullamento</members>
+        <members>HDT_FL_GestioneAutoletture</members>
+        <members>HDT_FL_GestionePreventivi</members>
+        <members>HDT_FL_GestioneReclami_VerificheDatiAlDl</members>
+        <members>HDT_FL_ModificaContrattoInPreAttivazione</members>
+        <members>HDT_FL_PostSalesDiscardDispatch</members>
+        <members>HDT_FL_PostSalesMasterDispatchSales</members>
+        <members>HDT_FL_Script_Churn_Prevention</members>
+        <members>HDT_FL_Script_Survey_Abbandono</members>
+        <members>HDT_Script_Aggiornamento_Anagrafica</members>
+        <members>HDT_Script_Captive_Clienti</members>
+        <members>HDT_Script_Consenso_Privacy</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>DiscardAnnullmentRule__c.HDT_VR_RequiredFields</members>
+        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_ModAppuntamento</members>
+        <members>wrts_prcgvr__Activity__c.HDT_VR_GestApp_ObblNonAtoA</members>
+        <members>wrts_prcgvr__Activity__c.HDT_VR_PastDate_DataScadenzaSospensione</members>
+        <name>ValidationRule</name>
+    </types>
+    <types>
+        <members>wrts_prcgvr__Activity__c</members>
+        <name>SharingRules</name>
+    </types>
+    <types>
+        <members>Case.HDT_RT_AltreInformative</members>
+        <members>Case.HDT_RT_VerificaDatiAlDl</members>
+        <members>Order.HDT_RT_Attivazione</members>
+        <members>Order.HDT_RT_AttivazioneConModifica</members>
+        <members>Order.HDT_RT_CambioOfferta</members>
+        <members>Order.HDT_RT_CambioUso</members>
+        <members>Order.HDT_RT_ConnessioneConAttivazione</members>
+        <members>Order.HDT_RT_Default</members>
+        <members>Order.HDT_RT_FlyingRequest</members>
+        <members>Order.HDT_RT_OrderDossier</members>
+        <members>Order.HDT_RT_Proroga</members>
+        <members>Order.HDT_RT_ScontiBonus</members>
+        <members>Order.HDT_RT_Subentro</members>
+        <members>Order.HDT_RT_SwitchIn</members>
+        <members>Order.HDT_RT_TemporaneaNuovaAtt</members>
+        <members>Order.HDT_RT_VAS</members>
+        <members>Order.HDT_RT_Voltura</members>
+        <members>Order.HDT_RT_VolturaConSwitch</members>
+        <members>ServicePoint__c.HDT_RT_Ele</members>
+        <members>ServicePoint__c.HDT_RT_Gas</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_CreditCheckKO</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_KoPrecedeteCliente</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Scarto</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>CampaignMember-Campaign Member Page Layout</members>
+        <members>Case-HDT_GenericheAttivazioni</members>
+        <members>Case-HDT_VotiveModena</members>
+        <members>Global-Global Layout</members>
+        <members>HDT_AppointmentSetting__mdt-Layout Impostazione Appuntamenti</members>
+        <members>HDT_ProtocolSpecificEmail__mdt-HDT_ProtocolSpecificEmail Layout</members>
+        <members>Order-Cambio Offerta</members>
+        <members>Order-Dossier</members>
+        <members>Order-HDT_PraticaInVolo</members>
+        <members>Order-HDT_Voltura</members>
+        <members>Order-Order Layout</members>
+        <members>Order-Prima attivazione con modifica</members>
+        <members>Order-Prima attivazione</members>
+        <members>Order-Sconti o Bonus VAS</members>
+        <members>Order-Subentro</members>
+        <members>Order-Switch in</members>
+        <members>Order-VAS</members>
+        <members>Product2-CPQ Product Layout New</members>
+        <members>SiebelActivity__x-SiebelActivity Layout</members>
+        <members>wrts_prcgvr__Activity__c-HDT_Scarti</members>
+        <members>wrts_prcgvr__Activity__c-wrts_prcgvr__Activity Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_DistributorManager</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_BA_ActivityDispatcher</members>
+        <members>HDT_BA_OrderEstimateExpiration</members>
+        <members>HDT_BA_RiconciliazioneSubscriptions</members>
+        <members>HDT_BA_RiconciliazioneSubscriptionsTest</members>
+        <members>HDT_BA_SendOrderToSii</members>
+        <members>HDT_LCP_CreateDistributorApointment</members>
+        <members>HDT_LC_AccountAlerts</members>
+        <members>HDT_LC_AppointmentAgenda</members>
+        <members>HDT_LC_AppointmentExtraSist</members>
+        <members>HDT_LC_AppointmentExtraSistTst</members>
+        <members>HDT_LC_CanaleContattoIVRLogin</members>
+        <members>HDT_LC_CanaleIVRNoShare</members>
+        <members>HDT_LC_ChildOrderProcessDetails</members>
+        <members>HDT_LC_ChildOrderProcessPrecheck</members>
+        <members>HDT_LC_ChildOrderProcessPrecheckTst</members>
+        <members>HDT_LC_CommunicazioniDistributore</members>
+        <members>HDT_LC_CommunicazioniDistributoreTst</members>
+        <members>HDT_LC_ConfigurePaymentMethods</members>
+        <members>HDT_LC_ConfigureProduct</members>
+        <members>HDT_LC_CopiaContratto</members>
+        <members>HDT_LC_CustomLookupController</members>
+        <members>HDT_LC_DocumentValidation</members>
+        <members>HDT_LC_DocumentValidationTst</members>
+        <members>HDT_LC_EditScartiComplessi</members>
+        <members>HDT_LC_FormAccountBusiness</members>
+        <members>HDT_LC_FormAccountResidenziale</members>
+        <members>HDT_LC_ModificaContrattiBp</members>
+        <members>HDT_LC_OrderDossierWizardActions</members>
+        <members>HDT_LC_SaleActions</members>
+        <members>HDT_LC_SaleServiceContainer</members>
+        <members>HDT_LC_SaleServiceItemsTiles</members>
+        <members>HDT_LC_ServicePointCustomSettings</members>
+        <members>HDT_QBL_BpCaRequest</members>
+        <members>HDT_QBL_GestioneScartiSap</members>
+        <members>HDT_QR_Account</members>
+        <members>HDT_QR_BillingProfile</members>
+        <members>HDT_QR_Case</members>
+        <members>HDT_QR_CaseValidations</members>
+        <members>HDT_QR_Opportunity</members>
+        <members>HDT_QR_Order</members>
+        <members>HDT_QR_OrderItem</members>
+        <members>HDT_QR_SearchPlug</members>
+        <members>HDT_QR_SelfReadings</members>
+        <members>HDT_QR_ServicePoint</members>
+        <members>HDT_QR_VoltureChangeManager</members>
+        <members>HDT_SCH_SendOrderToSii</members>
+        <members>HDT_SRV_AppointmentAgenda</members>
+        <members>HDT_SRV_AppointmentAgendaTst</members>
+        <members>HDT_SRV_BpCaVariation</members>
+        <members>HDT_SRV_DataEnrichmentPostSales</members>
+        <members>HDT_SRV_DocumentalManagement</members>
+        <members>HDT_SRV_PostSalesCriteriaManager</members>
+        <members>HDT_SRV_QservHandler</members>
+        <members>HDT_SRV_SaleServiceItem</members>
+        <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_SRV_SalesHandlerTst</members>
+        <members>HDT_SRV_SelfReadings</members>
+        <members>HDT_SRV_VoltureChangeManager</members>
+        <members>HDT_TRH_ActivityCustom</members>
+        <members>HDT_TRH_DiscardAnnullmentRule</members>
+        <members>HDT_UTL_Accents</members>
+        <members>HDT_UTL_Account</members>
+        <members>HDT_UTL_ActivityCustom</members>
+        <members>HDT_UTL_ActivityCustomProcess</members>
+        <members>HDT_UTL_AppointmentSetting</members>
+        <members>HDT_UTL_AppointmentSettingTest</members>
+        <members>HDT_UTL_CaseValidations</members>
+        <members>HDT_UTL_CheckDiscardCreation</members>
+        <members>HDT_UTL_CheckProcessAnnullment</members>
+        <members>HDT_UTL_DataFactoryTst</members>
+        <members>HDT_UTL_DocumentalManagement</members>
+        <members>HDT_UTL_EmailProtocolReceiver</members>
+        <members>HDT_UTL_GestAppAutomaticCreation</members>
+        <members>HDT_UTL_GestAppAutomaticCreationCase</members>
+        <members>HDT_UTL_GestioneScartiSap</members>
+        <members>HDT_UTL_HandleTechnicalData</members>
+        <members>HDT_UTL_HerokuPostSalesManager</members>
+        <members>HDT_UTL_OrderFieldsAlignment</members>
+        <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_OrderProcessAssignment</members>
+        <members>HDT_UTL_PayloadManagement</members>
+        <members>HDT_UTL_PostSalesManager</members>
+        <members>HDT_UTL_Sales</members>
+        <members>HDT_UTL_Scarti</members>
+        <members>HDT_UTL_SelfReadings</members>
+        <members>HDT_UTL_ServicePoint</members>
+        <members>HDT_UTL_SwtichInProcess</members>
+        <members>HDT_UTL_SwtichInProcessTst</members>
+        <members>HDT_UTL_VoltureChangeManager</members>
+        <members>HDT_WRP_VoltureChangeManager</members>
+        <members>HDT_WS_SalesApexCalloutAction</members>
+        <members>HDT_WS_SelfReadingsOutcome</members>
+        <members>HDT_WS_TransitionWinBack</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>Campaign.FlowType__c</members>
+        <members>CampaignMember.Agenzia_Lead_Contact__c</members>
+        <members>CampaignMember.Owner_Lead_Contact__c</members>
+        <members>Case.VulturePracticeReference__c</members>
+        <members>Contract.OldContractMoMi__c</members>
+        <members>DiscardAnnullmentRule__c.ActivityType__c</members>
+        <members>DiscardAnnullmentRule__c.DiscardCode__c</members>
+        <members>DiscardAnnullmentRule__c.ProcessValue__c</members>
+        <members>EligibilityCriteria__c.Agency__c</members>
+        <members>FulfillmentDateMatrix__c.ActivationDate__c</members>
+        <members>FulfillmentDateMatrix__c.Commodity__c</members>
+        <members>FulfillmentDateMatrix__c.FulfillmentDateFrom__c</members>
+        <members>FulfillmentDateMatrix__c.FulfillmentDateTo__c</members>
+        <members>FulfillmentDateMatrix__c.OriginMarket__c</members>
+        <members>FulfillmentDateMatrix__c.ProcessType__c</members>
+        <members>FulfillmentDateMatrix__c.SupplyType__c</members>
+        <members>FulfillmentDateMatrix__c.VoltageLevel__c</members>
+        <members>HDT_AppointmentSetting__mdt.Type__c</members>
+        <members>HDT_AppointmentSetting__mdt.Value4__c</members>
+        <members>HDT_CreateBpCa__mdt.Field__c</members>
+        <members>HDT_CreateBpCa__mdt.NotBlankable__c</members>
+        <members>HDT_CreateBpCa__mdt.Object__c</members>
+        <members>HDT_ProtocolSpecificEmail__mdt.Email__c</members>
+        <members>Order.DisconnectibilityType__c</members>
+        <members>Order.DocumentalProcessType__c</members>
+        <members>Order.IsExportSIE__c</members>
+        <members>Order.MarketingPrivacyAcquired__c</members>
+        <members>Order.MaxRequiredPotential__c</members>
+        <members>Order.Phase__c</members>
+        <members>Order.RdoCodeSiebel__c</members>
+        <members>Order.RdsCodeSiebel__c</members>
+        <members>Order.VoltureType__c</members>
+        <members>Product2.OfferteVocalOrder__c</members>
+        <members>ServicePoint__c.MaxRequiredPotential__c</members>
+        <members>SiebelActivity__x.X_CALL_DURATION__c</members>
+        <members>SiebelActivity__x.X_NUMERO__c</members>
+        <members>wrts_prcgvr__Activity__c.AppointmentOutcome__c</members>
+        <members>wrts_prcgvr__Activity__c.Type__c</members>
+        <members>wrts_prcgvr__Activity__c.wrts_prcgvr__Status__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>CaseType</members>
+        <name>StandardValueSet</name>
+    </types>
+    <types>
+        <members>HDT_LCP_DocumentValidation</members>
+        <members>HDT_LCP_EditScartiComplessi</members>
+        <members>HDT_LCP_OpenAuraCmp</members>
+        <members>HDT_LCP_RunFlowFromAura</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>HDT_AppointmentSetting.APPOINTMENT_CODE</members>
+        <members>HDT_AppointmentSetting.APPOINTMENT_DATE</members>
+        <members>HDT_AppointmentSetting.APPOINTMENT_SLOT</members>
+        <members>HDT_AppointmentSetting.COD_PRAT_DISTR</members>
+        <members>HDT_AppointmentSetting.DEVW1</members>
+        <members>HDT_AppointmentSetting.DEVW2</members>
+        <members>HDT_AppointmentSetting.Default_Aggiuntaattacco</members>
+        <members>HDT_AppointmentSetting.Default_Attivazione</members>
+        <members>HDT_AppointmentSetting.Default_Chiusuracontatore</members>
+        <members>HDT_AppointmentSetting.Default_ConsegnaCopiaChiaveGdM</members>
+        <members>HDT_AppointmentSetting.Default_Modificaimpianto</members>
+        <members>HDT_AppointmentSetting.Default_Nuovoimpianto</members>
+        <members>HDT_AppointmentSetting.Default_PrimaAttivazione</members>
+        <members>HDT_AppointmentSetting.Default_RiattivazioneFornitura</members>
+        <members>HDT_AppointmentSetting.Default_Rimozioneimpianto</members>
+        <members>HDT_AppointmentSetting.Default_Ripristinoforniturainterrotta</members>
+        <members>HDT_AppointmentSetting.Default_SostContatoreccliente</members>
+        <members>HDT_AppointmentSetting.Default_Spostamentocontatore</members>
+        <members>HDT_AppointmentSetting.Default_SubentrosuGdMchiuso</members>
+        <members>HDT_AppointmentSetting.Default_Variazioneportata</members>
+        <members>HDT_AppointmentSetting.Default_VerificaGdM</members>
+        <members>HDT_AppointmentSetting.Default_VerificaPressione</members>
+        <members>HDT_AppointmentSetting.Default_VerificadatialDL</members>
+        <members>HDT_AppointmentSetting.FLOW_CODE</members>
+        <members>HDT_AppointmentSetting.MM_Aggiuntaattacco</members>
+        <members>HDT_AppointmentSetting.MM_Attivazione</members>
+        <members>HDT_AppointmentSetting.MM_Chiusuracontatore</members>
+        <members>HDT_AppointmentSetting.MM_ConsegnaCopiaChiaveGdM</members>
+        <members>HDT_AppointmentSetting.MM_Modificaimpianto</members>
+        <members>HDT_AppointmentSetting.MM_Nuovoimpianto</members>
+        <members>HDT_AppointmentSetting.MM_PrimaAttivazione</members>
+        <members>HDT_AppointmentSetting.MM_RiattivazioneFornitura</members>
+        <members>HDT_AppointmentSetting.MM_Rimozioneimpianto</members>
+        <members>HDT_AppointmentSetting.MM_Ripristinoforniturainterrotta</members>
+        <members>HDT_AppointmentSetting.MM_Sost_Contatoreccliente</members>
+        <members>HDT_AppointmentSetting.MM_Spostamentocontatore</members>
+        <members>HDT_AppointmentSetting.MM_SubentrosuGdMchiuso</members>
+        <members>HDT_AppointmentSetting.MM_Variazioneportata</members>
+        <members>HDT_AppointmentSetting.MM_VerificaGdM</members>
+        <members>HDT_AppointmentSetting.MM_VerificaPressione</members>
+        <members>HDT_AppointmentSetting.MM_VerificadatialDL</members>
+        <members>HDT_AppointmentSetting.NOTE</members>
+        <members>HDT_AppointmentSetting.OUTCOME</members>
+        <members>HDT_AppointmentSetting.PROCESS_TYPE</members>
+        <members>HDT_CreateBpCa.AccountId</members>
+        <members>HDT_CreateBpCa.BillingCity</members>
+        <members>HDT_CreateBpCa.BillingCountry</members>
+        <members>HDT_CreateBpCa.BillingPostalCode</members>
+        <members>HDT_CreateBpCa.BillingState</members>
+        <members>HDT_CreateBpCa.BillingStreetName</members>
+        <members>HDT_CreateBpCa.BillingStreetNumber</members>
+        <members>HDT_CreateBpCa.BillingStreetToponym</members>
+        <members>HDT_CreateBpCa.BuildingFloor</members>
+        <members>HDT_CreateBpCa.Category</members>
+        <members>HDT_CreateBpCa.CertifiedEmail</members>
+        <members>HDT_CreateBpCa.ContactCode</members>
+        <members>HDT_CreateBpCa.ContactId</members>
+        <members>HDT_CreateBpCa.CustomerCode</members>
+        <members>HDT_CreateBpCa.CustomerMarking</members>
+        <members>HDT_CreateBpCa.Email</members>
+        <members>HDT_CreateBpCa.Fax</members>
+        <members>HDT_CreateBpCa.FirstName</members>
+        <members>HDT_CreateBpCa.FiscalCode</members>
+        <members>HDT_CreateBpCa.LastName</members>
+        <members>HDT_CreateBpCa.MobilePhone</members>
+        <members>HDT_CreateBpCa.Phone</members>
+        <members>HDT_CreateBpCa.PrimaryEmail</members>
+        <members>HDT_CreateBpCa.VATGroup</members>
+        <members>HDT_CreateBpCa.VATGroupEndDate</members>
+        <members>HDT_CreateBpCa.VATGroupStartDate</members>
+        <members>HDT_CreateBpCa.VatNumber</members>
+        <members>HDT_GestioneScartiSap.Flusso_bloccato_in_assenza_del_precedent</members>
+        <members>HDT_IntegrationObject.Documentale_Context1</members>
+        <members>HDT_ProtocolSpecificEmail.Mailbox_Attivazioni</members>
+        <members>HDT_ProtocolSpecificEmail.hcm_generica</members>
+        <members>HDT_ProtocolSpecificEmail.hcm_pagamenti</members>
+        <members>HDT_ProtocolSpecificEmail.hcm_pianorate</members>
+        <members>HDT_ScriptPerCommOffer.Aggiornamento_Anagrafica</members>
+        <members>HDT_ScriptPerCommOffer.Captive_Cienti</members>
+        <members>HDT_ScriptPerCommOffer.Churn_Prevention_Survey</members>
+        <members>HDT_ScriptPerCommOffer.Comfort_Call</members>
+        <members>HDT_ScriptPerCommOffer.Consenso_Privacy</members>
+        <members>HDT_ScriptPerCommOffer.Hera_Beb_VO</members>
+        <members>HDT_ScriptPerCommOffer.Hera_Etapiu_VO</members>
+        <members>HDT_ScriptPerCommOffer.Hera_Impronta_Zero_VO</members>
+        <members>HDT_ScriptPerCommOffer.Mini_VO</members>
+        <members>HDT_ScriptPerCommOffer.Placet_VO</members>
+        <members>HDT_ScriptPerCommOffer.Prezzo_Fisso_VO</members>
+        <members>HDT_ScriptPerCommOffer.Prezzo_Netto_VO</members>
+        <members>HDT_ScriptPerCommOffer.Prezzo_Sicurezza_VO</members>
+        <members>HDT_ScriptPerCommOffer.Quality_Call</members>
+        <members>HDT_ScriptPerCommOffer.Simply_Hera_VO</members>
+        <members>HDT_ScriptPerCommOffer.Survey_Abbandono</members>
+        <members>HDT_ScriptPerCommOffer.VAS</members>
+        <members>HDT_UserInputFlow.Attivazioni_Proroga_Conn_Temp</members>
+        <members>HDT_UserInputFlow.Disattivazioni_Ripensamento</members>
+        <members>HDT_UserInputFlow.Reclami_Dati_Tecnici_M02</members>
+        <name>CustomMetadata</name>
     </types>
     <version>49</version>
 </Package>

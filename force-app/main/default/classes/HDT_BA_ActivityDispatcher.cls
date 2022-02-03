@@ -137,6 +137,10 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                     break;
                 }
             }
+            // IF MAXIMUM SIZE FOR DML ACTION REACHED STOP PROCESSING
+            if(processedActivitiesMap.size() == 10000){
+                break;
+            }
         }
 
         if(!processedActivitiesMap.isEmpty()) {

@@ -316,9 +316,19 @@
                 <label>Esito KO da DL</label>
             </value>
             <value>
+                <fullName>KO Credit Check</fullName>
+                <default>false</default>
+                <label>>KO Credit Check</label>
+            </value>
+            <value>
                 <fullName>KO Fornitore</fullName>
                 <default>false</default>
                 <label>KO Fornitore</label>
+            </value>
+            <value>
+                <fullName>KO Precedente Cliente</fullName>
+                <default>false</default>
+                <label>KO Precedente Cliente</label>
             </value>
             <value>
                 <fullName>Approvazione Bonus Commerciale</fullName>
@@ -591,6 +601,11 @@
                 <fullName>Eliminato esito in scarto</fullName>
                 <default>false</default>
                 <label>Eliminato esito in scarto</label>
+            </value>
+            <value>
+                <fullName>Busta Docusign non consegnata</fullName>
+                <default>false</default>
+                <label>Busta Docusign non consegnata</label>
             </value>
         </valueSetDefinition>
     </valueSet>

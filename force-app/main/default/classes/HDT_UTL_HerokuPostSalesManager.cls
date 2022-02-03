@@ -219,8 +219,17 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             nextPhase = reqWrp.requestMap.get('FASE');
             storno = reqWrp.requestMap.get('STORNO');
             activity = reqWrp.requestMap.get('ATTIVITA');
+            String errDescr = reqWrp.requestMap.get('NOTE_ERR')!=null ? reqWrp.requestMap.get('NOTE_ERR') : '';
+            String utenza = reqWrp.requestMap.get('UTENZA')!=null ? reqWrp.requestMap.get('UTENZA') : '';
+            String cmp = reqWrp.requestMap.get('CMP')!=null ? reqWrp.requestMap.get('CMP') : '';
+            String dataElab = reqWrp.requestMap.get('DATA_ELABORAZIONE')!=null ? reqWrp.requestMap.get('DATA_ELABORAZIONE') : '';
+            Map<String, String> mapActivityField = new Map<String, String>();
+            mapActivityField.put('NOTE_ERR',errDescr);
+            mapActivityField.put('UTENZA',utenza);
+            mapActivityField.put('CMP',cmp);
+            mapActivityField.put('DATA_ELABORAZIONE',dataElab);
             //EVERIS: Gestione Scarti SAP
-            HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase);
+            HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase,mapActivityField);
             //Gestione Esito Appuntamento;
             HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
             appService.updateExtraSystemAppointment(nextPhase, recordCase.Id);
@@ -288,11 +297,19 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE_ANN') + '\n' + noteAnn;
             }
             if(STRING.isNotBlank(reqWrp.requestMap.get('NOTE_ERR'))){
-                currentCase.DiscardDescription__c=HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('NOTE_ERR'));
-            } else if(STRING.isNotBlank(reqWrp.requestMap.get('DES_ERR_AEEG'))){
-                currentCase.DiscardDescription__c=HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('DES_ERR_AEEG'));
-            } else if(STRING.isNotBlank(reqWrp.requestMap.get('TESTO_ERRR'))){
-                currentCase.DiscardDescription__c=HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('TESTO_ERRR'));
+                currentCase.DiscardDescription__c=HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('NOTE_ERR')) + '\n';
+            }
+            if(STRING.isNotBlank(reqWrp.requestMap.get('DES_ERR_AEEG'))){
+                String discardDescription = currentCase.DiscardDescription__c != null?currentCase.DiscardDescription__c:'';
+                currentCase.DiscardDescription__c= discardDescription + HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('DES_ERR_AEEG')) +  '\n';
+            }
+            if(STRING.isNotBlank(reqWrp.requestMap.get('TESTO_ERRR'))){
+                String discardDescription = currentCase.DiscardDescription__c != null?currentCase.DiscardDescription__c:'';
+                currentCase.DiscardDescription__c = discardDescription + HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('TESTO_ERRR'));
+            }
+            if(STRING.isNotBlank(reqWrp.requestMap.get('ANNOTAZIONI'))){
+                String discardDescription = currentCase.DiscardDescription__c != null?currentCase.DiscardDescription__c:'';
+                currentCase.DiscardDescription__c = discardDescription + HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('ANNOTAZIONI'));
             }
             if(currentPhase.indexOf('Annull') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
                 if(String.isBlank(recordCase.CancellationHerokuPracticeCode__c)){
@@ -508,6 +525,15 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             updateFuture(JSON.serialize(currentCase));
         }else if(currentCase.Phase__c.equalsIgnoreCase('Validazione KO da DL')){
             currentCase.Phase__c = 'Annullato';
+            currentCase.Status = 'Closed';
+            updateFuture(JSON.serialize(currentCase));
+        /**@frpanico 21/01/2022
+         * Aggiunto completamento automatico
+         * per il processo di "Verifica dati al DL"
+         */
+        }else if(currentCase.Type.equalsIgnoreCase('Verifica Dati al DL') && currentCase.Phase__c.equalsIgnoreCase('Esito OK da DL'))
+        {
+            currentCase.Phase__c = 'Completata';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
         }
