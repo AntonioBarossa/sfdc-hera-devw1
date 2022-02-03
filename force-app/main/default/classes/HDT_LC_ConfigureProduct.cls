@@ -49,9 +49,17 @@ public inherited sharing class HDT_LC_ConfigureProduct {
      * @param String opportunityId
      * @param String cancellationReason
      */
+    /**@frpanico 03/02/2022
+     * Aggiunto update IsTransition = false
+     * sull'oggetto Sale__c
+     * Ottimizzata le dml
+     */
     @AuraEnabled
     public static void cancelQuote(String quoteId, String opportunityId, String cancellationReason){
         
+        List<SObject> sobjsToUpdate = new List<SObject>();
+        Sale__c sale = new Sale__c();
+
         SBQQ__Quote__c quoteToUpdate = new SBQQ__Quote__c(
             Id = quoteId,
             CancellationReason__c = cancellationReason
@@ -66,13 +74,25 @@ public inherited sharing class HDT_LC_ConfigureProduct {
             }
         }
 
+        Opportunity opp = opportunityQr.getRecordById(opportunityId);
+
         Opportunity oppToUpdate = new Opportunity(
             Id = opportunityId,
             StageName = 'Closed Lost'
         );
 
+        sale.Id = opp.Sale__c;
+        sale.IsTransition__c = false;
+        
+        sobjsToUpdate.add(quoteToUpdate);
+        sobjsToUpdate.add(oppToUpdate);
+        sobjsToUpdate.add(sale);
+
+        HDT_UTL_DatabaseService.updateSObject(sobjsToUpdate);
+        /*
         quoteSrv.updateRecord(quoteToUpdate);
         opportunitySrv.updateRecord(oppToUpdate);
+        */
     }
 
     /**
