@@ -371,7 +371,7 @@
                                 <criteria>
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>HDT_RT_Scarti</rightValue>
+                                    <rightValue>HDT_RT_Scarto</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
