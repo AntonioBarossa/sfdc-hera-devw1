@@ -217,10 +217,15 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             Order ord = new Order();
             ord.id = oldActivity.order__c;
             ord.DocumentPackage__c = 'Validato';
-            if(!oldActivity.Type__c.containsIgnoreCase('Vocal Order'))
+            if(oldActivity.Type__c.containsIgnoreCase('Vocal Order'))
+            {
+                ord.Phase__c = 'Registrazione validata';
+            }
+            else
             {
                 ord.phase__c = 'Documentazione Gestita';
                 ord.status = 'Completed';
+            
             }
             orderSrv.updateRecord(ord);
         }
