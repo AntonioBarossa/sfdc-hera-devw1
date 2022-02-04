@@ -108,7 +108,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             System.debug(LoggingLevel.DEBUG, '>>> tempSplitted ' + tempSplitted.size());
 
-            enableCreateAccount = (String.isEmpty(tempSplitted[csnIndex])) ? true : false;
+            enableCreateAccount = true;//(String.isEmpty(tempSplitted[csnIndex])) ? true : false;
             enableCreateBillingProfile = (String.isEmpty(tempSplitted[contoContrattualeIndex])) ? true : false;
             enableCreateServicePoint = (String.isEmpty(tempSplitted[codicePuntoIndex])) ? true : false;
 
@@ -224,12 +224,12 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             for(Id itemId : itemIdToWrapperMap.keySet()){
                 iterationObj = itemIdToWrapperMap.get(itemId);
 
-                if(itObj.account.Id == null){
+                if(iterationObj.account.Id == null){
                     if(saveAccountResponse.itemIdToAccountId.containsKey(itemId)){
                         accountId = saveAccountResponse.itemIdToAccountId.get(itemId);
                     }   
                 } else {
-                    accountId = itObj.account.Id;
+                    accountId = iterationObj.account.Id;
                 }
                 
                 if(accountId != null){
@@ -295,6 +295,9 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
     public override void finalUpdate(){
         System.debug(LoggingLevel.DEBUG, 'finalUpdate');
+        if(itemsToSave.size() > 0){
+            update itemsToSave;
+        }
     }
 
     private void mapFieldsObject(){
@@ -357,7 +360,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         private ServicePoint__c servicePoint;
     }
 
-    public static void setDataForTest(){
+    public static void setDataForTest(Integer numRecords){
 
         Id massiveLoaderRequestId = 'a3d3O000000WyvQQAS';
         Set<Id> docId = new Set<Id>();
@@ -407,7 +410,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     
         List<String> tempList;
         String iteration = '';
-        for(Integer n=0; n<20; n++){
+        for(Integer n=0; n<numRecords; n++){
             item = new MassiveLoaderRequestItem__c();
             item.MassiveLoaderRequest__c = massiveLoaderRequestId;
             tempList = new List<String>();
@@ -421,19 +424,19 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             tempList.add(''); // FAX
             tempList.add(''); // Stato
             tempList.add(''); // BP
-            tempList.add(''); // Comune
+            tempList.add('Roma'); // Comune
             tempList.add('Adam'); // Nome
             tempList.add(''); // Professione
             tempList.add('AAA-EBT'); // Silos
-            tempList.add(''); // Localita
+            tempList.add('Roma'); // Localita
             tempList.add(''); // ComuneNascita
             tempList.add('55'); // Civico
             tempList.add('Daniel'); // Cognome
             tempList.add(''); // CodiceVia
             tempList.add(''); // Provincia
-            tempList.add(''); // CodiceLocalita
+            tempList.add('25'); // CodiceLocalita
             tempList.add(''); // IndirizzoEstero
-            tempList.add(''); // CAP
+            tempList.add('00166'); // CAP
             tempList.add('Aziende SME'); // Categoria
             tempList.add(''); // DataNascita
             tempList.add('AAS Associazione'); // Marcatura
@@ -449,6 +452,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             tempList.add(''); // Sesso
             tempList.add(''); // PrefCell
             tempList.add('100361621' + iteration); // CSN - 1003616210
+            tempList.add('00166'); // CodiceCitta
 
             // -- Billing Profile
             tempList.add('sono un numero'); // NumeroConto
