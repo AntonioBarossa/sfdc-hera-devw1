@@ -30,10 +30,6 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Phase__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Status</field>
             </layoutItems>
