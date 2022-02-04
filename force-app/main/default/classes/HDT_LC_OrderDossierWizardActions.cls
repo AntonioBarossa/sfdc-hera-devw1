@@ -151,7 +151,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 //   orderToUpdate.Phase__c = 'Plico da inviare'; 
             }
         }
-        else if(orderParent.Phase__c == 'Registrazione  da validare'){
+        else if(orderParent.Phase__c == 'Registrazione validata'){
             orderToUpdate.Phase__c = 'Documentazione Gestita';
             orderToUpdate.status = 'Completed';
         }

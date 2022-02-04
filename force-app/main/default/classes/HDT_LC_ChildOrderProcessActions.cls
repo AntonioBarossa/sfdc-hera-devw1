@@ -115,7 +115,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         // START 2 Calcolo data Invio richiesta al SII (Data di adempimento)    
                         if(order.SignedDate__c == null){
                             orderToUpdate.Status = 'In lavorazione';
-                            orderToUpdate.Phase__c = 'In attesa validazione' ;                        
+                            orderToUpdate.Phase__c = 'Da Inviare' ;                        
                         }
             
                         try {    

@@ -298,7 +298,7 @@ public with sharing class HDT_UTL_Sales {
                     }*/
                 }
                 else if(ord.phase__c == 'Documentazione da firmare'){
-                    if(ord.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
+                    if(ord.DocumentalPhase__c != null && ord.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
                         if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' )){
                             //ord.TecnicalPhase__c = 'Documentazione da Validare';
                             listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));

@@ -134,7 +134,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             act.wrts_prcgvr__status__c = 'Chiusa';
             res = true;
             ord.DocumentPackage__c = 'Validato';
-            //ord.phase__c = 'Documentazione Gestita';
+            ord.phase__c = 'Registrazione validata';
             //ord.status = 'Activated';
         }
         else{

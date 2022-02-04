@@ -268,7 +268,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 ));
             }
 
-            if (myOrder.Phase__c == 'Da Inviare'  && myOrder.DateComfortCall__c == null) {
+            if (myOrder.Phase__c == 'Da Inviare') {
                 childOrdersDocValid.add(new Order(
                     Id = myOrder.Id,
                    // phase__c = 'In attesa validazione'
@@ -916,7 +916,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     order.Phase__c = 'Comunicazione verso Heroku';
                 }
             }
-            else if(order.phase__c.equalsIgnoreCase('Documentazione da firmare') && order.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
+            else if(order.Phase__c != null && order.phase__c.equalsIgnoreCase('Documentazione da firmare') && order.DocumentalPhase__c !=null && order.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
                     if((order.Sale__r.Channel__c == 'Agenzie' || order.Sale__r.Channel__c == 'Business Agent') && (order.SignatureMethod__c == 'OTP Remoto' || order.SignatureMethod__c == 'OTP Coopresenza' )){
                         order.TecnicalPhase__c = 'Documentazione da Validare';
                         //listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
