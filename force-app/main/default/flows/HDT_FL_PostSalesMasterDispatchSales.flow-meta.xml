@@ -1284,6 +1284,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>TemporaryConnectionEndDate__c</field>
+            <value>
+                <elementReference>Get_Contract_Proroga.EndDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>TemporaryConnectionStartDate__c</field>
             <value>
                 <elementReference>Get_Contract_Proroga.StartDate</elementReference>

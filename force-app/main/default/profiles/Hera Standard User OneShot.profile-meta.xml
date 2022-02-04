@@ -3901,6 +3901,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Campaign.FlowType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Campaign.GenerationPeriod__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -30351,11 +30356,6 @@
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.RecordTypeDevName__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.RecordingLink__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
