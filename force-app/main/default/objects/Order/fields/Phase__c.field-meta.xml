@@ -679,6 +679,11 @@
                 <default>false</default>
                 <label>Comunicazione EngageOne KO</label>
             </value>
+            <value>
+                <fullName>Check TIMOE OK</fullName>
+                <default>false</default>
+                <label>Check TIMOE OK</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

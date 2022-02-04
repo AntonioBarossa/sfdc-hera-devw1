@@ -18,6 +18,7 @@ import isPreventivo from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.isPre
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
 import ConsumptionsCorrectionType__c from '@salesforce/schema/Case.ConsumptionsCorrectionType__c';
 import SystemCapacity__c from '@salesforce/schema/Case.SystemCapacity__c';
+import { ingestDataConnector } from 'lightning/analyticsWaveApi';
 
 class fieldData{
     constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value) {
@@ -190,13 +191,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 } else {
                     delete this.sectionDataToSubmit.EffectiveDate__c;
                 }
-            }
-        }
-        if(this.currentSectionName === 'dettaglioImpianto')
-        {
-            if(event.target.fieldName === 'Caliber__c' && event.target.value !== undefined && event.targe.value !== null)
-            {
-                this.handleShowInviaModulistica(event.target.value);
             }
         }
         let draftData = this.sectionDataToSubmit;
@@ -490,13 +484,20 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.template.querySelector('c-hdt-calculate-estimated-cost').getQuoteType();
     }
 
-    checkFieldAvailable(fieldApiName)
+    checkFieldAvailable(fieldApiName, isRequired = false)
     {
         console.log('#fieldName >>> ' + fieldApiName);
         if(this.template.querySelector(`[data-id=${fieldApiName}]`) !== null 
             && (this.template.querySelector(`[data-id=${fieldApiName}]`).value === ''|| this.template.querySelector(`[data-id=${fieldApiName}]`).value === null))
         {
-            return '';
+            if(isRequired === true && this.template.querySelector(`[data-id=${fieldApiName}]`).required === true)
+            {
+                return '';
+            }
+            else
+            {
+                return 'non obbligatorio';
+            }
         }
         else
         {
@@ -539,13 +540,23 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.handleWrapAddressObjectSpedizione();
         }
         if(currentSectionName === 'processVariables'){
-           if(this.checkFieldAvailable('AnnualWithdrawal__c') === '')
+           if(this.checkFieldAvailable('AnnualWithdrawal__c', true) === '')
            {
                this.showMessage('Errore', 'Popolare il campo Prelievo Annuo', 'error');
                return;
            }
+           if(this.checkFieldAvailable('MaxRequiredPotential__c', true) === '')
+           {
+               this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
+               return;
+           }
         }
         if(currentSectionName === 'dettaglioImpianto'){
+            if(this.typeVisibility('gas') && this.checkFieldAvailable('MaxRequiredPotential__c', true) === '')
+            {
+                this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
+                return;
+            }
             if(this.template.querySelector("[data-id='SurfaceServed__c']") !== null 
            
                 && 
@@ -760,10 +771,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
                 return;
             }
-            if( !isPreventivo(order) ){
-                showMessage('Errore','Preventivo non calcolato','error');
+            isPreventivo({ord:this.order}).then(result=>{
+                this.loading=false;
+            }).catch(error=>{
+                this.showMessage('Errore','Preventivo non calcolato','error');
                 return;
-            }
+            });
         }
         if(currentSectionName === 'ivaAccise'){
             let errorMessageIvaAccise = '';
@@ -948,6 +961,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('','EffectiveDate__c',this.typeVisibility('both'),true,false,'',''),
                     new fieldData('','SignedDate__c',this.order.ParentOrder__r.SignedDate__c != null,true,true,'',this.order.ParentOrder__r.SignedDate__c),
                     new fieldData('','NotRegisteredMeterCase__c',this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,false,'',''),
+                    new fieldData('','MaxRequiredPotential__c',this.typeVisibility('both'),this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,'',''),
                     new fieldData('','AccountId',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','PhoneNumber__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','Email__c',this.typeVisibility('both'),false,true,'',''),
@@ -1204,7 +1218,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Potenzialità massima richiesta',
                     'apiname': 'MaxRequiredPotential__c',
                     'typeVisibility': this.typeVisibility('gas'),
-                    'required': true,
+                    'required': this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' && this.order.RecordType.DeveloperName === 'HDT_RT_Subentro',
                     'disabled': false,
                     'value': '',
                     'processVisibility': ''
@@ -1240,7 +1254,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Classe Contatore',
                     'apiname': 'Caliber__c',
                     'typeVisibility': this.typeVisibility('gas'),
-                    'required': true,
+                    'required': false,
                     'disabled': true,
                     'value': '',
                     'processVisibility': ''

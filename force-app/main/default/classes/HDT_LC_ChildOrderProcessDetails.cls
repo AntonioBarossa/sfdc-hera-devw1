@@ -72,13 +72,32 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         System.debug('isVolture: '+isVolture);
 
         Order currentOrder = new Order();
-            
+
         /* Query the currentOrder */
         currentOrder = voltureChangeQr.getOrderInfosById(order.Id)[0];
+                
+        Map<string,Object> inputs = new Map<string,Object>();
+        inputs.put('orderNew',order);
+        inputs.put('currentOrder',currentOrder);
+        inputs.put('isVolture',isVolture);
+        inputs.put('isRetroactive',isRetroactive);
+        inputs.put('isReading',isReading);
+        inputs.put('isUpdateStep',isUpdateStep);
+        inputs.put('readingDate',readingDate);
+
         //INIZIO SVILUPPI EVERIS CHECK VOLTURA
         if(isVolture != null && isVolture == true){
+            HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck checks = HDT_UTL_VoltureChangeManager.processCheck(inputs);
+            if(checks.result != 'OK'){
+                throw new AuraHandledException(checks.message);
+            }else{
+                order = (Order)checks.sobj;
+            }
+
             // Order oldOrder = orderQr.getRecordById(order.Id);
             //@frpanico check "Cambio contatore non registrato"
+            
+            /**
             if(order.NotRegisteredMeterCase__c != null && order.NotRegisteredMeterCase__c == true)
             {
                 if(caseQr.getChageNonRegMeterByOrder(order.Id).size() == 0)
@@ -91,26 +110,26 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             {
                 throw new AuraHandledException('Valorizzare campi obbligatori');
             }
-            /**@frpanico 31/01/2022
-             * Aggiunto controllo
-             * Su Voltura in Recupero
-             */
+            //**@frpanico 31/01/2022
+            // * Aggiunto controllo
+            // * Su Voltura in Recupero
+            // 
             if(order.VoltureType__c != null && order.VoltureType__c.equalsIgnoreCase('In continuità_no_addebito') 
             && !currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Gas'))
             {
             throw new AuraHandledException('Per poter selezionare \"' + order.VoltureType__c + '\" è necessario un punto di fornitura Gas');   
             }
-            /**@frpanico 31/01/2022
-             * Aggiunto controllo se
-             * In continuita_no_addebito
-             * La voltura deve essere gas
-             */
+            //**@frpanico 31/01/2022
+            // * Aggiunto controllo se
+            // * In continuita_no_addebito
+            // * La voltura deve essere gas
+            // 
             if(order.VoltureType__c != null && order.EffectiveDate__c != null 
             && order.VoltureType__c.equalsIgnoreCase('Recupero') && order.EffectiveDate__c >= orderSrv.addBusinessDay(System.today(),3))
             {
                 throw new AuraHandledException('Per poter selezionare \"' + order.VoltureType__c + '\" è necessario inserire una data decorrenza antecedente al 31/08/2015');   
             }
-            /* Check Tipo Voltura "In Continuita"/"Recupero" ammesso solo se marcatura entrante/uscente e' "Persona Fisica"/"Persona Giuridica" */
+            // Check Tipo Voltura "In Continuita"/"Recupero" ammesso solo se marcatura entrante/uscente e' "Persona Fisica"/"Persona Giuridica"
             if(order.VoltureType__c != null && order.VoltureType__c.containsIgnoreCase('In Continuità'))
             {
                 if(currentOrder.PreviousCustomer__r.Account.CustomerMarking__c != currentOrder.Account.CustomerMarking__c || !currentOrder.Account.CustomerMarking__c.containsIgnoreCase('Persona Fisica'))
@@ -127,9 +146,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                 }
             }
             //@frpanico check "Data Decorrenza"
-            /**@frpanico 12/11/2021
-             * Update check VoltureType "Recupero" the date has been changed to 2015/08/31
-             */
+            //**@frpanico 12/11/2021
+            // * Update check VoltureType "Recupero" the date has been changed to 2015/08/31
+            //
             if(order.EffectiveDate__c != null)
             {
                 if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
@@ -163,7 +182,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             if(readingDate != null && (isReading != null && isReading == true))
             {
                 order.ReadingCustomerDate__c = readingDate;
-            }
+            } */
         }
         //FINE SVILUPPI EVERIS CHECK VOLTURA 
 

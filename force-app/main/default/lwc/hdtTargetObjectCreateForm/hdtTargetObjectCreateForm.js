@@ -732,7 +732,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
             }
             this.allSubmitedFields = this.servicePointRetrievedData;
-
         } 
         else {
             this.allSubmitedFields.RecordTypeId = this.recordtype.value;
@@ -908,6 +907,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.allSubmitedFields['MaxRequiredPotential__c'] === undefined || this.allSubmitedFields['MaxRequiredPotential__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Potenzialità Massima Richiesta, ');
             }
+            if (this.allSubmitedFields['MeterClass__c'] === undefined || this.allSubmitedFields['MeterClass__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Classe Contatore, ');
+            }
         }
         if (concatPointErrorFields !== '') {
             this.isValid = false;
@@ -994,6 +996,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             if (this.allSubmitedFields['MaxRequiredPotential__c'] === undefined || this.allSubmitedFields['MaxRequiredPotential__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Potenzialità Massima Richiesta, ');
+            }
+            if (this.allSubmitedFields['MeterClass__c'] === undefined || this.allSubmitedFields['MeterClass__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Classe Contatore, ');
             }
         }
         if (concatPointErrorFields !== '') {

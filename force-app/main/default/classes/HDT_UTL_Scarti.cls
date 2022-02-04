@@ -236,7 +236,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                         for(HDT_WRP_MrrRequest.HDT_WRP_Field curField3 : request.header.fields){ newData.put(curField3.name, curField3.value); }
                         dataForAttivitaTracciaturaCreation.add(newData);
                     }
-                    if('FASE'.equalsIgnoreCase(curField.name) && new List<String>{'Completata', 'Ammissibilità OK'}.contains(curField.value)){
+                    if('FASE'.equalsIgnoreCase(curField.name) /*&& new List<String>{'Completata', 'Ammissibilità OK'}.contains(curField.value)*/){
                     	system.debug(LoggingLevel.DEBUG, 'handleMRRInboundRequest curField: ' + curField.name + ' ' + curField.value);
                         for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
                             if('RECORD_ID'.equalsIgnoreCase(curField2.name)){
@@ -597,6 +597,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         List<DiscardAnnullmentRule__c> rules = [SELECT ControllingValue__c, ProcessValue__c, DiscardNoteReliability__c
                                                 FROM DiscardAnnullmentRule__c
                                                 WHERE ActivityType__c = :activityType
+                                                AND IsActive__c = true
                                                 WITH SECURITY_ENFORCED];
 		
         system.debug(LoggingLevel.DEBUG, 'checkDiscardAnnullmentRule rules: ' + JSON.serializePretty(rules));
@@ -985,6 +986,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                                       AND DiscardCategory__c IN :categories 
                                                       AND Id NOT IN :inputDataIds
                                                       AND wrts_prcgvr__Status__c NOT IN ('Chiusa','Sospesa')
+                                                      AND Type__c NOT IN ('Esito KO da DL','Esito KO da SII')
                                                       WITH SECURITY_ENFORCED];
 
         system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi relatedActs' + JSON.serializePretty(relatedActs));
