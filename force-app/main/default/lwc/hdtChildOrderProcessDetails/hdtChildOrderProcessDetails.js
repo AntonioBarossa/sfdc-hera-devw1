@@ -407,7 +407,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             isVolture: this.isVolture,
             isRetroactive: this.isRetroactive,
             isReading: this.isReading,
-            isUpdateStep: this.sectionDataToSubmit.length > 0,
+            isUpdateStep: this.isVolture === true && this.currentSectionName === 'processVariables',
             readingDate: this.readingCustomerDate
         }).then(data =>{
             if(this.isVolture){
@@ -487,21 +487,27 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     checkFieldAvailable(fieldApiName, isRequired = false)
     {
         console.log('#fieldName >>> ' + fieldApiName);
-        if(this.template.querySelector(`[data-id=${fieldApiName}]`) !== null 
-            && (this.template.querySelector(`[data-id=${fieldApiName}]`).value === ''|| this.template.querySelector(`[data-id=${fieldApiName}]`).value === null))
+        if(this.template.querySelector(`[data-id=${fieldApiName}]`) !== null)
         {
-            if(isRequired === true && this.template.querySelector(`[data-id=${fieldApiName}]`).required === true)
+            if((this.template.querySelector(`[data-id=${fieldApiName}]`).value === ''|| this.template.querySelector(`[data-id=${fieldApiName}]`).value === null))
             {
-                return '';
+                if(isRequired === true && this.template.querySelector(`[data-id=${fieldApiName}]`).required === true)
+                {
+                    return '';
+                }
+                else
+                {
+                    return 'non obbligatorio';
+                }
             }
             else
             {
-                return 'non obbligatorio';
+                return this.template.querySelector(`[data-id=${fieldApiName}]`).value;
             }
         }
         else
         {
-            return this.template.querySelector(`[data-id=${fieldApiName}]`).value;
+            return 'non obbligatorio';
         }
         
     }
@@ -552,7 +558,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
            }
         }
         if(currentSectionName === 'dettaglioImpianto'){
-            if(this.typeVisibility('gas') && this.checkFieldAvailable('MaxRequiredPotential__c', true) === '')
+            if( this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
             {
                 this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
                 return;
