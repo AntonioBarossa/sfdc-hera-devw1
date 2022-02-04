@@ -4148,6 +4148,11 @@
         <editable>true</editable>
         <field>Campaign.ExpectedRevenue</field>
         <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Campaign.FlowType__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -31856,11 +31861,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>trailheadapp__User_Trailmix__c.trailheadapp__User__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.RecordingLink__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
