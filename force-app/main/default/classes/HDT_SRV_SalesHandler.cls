@@ -195,16 +195,6 @@ public with sharing class HDT_SRV_SalesHandler {
                                         }
                                     }
                                 }
-
-                                 if(ord.CausalCode__c == '034' 
-                                     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
-                                         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
-                                         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
-                                 )){
-                                     ord.TecnicalPhase__c = 'Annullato';
-                                     ord.Status = 'Annullato';
-                                     ord.Phase__c = 'Annullato'; //HRAWRM-460
-                                 }
                             }
                             when 'Dati Tecnici Ricevuti'{
                                 HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
@@ -482,7 +472,6 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                         }
 
-                        system.debug('cost2 '+ord.phase__c);
                         orderSrv.updateRecord(ord);
                     	responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';
@@ -495,6 +484,19 @@ public with sharing class HDT_SRV_SalesHandler {
                             updateFuture(JSON.serialize(ord));
                         }
                         //EVERIS: END ANNULLAMENTO/RIPENSAMENTO  
+
+                        //FIX Annullamento automatico per morosità
+                        if(ord.Phase__c == 'Ammissibilità OK' && (ord.DiscardCodeHeroku__c == '034' || ord.DiscardCodeHeroku__c == '033' || ord.DiscardCodeHeroku__c == '032')
+                                     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
+                                         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
+                                         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
+                                 ))
+                                 {
+                                     //ord.TecnicalPhase__c = '';
+                                     ord.Status = 'Annullato';
+                                     ord.Phase__c = 'Annullato'; //HRAWRM-460
+                                     updateFuture(JSON.serialize(ord));
+                                 }
                     }else if(mapRequestFields.get('RECORD_ID')!= null && String.isNotBlank(activityName)){
                         //EVERIS: Gestione Scarti SAP Aggiunta logica creazione scarti se viene inviata solo l'attività
                         String recordId = mapRequestFields.get('RECORD_ID');

@@ -1,4 +1,7 @@
 <template>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass"></lightning-spinner>
+    </template>
     <lightning-record-edit-form object-api-name={objectapiname}>
         
         <div class="slds-border_bottom slds-m-top_large">
@@ -37,7 +40,7 @@
             <lightning-input disabled={disableFlagVerificato} type="Checkbox"  name='Flag Verificato' checked={flagverificato} label='Flag Verificato' class="slds-size_1-of-3" variant="label-stacked" onchange={handleCheckBoxChange} ></lightning-input> 
             
 
-
+            
         </div>
         
         <template if:true={booleanForm}>
