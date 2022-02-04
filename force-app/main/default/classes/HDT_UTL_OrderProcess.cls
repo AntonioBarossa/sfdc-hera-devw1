@@ -155,6 +155,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 DateTime nowDateTime = DateTime.now();
                 order.PhaseStory__c = oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
             }
+            /**@frpanico 04/02/2022
+             * Aggiunta gestione per
+             * Comfort Call
+             */
+            if(order.Phase__c != oldOrder.Phase__c
+            && oldOrder.Phase__c == 'Documentazione validata' 
+            && order.Phase__c == 'Comunicazione Verso Heroku'
+            && order.ComfortCallDaysDue__c != null
+            )
+            {
+                String newPhase = 'In attesa conferma cliente';
+                DateTime nowDateTime = DateTime.now();
+                order.Phase__c = newPhase;
+                order.PhaseStory__c =  oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
+            }
 
             if(order.Phase__c!=oldOrder.Phase__c 
                 && oldOrder.Phase__c == 'In attesa di quality call' 
@@ -176,6 +191,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     DateTime nowDateTime = DateTime.now();
                     order.PhaseStory__c = oldOrder.Phase__c+'@@'+'Quality Call OK'+'@@'+nowDateTime.getTime()+'@@A||'+ 'Quality Call OK'+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||' +oldOrder.PhaseStory__c;
             }
+
         }
         
     }   

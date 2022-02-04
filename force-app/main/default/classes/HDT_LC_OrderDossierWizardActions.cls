@@ -191,6 +191,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         ordersToUpdate.add(orderToUpdate);
 
         //update child orders
+        /**@frpanico 04/02/2022
+         * Commentato in quanto la conferma cliente va successivamente
+         * Alla validazione documenti
+         */
+        /*
         for (Order childOrder : childOrders) {
             if (childOrder.ComfortCallDaysDue__c != null) {
                 ordersToUpdate.add(new Order(
@@ -199,6 +204,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 ));
             }
         }
+        */
 
         orderSrv.updateRecords(ordersToUpdate);
 
