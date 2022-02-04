@@ -1,19 +1,23 @@
 public without sharing class HDT_UTL_IntegrationLog {
     
     public static void handleMrrRequest(String request, String error){
-        List<Integration_Log__c> integList = new List<Integration_Log__c>();
-        HDT_WRP_MrrRequest.HDT_WRP_Request postSalesRequest = new HDT_WRP_MrrRequest.HDT_WRP_Request();
-        HDT_UTL_HerokuPostSalesManager hpsmUtl = new HDT_UTL_HerokuPostSalesManager();
-        HDT_WRP_MrrRequest requestBody = (HDT_WRP_MrrRequest) JSON.deserialize(request, HDT_WRP_MrrRequest.class);
-        postSalesRequest = requestBody.requests[0];
-        HDT_WRP_HerokuPostSalesManager reqWrp = hpsmUtl.manipulateRequest(postSalesRequest);
-        String recordId = reqWrp.requestMap.get('RECORD_ID');
-        String method = reqWrp.requestMap.get('METHOD');
-        String processNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
-        HDT_WRP_IntegrationLog wrapObj = createWrapper(request,'MRR_Request',method,processNumber,recordId,error);
-        Integration_Log__c recordObject = createSobject(wrapObj);
-        integList.add(recordObject);
-        insertLogList(integList);
+        try{
+            List<Integration_Log__c> integList = new List<Integration_Log__c>();
+            HDT_WRP_MrrRequest.HDT_WRP_Request postSalesRequest = new HDT_WRP_MrrRequest.HDT_WRP_Request();
+            HDT_UTL_HerokuPostSalesManager hpsmUtl = new HDT_UTL_HerokuPostSalesManager();
+            HDT_WRP_MrrRequest requestBody = (HDT_WRP_MrrRequest) JSON.deserialize(request, HDT_WRP_MrrRequest.class);
+            postSalesRequest = requestBody.requests[0];
+            HDT_WRP_HerokuPostSalesManager reqWrp = hpsmUtl.manipulateRequest(postSalesRequest);
+            String recordId = reqWrp.requestMap.get('RECORD_ID');
+            String method = reqWrp.requestMap.get('METHOD');
+            String processNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
+            HDT_WRP_IntegrationLog wrapObj = createWrapper(request,'MRR_Request',method,processNumber,recordId,error);
+            Integration_Log__c recordObject = createSobject(wrapObj);
+            integList.add(recordObject);
+            insertLogList(integList);
+        }catch(Exception ex){
+            //No throw 
+        }
 
     }
     

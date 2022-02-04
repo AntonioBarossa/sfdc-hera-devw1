@@ -95,7 +95,7 @@ global with sharing class HDT_WS_MrrRequest {
 
             responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
             mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>{responseObject};
-
+            HDT_UTL_IntegrationLog.handleMrrRequest(RestContext.request.requestBody.toString(),jsonEx.getMessage() + ' ' + jsonEx.getStackTraceString());
             RestContext.response.statusCode = 400;
 
         }catch(CustomMessageException e){
@@ -116,7 +116,7 @@ global with sharing class HDT_WS_MrrRequest {
 
             responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
             mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>{responseObject};
-
+            HDT_UTL_IntegrationLog.handleMrrRequest(RestContext.request.requestBody.toString(),e.getMessage() + ' ' + e.getStackTraceString());
             RestContext.response.statusCode = 500;
 
         }catch(Exception e) {
