@@ -864,42 +864,20 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.loading = true;
         let currentSectionName = event.currentTarget.value;
         let currentSectionIndex = this.availableSteps.findIndex(section => section.name === currentSectionName);
-
-        //INIZIO SVILUPPI EVERIS
-        //LA VARIABILE nextIndex RIPORTA L'INDICE CORRETTO
         let nextIndex = this.availableSteps[currentSectionIndex - 1].name === 'reading' && this.resumeFromDraftReading === false
         ? currentSectionIndex - 2
         : currentSectionIndex - 1
-        //FINE SVILUPPI EVERIS 
-
-        let previousSectionStep = this.availableSteps[nextIndex].step;
-
-        updateProcessStep({order: {Id: this.order.Id, Step__c: previousSectionStep},isVolture:this.isVolture}).then(data =>{
-            this.loading = false;
-            this.currentSection = this.availableSteps[nextIndex];
-            //EVERIS
-            this.choosenSection = this.availableSteps[nextIndex].name;
-            this.activeSections = [this.choosenSection];
-            //EVERIS
-            this.currentSectionObjectApi = this.availableSteps[nextIndex].objectApiName;
-            this.currentSectionRecordId = this.availableSteps[nextIndex].recordId;
-            this.sectionDataToSubmit = {};
-            if(this.currentSection?.name==="creditCheck"){
-                getRecordNotifyChange([{recordId: this.order.Id}]);
-            }
-            this.dispatchEvent(new CustomEvent('refreshorderchild'));
-
-        }).catch(error => {
-            this.loading = false;
-            console.log((error.body.message !== undefined) ? error.body.message : error.message);
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: (error.body.message !== undefined) ? error.body.message : error.message,
-                variant: 'error',
-                mode: 'sticky'
-            });
-            this.dispatchEvent(toastErrorMessage);
-        });
+        this.currentSection = this.availableSteps[nextIndex];
+        this.choosenSection = this.availableSteps[nextIndex].name;
+        this.activeSections = [this.choosenSection];
+        this.currentSectionObjectApi = this.availableSteps[nextIndex].objectApiName;
+        this.currentSectionRecordId = this.availableSteps[nextIndex].recordId;
+        this.sectionDataToSubmit = {};
+        if(this.currentSection?.name==="creditCheck"){
+            getRecordNotifyChange([{recordId: this.order.Id}]);
+        }
+        this.dispatchEvent(new CustomEvent('refreshorderchild'));
+        this.loading = false;
     }
 
     handleFields(){
