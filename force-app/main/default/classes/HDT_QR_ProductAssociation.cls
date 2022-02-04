@@ -21,7 +21,7 @@ public inherited sharing class HDT_QR_ProductAssociation {
         String selectQuery = '';
 
         if(objRes.isAccessible()){
-            selectQuery = 'SELECT Id, DescriptionSAP__c, ProductCode, Version__c, Name, Family, CategoryFamily__c, Service__c, Status__c ' + queryString;
+            selectQuery = 'SELECT Id, DescriptionSAP__c, ProductCode, Version__c, Name, Family, CategoryFamily__c, Service__c, Status__c, SupplyType__c ' + queryString;
             System.debug(logginglevel.DEBUG, '>>> queryString: ' + selectQuery);
 
             prodList = Database.query(selectQuery);
