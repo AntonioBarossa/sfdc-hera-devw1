@@ -1,24 +1,14 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateProcessStep from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.updateProcessStep';
-//INIZIO SVILUPPI EVERIS
-import updateOrder from '@salesforce/apex/HDT_LC_SelfReading.updateOrder';
 import init from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.init';
-import { getRecord, getFieldValue, updateRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
+import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import  voltureEffectiveDateCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck';
 import getDates from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getDates';
-import RETROACTIVE_DATE from '@salesforce/schema/Order.RetroactiveDate__c';
-import EFFECTIVE_DATE from '@salesforce/schema/Order.EffectiveDate__c';
-import sendAdvanceDocumentation from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendAdvanceDocumentation';
-//FINE SVILUPPI EVERIS
-import createActivityAccise from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.createActivityAccise'
 import getQuoteTypeMtd from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getQuoteTypeMtd';
 import isPreventivo from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.isPreventivo';
-// @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
-import ConsumptionsCorrectionType__c from '@salesforce/schema/Case.ConsumptionsCorrectionType__c';
-import SystemCapacity__c from '@salesforce/schema/Case.SystemCapacity__c';
-import { ingestDataConnector } from 'lightning/analyticsWaveApi';
+import getReadingId from '@salesforce/apex/HDT_LC_SelfReading.getReadingId';
 
 class fieldData{
     constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value) {
@@ -816,20 +806,23 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
            this.sectionDataToSubmit['AggregateBilling__c'] = this.template.querySelector("[data-id='AggregateBilling__c']").value;
         }
         if(currentSectionName === 'reading'){
-
-            console.log('Inside reading condition');
-
-            try{
-                this.template.querySelector('c-hdt-self-reading').handleSaveButton();
-                this.isSavedReading = false;
-                this.resumeFromDraftReading = true;
-            } catch(e){
-                console.log('Inside Exception');
-                console.log('Here');
-                this.loading = false;
-                return;
-            }
-            console.log('isSavedReading--> '+this.isSavedReading);
+            let readingComponent = this.template.querySelector('c-hdt-self-reading');
+            getReadingId({objectName:'Order',objectId:this.order.Id, commodity:this.order.CommodityFormula__c})
+            .then(data => 
+                {
+                    console.log('# ReadingId >>> ' + data);
+                    this.resumeFromDraftReading = data !== null && data !== undefined;
+                    readingComponent.resumedFromDraft = this.resumeFromDraftReading;
+                    console.log('# Resume From Draft >>> ' + this.resumeFromDraftReading);
+                    console.log('# Child Resume From Draft >>> ' + readingComponent.resumedFromDraft);
+                    readingComponent.handleSaveButton();
+                    this.isSavedReading = false;
+                    readingComponent.isSaved = false;
+                })
+            .catch(error => 
+                {
+                    this.showMessage('Errore', JSON.stringify(error), 'error');
+                })
             
         }
         //f.defelice
