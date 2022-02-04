@@ -388,11 +388,18 @@ public with sharing class HDT_SRV_SalesHandler {
                                 {
                                     ord.Phase__c = annullatoPhase;
                                 }
+                                /**@frpanico 04/02/2022
+                                 * Gestione preventivo Extra Sistema
+                                 */
+                                else if(previousPhase.equalsIgnoreCase('Dati Tecnici Ricevuti') && ordRetrieved.ProcessType__c.containsIgnoreCase('Prima Attivazione con modifica'))
+                                {
+                                    ord.Phase__c = previousPhase;
+                                }
                                 else
                                 {
                                     Boolean redirectPreventivo = false;
                                     switch on ordRetrieved.ProcessType__c{
-                                        when 'Connessione con Attivazione', 'Temporanea - Nuova Attivazione', 'Attivazione con Modifica'{
+                                        when 'Connessione con Attivazione', 'Temporanea - Nuova Attivazione'{
                                             redirectPreventivo=true;
                                         }
                                     }                            
