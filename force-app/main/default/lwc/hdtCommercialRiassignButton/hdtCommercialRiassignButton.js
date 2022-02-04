@@ -28,22 +28,20 @@ export default class HdtCommercialRiassignButton extends LightningElement {
     }
     connectedCallback(){
         this.loading = true;
-        console.log('IDDDDD:' + this.recordId);
         getRecord({
             activityId: this.recordId
         }).then(result => {
-            console.log('enter::::' + JSON.stringify(result));
             this.caseid = result.Case__c;
-            if(result.Case__r.Phase__c != 'In Attesa Approvazione'){
-                console.log('enter::::INLAV');
-                this.isRiassignButton = true;
-            }
-            else if(result.Case__r.Phase__c == 'In Attesa Approvazione'){
-                if(result.OwnerId == userId && (result.ManuallyReassigned__c == true || result.Queued__c == true)){
-                    this.isApproveFase = true;
-                }else{
-                    console.log('***WORK IN PROGRESS****');
-                    this.isInApprovazione = true;
+            if(this.caseid != undefined && this.caseid != ''){           
+                if(result.Case__r.Phase__c != 'In Attesa Approvazione'){
+                    this.isRiassignButton = true;
+                }
+                else if(result.Case__r.Phase__c == 'In Attesa Approvazione'){
+                    if(result.OwnerId == userId && (result.ManuallyReassigned__c == true || result.Queued__c == true)){
+                        this.isApproveFase = true;
+                    }else{
+                        this.isInApprovazione = true;
+                    }
                 }
             }
             this.loading = false;
