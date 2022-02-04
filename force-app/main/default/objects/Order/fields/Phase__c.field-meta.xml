@@ -573,6 +573,11 @@
                 <label>Registrazione  da validare</label>
             </value>
             <value>
+                <fullName>Registrazione validata</fullName>
+                <default>false</default>
+                <label>Registrazione validata</label>
+            </value>
+            <value>
                 <fullName>Registrazione validata  Firmato/Inviato</fullName>
                 <default>false</default>
                 <label>Registrazione validata  Firmato/Inviato</label>
