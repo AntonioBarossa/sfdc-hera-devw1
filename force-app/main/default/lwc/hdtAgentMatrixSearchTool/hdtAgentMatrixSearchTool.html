@@ -8,7 +8,7 @@
         </div>
     </template>
     
-    <lightning-input type="text" placeholder="Cerca per Cognome, Codice Agenzia, Nome Agenzia" onkeydown={search}></lightning-input>
+    <lightning-input type="text" placeholder="Cerca per Cognome o Nome Agenzia" onkeydown={search}></lightning-input>
     <template if:true={agentsFound}>
         <template for:each={agents} for:item="agent">
             <div key={agent.AgentCode__c} class="slds-box slds-grid slds-grid_vertical-align-start" onclick={setAgent}>

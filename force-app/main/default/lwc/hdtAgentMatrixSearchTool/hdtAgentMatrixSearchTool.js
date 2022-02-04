@@ -28,7 +28,7 @@ export default class HdtAgentMatrixSearchTool extends LightningElement {
         if(event.keyCode === 13 && event.target.value) {
             try {
                 console.log(event.target.value);
-                this.agents = await getAgents(event.target.value);
+                this.agents = await getAgents({queryString: event.target.value});
             } catch(e) {
                 console.log(e);
             }

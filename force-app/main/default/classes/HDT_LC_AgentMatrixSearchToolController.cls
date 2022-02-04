@@ -27,7 +27,7 @@ public with sharing class HDT_LC_AgentMatrixSearchToolController {
     public static List<AgentMatrix__c> getAgents(String queryString){
         queryString = '%' + queryString +'%';
         try {
-            return [SELECT Id, AgentFirstName__c, AgentLastName__c, AgentCode__c, AgencyName__c, AgencyCode__c FROM AgentMatrix__c WHERE AgencyName__c LIKE: queryString OR AgentLastName__c =: queryString WITH SECURITY_ENFORCED];
+            return [SELECT Id, AgentFirstName__c, AgentLastName__c, AgentCode__c, AgencyName__c, AgencyCode__c FROM AgentMatrix__c WHERE AgencyName__c LIKE: queryString OR AgentLastName__c LIKE: queryString WITH SECURITY_ENFORCED];
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
