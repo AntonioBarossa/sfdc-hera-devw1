@@ -2,13 +2,13 @@ public without sharing class HDT_QBL_BpCaRequest implements Queueable,Database.A
     private Account account;
     private Contact contact;
     private List<AccountContactRelation> accountContactRelList = new List<AccountContactRelation>();
-    private Id saleId;
+    private string saleId;
 
     public HDT_QBL_BpCaRequest(Account acc ,Contact con) {
         this.account=acc;
         this.contact=con;
     }
-    public HDT_QBL_BpCaRequest(List<AccountContactRelation> accountContactRelList, Id saleId ) {
+    public HDT_QBL_BpCaRequest(List<AccountContactRelation> accountContactRelList, string saleId ) {
         this.accountContactRelList = accountContactRelList;
         this.saleId = saleId;
     }
