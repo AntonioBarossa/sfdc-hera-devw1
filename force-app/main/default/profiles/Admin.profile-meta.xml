@@ -34057,6 +34057,10 @@
         <recordType>Order.HDT_RT_AttivazioneConModifica</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Order-Prima attivazione con modifica</layout>
+        <recordType>Order.HDT_RT_ConnessioneConAttivazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Order-SBQQ__CPQ Order Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -34066,10 +34070,6 @@
     <layoutAssignments>
         <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_CambioUso</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
-        <recordType>Order.HDT_RT_ConnessioneConAttivazione</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-SBQQ__CPQ Order Layout</layout>
