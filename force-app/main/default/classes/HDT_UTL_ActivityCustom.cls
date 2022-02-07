@@ -134,7 +134,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             act.wrts_prcgvr__status__c = 'Chiusa';
             res = true;
             ord.DocumentPackage__c = 'Validato';
-            //ord.phase__c = 'Documentazione Gestita';
+            ord.phase__c = 'Registrazione validata';
             //ord.status = 'Activated';
         }
         else{
@@ -189,7 +189,8 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     public static string rejectActivityDocument(String recordId, String noteChiusura){
         try {
             wrts_prcgvr__Activity__c oldActivity = HDT_QR_ActivityCustom.getRecordByIdValidation(recordId);
-            system.debug('Krist: '+oldActivity);
+            oldActivity.validation__c = 'No';
+            oldActivity.wrts_prcgvr__status__c = 'Chiusa';
             Date d = System.today();
             Date dataAnnullRich = d.addDays(30); 
             wrts_prcgvr__Activity__c newActivity = new wrts_prcgvr__Activity__c(account__c = oldActivity.account__c,wrts_prcgvr__Status__c= 'Aperta',order__c = oldActivity.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali'),RequestedCancellationDate__c=dataAnnullRich, ClosingNote__c=noteChiusura);
@@ -216,8 +217,16 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             Order ord = new Order();
             ord.id = oldActivity.order__c;
             ord.DocumentPackage__c = 'Validato';
-            ord.phase__c = 'Documentazione Gestita';
-            ord.status = 'Activated';
+            if(oldActivity.Type__c.containsIgnoreCase('Vocal Order'))
+            {
+                ord.Phase__c = 'Registrazione validata';
+            }
+            else
+            {
+                ord.phase__c = 'Documentazione Gestita';
+                ord.status = 'Completed';
+            
+            }
             orderSrv.updateRecord(ord);
         }
         else{

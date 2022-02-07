@@ -1816,6 +1816,36 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Integration_Log__c.Error__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Integration_Log__c.Method__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Integration_Log__c.Process_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Integration_Log__c.RecordId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Integration_Log__c.Request__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Integration_Log__c.WebService__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Interaction__c.CompanyOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4147,6 +4177,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Campaign.ExpectedRevenue</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Campaign.FlowType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -34285,6 +34320,15 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
+        <object>Integration_Log__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>DiscardAnnullmentRule__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -37481,6 +37525,10 @@
     </recordTypeVisibilities>
     <tabVisibilities>
         <tab>CampaignMemberLeadAssigment__c</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>DiscardAnnullmentRule__c</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>

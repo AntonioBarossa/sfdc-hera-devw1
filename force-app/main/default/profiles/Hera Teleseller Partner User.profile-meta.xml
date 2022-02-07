@@ -4049,6 +4049,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Campaign.FlowType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Campaign.GenerationPeriod__c</field>
         <readable>true</readable>
     </fieldPermissions>

@@ -152,6 +152,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 DateTime nowDateTime = DateTime.now();
                 order.PhaseStory__c = oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
             }
+            /**@frpanico 04/02/2022
+             * Aggiunta gestione per
+             * Comfort Call
+             */
+            if(order.Phase__c != oldOrder.Phase__c
+            && oldOrder.Phase__c == 'Documentazione validata' 
+            && order.Phase__c == 'Comunicazione Verso Heroku'
+            && order.ComfortCallDaysDue__c != null
+            )
+            {
+                String newPhase = 'In attesa conferma cliente';
+                DateTime nowDateTime = DateTime.now();
+                order.Phase__c = newPhase;
+                order.PhaseStory__c =  oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
+            }
 
             if(order.Phase__c!=oldOrder.Phase__c 
                 && oldOrder.Phase__c == 'In attesa di quality call' 
@@ -173,6 +188,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     DateTime nowDateTime = DateTime.now();
                     order.PhaseStory__c = oldOrder.Phase__c+'@@'+'Quality Call OK'+'@@'+nowDateTime.getTime()+'@@A||'+ 'Quality Call OK'+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||' +oldOrder.PhaseStory__c;
             }
+
         }
         
     }   
@@ -249,7 +265,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 ));
             }
 
-            if (myOrder.Phase__c == 'Da Inviare'  && myOrder.DateComfortCall__c == null) {
+            if (myOrder.Phase__c == 'Da Inviare') {
                 childOrdersDocValid.add(new Order(
                     Id = myOrder.Id,
                    // phase__c = 'In attesa validazione'
@@ -603,7 +619,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     || newOrder.Phase__c=='Annullamento - Da inviare' 
                     || newOrder.Phase__c=='Preventivo Accettato' 
                     || newOrder.Phase__c=='Comunicazione Motore VAS' 
-                    || newOrder.Phase__c=='Documentazione da firmare')){
+                    || newOrder.Phase__c=='Documentazione da firmare'
+                    || newOrder.Phase__c=='Ammissibilità OK')){
                     newOrder.Phase__c = newOrder.TecnicalPhase__c;
                     newOrder.TecnicalPhase__c = null;
                 }
@@ -814,7 +831,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     order.Phase__c = 'Comunicazione verso Heroku';
                 }
             }
-            else if(order.phase__c.equalsIgnoreCase('Documentazione da firmare') && order.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
+            else if(order.Phase__c != null && order.phase__c.equalsIgnoreCase('Documentazione da firmare') && order.DocumentalPhase__c !=null && order.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
                     if((order.Sale__r.Channel__c == 'Agenzie' || order.Sale__r.Channel__c == 'Business Agent') && (order.SignatureMethod__c == 'OTP Remoto' || order.SignatureMethod__c == 'OTP Coopresenza' )){
                         order.TecnicalPhase__c = 'Documentazione da Validare';
                         //listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));

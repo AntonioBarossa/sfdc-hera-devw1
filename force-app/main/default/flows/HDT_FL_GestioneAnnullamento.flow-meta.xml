@@ -1036,6 +1036,27 @@
                     <stringValue>Autolettura</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Ammissibilità KO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito KO da DL</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito KO da SII</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_Fase_Precedente</targetReference>
             </connector>
@@ -1066,6 +1087,27 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Amm. Precheck OK SII</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito KO da DL</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito KO da SII</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Ammissibilità KO</stringValue>
                 </rightValue>
             </conditions>
             <connector>
