@@ -316,7 +316,7 @@ public with sharing class HDT_UTL_Account {
      * Creato metodo per la creazione del BP/CA
      */
     
-    public static void createBpCa(List<AccountContactRelation> accountContactRelList, Id saleId)
+    public static void createBpCa(List<AccountContactRelation> accountContactRelList, string saleId)
     {
         /**@frpanico 17/01/2022
          * Se presente accountContactRel Amm. Condominio/Legale Rappresentante
@@ -371,12 +371,22 @@ public with sharing class HDT_UTL_Account {
 
     }
 
-    private static Account checkCustomerMarking( Account acc , Id saleId)
+    private static Account checkCustomerMarking( Account acc , string saleId)
     {
-        List<Sale__c> isAccountInTransition = [ SELECT Id, Account__c, isTransition__c FROM Sale__c WHERE Sale__c.Id=:saleId WITH SECURITY_ENFORCED ]; 
+        //Modifiche HRADTR_GV 03/02/2022 - Inizio
+        Boolean checkSaleId = false;
+        Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
         
+        if(saleId instanceof Id){
+            List<Sale__c> isAccountInTransition = [ SELECT Id, Account__c, isTransition__c FROM Sale__c WHERE Sale__c.Id=:saleId WITH SECURITY_ENFORCED ]; 
+            checkSaleId = isAccountInTransition[0].IsTransition__c;
+        }
+        else{
+            checkSaleId = (!stabbedData.contains(saleId));
+        }
+        //Modifiche HRADTR_GV 03/02/2022 - FIne
         //IsTransition__c = false && CustomerMarking !LIKE «D*» (es. Persona Fisica)
-        if( !isAccountInTransition[0].IsTransition__c ){
+        if(checkSaleId){ //Modifiche HRADTR_GV 03/02/2022 
             switch on acc.CustomerMarking__c {
                 when 'Persona fisica' {
                     acc.CustomerMarking__c = 'D1 - Persona fisica';
