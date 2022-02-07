@@ -20,6 +20,11 @@
                 <default>false</default>
                 <label>Activity</label>
             </value>
+            <value>
+                <fullName>Campaign</fullName>
+                <default>false</default>
+                <label>Campaign</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
