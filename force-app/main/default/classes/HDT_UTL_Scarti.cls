@@ -222,10 +222,12 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         Set<String> orderNameSet = new Set<String>();
         List<Map<String,String>> dataForAttivitaTracciaturaCreation = new List<Map<String,String>>();
         List<wrts_prcgvr__Activity__c> dataForCheckEsitiIntermedi = new List<wrts_prcgvr__Activity__c>();
+        Map<String, String> activitiesValues = new Map<String,String>();
         for (HDT_WRP_MrrRequest.HDT_WRP_Request request : inboundRequests) {
             HDT_WRP_MrrResponse.HDT_WRP_Response parsedResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
             for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : parsedResponseItem.objects){
                 for(HDT_WRP_MrrResponse.HDT_WRP_Field curField : curObj.fields){
+                    activitiesValues.put(curField.name,curField.value);
                     system.debug(LoggingLevel.DEBUG, 'handleMRRInboundRequest curField: ' + curField.name + ' ' + curField.value);
                     /* 
                     //Gestione scarti SAP commentata per nuova gestione tramite custom metadata type 
@@ -272,7 +274,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         system.debug(LoggingLevel.DEBUG, 'MRREQUEST dataForAttivitaTracciaturaCreation' + JSON.serializePretty(dataForAttivitaTracciaturaCreation));
         system.debug(LoggingLevel.DEBUG, 'MRREQUEST dataForCheckEsitiIntermedi' + JSON.serializePretty(dataForCheckEsitiIntermedi));
         if(!dataForAttivitaTracciaturaCreation.isEmpty()){ createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation); }
-        if(!dataForCheckEsitiIntermedi.isEmpty()){ checkForEsitiIntermedi(dataForCheckEsitiIntermedi); }
+        if(!dataForCheckEsitiIntermedi.isEmpty()){ checkForEsitiIntermedi(dataForCheckEsitiIntermedi,activitiesValues); }
     }
 
 
@@ -951,6 +953,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @param inputData - list<wrts_prcgvr__Activity__c>  of Herokus's scarti (activity(custom) 
     */
     public static void checkForEsitiIntermedi(List<wrts_prcgvr__Activity__c> inputData){
+        checkForEsitiIntermedi(inputData, new Map<String, String>());
+    }
+
+    public static void checkForEsitiIntermedi(List<wrts_prcgvr__Activity__c> inputData,Map<String,String> activityValues){
         system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi start' + JSON.serializePretty(inputData));
         Set<String> categories = new Set<String>();
         Schema.DescribeFieldResult fieldResult = wrts_prcgvr__Activity__c.DiscardCategory__c.getDescribe();
@@ -994,10 +1000,24 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                                       WITH SECURITY_ENFORCED];
 
         system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi relatedActs' + JSON.serializePretty(relatedActs));
+        String endDate = activityValues.get('DATA_ELABORAZIONE');
+        String cmp = activityValues.get('CMP');
+        String utenza = activityValues.get('UTENZA');
+        Date endDateVal = null;
+        system.debug(endDate);
+        system.debug(cmp);
+        system.debug(utenza);
+
+        if(String.isNotBlank(endDate)){
+            endDateVal = date.valueOf(endDate);
+        }
 
         for(wrts_prcgvr__Activity__c relatedAct: relatedActs){
             system.debug(LoggingLevel.DEBUG, relatedAct);
             relatedAct.wrts_prcgvr__Status__c='Chiusa';
+            relatedAct.EndDate__c = endDateVal!=null ? endDateVal : null;
+            relatedAct.UserCompany__c = String.isNotBlank(cmp) ? cmp : null;
+            relatedAct.ClosedByUsername__c = String.isNotBlank(utenza) ? utenza : null;
             toUpdate.add(relatedAct);
         }
 
