@@ -158,4 +158,14 @@ public inherited sharing class HDT_QR_ProductAssociation {
 
     }
 
+    public static List<HDT_ProductAssociation__mdt> getProductAssociationMdt(List<HDT_ProductAssociation__mdt> prodAssMdtList, String key){
+        prodAssMdtList = new List<HDT_ProductAssociation__mdt>();
+        prodAssMdtList = [
+            SELECT DeveloperName, MasterLabel, Value__c
+            FROM HDT_ProductAssociation__mdt
+            WHERE MasterLabel = :key
+        ];
+        return prodAssMdtList;
+    }
+
 }
