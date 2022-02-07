@@ -271,7 +271,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              * Aggiunta gestione per
              * Vocal Order + Comfort
              */
-            if (myOrder.Phase__c == 'Da Inviare' && myOrder.ParentOrder__r.Phase__c.equalsIgnoreCase('Registrazione  da validare')) {
+            if (myOrder.Phase__c == 'Da Inviare' && !myOrder.ParentOrder__r.Phase__c.equalsIgnoreCase('Registrazione  da validare')) {
                 childOrdersDocValid.add(new Order(
                     Id = myOrder.Id,
                    // phase__c = 'In attesa validazione'
