@@ -31955,6 +31955,10 @@
         <recordType>Order.HDT_RT_AttivazioneConModifica</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Order-Prima attivazione con modifica</layout>
+        <recordType>Order.HDT_RT_ConnessioneConAttivazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Order-Sconti o Bonus VAS</layout>
         <recordType>Order.HDT_RT_ScontiBonus</recordType>
     </layoutAssignments>

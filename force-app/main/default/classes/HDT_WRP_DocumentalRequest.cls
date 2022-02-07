@@ -86,6 +86,8 @@ public class HDT_WRP_DocumentalRequest{
         public String status { get; set; }
         public String idCheckConfigurationName { get; set; }
         public String requireIdLookup { get; set; }
+        public String transcodeTemplate { get; set; }
+        public String roleName { get; set; }
         public List<String> senderProvidedNumbers { get; set; }
         public HDT_WRP_DocumentalTemplate template { get; set; }
 
