@@ -4,7 +4,7 @@
 * @description HDT_WS_MrrRequest – Rest API for inbound requests in the Mrr JSON format
 * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica​
 */
-
+@SuppressWarnings('PMD.AvoidDebugStatements')
 @RestResource(urlMapping='/MRRInboundService/*')
 global with sharing class HDT_WS_MrrRequest {
 
@@ -77,6 +77,7 @@ global with sharing class HDT_WS_MrrRequest {
                     //FINE SVILUPPI EVERIS
                 }
             }
+            HDT_UTL_Scarti.discardManagement(requestBody.requests);
         } catch (JSONException jsonEx) {
 
             System.debug(LoggingLevel.DEBUG,'requestbody: ' + String.valueOf(RestContext.request.requestBody));
