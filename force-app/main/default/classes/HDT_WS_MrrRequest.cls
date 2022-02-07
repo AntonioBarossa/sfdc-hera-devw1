@@ -4,7 +4,7 @@
 * @description HDT_WS_MrrRequest – Rest API for inbound requests in the Mrr JSON format
 * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica​
 */
-
+@SuppressWarnings('PMD.AvoidDebugStatements')
 @RestResource(urlMapping='/MRRInboundService/*')
 global with sharing class HDT_WS_MrrRequest {
 
@@ -77,11 +77,12 @@ global with sharing class HDT_WS_MrrRequest {
                     //FINE SVILUPPI EVERIS
                 }
             }
+            HDT_UTL_Scarti.discardManagement(requestBody.requests);
         } catch (JSONException jsonEx) {
 
-            System.debug('requestbody: ' + String.valueOf(RestContext.request.requestBody));
-            System.debug('errorMessage: ' + jsonEx.getMessage());
-            System.debug('errorStack: ' + jsonEx.getStackTraceString());
+            System.debug(LoggingLevel.DEBUG,'requestbody: ' + String.valueOf(RestContext.request.requestBody));
+            System.debug(LoggingLevel.DEBUG,'errorMessage: ' + jsonEx.getMessage());
+            System.debug(LoggingLevel.DEBUG,'errorStack: ' + jsonEx.getStackTraceString());
             
             mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
 
@@ -100,9 +101,9 @@ global with sharing class HDT_WS_MrrRequest {
 
         }catch(CustomMessageException e){
 
-            System.debug('requestbody: ' + String.valueOf(RestContext.request.requestBody));
-            System.debug('errorMessage: ' + e.getMessage());
-            System.debug('errorStack: ' + e.getStackTraceString());
+            System.debug(LoggingLevel.DEBUG,'requestbody: ' + String.valueOf(RestContext.request.requestBody));
+            System.debug(LoggingLevel.DEBUG,'errorMessage: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG,'errorStack: ' + e.getStackTraceString());
 
             mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
 
@@ -121,9 +122,9 @@ global with sharing class HDT_WS_MrrRequest {
 
         }catch(Exception e) {
             
-            System.debug('requestbody: ' + String.valueOf(RestContext.request.requestBody));
-            System.debug('errorMessage: ' + e.getMessage());
-            System.debug('errorStack: ' + e.getStackTraceString());
+            System.debug(LoggingLevel.DEBUG,'requestbody: ' + String.valueOf(RestContext.request.requestBody));
+            System.debug(LoggingLevel.DEBUG,'errorMessage: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG,'errorStack: ' + e.getStackTraceString());
 
             mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
 

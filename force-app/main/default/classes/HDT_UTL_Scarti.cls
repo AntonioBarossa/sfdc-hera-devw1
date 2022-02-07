@@ -589,6 +589,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @return boolean : true if it has to do annullment; false instead
     */
     public static boolean checkDiscardAnnullmentRule(Id recordId, String activityType){
+        return checkDiscardAnnullmentRule(recordId, activityType,'');
+    }
+
+    public static boolean checkDiscardAnnullmentRule(Id recordId, String activityType,String discardMessage){
         system.debug(LoggingLevel.DEBUG, 'checkDiscardAnnullmentRule start recordId: ' + recordId + '; activityType: ' + activityType);
         Boolean outcome = false;
         
@@ -609,7 +613,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 List<Case> parentCase = [SELECT Id,Type,DiscardDescription__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED];
                 if(!parentCase.isEmpty()){
                     processField = parentCase.get(0).Type;
-                    ctrField = parentCase.get(0).DiscardDescription__c;
+                    ctrField = String.isNotBlank(discardMessage) ? discardMessage : parentCase.get(0).DiscardDescription__c;
                 }
             }
             if(Schema.Order.SObjectType == recordId.getSobjectType()){
@@ -617,7 +621,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 List<Order> parentOrder = [SELECT Id,ProcessType__c,DiscardReason__c FROM Order WHERE Id =:recordId WITH SECURITY_ENFORCED];
                 if(!parentOrder.isEmpty()){
                     processField = parentOrder.get(0).ProcessType__c;
-                    ctrField = parentOrder.get(0).DiscardReason__c;
+                    ctrField = String.isNotBlank(discardMessage) ? discardMessage : parentOrder.get(0).DiscardReason__c;
                 }
             }
             if (String.isNotEmpty(processField) && String.isNotEmpty(ctrField)){
@@ -1037,15 +1041,13 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @param objectId - Id
     */
     public static void annullaPratica(Id objectId){
+        String objectName = '';
         if(Schema.Case.SObjectType == objectId.getSobjectType()){
-            Case caseRecord= new Case(Id=objectId, Phase__c='Annullato', Status='Closed', CancellationReason__c='Gestione Scarto');
-            /*eventuali modifiche*/
-            HDT_UTL_DatabaseService.updateSObject(caseRecord);
+            objectName = 'Case';
         }else if(Schema.Order.SObjectType == objectId.getSobjectType()){
-            Order orderRecord = new Order(Id=objectId, Phase__c='Annullato', Status='Activated', CancellationReason__c='Gestione Scarto');
-            /*eventuali modifiche*/
-            HDT_UTL_DatabaseService.updateSObject(orderRecord);
+            objectName = 'Order';
         }
+        annulmentProcess(objectId, objectName);
     }
 
     /**
@@ -1130,6 +1132,93 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             objectName = 'Account';
         }
         return objectName;
+    }
+
+    
+
+    public static void discardManagement(List<HDT_WRP_MrrRequest.HDT_WRP_Request> inboundRequests){
+        Map<String,String> requestDiscardManagemnt = createRequestMap(inboundRequests);
+        if (String.isNotBlank(requestDiscardManagemnt.get('FASE')) && String.isNotBlank(requestDiscardManagemnt.get('RECORD_ID')) && String.isNotBlank(requestDiscardManagemnt.get('OBJECT_TYPE'))){
+            Id recordId = (Id)requestDiscardManagemnt.get('RECORD_ID');
+            String fase = requestDiscardManagemnt.get('FASE');
+            String objectType = requestDiscardManagemnt.get('OBJECT_TYPE');
+            String templateName = '';
+            for (HDT_GestioneScarti__mdt conf : [SELECT OrderTemplate__c, CaseTemplate__c FROM HDT_GestioneScarti__mdt WHERE IsActive__c = true AND Phase__c =:fase WITH SECURITY_ENFORCED]){
+                templateName = 'Case'.equalsIgnoreCase(requestDiscardManagemnt.get('OBJECT_TYPE')) ? conf.CaseTemplate__c : conf.OrderTemplate__c;
+                break; //Se per sbaglio vengono configurate più configurazioni prende la prima che trova
+            }
+            if (String.isNotEmpty(templateName) && !checkDiscardAnnullmentRule(recordId, fase,requestDiscardManagemnt.get('DISCARD_MESSAGE'))){
+                HDT_UTL_DatabaseService.insertSObject(createActivityByObjectIdAndTemplateName(recordId, templateName,objectType));
+            }else if (String.isNotEmpty(templateName)){
+                annulmentProcess(recordId, objectType);
+            }
+        }
+    }
+
+    private static Map<String,String> createRequestMap(List<HDT_WRP_MrrRequest.HDT_WRP_Request> inboundRequests){
+        Map<String,String> requestMap = new Map<String,String>();
+        String discardError = '';
+        for (HDT_WRP_MrrRequest.HDT_WRP_Request request : inboundRequests) {
+            HDT_WRP_MrrResponse.HDT_WRP_Response parsedResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
+            for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : parsedResponseItem.objects){
+                for(HDT_WRP_MrrResponse.HDT_WRP_Field curField : curObj.fields){
+                    if (String.isBlank(curField.value)){
+                        continue;
+                    }
+                    if ('FASE'.equalsIgnoreCase(curField.name)){
+                        requestMap.put('FASE',curField.value);
+                    }else if('RECORD_ID'.equalsIgnoreCase(curField.name)){
+                        requestMap.putAll(getRecordId(curField.value));
+                    }
+                    //
+                    if(('NOTE_ERR'.equalsIgnoreCase(curField.name) 
+                    || 'NOTE_ERR'.equalsIgnoreCase(curField.name)
+                    || 'NOTE_ERR'.equalsIgnoreCase(curField.name)
+                    || 'NOTE_ERR'.equalsIgnoreCase(curField.name)) 
+                    && String.isNotBlank(curField.value)){
+                        discardError += HDT_UTL_Accents.removeDiacritics(curField.value) + '\n';
+                    }
+                }
+            }
+        }
+        requestMap.put('DISCARD_MESSAGE',discardError);
+        return requestMap;
+    }
+
+    private static Map<String,String> getRecordId(String recordIdToWork){
+        Map<String,String> requestMap = new Map<String,String>();
+        String objectType = '';
+        if(recordIdToWork instanceOf Id){
+            if(Schema.Case.SObjectType == Id.valueOf(recordIdToWork).getSobjectType()){
+                objectType = 'Case';
+            }else if(Schema.Order.SObjectType == Id.valueOf(recordIdToWork).getSobjectType()){
+                objectType = 'Order';
+            }
+        }
+        else if(recordIdToWork.startsWith('O-') ){
+            List<Order> orderList = HDT_QR_GenericQuery.getGenericRecords('Id', 'Order', 'OrderNumber = \''+String.escapeSingleQuotes(recordIdToWork)+'\'');
+            if(!orderList.isEmpty()){
+                objectType = 'Order';
+                recordIdToWork = orderList[0].Id;
+            }
+        }
+        if (String.isNotEmpty(objectType)){
+            requestMap.put('RECORD_ID', recordIdToWork);
+            requestMap.put('OBJECT_TYPE',objectType);
+        }
+        return requestMap;
+    }
+
+    private static void annulmentProcess(Id recordId,String objectType){
+        if (String.isNotEmpty(objectType)){
+            SObject objectToUpdate = Schema.getGlobalDescribe().get(objectType).newSObject();
+            String status = 'Case'.equalsIgnoreCase(objectType)? 'Closed' : 'Annullato';
+            objectToUpdate.put('Id',recordId);
+            objectToUpdate.put('CancellationReason__c','Gestione scarto');
+            objectToUpdate.put('Phase__c','Annullato');
+            objectToUpdate.put('Status',status);
+            HDT_UTL_DatabaseService.updateSObject(objectToUpdate);
+        }
     }
     //EVERIS: END Gestione Scarti SAP
 }
