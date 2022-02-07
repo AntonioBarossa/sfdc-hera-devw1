@@ -236,7 +236,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                         for(HDT_WRP_MrrRequest.HDT_WRP_Field curField3 : request.header.fields){ newData.put(curField3.name, curField3.value); }
                         dataForAttivitaTracciaturaCreation.add(newData);
                     }
-                    if('FASE'.equalsIgnoreCase(curField.name) /*&& new List<String>{'Completata', 'Ammissibilità OK'}.contains(curField.value)*/){
+                    if('FASE'.equalsIgnoreCase(curField.name) && String.isNotBlank(curField.value)/*&& new List<String>{'Completata', 'Ammissibilità OK'}.contains(curField.value)*/){
                     	system.debug(LoggingLevel.DEBUG, 'handleMRRInboundRequest curField: ' + curField.name + ' ' + curField.value);
                         for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
                             if('RECORD_ID'.equalsIgnoreCase(curField2.name)){

@@ -134,7 +134,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             act.wrts_prcgvr__status__c = 'Chiusa';
             res = true;
             ord.DocumentPackage__c = 'Validato';
-            //ord.phase__c = 'Documentazione Gestita';
+            ord.phase__c = 'Registrazione validata';
             //ord.status = 'Activated';
         }
         else{
@@ -217,8 +217,16 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             Order ord = new Order();
             ord.id = oldActivity.order__c;
             ord.DocumentPackage__c = 'Validato';
-            ord.phase__c = 'Documentazione Gestita';
-            ord.status = 'Activated';
+            if(oldActivity.Type__c.containsIgnoreCase('Vocal Order'))
+            {
+                ord.Phase__c = 'Registrazione validata';
+            }
+            else
+            {
+                ord.phase__c = 'Documentazione Gestita';
+                ord.status = 'Completed';
+            
+            }
             orderSrv.updateRecord(ord);
         }
         else{
