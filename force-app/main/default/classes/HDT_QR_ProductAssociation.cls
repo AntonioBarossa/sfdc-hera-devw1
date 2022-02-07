@@ -164,6 +164,7 @@ public inherited sharing class HDT_QR_ProductAssociation {
             SELECT DeveloperName, MasterLabel, Value__c
             FROM HDT_ProductAssociation__mdt
             WHERE MasterLabel = :key
+            WITH SECURITY_ENFORCED
         ];
         return prodAssMdtList;
     }
