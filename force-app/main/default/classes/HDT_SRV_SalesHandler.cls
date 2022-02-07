@@ -245,9 +245,12 @@ public with sharing class HDT_SRV_SalesHandler {
                                 HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
                                 utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
-                                ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.valueOf(mapRequestFields.get('DT_INIZIO_VERT')) : null;
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                if(mapRequestFields.get('DT_INIZIO_VERT') != null && String.isNotBlank(mapRequestFields.get('DT_INIZIO_VERT'))){
+                                    ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.valueOf(mapRequestFields.get('DT_INIZIO_VERT')) : null;
+                                }
+                                
                                 
                                 //Start HRAWRM-657 21/09/2021
                                 List<Id> listRecType = new List<Id>();
@@ -388,11 +391,18 @@ public with sharing class HDT_SRV_SalesHandler {
                                 {
                                     ord.Phase__c = annullatoPhase;
                                 }
+                                /**@frpanico 04/02/2022
+                                 * Gestione preventivo Extra Sistema
+                                 */
+                                else if(previousPhase.equalsIgnoreCase('Dati Tecnici Ricevuti') && ordRetrieved.ProcessType__c.containsIgnoreCase('Prima Attivazione con modifica'))
+                                {
+                                    ord.Phase__c = previousPhase;
+                                }
                                 else
                                 {
                                     Boolean redirectPreventivo = false;
                                     switch on ordRetrieved.ProcessType__c{
-                                        when 'Connessione con Attivazione', 'Temporanea - Nuova Attivazione', 'Attivazione con Modifica'{
+                                        when 'Connessione con Attivazione', 'Temporanea - Nuova Attivazione'{
                                             redirectPreventivo=true;
                                         }
                                     }                            
