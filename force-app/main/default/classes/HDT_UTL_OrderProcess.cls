@@ -267,8 +267,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione'
                 ));
             }
-
-            if (myOrder.Phase__c == 'Da Inviare') {
+            /**@frpanico 07/02/2022
+             * Aggiunta gestione per
+             * Vocal Order + Comfort
+             */
+            if (myOrder.Phase__c == 'Da Inviare' && myOrder.ParentOrder__r.Phase__c.equalsIgnoreCase('Registrazione  da validare')) {
                 childOrdersDocValid.add(new Order(
                     Id = myOrder.Id,
                    // phase__c = 'In attesa validazione'
