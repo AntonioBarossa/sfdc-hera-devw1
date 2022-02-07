@@ -80,7 +80,7 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
             }
         }
         system.debug('>> contactList: ' + contactList);
-        List<Campaign> comfortCampaign = HDT_QR_Campaign.getCampaignIds('Comfort Campaign');
+        List<Campaign> comfortCampaign = HDT_QR_Campaign.getCampaingByTipology('Comfort Call');
 
         /* for (String ordId : orderActivityMap.keySet()) {
             if ( orderMap.get(ordId).Contact__c != null && !comfortCampaign.isEmpty()) {

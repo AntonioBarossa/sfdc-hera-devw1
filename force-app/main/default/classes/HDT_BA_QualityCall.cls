@@ -191,7 +191,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         system.debug('>> commissioningCampaignList: ' + commissioningCampaignList);
         system.debug('>> contactList: ' + contactList);
 
-        List<Campaign> qualityCampaign = HDT_QR_Campaign.getCampaignIds('Quality Campaign');
+        List<Campaign> qualityCampaign = HDT_QR_Campaign.getCampaingByTipology('Quality Call');
 
         List<CampaignMember> campaignMembersBulk = new List<CampaignMember>();
         if (!qualityCampaign.isEmpty() && !contactList.isEmpty()) {
