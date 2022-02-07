@@ -3,7 +3,7 @@
     <fullName>Order_Compact_Layout</fullName>
     <fields>OrderNumber</fields>
     <fields>Cluster__c</fields>
-    <fields>SBQQ__Contracted__c</fields>
+    <fields>Phase__c</fields>
     <fields>Status</fields>
     <fields>ProcessType__c</fields>
     <fields>LoginChannel__c</fields>
