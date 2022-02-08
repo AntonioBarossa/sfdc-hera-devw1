@@ -6223,6 +6223,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.IsExportSIE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.IsInvoicingVerified__c</field>
         <readable>true</readable>
     </fieldPermissions>
