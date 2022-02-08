@@ -12,7 +12,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     //private Set<String> contoContrattualeSet = new Set<String>();
 
     private Map<String, List<String>> itemRequestMap = new Map<String, List<String>>();
-    private List<MassiveLoaderRequestItem__c> itemsToSave;
+    private List<MassiveLoaderRequestItem__c> itemsToUpdate;
     //private Account account;
     private HDT_WRP_sObject obj;
     //private BillingProfile__c billingProfile;
@@ -89,7 +89,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         List<sObject> AccountToInsert = new List<sObject>();
         List<String> itemIds = new List<String>();
-        itemsToSave = new List<MassiveLoaderRequestItem__c>();
+        itemsToUpdate = new List<MassiveLoaderRequestItem__c>();
 
         for(String itemId : itemRequestMap.keySet()){
 
@@ -166,7 +166,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             }
 
             if(!String.isEmpty(convertionError)){
-                itemsToSave.add(setErrorItem(itemId, convertionError));
+                itemsToUpdate.add(setErrorItem(itemId, convertionError));
                 continue;
             }
 
@@ -203,7 +203,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             saveAccountResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(accountToInsert, itemIds, 'Account');
 
             System.debug(LoggingLevel.DEBUG, '>>> savedObject ' + saveAccountResponse.savedObject);
-            System.debug(LoggingLevel.DEBUG, '>>> itemIdToAccountId: ' + saveAccountResponse.itemIdToAccountId);
+            System.debug(LoggingLevel.DEBUG, '>>> itemIdToObjId: ' + saveAccountResponse.itemIdToObjId);
             
             for(sObject obj : saveAccountResponse.savedObject){
                 if(obj.getSObjectType() == Schema.Account.getSObjectType()){
@@ -225,8 +225,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 iterationObj = itemIdToWrapperMap.get(itemId);
 
                 if(iterationObj.account.Id == null){
-                    if(saveAccountResponse.itemIdToAccountId.containsKey(itemId)){
-                        accountId = saveAccountResponse.itemIdToAccountId.get(itemId);
+                    if(saveAccountResponse.itemIdToObjId.containsKey(itemId)){
+                        accountId = saveAccountResponse.itemIdToObjId.get(itemId);
                     }   
                 } else {
                     accountId = iterationObj.account.Id;
@@ -283,20 +283,46 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 update acrList;
             }
 
+            System.debug('> > > ' + saveBillProfResponse.itemIdToObjId);
+            System.debug('> > > ' + saveServPointResponse.itemIdToObjId);
+
             HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER OBJs CREATION');
 
             if(saveAccountResponse.reponseItemList.size() > 0){
-                itemsToSave.addAll(saveAccountResponse.reponseItemList);
+                itemsToUpdate.addAll(saveAccountResponse.reponseItemList);
+            }
+
+            HDT_WRP_NextDataObj nextDataObj;
+            for(MassiveLoaderRequestItem__c item : itemsToUpdate){
+                nextDataObj = new HDT_WRP_NextDataObj();
+                if(saveAccountResponse.itemIdToObjId.containsKey(item.Id)){
+                    nextDataObj.accountId = saveAccountResponse.itemIdToObjId.get(item.Id);
+                }
+
+                if(saveBillProfResponse.itemIdToObjId.containsKey(item.Id)){
+                    nextDataObj.billProfId = saveBillProfResponse.itemIdToObjId.get(item.Id);
+                }
+
+                if(saveServPointResponse.itemIdToObjId.containsKey(item.Id)){
+                    nextDataObj.servPointId = saveServPointResponse.itemIdToObjId.get(item.Id);
+                }
+                item.NextStepData__c = JSON.serialize(nextDataObj);
             }
 
         }  
 
     }
 
+    public class HDT_WRP_NextDataObj {
+        public String accountId;
+        public String billProfId;
+        public String servPointId;
+    }
+
     public override void finalUpdate(){
         System.debug(LoggingLevel.DEBUG, 'finalUpdate');
-        if(itemsToSave.size() > 0){
-            update itemsToSave;
+        if(itemsToUpdate.size() > 0){
+            update itemsToUpdate;
         }
     }
 
@@ -510,7 +536,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             tempList.add(''); // Residente
             tempList.add(''); // SP_Civico
             tempList.add(''); // TipoApparecchiatura
-            tempList.add(''); // CodicePunto
+            tempList.add('IT001E04893470'); // CodicePunto
             tempList.add('');// CodiceImpianto
             item.Data__c = String.join(tempList, '|');
             itemsList.add(item);

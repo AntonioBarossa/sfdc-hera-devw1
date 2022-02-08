@@ -74,7 +74,7 @@ public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchabl
         }
 
         if(process.equalsIgnoreCase('SwitchIn') && accountIdList.size()>0){
-            HDT_BA_ProcessSales processReq = new HDT_BA_ProcessSales(accountIdList, batchSize, process);
+            HDT_BA_ProcessSales processReq = new HDT_BA_ProcessSales(idLoaderRequest, batchSize, process);
             Database.executeBatch(processReq, batchSize);
         }
 
