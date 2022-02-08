@@ -357,6 +357,10 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_CreateBpCa__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_AutomationToggle__mdt</name>
     </customMetadataTypeAccesses>
 	    <customMetadataTypeAccesses>

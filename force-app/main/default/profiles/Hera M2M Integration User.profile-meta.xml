@@ -80,6 +80,10 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_CreateBpCa__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_DataEnrichmentTransocode__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -205,6 +209,10 @@
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_SignModeSettings__mdt</name>
+    </customMetadataTypeAccesses>    
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_SolSystemUser__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
@@ -31971,6 +31979,10 @@
     <layoutAssignments>
         <layout>Order-Switch in</layout>
         <recordType>Order.HDT_RT_SwitchIn</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Switch in</layout>
+        <recordType>Order.HDT_RT_VolturaConSwitch</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-VAS</layout>
