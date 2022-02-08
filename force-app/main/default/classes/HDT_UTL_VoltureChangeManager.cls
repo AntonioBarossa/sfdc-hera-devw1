@@ -108,6 +108,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
         if(((String)fieldsMap.get('result')).equalsIgnoreCase('OK'))
         {
             /* Write text fields */
+            orderToUpdate.PrecheckResultSII__c = 'OK';
             orderToUpdate.TecnicalPhase__c = (String)fieldsMap.get('FASE');
             orderToUpdate.CausalCode__c = (String)fieldsMap.get('CODERR');
             orderToUpdate.Description = (String)fieldsMap.get('ANNOTAZIONI');
