@@ -208,6 +208,11 @@
                 <default>false</default>
                 <label>Gas Beta</label>
             </value>
+            <value>
+                <fullName>Hera Band Discount</fullName>
+                <default>false</default>
+                <label>Hera Band Discount</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
