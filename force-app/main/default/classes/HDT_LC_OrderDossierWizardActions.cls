@@ -311,6 +311,24 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         return result || orderParent.Status == 'Completed';
     }
+    /*@frpanico 08/02/2022
+    * Aggiunta gestione Annullamento
+    * Per poter annullare gli order non devono essere in default
+     */
+    @AuraEnabled
+    public static Boolean isCancelDisabled(Order parentOrder){
+        Boolean result = false;
+        List<Order> childOrders = orderQr.getChildOrdersByParentId(parentOrder.Id);
+        for(Order childOrder : childOrders)
+        {
+            if(childOrder.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_Default'))
+            {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
 
     
     @AuraEnabled(cacheable=true)

@@ -101,7 +101,7 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
                     label: 'Annulla',
                     name: 'cancelOrder',
                     title: 'Annulla',
-                    disabled: {fieldName :'disabledActionButton'},
+                    disabled: {fieldName :'disabledCancellationActionButton'},
                     value: 'cancelOrder'
                 }
             }
@@ -125,6 +125,7 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
                 ord.pod = '';
                 //ord.CustomerName__c = '/lightning/r/Order/' + ord.Id + '/view';
                 ord.pod = ord.ServicePoint__c !== undefined ? ord.ServicePoint__r.ServicePointCode__c : '';
+                ord.disabledCancellationActionButton = this.disabledInput || ord.Step__c === 20 || ord.Phase__c === 'Annullato' || ord.recordtypename === 'Default';
                 ord.disabledActionButton = this.disabledInput || ord.Step__c === 20 || ord.Phase__c === 'Annullato';
                 ord.offerta = data.primeQuoteLineMap[ord.Id]
 
