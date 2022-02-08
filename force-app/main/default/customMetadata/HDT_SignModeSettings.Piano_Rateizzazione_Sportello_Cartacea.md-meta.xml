@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Piano Rateizzazione</value>
+        <value xsi:type="xsd:string">RICH_RATEIZZAZIONE</value>
     </values>
     <values>
         <field>SendMode1__c</field>

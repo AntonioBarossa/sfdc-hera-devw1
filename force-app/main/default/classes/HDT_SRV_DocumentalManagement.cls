@@ -715,6 +715,8 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 			signInfo.idCheckConfigurationName = docusignCustomSettings.IdCheckConfigurationName__c;
 			signInfo.pageUrl = docusignCustomSettings.PageUrl__c;
 			signInfo.requireIdLookup = docusignCustomSettings.RequireIdLookup__c;
+			signInfo.transcodeTemplate = 'true';
+			signInfo.roleName = 'Cliente';
 			signInfo.status = docusignCustomSettings.Status__c;
 			signInfo.senderProvidedNumbers.add(telephoneNumber);
 			//customerInfo

@@ -321,7 +321,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
         //Boolean isVolture = (Boolean) checkMap.get('isVolture');
         Boolean isReading = (Boolean) checkMap.get('isReading');
         Boolean isRetroactive = (Boolean) checkMap.get('isRetroactive');
-        //Boolean isUpdateStep = (Boolean) checkMap.get('isUpdateStep');
+        Boolean isUpdateStep = (Boolean) checkMap.get('isUpdateStep');
         Date readingDate = (Date) checkMap.get('readingDate');
 
         order.NotRegisteredMeterCase__c = order.NotRegisteredMeterCase__c!=null?order.NotRegisteredMeterCase__c:currentOrder.NotRegisteredMeterCase__c;
@@ -383,7 +383,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             /**@frpanico 12/11/2021
              * Update check VoltureType "Recupero" the date has been changed to 2015/08/31
              */
-            if( order.EffectiveDate__c != null)
+            if(isUpdateStep != null && isUpdateStep == true &&  order.EffectiveDate__c != null)
             {
                 if( order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
                 {
