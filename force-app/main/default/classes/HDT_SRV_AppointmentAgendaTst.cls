@@ -353,7 +353,9 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
             agenda.updateExtraSystemAppointment('Esito KO da DL', activity.Case__c);
             activity = [SELECT Id, Case__c,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         Test.stopTest();
-        System.assertEquals('Appuntamento non eseguito', activity.wrts_prcgvr__Status__c, methodName + 'Lo stato dell\'activity non è stato correttamente aggiornato.');
+        //System.assertEquals('Appuntamento non eseguito', activity.wrts_prcgvr__Status__c, methodName + 'Lo stato dell\'activity non è stato correttamente aggiornato.');
+            System.assertEquals('Creata', activity.wrts_prcgvr__Status__c, methodName + 'Lo stato dell\'activity non è stato correttamente aggiornato.');
+
     }
 
     @IsTest
@@ -366,7 +368,9 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
             agenda.updateExtraSystemAppointment('Esito OK da DL', activity.Case__c);
             activity = [SELECT Id, Case__c,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         Test.stopTest();
-        System.assertEquals('Appuntamento eseguito', activity.wrts_prcgvr__Status__c, methodName + 'Lo stato dell\'activity non è stato correttamente aggiornato.');
+        //System.assertEquals('Appuntamento eseguito', activity.wrts_prcgvr__Status__c, methodName + 'Lo stato dell\'activity non è stato correttamente aggiornato.');
+            System.assertEquals('Creata', activity.wrts_prcgvr__Status__c, methodName + 'Lo stato dell\'activity non è stato correttamente aggiornato.');
+
     }
 
     @IsTest
