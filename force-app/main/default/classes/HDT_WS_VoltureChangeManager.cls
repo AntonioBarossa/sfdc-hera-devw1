@@ -56,6 +56,8 @@ global with sharing class HDT_WS_VoltureChangeManager implements wrts_prcgvr.Int
             /*Get MMRequest*/
             wrts_prcgvr.MRR_1_0.MultiRequest mrrList = (wrts_prcgvr.MRR_1_0.MultiRequest) argsMap.get('multirequest');
 
+            System.debug(LoggingLevel.DEBUG, 'Request '+mrrList);
+
             /*Build Request*/
             calloutMap.put('endpoint', endpoint);
             calloutMap.put('timeout', 12000);
@@ -77,6 +79,10 @@ global with sharing class HDT_WS_VoltureChangeManager implements wrts_prcgvr.Int
         if(responseMrr != null)
         {   
             voltureChangeManagerSrv.handleResponse(responseMrr, currentOrder);            
+        }
+        else 
+        {
+            voltureChangeManagerSrv.handleResponse(currentOrder);
         }
         /*Expected output of the Interface method*/
         response.success = true;

@@ -21,7 +21,7 @@ public inherited sharing class HDT_QR_ProductAssociation {
         String selectQuery = '';
 
         if(objRes.isAccessible()){
-            selectQuery = 'SELECT Id, DescriptionSAP__c, ProductCode, Version__c, Name, Family, CategoryFamily__c, Service__c, Status__c ' + queryString;
+            selectQuery = 'SELECT Id, DescriptionSAP__c, ProductCode, Version__c, Name, Family, CategoryFamily__c, Service__c, Status__c, SupplyType__c ' + queryString;
             System.debug(logginglevel.DEBUG, '>>> queryString: ' + selectQuery);
 
             prodList = Database.query(selectQuery);
@@ -156,6 +156,17 @@ public inherited sharing class HDT_QR_ProductAssociation {
 
         return groupMembers;
 
+    }
+
+    public static List<HDT_ProductAssociation__mdt> getProductAssociationMdt(List<HDT_ProductAssociation__mdt> prodAssMdtList, String key){
+        prodAssMdtList = new List<HDT_ProductAssociation__mdt>();
+        prodAssMdtList = [
+            SELECT DeveloperName, MasterLabel, Value__c
+            FROM HDT_ProductAssociation__mdt
+            WHERE MasterLabel = :key
+            WITH SECURITY_ENFORCED
+        ];
+        return prodAssMdtList;
     }
 
 }

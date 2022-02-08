@@ -80,6 +80,18 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         Order orderToUpdate = voltureChangeUtl.handleResponse(fieldsMap, currentOrder);
         HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
     }
+    /**@frpanico 07/02/2022
+     * Handle null response
+     */
+    public void handleResponse(Order currentOrder)
+    {
+        Order orderToUpdate = new Order();
+        orderToUpdate.Id = currentOrder.Id;
+        orderToUpdate.TecnicalPhase__c = 'Comunicazione verso Heroku KO';
+        orderToUpdate.DiscardReason__c = 'Errore nella risposta da Heroku';
+        orderToUpdate.Description = 'Errore nella risposta da Heroku';
+        HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
+    }
 
     /**@frpanico 18/10/2021
      * This method handle the ammissibility checks
@@ -111,9 +123,10 @@ public with sharing class HDT_SRV_VoltureChangeManager{
     public void handlePublishUpdate(Order inputOrder)
     {
         HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
-
-        inputOrder.Phase__c = publishUpdatePhase;
-        platEvent.SerializedSobj__c = JSON.serialize(inputOrder);
+        Order orderToUpdate = new Order();
+        orderToUpdate.Id = inputOrder.Id;
+        orderToUpdate.Phase__c = publishUpdatePhase;
+        platEvent.SerializedSobj__c = JSON.serialize(orderToUpdate);
         Database.SaveResult sr = Eventbus.publish(platEvent);
         
         if(sr.isSuccess())
