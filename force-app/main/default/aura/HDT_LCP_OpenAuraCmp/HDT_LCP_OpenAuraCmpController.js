@@ -87,6 +87,9 @@
                     } else if(element.pageReference.attributes.recordId === interactionId){
                         parentId = element.tabId;
                     }
+                    else if(element.pageReference.attributes.recordId === orderId){
+                        parentId = element.tabId;
+                    }
                 }
             });
             console.log('----------');

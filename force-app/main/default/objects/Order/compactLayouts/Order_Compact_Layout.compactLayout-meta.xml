@@ -2,12 +2,11 @@
 <CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Order_Compact_Layout</fullName>
     <fields>OrderNumber</fields>
-    <fields>ServicePointCodeFormula__c</fields>
-    <fields>AccountId</fields>
-    <fields>ContractId</fields>
-    <fields>EffectiveDate</fields>
+    <fields>Cluster__c</fields>
+    <fields>Phase__c</fields>
     <fields>Status</fields>
-    <fields>SupplyAddressFormula__c</fields>
-    <fields>ServicePointCode__c</fields>
+    <fields>ProcessType__c</fields>
+    <fields>LoginChannel__c</fields>
+    <fields>CreatedById</fields>
     <label>Order_Compact_Layout</label>
 </CompactLayout>

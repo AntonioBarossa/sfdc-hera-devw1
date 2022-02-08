@@ -1,5 +1,5 @@
-@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveClassLength, PMD.ExcessivePublicCount')
-public class HDT_SRV_DocumentalManagement{
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveClassLength, PMD.ExcessivePublicCount, PMD.CyclomaticComplexity, PMD.AvoidDeeplyNestedIfStmts, PMD.NcssMethodCount, PMD.ExcessiveParameterList')
+public with sharing class  HDT_SRV_DocumentalManagement{
 	
 	public static String generateRequest(String recordId, String context, String formParams){
 		
@@ -404,6 +404,7 @@ public class HDT_SRV_DocumentalManagement{
 				}
 			}
 			handleRadioGroup(record,listOfRadio,envelopeId);
+			// TODO: rimuovere commento
 			//handleLandRegistry(record,listOfData,listOfRadio);
 			HDT_UTL_DatabaseService.upsertSObject(record);
 		}
@@ -714,6 +715,8 @@ public class HDT_SRV_DocumentalManagement{
 			signInfo.idCheckConfigurationName = docusignCustomSettings.IdCheckConfigurationName__c;
 			signInfo.pageUrl = docusignCustomSettings.PageUrl__c;
 			signInfo.requireIdLookup = docusignCustomSettings.RequireIdLookup__c;
+			signInfo.transcodeTemplate = 'true';
+			signInfo.roleName = 'Cliente';
 			signInfo.status = docusignCustomSettings.Status__c;
 			signInfo.senderProvidedNumbers.add(telephoneNumber);
 			//customerInfo

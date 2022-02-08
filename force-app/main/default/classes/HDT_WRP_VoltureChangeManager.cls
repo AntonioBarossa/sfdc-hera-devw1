@@ -44,4 +44,21 @@ public with sharing class HDT_WRP_VoltureChangeManager {
         public String description;
         public List<HDT_WRP_Object> objects;
     }
+
+    /**@frpanico 01/02/2022
+     * Wrapper for Process Check
+     */
+    public class HDT_WRP_ProcessCheck
+    {
+        public String result;
+        public String message;
+        public SObject sobj;
+
+        public HDT_WRP_ProcessCheck(String result, String message, SObject sobj)
+        {
+            this.result = result;
+            this.message = message;
+            this.sobj = sobj;
+        }
+    }
 }

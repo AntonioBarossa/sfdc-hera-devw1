@@ -123,4 +123,28 @@ public with sharing class HDT_QR_Campaign {
             WHERE MacroActivityEasyCIM__r.Name = :name AND Category__c='Campagna Outbound' AND ReitekIntegrationTechnology__c ='Web Service' WITH SECURITY_ENFORCED
         ];
     }
+    /**@frpanico 04/02/2022
+     * Aggiunto metodo per
+     * query tramite Tipology__c
+     * in corso
+     * e la piu recente
+     */
+    public static List<Campaign> getCampaingByTipology(String tipology)
+    {
+        return [
+            SELECT 
+            Id,
+            Name,
+            MacroActivityEasyCIM__c,
+            MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c,
+            AssignmentType__c
+            FROM Campaign
+            where Tipology__c = :tipology
+            AND Status = 'In Corso'
+            WITH SECURITY_ENFORCED
+            ORDER BY StartDate DESC
+            LIMIT 1
+        ];
+    }
+
 }

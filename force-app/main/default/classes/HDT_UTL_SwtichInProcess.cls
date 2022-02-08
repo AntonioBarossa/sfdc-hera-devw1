@@ -84,13 +84,13 @@ public with sharing class HDT_UTL_SwtichInProcess {
                     dateSentToSii = order.WizardCompletedDate__c;
                 }
                 else{
-                    if(order.WizardCompletedDate__c > getMaxAfterthoughtDate(order)){
+                    //if(order.WizardCompletedDate__c > getMaxAfterthoughtDate(order)){
                         //DV: valorizzo con la data completamento wizard a cui applico la logica del prima o dopo il 10 del mese.
-                        dateSentToSii = order.WizardCompletedDate__c.day() < 11 ? order.WizardCompletedDate__c.addMonths(1).toStartofMonth() : order.WizardCompletedDate__c.addMonths(2).toStartofMonth();
-                    }
-                    else{
+                    //    dateSentToSii = order.WizardCompletedDate__c.day() < 11 ? order.WizardCompletedDate__c.addMonths(1).toStartofMonth() : order.WizardCompletedDate__c.addMonths(2).toStartofMonth();
+                    //}
+                    //else{
                         dateSentToSii= getMaxAfterthoughtDate(order).addDays(1);
-                    }
+                    //}
                 }            
             }
             else{
@@ -130,7 +130,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
             }
             // CALCOLATO DATA SU SEQUEN O NO
             if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
-                List<HDT_FulfillmentDateMatrix__c> afterthoughtDays = [SELECT ActivationDate__c FROM HDT_FulfillmentDateMatrix__c WHERE
+               List<FulfillmentDateMatrix__c> afterthoughtDays = [SELECT ActivationDate__c FROM FulfillmentDateMatrix__c WHERE
                     OriginMarket__c =: order.MarketOrigin__c AND 
                     Commodity__c =: order.ServicePoint__r.CommoditySector__c AND 
                     VoltageLevel__c =: order.VoltageLevel__c AND 
@@ -147,7 +147,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
             else{
                 if(order.RecessNotice__c == null){
 
-                    List<HDT_FulfillmentDateMatrix__c> afterthoughtDays2 = [SELECT ActivationDate__c FROM HDT_FulfillmentDateMatrix__c WHERE 
+                    List<FulfillmentDateMatrix__c> afterthoughtDays2 = [SELECT ActivationDate__c FROM FulfillmentDateMatrix__c WHERE 
                         OriginMarket__c =: order.MarketOrigin__c AND 
                         Commodity__c =: order.ServicePoint__r.CommoditySector__c AND
                         VoltageLevel__c =: order.VoltageLevel__c AND

@@ -1,7 +1,8 @@
-import { LightningElement,api,wire } from 'lwc';
+import { LightningElement,api,wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { updateRecord } from 'lightning/uiRecordApi';
 import valida from '@salesforce/apex/HDT_UTL_ActivityCustom.validaActivityDocument';
+import rejectActivity from '@salesforce/apex/HDT_UTL_ActivityCustom.rejectActivityDocument';
 
 export default class hdtDocumentActivityValidation extends LightningElement {
 
@@ -13,7 +14,9 @@ export default class hdtDocumentActivityValidation extends LightningElement {
     @api recordId;
     @api causale = '';
     @api caseid;
-
+    @api showModal=false;
+    @track note='';
+    @api showModalSpinner=false;
 
     approve(){
         valida({
@@ -35,7 +38,8 @@ export default class hdtDocumentActivityValidation extends LightningElement {
 
     reject(){
         console.log('rigettata');
-        valida({
+        this.showModal=true;
+       /* valida({
             recordid : this.recordId,
             validazione : 'No'
         }).then(result => {
@@ -64,11 +68,47 @@ export default class hdtDocumentActivityValidation extends LightningElement {
                 this.dispatchEvent(event);
             }
             updateRecord({ fields: { Id: this.recordId } });
-        });
-     
+        });*/
     }
 
+    rejectAct(){
+        console.log('@@@Note: '+this.note);
+        this.showModalSpinner=true;
+        rejectActivity({
+            recordId : this.recordId,
+            noteChiusura : this.note
+        }).then(result => {
+            if(result == 'Creata'){
+                const event = new ShowToastEvent({
+                    title: 'Successo',
+                    message: 'Attività Non Validata, è stata generata l\'attivita di Documento non Validato',
+                    variant: 'success',
+                });
+                this.dispatchEvent(event);
+                this.showModal=false;
+            }
+            updateRecord({ fields: { Id: this.recordId } });
+            this.showModalSpinner=false;
 
+        }).catch(error =>{
+            const event = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Attività Non Validata: Non è stato possibile creare l\'attivita di Documento non Validato',
+                variant: 'error',
+            });
+            this.dispatchEvent(event);
+            this.showModal=false;
+            console.log(error);
+            this.showModalSpinner=false;
+        });
+    }
 
+    handleInputChange(event) {
+        this.note = event.detail.value;
+    }
 
+    closeModal(){
+        this.note='';
+        this.showModal=false;
+    }
 }

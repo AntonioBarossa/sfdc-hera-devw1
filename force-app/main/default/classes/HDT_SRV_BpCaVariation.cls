@@ -313,7 +313,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         String fromq = 'Case';
         String queryString;
         fieldq = 'Id, Contact.FirstName,Contact.LastName,Contact.Phone, Contact.ContactCode__c, Contact.FiscalCode__c,CaseNumber';
-        fieldq += ',BillingCity__c,BillingCountry__c,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingPostalCode__c,BillingProvince__c,BillingStreetName__c';
+        fieldq += ',BillingCity__c,BillingCountry__c,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingPostalCode__c,BillingProvince__c,BillingStreetName__c,Account.BillingCity,Account.BillingCountry,Account.BillingStreetNumber__c,Account.BillingStreetNumberExtension__c,Account.BillingPostalCode,Account.BillingState,Account.BillingStreetName__c';
         whereq = 'Id = \''+inputParams.recordId+'\'';
         queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
         List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
@@ -329,12 +329,28 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.account.telefono = (String) c.get('Phone');
         requestBody.account.nome = (String) c.get('FirstName');
         requestBody.account.codiceFiscale = (String) c.get('FiscalCode__c');
+        requestBody.account.indirizzo.comune = (String) caseRecord.Account.BillingCity;
+        requestBody.account.indirizzo.nazione = getFormattedCountry((String) caseRecord.Account.BillingCountry);
+        requestBody.account.indirizzo.civico = (String) caseRecord.Account.BillingStreetNumber__c;
+        requestBody.account.indirizzo.suffissoCivico = (String) caseRecord.Account.BillingStreetNumberExtension__c != null? (String) caseRecord.Account.BillingStreetNumberExtension__c:'';
+        requestBody.account.indirizzo.cap = (String) caseRecord.Account.BillingPostalCode;
+        requestBody.account.indirizzo.provincia = (String) caseRecord.Account.BillingState;
+        requestBody.account.indirizzo.via = (String) caseRecord.Account.BillingStreetName__c;
+        requestBody.account.indirizzo.piano = '';
 
         requestBody.ordine.destinatarioDivergente.nome = (String) c.get('FirstName');
         requestBody.ordine.destinatarioDivergente.cognome = (String) c.get('LastName');
         requestBody.ordine.destinatarioDivergente.codiceFiscale = (String) c.get('FiscalCode__c');
         requestBody.ordine.destinatarioDivergente.telefono = (String) c.get('Phone');
         requestBody.ordine.destinatarioDivergente.idIntegrazione = (String) c.get('ContactCode__c');
+        requestBody.ordine.destinatarioDivergente.indirizzo.comune = (String) caseRecord.get('BillingCity__c');
+        requestBody.ordine.destinatarioDivergente.indirizzo.nazione = getFormattedCountry((String) caseRecord.get('BillingCountry__c'));
+        requestBody.ordine.destinatarioDivergente.indirizzo.civico = (String) caseRecord.get('BillingStreetNumber__c');
+        requestBody.ordine.destinatarioDivergente.indirizzo.suffissoCivico = (String) caseRecord.get('BillingStreetNumberExtension__c') != null? (String) caseRecord.get('BillingStreetNumberExtension__c'):'';
+        requestBody.ordine.destinatarioDivergente.indirizzo.cap = (String) caseRecord.get('BillingPostalCode__c');
+        requestBody.ordine.destinatarioDivergente.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
+        requestBody.ordine.destinatarioDivergente.indirizzo.via = (String) caseRecord.get('BillingStreetName__c');
+        requestBody.ordine.destinatarioDivergente.indirizzo.piano = '';
         // L'indirizzo dell'amministratore deve andare nel nodo ordine, come da specifica del webservice as-is.
         requestBody.ordine.indirizzo.comune = (String) caseRecord.get('BillingCity__c');
         requestBody.ordine.indirizzo.nazione = getFormattedCountry((String) caseRecord.get('BillingCountry__c'));
