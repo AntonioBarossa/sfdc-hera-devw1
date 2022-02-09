@@ -27,10 +27,13 @@ public with sharing class HDT_SRV_ScriptManagerTst {
         insert productList;
 
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, PHASE_INC);
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(2, false, accList[0].id, PHASE_INC);
         ordList[0].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONE;
         ordList[0].Name = 'Father';
         ordList[0].SignatureMethod__c = 'Vocal Order';
+        ordList[1].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONE;
+        ordList[1].Name = 'Father 2';
+        ordList[1].SignatureMethod__c = 'OTP Remoto';
         insert ordList;
 
         Product2 prod = [SELECT Id FROM Product2 WHERE ProductCode = 'HIZL_E_24' LIMIT 1];
@@ -109,6 +112,27 @@ public with sharing class HDT_SRV_ScriptManagerTst {
         // System.assertEquals(true, !config.isEmpty(), 'The configurations were not retrieved correctly');
         // System.assertNotEquals(true, config.isEmpty(), 'The configurations were not retrieved correctly');
         // System.assertEquals('Hera', config[0].scriptName, 'The configurations were not retrieved correctly');
+    }
+
+    @isTest
+    static void testGetOrderScriptConfigOtpRemoto(){
+
+        List<HDT_ScriptPerCommOffer__mdt> scriptsMapMock = HDT_SRV_ScriptManager.scriptsMapping;
+
+        HDT_ScriptPerCommOffer__mdt mappingMock = new HDT_ScriptPerCommOffer__mdt();
+        mappingMock.Object__c = 'Order';
+        mappingMock.DeveloperName = 'Mini_VO';
+        mappingMock.ScriptFlowName__c = 'HDL_FL_VO_Script_Mini_VO';
+
+        scriptsMapMock.add(mappingMock);
+
+        Order order = [SELECT Id, Name, ParentOrder__c FROM Order WHERE Order.Name = 'Father 2'];
+        
+        Test.startTest();
+        List<HDT_SRV_ScriptManager.HDT_WRP_ScriptConfig> config = HDT_SRV_ScriptManager.getScriptConfig(order.Id);
+        Test.stopTest();
+
+        System.assert(config.size() > 0, 'The configurations were not retrieved correctly');
     }
 
     @isTest

@@ -13,7 +13,7 @@ public with sharing class HDT_LC_EditScartiComplessi {
                     responseMap.put('objectId',recordId);
                     responseMap.put('objectType','Case');
                 }else if(activity.Order__c != null){
-                    if(activity.Type__c.equals('Busta Docusign non consegnata')){
+                    if(activity.Type__c!=null && activity.Type__c.equals('Busta Docusign non consegnata')){
                         responseMap.put('object',activity);
                         responseMap.put('objectType','wrts_prcgvr__Activity__c');
                     }
@@ -94,6 +94,7 @@ public with sharing class HDT_LC_EditScartiComplessi {
         return step;
     }
 
+    @TestVisible
     private static Double setStepForVoltureWithSwitch(ServicePoint__c serv, Id accountId){
         Double step = 4;
         if (serv != null && serv.Account__c != accountId){
