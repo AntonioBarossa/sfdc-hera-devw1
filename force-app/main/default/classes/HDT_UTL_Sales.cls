@@ -233,7 +233,7 @@ public with sharing class HDT_UTL_Sales {
         for(Order ord : orderNew){
             if(ord.RecordType.DeveloperName == 'HDT_RT_OrderDossier'){ //&& ord.TecnicalPhase__c != null){
                 if(ord.phase__c == 'Documentazione da inviare'){
-                    if(ord.Sale__r.Channel__c == 'Teleselling Outbound' && ord.SignatureMethod__c == 'Vocal Order'){
+                    if((ord.Sale__r.Channel__c == 'Teleselling Outbound' || ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Registrazione  da validare';
                         listActivityToCreate.add(instanceActVocalOrd(ord.accountid,ord.id,rt));
                         childToUpdate.add(ord);
@@ -256,11 +256,11 @@ public with sharing class HDT_UTL_Sales {
                         //orderParentToActivityDocument.add(ord.id);
                         //listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
-                    else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
+                    /*else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Documentazione Gestita';
                       //  ord.status = 'Activated';
                         childToUpdate.add(ord);
-                    } 
+                    }*/
                 /* else if(ord.Sale__r.Channel__c = 'Web' && ord.SignatureMethod__c == 'Vocal Order'){
                         
                     }*/
@@ -334,7 +334,7 @@ public with sharing class HDT_UTL_Sales {
       //  List<String> orderParentToActivityDocument = new List<String>();
             if(ord.RecordType.DeveloperName == 'HDT_RT_OrderDossier'){ //&& ord.TecnicalPhase__c != null){
                 if(ord.phase__c == 'Documentazione da inviare'){
-                    if(ord.Sale__r.Channel__c == 'Teleselling Outbound' && ord.SignatureMethod__c == 'Vocal Order'){
+                    if((ord.Sale__r.Channel__c == 'Teleselling Outbound' || ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Registrazione  da validare';
                         listActivityToCreate.add(instanceActVocalOrd(ord.accountid,ord.id,rt));
                         childToUpdate.add(ord);
@@ -357,11 +357,11 @@ public with sharing class HDT_UTL_Sales {
                         //orderParentToActivityDocument.add(ord.id);
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
-                    else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
+                    /*else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Documentazione Gestita';
                         //ord.status = 'Activated';
                         childToUpdate.add(ord);
-                    }
+                    }*/
                 /* else if(ord.Sale__r.Channel__c = 'Web' && ord.SignatureMethod__c == 'Vocal Order'){
                         
                     }*/
