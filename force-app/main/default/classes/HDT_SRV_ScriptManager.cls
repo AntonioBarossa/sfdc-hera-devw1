@@ -104,8 +104,13 @@ public inherited sharing class HDT_SRV_ScriptManager {
     
             String flowUrl = '';
             String nomeOfferta = '';
-    
-            if (offerNames.size() > 0){
+            if ('OTP Remoto'.equals(parentOrder.SignatureMethod__c)){
+                HDT_ScriptPerCommOffer__mdt miniVoMdt = HDT_ScriptPerCommOffer__mdt.getInstance('Mini_VO');
+
+                flowUrl = '/flow/' + miniVoMdt.ScriptFlowName__c + '?idOrdinePadreInput='+ orderParentId;
+                configs.add(new HDT_WRP_ScriptConfig('Mini Vocal Order', flowUrl));
+            }
+            else if (offerNames.size() > 0){
                 for (AggregateResult offerName : offerNames){
                     for (HDT_ScriptPerCommOffer__mdt scriptPerOffer : scriptsMapping) {
                         if (scriptPerOffer.Object__c == 'Order' && scriptPerOffer.SignatureMethod__c == parentOrder.SignatureMethod__c) {
