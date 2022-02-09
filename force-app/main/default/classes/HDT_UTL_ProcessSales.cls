@@ -110,7 +110,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             enableCreateAccount = true;//(String.isEmpty(tempSplitted[csnIndex])) ? true : false;
             enableCreateBillingProfile = (String.isEmpty(tempSplitted[contoContrattualeIndex])) ? true : false;
-            enableCreateServicePoint = (String.isEmpty(tempSplitted[codicePuntoIndex])) ? true : false;
+            enableCreateServicePoint = true;//(String.isEmpty(tempSplitted[codicePuntoIndex])) ? true : false;
 
             for (String tempField : tempSplitted) {
 
