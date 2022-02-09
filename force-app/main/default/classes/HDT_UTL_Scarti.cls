@@ -942,24 +942,20 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         if(Schema.Case.SObjectType == objectId.getSobjectType()){
             toUpdateActivities = [SELECT id, wrts_prcgvr__Status__c
                                   FROM wrts_prcgvr__Activity__c
-                                  WHERE Case__c= :objectId 
-                                  AND wrts_prcgvr__Status__c != 'Chiusa'
+                                  WHERE (Case__c= :objectId OR Order__c= :objectId)  
+                                  AND (wrts_prcgvr__Status__c != 'Chiusa' AND wrts_prcgvr__Status__c != 'Completed' 
+                                        AND wrts_prcgvr__Status__c != 'Annullata' AND wrts_prcgvr__Status__c != 'Comunicazione inviata')
                                   WITH SECURITY_ENFORCED]; 
+            List<User> u = [SELECT ID, UserCompany__c, Username FROM User WHERE ID =: Userinfo.getUserId()];
             for(wrts_prcgvr__Activity__c singleActivity : toUpdateActivities){
                 singleActivity.wrts_prcgvr__Status__c='Chiusa';
+                singleActivity.EndDate__c = Date.today();
+                singleActivity.UserCompany__c = u[0].UserCompany__c;
+                singleActivity.ClosedByUsername__c=u[0].Username;
             }
+
             HDT_UTL_DatabaseService.updateSObject(toUpdateActivities);
-        }else if(Schema.Order.SObjectType == objectId.getSobjectType()){
-            toUpdateActivities = [SELECT id, wrts_prcgvr__Status__c
-                        FROM wrts_prcgvr__Activity__c
-                        WHERE Order__c= :objectId 
-                        AND wrts_prcgvr__Status__c != 'Chiusa'
-                        WITH SECURITY_ENFORCED];
-            for(wrts_prcgvr__Activity__c singleActivity : toUpdateActivities){
-                singleActivity.wrts_prcgvr__Status__c='Chiusa';
-            }
-            HDT_UTL_DatabaseService.updateSObject(toUpdateActivities);
-        }    
+        }  
     }
 
     //EVERIS: Gestione Scarti SAP
