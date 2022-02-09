@@ -5,7 +5,7 @@
         <description>Inserisco i valori &quot;Social&quot; nel Case del SocialPost e assegno al case il record type &quot;Altre Informative&quot;</description>
         <name>Inserimento_valori_Social_Case_SocialPost</name>
         <label>Inserimento valori Social e Record Type &quot;Altre Informative&quot;</label>
-        <locationX>264</locationX>
+        <locationX>446</locationX>
         <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>Case_SocialPost.Cluster__c</assignToReference>
@@ -28,22 +28,29 @@
                 <elementReference>Get_RecordType_Altre_Informative_0.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case_SocialPost.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Case_SocialPost</targetReference>
         </connector>
     </assignments>
     <decisions>
         <description>Condizione per verificare che ci siano i valori &quot;Social&quot; nei campi chiamati in causa, ovvero, Cluster e Canale, e verificare che il case abbia il record type &quot;Altre Informative&quot;.</description>
-        <name>Ci_sono_valori_Social</name>
-        <label>Valori &quot;Social&quot; e Record Type &quot;Altre Informative&quot;?</label>
-        <locationX>176</locationX>
+        <name>case_correctly_populated_decision</name>
+        <label>Case Correttamente Popolato?</label>
+        <locationX>248</locationX>
         <locationY>575</locationY>
         <defaultConnector>
             <targetReference>Inserimento_valori_Social_Case_SocialPost</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>NO</defaultConnectorLabel>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
-            <name>Ci_sono_valori_Social_0</name>
+            <name>case_correctly_populated_decision_yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Case_SocialPost.Cluster__c</leftValueReference>
@@ -66,33 +73,15 @@
                     <elementReference>Get_RecordType_Altre_Informative_0.Id</elementReference>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>open_activities_get</targetReference>
-            </connector>
-            <label>SI</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>gestione_richiesta_social_activity_exist_decision</name>
-        <label>Esiste un&apos;Attività Gestione Richiesta Social?</label>
-        <locationX>374</locationX>
-        <locationY>1391</locationY>
-        <defaultConnector>
-            <targetReference>Creazione_Attivita_Gestione_Richiesta_Social_0_0_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>gestione_richiesta_social_activity_exist_decision_yes</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Activity_Gestione_Richiesta_Social.Id</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>Case_SocialPost.Status</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <stringValue>In Lavorazione</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Creazione_Attivita_Gestione_Richiesta_Social_0_0</targetReference>
+                <targetReference>open_activities_get</targetReference>
             </connector>
             <label>Si</label>
         </rules>
@@ -100,10 +89,10 @@
     <decisions>
         <name>open_activity_exists_decision</name>
         <label>Esiste Activity Aperta?</label>
-        <locationX>176</locationX>
-        <locationY>1151</locationY>
+        <locationX>50</locationX>
+        <locationY>815</locationY>
         <defaultConnector>
-            <targetReference>Activity_Gestione_Richiesta_Social</targetReference>
+            <targetReference>Creazione_Attivita_Gestione_Richiesta_Social_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -143,18 +132,12 @@
     <recordCreates>
         <name>Creazione_Attivita_Gestione_Richiesta_Social_0_0</name>
         <label>Creazione Attività Integrazione Richiesta Social</label>
-        <locationX>242</locationX>
-        <locationY>1511</locationY>
+        <locationX>182</locationX>
+        <locationY>935</locationY>
         <inputAssignments>
             <field>Case__c</field>
             <value>
                 <elementReference>$Record.ParentId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ParentActivity__c</field>
-            <value>
-                <elementReference>Activity_Gestione_Richiesta_Social.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -169,8 +152,8 @@
     <recordCreates>
         <name>Creazione_Attivita_Gestione_Richiesta_Social_0_0_0</name>
         <label>Creazione Attività Gestione Richiesta Social</label>
-        <locationX>506</locationX>
-        <locationY>1511</locationY>
+        <locationX>446</locationX>
+        <locationY>935</locationY>
         <inputAssignments>
             <field>Case__c</field>
             <value>
@@ -187,41 +170,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
-        <name>Activity_Gestione_Richiesta_Social</name>
-        <label>Activity Gestione Richiesta Social</label>
-        <locationX>374</locationX>
-        <locationY>1271</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>gestione_richiesta_social_activity_exist_decision</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Case__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.ParentId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Type__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Gestione Richiesta Social</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>wrts_prcgvr__Activity__c</object>
-        <queriedFields>Id</queriedFields>
-        <sortField>CreatedDate</sortField>
-        <sortOrder>Desc</sortOrder>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <description>Ottengo il record del Case correlato al SocialPost</description>
         <name>Case_SocialPost</name>
         <label>Case SocialPost</label>
-        <locationX>176</locationX>
+        <locationX>248</locationX>
         <locationY>335</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -241,16 +193,17 @@
         <queriedFields>Cluster__c</queriedFields>
         <queriedFields>Channel__c</queriedFields>
         <queriedFields>RecordTypeId</queriedFields>
+        <queriedFields>Status</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <name>Get_RecordType_Altre_Informative_0</name>
         <label>Get RecordType Altre Informative</label>
-        <locationX>176</locationX>
+        <locationX>248</locationX>
         <locationY>455</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Ci_sono_valori_Social</targetReference>
+            <targetReference>case_correctly_populated_decision</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -268,8 +221,8 @@
     <recordLookups>
         <name>open_activities_get</name>
         <label>Attività Aperte</label>
-        <locationX>176</locationX>
-        <locationY>1031</locationY>
+        <locationX>50</locationX>
+        <locationY>695</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>open_activity_exists_decision</targetReference>
@@ -283,7 +236,7 @@
             </value>
         </filters>
         <filters>
-            <field>Status__c</field>
+            <field>wrts_prcgvr__Status__c</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Aperta</stringValue>
@@ -298,15 +251,15 @@
         <description>Aggiorno il case del SocialPost inserendo nei Campi &quot;Cluster&quot; e &quot;Canale&quot; i valori &quot;Social&quot;</description>
         <name>Update_Case_SocialPost</name>
         <label>Update Case SocialPost</label>
-        <locationX>264</locationX>
+        <locationX>446</locationX>
         <locationY>815</locationY>
         <connector>
-            <targetReference>open_activities_get</targetReference>
+            <targetReference>Creazione_Attivita_Gestione_Richiesta_Social_0_0_0</targetReference>
         </connector>
         <inputReference>Case_SocialPost</inputReference>
     </recordUpdates>
     <start>
-        <locationX>50</locationX>
+        <locationX>122</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Case_SocialPost</targetReference>
