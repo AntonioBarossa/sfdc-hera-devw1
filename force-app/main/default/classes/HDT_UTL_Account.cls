@@ -342,30 +342,41 @@ public with sharing class HDT_UTL_Account {
                 }
             }
         }
-        //CustomerMarking D* and update
-        Account acc = checkCustomerMarking( (Account)accountContactMap.get('Account') , saleId );
-        Contact cont = (Contact)accountContactMap.get('Contact');
-      
-        //HRADTR_GV Modifiche 03/02/2022 - Inizio
-        List<SObject> listToUpdate = new List<SObject>();
-        HDT_WS_RicCreBpCaRequest   req;
-        HDT_WS_RichCreBpCaResponse resCreate;
-        req = callBpCaCreate(acc,cont);
-        resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
-        if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
-            acc.CustomerCode__c = resCreate.data.codiceBP;
-            listToUpdate.add(acc); 
-        } // TODO gestire l'errore 
-
-            if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) && isAmministratore ){
-            req = callAmCaCreate(acc,cont);
+        /**@frpanico 09/02/2022
+         * Se presente il customer code
+         * Non viene registrato su sap l'account
+         */
+        if(String.isBlank(((String)((Account)accountContactMap.get('Accout')).get('CustomerCode__c'))))
+        {
+            //CustomerMarking D* and update
+            Account acc = checkCustomerMarking( (Account)accountContactMap.get('Account') , saleId );
+            Contact cont = (Contact)accountContactMap.get('Contact');
+        
+            //HRADTR_GV Modifiche 03/02/2022 - Inizio
+            List<SObject> listToUpdate = new List<SObject>();
+            HDT_WS_RicCreBpCaRequest   req;
+            HDT_WS_RichCreBpCaResponse resCreate;
+            req = callBpCaCreate(acc,cont);
             resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
             if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
-                cont.ContactCode__c = resCreate.data.codiceBP;
-                listToUpdate.add(cont); 
+                acc.CustomerCode__c = resCreate.data.codiceBP;
+                listToUpdate.add(acc); 
             } // TODO gestire l'errore 
-            HDT_UTL_DatabaseService.updateSObject( listToUpdate ); 
 
+                if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) && isAmministratore ){
+                req = callAmCaCreate(acc,cont);
+                resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
+                if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
+                    cont.ContactCode__c = resCreate.data.codiceBP;
+                    listToUpdate.add(cont); 
+                } // TODO gestire l'errore 
+                HDT_UTL_DatabaseService.updateSObject( listToUpdate ); 
+
+            }
+        }
+        else
+        {
+            return;    
         }
         //HRADTR_GV Modifiche 03/02/2022 - Fine
 
