@@ -63,10 +63,6 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
      */
     public SaleServiceItem__c createRecord(ServicePoint__c servicePoint, Sale__c sale, Map<String,String> extraParams){
 
-      
-
-
-
         //Get servicePoint data start
         servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
         List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SwitchInWinback__c,ServicePointCode__c,SupplyType__c,SupplyTypeTemp__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c, isReseller__c');
@@ -79,16 +75,11 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         sale = existingSale;
         //Get sale data end
         
-          /*** get Agency User and Code */
-        System.debug('******SalesAgent');
-          Map<String,String> agc = HDT_UTL_Sales.getAgentNameAndCode(servicePoint,sale.Account__r.CustomerMarking__c);
-          //String brand =  HDT_UTL_BrandSalesCompany.getFieldsMatrice(String comune,String servizio,String societaVendita,String tipoMercato);
+        /*** get Agency User and Code */
+        Map<String,String> agc = HDT_UTL_Sales.getAgentNameAndCode(servicePoint,sale.Account__r.CustomerMarking__c);
+        //String brand =  HDT_UTL_BrandSalesCompany.getFieldsMatrice(String comune,String servizio,String societaVendita,String tipoMercato);
 
-
-          /***end */
-  
-
-
+        /***end */
         //Needed logic start
         Boolean allowChangeUse = false;
         Boolean amendmentAllowed = isAmendmentAllowed(servicePoint, sale);
@@ -123,9 +114,11 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
             }
             groupLoginList.addAll(groupLoginSet);
             groupLoginString = String.join(groupLoginList, ',');
-        } else if (loginGroupItemList.size() == 1) {
+        }
+        else if (loginGroupItemList.size() == 1) {
             groupLoginString = loginGroupItemList[0].LoginGroup__r.NameGroup__c;
-        } else {
+        }
+        else {
             groupLoginString = '';
         }
         //End group login logic
@@ -140,7 +133,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         //calculate fields based on commodity start
         Decimal consumptionRangeEle = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? servicePoint.AnnualConsumption__c : null;
         Decimal consumptionRangeGas = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.AnnualConsumption__c : null;
-        Decimal powerFlow = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? servicePoint.PowerContractual__c : Decimal.valueOf(servicePoint.MaxRequiredPotential__c);
+        Decimal powerFlow = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? servicePoint.PowerContractual__c : servicePoint.MaxRequiredPotential__c;
         String residentDeliveryAddress = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? (servicePoint.Resident__c == true ? 'Y' : 'N') : 'N';
         //calculate fields based on commodity end
 
@@ -159,17 +152,11 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         calculatedDecimalValues.put('powerFlow', powerFlow);
         String brand =  HDT_UTL_BrandSalesCompany.getFieldsMatrice(Servicepoint.SupplyCity__c,Servicepoint.CommoditySector__c,agc.get('nomeAgente'),Servicepoint.MarketOrigin__c);
         
-
-
         checkReadAccess('Opportunity__c,Opportunity__r.Name,Quote__c,ServicePoint__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.RecordType.Name,ServicePoint__r.RecordType.DeveloperName,ServicePoint__r.RecordType.MarketOrigin__c,Opportunity__r.Sale__c');
         List<SaleServiceItem__c> existingSaleServiceItems = saleServiceItemQuery.queryExsistingCityAndType(sale, servicePoint, calculatedStringValues, calculatedDecimalValues);
         //Compare logic to create new quote or not end
 
         SaleServiceItem__c newSaleServiceItem = new SaleServiceItem__c();
-
-        system.debug('!isAmendmentAllowed ' + !isAmendmentAllowed(servicePoint, sale));
-        system.debug('!existingSaleServiceItems ' + !existingSaleServiceItems.isEmpty());
-        system.debug('extraParams ' + extraParams);
 
         if (!existingSaleServiceItems.isEmpty() && !isAmendmentAllowed(servicePoint, sale) && (extraParams == null || extraParams.isEmpty())) {
 
@@ -183,7 +170,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 ServicePoint__c = servicePoint.Id,
                 Name=servicePoint.ServicePointCode__c
             );
-        } else {
+        }
+        else {
             Opportunity newOpportunity = opportunityService.createRecord(new Opportunity(
                 Sale__c = sale.Id,
                 Name = opportunityService.generateName(sale),
@@ -231,32 +219,25 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 SuperUser__c = helperMethods.isSuperUser() ? 'Y' : 'N',
                 SBQQ__PricebookId__c = getPricebookId(servicePoint)
             );
-            if(contractReference != null){
+            if(contractReference != null && contractReference != ''){
                 newQuote.ContractReference__c = contractReference;
             }
             /** Andrei Necsulescu - 27/08/2021
              *  New quote Profile__c logic using custom permission
              */
-            System.debug('HDT_SRV_SaleServiceItem.createRecord Quote-Profile__c');
             if (utils.isAssignedCustomPermission(constantsUtl.CUSTOMPERMISSION_NAME_SALESFORCECPQADMIN)) {
-                System.debug('HDT_SRV_SaleServiceItem.createRecord is CPQ Admin ');
                 newQuote.Profile__c = constantsUtl.QUOTE_PROFILEFIELD_SALESFORCECPQADMIN;
-
-            } else {
-                System.debug('HDT_SRV_SaleServiceItem.createRecord is NOT CPQ Admin ');
+            }
+            else {
                 newQuote.Profile__c = userRoleProfile[0].Profile.Name;
-                
             }
 
             /** Andrei Necsulescu - 30/08/2021
              *  Moved actual quote creation to account for profile logic
              */
             quoteService.createRecord(newQuote);
-
             newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
-
             opportunityService.updateRecord(newOpportunity);
-
             newSaleServiceItem = new SaleServiceItem__c(
                 Opportunity__c = newOpportunity.Id,
                 Quote__c = newQuote.Id,
@@ -272,16 +253,10 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 SwitchInWinback__c = HDT_UTL_Sales.isWinback(servicePoint.Id)
             ));
         }
-
-
         //winback check end
-
         List<String> fields = helperMethods.getObjAttrList(newSaleServiceItem);
-
         checkCreateAccess(String.join(fields, ','));
-
         HDT_UTL_DatabaseService.insertSObject(newSaleServiceItem);
-
         return newSaleServiceItem;
     }
 

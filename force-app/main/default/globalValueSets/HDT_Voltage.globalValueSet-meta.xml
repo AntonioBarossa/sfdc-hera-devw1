@@ -10,6 +10,11 @@
         <default>false</default>
         <label>MT</label>
     </customValue>
+    <customValue>
+        <fullName>AT</fullName>
+        <default>false</default>
+        <label>AT</label>
+    </customValue>
     <description>Tensione</description>
     <masterLabel>Voltage</masterLabel>
     <sorted>false</sorted>

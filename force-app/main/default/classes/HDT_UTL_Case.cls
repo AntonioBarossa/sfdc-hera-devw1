@@ -6,6 +6,7 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_Case {
 
+    private static HDT_QR_AccountContactRelation accountContactRelationQr = new HDT_QR_AccountContactRelation();
 
     @InvocableMethod(label='Predefault')
     public static List<HDT_UTL_FlowOutputs> caseFlowPredefaults(List<HDT_UTL_FlowInputs> inputs){
@@ -63,6 +64,9 @@ public inherited sharing class HDT_UTL_Case {
             String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
             output.cancellationNote = nowDateFormat + ': ' + cancellationNote;
             
+        }
+        else if(process.equalsIgnoreCase('CreaBpCa')){
+            System.enqueueJob(new HDT_QBL_BpCaRequest( accountContactRelationQr.getCreateBpCa( currentCase.AccountId ), currentCase.SupplyProvince__c ) );
         }
 
         outputs.add(output);

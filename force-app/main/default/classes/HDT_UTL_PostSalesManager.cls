@@ -386,11 +386,12 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     }
 
     public void sendDocumentFile(SObject inputRecord){
-        String recordId = (String)inputRecord.get('Id');
+        Id recordId = (Id)inputRecord.get('Id');
         Map<String,String> formParams = new Map<String,String>();
         formParams.put('mode', 'Print');
         formParams.put('Archiviato', 'Y');
-        HDT_LC_DocumentSignatureManager.sendDocumentFile(recordId, 'Case', JSON.serialize(formParams));
+        String sObjectName = recordId.getSObjectType().getDescribe().getName();
+        HDT_LC_DocumentSignatureManager.sendDocumentFile(recordId, sObjectName, JSON.serialize(formParams));
     }
 
     public void closeRiattivazione(SObject inputCase)

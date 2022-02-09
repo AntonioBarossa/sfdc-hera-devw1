@@ -1,5 +1,5 @@
-@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveClassLength, PMD.ExcessivePublicCount')
-public class HDT_SRV_DocumentalManagement{
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveClassLength, PMD.ExcessivePublicCount, PMD.CyclomaticComplexity, PMD.AvoidDeeplyNestedIfStmts, PMD.NcssMethodCount, PMD.ExcessiveParameterList')
+public with sharing class  HDT_SRV_DocumentalManagement{
 	
 	public static String generateRequest(String recordId, String context, String formParams){
 		
@@ -404,7 +404,7 @@ public class HDT_SRV_DocumentalManagement{
 				}
 			}
 			handleRadioGroup(record,listOfRadio,envelopeId);
-			//handleLandRegistry(record,listOfData,listOfRadio);
+			handleLandRegistry(record,listOfData,listOfRadio);
 			HDT_UTL_DatabaseService.upsertSObject(record);
 		}
 	}
@@ -674,6 +674,7 @@ public class HDT_SRV_DocumentalManagement{
 			sPackageRequest.objectId = recordId;
 			sPackageRequest.signMode = signMode;
 			sPackageRequest.mode = mode;
+			sPackageRequest.documentId = '1';
 			for(Map<String,Object> singleMap : driverPayloadListMap){
 				sPackage = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage((List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver>)singleMap.get('driver'),(String)singleMap.get('payload'));
 				sPackageRequest.sPackage.add(sPackage);
@@ -714,6 +715,7 @@ public class HDT_SRV_DocumentalManagement{
 			signInfo.idCheckConfigurationName = docusignCustomSettings.IdCheckConfigurationName__c;
 			signInfo.pageUrl = docusignCustomSettings.PageUrl__c;
 			signInfo.requireIdLookup = docusignCustomSettings.RequireIdLookup__c;
+			signInfo.transcodeTemplate = 'true';
 			signInfo.status = docusignCustomSettings.Status__c;
 			signInfo.senderProvidedNumbers.add(telephoneNumber);
 			//customerInfo
@@ -738,6 +740,7 @@ public class HDT_SRV_DocumentalManagement{
 			customerInfo.vatNumber = vatCode;
 			customerInfo.creationUrl = creationUrl;
 			customerInfo.emailSubject = 'HERA - ' + processType;
+			customerInfo.roleName = 'Cliente';
 			//@ealpi nuovi campi inviati
 			customerInfo.rds = rds;
 			customerInfo.dateCreationDocument = today.format('yyyy-MM-dd HH:mm:ss');

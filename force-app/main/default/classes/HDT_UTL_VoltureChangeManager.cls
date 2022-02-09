@@ -4,6 +4,8 @@ public with sharing class HDT_UTL_VoltureChangeManager {
     //private static String lawEightyActivityTemplate = '';
     @TestVisible
     private static String lawEightyPhase = 'In Attesa Legge 80';
+    private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    private static HDT_QR_Case caseQr = new HDT_QR_Case();
 
     /*
      *@frpanico 06/10/2021
@@ -102,41 +104,53 @@ public with sharing class HDT_UTL_VoltureChangeManager {
     {
         Order orderToUpdate = new Order();
         orderToUpdate.Id = currentOrder.Id;
-        /* Write text fields */
-        orderToUpdate.TecnicalPhase__c = (String)fieldsMap.get('FASE');
-        orderToUpdate.CausalCode__c = (String)fieldsMap.get('CODERR');
-        orderToUpdate.Description = (String)fieldsMap.get('ANNOTAZIONI');
-        orderToUpdate.SupplyStreetName__c = (String)fieldsMap.get('VIA');
-        orderToUpdate.SupplyStreetNumber__c = (String)fieldsMap.get('CIV');
-        orderToUpdate.SupplyPostalCode__c = (String)fieldsMap.get('CAP');
-        orderToUpdate.SupplyCityCode__c = (String)fieldsMap.get('ISTAT');
-        orderToUpdate.SupplyCity__c = (String)fieldsMap.get('LOCALITA');
-        orderToUpdate.SupplyState__c = (String)fieldsMap.get('PROV');
-        orderToUpdate.SupplyCountry__c = (String)fieldsMap.get('NAZIONE');
-        orderToUpdate.DiscardReason__c = HDT_UTL_Accents.removeDiacritics((String)fieldsMap.get('DES_ERR_AEEG'));
-        orderToUpdate.HerokuPracticeCode__c = (String)fieldsMap.get('COD_PRAT_UTENTE');
-        orderToUpdate.DistributorPracticeCode__c = (String)fieldsMap.get('COD_PRAT_DISTR');
-        /* Date Fields */
-        orderToUpdate.SwitchOutDate__c = fieldsMap.get('DATA_DECORRENZA_SW') != null
-            ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_SW'))
-            : null;   
-        orderToUpdate.EffectiveDate__c = fieldsMap.get('DATA_DECORRENZA_VT_TIT_III') != null
-            ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III'))
-            : null;
-        orderToUpdate.EffectiveDate__c = fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV') != null 
-            ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV'))
-            : null;
-        /* Number Fields */
-        orderToUpdate.PowerCommitted__c = fieldsMap.get('POTCONTRIMP') != null 
-            ? Decimal.valueOf((String)fieldsMap.get('POTCONTRIMP'))
-            : null;
-        orderToUpdate.PowerAvailable__c = fieldsMap.get('POTDISP') != null 
-            ? Decimal.valueOf((String)fieldsMap.get('POTDISP'))
-            : null;
-        /* Field "TENSIONE" */
-        orderToUpdate.VoltageLevel__c = fieldsMap.get('TENSIONE') != null 
-            ? voltureChangeUtils.getTension((String)fieldsMap.get('TENSIONE'))
-            : null;
+        /* Handle Result KO */
+        if(((String)fieldsMap.get('result')).equalsIgnoreCase('OK'))
+        {
+            /* Write text fields */
+            orderToUpdate.TecnicalPhase__c = (String)fieldsMap.get('FASE');
+            orderToUpdate.CausalCode__c = (String)fieldsMap.get('CODERR');
+            orderToUpdate.Description = (String)fieldsMap.get('ANNOTAZIONI');
+            orderToUpdate.SupplyStreetName__c = (String)fieldsMap.get('VIA');
+            orderToUpdate.SupplyStreetNumber__c = (String)fieldsMap.get('CIV');
+            orderToUpdate.SupplyPostalCode__c = (String)fieldsMap.get('CAP');
+            orderToUpdate.SupplyCityCode__c = (String)fieldsMap.get('ISTAT');
+            orderToUpdate.SupplyCity__c = (String)fieldsMap.get('LOCALITA');
+            orderToUpdate.SupplyState__c = (String)fieldsMap.get('PROV');
+            orderToUpdate.SupplyCountry__c = (String)fieldsMap.get('NAZIONE');
+            orderToUpdate.DiscardReason__c = HDT_UTL_Accents.removeDiacritics((String)fieldsMap.get('DES_ERR_AEEG'));
+            orderToUpdate.HerokuPracticeCode__c = (String)fieldsMap.get('COD_PRAT_UTENTE');
+            orderToUpdate.DistributorPracticeCode__c = (String)fieldsMap.get('COD_PRAT_DISTR');
+            /* Date Fields */
+            orderToUpdate.SwitchOutDate__c = fieldsMap.get('DATA_DECORRENZA_SW') != null
+                ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_SW'))
+                : null;   
+            orderToUpdate.EffectiveDate__c = fieldsMap.get('DATA_DECORRENZA_VT_TIT_III') != null
+                ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III'))
+                : null;
+            orderToUpdate.EffectiveDate__c = fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV') != null 
+                ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV'))
+                : null;
+            /* Number Fields */
+            orderToUpdate.PowerCommitted__c = fieldsMap.get('POTCONTRIMP') != null 
+                ? Decimal.valueOf((String)fieldsMap.get('POTCONTRIMP'))
+                : null;
+            orderToUpdate.PowerAvailable__c = fieldsMap.get('POTDISP') != null 
+                ? Decimal.valueOf((String)fieldsMap.get('POTDISP'))
+                : null;
+            /* Field "TENSIONE" */
+            orderToUpdate.VoltageLevel__c = fieldsMap.get('TENSIONE') != null 
+                ? voltureChangeUtils.getTension((String)fieldsMap.get('TENSIONE'))
+                : null;
+        }
+        /* result KO */
+        else 
+        {
+            orderToUpdate.TecnicalPhase__c = 'Comunicazione verso Heroku KO';
+            orderToUpdate.Description = (String)fieldsMap.get('errorMessage');
+            orderToUpdate.DiscardReason__c = (String)fieldsMap.get('errorMessage');
+
+        }
         return orderToUpdate;
     }
     
@@ -298,6 +312,128 @@ public with sharing class HDT_UTL_VoltureChangeManager {
         {
             return Integer.valueOf(posizione.valore);    
         }
+    }
+    /**@frpanico 01/02/2022 
+     * Introduced method
+     * to perform process check
+     * The map contains four key/value pairs
+     * ('orderNew',inserted field)
+     * ('currentOrder',retrieved order)
+     * ('isReading', input booleans)
+     * ('isRetroactive', input booleans)
+     * ('readingDate', reading date for readings)
+    */
+    public static HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck processCheck(Map<String,Object> checkMap)
+    {
+        String message;
+        String result='OK';
+
+        Order order = (Order) checkMap.get('orderNew');
+        Order currentOrder = (Order) checkMap.get('currentOrder');
+        //Boolean isVolture = (Boolean) checkMap.get('isVolture');
+        Boolean isReading = (Boolean) checkMap.get('isReading');
+        Boolean isRetroactive = (Boolean) checkMap.get('isRetroactive');
+        Boolean isUpdateStep = (Boolean) checkMap.get('isUpdateStep');
+        Date readingDate = (Date) checkMap.get('readingDate');
+
+        order.NotRegisteredMeterCase__c = order.NotRegisteredMeterCase__c!=null?order.NotRegisteredMeterCase__c:currentOrder.NotRegisteredMeterCase__c;
+        order.VoltureType__c = order.VoltureType__c!=null? order.VoltureType__c: currentOrder.VoltureType__c;
+        order.EffectiveDate__c = order.EffectiveDate__c!=null? order.EffectiveDate__c:currentOrder.EffectiveDate__c;
+        order.RetroactiveDate__c = order.RetroactiveDate__c!=null? order.RetroactiveDate__c:currentOrder.RetroactiveDate__c;
+        order.Subprocess__c = order.Subprocess__c!=null? order.Subprocess__c:currentOrder.Subprocess__c;
+        
+        if(order.NotRegisteredMeterCase__c == true){
+                if(caseQr.getChageNonRegMeterByOrder(order.Id).size() == 0)
+                {                
+                    message = 'Necessario completare un Case di \'Cambio Contatore Non Registrato\'';
+                    result='KO';
+                }
+            }
+            //@frpanico check "Tipo Voltura"
+            if( String.isBlank(order.VoltureType__c) )
+            {
+                message = 'Valorizzare campi obbligatori';
+                result='KO';
+            }
+            /**@frpanico 31/01/2022
+             * Aggiunto controllo
+             * Su Voltura in Recupero
+             */
+            if(order.VoltureType__c.equalsIgnoreCase('In continuità_no_addebito') && !currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Gas')){
+                message = 'Per poter selezionare \"' + order.VoltureType__c + '\" è necessario un punto di fornitura Gas';
+                result='KO';
+            }
+            /**@frpanico 31/01/2022
+             * Aggiunto controllo se
+             * In continuita_no_addebito
+             * La voltura deve essere gas
+             */
+            if( order.VoltureType__c.equalsIgnoreCase('Recupero') && order.EffectiveDate__c >= orderSrv.addBusinessDay(System.today(),3))
+            {
+                message = 'Per poter selezionare \"' + order.VoltureType__c + '\" è necessario inserire una data decorrenza antecedente al 31/08/2015';
+                result='KO';
+            }
+            /* Check Tipo Voltura "In Continuita"/"Recupero" ammesso solo se marcatura entrante/uscente e' "Persona Fisica"/"Persona Giuridica" */
+            if(order.VoltureType__c.containsIgnoreCase('In Continuità'))
+            {
+                if(currentOrder.PreviousCustomer__r.Account.CustomerMarking__c != currentOrder.Account.CustomerMarking__c || !currentOrder.Account.CustomerMarking__c.containsIgnoreCase('Persona Fisica'))
+                {
+                    message = 'Per Voltura \"' + order.VoltureType__c + '\", entrambi i clienti (uscente ed entrante) devono essere \"Persone Fisiche\"';
+                    result='KO';
+                }
+            }
+            else if( order.VoltureType__c.equalsIgnoreCase('Incorporazione societaria') )
+            {
+                if(currentOrder.PreviousCustomer__r.Account.RecordType.DeveloperName != currentOrder.Account.RecordType.DeveloperName
+                    || !currentOrder.Account.RecordType.DeveloperName.containsIgnoreCase('HDT_RT_Business'))
+                {
+                    message = 'Per Voltura \"' + order.VoltureType__c + '\", entrambi i clienti (uscente ed entrante) devono essere \"Persone Giuridiche\"';
+                    result='KO';
+                }
+            }
+            //@frpanico check "Data Decorrenza"
+            /**@frpanico 12/11/2021
+             * Update check VoltureType "Recupero" the date has been changed to 2015/08/31
+             */
+            if(isUpdateStep != null && isUpdateStep == true &&  order.EffectiveDate__c != null)
+            {
+                if( order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
+                {
+                    if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva')))
+                    {
+                        message = 'Impossibile inserire una data inferiore a 3 gg lavorativi';
+                        result='KO';
+                    }
+                    else if( order.VoltureType__c == 'Recupero' && order.EffectiveDate__c > Date.newInstance(2015, 08, 31))
+                    {
+                        message = 'Per Voltura di tipo \"Recupero\" è necessario inserire una data antecedente al 31/08/2015';
+                        result='KO';
+                    }
+                    else
+                    {    
+                        order.RetroactiveDate__c = order.EffectiveDate__c;
+                        order.Subprocess__c = 'Retroattiva';
+                    }
+                } 
+                else 
+                {
+                    order.RetroactiveDate__c = null;
+                    order.Subprocess__c = 'Standard';
+                }    
+            }
+            //@frpanico check "Voltura con Autolettura"
+            if(isReading != null && isReading == true && isRetroactive != null && isRetroactive == false)
+            {
+                order.Subprocess__c = 'Con Autolettura';
+            }
+            //@frpanico valorizzazione "Data Lettura"
+            if(readingDate != null && (isReading != null && isReading == true))
+            {
+                order.ReadingCustomerDate__c = readingDate;
+            }
+
+        HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck wrp = new HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck(result,message,(SObject)order);
+        return wrp;
     }
 
 }

@@ -254,7 +254,7 @@ public with sharing class HDT_UTL_Sales {
                         childToUpdate.add(ord);
                         //tutti i figli per cui crearla
                         //orderParentToActivityDocument.add(ord.id);
-                        listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
+                        //listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
                     else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Documentazione Gestita';
@@ -275,13 +275,13 @@ public with sharing class HDT_UTL_Sales {
                     else if((ord.Sale__r.Channel__c == 'HC Point') && ord.SignatureMethod__c == 'Cartacea' ){
                         ord.Phase__c = 'Documentazione da Firmare';
                         childToUpdate.add(ord);
-                        listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
+                        //listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
                     else if((ord.Sale__r.Channel__c == 'Sportello') && ord.SignatureMethod__c == 'Cartacea' ){
                         ord.Phase__c = 'Documentazione da Firmare';
                        // ord.status = 'Activated';
                         childToUpdate.add(ord);
-                        listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
+                        //listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
                     else if(ord.Sale__r.Channel__c == 'Vendita Condomini' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
                         ord.Phase__c = 'Documentazione da Firmare';
@@ -298,7 +298,7 @@ public with sharing class HDT_UTL_Sales {
                     }*/
                 }
                 else if(ord.phase__c == 'Documentazione da firmare'){
-                    if(ord.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
+                    if(ord.DocumentalPhase__c != null && ord.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
                         if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' )){
                             //ord.TecnicalPhase__c = 'Documentazione da Validare';
                             listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));

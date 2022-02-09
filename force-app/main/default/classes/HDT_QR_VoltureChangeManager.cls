@@ -247,9 +247,15 @@ public with sharing class HDT_QR_VoltureChangeManager {
         SObjectAccessDecision securityDecision = 
             Security.stripInaccessible(AccessType.READABLE,
             [SELECT PreviousCustomer__r.Account.CustomerMarking__c,
+            NotRegisteredMeterCase__c,
+            VoltureType__c,
+            EffectiveDate__c,
+            RetroactiveDate__c,
+            Subprocess__c,
             PreviousCustomer__r.Account.RecordType.DeveloperName,
             Account.CustomerMarking__c,
-            Account.RecordType.DeveloperName
+            Account.RecordType.DeveloperName,
+            ServicePoint__r.CommoditySector__c
             FROM Order
             WHERE Id = :orderId]);
     

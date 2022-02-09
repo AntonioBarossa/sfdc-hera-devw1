@@ -128,54 +128,6 @@
     <picklistValues>
         <picklist>Caliber__c</picklist>
         <values>
-            <fullName>100</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>100 Volt</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>230 Volt</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>30</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>4</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>400 Volt</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>50</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>8</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DIR Biorario</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DIR Monorario</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DIR Orario</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Elettronico</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>G1%2C6</fullName>
             <default>false</default>
         </values>
@@ -363,6 +315,7 @@
             <fullName>G6500</fullName>
             <default>false</default>
         </values>
+    </picklistValues>
     </picklistValues>
     <picklistValues>
         <picklist>CancellationReasonDescription__c</picklist>
@@ -2132,61 +2085,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>MaxRequiredPotential__c</picklist>
-        <values>
-            <fullName>46</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>76</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>100</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>191</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>200</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>307</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>498</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>767</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1228</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2398</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>3837</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6236</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>9594</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>MethodSignedAccepted__c</picklist>
         <values>
             <fullName>Comfort call</fullName>
@@ -2316,10 +2214,10 @@
             <fullName>Caricamento KO</fullName>
             <default>false</default>
         </values>
-        <values>
+<!--         <values>
             <fullName>Chiuso</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Completata</fullName>
             <default>false</default>
@@ -2347,9 +2245,17 @@
         <values>
             <fullName>Documentazione Validata</fullName>
             <default>false</default>
+        </values>        
+        <values>
+            <fullName>Errore invio a DL/SII</fullName>
+            <default>false</default>
         </values>
         <values>
             <fullName>Errore lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2373,6 +2279,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Flusso bloccato in assenza del precedente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Attesa Legge 80</fullName>
             <default>false</default>
         </values>
@@ -2381,17 +2291,21 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In sequenzializzazione</fullName>
+            <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>In sequenzializzazione</fullName>
+            <default>false</default>
+        </values>
+<!--         <values>
             <fullName>KO Rilavorato</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>OK SAP</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Pratica In Attesa</fullName>
             <default>false</default>

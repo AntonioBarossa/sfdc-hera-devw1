@@ -12,10 +12,10 @@ public with sharing class HDT_UTL_ServicePoint {
     private static HDT_SRV_ServicePoint serviceSrv = new HDT_SRV_ServicePoint();
     
     @AuraEnabled
-    public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response ){
+    public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response){
         
         ServicePoint__c spNew = new ServicePoint__c();
-        if(sp!= null){
+        if(sp != null){
             spNew = sp;
         }
         
@@ -45,7 +45,7 @@ public with sharing class HDT_UTL_ServicePoint {
             else if(mapRes.get('STATODEVICE')== 'I'){
                 spNew.MeterStatus__c  ='Inattivo' ;
             }
-            else{
+            else if(!String.isBlank(mapRes.get('STATODEVICE'))){
                 spNew.MeterStatus__c  = 'Bozza';
             }
         }
@@ -116,7 +116,7 @@ public with sharing class HDT_UTL_ServicePoint {
         }
         if(mapRes.get('DISTRIBUTORE')!=null && !String.isBlank(mapRes.get('DISTRIBUTORE'))){
             Account a = accountQr.getAccountByDistributorKey(mapRes.get('DISTRIBUTORE'));
-            spNew.Distributor__c = a.id;
+            spNew.Distributor__c = a.Id != null ? a.Id : ((sp != null && sp.Distributor__c != null) ? sp.Distributor__c : null);
         }
         if(mapRes.get('POD')!=null && !String.isBlank(mapRes.get('POD'))){
             spNew.ServicePointCode__c   = mapRes.get('POD');
@@ -168,15 +168,14 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.SwitchInWinback__c = false;
             spNew.SwitchOutDate__c = null;
         }
-        if(mapRes.get('TIPOIMPIANTO')!=null && !String.isBlank(mapRes.get('TIPOIMPIANTO'))){            
-            spNew.ImplantType__c  = mapRes.get('TIPOIMPIANTO')+'-'+mapRes.get('DESCRTIPOIMP');		
+        if(mapRes.get('TIPOIMPIANTO')!=null && !String.isBlank(mapRes.get('TIPOIMPIANTO'))){
+            HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
+            spNew.ImplantType__c = dataEnrich.getPicklistValue('ServicePoint__c', 'ImplantType__c', mapRes.get('TIPOIMPIANTO'));
         }
         if(mapRes.get('CONSUMOCAPDR')!=null && !String.isBlank(mapRes.get('CONSUMOCAPDR'))){            
             spNew.AnnualConsumption__c = integer.valueOf(mapRes.get('CONSUMOCAPDR'));
         }
-        if(mapRes.get('CONSUMOANNUOEE')!=null && !String.isBlank(mapRes.get('CONSUMOANNUOEE'))){
-            System.debug('@Davide - consumo annuo: ' +mapRes.get('CONSUMOANNUOEE'));
-            System.debug('@Davide - consumo annuo int: ' +integer.valueOf(mapRes.get('CONSUMOANNUOEE')));            
+        if(mapRes.get('CONSUMOANNUOEE')!=null && !String.isBlank(mapRes.get('CONSUMOANNUOEE'))){         
             spNew.AnnualConsumption__c = integer.valueOf(mapRes.get('CONSUMOANNUOEE'));
         }
         if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
@@ -206,10 +205,6 @@ public with sharing class HDT_UTL_ServicePoint {
         if(mapRes.get('VIA')!=null && !String.isBlank(mapRes.get('VIA'))){
             spNew.SupplyStreet__c  = mapRes.get('VIA');
         }
-        // Andrei Necsulescu 28/06/2021 - The code was commented as the SupplyStreetToponym__c needed to be deleted. We didn't delete the piece of code outright as we don't know if this string needs to be moved to another field.
-        // if(mapRes.get('TIPOVIA')!=null && !String.isBlank(mapRes.get('TIPOVIA'))){
-        // 	spNew.SupplyStreetToponym__c  = mapRes.get('TIPOVIA');
-        // }
         if(mapRes.get('CIVICO')!=null && !String.isBlank(mapRes.get('CIVICO'))){
             spNew.SupplyStreetNumber__c  = mapRes.get('CIVICO');
         }
@@ -235,24 +230,62 @@ public with sharing class HDT_UTL_ServicePoint {
            && mapRes.get('CODICEVIA')!=null && !String.isBlank(mapRes.get('CODICEVIA')))
         {
             spNew.SupplyisAddressVerified__c = true;
-        }        
+        }
+        Map<String, Account> accBpMap = new Map<String, Account>();
         if(mapRes.get('BP') != null){
             List<Account> accBp = accountQr.getAccountByCustomerCode(mapRes.get('BP'));
             if (!accBp.isEmpty()) {
                 spNew.Account__c = accBp[0].Id;
+                accBpMap.put(accBp[0].Id, accBp[0]);
             }
         }
+        Map<String, String> inputFields = new Map<String, String>();
+        String imposta = spNew.CommoditySector__c.equalsIgnoreCase('Energia Elettrica') ? spNew.ExciseEle__c : spNew.ExciseGas__c;
+        String accCategory = accBpMap.get(spNew.Account__c) != null ? accBpMap.get(spNew.Account__c).Category__c : '';
+
+        inputFields.put('servizio', spNew.CommoditySector__c);
+        inputFields.put('imposta', imposta);
+        inputFields.put('tipoImpianto', spNew.ImplantType__c);
+        inputFields.put('accCategory', accCategory);
+
+        spNew.SupplyType__c = calculateSupplyType(inputFields);
         
         List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
         servicePoints.add(spNew);
         return servicePoints;
     }
+
+    public static String calculateSupplyType(Map<String, String> inputFields){
+
+        String tipoFornitura = '';
+        String servizio = inputFields.get('servizio');
+        String imposta = inputFields.get('imposta');
+        String tipoImpianto = inputFields.get('tipoImpianto');
+        String accCategory = inputFields.get('accCategory');
+
+        if(servizio.equalsIgnoreCase('Energia Elettrica')){
+            tipoFornitura = tipoImpianto.equalsIgnoreCase('13A0-Usi di Abitazione BT') ? 'Domestico' : 'Non Domestico';
+        }
+        else {
+            String fields = 'Id, SupplyType__c';
+            String conditions = '';
+            conditions += String.isNotBlank(imposta) ? 'Taxes__c = \'' +imposta +'\' AND ' : '';
+            conditions += String.isNotBlank(tipoImpianto) ? 'ImplantType__c = \'' +tipoImpianto +'\' AND ' : '';
+            conditions += String.isNotBlank(accCategory) ? 'AccountCategory__c = \'' +accCategory +'\' AND ' : '';
+            conditions = conditions.removeEndIgnoreCase(' AND ');
+            
+            List<FieldCoerenceServicePoint__c> fieldCoerenceList = new List<FieldCoerenceServicePoint__c>();
+            fieldCoerenceList = HDT_QR_GenericQuery.getGenericRecords(fields, 'FieldCoerenceServicePoint__c' , conditions);
+            tipoFornitura = fieldCoerenceList.size() > 0 ? fieldCoerenceList[0].SupplyType__c : '';
+        }
+        return tipoFornitura;
+    }
     
     @AuraEnabled
-    public static List<String> objectToList(HDT_WRP_AddressObject Wrap){
+    public static List<String> objectToList(HDT_WRP_AddressObject wrap){
         
         List<String> listFields = new List<String>();
-        String stringWrap = JSON.serialize(Wrap);
+        String stringWrap = JSON.serialize(wrap);
         listFields = (List<String>)JSON.deserializeUntyped(stringWrap);
         
         return listFields;        
@@ -321,8 +354,8 @@ public with sharing class HDT_UTL_ServicePoint {
     
     public static void blockblankonfield(List<ServicePoint__c> oldList , List<ServicePoint__c> newList){
         Map<String,ServicePoint__c> oldMap = new Map<String,Servicepoint__c>();
-        for(ServicePoint__c srvO : oldList){
-            oldMap.put(srvO.id,srvO);
+        for(ServicePoint__c srvOld : oldList){
+            oldMap.put(srvOld.id,srvOld);
         }
         for(ServicePoint__c srv : newList){
             if(srv.SupplyType__c == null || srv.ImplantType__c == null){ 

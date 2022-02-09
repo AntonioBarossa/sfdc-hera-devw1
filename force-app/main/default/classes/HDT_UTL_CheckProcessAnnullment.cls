@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.EmptyStatementBlock, PMD.AvoidDebugStatements, PMD.AvoidGlobalModifier')
 global with sharing class HDT_UTL_CheckProcessAnnullment implements wrts_prcgvr.Interfaces_1_2.IApexCriteria{
     global HDT_UTL_CheckProcessAnnullment() {}
 
@@ -16,8 +17,8 @@ global with sharing class HDT_UTL_CheckProcessAnnullment implements wrts_prcgvr.
         try{
             activityCreationOutcome = HDT_UTL_Scarti.checkActivityCreation((Id)record.get('Id'), method);
         } catch(Exception e){
-            system.debug(e.getMessage());
-            system.debug(e.getStackTraceString());
+            system.debug(LoggingLevel.DEBUG, e.getMessage());
+            system.debug(LoggingLevel.DEBUG, e.getStackTraceString());
         }
 		
 		return !activityCreationOutcome;

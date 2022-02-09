@@ -169,7 +169,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
                 HDT_UTL_DatabaseService.upsertSObject(c); // necessario per doppia transizione di fase.
                 String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
                 c.Description = nowDateFormat + ': '  + request.outcomeDescription;
-                c.Phase__c = 'KO Definitivo';
+                c.Phase__c = 'Annullato';
                 c.Status = 'Closed';
             }
             when else {
