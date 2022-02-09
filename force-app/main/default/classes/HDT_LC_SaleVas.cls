@@ -344,7 +344,11 @@ public inherited sharing class HDT_LC_SaleVas {
             AccountId = order.AccountId
         ));
 
-        SBQQ__Quote__c newQuote = quoteSrv.createRecord(new SBQQ__Quote__c(
+        /**@frpanico 09/02/2022
+         * Inserimento puntamento
+         * al contratto
+         */
+        SBQQ__Quote__c newQuote = new SBQQ__Quote__c(
             Sale__c = sale.Id,
             OrderReference__c = order.Id,
             SBQQ__Opportunity2__c = newOpportunity.Id,
@@ -363,7 +367,14 @@ public inherited sharing class HDT_LC_SaleVas {
             IsBillableVas__c = false,
             IsTransition__c = currentSale[0].IsTransition__c,
             SBQQ__PricebookId__c = checkCommodityOrder(order.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
-        ));
+        );
+
+        if(order.ContractReference__c != null)
+        {
+            newQuote.ContractReference__c = order.ContractReference__c;
+        }
+
+        newQuote = quoteSrv.createRecord(newQuote);
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
 
