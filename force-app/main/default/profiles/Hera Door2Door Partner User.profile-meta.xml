@@ -221,6 +221,10 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_GestioneScarti__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_GestioneScartiSap__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -350,6 +354,10 @@
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_CallScriptValue__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_CreateBpCa__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
@@ -1463,6 +1471,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.FiscalCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.FormalChannelInCharge__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3927,6 +3940,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Campaign.FlowType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Campaign.GenerationPeriod__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6138,6 +6156,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.IsExportCMOR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.IsExportSIE__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10395,6 +10418,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>HDT_Generic_Record_Selection__mdt.sObject__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_GestioneScarti__mdt.Phase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_GestioneScarti__mdt.IsActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_GestioneScarti__mdt.CaseTemplate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_GestioneScarti__mdt.OrderTemplate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -29889,6 +29932,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.FormalChannelInCharge__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.HerokuPracticeCode__c</field>
         <readable>true</readable>
@@ -30082,11 +30130,6 @@
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.RecordTypeDevName__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.RecordingLink__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -31607,6 +31650,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-Prima attivazione con modifica</layout>
+        <recordType>Order.HDT_RT_ConnessioneConAttivazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Prima attivazione con modifica</layout>
         <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -31620,6 +31667,10 @@
     <layoutAssignments>
         <layout>Order-Switch in</layout>
         <recordType>Order.HDT_RT_SwitchIn</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Switch in</layout>
+        <recordType>Order.HDT_RT_VolturaConSwitch</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-HDT_PraticaInVolo</layout>

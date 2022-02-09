@@ -17,6 +17,9 @@ public class HDT_UTL_GestAppAutomaticCreationCaseTst {
 
 
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        Id rtDistributore=Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Distributore').getRecordTypeId();
+        accList[0].recordTypeId=rtDistributore;
+        update accList;
         List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].Id, 'Bozza');
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);

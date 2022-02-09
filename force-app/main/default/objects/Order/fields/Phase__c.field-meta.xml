@@ -573,6 +573,11 @@
                 <label>Registrazione  da validare</label>
             </value>
             <value>
+                <fullName>Registrazione validata</fullName>
+                <default>false</default>
+                <label>Registrazione validata</label>
+            </value>
+            <value>
                 <fullName>Registrazione validata  Firmato/Inviato</fullName>
                 <default>false</default>
                 <label>Registrazione validata  Firmato/Inviato</label>
@@ -678,6 +683,11 @@
                 <fullName>Comunicazione EngageOne KO</fullName>
                 <default>false</default>
                 <label>Comunicazione EngageOne KO</label>
+            </value>
+            <value>
+                <fullName>Check TIMOE OK</fullName>
+                <default>false</default>
+                <label>Check TIMOE OK</label>
             </value>
         </valueSetDefinition>
     </valueSet>

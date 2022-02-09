@@ -21,6 +21,9 @@ public with sharing class HDT_SRV_SalesHandler {
      */
     private static HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
     private static Set<String> moveOutProcesses = new Set<String>{'Cambio Uso','Voltura','Cambio Offerta'};
+    private static String erroreLavorazioneSapPhase = 'Errore lavorazione SAP';
+    private static String annullatoPhase = 'Annullato';
+    private static String annullatoStatus = 'Annullato';
 
     public  HDT_WRP_MrrResponse.HDT_WRP_Response manageSalesProcessCategory(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem) {
         
@@ -192,16 +195,6 @@ public with sharing class HDT_SRV_SalesHandler {
                                         }
                                     }
                                 }
-
-                                 if(ord.CausalCode__c == '034' 
-                                     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
-                                         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
-                                         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
-                                 )){
-                                     ord.TecnicalPhase__c = 'Annullato';
-                                     ord.Status = 'Annullato';
-                                     ord.Phase__c = 'Annullato'; //HRAWRM-460
-                                 }
                             }
                             when 'Dati Tecnici Ricevuti'{
                                 HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
@@ -252,9 +245,12 @@ public with sharing class HDT_SRV_SalesHandler {
                                 HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
                                 utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
-                                ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.valueOf(mapRequestFields.get('DT_INIZIO_VERT')) : null;
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                if(mapRequestFields.get('DT_INIZIO_VERT') != null && String.isNotBlank(mapRequestFields.get('DT_INIZIO_VERT'))){
+                                    ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.valueOf(mapRequestFields.get('DT_INIZIO_VERT')) : null;
+                                }
+                                
                                 
                                 //Start HRAWRM-657 21/09/2021
                                 List<Id> listRecType = new List<Id>();
@@ -386,11 +382,27 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.Phase__c = previousPhase;
                                     ord.Status = 'Completed';
                                 }
-                                else 
+                                /**@frpanico 02/02/2022
+                                 * Aggiunta gestione 
+                                 * Annullato -Errore Lavorazione SAP - Annullato
+                                 */
+                                else if((previousPhase.equalsIgnoreCase(erroreLavorazioneSapPhase) || previousPhase.equalsIgnoreCase(annullatoPhase))
+                                    && ordRetrieved.Status.equalsIgnoreCase(annullatoStatus))
+                                {
+                                    ord.Phase__c = annullatoPhase;
+                                }
+                                /**@frpanico 04/02/2022
+                                 * Gestione preventivo Extra Sistema
+                                 */
+                                else if(previousPhase.equalsIgnoreCase('Dati Tecnici Ricevuti') && ordRetrieved.ProcessType__c.containsIgnoreCase('Prima Attivazione con modifica'))
+                                {
+                                    ord.Phase__c = previousPhase;
+                                }
+                                else
                                 {
                                     Boolean redirectPreventivo = false;
                                     switch on ordRetrieved.ProcessType__c{
-                                        when 'Connessione con Attivazione', 'Temporanea - Nuova Attivazione', 'Attivazione con Modifica'{
+                                        when 'Connessione con Attivazione', 'Temporanea - Nuova Attivazione'{
                                             redirectPreventivo=true;
                                         }
                                     }                            
@@ -470,7 +482,6 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                         }
 
-                        system.debug('cost2 '+ord.phase__c);
                         orderSrv.updateRecord(ord);
                     	responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';
@@ -483,6 +494,19 @@ public with sharing class HDT_SRV_SalesHandler {
                             updateFuture(JSON.serialize(ord));
                         }
                         //EVERIS: END ANNULLAMENTO/RIPENSAMENTO  
+
+                        //FIX Annullamento automatico per morosità
+                        if(ord.Phase__c == 'Ammissibilità OK' && (ord.DiscardCodeHeroku__c == '034' || ord.DiscardCodeHeroku__c == '033' || ord.DiscardCodeHeroku__c == '032')
+                                     && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
+                                         || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
+                                         || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
+                                 ))
+                                 {
+                                     //ord.TecnicalPhase__c = '';
+                                     ord.Status = 'Annullato';
+                                     ord.Phase__c = 'Annullato'; //HRAWRM-460
+                                     updateFuture(JSON.serialize(ord));
+                                 }
                     }else if(mapRequestFields.get('RECORD_ID')!= null && String.isNotBlank(activityName)){
                         //EVERIS: Gestione Scarti SAP Aggiunta logica creazione scarti se viene inviata solo l'attività
                         String recordId = mapRequestFields.get('RECORD_ID');

@@ -600,7 +600,8 @@ public inherited sharing class HDT_QR_Order {
             DateComfortCall__c,
             DocumentPackage__c,
             ProcessType__c,
-            ParentOrder__c
+            ParentOrder__c,
+            ParentOrder__r.Phase__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
@@ -944,6 +945,7 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getRecordByOrderNumber(String orderNumber){
         return [SELECT id,
         phase__c,
+        Status,
         PrecheckResultSII__c,
         ProcessType__c,
         BillingProfile__c, 
@@ -972,6 +974,7 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getOrdersByOrderNumber(List<String> orderNumbers){
         return [SELECT id,
         phase__c,
+        Status,
         PrecheckResultSII__c,
         ProcessType__c,
         BillingProfile__c, 
@@ -998,7 +1001,7 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getRecordByOrderId(String recordId){
-        return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, CancellationNote__c, AccountId from Order where Id = :recordId WITH SECURITY_ENFORCED];
+        return [Select id,phase__c,Status,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, CancellationNote__c, AccountId from Order where Id = :recordId WITH SECURITY_ENFORCED];
     }
 
     /**

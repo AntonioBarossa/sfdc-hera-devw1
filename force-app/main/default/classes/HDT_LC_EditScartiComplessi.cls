@@ -2,20 +2,36 @@ public with sharing class HDT_LC_EditScartiComplessi {
     @AuraEnabled
     public static string getInitData(String recordId){
         Map<String,Object> responseMap = new Map<String,Object>();
+        Boolean hasOwnership = true;
         try {
-            wrts_prcgvr__Activity__c activity = (wrts_prcgvr__Activity__c)HDT_QR_GenericQuery.getGenericRecords('Id,Case__c, Order__c,Order__r.ParentOrder__c, Order__r.AccountId,Order__r.ServicePoint__r.Account__c, Order__r.ServicePoint__r.CommoditySector__c,Order__r.RecordType.DeveloperName, Order__r.SwitchOutDate__c', 'wrts_prcgvr__Activity__c', 'Id =\''+recordId+'\'')[0];
-            if (activity.Case__c != null){
-                responseMap.put('objectId',recordId);
-                responseMap.put('objectType','Case');
-            }else if(activity.Order__c != null){
-                setStep(activity);
-                responseMap.put('objectType','Order');
-                responseMap.put('object',activity.Order__r);
-            }else{
-                throw new AuraHandledException('Attività Non Valida');
+            wrts_prcgvr__Activity__c activity = (wrts_prcgvr__Activity__c)HDT_QR_GenericQuery.getGenericRecords('Id,Case__c, Type__c, OwnerId, Order__c,Order__r.ParentOrder__c,Order__r.ParentOrder__r.AccountId, Order__r.ParentOrder__r.Sale__c,Order__r.Sale__c, Order__r.AccountId,Order__r.ServicePoint__r.Account__c, Order__r.ServicePoint__r.CommoditySector__c,Order__r.RecordType.DeveloperName, Order__r.SwitchOutDate__c', 'wrts_prcgvr__Activity__c', 'Id =\''+recordId+'\'')[0];
+            if(activity.OwnerId!= Userinfo.getUserId()){
+                hasOwnership=false;
+            }
+            else{
+                if (activity.Case__c != null){
+                    responseMap.put('objectId',recordId);
+                    responseMap.put('objectType','Case');
+                }else if(activity.Order__c != null){
+                    if(activity.Type__c!=null && activity.Type__c.equals('Busta Docusign non consegnata')){
+                        responseMap.put('object',activity);
+                        responseMap.put('objectType','wrts_prcgvr__Activity__c');
+                    }
+                    else {
+                        setStep(activity);
+                        responseMap.put('objectType','Order');
+                        responseMap.put('object',activity.Order__r);
+                    }
+                }else{
+                    throw new AuraHandledException('Attività Non Valida');
+                }
             }
         } catch (Exception e) {
             throw new AuraHandledException('Non è stata trovata l\'attività richiesta.');
+        }
+
+        if(!hasOwnership){
+            throw new AuraHandledException('L\'attività può essere gestita solamente dall\'assegnatario');
         }
         return JSON.serialize(responseMap);
     }
@@ -78,6 +94,7 @@ public with sharing class HDT_LC_EditScartiComplessi {
         return step;
     }
 
+    @TestVisible
     private static Double setStepForVoltureWithSwitch(ServicePoint__c serv, Id accountId){
         Double step = 4;
         if (serv != null && serv.Account__c != accountId){

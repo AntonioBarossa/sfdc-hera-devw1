@@ -82,7 +82,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                     if(String.isNotBlank(outcomeData.errorCode)){
                         errorCodesDescriptionSet.add(outcomeData.errorCode);
                     }else if(String.isNotBlank(outcomeData.errorDescription)) {
-                        errorCodesDescriptionSet.add(outcomeData.errorDescription);
+                        errorCodesDescriptionSet.add(HDT_UTL_Accents.removeDiacritics(outcomeData.errorDescription));
                     }
                 }
             }
@@ -150,7 +150,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                     errorDescription += ' - ' + outcomeData.errorDescription;
                 }
                 caseToUpdate.Subject = errorDescription;  // tracciamo l'errore su Subject poichè Description potrebbe già contenere qualcosa e non possiamo permetterci di querare il case per andare in append.
-                caseToUpdate.Phase__c = 'Annullato'; // skippiamo le fasi Esito KO pre-MDM / Esito KO da SAP poichè non possiamo permetterci un doppio update di fase.
+                //caseToUpdate.Phase__c = 'Annullato'; // skippiamo le fasi Esito KO pre-MDM / Esito KO da SAP poichè non possiamo permetterci un doppio update di fase.
             } else {
                 System.debug(LoggingLevel.DEBUG, 'Entering NOT isAutomaticDiscard');
                 

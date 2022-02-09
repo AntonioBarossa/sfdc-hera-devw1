@@ -84,13 +84,13 @@ public with sharing class HDT_UTL_SwtichInProcess {
                     dateSentToSii = order.WizardCompletedDate__c;
                 }
                 else{
-                    if(order.WizardCompletedDate__c > getMaxAfterthoughtDate(order)){
+                    //if(order.WizardCompletedDate__c > getMaxAfterthoughtDate(order)){
                         //DV: valorizzo con la data completamento wizard a cui applico la logica del prima o dopo il 10 del mese.
-                        dateSentToSii = order.WizardCompletedDate__c.day() < 11 ? order.WizardCompletedDate__c.addMonths(1).toStartofMonth() : order.WizardCompletedDate__c.addMonths(2).toStartofMonth();
-                    }
-                    else{
+                    //    dateSentToSii = order.WizardCompletedDate__c.day() < 11 ? order.WizardCompletedDate__c.addMonths(1).toStartofMonth() : order.WizardCompletedDate__c.addMonths(2).toStartofMonth();
+                    //}
+                    //else{
                         dateSentToSii= getMaxAfterthoughtDate(order).addDays(1);
-                    }
+                    //}
                 }            
             }
             else{
