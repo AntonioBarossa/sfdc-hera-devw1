@@ -140,8 +140,8 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         else{
             ord.CancellationReason__c = 'Registrazione non conforme';
         }
-        orderSrv.updateRecord(ord);
         activityCustomSrv.updateRecord(act);
+        orderSrv.updateRecord(ord);
 
         return res;
         //update act;
@@ -212,6 +212,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         String res = '';
         //Modifica del 28/01/2022 in ogni caso questa activity viene chiusa
         oldActivity.wrts_prcgvr__status__c = 'Chiusa';
+        activityCustomSrv.updateRecord(oldActivity);
         if(validazione == 'Si'){
            // res = true;
             Order ord = new Order();
@@ -257,7 +258,6 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             activityCustomSrv.createRecord(newActivity);
             res = 'Creata';  
          }
-        activityCustomSrv.updateRecord(oldActivity);
         return res;
     }
 
