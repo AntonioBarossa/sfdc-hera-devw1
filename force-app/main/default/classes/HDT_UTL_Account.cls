@@ -396,7 +396,7 @@ public with sharing class HDT_UTL_Account {
         }
         //Modifiche HRADTR_GV 03/02/2022 - FIne
         //IsTransition__c = false && CustomerMarking !LIKE «D*» (es. Persona Fisica)
-        if(checkSaleId){ //Modifiche HRADTR_GV 03/02/2022 
+        if(!checkSaleId){ //Modifiche HRADTR_GV 03/02/2022 
             switch on acc.CustomerMarking__c {
                 when 'Persona fisica' {
                     acc.CustomerMarking__c = 'D1 - Persona fisica';
