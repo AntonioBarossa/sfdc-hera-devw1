@@ -346,7 +346,7 @@ public with sharing class HDT_UTL_Account {
          * Se presente il customer code
          * Non viene registrato su sap l'account
          */
-        if(String.isBlank(((String)((Account)accountContactMap.get('Accout')).get('CustomerCode__c'))))
+        if(String.isBlank(((String)((Account)accountContactMap.get('Account')).get('CustomerCode__c'))))
         {
             //CustomerMarking D* and update
             Account acc = checkCustomerMarking( (Account)accountContactMap.get('Account') , saleId );
@@ -431,6 +431,8 @@ public with sharing class HDT_UTL_Account {
 
     private static Map<String, SObject> generateAccountContact(AccountContactRelation accountContactRel)
     {
+        accountContactRel = HDT_QR_AccountContactRelation.getAccountContactData(accountContactRel.Id)[0];
+
         Map<String, SObject> accountContactMap = new Map<String, SObject>();
         Account newAccount = new Account();
         Contact newContact = new Contact();
