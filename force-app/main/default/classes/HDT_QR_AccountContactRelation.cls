@@ -285,16 +285,17 @@ public inherited sharing class HDT_QR_AccountContactRelation {
     /**@frpanico 17/01/2022
      * Aggiunto metodo per servizio Crea BpCa
      */
-    public List<AccountContactRelation> getCreateBpCa(String AccountId)
+    public List<AccountContactRelation> getCreateBpCa(String accountId)
     {
         return 
         [
         SELECT Id,
         Roles
         FROM AccountContactRelation
-        WHERE Roles = 'Titolare'
+        WHERE (Roles = 'Titolare'
         OR Roles = 'Amministratore condominio'
-        OR Roles = 'Legale rappresentante'
+        OR Roles = 'Legale rappresentante')
+        AND AccountId = :accountId
         WITH SECURITY_ENFORCED
         ];
     }
@@ -304,6 +305,7 @@ public inherited sharing class HDT_QR_AccountContactRelation {
         return 
         [
         SELECT AccountId,
+        Account.Name,
         Account.FirstName__c,
         Account.LastName__c,
         Account.RecordTypeId,

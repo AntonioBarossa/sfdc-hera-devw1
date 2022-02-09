@@ -363,16 +363,15 @@ public with sharing class HDT_UTL_Account {
                 listToUpdate.add(acc); 
             } // TODO gestire l'errore 
 
-                if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) && isAmministratore ){
+            if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) && isAmministratore ){
                 req = callAmCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
                 if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
                     cont.ContactCode__c = resCreate.data.codiceBP;
                     listToUpdate.add(cont); 
                 } // TODO gestire l'errore 
-                HDT_UTL_DatabaseService.updateSObject( listToUpdate ); 
-
             }
+            HDT_UTL_DatabaseService.updateSObject( listToUpdate ); 
         }
         else
         {
