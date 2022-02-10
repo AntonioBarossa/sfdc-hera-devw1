@@ -473,6 +473,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.CancellationRequestDate__c = System.today();
                                 ord.CancellationReasonCode__c = mapRequestFields.get('COD_CAUSALE');
                                 ord.CancellationNote__c = mapRequestFields.get('ANNOTAZIONI_ANN');
+                                ord.CancellationReason__c = 'Annullamento dal SII';
                                 String annotazioni = ord.CancellationNote__c != null? ord.CancellationNote__c:'';
                                 ord.CancellationNote__c = mapRequestFields.get('NOTE_ANN') +'\n' + annotazioni;
                                 HDT_UTL_HerokuPostSalesManager utlClass = new HDT_UTL_HerokuPostSalesManager();

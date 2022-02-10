@@ -950,7 +950,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 readingButton:true,
                 //@frpanico 17/09/21 added "Voltura con Switch" condition
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
-                || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0),
+                || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'),
                 data:[
                     //@frpanico 09/09/21 utilizzato oggetto per snellire il codice dove possibile
                     //constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value)
