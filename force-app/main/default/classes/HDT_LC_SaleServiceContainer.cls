@@ -51,6 +51,14 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
         
         Map<String,String> extraParams = new Map<String,String>();
         boolean isTransition =HDT_UTL_Sales.isTransition(ServicePoint,sale);
+        List<account> acc = [ SELECT CustomerMarking__c FROM account WHERE Id=:sale.Account__c WITH SECURITY_ENFORCED];
+        String result = '';
+        String regex = '^D[0-9] - .*';
+        Pattern regexPattern = Pattern.compile(regex);
+
+        if ( isTransition && regexPattern.matcher(acc[0].CustomerMarking__c).matches() ){
+                throw new AuraHandledException('Impossibile effettuare vendita fuori ambito per cliente migrato. Necessario creare un nuovo cliente clone');
+        }
         if (hasUsoEnergiaChangedForEle(sale.Account__c, servicePoint, oldSupplyType,isTransition)) {
             List<Contract> linkedContracts = contractQr.getRecordsWithContractsByServicePointAndAccountId(servicePoint.Id, sale.Account__c);
             String contractReference = (linkedContracts != null && linkedContracts.size() > 0) ? String.valueOf(linkedContracts[0].id) : '';
