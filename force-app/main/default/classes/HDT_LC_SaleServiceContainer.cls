@@ -52,7 +52,6 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
         Map<String,String> extraParams = new Map<String,String>();
         boolean isTransition =HDT_UTL_Sales.isTransition(ServicePoint,sale);
         List<account> acc = [ SELECT CustomerMarking__c FROM account WHERE Id=:sale.Account__c WITH SECURITY_ENFORCED];
-        String result = '';
         String regex = '^D[0-9] - .*';
         Pattern regexPattern = Pattern.compile(regex);
 
