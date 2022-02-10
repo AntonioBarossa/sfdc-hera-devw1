@@ -627,7 +627,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     newOrder.Phase__c = newOrder.TecnicalPhase__c;
                     newOrder.TecnicalPhase__c = null;
                 }
-                if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& !newOrder.SBQQ__Contracted__c && !old.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) { //Fabiana 15/09/2021 //Sandy 05/10 Flusso Bonus e Sconti richiede chiusura e contracted in due transazioni distinte
+                if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& newOrder.Status.equalsIgnoreCase('Activated') && !newOrder.SBQQ__Contracted__c && !old.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) { //Fabiana 15/09/2021 //Sandy 05/10 Flusso Bonus e Sconti richiede chiusura e contracted in due transazioni distinte
                     newOrder.SBQQ__Contracted__c=true; 
                 }
             }           
@@ -648,7 +648,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             mapOld.put(old.id,old);
         }
         for (Order temp : listOrder) {
-            if(mapOld.get(temp.id).phase__c != 'Completata' && temp.Phase__c == 'Completata'){
+            if(mapOld.get(temp.id).phase__c != 'Completata' && temp.Phase__c == 'Completata' && temp.Status.equalsIgnoreCase('Activated')){
                 if ( String.isNotBlank(String.valueOf(temp.ServicePoint__c))) {
                     ServicePoint__c sp=new ServicePoint__c(id=temp.ServicePoint__c);
                     sp.supplytype__c = temp.ServicePoint__r.supplytypeTemp__c;
