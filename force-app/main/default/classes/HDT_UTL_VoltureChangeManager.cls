@@ -123,24 +123,24 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             orderToUpdate.HerokuPracticeCode__c = (String)fieldsMap.get('COD_PRAT_UTENTE');
             orderToUpdate.DistributorPracticeCode__c = (String)fieldsMap.get('COD_PRAT_DISTR');
             /* Date Fields */
-            orderToUpdate.SwitchOutDate__c = fieldsMap.get('DATA_DECORRENZA_SW') != null
+            orderToUpdate.SwitchOutDate__c = !String.isBlank((String)fieldsMap.get('DATA_DECORRENZA_SW')) 
                 ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_SW'))
                 : null;   
-            orderToUpdate.EffectiveDate__c = fieldsMap.get('DATA_DECORRENZA_VT_TIT_III') != null
+            orderToUpdate.EffectiveDate__c = !String.isBlank((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III')) 
                 ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III'))
                 : null;
-            orderToUpdate.EffectiveDate__c = fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV') != null 
+            orderToUpdate.EffectiveDate__c = !String.isBlank((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV'))  
                 ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV'))
                 : null;
             /* Number Fields */
-            orderToUpdate.PowerCommitted__c = fieldsMap.get('POTCONTRIMP') != null 
+            orderToUpdate.PowerCommitted__c = !String.isBlank((String)fieldsMap.get('POTCONTRIMP'))
                 ? Decimal.valueOf((String)fieldsMap.get('POTCONTRIMP'))
                 : null;
-            orderToUpdate.PowerAvailable__c = fieldsMap.get('POTDISP') != null 
+            orderToUpdate.PowerAvailable__c = !String.isBlank((String)fieldsMap.get('POTDISP'))
                 ? Decimal.valueOf((String)fieldsMap.get('POTDISP'))
                 : null;
             /* Field "TENSIONE" */
-            orderToUpdate.VoltageLevel__c = fieldsMap.get('TENSIONE') != null 
+            orderToUpdate.VoltageLevel__c = !String.isBlank((String)fieldsMap.get('TENSIONE'))
                 ? voltureChangeUtils.getTension((String)fieldsMap.get('TENSIONE'))
                 : null;
         }
