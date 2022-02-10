@@ -508,6 +508,15 @@ public with sharing class HDT_SRV_SalesHandler {
                                      ord.Phase__c = 'Annullato'; //HRAWRM-460
                                      updateFuture(JSON.serialize(ord));
                                  }
+                        //Annullamento automatico per precheck ko su precedente cliente
+                        if(ord.Phase__c.equalsIgnoreCase('Dati TIMOE Ricevuti') && ordRetrieved.IsTechnicalTransfer__c){
+                            ord.CancellationReason__c = 'Revoca ai sensi del comma 8.2 del TIMG';
+                            ord.CancellationReasonDescription__c = 'Revoca ai sensi del comma 8.2 del TIMG';
+                            ord.CancellationReasonCode__c = 'SG02';
+                            ord.CancellationRequestDate__c = Date.Today();
+                            ord.Phase__c = 'Annullamento - Da inviare';
+                            orderSrv.updateRecord(ord);
+                        }
                     }else if(mapRequestFields.get('RECORD_ID')!= null && String.isNotBlank(activityName)){
                         //EVERIS: Gestione Scarti SAP Aggiunta logica creazione scarti se viene inviata solo l'attività
                         String recordId = mapRequestFields.get('RECORD_ID');

@@ -694,6 +694,11 @@
                 <default>false</default>
                 <label>Check TIMOE OK</label>
             </value>
+            <value>
+                <fullName>Dati TIMOE Ricevuti</fullName>
+                <default>false</default>
+                <label>Dati TIMOE Ricevuti</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
