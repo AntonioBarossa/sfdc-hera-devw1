@@ -273,6 +273,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.DocumentLow80__c = 'Richiesto';
                 }
+            }when 'HDT_RT_CambioOfferta'{
+                if(order.SignedDate__c != null){                    
+                    HDT_UTL_SwtichInProcess.calculateCambioOffertaDate(order);  // Data di decorrenza
+                }
             }
         }
 
