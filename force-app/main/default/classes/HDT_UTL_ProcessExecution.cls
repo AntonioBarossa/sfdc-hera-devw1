@@ -20,7 +20,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public  Id recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
     public  Id recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
 
-    public List<Id> accountIdList = new List<Id>();
+    //public List<Id> accountIdList = new List<Id>();
 
     // --------- montors fix for bulk develop  ---------
     public void setMassiveLoaderRequestItemList(list<MassiveLoaderRequestItem__c> requestItemList){

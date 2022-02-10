@@ -2,7 +2,7 @@ public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchabl
     private id idLoaderRequest;
     private Integer batchSize;
     private String process;
-    public List<Id> accountIdList = new List<Id>();
+    //public List<Id> accountIdList = new List<Id>();
 
     private static HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
 
@@ -38,8 +38,8 @@ public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchabl
         
         try {
             cls.execute();
-            System.debug('>>> final account list: ' + cls.accountIdList);
-            accountIdList.addAll(cls.accountIdList);
+            //System.debug('>>> final account list: ' + cls.accountIdList);
+            //accountIdList.addAll(cls.accountIdList);
         } catch (HDT_UTL_ProcessExecution.HDT_WRP_ProcessEntitiesException e) {
             System.debug('HDT_UTL_ProcessExecution.HDT_WRP_ProcessEntitiesException');
             System.debug(e.Message);
@@ -73,7 +73,8 @@ public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchabl
             Database.executebatch(batch, 1000);
         }
 
-        if(process.equalsIgnoreCase('SwitchIn') && accountIdList.size()>0){
+        //if(process.equalsIgnoreCase('SwitchIn') && accountIdList.size()>0){
+        if(process.equalsIgnoreCase('SwitchIn')){
             HDT_BA_ProcessSales processReq = new HDT_BA_ProcessSales(idLoaderRequest, batchSize, process);
             Database.executeBatch(processReq, batchSize);
         }
