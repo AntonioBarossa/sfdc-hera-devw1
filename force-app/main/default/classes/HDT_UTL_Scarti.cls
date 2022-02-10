@@ -1012,7 +1012,23 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         return objectName;
     }
 
-    
+    public static void discardManagement(Map<String,String> requestDiscardManagemnt){
+        if (String.isNotBlank(requestDiscardManagemnt.get('FASE')) && String.isNotBlank(requestDiscardManagemnt.get('RECORD_ID')) && String.isNotBlank(requestDiscardManagemnt.get('OBJECT_TYPE'))){
+            Id recordId = (Id)requestDiscardManagemnt.get('RECORD_ID');
+            String fase = requestDiscardManagemnt.get('FASE');
+            String objectType = requestDiscardManagemnt.get('OBJECT_TYPE');
+            String templateName = '';
+            for (HDT_GestioneScarti__mdt conf : [SELECT OrderTemplate__c, CaseTemplate__c FROM HDT_GestioneScarti__mdt WHERE IsActive__c = true AND Phase__c =:fase WITH SECURITY_ENFORCED]){
+                templateName = 'Case'.equalsIgnoreCase(requestDiscardManagemnt.get('OBJECT_TYPE')) ? conf.CaseTemplate__c : conf.OrderTemplate__c;
+                break; //Se per sbaglio vengono configurate più configurazioni prende la prima che trova
+            }
+            if (String.isNotEmpty(templateName) && !checkDiscardAnnullmentRule(recordId, fase,requestDiscardManagemnt.get('DISCARD_MESSAGE'))){
+                HDT_UTL_DatabaseService.insertSObject(createActivityByObjectIdAndTemplateName(recordId, templateName,objectType));
+            }else if (String.isNotEmpty(templateName)){
+                annulmentProcess(recordId, objectType);
+            }
+        }
+    }
 
     public static void discardManagement(List<HDT_WRP_MrrRequest.HDT_WRP_Request> inboundRequests){
         Map<String,String> requestDiscardManagemnt = createRequestMap(inboundRequests);

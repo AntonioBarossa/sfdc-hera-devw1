@@ -469,4 +469,27 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }
         return fixedFeeExclVat==null ? null : fixedFeeExclVat*(1+vatNumber);
     }
+
+    public class HDT_WRP_CheckCreditWrapper{
+        @AuraEnabled public String message;
+        @AuraEnabled public Boolean result;
+    }
+
+    @AuraEnabled
+    public static HDT_WRP_CheckCreditWrapper checkCreditResultAction(Order ord){
+        HDT_WRP_CheckCreditWrapper retWrapper = new HDT_WRP_CheckCreditWrapper();
+        Order currentOrder = orderQr.getRecordById(ord.Id);
+        if(currentOrder.OutgoingCreditCheckResult__c.equalsIgnoreCase('KO') || currentOrder.IncomingCreditCheckResult__c.equalsIgnoreCase('KO')){
+            String message = 'Il processo non può essere confermato perchè il credit check è andato in KO per' + currentOrder.OutgoingCreditCheckResult__c != null ? 'Precedente Intestatario' : 'Nuovo Intestatario';
+            retWrapper.result=false;
+            retWrapper.message=message;
+            return retWrapper;
+        }
+
+        retWrapper.result=true;
+        retWrapper.message='';
+        return retWrapper;
+    
+    }
+
 }

@@ -254,6 +254,33 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                         }
                         HDT_SRV_Order ordSrv = new HDT_SRV_Order();
                         ordSrv.updateRecord(ord);
+
+                        Map<String,String> utilityMap = new Map<String, String>();
+                        
+                        String errdesc = '';
+                        if(STRING.isNotBlank(fieldValueResponse.get('NOTE_ERR'))){
+                            errdesc += HDT_UTL_Accents.removeDiacritics(fieldValueResponse.get('NOTE_ERR')) + '\n';
+                        }
+                        if(STRING.isNotBlank(fieldValueResponse.get('DES_ERR_AEEG'))){
+                            errdesc += HDT_UTL_Accents.removeDiacritics(fieldValueResponse.get('DES_ERR_AEEG')) + '\n';
+                        }
+                        if(STRING.isNotBlank(fieldValueResponse.get('TESTO_ERRR'))){
+                            errdesc += HDT_UTL_Accents.removeDiacritics(fieldValueResponse.get('TESTO_ERRR')) + '\n';;
+                        }
+                        if(STRING.isNotBlank(fieldValueResponse.get('ANNOTAZIONI'))){
+                            errdesc += HDT_UTL_Accents.removeDiacritics(fieldValueResponse.get('ANNOTAZIONI'));
+                        }
+
+                        utilityMap.put('NOTE_ERR', errdesc);
+                        utilityMap.put('DISCARD_MESSAGE', errdesc);
+                        utilityMap.put('DATA_ELABORAZIONE', STRING.isNotBlank(fieldValueResponse.get('DATA_ELABORAZIONE') ? fieldValueResponse.get('DATA_ELABORAZIONE') : ''));
+                        utilityMap.put('CMP', errdesc);
+                        utilityMap.put('UTENZA', errdesc);
+                        utilityMap.put('FASE', errdesc);
+                        utilityMap.put('RECORD_ID', errdesc);
+                        utilityMap.put('OBJECT_TYPE', errdesc);
+                        HDT_UTL_Scarti.handleHerokuResponse(ord.Id,fieldValueResponse.get('ATTIVITA'), fieldValueResponse.get('FASE'), fieldValueResponse);
+                        HDT_UTL_Scarti.discardManagement();
                     }
                 }
 
