@@ -2291,6 +2291,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Corso caricamento Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
         </values>

@@ -89,6 +89,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track isReading;
     @track resumeFromDraftReading = false;
     @track readingDisabled = false;
+    @track currentSectionName; 
     //FINE SVILUPPI EVERIS
     sysdate(){
         var sysdateIso = new Date().toISOString(); // Es: 2021-03-01T15:34:47.987Z
@@ -385,8 +386,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         //INIZIO SVILUPPI EVERIS
         console.log('isVolture: '+this.isVolture);
         console.log('isRetroactive: '+this.isRetroactive);
-        console.log('isReading: '+this.isReading)
-        console.log('isUpdateStep: '+this.sectionDataToSubmit.length > 0);
+        console.log('isReading: '+this.isReading);
+        console.log('CurrentSectionName: '+this.currentSectionName);
+        console.log('isUpdateStep: '+ this.isVolture === true && this.currentSectionName === 'processVariables');
         let orderId = this.order.Id;
         //FINE SVILUPPI EVERIS
         //INSERITE NUOVE VARIABILI, IsRetroactive e IsReading solo in avanzamento di sezione.  
@@ -516,6 +518,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     handleNext(event){
         this.loading = true;
         let currentSectionName = event.currentTarget.value;
+        this.currentSectionName = currentSectionName;
         console.log("currentSectionName "+currentSectionName);
         let currentSection = this.availableSteps.filter(section => section.name === currentSectionName);
         let currentObjectApiName = currentSection[0].objectApiName;
@@ -860,17 +863,34 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         let nextIndex = this.availableSteps[currentSectionIndex - 1].name === 'reading' && this.resumeFromDraftReading === false
         ? currentSectionIndex - 2
         : currentSectionIndex - 1
-        this.currentSection = this.availableSteps[nextIndex];
-        this.choosenSection = this.availableSteps[nextIndex].name;
-        this.activeSections = [this.choosenSection];
-        this.currentSectionObjectApi = this.availableSteps[nextIndex].objectApiName;
-        this.currentSectionRecordId = this.availableSteps[nextIndex].recordId;
-        this.sectionDataToSubmit = {};
-        if(this.currentSection?.name==="creditCheck"){
-            getRecordNotifyChange([{recordId: this.order.Id}]);
-        }
-        this.dispatchEvent(new CustomEvent('refreshorderchild'));
-        this.loading = false;
+        let previousSectionStep = this.availableSteps[nextIndex].step;
+
+        updateProcessStep({order: {Id: this.order.Id, Step__c: previousSectionStep},isVolture:this.isVolture}).then(data =>{
+            this.loading = false;
+            this.currentSection = this.availableSteps[nextIndex];
+            //EVERIS
+            this.choosenSection = this.availableSteps[nextIndex].name;
+            this.activeSections = [this.choosenSection];
+            //EVERIS
+            this.currentSectionObjectApi = this.availableSteps[nextIndex].objectApiName;
+            this.currentSectionRecordId = this.availableSteps[nextIndex].recordId;
+            this.sectionDataToSubmit = {};
+            if(this.currentSection?.name==="creditCheck"){
+                getRecordNotifyChange([{recordId: this.order.Id}]);
+            }
+            this.dispatchEvent(new CustomEvent('refreshorderchild'));
+
+        }).catch(error => {
+            this.loading = false;
+            console.log((error.body.message !== undefined) ? error.body.message : error.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
     }
 
     handleFields(){

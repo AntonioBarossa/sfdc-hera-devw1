@@ -139,7 +139,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
         if(order.ProcessType__c == 'Cambio offerta'){
             // Per cambio offerta entrare in tabella con la data firma o la data massima di ripensamento se no esecuzione anticipata
             dateToFrom = order.SignedDate__c;
-            List<FulfillmentDateMatrix__c> afterthoughtDays = [SELECT ActivationDate__c FROM FulfillmentDateMatrix__c WHERE
+            /*List<FulfillmentDateMatrix__c> afterthoughtDays = [SELECT ActivationDate__c FROM FulfillmentDateMatrix__c WHERE
                     OriginMarket__c =: order.MarketOrigin__c AND 
                     Commodity__c =: order.ServicePoint__r.CommoditySector__c AND 
                     VoltageLevel__c =: order.VoltageLevel__c AND 
@@ -154,6 +154,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
                 }else {
                     effectiveDateTmp = order.SignedDate__c;
                 }
+                */
         }
         else{
             //DV: Aggiungo controllo sul RT "HDT_RT_SwitchIn", in quanto per lo SwitchIn devo andarmi a prendere la Data Decorrenza (ovvero la Data invio richiesta al SII).
