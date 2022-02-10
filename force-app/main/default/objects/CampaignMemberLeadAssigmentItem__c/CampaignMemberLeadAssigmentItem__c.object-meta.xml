@@ -149,18 +149,19 @@
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
     <gender>Feminine</gender>
-    <label>Assegnazione Campaign Member Item</label>
+    <label>Assegnazione Campaign Member Item (Lead)</label>
     <nameField>
+        <displayFormat>CMAIL-{00000000}</displayFormat>
         <label>Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Assegnazioni Campaign Member Item</pluralLabel>
-    <searchLayouts/>
+    <pluralLabel>Assegnazioni Campaign Member Item (Lead)</pluralLabel>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
     <visibility>Public</visibility>
