@@ -2138,6 +2138,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Dati TIMOE Ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità OK</fullName>
             <default>false</default>
         </values>
