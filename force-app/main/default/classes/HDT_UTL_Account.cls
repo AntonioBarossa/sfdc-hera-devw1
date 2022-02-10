@@ -176,8 +176,8 @@ public with sharing class HDT_UTL_Account {
                 acc.CustomerCode__c = res.data.codiceBP;
                 update acc;
             }
-          
-            else if(('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) || 'Piccoli Condomini'.equalsIgnoreCase(acc.Category__c))&& ('BP non rilevato'.equalsIgnoreCase(res.data.commenti))) {
+            /* Commentato in quanto errata gestione della registrazione dell'amministratore */
+            /*else if(('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) || 'Piccoli Condomini'.equalsIgnoreCase(acc.Category__c))&& ('BP non rilevato'.equalsIgnoreCase(res.data.commenti))) {
                 // amministratore di condominio viene identificato  dalla category 
                 req = callAmCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert amministratore
@@ -186,7 +186,7 @@ public with sharing class HDT_UTL_Account {
                     acc.CustomerCode__c = resCreate.data.codiceBP; 
                     update acc;
                 } // TODO gestire l'errore 
-            }
+            }*/
             /**@frpanico 17/01/2022
              * Commentata parte di codice della creazione Account
              * L'account viene creato in un secondo momento
