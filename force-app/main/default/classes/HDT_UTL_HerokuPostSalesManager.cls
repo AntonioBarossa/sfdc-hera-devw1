@@ -148,6 +148,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             caseUpdate.add(caseNew);
             HDT_UTL_DatabaseService.updateSObject(caseUpdate);
             if(currentCase.Type == 'Allineamento Anagrafica' && phase == 'Esito OK da SII'){
+                caseNew.TecnicalPhase__c = '';
                 caseNew.Phase__c = 'Completata';
                 caseNew.Status = 'Closed';
                 updateFuture(JSON.serialize(caseNew));

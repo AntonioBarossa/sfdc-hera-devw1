@@ -792,6 +792,11 @@
         <editable>true</editable>
         <field>Order.RdsCodeSiebel__c</field>
         <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.VatPercentageFormula__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -30004,6 +30009,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Note__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.OldCustomerAccount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
