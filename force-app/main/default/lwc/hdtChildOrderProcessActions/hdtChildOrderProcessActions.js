@@ -4,12 +4,11 @@ import save from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.save';
 import saveDraft from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.saveDraft';
 import cancel from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.cancel';
 import calculateRate from '@salesforce/apex/HDT_UTL_Order.calculateRateCategory';
-import checkCreditResultAction from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.checkCreditResultAction';
 //Metodo per risottomissione pratica dopo la gestione degli scarti complessi
 import resubmission from '@salesforce/apex/HDT_LC_EditScartiComplessi.resubmissionPractice';
 export default class hdtChildOrderProcessActions extends LightningElement {
     @api order;
-    @api lastStepNumber; 
+    @api lastStepNumber;
     @api draftObject;
     @api draftObjectApiName;
     @api diffDraftObjectApiName;
@@ -17,7 +16,6 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     @api lastStepData;
     loading = false;
     isDialogVisible = false;
-    errMessage = '';
 
     //Modifiche Gestione Scarti Complessi
     @api discardRework;
@@ -151,16 +149,6 @@ export default class hdtChildOrderProcessActions extends LightningElement {
             }
 
         } 
-
-        if (!this.checkCreditResult(orderToSave)) {
-            const toastSuccessMessage = new ShowToastEvent({
-                title: 'Error',
-                message: this.message,
-                variant: 'error'
-            });
-            this.dispatchEvent(toastSuccessMessage);
-            return;
-        }
         
         orderToSave = this.order;
 
@@ -365,19 +353,5 @@ export default class hdtChildOrderProcessActions extends LightningElement {
         } else {
             this.isDialogVisible = false;
         }
-    }
-
-    checkCreditResult(ordToSave){
-        let result = true;
-        checkCreditResultAction({ord:ordToSave}).then(data=>{
-            result = data.result;
-            this.message = data.message;
-            return result;
-        }).catch(err=>{
-            console.log('Errore: ' + err);
-            result = false;
-            this.message = 'Si è verificato un errore';
-            return result;
-        })
     }
 }
