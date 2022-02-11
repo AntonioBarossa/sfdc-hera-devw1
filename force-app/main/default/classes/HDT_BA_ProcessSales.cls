@@ -1,6 +1,7 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_BA_ProcessSales implements Database.Batchable<SObject>, Database.Stateful,Database.AllowsCallouts {
 
+    private static HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
     private id idLoaderRequest;
     private Integer batchSize;
     private String process;
@@ -33,6 +34,24 @@ public inherited sharing class HDT_BA_ProcessSales implements Database.Batchable
 
     }
 
-    public void finish(Database.BatchableContext bc){}
+    public void finish(Database.BatchableContext bc){
+        //System.debug('HDT_BA_ProcessRequestItem finish ');
+        MassiveLoaderRequest__c oldReq = new MassiveLoaderRequest__c();
+        oldReq.Id = idLoaderRequest;
+        oldReq.Status__c = constantsUtl.MASSIVLOADER_STATUS_CHIUSO;
+        update oldReq;
+
+        // Creazione file RequestItem in Errore 
+        List<MassiveLoaderRequestItem__c> listErrorReq = [
+            SELECT Id, Name, Data__c, Status__c, StatusDescription__c
+            FROM MassiveLoaderRequestItem__c
+            WHERE Status__c = 'Errore' AND MassiveLoaderRequest__c = :idLoaderRequest
+        ];
+
+        if (listErrorReq!=null && listErrorReq.size()>0) {
+            HDT_BA_ErrorRequestItem batch = new HDT_BA_ErrorRequestItem(idLoaderRequest);
+            Database.executebatch(batch, 1000);
+        }
+    }
 
 }

@@ -426,25 +426,25 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         delete [
             SELECT Id
             FROM Account
-            WHERE Createddate = today AND CreatedById = '0051X0000055rbNQAQ'
+            WHERE CreatedById = '0051X0000055rbNQAQ'
         ];
         
         delete [
             SELECT Id
             FROM Contact
-            WHERE Createddate = today AND CreatedById = '0051X0000055rbNQAQ'
+            WHERE CreatedById = '0051X0000055rbNQAQ'
         ];
 
         delete [
             SELECT Id
             FROM BillingProfile__c
-            WHERE Createddate = today AND CreatedById = '0051X0000055rbNQAQ'
+            WHERE CreatedById = '0051X0000055rbNQAQ'
         ];
 
         delete [
             SELECT Id
             FROM ServicePoint__c
-            WHERE Createddate = today AND CreatedById = '0051X0000055rbNQAQ'
+            WHERE CreatedById = '0051X0000055rbNQAQ'
         ];
 
         List<ContentDocumentLink> cdlList = [

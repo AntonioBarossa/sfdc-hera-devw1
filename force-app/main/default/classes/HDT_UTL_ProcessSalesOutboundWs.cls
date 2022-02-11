@@ -81,7 +81,15 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
                     servPointFromWs = servicePointMap.get(servicePointId);
 
                     serResp = HDT_WS_ArrichmentDataEntityInvoker.callService('', servPointFromWs.Name);//'IT001E04893470'
+                    //serResp = HDT_WS_ArrichmentDataEntityInvoker.callService('', 'xxx');
                     System.debug(serResp);
+
+                    if(serResp == null || serResp.statusCode != 200){
+                        singleItem.Status__c = 'Errore';
+                        singleItem.StatusDescription__c = '[' + serResp.errorDetails[0].code + '] ' + serResp.errorDetails[0].message;
+                        System.debug(LoggingLevel.DEBUG, '>>> Additional info: ' + serResp.errorDetails[0].additionalInfo);
+                        continue;
+                    }
 
                     servPointFromWs = HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(servPointFromWs, serResp)[0];
                     System.debug(LoggingLevel.DEBUG, '>>> update sp ' + servPointFromWs);
