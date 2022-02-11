@@ -5,22 +5,14 @@
 * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
 */
 
+@SuppressWarnings('PMD.CyclomaticComplexity, PMD.NcssMethodCount, PMD.AvoidDeeplyNestedIfStmts')
 public with sharing class HDT_SRV_SalesHandler {
-
-    /**​
-    * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
-    * @date 13/04/2021
-    * @description HDT_SRV_SalesHandler.manageSalesProcessCategory() – manage the requests of process category "sales"
-    * @param request The request to be processed
-    * @param mrrResponseItem the already initialized response item that needs to be returned at the end of the execution
-    * @return the response item containing the result of the executed operations
-    */
 
     /**@frpanico 25/10/2021
      * Added class instance
      */
     private static HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
-    private static Set<String> moveOutProcesses = new Set<String>{'Cambio Uso','Voltura','Cambio Offerta'};
+    private static Set<String> moveOutProcesses = new Set<String>{'Cambio Uso','Voltura','Cambio Offerta Ele','Cambio Offerta Gas'};
     private static String erroreLavorazioneSapPhase = 'Errore lavorazione SAP';
     private static String annullatoPhase = 'Annullato';
     private static String annullatoStatus = 'Annullato';
@@ -215,15 +207,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                 }
                             }
                             when 'Errore tecnico invio a SAP', 'Flusso bloccato in assenza del precedente', 'Errore invio a DL/SII' {
-                                system.debug('previousPhase '+previousPhase);
+
                                 String finalPhase = ord.phase__c;
                                 if('Errore tecnico invio a SAP'.equalsIgnoreCase(finalPhase)){
                                      finalPhase = 'Errore comunicazione SAP';
                                 }
                             	ord.TrackingDiscardPhase__c = finalPhase;
-                                ord.phase__c=previousPhase; //perchè queste 3 non sono ammesse nel campo phase__c
-                                system.debug('phase__c '+ord.phase__c);
-                                system.debug('TrackingDiscardPhase__c '+ord.TrackingDiscardPhase__c);
+                                ord.phase__c=previousPhase;
                             }
                             when 'Esito KO da DL' {
                                 //Gestione Esito Appuntamento;
@@ -329,39 +319,36 @@ public with sharing class HDT_SRV_SalesHandler {
                                 //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
                             }
                             when 'Esito OK da DL/SII'{
-                                //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
+                                
                                 if(previousPhase.indexOf('Annullamento') > -1) {
                                     ord.Phase__c = 'Annullamento - ' + nextPhase;
                                     finalCancellationPhase = 'Annullato';
                                     Datetime nowDate = Datetime.now();
                                     String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
                                     String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
-                                    if(mapRequestFields.get('NOTE_ANN') != null && mapRequestFields.get('NOTE_ANN') != '')
-                                    {
+                                    if(mapRequestFields.get('NOTE_ANN') != null && mapRequestFields.get('NOTE_ANN') != ''){
                                         ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('NOTE_ANN') + '\n' + cancellationNote;
                                     }
-                                }else if(previousPhase.indexOf('Ripensamento') > -1) {
+                                }
+                                else if(previousPhase.indexOf('Ripensamento') > -1) {
                                    	ord.Phase__c = 'Ripensamento - Esito OK da SII';
                                     finalCancellationPhase = 'Ripensato';
                                 }
-                                //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
                             }
                             when 'Esito KO da DL/SII' {
-                                //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                                 if(previousPhase.indexOf('Annullamento') > -1) {
                                     ord.Phase__c = 'Annullamento - ' + nextPhase;
                                     Datetime nowDate = Datetime.now();
                                     String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
                                     String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
-                                    if(mapRequestFields.get('NOTE_ANN') != null && mapRequestFields.get('NOTE_ANN') != '')
-                                    {
+                                    if(mapRequestFields.get('NOTE_ANN') != null && mapRequestFields.get('NOTE_ANN') != ''){
                                         ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('NOTE_ANN') + '\n' + cancellationNote;
                                         ord.DiscardReason__c = mapRequestFields.get('NOTE_ANN');
                                     }
-                                }else if(previousPhase.indexOf('Ripensamento') > -1) {
+                                }
+                                else if(previousPhase.indexOf('Ripensamento') > -1) {
                                     ord.Phase__c = 'Ripensamento - Esito KO da SII';
                                 }
-                                //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
                             }
                             when 'Errore lavorazione SAP' {
                                 ord.DiscardReason__c = discardReasonString;
@@ -416,7 +403,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     listRecordType.add(rtVultureWithSwitch);
 
                                     if (!listRecordType.contains(ord.recordtypeId ) && String.isNotBlank(mapRequestFields.get('DT_CREA'))  ) {
-                                        ord.EffectiveDate__c = date.valueOf( mapRequestFields.get('DT_CREA')); //? per tutti i processi tranne RecordType.Name in ('SwitchIn','Cambio Offerta','Voltura Con Switch')
+                                        ord.EffectiveDate__c = date.valueOf( mapRequestFields.get('DT_CREA'));
                                     }
                                     //End HRAWRM-657 21/09/2021
 
@@ -447,16 +434,14 @@ public with sharing class HDT_SRV_SalesHandler {
                                             HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
                                             try{
                                                 billingProfileSrv.updateRecord(billingProfile);
-                                            }catch(Exception e){
-                                                system.debug('Exception Update Billing Profile');
+                                            }
+                                            catch(Exception e){
                                                 throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating Billing Profile, VKONT Already not Unique - '+e.getMessage());
                                             }
                                         }
-                                        //Modifica HRADRT_GV 31/01/2022 - Inizio
                                         if(ordRetrieved.ProcessType__c.containsIgnoreCase('Subentro') || ordRetrieved.ProcessType__c.containsIgnoreCase('Voltura')){
                                             mapRequestFields.put('NuovoAccount',ordRetrieved.AccountId);
                                         }
-                                        //Modifica HRADRT_GV 31/01/2022 - Fine
 
                                         HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
                                         utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
@@ -786,18 +771,17 @@ public with sharing class HDT_SRV_SalesHandler {
         return mrrResponseItem;
     }
     
-    //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
     @Future
     private static void updateFuture(String inputString){
         Order recordOrder = (Order) JSON.deserialize(inputString, Order.class);
         HDT_UTL_DatabaseService.updateSObject(recordOrder);
     }
-    //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
+
+    @SuppressWarnings('PMD.ExcessiveParameterList')
     private static void mapError(String msg, HDT_WRP_MrrResponse.HDT_WRP_Field responseField,HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError,HDT_WRP_MrrResponse.HDT_WRP_Object responseObject,HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem){
         responseField.fieldType = 'TEXT';
         responseField.name = 'ESITO';
         responseField.value = 'KO';
-
         responseFieldError.fieldType = 'TEXT';
         responseFieldError.name = 'ERROR_MESSAGE';
         responseFieldError.value = msg;
@@ -811,11 +795,12 @@ public with sharing class HDT_SRV_SalesHandler {
     private static void updateServicePoint(ServicePoint__c sp){
         try{
             new HDT_SRV_ServicePoint().updateRecord(sp);
-        }catch(Exception e){
-           // system.debug('Exception Update ServicePoint');
+        }
+        catch(Exception e){
             throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating ServicePoint - '+e.getMessage());
         }
     }
+    
     @TestVisible
     private static Map<String,String> requiredFields(List<String> listFieldsReq,HDT_WRP_MrrRequest.HDT_WRP_Request request){
         Map<String,String> localMapRequestFields = new Map<String,String>();
