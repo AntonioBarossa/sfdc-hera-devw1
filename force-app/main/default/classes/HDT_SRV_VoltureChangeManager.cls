@@ -1,15 +1,13 @@
-public with sharing class HDT_SRV_VoltureChangeManager 
-{
+public with sharing class HDT_SRV_VoltureChangeManager{
+
     private static HDT_UTL_VoltureChangeManager voltureChangeUtl = new HDT_UTL_VoltureChangeManager();
     private static HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
     private static HDT_UTL_VoltureChangeUtilities voltureChangeUtils = new HDT_UTL_VoltureChangeUtilities();
-
     private static String voltureChangeRecordTypeName = 'HDT_RT_VolturaConSwitch';
-    private static String clonedOrderRecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(voltureChangeRecordTypeName).getRecordTypeId();
-
     private static String ammissibilityCheckTemplate = 'Controlli Ammissibilità';
     @TestVisible
     private static String publishUpdatePhase = 'Comunicazione verso Heroku';
+    private static String clonedOrderRecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(voltureChangeRecordTypeName).getRecordTypeId();
     /**
      * @frpanico 06/10/2021
      * This method call the cloneSobject method from the HDT_UTL_VoltureChangeManager class
@@ -21,10 +19,8 @@ public with sharing class HDT_SRV_VoltureChangeManager
         /*Variable Declarations*/
         List<OrderItem> orderItemsToClone = new List<OrderItem>();
         List<OrderItem> orderItemsToCreate = new List<OrderItem>();
-
         Map<String,Object> extraParams = new Map<String,Object>();
         Map<String,Object> accountCheckParams = new Map<String,Object>();
-
         HDT_WRP_VoltureChangeManager.HDT_WRP_AccountCheck accountCheck = new HDT_WRP_VoltureChangeManager.HDT_WRP_AccountCheck();
 
         /* Call to the cloneSobject method */
@@ -84,6 +80,18 @@ public with sharing class HDT_SRV_VoltureChangeManager
         Order orderToUpdate = voltureChangeUtl.handleResponse(fieldsMap, currentOrder);
         HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
     }
+    /**@frpanico 07/02/2022
+     * Handle null response
+     */
+    public void handleResponse(Order currentOrder)
+    {
+        Order orderToUpdate = new Order();
+        orderToUpdate.Id = currentOrder.Id;
+        orderToUpdate.TecnicalPhase__c = 'Comunicazione verso Heroku KO';
+        orderToUpdate.DiscardReason__c = 'Errore nella risposta da Heroku';
+        orderToUpdate.Description = 'Errore nella risposta da Heroku';
+        HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
+    }
 
     /**@frpanico 18/10/2021
      * This method handle the ammissibility checks
@@ -115,9 +123,10 @@ public with sharing class HDT_SRV_VoltureChangeManager
     public void handlePublishUpdate(Order inputOrder)
     {
         HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
-
-        inputOrder.Phase__c = publishUpdatePhase;
-        platEvent.SerializedSobj__c = JSON.serialize(inputOrder);
+        Order orderToUpdate = new Order();
+        orderToUpdate.Id = inputOrder.Id;
+        orderToUpdate.Phase__c = publishUpdatePhase;
+        platEvent.SerializedSobj__c = JSON.serialize(orderToUpdate);
         Database.SaveResult sr = Eventbus.publish(platEvent);
         
         if(sr.isSuccess())
@@ -142,8 +151,7 @@ public with sharing class HDT_SRV_VoltureChangeManager
         Map<String,Object> inputMapSingleSobj = new Map<String,Object>();
         List<HDT_GenericDataEnrichmentTranscode__mdt> transcodeConfigs = new List<HDT_GenericDataEnrichmentTranscode__mdt>();
         /* Get input variable */
-        List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> posizioni = 
-            (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)inputMap.get('posizioni');
+        List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> posizioni = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)inputMap.get('posizioni');
         List<SObject> sobjList = (List<SObject>)inputMap.get('sobjList');
         /* Enrich SobjName List */
         for(SObject sobj : sobjList)
@@ -164,17 +172,18 @@ public with sharing class HDT_SRV_VoltureChangeManager
         return sobjList;
     }
 
-    /*Edoardo Zanatta 13/01/2022
-    
-    */    
+    /*Edoardo Zanatta 13/01/2022    
+    */
     public void orderPrecheckOk(Order myOrder){
         
         Date today = System.today();
-        
-        myOrder.Phase__c = myOrder.DateSentToSII__c > today ? 'In attesa tempi di ripensamento' : 'Comunicazione verso Heroku';
+
+        Order ordToUpdate = new Order();
+        ordToUpdate.Id = myOrder.Id;        
+        ordToUpdate.Phase__c = myOrder.DateSentToSII__c > today ? 'In attesa tempi di ripensamento' : 'Comunicazione verso Heroku';
 
         HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
-        platEvent.SerializedSobj__c = JSON.serialize(myOrder);
+        platEvent.SerializedSobj__c = JSON.serialize(ordToUpdate);
         Eventbus.publish(platEvent);            
     }
 }

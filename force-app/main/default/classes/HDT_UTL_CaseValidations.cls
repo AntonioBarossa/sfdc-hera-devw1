@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.CyclomaticComplexity')
 public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseValidationInterface {
 
     HDT_QR_CaseValidations caseValidationQr = new HDT_QR_CaseValidations();
@@ -98,7 +99,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         
         }else if(caseType == 'Proroga Conn Temp')
         {
-            result = validateEndDate(fields);
+            Date currentEndDate = currentCase.TemporaryConnectionEndDate__c;
+            result = validateEndDate(fields, currentEndDate);
         
         }else {
 
@@ -1171,7 +1173,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return result;
     }
 
-    public String validateEndDate(String fields){
+    public String validateEndDate(String fields, Date currentEndDate){
 
         String endDateString = getFieldValue(fields, 'TemporaryConnectionEndDate__c');
 
@@ -1179,9 +1181,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         Date endDate = Date.valueOf(endDateString);
 
-        /*if (endDate < startDate) {
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario che la data finale sia successiva alla data iniziale.'));
-        }*/
+        if ( currentEndDate > endDate) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario che la data fine connessione temporanea sia successiva a quella già esistente sul contratto.'));
+        }
 
         return result;
     }

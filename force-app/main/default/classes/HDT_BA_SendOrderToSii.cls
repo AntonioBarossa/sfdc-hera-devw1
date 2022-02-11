@@ -9,7 +9,7 @@ public with sharing class HDT_BA_SendOrderToSii implements Database.Batchable<sO
         Date tday = System.today();
         List <Order> orderList = new List <Order>();
 
-        orderList = [SELECT id, Phase__c, DateSentToSII__c FROM Order WHERE Phase__c = 'In attesa tempi di ripensamento' AND DateSentToSII__c = :tday];
+        orderList = [SELECT id, Phase__c, DateSentToSII__c FROM Order WHERE Phase__c = 'In attesa tempi di ripensamento' AND DateSentToSII__c <= :tday];
         return orderList;
     }
 
