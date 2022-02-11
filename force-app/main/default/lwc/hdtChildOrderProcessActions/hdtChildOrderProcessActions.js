@@ -36,6 +36,15 @@ export default class hdtChildOrderProcessActions extends LightningElement {
                _message = response;
                _title = 'Error';
                _variant = 'error'; 
+            }else{
+                this.loading = false;
+
+                if(this.order.ProcessType__c === 'Switch in Ripristinatorio' || this.order.IsCloned__c===true){
+                    console.log('redirect_attivazione_mod');
+                    this.dispatchEvent(new CustomEvent('redirect_attivazione_mod'));
+                } else {
+                    this.dispatchEvent(new CustomEvent('redirecttoparent'));
+                }
             }
             const toastSuccessMessage = new ShowToastEvent({
                 title: _title,

@@ -48,7 +48,7 @@ public with sharing class HDT_LC_EditScartiComplessi {
                 fase = 'Comunicazione Motore VAS';
             }
         }
-        Order orderToUpdate = new Order(Id = orderId,Phase__c = fase);
+        Order orderToUpdate = new Order(Id = orderId,Phase__c = fase, DiscardReason__c = null);
         System.Savepoint sp = Database.setSavePoint();
         try {
             if (!HDT_UTL_Scarti.updateCloseDiscardActivity(activityId)){
