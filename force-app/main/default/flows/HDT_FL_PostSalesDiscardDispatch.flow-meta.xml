@@ -4,8 +4,8 @@
     <decisions>
         <name>Check_Cluster</name>
         <label>Check Cluster</label>
-        <locationX>974</locationX>
-        <locationY>518</locationY>
+        <locationX>1238</locationX>
+        <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Schermata_di_errore</targetReference>
         </defaultConnector>
@@ -35,6 +35,9 @@
                     <stringValue>Preventivi</stringValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Gestione_Preventivi</targetReference>
+            </connector>
             <label>Preventivi</label>
         </rules>
         <rules>
@@ -92,6 +95,9 @@
                     <stringValue>Reclami</stringValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Gestione_Scarti</targetReference>
+            </connector>
             <label>Reclami</label>
         </rules>
         <rules>
@@ -108,6 +114,31 @@
                 <targetReference>Gestione_Autolettura</targetReference>
             </connector>
             <label>Autolettura</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Type_Activity</name>
+        <label>Check Type Activity</label>
+        <locationX>644</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>Check_Cluster</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Busta_Docusign_non_consegnata</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>tipologia_activity</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Busta Docusign non consegnata</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Innesco_Documentale</targetReference>
+            </connector>
+            <label>Busta Docusign non consegnata</label>
         </rules>
     </decisions>
     <interviewLabel>PostSalesDiscardDispatch {!$Flow.CurrentDateTime}</interviewLabel>
@@ -134,7 +165,7 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>974</locationX>
+        <locationX>644</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -155,7 +186,7 @@
     <recordLookups>
         <name>Get_Case_Id_From_Activity</name>
         <label>Get Case Id From Activity</label>
-        <locationX>974</locationX>
+        <locationX>644</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -174,12 +205,16 @@
             <assignToReference>caseId</assignToReference>
             <field>Case__c</field>
         </outputAssignments>
+        <outputAssignments>
+            <assignToReference>tipologia_activity</assignToReference>
+            <field>Type__c</field>
+        </outputAssignments>
     </recordLookups>
     <screens>
         <name>Schermata_di_errore</name>
         <label>Schermata di errore</label>
-        <locationX>1898</locationX>
-        <locationY>638</locationY>
+        <locationX>2162</locationX>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -192,7 +227,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>848</locationX>
+        <locationX>518</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case_Id_From_Activity</targetReference>
@@ -202,10 +237,10 @@
     <subflows>
         <name>Arricchimento_Dati</name>
         <label>Arricchimento Dati</label>
-        <locationX>974</locationX>
+        <locationX>644</locationX>
         <locationY>398</locationY>
         <connector>
-            <targetReference>Check_Cluster</targetReference>
+            <targetReference>Check_Type_Activity</targetReference>
         </connector>
         <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
         <inputAssignments>
@@ -230,8 +265,8 @@
     <subflows>
         <name>Gestione_Autolettura</name>
         <label>Gestione Autolettura</label>
-        <locationX>1634</locationX>
-        <locationY>638</locationY>
+        <locationX>1898</locationX>
+        <locationY>758</locationY>
         <flowName>HDT_FL_GestioneAutoletture</flowName>
         <inputAssignments>
             <name>discardActivityId</name>
@@ -262,8 +297,8 @@
     <subflows>
         <name>Gestione_Disattivazioni</name>
         <label>Gestione Disattivazioni</label>
-        <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationX>842</locationX>
+        <locationY>758</locationY>
         <flowName>HDT_FL_GestioneDisattivazioni</flowName>
         <inputAssignments>
             <name>discardActivityId</name>
@@ -286,10 +321,23 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
+        <name>Gestione_Innesco_Documentale</name>
+        <label>Gestione Innesco Documentale</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <flowName>HDT_FL_GestioneInnescoDocumentaleCase</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Gestione_Morosit</name>
         <label>Gestione Morosità</label>
-        <locationX>842</locationX>
-        <locationY>638</locationY>
+        <locationX>1106</locationX>
+        <locationY>758</locationY>
         <flowName>HDT_FL_GestioneScartiComplessi</flowName>
         <inputAssignments>
             <name>caseId</name>
@@ -305,10 +353,61 @@
         </inputAssignments>
     </subflows>
     <subflows>
+        <name>Gestione_Preventivi</name>
+        <label>Gestione Preventivi</label>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
+        <flowName>HDT_FL_GestionePreventivi</flowName>
+        <inputAssignments>
+            <name>discardActivityId</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>discardRework</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>caseId</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Gestione_Scarti</name>
+        <label>Gestione Scarti</label>
+        <locationX>1634</locationX>
+        <locationY>758</locationY>
+        <flowName>HDT_FL_GestioneReclami_VerificheDatiAlDl</flowName>
+        <inputAssignments>
+            <name>discardActivityId</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>discardRework</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Get_Case</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Gestione_Verifiche</name>
         <label>Gestione Verifiche</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
         <flowName>HDT_FL_GestioneVerifiche</flowName>
         <inputAssignments>
             <name>discardActivityId</name>
@@ -333,8 +432,8 @@
     <subflows>
         <name>Gestione_Voltura</name>
         <label>Gestione Voltura</label>
-        <locationX>1106</locationX>
-        <locationY>638</locationY>
+        <locationX>1370</locationX>
+        <locationY>758</locationY>
         <flowName>HDT_FL_GestioneScartiComplessi</flowName>
         <inputAssignments>
             <name>caseId</name>
@@ -369,5 +468,12 @@
         <value>
             <stringValue></stringValue>
         </value>
+    </variables>
+    <variables>
+        <name>tipologia_activity</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

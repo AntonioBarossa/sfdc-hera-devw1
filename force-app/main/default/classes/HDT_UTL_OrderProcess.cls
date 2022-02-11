@@ -4,7 +4,7 @@
  * @description HDT_UTL_OrderProcess Class
  * @history Keltin Mesonjesi – 12/03/2021 – Created Class
  */
-
+@SuppressWarnings('PMD.CyclomaticComplexity')
 public inherited sharing  class HDT_UTL_OrderProcess {
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
@@ -14,6 +14,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog();
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
 
+    @SuppressWarnings('PMD.AvoidDebugStatements') 
     public static void updateServicePointToComplete(List<Order> orderOld,List<Order> orderNew){
         try{
             Map<String,order> mapOrderOld = new Map<String,Order>();
@@ -31,7 +32,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
         }
         catch(Exception e){
-            system.debug(e);
+            system.debug(Logginglevel.Debug, e);
         }
     }
 
@@ -95,8 +96,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             mapOrder.put(o.Id, o);
         }
 
-
-        //19/08/2021 gabriele.rota@webresults.it - Calcolo Data Decorrenza Cambio Offerta
         HDT_QR_RecordType recordTypeQr = new HDT_QR_RecordType();
         String rtCambioOfferta = recordTypeQr.getRecordTypeIdByName('HDT_RT_CambioOfferta');
 
@@ -133,7 +132,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 order.Phase__c='Esportazione VS Siebel';
             }
 
-
             //19/08/2021 gabriele.rota@webresults.it - Calcolo Data Decorrenza Cambio Offerta
             if (order.RecordTypeId==rtCambioOfferta && order.EffectiveDate__c==null) {
                 Date refDate = (order.ContractSigned__c)?order.WizardCompletedDate__c:order.SignedDate__c;
@@ -153,6 +151,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 order.Phase__c = newPhase;
                 DateTime nowDateTime = DateTime.now();
                 order.PhaseStory__c = oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
+            }
+            /**@frpanico 04/02/2022
+             * Aggiunta gestione per
+             * Comfort Call
+             */
+            if(order.Phase__c != oldOrder.Phase__c
+            && oldOrder.Phase__c == 'Documentazione validata' 
+            && order.Phase__c == 'Comunicazione Verso Heroku'
+            && order.ComfortCallDaysDue__c != null
+            )
+            {
+                String newPhase = 'In attesa conferma cliente';
+                DateTime nowDateTime = DateTime.now();
+                order.Phase__c = newPhase;
+                order.PhaseStory__c =  oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
             }
 
             if(order.Phase__c!=oldOrder.Phase__c 
@@ -175,6 +188,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     DateTime nowDateTime = DateTime.now();
                     order.PhaseStory__c = oldOrder.Phase__c+'@@'+'Quality Call OK'+'@@'+nowDateTime.getTime()+'@@A||'+ 'Quality Call OK'+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||' +oldOrder.PhaseStory__c;
             }
+
         }
         
     }   
@@ -221,8 +235,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
 //**** AGGIUNTA Validazione Documentale LG 2009 FF */
         List<Order> ordersFullList = HDT_UTL_Sales.validationActivityPhaseTransition(ordersFullList2);
-        system.debug('******:123' + ordersFullList);
-
         for(Order o : ordersFullList2){
             if (o.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && (o.Phase__c == 'Documentazione Gestita' || o.DocumentPackage__c == 'Validato')) {
                 ordersParent.add(o.id);
@@ -241,24 +253,26 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<Order> childOrders = orderQr.getChildOrdersByParentIds(ordersParent);
         //set<Order> filtered = new set<Order>();
         List<Order> childOrdersDocValid = new List<Order>();
-        for(Order o1 : childOrders){
-            if(o1.phase__c == 'Documentazione Validata'){
-                filtered.add(o1);
+        for(Order myOrder : childOrders){
+            if(myOrder.phase__c == 'Documentazione Validata'){
+                filtered.add(myOrder);
             }
 
-            if (o1.Phase__c == 'In attesa validazione'  && o1.DateComfortCall__c == null) {
+            if (myOrder.Phase__c == 'In attesa validazione'  && myOrder.DateComfortCall__c == null) {
                 childOrdersDocValid.add(new Order(
-                    Id = o1.Id,
-                    phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(o1) ? 'Documentazione Validata': 'In attesa validazione'
+                    Id = myOrder.Id,
+                    phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione'
                 ));
             }
-
-            if (o1.Phase__c == 'Da Inviare'  && o1.DateComfortCall__c == null) {
+            /**@frpanico 07/02/2022
+             * Aggiunta gestione per
+             * Vocal Order + Comfort
+             */
+            if (myOrder.Phase__c == 'Da Inviare' && myOrder.ParentOrder__r.Phase__c.equalsIgnoreCase('Documentazione Gestita')) {
                 childOrdersDocValid.add(new Order(
-                    Id = o1.Id,
+                    Id = myOrder.Id,
                    // phase__c = 'In attesa validazione'
-                    phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(o1) ? 'Documentazione Validata': 'In attesa validazione'
-                ));
+                    phase__c = myOrder.ProcessType__c == 'Voltura' ? 'Accettazione Voltura': HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione'));
             }
         }
         if(ordersFullList != null && !ordersFullList.isEmpty()){
@@ -307,8 +321,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     private static void insertLogForOrderChangedPhase(Map<String,Order> orderMapOld, Map<String,Order> orderMapNew){
         List<CommunicationLog__c> commList = new List<CommunicationLog__c>();
         Map<String,String> mapOrdToContact = new map<String,String>();
-        HDT_QR_RecordType recordtypeQR = new HDT_QR_RecordType();
-        String recordtypeParentId = recordtypeQR.getRecordTypeIdByName('HDT_RT_OrderDossier');
+        HDT_QR_RecordType myRecordTypeQr = new HDT_QR_RecordType();
+        String recordtypeParentId = myRecordTypeQr.getRecordTypeIdByName('HDT_RT_OrderDossier');
         for (Order o : orderMapNew.values()){
             mapOrdToContact.put(o.id,o.contact__c);
         }
@@ -326,7 +340,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                    if(mapContact.get(newOrd.Contact__c) != null){
                        c = mapContact.get(newOrd.Contact__c);
                    }
-                   System.debug('**************Eccolo:' + c);
                    commList.add(commUTL.instanceCommunicationLog('Attivazioni',newOrd.ProcessType__c,newOrd.Phase__c,st,newOrd.CancellationReason__c,newOrd.Id,'',newOrd.Contact__c,newOrd.AccountId,c != null ? c.company__c : 'ND',newOrd.CompanyOwner__c));
                }
            }
@@ -343,8 +356,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
      * @param oldOrdersList
      */
     public static void orderCalulateDateUpdate(List<Order> newOrdersList, List<Order> oldOrdersList) { 
-        system.debug('Ricalcolo delle date da Trigger sugli ordini --> newOrdersList : ' + JSON.serializePretty(newOrdersList));
-        system.debug('Ricalcolo delle date da Trigger sugli ordini --> oldOrdersList : ' + JSON.serializePretty(oldOrdersList));
         List<Order> orderList = new List<Order>();                        
         Map<String,Boolean> mapAccountRes = HDT_UTL_SwtichInProcess.checkAccountOrderIsResidential(newOrdersList);
         //IsSequanzialized__c
@@ -374,7 +385,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
                 
                 if(ricalculateDate == true){
-                    system.debug('Esecuzione ricalcolo delle date');
                     Order orderToUpdate = new Order();
                     orderToUpdate.id = newOrder.Id;
                     if(mapAccountRes.get(newOrder.AccountId)){                                        
@@ -495,13 +505,26 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         
         orderSrv.checkReadAccess('Phase__c');
         //List<Order> childOrders = orderQr.getChildOrdersByParentIds(parentOrderIds);
-        System.debug('***********1');
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+        Order notManagedOrder = new Order();
+        Boolean isNotManaged = false;
+        for(Order childOrder : parentOrderIds)
+        {
+            if(childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt')
+            {
+                notManagedOrder = childOrder;
+                break;
+            }
+        }
+        if(notManagedOrder != null)
+        {
+            isNotManaged = isNotManaged(notManagedOrder);
+        }
         for (Order childOrder : parentOrderIds) {
             if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
                 //for vas i need a bulk update on a queueable
                 if (childOrder.Phase__c == currentVasPhase) {
-                    String phaseVas = childOrder.VASType__c?.equals('VAS Servizio')? 'In attesa tempi di ripensamento' : newVasPhase;
+                    String phaseVas = childOrder.VASType__c?.equals('VAS Servizio')? 'Sequenzializzato' : newVasPhase;
                     /*Order orderToUpdate = new Order(
                         Id = childOrder.Id,
                         Phase__c = newVasPhase
@@ -509,14 +532,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     childOrdersToUpdate.add(orderToUpdate);*/
                     vasOrdersToUpdate.put(childOrder.Id, phaseVas);
                 }
-            } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && childOrder.DistributorFormula__c == 'AMGA UDINE-10R0000032') {
+            } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged ) {
                 //MODIFICARE IN ATTESA DI SVILUPPO MATRICE, TEMPORANEA ATTIVAZIONE FABIANA BUG 18/09/21
                 //Valore distributore STABBATO  
                 if (childOrder.Phase__c == currentPhase
                         && !childOrder.QualityCall__c
                         && !isMonitoringList.contains(childOrder.AgencyCode__c)
                         && childOrder.ProcessType__c != 'Voltura' ) {
-                            System.debug('***********5');
                             Order orderToUpdate = new Order(
                                 Id = childOrder.Id,
                                     Phase__c = 'Pratica non gestita per il DL'
@@ -526,9 +548,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
             else{
                 if('Esportazione VS Siebel ' == newPhase){
-                    System.debug('***********2');
                     if (childOrder.Phase__c == currentPhase) {
-                        System.debug('***********3');
                         Order orderToUpdate = new Order(
                             Id = childOrder.Id,
                                 Phase__c = newPhase,
@@ -538,13 +558,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     }
                 }
                 else{
-                    System.debug('***********4');
                     if (childOrder.Phase__c == currentPhase
                         // && !childOrder.QualityCall__c
                         // && !isMonitoringList.contains(childOrder.AgencyCode__c)
                         //@frpanico 06/09/2021 added voltura condition
                         && childOrder.ProcessType__c != 'Voltura' ) {
-                        System.debug('***********5');
                         Order orderToUpdate = new Order(
                             Id = childOrder.Id,
                                 Phase__c = newPhase
@@ -558,6 +576,20 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         orderSrv.updateRecords(childOrdersToUpdate);
         return vasOrdersToUpdate;
     }
+
+    
+    private static Boolean isNotManaged( Order ord ){
+
+        Integer count = [SELECT count() FROM HDT_AdminServiceDispatcher__mdt 
+                            WHERE DistributorCode__c =:ord.DistributorCode__c 
+                            AND   Commodity__c =:ord.Commodity__c 
+                            AND   Type__c =:ord.ProcessCode__c
+                            WITH SECURITY_ENFORCED];
+
+        return ( count > 0 );
+
+    }
+
     @TestVisible
     private static void updateChildOrdersPhaseChild(List<String> parentOrderIds, String currentPhase, String newPhase,String currentVasPhase,String newVasPhase) {
         
@@ -589,7 +621,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
         }
-
         orderSrv.updateRecords(childOrdersToUpdate);
     }
 
@@ -600,9 +631,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
      * @return List<Order>
      */
     public static List<Order> updatePhase(List<Order> newOrdersList, List<Order> oldOrdersList) {
+
         Id bonusScontiRtId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId();
         Map<String,Order> orderMapOld = new Map<String,Order>();
-        // List<Order> ordersToUpdate = new List<Order>();        
+
         for (Order oldOrder : oldOrdersList) {
             orderMapOld.put(oldOrder.id,oldOrder);
         }
@@ -610,22 +642,22 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if(orderMapOld.get(newOrder.id)!= null){
                 Order old= orderMapOld.get(newOrder.id);
                 if(newOrder.TecnicalPhase__c != null && newOrder.TecnicalPhase__c == old.TecnicalPhase__c && 
-                    (/*Eversi aggiunta fase*/newOrder.Phase__c == 'Voltura Rifiutata' 
-                    || newOrder.Phase__c == 'Documentazione Validata'/*Eversi aggiunta fase*/ 
+                    (  newOrder.Phase__c == 'Voltura Rifiutata' 
+                    || newOrder.Phase__c == 'Documentazione Validata'
                     || newOrder.Phase__c=='Comunicazione verso Heroku' 
                     || newOrder.Phase__c=='Ripensamento - Da inviare' 
                     || newOrder.Phase__c=='Annullamento - Da inviare' 
                     || newOrder.Phase__c=='Preventivo Accettato' 
                     || newOrder.Phase__c=='Comunicazione Motore VAS' 
-                    || newOrder.Phase__c=='Documentazione da firmare')){
+                    || newOrder.Phase__c=='Documentazione da firmare'
+                    || newOrder.Phase__c=='Ammissibilità OK')){
                     newOrder.Phase__c = newOrder.TecnicalPhase__c;
                     newOrder.TecnicalPhase__c = null;
                 }
-                if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& !newOrder.SBQQ__Contracted__c && !old.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) { //Fabiana 15/09/2021 //Sandy 05/10 Flusso Bonus e Sconti richiede chiusura e contracted in due transazioni distinte
+                if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& newOrder.Status.equalsIgnoreCase('Activated') && !newOrder.SBQQ__Contracted__c && !old.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) { //Fabiana 15/09/2021 //Sandy 05/10 Flusso Bonus e Sconti richiede chiusura e contracted in due transazioni distinte
                     newOrder.SBQQ__Contracted__c=true; 
                 }
-            }
-           
+            }           
         }
         return newOrdersList;
     }
@@ -635,97 +667,29 @@ public inherited sharing  class HDT_UTL_OrderProcess {
      * HRDTR-00_HRAWRM-638
      **/
     public static void overturningFields(List<Order> oldList, List<Order> listOrder ){
+
         Map<Id, Sobject> mapObjToUpdate = new Map<Id, Sobject>();
         Map<String,Order> mapOld = new Map<String,Order>();
+
         for(Order old : oldList){ 
             mapOld.put(old.id,old);
         }
         for (Order temp : listOrder) {
-            if(mapOld.get(temp.id).phase__c != 'Completata' && temp.Phase__c == 'Completata'){
+            if(mapOld.get(temp.id).phase__c != 'Completata' && temp.Phase__c == 'Completata' && temp.Status.equalsIgnoreCase('Activated')){
                 if ( String.isNotBlank(String.valueOf(temp.ServicePoint__c))) {
                     ServicePoint__c sp=new ServicePoint__c(id=temp.ServicePoint__c);
                     sp.supplytype__c = temp.ServicePoint__r.supplytypeTemp__c;
                     sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;    
-                    // sp.Account__c=temp.AccountId;
                     sp.SAPImplantCode__c=temp.SapImplantCode__c; 
                     sp.account__c = temp.AccountId;
-                        //listObjToUpdate.add(sp);
                     mapObjToUpdate.put(sp.Id, sp);
                 }
-                /**@frpanico 01/02/2022
-                 * Commentata errata operativita'
-                 * Sovrascrive il codice CA con il codice contratto
-                 */
-                /*
-                if (String.isNotBlank( String.valueOf( temp.BillingProfile__c))) {
-                    if (String.isNotBlank((temp.SapContractCode__c) )) {    
-                        BillingProfile__c bill=new BillingProfile__c(id=temp.BillingProfile__c ,ContractAccountCode__c=temp.SapContractCode__c);
-                        //listObjToUpdate.add(bill);
-                        mapObjToUpdate.put(bill.id, bill);
-                    }
-                }
-                */
             }
         }
         if(!mapObjToUpdate.values().isEmpty()){
             update  mapObjToUpdate.values();
         }
-
     }
-    // START @Picchiri Credit check Date 04.06.21
-    // Viene invocata da una modifica lato ordine
-    // In questo metodo viene invocata la classe per la creazione della Activiti del Credit Check Entanti (Nuovo cliente) e Uscenti (Vecchio cliente)
-    /*public static void creditCheckManager(List<Order> newOrdersList, List<Order> oldOrdersList) {
-        system.debug('start creditCheckManager');
-        Map<Id,Schema.RecordTypeInfo> rtMap = Order.sobjectType.getDescribe().getRecordTypeInfosById();
-        Map<String,List<Order>> orderMapNew = new Map<String,List<Order>>();
-        List<Order> orderListOldCustomer = new List<Order>();                        
-        List<Order> orderListNewCustomer = new List<Order>();   
-        List<Order> orderListcreditCheckPhaseManager = new List<Order>();                        
-        List<Order> orderList = new List<Order>();                                
-
-        for (Integer i = 0; i<newOrdersList.size(); i++) {
-            Order newOrder = newOrdersList[i];
-            Order oldOrder = oldOrdersList[i]; 
-            String recordTypeName = rtMap.get(newOrder.RecordTypeId).getDeveloperName();
-            system.debug('recordTypeName -->  : ' + recordTypeName);  
-            if((recordTypeName == 'HDT_RT_VAS' && newOrder.OrderReferenceNumber == null && newOrder.ContractReference__c == null) || recordTypeName == 'HDT_RT_Voltura' || recordTypeName == 'HDT_RT_Subentro' || recordTypeName == 'HDT_RT_AttivazioneConModifica' || recordTypeName == 'HDT_RT_SwitchIn' || recordTypeName == 'HDT_RT_ConnessioneConAttivazione' || recordTypeName == 'HDT_RT_TemporaneaNuovaAtt'){                             
-                system.debug('xxx 1 ---->');
-                if (newOrder.CreditCheckDescription__c != null && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c) {    
-                    system.debug('xxx 2 ---->');
-                    if(newOrder.OutgoingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){                        
-                        system.debug('xxx 3 ---->');
-                        orderListOldCustomer.add(newOrder);
-                    }
-                    if(newOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){                        
-                        system.debug('xxx 4 ---->');
-                        orderListNewCustomer.add(newOrder);
-                    }                                      
-                }
-                if((oldOrder.IncomingCreditCheckResult__c!=null && oldOrder.IncomingCreditCheckResult__c.contains('KO')) && (newOrder.IncomingCreditCheckResult__c != null && newOrder.IncomingCreditCheckResult__c.contains('OK'))){
-                    orderListcreditCheckPhaseManager.add(newOrder);
-                }
-            }
-
-        }
-
-        orderMapNew.put('oldCustomer',orderListOldCustomer);
-        orderMapNew.put('newCustomer',orderListNewCustomer);   
-        
-        system.debug('gestioneEsitiCreditCheck trigger --> orderMapNew : ' + JSON.serializePretty(orderMapNew));
-        
-        if(!orderMapNew.isEmpty()){
-            HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
-        }
-        
-        if(!orderListcreditCheckPhaseManager.isEmpty()){
-            system.debug('creditCheckPhaseManager ----> : ' + JSON.serializePretty(orderListcreditCheckPhaseManager));
-            creditCheckPhaseManager(orderListcreditCheckPhaseManager);                     
-        }        
-    }*/        
-    // FINE @Picchiri Credit check Date 04.06.21
-
-
 
     /**
      * @description  FIX METODO DEFELICE
@@ -733,28 +697,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
      * @param oldOrdersMap
      **/
     public static void creditCheckManager2(Map<Id,SObject>  newOrdersMap, Map<Id,SObject> oldOrdersMap) {
-        system.debug('start creditCheckManager2');
         Map<Id,Schema.RecordTypeInfo> rtMap = Order.sobjectType.getDescribe().getRecordTypeInfosById();
         Map<String,List<Order>> orderMapNew = new Map<String,List<Order>>();
         List<Order> orderListOldCustomer = new List<Order>();                        
         List<Order> orderListNewCustomer = new List<Order>();   
         List<Order> orderListcreditCheckPhaseManager = new List<Order>();                        
-        // List<Order> orderList = new List<Order>();                                
 
         for (Order newOrder : (List<Order>) newOrdersMap.values()) {
             Order oldOrder = (Order) oldOrdersMap.get(newOrder.id); 
             String recordTypeName = rtMap.get(newOrder.RecordTypeId).getDeveloperName();
-            system.debug('recordTypeName -->  : ' + recordTypeName);  
-            if((recordTypeName == 'HDT_RT_VAS' && newOrder.OrderReferenceNumber == null && newOrder.ContractReference__c == null) || recordTypeName == 'HDT_RT_Voltura' || recordTypeName == 'HDT_RT_Subentro' || recordTypeName == 'HDT_RT_AttivazioneConModifica' || recordTypeName == 'HDT_RT_SwitchIn' || recordTypeName == 'HDT_RT_ConnessioneConAttivazione' || recordTypeName == 'HDT_RT_TemporaneaNuovaAtt'){                             
-                system.debug('xxx 1 ---->');
+            if((recordTypeName == 'HDT_RT_VAS' && newOrder.OrderReferenceNumber == null && newOrder.ContractReference__c == null) || recordTypeName == 'HDT_RT_Voltura' || recordTypeName == 'HDT_RT_Attivazione' || recordTypeName == 'HDT_RT_VolturaConSwitch' || recordTypeName == 'HDT_RT_Subentro' || recordTypeName == 'HDT_RT_AttivazioneConModifica' || recordTypeName == 'HDT_RT_SwitchIn' || recordTypeName == 'HDT_RT_ConnessioneConAttivazione' || recordTypeName == 'HDT_RT_TemporaneaNuovaAtt'){                             
                 if (newOrder.CreditCheckDescription__c != null && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c) {    
-                    system.debug('xxx 2 ---->');
                     if(newOrder.OutgoingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){                        
-                        system.debug('xxx 3 ---->');
                         orderListOldCustomer.add(newOrder);
                     }
                     if(newOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){                        
-                        system.debug('xxx 4 ---->');
                         orderListNewCustomer.add(newOrder);
                     }                                      
                 }
@@ -762,24 +719,18 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     orderListcreditCheckPhaseManager.add(newOrder);
                 }
             }
-
         }
 
         orderMapNew.put('oldCustomer',orderListOldCustomer);
         orderMapNew.put('newCustomer',orderListNewCustomer);   
         
-        system.debug('gestioneEsitiCreditCheck trigger --> orderMapNew : ' + JSON.serializePretty(orderMapNew));
-        
         if(!orderMapNew.isEmpty()){
             HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
-        }
-        
+        }        
         if(!orderListcreditCheckPhaseManager.isEmpty()){
-            system.debug('creditCheckPhaseManager ----> : ' + JSON.serializePretty(orderListcreditCheckPhaseManager));
             creditCheckPhaseManager(orderListcreditCheckPhaseManager);                     
         }        
     }        
-    // FINE @Picchiri Credit check Date 04.06.21
 
     /**
      * @description  @Picchiri 16.06.21 chiamata Mulesoft // Lista di ordini per nuovo cliente dove si è ricevuto un ok dopo un ko
@@ -788,7 +739,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     public static void creditCheckPhaseManager(List<Order> orderList){ 
 
         Map<Id,Schema.RecordTypeInfo> rtMap = Order.sobjectType.getDescribe().getRecordTypeInfosById();        
-        system.debug('Start creditCheckPhaseManager');
         List<Order> orderListToUpdate = new List<Order>();
         Map<Id,Order> mapIdToTotalOrder = new Map<Id,Order>();
         Map<Id,Order> mapIdToOrderUpdate = new Map<Id,Order>();
@@ -805,16 +755,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             String recordTypeName = rtMap.get(orderToUpdate.RecordTypeId).getDeveloperName();
 
             if(orderToUpdate.ParentOrder__r.Phase__c == 'Documentazione Gestita' && (orderToUpdate.Phase__c == 'Documentazione Validata' || orderToUpdate.Phase__c == 'Documentazione da inviare' )){
-                system.debug('YYY 1 --->');
                 if(orderToUpdate.recordType.Developername != 'HDT_RT_VAS'
                     && !orderToUpdate.QualityCall__c
                     && !isMonitoringList.contains(orderToUpdate.AgencyCode__c)){
-                    system.debug('YYY 2 --->');
                     orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
                     orderListToUpdate.add(orderToUpdate);
                     mapIdToOrderUpdate.put(orderToUpdate.id,orderToUpdate);
-                }else{
-                    system.debug('YYY 3 --->');
+                }
+                else{
                     orderToUpdate.Phase__c = 'Comunicazione Motore VAS';
                     orderListToUpdate.add(orderToUpdate);
                     mapIdToOrderUpdate.put(orderToUpdate.id,orderToUpdate);
@@ -822,9 +770,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
 
             if((recordTypeName == 'HDT_RT_VAS' && orderToUpdate.OrderReferenceNumber != null && orderToUpdate.ContractReference__c != null) || recordTypeName == 'HDT_RT_Voltura' || recordTypeName == 'HDT_RT_Subentro' || recordTypeName == 'HDT_RT_AttivazioneConModifica' || recordTypeName == 'HDT_RT_SwitchIn' || recordTypeName == 'HDT_RT_ConnessioneConAttivazione' || recordTypeName == 'HDT_RT_TemporaneaNuovaAtt'){             
-                system.debug('YYY 4 --->');
                 if((orderToUpdate.IncomingCreditCheckResult__c != null && orderToUpdate.IncomingCreditCheckResult__c == 'OK') || (orderToUpdate.OutgoingCreditCheckResult__c != null && orderToUpdate.OutgoingCreditCheckResult__c == 'OK')){
-                    system.debug('YYY 5 --->');
                     orderSetId.add(orderToUpdate.id);
                 }                
             }
@@ -833,7 +779,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         // recuperare l'activity per questi ordini
         // Le activity sull'ordine potrebbero essere più di una. Bisogna prendere quella con record type "credit check ko" e wrts_prcgvr__Status__c "creata" e CreditCheckReason__c contiene  "Cattivo pagatore"
         if(!orderSetId.isEmpty()){
-            system.debug('YYY 6 --->');
             List<wrts_prcgvr__Activity__c> actList = HDT_QR_ActivityCustom.getActivityListCrediCheck(orderSetId);
             for(wrts_prcgvr__Activity__c act : actList){
                 mapIdOrderToActivity.put(act.Order__c,act);
@@ -850,35 +795,24 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 
                 if(ord.CreditCheckDescription__c.contains('Saldo debito cattivo pagatore')){
                     mapIdToOrderClean.put(ord.id,ord);                
-                }
-    
+                }    
                 if(ord.CreditCheckDescription__c.contains('Saldo debito cattivo pagatore') || ord.OutgoingCreditCheckResult__c != null){                
                     actListToRecheck.add(actToUpdate);
                 }
             }
             HDT_UTL_ActivityCustomProcess.updateCreditCheckActivity(actListToUpdate);
-    
         }
-
         // sbiancare l'esito ( IncomingCreditCheckResult__c / CreditCheckDescription__c) su order e reinviare la chiamata 
         if(!mapIdToOrderClean.isEmpty()){
-            system.debug('YYY 7 --->');
             mapIdToOrderUpdate = cleanCreditCheckOnOrder(mapIdToOrderClean,mapIdToTotalOrder);             
         }
-        
-        
         if(!mapIdToOrderUpdate.isEmpty()){
-            system.debug('YYY 8 --->');
             update  mapIdToOrderUpdate.values();                    
-        }             
-
+        }
         // reinviare la chiamata        
         if(!actListToRecheck.isEmpty()){
-            system.debug('YYY 9 --->' + JSON.serializePretty(actListToRecheck));
             HDT_UTL_ActivityCustomProcess.recheckCreditCheck(actListToRecheck);
         }
-        
-        
     }
 
     /**
@@ -904,8 +838,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     }
     // FINE @Picchiri Credit check Date 15.06.21
 
-    public static void updatePhaseForFirm(List<Order> newListOrder)
-    {
+    public static void updatePhaseForFirm(List<Order> newListOrder){
         /*@frpanico 15/12/2021
         * DM Voltura - Aggiunta gestione ritorno da Docusign
         * per la Voltura Con Switch Ele nel caso di firma OTP
@@ -928,7 +861,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     order.Phase__c = 'Comunicazione verso Heroku';
                 }
             }
-            else if(order.phase__c.equalsIgnoreCase('Documentazione da firmare') && order.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
+            else if(order.Phase__c != null && order.phase__c.equalsIgnoreCase('Documentazione da firmare') && order.DocumentalPhase__c !=null && order.DocumentalPhase__c.containsIgnoreCase('Plico firmato')){
                     if((order.Sale__r.Channel__c == 'Agenzie' || order.Sale__r.Channel__c == 'Business Agent') && (order.SignatureMethod__c == 'OTP Remoto' || order.SignatureMethod__c == 'OTP Coopresenza' )){
                         order.TecnicalPhase__c = 'Documentazione da Validare';
                         //listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
@@ -944,8 +877,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
     }
 
-
-
+    @SuppressWarnings('PMD.AvoidDebugStatements') 
     public static Boolean manageCancellationProcess(List<Order> orderList, Map<Id,SObject> orderOldMapd){
 		Order orderNew = orderList[0];
 		Order orderOld = (Order) Trigger.oldMap.get(orderNew.Id);
@@ -954,12 +886,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         DateTime nowDateTime = DateTime.now();
 		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
             //@frpanico closes open activities on "Annullato" or "Ripensato"
-            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
+            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out') || newPhase.containsIgnoreCase('Annullamento SII'))
             {                
                 List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
                 try
                 {
-                    activities = orderQr .getOpenActivitiesByOrderId(orderNew.Id);
+                    activities = orderQr.getOpenActivitiesByOrderId(orderNew.Id);
                     for(wrts_prcgvr__Activity__c activity : activities)
                     {
                         activity.wrts_prcgvr__Status__c = 'Chiusa';
@@ -968,7 +900,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
                 catch(Exception e)
                 {
-                    System.debug('Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
+                    System.debug(Logginglevel.Debug, 'Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
                 }
                 if(orderNew.ProcessType__c != null && 
                     (orderNew.ProcessType__c.containsIgnoreCase('Volutra') ||  orderNew.ProcessType__c.containsIgnoreCase('Cambio Offerta'))
@@ -984,7 +916,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     }
                 }
             }
-            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
+            if(newPhase.containsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
             {
                 orderNew.Status = 'Annullato';
             }
@@ -992,9 +924,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              * Si entra nello skip soltanto se la fase di partenza non e' di annullamento
              * Dunque non sono previste activity
              */
-			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
+			if(newPhase.indexOf('Annullamento') > -1 || newPhase.containsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
                 if((oldPhase.indexOf('Annullamento - ') == -1 && oldPhase.indexOf('Ripensamento - ') == -1)
-                    || newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+                    || newPhase.containsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
                 {
 				    orderNew.PhaseStory__c = !String.isBlank(orderNew.PhaseStory__c) 
                         ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c
@@ -1014,59 +946,42 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 		}
 		return false;
 	}
-
-    // // @Picchiri sbiancamento esito e causale credit check all'interno dell'ordine. 
-    // // Per risottomissione credit check
-    // public static void cleanCreditCheckOnOrder(List<Id> listOrderId) {
-    //     List<Order> listOrderToUpdate = orderQr.getRecordsByIds(listOrderId);
-    //     for (Order order : listOrderToUpdate) {
-    //         order.IncomingCreditCheckResult__c = '';
-    //         order.OutgoingCreditCheckResult__c = '';	
-    //         order.CreditCheckDescription__c	 = '';
-    //     }
-    //     if(!listOrderToUpdate.isEmpty()){
-    //         update listOrderToUpdate;
-    //     }
-    
-    // }
-    // // FINE @Picchiri Credit check Date 15.06.21
         
-        /**
-         * @description  updateServiceRequest
-         * @param newOrdersList
-         * @param oldOrdersList
-         **/
-        public static void updateServiceRequest(List<Order> newOrdersList, List<Order> oldOrdersList){
-            Map<String,Order> mapOrder = new Map<String,Order>();
-            Map<String,String> orderStatuses= new Map<String,String>();
-            List<ServiceRequest__c> sReqToUpdate= new List<ServiceRequest__c>();
-            Set<Id> orderIds= new Set<Id>();
-            for(Order o: oldOrdersList){
-                mapOrder.put(o.id, o);
-            }
-            for (Order ord: newOrdersList){
-                Order oldOrder= mapOrder.get(ord.id);
-                
-                if(ord.Status != oldOrder.Status ){
-                    orderIds.add(ord.Id);
-                    orderStatuses.put(ord.Id, ord.Status);
-                }
-            }
-            List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(orderIds, 'Order__c');
-            List<ServiceRequest__c> srvRequestsToDelete = new List<ServiceRequest__c>();
-            for(ServiceRequest__c s: srvRequests){
-                // ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
-                s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(orderStatuses.get(s.Order__c), 'Order');
-                if( s.Status__c == 'Activated' || s.Status__c == 'Annullato' ){
-                    srvRequestsToDelete.add(s);
-                } else {
-                    sReqToUpdate.add(s);
-                }
-            }
-            if (!srvRequestsToDelete.isEmpty()){
-                HDT_SRV_ServiceRequest.deleteRecord(srvRequestsToDelete);
-            }
-            HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
+    /**
+     * @description  updateServiceRequest
+     * @param newOrdersList
+     * @param oldOrdersList
+     **/
+    public static void updateServiceRequest(List<Order> newOrdersList, List<Order> oldOrdersList){
+        Map<String,Order> mapOrder = new Map<String,Order>();
+        Map<String,String> orderStatuses= new Map<String,String>();
+        List<ServiceRequest__c> sReqToUpdate= new List<ServiceRequest__c>();
+        Set<Id> orderIds= new Set<Id>();
+        for(Order o: oldOrdersList){
+            mapOrder.put(o.id, o);
         }
-
+        for (Order ord: newOrdersList){
+            Order oldOrder= mapOrder.get(ord.id);
+            
+            if(ord.Status != oldOrder.Status ){
+                orderIds.add(ord.Id);
+                orderStatuses.put(ord.Id, ord.Status);
+            }
+        }
+        List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(orderIds, 'Order__c');
+        List<ServiceRequest__c> srvRequestsToDelete = new List<ServiceRequest__c>();
+        for(ServiceRequest__c s: srvRequests){
+            // ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
+            s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(orderStatuses.get(s.Order__c), 'Order');
+            if( s.Status__c == 'Activated' || s.Status__c == 'Annullato' ){
+                srvRequestsToDelete.add(s);
+            } else {
+                sReqToUpdate.add(s);
+            }
+        }
+        if (!srvRequestsToDelete.isEmpty()){
+            HDT_SRV_ServiceRequest.deleteRecord(srvRequestsToDelete);
+        }
+        HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
+    }
 }

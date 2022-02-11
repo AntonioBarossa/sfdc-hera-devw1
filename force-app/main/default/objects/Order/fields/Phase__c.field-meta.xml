@@ -169,13 +169,11 @@
             <value>
                 <fullName>Caricamento Siebel KO</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Caricamento Siebel KO</label>
             </value>
             <value>
                 <fullName>Caricamento Siebel OK</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Caricamento Siebel OK</label>
             </value>
             <value>
@@ -391,6 +389,11 @@
                 <label>In attesa validazione</label>
             </value>
             <value>
+                <fullName>In Corso caricamento Siebel</fullName>
+                <default>false</default>
+                <label>In Corso caricamento Siebel</label>
+            </value>
+            <value>
                 <fullName>In Lavorazione</fullName>
                 <default>false</default>
                 <label>In Lavorazione</label>
@@ -567,13 +570,17 @@
             <value>
                 <fullName>Registrazione da validare</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Registrazione da validare</label>
             </value>
             <value>
                 <fullName>Registrazione  da validare</fullName>
                 <default>false</default>
                 <label>Registrazione  da validare</label>
+            </value>
+            <value>
+                <fullName>Registrazione validata</fullName>
+                <default>false</default>
+                <label>Registrazione validata</label>
             </value>
             <value>
                 <fullName>Registrazione validata  Firmato/Inviato</fullName>
@@ -681,6 +688,16 @@
                 <fullName>Comunicazione EngageOne KO</fullName>
                 <default>false</default>
                 <label>Comunicazione EngageOne KO</label>
+            </value>
+            <value>
+                <fullName>Check TIMOE OK</fullName>
+                <default>false</default>
+                <label>Check TIMOE OK</label>
+            </value>
+            <value>
+                <fullName>Dati TIMOE Ricevuti</fullName>
+                <default>false</default>
+                <label>Dati TIMOE Ricevuti</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -55,6 +55,7 @@
             <controllingFieldValue>Richiesta lettura cliente</controllingFieldValue>
             <controllingFieldValue>Rimozione Impianto</controllingFieldValue>
             <controllingFieldValue>Risoluzione No Disalimentabile</controllingFieldValue>
+            <controllingFieldValue>Risoluzione No Sospensione</controllingFieldValue>
             <controllingFieldValue>Autolettura da cliente</controllingFieldValue>
             <controllingFieldValue>Chiusura Contatore</controllingFieldValue>
             <controllingFieldValue>Connessione con Attivazione</controllingFieldValue>
@@ -86,6 +87,10 @@
             <controllingFieldValue>Modifica Impianto</controllingFieldValue>
             <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
             <controllingFieldValue>Sospensione Fornitura</controllingFieldValue>
+            <controllingFieldValue>Voltura</controllingFieldValue>
+            <controllingFieldValue>Consegna copia chiave GdM</controllingFieldValue>
+            <controllingFieldValue>Cambio Offerta Gas</controllingFieldValue>
+            <controllingFieldValue>Cambio Offerta Ele</controllingFieldValue>
             <valueName>Esito KO da DL</valueName>
         </valueSettings>
         <valueSettings>

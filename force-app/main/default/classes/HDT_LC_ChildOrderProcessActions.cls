@@ -35,7 +35,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         orderToUpdate.Id = order.Id;
         orderToUpdate.Status = 'In lavorazione';
         //EVERIS: Aggiunto caso Voltura
-        orderToUpdate.Phase__c = order.RecordType.DeveloperName == 'HDT_RT_Voltura' ? 'Accettazione Voltura' : 'Da Inviare'; 
+        orderToUpdate.Phase__c = 'Da Inviare'; 
         orderToUpdate.Step__c = 20;
         orderToUpdate.WizardCompletedDate__c = Date.today();
         
@@ -115,7 +115,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         // START 2 Calcolo data Invio richiesta al SII (Data di adempimento)    
                         if(order.SignedDate__c == null){
                             orderToUpdate.Status = 'In lavorazione';
-                            orderToUpdate.Phase__c = 'In attesa validazione' ;                        
+                            orderToUpdate.Phase__c = 'Da Inviare' ;                        
                         }
             
                         try {    
@@ -129,9 +129,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         // END Calcolo data Invio richiesta al SII (Data di adempimento)    
                         // END Calculate Date @Picchiri 20/05/21 FOR RESIDENZIALE ACCOUNT
     
-                        if (order.VolturaThirdTrader__c) {
+                        if (order.VolturaThirdTrader__c == true) {
                             orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
-                        }                        
+                        }
+                        orderToUpdate.CIAccoutn__c = 'Richiesto';                        
                     }
                     else { // @Picchiri Only for not residential customer
      
@@ -271,6 +272,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             when 'HDT_RT_TemporaneaNuovaAtt' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.DocumentLow80__c = 'Richiesto';
+                }
+            }when 'HDT_RT_CambioOfferta'{
+                if(order.SignedDate__c != null){                    
+                    HDT_UTL_SwtichInProcess.calculateCambioOffertaDate(order);  // Data di decorrenza
                 }
             }
         }
