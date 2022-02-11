@@ -245,12 +245,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              * Aggiunta gestione per
              * Vocal Order + Comfort
              */
-            if (myOrder.Phase__c == 'Da Inviare' && !myOrder.ParentOrder__r.Phase__c.equalsIgnoreCase('Registrazione  da validare')) {
+            if (myOrder.Phase__c == 'Da Inviare' && myOrder.ParentOrder__r.Phase__c.equalsIgnoreCase('Documentazione Gestita')) {
                 childOrdersDocValid.add(new Order(
                     Id = myOrder.Id,
                    // phase__c = 'In attesa validazione'
-                    phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione'
-                ));
+                    phase__c = myOrder.ProcessType__c == 'Voltura' ? 'Accettazione Voltura': HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione'));
             }
         }
         if(ordersFullList != null && !ordersFullList.isEmpty()){
@@ -446,13 +445,33 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         
         orderSrv.checkReadAccess('Phase__c');
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+        Order notManagedOrder = new Order();
+        Boolean isNotManaged = false;
+        for(Order childOrder : parentOrderIds)
+        {
+            if(childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt')
+            {
+                notManagedOrder = childOrder;
+                break;
+            }
+        }
+        if(notManagedOrder != null)
+        {
+            isNotManaged = isNotManaged(notManagedOrder);
+        }
         for (Order childOrder : parentOrderIds) {
             if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
                 if (childOrder.Phase__c == currentVasPhase) {
                     String phaseVas = childOrder.VASType__c?.equals('VAS Servizio')? 'Sequenzializzato' : newVasPhase;
                     vasOrdersToUpdate.put(childOrder.Id, phaseVas);
                 }
+<<<<<<< HEAD
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && childOrder.DistributorFormula__c == 'AMGA UDINE-10R0000032') {
+=======
+            } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged ) {
+                //MODIFICARE IN ATTESA DI SVILUPPO MATRICE, TEMPORANEA ATTIVAZIONE FABIANA BUG 18/09/21
+                //Valore distributore STABBATO  
+>>>>>>> c72b9637e939209ee7f688c21245b0a09cd4a0ab
                 if (childOrder.Phase__c == currentPhase
                         && !childOrder.QualityCall__c
                         && !isMonitoringList.contains(childOrder.AgencyCode__c)
@@ -491,6 +510,20 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         orderSrv.updateRecords(childOrdersToUpdate);
         return vasOrdersToUpdate;
     }
+
+    
+    private static Boolean isNotManaged( Order ord ){
+
+        Integer count = [SELECT count() FROM HDT_AdminServiceDispatcher__mdt 
+                            WHERE DistributorCode__c =:ord.DistributorCode__c 
+                            AND   Commodity__c =:ord.Commodity__c 
+                            AND   Type__c =:ord.ProcessCode__c
+                            WITH SECURITY_ENFORCED];
+
+        return ( count > 0 );
+
+    }
+
     @TestVisible
     private static void updateChildOrdersPhaseChild(List<String> parentOrderIds, String currentPhase, String newPhase,String currentVasPhase,String newVasPhase) {
         

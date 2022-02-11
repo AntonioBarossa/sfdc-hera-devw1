@@ -458,6 +458,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.CancellationRequestDate__c = System.today();
                                 ord.CancellationReasonCode__c = mapRequestFields.get('COD_CAUSALE');
                                 ord.CancellationNote__c = mapRequestFields.get('ANNOTAZIONI_ANN');
+                                ord.CancellationReason__c = 'Annullamento dal SII';
                                 String annotazioni = ord.CancellationNote__c != null? ord.CancellationNote__c:'';
                                 ord.CancellationNote__c = mapRequestFields.get('NOTE_ANN') +'\n' + annotazioni;
                                 HDT_UTL_HerokuPostSalesManager utlClass = new HDT_UTL_HerokuPostSalesManager();
@@ -492,6 +493,15 @@ public with sharing class HDT_SRV_SalesHandler {
                                      ord.Phase__c = 'Annullato'; //HRAWRM-460
                                      updateFuture(JSON.serialize(ord));
                                  }
+                        //Annullamento automatico per precheck ko su precedente cliente
+                        if(ord.Phase__c.equalsIgnoreCase('Dati TIMOE Ricevuti') && ordRetrieved.IsTechnicalTransfer__c){
+                            ord.CancellationReason__c = 'Revoca ai sensi del comma 8.2 del TIMG';
+                            ord.CancellationReasonDescription__c = 'Revoca ai sensi del comma 8.2 del TIMG';
+                            ord.CancellationReasonCode__c = 'SG02';
+                            ord.CancellationRequestDate__c = Date.Today();
+                            ord.Phase__c = 'Annullamento - Da inviare';
+                            orderSrv.updateRecord(ord);
+                        }
                     }else if(mapRequestFields.get('RECORD_ID')!= null && String.isNotBlank(activityName)){
                         //EVERIS: Gestione Scarti SAP Aggiunta logica creazione scarti se viene inviata solo l'attività
                         String recordId = mapRequestFields.get('RECORD_ID');
