@@ -217,7 +217,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     if('ATTIVITA'.equalsIgnoreCase(curField.name) && 'Richiesta non identificata'.equalsIgnoreCase(curField.value)){
                         Map<String,String> newData = new Map<String,String>();
                         for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){ newData.put(curField2.name, curField2.value); }
+                        /* 
+                        Commentato perché nella Richiesta non identificata, il curObj.fields è vuoto ed in ogni caso non serve.
                         for(HDT_WRP_MrrRequest.HDT_WRP_Field curField3 : request.header.fields){ newData.put(curField3.name, curField3.value); }
+                         */
                         dataForAttivitaTracciaturaCreation.add(newData);
                     }
                     if('FASE'.equalsIgnoreCase(curField.name) && String.isNotBlank(curField.value)/*&& new List<String>{'Completata', 'Ammissibilità OK'}.contains(curField.value)*/){
