@@ -28,12 +28,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         System.debug(LoggingLevel.DEBUG, 'checks');
         mapFieldsObject();
 
-        System.debug(LoggingLevel.DEBUG, '>>> mapAllFields: ' + String.valueOf(mapAllFields));
-        System.debug(LoggingLevel.DEBUG, '>>> mapWrapperAccountFields: ' + String.valueOf(mapWrapperAccountFields));
-        System.debug(LoggingLevel.DEBUG, '>>> mapHeaderForWrapper: ' + String.valueOf(mapHeaderForWrapper));
-        System.debug(LoggingLevel.DEBUG, '>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
-        System.debug(LoggingLevel.DEBUG, '>>> sobjectMap: ' + String.valueOf(sobjectMap));
-
         contoContrattualeIndex = mapHeaderForWrapper.get('ContoContrattuale');
         codicePuntoIndex = mapHeaderForWrapper.get('CodicePunto');
         recTypeIndex = mapHeaderForWrapper.get('Tipo');
@@ -91,7 +85,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             enableCreateBillingProfile = String.isEmpty(tempSplitted[contoContrattualeIndex]);
             enableCreateServicePoint = !codicePuntoMap.containsKey(tempSplitted[codicePuntoIndex]);
 
-            System.debug(LoggingLevel.DEBUG, '>>> enableCreate: Account [' + enableCreateContact + ']; billProf [' + enableCreateBillingProfile + ']; servPoint [' + enableCreateServicePoint + ']');
+            System.debug(LoggingLevel.DEBUG, '>>> enableCreate: billProf [' + enableCreateBillingProfile + ']; servPoint [' + enableCreateServicePoint + ']');
 
             for (String tempField : tempSplitted) {
 
@@ -105,7 +99,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 if (mapRequiredByPosition.get(count) != null && String.isBlank(tempField)) {
                     convertionError = 'Missing Required Field: ' + mapHeaderByPosition.get(count);
                     System.debug(LoggingLevel.DEBUG, '>>> required field error: ' + convertionError);
-                    if(!String.isEmpty(convertionError)){
+                    if(String.isNotEmpty(convertionError)){
                         // error happened -> exit
                         break;
                     }
@@ -134,7 +128,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                         
                     }
                     
-                    if(!String.isEmpty(convertionError)){
+                    if(String.isNotEmpty(convertionError)){
                         // error happened -> exit
                         System.debug(LoggingLevel.DEBUG, '>>> break for loop...' + csvHeader + ' - ' + objField + ' - ' + tempField);
                         break;
@@ -144,7 +138,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 count++;
             }
 
-            if(!String.isEmpty(convertionError)){
+            if(String.isNotEmpty(convertionError)){
                 itemsToUpdate.add(setErrorItem(itemId, convertionError));
                 continue;
             }
@@ -289,7 +283,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                     nextDataObj.servPointId = saveServPointResponse.itemIdToObjId.get(item.Id);
                 }
                 item.NextStepData__c = JSON.serialize(nextDataObj);
-                item.Status__c = 'Chiuso';
+                item.Status__c = 'In Lavorazione';
                 itemsToUpdate.add(item);
             }
 
@@ -306,19 +300,19 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     }
 
     public void addInformationToSet(Account account){
-        if(!String.isEmpty(account.CustomerCode__c)){
+        if(String.isNotEmpty(account.CustomerCode__c)){
             csnSet.add(account.CustomerCode__c);
         }
     
-        if(!String.isEmpty(account.FiscalCode__c)){
+        if(String.isNotEmpty(account.FiscalCode__c)){
             fiscalCodeSet.add(account.FiscalCode__c);
         }
     
-        if(!String.isEmpty(account.VATNumber__c)){
+        if(String.isNotEmpty(account.VATNumber__c)){
             vatNumberSet.add(account.VATNumber__c);
         }
     
-        if(!String.isEmpty(account.CustomerMarking__c)){
+        if(String.isNotEmpty(account.CustomerMarking__c)){
             marcaturaSet.add(account.CustomerMarking__c);
         }
     }
@@ -326,7 +320,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     public Id setAccountIdFromDb(Account iterationAccount){
 
         //search by CustomerCode__c --> CSN (csv header)
-        if(!String.isEmpty(iterationAccount.CustomerCode__c)){
+        if(String.isNotEmpty(iterationAccount.CustomerCode__c)){
             for(Account a : accountList){
                 if(a.CustomerCode__c.equalsIgnoreCase(iterationAccount.CustomerCode__c)){
                     System.debug(LoggingLevel.DEBUG, '>>> Account id [' + a.Id + '] found by CustomerCode__c -> ' + iterationAccount.CustomerCode__c);
@@ -336,9 +330,9 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         }
         
         //search by FiscalCode__c, VATNumber__c and CustomerMarking__c
-        if( String.isEmpty(iterationAccount.FiscalCode__c) &&
-            String.isEmpty(iterationAccount.VATNumber__c) &&
-            String.isEmpty(iterationAccount.CustomerMarking__c)
+        if( String.isNotEmpty(iterationAccount.FiscalCode__c) &&
+            String.isNotEmpty(iterationAccount.VATNumber__c) &&
+            String.isNotEmpty(iterationAccount.CustomerMarking__c)
         ) {
             for(Account a : accountList){
                 if(
@@ -429,17 +423,17 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         Set<Id> docId = new Set<Id>();
 
         delete [SELECT Id FROM MassiveLoaderRequestItem__c WHERE MassiveLoaderRequest__c = :massiveLoaderRequestId];
-        //delete [
-        //    SELECT Id
-        //    FROM Account
-        //    WHERE Createddate = today AND CreatedById = '0051X0000055rbNQAQ'
-        //];
-    //
-        //delete [
-        //    SELECT Id
-        //    FROM Contact
-        //    WHERE Createddate = today AND CreatedById = '0051X0000055rbNQAQ'
-        //];
+        delete [
+            SELECT Id
+            FROM Account
+            WHERE Createddate = today AND CreatedById = '0051X0000055rbNQAQ'
+        ];
+        
+        delete [
+            SELECT Id
+            FROM Contact
+            WHERE Createddate = today AND CreatedById = '0051X0000055rbNQAQ'
+        ];
 
         delete [
             SELECT Id
@@ -514,6 +508,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             tempList.add('SXSRLA45H28H' + iteration); // CF - SXSRLA45H28H5
             tempList.add(''); // Sesso
             tempList.add(''); // PrefCell
+            //tempList.add('');
             tempList.add('100361621' + iteration); // CSN - 1003616210
             tempList.add('00166'); // CodiceCitta
 
