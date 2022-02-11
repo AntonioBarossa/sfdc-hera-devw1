@@ -506,6 +506,20 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         orderSrv.checkReadAccess('Phase__c');
         //List<Order> childOrders = orderQr.getChildOrdersByParentIds(parentOrderIds);
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+        Order notManagedOrder = new Order();
+        Boolean isNotManaged = false;
+        for(Order childOrder : parentOrderIds)
+        {
+            if(childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt')
+            {
+                notManagedOrder = childOrder;
+                break;
+            }
+        }
+        if(notManagedOrder != null)
+        {
+            isNotManaged = isNotManaged(notManagedOrder);
+        }
         for (Order childOrder : parentOrderIds) {
             if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
                 //for vas i need a bulk update on a queueable
@@ -518,7 +532,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     childOrdersToUpdate.add(orderToUpdate);*/
                     vasOrdersToUpdate.put(childOrder.Id, phaseVas);
                 }
-            } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged(childOrder) ) {
+            } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged ) {
                 //MODIFICARE IN ATTESA DI SVILUPPO MATRICE, TEMPORANEA ATTIVAZIONE FABIANA BUG 18/09/21
                 //Valore distributore STABBATO  
                 if (childOrder.Phase__c == currentPhase
