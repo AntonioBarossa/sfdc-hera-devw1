@@ -2,7 +2,7 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
     private Order order;
     private HDT_QR_RecordType qrRecordType = new HDT_QR_RecordType();
 
-    class MyException extends Exception{}
+    class HDT_UTL_CustomException extends Exception{}
     public HDT_QBL_VoltureChangeManager(Order ord) {
         this.order = ord;
     }
@@ -19,7 +19,9 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
         newCase.CompanyOwner__c = order.CompanyOwner__c;
         newCase.ContactId = order.Contact__c;
         if(order.ContractReference__c != null)
-            newCase.Contract__c = order.ContractReference__c; 
+        {
+            newCase.Contract__c = order.ContractReference__c;
+        }
         newCase.CreatorGroup__c = order.CreatorGroup__c;
         newCase.DistributorNote__c = order.PhoneNumber__c;
         newCase.Origin = order.Channel__c;
@@ -65,7 +67,7 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
             newCase.Status = 'Closed';
             newCase.CancellationReason__c = 'Processo incompatibile';
             HDT_UTL_DatabaseService.updateSObject(newCase);
-            throw new MyException('Errore nella verifica della compatibilita'); 
+            throw new HDT_UTL_CustomException('Errore nella verifica della compatibilita'); 
         }
         //Check Compatibility Output
         if(String.isEmpty(compatibility))
@@ -79,7 +81,7 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
             newCase.Status = 'Closed';
             newCase.CancellationReason__c = 'Processo incompatibile';
             HDT_UTL_DatabaseService.updateSObject(newCase);
-            throw new MyException('Processo Incompatibile');
+            throw new HDT_UTL_CustomException('Processo Incompatibile');
         }
 
         //Aggiornamento case in fase "In attesa data decorrenza".
