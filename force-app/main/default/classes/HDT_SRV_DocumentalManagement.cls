@@ -565,9 +565,9 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						for(Order singleOrder : orderList){
 							singleOrder.SignedDate__c = Date.today();
 							if(singleOrder.DocumentalProcessType__c == 'Switch In'){
-								//HDT_UTL_SwtichInProcess.calculateSwitchDate(singleOrder);
+								HDT_UTL_SwtichInProcess.calculateSwitchDate(singleOrder);
 							}else if(singleOrder.DocumentalProcessType__c == 'Cambio offerta'){
-								//HDT_UTL_SwtichInProcess.calculateCambioOffertaDate(singleOrder);
+								HDT_UTL_SwtichInProcess.calculateCambioOffertaDate(singleOrder);
 							}
 						}
 						HDT_UTL_DatabaseService.updateSObject(orderList);

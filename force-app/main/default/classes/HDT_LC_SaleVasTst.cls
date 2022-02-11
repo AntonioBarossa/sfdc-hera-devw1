@@ -218,7 +218,7 @@ public with sharing class HDT_LC_SaleVasTst {
     }
 
     @isTest
-    public static void testTransitionCheck2() {
+    public static void testTransitionCheckNew() {
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -229,7 +229,7 @@ public with sharing class HDT_LC_SaleVasTst {
             Sale__c sale = [SELECT Id, isTransition__c FROM Sale__c WHERE Status__c = 'Bozza' LIMIT 1];
             City__c city = [SELECT Id, Name FROM City__c WHERE Province__c = 'AQ' LIMIT 1];
 
-            HDT_LC_SaleVas.wrapReturn wrap = HDT_LC_SaleVas.transitionCheck2(sale.Id, city.Name, 'VAS stand alone');
+            HDT_LC_SaleVas.wrapReturn wrap = HDT_LC_SaleVas.transitionCheckNew(sale.Id, city.Name, 'VAS stand alone');
  
             Test.stopTest();
 

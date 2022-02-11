@@ -374,7 +374,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          */
          console.log('****12');
         //if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
-        if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c ) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
+        if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c ) || (['HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
                 this.callCreditCheckSAP();
         }
         console.log('****13');
@@ -514,6 +514,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             }
         ];
 
+        console.log('#Calling Credit Check......');
+        this.callCreditCheckSAP();
+        console.log('#End Credit Check......');
         console.log('CallBack end');
     }
 
