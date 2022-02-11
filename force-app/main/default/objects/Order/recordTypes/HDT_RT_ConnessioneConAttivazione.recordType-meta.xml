@@ -2307,6 +2307,10 @@
             <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>In Corso caricamento Siebel</fullName>
+            <default>false</default>
+        </values>
 <!--         <values>
             <fullName>In sequenzializzazione</fullName>
             <default>false</default>
