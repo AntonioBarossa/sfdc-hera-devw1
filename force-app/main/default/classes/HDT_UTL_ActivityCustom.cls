@@ -134,14 +134,14 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             act.wrts_prcgvr__status__c = 'Chiusa';
             res = true;
             ord.DocumentPackage__c = 'Validato';
-            //ord.phase__c = 'Documentazione Gestita';
+            ord.phase__c = 'Registrazione validata';
             //ord.status = 'Activated';
         }
         else{
             ord.CancellationReason__c = 'Registrazione non conforme';
         }
-        orderSrv.updateRecord(ord);
         activityCustomSrv.updateRecord(act);
+        orderSrv.updateRecord(ord);
 
         return res;
         //update act;
@@ -212,13 +212,22 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         String res = '';
         //Modifica del 28/01/2022 in ogni caso questa activity viene chiusa
         oldActivity.wrts_prcgvr__status__c = 'Chiusa';
+        activityCustomSrv.updateRecord(oldActivity);
         if(validazione == 'Si'){
            // res = true;
             Order ord = new Order();
             ord.id = oldActivity.order__c;
             ord.DocumentPackage__c = 'Validato';
-            ord.phase__c = 'Documentazione Gestita';
-            ord.status = 'Activated';
+            if(oldActivity.Type__c.containsIgnoreCase('Vocal Order'))
+            {
+                ord.Phase__c = 'Registrazione validata';
+            }
+            else
+            {
+                ord.phase__c = 'Documentazione Gestita';
+                ord.status = 'Completed';
+            
+            }
             orderSrv.updateRecord(ord);
         }
         else{
@@ -249,7 +258,6 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             activityCustomSrv.createRecord(newActivity);
             res = 'Creata';  
          }
-        activityCustomSrv.updateRecord(oldActivity);
         return res;
     }
 

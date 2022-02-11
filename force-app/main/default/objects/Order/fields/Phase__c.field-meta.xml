@@ -389,6 +389,11 @@
                 <label>In attesa validazione</label>
             </value>
             <value>
+                <fullName>In Corso caricamento Siebel</fullName>
+                <default>false</default>
+                <label>In Corso caricamento Siebel</label>
+            </value>
+            <value>
                 <fullName>In Lavorazione</fullName>
                 <default>false</default>
                 <label>In Lavorazione</label>
@@ -573,6 +578,11 @@
                 <label>Registrazione  da validare</label>
             </value>
             <value>
+                <fullName>Registrazione validata</fullName>
+                <default>false</default>
+                <label>Registrazione validata</label>
+            </value>
+            <value>
                 <fullName>Registrazione validata  Firmato/Inviato</fullName>
                 <default>false</default>
                 <label>Registrazione validata  Firmato/Inviato</label>
@@ -683,6 +693,11 @@
                 <fullName>Check TIMOE OK</fullName>
                 <default>false</default>
                 <label>Check TIMOE OK</label>
+            </value>
+            <value>
+                <fullName>Dati TIMOE Ricevuti</fullName>
+                <default>false</default>
+                <label>Dati TIMOE Ricevuti</label>
             </value>
         </valueSetDefinition>
     </valueSet>

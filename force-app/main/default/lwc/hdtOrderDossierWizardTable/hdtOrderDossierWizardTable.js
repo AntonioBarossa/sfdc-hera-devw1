@@ -5,6 +5,7 @@ import getTableData from '@salesforce/apex/HDT_LC_OrderDossierWizardTable.getTab
 import next from '@salesforce/apex/HDT_LC_OrderDossierWizardTable.next';
 import edit from '@salesforce/apex/HDT_LC_OrderDossierWizardTable.edit';
 import cancel from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.cancel';
+
 export default class hdtOrderDossierWizardTable extends NavigationMixin(LightningElement) {
 
     @api orderParentRecord;
@@ -58,7 +59,18 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
 
     get columnsDocumenti(){
         return [
-            {fieldName: 'CustomerName__c', // This field should have the actual URL in it.
+            {
+                label: 'Numero Ordine',
+                sortable: false,
+                type: 'button',
+                typeAttributes:{
+                    variant: 'base',
+                    style:'border: none;background: none',
+                    label: {fieldName: 'OrderNumber'},
+                    name: 'redirectOrder'
+                }
+            },
+            /*{fieldName: 'CustomerName__c', // This field should have the actual URL in it.
              type: 'url', 
              sortable: "false",
              label: 'Numero Ordine',
@@ -69,7 +81,7 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
                  },
                  target: '_parent', 
                  tooltip: 'Open the customer page'
-             }},
+             }},*/
             {label: 'Codice punto', fieldName: 'pod', type: 'text'},
             {label: 'Indirizzo di fornitura', fieldName: 'SupplyAddressFormula__c', type: 'text'},
             {label: 'Phase', fieldName: 'Phase__c', type: 'text'},
@@ -89,7 +101,7 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
                     label: 'Annulla',
                     name: 'cancelOrder',
                     title: 'Annulla',
-                    disabled: {fieldName :'disabledActionButton'},
+                    disabled: {fieldName :'disabledCancellationActionButton'},
                     value: 'cancelOrder'
                 }
             }
@@ -111,8 +123,9 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
                     ord.recordtypename = ord.RecordType.Name;
                 }
                 ord.pod = '';
-                ord.CustomerName__c = '/lightning/r/Order/' + ord.Id + '/view';
+                //ord.CustomerName__c = '/lightning/r/Order/' + ord.Id + '/view';
                 ord.pod = ord.ServicePoint__c !== undefined ? ord.ServicePoint__r.ServicePointCode__c : '';
+                ord.disabledCancellationActionButton = this.disabledInput || ord.Step__c === 20 || ord.Phase__c === 'Annullato' || ord.recordtypename === 'Default';
                 ord.disabledActionButton = this.disabledInput || ord.Step__c === 20 || ord.Phase__c === 'Annullato';
                 ord.offerta = data.primeQuoteLineMap[ord.Id]
 
@@ -137,9 +150,24 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
         let action = event.detail.action;
         this.orderId = row.Id;
         this.action = action.value;
+        let actionName = action.name;
+
+        console.log('#Action Name >>> ' + actionName);
 
         if(this.action === 'cancelOrder'){
             this.isDialogVisible = true;
+        }
+        else if(actionName === 'redirectOrder')
+        {
+            console.log('#Action value >>> ' + JSON.stringify(row.Id));
+            this[NavigationMixin.Navigate]({
+                type: 'standard__recordPage',
+                attributes: {
+                    recordId: row.Id,
+                    objectApiName: 'Order', // objectApiName is optional
+                    actionName: 'view'
+                }
+            });
         } else {
             console.log(' c__orderParent:'+ this.orderParentRecord.Id);
             console.log('  c__orderId:'+ this.orderId);

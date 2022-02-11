@@ -600,7 +600,8 @@ public inherited sharing class HDT_QR_Order {
             DateComfortCall__c,
             DocumentPackage__c,
             ProcessType__c,
-            ParentOrder__c
+            ParentOrder__c,
+            ParentOrder__r.Phase__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
@@ -962,7 +963,8 @@ public inherited sharing class HDT_QR_Order {
         PowerCommitted__c,
         PowerAvailable__c,
         VoltageLevel__c,
-        AccountId
+        AccountId,
+        IsTechnicalTransfer__c
         FROM Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
     /**@frpanico 26/10/2021
@@ -990,7 +992,8 @@ public inherited sharing class HDT_QR_Order {
         SupplyCountry__c,
         PowerCommitted__c,
         PowerAvailable__c,
-        VoltageLevel__c
+        VoltageLevel__c,
+        IsTechnicalTransfer__c
         FROM Order where Ordernumber IN :orderNumbers WITH SECURITY_ENFORCED];
     }
 
@@ -1000,7 +1003,7 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getRecordByOrderId(String recordId){
-        return [Select id,phase__c,Status,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, CancellationNote__c, AccountId from Order where Id = :recordId WITH SECURITY_ENFORCED];
+        return [Select id,IsTechnicalTransfer__c,phase__c,Status,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, CancellationNote__c, AccountId from Order where Id = :recordId WITH SECURITY_ENFORCED];
     }
 
     /**

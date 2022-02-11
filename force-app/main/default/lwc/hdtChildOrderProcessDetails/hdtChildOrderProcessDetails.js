@@ -1,24 +1,14 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateProcessStep from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.updateProcessStep';
-//INIZIO SVILUPPI EVERIS
-import updateOrder from '@salesforce/apex/HDT_LC_SelfReading.updateOrder';
 import init from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.init';
-import { getRecord, getFieldValue, updateRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
+import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import  voltureEffectiveDateCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck';
 import getDates from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getDates';
-import RETROACTIVE_DATE from '@salesforce/schema/Order.RetroactiveDate__c';
-import EFFECTIVE_DATE from '@salesforce/schema/Order.EffectiveDate__c';
-import sendAdvanceDocumentation from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendAdvanceDocumentation';
-//FINE SVILUPPI EVERIS
-import createActivityAccise from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.createActivityAccise'
 import getQuoteTypeMtd from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getQuoteTypeMtd';
 import isPreventivo from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.isPreventivo';
-// @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
-import ConsumptionsCorrectionType__c from '@salesforce/schema/Case.ConsumptionsCorrectionType__c';
-import SystemCapacity__c from '@salesforce/schema/Case.SystemCapacity__c';
-import { ingestDataConnector } from 'lightning/analyticsWaveApi';
+import getReadingId from '@salesforce/apex/HDT_LC_SelfReading.getReadingId';
 
 class fieldData{
     constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value) {
@@ -99,6 +89,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track isReading;
     @track resumeFromDraftReading = false;
     @track readingDisabled = false;
+    @track currentSectionName; 
     //FINE SVILUPPI EVERIS
     sysdate(){
         var sysdateIso = new Date().toISOString(); // Es: 2021-03-01T15:34:47.987Z
@@ -395,8 +386,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         //INIZIO SVILUPPI EVERIS
         console.log('isVolture: '+this.isVolture);
         console.log('isRetroactive: '+this.isRetroactive);
-        console.log('isReading: '+this.isReading)
-        console.log('isUpdateStep: '+this.sectionDataToSubmit.length > 0);
+        console.log('isReading: '+this.isReading);
+        console.log('CurrentSectionName: '+this.currentSectionName);
+        console.log('isUpdateStep: '+ this.isVolture === true && this.currentSectionName === 'processVariables');
         let orderId = this.order.Id;
         //FINE SVILUPPI EVERIS
         //INSERITE NUOVE VARIABILI, IsRetroactive e IsReading solo in avanzamento di sezione.  
@@ -407,7 +399,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             isVolture: this.isVolture,
             isRetroactive: this.isRetroactive,
             isReading: this.isReading,
-            isUpdateStep: this.sectionDataToSubmit.length > 0,
+            isUpdateStep: this.isVolture === true && this.currentSectionName === 'processVariables',
             readingDate: this.readingCustomerDate
         }).then(data =>{
             if(this.isVolture){
@@ -487,21 +479,27 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     checkFieldAvailable(fieldApiName, isRequired = false)
     {
         console.log('#fieldName >>> ' + fieldApiName);
-        if(this.template.querySelector(`[data-id=${fieldApiName}]`) !== null 
-            && (this.template.querySelector(`[data-id=${fieldApiName}]`).value === ''|| this.template.querySelector(`[data-id=${fieldApiName}]`).value === null))
+        if(this.template.querySelector(`[data-id=${fieldApiName}]`) !== null)
         {
-            if(isRequired === true && this.template.querySelector(`[data-id=${fieldApiName}]`).required === true)
+            if((this.template.querySelector(`[data-id=${fieldApiName}]`).value === ''|| this.template.querySelector(`[data-id=${fieldApiName}]`).value === null))
             {
-                return '';
+                if(isRequired === true && this.template.querySelector(`[data-id=${fieldApiName}]`).required === true)
+                {
+                    return '';
+                }
+                else
+                {
+                    return 'non obbligatorio';
+                }
             }
             else
             {
-                return 'non obbligatorio';
+                return this.template.querySelector(`[data-id=${fieldApiName}]`).value;
             }
         }
         else
         {
-            return this.template.querySelector(`[data-id=${fieldApiName}]`).value;
+            return 'non obbligatorio';
         }
         
     }
@@ -520,6 +518,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     handleNext(event){
         this.loading = true;
         let currentSectionName = event.currentTarget.value;
+        this.currentSectionName = currentSectionName;
         console.log("currentSectionName "+currentSectionName);
         let currentSection = this.availableSteps.filter(section => section.name === currentSectionName);
         let currentObjectApiName = currentSection[0].objectApiName;
@@ -552,7 +551,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
            }
         }
         if(currentSectionName === 'dettaglioImpianto'){
-            if(this.typeVisibility('gas') && this.checkFieldAvailable('MaxRequiredPotential__c', true) === '')
+            if( this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
             {
                 this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
                 return;
@@ -810,20 +809,23 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
            this.sectionDataToSubmit['AggregateBilling__c'] = this.template.querySelector("[data-id='AggregateBilling__c']").value;
         }
         if(currentSectionName === 'reading'){
-
-            console.log('Inside reading condition');
-
-            try{
-                this.template.querySelector('c-hdt-self-reading').handleSaveButton();
-                this.isSavedReading = false;
-                this.resumeFromDraftReading = true;
-            } catch(e){
-                console.log('Inside Exception');
-                console.log('Here');
-                this.loading = false;
-                return;
-            }
-            console.log('isSavedReading--> '+this.isSavedReading);
+            let readingComponent = this.template.querySelector('c-hdt-self-reading');
+            getReadingId({objectName:'Order',objectId:this.order.Id, commodity:this.order.CommodityFormula__c})
+            .then(data => 
+                {
+                    console.log('# ReadingId >>> ' + data);
+                    this.resumeFromDraftReading = data !== null && data !== undefined;
+                    readingComponent.resumedFromDraft = this.resumeFromDraftReading;
+                    console.log('# Resume From Draft >>> ' + this.resumeFromDraftReading);
+                    console.log('# Child Resume From Draft >>> ' + readingComponent.resumedFromDraft);
+                    readingComponent.handleSaveButton();
+                    this.isSavedReading = false;
+                    readingComponent.isSaved = false;
+                })
+            .catch(error => 
+                {
+                    this.showMessage('Errore', JSON.stringify(error), 'error');
+                })
             
         }
         //f.defelice
@@ -858,14 +860,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.loading = true;
         let currentSectionName = event.currentTarget.value;
         let currentSectionIndex = this.availableSteps.findIndex(section => section.name === currentSectionName);
-
-        //INIZIO SVILUPPI EVERIS
-        //LA VARIABILE nextIndex RIPORTA L'INDICE CORRETTO
         let nextIndex = this.availableSteps[currentSectionIndex - 1].name === 'reading' && this.resumeFromDraftReading === false
         ? currentSectionIndex - 2
         : currentSectionIndex - 1
-        //FINE SVILUPPI EVERIS 
-
         let previousSectionStep = this.availableSteps[nextIndex].step;
 
         updateProcessStep({order: {Id: this.order.Id, Step__c: previousSectionStep},isVolture:this.isVolture}).then(data =>{
@@ -953,7 +950,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 readingButton:true,
                 //@frpanico 17/09/21 added "Voltura con Switch" condition
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
-                || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0),
+                || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'),
                 data:[
                     //@frpanico 09/09/21 utilizzato oggetto per snellire il codice dove possibile
                     //constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value)

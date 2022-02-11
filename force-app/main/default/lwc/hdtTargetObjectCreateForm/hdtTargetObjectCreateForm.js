@@ -1025,7 +1025,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             //Validate address
             if (this.theRecord['Indirizzo Estero'] == false || this.theRecord['Indirizzo Estero'] == undefined) {
                 if (this.theRecord['Flag Verificato'] == false || this.theRecord['Flag Verificato'] == undefined) {
-                    isValid = false;
                     this.isValidFields = false;
                     this.loading = false;
                     this.alert('Dati tabella', 'E\' necessario verificare l\'indirizzo per poter procedere al salvataggio', 'error');
@@ -1123,7 +1122,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     resolve();
                 })
                 .catch(error => {
-                    isValid = false;
                     this.isValidFields = false;
                     this.loading = false;
                     this.alert('Errore', 'Errore nel processo di controllo coerenza campi!', 'error');

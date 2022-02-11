@@ -104,41 +104,68 @@ public with sharing class HDT_UTL_VoltureChangeManager {
     {
         Order orderToUpdate = new Order();
         orderToUpdate.Id = currentOrder.Id;
-        /* Write text fields */
-        orderToUpdate.TecnicalPhase__c = (String)fieldsMap.get('FASE');
-        orderToUpdate.CausalCode__c = (String)fieldsMap.get('CODERR');
-        orderToUpdate.Description = (String)fieldsMap.get('ANNOTAZIONI');
-        orderToUpdate.SupplyStreetName__c = (String)fieldsMap.get('VIA');
-        orderToUpdate.SupplyStreetNumber__c = (String)fieldsMap.get('CIV');
-        orderToUpdate.SupplyPostalCode__c = (String)fieldsMap.get('CAP');
-        orderToUpdate.SupplyCityCode__c = (String)fieldsMap.get('ISTAT');
-        orderToUpdate.SupplyCity__c = (String)fieldsMap.get('LOCALITA');
-        orderToUpdate.SupplyState__c = (String)fieldsMap.get('PROV');
-        orderToUpdate.SupplyCountry__c = (String)fieldsMap.get('NAZIONE');
-        orderToUpdate.DiscardReason__c = HDT_UTL_Accents.removeDiacritics((String)fieldsMap.get('DES_ERR_AEEG'));
-        orderToUpdate.HerokuPracticeCode__c = (String)fieldsMap.get('COD_PRAT_UTENTE');
-        orderToUpdate.DistributorPracticeCode__c = (String)fieldsMap.get('COD_PRAT_DISTR');
-        /* Date Fields */
-        orderToUpdate.SwitchOutDate__c = fieldsMap.get('DATA_DECORRENZA_SW') != null
-            ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_SW'))
-            : null;   
-        orderToUpdate.EffectiveDate__c = fieldsMap.get('DATA_DECORRENZA_VT_TIT_III') != null
-            ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III'))
-            : null;
-        orderToUpdate.EffectiveDate__c = fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV') != null 
-            ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV'))
-            : null;
-        /* Number Fields */
-        orderToUpdate.PowerCommitted__c = fieldsMap.get('POTCONTRIMP') != null 
-            ? Decimal.valueOf((String)fieldsMap.get('POTCONTRIMP'))
-            : null;
-        orderToUpdate.PowerAvailable__c = fieldsMap.get('POTDISP') != null 
-            ? Decimal.valueOf((String)fieldsMap.get('POTDISP'))
-            : null;
-        /* Field "TENSIONE" */
-        orderToUpdate.VoltageLevel__c = fieldsMap.get('TENSIONE') != null 
-            ? voltureChangeUtils.getTension((String)fieldsMap.get('TENSIONE'))
-            : null;
+        /* Handle Result KO */
+        if(((String)fieldsMap.get('result')).equalsIgnoreCase('OK'))
+        {
+            /* Write text fields */
+            orderToUpdate.PrecheckResultSII__c = ((String)fieldsMap.get('FASE')).equalsIgnoreCase('Amm. Precheck OK SII') ? 'OK' : 'KO';
+            orderToUpdate.TecnicalPhase__c = (String)fieldsMap.get('FASE');
+            orderToUpdate.CausalCode__c = (String)fieldsMap.get('CODERR');
+            orderToUpdate.Description = (String)fieldsMap.get('ANNOTAZIONI');
+            if(! string.isBlank((String)fieldsMap.get('VIA')) ){
+                orderToUpdate.SupplyStreetName__c = (String)fieldsMap.get('VIA');
+            }
+            if(! string.isBlank((String)fieldsMap.get('CIV')) ){
+                orderToUpdate.SupplyStreetNumber__c = (String)fieldsMap.get('CIV');
+            }
+            if(! string.isBlank((String)fieldsMap.get('CAP')) ){
+                orderToUpdate.SupplyPostalCode__c = (String)fieldsMap.get('CAP');
+            }
+            if(! string.isBlank((String)fieldsMap.get('ISTAT')) ){
+                orderToUpdate.SupplyCityCode__c = (String)fieldsMap.get('ISTAT');
+            }
+            if(! string.isBlank((String)fieldsMap.get('LOCALITA')) ){
+                orderToUpdate.SupplyCity__c = (String)fieldsMap.get('LOCALITA');
+            }
+            if(! string.isBlank((String)fieldsMap.get('PROV')) ){
+                orderToUpdate.SupplyState__c = (String)fieldsMap.get('PROV');
+            }
+            if(! string.isBlank((String)fieldsMap.get('NAZIONE')) ){
+                orderToUpdate.SupplyCountry__c = (String)fieldsMap.get('NAZIONE');
+            }
+            orderToUpdate.DiscardReason__c = HDT_UTL_Accents.removeDiacritics((String)fieldsMap.get('DES_ERR_AEEG'));
+            orderToUpdate.HerokuPracticeCode__c = (String)fieldsMap.get('COD_PRAT_UTENTE');
+            orderToUpdate.DistributorPracticeCode__c = (String)fieldsMap.get('COD_PRAT_DISTR');
+            /* Date Fields */
+            if( ! string.isBlank((String)fieldsMap.get('DATA_DECORRENZA_SW')) ){
+                orderToUpdate.SwitchOutDate__c = Date.valueOf( (String)fieldsMap.get('DATA_DECORRENZA_SW') );
+            }
+            if( ! string.isBlank((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III')) ){
+                orderToUpdate.EffectiveDate__c = Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III'));
+            }
+            if(  ! string.isBlank((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III'))){
+                orderToUpdate.EffectiveDate__c = Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV'));
+            }
+            if( ! string.isBlank((String)fieldsMap.get('POTCONTRIMP')) ){
+                orderToUpdate.PowerCommitted__c = Decimal.valueOf((String)fieldsMap.get('POTCONTRIMP'));
+            }
+            /* Number Fields */
+            if( ! string.isBlank((String)fieldsMap.get('POTDISP'))){
+                orderToUpdate.PowerAvailable__c = Decimal.valueOf((String)fieldsMap.get('POTDISP'));
+            }
+            /* Field "TENSIONE" */
+            if( ! string.isBlank((String)fieldsMap.get('TENSIONE')) ){
+                orderToUpdate.VoltageLevel__c = voltureChangeUtils.getTension((String)fieldsMap.get('TENSIONE'));
+            }
+        }
+        /* result KO */
+        else 
+        {
+            orderToUpdate.TecnicalPhase__c = 'Comunicazione verso Heroku KO';
+            orderToUpdate.Description = (String)fieldsMap.get('errorMessage');
+            orderToUpdate.DiscardReason__c = (String)fieldsMap.get('errorMessage');
+
+        }
         return orderToUpdate;
     }
     
@@ -321,7 +348,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
         //Boolean isVolture = (Boolean) checkMap.get('isVolture');
         Boolean isReading = (Boolean) checkMap.get('isReading');
         Boolean isRetroactive = (Boolean) checkMap.get('isRetroactive');
-        //Boolean isUpdateStep = (Boolean) checkMap.get('isUpdateStep');
+        Boolean isUpdateStep = (Boolean) checkMap.get('isUpdateStep');
         Date readingDate = (Date) checkMap.get('readingDate');
 
         order.NotRegisteredMeterCase__c = order.NotRegisteredMeterCase__c!=null?order.NotRegisteredMeterCase__c:currentOrder.NotRegisteredMeterCase__c;
@@ -383,7 +410,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             /**@frpanico 12/11/2021
              * Update check VoltureType "Recupero" the date has been changed to 2015/08/31
              */
-            if( order.EffectiveDate__c != null)
+            if(isUpdateStep != null && isUpdateStep == true &&  order.EffectiveDate__c != null)
             {
                 if( order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
                 {

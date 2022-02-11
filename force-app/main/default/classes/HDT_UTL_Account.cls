@@ -176,8 +176,8 @@ public with sharing class HDT_UTL_Account {
                 acc.CustomerCode__c = res.data.codiceBP;
                 update acc;
             }
-          
-            else if(('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) || 'Piccoli Condomini'.equalsIgnoreCase(acc.Category__c))&& ('BP non rilevato'.equalsIgnoreCase(res.data.commenti))) {
+            /* Commentato in quanto errata gestione della registrazione dell'amministratore */
+            /*else if(('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) || 'Piccoli Condomini'.equalsIgnoreCase(acc.Category__c))&& ('BP non rilevato'.equalsIgnoreCase(res.data.commenti))) {
                 // amministratore di condominio viene identificato  dalla category 
                 req = callAmCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert amministratore
@@ -186,7 +186,7 @@ public with sharing class HDT_UTL_Account {
                     acc.CustomerCode__c = resCreate.data.codiceBP; 
                     update acc;
                 } // TODO gestire l'errore 
-            }
+            }*/
             /**@frpanico 17/01/2022
              * Commentata parte di codice della creazione Account
              * L'account viene creato in un secondo momento
@@ -316,7 +316,7 @@ public with sharing class HDT_UTL_Account {
      * Creato metodo per la creazione del BP/CA
      */
     
-    public static void createBpCa(List<AccountContactRelation> accountContactRelList, Id saleId)
+    public static void createBpCa(List<AccountContactRelation> accountContactRelList, string saleId)
     {
         /**@frpanico 17/01/2022
          * Se presente accountContactRel Amm. Condominio/Legale Rappresentante
@@ -342,41 +342,61 @@ public with sharing class HDT_UTL_Account {
                 }
             }
         }
-        //CustomerMarking D* and update
-        Account acc = checkCustomerMarking( (Account)accountContactMap.get('Account') , saleId );
-        Contact cont = (Contact)accountContactMap.get('Contact');
-      
-        //HRADTR_GV Modifiche 03/02/2022 - Inizio
-        List<SObject> listToUpdate = new List<SObject>();
-        HDT_WS_RicCreBpCaRequest   req;
-        HDT_WS_RichCreBpCaResponse resCreate;
-        req = callBpCaCreate(acc,cont);
-        resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
-        if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
-            acc.CustomerCode__c = resCreate.data.codiceBP;
-            listToUpdate.add(acc); 
-        } // TODO gestire l'errore 
-
-            if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) && isAmministratore ){
-            req = callAmCaCreate(acc,cont);
+        /**@frpanico 09/02/2022
+         * Se presente il customer code
+         * Non viene registrato su sap l'account
+         */
+        if(String.isBlank(((String)((Account)accountContactMap.get('Account')).get('CustomerCode__c'))))
+        {
+            //CustomerMarking D* and update
+            Account acc = checkCustomerMarking( (Account)accountContactMap.get('Account') , saleId );
+            Contact cont = (Contact)accountContactMap.get('Contact');
+        
+            //HRADTR_GV Modifiche 03/02/2022 - Inizio
+            List<SObject> listToUpdate = new List<SObject>();
+            HDT_WS_RicCreBpCaRequest   req;
+            HDT_WS_RichCreBpCaResponse resCreate;
+            req = callBpCaCreate(acc,cont);
             resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
             if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
-                cont.ContactCode__c = resCreate.data.codiceBP;
-                listToUpdate.add(cont); 
+                acc.CustomerCode__c = resCreate.data.codiceBP;
+                listToUpdate.add(acc); 
             } // TODO gestire l'errore 
-            HDT_UTL_DatabaseService.updateSObject( listToUpdate ); 
 
+            if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) && isAmministratore ){
+                req = callAmCaCreate(acc,cont);
+                resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
+                if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
+                    cont.ContactCode__c = resCreate.data.codiceBP;
+                    listToUpdate.add(cont); 
+                } // TODO gestire l'errore 
+            }
+            HDT_UTL_DatabaseService.updateSObject( listToUpdate ); 
+        }
+        else
+        {
+            return;    
         }
         //HRADTR_GV Modifiche 03/02/2022 - Fine
 
     }
 
-    private static Account checkCustomerMarking( Account acc , Id saleId)
+    private static Account checkCustomerMarking( Account acc , string saleId)
     {
-        List<Sale__c> isAccountInTransition = [ SELECT Id, Account__c, isTransition__c FROM Sale__c WHERE Sale__c.Id=:saleId WITH SECURITY_ENFORCED ]; 
+        //Modifiche HRADTR_GV 03/02/2022 - Inizio
+        Boolean checkSaleId = false;
+        Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
         
+        if(saleId instanceof Id){
+            List<Sale__c> isAccountInTransition = [ SELECT Id, Account__c, isTransition__c FROM Sale__c WHERE Sale__c.Id=:saleId WITH SECURITY_ENFORCED ]; 
+            checkSaleId = isAccountInTransition[0].IsTransition__c;
+        }
+        else{
+            checkSaleId = (!stabbedData.contains(saleId));
+        }
+        //Modifiche HRADTR_GV 03/02/2022 - FIne
         //IsTransition__c = false && CustomerMarking !LIKE «D*» (es. Persona Fisica)
-        if( !isAccountInTransition[0].IsTransition__c ){
+        if(!checkSaleId){ //Modifiche HRADTR_GV 03/02/2022 
             switch on acc.CustomerMarking__c {
                 when 'Persona fisica' {
                     acc.CustomerMarking__c = 'D1 - Persona fisica';
@@ -410,6 +430,8 @@ public with sharing class HDT_UTL_Account {
 
     private static Map<String, SObject> generateAccountContact(AccountContactRelation accountContactRel)
     {
+        accountContactRel = HDT_QR_AccountContactRelation.getAccountContactData(accountContactRel.Id)[0];
+
         Map<String, SObject> accountContactMap = new Map<String, SObject>();
         Account newAccount = new Account();
         Contact newContact = new Contact();

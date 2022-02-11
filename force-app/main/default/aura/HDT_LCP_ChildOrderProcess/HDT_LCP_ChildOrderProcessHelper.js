@@ -12,9 +12,10 @@
                 component.set("v.orderParentId", pageReference.state.c__orderParent);
 
                 //Gestione Scarti Complessi
-                let discardRework = (pageReference.state.c__discardRework === true)? true : false;
+                let discardRework = (pageReference.state.c__discardRework === 'true' || pageReference.state.c__discardRework === true)? true : false;
                 component.set("v.discardActivityToClose",pageReference.state.c__discardActivityToClose);
                 component.set("v.discardRework", discardRework);
+                console.log('discardRework: '+discardRework);
                 //Fine Gestione Scarti Complessi
                 
             }

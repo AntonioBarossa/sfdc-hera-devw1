@@ -719,6 +719,29 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Case.HDT_CreateDistributorApointment</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Cluster__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Disattivazioni</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Cluster__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Morosità</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Cluster__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Verifiche</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Cluster__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Preventivi</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Global.EscalationCmp</value>

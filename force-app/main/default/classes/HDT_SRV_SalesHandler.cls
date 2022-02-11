@@ -245,9 +245,12 @@ public with sharing class HDT_SRV_SalesHandler {
                                 HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
                                 utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
-                                ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.valueOf(mapRequestFields.get('DT_INIZIO_VERT')) : null;
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                if(mapRequestFields.get('DT_INIZIO_VERT') != null && String.isNotBlank(mapRequestFields.get('DT_INIZIO_VERT'))){
+                                    ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.valueOf(mapRequestFields.get('DT_INIZIO_VERT')) : null;
+                                }
+                                
                                 
                                 //Start HRAWRM-657 21/09/2021
                                 List<Id> listRecType = new List<Id>();
@@ -388,11 +391,18 @@ public with sharing class HDT_SRV_SalesHandler {
                                 {
                                     ord.Phase__c = annullatoPhase;
                                 }
+                                /**@frpanico 04/02/2022
+                                 * Gestione preventivo Extra Sistema
+                                 */
+                                else if(previousPhase.equalsIgnoreCase('Dati Tecnici Ricevuti') && ordRetrieved.ProcessType__c.containsIgnoreCase('Prima Attivazione con modifica'))
+                                {
+                                    ord.Phase__c = previousPhase;
+                                }
                                 else
                                 {
                                     Boolean redirectPreventivo = false;
                                     switch on ordRetrieved.ProcessType__c{
-                                        when 'Connessione con Attivazione', 'Temporanea - Nuova Attivazione', 'Attivazione con Modifica'{
+                                        when 'Connessione con Attivazione', 'Temporanea - Nuova Attivazione'{
                                             redirectPreventivo=true;
                                         }
                                     }                            
@@ -463,6 +473,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.CancellationRequestDate__c = System.today();
                                 ord.CancellationReasonCode__c = mapRequestFields.get('COD_CAUSALE');
                                 ord.CancellationNote__c = mapRequestFields.get('ANNOTAZIONI_ANN');
+                                ord.CancellationReason__c = 'Annullamento dal SII';
                                 String annotazioni = ord.CancellationNote__c != null? ord.CancellationNote__c:'';
                                 ord.CancellationNote__c = mapRequestFields.get('NOTE_ANN') +'\n' + annotazioni;
                                 HDT_UTL_HerokuPostSalesManager utlClass = new HDT_UTL_HerokuPostSalesManager();
@@ -497,6 +508,15 @@ public with sharing class HDT_SRV_SalesHandler {
                                      ord.Phase__c = 'Annullato'; //HRAWRM-460
                                      updateFuture(JSON.serialize(ord));
                                  }
+                        //Annullamento automatico per precheck ko su precedente cliente
+                        if(ord.Phase__c.equalsIgnoreCase('Dati TIMOE Ricevuti') && ordRetrieved.IsTechnicalTransfer__c){
+                            ord.CancellationReason__c = 'Revoca ai sensi del comma 8.2 del TIMG';
+                            ord.CancellationReasonDescription__c = 'Revoca ai sensi del comma 8.2 del TIMG';
+                            ord.CancellationReasonCode__c = 'SG02';
+                            ord.CancellationRequestDate__c = Date.Today();
+                            ord.Phase__c = 'Annullamento - Da inviare';
+                            orderSrv.updateRecord(ord);
+                        }
                     }else if(mapRequestFields.get('RECORD_ID')!= null && String.isNotBlank(activityName)){
                         //EVERIS: Gestione Scarti SAP Aggiunta logica creazione scarti se viene inviata solo l'attività
                         String recordId = mapRequestFields.get('RECORD_ID');

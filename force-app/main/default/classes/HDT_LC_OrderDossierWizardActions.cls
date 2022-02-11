@@ -151,7 +151,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 //   orderToUpdate.Phase__c = 'Plico da inviare'; 
             }
         }
-        else if(orderParent.Phase__c == 'Registrazione  da validare'){
+        else if(orderParent.Phase__c == 'Registrazione validata'){
             orderToUpdate.Phase__c = 'Documentazione Gestita';
             orderToUpdate.status = 'Completed';
         }
@@ -191,6 +191,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         ordersToUpdate.add(orderToUpdate);
 
         //update child orders
+        /**@frpanico 04/02/2022
+         * Commentato in quanto la conferma cliente va successivamente
+         * Alla validazione documenti
+         */
+        /*
         for (Order childOrder : childOrders) {
             if (childOrder.ComfortCallDaysDue__c != null) {
                 ordersToUpdate.add(new Order(
@@ -199,6 +204,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 ));
             }
         }
+        */
 
         orderSrv.updateRecords(ordersToUpdate);
 
@@ -304,6 +310,24 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         }
 
         return result || orderParent.Status == 'Completed';
+    }
+    /*@frpanico 08/02/2022
+    * Aggiunta gestione Annullamento
+    * Per poter annullare gli order non devono essere in default
+     */
+    @AuraEnabled
+    public static Boolean isCancelDisabled(Order parentOrder){
+        Boolean result = false;
+        List<Order> childOrders = orderQr.getChildOrdersByParentId(parentOrder.Id);
+        for(Order childOrder : childOrders)
+        {
+            if(childOrder.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_Default'))
+            {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
     
