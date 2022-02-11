@@ -997,6 +997,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 mapFieldValue.put('Phase__c',fase);
             }
             List<HDT_GestioneScartiSap__mdt> rules = HDT_UTL_GestioneScartiSap.getRuleFromActivity(mapFieldValue);
+            
             if (!rules.isEmpty()){
                 System.enqueueJob(new HDT_QBL_GestioneScartiSap(objectId,rules,mapActivityField));
             }
@@ -1015,10 +1016,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         return objectName;
     }
 
-    
-
-    public static void discardManagement(List<HDT_WRP_MrrRequest.HDT_WRP_Request> inboundRequests){
-        Map<String,String> requestDiscardManagemnt = createRequestMap(inboundRequests);
+    public static void discardManagement(Map<String,String> requestDiscardManagemnt){
         if (String.isNotBlank(requestDiscardManagemnt.get('FASE')) && String.isNotBlank(requestDiscardManagemnt.get('RECORD_ID')) && String.isNotBlank(requestDiscardManagemnt.get('OBJECT_TYPE'))){
             Id recordId = (Id)requestDiscardManagemnt.get('RECORD_ID');
             String fase = requestDiscardManagemnt.get('FASE');
@@ -1028,12 +1026,23 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 templateName = 'Case'.equalsIgnoreCase(requestDiscardManagemnt.get('OBJECT_TYPE')) ? conf.CaseTemplate__c : conf.OrderTemplate__c;
                 break; //Se per sbaglio vengono configurate più configurazioni prende la prima che trova
             }
+            System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> Discard Message: ' +  requestDiscardManagemnt.get('DISCARD_MESSAGE'));
+            System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> templateName: ' +  templateName);
+            System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> checkDiscardAnnullmentRule: ' +  checkDiscardAnnullmentRule(recordId, fase,requestDiscardManagemnt.get('DISCARD_MESSAGE')));
             if (String.isNotEmpty(templateName) && !checkDiscardAnnullmentRule(recordId, fase,requestDiscardManagemnt.get('DISCARD_MESSAGE'))){
-                HDT_UTL_DatabaseService.insertSObject(createActivityByObjectIdAndTemplateName(recordId, templateName,objectType));
+                wrts_prcgvr__Activity__c act = createActivityByObjectIdAndTemplateName(recordId, templateName,objectType);
+                act.DiscardDescription__c = requestDiscardManagemnt.get('DISCARD_MESSAGE');
+                System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> act: ' +  act);
+                HDT_UTL_DatabaseService.insertSObject(act);
             }else if (String.isNotEmpty(templateName)){
                 annulmentProcess(recordId, objectType);
             }
         }
+    }
+
+    public static void discardManagement(List<HDT_WRP_MrrRequest.HDT_WRP_Request> inboundRequests){
+        Map<String,String> requestDiscardManagemnt = createRequestMap(inboundRequests);
+        discardManagement(requestDiscardManagemnt);
     }
 
     private static Map<String,String> createRequestMap(List<HDT_WRP_MrrRequest.HDT_WRP_Request> inboundRequests){
@@ -1053,9 +1062,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     }
                     //
                     if(('NOTE_ERR'.equalsIgnoreCase(curField.name) 
-                    || 'NOTE_ERR'.equalsIgnoreCase(curField.name)
-                    || 'NOTE_ERR'.equalsIgnoreCase(curField.name)
-                    || 'NOTE_ERR'.equalsIgnoreCase(curField.name)) 
+                    || 'DES_ERR_AEEG'.equalsIgnoreCase(curField.name)
+                    || 'TESTO_ERRR'.equalsIgnoreCase(curField.name)
+                    || 'ANNOTAZIONI'.equalsIgnoreCase(curField.name)) 
                     && String.isNotBlank(curField.value)){
                         discardError += HDT_UTL_Accents.removeDiacritics(curField.value) + '\n';
                     }
