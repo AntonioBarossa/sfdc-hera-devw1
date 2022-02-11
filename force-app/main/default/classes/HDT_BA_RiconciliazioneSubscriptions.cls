@@ -21,6 +21,7 @@ public with sharing class HDT_BA_RiconciliazioneSubscriptions implements Databas
             SBQQ__Subscription__c clone= sub.clone(false,true,false,true);
             clone.SBQQ__Contract__c = oldContToNew.get(sub.SBQQ__Contract__r.SAPContractCode__c).SBQQ__Contract__c;
             clone.SBQQ__RootId__c = oldContToNew.get(sub.SBQQ__Contract__r.SAPContractCode__c).Id;
+            clone.SBQQ__RequiredById__c = oldContToNew.get(sub.SBQQ__Contract__r.SAPContractCode__c).Id;
             clones.add(clone);
         }
         insert clones;

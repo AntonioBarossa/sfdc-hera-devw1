@@ -969,7 +969,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     }
 
     public static wrts_prcgvr__Activity__c closeDiscardActivity(Id activityId){
-        return new wrts_prcgvr__Activity__c(Id =  activityId, wrts_prcgvr__Status__c ='Chiusa', EndDate__c = Date.today());
+        List<User> u = [SELECT ID, UserCompany__c, Username FROM User WHERE ID =: Userinfo.getUserId()];
+        return new wrts_prcgvr__Activity__c(Id =  activityId, wrts_prcgvr__Status__c ='Chiusa', EndDate__c = Date.today(), UserCompany__c = u[0].UserCompany__c, ClosedByUsername__c=u[0].Username );
     }
 
     public static Boolean manageSapDiscard(List<SObject> newObjectList, Map<Id,SObject> oldObjectMap){

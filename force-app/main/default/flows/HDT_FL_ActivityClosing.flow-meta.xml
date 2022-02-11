@@ -5,7 +5,7 @@
         <name>Assegna_Note</name>
         <label>Assegna Note</label>
         <locationX>50</locationX>
-        <locationY>854</locationY>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>activity.ClosingNote__c</assignToReference>
             <operator>Assign</operator>
@@ -72,14 +72,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Tipo_Completa_Attivit</targetReference>
+            <targetReference>Get_Activity</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>HDT_CloseActivity_AND_HDT_CloseManualActivity</name>
         <label>HDT_CloseActivity AND HDT_CloseManualActivity</label>
         <locationX>314</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>activity.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -102,7 +102,7 @@
         <name>HDT_CloseDistributorComunicationAssign</name>
         <label>HDT_CloseDistributorComunicationAssign</label>
         <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>activity.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -118,7 +118,7 @@
         <name>ActivityType_0</name>
         <label>ActivityType</label>
         <locationX>182</locationX>
-        <locationY>734</locationY>
+        <locationY>854</locationY>
         <defaultConnector>
             <targetReference>Chiudi_Activity</targetReference>
         </defaultConnector>
@@ -127,7 +127,7 @@
             <name>HDT_CloseManualActivity_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>activity.RecordType.DeveloperName</leftValueReference>
+                <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>HDT_RT_Scarto</stringValue>
@@ -150,7 +150,7 @@
         <name>Tipo_Completa_Attivit</name>
         <label>Tipo Completa Attività</label>
         <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>HDT_CloseActivity_AND_HDT_CloseManualActivity</targetReference>
         </defaultConnector>
@@ -159,7 +159,7 @@
             <name>RT_HDT_CloseDistributorComunication</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>activity.RecordType.DeveloperName</leftValueReference>
+                <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>HDT_RT_DistributorCommunication</stringValue>
@@ -200,11 +200,32 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_Activity</name>
+        <label>Get Activity</label>
+        <locationX>182</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Tipo_Completa_Attivit</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Chiudi_Activity</name>
         <label>Chiudi Activity</label>
         <locationX>182</locationX>
-        <locationY>1070</locationY>
+        <locationY>1190</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
         </connector>
@@ -214,7 +235,7 @@
         <name>Screen_Finale</name>
         <label>Screen Finale</label>
         <locationX>182</locationX>
-        <locationY>1190</locationY>
+        <locationY>1310</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -230,7 +251,7 @@
         <name>Set_Note</name>
         <label>Set Note</label>
         <locationX>182</locationX>
-        <locationY>614</locationY>
+        <locationY>734</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -242,19 +263,26 @@
             <isRequired>false</isRequired>
             <objectFieldReference>activity.ClosingNote__c</objectFieldReference>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
                 <conditions>
-                    <leftValueReference>activity.RecordType.DeveloperName</leftValueReference>
+                    <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue>HDT_CloseDistributorComunication</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>activity.RecordType.DeveloperName</leftValueReference>
+                    <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue>HDT_RT_Scarto</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Get_Activity.DiscardCategory__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Manuale</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -266,7 +294,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>activity.RecordType.DeveloperName</leftValueReference>
+                    <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>HDT_CloseDistributorComunication</stringValue>
@@ -282,14 +310,14 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>activity.RecordType.DeveloperName</leftValueReference>
+                    <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>HDT_RT_Scarto</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>activity.DiscardCategory__c</leftValueReference>
+                    <leftValueReference>Get_Activity.DiscardCategory__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Manuale</stringValue>
@@ -307,14 +335,14 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>activity.RecordType.DeveloperName</leftValueReference>
+                    <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>HDT_RT_Scarto</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>activity.DiscardCategory__c</leftValueReference>
+                    <leftValueReference>Get_Activity.DiscardCategory__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Manuale</stringValue>
