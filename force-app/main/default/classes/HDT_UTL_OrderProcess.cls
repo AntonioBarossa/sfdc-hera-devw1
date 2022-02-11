@@ -583,7 +583,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Integer count = [SELECT count() FROM HDT_AdminServiceDispatcher__mdt 
                             WHERE DistributorCode__c =:ord.DistributorCode__c 
                             AND   Commodity__c =:ord.Commodity__c 
-                            AND   Type__c =:ord.ProcessCode__c
+                            AND   ServiceCode__c =:ord.ProcessCode__c
+                            AND   Type__c =:ord.ProcessType__c
                             WITH SECURITY_ENFORCED];
 
         return ( count > 0 );
