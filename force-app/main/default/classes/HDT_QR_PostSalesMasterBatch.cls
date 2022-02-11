@@ -139,8 +139,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         Station__c,
         Type,
         PhoneNumber__c,
-        Email__c,
-        CreatedDate
+        Email__c
         FROM Case
         WHERE Type = : 'Voltura Tecnica'
         WITH SECURITY_ENFORCED
