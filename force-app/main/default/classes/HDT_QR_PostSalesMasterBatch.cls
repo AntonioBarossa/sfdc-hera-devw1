@@ -122,4 +122,29 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         ];
     }
 
+    public List<Case> getCaseVolturaTecnica(){
+        return [SELECT Id,
+        AccountId,
+        Cluster__c,
+        CompanyOwner__c,
+        ContactId,
+        Contract__c,
+        CreatorGroup__c,
+        DistributorNote__c,
+        Origin,
+        Order__c,
+        Phase__c,
+        RecordTypeId,
+        ServicePoint__c,
+        Station__c,
+        Type,
+        PhoneNumber__c,
+        Email__c,
+        CreatedDate
+        FROM Case
+        WHERE Type = : 'Voltura Tecnica'
+        WITH SECURITY_ENFORCED
+        ];
+    }
+
 }
