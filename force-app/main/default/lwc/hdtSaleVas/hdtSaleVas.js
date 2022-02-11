@@ -4,7 +4,7 @@ import getOrdersList from '@salesforce/apex/HDT_LC_SaleVas.getOrdersList';
 import getContractsList from '@salesforce/apex/HDT_LC_SaleVas.getContractsList';
 import getContractsAndOrdersMap from '@salesforce/apex/HDT_LC_SaleVas.getContractsAndOrdersMap';
 import confirmAction from '@salesforce/apex/HDT_LC_SaleVas.confirmAction';
-import checkTransition from '@salesforce/apex/HDT_LC_SaleVas.transitionCheck2';
+import checkTransition from '@salesforce/apex/HDT_LC_SaleVas.transitionCheckNew';
 
 export default class hdtSaleVas extends LightningElement {
 
@@ -329,8 +329,16 @@ export default class hdtSaleVas extends LightningElement {
                         variant: 'Error'
                     });
                     this.dispatchEvent(toastSuccessMessage);
-                }
-                else{
+                }else if( dat.messRes == 'AccountMigratoTransitorio' ){
+                    this.isLoading = false;
+                    //this.dispatchEvent(new CustomEvent('createvas'));
+                    const toastSuccessMessage = new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Impossibile effettuare vendita fuori ambito per cliente migrato. Necessario creare un nuovo cliente clone',
+                        variant: 'Error'
+                    });
+                    this.dispatchEvent(toastSuccessMessage);
+                }else{
                     this.isLoading = false;
                     //this.dispatchEvent(new CustomEvent('createvas'));
                     const toastSuccessMessage = new ShowToastEvent({
