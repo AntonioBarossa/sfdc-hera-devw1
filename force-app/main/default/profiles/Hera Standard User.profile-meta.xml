@@ -750,6 +750,11 @@
         <editable>true</editable>
         <field>Order.RdsCodeSiebel__c</field>
         <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.VatPercentageFormula__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
