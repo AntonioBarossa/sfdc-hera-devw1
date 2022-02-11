@@ -15,7 +15,7 @@ import {
 import IMPLANT_TYPE from '@salesforce/schema/Order.ImplantType__c';
 import checkLogin from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkLogin';
 import checkContractualEnvelope from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkContractualEnvelope';
-import checkListenVO from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkListenVO';
+import checkListenVO from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkListenVo';
 import checkFinalConfirmationOfTheContract from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkContractualEnvelope';
 import getOrderSiblings from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.getOrderSiblings';
 import getOrderSiblingsDocumentalActivity from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.getOrderSiblingsDocumentalActivity';
@@ -206,12 +206,14 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
 
             if(res.res == null || res.res == undefined){
 
-                let ecid = res.ecid;
-                let token = res.token
+                // let ecid = res.ecid;
+                // let token = res.token
                 if(res.errorMessage == null || res.errorMessage == undefined){
 
-                    let searchparams2 = 'token=' + encodeURIComponent(token) +'&ecid=' + encodeURIComponent(ecid); 
-                    let reiteklink = 'https://herapresfdc.cloudando.com/HeraSfdc/rec/download?' + searchparams2;
+                    // let searchparams2 = 'token=' + encodeURIComponent(token) +'&ecid=' + encodeURIComponent(ecid); 
+                    // let reiteklink = 'https://herapresfdc.cloudando.com/HeraSfdc/rec/download?' + searchparams2;
+                    console.log('#Recording Link >>> ' + res.res);
+                    let reiteklink = res.res;
                     const link = document.createElement("a");
                     link.href = reiteklink;
                     link.click();

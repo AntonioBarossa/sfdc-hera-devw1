@@ -40,30 +40,36 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
     }
             
     @AuraEnabled
-    public static map<String,String> checkListenVO(String orderId,String username,String password){
+    public static map<String,String> checkListenVo(String orderId,String username,String password){
         map<String,String> mapReturn = new Map<String,String>();
+        List<wrts_prcgvr__Activity__c> voActivity = new List<wrts_prcgvr__Activity__c>();
         try {
+            voActivity = [SELECT Id, 
+            RecordingLink__c 
+            FROM wrts_prcgvr__Activity__c 
+            WHERE Type__c = 'Validazione Vocal Order'
+            AND Order__c = :orderId
+            WITH SECURITY_ENFORCED];
+            if(!voActivity.isEmpty()){
                 Order ord = checkLogin(username,password);
-                if(ord.id == orderId){
-                    String[] s = ord.UniqueAutentication__c.split('_');
-                    if(s.size() == 2 && s[0] != null && s[1] != null){
-                        mapReturn.put('ecid',s[0]);
-                        mapReturn.put('token',s[1]);
-                        return mapReturn;
-                    }
-                    else{
-                        mapReturn.put('res','NonPossibile');
-                        return mapReturn;
-                    }
+                if(ord.id == orderId)
+                {
+                    mapReturn.put('res',voActivity[0].RecordingLink__c);
+                    return mapReturn;
                 }
                 else{
                     mapReturn.put('res','NonPossibile');
                     return mapReturn;
                 }
             }
-            catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            else{
+                mapReturn.put('res','NonPossibile');
+                return mapReturn;
             }
+        }
+        catch (Exception e) {
+        throw new AuraHandledException(e.getMessage());
+        }
   
     }
     @AuraEnabled
