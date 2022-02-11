@@ -465,13 +465,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     String phaseVas = childOrder.VASType__c?.equals('VAS Servizio')? 'Sequenzializzato' : newVasPhase;
                     vasOrdersToUpdate.put(childOrder.Id, phaseVas);
                 }
-<<<<<<< HEAD
-            } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && childOrder.DistributorFormula__c == 'AMGA UDINE-10R0000032') {
-=======
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged ) {
                 //MODIFICARE IN ATTESA DI SVILUPPO MATRICE, TEMPORANEA ATTIVAZIONE FABIANA BUG 18/09/21
                 //Valore distributore STABBATO  
->>>>>>> c72b9637e939209ee7f688c21245b0a09cd4a0ab
                 if (childOrder.Phase__c == currentPhase
                         && !childOrder.QualityCall__c
                         && !isMonitoringList.contains(childOrder.AgencyCode__c)

@@ -36,12 +36,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         Contract contractReference = new Contract();
         orderToUpdate.Id = order.Id;
         orderToUpdate.Status = 'In lavorazione';
-<<<<<<< HEAD
-        orderToUpdate.Phase__c = order.RecordType.DeveloperName == 'HDT_RT_Voltura' ? 'Accettazione Voltura' : 'Da Inviare'; 
-=======
         //EVERIS: Aggiunto caso Voltura
         orderToUpdate.Phase__c = 'Da Inviare'; 
->>>>>>> c72b9637e939209ee7f688c21245b0a09cd4a0ab
         orderToUpdate.Step__c = 20;
         orderToUpdate.WizardCompletedDate__c = Date.today();
         
