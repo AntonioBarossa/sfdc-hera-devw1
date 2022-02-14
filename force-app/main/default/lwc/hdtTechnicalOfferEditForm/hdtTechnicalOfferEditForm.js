@@ -89,7 +89,12 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         var techOffObj = {};
 
         this.template.querySelectorAll('lightning-input-field').forEach((field) => {
-            techOffObj[field.fieldName] = field.value;
+            if(field.value===''){
+                techOffObj[field.fieldName] = null;
+            } else {
+                techOffObj[field.fieldName] = field.value;
+            }
+            
         });
 
         var responseObj = this.checkValue(techOffObj);
@@ -106,6 +111,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         }
 
         this.hidden = 'slds-hide';
+
 
         const newOffer = new CustomEvent('newoffercreated', {
             detail: {newTechOfferObj: JSON.stringify(techOffObj)}
