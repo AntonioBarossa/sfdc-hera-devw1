@@ -7,6 +7,8 @@ public with sharing class HDT_SRV_VoltureChangeManager{
     private static String ammissibilityCheckTemplate = 'Controlli Ammissibilità';
     @TestVisible
     private static String publishUpdatePhase = 'Comunicazione verso Heroku';
+    @TestVisible
+    private static String volturaTecnicaPhase = 'In attesa Data Decorrenza';
     private static String clonedOrderRecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(voltureChangeRecordTypeName).getRecordTypeId();
     /**
      * @frpanico 06/10/2021
@@ -185,5 +187,11 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
         platEvent.SerializedSobj__c = JSON.serialize(ordToUpdate);
         Eventbus.publish(platEvent);            
+    }
+
+    public void createCaseFromOrder(Order myOrder){
+
+        System.enqueueJob(new HDT_QBL_VoltureChangeManager(myOrder));
+
     }
 }
