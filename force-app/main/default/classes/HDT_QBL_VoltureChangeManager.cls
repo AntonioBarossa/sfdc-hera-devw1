@@ -2,7 +2,7 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
     private Order order;
     private HDT_QR_RecordType qrRecordType = new HDT_QR_RecordType();
 
-    class MyException extends Exception{}
+    class HDT_UTL_CustomException  extends Exception{}
     public HDT_QBL_VoltureChangeManager(Order ord) {
         this.order = ord;
     }
@@ -60,27 +60,11 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
         }
         catch(Exception e)
         {
-            System.debug(LoggingLevel.DEBUG, 'Compatibilita non superata ' + compatibility);
-            newCase.Phase__c = 'Bozza Annullata';
-            newCase.Status = 'Closed';
-            newCase.CancellationReason__c = 'Processo incompatibile';
-            HDT_UTL_DatabaseService.updateSObject(newCase);
-            throw new MyException('Errore nella verifica della compatibilita'); 
+            errorCompatibility(newCase, 'Errore nella verifica della compatibilita', compatibility);
         }
         //Check Compatibility Output
-        if(String.isEmpty(compatibility))
-        {
-            System.debug(LoggingLevel.DEBUG, 'Compatibilita superata con successo ' + compatibility);
-        }
-        else
-        {
-            System.debug(LoggingLevel.DEBUG, 'Compatibilita non superata ' + compatibility);
-            newCase.Phase__c = 'Bozza Annullata';
-            newCase.Status = 'Closed';
-            newCase.CancellationReason__c = 'Processo incompatibile';
-            HDT_UTL_DatabaseService.updateSObject(newCase);
-            throw new MyException('Processo Incompatibile');
-        }
+        if(!String.isEmpty(compatibility))
+            errorCompatibility(newCase, 'Processo Incompatibile', compatibility);
 
         //Aggiornamento case in fase "In attesa data decorrenza".
         newCase.EffectiveDate__c = HDT_UTL_Case.addBusinessDay(order.EffectiveDate__c, 3);
@@ -98,15 +82,13 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
         return HDT_UTL_DataEnrichmentPostSales.handleResponse(serializedResponse, newCase);
     }
 
-    // private HDT_CausalCodeCalculation__mdt getCausalCode(String cluster, String process, String commodity){
-    //     return [SELECT Id, 
-    //     CausalCode__c,
-    //     OperationCode__c
-    //     FROM  HDT_CausalCodeCalculation__mdt
-    //     WHERE Cluster__c = :cluster
-    //     AND Process__c = :process
-    //     AND Commodity__c = :commodity
-    //     WITH SECURITY_ENFORCED
-    //     LIMIT 1];
-    // }
+    private void errorCompatibility(Case caseToUpdate, String errorMessage, String compatibility){
+
+        System.debug(LoggingLevel.DEBUG, 'Compatibilita non superata ' + compatibility);
+        caseToUpdate.Phase__c = 'Bozza Annullata';
+        caseToUpdate.Status = 'Closed';
+        caseToUpdate.CancellationReason__c = 'Processo incompatibile';
+        HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+        throw new HDT_UTL_CustomException (errorMessage); 
+    }
 }
