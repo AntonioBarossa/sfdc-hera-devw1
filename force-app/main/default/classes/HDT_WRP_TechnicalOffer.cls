@@ -122,11 +122,11 @@ public inherited sharing class HDT_WRP_TechnicalOffer {
         //BRIM fields
         public String ore;
         public String percentuale;
-        public String p0;
-        public String k;
-        public String i0;
-        public String lambda;
-        public String productIdentifier;
+        public String parametroP0;
+        public String parametroK;
+        public String parametroI0;
+        public String parametroL;
+        public String identificativoProdotto;
 
         public List<HDT_WRP_Position> input;
     }
