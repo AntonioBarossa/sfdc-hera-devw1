@@ -203,8 +203,10 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
 
 
         checkListenVO({orderId : this.orderId,username : this.username,password : this.password}).then(res => {
-
-            if(res.res == null || res.res == undefined){
+            console.log('#Res >>> ' + JSON.stringify(res));
+            console.log('#Res[res] >>> ' + res.res);
+            console.log('#Res[res] condition >>> ' + (res.res !== null && res.res !== undefined))
+            if(res.res !== null && res.res !== undefined){
 
                 // let ecid = res.ecid;
                 // let token = res.token
@@ -216,6 +218,7 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
                     let reiteklink = res.res;
                     const link = document.createElement("a");
                     link.href = reiteklink;
+                    link.target = '_blank';
                     link.click();
                 }
                 else{
@@ -226,13 +229,14 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
                     }));
                 } 
                 }
-                else{
-                    this.dispatchEvent(new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Si è verificato un errore!',
-                        variant: 'error'
-                    }));
-                }
+            else{
+                console.log('# Else statement res null #')
+                this.dispatchEvent(new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Si è verificato un errore!',
+                    variant: 'error'
+                }));
+            }
             console.log(JSON.stringify(result));
         }).catch(err => {
             console.log(JSON.stringify(err));
