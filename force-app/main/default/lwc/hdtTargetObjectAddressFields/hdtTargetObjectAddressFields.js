@@ -1759,6 +1759,7 @@ disabledverifyFieldsAddressDisabled(){
                     console.log("Error:" + JSON.stringify(data));
                     this.dispEvent(false);
                     this.showSpinner = false;
+                    this.alert('Indirizzo da verificare','Attenzione! Indirizzo non censito sullo stradario SAP, inserisci una nuova Via','warn');
                 }
                 
     
