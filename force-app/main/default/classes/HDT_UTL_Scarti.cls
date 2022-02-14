@@ -860,7 +860,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                                       AND DiscardCategory__c IN :categories 
                                                       AND Id NOT IN :inputDataIds
                                                       AND wrts_prcgvr__Status__c NOT IN ('Chiusa','Sospesa')
-                                                      AND Type__c NOT IN ('Esito KO da DL','Esito KO da SII')
+                                                      AND Type__c NOT IN ('Ammissibilità KO','Esito KO da DL','Esito KO da SII')
                                                       WITH SECURITY_ENFORCED];
 
         system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi relatedActs' + JSON.serializePretty(relatedActs));
