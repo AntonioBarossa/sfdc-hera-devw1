@@ -115,7 +115,36 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             String serializedCase = JSON.serialize(caseToUpdate[0]);
             //updateFuture(serializedCase);
         }*/
-        
+
+        if(!wrpResponses.isEmpty() && wrpResponses[0].responseMap != null){
+            Map<String,String> utilityMap = new Map<String, String>();
+                            
+            String errdesc = '';
+            if(String.isNotBlank(wrpResponses[0].responseMap.get('NOTE_ERR'))){
+                errdesc += HDT_UTL_Accents.removeDiacritics(wrpResponses[0].responseMap.get('NOTE_ERR')) + '\n';
+            }
+            if(String.isNotBlank(wrpResponses[0].responseMap.get('DES_ERR_AEEG'))){
+                errdesc += HDT_UTL_Accents.removeDiacritics(wrpResponses[0].responseMap.get('DES_ERR_AEEG')) + '\n';
+            }
+            if(String.isNotBlank(wrpResponses[0].responseMap.get('TESTO_ERRR'))){
+                errdesc += HDT_UTL_Accents.removeDiacritics(wrpResponses[0].responseMap.get('TESTO_ERRR')) + '\n';
+            }
+            if(String.isNotBlank(wrpResponses[0].responseMap.get('ANNOTAZIONI'))){
+                errdesc += HDT_UTL_Accents.removeDiacritics(wrpResponses[0].responseMap.get('ANNOTAZIONI'));
+            }
+
+            utilityMap.put('NOTE_ERR', errdesc);
+            utilityMap.put('DISCARD_MESSAGE', errdesc);
+            utilityMap.put('DATA_ELABORAZIONE', String.isNotBlank(wrpResponses[0].responseMap.get('DATA_ELABORAZIONE')) ? wrpResponses[0].responseMap.get('DATA_ELABORAZIONE') : '');
+            utilityMap.put('CMP', String.isNotBlank(wrpResponses[0].responseMap.get('CMP')) ? wrpResponses[0].responseMap.get('CMP') : '');
+            utilityMap.put('UTENZA', String.isNotBlank(wrpResponses[0].responseMap.get('UTENZA')) ? wrpResponses[0].responseMap.get('UTENZA') : '');
+            utilityMap.put('FASE', String.isNotBlank(wrpResponses[0].responseMap.get('FASE')) ? wrpResponses[0].responseMap.get('FASE') : '');
+            utilityMap.put('RECORD_ID', String.isNotBlank(wrpResponses[0].responseMap.get('RECORD_ID')) ? wrpResponses[0].responseMap.get('RECORD_ID') : '');
+            utilityMap.put('OBJECT_TYPE', 'Case');
+
+            HDT_UTL_Scarti.handleHerokuResponse(caseToUpdate[0].Id,wrpResponses[0].responseMap.get('ATTIVITA'), wrpResponses[0].responseMap.get('FASE'), utilityMap);
+            HDT_UTL_Scarti.discardManagement(utilityMap);
+        }
 
         response.success = true;
         response.message = 'OK';

@@ -744,6 +744,13 @@
                     <dateValue>4000-12-31</dateValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Chiusura Contatore</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_FT_0</targetReference>
             </connector>

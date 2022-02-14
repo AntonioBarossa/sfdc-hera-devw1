@@ -194,11 +194,11 @@
             <actionType>StandardButton</actionType>
             <sortOrder>7</sortOrder>
         </platformActionListItems>
-        <platformActionListItems>
+        <!--<platformActionListItems>
             <actionName>IsotopeSubscription</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>13</sortOrder>
-        </platformActionListItems>
+        </platformActionListItems>-->
         <platformActionListItems>
             <actionName>Edit</actionName>
             <actionType>StandardButton</actionType>

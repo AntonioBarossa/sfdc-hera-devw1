@@ -2138,6 +2138,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Dati TIMOE Ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità OK</fullName>
             <default>false</default>
         </values>
@@ -2303,6 +2307,18 @@
         </values>
         <values>
             <fullName>In attesa validazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Corso caricamento Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel KO</fullName>
             <default>false</default>
         </values>
         <values>
