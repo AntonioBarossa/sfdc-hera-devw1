@@ -15,7 +15,47 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
     
     @AuraEnabled
     public static String checkContractualEnvelope(String orderId,String username,String password ){
-        if(orderId == checkLogin(username,password).id){
+        String result = '';
+        List<Order> childOrderList = new List<Order>();
+        List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> platformEvents = new List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>();
+        Order parentOrder = new Order();
+        HDT_WRP_ContractConfirmation checkConfirmation = checkContractConfirmation(username,password);
+        if(checkConfirmation.checkContract)
+        {
+            result = 'Validato';
+        }
+        else
+        {
+            parentOrder.Id = orderId;
+            parentOrder.MethodSignedAccepted__c = 'web assistito';
+            parentOrder.SignedDate__c = System.today();
+            platformEvents.add(new HDT_PEV_VoltureChangeManagerUpdateSObj__e(SerializedSobj__c=JSON.serialize(parentOrder)));
+            childOrderList = checkConfirmation.childOrders;
+            for(Order childOrder : childOrderList)
+            {
+                Order childOrd = new Order();
+                childOrd.Id = childOrder.Id;
+                childOrd.Phase__c = 'Comunicazione verso Heroku';
+                childOrd.SignedDate__c = System.today();
+                platformEvents.add(new HDT_PEV_VoltureChangeManagerUpdateSObj__e(SerializedSobj__c=JSON.serialize(childOrd)));
+            }
+            List<Database.SaveResult> srList = Eventbus.publish(platformEvents);   
+            for(Database.SaveResult sr : srList)
+            {
+                if(sr.isSuccess())
+                {
+                    result = 'success';
+                }
+                else 
+                {
+                    result = 'Errore';
+                    break;
+                }
+            }
+        }
+        return result;
+
+        /*if(orderId == checkLogin(username,password).id){
             try {
                 System.debug('It\'s inside the method checkContractualEnvelope');
                 //  ConsumptionCode__c consumptionCode = consumptionCodeQr.getRecordById(consumptionCodeId);
@@ -36,34 +76,51 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
         }
         else{
             return 'Errore';
+        }*/
+    }
+
+    private static HDT_WRP_ContractConfirmation checkContractConfirmation(String username, String password)
+    {
+        Order checkOrder = orderQr.getOrderByUsernamePassword(username,password)[0];
+        return new HDT_WRP_ContractConfirmation(checkOrder.MethodSignedAccepted__c != null && checkOrder.MethodSignedAccepted__c.equalsIgnoreCase('web assistito'),
+            checkOrder.Orders__r);
+    }
+    private class HDT_WRP_ContractConfirmation
+    {
+        public Boolean checkContract;
+        public List<Order> childOrders;
+
+        public HDT_WRP_ContractConfirmation(Boolean checkContract, List<Order> childOrders)
+        {
+            this.checkContract = checkContract;
+            this.childOrders = childOrders;
         }
+
     }
             
     @AuraEnabled
-    public static map<String,String> checkListenVO(String orderId,String username,String password){
+    public static map<String,String> checkListenVo(String orderId,String username,String password){
         map<String,String> mapReturn = new Map<String,String>();
+        List<wrts_prcgvr__Activity__c> voActivity = new List<wrts_prcgvr__Activity__c>();
         try {
-                Order ord = checkLogin(username,password);
-                if(ord.id == orderId){
-                    String[] s = ord.UniqueAutentication__c.split('_');
-                    if(s.size() == 2 && s[0] != null && s[1] != null){
-                        mapReturn.put('ecid',s[0]);
-                        mapReturn.put('token',s[1]);
-                        return mapReturn;
-                    }
-                    else{
-                        mapReturn.put('res','NonPossibile');
-                        return mapReturn;
-                    }
-                }
-                else{
-                    mapReturn.put('res','NonPossibile');
-                    return mapReturn;
-                }
+            voActivity = [SELECT Id, 
+            RecordingLink__c 
+            FROM wrts_prcgvr__Activity__c 
+            WHERE Type__c = 'Validazione Vocal Order'
+            AND Order__c = :orderId
+            WITH SECURITY_ENFORCED];
+            if(!voActivity.isEmpty()){
+                mapReturn.put('res',voActivity[0].RecordingLink__c);
+                return mapReturn;
             }
-            catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            else{
+                mapReturn.put('res','NonPossibile');
+                return mapReturn;
             }
+        }
+        catch (Exception e) {
+        throw new AuraHandledException(e.getMessage());
+        }
   
     }
     @AuraEnabled
