@@ -131,10 +131,10 @@
     </values>
     <values>
         <field>Credential__c</field>
-        <value xsi:type="xsd:string">https://monted-dev-ed.my.salesforce.com/services/apexrest/practices</value>
+        <value xsi:type="xsd:string">callout:Practices</value>
     </values>
     <values>
         <field>UseMock__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
 </CustomMetadata>

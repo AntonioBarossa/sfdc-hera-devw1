@@ -7,9 +7,12 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
         dataTable.details = new List<Object>();
         dataTable.rate = new List<Object>();
 
-        List<Object> dataList = (List<Object>)responseMap.get('data');
-        Map<String, Object> dataMap = (Map<String, Object>)dataList[0];
-        List<Object> detailsList = (List<Object>)dataMap.get('details');
+        //Object dataList = (Object)responseMap.get('data');
+        Map<String, Object> dataMap = (Map<String, Object>)responseMap.get('data');
+
+        System.debug('>>> ' + dataMap);
+
+        List<Object> detailsList = (List<Object>)dataMap.get('detail');
 
         Map<String, Object> detailItemMap;
         List<Object> rateList;
@@ -22,7 +25,11 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
                 System.debug('>>> current type: ' + type);
                 rateList = (List<Object>)detailItemMap.get('rate');
                 dataTable.details.add(singleDetail);
-                dataTable.rate.addAll(rateList);
+
+                if(rateList != null && rateList.size() > 0){
+                    dataTable.rate.addAll(rateList);
+                }
+
             }
         }
         
