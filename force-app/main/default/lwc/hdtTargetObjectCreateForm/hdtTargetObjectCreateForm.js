@@ -1024,8 +1024,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
             //Validate address
             if (this.theRecord['Indirizzo Estero'] == false || this.theRecord['Indirizzo Estero'] == undefined) {
-                console.log('@Davide - Indirizzo non estero');
-                console.log('@Davide - this.theRecord[\'Flag Verificato\']: ' +this.theRecord['Flag Verificato']);
                 if (this.theRecord['Flag Verificato'] == false || this.theRecord['Flag Verificato'] == undefined) {
                     this.isValidFields = false;
                     this.loading = false;
