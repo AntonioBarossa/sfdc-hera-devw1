@@ -229,12 +229,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.DocumentLow80__c = 'Richiesto';
                 }
-            }when 'HDT_RT_CambioOfferta'{
+            }
+            when 'HDT_RT_CambioOfferta'{
                 if(order.SignedDate__c != null){                    
                     HDT_UTL_SwtichInProcess.calculateCambioOffertaDate(order);  // Data di decorrenza
                 }
             }
-            when 'HDT_RT_CambioOfferta' {
+            /*when 'HDT_RT_CambioOfferta' {
                 
                 String dateToCalculate = '';
                 List<Order> listOrd = new List<Order>{order};
@@ -253,7 +254,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 catch (Exception e) { 
                     throw new AuraHandledException('Dati incompleti o errati per la generazione della data ' +dateToCalculate);
                 }             
-            }
+            }*/
         }
 
         List<ComfortQualityCall__c> comfortQualityList = new List<ComfortQualityCall__c>();
