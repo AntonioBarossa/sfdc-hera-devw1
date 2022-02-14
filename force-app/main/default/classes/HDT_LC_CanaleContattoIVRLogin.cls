@@ -36,6 +36,7 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
                 Order childOrd = new Order();
                 childOrd.Id = childOrder.Id;
                 childOrd.Phase__c = 'Comunicazione verso Heroku';
+                childOrd.SignedDate__c = System.today();
                 platformEvents.add(new HDT_PEV_VoltureChangeManagerUpdateSObj__e(SerializedSobj__c=JSON.serialize(childOrd)));
             }
             List<Database.SaveResult> srList = Eventbus.publish(platformEvents);   
