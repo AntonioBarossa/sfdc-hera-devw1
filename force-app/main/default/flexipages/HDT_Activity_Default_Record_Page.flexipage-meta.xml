@@ -137,7 +137,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>wrts_prcgvr__Activity__c.HDT_CloseManualActivity</value>
+                            <value>wrts_prcgvr__Activity__c.HDT_CloseActivity</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
                                 <criteria>
@@ -511,7 +511,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>wrts_prcgvr__Activity__c.HDT_CloseDistributorComunication</value>
+                            <value>wrts_prcgvr__Activity__c.HDT_CloseActivity</value>
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!Record.RecordTypeDevName__c}</leftValue>

@@ -19,7 +19,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         scope.addAll(postsalesQr.getAutoletturaBozzaCase());
         scope.addAll(postsalesQr.getPostSalesBozzaCase());
         scope.addAll(postsalesQr.getExpiredArticle());
-
+        scope.addAll(postsalesQr.getCaseVolturaTecnica());
 
 
         return scope;
@@ -136,6 +136,20 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                 }
                             }
                         }
+                    }
+                    else if(currentCase.Type.equalsIgnoreCase('Voltura Tecnica')){
+                        currentCase.EffectiveDate__c = HDT_UTL_Case.addBusinessDay(System.today(),3);
+                        currentCase.Phase__c = 'Da Inviare';
+                        HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
+                        event.SerializedCase__c = JSON.serialize(currentCase);
+                        Database.SaveResult sr = EventBus.publish(event);
+                        if (sr.isSuccess()) {
+                            System.debug(LoggingLevel.DEBUG, 'Successfully published event.');
+                        } else {
+                            for (Database.Error err : sr.getErrors()) {
+                                System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+                            }
+                        }
                     }                    
                 }
                 when Knowledge__kav article{
@@ -161,6 +175,4 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         System.debug(LoggingLevel.DEBUG, 'HDT_BA_PostSalesMasterBatch - finished job: ' + a);
         
     }
-
-
 }
