@@ -68,10 +68,56 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
     @istest
     static void testexecute(){
 
-        List<Order> orderList = [SELECT Id, Phase__c, AccountId, CompanyOwner__c, Contact__c, BillingProfile__c, ContractReference__c, CreatorGroup__c, PhoneNumber__c, Channel__c, ServicePoint__c, LoginWorkstation__c, Email__c, ServicePointCode__c, SapContractCode__c, Commodity__c, EffectiveDate__c 
-        FROM Order 
-        WHERE ParentOrder__c != null
-        AND ProcessType__c = 'Switch in Ele'];
+        List<Order> orderList = [SELECT Id, 
+                                        Phase__c, 
+                                        AccountId, 
+                                        CompanyOwner__c, 
+                                        Contact__c, 
+                                        BillingProfile__c, 
+                                        ContractReference__c, 
+                                        CreatorGroup__c, 
+                                        PhoneNumber__c, 
+                                        Channel__c, 
+                                        ServicePoint__c, 
+                                        LoginWorkstation__c, 
+                                        Email__c, 
+                                        ServicePointCode__c, 
+                                        SapContractCode__c, 
+                                        Commodity__c, 
+                                        EffectiveDate__c,
+                                        SupplyCity__c,
+                                        SupplyCityCode__c,
+                                        SupplyCountry__c,
+                                        SupplyPostalCode__c,
+                                        SupplyState__c,
+                                        SupplyStreetName__c,
+                                        SupplyStreetNumber__c,
+                                        BillingCity__c,
+                                        BillingCityCode__c,
+                                        BillingCountry__c,
+                                        BillingPostalCode__c,
+                                        BillingProvince__c,
+                                        BillingStreetName__c,
+                                        ResidentialCity__c,
+                                        ResidentialCityCode__c,
+                                        ResidentialCountry__c,
+                                        ResidentialPostalCode__c,
+                                        ResidentialState__c,
+                                        ResidentialStreet__c,
+                                        ResidentialStreetName__c,
+                                        SalesCompany__c,
+                                        SalesCompanyCode__c,
+                                        DistributorCode__c,
+                                        ExciseGAS__c,
+                                        VAT__c,
+                                        Resident__c,
+                                        Market__c,
+                                        SupplyType__c,
+                                        AnnualConsumption__c,
+                                        Caliber__c 
+                                FROM Order 
+                                WHERE ParentOrder__c != null
+                                AND ProcessType__c = 'Switch in Ele'];
         
         String recordTypeNameVolturaConSwitch = 'HDT_RT_VolturaConSwitch';
         String recordTypeIdVolturaConSwitch = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(recordTypeNameVolturaConSwitch).getRecordTypeId();
@@ -85,23 +131,70 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
 
         Test.stopTest();
 
-        List<Case> caseListUpdated = [Select Id,Phase__c, Order__c FROM Case WHERE Order__c = :orderList[0].Id]; 
-
+        List<Case> caseListUpdated = [Select Id,Phase__c, Order__c, CausalCode__c, Commodity__c, Order__r.Commodity__c FROM Case WHERE Order__c = :orderList[0].Id]; 
+        string causalCodeFromCommodity = '';
+        if(caseListUpdated[0].Order__r.Commodity__c == 'Energia Elettrica'){
+            causalCodeFromCommodity = 'VT1';
+        }
+        else if(caseListUpdated[0].Order__r.Commodity__c == 'Gas'){
+            causalCodeFromCommodity = 'VTG';
+        }
         System.assertEquals(HDT_SRV_VoltureChangeManager.volturaTecnicaPhase, caseListUpdated[0].Phase__c,'Fase non correttamente aggiornata');
+        System.assertEquals(causalCodeFromCommodity, caseListUpdated[0].CausalCode__c,'Causal Code non correttamente calcolato');
     }
 
     @istest
     static void testWrongOrder(){
 
-        // List<Order> orderList = [SELECT Id, Phase__c, AccountId, CompanyOwner__c, Contact__c, BillingProfile__c, ContractReference__c, CreatorGroup__c, PhoneNumber__c, Channel__c, ServicePoint__c, LoginWorkstation__c, Email__c, ServicePointCode__c, SapContractCode__c, Commodity__c, EffectiveDate__c 
-        // FROM Order 
-        // WHERE ParentOrder__c != null
-        // AND ProcessType__c != 'Switch in Ele'
-        // AND Commodity__c = 'Energia Elettrica'];
-
-        List<Order> orderList = [SELECT Id, Phase__c, AccountId, CompanyOwner__c, Contact__c, BillingProfile__c, ContractReference__c, CreatorGroup__c, PhoneNumber__c, Channel__c, ServicePoint__c, LoginWorkstation__c, Email__c, ServicePointCode__c, SapContractCode__c, Commodity__c, EffectiveDate__c 
-        FROM Order 
-        WHERE ParentOrder__c != null];
+        List<Order> orderList = [SELECT Id, 
+                                        Phase__c, 
+                                        AccountId, 
+                                        CompanyOwner__c, 
+                                        Contact__c, 
+                                        BillingProfile__c, 
+                                        ContractReference__c, 
+                                        CreatorGroup__c, 
+                                        PhoneNumber__c, 
+                                        Channel__c, 
+                                        ServicePoint__c, 
+                                        LoginWorkstation__c, 
+                                        Email__c, 
+                                        ServicePointCode__c, 
+                                        SapContractCode__c, 
+                                        Commodity__c, 
+                                        EffectiveDate__c,
+                                        SupplyCity__c,
+                                        SupplyCityCode__c,
+                                        SupplyCountry__c,
+                                        SupplyPostalCode__c,
+                                        SupplyState__c,
+                                        SupplyStreetName__c,
+                                        SupplyStreetNumber__c,
+                                        BillingCity__c,
+                                        BillingCityCode__c,
+                                        BillingCountry__c,
+                                        BillingPostalCode__c,
+                                        BillingProvince__c,
+                                        BillingStreetName__c,
+                                        ResidentialCity__c,
+                                        ResidentialCityCode__c,
+                                        ResidentialCountry__c,
+                                        ResidentialPostalCode__c,
+                                        ResidentialState__c,
+                                        ResidentialStreet__c,
+                                        ResidentialStreetName__c,
+                                        SalesCompany__c,
+                                        SalesCompanyCode__c,
+                                        DistributorCode__c,
+                                        ExciseGAS__c,
+                                        VAT__c,
+                                        Resident__c,
+                                        Market__c,
+                                        SupplyType__c,
+                                        AnnualConsumption__c,
+                                        Caliber__c 
+                                FROM Order 
+                                WHERE ParentOrder__c != null];
         
         String exceptionContent = '';
         String recordTypeNameVolturaConSwitch = 'HDT_RT_VolturaConSwitch';
@@ -122,10 +215,18 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
         catch(Exception ex){
         exceptionContent = ex.getMessage();
         }
-        List<Case> caseListUpdated = [Select Id,Phase__c, Order__c FROM Case WHERE Order__c = :orderList[0].Id]; 
+        List<Case> caseListUpdated = [Select Id,Phase__c, Order__c, CausalCode__c, Order__r.Commodity__c FROM Case WHERE Order__c = :orderList[0].Id]; 
+        string causalCodeFromCommodity = '';
 
         System.assertEquals('Bozza Annullata', caseListUpdated[0].Phase__c,'Fase non correttamente aggiornata');
         System.assertEquals('Errore nella verifica della compatibilita', exceptionContent,'Errore imprevisto nell\'eccezione');
+        if(caseListUpdated[0].Order__r.Commodity__c == 'Energia Elettrica'){
+            causalCodeFromCommodity = 'VT1';
+        }
+        else if(caseListUpdated[0].Order__r.Commodity__c == 'Gas'){
+            causalCodeFromCommodity = 'VTG';
+        }
+        System.assertEquals(causalCodeFromCommodity, caseListUpdated[0].CausalCode__c,'Causal Code non correttamente calcolato');
     }
 
     public class HDT_UTL_TestMockVolturaTecnica implements HTTPCalloutMock{
