@@ -46,7 +46,7 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
         String type;
         String practice;
         String jsonString;
-        List<HDT_WRP_rateDetail> rateListDes;
+        List<HDT_WRP_RateDetail> rateListDes;
         for(Object singleDetail : detailsList){
             detailItemMap = (Map<String, Object>)singleDetail;
             type = String.valueOf(detailItemMap.get('vasType'));
@@ -58,10 +58,10 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
                 dataTable.details.add(singleDetail);
 
                 jsonString = JSON.serialize(rateList);
-                rateListDes = (List<HDT_WRP_rateDetail>)JSON.deserialize(jsonString, List<HDT_WRP_rateDetail>.class);
+                rateListDes = (List<HDT_WRP_RateDetail>)JSON.deserialize(jsonString, List<HDT_WRP_RateDetail>.class);
 
                 if(rateListDes != null && rateListDes.size() > 0){
-                    for(HDT_WRP_rateDetail singleRate : rateListDes){
+                    for(HDT_WRP_RateDetail singleRate : rateListDes){
                         singleRate.practice = practice;
                     }
                     dataTable.rate.addAll(rateListDes);
@@ -87,7 +87,7 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
         @AuraEnabled public List<Object> rate;
     }
 
-    public class HDT_WRP_rateDetail {
+    public class HDT_WRP_RateDetail {
         @AuraEnabled public String practice;
         @AuraEnabled public String rateNumber;
         @AuraEnabled public String document;
