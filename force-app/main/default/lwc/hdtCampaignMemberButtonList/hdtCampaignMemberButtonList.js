@@ -13,7 +13,7 @@ export default class hdtCampaignMemberButtonList extends NavigationMixin(Lightni
 
             this.caseObj = {
                 'Subject': 'PostVendita',
-                'AccountId': data.GenericField1__c,
+                'AccountId': data.Contact.AccountId,
                 'Cluster__c': data.Campaign.CaseCategory__c,
                 'Type': data.Campaign.CaseSubCategory__c,
                 'Campaign__c': data.CampaignId

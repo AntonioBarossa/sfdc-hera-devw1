@@ -325,7 +325,7 @@
                                 <criteria>
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>HDT_RT_CreditCheckKO</rightValue>
+                                    <rightValue>HDT_RT_KoPrecedeteCliente</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

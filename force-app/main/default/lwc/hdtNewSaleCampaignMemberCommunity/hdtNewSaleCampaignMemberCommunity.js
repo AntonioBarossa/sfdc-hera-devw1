@@ -9,7 +9,7 @@ export default class hdtNewSaleCampaignMemberCommunity extends NavigationMixin(L
     navigateToNewSale() {
         getAccountAndCampaign({ campaignMemberId: this.recordId }).then(data => {
             console.log(JSON.stringify(data));
-            if (!data.GenericField1__c) {
+            if (!data.Contact.AccountId) {
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: '',

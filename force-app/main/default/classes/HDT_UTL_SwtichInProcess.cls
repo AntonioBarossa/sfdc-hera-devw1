@@ -13,7 +13,8 @@ public with sharing class HDT_UTL_SwtichInProcess {
         'HDT_RT_SwitchIn' => 'Switch In',
         'isReseller' => 'Switch In Reseller',
         'HDT_RT_ScontiBonus' => '',
-        'HDT_RT_VAS' => ''
+        'HDT_RT_VAS' => '',
+        'HDT_RT_CambioOfferta' => 'Cambio offerta'
     };  
     
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
@@ -129,22 +130,22 @@ public with sharing class HDT_UTL_SwtichInProcess {
     } 
 
     // Data di decorrenza
-    public static Date getEffectiveDate(Order order) {
+    public static Date getEffectiveDate(Order orderInput) {
 
-        if (order.IsActivationDeferred__c==true) {
-            return order.EffectiveDate__c;
+        if (orderInput.IsActivationDeferred__c==true) {
+            return orderInput.EffectiveDate__c;
         }
 
         Date effectiveDateTmp = null;
         Date dateDecorrenzaTmp = null;
         Date dateToFrom = null;
-        order = orderQr.getRecordById(order.id);
+        Order order = orderQr.getRecordById(orderInput.id);
         String processType = PROCESSTYPEBYRRECORDTYPEMAP.get(order.RecordType.DeveloperName);
 
         //// AGGIUNGERE CONTROLLO SU DOMESTICO SOLO NON DOMESTICO
-        if(order.ProcessType__c.contains('Cambio offerta')){
+        if(order.ProcessType__c.contains('Cambio Offerta')){
             // Per cambio offerta entrare in tabella con la data firma o la data massima di ripensamento se no esecuzione anticipata
-            dateToFrom = order.SignedDate__c;
+            dateToFrom = orderInput.SignedDate__c != null? orderInput.SignedDate__c:order.SignedDate__c;
             List<FulfillmentDateMatrix__c> afterthoughtDays = [SELECT ActivationDate__c FROM FulfillmentDateMatrix__c WHERE
                 OriginMarket__c =: order.MarketOrigin__c AND 
                 Commodity__c =: order.ServicePoint__r.CommoditySector__c AND 
