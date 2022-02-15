@@ -19,7 +19,9 @@ public class HDT_BA_PostSalesMasterBatchTst {
         String rtIdAutolettura = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtNameAutolettura).getRecordTypeId();
         String rtNamePostSales = 'HDT_RT_Domiciliazione';
         String rtIdPostSales = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtNamePostSales).getRecordTypeId();
-        
+        String rtNameVolturaTecnica = 'HDT_RT_VolturaTecnica';
+        String rtIdVolturaTecnica = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtNameVolturaTecnica).getRecordTypeId();
+
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Attesa conferma preventivo cliente', 'Bozza', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Preventivo scaduto', 'Attesa conferma preventivo cliente', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Bozza Annullata', 'Bozza', rtId, rtName,'A','','','');
@@ -31,7 +33,9 @@ public class HDT_BA_PostSalesMasterBatchTst {
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito KO da SAP', 'Pratica In Attesa', rtIdPianRat, rtNamePianoRat,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Bozza Annullata', 'Bozza', rtIdPostSales, rtNamePostSales,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Bozza Annullata', 'Bozza', rtIdAutolettura, rtNameAutolettura,'A','','','');
-        
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'In attesa Data Decorrenza','Bozza', rtIdVolturaTecnica, rtNameVolturaTecnica, 'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'In attesa Data Decorrenza', rtIdVolturaTecnica, rtNameVolturaTecnica, 'A','','','');
+
 
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
@@ -41,7 +45,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);        
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(5, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(6, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         
         Datetime oneDayAgo = Datetime.now().addDays(-5);
         Test.setCreatedDate(caseList[3].Id, oneDayAgo);
@@ -74,6 +78,10 @@ public class HDT_BA_PostSalesMasterBatchTst {
 
         caseList[4].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Domiciliazione').getRecordTypeId();
         caseList[4].Cluster__c = 'Pagamenti';
+
+        caseList[5].RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();
+        caseList[5].Type = 'Voltura Tecnica';
+        caseList[5].Phase__c = 'In attesa Data Decorrenza';
         update caseList;        
 
         Knowledge__kav kArt = new Knowledge__kav();
@@ -105,7 +113,8 @@ public class HDT_BA_PostSalesMasterBatchTst {
         Case myCase3 = [SELECT Id, Phase__c, Type  FROM Case WHERE Type = 'Contratto Non Richiesto' LIMIT 1];
         Case myCase4 = [SELECT Id, Phase__c, Cluster__c FROM Case WHERE Phase__c = 'Bozza' and Cluster__c = 'Autolettura' LIMIT 1];
         Case myCase5 = [SELECT Id, Phase__c, Cluster__c FROM Case WHERE Phase__c = 'Bozza' and Cluster__c = 'Pagamenti' LIMIT 1];
-        
+        Case myCase6 = [SELECT Id, Phase__c, Type  FROM Case WHERE Type = 'Voltura Tecnica' LIMIT 1];
+
         Knowledge__kav kArt = [SELECT Id, KnowledgeArticleId FROM Knowledge__kav LIMIT 1];
         
         String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
@@ -150,6 +159,9 @@ public class HDT_BA_PostSalesMasterBatchTst {
 
         Case updatedCase5 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase5.Id LIMIT 1];
         System.assertEquals('Bozza Annullata', updatedCase5.Phase__c, 'Phase != Bozza Annullata');
+
+        Case updatedCase6 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase6.Id LIMIT 1];
+        System.assertEquals('Da Inviare', updatedCase6.Phase__c, 'Phase != Da Inviare');
 
         Knowledge__kav myArticle = [Select Id, PublishStatus from Knowledge__kav where Id =: kArt.Id];
         System.assertEquals('Archived', myArticle.PublishStatus, 'PublishStatus != Archived');
