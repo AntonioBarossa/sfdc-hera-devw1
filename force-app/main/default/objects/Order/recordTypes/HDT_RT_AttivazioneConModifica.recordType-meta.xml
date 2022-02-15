@@ -2190,6 +2190,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Attesa Credit Check</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Attesa conferma preventivo cliente</fullName>
             <default>false</default>
         </values> 
@@ -2221,6 +2225,10 @@
             <fullName>Conferma Appuntamento KO</fullName>
             <default>false</default>
         </values> -->
+        <values>
+            <fullName>Credit Check KO</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Dati Tecnici Ricevuti</fullName>
             <default>false</default>

@@ -2170,6 +2170,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Attesa Credit Check</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Attesa conferma preventivo cliente</fullName>
             <default>false</default>
         </values>
@@ -2213,6 +2217,10 @@
             <fullName>DL documentazione incompleta</fullName>
             <default>false</default>
         </values> -->
+        <values>
+            <fullName>Credit Check KO</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Da Inviare</fullName>
             <default>false</default>
