@@ -254,6 +254,34 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                         }
                         HDT_SRV_Order ordSrv = new HDT_SRV_Order();
                         ordSrv.updateRecord(ord);
+
+                        Map<String,String> utilityMap = new Map<String, String>();
+                        
+                        String errdesc = '';
+                        if(String.isNotBlank(fieldValueResponse.get('NOTE_ERR'))){
+                            errdesc += HDT_UTL_Accents.removeDiacritics(fieldValueResponse.get('NOTE_ERR')) + '\n';
+                        }
+                        if(String.isNotBlank(fieldValueResponse.get('DES_ERR_AEEG'))){
+                            errdesc += HDT_UTL_Accents.removeDiacritics(fieldValueResponse.get('DES_ERR_AEEG')) + '\n';
+                        }
+                        if(String.isNotBlank(fieldValueResponse.get('TESTO_ERRR'))){
+                            errdesc += HDT_UTL_Accents.removeDiacritics(fieldValueResponse.get('TESTO_ERRR')) + '\n';
+                        }
+                        if(String.isNotBlank(fieldValueResponse.get('ANNOTAZIONI'))){
+                            errdesc += HDT_UTL_Accents.removeDiacritics(fieldValueResponse.get('ANNOTAZIONI'));
+                        }
+
+                        utilityMap.put('NOTE_ERR', errdesc);
+                        utilityMap.put('DISCARD_MESSAGE', errdesc);
+                        utilityMap.put('DATA_ELABORAZIONE', String.isNotBlank(fieldValueResponse.get('DATA_ELABORAZIONE')) ? fieldValueResponse.get('DATA_ELABORAZIONE') : '');
+                        utilityMap.put('CMP', String.isNotBlank(fieldValueResponse.get('CMP')) ? fieldValueResponse.get('CMP') : '');
+                        utilityMap.put('UTENZA', String.isNotBlank(fieldValueResponse.get('UTENZA')) ? fieldValueResponse.get('UTENZA') : '');
+                        utilityMap.put('FASE', String.isNotBlank(fieldValueResponse.get('FASE')) ? fieldValueResponse.get('FASE') : '');
+                        utilityMap.put('RECORD_ID', ord.id);
+                        utilityMap.put('OBJECT_TYPE', 'Order');
+
+                        HDT_UTL_Scarti.handleHerokuResponse(ord.Id,fieldValueResponse.get('ATTIVITA'), fieldValueResponse.get('FASE'), utilityMap);
+                        HDT_UTL_Scarti.discardManagement(utilityMap);
                     }
                 }
 

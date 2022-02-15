@@ -39,8 +39,16 @@ public with sharing class HDT_LC_EditScartiComplessi {
     @AuraEnabled
     public static String resubmissionPractice(String orderId,String activityId, String processType){
         String response;
-        String fase = 'Voltura'.equalsIgnoreCase(processType) ? 'Documentazione Validata' : 'Comunicazione verso Heroku';
-        Order orderToUpdate = new Order(Id = orderId,Phase__c = fase);
+        String fase = 'Comunicazione verso Heroku';
+        switch on processType {
+            when  'Voltura' {
+                fase = 'Documentazione Validata';
+            }
+            when 'VAS' {
+                fase = 'Comunicazione Motore VAS';
+            }
+        }
+        Order orderToUpdate = new Order(Id = orderId,Phase__c = fase, DiscardReason__c = null);
         System.Savepoint sp = Database.setSavePoint();
         try {
             if (!HDT_UTL_Scarti.updateCloseDiscardActivity(activityId)){
