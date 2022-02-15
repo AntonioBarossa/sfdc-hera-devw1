@@ -335,7 +335,8 @@ public inherited sharing class HDT_QR_Order {
             CommercialProductVersion__c,
             CommercialProductCode__c,
             IsEarlyActivation__c,
-            DistributorFormula__c
+            DistributorFormula__c,
+            CreditCheckInProgress__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
