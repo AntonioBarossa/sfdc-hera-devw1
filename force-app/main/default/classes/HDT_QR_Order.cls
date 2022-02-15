@@ -42,7 +42,7 @@ public inherited sharing class HDT_QR_Order {
             SELECT
             Name, AccountId,SAPImplantCode__c,SapContractCode__c,EffectiveDate__c,ContractAccountCode__c,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
             Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c,Market__c,VAT__c, SBQQ__Quote__r.SBQQ__PriceBook__c,  
-            CommercialProduct__c  
+            CommercialProduct__c, TemporaryConnectionEndDate__c, ProcessType__c
             FROM Order 
             WHERE Id IN :orderId
             WITH SECURITY_ENFORCED
@@ -505,7 +505,10 @@ public inherited sharing class HDT_QR_Order {
             QualityCall__c,
             AgencyCode__c,
             DistributorFormula__c,
-            VASType__c
+            VASType__c,
+            ProcessCode__c,
+            DistributorCode__c,
+            Commodity__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED

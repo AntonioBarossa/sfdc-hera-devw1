@@ -2249,6 +2249,14 @@
             <fullName>In Corso caricamento Siebel</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Caricamento Siebel OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel KO</fullName>
+            <default>false</default>
+        </values>
 <!--         <values>
             <fullName>In Attesa Legge 80</fullName>
             <default>false</default>

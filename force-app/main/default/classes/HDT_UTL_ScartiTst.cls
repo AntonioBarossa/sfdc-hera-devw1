@@ -124,6 +124,7 @@ public class HDT_UTL_ScartiTst {
             rules[0].ControllingValue__c = 'testCatalog';
             rules[0].ProcessField__c = 'ProcessType__c';
             rules[0].ProcessValue__c = 'Connessione con Attivazione';
+            rules[0].DiscardNoteReliability__c='Alta';
             insert rules;
             
             List<DiscardAnnullmentRule__c> rulesCase = HDT_UTL_DataFactoryTst.createDiscardAnnullmentRule(1,false,'Case');
@@ -132,11 +133,12 @@ public class HDT_UTL_ScartiTst {
             rulesCase[0].ControllingValue__c = 'testdescription';
             rulesCase[0].ProcessField__c = 'Type';
             rulesCase[0].ProcessValue__c = 'Consegna copia chiave GdM';
+            rulesCase[0].DiscardNoteReliability__c='Alta';
             insert rulesCase;
             
             List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(4,false,accId);
             activities[0].Order__c = orders[0].id;
-            activities[0].wrts_prcgvr__Status__c = 'Creata';
+            activities[0].wrts_prcgvr__Status__c = 'Aperta';
             activities[0].NewEmail__c = 'yes@no.it';
             activities[0].NewMobile__c = '3334441122';
             activities[0].DiscardCategory__c = 'Anonima';
@@ -144,7 +146,7 @@ public class HDT_UTL_ScartiTst {
             activities[0].Case__c = cases[0].id;            
             activities[1].Case__c = cases[0].id;
             activities[1].DiscardCategory__c = 'Anonima';
-            activities[1].wrts_prcgvr__Status__c = 'Creata';
+            activities[1].wrts_prcgvr__Status__c = 'Aperta';
             activities[2].NewEmail__c = 'activityCase@no.it';
             activities[2].Case__c = cases[0].id;   
             activities[3].NewEmail__c = 'activityOrder@no.it';
@@ -654,10 +656,14 @@ public class HDT_UTL_ScartiTst {
 
     @isTest static void updatePraticaForScartoDocumentaleQueueException(){
                
-        wrts_prcgvr__Activity__c act = [Select id from wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it' LIMIT 1];       
-        act.NewEmail__c = 'forse@bo.it';
-        update act;
-                
+        list <wrts_prcgvr__Activity__c> act = [Select id from wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it' LIMIT 1];       
+        list <wrts_prcgvr__Activity__c> actnewlist=new list<wrts_prcgvr__Activity__c>();
+        wrts_prcgvr__Activity__c actnew=new wrts_prcgvr__Activity__c();
+        actnew.id=act[0].id;
+        actnew.NewEmail__c = 'forse@bo.it';
+        actnewlist.add(actnew);
+        //update act;
+        HDT_UTL_Scarti.updatePraticaForScartoDocumentale(actnewlist, act);        
         List<Order> ords = [Select Email__c From Order Where Email__c ='forse@bo.it'];
         System.assertNotEquals(null, ords, 'updatePraticaForScartoDocumentaleQueue did not work correctly');
         List<AsyncApexJob> jobs = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'Queueable'];
@@ -665,7 +671,7 @@ public class HDT_UTL_ScartiTst {
                
     }
     
-    @isTest static void updatePraticaForScartoDocumentaleQueueOrder(){
+  /*  @isTest static void updatePraticaForScartoDocumentaleQueueOrder(){
                
         wrts_prcgvr__Activity__c act = [Select id from wrts_prcgvr__Activity__c where NewEmail__c = 'activityOrder@no.it' LIMIT 1];       
         act.NewEmail__c = 'forse@bo.it';
@@ -676,7 +682,7 @@ public class HDT_UTL_ScartiTst {
         List<AsyncApexJob> jobs = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'Queueable'];
     	System.assertEquals(1, jobs.size(), 'expecting one queued job');
                
-    }
+    }*/
     
     @isTest static void checkDiscardAnnullmentRuleCase(){
         
@@ -757,4 +763,123 @@ public class HDT_UTL_ScartiTst {
         System.assertEquals('Aperta', activityAfter[0].wrts_prcgvr__Status__c, 'handleEditButtonPress did not work correctly');
         System.assertNotEquals(null, activityAfter[0].DiscardWorked__c, 'handleEditButtonPress did not work correctly');
     }
+    
+     @isTest static void updateCloseDiscardActivityTest(){
+        
+        wrts_prcgvr__Activity__c act = [Select id from wrts_prcgvr__Activity__c LIMIT 1];       
+
+        
+        Test.startTest();
+        
+        Boolean res = HDT_UTL_Scarti.updateCloseDiscardActivity(act.Id);
+        
+        Test.stopTest();
+        
+        System.assertEquals(true, res, 'updateCloseDiscardActivity did not work correctly');
+        System.assertNotEquals(null, res, 'updateCloseDiscardActivity did not work correctly');
+
+    }
+    
+    
+         @isTest static void closeDiscardActivityTest(){
+        
+        wrts_prcgvr__Activity__c act = [Select id from wrts_prcgvr__Activity__c LIMIT 1];       
+
+        
+        Test.startTest();
+        
+        wrts_prcgvr__Activity__c res = HDT_UTL_Scarti.CloseDiscardActivity(act.Id);
+        
+        Test.stopTest();
+        
+        System.assertEquals('Chiusa', res.wrts_prcgvr__Status__c, 'CloseDiscardActivity did not work correctly');
+
+    }
+    @isTest static void handleHerokuResponseTest(){
+        wrts_prcgvr__Activity__c act = [Select id from wrts_prcgvr__Activity__c LIMIT 1]; 
+        Map<String,String> mapp = new Map<String,String>();
+        mapp.put('ATTIVITA','Richiesta non identificata');
+
+        mapp.put('UTENZA','userprova');
+        mapp.put('DATA_EVENTO',String.valueof(System.today()));
+        mapp.put('ERROR_MESSAGE','descrizione scarto');
+        
+                Test.startTest();
+        
+        HDT_UTL_Scarti.handleHerokuResponse(act.Id,'Test','Fase1', mapp);
+        
+        Test.stopTest();
+        
+    }
+    
+    @isTest static void discardManagementTest(){
+                HDT_WRP_MrrRequest mrRequest = new HDT_WRP_MrrRequest();
+        
+        List<HDT_WRP_MrrRequest.HDT_WRP_Field> fields = new List<HDT_WRP_MrrRequest.HDT_WRP_Field>();
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldAttivita = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        fieldAttivita.fieldType = 'fieldType';
+        fieldAttivita.name = 'ATTIVITA';
+        fieldAttivita.value = 'Richiesta non identificata.';
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldFase = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        fieldFase.fieldType = 'fieldType';
+        fieldFase.name = 'FASE';
+        fieldFase.value = 'Completata';
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldRecordOrder = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        fieldRecordOrder.fieldType = 'fieldType';
+        fieldRecordOrder.name = 'RECORD_ID';
+        fieldRecordOrder.value = [Select id from order].id;
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldRecordCase = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        fieldRecordCase.fieldType = 'fieldType';
+        fieldRecordCase.name = 'RECORD_ID';
+        fieldRecordCase.value = [Select id from Case].id;
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldPizza = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        fieldPizza.fieldType = 'fieldType';
+        fieldPizza.name = 'RECORD_ID';
+        fieldPizza.value = 'O-pizza';
+        
+        fields.add(fieldAttivita);
+        fields.add(fieldFase);
+        fields.add(fieldRecordOrder);
+        fields.add(fieldRecordCase);
+        fields.add(fieldPizza);
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Header head = new HDT_WRP_MrrRequest.HDT_WRP_Header();
+        head.requestId = 'requestId';
+        head.requestTimeStamp = 'requestTimeStamp';
+        head.requestType = 'requestType';
+        head.fields = fields;       
+        
+        List<HDT_WRP_MrrRequest.HDT_WRP_Object> objs = new List<HDT_WRP_MrrRequest.HDT_WRP_Object>();
+        HDT_WRP_MrrRequest.HDT_WRP_Object ob = new HDT_WRP_MrrRequest.HDT_WRP_Object();
+        ob.fields = fields;
+        ob.id = 'obid';
+        ob.name = 'obname';       
+        ob.objectType = 'obtype';
+        objs.add(ob);
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Request req = new HDT_WRP_MrrRequest.HDT_WRP_Request();
+        req.code = 'code';
+        req.description = 'description';
+        req.header = head;
+        req.objects = objs;
+
+        List<HDT_WRP_MrrRequest.HDT_WRP_Request> reqs = new List<HDT_WRP_MrrRequest.HDT_WRP_Request>();
+        reqs.add(req);
+        mrRequest.requests = reqs;
+        
+        Test.startTest();
+
+        HDT_UTL_Scarti.discardManagement(mrRequest.requests);
+        
+        Test.stopTest();
+        
+        System.assertEquals('code', mrRequest.requests[0].code, 'handleMRRInboundRequest did not work correctly');
+        System.assertNotEquals(null, mrRequest.requests, 'handleMRRInboundRequest did not work correctly');
+        
+    }
+    
 }
