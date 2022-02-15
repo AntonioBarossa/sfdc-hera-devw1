@@ -28,7 +28,7 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
     }
 
     public override void manageResponse(){
-        System.debug('>>> HDT_UTL_VasPractices');
+        System.debug(LoggingLevel.DEBUG, '>>> HDT_UTL_VasPractices');
 
         HDT_WRP_DataTable dataTable = new HDT_WRP_DataTable();
         dataTable.details = new List<Object>();
@@ -37,7 +37,7 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
         //Object dataList = (Object)responseMap.get('data');
         Map<String, Object> dataMap = (Map<String, Object>)responseMap.get('data');
 
-        System.debug('>>> ' + dataMap);
+        System.debug(LoggingLevel.DEBUG, '>>> ' + dataMap);
 
         List<Object> detailsList = (List<Object>)dataMap.get('detail');
 
@@ -53,7 +53,7 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
             practice = String.valueOf(detailItemMap.get('practice'));
 
             if(!type.equalsIgnoreCase('CANONE RAI')){
-                System.debug('>>> current type: ' + type);
+                System.debug(LoggingLevel.DEBUG, '>>> current type: ' + type);
                 rateList = (List<Object>)detailItemMap.get('rate');
                 dataTable.details.add(singleDetail);
 
@@ -70,8 +70,8 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
             }
         }
         
-        //System.debug('>>> details -> ' + String.valueOf(dataTable.details));
-        //System.debug('>>> rate -> ' + String.valueOf(dataTable.rate));
+        //System.debug(LoggingLevel.DEBUG, '>>> details -> ' + String.valueOf(dataTable.details));
+        //System.debug(LoggingLevel.DEBUG, '>>> rate -> ' + String.valueOf(dataTable.rate));
 
         result = dataTable;
     }
