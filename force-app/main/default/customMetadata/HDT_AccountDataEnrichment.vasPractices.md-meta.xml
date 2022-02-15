@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Authorization__c</field>
-        <value xsi:type="xsd:string">Bearer 00D58000000KR1c!AQgAQEJ_nO0cjQ.Ope22DsqbrYoOkOdWuYEvsOIyFjWZEvfJmsLRBWYQMwPpQbkpfg0D542WtjUvnwJhX5CIIgoNN1RQnEW3</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>ColumnData__c</field>
@@ -96,6 +96,11 @@
     &quot;iconName&quot;: &quot;standard:record_update&quot;,
     &quot;columns&quot;: [
       {
+        &quot;label&quot;: &quot;Pratica&quot;,
+        &quot;fieldName&quot;: &quot;practice&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
         &quot;label&quot;: &quot;Numero rata&quot;,
         &quot;fieldName&quot;: &quot;rateNumber&quot;,
         &quot;initialWidth&quot;: 160
@@ -118,11 +123,6 @@
       {
         &quot;label&quot;: &quot;Stato Rata&quot;,
         &quot;fieldName&quot;: &quot;installmentStatus&quot;,
-        &quot;initialWidth&quot;: 160
-      },
-      {
-        &quot;label&quot;: &quot;Codice pratica&quot;,
-        &quot;fieldName&quot;: &quot;practice&quot;,
         &quot;initialWidth&quot;: 160
       }
     ]
