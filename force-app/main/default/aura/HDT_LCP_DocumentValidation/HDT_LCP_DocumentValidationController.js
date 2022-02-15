@@ -286,6 +286,10 @@
                     if(element.pageReference.attributes.recordId === orderId){
                         parentId = element.tabId;
                     }
+                    else if(element.pageReference.attributes.recordId === accountId)
+                    {
+                        parentId = element.tabId;
+                    }
                 }
             });
             console.log('----------');
