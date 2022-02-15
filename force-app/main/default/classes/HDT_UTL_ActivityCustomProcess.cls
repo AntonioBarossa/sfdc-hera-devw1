@@ -139,25 +139,33 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
     public static void updateCreditCheckActivity(List<wrts_prcgvr__Activity__c> actListToUpdate){        
         if(!actListToUpdate.isEmpty()){
             system.debug('Start updateCreditCheckActivity -----> ' + json.serializePretty(actListToUpdate));
-            update actListToUpdate;
+            activitySrv.updateRecords(actListToUpdate);
+            //update actListToUpdate;
         }
     }
 
     // @Picchiri 08.06.21 Credit Check 
     // Annullamento Activity di Credit Check e annullamento Ordine in caso di KO Definitvo dell'activity
-    public static void annullamentoActivityCustom(List<wrts_prcgvr__Activity__c> newActList, List<wrts_prcgvr__Activity__c> oldActList){
-                
+    public static void annullamentoActivityCustom(List<wrts_prcgvr__Activity__c> newActList, Map<Id,wrts_prcgvr__Activity__c> oldMap){
+
         Set<Id> orderIdToAnnullamento = new Set<Id>();        
         for(wrts_prcgvr__Activity__c act : newActList){
-            if(act.wrts_prcgvr__Status__c == 'KO Definitivo'){
+            if('KO Definitivo'.equalsIgnoreCase(act.wrts_prcgvr__Status__c) && act.wrts_prcgvr__Status__c!= oldMap.get(act.Id).wrts_prcgvr__Status__c){
                 orderIdToAnnullamento.add(act.Order__c);                 
             }
         }
 
         System.debug('orderIdToAnnullamento ----> ' + orderIdToAnnullamento);        
-        List<Order> orderToAnnullamento = [SELECT id,Status FROM Order WHERE id IN :orderIdToAnnullamento WITH SECURITY_ENFORCED];
+        List<Order> orderToAnnullamento = [SELECT id,Status, RecordType.DeveloperName FROM Order WHERE id IN :orderIdToAnnullamento WITH SECURITY_ENFORCED];
         for(Order order : orderToAnnullamento){        
-            order.Status = 'Annullato';                
+            order.Status = 'Annullato';     
+            if(order.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_Voltura')){
+                order.Phase__c = 'Accettazione Voltura';
+            }        
+            else {
+                order.Phase__c = 'Annullato'; 
+            }               
+            order.CancellationReason__c = 'Gestione Scarto';                
         }
         orderSrv.updateRecords(orderToAnnullamento);
         //update orderToAnnullamento;
@@ -227,7 +235,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         
             String typeOfCommodity = act.Order__r.ServicePoint__r.CommoditySector__c;
             String fiscalData = null;
-            Boolean precedenteCliente = null;
+            //Boolean precedenteCliente = null;
 
             if(act.Order__r.RecordType.DeveloperName == 'HDT_RT_Subentro' || act.Order__r.RecordType.DeveloperName == 'HDT_RT_Voltura'){
             
@@ -236,7 +244,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 }else if(act.Order__r.ServicePoint__r.Account__r.VATNumber__c != null){
                     fiscalData = act.Order__r.ServicePoint__r.Account__r.VATNumber__c;
                 }
-                precedenteCliente = true;                
+                //precedenteCliente = true;                
             }
                 
             if(typeOfCommodity == 'Energia Elettrica'){
@@ -293,10 +301,10 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             iw.market = act.Order__r.Market__c;
             iw.offerType = act.Order__r.Catalog__c;
             iw.details = l;
-            if(precedenteCliente == true){
+            /*if(precedenteCliente == true){
                 iw.bpAlternative = act.Order__r.ServicePoint__r.Account__r.CustomerCode__c;
                 iw.alternativeCustomerId = fiscalData;            
-            }
+            }*/
             system.debug('act.Order__r.RecordType.DeveloperName ---> ' + JSON.serialize(iw)); 
             HDT_WS_CreditCheck.callService(iw);
         }

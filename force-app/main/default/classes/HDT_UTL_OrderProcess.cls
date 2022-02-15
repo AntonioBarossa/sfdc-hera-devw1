@@ -748,7 +748,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Map<Id,Order> mapIdToOrderClean = new Map<Id,Order>();        
         Set<Id> orderSetId = new Set<Id>();
         List<wrts_prcgvr__Activity__c> actListToUpdate = new List<wrts_prcgvr__Activity__c>();
-        List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
+        //List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
         Map<Id,wrts_prcgvr__Activity__c> mapIdOrderToActivity = new Map<Id,wrts_prcgvr__Activity__c>();
 
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
@@ -772,7 +772,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
 
-            if((recordTypeName == 'HDT_RT_VAS' && orderToUpdate.OrderReferenceNumber != null && orderToUpdate.ContractReference__c != null) || recordTypeName == 'HDT_RT_Voltura' || recordTypeName == 'HDT_RT_Subentro' || recordTypeName == 'HDT_RT_AttivazioneConModifica' || recordTypeName == 'HDT_RT_SwitchIn' || recordTypeName == 'HDT_RT_ConnessioneConAttivazione' || recordTypeName == 'HDT_RT_TemporaneaNuovaAtt'){             
+            //if((recordTypeName == 'HDT_RT_VAS' && orderToUpdate.OrderReferenceNumber != null && orderToUpdate.ContractReference__c != null) || recordTypeName == 'HDT_RT_Voltura' || recordTypeName == 'HDT_RT_Subentro' || recordTypeName == 'HDT_RT_AttivazioneConModifica' || recordTypeName == 'HDT_RT_SwitchIn' || recordTypeName == 'HDT_RT_ConnessioneConAttivazione' || recordTypeName == 'HDT_RT_TemporaneaNuovaAtt'){         
+            if(checkRecordTypeForCreditCheck(recordTypeName, orderToUpdate)){             
                 if((orderToUpdate.IncomingCreditCheckResult__c != null && orderToUpdate.IncomingCreditCheckResult__c == 'OK') || (orderToUpdate.OutgoingCreditCheckResult__c != null && orderToUpdate.OutgoingCreditCheckResult__c == 'OK')){
                     orderSetId.add(orderToUpdate.id);
                 }                
@@ -796,12 +797,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 actToUpdate.wrts_prcgvr__Status__c = 'KO Risolto';
                 actListToUpdate.add(actToUpdate);
                 
-                if(ord.CreditCheckDescription__c.contains('Saldo debito cattivo pagatore')){
+                if(ord.CreditCheckDescription__c.contains('Saldo debito cattivo pagatore') && actToUpdate.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_CreditCheckKO')){
                     mapIdToOrderClean.put(ord.id,ord);                
                 }    
-                if(ord.CreditCheckDescription__c.contains('Saldo debito cattivo pagatore') || ord.OutgoingCreditCheckResult__c != null){                
+                /*if(ord.CreditCheckDescription__c.contains('Saldo debito cattivo pagatore') || ord.OutgoingCreditCheckResult__c != null){                
                     actListToRecheck.add(actToUpdate);
-                }
+                }*/
             }
             HDT_UTL_ActivityCustomProcess.updateCreditCheckActivity(actListToUpdate);
         }
@@ -810,12 +811,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             mapIdToOrderUpdate = cleanCreditCheckOnOrder(mapIdToOrderClean,mapIdToTotalOrder);             
         }
         if(!mapIdToOrderUpdate.isEmpty()){
-            update  mapIdToOrderUpdate.values();                    
+            orderSrv.updateRecords(mapIdToOrderUpdate.values());
+            //update  mapIdToOrderUpdate.values();                    
         }
         // reinviare la chiamata        
-        if(!actListToRecheck.isEmpty()){
+        /*if(!actListToRecheck.isEmpty()){
             HDT_UTL_ActivityCustomProcess.recheckCreditCheck(actListToRecheck);
-        }
+        }*/
     }
 
     /**
