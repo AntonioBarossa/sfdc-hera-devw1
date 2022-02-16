@@ -860,6 +860,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                                       AND DiscardCategory__c IN :categories 
                                                       AND Id NOT IN :inputDataIds
                                                       AND wrts_prcgvr__Status__c NOT IN ('Chiusa','Sospesa')
+                                                      AND wrts_prcgvr__IsClosed__c = false
                                                       AND Type__c NOT IN ('Ammissibilità KO','Esito KO da DL','Esito KO da SII')
                                                       WITH SECURITY_ENFORCED];
 
@@ -868,10 +869,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         String cmp = activityValues.get('CMP');
         String utenza = activityValues.get('UTENZA');
         Date endDateVal = null;
-        system.debug(endDate);
-        system.debug(cmp);
-        system.debug(utenza);
-
         if(String.isNotBlank(endDate)){
             endDateVal = date.valueOf(endDate);
         }

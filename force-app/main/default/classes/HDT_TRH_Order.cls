@@ -28,6 +28,8 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         HDT_UTL_OrderProcess.salesProcessManagementBefore(trigger.new,trigger.old);
         HDT_UTL_OrderProcess.recalculateOrderDateAfterKo(trigger.new,trigger.old);
         HDT_UTL_OrderProcess.updateServiceRequest(trigger.new, trigger.old);
+        HDT_UTL_OrderProcess.checkCreditProcessStatus(Trigger.new, Trigger.oldMap);
+
         HDT_UTL_Dependencies.processSequentializationBefore(Trigger.newMap,Trigger.oldMap,'Order');
         HDT_UTL_PclickBulkActionVas.checkVasContractAlignmentBeforeUpdate(trigger.new);
     }

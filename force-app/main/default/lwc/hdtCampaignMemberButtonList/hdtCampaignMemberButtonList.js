@@ -65,7 +65,7 @@ export default class hdtCampaignMemberButtonList extends NavigationMixin(Lightni
                             c__campaignId: obj['c__campaignId']
                         }
                     }).then(url => {
-                       window.open(url, "_blank");
+                       window.open(url, "_self");
                     });
                 }
             }).catch(error => {

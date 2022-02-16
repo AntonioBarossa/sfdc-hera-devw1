@@ -721,7 +721,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         for (Order newOrder : (List<Order>) newOrdersMap.values()) {
             Order oldOrder = (Order) oldOrdersMap.get(newOrder.id); 
             String recordTypeName = rtMap.get(newOrder.RecordTypeId).getDeveloperName();
-            if((recordTypeName == 'HDT_RT_VAS' && newOrder.OrderReferenceNumber == null && newOrder.ContractReference__c == null) || recordTypeName == 'HDT_RT_Voltura' || recordTypeName == 'HDT_RT_Attivazione' || recordTypeName == 'HDT_RT_VolturaConSwitch' || recordTypeName == 'HDT_RT_Subentro' || recordTypeName == 'HDT_RT_AttivazioneConModifica' || recordTypeName == 'HDT_RT_SwitchIn' || recordTypeName == 'HDT_RT_ConnessioneConAttivazione' || recordTypeName == 'HDT_RT_TemporaneaNuovaAtt'){                             
+            if(checkRecordTypeForCreditCheck(recordTypeName, newOrder)){                             
                 if (newOrder.CreditCheckDescription__c != null && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c) {    
                     if(newOrder.OutgoingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){                        
                         orderListOldCustomer.add(newOrder);
@@ -747,6 +747,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }        
     }        
 
+    public static Boolean checkRecordTypeForCreditCheck(String recordTypeName, Order newOrder){
+        return ((recordTypeName == 'HDT_RT_VAS' && newOrder.OrderReferenceNumber == null && newOrder.ContractReference__c == null) || recordTypeName == 'HDT_RT_Voltura' || recordTypeName == 'HDT_RT_Attivazione' || recordTypeName == 'HDT_RT_VolturaConSwitch' || recordTypeName == 'HDT_RT_Subentro' || recordTypeName == 'HDT_RT_AttivazioneConModifica' || recordTypeName == 'HDT_RT_SwitchIn' || recordTypeName == 'HDT_RT_ConnessioneConAttivazione' || recordTypeName == 'HDT_RT_TemporaneaNuovaAtt');
+    }
     /**
      * @description  @Picchiri 16.06.21 chiamata Mulesoft // Lista di ordini per nuovo cliente dove si è ricevuto un ok dopo un ko
      * @param orderList
@@ -757,10 +760,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<Order> orderListToUpdate = new List<Order>();
         Map<Id,Order> mapIdToTotalOrder = new Map<Id,Order>();
         Map<Id,Order> mapIdToOrderUpdate = new Map<Id,Order>();
-        Map<Id,Order> mapIdToOrderClean = new Map<Id,Order>();        
+        //Map<Id,Order> mapIdToOrderClean = new Map<Id,Order>();        
         Set<Id> orderSetId = new Set<Id>();
         List<wrts_prcgvr__Activity__c> actListToUpdate = new List<wrts_prcgvr__Activity__c>();
-        List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
+        //List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
         Map<Id,wrts_prcgvr__Activity__c> mapIdOrderToActivity = new Map<Id,wrts_prcgvr__Activity__c>();
 
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
@@ -784,7 +787,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
 
-            if((recordTypeName == 'HDT_RT_VAS' && orderToUpdate.OrderReferenceNumber != null && orderToUpdate.ContractReference__c != null) || recordTypeName == 'HDT_RT_Voltura' || recordTypeName == 'HDT_RT_Subentro' || recordTypeName == 'HDT_RT_AttivazioneConModifica' || recordTypeName == 'HDT_RT_SwitchIn' || recordTypeName == 'HDT_RT_ConnessioneConAttivazione' || recordTypeName == 'HDT_RT_TemporaneaNuovaAtt'){             
+            //if((recordTypeName == 'HDT_RT_VAS' && orderToUpdate.OrderReferenceNumber != null && orderToUpdate.ContractReference__c != null) || recordTypeName == 'HDT_RT_Voltura' || recordTypeName == 'HDT_RT_Subentro' || recordTypeName == 'HDT_RT_AttivazioneConModifica' || recordTypeName == 'HDT_RT_SwitchIn' || recordTypeName == 'HDT_RT_ConnessioneConAttivazione' || recordTypeName == 'HDT_RT_TemporaneaNuovaAtt'){         
+            if(checkRecordTypeForCreditCheck(recordTypeName, orderToUpdate)){             
                 if((orderToUpdate.IncomingCreditCheckResult__c != null && orderToUpdate.IncomingCreditCheckResult__c == 'OK') || (orderToUpdate.OutgoingCreditCheckResult__c != null && orderToUpdate.OutgoingCreditCheckResult__c == 'OK')){
                     orderSetId.add(orderToUpdate.id);
                 }                
@@ -808,26 +812,27 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 actToUpdate.wrts_prcgvr__Status__c = 'KO Risolto';
                 actListToUpdate.add(actToUpdate);
                 
-                if(ord.CreditCheckDescription__c.contains('Saldo debito cattivo pagatore')){
+                /*if(ord.CreditCheckDescription__c.contains('Saldo debito cattivo pagatore') && actToUpdate.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_CreditCheckKO')){
                     mapIdToOrderClean.put(ord.id,ord);                
                 }    
                 if(ord.CreditCheckDescription__c.contains('Saldo debito cattivo pagatore') || ord.OutgoingCreditCheckResult__c != null){                
                     actListToRecheck.add(actToUpdate);
-                }
+                }*/
             }
             HDT_UTL_ActivityCustomProcess.updateCreditCheckActivity(actListToUpdate);
         }
         // sbiancare l'esito ( IncomingCreditCheckResult__c / CreditCheckDescription__c) su order e reinviare la chiamata 
-        if(!mapIdToOrderClean.isEmpty()){
+        /*if(!mapIdToOrderClean.isEmpty()){
             mapIdToOrderUpdate = cleanCreditCheckOnOrder(mapIdToOrderClean,mapIdToTotalOrder);             
         }
         if(!mapIdToOrderUpdate.isEmpty()){
-            update  mapIdToOrderUpdate.values();                    
+            orderSrv.updateRecords(mapIdToOrderUpdate.values());
+            //update  mapIdToOrderUpdate.values();                    
         }
         // reinviare la chiamata        
         if(!actListToRecheck.isEmpty()){
             HDT_UTL_ActivityCustomProcess.recheckCreditCheck(actListToRecheck);
-        }
+        }*/
     }
 
     /**
@@ -836,7 +841,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
      * @param mapIdToOrderUpdate
      * @return Map<Id,Order>
      **/
-    public static Map<Id,Order> cleanCreditCheckOnOrder(Map<Id,Order> mapIdToOrderClean,Map<Id,Order> mapIdToOrderUpdate) {
+    /* public static Map<Id,Order> cleanCreditCheckOnOrder(Map<Id,Order> mapIdToOrderClean,Map<Id,Order> mapIdToOrderUpdate) {
         Map<Id,Order> mapIdToOrderUpdateTmp = new Map<Id,Order>();
 
         for(Order ord : mapIdToOrderUpdate.values()){
@@ -850,7 +855,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
 
         return mapIdToOrderUpdateTmp;    
-    }
+    } */
     // FINE @Picchiri Credit check Date 15.06.21
 
     public static void updatePhaseForFirm(List<Order> newListOrder){
@@ -998,5 +1003,60 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             HDT_SRV_ServiceRequest.deleteRecord(srvRequestsToDelete);
         }
         HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
+    }
+
+    public static void checkCreditProcessStatus(List<Sobject> newOrdersListObj, Map<Id,Sobject> oldOrdersMapObj){
+        List<Order> newOrdersList = (List<Order>)newOrdersListObj;
+        Map<Id,Order> oldOrdersMap = (Map<Id,Order>)oldOrdersMapObj;
+        Map<Id,Schema.RecordTypeInfo> rtMap = Order.sobjectType.getDescribe().getRecordTypeInfosById();
+        Set<Id> ordersId = new Set<Id>();
+        Set<Id> contractReferences = new Set<Id>();
+        for(Order o : newOrdersList){
+            ordersId.add(o.Id);
+        }
+
+        Map<Id, Order> currentOrders = new Map<Id, Order>([SELECT Id, RecordTypeId, IncomingCreditCheckResult__c, OutgoingCreditCheckResult__c, CreditCheckInProgress__c, Phase__c, ProcessType__c, CommodityFormula__c, IsCloned__c, SignedDate__c, RecordType.DeveloperName, ContractReference__c FROM Order WHERE Id IN: ordersId ]);
+        for(Order o : newOrdersList){
+            contractReferences.add(o.ContractReference__c);
+        }
+
+        Map<Id,Contract> contracts =  new Map<Id, Contract>([SELECT Id, Account.CompanyOwner__c FROM Contract WHERE Id IN :contractReferences]);
+        
+        for(Order o : newOrdersList){
+            String recordTypeName = rtMap.get(o.RecordTypeId).getDeveloperName();
+            if(checkRecordTypeForCreditCheck(recordTypeName, o) && (o.IncomingCreditCheckResult__c != oldOrdersMap.get(o.Id).IncomingCreditCheckResult__c || o.OutgoingCreditCheckResult__c != oldOrdersMap.get(o.id).OutgoingCreditCheckResult__c)){
+                o.CreditCheckInProgress__c = false;
+                if('Attesa Credit Check'.equalsIgnoreCase(o.Phase__c) || 'Credit Check KO'.equalsIgnoreCase(o.Phase__c)){
+                    if((String.isNotBlank(o.IncomingCreditCheckResult__c) && o.IncomingCreditCheckResult__c.containsIgnoreCase('KO')) || (String.isNotBlank(o.OutgoingCreditCheckResult__c) && o.OutgoingCreditCheckResult__c.containsIgnoreCase('KO'))){
+                        o.Phase__c = 'Credit Check KO';
+                    }
+                    else{
+                        o.Phase__c = 'Da Inviare'; 
+                        Order currentOrder = currentOrders.get(o.Id);
+                        switch on currentOrder.RecordType.DeveloperName {
+                            when 'HDT_RT_SwitchIn'{
+                                if (o.ProcessType__c == 'Switch in Fittizio') {
+                                    o.Phase__c = 'Comunicazione verso Heroku';
+                                }   
+                                if (o.ProcessType__c == 'Switch in Ripristinatorio') {
+                                    o.Phase__c = 'Comunicazione verso Heroku';
+                                }
+                                else if(o.SignedDate__c == null){
+                                    o.Phase__c = 'Da Inviare' ;                        
+                                }
+                                if (o.IsCloned__c) {
+                                    o.Phase__c = 'Comunicazione verso Heroku';
+                                }
+                            }
+                            when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'{
+                                if(o.CommodityFormula__c.equalsIgnoreCase('Energia Elettrica') && !String.isEmpty(contracts.get(o.ContractReference__c).Id) && !contracts.get(o.ContractReference__c).Account.CompanyOwner__c.equalsIgnoreCase('HERA COMM')){
+                                    o.Phase__c = 'Esportazione VS Siebel';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

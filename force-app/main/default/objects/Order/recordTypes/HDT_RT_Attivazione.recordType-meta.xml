@@ -2190,6 +2190,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Attesa Credit Check</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bozza</fullName>
             <default>true</default>
         </values>
@@ -2227,6 +2231,10 @@
         </values>
         <values>
             <fullName>Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Check KO</fullName>
             <default>false</default>
         </values>
         <values>

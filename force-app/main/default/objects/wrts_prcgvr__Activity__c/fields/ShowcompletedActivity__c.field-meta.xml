@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ShowcompletedActivity__c</fullName>
+    <externalId>false</externalId>
+    <formula>AND(
+	wrts_prcgvr__IsClosed__c = False,
+	OR(
+		AND(
+			OR(RecordType.DeveloperName = &apos;HDT_RT_Default&apos;, RecordType.DeveloperName = &apos;HDT_RT_AttivitaGestionali&apos;),
+			NOT(ISPICKVAL(Type__c,&apos;Validazione Documentale&apos;)),
+			NOT(ISPICKVAL(Type__c,&apos;Validazione Vocal Order&apos;)),
+			NOT(ISPICKVAL(Type__c,&apos;Documenti non validati&apos;))
+		),
+		AND(
+			RecordType.DeveloperName = &apos;HDT_RT_Scarto&apos;, 
+			ISPICKVAL( DiscardCategory__c,&apos;Manuale&apos;)
+		),
+		RecordType.DeveloperName = &apos;HDT_RT_HCPoint&apos;,
+		RecordType.DeveloperName = &apos;HDT_RT_Sportello&apos;, 
+		Contains( RecordType.DeveloperName ,&apos;Escalation&apos;), 	
+		RecordType.DeveloperName = &apos;HDT_RT_RegisterActivity&apos;, 
+		ISPICKVAL( DiscardCategory__c,&apos;Gestionale&apos;),
+		RecordType.DeveloperName = &apos;HDT_RT_DistributorCommunication&apos;
+	)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Mostra Completa Attività</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

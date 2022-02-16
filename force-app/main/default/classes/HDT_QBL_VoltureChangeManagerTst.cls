@@ -14,7 +14,7 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
 		List<Sale__c> saleList=HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Attiva');
 		List<Order> orderList=HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].Id, 'Bozza');
         List<Contract> contractList=HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].Id);//
-        List<BillingProfile__c> BillingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);//
+        List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);//
         List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList=HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);  
         spList[0].CommoditySector__c = 'Energia Elettrica';
@@ -43,7 +43,7 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
         childOrderList[0].ServicePoint__c = spList[0].Id;
         childOrderList[0].LoginWorkstation__c = 'CC_LT_Staff';
         childOrderList[0].Email__c = 'test@email.com';
-        childOrderList[0].BillingProfile__c = BillingProfileList[0].Id;
+        childOrderList[0].BillingProfile__c = billingProfileList[0].Id;
         childOrderList[0].ServicePointCode__c = 'IT001E00032928';
         childOrderList[0].SapContractCode__c = '3001002003';
         childOrderList[0].Commodity__c = 'Energia Elettrica';
@@ -131,7 +131,7 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
 
         Test.stopTest();
 
-        List<Case> caseListUpdated = [Select Id,Phase__c, Order__c, CausalCode__c, Commodity__c, Order__r.Commodity__c FROM Case WHERE Order__c = :orderList[0].Id]; 
+        List<Case> caseListUpdated = [Select Id,Phase__c, Order__c, CausalCode__c, Commodity__c, Order__r.Commodity__c, Subprocess__c FROM Case WHERE Order__c = :orderList[0].Id]; 
         string causalCodeFromCommodity = '';
         if(caseListUpdated[0].Order__r.Commodity__c == 'Energia Elettrica'){
             causalCodeFromCommodity = 'VT1';
@@ -141,6 +141,7 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
         }
         System.assertEquals(HDT_SRV_VoltureChangeManager.volturaTecnicaPhase, caseListUpdated[0].Phase__c,'Fase non correttamente aggiornata');
         System.assertEquals(causalCodeFromCommodity, caseListUpdated[0].CausalCode__c,'Causal Code non correttamente calcolato');
+        System.assertEquals('Ordinaria', caseListUpdated[0].Subprocess__c,'Subprocess non correttamente aggiornato');
     }
 
     @istest
@@ -215,7 +216,7 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
         catch(Exception ex){
         exceptionContent = ex.getMessage();
         }
-        List<Case> caseListUpdated = [Select Id,Phase__c, Order__c, CausalCode__c, Order__r.Commodity__c FROM Case WHERE Order__c = :orderList[0].Id]; 
+        List<Case> caseListUpdated = [Select Id,Phase__c, Order__c, CausalCode__c, Order__r.Commodity__c, Subprocess__c FROM Case WHERE Order__c = :orderList[0].Id]; 
         string causalCodeFromCommodity = '';
 
         System.assertEquals('Bozza Annullata', caseListUpdated[0].Phase__c,'Fase non correttamente aggiornata');
@@ -227,6 +228,7 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
             causalCodeFromCommodity = 'VTG';
         }
         System.assertEquals(causalCodeFromCommodity, caseListUpdated[0].CausalCode__c,'Causal Code non correttamente calcolato');
+        System.assertEquals('Ordinaria', caseListUpdated[0].Subprocess__c,'Subprocess non correttamente aggiornato');
     }
 
     public class HDT_UTL_TestMockVolturaTecnica implements HTTPCalloutMock{

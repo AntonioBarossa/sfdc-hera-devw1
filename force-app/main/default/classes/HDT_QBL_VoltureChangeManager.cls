@@ -65,6 +65,8 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
         newCase.SupplyType__c = order.SupplyType__c;
         newCase.AnnualConsumption__c = order.AnnualConsumption__c;
         newCase.CaliberAvailable__c = order.Caliber__c;
+        newCase.Charge__c = 'Si';
+        newCase.Subprocess__c = 'Ordinaria';
 
         pod = order.ServicePointCode__c;
         sapContractCode = order.SapContractCode__c;
@@ -81,14 +83,12 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
         causalCodeMdt = qrClass.getCausalCode(newCase.Cluster__c, newCase.Type, order.Commodity__c);
         if(causalCodeMdt != null){
             newCase.CausalCode__c = causalCodeMdt.CausalCode__c;
-            system.debug('newCase CausalCode 1--> '+newCase.CausalCode__c);
         }
 
         //creazione case
         HDT_UTL_DatabaseService.insertSObject(newCase);
 
         newCase = qrClass.getCaseRecord(newCase.Id);
-        system.debug('newCase CausalCode 2--> '+newCase.CausalCode__c);
         //Controllo Compatibilità
         String compatibility = '';
         try
