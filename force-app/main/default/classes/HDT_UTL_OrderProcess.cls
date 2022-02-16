@@ -191,6 +191,48 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
         }        
     }
+    /**
+    * @author NTTDATA
+    * @date 16/02/2022
+    * @description Calculate Order Date Like Sii or Effective Date
+    * @param List<Order> newOrdersList - List<Order>
+    * @param List<Order> oldOrdersList - List<Order>
+    * @return void
+    */
+    public static void calculateOrderDate(List<Order> newOrdersList,List<Order> oldOrdersList){
+        Map<String,Order> orderMapOld = new Map<String,Order>();
+        List<Order> orderDateList = new List<Order>();
+        List<String> orderParentIds = new List<String>();
+        for (Order oldOrder : oldOrdersList) {
+            orderMapOld.put(oldOrder.id,oldOrder);
+        }
+        for(Order newOrder : newOrdersList){
+            Order oldOrder = orderMapOld.get(newOrder.Id);
+            String oldValue = oldOrder.Phase__c;
+            String newValue = newOrder.Phase__c;
+            System.debug(oldValue + ' ' + newOrder.RecordType.DeveloperName + ' ' + newOrder.Phase__c + ' ' + newOrder.Channel__c);
+            if(String.isNotBlank(oldValue) && String.isNotBlank(newValue) &&
+                !newValue.equalsIgnoreCase(oldValue) && 
+                newOrder.ParentOrder__c == null && 
+                newOrder.Phase__c == 'Documentazione Gestita' &&
+                !newOrder.Channel__c.equalsIgnoreCase('Teleselling Outbound')
+            ){
+                orderParentIds.add(newOrder.Id);
+            }
+        }
+        if(!orderParentIds.isEmpty()){
+            List<Order> childOrders = orderQr.getChildOrdersForDateCalculation(orderParentIds);
+            for(Order singleOrder : childOrders){
+                if(singleOrder.SignedDate__c == null){
+                    singleOrder.SignedDate__c = Date.today();
+                }
+            }
+            HDT_UTL_ProcessDateManager.calculateOrderProcessDate(childOrders);
+            if (!childOrders.isEmpty()) {
+                HDT_UTL_DatabaseService.updateSObject(childOrders);
+            }
+        }
+    }
 
     /**
      * @description orderPhaseManagementAfterUpdate
@@ -203,7 +245,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Map<String,Order> orderMapOld = new Map<String,Order>();
         Map<String,Order> orderMapNew = new Map<String,Order>();
         List<String> olistd = new List<String>();
-        
+
         for (Order oldOrder : oldOrdersList) {
             orderMapOld.put(oldOrder.id,oldOrder);
         }
@@ -315,6 +357,48 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
     }
 
+    
+/**
+    * @author NTTDATA
+    * @date 16/02/2022
+    * @description Recalculate Order Date Like Sii or Effective Date
+    * @param List<Order> newOrdersList - List<Order>
+    * @param List<Order> oldOrdersList - List<Order>
+    * @return void
+    */
+    public static void recalculateOrderDateAfterKo(List<Order> newOrdersList, List<Order> oldOrdersList){
+        Map<String,Order> mapOldOrder = new Map<String,Order>();
+        List<Order> newOrdersListRecalc = new List<Order>();
+        for (Order oldOrder : oldOrdersList) {
+            mapOldOrder.put(oldOrder.id,oldOrder);
+        }
+        for (Order newOrder : newOrdersList) {
+            Order oldOrder = mapOldOrder.get(newOrder.id);
+            if(oldOrder != null){
+                if( newOrder.DocumentalProcessType__c != null
+                    && newOrder.SignedDate__c != null
+                    && (newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura') || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch'))
+                    && (
+                        (oldOrder.Phase__c == 'Comunicazione verso Heroku KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
+                        ||(oldOrder.Phase__c == 'Amm. Precheck KO SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
+                        || (oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
+                        || (oldOrder.Phase__c == 'Esito OK da SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
+                        || (oldOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.IncomingCreditCheckResult__c == 'OK')
+                    )
+                ){
+                    if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
+                        newOrder.DateSentToSII__c = Date.today();
+                        newOrdersListRecalc.add(newOrder);
+                    }else {
+                        newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                    }
+                }
+            }
+        }
+        if(!newOrdersListRecalc.isEmpty()){
+            HDT_UTL_ProcessDateManager.setEffectiveDate(newOrdersListRecalc);
+        }
+    }
     // START @Picchiri HRADTR-77 Calcolo Date 01.06.21
     /**
      * @description Ricalcolo delle date

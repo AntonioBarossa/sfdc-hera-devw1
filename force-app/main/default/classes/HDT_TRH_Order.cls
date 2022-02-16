@@ -26,6 +26,7 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils')).bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});
         
         HDT_UTL_OrderProcess.salesProcessManagementBefore(trigger.new,trigger.old);
+        HDT_UTL_OrderProcess.recalculateOrderDateAfterKo(trigger.new,trigger.old);
         HDT_UTL_OrderProcess.updateServiceRequest(trigger.new, trigger.old);
         HDT_UTL_Dependencies.processSequentializationBefore(Trigger.newMap,Trigger.oldMap,'Order');
         HDT_UTL_PclickBulkActionVas.checkVasContractAlignmentBeforeUpdate(trigger.new);
@@ -41,7 +42,8 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         HDT_UTL_OrderProcess.checkSatisfationIndex(trigger.newMap, trigger.oldMap);
         HDT_UTL_OrderProcess.orderPhaseManagementAfterUpdate(trigger.new,trigger.old);
-        HDT_UTL_OrderProcess.orderCalulateDateUpdate(trigger.new,trigger.old);
+        //HDT_UTL_OrderProcess.orderCalulateDateUpdate(trigger.new,trigger.old);
+        HDT_UTL_OrderProcess.calculateOrderDate(trigger.new,trigger.old);
         HDT_UTL_OrderProcess.creditCheckManager2(trigger.newMap,trigger.oldMap);
         HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
         HDT_UTL_OrderTriggerVas.cancelLinkedVasOrders(Trigger.newMap, Trigger.oldMap);        
