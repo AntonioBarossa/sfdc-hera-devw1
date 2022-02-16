@@ -348,7 +348,7 @@ public inherited sharing class HDT_LC_ConfigureProduct {
                                                 WITH SECURITY_ENFORCED];
         Boolean result = false;
         List<wrts_prcgvr__Activity__c> activityList = new List<wrts_prcgvr__Activity__c>();
-        if ( salSerItems[0].ServicePoint__c != null) {
+        if (!salSerItems.isEmpty() && salSerItems[0].ServicePoint__c != null) {
             activityList = HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePointNotStatus('Gestione Switch in Ripristinatorio', 'Completed', salSerItems[0].Quote__r.SBQQ__Account__c, salSerItems[0].ServicePoint__r.ServicePointCode__c);
         }
         if (!activityList.isEmpty()

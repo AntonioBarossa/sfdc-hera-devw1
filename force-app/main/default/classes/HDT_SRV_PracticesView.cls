@@ -27,12 +27,13 @@ public inherited sharing class HDT_SRV_PracticesView {
         return retObj;
     }
 
-    private static HttpRequest setHttpRequest(HDT_AccountDataEnrichment__mdt metadataRecord, HttpRequest req, Map<String, String> headerMap){
+    private static HttpRequest setHttpRequest(HDT_AccountDataEnrichment__mdt metadataRecord, HttpRequest req, Map<String, String> headerMap, String addonUrl){
+        
         // Create callout request
         req = new HttpRequest();
         req.setMethod('GET');
-        req.setEndpoint(metadataRecord.Credential__c);
-
+        req.setEndpoint(metadataRecord.Credential__c + addonUrl);
+      
         if(metadataRecord.UseMock__c){
             req.setHeader('Authorization', metadataRecord.Authorization__c);
         }
@@ -68,8 +69,8 @@ public inherited sharing class HDT_SRV_PracticesView {
             throw new AuraHandledException('Il Customer Code non è stato trovato!');
         }
 
-        headerMap.put('value', accList[0].CustomerCode__c);
-        req = setHttpRequest(enrichmentbMetadataList[0], req, headerMap);
+        //headerMap.put('partner', accList[0].CustomerCode__c);
+        req = setHttpRequest(enrichmentbMetadataList[0], req, headerMap, '?partner=' + accList[0].CustomerCode__c);
 
         try{
             res = http.send(req);

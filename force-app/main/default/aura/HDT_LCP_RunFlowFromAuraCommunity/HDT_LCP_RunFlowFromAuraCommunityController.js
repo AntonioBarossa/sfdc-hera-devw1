@@ -44,6 +44,7 @@
                     }
 
         var caseId = null;
+        component.set("v.campaignId",campaignId);
         /*
         var flowName = myPageRef.state.c__flowName;
         var accId = myPageRef.state.c__accid;
@@ -275,8 +276,27 @@
 
             console.log('# outputVariable -> '+outputVariables);
             console.log('# newCaseId -> '+newCaseId);
+            var campaignId = component.get("v.campaignId");
+            console.log('# campaignId -> ' +campaignId);
+            var navService = component.find("navService");
+            var pageReference = 
+            {
+                "type":"standard__recordPage",
+                "attributes":
+                {
+                    "recordId": campaignId,
+                    "actionName" : "view"
+                }
+            }
+            navService.navigate(pageReference);
+            /* ToDo: inserire redirect alla pagina del campaign member o campaign */
+            // var navEvt = $A.get("e.force:navigateToSObject");
+            // navEvt.setParams({
+            // "recordId": campaignId
+            // });
+            // navEvt.fire();
             //Gestione chiusura errore in creazione
-            if(newCaseId == null || newCaseId == undefined){
+            /*if(newCaseId == null || newCaseId == undefined){
                 
                 workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
                     console.log('# Refresh page -> ' + enableRefresh);
@@ -374,7 +394,7 @@
                 });
 
 
-                /*workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
+                workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
                         console.log('# Refresh page -> ' + enableRefresh);
                         
                         console.log('# OK Refresh page #');
@@ -392,10 +412,10 @@
         
                 }).catch(function(error) {
                     console.log(error);
-                });*/
+                });
 
 
-            }
+            }*/
         }
     },
     onTabClosed : function(component, event, helper) {

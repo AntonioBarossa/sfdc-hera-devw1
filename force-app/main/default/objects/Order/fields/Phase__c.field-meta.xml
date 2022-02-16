@@ -141,6 +141,11 @@
                 <label>Attesa conferma preventivo cliente</label>
             </value>
             <value>
+                <fullName>Attesa Credit Check</fullName>
+                <default>false</default>
+                <label>Attesa Credit Check</label>
+            </value>
+            <value>
                 <fullName>BL010</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -225,6 +230,11 @@
                 <fullName>Conferma Appuntamento KO</fullName>
                 <default>false</default>
                 <label>Conferma Appuntamento KO</label>
+            </value>
+            <value>
+                <fullName>Credit Check KO</fullName>
+                <default>false</default>
+                <label>Credit Check KO</label>
             </value>
             <value>
                 <fullName>Da Inviare</fullName>

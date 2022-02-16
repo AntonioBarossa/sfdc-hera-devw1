@@ -311,7 +311,7 @@
                     <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue>HDT_CloseDistributorComunication</stringValue>
+                        <stringValue>HDT_RT_DistributorCommunication</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -340,7 +340,7 @@
                     <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>HDT_CloseDistributorComunication</stringValue>
+                        <stringValue>HDT_RT_DistributorCommunication</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
