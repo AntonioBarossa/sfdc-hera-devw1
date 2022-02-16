@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>StatusName__c</field>
-        <value xsi:type="xsd:string">Contattato positivo - Cambio offerta e vendita VAS</value>
+        <value xsi:type="xsd:string">Cont.to positivo Cambio off. e vend. VAS</value>
     </values>
 </CustomMetadata>

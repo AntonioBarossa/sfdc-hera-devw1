@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>StatusName__c</field>
-        <value xsi:type="xsd:string">Contatto convertito in appuntamento motivato</value>
+        <value xsi:type="xsd:string">Contatto convertito in app.to motivato</value>
     </values>
 </CustomMetadata>

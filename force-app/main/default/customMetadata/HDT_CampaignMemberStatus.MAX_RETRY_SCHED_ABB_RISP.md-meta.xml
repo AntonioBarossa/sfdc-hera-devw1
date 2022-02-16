@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>StatusName__c</field>
-        <value xsi:type="xsd:string">Terminato per numero massimo di esiti abbattuta alla risposta</value>
+        <value xsi:type="xsd:string">Term. num. max. esiti abbattuta a risp.</value>
     </values>
 </CustomMetadata>

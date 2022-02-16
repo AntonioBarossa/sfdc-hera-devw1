@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>StatusName__c</field>
-        <value xsi:type="xsd:string">Appuntamento telefonico motivato personale</value>
+        <value xsi:type="xsd:string">Appuntamento tel. motivato personale</value>
     </values>
 </CustomMetadata>

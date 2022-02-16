@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>StatusName__c</field>
-        <value xsi:type="xsd:string">Chiusura per superamento max tentativi totali</value>
+        <value xsi:type="xsd:string">Chiusura per sup.to max tentativi totali</value>
     </values>
 </CustomMetadata>

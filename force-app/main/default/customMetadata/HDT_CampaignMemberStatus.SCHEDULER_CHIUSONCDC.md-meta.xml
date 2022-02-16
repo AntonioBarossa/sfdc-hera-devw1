@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>StatusName__c</field>
-        <value xsi:type="xsd:string">Chiusura forzata contatto da chiamata diretta</value>
+        <value xsi:type="xsd:string">Chiusura forz. cont.to da chiam. diretta</value>
     </values>
 </CustomMetadata>

@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>StatusName__c</field>
-        <value xsi:type="xsd:string">Forzato da aperto in manuale a contattabile</value>
+        <value xsi:type="xsd:string">Forz. da aperto in man.le a contattabile</value>
     </values>
 </CustomMetadata>

@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>StatusName__c</field>
-        <value xsi:type="xsd:string">Riaggancia e rifiuta immediatamente il contatto</value>
+        <value xsi:type="xsd:string">Riaggancia e rifiuta imm.te il contatto</value>
     </values>
 </CustomMetadata>
