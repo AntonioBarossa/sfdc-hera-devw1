@@ -150,6 +150,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             obj.account.RecordTypeId = recordTypeMap.get(tempSplitted[recTypeIndex]);
             
             // only for test
+            obj.account.Name = String.isBlank(obj.account.FirstName__c) ? obj.account.LastName__c : obj.account.FirstName__c + ' ' + obj.account.LastName__c;
             obj.account.IsWrongFiscalData__c = false;
             obj.account.BillingCityCode__c = 'Roma';
 
@@ -182,6 +183,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveAccountResponse;
             saveAccountResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(accountToInsert, itemIds, 'Account');
+
+            //itemsToUpdate.addAll(saveAccountResponse.reponseItemList);
 
             System.debug(LoggingLevel.DEBUG, '>>> savedObject ' + saveAccountResponse.savedObject);
             System.debug(LoggingLevel.DEBUG, '>>> itemIdToObjId: ' + saveAccountResponse.itemIdToObjId);
@@ -476,7 +479,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             iteration = String.valueOf(n);
 
             // -- Account / Contact
-            tempList.add('Business'); // Tipo
+            tempList.add('Residenziale'); // Tipo
             tempList.add('true'); // FlagVerificato
             tempList.add(''); // FAX
             tempList.add(''); // Stato
@@ -494,9 +497,9 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             tempList.add('25'); // CodiceLocalita
             tempList.add(''); // IndirizzoEstero
             tempList.add('00166'); // CAP
-            tempList.add('Aziende SME'); // Categoria
+            tempList.add('Piccoli condomini'); // Categoria
             tempList.add(''); // DataNascita
-            tempList.add('AAS Associazione'); // Marcatura
+            tempList.add('AAS Parti comuni'); // Marcatura
             tempList.add(''); // TitoloStudio
             tempList.add('via roma'); // NomeVia
             tempList.add(''); // Email

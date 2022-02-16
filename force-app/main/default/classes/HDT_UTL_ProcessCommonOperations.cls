@@ -12,10 +12,10 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
  
         if(objRes.isCreateable()){
 
-            List<Database.SaveResult> insertResults = Database.insert(itemList, false);
+            List<Database.UpsertResult> upsertResults = Database.upsert(itemList, false);
 
-            for(Integer n=0; n<insertResults.size(); n++){
-                Database.SaveResult sr = insertResults[n];
+            for(Integer n=0; n<upsertResults.size(); n++){
+                Database.UpsertResult sr = upsertResults[n];
 
                 if(sr.isSuccess()) {
 
