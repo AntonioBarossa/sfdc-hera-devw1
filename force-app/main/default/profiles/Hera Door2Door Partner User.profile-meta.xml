@@ -31152,9 +31152,6 @@
         <layout>CampaignMemberLeadAssigment__c-Assegnazione Campaign Member su base Lea Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>CampaingMemberLeadAssigment__c-Assegnazione Campaign Member Item Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Case-Case Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
