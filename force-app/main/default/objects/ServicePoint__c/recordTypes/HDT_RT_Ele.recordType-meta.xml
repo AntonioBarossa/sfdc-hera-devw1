@@ -373,6 +373,10 @@
             <fullName>Regolamentato</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Salvaguardia</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>MeterClass__c</picklist>

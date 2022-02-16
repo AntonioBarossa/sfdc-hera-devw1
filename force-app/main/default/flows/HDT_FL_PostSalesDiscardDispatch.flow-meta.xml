@@ -5,7 +5,7 @@
         <name>Check_Cluster</name>
         <label>Check Cluster</label>
         <locationX>1238</locationX>
-        <locationY>638</locationY>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Schermata_di_errore</targetReference>
         </defaultConnector>
@@ -120,7 +120,7 @@
         <name>Check_Type_Activity</name>
         <label>Check Type Activity</label>
         <locationX>644</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Check_Cluster</targetReference>
         </defaultConnector>
@@ -169,7 +169,7 @@
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Arricchimento_Dati</targetReference>
+            <targetReference>Check_Type_Activity</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -214,7 +214,7 @@
         <name>Schermata_di_errore</name>
         <label>Schermata di errore</label>
         <locationX>2162</locationX>
-        <locationY>758</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -235,38 +235,10 @@
     </start>
     <status>Active</status>
     <subflows>
-        <name>Arricchimento_Dati</name>
-        <label>Arricchimento Dati</label>
-        <locationX>644</locationX>
-        <locationY>398</locationY>
-        <connector>
-            <targetReference>Check_Type_Activity</targetReference>
-        </connector>
-        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
-        <inputAssignments>
-            <name>ContractId</name>
-            <value>
-                <elementReference>Get_Case.Contract__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>InputCase</name>
-            <value>
-                <elementReference>caseId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>ServicePointId</name>
-            <value>
-                <elementReference>Get_Case.ServicePoint__c</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
         <name>Gestione_Autolettura</name>
         <label>Gestione Autolettura</label>
         <locationX>1898</locationX>
-        <locationY>758</locationY>
+        <locationY>638</locationY>
         <flowName>HDT_FL_GestioneAutoletture</flowName>
         <inputAssignments>
             <name>discardActivityId</name>
@@ -298,7 +270,7 @@
         <name>Gestione_Disattivazioni</name>
         <label>Gestione Disattivazioni</label>
         <locationX>842</locationX>
-        <locationY>758</locationY>
+        <locationY>638</locationY>
         <flowName>HDT_FL_GestioneDisattivazioni</flowName>
         <inputAssignments>
             <name>discardActivityId</name>
@@ -324,7 +296,7 @@
         <name>Gestione_Innesco_Documentale</name>
         <label>Gestione Innesco Documentale</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>518</locationY>
         <flowName>HDT_FL_GestioneInnescoDocumentaleCase</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -337,7 +309,7 @@
         <name>Gestione_Morosit</name>
         <label>Gestione Morosità</label>
         <locationX>1106</locationX>
-        <locationY>758</locationY>
+        <locationY>638</locationY>
         <flowName>HDT_FL_GestioneScartiComplessi</flowName>
         <inputAssignments>
             <name>caseId</name>
@@ -356,7 +328,7 @@
         <name>Gestione_Preventivi</name>
         <label>Gestione Preventivi</label>
         <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationY>638</locationY>
         <flowName>HDT_FL_GestionePreventivi</flowName>
         <inputAssignments>
             <name>discardActivityId</name>
@@ -382,7 +354,7 @@
         <name>Gestione_Scarti</name>
         <label>Gestione Scarti</label>
         <locationX>1634</locationX>
-        <locationY>758</locationY>
+        <locationY>638</locationY>
         <flowName>HDT_FL_GestioneReclami_VerificheDatiAlDl</flowName>
         <inputAssignments>
             <name>discardActivityId</name>
@@ -407,7 +379,7 @@
         <name>Gestione_Verifiche</name>
         <label>Gestione Verifiche</label>
         <locationX>314</locationX>
-        <locationY>758</locationY>
+        <locationY>638</locationY>
         <flowName>HDT_FL_GestioneVerifiche</flowName>
         <inputAssignments>
             <name>discardActivityId</name>
@@ -433,7 +405,7 @@
         <name>Gestione_Voltura</name>
         <label>Gestione Voltura</label>
         <locationX>1370</locationX>
-        <locationY>758</locationY>
+        <locationY>638</locationY>
         <flowName>HDT_FL_GestioneScartiComplessi</flowName>
         <inputAssignments>
             <name>caseId</name>

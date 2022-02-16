@@ -560,7 +560,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					}
 					Order orderRecord = (Order) record;
 					//FIX data firma su order figli
-					List<Order> orderList = HDT_QR_GenericQuery.getGenericRecords('select Id,Account.RecordType.DeveloperName,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c from Order where ParentOrder__c = \''+(String)orderRecord.Id+'\'', 'Order');
+					List<Order> orderList = HDT_QR_GenericQuery.getGenericRecords('select Id,Account.RecordType.DeveloperName,Channel__c,Market__c,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c,IsActivationDeferred__c,ProcessType__c,MarketOrigin__c,ServicePoint__r.CommoditySector__c,VoltageLevel__c,SupplyType__c,CustomerCategory__c,SignatureMethod__c,DocSendingMethod__c from Order where ParentOrder__c = \''+(String)orderRecord.Id+'\'', 'Order');
 					if(orderList != null && !orderList.isEmpty()){
 						for(Order singleOrder : orderList){
 							singleOrder.SignedDate__c = Date.today();

@@ -424,7 +424,7 @@ handleAddressFromAccount()
                 this.handleAddressVerification();
             }else{
                 this.flagverificato=false;
-                this.theRecord['Flag Verificato']= true;
+                this.theRecord['Flag Verificato']= false;
                 this.alert('Indirizzo da verificare','Attenzione! Indirizzo non censito sullo stradario SAP, inserisci una nuova Via','warn');
             }
             
