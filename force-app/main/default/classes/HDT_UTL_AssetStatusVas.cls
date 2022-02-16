@@ -30,7 +30,7 @@ public inherited sharing class HDT_UTL_AssetStatusVas {
 
         Map<Id,Order> orderPerItem = new Map<Id,Order>();
         Set<id> orderReferenceIds = new Set<id>();
-        for (OrderItem ordItem:[SELECT Order.RecordType.DeveloperName, Order.VasPracticeCode__c, Order.ContractReference__c, Order.OrderReference__c FROM OrderItem
+        for (OrderItem ordItem:[SELECT Order.RecordType.DeveloperName,Order.ActivatedDate, Order.CreatedDate, Order.VasPracticeCode__c, Order.ContractReference__c, Order.OrderReference__c FROM OrderItem
                                 WHERE Id IN :orderItemsIds WITH SECURITY_ENFORCED]) {
             orderPerItem.put( ordItem.Id, ordItem.Order );
             if(ordItem.Order.OrderReference__c!=null){
@@ -53,10 +53,22 @@ public inherited sharing class HDT_UTL_AssetStatusVas {
                 Boolean isVasOrder = (currentOrder.RecordType.DeveloperName==ORDER_VAS_RT);
                 system.debug('inside '+isVasOrder+' '+isParentAsset);
 
-                if (isVasOrder && isParentAsset) {//dont set status if was already setted
+                /**@frpanico 16/02/2022
+                 * Rimosso il controllo sul parent asset
+                 * Per far valorizzare i campi su tutti
+                 * Gli asset del bundle
+                 */
+                if (isVasOrder) {//dont set status if was already setted
                     asset.DigitalAssetStatus =  String.isBlank((String) oldMap?.get(asset.Id)?.get('DigitalAssetStatus'))? ASSET_ACTIVE_STATUS : asset.DigitalAssetStatus;//setting status to active
                     asset.Contract__c = currentOrder.ContractReference__c!=null? currentOrder.ContractReference__c : referenceToContract.get(currentOrder.OrderReference__c)?.Id;
                     asset.VasPracticeCode__c = String.isNotBlank(asset.VasPracticeCode__c)? asset.VasPracticeCode__c : currentOrder.VasPracticeCode__c;//copying Vas fields from order
+                    /**@frpanico 16/02/2022
+                     * Aggiunta campi Data
+                     * PurchaseDate, InstallDate
+                     */
+                    asset.PurchaseDate = Date.valueOf(currentOrder.CreatedDate);
+                    asset.InstallDate = currentOrder.ActivatedDate != null ? Date.valueOf(currentOrder.ActivatedDate) : null;
+                
                 }
             }
         }
