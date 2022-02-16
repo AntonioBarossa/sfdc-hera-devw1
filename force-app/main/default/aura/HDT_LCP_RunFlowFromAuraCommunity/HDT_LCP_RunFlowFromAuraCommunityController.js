@@ -44,6 +44,7 @@
                     }
 
         var caseId = null;
+        component.set("v.campaignId",campaignId);
         /*
         var flowName = myPageRef.state.c__flowName;
         var accId = myPageRef.state.c__accid;
@@ -275,13 +276,16 @@
 
             console.log('# outputVariable -> '+outputVariables);
             console.log('# newCaseId -> '+newCaseId);
+            var campaignId = component.get("v.campaignId");
+            console.log('# campaignId -> ' +campaignId);
             var navService = component.find("navService");
             var pageReference = 
             {
-                "type":"comm__namedPage",
+                "type":"standard__recordPage",
                 "attributes":
                 {
-                    "name":"Campaign_Member_Detail__c"
+                    "recordId": campaignId,
+                    "actionName" : "view"
                 }
             }
             navService.navigate(pageReference);
