@@ -56,8 +56,8 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
 
         HDT_UTL_ActivityCustomProcess.changeAssignRelatedRecord(trigger.new,trigger.old);
 
-        // @Picchiri 08.06.21 Credit Check Annullamento Ordine
-        HDT_UTL_ActivityCustomProcess.annullamentoActivityCustom(trigger.new,trigger.old);
+        // @Picchiri 08.06.21 Credit Check Annullamento Ordine  
+        HDT_UTL_ActivityCustomProcess.annullamentoActivityCustom(trigger.new,(Map<Id, wrts_prcgvr__Activity__c>)trigger.oldMap);
 
         // @Picchiri 14.06.21 Credit innesco credi check al cambio dello stato        
         HDT_UTL_ActivityCustomProcess.creditCheckKoPrecedenteCliente(trigger.new,trigger.old);
