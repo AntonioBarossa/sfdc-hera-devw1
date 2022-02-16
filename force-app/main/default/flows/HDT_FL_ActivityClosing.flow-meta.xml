@@ -4,8 +4,8 @@
     <assignments>
         <name>Assegna_Note</name>
         <label>Assegna Note</label>
-        <locationX>50</locationX>
-        <locationY>974</locationY>
+        <locationX>182</locationX>
+        <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>activity.ClosingNote__c</assignToReference>
             <operator>Assign</operator>
@@ -27,7 +27,7 @@
     <assignments>
         <name>Assign_Activity</name>
         <label>Assign Activity</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>158</locationY>
         <assignmentItems>
             <assignToReference>activity.Id</assignToReference>
@@ -78,7 +78,7 @@
     <assignments>
         <name>HDT_CloseActivity_AND_HDT_CloseManualActivity</name>
         <label>HDT_CloseActivity AND HDT_CloseManualActivity</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>activity.wrts_prcgvr__Status__c</assignToReference>
@@ -101,7 +101,7 @@
     <assignments>
         <name>HDT_CloseDistributorComunicationAssign</name>
         <label>HDT_CloseDistributorComunicationAssign</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>activity.wrts_prcgvr__Status__c</assignToReference>
@@ -117,8 +117,8 @@
     <decisions>
         <name>ActivityType_0</name>
         <label>ActivityType</label>
-        <locationX>182</locationX>
-        <locationY>854</locationY>
+        <locationX>314</locationX>
+        <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Chiudi_Activity</targetReference>
         </defaultConnector>
@@ -134,7 +134,14 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>activity.DiscardCategory__c</leftValueReference>
+                <leftValueReference>Get_Activity.DiscardCategory__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Activity.DiscardCategory__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Manuale</stringValue>
@@ -149,12 +156,27 @@
     <decisions>
         <name>Tipo_Completa_Attivit</name>
         <label>Tipo Completa Attività</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>HDT_CloseActivity_AND_HDT_CloseManualActivity</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
+        <rules>
+            <name>Check_Assegnazione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsNotOwner</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Finale_0</targetReference>
+            </connector>
+            <label>Check Assegnazione</label>
+        </rules>
         <rules>
             <name>RT_HDT_CloseDistributorComunication</name>
             <conditionLogic>and</conditionLogic>
@@ -179,6 +201,11 @@
         <picklistField>ActivityOutcome__c</picklistField>
         <picklistObject>wrts_prcgvr__Activity__c</picklistObject>
     </dynamicChoiceSets>
+    <formulas>
+        <name>IsNotOwner</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(BEGINS({!Get_Activity.OwnerId},{!$User.Id}),false,true)</expression>
+    </formulas>
     <interviewLabel>Activity - Chiusura {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Activity - Chiusura</label>
     <processMetadataValues>
@@ -203,7 +230,7 @@
     <recordLookups>
         <name>Get_Activity</name>
         <label>Get Activity</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -224,8 +251,8 @@
     <recordUpdates>
         <name>Chiudi_Activity</name>
         <label>Chiudi Activity</label>
-        <locationX>182</locationX>
-        <locationY>1190</locationY>
+        <locationX>314</locationX>
+        <locationY>1310</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
         </connector>
@@ -234,8 +261,8 @@
     <screens>
         <name>Screen_Finale</name>
         <label>Screen Finale</label>
-        <locationX>182</locationX>
-        <locationY>1310</locationY>
+        <locationX>314</locationX>
+        <locationY>1430</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -248,10 +275,26 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Screen_Finale_0</name>
+        <label>Screen Finale</label>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>dt1_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(255, 0, 0);&quot;&gt;Attenzione!&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;L&apos;attività può essere gestita solo dall&apos;assegnatario.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Set_Note</name>
         <label>Set Note</label>
-        <locationX>182</locationX>
-        <locationY>734</locationY>
+        <locationX>314</locationX>
+        <locationY>854</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -268,7 +311,7 @@
                     <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue>HDT_CloseDistributorComunication</stringValue>
+                        <stringValue>HDT_RT_DistributorCommunication</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -297,7 +340,7 @@
                     <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>HDT_CloseDistributorComunication</stringValue>
+                        <stringValue>HDT_RT_DistributorCommunication</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -354,7 +397,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Assign_Activity</targetReference>
