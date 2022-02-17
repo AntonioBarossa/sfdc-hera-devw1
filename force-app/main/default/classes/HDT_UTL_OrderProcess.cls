@@ -546,7 +546,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         for (Order childOrder : parentOrderIds) {
             if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
                 if (childOrder.Phase__c == currentVasPhase) {
-                    String phaseVas = childOrder.VASType__c?.equals('VAS Servizio')? 'Sequenzializzato' : newVasPhase;
+                    String phaseVas = childOrder.VASType__c?.equals('VAS Servizio')? 'In attesa tempi di ripensamento' : newVasPhase;
                     vasOrdersToUpdate.put(childOrder.Id, phaseVas);
                 }
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged ) {
