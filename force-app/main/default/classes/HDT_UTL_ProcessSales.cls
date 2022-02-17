@@ -196,13 +196,15 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 continue;
             }
 
-            // account not present in DB - create new account and contact
-            processObj.contact = new Contact();
-            processObj.contact.AccountId = saveAccountResponse.itemIdToObjId.get(processObj.requestItem.Id);
-            processObj.contact = createContact(processObj.contact, processObj.account);
-            System.debug(LoggingLevel.DEBUG, '>>> currentContact: ' + processObj.contact);
-            itemIds.add(processObj.requestItem.Id);
-            saveContactList.add(processObj.contact);
+            if(saveAccountResponse.itemIdToObjId.containsKey(processObj.requestItem.Id)){
+                // account not present in DB - create new account and contact
+                processObj.contact = new Contact();
+                processObj.contact.AccountId = saveAccountResponse.itemIdToObjId.get(processObj.requestItem.Id);
+                processObj.contact = createContact(processObj.contact, processObj.account);
+                System.debug(LoggingLevel.DEBUG, '>>> currentContact: ' + processObj.contact);
+                itemIds.add(processObj.requestItem.Id);
+                saveContactList.add(processObj.contact);
+            }
         }
 
         HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveContactResponse;
