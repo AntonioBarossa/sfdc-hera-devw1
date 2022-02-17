@@ -98,7 +98,14 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
                     serResp = HDT_WS_ArrichmentDataEntityInvoker.callService('', servPointFromWs.Name);
                     System.debug(serResp);
 
-                    if(serResp == null || serResp.statusCode != 200){
+                    if(serResp.exceptionMessage != null){
+                        singleItem.Status__c = 'Errore';
+                        singleItem.StatusDescription__c = '[ServicePoint__c] ' + serResp.exceptionMessage;
+                        System.debug(LoggingLevel.DEBUG, '[ServicePoint__c] no reponse from ws...');
+                        continue;
+                    }
+                    
+                    if(serResp.statusCode != 200){
                         singleItem.Status__c = 'Errore';
                         singleItem.StatusDescription__c = '[ServicePoint__c] ' + serResp.errorDetails[0].code + '; ' + serResp.errorDetails[0].message;
                         System.debug(LoggingLevel.DEBUG, '>>> Additional info: ' + serResp.errorDetails[0].additionalInfo);
@@ -122,6 +129,13 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
                     contact = setContactRecord(accRelMap.get(accountId), contact);
                     HDT_WS_RicCreBpCaRequest req = HDT_UTL_Account.callBpCaCreate(account, contact);
                     HDT_WS_RichCreBpCaResponse res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
+
+                    if(res.exceptionMessage != null){
+                        singleItem.Status__c = 'Errore';
+                        singleItem.StatusDescription__c = '[Account] ' + res.exceptionMessage;
+                        System.debug(LoggingLevel.DEBUG, '[Account] no reponse from ws...');
+                        continue;
+                    }
 
                     if ('success'.equalsIgnoreCase(res.status)) {
                         if ('Errore'.equalsIgnoreCase(res.data.tipoAttivita)) {
