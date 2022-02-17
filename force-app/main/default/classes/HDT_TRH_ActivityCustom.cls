@@ -78,7 +78,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
         // HDT_UTL_Scarti.handleEditButtonPress(trigger.new, (Map<Id, wrts_prcgvr__Activity__c>) trigger.oldMap);
     }
 
-    public override void afterInsert(){
+    public override void afterInsert(){ 
         HDT_UTL_Scarti.checkForEsitiIntermedi(trigger.new);
     }   
 
