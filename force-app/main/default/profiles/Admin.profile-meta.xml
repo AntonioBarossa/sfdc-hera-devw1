@@ -34670,7 +34670,7 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
-        <object>CampaingMemberLeadAssigment__c</object>
+        <object>CampaignMemberLeadAssigment__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

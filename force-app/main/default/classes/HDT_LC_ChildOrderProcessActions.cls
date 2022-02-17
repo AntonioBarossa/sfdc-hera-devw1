@@ -298,7 +298,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
         }
 
-        /* Commentata in attesa di configurazione PC Manager
         if(currentOrder.CreditCheckInProgress__c && String.isBlank(currentOrder.IncomingCreditCheckResult__c) && String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
             orderToUpdate.Phase__c = 'Attesa Credit Check';
         }
@@ -307,7 +306,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             if(currentOrder.IncomingCreditCheckResult__c.containsIgnoreCase('KO') || currentOrder.OutgoingCreditCheckResult__c.containsIgnoreCase('KO')){
                 orderToUpdate.Phase__c = 'Credit Check KO';
             }
-        } */
+        }
 
         orderSrv.updateRecord(orderToUpdate);
         if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
