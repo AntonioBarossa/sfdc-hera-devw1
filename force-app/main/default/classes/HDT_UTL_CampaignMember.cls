@@ -6,85 +6,51 @@
 */
 
 public with sharing class HDT_UTL_CampaignMember {
-
     public static void createCampaignMemberStatus(List<Campaign> newCampaigns, List<Campaign> oldCampaigns){
-
         Map<String,Campaign> mapCampaign = new Map<String,Campaign>();
-        List<HDT_CampaignMemberStatus__mdt> campaignStatusMdt= HDT_QR_CampaignMemberStatusMetadata.getRecords();
+        List<HDT_CampaignMemberStatus__mdt> campaignStatusMdt = HDT_QR_CampaignMemberStatusMetadata.getRecords();
         List<CampaignMemberStatus> campaignMemberStatuses= new List<CampaignMemberStatus>();
 
         List<Campaign> campaigns= new List<Campaign>();
         for(Campaign ce: oldCampaigns){
             mapCampaign.put(ce.id, ce);
         }
+
         for (Campaign cam: newCampaigns){
             Campaign oldCampaign = mapCampaign.get(cam.id);
             if(cam.Status != oldCampaign.Status ){
-                if(oldCampaign.Status== 'Bozza' && cam.Status== 'Pianificata'){
+                if(oldCampaign.Status == 'Bozza' && cam.Status == 'Pianificata'){
                     campaigns.add(cam);
                 }
             }
         }
+
         for(Campaign c: campaigns){
-            for(HDT_CampaignMemberStatus__mdt cmdt: campaignStatusMdt){
-                //filter per campaign category
-                if (cmdt.Category__c == 'Tutte' && cmdt.Channel__c == 'Tutti') {
-                    CampaignMemberStatus cmStatus = new CampaignMemberStatus(
+            for(HDT_CampaignMemberStatus__mdt cmdt : campaignStatusMdt){
+                if (
+                    (cmdt.Category__c == 'Tutte' && cmdt.Channel__c == 'Tutti') ||
+                    (c.Category__c == 'Campagna CRM' && cmdt.Category__c == 'Inbound' && cmdt.Channel__c == 'Tutti') || (
+                        (c.Category__c == 'Campagna Outbound' && cmdt.Category__c == 'Outbound') && (
+                            (c.Channel__c == 'Telefonico Outbound' && cmdt.Channel__c == 'Telefonico Outbound') ||
+                            (c.Channel__c == 'Cartaceo' && cmdt.Channel__c == 'Cartaceo')
+                        )
+                    ) ||
+                    (c.Category__c == 'Campagna Marketing Cloud' && cmdt.Category__c == 'Marketing Cloud')
+                ) {
+                    campaignMemberStatuses.add(new CampaignMemberStatus(
                         CampaignId = c.Id,
-                        Label = cmdt.MasterLabel,
+                        Label = cmdt.StatusName__c,
                         HasResponded = cmdt.HasResponded__c,
                         IsDefault = cmdt.Default__c
-                    );
-                    campaignMemberStatuses.add(cmStatus);
-                } else {
-                    if (c.Category__c == 'Campagna CRM') {
-                        if (cmdt.Category__c == 'Inbound' && cmdt.Channel__c == 'Tutti') {
-                            CampaignMemberStatus cmStatus = new CampaignMemberStatus(
-                                CampaignId = c.Id,
-                                Label = cmdt.MasterLabel,
-                                HasResponded = cmdt.HasResponded__c,
-                                IsDefault = cmdt.Default__c
-                            );
-                            campaignMemberStatuses.add(cmStatus);
-                        }
-                    } else if (c.Category__c == 'Campagna Outbound' && cmdt.Category__c == 'Outbound') {
-                        if (c.Channel__c == 'Telefonico Outbound' && cmdt.Channel__c == 'Telefonico Outbound') {
-                            CampaignMemberStatus cmStatus = new CampaignMemberStatus(
-                                CampaignId = c.Id,
-                                Label = cmdt.MasterLabel,
-                                HasResponded = cmdt.HasResponded__c,
-                                IsDefault = cmdt.Default__c
-                            );
-                            campaignMemberStatuses.add(cmStatus);
-                        } else if (c.Channel__c == 'Cartaceo' && cmdt.Channel__c == 'Cartaceo') {
-                            CampaignMemberStatus cmStatus = new CampaignMemberStatus(
-                                CampaignId = c.Id,
-                                Label = cmdt.MasterLabel,
-                                HasResponded = cmdt.HasResponded__c,
-                                IsDefault = cmdt.Default__c
-                            );
-                            campaignMemberStatuses.add(cmStatus);
-                        }
-                    } else if (c.Category__c == 'Campagna Marketing Cloud' && cmdt.Category__c == 'Marketing Cloud') {
-                        CampaignMemberStatus cmStatus = new CampaignMemberStatus(
-                            CampaignId = c.Id,
-                            Label = cmdt.MasterLabel,
-                            HasResponded = cmdt.HasResponded__c,
-                            IsDefault = cmdt.Default__c
-                        );
-                        campaignMemberStatuses.add(cmStatus);
-                    }
-                } 
+                    ));
+                }
             }
         }
-        try{
+        try {
             HDT_SRV_CampaignMemberStatus.createRecord(campaignMemberStatuses);
-        }
-        catch(Exception e){
+        } catch(Exception e) {
             system.debug('*******:'+ e);
         }
-        
-
     }
 
     public static void createCampaignMember(List<CampaignMember> newCampaignMember) {
@@ -224,6 +190,16 @@ public with sharing class HDT_UTL_CampaignMember {
         for (Campaign cmp : newCampaigns) {
             if (cmp.Status == 'In Corso' && oldStatus.get(cmp.Id) == 'Pianificata') {
                 cmp.isActive = true;              
+            }
+        }
+    }
+
+    public static void parseStatusCode(Map<Id, CampaignMember> newMap, Map<Id, CampaignMember> oldMap) {
+        if(newMap != null){
+            for(CampaignMember member : newMap.values()) {
+                if(oldMap != null && (!oldMap.containsKey(member.Id) || oldMap.get(member.Id).StatusCode__c != member.StatusCode__c)) {
+                    member.Status = HDT_CampaignMemberStatus__mdt.getInstance(member.StatusCode__c).MasterLabel;
+                }
             }
         }
     }
