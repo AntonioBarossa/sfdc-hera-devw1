@@ -270,7 +270,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.SospendiAttivita</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -285,6 +285,11 @@
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>HDT_RT_DistributorAppointment</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Tracciatura</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
