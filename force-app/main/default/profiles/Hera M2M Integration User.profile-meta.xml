@@ -596,6 +596,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.CreditCheckInProgress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.Cs1Outcome__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9871,7 +9876,7 @@
         <field>Event.WhoId</field>
         <readable>true</readable>
     </fieldPermissions>
-    <!-- <fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>FulfillmentDateMatrix__c.ActivationDate__c</field>
         <readable>true</readable>
@@ -9910,7 +9915,7 @@
         <editable>true</editable>
         <field>FulfillmentDateMatrix__c.VoltageLevel__c</field>
         <readable>true</readable>
-    </fieldPermissions> -->
+    </fieldPermissions>
     <!-- <fieldPermissions>
         <editable>true</editable>
         <field>FieldCoerenceServicePoint__c.AccountCategory__c</field>
@@ -10314,11 +10319,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>HDT_CampaignMemberStatus__mdt.HasResponded__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>HDT_CampaignMemberStatus__mdt.StatusName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -30749,6 +30749,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.ShowcompletedActivity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Signature__c</field>
         <readable>true</readable>
@@ -32261,7 +32266,7 @@
         <object>Integration_Log__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    <!-- <objectPermissions>
+    <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
@@ -32269,7 +32274,7 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>FulfillmentDateMatrix__c</object>
         <viewAllRecords>false</viewAllRecords>
-    </objectPermissions> -->
+    </objectPermissions>
     <!-- <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -32555,7 +32560,7 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
-        <object>CampaingMemberLeadAssigment__c</object>
+        <object>CampaignMemberLeadAssigment__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

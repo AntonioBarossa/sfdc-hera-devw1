@@ -59,6 +59,11 @@ public with sharing class HDT_BA_VasEngineSender implements Database.Batchable<S
     * @param bc 
     **/
     public void finish(Database.BatchableContext bc) {
+        /**@frpanico 17/02/2022
+         * Aggiunto batch pclick per sbloccare la callout
+         */
+        Schedulable instance = (Schedulable) wrts_prcgvr.VersionManager.newClassInstance('AsyncJobBatchSchedule');
+        instance.execute(null);
         return;
     }
 }

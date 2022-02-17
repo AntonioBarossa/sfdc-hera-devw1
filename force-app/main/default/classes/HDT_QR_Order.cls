@@ -42,7 +42,7 @@ public inherited sharing class HDT_QR_Order {
             SELECT
             Name, AccountId,SAPImplantCode__c,SapContractCode__c,EffectiveDate__c,ContractAccountCode__c,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
             Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c,Market__c,VAT__c, SBQQ__Quote__r.SBQQ__PriceBook__c,  
-            CommercialProduct__c  
+            CommercialProduct__c, TemporaryConnectionEndDate__c, ProcessType__c
             FROM Order 
             WHERE Id IN :orderId
             WITH SECURITY_ENFORCED
@@ -335,7 +335,8 @@ public inherited sharing class HDT_QR_Order {
             CommercialProductVersion__c,
             CommercialProductCode__c,
             IsEarlyActivation__c,
-            DistributorFormula__c
+            DistributorFormula__c,
+            CreditCheckInProgress__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -504,7 +505,10 @@ public inherited sharing class HDT_QR_Order {
             QualityCall__c,
             AgencyCode__c,
             DistributorFormula__c,
-            VASType__c
+            VASType__c,
+            ProcessCode__c,
+            DistributorCode__c,
+            Commodity__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -567,6 +571,24 @@ public inherited sharing class HDT_QR_Order {
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
+            AND Phase__c NOT IN ('Annullato')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+    /**
+    * @author NTTDATA
+    * @date 16/02/2022
+    * @description Get child records by list of parent Order Ids
+    * @param parentOrderIds - List<String>
+    * @return List<Order>
+    */
+    public List<Order> getChildOrdersForDateCalculation(List<String> parentOrderIds){
+        return [
+            SELECT
+            Id,EffectiveDate__c,ClientCategoryFormula__c,CommodityFormula__c,RecordType.DeveloperName,WizardCompletedDate__c,Account.RecordType.DeveloperName,Channel__c,Market__c,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c,IsActivationDeferred__c,ProcessType__c,MarketOrigin__c,ServicePoint__r.CommoditySector__c,VoltageLevel__c,SupplyType__c,CustomerCategory__c,SignatureMethod__c,DocSendingMethod__c
+            FROM
+            Order
+            WHERE ParentOrder__c IN :parentOrderIds
             AND Phase__c NOT IN ('Annullato')
             WITH SECURITY_ENFORCED
         ];

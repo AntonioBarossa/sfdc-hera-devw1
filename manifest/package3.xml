@@ -1,40 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Case.HDT_CreateDistributorApointment</members>
-        <members>Crea_Distributore2</members>
-        <members>Order.HDT_CreateDistributorApointment</members>
+        <members>Account.HDT_VasPracticesView</members>
         <name>QuickAction</name>
     </types>
     <types>
+        <members>Account_Service_Console</members>
         <members>HDT_Activity_Default_Record_Page</members>
-        <members>HDT_General_Case_Record_Page</members>
-        <members>HDT_Order_Default</members>
         <name>FlexiPage</name>
     </types>
     <types>
-        <members>HDT_GestioneScarti__mdt</members>
-        <members>HDT_ProductAssociation__mdt</members>
-        <members>Integration_Log__c</members>
+        <members>CampaignMemberAssigmentItem__c</members>
+        <members>CampaignMemberAssigment__c</members>
+        <members>CampaignMemberLeadAssigmentItem__c</members>
+        <members>CampaignMemberLeadAssigment__c</members>
+        <members>wrts_prcgvr__Activity__c</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>Order.Order_Compact_Layout</members>
-        <name>CompactLayout</name>
+        <members>CampaignMemberAssigmentItem__c</members>
+        <members>CampaignMemberAssigment__c</members>
+        <members>CampaignMemberLeadAssigmentItem__c</members>
+        <name>CustomTab</name>
     </types>
     <types>
-        <members>hdtAccordionWithClick</members>
-        <members>hdtAdvancedSearch</members>
-        <members>hdtAppointmentAgenda</members>
-        <members>hdtCampaignMemberScriptLauncher</members>
+        <members>hdtCampaignMemberButtonList</members>
+        <members>hdtCanaleContattoIVRLogin</members>
+        <members>hdtChildOrderProcessActions</members>
         <members>hdtChildOrderProcessDetails</members>
         <members>hdtChildOrderProcessPrecheck</members>
-        <members>hdtCommercialRiassignButton</members>
-        <members>hdtOrderDossierWizardTable</members>
-        <members>hdtProductAssociationSearchTable</members>
-        <members>hdtSaleVas</members>
+        <members>hdtNewSaleCampaignMemberCommunity</members>
+        <members>hdtPracticesView</members>
         <members>hdtTargetObjectAddressFields</members>
-        <members>hdtTargetObjectCreateForm</members>
+        <members>hdtTechnicalOfferEditForm</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
@@ -50,31 +48,37 @@
     </types>
     <types>
         <members>HDT_FL_ActivityClosing</members>
-        <members>HDT_FL_ActivityEscalation</members>
-        <members>HDT_FL_ActivityEscalationNotifyClosure</members>
-        <members>HDT_FL_GestioneDisattivazioni</members>
-        <members>HDT_FL_GestionePagamenti_PianoRateizzazione</members>
+        <members>HDT_FL_Autoelettrica</members>
+        <members>HDT_FL_GestioneAnnullamento</members>
+        <members>HDT_FL_GestioneModificheAnagrafiche</members>
+        <members>HDT_FL_GestionePagamenti_RichiestaDomiciliazione</members>
         <members>HDT_FL_GestionePreventivi</members>
-        <members>HDT_FL_SocialCaseAutoClosure</members>
-        <members>HDT_FL_SocialLeadAssignCompanyOwner</members>
+        <members>HDT_FL_PostSalesDiscardDispatch</members>
+        <members>HDT_FL_PostSalesMasterDispatch</members>
+        <members>HDT_FL_PostSalesMasterDispatchSales</members>
+        <members>HDT_FL_SegnalazioniVAS</members>
         <name>Flow</name>
     </types>
     <types>
-        <members>wrts_prcgvr__Activity__c.HDT_VR_CreditCheck</members>
+        <members>HDT_CampaignMemberStatus__mdt.Controllo_Lunghezza_Massima</members>
         <name>ValidationRule</name>
     </types>
     <types>
-        <members>wrts_prcgvr__Activity__c</members>
-        <name>SharingRules</name>
+        <members>CampaignMemberAssigmentItem__c.All</members>
+        <members>CampaignMemberAssigment__c.All</members>
+        <members>CampaignMemberLeadAssigmentItem__c.All</members>
+        <members>CampaignMemberLeadAssigment__c.All</members>
+        <members>HDT_CampaignMemberStatus__mdt.All_statuses</members>
+        <name>ListView</name>
     </types>
     <types>
+        <members>Case.HDT_RT_VolturaTecnica</members>
         <members>Order.HDT_RT_Attivazione</members>
         <members>Order.HDT_RT_AttivazioneConModifica</members>
         <members>Order.HDT_RT_CambioOfferta</members>
         <members>Order.HDT_RT_CambioUso</members>
         <members>Order.HDT_RT_ConnessioneConAttivazione</members>
         <members>Order.HDT_RT_FlyingRequest</members>
-        <members>Order.HDT_RT_OrderDossier</members>
         <members>Order.HDT_RT_Proroga</members>
         <members>Order.HDT_RT_ScontiBonus</members>
         <members>Order.HDT_RT_Subentro</members>
@@ -83,327 +87,309 @@
         <members>Order.HDT_RT_VAS</members>
         <members>Order.HDT_RT_Voltura</members>
         <members>Order.HDT_RT_VolturaConSwitch</members>
+        <members>ServicePoint__c.HDT_RT_Ele</members>
+        <members>ServicePoint__c.HDT_RT_Gas</members>
         <name>RecordType</name>
     </types>
     <types>
-        <members>HDT_GestioneScarti__mdt-Gestione Scarto Layout</members>
-        <members>HDT_ProductAssociation__mdt-Product Association Layout</members>
-        <members>Order-Cambio Offerta</members>
-        <members>Order-Dossier</members>
-        <members>Order-HDT_PraticaInVolo</members>
-        <members>Order-Order Layout</members>
-        <members>Order-Prima attivazione con modifica</members>
-        <members>Order-Prima attivazione</members>
-        <members>Order-Sconti o Bonus VAS</members>
-        <members>Order-Subentro</members>
-        <members>Order-Switch in</members>
-        <members>Order-VAS</members>
+        <members>Account-CPQ Account Layout Service Console</members>
+        <members>HDT_AccountDataEnrichment__mdt-Account data enrichment Layout</members>
         <members>Product2-CPQ Product Layout New</members>
+        <members>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali2</members>
+        <members>wrts_prcgvr__Activity__c-HDT_CCheckNew</members>
+        <members>wrts_prcgvr__Activity__c-HDT_CCheckOld</members>
+        <members>wrts_prcgvr__Activity__c-HDT_ComfortQuality</members>
+        <members>wrts_prcgvr__Activity__c-HDT_ComunicazioniDistributore</members>
+        <members>wrts_prcgvr__Activity__c-HDT_GestioneAppuntamento</members>
+        <members>wrts_prcgvr__Activity__c-HDT_Protocollo</members>
+        <members>wrts_prcgvr__Activity__c-HDT_Scarti</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_BA_ComfortCall</members>
+        <members>HDT_CampaignManager</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_BA_CallCreditCheck</members>
+        <members>HDT_BA_CallCreditCheckTst</members>
+        <members>HDT_BA_Dependencies</members>
+        <members>HDT_BA_PostSalesMasterBatch</members>
+        <members>HDT_BA_PostSalesMasterBatchTst</members>
         <members>HDT_BA_QualityCall</members>
-        <members>HDT_BA_RiconciliazioneSubscriptions</members>
-        <members>HDT_LC_AppointmentAgendaTst</members>
+        <members>HDT_BA_VasEngineSender</members>
+        <members>HDT_LC_CanaleContattoIVRLogin</members>
+        <members>HDT_LC_CanaleIVRNoShare</members>
         <members>HDT_LC_ChildOrderProcessActions</members>
-        <members>HDT_LC_CommunicazioniDistributore</members>
+        <members>HDT_LC_ChildOrderProcessPrecheck</members>
+        <members>HDT_LC_ConfigureProduct</members>
+        <members>HDT_LC_ConfigureProductTst</members>
+        <members>HDT_LC_CtToolbar</members>
         <members>HDT_LC_EditScartiComplessi</members>
-        <members>HDT_LC_EditScartiComplessiTst</members>
-        <members>HDT_LC_OrderDossierWizard</members>
-        <members>HDT_LC_OrderDossierWizardActions</members>
-        <members>HDT_LC_OrdersForComfortQualityList</members>
-        <members>HDT_LC_SaleServiceContainer</members>
-        <members>HDT_LC_SaleVas</members>
-        <members>HDT_LC_SaleVasTst</members>
-        <members>HDT_QBL_BpCaRequest</members>
-        <members>HDT_QR_AccountContactRelation</members>
+        <members>HDT_LC_OfferConfiguratorCtrlHelper</members>
+        <members>HDT_LC_PracticesView</members>
+        <members>HDT_QBL_VoltureChangeManager</members>
+        <members>HDT_QBL_VoltureChangeManagerTst</members>
+        <members>HDT_QR_AccountDataEnrichment</members>
         <members>HDT_QR_ActivityCustom</members>
-        <members>HDT_QR_Campaign</members>
+        <members>HDT_QR_CampaignMemberStatusMetadata</members>
+        <members>HDT_QR_Case</members>
+        <members>HDT_QR_HerokuPostSalesManager</members>
         <members>HDT_QR_Order</members>
-        <members>HDT_QR_ProductAssociation</members>
-        <members>HDT_SRV_AppointmentAgendaTst</members>
+        <members>HDT_QR_PostSalesMasterBatch</members>
+        <members>HDT_QR_TechnicalOffer</members>
         <members>HDT_SRV_DocumentalManagement</members>
-        <members>HDT_SRV_ProductAssociation</members>
+        <members>HDT_SRV_HerokuPostSalesManager</members>
+        <members>HDT_SRV_PracticesView</members>
+        <members>HDT_SRV_QuoteLine</members>
+        <members>HDT_SRV_QuoteLineTst</members>
         <members>HDT_SRV_SalesHandler</members>
-        <members>HDT_SRV_ScriptManager</members>
-        <members>HDT_SRV_ScriptManagerTst</members>
+        <members>HDT_SRV_VoltureChangeDispatcher</members>
+        <members>HDT_SRV_VoltureChangeDispatcherTst</members>
         <members>HDT_SRV_VoltureChangeManager</members>
+        <members>HDT_SRV_VoltureChangeManagerTst</members>
+        <members>HDT_TRH_ActivityCustom</members>
+        <members>HDT_TRH_Contract</members>
         <members>HDT_TRH_Order</members>
-        <members>HDT_UTL_Account</members>
-        <members>HDT_UTL_ActivityCustom</members>
-        <members>HDT_UTL_ActivityCustomTst</members>
-        <members>HDT_UTL_AppointmentSettingTest</members>
-        <members>HDT_UTL_Case</members>
-        <members>HDT_UTL_GestAppAutomaticCreationCaseTst</members>
-        <members>HDT_UTL_HerokuPostSalesManager</members>
-        <members>HDT_UTL_IntegrationLog</members>
+        <members>HDT_TRH_OrderItem</members>
+        <members>HDT_UTL_ActivityCustomProcess</members>
+        <members>HDT_UTL_AssetStatusVas</members>
+        <members>HDT_UTL_CampaignMember</members>
+        <members>HDT_UTL_CheckFiscalCodeTaxNumber</members>
+        <members>HDT_UTL_NotifVasHelper</members>
         <members>HDT_UTL_OrderProcess</members>
-        <members>HDT_UTL_Sales</members>
+        <members>HDT_UTL_PracticesSupport</members>
+        <members>HDT_UTL_ProcessDateManager</members>
         <members>HDT_UTL_Scarti</members>
+        <members>HDT_UTL_ScartiTst</members>
         <members>HDT_UTL_SwtichInProcess</members>
-        <members>HDT_UTL_VoltureChangeManager</members>
-        <members>HDT_WRP_DocumentalRequest</members>
-        <members>HDT_WS_MrrRequest</members>
-        <members>HDT_WS_SelfReadingsOutcome</members>
-        <members>HDT_WS_VoltureChangeManager</members>
+        <members>HDT_UTL_VasManagement</members>
+        <members>HDT_UTL_VasPractices</members>
+        <members>HDT_WRP_Practices</members>
+        <members>HDT_WRP_TechnicalOffer</members>
+        <members>HDT_WS_ArricchimentoDatiTemp</members>
+        <members>HDT_WS_HTTPServiceCall</members>
+        <members>HDT_WS_SalesApexCalloutAction</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Account.FormalChannelInCharge__c</members>
-        <members>Case.IsExportSIE__c</members>
-        <members>HDT_GestioneScarti__mdt.CaseTemplate__c</members>
-        <members>HDT_GestioneScarti__mdt.IsActive__c</members>
-        <members>HDT_GestioneScarti__mdt.OrderTemplate__c</members>
-        <members>HDT_GestioneScarti__mdt.Phase__c</members>
-        <members>HDT_ProductAssociation__mdt.Value__c</members>
-        <members>HDT_ScriptPerCommOffer__mdt.Object__c</members>
-        <members>Integration_Log__c.Error__c</members>
-        <members>Integration_Log__c.Method__c</members>
-        <members>Integration_Log__c.Process_Number__c</members>
-        <members>Integration_Log__c.RecordId__c</members>
-        <members>Integration_Log__c.Request__c</members>
-        <members>Integration_Log__c.WebService__c</members>
+        <members>CampaignMember.NumberingValidityStartDate__c</members>
+        <members>CampaignMember.StatusCode__c</members>
+        <members>CampaignMemberAssigmentItem__c.Agency__c</members>
+        <members>CampaignMemberAssigmentItem__c.CampaingMemberAssigment__c</members>
+        <members>CampaignMemberLeadAssigmentItem__c.Active__c</members>
+        <members>CampaignMemberLeadAssigmentItem__c.Agency__c</members>
+        <members>CampaignMemberLeadAssigmentItem__c.CampaignMemberLeadAssigment__c</members>
+        <members>CampaignMemberLeadAssigmentItem__c.InterestProduct__c</members>
+        <members>CampaignMemberLeadAssigmentItem__c.ProcessingType__c</members>
+        <members>CampaignMemberLeadAssigmentItem__c.SourceAgency__c</members>
+        <members>CampaignMemberLeadAssigment__c.Agency__c</members>
+        <members>HDT_AccountDataEnrichment__mdt.ApexClass__c</members>
+        <members>HDT_CampaignMemberStatus__mdt.OutcomeCategory__c</members>
+        <members>HDT_CampaignMemberStatus__mdt.OutcomeType__c</members>
+        <members>HDT_CampaignMemberStatus__mdt.StatusName__c</members>
+        <members>HDT_Dependant_Picklist_VAS__mdt.Process_Type__c</members>
+        <members>Order.CreditCheckInProgress__c</members>
         <members>Order.Phase__c</members>
-        <members>Order.VatPercentageFormula__c</members>
-        <members>Product2.CategoryFamily__c</members>
-        <members>Product2.SupplyType__c</members>
-        <members>wrts_prcgvr__Activity__c.FormalChannelInCharge__c</members>
+        <members>wrts_prcgvr__Activity__c.ShowcompletedActivity__c</members>
+        <members>wrts_prcgvr__Activity__c.Type__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>Product2Family</members>
-        <name>StandardValueSet</name>
-    </types>
-    <types>
-        <members>HDT_LCP_ChildOrderProcess</members>
+        <members>HDT_LCP_DocumentValidation</members>
+        <members>HDT_LCP_OpenPracticesLwc</members>
+        <members>HDT_LCP_OpenPracticesSubTab</members>
+        <members>HDT_LCP_RunFlowFromAuraCommunity</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>HDT_AdminServiceDispatcher.Config10022022_1</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_10</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_100</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_101</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_102</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_103</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_104</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_105</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_106</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_107</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_108</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_109</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_11</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_110</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_111</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_112</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_113</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_114</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_115</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_116</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_117</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_118</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_119</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_12</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_120</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_121</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_122</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_123</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_124</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_125</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_126</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_127</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_128</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_129</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_13</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_130</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_131</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_132</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_133</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_134</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_135</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_136</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_137</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_138</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_139</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_14</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_140</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_141</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_142</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_143</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_144</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_145</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_146</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_147</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_148</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_149</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_15</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_150</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_151</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_152</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_153</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_154</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_16</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_17</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_18</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_19</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_2</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_20</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_21</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_22</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_23</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_24</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_25</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_26</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_27</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_28</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_29</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_3</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_30</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_31</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_32</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_33</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_34</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_35</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_36</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_37</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_38</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_39</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_4</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_40</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_41</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_42</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_43</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_44</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_45</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_46</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_47</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_48</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_49</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_5</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_50</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_51</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_52</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_53</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_54</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_55</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_56</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_57</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_58</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_59</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_6</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_60</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_61</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_62</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_63</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_64</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_65</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_66</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_67</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_68</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_69</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_7</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_70</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_71</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_72</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_73</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_74</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_75</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_76</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_77</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_78</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_79</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_8</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_80</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_81</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_82</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_83</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_84</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_85</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_86</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_87</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_88</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_89</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_9</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_90</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_91</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_92</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_93</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_94</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_95</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_96</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_97</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_98</members>
-        <members>HDT_AdminServiceDispatcher.Config10022022_99</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought014804</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought018462</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought026736</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought073177</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought075734</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought077664</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought118177</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought147565</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought161997</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought197527</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought211044</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought250271</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought259438</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought299391</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought306568</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought351751</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought399471</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought401317</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought403660</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought438516</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought443700</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought444397</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought471801</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought472126</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought473792</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought495685</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought562441</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought568645</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought570488</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought581480</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought611715</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought625589</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought631674</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought632947</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought670860</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought683719</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought685627</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought711830</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought744616</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought750214</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought815194</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought832830</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought864298</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought878142</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought899382</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought926905</members>
-        <members>HDT_AfterthoughtDays.HDT_Afterthought946811</members>
-        <members>HDT_GestioneScarti.Ammissibilit_KO</members>
-        <members>HDT_GestioneScarti.Esito_KO_da_DL</members>
-        <members>HDT_GestioneScarti.Esito_KO_da_SII</members>
-        <members>HDT_ProductAssociation.Bonus_Eur_Giorno</members>
-        <members>HDT_ProductAssociation.Bonus_Eur_Mese</members>
-        <members>HDT_ProductAssociation.Bonus_Eur_SMC</members>
-        <members>HDT_ProductAssociation.Bonus_Eur_kWh</members>
-        <members>HDT_ProductAssociation.Bonus_Percentuale</members>
-        <members>HDT_ProductAssociation.ContenitoreBonus</members>
-        <members>HDT_ProductAssociation.Contenitore_Contributi</members>
-        <members>HDT_ProductAssociation.Contributo_Eur_Giorno</members>
-        <members>HDT_ProductAssociation.Contributo_Eur_Mese</members>
-        <members>HDT_ProductAssociation.Contributo_Eur_SMC</members>
-        <members>HDT_ProductAssociation.Contributo_Eur_kW</members>
-        <members>HDT_ProductAssociation.Contributo_Eur_kWh</members>
-        <members>HDT_ProductAssociation.Offerta_commerciale</members>
-        <members>HDT_ProductAssociation.Promozione</members>
-        <members>HDT_ProductAssociation.VAS_Fatturabili</members>
-        <members>HDT_ProductAssociation.VAS_Prodotto</members>
-        <members>HDT_ProductAssociation.VAS_Servizio</members>
-        <members>HDT_SignModeSettings.Piano_Rat_Sportello_OTP_Coopresenza</members>
-        <members>HDT_SignModeSettings.Piano_Rat_Sportello_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Piano_Rateizzazione_Sportello_Cartacea</members>
+        <members>HDT_OrderItem</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>HDT_AccountDataEnrichment.vasPractices</members>
+        <members>HDT_AppointmentSetting.SIT</members>
+        <members>HDT_AppointmentSetting.UAT</members>
+        <members>HDT_CampaignMemberStatus.ANSWERING_MACHINE_BY_AGENT</members>
+        <members>HDT_CampaignMemberStatus.APP0</members>
+        <members>HDT_CampaignMemberStatus.APP1</members>
+        <members>HDT_CampaignMemberStatus.APP2</members>
+        <members>HDT_CampaignMemberStatus.APP3</members>
+        <members>HDT_CampaignMemberStatus.APP_MOTIVATO_SCADUTO_SCHED</members>
+        <members>HDT_CampaignMemberStatus.ATTESA_DOC_INVIATA</members>
+        <members>HDT_CampaignMemberStatus.BUSY_BY_AGENT</members>
+        <members>HDT_CampaignMemberStatus.CC_REC_KO</members>
+        <members>HDT_CampaignMemberStatus.CH_ALT</members>
+        <members>HDT_CampaignMemberStatus.CH_BLK</members>
+        <members>HDT_CampaignMemberStatus.CH_INT</members>
+        <members>HDT_CampaignMemberStatus.CH_NEO</members>
+        <members>HDT_CampaignMemberStatus.CH_REC</members>
+        <members>HDT_CampaignMemberStatus.CH_UP</members>
+        <members>HDT_CampaignMemberStatus.CH_UP_BONUS</members>
+        <members>HDT_CampaignMemberStatus.CH_UP_CO</members>
+        <members>HDT_CampaignMemberStatus.CH_UP_CO_VAS</members>
+        <members>HDT_CampaignMemberStatus.CH_UP_VAS</members>
+        <members>HDT_CampaignMemberStatus.CONFERMA_CC</members>
+        <members>HDT_CampaignMemberStatus.CONFERMA_GIA_AVVENUTA</members>
+        <members>HDT_CampaignMemberStatus.CONFERMA_PLICO_IVR</members>
+        <members>HDT_CampaignMemberStatus.CONFERMA_PLICO_IVR_EP</members>
+        <members>HDT_CampaignMemberStatus.CONFERMA_PLICO_MAIL</members>
+        <members>HDT_CampaignMemberStatus.CONFERMA_PLICO_MAIL_EP</members>
+        <members>HDT_CampaignMemberStatus.CONFERMA_PLICO_WEB</members>
+        <members>HDT_CampaignMemberStatus.CONFERMA_PLICO_WEB_EP</members>
+        <members>HDT_CampaignMemberStatus.CONF_RECUP</members>
+        <members>HDT_CampaignMemberStatus.CONVERT_TO_MOTIVATED_APP</members>
+        <members>HDT_CampaignMemberStatus.DATI_ERRATI_DOCUMENTAZIONE</members>
+        <members>HDT_CampaignMemberStatus.DL</members>
+        <members>HDT_CampaignMemberStatus.DOCUMENTAZIONE_INVIATA</members>
+        <members>HDT_CampaignMemberStatus.ERRORE_CONFERMA_PLICO</members>
+        <members>HDT_CampaignMemberStatus.FAX_BY_AGENT</members>
+        <members>HDT_CampaignMemberStatus.FORZATO_AM_IN_CONTATTABILE</members>
+        <members>HDT_CampaignMemberStatus.GENERICO_NEW</members>
+        <members>HDT_CampaignMemberStatus.INVIO_WHATSAPP</members>
+        <members>HDT_CampaignMemberStatus.LOTTO_SCADUTO_SCHED</members>
+        <members>HDT_CampaignMemberStatus.MAX_RETRY_SCHED_ABB_RING</members>
+        <members>HDT_CampaignMemberStatus.MAX_RETRY_SCHED_ABB_RISP</members>
+        <members>HDT_CampaignMemberStatus.MAX_RETRY_SCHED_BUSY</members>
+        <members>HDT_CampaignMemberStatus.MAX_RETRY_SCHED_MOTIV_APP</members>
+        <members>HDT_CampaignMemberStatus.MAX_RETRY_SCHED_NERR</members>
+        <members>HDT_CampaignMemberStatus.MAX_RETRY_SCHED_NT</members>
+        <members>HDT_CampaignMemberStatus.MAX_RETRY_SCHED_PERS_APP</members>
+        <members>HDT_CampaignMemberStatus.MAX_RETRY_SCHED_SEGR</members>
+        <members>HDT_CampaignMemberStatus.MAX_RETRY_SCHED_TOT</members>
+        <members>HDT_CampaignMemberStatus.NC_GRAVE</members>
+        <members>HDT_CampaignMemberStatus.NEO</members>
+        <members>HDT_CampaignMemberStatus.NOT_ELABORATED_BY_AGENT</members>
+        <members>HDT_CampaignMemberStatus.NO_ANSWER_BY_AGENT</members>
+        <members>HDT_CampaignMemberStatus.NU_DISC</members>
+        <members>HDT_CampaignMemberStatus.NU_HVAC</members>
+        <members>HDT_CampaignMemberStatus.QC_ERR_CAR</members>
+        <members>HDT_CampaignMemberStatus.QC_VERNC</members>
+        <members>HDT_CampaignMemberStatus.REINVIO_DOCUMENTAZIONE_NEW</members>
+        <members>HDT_CampaignMemberStatus.RIAPERTURA_CONTATTO</members>
+        <members>HDT_CampaignMemberStatus.RIC_PLICO_IN_CORSO</members>
+        <members>HDT_CampaignMemberStatus.RIMOSSO_APPUNTAMENTO</members>
+        <members>HDT_CampaignMemberStatus.RINUNCIA_CONTRATTO</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_AM2V</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_APP0</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_APP1</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_APP2</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_APP3</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_ARING</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_ARISP</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_ATV</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_BLACK_LIST</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_CHIUSOFORZ</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_CHIUSONCDC</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_CHIUSONCI</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_CLOSE</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_DC</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_DCA</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_DEC</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_DELFIDEL</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_DL</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_DLA</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_DUPIDMAST</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_E2V</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_EIN</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_ERR01</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_FAX</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_FU</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_IRR</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_LI</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_MOV_CB_TNT</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_MTT</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_NE</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_NEO</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_NNLAV</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_NNLAVMAN</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_NOP</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_OC</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_OCV</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_OPERFRONT</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_OPERFRONTV</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_PBX</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_SG</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_SOL</members>
+        <members>HDT_CampaignMemberStatus.SCHEDULER_TELMUTO</members>
+        <members>HDT_CampaignMemberStatus.UNBLK</members>
+        <members>HDT_CampaignMemberStatus.UNCLI</members>
+        <members>HDT_CampaignMemberStatus.UNGES</members>
+        <members>HDT_CampaignMemberStatus.UNKOG</members>
+        <members>HDT_CampaignMemberStatus.UNOFF</members>
+        <members>HDT_CampaignMemberStatus.UNPAT</members>
+        <members>HDT_CampaignMemberStatus.UNRIF</members>
+        <members>HDT_CampaignMemberStatus.UNRRC</members>
+        <members>HDT_CampaignMemberStatus.UNTGT</members>
+        <members>HDT_CampaignMemberStatus.UNTIT</members>
+        <members>HDT_CampaignMemberStatus.UNUNP</members>
+        <members>HDT_CampaignMemberStatus.UP</members>
+        <members>HDT_CampaignMemberStatus.VENDITA_EXTRA_VO</members>
+        <members>HDT_CampaignMemberStatus.WRONG_NUMBER_BY_AGENT</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV0</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV1</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV10</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV11</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV12</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV13</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV14</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV15</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV16</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV17</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV18</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV19</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV1B</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV2</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV20</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV21</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV22</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV23</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV24</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV25</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV26</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV27</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV28</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV29</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV3</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV30</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV31</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV32</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV33</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV34</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV35</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV36</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV37</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV38</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV39</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV4</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV40</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV41</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV42</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV43</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV44</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV45</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV46</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV47</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV48</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV49</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV5</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV50</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV51</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV52</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV53</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV54</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV55</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV56</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV57</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV6</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV7</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV8</members>
+        <members>HDT_Dependant_Picklist_VAS.DPV9</members>
+        <members>HDT_StatoMotoreVas.CHIUSO</members>
+        <members>HDT_StatoMotoreVas.COFF</members>
+        <members>HDT_StatoMotoreVas.FATTURA_SD</members>
+        <members>HDT_StatoMotoreVas.OK_ODV</members>
+        <members>HDT_StatoMotoreVas.OK_PAREG</members>
+        <members>HDT_StatoMotoreVas.RTZ</members>
         <name>CustomMetadata</name>
     </types>
     <version>49</version>

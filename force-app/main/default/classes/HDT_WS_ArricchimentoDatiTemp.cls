@@ -40,6 +40,7 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
             req.setEndpoint('Callout:ArricchimentoDatiTemp');
             req.setMethod('POST');
             req.setBody(pretty);
+            req.setTimeout(120000);
             req.setHeader('Accept', 'application/json');
             req.setHeader('Content-Type', 'application/json');
             Http http = new Http();

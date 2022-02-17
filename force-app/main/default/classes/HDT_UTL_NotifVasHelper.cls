@@ -221,8 +221,16 @@ public inherited sharing class HDT_UTL_NotifVasHelper {
     private static void mapAssetStatus(HDT_StatoMotoreVas__mdt statusMapping, Map<String,SObject> sObjMap) {
         if (sObjMap.containsKey('Asset')) {
             Asset currentAsset = (Asset)sObjMap.get('Asset');
+            Case currentCase = (Case)sObjMap.get('Case');
             if (String.isNotBlank(statusMapping.AssetStatus__c)) {
                 currentAsset.DigitalAssetStatus = statusMapping.AssetStatus__c;
+                /**@frpanico 16/02/2022
+                 * Aggiunto UsageEndDate
+                 */
+                if(currentCase.TerminationDate__c != null)
+                {
+                    currentAsset.UsageEndDate = currentCase.TerminationDate__c;
+                }
             }
         }
     }

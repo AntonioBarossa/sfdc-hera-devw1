@@ -2136,6 +2136,10 @@
             <fullName>Annullato SII</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Attesa Credit Check</fullName>
+            <default>false</default>
+        </values>
         <!-- <values>
             <fullName>Attesa conferma preventivo cliente</fullName>
             <default>false</default>
@@ -2170,6 +2174,10 @@
         </values>
         <values>
             <fullName>Comunicazione verso Motore VAS OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Check KO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2210,6 +2218,14 @@
         </values>
         <values>
             <fullName>In Corso caricamento Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel KO</fullName>
             <default>false</default>
         </values>
         <values>

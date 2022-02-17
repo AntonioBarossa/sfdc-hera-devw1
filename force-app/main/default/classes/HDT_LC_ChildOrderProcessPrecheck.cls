@@ -134,6 +134,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             newOrder.ProcessType__c = processType;
             newOrder.ProcessCode__c = processCode;
             newOrder.Phase__c = 'Bozza';
+            newOrder.CreditCheckInProgress__c = order.CreditCheckInProgress__c;
 
             //Logica Superficie Servita Start
             newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas') ? 75 : null;
