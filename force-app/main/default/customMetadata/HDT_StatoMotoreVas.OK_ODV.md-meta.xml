@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>OrderStatus__c</field>
-        <value xsi:type="xsd:string">Completed</value>
+        <value xsi:type="xsd:string">Activated</value>
     </values>
     <values>
         <field>VasStatus__c</field>
