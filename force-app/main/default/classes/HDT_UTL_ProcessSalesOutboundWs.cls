@@ -100,7 +100,7 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
 
                     if(serResp == null || serResp.statusCode != 200){
                         singleItem.Status__c = 'Errore';
-                        singleItem.StatusDescription__c = '[' + serResp.errorDetails[0].code + '] ' + serResp.errorDetails[0].message;
+                        singleItem.StatusDescription__c = '[ServicePoint__c] ' + serResp.errorDetails[0].code + '; ' + serResp.errorDetails[0].message;
                         System.debug(LoggingLevel.DEBUG, '>>> Additional info: ' + serResp.errorDetails[0].additionalInfo);
                         continue;
                     }
@@ -127,7 +127,7 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
                         if ('Errore'.equalsIgnoreCase(res.data.tipoAttivita)) {
                             System.debug(LoggingLevel.DEBUG, '>>> res.data.commenti: ' + res.data.commenti);
                             singleItem.Status__c = 'Errore';
-                            singleItem.StatusDescription__c = res.data.commenti;
+                            singleItem.StatusDescription__c = '[Account] ' + res.data.commenti;
                         } else {
                             account.CustomerCode__c = res.data.codiceBP;
                             itemIds.add(singleItem.Id);
@@ -142,7 +142,7 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
                         System.debug(LoggingLevel.DEBUG, '>>> res.errorDetails: ' + res.errorDetails);
                         System.debug(LoggingLevel.DEBUG, '>>> res.exceptionMessage: ' + res.exceptionMessage);
                         singleItem.Status__c = 'Errore';
-                        singleItem.StatusDescription__c = res.exceptionMessage + ' - ' + res.errorDetails;
+                        singleItem.StatusDescription__c = '[Account] ' + res.exceptionMessage + ' - ' + res.errorDetails;
                     }
 
                 }
@@ -174,8 +174,6 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
             }
 
         }
-
-        System.debug(LoggingLevel.DEBUG, 'CpuTime > ' + limits.getCpuTime());
 
     }
 

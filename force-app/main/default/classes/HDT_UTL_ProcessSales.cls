@@ -12,16 +12,12 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     private Set<String> vatNumberSet = new Set<String>();
     private Set<String> marcaturaSet = new Set<String>();
     private Set<String> contoContrattualeSet = new Set<String>();
-    private Map<String, List<String>> itemRequestMap = new Map<String, List<String>>();
     private List<MassiveLoaderRequestItem__c> itemsToUpdate;
-    private HDT_WRP_sObject obj;
-    private Map<Id, HDT_WRP_sObject> itemIdToWrapperMap = new Map<Id, HDT_WRP_sObject>();
+    private List<HDT_WRP_ProcessObjects> processObjList;
     private Map<String, Id> recordTypeMap;
     private Integer contoContrattualeIndex;
     private Integer codicePuntoIndex;
     private Integer recTypeIndex;
-    private Boolean enableCreateBillingProfile;
-    private Boolean enableCreateServicePoint;
 
     public override void checks(){
         System.debug(LoggingLevel.DEBUG, 'checks');
@@ -31,12 +27,17 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         codicePuntoIndex = mapHeaderForWrapper.get('CodicePunto');
         recTypeIndex = mapHeaderForWrapper.get('Tipo');
 
-        List<String> dataSplitted;
+        HDT_WRP_ProcessObjects processObj;
+        processObjList = new List<HDT_WRP_ProcessObjects>();
         for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
-            dataSplitted = item.Data__c.split(splitCharacter, -1);
-            codicePuntoSet.add(dataSplitted[codicePuntoIndex]);
-            contoContrattualeSet.add(dataSplitted[contoContrattualeIndex]);
-            itemRequestMap.put(item.Id, dataSplitted);
+            processObj = new HDT_WRP_ProcessObjects();
+            processObj.requestItem = item;
+            processObj.csvSplitted = item.Data__c.split(splitCharacter, -1);
+
+            codicePuntoSet.add(processObj.csvSplitted[codicePuntoIndex]);
+            contoContrattualeSet.add(processObj.csvSplitted[contoContrattualeIndex]);
+
+            processObjList.add(processObj);
         }
     }
 
@@ -44,10 +45,10 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         System.debug(LoggingLevel.DEBUG, 'getRecords');
 
         recordTypeMap = new Map<String, Id>();
+        codicePuntoMap = new Map<String, Id>();
+
         recordTypeMap.put('Business', Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId());
         recordTypeMap.put('Residenziale', Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId());
-
-        codicePuntoMap = new Map<String, Id>();
 
         for(ServicePoint__c sp : [SELECT Id, ServicePointCode__c FROM ServicePoint__c WHERE ServicePointCode__c IN :codicePuntoSet]){
             codicePuntoMap.put(sp.ServicePointCode__c, sp.Id);
@@ -59,34 +60,37 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         System.debug(LoggingLevel.DEBUG, 'registryCreation');
 
         HDT_UTL_ProcessCommonOperations.getLimitDetails('START registryCreation');
-
+        Boolean enableCreateBillingProfile;
+        Boolean enableCreateServicePoint;
         List<sObject> accountToInsert = new List<sObject>();
         List<String> itemIds = new List<String>();
         itemsToUpdate = new List<MassiveLoaderRequestItem__c>();
+        List<Contact> saveContactList = new List<Contact>();
+        List<BillingProfile__c> saveBillProfList = new List<BillingProfile__c>();
+        List<ServicePoint__c> saveServPointList = new List<ServicePoint__c>();
+        List<AccountContactRelation> acrList;
 
-        for(String itemId : itemRequestMap.keySet()){
-
-            List<String> tempSplitted = itemRequestMap.get(itemId);
-            
-            obj = new HDT_WRP_sObject();
-            obj.account = new Account();
-            obj.contact = new Contact();
-            obj.billingProfile = new BillingProfile__c();
-            obj.servicePoint = new ServicePoint__c();
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+ 
+            processObj.account = new Account();
+            processObj.billingProfile = new BillingProfile__c();
+            processObj.servicePoint = new ServicePoint__c();
             
             Integer count = 0;
             String convertionError;
             String csvHeader;
             String objField;
 
-            System.debug(LoggingLevel.DEBUG, '>>> tempSplitted ' + tempSplitted.size());
+            System.debug(LoggingLevel.DEBUG, '>>> tempSplitted ' + processObj.csvSplitted.size());
 
-            enableCreateBillingProfile = String.isEmpty(tempSplitted[contoContrattualeIndex]);
-            enableCreateServicePoint = !codicePuntoMap.containsKey(tempSplitted[codicePuntoIndex]);
+            enableCreateBillingProfile = String.isEmpty(processObj.csvSplitted[contoContrattualeIndex]);
+            enableCreateServicePoint = !codicePuntoMap.containsKey(processObj.csvSplitted[codicePuntoIndex]);
 
             System.debug(LoggingLevel.DEBUG, '>>> enableCreate: billProf [' + enableCreateBillingProfile + ']; servPoint [' + enableCreateServicePoint + ']');
 
-            for (String tempField : tempSplitted) {
+            processObj.account.RecordTypeId = recordTypeMap.get(processObj.csvSplitted[recTypeIndex]);
+            
+            for (String tempField : processObj.csvSplitted) {
 
                 if ('null'.equalsIgnoreCase(tempField)) {
                    tempField = '';
@@ -111,16 +115,16 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
                         switch on sobjectMap.get(csvHeader).objectType__c {
                             when 'Account' {
-                                convertionError = mapTypeField(obj.account, mapAllFields, count, tempField);
+                                convertionError = mapTypeField(processObj.account, mapAllFields, count, tempField);
                             }
                             when 'BillingProfile__c' {
                                 if(enableCreateBillingProfile){
-                                    convertionError = mapTypeField(obj.billingProfile, mapAllFields, count, tempField);
+                                    convertionError = mapTypeField(processObj.billingProfile, mapAllFields, count, tempField);
                                 }
                             }
                             when 'ServicePoint__c' {
                                 if(enableCreateServicePoint){
-                                    convertionError = mapTypeField(obj.servicePoint, mapAllFields, count, tempField);
+                                    convertionError = mapTypeField(processObj.servicePoint, mapAllFields, count, tempField);
                                 }
                             }
                         }
@@ -138,152 +142,180 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             }
 
             if(String.isNotEmpty(convertionError)){
-                itemsToUpdate.add(setErrorItem(itemId, convertionError));
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = convertionError;
                 continue;
             }
 
-            System.debug(LoggingLevel.DEBUG, '>>> currentAccount: ' + obj.account);
-            System.debug(LoggingLevel.DEBUG, '>>> currentBillingProfile: ' + obj.billingProfile);
-            System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + obj.servicePoint);
+            processObj.account.Name = String.isBlank(processObj.account.FirstName__c) ? processObj.account.LastName__c : processObj.account.FirstName__c + ' ' + processObj.account.LastName__c;
 
-            obj.account.RecordTypeId = recordTypeMap.get(tempSplitted[recTypeIndex]);
-            
             // only for test
-            obj.account.Name = String.isBlank(obj.account.FirstName__c) ? obj.account.LastName__c : obj.account.FirstName__c + ' ' + obj.account.LastName__c;
-            obj.account.IsWrongFiscalData__c = false;
-            obj.account.BillingCityCode__c = 'Roma';
+            processObj.account.IsWrongFiscalData__c = false;
+            processObj.account.BillingCityCode__c = 'Roma';
 
-            addInformationToSet(obj.account);
+            System.debug(LoggingLevel.DEBUG, '>>> currentAccount: ' + processObj.account);
+            System.debug(LoggingLevel.DEBUG, '>>> currentBillingProfile: ' + processObj.billingProfile);
+            System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + processObj.servicePoint);
 
-            itemIdToWrapperMap.put(itemId, obj);
+            addInformationToSet(processObj.account);
 
         }
 
         accountList = HDT_QR_ProcessSales.getAccountList(fiscalCodeSet, vatNumberSet, marcaturaSet, csnSet);
 
-        List<Contact> saveContactList = new List<Contact>();
-        List<BillingProfile__c> saveBillProfList = new List<BillingProfile__c>();
-        List<ServicePoint__c> saveServPointList = new List<ServicePoint__c>();
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
 
-        if(itemIdToWrapperMap.size() > 0){
-
-            HDT_WRP_sObject itObj;
-            for(Id itemId : itemIdToWrapperMap.keySet()){
-                itObj = itemIdToWrapperMap.get(itemId);
-
-                itObj.account.Id = setAccountIdFromDb(itObj.account);
-
-                if(itObj.account.Id == null){
-                    itObj.contact = createContact(itObj.contact, itObj.account);
-                    saveContactList.add(itObj.contact);
-                    itemIds.add(itemId);
-                    accountToInsert.add(itObj.account);
-                }
-
+            if(processObj.requestItem.Status__c.equalsIgnoreCase('Errore')){
+                continue;
             }
 
-            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveAccountResponse;
-            saveAccountResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(accountToInsert, itemIds, 'Account');
+            processObj.account.Id = setAccountIdFromDb(processObj.account);
 
-            //itemsToUpdate.addAll(saveAccountResponse.reponseItemList);
+            if(processObj.account.Id == null){
+                itemIds.add(processObj.requestItem.Id);
+                accountToInsert.add(processObj.account);
+            }
 
-            System.debug(LoggingLevel.DEBUG, '>>> savedObject ' + saveAccountResponse.savedObject);
-            System.debug(LoggingLevel.DEBUG, '>>> itemIdToObjId: ' + saveAccountResponse.itemIdToObjId);
+        }
 
-            itemIds.clear();
-            itemIds = new List<String>();
+        HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveAccountResponse;
+        saveAccountResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(accountToInsert, itemIds, 'Account');
 
-            HDT_WRP_sObject iterationObj;
-            Id accountId;
-            List<Id> accountIdsList = new List<Id>();
-            for(Id itemId : itemIdToWrapperMap.keySet()){
-                iterationObj = itemIdToWrapperMap.get(itemId);
+        System.debug(LoggingLevel.DEBUG, '>>> savedObject ' + saveAccountResponse.savedObject);
+        System.debug(LoggingLevel.DEBUG, '>>> itemIdToObjId: ' + saveAccountResponse.itemIdToObjId);
+        System.debug(LoggingLevel.DEBUG, '>>> errorItemMap: ' + saveAccountResponse.errorItemMap);
 
-                if(iterationObj.account.Id == null){
-                    if(saveAccountResponse.itemIdToObjId.containsKey(itemId)){
-                        accountId = saveAccountResponse.itemIdToObjId.get(itemId);
-                    }   
-                } else {
-                    accountId = iterationObj.account.Id;
-                }
+        itemIds.clear();
+        itemIds = new List<String>();
+
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+
+            if(saveAccountResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = saveAccountResponse.errorItemMap.get(processObj.requestItem.Id);
+                continue;
+            }
+
+            // account not present in DB - create new account and contact
+            processObj.contact = new Contact();
+            processObj.contact.AccountId = saveAccountResponse.itemIdToObjId.get(processObj.requestItem.Id);
+            processObj.contact = createContact(processObj.contact, processObj.account);
+            System.debug(LoggingLevel.DEBUG, '>>> currentContact: ' + processObj.contact);
+            itemIds.add(processObj.requestItem.Id);
+            saveContactList.add(processObj.contact);
+        }
+
+        HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveContactResponse;
+        if(saveContactList.size() > 0){
+            saveContactResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(saveContactList, itemIds, 'Contact');
+            System.debug('>>>>> ' + saveContactResponse.errorItemMap);
+        }
+
+        itemIds.clear();
+        itemIds = new List<String>();
+
+        Id accountId;
+        List<Id> accountIdsList = new List<Id>();
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+
+            if(saveAccountResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = saveAccountResponse.errorItemMap.get(processObj.requestItem.Id);
+                continue;
+            }
+
+            if(processObj.account.Id == null){
+                if(saveAccountResponse.itemIdToObjId.containsKey(processObj.requestItem.Id)){
+                    accountId = saveAccountResponse.itemIdToObjId.get(processObj.requestItem.Id);
+                }   
+            } else {
+                accountId = processObj.account.Id;
+            }
+            
+            if(accountId != null){
+                processObj.billingProfile.Account__c = accountId;
+                processObj.servicePoint.Account__c = accountId;
+
+                System.debug(LoggingLevel.DEBUG, '>>> currentBillingProfile: ' + processObj.billingProfile);
+                System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + processObj.servicePoint);
                 
-                if(accountId != null){
-                    iterationObj.contact.AccountId = accountId;
-                    iterationObj.billingProfile.Account__c = accountId;
-                    iterationObj.servicePoint.Account__c = accountId;
-    
-                    System.debug(LoggingLevel.DEBUG, '>>> currentBillingProfile: ' + iterationObj.billingProfile);
-                    System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + iterationObj.servicePoint);
-                    System.debug(LoggingLevel.DEBUG, '>>> currentContact: ' + iterationObj.contact);
-                    
-                    saveBillProfList.add(iterationObj.billingProfile);
-                    saveServPointList.add(iterationObj.servicePoint);
-                    itemIds.add(itemId);
-                    accountIdsList.add(accountId);
-                }
-
+                saveBillProfList.add(processObj.billingProfile);
+                saveServPointList.add(processObj.servicePoint);
+                itemIds.add(processObj.requestItem.Id);
+                accountIdsList.add(accountId);
             }
 
-            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveContactResponse;
-            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveBillProfResponse;
-            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveServPointResponse;
+        }
 
-            if(saveContactList.size() > 0){
-                saveContactResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(saveContactList, itemIds, 'Contact');
+        HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveBillProfResponse;
+        HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveServPointResponse;
+        
+        if(saveBillProfList.size() > 0){
+            saveBillProfResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(saveBillProfList, itemIds, 'BillingProfile__c');
+        }
+        
+        if(saveServPointList.size() > 0){
+            saveServPointResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(saveServPointList, itemIds, 'ServicePoint__c');
+        }
+        
+        if(accountIdsList.size() > 0){
+            acrList = HDT_QR_ProcessSales.getAccountContactRelationByAccountId(acrList, accountIdsList);
+        }
+
+        if(acrList.size() > 0){
+            for(AccountContactRelation acr : acrList){
+                acr.Roles = 'Titolare';
             }
+
+            update acrList;
+        }
+
+        System.debug(LoggingLevel.DEBUG, '>>> saveBillProfResponse: ' + saveBillProfResponse.itemIdToObjId);
+        System.debug(LoggingLevel.DEBUG, '>>> saveServPointResponse: ' + saveServPointResponse.itemIdToObjId);
+
+        HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER OBJs CREATION');
+
+        HDT_WRP_NextDataObj nextDataObj;
+
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+
+            if(processObj.requestItem.Status__c.equalsIgnoreCase('Errore')){
+                itemsToUpdate.add(processObj.requestItem);
+                continue;
+            }
+
+            if(saveBillProfResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = saveBillProfResponse.errorItemMap.get(processObj.requestItem.Id);
+                itemsToUpdate.add(processObj.requestItem);
+                continue;
+            }
+
+            if(saveServPointResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = saveServPointResponse.errorItemMap.get(processObj.requestItem.Id);
+                itemsToUpdate.add(processObj.requestItem);
+                continue;
+            }
+
+            nextDataObj = new HDT_WRP_NextDataObj();
+            if(saveAccountResponse.itemIdToObjId.containsKey(processObj.requestItem.Id)){
+                nextDataObj.accountId = saveAccountResponse.itemIdToObjId.get(processObj.requestItem.Id);
+            }
+
+            if(saveBillProfResponse.itemIdToObjId.containsKey(processObj.requestItem.Id)){
+                nextDataObj.billProfId = saveBillProfResponse.itemIdToObjId.get(processObj.requestItem.Id);
+            }
+
+            if(saveServPointResponse.itemIdToObjId.containsKey(processObj.requestItem.Id)){
+                nextDataObj.servPointId = saveServPointResponse.itemIdToObjId.get(processObj.requestItem.Id);
+            }
+
+            processObj.requestItem.NextStepData__c = JSON.serialize(nextDataObj);
+            processObj.requestItem.Status__c = 'In Lavorazione';
+            itemsToUpdate.add(processObj.requestItem);
             
-            if(saveBillProfList.size() > 0){
-                saveBillProfResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(saveBillProfList, itemIds, 'BillingProfile__c');
-            }
-            
-            if(saveServPointList.size() > 0){
-                saveServPointResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(saveServPointList, itemIds, 'ServicePoint__c');
-            }
-            
-            List<AccountContactRelation> acrList;
-
-            if(accountIdsList.size() > 0){
-                acrList = HDT_QR_ProcessSales.getAccountContactRelationByAccountId(acrList, accountIdsList);
-            }
-
-            if(acrList.size() > 0){
-                for(AccountContactRelation acr : acrList){
-                    acr.Roles = 'Titolare';
-                }
-    
-                update acrList;
-            }
-
-            System.debug('> > > ' + saveBillProfResponse.itemIdToObjId);
-            System.debug('> > > ' + saveServPointResponse.itemIdToObjId);
-
-            HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER OBJs CREATION');
-
-            HDT_WRP_NextDataObj nextDataObj;
-            MassiveLoaderRequestItem__c item;
-            for(Id itemId : itemIdToWrapperMap.keySet()){
-
-                item = new MassiveLoaderRequestItem__c();
-                item.Id = itemId;
-
-                nextDataObj = new HDT_WRP_NextDataObj();
-                if(saveAccountResponse.itemIdToObjId.containsKey(item.Id)){
-                    nextDataObj.accountId = saveAccountResponse.itemIdToObjId.get(item.Id);
-                }
-
-                if(saveBillProfResponse.itemIdToObjId.containsKey(item.Id)){
-                    nextDataObj.billProfId = saveBillProfResponse.itemIdToObjId.get(item.Id);
-                }
-
-                if(saveServPointResponse.itemIdToObjId.containsKey(item.Id)){
-                    nextDataObj.servPointId = saveServPointResponse.itemIdToObjId.get(item.Id);
-                }
-                item.NextStepData__c = JSON.serialize(nextDataObj);
-                item.Status__c = 'In Lavorazione';
-                itemsToUpdate.add(item);
-            }
-
-        }  
+        }
 
     }
 
@@ -400,11 +432,13 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         return contact;
     }
 
-    private class HDT_WRP_sObject {
+    private class HDT_WRP_ProcessObjects {
         private Account account;
         private Contact contact;
         private BillingProfile__c billingProfile;
         private ServicePoint__c servicePoint;
+        private MassiveLoaderRequestItem__c requestItem;
+        private List<String> csvSplitted;
     }
 
     public class HDT_WRP_NextDataObj {

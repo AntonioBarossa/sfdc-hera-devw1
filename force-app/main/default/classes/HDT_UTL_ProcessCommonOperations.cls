@@ -6,6 +6,7 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
         saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
         saveResponse.savedObject = new List<sObject>();
         saveResponse.itemIdToObjId = new Map<Id, Id>();
+        saveResponse.errorItemMap = new Map<Id, String>();
 
         SObjectType objtype = Schema.getGlobalDescribe().get(sObjectType);
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
@@ -41,6 +42,7 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
                     }
 
                     itemError.StatusDescription__c = errorMessage.abbreviate(250);
+                    saveResponse.errorItemMap.put(itemIds[n], errorMessage.abbreviate(250));
                     saveResponse.reponseItemList.add(itemError);
                     
                 }
@@ -170,6 +172,7 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
         public List<MassiveLoaderRequestItem__c> reponseItemList;
         public List<sObject> savedObject;
         public Map<Id, Id> itemIdToObjId;
+        public Map<Id, String> errorItemMap;
     }
 
 }
