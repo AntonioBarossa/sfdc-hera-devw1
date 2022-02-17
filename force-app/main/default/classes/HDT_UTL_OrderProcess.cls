@@ -361,7 +361,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 /**
     * @author NTTDATA
     * @date 16/02/2022
-    * @description Recalculate Order Date Like Sii or Effective Date
+    * @description Recalculate Order Date after KO or After Quality Call Confirm
     * @param List<Order> newOrdersList - List<Order>
     * @param List<Order> oldOrdersList - List<Order>
     * @return void
@@ -369,6 +369,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     public static void recalculateOrderDateAfterKo(List<Order> newOrdersList, List<Order> oldOrdersList){
         Map<String,Order> mapOldOrder = new Map<String,Order>();
         List<Order> newOrdersListRecalc = new List<Order>();
+        List<Order> newOrdersListComfort = new List<Order>();
         for (Order oldOrder : oldOrdersList) {
             mapOldOrder.put(oldOrder.id,oldOrder);
         }
@@ -377,26 +378,33 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if(oldOrder != null){
                 if( newOrder.DocumentalProcessType__c != null
                     && newOrder.SignedDate__c != null
-                    && (newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura') || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch'))
-                    && (
-                        (oldOrder.Phase__c == 'Comunicazione verso Heroku KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
+                    && (newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
+                        || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura')
+                        || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch'))
+                ){
+                    if((oldOrder.Phase__c == 'Comunicazione verso Heroku KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         ||(oldOrder.Phase__c == 'Amm. Precheck KO SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         || (oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         || (oldOrder.Phase__c == 'Esito OK da SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         || (oldOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.IncomingCreditCheckResult__c == 'OK')
-                    )
-                ){
-                    if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
-                        newOrder.DateSentToSII__c = Date.today();
-                        newOrdersListRecalc.add(newOrder);
-                    }else {
-                        newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                    ){
+                        if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
+                            newOrder.DateSentToSII__c = Date.today();
+                            newOrdersListRecalc.add(newOrder);
+                        }else {
+                            newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                        }
+                    }else if(oldOrder.ConfirmCustomerContract__c == null && newOrder.ConfirmCustomerContract__c == 'Comfort call'){
+                        newOrdersListComfort.add(newOrder);
                     }
                 }
             }
         }
         if(!newOrdersListRecalc.isEmpty()){
             HDT_UTL_ProcessDateManager.setEffectiveDate(newOrdersListRecalc);
+        }
+        if(!newOrdersListComfort.isEmpty()){
+            HDT_UTL_ProcessDateManager.calculateOrderProcessDate(newOrdersListComfort);
         }
     }
     // START @Picchiri HRADTR-77 Calcolo Date 01.06.21
@@ -546,7 +554,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         for (Order childOrder : parentOrderIds) {
             if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
                 if (childOrder.Phase__c == currentVasPhase) {
-                    String phaseVas = childOrder.VASType__c?.equals('VAS Servizio')? 'Sequenzializzato' : newVasPhase;
+                    String phaseVas = childOrder.VASType__c?.equals('VAS Servizio')? 'In attesa tempi di ripensamento' : newVasPhase;
                     vasOrdersToUpdate.put(childOrder.Id, phaseVas);
                 }
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged ) {
