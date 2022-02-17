@@ -157,6 +157,7 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
         limitList.add('>>> DML: ' + String.valueOf(Limits.getDMLStatements()) + ' of ' + String.valueOf(Limits.getLimitDMLStatements()));
         limitList.add('>>> HeapSize: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
         limitList.add('>>> Queries: ' + String.valueOf(Limits.getQueries()) + ' of ' + String.valueOf(Limits.getLimitQueries()));
+        limitList.add('>>> Callouts: ' + String.valueOf(Limits.getCallouts()) + ' of ' + String.valueOf(Limits.getLimitCallouts()));
 
         System.debug(LoggingLevel.DEBUG, '---------------- ' + stageName + ' ----------------');
         for(String s : limitList){

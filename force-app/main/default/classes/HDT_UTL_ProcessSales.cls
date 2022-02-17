@@ -20,7 +20,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     private Integer contoContrattualeIndex;
     private Integer codicePuntoIndex;
     private Integer recTypeIndex;
-    private Boolean enableCreateContact;
     private Boolean enableCreateBillingProfile;
     private Boolean enableCreateServicePoint;
 
@@ -162,6 +161,10 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         accountList = HDT_QR_ProcessSales.getAccountList(fiscalCodeSet, vatNumberSet, marcaturaSet, csnSet);
 
+        List<Contact> saveContactList = new List<Contact>();
+        List<BillingProfile__c> saveBillProfList = new List<BillingProfile__c>();
+        List<ServicePoint__c> saveServPointList = new List<ServicePoint__c>();
+
         if(itemIdToWrapperMap.size() > 0){
 
             HDT_WRP_sObject itObj;
@@ -171,12 +174,10 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 itObj.account.Id = setAccountIdFromDb(itObj.account);
 
                 if(itObj.account.Id == null){
-                    enableCreateContact = true;
                     itObj.contact = createContact(itObj.contact, itObj.account);
+                    saveContactList.add(itObj.contact);
                     itemIds.add(itemId);
                     accountToInsert.add(itObj.account);
-                } else {
-                    enableCreateContact = false;
                 }
 
             }
@@ -191,10 +192,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             itemIds.clear();
             itemIds = new List<String>();
-
-            List<Contact> saveContactList = new List<Contact>();
-            List<BillingProfile__c> saveBillProfList = new List<BillingProfile__c>();
-            List<ServicePoint__c> saveServPointList = new List<ServicePoint__c>();
 
             HDT_WRP_sObject iterationObj;
             Id accountId;
@@ -218,10 +215,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                     System.debug(LoggingLevel.DEBUG, '>>> currentBillingProfile: ' + iterationObj.billingProfile);
                     System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + iterationObj.servicePoint);
                     System.debug(LoggingLevel.DEBUG, '>>> currentContact: ' + iterationObj.contact);
-    
-                    if(enableCreateContact){
-                        saveContactList.add(iterationObj.contact);
-                    }
                     
                     saveBillProfList.add(iterationObj.billingProfile);
                     saveServPointList.add(iterationObj.servicePoint);
