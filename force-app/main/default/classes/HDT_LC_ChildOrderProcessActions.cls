@@ -298,6 +298,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
         }
 
+        if(currentOrder.CreditCheckInProgress__c && String.isBlank(currentOrder.IncomingCreditCheckResult__c) && String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
+            orderToUpdate.Phase__c = 'Attesa Credit Check';
+        }
+        else if(!String.isBlank(currentOrder.IncomingCreditCheckResult__c) || !String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
+            orderToUpdate.CreditCheckInProgress__c = false;
+            if(currentOrder.IncomingCreditCheckResult__c.containsIgnoreCase('KO') || currentOrder.OutgoingCreditCheckResult__c.containsIgnoreCase('KO')){
+                orderToUpdate.Phase__c = 'Credit Check KO';
+            }
+        }
+
         orderSrv.updateRecord(orderToUpdate);
         if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
             HDT_LC_ChildOrderProcessDetails.createActivityAccise(orderToUpdate.FacilitationExcise__c,orderToUpdate.VATfacilitationFlag__c,orderToUpdate.id,orderToUpdate.accountid);

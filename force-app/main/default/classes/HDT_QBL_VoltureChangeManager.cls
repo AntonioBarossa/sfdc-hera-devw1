@@ -34,6 +34,40 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
         newCase.PhoneNumber__c = order.PhoneNumber__c;
         newCase.Email__c = order.Email__c;
         newCase.BillingProfile__c = order.BillingProfile__c;
+        newCase.SupplyCity__c = order.SupplyCity__c;
+        newCase.SupplyCityCode__c= order.SupplyCityCode__c; 
+        newCase.SupplyCountry__c = order.SupplyCountry__c;
+        newCase.SupplyPostalCode__c= order.SupplyPostalCode__c;
+        newCase.SupplyProvince__c= order.SupplyState__c;
+        newCase.SupplyStreetName__c= order.SupplyStreetName__c;
+        newCase.SupplyStreetNumber__c= order.SupplyStreetNumber__c;
+        newCase.InvoicingCity__c = order.BillingCity__c;
+        newCase.InvoicingCityCode__c = order.BillingCityCode__c;
+        newCase.InvoicingCountry__c = order.BillingCountry__c;
+        newCase.InvoicingPostalCode__c = order.BillingPostalCode__c;
+        newCase.InvoicingProvince__c = order.BillingProvince__c;
+        newCase.InvoicingStreetName__c = order.BillingStreetName__c;
+        newCase.InvoicingStreetNumber__c = order.BillingStreetName__c;
+        newCase.BillingCity__c = order.ResidentialCity__c;
+        newCase.BillingCityCode__c = order.ResidentialCityCode__c;
+        newCase.BillingCountry__c = order.ResidentialCountry__c;
+        newCase.BillingPostalCode__c = order.ResidentialPostalCode__c;
+        newCase.BillingProvince__c = order.ResidentialState__c;
+        newCase.BillingStreetName__c = order.ResidentialStreet__c;
+        newCase.BillingStreetNumber__c = order.ResidentialStreetName__c;
+        newCase.SalesCompany__c = order.SalesCompany__c;
+        newCase.SalesCompanyCode__c = order.SalesCompanyCode__c;
+        newCase.DistributorCode__c = order.DistributorCode__c;
+        newCase.Taxes__c = order.ExciseGAS__c;
+        newCase.TaxRate__c = order.VAT__c;
+        newCase.Resident__c = order.Resident__c;
+        newCase.Market__c = order.Market__c;
+        newCase.SupplyType__c = order.SupplyType__c;
+        newCase.AnnualConsumption__c = order.AnnualConsumption__c;
+        newCase.CaliberAvailable__c = order.Caliber__c;
+        newCase.Charge__c = 'Si';
+        newCase.Subprocess__c = 'Ordinaria';
+
         pod = order.ServicePointCode__c;
         sapContractCode = order.SapContractCode__c;
 
@@ -44,15 +78,16 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
             System.debug(LoggingLevel.DEBUG, 'Impossibile arrichire dati: ' + e.getMessage());
         }
 
-        //creazione case
-         HDT_UTL_DatabaseService.insertSObject(newCase);
-
         //aggiunta Codice Causale
         HDT_CausalCodeCalculation__mdt causalCodeMdt = new HDT_CausalCodeCalculation__mdt();
         causalCodeMdt = qrClass.getCausalCode(newCase.Cluster__c, newCase.Type, order.Commodity__c);
         if(causalCodeMdt != null){
             newCase.CausalCode__c = causalCodeMdt.CausalCode__c;
         }
+
+        //creazione case
+        HDT_UTL_DatabaseService.insertSObject(newCase);
+
         newCase = qrClass.getCaseRecord(newCase.Id);
         //Controllo Compatibilità
         String compatibility = '';
@@ -72,7 +107,7 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
         //Aggiornamento case in fase "In attesa data decorrenza".
         newCase.EffectiveDate__c = HDT_UTL_Case.addBusinessDay(order.EffectiveDate__c, 3);
         newCase.SuspensionDate__c = System.today();
-        newCase.SuspensionDays__c = order.EffectiveDate__c.daysBetween(newCase.SuspensionDate__c);
+        newCase.SuspensionDays__c = newCase.SuspensionDate__c.daysBetween(order.EffectiveDate__c);
 
         newCase.Phase__c = 'In attesa Data Decorrenza';
 

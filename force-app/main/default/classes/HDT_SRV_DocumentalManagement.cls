@@ -558,20 +558,8 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					} else {
 						record.put('DocumentalPhase__c','Plico firmato');
 					}
+					record.put('Phase__c','Documentazione Gestita');
 					Order orderRecord = (Order) record;
-					//FIX data firma su order figli
-					List<Order> orderList = HDT_QR_GenericQuery.getGenericRecords('select Id,Account.RecordType.DeveloperName,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c from Order where ParentOrder__c = \''+(String)orderRecord.Id+'\'', 'Order');
-					if(orderList != null && !orderList.isEmpty()){
-						for(Order singleOrder : orderList){
-							singleOrder.SignedDate__c = Date.today();
-							if(singleOrder.DocumentalProcessType__c == 'Switch In'){
-								HDT_UTL_SwtichInProcess.calculateSwitchDate(singleOrder);
-							}else if(singleOrder.DocumentalProcessType__c == 'Cambio offerta'){
-								HDT_UTL_SwtichInProcess.calculateCambioOffertaDate(singleOrder);
-							}
-						}
-						HDT_UTL_DatabaseService.updateSObject(orderList);
-					}
 					HDT_UTL_DatabaseService.updateSObject(record);
 					if (!activitiesToCreate.isEmpty()){
 						HDT_UTL_DatabaseService.insertSObject(activitiesToCreate);

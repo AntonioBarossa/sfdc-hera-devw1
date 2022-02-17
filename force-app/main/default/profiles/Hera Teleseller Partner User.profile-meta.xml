@@ -4967,6 +4967,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Interaction__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.SecondaryContact__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10159,11 +10164,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>HDT_CampaignMemberStatus__mdt.StatusName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>HDT_CausalCodeCalculation__mdt.CausalCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12800,6 +12800,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.MarketingPrivacyAcquired__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.CreditCheckInProgress__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -30194,6 +30199,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.ShowcompletedActivity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Signature__c</field>
         <readable>true</readable>
@@ -31151,9 +31161,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>CampaignMemberLeadAssigment__c-Assegnazione Campaign Member su base Lea Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>CampaingMemberLeadAssigment__c-Assegnazione Campaign Member Item Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
@@ -32268,7 +32275,7 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>CampaingMemberLeadAssigment__c</object>
+        <object>CampaignMemberLeadAssigment__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

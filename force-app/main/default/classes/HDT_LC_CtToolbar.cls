@@ -73,14 +73,16 @@ public with sharing class HDT_LC_CtToolbar {
         activity.Type__c = 'Chiamata outbound';
         activity.wrts_prcgvr__Status__c = 'Aperta'; //Chiusa
         activity.RecordingLink__c = reiteklink;
-        activity.order__c = ord.id;
         activity.RecordTypeId = utlConstants.ACTIVITYCUSTOM_RECORDTYPEID_CHIAMATAOUTBOUND;
-
+        if(ord != null){
+            activity.order__c = ord.id;
+        }
+        
         activitySrv.createRecord(activity);
 
-        if(ord != null){
+        if(ord != null) {
             return ord.id;
-        }else{
+        } else {
             return null;
         }
     }
