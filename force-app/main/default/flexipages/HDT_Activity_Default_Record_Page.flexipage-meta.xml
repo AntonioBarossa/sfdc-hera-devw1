@@ -337,22 +337,6 @@
                         <valueListItems>
                             <value>Edit</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>HDT_RT_KoPrecedeteCliente</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>HDT_RT_DistributorCommunication</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>HDT_RT_CreditCheckKO</rightValue>
-                                </criteria>
                                 <criteria>
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>EQUAL</operator>
@@ -419,6 +403,42 @@
                                     <leftValue>{!Record.ShowcompletedActivity__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.wrts_prcgvr__Activity__c.HDT_KO_Definitivo</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_KoPrecedeteCliente</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_CreditCheckKO</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.wrts_prcgvr__Activity__c.HDT_KO_Forzato</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_CreditCheckKO</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.wrts_prcgvr__Activity__c.HDT_KO_Risolto</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_KoPrecedeteCliente</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -1171,16 +1191,13 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CreditCheckResolutionReason__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.RecordTypeId</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.Note__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_CreditCheckKO</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2ec7406d-2c28-4619-94f8-33ab969318d6</name>
@@ -1189,12 +1206,14 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.wrts_prcgvr__Status__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
                 <fieldItem>Record.Reason__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_KoPrecedeteCliente</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1204,6 +1223,12 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Account__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Note__c</fieldItem>
+                <identifier>RecordNote__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-1865a7d2-9cba-4b02-b8f6-1a02d2b4f89a</name>
@@ -2005,7 +2030,7 @@
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 OR (2 AND 3)</booleanFilter>
+                    <booleanFilter>1 OR (2 AND 3) OR 4</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
@@ -2020,6 +2045,11 @@
                         <leftValue>{!Record.DiscardCategory__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Manuale</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_KoPrecedeteCliente</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
