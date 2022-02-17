@@ -10164,11 +10164,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>HDT_CampaignMemberStatus__mdt.StatusName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>HDT_CausalCodeCalculation__mdt.CausalCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
