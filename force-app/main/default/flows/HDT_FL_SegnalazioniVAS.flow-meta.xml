@@ -194,26 +194,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Case_Phase_e_Status_In_Lavorazione</name>
-        <label>Set Case Phase e Status In Lavorazione</label>
-        <locationX>1062</locationX>
-        <locationY>4262</locationY>
-        <assignmentItems>
-            <assignToReference>Case.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Case.Status</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
         <name>Set_Contract</name>
         <label>Set Contract</label>
         <locationX>1568</locationX>
@@ -348,9 +328,6 @@
         <label>Phase/Status?</label>
         <locationX>864</locationX>
         <locationY>4142</locationY>
-        <defaultConnector>
-            <targetReference>Set_Case_Phase_e_Status_In_Lavorazione</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>In_Lavorazione</name>
@@ -372,7 +349,7 @@
             <connector>
                 <targetReference>Show_Fields</targetReference>
             </connector>
-            <label>In Lavorazione/Bozza</label>
+            <label>In Lavorazione</label>
         </rules>
     </decisions>
     <decisions>
