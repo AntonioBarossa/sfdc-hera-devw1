@@ -5,7 +5,10 @@
 * @history Fatjola Memishaj – 18/03/2021 – Created class
 */
 
+
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.EmptyStatementBlock, PMD.CyclomaticComplexity')
 public with sharing class HDT_UTL_CampaignMember {
+
     public static void createCampaignMemberStatus(List<Campaign> newCampaigns, List<Campaign> oldCampaigns){
         Map<String,Campaign> mapCampaign = new Map<String,Campaign>();
         List<HDT_CampaignMemberStatus__mdt> campaignStatusMdt = HDT_QR_CampaignMemberStatusMetadata.getRecords();
@@ -48,8 +51,9 @@ public with sharing class HDT_UTL_CampaignMember {
         }
         try {
             HDT_SRV_CampaignMemberStatus.createRecord(campaignMemberStatuses);
-        } catch(Exception e) {
-            system.debug('*******:'+ e);
+        }
+        catch(Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Andato in Eccezione');
         }
     }
 
@@ -115,7 +119,7 @@ public with sharing class HDT_UTL_CampaignMember {
     }
 
     public static void createCommercialCode(List<CampaignMember> newCampaignMember) {
-        System.debug('createCommercialCode ---- ok');
+
         List<String> campaignIdList = new List<String>();
         List<String> campaignMemberIdList = new List<String>();
         Set<String> uniqueCampaignId = new Set<String>();
@@ -148,7 +152,6 @@ public with sharing class HDT_UTL_CampaignMember {
     }
 
     public static void campaignSuspension(List<Campaign> newCampaigns, List<Campaign> oldCampaigns) {
-        System.debug('campaignSuspension method');
 
         List<Campaign> campaignsToUpdate = new List<Campaign>();
         Map<String,String> oldStatus = new Map<String,String>();
@@ -172,7 +175,7 @@ public with sharing class HDT_UTL_CampaignMember {
 
     @future(callout=true)
 	public static void futureCampaignOutboundSuspensionRequest(List<String> campaignIds){
-        System.debug('future method - ' + campaignIds);
+
         // for (String id : campaignIds) {
         //     HDT_WS_CampaignOutboundSuspension.HDT_WS_CampaignOutboundSuspensionRequest wsReq = new HDT_WS_CampaignOutboundSuspension.HDT_WS_CampaignOutboundSuspensionRequest();
         //     wsReq.idCampaign = id;            
@@ -182,7 +185,7 @@ public with sharing class HDT_UTL_CampaignMember {
 	}
 
     public static void activateCampaign(List<Campaign> newCampaigns, List<Campaign> oldCampaigns) {
-        System.debug('ok');
+
         Map<String,String> oldStatus = new Map<String,String>();
         for (Campaign oldCmp : oldCampaigns) {
             oldStatus.put(oldCmp.Id, oldCmp.Status);            
@@ -195,12 +198,29 @@ public with sharing class HDT_UTL_CampaignMember {
     }
 
     public static void parseStatusCode(Map<Id, CampaignMember> newMap, Map<Id, CampaignMember> oldMap) {
+
         if(newMap != null){
             for(CampaignMember member : newMap.values()) {
                 if(oldMap != null && (!oldMap.containsKey(member.Id) || oldMap.get(member.Id).StatusCode__c != member.StatusCode__c)) {
                     member.Status = HDT_CampaignMemberStatus__mdt.getInstance(member.StatusCode__c).MasterLabel;
                 }
             }
+        }
+    }
+    
+    @SuppressWarnings('PMD.ApexCRUDViolation')
+    public static void checkTipoEsito(List<CampaignMember> newCampMembList, Map<Id, CampaignMember> campMembOldMap){
+
+        List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
+
+        for(CampaignMember member : newCampMembList){
+            if(member.ResultType__c.equalsIgnoreCase('Macchina') && member.ResultType__c != campMembOldMap.get(member.Id).ResultType__c && member.RelatedActivity__c != null){
+                activitiesToUpdate.add(new wrts_prcgvr__Activity__c(Id = member.RelatedActivity__c, wrts_prcgvr__Status__c = 'Non Esitata'));
+            }
+        }
+
+        if(!activitiesToUpdate.isEmpty()){
+            update activitiesToUpdate;
         }
     }
 }
