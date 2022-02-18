@@ -1694,13 +1694,13 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- <picklistValues>
         <picklist>Cemetery__c</picklist>
         <values>
             <fullName>null</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues> -->
     <picklistValues>
         <picklist>ChannelOfPayment__c</picklist>
         <values>
