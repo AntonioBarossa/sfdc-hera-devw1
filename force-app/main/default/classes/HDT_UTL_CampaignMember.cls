@@ -197,17 +197,6 @@ public with sharing class HDT_UTL_CampaignMember {
         }
     }
 
-    public static void parseStatusCode(Map<Id, CampaignMember> newMap, Map<Id, CampaignMember> oldMap) {
-
-        if(newMap != null){
-            for(CampaignMember member : newMap.values()) {
-                if(oldMap != null && (!oldMap.containsKey(member.Id) || oldMap.get(member.Id).StatusCode__c != member.StatusCode__c)) {
-                    member.Status = HDT_CampaignMemberStatus__mdt.getInstance(member.StatusCode__c).MasterLabel;
-                }
-            }
-        }
-    }
-    
     @SuppressWarnings('PMD.ApexCRUDViolation')
     public static void checkTipoEsito(List<CampaignMember> newCampMembList, Map<Id, CampaignMember> campMembOldMap){
 

@@ -8,7 +8,6 @@ public inherited sharing class HDT_TRH_CampaignMember extends HDT_TRH_TriggerHan
 
     public override void beforeInsert(){  
         HDT_UTL_CampaignMember.createCampaignMember(trigger.new);
-        HDT_UTL_CampaignMember.parseStatusCode((Map<Id, CampaignMember>) trigger.newMap, (Map<Id, CampaignMember>) trigger.oldMap);
     }
     
     public override void afterInsert(){
@@ -16,7 +15,6 @@ public inherited sharing class HDT_TRH_CampaignMember extends HDT_TRH_TriggerHan
     }
     
     public override void beforeUpdate(){
-        HDT_UTL_CampaignMember.parseStatusCode((Map<Id, CampaignMember>) trigger.newMap, (Map<Id, CampaignMember>) trigger.oldMap);
         HDT_UTL_CampaignMember.checkTipoEsito((List<CampaignMember>) Trigger.new,  (Map<Id, CampaignMember>) Trigger.oldMap);
     }
 }
