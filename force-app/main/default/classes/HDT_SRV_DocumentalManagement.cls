@@ -577,6 +577,10 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
 				}
 			}
+		}else{
+			record.put('DocumentalPhase__c','Plico firmato');
+			record.put('Phase__c','Documentazione Gestita');
+			HDT_UTL_DatabaseService.updateSObject(record);
 		}
 	}
 	private static void handleLandRegistry(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio){
