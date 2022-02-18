@@ -222,16 +222,23 @@ public inherited sharing class HDT_UTL_NotifVasHelper {
         if (sObjMap.containsKey('Asset')) {
             Asset currentAsset = (Asset)sObjMap.get('Asset');
             Case currentCase = (Case)sObjMap.get('Case');
-            if (String.isNotBlank(statusMapping.AssetStatus__c)) {
-                currentAsset.DigitalAssetStatus = statusMapping.AssetStatus__c;
-                /**@frpanico 16/02/2022
-                 * Aggiunto UsageEndDate
-                 */
-                if(currentCase.TerminationDate__c != null)
-                {
-                    currentAsset.UsageEndDate = currentCase.TerminationDate__c;
+            /* Get Assets in bundle */
+            List<Asset> bundle = [SELECT DigitalAssetStatus,UsageEndDate FROM Asset WHERE SBQQ__RootAsset__c = :currentAsset.Id WITH SECURITY_ENFORCED];
+            bundle.add(currentAsset);
+            for(Asset singleAsset : bundle)
+            {
+                if (String.isNotBlank(statusMapping.AssetStatus__c)) {
+                    singleAsset.DigitalAssetStatus = statusMapping.AssetStatus__c;
+                    /**@frpanico 16/02/2022
+                     * Aggiunto UsageEndDate
+                     */
+                    if(currentCase.TerminationDate__c != null)
+                    {
+                        singleAsset.UsageEndDate = currentCase.TerminationDate__c;
+                    }
                 }
             }
+            HDT_UTL_DatabaseService.updateSObject(bundle);
         }
     }
 }
