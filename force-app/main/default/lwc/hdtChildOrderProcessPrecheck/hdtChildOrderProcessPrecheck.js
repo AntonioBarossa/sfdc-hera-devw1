@@ -381,10 +381,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         //if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
         if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c ) || (['HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType !== 'Switch in Ripristinatorio')){
             console.log('Inside Condition');
-            if(this.order.CreditCheckInProgress__c !== undefined)
+            /*if(this.order.CreditCheckInProgress__c !== undefined && this.order.CreditCheckInProgress__c !== null )
             {
                 this.order.CreditCheckInProgress__c = true;
-            }
+            }*/
             console.log('# Calling Credit Check #');
             this.callCreditCheckSAP();
         }

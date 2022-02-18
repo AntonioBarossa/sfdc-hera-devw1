@@ -64,9 +64,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
         }
 
-        System.debug(loggingLevel.DEBUG,'LastStepData: ' + lastStepData.keySet());
-        System.debug(loggingLevel.DEBUG,'Attivazione Posticipata: ' + orderToUpdate.get('IsActivationDeferred__c'));
-
         switch on order.RecordType.DeveloperName {
             when 'HDT_RT_Subentro' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
