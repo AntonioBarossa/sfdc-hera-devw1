@@ -235,6 +235,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                String.valueOf(recordCase.get('Type')).equalsIgnoreCase('Rettifica Consumi') && 
                String.valueOf(recordCase.get('Subprocess__c')).equalsIgnoreCase('Errore Stima Consumi')){
                 nextPhase = 'Pratica In Attesa';
+                currentCase.Description = errDescr;
             }
             else{
                 HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase,mapActivityField);
