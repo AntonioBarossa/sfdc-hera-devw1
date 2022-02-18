@@ -6,7 +6,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
     private Map<String, String> mapWrapperCaseFields;
     private Set<String> accountIdSet = new Set<String>();
     private Set<String> contractCodeSet = new Set<String>();
-    private Map<String, List<String>> itemRequestMap = new Map<String, List<String>>();
+    private List<HDT_WRP_ProcessObjects> processObjList;
     private Map<String, Contract> contractMap = new Map<String, Contract>();
     private Map<String, Id> orderIdsMap = new Map<String, Id>();
     private Map<String, Id> recordTypeMap = new Map<String, Id>();
@@ -14,7 +14,6 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
     private List<Contract> contractList;
     private List<String> orderNumberList = new List<String>();
     private List<Order> orderList = new List<Order>();
-    private Case newCase;
     private Id recordTypeId;
     private Integer podIndex;
     private Integer contractIndex;
@@ -43,15 +42,20 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
             }
         }
         
-
-        List<String> dataSplitted;
+        HDT_WRP_ProcessObjects processObj;
+        processObjList = new List<HDT_WRP_ProcessObjects>();
         for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
-            dataSplitted = item.Data__c.split(splitCharacter, -1);
-            accountIdSet.add(dataSplitted[accountIdIndex]);
-            contractCodeSet.add(dataSplitted[contractIndex]);
-            itemRequestMap.put(item.Id, dataSplitted);
+            processObj = new HDT_WRP_ProcessObjects();
+            processObj.requestItem = item;
+            processObj.csvSplitted = item.Data__c.split(splitCharacter, -1);
+
+            accountIdSet.add(processObj.csvSplitted[accountIdIndex]);
+            contractCodeSet.add(processObj.csvSplitted[contractIndex]);
+
+            processObjList.add(processObj);
+
             if(orderVolturaIndex != null)
-                orderNumberList.add(dataSplitted[orderVolturaIndex]);
+                orderNumberList.add(processObj.csvSplitted[orderVolturaIndex]);
         }
 
     }
@@ -83,8 +87,9 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
         HDT_UTL_ProcessCommonOperations.getLimitDetails('START registryCreation');
 
         List<Case> caseToInsert = new List<Case>();
-        List<String> itemIds = new List<String>();
+        List<MassiveLoaderRequestItem__c> requestItemForUpsert;
         itemsToSave = new List<MassiveLoaderRequestItem__c>();
+        requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
 
         HDT_QR_CausalCodeCalculation causalCodeCalculation = new HDT_QR_CausalCodeCalculation();
         HDT_CausalCodeCalculation__mdt causalCode;
@@ -92,18 +97,16 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
         //System.debug(LoggingLevel.DEBUG, '>>> currentRequestItemList: ' + String.valueOf(currentProcess.currentCase));
         //System.debug(LoggingLevel.DEBUG, '>>> get mapCaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
 
-        Case newCase;
         Id currentRecordTypeId;
-        for(String itemId : itemRequestMap.keySet()){
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
 
-            List<String> tempSplitted = itemRequestMap.get(itemId);
-            newCase = new Case();
-            // Per ogni item della mappa itemRequestMap viene convertito il data__c in una lista (tempSplitted) e tramite il metodo mapTypeField la lista viene
+            processObj.newCase = new Case();
+            // Per ogni item della mappa itemRequestMap viene convertito il data__c in una lista (processObj.csvSplitted) e tramite il metodo mapTypeField la lista viene
             // convertita nel custom obj indicato, in questo caso è currentProcess.currentCase
 
             Integer count = 0;
             String convertionError;
-            for (String tempField : tempSplitted) {
+            for (String tempField : processObj.csvSplitted) {
 
                 if ('null'.equalsIgnoreCase(tempField)) {
                    tempField = '';
@@ -122,7 +125,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
 
                 if(String.isNotBlank(mapCaseFields.get(mapHeaderByPosition.get(count))) && String.isNotBlank(tempField)){
                     System.debug(LoggingLevel.DEBUG, '>>> tempField: ' + tempField + ' # Header: ' + mapHeaderByPosition.get(count) + ' # CaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
-                    convertionError = mapTypeField(newCase, mapCaseFields, count, tempField);
+                    convertionError = mapTypeField(processObj.newCase, mapCaseFields, count, tempField);
 
                     if(!String.isEmpty(convertionError)){
                         // error happened -> exit
@@ -133,28 +136,34 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
             }
 
             if(!String.isEmpty(convertionError)){
-                itemsToSave.add(setErrorItem(itemId, convertionError));
+                //itemsToSave.add(setErrorItem(itemId, convertionError));
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = convertionError;
+                itemsToSave.add(processObj.requestItem);
                 continue;
             }
 
-            System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + newCase);
+            System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + processObj.newCase);
             Contract contract;
             
-            if(contractMap.containsKey(tempSplitted[contractIndex])){
-                contract = contractMap.get(tempSplitted[contractIndex]);
-                newCase.Contract__c = contract.Id;
-                newCase.ServicePoint__c = contract.ServicePoint__c;
-                newCase.BillingProfile__c = contract.BillingProfile__c;
+            if(contractMap.containsKey(processObj.csvSplitted[contractIndex])){
+                contract = contractMap.get(processObj.csvSplitted[contractIndex]);
+                processObj.newCase.Contract__c = contract.Id;
+                processObj.newCase.ServicePoint__c = contract.ServicePoint__c;
+                processObj.newCase.BillingProfile__c = contract.BillingProfile__c;
             } else {
-                itemsToSave.add(setErrorItem(itemId, 'pod non presente'));
+                //itemsToSave.add(setErrorItem(itemId, 'pod non presente'));
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = 'pod non presente';
+                itemsToSave.add(processObj.requestItem);
                 continue;
             }
                         
             if(!String.isEmpty(contract.ServicePoint__r.CommoditySector__c)){
-                causalCode = causalCodeCalculation.calculateCausalCode(this.processName, newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
+                causalCode = causalCodeCalculation.calculateCausalCode(this.processName, processObj.newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
 
                 if(causalCode != null){
-                    newCase.CausalCode__c = causalCode.CausalCode__c;//'D01' for example
+                    processObj.newCase.CausalCode__c = causalCode.CausalCode__c;//'D01' for example
                 } else {
                     //do something -> record error
                 }
@@ -162,29 +171,32 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
                 currentRecordTypeId = recordTypeMap.get(contract.ServicePoint__r.CommoditySector__c);
             }
 
-            newCase.AccountId = tempSplitted[accountIdIndex];
-            newCase.Cluster__c = 'Variazioni';
-            newCase = HDT_UTL_ProcessCommonOperations.setCaseField(newCase, currentRecordTypeId);
+            processObj.newCase.AccountId = processObj.csvSplitted[accountIdIndex];
+            processObj.newCase.Cluster__c = 'Variazioni';
+            processObj.newCase = HDT_UTL_ProcessCommonOperations.setCaseField(processObj.newCase, currentRecordTypeId);
 
-            if(newCase.Type.equalsIgnoreCase('Cambio contatore non registrato') && orderVolturaIndex != null){
-                String currentOrderNum = tempSplitted[orderVolturaIndex];
+            if(processObj.newCase.Type.equalsIgnoreCase('Cambio contatore non registrato') && orderVolturaIndex != null){
+                String currentOrderNum = processObj.csvSplitted[orderVolturaIndex];
                 if(orderIdsMap.containsKey(currentOrderNum)){
-                    newCase.VulturePracticeReference__c = orderIdsMap.get(currentOrderNum);
+                    processObj.newCase.VulturePracticeReference__c = orderIdsMap.get(currentOrderNum);
                 } else {
                     System.debug(LoggingLevel.DEBUG, '>>> NO ORDER FOUND');
                 }
             }
 
             try{
-                String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(tempSplitted[podIndex], null);
+                String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(processObj.csvSplitted[podIndex], null);
                 System.debug(LoggingLevel.DEBUG, '>>> arricchimentoResponse: ' + arricchimentoResponse);
-                newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, newCase);
-                //newCase.Taxes__c = null;
-                caseToInsert.add(newCase); 
-                itemIds.add(itemId);
+                processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, processObj.newCase);
+                //processObj.newCase.Taxes__c = null;
+                caseToInsert.add(processObj.newCase); 
+                requestItemForUpsert.add(processObj.requestItem);
             } catch(Exception e){
                 System.debug(LoggingLevel.DEBUG, '>>> arricchimentoError ' + e.getMessage());
-                itemsToSave.add(setErrorItem(itemId, 'Errore arricchimento dati # '));
+                //itemsToSave.add(setErrorItem(itemId, 'Errore arricchimento dati # '));
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = 'Errore arricchimento dati # ';
+                itemsToSave.add(processObj.requestItem);
             }
 
         }
@@ -192,7 +204,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
         if(caseToInsert.size() > 0){
 
             HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse;
-            saveResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(caseToInsert, itemIds, 'Case');
+            saveResponse = HDT_UTL_ProcessCommonOperations.databaseInsert_improved(caseToInsert, requestItemForUpsert, 'Case');
             runAlignment(caseToInsert);
             caseToInsert.clear();
 
@@ -281,18 +293,30 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
 
     }
 
-    public static void setDataForTest(){
+    private class HDT_WRP_ProcessObjects {
+        private Case newCase;
+        private Contract contract;
+        private MassiveLoaderRequestItem__c requestItem;
+        private List<String> csvSplitted;
+    }
+
+    public static void setDataForTest(Integer numRecords){
 
         Id massiveLoaderRequestId = 'a3d3O000000WwZOQA0';
-
         Set<Id> docId = new Set<Id>();
-        delete [SELECT Id FROM MassiveLoaderRequestItem__c WHERE MassiveLoaderRequest__c = :massiveLoaderRequestId];
+
+        delete [
+            SELECT Id, Data__c, NextStepData__c, Status__c, StatusDescription__c, MassiveLoaderRequest__c
+            FROM MassiveLoaderRequestItem__c
+            WHERE MassiveLoaderRequest__c = :massiveLoaderRequestId
+        ];
+
         delete [
             SELECT Id, Type, AccountId, NotPerformedBefore__c, WrittenReceiptRequestDate__c, CustomerRecessDate__c, VulturePracticeReference__c,
                    DistributorNote__c, ServicePoint__c, BillingProfile__c, Contract__c, RecordTypeId, ContactId, CausalCode__c, 
                    Phase__c, Status, CancellationReason__c
             FROM Case
-            WHERE Createddate = today AND CreatedById = '0051X0000055rbNQAQ'
+            WHERE CreatedById = '0051X0000055rbNQAQ'
         ];
     
         List<ContentDocumentLink> cdlList = [
@@ -313,7 +337,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
         List<MassiveLoaderRequestItem__c> itemsList = new List<MassiveLoaderRequestItem__c>();
         MassiveLoaderRequestItem__c item;
     
-        for(Integer n=0; n<20; n++){
+        for(Integer n=0; n<numRecords; n++){
             item = new MassiveLoaderRequestItem__c();
             item.MassiveLoaderRequest__c = massiveLoaderRequestId;
             item.Status__c = 'In attesa di lavorazione';

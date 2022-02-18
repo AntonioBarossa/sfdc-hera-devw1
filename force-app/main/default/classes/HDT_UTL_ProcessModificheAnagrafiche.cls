@@ -6,7 +6,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
     private Map<String, String> mapWrapperCaseFields;
     private Set<String> accountIdSet = new Set<String>();
     private Set<String> contractCodeSet = new Set<String>();
-    private Map<String, List<String>> itemRequestMap = new Map<String, List<String>>();
+    private List<HDT_WRP_ProcessObjects> processObjList;
     private List<MassiveLoaderRequestItem__c> itemsToSave;
     private Case newCase;
     private Map<String, AccountContactRelation> accountContactMap;
@@ -31,12 +31,17 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
         accountIdIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
         contractIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CONTO_CONTRATTUALE'));
 
-        List<String> dataSplitted;
+        HDT_WRP_ProcessObjects processObj;
+        processObjList = new List<HDT_WRP_ProcessObjects>();
         for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
-            dataSplitted = item.Data__c.split(splitCharacter, -1);
-            accountIdSet.add(dataSplitted[accountIdIndex]);
-            contractCodeSet.add(dataSplitted[contractIndex]);
-            itemRequestMap.put(item.Id, dataSplitted);
+            processObj = new HDT_WRP_ProcessObjects();
+            processObj.requestItem = item;
+            processObj.csvSplitted = item.Data__c.split(splitCharacter, -1);
+
+            accountIdSet.add(processObj.csvSplitted[accountIdIndex]);
+            contractCodeSet.add(processObj.csvSplitted[contractIndex]);
+            
+            processObjList.add(processObj);
         }
 
     }
@@ -69,13 +74,13 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
         HDT_UTL_ProcessCommonOperations.getLimitDetails('START registryCreation');
 
         List<Case> caseToInsert = new List<Case>();
-        List<String> itemIds = new List<String>();
+        List<MassiveLoaderRequestItem__c> requestItemForUpsert;
         itemsToSave = new List<MassiveLoaderRequestItem__c>();
+        requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
 
         List<String> emptyCsvField;
-        for(String itemId : itemRequestMap.keySet()){
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
 
-            List<String> tempSplitted = itemRequestMap.get(itemId);
             newCase = new Case();
 
             Integer count = 0;
@@ -85,9 +90,9 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
             String objField;
             emptyCsvField = new List<String>();
 
-            System.debug(LoggingLevel.DEBUG, '>>> tempSplitted ' + tempSplitted.size());
+            System.debug(LoggingLevel.DEBUG, '>>> processObj.csvSplitted ' + processObj.csvSplitted.size());
 
-            for (String tempField : tempSplitted) {
+            for (String tempField : processObj.csvSplitted) {
 
                 if ('null'.equalsIgnoreCase(tempField)) {
                    tempField = '';
@@ -128,16 +133,22 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
             }
 
             if(!String.isEmpty(convertionError)){
-                itemsToSave.add(setErrorItem(itemId, convertionError));
+                //itemsToSave.add(setErrorItem(itemId, convertionError));
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = convertionError;
+                itemsToSave.add(processObj.requestItem);
                 continue;
             }
 
             if(emptyCsvField.size() > 0){
                 System.debug(LoggingLevel.DEBUG, '>>> we need to set empty fields');
-                convertionError = setEmptyCsvFields(emptyCsvField, newCase, tempSplitted[accountIdIndex], tempSplitted[contractIndex]);
+                convertionError = setEmptyCsvFields(emptyCsvField, newCase, processObj.csvSplitted[accountIdIndex], processObj.csvSplitted[contractIndex]);
 
                 if(!String.isEmpty(convertionError)){
-                    itemsToSave.add(setErrorItem(itemId, convertionError));
+                    //itemsToSave.add(setErrorItem(itemId, convertionError));
+                    processObj.requestItem.Status__c = 'Errore';
+                    processObj.requestItem.StatusDescription__c = convertionError;
+                    itemsToSave.add(processObj.requestItem);
                     continue;
                 }
 
@@ -145,18 +156,18 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
 
             System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + newCase);
 
-            newCase.AccountId = tempSplitted[accountIdIndex];
+            newCase.AccountId = processObj.csvSplitted[accountIdIndex];
             newCase.Cluster__c = 'Modifiche Anagrafiche';
             newCase = HDT_UTL_ProcessCommonOperations.setCaseField(newCase, recordTypeId);
 
             caseToInsert.add(newCase); 
-            itemIds.add(itemId);
+            requestItemForUpsert.add(processObj.requestItem);
         }
 
         if(caseToInsert.size() > 0){
 
             HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse;
-            saveResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(caseToInsert, itemIds, 'Case');
+            saveResponse = HDT_UTL_ProcessCommonOperations.databaseInsert_improved(caseToInsert, requestItemForUpsert, 'Case');
             caseToInsert.clear();
 
             HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE CREATION & Enrichment');
@@ -271,18 +282,29 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
 
     }
 
-    public static void setDataForTest(){
+    private class HDT_WRP_ProcessObjects {
+        private Case newCase;
+        private MassiveLoaderRequestItem__c requestItem;
+        private List<String> csvSplitted;
+    }
+
+    public static void setDataForTest(Integer numRecords){
 
         Id massiveLoaderRequestId = 'a3d3O000000WuVqQAK';
         Set<Id> docId = new Set<Id>();
 
-        delete [SELECT Id FROM MassiveLoaderRequestItem__c WHERE MassiveLoaderRequest__c = :massiveLoaderRequestId];
+        delete [
+            SELECT Id, Data__c, NextStepData__c, Status__c, StatusDescription__c, MassiveLoaderRequest__c
+            FROM MassiveLoaderRequestItem__c
+            WHERE MassiveLoaderRequest__c = :massiveLoaderRequestId
+        ];
+
         delete [
             SELECT Id, Type, AccountId, NotPerformedBefore__c, WrittenReceiptRequestDate__c, CustomerRecessDate__c, VulturePracticeReference__c,
                    DistributorNote__c, ServicePoint__c, BillingProfile__c, Contract__c, RecordTypeId, ContactId, CausalCode__c, 
                    Phase__c, Status, CancellationReason__c
             FROM Case
-            WHERE Createddate = today AND CreatedById = '0051X0000055rbNQAQ'
+            WHERE CreatedById = '0051X0000055rbNQAQ'
         ];
     
         List<ContentDocumentLink> cdlList = [
@@ -303,7 +325,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
         List<MassiveLoaderRequestItem__c> itemsList = new List<MassiveLoaderRequestItem__c>();
         MassiveLoaderRequestItem__c item;
     
-        for(Integer n=0; n<2; n++){
+        for(Integer n=0; n<numRecords; n++){
             item = new MassiveLoaderRequestItem__c();
             item.MassiveLoaderRequest__c = massiveLoaderRequestId;
             item.Status__c = 'In attesa di lavorazione';
