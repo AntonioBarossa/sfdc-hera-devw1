@@ -20,7 +20,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
         String rtNamePostSales = 'HDT_RT_Domiciliazione';
         String rtIdPostSales = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtNamePostSales).getRecordTypeId();
         String rtNameVolturaTecnica = 'HDT_RT_VolturaTecnica';
-        String rtIdVolturaTecnica = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtNameVolturaTecnica).getRecordTypeId();
+        String rtIdVolturaTecnica = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();
 
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Attesa conferma preventivo cliente', 'Bozza', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Preventivo scaduto', 'Attesa conferma preventivo cliente', rtId, rtName,'A','','','');
@@ -35,6 +35,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Bozza Annullata', 'Bozza', rtIdAutolettura, rtNameAutolettura,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'In attesa Data Decorrenza','Bozza', rtIdVolturaTecnica, rtNameVolturaTecnica, 'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'In attesa Data Decorrenza', rtIdVolturaTecnica, rtNameVolturaTecnica, 'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'In attesa Data Decorrenza', 'Da Inviare', rtIdVolturaTecnica, rtNameVolturaTecnica, 'A','','','');
 
 
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
@@ -82,6 +83,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
         caseList[5].RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();
         caseList[5].Type = 'Voltura Tecnica';
         caseList[5].Phase__c = 'In attesa Data Decorrenza';
+        caseList[5].SuspensionDate__c = Date.today()-10;
         update caseList;        
 
         Knowledge__kav kArt = new Knowledge__kav();
@@ -114,16 +116,16 @@ public class HDT_BA_PostSalesMasterBatchTst {
         Case myCase4 = [SELECT Id, Phase__c, Cluster__c FROM Case WHERE Phase__c = 'Bozza' and Cluster__c = 'Autolettura' LIMIT 1];
         Case myCase5 = [SELECT Id, Phase__c, Cluster__c FROM Case WHERE Phase__c = 'Bozza' and Cluster__c = 'Pagamenti' LIMIT 1];
         Case myCase6 = [SELECT Id, Phase__c, Type  FROM Case WHERE Type = 'Voltura Tecnica' LIMIT 1];
-
+        
         Knowledge__kav kArt = [SELECT Id, KnowledgeArticleId FROM Knowledge__kav LIMIT 1];
         
         String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
         Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
         User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
-        EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-        LocaleSidKey='en_US', ProfileId = p.Id,
-        TimeZoneSidKey='America/Los_Angeles',
-        UserName=uniqueUserName);
+                            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+                            LocaleSidKey='en_US', ProfileId = p.Id,
+                            TimeZoneSidKey='America/Los_Angeles',
+                            UserName=uniqueUserName);
         u.UserPermissionsKnowledgeUser = true;
 		insert u;
 
@@ -149,7 +151,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
         System.assertEquals('Preventivo scaduto', updatedCase1.Phase__c, 'Phase != Preventivo scaduto');
 
         Case updatedCase2 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase2.Id LIMIT 1];
-        System.assertEquals('Completata', updatedCase2.Phase__c, 'Phase != Pratica In Attesa');
+        System.assertEquals('Da Inviare', updatedCase2.Phase__c, 'Phase != Da Inviare');
 
         Case updatedCase3 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase3.Id LIMIT 1];
         System.assertEquals('Da Inviare', updatedCase3.Phase__c, 'Phase != Da Inviare');
@@ -161,6 +163,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
         System.assertEquals('Bozza Annullata', updatedCase5.Phase__c, 'Phase != Bozza Annullata');
 
         Case updatedCase6 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase6.Id LIMIT 1];
+        
         System.assertEquals('Da Inviare', updatedCase6.Phase__c, 'Phase != Da Inviare');
 
         Knowledge__kav myArticle = [Select Id, PublishStatus from Knowledge__kav where Id =: kArt.Id];
