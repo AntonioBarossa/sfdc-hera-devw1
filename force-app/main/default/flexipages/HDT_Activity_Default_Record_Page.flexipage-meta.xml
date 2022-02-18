@@ -1228,7 +1228,6 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.Note__c</fieldItem>
-                <identifier>RecordNote__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-1865a7d2-9cba-4b02-b8f6-1a02d2b4f89a</name>
