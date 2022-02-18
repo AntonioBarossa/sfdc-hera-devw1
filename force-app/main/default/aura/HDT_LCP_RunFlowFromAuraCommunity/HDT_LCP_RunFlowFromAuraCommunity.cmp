@@ -27,6 +27,9 @@
     <!--Attributo per innesco da Campagne-->
     <aura:attribute name="campaignId" type="String"/>
 
+    <!--Attributo per innesco da CampagneMember-->
+    <aura:attribute name="campaignMemberId" type="String"/>
+
     <!-- id del Lead oggetto del processo. -->
     <aura:attribute name="leadId" type="String"/>
 
@@ -45,7 +48,7 @@
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <lightning:workspaceAPI aura:id="workspace" />
     <aura:handler event="lightning:tabClosed" action="{! c.onTabClosed }"/>
-
+    <lightning:navigation aura:id="navService"/>
     <div class="slds-box slds-theme_default">
     	<lightning:flow aura:id="flowData" onstatuschange="{!c.handleStatusChange}" />
     </div>

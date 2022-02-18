@@ -226,4 +226,34 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 		test.stopTest();
 	
 	}
+    @isTest
+    public static void testRejectActivityDocument(){
+
+		User tUser=[SELECT Id
+		            FROM User
+		            WHERE Alias='crmuser'
+		            LIMIT 1];
+
+		System.runAs(tUser){
+
+			test.startTest();
+
+			List<wrts_prcgvr__Activity__c> tActivCust=[SELECT Id, Place__c
+			                                           FROM wrts_prcgvr__Activity__c
+			                                           WHERE Place__c='testPlace1'];
+
+			string rejectActivityDocument=HDT_UTL_ActivityCustom.rejectActivityDocument(tActivCust[0].Id, 'Si');
+			HDT_UTL_ActivityCustom.rejectActivityDocument(tActivCust[0].Id, 'No');
+
+			test.stopTest();
+
+			System.assertEquals(true, rejectActivityDocument!=null, 'Return is wrong');
+			System.assertNotEquals(false, rejectActivityDocument!=null, 'Return is wrong');
+		}
+	}
+
+    
+    
+    
+    
 }

@@ -404,8 +404,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 				}
 			}
 			handleRadioGroup(record,listOfRadio,envelopeId);
-			// TODO: rimuovere commento
-			//handleLandRegistry(record,listOfData,listOfRadio);
+			handleLandRegistry(record,listOfData,listOfRadio);
 			HDT_UTL_DatabaseService.upsertSObject(record);
 		}
 	}
@@ -452,6 +451,8 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 				}
 			}else{
 				Order orderRecord = (Order) record;
+				//FIX data firma su order figli
+				//List<Order> orderList = HDT_QR_GenericQuery.getGenericRecords('select Id,Account.RecordType.DeveloperName,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c from Order where ParentOrder__c = \''+(String)orderRecord.Id+'\'', 'Order');
 				Contact orderContact = (Contact) orderRecord.Contact__r;
 				if (orderContact != null){
 					individualId = orderContact.IndividualId;
@@ -557,6 +558,8 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					} else {
 						record.put('DocumentalPhase__c','Plico firmato');
 					}
+					record.put('Phase__c','Documentazione Gestita');
+					Order orderRecord = (Order) record;
 					HDT_UTL_DatabaseService.updateSObject(record);
 					if (!activitiesToCreate.isEmpty()){
 						HDT_UTL_DatabaseService.insertSObject(activitiesToCreate);
@@ -574,6 +577,10 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
 				}
 			}
+		}else{
+			record.put('DocumentalPhase__c','Plico firmato');
+			record.put('Phase__c','Documentazione Gestita');
+			HDT_UTL_DatabaseService.updateSObject(record);
 		}
 	}
 	private static void handleLandRegistry(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio){
@@ -675,6 +682,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 			sPackageRequest.objectId = recordId;
 			sPackageRequest.signMode = signMode;
 			sPackageRequest.mode = mode;
+			sPackageRequest.documentId = '1';
 			for(Map<String,Object> singleMap : driverPayloadListMap){
 				sPackage = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage((List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver>)singleMap.get('driver'),(String)singleMap.get('payload'));
 				sPackageRequest.sPackage.add(sPackage);
@@ -715,6 +723,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 			signInfo.idCheckConfigurationName = docusignCustomSettings.IdCheckConfigurationName__c;
 			signInfo.pageUrl = docusignCustomSettings.PageUrl__c;
 			signInfo.requireIdLookup = docusignCustomSettings.RequireIdLookup__c;
+			signInfo.transcodeTemplate = 'true';
 			signInfo.status = docusignCustomSettings.Status__c;
 			signInfo.senderProvidedNumbers.add(telephoneNumber);
 			//customerInfo
@@ -739,6 +748,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 			customerInfo.vatNumber = vatCode;
 			customerInfo.creationUrl = creationUrl;
 			customerInfo.emailSubject = 'HERA - ' + processType;
+			customerInfo.roleName = 'Cliente';
 			//@ealpi nuovi campi inviati
 			customerInfo.rds = rds;
 			customerInfo.dateCreationDocument = today.format('yyyy-MM-dd HH:mm:ss');

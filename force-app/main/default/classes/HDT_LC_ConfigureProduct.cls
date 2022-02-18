@@ -8,6 +8,7 @@ public inherited sharing class HDT_LC_ConfigureProduct {
     
     private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
     private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
+    private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
     private static HDT_QR_SaleServiceItem saleServiceItemQr = new HDT_QR_SaleServiceItem();
     private static HDT_SRV_SaleServiceItem saleServiceItemSrv = new HDT_SRV_SaleServiceItem();
     private static HDT_QR_QuoteLine quoteLineQr = new HDT_QR_QuoteLine();
@@ -49,9 +50,17 @@ public inherited sharing class HDT_LC_ConfigureProduct {
      * @param String opportunityId
      * @param String cancellationReason
      */
+    /**@frpanico 03/02/2022
+     * Aggiunto update IsTransition = false
+     * sull'oggetto Sale__c
+     * Ottimizzata le dml
+     */
     @AuraEnabled
     public static void cancelQuote(String quoteId, String opportunityId, String cancellationReason){
         
+        List<SObject> sobjsToUpdate = new List<SObject>();
+        Sale__c sale = new Sale__c();
+
         SBQQ__Quote__c quoteToUpdate = new SBQQ__Quote__c(
             Id = quoteId,
             CancellationReason__c = cancellationReason
@@ -66,13 +75,25 @@ public inherited sharing class HDT_LC_ConfigureProduct {
             }
         }
 
+        Opportunity opp = opportunityQr.getRecordById(opportunityId);
+
         Opportunity oppToUpdate = new Opportunity(
             Id = opportunityId,
             StageName = 'Closed Lost'
         );
 
+        sale.Id = opp.Sale__c;
+        sale.IsTransition__c = false;
+        
+        sobjsToUpdate.add(quoteToUpdate);
+        sobjsToUpdate.add(oppToUpdate);
+        sobjsToUpdate.add(sale);
+
+        HDT_UTL_DatabaseService.updateSObject(sobjsToUpdate);
+        /*
         quoteSrv.updateRecord(quoteToUpdate);
         opportunitySrv.updateRecord(oppToUpdate);
+        */
     }
 
     /**
@@ -134,12 +155,15 @@ public inherited sharing class HDT_LC_ConfigureProduct {
         saleServiceItemSrv.checkReadAccess('Opportunity__c,Opportunity__r.Sale__c,Opportunity__r.Name,Opportunity__r.CreatedDate,Quote__c,Quote__r.Name,ServicePoint__c,ServicePoint__r.ServicePointCode__c,ServicePoint__r.RecordType.Name,ServicePoint__r.RecordType.DeveloperName,ServicePoint__r.SupplyCity__c');
         List<SaleServiceItem__c> saleServiceItems = saleServiceItemQr.getActiveRecordsBySaleId(sale.Id);
 
-        system.debug('keltin saleServiceItems: ' + saleServiceItems);
-        system.debug('keltin saleServiceItems size: ' + saleServiceItems.size());
-        system.debug('keltin quoteLinePods: ' + quoteLinePods);
-        system.debug('keltin quoteLinePods size: ' + quoteLinePods.size());
-
-        if (quoteLinePods.size() != saleServiceItems.size()) {
+        system.debug(loggingLevel.DEBUG,'keltin saleServiceItems: ' + saleServiceItems);
+        system.debug(loggingLevel.DEBUG,'keltin saleServiceItems size: ' + saleServiceItems.size());
+        system.debug(loggingLevel.DEBUG,'keltin quoteLinePods: ' + quoteLinePods);
+        system.debug(loggingLevel.DEBUG,'keltin quoteLinePods size: ' + quoteLinePods.size());
+        /**@frpanico 18/02/2022
+         * Se la quote è legata ad un Vas o quote di Amend
+         * Non c'è nessuna quoteLine Pod/Pdr
+         */
+        if (!quoteLinePods.isEmpty() && quoteLinePods.size() != saleServiceItems.size()) {
             throw new AuraHandledException('Configurare i prodotti per tutti i Service Point!');
         }
 
@@ -250,7 +274,6 @@ public inherited sharing class HDT_LC_ConfigureProduct {
 
     @AuraEnabled
     public static wrapReturnValidity checkApprovedProduct(Sale__c sale){
-        system.debug('sale******************************* '+sale);
         list<String> listId = new List<String>();
         list<String> idToCreateActivity = new List<String>();
         map<String,boolean> checkIsPresent = new Map<string,boolean>();
@@ -259,14 +282,16 @@ public inherited sharing class HDT_LC_ConfigureProduct {
         resp.responseError = '';
         // Boolean hasPermission = FeatureManagement.checkPermission('HDT_CP_SuperUserCPQ');
         Map<String,wrts_prcgvr__Activity__c> orderLineActivity = new Map<String,wrts_prcgvr__Activity__c>();
-            List<SBQQ__QuoteLine__c> quoteLinesActive = quoteLineQr.getActiveRecords(sale.Id);
-            for(SBQQ__QuoteLine__c line : quoteLinesActive){
-                if(line.SBQQ__Product__c != null && line.SBQQ__Product__r.Status__c == 'Scaduta' ){//line.SBQQ__Product__r.EndDate__c < date.today()){
-                    listId.add(line.id);
-                    checkIsPresent.put(line.id,true);
+        List<SBQQ__QuoteLine__c> quoteLinesActive = quoteLineQr.getActiveRecords(sale.Id);
+            if( !isSwitchInRipristinatorio(sale, quoteLinesActive ) ){
+                for(SBQQ__QuoteLine__c line : quoteLinesActive){
+                    if(line.SBQQ__Product__c != null && line.SBQQ__Product__r.Status__c == 'Scaduta' ){//line.SBQQ__Product__r.EndDate__c < date.today()){
+                        listId.add(line.id);                //segna i SBQQ__QuoteLine__c "Scaduti"
+                        checkIsPresent.put(line.id,true);
+                    }
                 }
             }
-            if(!listId.isEmpty()){
+            if(!listId.isEmpty()){ //per i SBQQ__QuoteLine__c Scaduti
                 List<wrts_prcgvr__Activity__c> listActivity = HDT_QR_ActivityCustom.getRecordByOrderLine(listId);
                 System.debug('*****DEBUGActivity:' + listActivity);
                 Set<String> quoteToUpdateId = new Set<String>();
@@ -277,7 +302,7 @@ public inherited sharing class HDT_LC_ConfigureProduct {
                 System.debug('*****DEBUGActivity2:' + orderLineActivity);
                 for(SBQQ__QuoteLine__c line : quoteLinesActive){
                     if(checkIsPresent.get(line.id)!= null){
-                        if(orderLineActivity.get(line.id) != null){
+                        if(orderLineActivity.get(line.id) != null){ //"if" not needed???
                             System.debug('*****DEBUGActivityDENTROIF:' + line);
                             if(orderLineActivity.get(line.id) != null &&  orderLineActivity.get(line.id).approved__c != 'Si'){
                                 resp.responseError += (resp.responseError == '' ? line.sbqq__product__r.Name : ',' + line.sbqq__product__r.Name);
@@ -316,6 +341,40 @@ public inherited sharing class HDT_LC_ConfigureProduct {
         
         return resp;
     }
+    @testVisible
+    public static Boolean isSwitchInRipristinatorio(Sale__c sale, List<SBQQ__QuoteLine__c> quoteLinesActive ){
+        //List<SBQQ__Quote__c> quotes = [SELECT AmendmentAllowed__c, AllowChangeUse__c FROM SBQQ__Quote__c WHERE Sale__c =:sale.Id WITH SECURITY_ENFORCED];
+        List<SaleServiceItem__c> salSerItems = [SELECT ServicePoint__c, ServicePoint__r.ServicePointCode__c, 
+                                                       Quote__r.SBQQ__Account__c, Quote__r.AmendmentAllowed__c, Quote__r.AllowChangeUse__c, Quote__r.ContractReference__c
+                                                FROM SaleServiceItem__c 
+                                                WHERE Quote__r.sale__c =:sale.Id 
+                                                WITH SECURITY_ENFORCED];
+        Boolean result = false;
+        List<wrts_prcgvr__Activity__c> activityList = new List<wrts_prcgvr__Activity__c>();
+        if ( !salSerItems.isEmpty() && salSerItems[0].ServicePoint__c != null) {
+            activityList = HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePointNotStatus('Gestione Switch in Ripristinatorio', 'Completed', salSerItems[0].Quote__r.SBQQ__Account__c, salSerItems[0].ServicePoint__r.ServicePointCode__c);
+        }
+        if (!activityList.isEmpty()
+            && !salSerItems[0].Quote__r.AmendmentAllowed__c 
+            && !salSerItems[0].Quote__r.AllowChangeUse__c  
+            && !isCambioOfferta(salSerItems[0], quoteLinesActive)) {
+                result = true;
+        }
+        return result;
+    }
+
+    public static Boolean isCambioOfferta(SaleServiceItem__c salSerItems, List<SBQQ__QuoteLine__c> quoteLinesActive ){
+        //getRecordsByOrderIdFilteredPdrPod
+        Boolean isOffertaCommerciale=false;
+        for (SBQQ__QuoteLine__c quoteLines : quoteLinesActive) {
+            if( quoteLines.SBQQ__Product__r.Name == 'PDR' || quoteLines.SBQQ__Product__r.Name == 'POD' ){
+                isOffertaCommerciale=true;
+            }
+        }
+        Boolean result = isOffertaCommerciale && !salSerItems.Quote__r.AllowChangeUse__c && salSerItems.Quote__r.ContractReference__c != null && !salSerItems.Quote__r.AmendmentAllowed__c;
+        return result;
+    }
+
     public class wrapReturnValidity{
         @AuraEnabled public boolean wrapCheck {get;set;} 
         @AuraEnabled public string responseError {get;set;}

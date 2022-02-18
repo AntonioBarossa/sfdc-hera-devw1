@@ -42,7 +42,7 @@ public inherited sharing class HDT_QR_Order {
             SELECT
             Name, AccountId,SAPImplantCode__c,SapContractCode__c,EffectiveDate__c,ContractAccountCode__c,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
             Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c,Market__c,VAT__c, SBQQ__Quote__r.SBQQ__PriceBook__c,  
-            CommercialProduct__c  
+            CommercialProduct__c, TemporaryConnectionEndDate__c, ProcessType__c
             FROM Order 
             WHERE Id IN :orderId
             WITH SECURITY_ENFORCED
@@ -335,7 +335,8 @@ public inherited sharing class HDT_QR_Order {
             CommercialProductVersion__c,
             CommercialProductCode__c,
             IsEarlyActivation__c,
-            DistributorFormula__c
+            DistributorFormula__c,
+            CreditCheckInProgress__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -504,7 +505,10 @@ public inherited sharing class HDT_QR_Order {
             QualityCall__c,
             AgencyCode__c,
             DistributorFormula__c,
-            VASType__c
+            VASType__c,
+            ProcessCode__c,
+            DistributorCode__c,
+            Commodity__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -571,6 +575,24 @@ public inherited sharing class HDT_QR_Order {
             WITH SECURITY_ENFORCED
         ];
     }
+    /**
+    * @author NTTDATA
+    * @date 16/02/2022
+    * @description Get child records by list of parent Order Ids
+    * @param parentOrderIds - List<String>
+    * @return List<Order>
+    */
+    public List<Order> getChildOrdersForDateCalculation(List<String> parentOrderIds){
+        return [
+            SELECT
+            Id,EffectiveDate__c,ClientCategoryFormula__c,CommodityFormula__c,RecordType.DeveloperName,WizardCompletedDate__c,Account.RecordType.DeveloperName,Channel__c,Market__c,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c,IsActivationDeferred__c,ProcessType__c,MarketOrigin__c,ServicePoint__r.CommoditySector__c,VoltageLevel__c,SupplyType__c,CustomerCategory__c,SignatureMethod__c,DocSendingMethod__c
+            FROM
+            Order
+            WHERE ParentOrder__c IN :parentOrderIds
+            AND Phase__c NOT IN ('Annullato')
+            WITH SECURITY_ENFORCED
+        ];
+    }
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -600,7 +622,8 @@ public inherited sharing class HDT_QR_Order {
             DateComfortCall__c,
             DocumentPackage__c,
             ProcessType__c,
-            ParentOrder__c
+            ParentOrder__c,
+            ParentOrder__r.Phase__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
@@ -962,7 +985,8 @@ public inherited sharing class HDT_QR_Order {
         PowerCommitted__c,
         PowerAvailable__c,
         VoltageLevel__c,
-        AccountId
+        AccountId,
+        IsTechnicalTransfer__c
         FROM Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
     /**@frpanico 26/10/2021
@@ -990,7 +1014,8 @@ public inherited sharing class HDT_QR_Order {
         SupplyCountry__c,
         PowerCommitted__c,
         PowerAvailable__c,
-        VoltageLevel__c
+        VoltageLevel__c,
+        IsTechnicalTransfer__c
         FROM Order where Ordernumber IN :orderNumbers WITH SECURITY_ENFORCED];
     }
 
@@ -1000,7 +1025,7 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getRecordByOrderId(String recordId){
-        return [Select id,phase__c,Status,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, CancellationNote__c, AccountId from Order where Id = :recordId WITH SECURITY_ENFORCED];
+        return [Select id,IsTechnicalTransfer__c,phase__c,Status,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, CancellationNote__c, AccountId from Order where Id = :recordId WITH SECURITY_ENFORCED];
     }
 
     /**

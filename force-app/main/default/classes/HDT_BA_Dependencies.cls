@@ -107,7 +107,9 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
     }
 
     private void scheduleCallouts(){
-        DateTime now = Datetime.now();
+        Schedulable instance = (Schedulable) wrts_prcgvr.VersionManager.newClassInstance('AsyncJobBatchSchedule');
+        instance.execute(null);
+        /*DateTime now = Datetime.now();
         now.addMinutes(2);
         String hour = String.valueOf(now.hour());
         String min = String.valueOf(now.minute());
@@ -116,5 +118,6 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
         String fireTime = ss + ' ' + min + ' ' + hour + ' * * ? '+now.year();
         Object instance = wrts_prcgvr.VersionManager.newClassInstance('AsyncJobBatchSchedule');
         System.schedule('Async Callout retry '+now, fireTime, (Schedulable) instance);
+        */
     }
 }

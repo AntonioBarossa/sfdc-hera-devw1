@@ -190,6 +190,31 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
+        <name>HDT_UTL_Case_0</name>
+        <label>HDT_UTL_Case</label>
+        <locationX>1883</locationX>
+        <locationY>1180</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>GetRecordTypePreventivi</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>GetCaseNuovoImpianto</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>CreaBpCa</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>Opzione</name>
         <label>Predefault_CalcolaOpzione</label>
         <locationX>1184</locationX>
@@ -1354,17 +1379,24 @@
     <decisions>
         <name>Fase</name>
         <label>Fase?</label>
-        <locationX>1516</locationX>
-        <locationY>544</locationY>
+        <locationX>1363</locationX>
+        <locationY>436</locationY>
         <defaultConnectorLabel>Case non Riprendibile</defaultConnectorLabel>
         <rules>
             <name>Bozza</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Input_Case.Phase__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Bozza</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>discardRework</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1423,8 +1455,8 @@
     <decisions>
         <name>Is_Discard_Rework</name>
         <label>Is Discard Rework</label>
-        <locationX>1524</locationX>
-        <locationY>71</locationY>
+        <locationX>1522</locationX>
+        <locationY>70</locationY>
         <defaultConnector>
             <targetReference>Check_Servizio_Q02</targetReference>
         </defaultConnector>
@@ -1440,7 +1472,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Tipo_Processo</targetReference>
+                <targetReference>Get_Input_Case</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -1846,6 +1878,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Tipo_Processo_Nuovo_Impianto</name>
+        <label>Tipo Processo Nuovo Impianto?</label>
+        <locationX>1977</locationX>
+        <locationY>1352</locationY>
+        <defaultConnector>
+            <targetReference>GetRecordTypePreventivi</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NO</defaultConnectorLabel>
+        <rules>
+            <name>Tipo_Processo_Nuovo_Impianto_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseNuovoImpianto.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Nuovo Impianto</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>HDT_UTL_Case_0</targetReference>
+            </connector>
+            <label>SI</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Valorizzare_Potenza_Richiesta</name>
         <label>Valorizzare Potenza Richiesta?</label>
         <locationX>561</locationX>
@@ -2130,8 +2187,8 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <description>Metodo che interroga il Case partendo dall&apos;ID</description>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>1530</locationX>
-        <locationY>417</locationY>
+        <locationX>1371</locationX>
+        <locationY>281</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Fase</targetReference>
@@ -2172,11 +2229,11 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
     <recordLookups>
         <name>GetCaseNuovoImpianto</name>
         <label>GetCaseNuovoImpianto</label>
-        <locationX>1951</locationX>
-        <locationY>1269</locationY>
+        <locationX>2100</locationX>
+        <locationY>1403</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>GetRecordTypePreventivi</targetReference>
+            <targetReference>Tipo_Processo_Nuovo_Impianto</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2193,8 +2250,8 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
     <recordLookups>
         <name>getContract</name>
         <label>getContract</label>
-        <locationX>1848</locationX>
-        <locationY>1118</locationY>
+        <locationX>1773</locationX>
+        <locationY>1082</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaRecordType</targetReference>
@@ -2221,8 +2278,8 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
     <recordLookups>
         <name>GetRecordTypePreventivi</name>
         <label>GetRecordTypePreventivi</label>
-        <locationX>1987</locationX>
-        <locationY>1152</locationY>
+        <locationX>1991</locationX>
+        <locationY>1108</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getContract</targetReference>
@@ -3342,7 +3399,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Check_Servizio_Q02</name>
         <label>Check Servizio Q02</label>
         <locationX>1531</locationX>
-        <locationY>281</locationY>
+        <locationY>280</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
         </connector>

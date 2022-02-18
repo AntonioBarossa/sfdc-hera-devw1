@@ -6,7 +6,6 @@
     <externalId>false</externalId>
     <label>Assegnazione Campaign Member</label>
     <referenceTo>CampaignMemberAssigment__c</referenceTo>
-    <relationshipLabel>Assegnazioni Campaign Member Item</relationshipLabel>
     <relationshipName>Assegnazioni_Campaign_Member_Item</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>

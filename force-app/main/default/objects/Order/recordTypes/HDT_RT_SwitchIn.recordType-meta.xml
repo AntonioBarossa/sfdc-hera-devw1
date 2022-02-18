@@ -2134,6 +2134,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Check TIMOE OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati TIMOE Ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità OK</fullName>
             <default>false</default>
         </values>
@@ -2198,6 +2206,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Attesa Credit Check</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bozza</fullName>
             <default>true</default>
         </values>
@@ -2227,6 +2239,10 @@
         </values>
         <values>
             <fullName>Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Check KO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2299,6 +2315,18 @@
         </values>
         <values>
             <fullName>In attesa validazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Corso caricamento Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel KO</fullName>
             <default>false</default>
         </values>
         <values>

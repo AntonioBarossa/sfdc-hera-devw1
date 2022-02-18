@@ -77,6 +77,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     EffectiveDate = Date.today(),
                     Step__c = 1,
                     Channel__c = sale.Channel__c,
+                    LoginChannel__c = sale.Channel__c,
                     VendorLastName__c = sale.VendorLastName__c,
                     VendorFirstName__c = sale.VendorFirstName__C,
                     CommercialId__c = sale.CommercialId__c,
