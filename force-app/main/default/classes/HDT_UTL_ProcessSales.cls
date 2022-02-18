@@ -57,18 +57,24 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     }
 
     public override void registryCreation(){
-        System.debug(LoggingLevel.DEBUG, 'registryCreation');
 
         HDT_UTL_ProcessCommonOperations.getLimitDetails('START registryCreation');
+
         Boolean enableCreateBillingProfile;
         Boolean enableCreateServicePoint;
-        List<sObject> accountToInsert = new List<sObject>();
-        List<String> itemIds = new List<String>();
-        itemsToUpdate = new List<MassiveLoaderRequestItem__c>();
-        List<Contact> saveContactList = new List<Contact>();
-        List<BillingProfile__c> saveBillProfList = new List<BillingProfile__c>();
-        List<ServicePoint__c> saveServPointList = new List<ServicePoint__c>();
+        List<sObject> accountToInsert;
+        List<MassiveLoaderRequestItem__c> requestItemForUpsert;
+        List<Contact> saveContactList;
+        List<BillingProfile__c> saveBillProfList;
+        List<ServicePoint__c> saveServPointList;
         List<AccountContactRelation> acrList;
+
+        accountToInsert = new List<sObject>();
+        requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
+        itemsToUpdate = new List<MassiveLoaderRequestItem__c>();
+        saveContactList = new List<Contact>();
+        saveBillProfList = new List<BillingProfile__c>();
+        saveServPointList = new List<ServicePoint__c>();
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
  
@@ -149,8 +155,9 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 continue;
             }
 
-            processObj.account.Name = String.isBlank(processObj.account.FirstName__c) ? processObj.account.LastName__c : processObj.account.FirstName__c + ' ' + processObj.account.LastName__c;
-
+            if(processObj.account.VATNumber__c=='12345672'){
+                processObj.account.Name = String.isBlank(processObj.account.FirstName__c) ? processObj.account.LastName__c : processObj.account.FirstName__c + ' ' + processObj.account.LastName__c;
+            }
             // only for test
             processObj.account.IsWrongFiscalData__c = false;
             processObj.account.BillingCityCode__c = 'Roma';
@@ -176,21 +183,21 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             processObj.account.Id = setAccountIdFromDb(processObj.account);
 
             if(processObj.account.Id == null){
-                itemIds.add(processObj.requestItem.Id);
+                requestItemForUpsert.add(processObj.requestItem);
                 accountToInsert.add(processObj.account);
             }
 
         }
 
         HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveAccountResponse;
-        saveAccountResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(accountToInsert, itemIds, 'Account');
+        saveAccountResponse = HDT_UTL_ProcessCommonOperations.databaseInsert_improved(accountToInsert, requestItemForUpsert, 'Account');
 
         System.debug(LoggingLevel.DEBUG, '>>> savedObject ' + saveAccountResponse.savedObject);
         System.debug(LoggingLevel.DEBUG, '>>> itemIdToObjId: ' + saveAccountResponse.itemIdToObjId);
         System.debug(LoggingLevel.DEBUG, '>>> errorItemMap: ' + saveAccountResponse.errorItemMap);
 
-        itemIds.clear();
-        itemIds = new List<String>();
+        requestItemForUpsert.clear();
+        requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
@@ -206,19 +213,19 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 processObj.contact.AccountId = saveAccountResponse.itemIdToObjId.get(processObj.requestItem.Id);
                 processObj.contact = createContact(processObj.contact, processObj.account);
                 System.debug(LoggingLevel.DEBUG, '>>> currentContact: ' + processObj.contact);
-                itemIds.add(processObj.requestItem.Id);
+                requestItemForUpsert.add(processObj.requestItem);
                 saveContactList.add(processObj.contact);
             }
         }
 
         HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveContactResponse;
         if(saveContactList.size() > 0){
-            saveContactResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(saveContactList, itemIds, 'Contact');
+            saveContactResponse = HDT_UTL_ProcessCommonOperations.databaseInsert_improved(saveContactList, requestItemForUpsert, 'Contact');
             System.debug('>>>>> ' + saveContactResponse.errorItemMap);
         }
 
-        itemIds.clear();
-        itemIds = new List<String>();
+        requestItemForUpsert.clear();
+        requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
 
         Id accountId;
         List<Id> accountIdsList = new List<Id>();
@@ -247,7 +254,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 
                 saveBillProfList.add(processObj.billingProfile);
                 saveServPointList.add(processObj.servicePoint);
-                itemIds.add(processObj.requestItem.Id);
+                requestItemForUpsert.add(processObj.requestItem);
                 accountIdsList.add(accountId);
             }
 
@@ -257,11 +264,11 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveServPointResponse;
         
         if(saveBillProfList.size() > 0){
-            saveBillProfResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(saveBillProfList, itemIds, 'BillingProfile__c');
+            saveBillProfResponse = HDT_UTL_ProcessCommonOperations.databaseInsert_improved(saveBillProfList, requestItemForUpsert, 'BillingProfile__c');
         }
         
         if(saveServPointList.size() > 0){
-            saveServPointResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(saveServPointList, itemIds, 'ServicePoint__c');
+            saveServPointResponse = HDT_UTL_ProcessCommonOperations.databaseInsert_improved(saveServPointList, requestItemForUpsert, 'ServicePoint__c');
         }
         
         if(accountIdsList.size() > 0){
@@ -465,27 +472,32 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         Id massiveLoaderRequestId = 'a3d3O000000WyvQQAS';
         Set<Id> docId = new Set<Id>();
 
-        delete [SELECT Id FROM MassiveLoaderRequestItem__c WHERE MassiveLoaderRequest__c = :massiveLoaderRequestId];
         delete [
-            SELECT Id
+            SELECT Id, Data__c, NextStepData__c, Status__c, StatusDescription__c, MassiveLoaderRequest__c
+            FROM MassiveLoaderRequestItem__c
+            WHERE MassiveLoaderRequest__c = :massiveLoaderRequestId
+        ];
+
+        delete [
+            SELECT Id, Name, RecordTypeId, RecordType.Name, CustomerCode__c, FiscalCode__c, VATNumber__c, CustomerMarking__c 
             FROM Account
             WHERE CreatedById = '0051X0000055rbNQAQ'
         ];
         
         delete [
-            SELECT Id
+            SELECT Id, FirstName, Account.CustomerCode__c
             FROM Contact
             WHERE CreatedById = '0051X0000055rbNQAQ'
         ];
 
         delete [
-            SELECT Id
+            SELECT Id, Account__r.CustomerCode__c
             FROM BillingProfile__c
             WHERE CreatedById = '0051X0000055rbNQAQ'
         ];
 
         delete [
-            SELECT Id
+            SELECT Id, Name, Account__r.CustomerCode__c, ServicePointCode__c
             FROM ServicePoint__c
             WHERE CreatedById = '0051X0000055rbNQAQ'
         ];

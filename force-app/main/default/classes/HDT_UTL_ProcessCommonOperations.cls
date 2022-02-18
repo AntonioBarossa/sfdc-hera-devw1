@@ -153,6 +153,50 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
         return newCase;
     }
 
+    public static HDT_WRP_SaveResponse databaseInsert_improved(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType){
+        HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
+        saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
+        saveResponse.savedObject = new List<sObject>();
+        saveResponse.itemIdToObjId = new Map<Id, Id>();
+        saveResponse.errorItemMap = new Map<Id, String>();
+
+        SObjectType objtype = Schema.getGlobalDescribe().get(sObjectType);
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+ 
+        if(objRes.isCreateable()){
+
+            List<Database.UpsertResult> upsertResults = Database.upsert(sObjectList, false);
+
+            for(Integer n=0; n<upsertResults.size(); n++){
+                Database.UpsertResult sr = upsertResults[n];
+
+                if(sr.isSuccess()) {
+                    requetItems[n].Status__c = 'Chiuso';
+                    saveResponse.reponseItemList.add(requetItems[n]);
+                    saveResponse.savedObject.add(sObjectList[n]);
+                    saveResponse.itemIdToObjId.put(requetItems[n].Id, sr.getId());
+
+                } else {
+                    requetItems[n].Status__c = 'Errore';
+
+                    String errorMessage = '';
+                    for(Database.Error err : sr.getErrors()) {
+                        errorMessage += '[' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + '] ';
+                        System.debug(LoggingLevel.DEBUG, '>>> errorMessage ' + errorMessage);
+                    }
+
+                    requetItems[n].StatusDescription__c = errorMessage.abbreviate(250);
+                    saveResponse.errorItemMap.put(requetItems[n].Id, errorMessage.abbreviate(250));
+                    saveResponse.reponseItemList.add(requetItems[n]);
+                    
+                }
+            }
+        }
+
+        return saveResponse;
+
+    }
+
     public static void getLimitDetails(String stageName){
         List<String> limitList = new List<String>();
         limitList.add('>>> CpuTime: ' + String.valueOf(Limits.getCpuTime()) + ' of ' + String.valueOf(Limits.getLimitCpuTime()));

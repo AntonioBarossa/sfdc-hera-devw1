@@ -11,7 +11,7 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
     List<ServicePoint__c> servicePointToUpdate;
     List<AccountContactRelation> accContRelList;
     Map<Id, AccountContactRelation> accRelMap;
-    List<String> itemIds = new List<String>();
+    List<MassiveLoaderRequestItem__c> requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
 
     public HDT_UTL_ProcessSalesOutboundWs() {
         System.debug(LoggingLevel.DEBUG, 'HDT_UTL_ProcessSalesOutboundWs');
@@ -116,10 +116,12 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
                     System.debug(LoggingLevel.DEBUG, '>>> update sp ' + servPointFromWs);
 
                     servicePointToUpdate.add(servPointFromWs);
+
                     singleItem.Status__c = 'Chiuso';
+                    requestItemForUpsert.add(singleItem);
                 }
 
-                accountId = idsMap.get(singleItem.Id).accountId;
+                //accountId = idsMap.get(singleItem.Id).accountId;
 
                 //if(String.isNotEmpty(accountId)){
                 //    account = new Account();
@@ -144,7 +146,7 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
                 //            singleItem.StatusDescription__c = '[Account] ' + res.data.commenti;
                 //        } else {
                 //            account.CustomerCode__c = res.data.codiceBP;
-                //            itemIds.add(singleItem.Id);
+                //            requestItemForUpsert.add(singleItem);
                 //            singleItem.Status__c = 'Chiuso';
                 //            accountToUpdate.add(account);
                 //            System.debug(LoggingLevel.DEBUG, 'CustomerCode__c > ' + account.CustomerCode__c);
@@ -169,25 +171,25 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
 
         }
 
-        if(accountToUpdate.size() > 0){
-            Map<Id, MassiveLoaderRequestItem__c> errorItemMap = new Map<Id, MassiveLoaderRequestItem__c>();
-            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse updateAccountResponse;
+        // if(accountToUpdate.size() > 0){
+        //     Map<Id, MassiveLoaderRequestItem__c> errorItemMap = new Map<Id, MassiveLoaderRequestItem__c>();
+        //     HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse updateAccountResponse; //
 
-            updateAccountResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(accountToUpdate, itemIds, 'Account');
+        //     updateAccountResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(accountToUpdate, requestItemForUpsert, 'Account'); //
 
-            for(MassiveLoaderRequestItem__c errorItem : updateAccountResponse.reponseItemList){
-                if(errorItem.Status__c == 'Errore'){
-                    errorItemMap.put(errorItem.Id, errorItem);
-                }
-            }
+        //     for(MassiveLoaderRequestItem__c errorItem : updateAccountResponse.reponseItemList){
+        //         if(errorItem.Status__c == 'Errore'){
+        //             errorItemMap.put(errorItem.Id, errorItem);
+        //         }
+        //     } //
 
-            for(MassiveLoaderRequestItem__c singleItem : requestItemList){
-                if(errorItemMap.containsKey(singleItem.Id)){
-                    singleItem = errorItemMap.get(singleItem.Id);
-                }
-            }
+        //     for(MassiveLoaderRequestItem__c singleItem : requestItemList){
+        //         if(errorItemMap.containsKey(singleItem.Id)){
+        //             singleItem = errorItemMap.get(singleItem.Id);
+        //         }
+        //     } //
 
-        }
+        // }
 
     }
 
