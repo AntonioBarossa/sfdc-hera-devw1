@@ -118,7 +118,7 @@ public inherited sharing class HDT_LC_CampaignsController {
     
     @AuraEnabled
     public static CampaignMember getAccountAndCampaign(String campaignMemberId) {
-        campaignMemberSrv.checkReadAccess('ContactId,LeadId,CampaignId,GenericField1__c');
+        campaignMemberSrv.checkReadAccess('ContactId,LeadId,CampaignId,GenericField1__c, Campaign.ProcessType__c');
         return  campaignMemberQr.getAccountAndCampaign(campaignMemberId);
     }
     
@@ -429,7 +429,7 @@ public inherited sharing class HDT_LC_CampaignsController {
     @AuraEnabled(cacheable=true)
     public static CampaignMember getCampaignAndAccountByMember(String campaignMemberId){
         try {
-            CampaignMember cm = [SELECT Id, GenericField1__c ,Contact.AccountId, CampaignId, Campaign.CaseCategory__c, Campaign.CaseSubCategory__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED];
+            CampaignMember cm = [SELECT Id, GenericField1__c ,Contact.AccountId, CampaignId, Campaign.CaseCategory__c, Campaign.CaseSubCategory__c, Campaign.ProcessType__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED];
             System.debug(cm);
             return cm;
         } catch (Exception e) {

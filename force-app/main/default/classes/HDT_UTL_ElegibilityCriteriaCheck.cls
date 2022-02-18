@@ -70,8 +70,12 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
         for (Integer i = 0; i < recordList.size(); i++) {
             Contract c = (Contract) recordList[i];
             List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
-            String productId = subscriptions[0].SBQQ__Product__c;
-            productIds.add(productId);
+            if(!subscriptions.isEmpty())
+            {
+                String productId = subscriptions[0].SBQQ__Product__c;
+                productIds.add(productId);
+            }
+
         }
 
         // Query oggetto criteri eleggibilità

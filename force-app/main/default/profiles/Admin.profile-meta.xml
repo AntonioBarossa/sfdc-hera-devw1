@@ -34122,11 +34122,11 @@
         <layout>Order-SBQQ__CPQ Order Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <layout>Order-Cambio Offerta</layout>
         <recordType>Order.HDT_RT_CambioOfferta</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <layout>Order-Cambio Offerta</layout>
         <recordType>Order.HDT_RT_CambioUso</recordType>
     </layoutAssignments>
     <layoutAssignments>
