@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>Has_Attachment__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Process_Type__c</field>
@@ -40,7 +40,7 @@
     </values>
     <values>
         <field>UserInputFlow__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">VAS_Segnalazioni_VAS_Note</value>
     </values>
     <values>
         <field>Value__c</field>
