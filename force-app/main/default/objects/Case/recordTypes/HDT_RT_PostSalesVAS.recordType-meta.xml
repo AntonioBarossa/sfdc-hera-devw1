@@ -3120,17 +3120,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>EnergyService__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>ErrorType__c</picklist>
         <values>
             <fullName>Offerta</fullName>
