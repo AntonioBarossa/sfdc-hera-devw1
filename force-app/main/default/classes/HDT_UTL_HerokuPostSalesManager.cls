@@ -230,7 +230,15 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             mapActivityField.put('CMP',cmp);
             mapActivityField.put('DATA_ELABORAZIONE',dataElab);
             //EVERIS: Gestione Scarti SAP
-            HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase,mapActivityField);
+            if(errDescr.containsIgnoreCase('Pratica in attesa') && 
+               nextPhase.equalsIgnoreCase('Errore Lavorazione SAP') &&
+               String.valueOf(recordCase.get('Type')).equalsIgnoreCase('Rettifica Consumi') && 
+               String.valueOf(recordCase.get('Subprocess__c')).equalsIgnoreCase('Errore Stima Consumi')){
+                nextPhase = 'Pratica In Attesa';
+            }
+            else{
+                HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase,mapActivityField);
+            }
             //Gestione Esito Appuntamento;
             HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
             appService.updateExtraSystemAppointment(nextPhase, recordCase.Id);
