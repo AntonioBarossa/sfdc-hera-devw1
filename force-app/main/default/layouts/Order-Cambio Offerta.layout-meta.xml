@@ -570,7 +570,6 @@
     </platformActionList>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>CO__c</fields>
         <fields>ExpirationDate__c</fields>
         <fields>ACCOUNT.NAME</fields>
         <fields>NAME</fields>
