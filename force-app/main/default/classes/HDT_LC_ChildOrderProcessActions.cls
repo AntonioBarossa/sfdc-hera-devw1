@@ -77,7 +77,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
                 List<Order> listOrd = new List<Order>{order};
                 Map<String,Boolean> mapAccountRes = HDT_UTL_SwtichInProcess.checkAccountOrderIsResidential(listOrd);
-                orderToUpdate.IsActivationDeferred__c = order.IsActivationDeferred__c;
+                //orderToUpdate.IsActivationDeferred__c = order.IsActivationDeferred__c;
 
                 try {       
                     if(order.SignedDate__c != null){                    
@@ -303,7 +303,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }
         else if(!String.isBlank(currentOrder.IncomingCreditCheckResult__c) || !String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
             orderToUpdate.CreditCheckInProgress__c = false;
-            if(currentOrder.IncomingCreditCheckResult__c.containsIgnoreCase('KO') || currentOrder.OutgoingCreditCheckResult__c.containsIgnoreCase('KO')){
+            /**@frpanico 17/02/2022
+             * Aggiunto il null check 
+             * l'Or nella condizioni di sopra puo comunque
+             * far incorrere in una NullException
+             */
+            if((!String.isBlank(currentOrder.IncomingCreditCheckResult__c) && currentOrder.IncomingCreditCheckResult__c.containsIgnoreCase('KO')) 
+                || (!String.isBlank(currentOrder.OutgoingCreditCheckResult__c) && currentOrder.OutgoingCreditCheckResult__c.containsIgnoreCase('KO'))){
                 orderToUpdate.Phase__c = 'Credit Check KO';
             }
         }

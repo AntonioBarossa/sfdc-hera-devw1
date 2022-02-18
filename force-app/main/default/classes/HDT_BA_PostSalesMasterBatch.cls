@@ -18,8 +18,8 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         scope.addAll(postsalesQr.getNonReqContract());
         scope.addAll(postsalesQr.getAutoletturaBozzaCase());
         scope.addAll(postsalesQr.getPostSalesBozzaCase());
-        scope.addAll(postsalesQr.getExpiredArticle());
         scope.addAll(postsalesQr.getCaseVolturaTecnica());
+        scope.addAll(postsalesQr.getExpiredArticle());
 
 
         return scope;
@@ -53,6 +53,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         }
 
         List<Case> myCurrentCaseList = new List<Case>();
+        List<HDT_PEV_NonReqContract__e> eventsToPublish = new List<HDT_PEV_NonReqContract__e>();
 
         for(SObject sobj : scope){
 
@@ -88,26 +89,22 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                         }
                         
                         
-                        if((currentCase.Type.equalsIgnoreCase('Piano Rateizzazione') || currentCase.Type.equalsIgnoreCase('Blocco Sollecito/Interessi'))
-                            && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa')){
-                            SObject transition;
-                            SObject action;
-                            String method = currentCase.Type.equalsIgnoreCase('Piano Rateizzazione') ? 'HDT_InstallmentPlans' : 'HDT_ReminderBlock';
-                            Map<String, Object> args = new Map<String,Object>();
-                            Case newCase = new Case();
-                            newCase.Id = currentCase.Id;
-                            args.put('transition', transition);
-                            args.put('action', action);
-                            args.put('method',method);
-                            args.put('sender', currentCase);
+                        if( currentCase.Type.equalsIgnoreCase('Piano Rateizzazione') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
 
-                            HDT_WS_Payments paymentsWs = new HDT_WS_Payments();
-                            wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
-                            responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) paymentsWs.execute(args);
+                                currentCase.Phase__c = 'Da Inviare';
+                                HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
+                                event.SerializedCase__c = JSON.serialize(currentCase);
+                                eventsToPublish.add(event);
 
-                            //TO trigger Technical Phase
-                            myCurrentCaseList.add(newCase);
-                        }else if(currentCase.Cluster__c.equalsIgnoreCase('Preventivi') || currentCase.Cluster__c.equalsIgnoreCase('Verifiche')){
+                        }else if( currentCase.Type.equalsIgnoreCase('Blocco Sollecito/Interessi') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
+
+                                currentCase.Phase__c = 'In Lavorazione';
+                                HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
+                                event.SerializedCase__c = JSON.serialize(currentCase);
+                                eventsToPublish.add(event);
+
+                        }else if( (currentCase.Cluster__c.equalsIgnoreCase('Preventivi') || currentCase.Cluster__c.equalsIgnoreCase('Verifiche')) && currentCase.Phase__c.equalsIgnoreCase('Attesa conferma preventivo cliente') ){
+
                             currentCase.Phase__c = 'Preventivo scaduto';
                             HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
                             event.SerializedCase__c = JSON.serialize(currentCase);
@@ -120,7 +117,8 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                     System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
                                 }
                             }
-                        }else if(currentCase.Type.equalsIgnoreCase('Contratto Non Richiesto')){
+
+                        }else if(currentCase.Type.equalsIgnoreCase('Contratto Non Richiesto') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
                             HDT_QR_PostSalesMasterBatch postsalesQr = new HDT_QR_PostSalesMasterBatch();
                             Order relatedOrder = postsalesQr.getRelatedOrder(currentCase.Order__c);
                             if(relatedOrder!= null){
@@ -140,10 +138,10 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                     }
                                 }
                             }
-                        }
-                        else if(currentCase.Type.equalsIgnoreCase('Voltura Tecnica')){
+                        }else if( currentCase.Type.equalsIgnoreCase('Voltura Tecnica') && currentCase.Phase__c.equalsIgnoreCase('In attesa Data Decorrenza') ){
                             currentCase.EffectiveDate__c = HDT_UTL_Case.addBusinessDay(System.today(),3);
                             currentCase.Phase__c = 'Da Inviare';
+                            
                             HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
                             event.SerializedCase__c = JSON.serialize(currentCase);
                             Database.SaveResult sr = EventBus.publish(event);
@@ -155,7 +153,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                     System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
                                 }
                             }
-                        }                    
+                        }               
                     }
                     when Knowledge__kav article{
                         if(article.ExpirationDate__c != null){
@@ -170,6 +168,19 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                 continue;
             }
         }
+        if(!eventsToPublish.isEmpty()){
+            //EventBus.publish(eventsToPublish);
+            List<Database.SaveResult> srList = EventBus.publish(eventsToPublish);
+            for (Database.SaveResult sr : srList ) {
+                if (sr.isSuccess()) {
+                    System.debug(LoggingLevel.DEBUG, 'Successfully published events.');
+                } else {
+                    for (Database.Error err : sr.getErrors()) {
+                        System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+                    }
+                }
+            }
+        }        
         if(!myCurrentCaseList.isEmpty()){
             HDT_UTL_DatabaseService.updateSObject(myCurrentCaseList);
         }
