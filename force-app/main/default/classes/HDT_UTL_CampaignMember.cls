@@ -203,7 +203,7 @@ public with sharing class HDT_UTL_CampaignMember {
         List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
 
         for(CampaignMember member : newCampMembList){
-            if(member.ResultType__c.equalsIgnoreCase('Macchina') && member.ResultType__c != campMembOldMap.get(member.Id).ResultType__c && member.RelatedActivity__c != null){
+            if(member.ResultType__c == 'Macchina' && member.ResultType__c != campMembOldMap.get(member.Id).ResultType__c && member.RelatedActivity__c != null){
                 activitiesToUpdate.add(new wrts_prcgvr__Activity__c(Id = member.RelatedActivity__c, wrts_prcgvr__Status__c = 'Non Esitata'));
             }
         }
