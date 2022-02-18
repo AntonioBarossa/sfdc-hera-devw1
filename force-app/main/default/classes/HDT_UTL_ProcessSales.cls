@@ -141,6 +141,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 count++;
             }
 
+            processObj.csvSplitted.clear();
+
             if(String.isNotEmpty(convertionError)){
                 processObj.requestItem.Status__c = 'Errore';
                 processObj.requestItem.StatusDescription__c = convertionError;
@@ -162,6 +164,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         }
 
         accountList = HDT_QR_ProcessSales.getAccountList(fiscalCodeSet, vatNumberSet, marcaturaSet, csnSet);
+
+        clearAllUselessSets();
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
@@ -432,6 +436,13 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         contact.MailingPlaceCode__c = account.BillingPlaceCode__c;                    
         contact.MailingIsAddressVerified__c = account.BillingIsAddressVerified__c;
         return contact;
+    }
+
+    public void clearAllUselessSets(){
+        fiscalCodeSet.clear();
+        vatNumberSet.clear();
+        marcaturaSet.clear();
+        csnSet.clear();
     }
 
     private class HDT_WRP_ProcessObjects {
