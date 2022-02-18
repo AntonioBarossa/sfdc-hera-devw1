@@ -409,7 +409,7 @@
                         <valueListItems>
                             <value>CustomButton.wrts_prcgvr__Activity__c.HDT_KO_Definitivo</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2</booleanFilter>
+                                <booleanFilter>(1 OR 2) AND 3</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -419,26 +419,43 @@
                                     <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>HDT_RT_CreditCheckKO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__IsClosed__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.wrts_prcgvr__Activity__c.HDT_KO_Forzato</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>HDT_RT_CreditCheckKO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__IsClosed__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.wrts_prcgvr__Activity__c.HDT_KO_Risolto</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>HDT_RT_KoPrecedeteCliente</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__IsClosed__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -1170,7 +1187,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CreditCheckResults__c</fieldItem>
             </fieldInstance>
@@ -1206,6 +1223,10 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Reason__c</fieldItem>
                 <visibilityRule>
                     <criteria>
