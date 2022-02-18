@@ -212,4 +212,29 @@ public with sharing class HDT_UTL_CampaignMember {
             update activitiesToUpdate;
         }
     }
+
+    public static void handleStatusChange(List<CampaignMember> newList, Map<Id,CampaignMember> oldMap) {
+        Map<String, HDT_CampaignMemberStatus__mdt> statusMap =  new Map<String, HDT_CampaignMemberStatus__mdt>();
+        Map<String, HDT_CampaignMemberStatus__mdt> statusCodeMap =  new Map<String, HDT_CampaignMemberStatus__mdt>();
+        for(HDT_CampaignMemberStatus__mdt status : HDT_CampaignMemberStatus__mdt.getAll().values()) {
+            statusMap.put(status.StatusName__c, status);
+            statusCodeMap.put(status.DeveloperName, status);
+        }
+
+        HDT_CampaignMemberStatus__mdt status;
+        for(CampaignMember member : newList) {
+            if(oldMap == null || (member.Status != oldMap.get(member.Id).Status)) {
+                if(statusMap.containsKey(member.Status)) {
+                    status = statusMap.get(member.Status);
+                    member.ResultType__c = status.OutcomeType__c;
+                    member.ResultCategory__c = status.OutcomeCategory__c;
+                }
+            } else if(member.StatusCode__c != oldMap.get(member.Id).StatusCode__c) {
+                status = statusCodeMap.get(member.StatusCode__c);
+                member.Status = status.StatusName__c;
+                member.ResultType__c = status.OutcomeType__c;
+                member.ResultCategory__c = status.OutcomeCategory__c;
+            }
+        }
+    }
 }
