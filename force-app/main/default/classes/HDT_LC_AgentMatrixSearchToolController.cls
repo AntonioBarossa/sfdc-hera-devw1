@@ -9,7 +9,7 @@ public with sharing class HDT_LC_AgentMatrixSearchToolController {
                     return matrix[0];
                 } else {
                     return new AgentMatrix__c(
-                        AgentFirstName__c = 'NON CENSITO',
+                        AgentFirstName__c = '',
                         AgentLastName__c = 'NON CENSITO',
                         AgentCode__c = rule.SalesAgency__c,
                         AgencyName__c = 'NON CENSITO',
@@ -33,6 +33,7 @@ public with sharing class HDT_LC_AgentMatrixSearchToolController {
         }
     }
 
+    @SuppressWarnings('PMD.ApexCRUDViolation')
     @AuraEnabled
     public static String updateRule(String ruleId, String agentCode){
         try {
