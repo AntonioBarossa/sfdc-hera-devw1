@@ -1,4 +1,5 @@
 global with sharing class HDT_SCH_ClearLogs implements Schedulable {
+    @SuppressWarnings('PMD.ApexSuggestUsingNamedCred')
     global void execute(SchedulableContext SC) {
         String idString = '';
         for(List<ApexLog> logs : [SELECT Id FROM ApexLog LIMIT 50000]) {
