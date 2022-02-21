@@ -177,6 +177,33 @@ public inherited sharing class HDT_SRV_ScriptManager {
         }
     }
 
+    @AuraEnabled
+    public static String getFlowCase(Id caseId){
+
+        String flowUrl = '';
+        Case caseRetrieved = [SELECT Id FROM Case WHERE Id =: caseId WITH SECURITY_ENFORCED LIMIT 1];
+
+        if(caseRetrieved != null){
+
+            for (HDT_ScriptPerCommOffer__mdt scriptPerOffer : scriptsMapping) {
+
+                if('Case'.equals(scriptPerOffer.Object__c)){
+                    flowUrl = '/flow/' + scriptPerOffer.ScriptFlowName__c +'?idCaseInput='+ caseRetrieved.Id;
+                    break;
+                }
+            }
+
+            if(!String.isBlank(flowUrl)){
+                return flowUrl;
+            }else{
+                return 'flow not found';
+            }
+
+        }else{
+            throw new AuraHandledException('Si è verificato un errore  in fase di get delle informazioni su Case');
+        }
+    }
+
     /**
     * @description Get script name and target for given activity
     * @author gabriele.rota@webresults.it | 2021-09-29 
