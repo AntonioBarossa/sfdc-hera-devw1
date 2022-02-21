@@ -37,10 +37,10 @@ public with sharing class HDT_LC_AgentMatrixSearchToolController {
     @SuppressWarnings('PMD.ApexCRUDViolation')
     public static String updateRule(String ruleId, String agentCode){
         try {
-            update new AssignmentRule__c(
+            HDT_UTL_DatabaseService.updateSObject(new AssignmentRule__c(
                 Id = ruleId,
                 SalesAgency__c = agentCode
-            );
+            ));
             return null;
         } catch (Exception e) {
             return 'ERROR: ' + e.getMessage() + ' at line ' + e.getLineNumber() + ' | ' + e.getStackTraceString();
