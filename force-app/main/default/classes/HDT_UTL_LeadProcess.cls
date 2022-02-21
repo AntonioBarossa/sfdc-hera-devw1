@@ -506,7 +506,7 @@ public with sharing class HDT_UTL_LeadProcess {
                         //ContentDocumentLink cdl = new ContentDocumentLink();
                         HDT_QR_ContentVersion conDocQr = new HDT_QR_ContentVersion();
                         ContentVersion cvdl = conDocQr.getRecordById(mapRequestFields.get('FILE'));
-                        cdlSrv.createRecord(l.id,cvdl.contentDocumentId,'C');
+                        cdlSrv.createRecord(l.id,cvdl.contentDocumentId,'I');
                     }              
                     
                     responseField.fieldType = 'TEXT';
