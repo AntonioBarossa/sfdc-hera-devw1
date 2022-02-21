@@ -705,7 +705,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             data["alternativeCustomerId"] = fiscalData;
         }
         console.log("this.4"); 
-
+        console.log("@@@@request --> " + JSON.stringify(data)); 
         return data; 
     }
     // END @Picchiri 07/06/21 Credit Check
