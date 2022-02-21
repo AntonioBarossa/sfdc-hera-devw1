@@ -45,6 +45,9 @@ export default class HdtCreateCampaign extends LightningElement {
     @track maxNumberVASCodeUseRequired = false;
     @track codeConventionQuantityRequired = false;
     @track requiredPriority=false;
+    @track assignType='';
+    @track showcampaignMemberAssignment=false;
+    @track showDefaultFinalState=false;
     showCampaignInboundFields=false;
 
     @wire(getUserRole, {
@@ -60,6 +63,17 @@ export default class HdtCreateCampaign extends LightningElement {
 
     handleFormLoad(event) {
         this.statusField = this.template.querySelector('.statusField > lightning-input-field').value;
+        this.channelValues = this.template.querySelector('.channelField > lightning-input-field') != null ? this.template.querySelector('.channelField > lightning-input-field').value : '';
+        this.tipology = this.template.querySelector('.tipologyField > lightning-input-field').value;
+        let categoryField=this.template.querySelector('.categoryField > lightning-input-field').value;
+        this.assignType = this.template.querySelector('.assignmentType > lightning-input-field') != null ? this.template.querySelector('.assignmentType > lightning-input-field').value : '';
+        if(this.assignType!=null && this.assignType!=''){
+            this.campaignMemberAssignmentRequired = (this.assignType == 'Peso Percentuale') ? true : false;
+            this.showcampaignMemberAssignment = (this.assignType == 'Peso Percentuale') ? true : false;
+        }
+        this.showDefaultFinalState=(this.template.querySelector('.processType > lightning-input-field').value) ? true : false;
+
+        this.checkRequiredProcessType(categoryField,this.statusField, this.channelValues); 
     }
 
     renderedCallback() {
@@ -114,7 +128,7 @@ export default class HdtCreateCampaign extends LightningElement {
             this.reitekFieldRequired = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignOutboundFields = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignMemberAssignmentTypeRequired = channelField.includes('Telefonico Outbound') ? true : false;
-            this.campaignMemberAssignmentRequired = channelField.includes('Telefonico Outbound') ? true : false;
+            //this.campaignMemberAssignmentRequired = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignBillingFields = channelField.includes('Bolletta') ? true : false;
             this.paperCampaignFields = channelField.includes('Cartaceo') ? true : false;
             this.campaignCommercialCodeFields = (channelField.includes('Bolletta') || categoryField === 'Campagna Marketing Cloud' || categoryField === 'Campagna CRM') ? true : false;
@@ -126,12 +140,12 @@ export default class HdtCreateCampaign extends LightningElement {
             this.recurringCampaignFieldsRequired = false;
             this.reitekFieldRequired = false;
             this.campaignMemberAssignmentTypeRequired = false;
-            this.campaignMemberAssignmentRequired = false;
+            //this.campaignMemberAssignmentRequired = false;
             this.campaignCommercialCodeFields = false;
         }
         // HRAWRM-686 Start 27/09/2021
         this.checkStartDateMethods(event.detail.value);
-        this.checkRequiredProcessType(categoryField,this.statusField); 
+        this.checkRequiredProcessType(categoryField,this.statusField, channelField); 
         // HRAWRM-686 End 27/09/2021
     }
 
@@ -154,21 +168,22 @@ export default class HdtCreateCampaign extends LightningElement {
             this.reitekFieldRequired = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignOutboundFields = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignMemberAssignmentTypeRequired = channelField.includes('Telefonico Outbound') ? true : false;
-            this.campaignMemberAssignmentRequired = channelField.includes('Telefonico Outbound') ? true : false;
+            //this.campaignMemberAssignmentRequired = channelField.includes('Telefonico Outbound') ? true : false;
             this.campaignBillingFields = channelField.includes('Bolletta') ? true : false;
             this.recurringCampaignFieldsRequired = recurringField;
         } else {
             if ("Campagna Contenitore" == event.detail.value) {
                 this.channelFieldRequired = false;
+                this.channelValues='';
             }
            //!HRAWRM-686 this.startDateFieldRequired = false;
             this.recurringCampaignFieldsRequired = false;
             this.reitekFieldRequired = false;
             this.campaignMemberAssignmentTypeRequired = false;
-            this.campaignMemberAssignmentRequired = false;
+            //this.campaignMemberAssignmentRequired = false;
         }
         this.checkStartDateMethods(this.statusField);
-        this.checkRequiredProcessType(categoryField,this.statusField);
+        this.checkRequiredProcessType(categoryField,this.statusField, channelField);
     }
     // Start HRAWRM-621 16/09/2021
     checkRequiredShippingMethods(category,channel,status){
@@ -208,13 +223,25 @@ export default class HdtCreateCampaign extends LightningElement {
         console.log('reqEndDate:'+this.reqEndDate);
         console.log('recurr:'+this.recurr);
     }
-    // HRAWRM-686 Start 27/09/2021
-    checkRequiredProcessType(category,status){
+    // HRAWRM-686 Start 27/09/2021      
+    checkRequiredProcessType(category,status, channel){
+           // this.channelValues = this.template.querySelector('.channelField > lightning-input-field') != null ? this.template.querySelector('.channelField > lightning-input-field').value : '';
+        this.tipology = this.template.querySelector('.tipologyField > lightning-input-field').value;
         console.log('category: '+category);
         console.log('status: '+status);
+        console.log('tipology: '+this.tipology);
+        console.log('channel: '+channel);
 
-        if (('Campagna Outbound'==category || 'Campagna CRM'==category) && status!='Bozza') {
+        if ((('Campagna Outbound'==category || 'Campagna CRM'==category) && status!='Bozza')) {
             this.processTypeFieldRequired=true;
+        }
+        else if(channel){
+            if(this.tipology!="Quality Call" && this.tipology!="Comfort Call" && (channel.includes('Sportello') || channel.includes('Telefonico Inbound') || channel.includes('Telefonico Outbound'))){
+                this.processTypeFieldRequired=true;
+            }
+            else{
+                this.processTypeFieldRequired=false;
+            }
         }
         else{
             this.processTypeFieldRequired=false;
@@ -222,13 +249,13 @@ export default class HdtCreateCampaign extends LightningElement {
     }
     // HRAWRM-686 End 27/09/2021
 
-
     handleChangeProcessType(event){
         let processType = event.detail.value;
         let categoryField = this.template.querySelector('.categoryField > lightning-input-field') != null ? this.template.querySelector('.categoryField > lightning-input-field').value : '';
        // 27-08-2021  HRDTR-00_HRAWRM-303  categoryField == 'Campagne Marketing Cloud'
         this.campaignInboundFields = ((processType == 'Entrambi' || processType == 'Nuovo Caso' )&& this.statusField !== 'Bozza' ) ? true : false;// Matteo Tatti HRAWRM-658 21/09/2021
         this.showCampaignInboundFields = ((processType == 'Entrambi' || processType == 'Nuovo Caso' ) ) ? true : false;// Matteo Tatti HRAWRM-658 21/09/2021
+        this.showDefaultFinalState=(processType) ? true : false;
     }
 
     handleChangeChannel(event) {
@@ -245,7 +272,8 @@ export default class HdtCreateCampaign extends LightningElement {
             this.campaignCommercialCodeFields = (event.detail.value === 'Bolletta' || this.template.querySelector('.categoryField > lightning-input-field').value === 'Campagna Marketing Cloud' || this.template.querySelector('.categoryField > lightning-input-field').value === 'Campagna CRM') ? true : false;
         }
         this.paperCampaignFields = event.detail.value.includes('Cartaceo') ? true : false;
-        let categoryField=this.template.querySelector('.categoryField > lightning-input-field').value
+        let categoryField=this.template.querySelector('.categoryField > lightning-input-field').value;
+        this.checkRequiredProcessType(categoryField,this.statusField, event.detail.value); 
         this.checkRequiredShippingMethods(categoryField,event.detail.value,this.statusField);  // Start HRAWRM-621 16/09/2021
         //reset fields
 
@@ -295,8 +323,9 @@ export default class HdtCreateCampaign extends LightningElement {
     }
 
     handleChangeAssignmentTye(event) {
-        this.campaignMemberAssignmentRequired = (event.detail.value === 'Peso Percentuale' && this.statusField !== 'Bozza') ? true : false;
-
+        //this.campaignMemberAssignmentRequired = (event.detail.value === 'Peso Percentuale' && this.statusField !== 'Bozza') ? true : false;
+        this.campaignMemberAssignmentRequired = (event.detail.value == 'Peso Percentuale') ? true : false;
+        this.showcampaignMemberAssignment = (event.detail.value == 'Peso Percentuale') ? true : false;
     }
 
     handleGenerationPeriodChange(event) {
@@ -352,6 +381,8 @@ export default class HdtCreateCampaign extends LightningElement {
     }
     handleType(event) {
         this.tipology = event.detail.value;
+        let categoryField=this.template.querySelector('.categoryField > lightning-input-field').value;
+        this.checkRequiredProcessType(categoryField,this.statusField, this.channelValues); 
     }
     handleSubmit(event) {
         event.preventDefault();

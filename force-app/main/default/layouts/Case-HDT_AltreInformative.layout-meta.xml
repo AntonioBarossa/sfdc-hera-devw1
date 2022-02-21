@@ -71,6 +71,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>AccountId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>ContactId</field>
             </layoutItems>
         </layoutColumns>
@@ -213,6 +217,13 @@
         <fields>et4ae5__Contact_ID__c</fields>
         <relatedList>et4ae5__IndividualEmailResult__c.CaseID__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>Name</fields>
+        <fields>Persona</fields>
+        <fields>Headline</fields>
+        <fields>Who</fields>
+        <relatedList>SocialPosts</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -221,7 +232,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X0000025kaf</masterLabel>
+        <masterLabel>00h1j000002FKxP</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
