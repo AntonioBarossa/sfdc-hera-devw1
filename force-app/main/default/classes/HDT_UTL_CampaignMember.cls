@@ -197,30 +197,44 @@ public with sharing class HDT_UTL_CampaignMember {
         }
     }
 
-    public static void parseStatusCode(Map<Id, CampaignMember> newMap, Map<Id, CampaignMember> oldMap) {
-
-        if(newMap != null){
-            for(CampaignMember member : newMap.values()) {
-                if(oldMap != null && (!oldMap.containsKey(member.Id) || oldMap.get(member.Id).StatusCode__c != member.StatusCode__c)) {
-                    member.Status = HDT_CampaignMemberStatus__mdt.getInstance(member.StatusCode__c).MasterLabel;
-                }
-            }
-        }
-    }
-    
     @SuppressWarnings('PMD.ApexCRUDViolation')
     public static void checkTipoEsito(List<CampaignMember> newCampMembList, Map<Id, CampaignMember> campMembOldMap){
 
         List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
 
         for(CampaignMember member : newCampMembList){
-            if(member.ResultType__c.equalsIgnoreCase('Macchina') && member.ResultType__c != campMembOldMap.get(member.Id).ResultType__c && member.RelatedActivity__c != null){
+            if(member.ResultType__c == 'Macchina' && member.ResultType__c != campMembOldMap.get(member.Id).ResultType__c && member.RelatedActivity__c != null){
                 activitiesToUpdate.add(new wrts_prcgvr__Activity__c(Id = member.RelatedActivity__c, wrts_prcgvr__Status__c = 'Non Esitata'));
             }
         }
 
         if(!activitiesToUpdate.isEmpty()){
             update activitiesToUpdate;
+        }
+    }
+
+    public static void handleStatusChange(List<CampaignMember> newList, Map<Id,CampaignMember> oldMap) {
+        Map<String, HDT_CampaignMemberStatus__mdt> statusMap =  new Map<String, HDT_CampaignMemberStatus__mdt>();
+        Map<String, HDT_CampaignMemberStatus__mdt> statusCodeMap =  new Map<String, HDT_CampaignMemberStatus__mdt>();
+        for(HDT_CampaignMemberStatus__mdt status : HDT_CampaignMemberStatus__mdt.getAll().values()) {
+            statusMap.put(status.StatusName__c, status);
+            statusCodeMap.put(status.DeveloperName, status);
+        }
+
+        HDT_CampaignMemberStatus__mdt status;
+        for(CampaignMember member : newList) {
+            if(oldMap == null || (member.Status != oldMap.get(member.Id).Status)) {
+                if(statusMap.containsKey(member.Status)) {
+                    status = statusMap.get(member.Status);
+                    member.ResultType__c = status.OutcomeType__c;
+                    member.ResultCategory__c = status.OutcomeCategory__c;
+                }
+            } else if(member.StatusCode__c != oldMap.get(member.Id).StatusCode__c) {
+                status = statusCodeMap.get(member.StatusCode__c);
+                member.Status = status.StatusName__c;
+                member.ResultType__c = status.OutcomeType__c;
+                member.ResultCategory__c = status.OutcomeCategory__c;
+            }
         }
     }
 }
