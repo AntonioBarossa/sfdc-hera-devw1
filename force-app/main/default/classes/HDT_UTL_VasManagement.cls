@@ -77,7 +77,7 @@ public with sharing class HDT_UTL_VasManagement {
             SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
             (SELECT Quantity, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
                 DurationDay__c, PaymentMode__c, IVA__c,
-                Product2.Name, Product2.NumberRateMonthly__c, Product2.DescriptionSAP__c
+                Product2.Name, Product2.NumberRateMonthly__c, Product2.DescriptionSAP__c,DelayEffectiveDate__c
                 FROM OrderItems)
             FROM Order WHERE Id = :orderId WITH SECURITY_ENFORCED];
     }
@@ -105,14 +105,20 @@ public with sharing class HDT_UTL_VasManagement {
     * @return String 
     **/
     private static String getCompanyCode(String salesCompany, String servicePointCode){
-        if(STRING.isBlank(servicePointCode)){
+        if(String.isBlank(servicePointCode) && String.isBlank(salesCompany)){
             return null;
+        }else if(String.isNotBlank(salesCompany)){
+            List<HDT_HeraCompany__mdt> companies = [select CompanyCode__c from HDT_HeraCompany__mdt where SalesCompany__c=:salesCompany WITH SECURITY_ENFORCED];
+            return companies.isEmpty()? null : companies?.get(0)?.CompanyCode__c; 
         }
-        List<ServicePoint__c> lpc = [Select Vendor__c from ServicePoint__c where ServicePointCode__c=:servicePointCode WITH SECURITY_ENFORCED LIMIT 1 ];
-        if(lpc.size()>0){
-            List<HDT_HeraCompany__mdt> companies = [select CompanyCode__c from HDT_HeraCompany__mdt where SalesCompany__c=:lpc[0].Vendor__c WITH SECURITY_ENFORCED];
-            return companies.isEmpty()? null : companies?.get(0)?.CompanyCode__c;
+        else{
+            List<ServicePoint__c> lpc = [Select Vendor__c from ServicePoint__c where ServicePointCode__c=:servicePointCode WITH SECURITY_ENFORCED LIMIT 1 ];
+            if(lpc.size()>0){
+                List<HDT_HeraCompany__mdt> companies = [select CompanyCode__c from HDT_HeraCompany__mdt where SalesCompany__c=:lpc[0].Vendor__c WITH SECURITY_ENFORCED];
+                return companies.isEmpty()? null : companies?.get(0)?.CompanyCode__c;
+            }
         }
+        
         return null;
     }
 
@@ -278,7 +284,7 @@ public with sharing class HDT_UTL_VasManagement {
             telefono = currentOrder.PhoneNumber__c;
             mail = currentOrder.ShippingMail__c;
             modalitaFatturazione = parentOrderItem?.VASBillingMode__c?.substring(0,1);
-            dataDecorrenza = parentOrderItem?.VasActivationDate__c;
+            dataDecorrenza = parentOrderItem.VasActivationDate__c != null ? parentOrderItem?.VasActivationDate__c : parentOrderItem?.DelayEffectiveDate__c;
             dataFirma = currentOrder.SignedDate__c;
             durataServizioGg = parentOrderItem?.DurationDay__c;
             //modalitaPagamento = parentOrderItem?.PaymentMode__c;

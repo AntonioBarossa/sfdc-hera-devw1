@@ -433,8 +433,13 @@ export default class HdtAdvancedSearch extends LightningElement {
                     });
                 }
                 else{
-                    this.alert('Errore','Il dato ricercato non è stato trovato in SAP, Modificare i parametri di ricerca o procedere alla creazione manuale.','error');
-                    this.preloading = false;
+                    if(this.postSales){
+                        this.alert('Errore','Il dato ricercato non è stato trovato in SAP, Modificare i parametri di ricerca o procedere alla creazione manuale.','error');
+                        this.preloading = false;
+                    }
+                    else{
+                        resolve();
+                    }
                 }
             });
         });

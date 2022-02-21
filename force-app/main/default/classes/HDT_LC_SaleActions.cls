@@ -16,6 +16,7 @@ public inherited sharing class HDT_LC_SaleActions {
     private static HDT_SRV_QuoteLineGroup quoteLineGroupSrv = new HDT_SRV_QuoteLineGroup();
     private static HDT_SRV_QuoteProcess quoteProcessSrv = new HDT_SRV_QuoteProcess();
     private static HDT_QR_QuoteProcess quoteProcessQr = new HDT_QR_QuoteProcess();
+    private static HDT_QR_AccountContactRelation accountContactRelationQr = new HDT_QR_AccountContactRelation();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -230,7 +231,8 @@ public inherited sharing class HDT_LC_SaleActions {
          * In ogni caso, se l'account non ha il Codice Cliente
          * viene chiamato il servizio di Crea BP/CA
          */
-        
+
+        System.enqueueJob(new HDT_QBL_BpCaRequest( accountContactRelationQr.getCreateBpCa( accountIds[0] ), sale.Id ) );
 
     }
 

@@ -1,6 +1,211 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>Assegna_Note</name>
+        <label>Assegna Note</label>
+        <locationX>182</locationX>
+        <locationY>1094</locationY>
+        <assignmentItems>
+            <assignToReference>activity.ClosingNote__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Note_di_Chiusura</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>activity.ActivityOutcome__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Esito_Attivit</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Chiudi_Activity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Activity</name>
+        <label>Assign Activity</label>
+        <locationX>314</locationX>
+        <locationY>158</locationY>
+        <assignmentItems>
+            <assignToReference>activity.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>activity.ActivityEndTime__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>activity.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>activity.ClosedByUsername__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Username</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>activity.wrts_prcgvr__IsClosed__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>activity.UserCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.UserCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Activity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>HDT_CloseActivity_AND_HDT_CloseManualActivity</name>
+        <label>HDT_CloseActivity AND HDT_CloseManualActivity</label>
+        <locationX>578</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>activity.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Chiusa</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>activity.QAdCallStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Chiusa</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Note</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>HDT_CloseDistributorComunicationAssign</name>
+        <label>HDT_CloseDistributorComunicationAssign</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>activity.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Comunicazione inviata</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Note</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>ActivityType_0</name>
+        <label>ActivityType</label>
+        <locationX>314</locationX>
+        <locationY>974</locationY>
+        <defaultConnector>
+            <targetReference>Chiudi_Activity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
+        <rules>
+            <name>HDT_CloseManualActivity_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_Scarto</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Activity.DiscardCategory__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Activity.DiscardCategory__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Manuale</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Note</targetReference>
+            </connector>
+            <label>HDT_CloseManualActivity</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Tipo_Completa_Attivit</name>
+        <label>Tipo Completa Attività</label>
+        <locationX>314</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>HDT_CloseActivity_AND_HDT_CloseManualActivity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
+        <rules>
+            <name>Check_Assegnazione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsNotOwner</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Finale_0</targetReference>
+            </connector>
+            <label>Check Assegnazione</label>
+        </rules>
+        <rules>
+            <name>RT_HDT_CloseDistributorComunication</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_DistributorCommunication</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>HDT_CloseDistributorComunicationAssign</targetReference>
+            </connector>
+            <label>RT_HDT_CloseDistributorComunication</label>
+        </rules>
+    </decisions>
+    <dynamicChoiceSets>
+        <name>EsitoAct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>ActivityOutcome__c</picklistField>
+        <picklistObject>wrts_prcgvr__Activity__c</picklistObject>
+    </dynamicChoiceSets>
+    <formulas>
+        <name>IsNotOwner</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(BEGINS({!Get_Activity.OwnerId},{!$User.Id}),false,true)</expression>
+    </formulas>
     <interviewLabel>Activity - Chiusura {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Activity - Chiusura</label>
     <processMetadataValues>
@@ -22,13 +227,14 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordUpdates>
-        <name>Chiudi_Activity</name>
-        <label>Chiudi Activity</label>
-        <locationX>176</locationX>
-        <locationY>158</locationY>
+    <recordLookups>
+        <name>Get_Activity</name>
+        <label>Get Activity</label>
+        <locationX>314</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Screen_Finale</targetReference>
+            <targetReference>Tipo_Completa_Attivit</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -38,43 +244,25 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
-        <inputAssignments>
-            <field>ActivityEndTime__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDateTime</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>EndDate__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>QAdCallStatus__c</field>
-            <value>
-                <stringValue>Chiusa</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>wrts_prcgvr__IsClosed__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>wrts_prcgvr__Status__c</field>
-            <value>
-                <stringValue>Chiusa</stringValue>
-            </value>
-        </inputAssignments>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Chiudi_Activity</name>
+        <label>Chiudi Activity</label>
+        <locationX>314</locationX>
+        <locationY>1310</locationY>
+        <connector>
+            <targetReference>Screen_Finale</targetReference>
+        </connector>
+        <inputReference>activity</inputReference>
     </recordUpdates>
     <screens>
         <name>Screen_Finale</name>
         <label>Screen Finale</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>314</locationX>
+        <locationY>1430</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -86,14 +274,144 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <start>
+    <screens>
+        <name>Screen_Finale_0</name>
+        <label>Screen Finale</label>
         <locationX>50</locationX>
+        <locationY>518</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>dt1_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(255, 0, 0);&quot;&gt;Attenzione!&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;L&apos;attività può essere gestita solo dall&apos;assegnatario.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Set_Note</name>
+        <label>Set Note</label>
+        <locationX>314</locationX>
+        <locationY>854</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>ActivityType_0</targetReference>
+        </connector>
+        <fields>
+            <fieldType>ObjectProvided</fieldType>
+            <isRequired>false</isRequired>
+            <objectFieldReference>activity.ClosingNote__c</objectFieldReference>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>HDT_RT_DistributorCommunication</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>HDT_RT_Scarto</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Get_Activity.DiscardCategory__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Manuale</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <fieldType>ObjectProvided</fieldType>
+            <isRequired>false</isRequired>
+            <objectFieldReference>activity.Note__c</objectFieldReference>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>HDT_RT_DistributorCommunication</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Note_di_Chiusura</name>
+            <fieldText>Note di Chiusura</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>HDT_RT_Scarto</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Get_Activity.DiscardCategory__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Manuale</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Esito_Attivit</name>
+            <choiceReferences>EsitoAct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Esito Attività</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Activity.RecordType.DeveloperName</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>HDT_RT_Scarto</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Get_Activity.DiscardCategory__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Manuale</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Chiudi_Activity</targetReference>
+            <targetReference>Assign_Activity</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>activity</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>wrts_prcgvr__Activity__c</objectType>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>

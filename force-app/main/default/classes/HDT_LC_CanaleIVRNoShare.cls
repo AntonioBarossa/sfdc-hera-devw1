@@ -1,7 +1,7 @@
 public without sharing class HDT_LC_CanaleIVRNoShare {
     public List<Order>  getOrderByUsernamePassword(String username, String password) {
         List<Order> listOrder = [
-            SELECT Username__c, Password__c,UniqueAutentication__c  FROM Order WHERE Username__c = :username AND Password__c = :password WITH SECURITY_ENFORCED
+            SELECT Username__c, Password__c,UniqueAutentication__c,MethodSignedAccepted__c,(Select Username__c FROM Orders__r) FROM Order WHERE Username__c = :username AND Password__c = :password WITH SECURITY_ENFORCED
         ];
 
         return listOrder;
@@ -9,7 +9,13 @@ public without sharing class HDT_LC_CanaleIVRNoShare {
 	public DocumentalActivity__c  getActivityByOrder(String orderId) {
         List<DocumentalActivity__c> dl = [SELECT Id, OrderId__c FROM DocumentalActivity__c where orderId__c = :orderId WITH SECURITY_ENFORCED];
 
-        return  dl[0];
+        return  !dl.isEmpty() ? dl[0] : null ;
+    }
+
+    public DocumentSendTracking__c getDocumentalSendTracking(String orderId)
+    {
+        List<DocumentSendTracking__c> dst = [SELECT Id, Order__c FROM DocumentSendTracking__c WHERE Order__c = :orderId WITH SECURITY_ENFORCED];
+        return dst[0];
     }
 
     public map<String,String> getPlico(String recordId){

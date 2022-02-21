@@ -32,6 +32,11 @@
             <actionType>QuickAction</actionType>
             <sortOrder>5</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Crea_Distributore2</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>6</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <quickActionList>
         <quickActionListItems>
@@ -45,6 +50,9 @@
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>HDT_SendCertifiedEmail</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>Crea_Distributore2</quickActionName>
         </quickActionListItems>
     </quickActionList>
     <showEmailCheckbox>false</showEmailCheckbox>

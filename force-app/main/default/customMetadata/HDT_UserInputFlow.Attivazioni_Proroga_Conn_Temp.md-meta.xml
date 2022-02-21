@@ -6,48 +6,8 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {
-&quot;FieldName&quot;: &quot;TemporaryConnectionStartDate__c&quot;,
-&quot;Required&quot;: true,
-&quot;Column&quot;: 1
-},
-{
 &quot;FieldName&quot;: &quot;TemporaryConnectionEndDate__c&quot;,
 &quot;Required&quot;: true,
-&quot;Column&quot;: 2
-},
-{
-&quot;FieldName&quot;: &quot;HoursOfUse__c&quot;,
-&quot;Required&quot;: true,
-&quot;Column&quot;: 1
-},
-{
-&quot;FieldName&quot;: &quot;ConnectionType__c&quot;,
-&quot;Required&quot;: true,
-&quot;Column&quot;: 2
-},
-{
-&quot;FieldName&quot;: &quot;ServicePointType__c&quot;,
-&quot;Required&quot;: true,
-&quot;Column&quot;: 1
-},
-{
-&quot;FieldName&quot;: &quot;PowerAvailable__c&quot;,
-&quot;Required&quot;: true,
-&quot;Column&quot;: 2
-},
-{
-&quot;FieldName&quot;: &quot;PowerCommitted__c&quot;,
-&quot;Required&quot;: true,
-&quot;Column&quot;: 1
-},
-{
-&quot;FieldName&quot;: &quot;Voltage__c&quot;,
-&quot;Required&quot;: true,
-&quot;Column&quot;: 2
-},
-{
-&quot;FieldName&quot;: &quot;UseTypeEnergy__c&quot;,
-&quot;Required&quot;: false,
 &quot;Column&quot;: 1
 }
 ]</value>
@@ -59,46 +19,86 @@
     <values>
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[
-  {
-    &quot;FieldName&quot;: &quot;SupplyCity__c&quot;,
-    &quot;Required&quot;: true,
-    &quot;Column&quot;: 1
-  },
-  {
-    &quot;FieldName&quot;: &quot;SupplyStreetName__c&quot;,
-    &quot;Required&quot;: true,
-    &quot;Column&quot;: 2
-  },
-  {
-    &quot;FieldName&quot;: &quot;SupplyStreetNumber__c&quot;,
-    &quot;Required&quot;: true,
-    &quot;Column&quot;: 1
-  },
- {
-    &quot;FieldName&quot;: &quot;SupplyPlace__c&quot;,
-    &quot;Required&quot;: true,
-    &quot;Column&quot;: 2
-  },
- {
-    &quot;FieldName&quot;: &quot;SupplyProvince__c&quot;,
-    &quot;Required&quot;: true,
-    &quot;Column&quot;: 1
-  },
-  {
-    &quot;FieldName&quot;: &quot;SupplyPostalCode__c&quot;,
-    &quot;Required&quot;: true,
-    &quot;Column&quot;: 2
-  },
-  {
-    &quot;FieldName&quot;: &quot;SupplyCountry__c&quot;,
-    &quot;Required&quot;: true,
-    &quot;Column&quot;: 1
-  },
-  {
-    &quot;FieldName&quot;: &quot;SupplyCityCode__c&quot;,
-    &quot;Required&quot;: true,
-    &quot;Column&quot;: 2
-  },
+{
+&quot;FieldName&quot;: &quot;TemporaryConnectionStartDate__c&quot;,
+&quot;Required&quot;: true,
+&quot;Column&quot;: 1
+},
+{
+&quot;FieldName&quot;: &quot;HoursOfUse__c&quot;,
+&quot;Required&quot;: true,
+&quot;Column&quot;: 2
+},
+{
+&quot;FieldName&quot;: &quot;ConnectionType__c&quot;,
+&quot;Required&quot;: true,
+&quot;Column&quot;: 1
+},
+{
+&quot;FieldName&quot;: &quot;ServicePointType__c&quot;,
+&quot;Required&quot;: true,
+&quot;Column&quot;: 2
+},
+{
+&quot;FieldName&quot;: &quot;PowerAvailable__c&quot;,
+&quot;Required&quot;: true,
+&quot;Column&quot;: 1
+},
+{
+&quot;FieldName&quot;: &quot;PowerCommitted__c&quot;,
+&quot;Required&quot;: true,
+&quot;Column&quot;: 2
+},
+{
+&quot;FieldName&quot;: &quot;Voltage__c&quot;,
+&quot;Required&quot;: true,
+&quot;Column&quot;: 1
+},
+{
+&quot;FieldName&quot;: &quot;UseTypeEnergy__c&quot;,
+&quot;Required&quot;: false,
+&quot;Column&quot;: 2
+},
+{
+&quot;FieldName&quot;: &quot;SupplyCity__c&quot;,
+&quot;Required&quot;: true,
+&quot;Column&quot;: 1
+},
+{
+&quot;FieldName&quot;: &quot;SupplyStreetName__c&quot;,
+&quot;Required&quot;: true,
+&quot;Column&quot;: 2
+},
+{
+&quot;FieldName&quot;: &quot;SupplyStreetNumber__c&quot;,
+&quot;Required&quot;: true,
+&quot;Column&quot;: 1
+},
+{
+&quot;FieldName&quot;: &quot;SupplyPlace__c&quot;,
+&quot;Required&quot;: true,
+&quot;Column&quot;: 2
+},
+{
+&quot;FieldName&quot;: &quot;SupplyProvince__c&quot;,
+&quot;Required&quot;: true,
+&quot;Column&quot;: 1
+},
+{
+&quot;FieldName&quot;: &quot;SupplyPostalCode__c&quot;,
+&quot;Required&quot;: true,
+&quot;Column&quot;: 2
+},
+{
+&quot;FieldName&quot;: &quot;SupplyCountry__c&quot;,
+&quot;Required&quot;: true,
+&quot;Column&quot;: 1
+},
+{
+&quot;FieldName&quot;: &quot;SupplyCityCode__c&quot;,
+&quot;Required&quot;: true,
+&quot;Column&quot;: 2
+},
 {
 &quot;FieldName&quot;: &quot;ServicePoint__c&quot;,
 &quot;Required&quot;: true,

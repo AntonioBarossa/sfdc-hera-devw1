@@ -126,7 +126,8 @@ public inherited sharing class HDT_QR_ActivityCustom {
             SELECT
             Id,
             order__c,
-            Account__c
+            Account__c,
+            Type__c
             FROM wrts_prcgvr__Activity__c
             WHERE Id= :activityId
             WITH SECURITY_ENFORCED
@@ -288,7 +289,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
                                                              Order__r.Account.RecordType.DeveloperName                                                             
                                                        FROM wrts_prcgvr__Activity__c 
                                                        WHERE  (RecordType.DeveloperName = 'HDT_RT_CreditCheckKO' or RecordType.DeveloperName = 'HDT_RT_KoPrecedeteCliente') 
-                                                                and wrts_prcgvr__Status__c = 'Creata' and Order__c IN :orderSetId WITH SECURITY_ENFORCED];
+                                                                and wrts_prcgvr__Status__c = 'Aperta' and Order__c IN :orderSetId WITH SECURITY_ENFORCED];
 
         return actList;}
 

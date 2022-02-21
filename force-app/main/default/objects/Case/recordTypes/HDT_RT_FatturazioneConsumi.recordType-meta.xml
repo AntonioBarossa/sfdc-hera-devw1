@@ -7821,6 +7821,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pratica In Attesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Prescrizione concessa</fullName>
             <default>false</default>
         </values>

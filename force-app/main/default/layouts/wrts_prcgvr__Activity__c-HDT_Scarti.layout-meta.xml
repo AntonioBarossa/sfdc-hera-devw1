@@ -5,7 +5,7 @@
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Edit</excludeButtons>
-    <excludeButtons>IsotopeSubscription</excludeButtons>
+    <!--<excludeButtons>IsotopeSubscription</excludeButtons>-->
     <excludeButtons>PrintableView</excludeButtons>
     <excludeButtons>RecordShareHierarchy</excludeButtons>
     <excludeButtons>Share</excludeButtons>
@@ -184,6 +184,9 @@
     </platformActionList>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedFileList</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>

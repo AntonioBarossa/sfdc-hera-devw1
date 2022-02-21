@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements,PMD.CyclomaticComplexity')
 public without sharing class HDT_UTL_ActivityCustomProcess {
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
@@ -16,10 +17,10 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         List<Lead> listLead = new List<Lead>();
         List<String> listContactId = new List<String>();
         List<Account> listAccount = new List<Account>();
-		System.debug('DENTRO HANDLER HANDLER: ' + triggernew);
+		system.debug(LoggingLevel.DEBUG, 'DENTRO HANDLER HANDLER: ' + triggernew);
         List<wrts_prcgvr__Activity__c> listActD2DBef = filterByD2D(triggerold,recordtypeid);
         for(wrts_prcgvr__Activity__c art : listActD2DBef){
-            System.debug('DENTRO HANDLER HANDLER2:' + art);
+            system.debug(LoggingLevel.DEBUG, 'DENTRO HANDLER HANDLER2:' + art);
             mapIdOwnerIdBef.put(art.id,art.ownerId);
         } 
         List<wrts_prcgvr__Activity__c> listActD2DAfter = filterByD2D(triggernew,recordtypeid);
@@ -41,13 +42,13 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         List<AccountShare> lAccSh = new List<AccountShare>();
         for(Contact c : contactList){
             if(mapContactIdOwner.get(c.id)!= null && c.AccountId != null){
-                System.debug('************:'+c.AccountId);
+                system.debug(LoggingLevel.DEBUG, '************:'+c.AccountId);
                 lAccSh.add(HDT_UTL_RecordShare.accountShareEditCreate(c.AccountId,mapContactIdOwner.get(c.id)));
                 listAccount.add(new Account(id=c.AccountId,ownerId=mapContactIdOwner.get(c.id)));
             }
         }
         /*if(lAccSh != null && !lAccSh.isEmpty()){
-            System.debug('PROVAPROVA:' + lAccSh);
+            system.debug(LoggingLevel.DEBUG, 'PROVAPROVA:' + lAccSh);
             HDT_SRV_RecordShare.createRecordWithout(lAccSh);
         }*/
         if(listLead != null && !listLead.isEmpty()){
@@ -60,10 +61,10 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
 
     private static List<wrts_prcgvr__Activity__c> filterByD2d(List<wrts_prcgvr__Activity__c> li,String recordtypeid){
         List<wrts_prcgvr__Activity__c> rep = new List<wrts_prcgvr__Activity__c>();
-        System.debug('DENTRO HANDLER HANDLER4:');
+        system.debug(LoggingLevel.DEBUG, 'DENTRO HANDLER HANDLER4:');
         for(wrts_prcgvr__Activity__c act : li){
             if(recordtypeid.equalsIgnoreCase(act.recordtypeid)){
-                System.debug('DENTRO HANDLER HANDLER5:');
+                system.debug(LoggingLevel.DEBUG, 'DENTRO HANDLER HANDLER5:');
                 rep.add(act);
             }
         }
@@ -74,7 +75,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
     // Alla ricezione di un esito KO, verrà creata su Salesforce un Activities
     public static void createActivityForCreditCheck(Map<String,List<Order>> orderMap){        
 
-        system.debug('HDT_UTL_ActivityProcess createActivity --> orderMap : ' + JSON.serializePretty(orderMap));
+        system.debug(LoggingLevel.DEBUG, 'HDT_UTL_ActivityProcess createActivity --> orderMap : ' + JSON.serializePretty(orderMap));
         
         List<wrts_prcgvr__Activity__c> listActivity = new List<wrts_prcgvr__Activity__c>();
         //Id rtOldCustomer = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_KoPrecedeteCliente' limit 1].id;
@@ -98,18 +99,20 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                     activity.CreditCheckResults__c = order.OutgoingCreditCheckResult__c;
                     activity.Account__c = order.ServicePoint__r.Account__c; 
                     activity.OldCustomerAccount__c=ordersToGetOldCustomer.get(order.Id).ServicePoint__r?.Account__c;
+                    activity.Type__c = 'KO Precedente Cliente';
                 }
                         
                 if(typeCustomer == 'newCustomer'){ // Nuovo cliente // entrante
                     activity.RecordTypeId = rtNewCustomer;                     
                     activity.CreditCheckResults__c = order.IncomingCreditCheckResult__c;
                     activity.Account__c = order.AccountId; 
+                    activity.Type__c = 'KO Credit Check';
                 }
 
                 activity.CreditCheckReason__c = order.CreditCheckDescription__c;
                 activity.Order__c = order.Id;                
                 activity.Contact__c = order.Contact__c;                                
-                activity.wrts_prcgvr__Status__c = 'Creata';                
+                activity.wrts_prcgvr__Status__c = 'Aperta';                
                 activity.Note__c = order.CommentForDL__c;
                 activity.OwnerId = order.OwnerId;
                 activity.CvpId__c= order.CvpId__c;
@@ -136,26 +139,34 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
     
     public static void updateCreditCheckActivity(List<wrts_prcgvr__Activity__c> actListToUpdate){        
         if(!actListToUpdate.isEmpty()){
-            system.debug('Start updateCreditCheckActivity -----> ' + json.serializePretty(actListToUpdate));
-            update actListToUpdate;
+            system.debug(LoggingLevel.DEBUG, 'Start updateCreditCheckActivity -----> ' + json.serializePretty(actListToUpdate));
+            activitySrv.updateRecords(actListToUpdate);
+            //update actListToUpdate;
         }
     }
 
     // @Picchiri 08.06.21 Credit Check 
     // Annullamento Activity di Credit Check e annullamento Ordine in caso di KO Definitvo dell'activity
-    public static void annullamentoActivityCustom(List<wrts_prcgvr__Activity__c> newActList, List<wrts_prcgvr__Activity__c> oldActList){
-                
+    public static void annullamentoActivityCustom(List<wrts_prcgvr__Activity__c> newActList, Map<Id,wrts_prcgvr__Activity__c> oldMap){
+
         Set<Id> orderIdToAnnullamento = new Set<Id>();        
         for(wrts_prcgvr__Activity__c act : newActList){
-            if(act.wrts_prcgvr__Status__c == 'KO Definitivo'){
+            if('KO Definitivo'.equalsIgnoreCase(act.wrts_prcgvr__Status__c) && act.wrts_prcgvr__Status__c!= oldMap.get(act.Id).wrts_prcgvr__Status__c){
                 orderIdToAnnullamento.add(act.Order__c);                 
             }
         }
 
-        System.debug('orderIdToAnnullamento ----> ' + orderIdToAnnullamento);        
-        List<Order> orderToAnnullamento = [SELECT id,Status FROM Order WHERE id IN :orderIdToAnnullamento WITH SECURITY_ENFORCED];
+        system.debug(LoggingLevel.DEBUG, 'orderIdToAnnullamento ----> ' + orderIdToAnnullamento);        
+        List<Order> orderToAnnullamento = [SELECT id,Status, RecordType.DeveloperName FROM Order WHERE id IN :orderIdToAnnullamento WITH SECURITY_ENFORCED];
         for(Order order : orderToAnnullamento){        
-            order.Status = 'Annullato';                
+            if(order.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_Voltura')){
+                order.Phase__c = 'Accettazione Voltura';
+            }        
+            else {
+                order.Status = 'Annullato';     
+                order.Phase__c = 'Annullato'; 
+                order.CancellationReason__c = 'Gestione Scarto';  
+            }                             
         }
         orderSrv.updateRecords(orderToAnnullamento);
         //update orderToAnnullamento;
@@ -195,7 +206,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
 
     // @Picchiri 14.06.21 Credit Check Gestione Esiti ed eventuali invocazione a chiamata Mulesoft
     public static void creditCheckKoPrecedenteCliente(List<wrts_prcgvr__Activity__c> newActList, List<wrts_prcgvr__Activity__c> oldActList){
-        system.debug('Start creditCheckKoPrecedenteCliente --->');
+        system.debug(LoggingLevel.DEBUG, 'Start creditCheckKoPrecedenteCliente --->');
 
         HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
         Id recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_CreditCheckKO');
@@ -204,12 +215,12 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         for(Integer i = 0; i < newActList.size(); i++){
             wrts_prcgvr__Activity__c act = newActList[i];
             wrts_prcgvr__Activity__c actOld = oldActList[i];
-            if(act.recordtypeid == recordtypeid && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && (act.CreditCheckResolutionReason__c == 'Dimostrata Estraneità' || act.CreditCheckResolutionReason__c == 'Saldo Pagato') && act.wrts_prcgvr__Status__c == 'KO Risolto'){                    
+            if(act.recordtypeid == recordtypeid && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && (act.Reason__c == 'Dimostrata Estraneità' || act.Reason__c == 'Saldo Pagato') && act.wrts_prcgvr__Status__c == 'KO Risolto'){                    
                 actListToRecheck.add(act);                    
             }
         }
 
-        system.debug('actListToRecheck' + JSON.serializePretty(actListToRecheck));
+        system.debug(LoggingLevel.DEBUG, 'actListToRecheck' + JSON.serializePretty(actListToRecheck));
 
         if(!actListToRecheck.isEmpty()){
             recheckCreditCheck(actListToRecheck);
@@ -220,12 +231,12 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
 
     // @Picchiri 15.06.21 chiamata Mulesoft
     public static void recheckCreditCheck(List<wrts_prcgvr__Activity__c> actListToRecheck){
-        system.debug('Start recheckCreditCheck --->');
+        system.debug(LoggingLevel.DEBUG, 'Start recheckCreditCheck --->');
         for(wrts_prcgvr__Activity__c act : actListToRecheck){  
         
             String typeOfCommodity = act.Order__r.ServicePoint__r.CommoditySector__c;
             String fiscalData = null;
-            Boolean precedenteCliente = null;
+            //Boolean precedenteCliente = null;
 
             if(act.Order__r.RecordType.DeveloperName == 'HDT_RT_Subentro' || act.Order__r.RecordType.DeveloperName == 'HDT_RT_Voltura'){
             
@@ -234,7 +245,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 }else if(act.Order__r.ServicePoint__r.Account__r.VATNumber__c != null){
                     fiscalData = act.Order__r.ServicePoint__r.Account__r.VATNumber__c;
                 }
-                precedenteCliente = true;                
+                //precedenteCliente = true;                
             }
                 
             if(typeOfCommodity == 'Energia Elettrica'){
@@ -250,7 +261,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             }            
             iwd.commodity = typeOfCommodity;
             
-            system.debug('HDT_VFC_InputWrapperDetail ---> ' + JSON.serialize(iwd)); 
+            system.debug(LoggingLevel.DEBUG, 'HDT_VFC_InputWrapperDetail ---> ' + JSON.serialize(iwd)); 
 
             List<HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail> l = new List<HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail>();
             l.add(iwd);
@@ -261,7 +272,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 l.remove(1);
             }
 
-            system.debug('HDT_VFC_InputWrapperDetail 2 ---> ' + JSON.serialize(iwd)); 
+            system.debug(LoggingLevel.DEBUG, 'HDT_VFC_InputWrapperDetail 2 ---> ' + JSON.serialize(iwd)); 
 
             HDT_WS_CreditCheckRequest iw = new HDT_WS_CreditCheckRequest();
             iw.sistema = 'eEnergy';
@@ -291,11 +302,11 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             iw.market = act.Order__r.Market__c;
             iw.offerType = act.Order__r.Catalog__c;
             iw.details = l;
-            if(precedenteCliente == true){
+            /*if(precedenteCliente == true){
                 iw.bpAlternative = act.Order__r.ServicePoint__r.Account__r.CustomerCode__c;
                 iw.alternativeCustomerId = fiscalData;            
-            }
-            system.debug('act.Order__r.RecordType.DeveloperName ---> ' + JSON.serialize(iw)); 
+            }*/
+            system.debug(LoggingLevel.DEBUG, 'act.Order__r.RecordType.DeveloperName ---> ' + JSON.serialize(iw)); 
             HDT_WS_CreditCheck.callService(iw);
         }
     }
@@ -309,7 +320,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
     //     Map<id,wrts_prcgvr__Activity__c> mapActivityOld = new Map<Id,wrts_prcgvr__Activity__c>();
     //     List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
 
-	// 	System.debug('manageStatusChangeCrediCheck: Creating map of HDT_RT_CreditCheckKO recordtype');
+	// 	system.debug(LoggingLevel.DEBUG, 'manageStatusChangeCrediCheck: Creating map of HDT_RT_CreditCheckKO recordtype');
     //     List<wrts_prcgvr__Activity__c> listActD2DBef = filterByD2D(triggerold,recordtypeid);
 
     //     for(Integer i = 0; i < triggernew.size(); i++){
@@ -356,7 +367,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
     
     public static void cancelQualityNoResult(List<wrts_prcgvr__Activity__c> triggernew , List<wrts_prcgvr__Activity__c> triggerold){
 
-        system.debug('>>cancelQualityNoResult start');
+        system.debug(LoggingLevel.DEBUG, '>>cancelQualityNoResult start');
 
         try {
             Set<id> activityIdSet = Trigger.newMap.keySet();
@@ -391,10 +402,10 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 orderSrv.updateRecords(ordersToUpdate);
             }
         } catch (Exception e) {
-            System.debug('HDT_TRH_ActivityCustom - afterUpdate - cancelQualityNoResult: ' + e.getMessage());
+            system.debug(LoggingLevel.DEBUG, 'HDT_TRH_ActivityCustom - afterUpdate - cancelQualityNoResult: ' + e.getMessage());
         }
 
-        system.debug('>>cancelQualityNoResult end');
+        system.debug(LoggingLevel.DEBUG, '>>cancelQualityNoResult end');
 
     }
 }

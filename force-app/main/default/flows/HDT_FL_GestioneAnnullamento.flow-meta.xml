@@ -138,6 +138,7 @@
             <typeName>T__caseRecord</typeName>
             <typeValue>Case</typeValue>
         </dataTypeMappings>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>description</name>
             <value>
@@ -1036,6 +1037,27 @@
                     <stringValue>Autolettura</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Ammissibilità KO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito KO da DL</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito KO da SII</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_Fase_Precedente</targetReference>
             </connector>
@@ -1053,7 +1075,7 @@
         <defaultConnectorLabel>Non inviata</defaultConnectorLabel>
         <rules>
             <name>Inviata_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND (NOT(7))</conditionLogic>
             <conditions>
                 <leftValueReference>GetOrderAggiornato_0.HerokuPracticeCode__c</leftValueReference>
                 <operator>IsNull</operator>
@@ -1066,6 +1088,41 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Amm. Precheck OK SII</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito KO da DL</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito KO da SII</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Ammissibilità KO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.PhaseStory__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Amm. Precheck OK SII</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.PhaseStory__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Ammissibilità OK</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1789,8 +1846,8 @@
     <recordUpdates>
         <name>AggiornaOrder</name>
         <label>AggiornaOrder</label>
-        <locationX>4322</locationX>
-        <locationY>1146</locationY>
+        <locationX>4374</locationX>
+        <locationY>1160</locationY>
         <inputReference>GetOrder</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1847,6 +1904,7 @@
                     <elementReference>GetRecord.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1915,6 +1973,7 @@
                     <elementReference>GetRecord.RecordType.DeveloperName</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>DefaultReason</assignToReference>
@@ -1997,6 +2056,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2053,6 +2113,7 @@
                     <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>DefaultReason</assignToReference>
@@ -2135,6 +2196,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2197,6 +2259,7 @@
                     <elementReference>GetRecord.Type</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>DefaultReason</assignToReference>
@@ -2279,6 +2342,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2347,6 +2411,7 @@
                     <elementReference>GetOrder.CancellationReason__c</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>DefaultReason</assignToReference>
@@ -2423,6 +2488,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>

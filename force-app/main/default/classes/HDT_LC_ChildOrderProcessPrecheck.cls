@@ -106,9 +106,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     newOrder.RequestOption__c = HDT_UTL_OrderFieldsAlignment.calculateRequestedOption(order.ImplantType__c, order.PowerRequested__c);
                 }
                 when 'HDT_RT_TemporaneaNuovaAtt' {
-                    newOrder.RequestOption__c = null;
                     newOrder.ConnectionType__c = null;
                 }
+                when 'HDT_RT_SwitchIn' {
+                    newOrder.PowerRequested__c  = order.PowerCommitted__c;
+                }
+
             }
 
             switch on processType {
@@ -131,9 +134,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             newOrder.ProcessType__c = processType;
             newOrder.ProcessCode__c = processCode;
             newOrder.Phase__c = 'Bozza';
+            newOrder.CreditCheckInProgress__c = order.CreditCheckInProgress__c;
 
             //Logica Superficie Servita Start
-            newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas' && selectedProcessObject.get('recordType') != 'HDT_RT_Voltura') ? 75 : null;
+            newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas') ? 75 : null;
             //Logica Superficie Servita End
             orderSrv.updateRecord(newOrder);
             //EVERIS 

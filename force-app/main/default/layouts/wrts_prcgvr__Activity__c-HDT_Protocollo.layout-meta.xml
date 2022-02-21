@@ -2,7 +2,7 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
-    <excludeButtons>IsotopeSubscription</excludeButtons>
+    <!--<excludeButtons>IsotopeSubscription</excludeButtons>-->
     <excludeButtons>PrintableView</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>

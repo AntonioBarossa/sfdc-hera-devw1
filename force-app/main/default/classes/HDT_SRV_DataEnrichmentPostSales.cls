@@ -12,15 +12,13 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
                 Decimal phaseCondition = Decimal.valueOf(condition);
                 if(phaseCondition <= 1.0 ){
                     condition = 'Monofase';
-                } else {
+                }
+                else {
                     condition = 'Trifase';
                 }
-            } catch (Exception e) {
-                System.debug(LoggingLevel.DEBUG, 'getPicklistValue - Exception TypeName: ' + e.getTypeName());
-                System.debug(LoggingLevel.DEBUG, 'getPicklistValue - Exception Message: ' + e.getMessage());
-                System.debug(LoggingLevel.DEBUG, 'getPicklistValue - Exception StackTraceString: ' + e.getStackTraceString());
-                return null;
-                
+            }
+            catch (Exception e) {
+                return null;                
             }
         }
 
@@ -30,8 +28,7 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
             }
         }
 
-        List<PicklistEntry> entryList =
-            ((SObject) (Type.forName('Schema.'+objectName).newInstance())).getSobjectType().getDescribe().fields.getMap().get(fieldName).getDescribe().getPicklistValues();
+        List<PicklistEntry> entryList = ((SObject) (Type.forName('Schema.'+objectName).newInstance())).getSobjectType().getDescribe().fields.getMap().get(fieldName).getDescribe().getPicklistValues();
 
         for(PicklistEntry entry : entryList){
             // Per non matchare il testo 10% se condition = 10
@@ -45,7 +42,6 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
         return result;
     }
-
 
     public Boolean getBoolFromString(String value){
 

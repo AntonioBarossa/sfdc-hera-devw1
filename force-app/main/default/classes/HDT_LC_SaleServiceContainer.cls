@@ -30,24 +30,14 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
      * @description Check if field "Uso Energia" has been changed on confirmation for service point
      * @param String accountId
      * @param ServicePoint__c newServicePoint
-     * @param ServicePoint__c oldServicePoint
+     * @param String  oldSupplyType
      */
-    private static Boolean hasUsoEnergiaChangedForEle(String accountId, ServicePoint__c newServicePoint, ServicePoint__c oldServicePoint) {
-        System.debug('**********:1' +oldServicePoint.supplytype__c );
-        System.debug('**********:2' +newServicePoint.supplytype__c );
-        System.debug('**********:3' +oldServicePoint.SupplyTypeTemp__c );
-        System.debug('**********:4' +newServicePoint.SupplyTypeTemp__c );
-        return isServicePointLinkedToContract(newServicePoint, accountId) && newServicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' && oldServicePoint.supplytype__c !=null && oldServicePoint.supplytype__c != newServicePoint.SupplyTypeTemp__c;
-
+    private static Boolean hasUsoEnergiaChangedForEle(String accountId, ServicePoint__c newServicePoint, String oldSupplyType) {
+        return isServicePointLinkedToContract(newServicePoint, accountId) && newServicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' && oldSupplyType != '' && oldSupplyType != newServicePoint.SupplyTypeTemp__c;
     }
 
-    private static Boolean hasUsoEnergiaChangedForEle(String accountId, ServicePoint__c newServicePoint, ServicePoint__c oldServicePoint, boolean isTransition) {
-        System.debug('**********:1' +oldServicePoint.supplytype__c );
-        System.debug('**********:2' +newServicePoint.supplytype__c );
-        System.debug('**********:3' +oldServicePoint.SupplyTypeTemp__c );
-        System.debug('**********:4' +newServicePoint.SupplyTypeTemp__c );
-        return (isServicePointLinkedToContract(newServicePoint, accountId) || isTransition )&& newServicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' && oldServicePoint.supplytype__c !=null && oldServicePoint.supplytype__c != newServicePoint.SupplyTypeTemp__c;
-
+    private static Boolean hasUsoEnergiaChangedForEle(String accountId, ServicePoint__c newServicePoint, String oldSupplyType, Boolean isTransition) {
+        return (isServicePointLinkedToContract(newServicePoint, accountId) || isTransition )&& newServicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' && oldSupplyType != '' && oldSupplyType != newServicePoint.SupplyTypeTemp__c;
     }
 
     /**
@@ -57,13 +47,20 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
      * @param Sale__c sale
      */
     @AuraEnabled
-    public static Map<String,Boolean> createSaleServiceItemTile(ServicePoint__c servicePoint, Sale__c sale, ServicePoint__c oldServicePoint){
+    public static Map<String,Boolean> createSaleServiceItemTile(ServicePoint__c servicePoint, Sale__c sale, String oldSupplyType){
         
         Map<String,String> extraParams = new Map<String,String>();
         boolean isTransition =HDT_UTL_Sales.isTransition(ServicePoint,sale);
-        if (hasUsoEnergiaChangedForEle(sale.Account__c, servicePoint, oldServicePoint,isTransition)) {
+        List<account> acc = [ SELECT CustomerMarking__c FROM account WHERE Id=:sale.Account__c WITH SECURITY_ENFORCED];
+        String regex = '^D[0-9] - .*';
+        Pattern regexPattern = Pattern.compile(regex);
+
+        if ( isTransition && regexPattern.matcher(acc[0].CustomerMarking__c).matches() ){
+                throw new AuraHandledException('Impossibile effettuare vendita fuori ambito per cliente migrato. Necessario creare un nuovo cliente clone');
+        }
+        if (hasUsoEnergiaChangedForEle(sale.Account__c, servicePoint, oldSupplyType,isTransition)) {
             List<Contract> linkedContracts = contractQr.getRecordsWithContractsByServicePointAndAccountId(servicePoint.Id, sale.Account__c);
-            String contractReference = linkedContracts != null && !linkedContracts.isEmpty() ? linkedContracts[0].id : '';
+            String contractReference = (linkedContracts != null && linkedContracts.size() > 0) ? String.valueOf(linkedContracts[0].id) : '';
             extraParams.put('AllowChangeUse__c', 'true');
             extraParams.put('contractReference', contractReference);
         }

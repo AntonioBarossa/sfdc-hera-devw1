@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OutcomeType__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Tipo Esito</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Macchina</fullName>
+                <default>true</default>
+                <label>Macchina</label>
+            </value>
+            <value>
+                <fullName>Operatore</fullName>
+                <default>false</default>
+                <label>Operatore</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

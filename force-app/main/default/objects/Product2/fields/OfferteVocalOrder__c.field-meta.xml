@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OfferteVocalOrder__c</fullName>
+    <description>Utilizzato per gli script vocal order</description>
+    <externalId>false</externalId>
+    <label>Offerte Vocal Order</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Hera Bebé Luce</fullName>
+                <default>false</default>
+                <label>Hera Bebé Luce</label>
+            </value>
+            <value>
+                <fullName>Hera Doppio Sconto GAS</fullName>
+                <default>false</default>
+                <label>Hera Doppio Sconto GAS</label>
+            </value>
+            <value>
+                <fullName>Hera Doppio Sconto Luce</fullName>
+                <default>false</default>
+                <label>Hera Doppio Sconto Luce</label>
+            </value>
+            <value>
+                <fullName>Hera EtaPiu GAS</fullName>
+                <default>false</default>
+                <label>Hera EtaPiu GAS</label>
+            </value>
+            <value>
+                <fullName>Hera EtaPiu Luce</fullName>
+                <default>false</default>
+                <label>Hera EtaPiu Luce</label>
+            </value>
+            <value>
+                <fullName>Nuova Impronta Zero Casa Gas</fullName>
+                <default>false</default>
+                <label>Nuova Impronta Zero Casa Gas</label>
+            </value>
+            <value>
+                <fullName>Nuova Impronta Zero Casa Imola Luce</fullName>
+                <default>false</default>
+                <label>Nuova Impronta Zero Casa Imola Luce</label>
+            </value>
+            <value>
+                <fullName>Nuova Impronta Zero Casa Luce</fullName>
+                <default>false</default>
+                <label>Nuova Impronta Zero Casa Luce</label>
+            </value>
+            <value>
+                <fullName>Nuova Impronta Zero Lavoro Gas</fullName>
+                <default>false</default>
+                <label>Nuova Impronta Zero Lavoro Gas</label>
+            </value>
+            <value>
+                <fullName>Nuova Impronta Zero Lavoro Luce</fullName>
+                <default>false</default>
+                <label>Nuova Impronta Zero Lavoro Luce</label>
+            </value>
+            <value>
+                <fullName>Nuova Impronta Zero Lavoro Luce Imola</fullName>
+                <default>false</default>
+                <label>Nuova Impronta Zero Lavoro Luce Imola</label>
+            </value>
+            <value>
+                <fullName>Placet Fissa Luce Casa</fullName>
+                <default>false</default>
+                <label>Placet Fissa Luce Casa</label>
+            </value>
+            <value>
+                <fullName>Prezzo Fisso Leggero Hera Gas_Rete</fullName>
+                <default>false</default>
+                <label>Prezzo Fisso Leggero Hera Gas_Rete</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Lavoro Gas</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Lavoro Gas</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Lavoro Imola Luce</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Lavoro Imola Luce</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Lavoro Luce</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Lavoro Luce</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Natura Casa Gas</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Natura Casa Gas</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Natura Casa Imola Luce</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Natura Casa Imola Luce</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Natura Casa Luce</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Natura Casa Luce</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Special Web Gas</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Special Web Gas</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Special Web Lavoro Gas</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Special Web Lavoro Gas</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Special Web Luce</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Special Web Luce</label>
+            </value>
+            <value>
+                <fullName>Prezzo Sicurezza Hera Gas_Rete</fullName>
+                <default>false</default>
+                <label>Prezzo Sicurezza Hera Gas_Rete</label>
+            </value>
+            <value>
+                <fullName>Prezzo Sicurezza Hera Imola Luce</fullName>
+                <default>false</default>
+                <label>Prezzo Sicurezza Hera Imola Luce</label>
+            </value>
+            <value>
+                <fullName>Prezzo Sicurezza Hera Luce</fullName>
+                <default>false</default>
+                <label>Prezzo Sicurezza Hera Luce</label>
+            </value>
+            <value>
+                <fullName>Simply Hera Casa Gas</fullName>
+                <default>false</default>
+                <label>Simply Hera Casa Gas</label>
+            </value>
+            <value>
+                <fullName>Simply Hera Casa Luce</fullName>
+                <default>false</default>
+                <label>Simply Hera Casa Luce</label>
+            </value>
+            <value>
+                <fullName>Welcome Hera Casa Gas</fullName>
+                <default>false</default>
+                <label>Welcome Hera Casa Gas</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

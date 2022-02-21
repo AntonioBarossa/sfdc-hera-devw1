@@ -20,6 +20,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>X_CALL_DURATION__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>COMMENTS_LONG__c</field>
             </layoutItems>
             <layoutItems>
@@ -83,6 +87,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_CANALE_USER__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_NUMERO__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

@@ -83,6 +83,7 @@
             var accountTabId;
             var leadTabId;
             var interactionTabId;
+            var orderTabId;
             response.forEach((element) => {
                 if(element.pageReference.type === 'standard__recordPage'){                    
                     if(element.pageReference.attributes.recordId===accId){
@@ -97,6 +98,9 @@
                     } else if(element.pageReference.attributes.recordId===interactionId){
                         interactionTabId = element.tabId;
                     }
+                    else if(element.pageReference.attributes.recordId===orderId){
+                        orderTabId = element.tabId;
+                    }
                 }
             });
             console.log('----------');
@@ -108,6 +112,9 @@
 
             console.log('# interactionTabId: ' + interactionTabId);
             component.set("v.interactionTabId", interactionTabId);
+
+            console.log('# orderTabId: ' + orderTabId);
+            component.set("v.orderTabId", orderTabId);
             
             console.log('# subTabToClose: ' + subTabToClose);
             component.set("v.subTabToClose", subTabToClose);
@@ -127,7 +134,8 @@
             console.log('# CaseId is NOT NULL');
             //{ name : "InputCase", type : "SObject", value: {"Id" : caseId}}
             inputVariables.push({ name : 'InputCase', type : 'String', value : caseId });
-            if(processType === 'Annullamento prestazione' || processType === 'Ripristina fase' || processType === 'Ripensamento'){
+            if(processType === 'Annullamento prestazione' || processType === 'Ripristina fase' || processType === 'Ripensamento'
+                || processType === 'KO Definitivo' || processType === 'KO Forzato' || processType === 'KO Risolto'){
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
             }
 
