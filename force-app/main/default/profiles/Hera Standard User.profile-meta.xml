@@ -4193,6 +4193,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Campaign.PositiveOutcomeDefaultStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>sale__c.CampaignEleggibilityGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
