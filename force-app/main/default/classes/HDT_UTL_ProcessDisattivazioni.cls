@@ -233,7 +233,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
         if(caseToInsert.size() > 0){
 
             HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse;
-            saveResponse = HDT_UTL_ProcessCommonOperations.databaseInsert_improved(caseToInsert, requestItemForUpsert, 'Case');
+            saveResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
 
             caseToInsert.clear();
 

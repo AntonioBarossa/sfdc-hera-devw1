@@ -1,7 +1,7 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_UTL_ProcessCommonOperations {
 
-    public static HDT_WRP_SaveResponse databaseInsert(List<sObject> itemList, List<String> itemIds, String sObjectType){
+    public static HDT_WRP_SaveResponse databaseUpsert(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType){
         HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
         saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
         saveResponse.savedObject = new List<sObject>();
@@ -13,27 +13,19 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
  
         if(objRes.isCreateable()){
 
-            List<Database.UpsertResult> upsertResults = Database.upsert(itemList, false);
+            List<Database.UpsertResult> upsertResults = Database.upsert(sObjectList, false);
 
             for(Integer n=0; n<upsertResults.size(); n++){
                 Database.UpsertResult sr = upsertResults[n];
 
                 if(sr.isSuccess()) {
-
-                    MassiveLoaderRequestItem__c itemSuccess;
-                    itemSuccess = new MassiveLoaderRequestItem__c();
-                    itemSuccess.Id = itemIds[n];
-                    itemSuccess.Status__c = 'Chiuso';
-                    saveResponse.reponseItemList.add(itemSuccess);
-                    saveResponse.savedObject.add(itemList[n]);
-                    saveResponse.itemIdToObjId.put(itemIds[n], sr.getId());
+                    requetItems[n].Status__c = 'Chiuso';
+                    saveResponse.reponseItemList.add(requetItems[n]);
+                    saveResponse.savedObject.add(sObjectList[n]);
+                    saveResponse.itemIdToObjId.put(requetItems[n].Id, sr.getId());
 
                 } else {
-
-                    MassiveLoaderRequestItem__c itemError;
-                    itemError = new MassiveLoaderRequestItem__c();
-                    itemError.Id = itemIds[n];
-                    itemError.Status__c = 'Errore';
+                    requetItems[n].Status__c = 'Errore';
 
                     String errorMessage = '';
                     for(Database.Error err : sr.getErrors()) {
@@ -41,9 +33,9 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
                         System.debug(LoggingLevel.DEBUG, '>>> errorMessage ' + errorMessage);
                     }
 
-                    itemError.StatusDescription__c = errorMessage.abbreviate(250);
-                    saveResponse.errorItemMap.put(itemIds[n], errorMessage.abbreviate(250));
-                    saveResponse.reponseItemList.add(itemError);
+                    requetItems[n].StatusDescription__c = errorMessage.abbreviate(250);
+                    saveResponse.errorItemMap.put(requetItems[n].Id, errorMessage.abbreviate(250));
+                    saveResponse.reponseItemList.add(requetItems[n]);
                     
                 }
             }
@@ -52,6 +44,58 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
         return saveResponse;
 
     }
+
+    //public static HDT_WRP_SaveResponse databaseInsert(List<sObject> itemList, List<String> itemIds, String sObjectType){
+    //    HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
+    //    saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
+    //    saveResponse.savedObject = new List<sObject>();
+    //    saveResponse.itemIdToObjId = new Map<Id, Id>();
+    //    saveResponse.errorItemMap = new Map<Id, String>();
+
+    //    SObjectType objtype = Schema.getGlobalDescribe().get(sObjectType);
+    //    Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+ 
+    //    if(objRes.isCreateable()){
+
+    //        List<Database.UpsertResult> upsertResults = Database.upsert(itemList, false);
+
+    //        for(Integer n=0; n<upsertResults.size(); n++){
+    //            Database.UpsertResult sr = upsertResults[n];
+
+    //            if(sr.isSuccess()) {
+
+    //                MassiveLoaderRequestItem__c itemSuccess;
+    //                itemSuccess = new MassiveLoaderRequestItem__c();
+    //                itemSuccess.Id = itemIds[n];
+    //                itemSuccess.Status__c = 'Chiuso';
+    //                saveResponse.reponseItemList.add(itemSuccess);
+    //                saveResponse.savedObject.add(itemList[n]);
+    //                saveResponse.itemIdToObjId.put(itemIds[n], sr.getId());
+
+    //            } else {
+
+    //                MassiveLoaderRequestItem__c itemError;
+    //                itemError = new MassiveLoaderRequestItem__c();
+    //                itemError.Id = itemIds[n];
+    //                itemError.Status__c = 'Errore';
+
+    //                String errorMessage = '';
+    //                for(Database.Error err : sr.getErrors()) {
+    //                    errorMessage += '[' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + '] ';
+    //                    System.debug(LoggingLevel.DEBUG, '>>> errorMessage ' + errorMessage);
+    //                }
+
+    //                itemError.StatusDescription__c = errorMessage.abbreviate(250);
+    //                saveResponse.errorItemMap.put(itemIds[n], errorMessage.abbreviate(250));
+    //                saveResponse.reponseItemList.add(itemError);
+    //                
+    //            }
+    //        }
+    //    }
+
+    //    return saveResponse;
+
+    //}
 
     public static void runCompatibility(List<Case> savedCase){
         Map<Id, String> compatibilityMap = checkCompatibilityPostSales(savedCase);
@@ -151,50 +195,6 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
         newCase.CompanyOwner__c = 'HERA COMM';
         newCase.Commodity__c = 'Energia Elettrica';
         return newCase;
-    }
-
-    public static HDT_WRP_SaveResponse databaseInsert_improved(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType){
-        HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
-        saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
-        saveResponse.savedObject = new List<sObject>();
-        saveResponse.itemIdToObjId = new Map<Id, Id>();
-        saveResponse.errorItemMap = new Map<Id, String>();
-
-        SObjectType objtype = Schema.getGlobalDescribe().get(sObjectType);
-        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
- 
-        if(objRes.isCreateable()){
-
-            List<Database.UpsertResult> upsertResults = Database.upsert(sObjectList, false);
-
-            for(Integer n=0; n<upsertResults.size(); n++){
-                Database.UpsertResult sr = upsertResults[n];
-
-                if(sr.isSuccess()) {
-                    requetItems[n].Status__c = 'Chiuso';
-                    saveResponse.reponseItemList.add(requetItems[n]);
-                    saveResponse.savedObject.add(sObjectList[n]);
-                    saveResponse.itemIdToObjId.put(requetItems[n].Id, sr.getId());
-
-                } else {
-                    requetItems[n].Status__c = 'Errore';
-
-                    String errorMessage = '';
-                    for(Database.Error err : sr.getErrors()) {
-                        errorMessage += '[' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + '] ';
-                        System.debug(LoggingLevel.DEBUG, '>>> errorMessage ' + errorMessage);
-                    }
-
-                    requetItems[n].StatusDescription__c = errorMessage.abbreviate(250);
-                    saveResponse.errorItemMap.put(requetItems[n].Id, errorMessage.abbreviate(250));
-                    saveResponse.reponseItemList.add(requetItems[n]);
-                    
-                }
-            }
-        }
-
-        return saveResponse;
-
     }
 
     public static void getLimitDetails(String stageName){

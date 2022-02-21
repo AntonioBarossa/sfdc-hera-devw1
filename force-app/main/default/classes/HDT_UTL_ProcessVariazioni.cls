@@ -204,8 +204,8 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
         if(caseToInsert.size() > 0){
 
             HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse;
-            saveResponse = HDT_UTL_ProcessCommonOperations.databaseInsert_improved(caseToInsert, requestItemForUpsert, 'Case');
-            runAlignment(caseToInsert);
+            saveResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
+            runAlignment(saveResponse.savedObject);
             caseToInsert.clear();
 
             HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE CREATION / Enrichment / Alignment');

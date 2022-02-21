@@ -190,7 +190,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         }
 
         HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveAccountResponse;
-        saveAccountResponse = HDT_UTL_ProcessCommonOperations.databaseInsert_improved(accountToInsert, requestItemForUpsert, 'Account');
+        saveAccountResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(accountToInsert, requestItemForUpsert, 'Account');
 
         System.debug(LoggingLevel.DEBUG, '>>> savedObject ' + saveAccountResponse.savedObject);
         System.debug(LoggingLevel.DEBUG, '>>> itemIdToObjId: ' + saveAccountResponse.itemIdToObjId);
@@ -220,7 +220,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveContactResponse;
         if(saveContactList.size() > 0){
-            saveContactResponse = HDT_UTL_ProcessCommonOperations.databaseInsert_improved(saveContactList, requestItemForUpsert, 'Contact');
+            saveContactResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(saveContactList, requestItemForUpsert, 'Contact');
             System.debug('>>>>> ' + saveContactResponse.errorItemMap);
         }
 
@@ -264,11 +264,11 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveServPointResponse;
         
         if(saveBillProfList.size() > 0){
-            saveBillProfResponse = HDT_UTL_ProcessCommonOperations.databaseInsert_improved(saveBillProfList, requestItemForUpsert, 'BillingProfile__c');
+            saveBillProfResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(saveBillProfList, requestItemForUpsert, 'BillingProfile__c');
         }
         
         if(saveServPointList.size() > 0){
-            saveServPointResponse = HDT_UTL_ProcessCommonOperations.databaseInsert_improved(saveServPointList, requestItemForUpsert, 'ServicePoint__c');
+            saveServPointResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(saveServPointList, requestItemForUpsert, 'ServicePoint__c');
         }
         
         if(accountIdsList.size() > 0){
