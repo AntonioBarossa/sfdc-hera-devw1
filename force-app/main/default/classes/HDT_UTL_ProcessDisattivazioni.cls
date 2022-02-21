@@ -28,11 +28,6 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
 
         mapFieldsObject();
 
-        System.debug(LoggingLevel.DEBUG, '>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
-        System.debug(LoggingLevel.DEBUG, '>>> mapWrapperCaseFields: ' + String.valueOf(mapWrapperCaseFields));
-        System.debug(LoggingLevel.DEBUG, '>>> mapHeaderForWrapper: ' + String.valueOf(mapHeaderForWrapper));
-        System.debug(LoggingLevel.DEBUG, '>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
-
         isVolturaProcess = (this.processName == 'VolturaTecnica') ? true : false;
 
         podIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('POD'));
@@ -47,10 +42,35 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
 
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
+        List<String> tempSplitedFields;
         for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
+
+            tempSplitedFields = new List<String>();
+            tempSplitedFields = item.Data__c.split(splitCharacter, -1);
+
+            Integer count = 0;
+            for(String field : tempSplitedFields){
+
+                if(mapRequiredByPosition.containsKey(count) && mapRequiredByPosition.get(count) != null && String.isBlank(tempSplitedFields[count])) {
+                    System.debug(LoggingLevel.DEBUG, '>>> Missing Required Field');
+                    item.Status__c = 'Errore';
+                    item.StatusDescription__c = 'Missing Required Field: ' + mapHeaderByPosition.get(count);
+                    break;
+                }
+                count++;
+            }
+            
+            System.debug(LoggingLevel.DEBUG, '>>> itemStatus' + item.Status__c);
+
+            if(item.Status__c.equalsIgnoreCase('Errore')){
+                itemsToSave.add(item);
+                continue;
+            }
+
             processObj = new HDT_WRP_ProcessObjects();
             processObj.requestItem = item;
-            processObj.csvSplitted = item.Data__c.split(splitCharacter, -1);
+            processObj.csvSplitted = tempSplitedFields;
+
             accountIdSet.add(processObj.csvSplitted[accountIdIndex]);
             contractCodeSet.add(processObj.csvSplitted[contractIndex]);
             processObjList.add(processObj);
@@ -129,18 +149,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
                 if ('null'.equalsIgnoreCase(tempField)) {
                    tempField = '';
                 }
-            
-                if (mapRequiredByPosition.get(count) != null && String.isBlank(tempField)) {
-                    System.debug(LoggingLevel.DEBUG, '>>> throw new HDT_WRP_ProcessEntitiesException');
-                    //throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field', 'Missing Required Field: ' + mapHeaderByPosition.get(count));
-                    convertionError = 'Missing Required Field: ' + mapHeaderByPosition.get(count);
-                }
-
-                if(!String.isEmpty(convertionError)){
-                    // error happened -> exit
-                    break;
-                }
-            
+                        
                 if(String.isNotBlank(mapCaseFields.get(mapHeaderByPosition.get(count))) && String.isNotBlank(tempField)){
                     System.debug(LoggingLevel.DEBUG, '>>> tempField: ' + tempField + ' # Header: ' + mapHeaderByPosition.get(count) + ' # CaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
                     convertionError = mapTypeField(processObj.newCase, mapCaseFields, count, tempField);
@@ -153,7 +162,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
                 count++;
             }
 
-            if(!String.isEmpty(convertionError)){
+            if(String.isNotEmpty(convertionError)){
                 processObj.requestItem.Status__c = 'Errore';
                 processObj.requestItem.StatusDescription__c = convertionError;
                 itemsToSave.add(processObj.requestItem);

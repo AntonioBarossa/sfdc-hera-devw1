@@ -29,10 +29,35 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
+        itemsToUpdate = new List<MassiveLoaderRequestItem__c>();
+        List<String> tempSplitedFields;
         for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
+
+            tempSplitedFields = new List<String>();
+            tempSplitedFields = item.Data__c.split(splitCharacter, -1);
+
+            Integer count = 0;
+            for(String field : tempSplitedFields){
+
+                if(mapRequiredByPosition.containsKey(count) && mapRequiredByPosition.get(count) != null && String.isBlank(tempSplitedFields[count])) {
+                    System.debug(LoggingLevel.DEBUG, '>>> Missing Required Field');
+                    item.Status__c = 'Errore';
+                    item.StatusDescription__c = 'Missing Required Field: ' + mapHeaderByPosition.get(count);
+                    break;
+                }
+                count++;
+            }
+            
+            System.debug(LoggingLevel.DEBUG, '>>> itemStatus' + item.Status__c);
+
+            if(item.Status__c.equalsIgnoreCase('Errore')){
+                itemsToUpdate.add(item);
+                continue;
+            }
+
             processObj = new HDT_WRP_ProcessObjects();
             processObj.requestItem = item;
-            processObj.csvSplitted = item.Data__c.split(splitCharacter, -1);
+            processObj.csvSplitted = tempSplitedFields;
 
             codicePuntoSet.add(processObj.csvSplitted[codicePuntoIndex]);
             contoContrattualeSet.add(processObj.csvSplitted[contoContrattualeIndex]);
@@ -60,6 +85,10 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         HDT_UTL_ProcessCommonOperations.getLimitDetails('START registryCreation');
 
+        if(processObjList.size() == 0){
+            return;
+        }
+
         Boolean enableCreateBillingProfile;
         Boolean enableCreateServicePoint;
         List<sObject> accountToInsert;
@@ -71,7 +100,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         accountToInsert = new List<sObject>();
         requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
-        itemsToUpdate = new List<MassiveLoaderRequestItem__c>();
         saveContactList = new List<Contact>();
         saveBillProfList = new List<BillingProfile__c>();
         saveServPointList = new List<ServicePoint__c>();
@@ -104,15 +132,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 
                 csvHeader = mapHeaderByPosition.get(count);
                 objField = mapAllFields.get(csvHeader);
-
-                if (mapRequiredByPosition.get(count) != null && String.isBlank(tempField)) {
-                    convertionError = 'Missing Required Field: ' + mapHeaderByPosition.get(count);
-                    System.debug(LoggingLevel.DEBUG, '>>> required field error: ' + convertionError);
-                    if(String.isNotEmpty(convertionError)){
-                        // error happened -> exit
-                        break;
-                    }
-                }
             
                 if(String.isNotBlank(objField) && String.isNotBlank(tempField)){
                     System.debug(LoggingLevel.DEBUG, '>>> CSV Header: ' + csvHeader + '; sObj Field: ' + objField + '; value: ' + tempField);
@@ -155,9 +174,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 continue;
             }
 
-            if(processObj.account.VATNumber__c=='12345672'){
-                processObj.account.Name = String.isBlank(processObj.account.FirstName__c) ? processObj.account.LastName__c : processObj.account.FirstName__c + ' ' + processObj.account.LastName__c;
-            }
+            processObj.account.Name = String.isBlank(processObj.account.FirstName__c) ? processObj.account.LastName__c : processObj.account.FirstName__c + ' ' + processObj.account.LastName__c;
+
             // only for test
             processObj.account.IsWrongFiscalData__c = false;
             processObj.account.BillingCityCode__c = 'Roma';
@@ -177,6 +195,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
             if(processObj.requestItem.Status__c.equalsIgnoreCase('Errore')){
+                System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c ');
                 continue;
             }
 
@@ -202,12 +221,14 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
             if(saveAccountResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
+                System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c after save');
                 processObj.requestItem.Status__c = 'Errore';
                 processObj.requestItem.StatusDescription__c = saveAccountResponse.errorItemMap.get(processObj.requestItem.Id);
                 continue;
             }
 
             if(saveAccountResponse.itemIdToObjId.containsKey(processObj.requestItem.Id)){
+                System.debug(LoggingLevel.DEBUG, '>>> you can now create a contact');
                 // account not present in DB - create new account and contact
                 processObj.contact = new Contact();
                 processObj.contact.AccountId = saveAccountResponse.itemIdToObjId.get(processObj.requestItem.Id);
@@ -220,6 +241,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveContactResponse;
         if(saveContactList.size() > 0){
+            System.debug(LoggingLevel.DEBUG, '>>> save contact');
             saveContactResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(saveContactList, requestItemForUpsert, 'Contact');
             System.debug('>>>>> ' + saveContactResponse.errorItemMap);
         }
@@ -232,6 +254,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
             if(saveAccountResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
+                System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c error');
                 processObj.requestItem.Status__c = 'Errore';
                 processObj.requestItem.StatusDescription__c = saveAccountResponse.errorItemMap.get(processObj.requestItem.Id);
                 continue;
@@ -260,31 +283,40 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         }
 
+        System.debug(LoggingLevel.DEBUG, '>>> save billProf and servPoint');
+
         HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveBillProfResponse;
         HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveServPointResponse;
         
+        System.debug(LoggingLevel.DEBUG, '>>> saveBillProfList ' + saveBillProfList.size());
+        System.debug(LoggingLevel.DEBUG, '>>> saveServPointList ' + saveServPointList.size());
+
         if(saveBillProfList.size() > 0){
+            System.debug(LoggingLevel.DEBUG, '>>> save BillingProfile__c');
             saveBillProfResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(saveBillProfList, requestItemForUpsert, 'BillingProfile__c');
+            System.debug(LoggingLevel.DEBUG, '>>> saveBillProfResponse: ' + saveBillProfResponse.itemIdToObjId);
         }
         
         if(saveServPointList.size() > 0){
+            System.debug(LoggingLevel.DEBUG, '>>> save ServicePoint__c');
             saveServPointResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(saveServPointList, requestItemForUpsert, 'ServicePoint__c');
+            System.debug(LoggingLevel.DEBUG, '>>> saveServPointResponse: ' + saveServPointResponse.itemIdToObjId);
         }
         
+        System.debug(LoggingLevel.DEBUG, '>>> accountIdsList: ' + accountIdsList.size());
+
         if(accountIdsList.size() > 0){
+            System.debug(LoggingLevel.DEBUG, '>>> get AccountContactRelation');
             acrList = HDT_QR_ProcessSales.getAccountContactRelationByAccountId(acrList, accountIdsList);
         }
 
-        if(acrList.size() > 0){
+        if(acrList != null && acrList.size() > 0){
             for(AccountContactRelation acr : acrList){
                 acr.Roles = 'Titolare';
             }
 
             update acrList;
         }
-
-        System.debug(LoggingLevel.DEBUG, '>>> saveBillProfResponse: ' + saveBillProfResponse.itemIdToObjId);
-        System.debug(LoggingLevel.DEBUG, '>>> saveServPointResponse: ' + saveServPointResponse.itemIdToObjId);
 
         HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER OBJs CREATION');
 
@@ -297,14 +329,14 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 continue;
             }
 
-            if(saveBillProfResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
+            if(saveBillProfResponse != null && saveBillProfResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 processObj.requestItem.Status__c = 'Errore';
                 processObj.requestItem.StatusDescription__c = saveBillProfResponse.errorItemMap.get(processObj.requestItem.Id);
                 itemsToUpdate.add(processObj.requestItem);
                 continue;
             }
 
-            if(saveServPointResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
+            if(saveServPointResponse != null && saveServPointResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 processObj.requestItem.Status__c = 'Errore';
                 processObj.requestItem.StatusDescription__c = saveServPointResponse.errorItemMap.get(processObj.requestItem.Id);
                 itemsToUpdate.add(processObj.requestItem);
@@ -533,7 +565,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             // -- Account / Contact
             tempList.add('Residenziale'); // Tipo
             tempList.add('true'); // FlagVerificato
-            tempList.add(''); // FAX
+            tempList.add(''); // FAX - 854455666
             tempList.add(''); // Stato
             tempList.add(''); // BP
             tempList.add('Roma'); // Comune

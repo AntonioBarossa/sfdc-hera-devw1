@@ -370,12 +370,12 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
         }
     }
 
-    public MassiveLoaderRequestItem__c setErrorItem(String itemId, String message){
-        MassiveLoaderRequestItem__c itemError = new MassiveLoaderRequestItem__c();
-        itemError.Id = itemId;
-        itemError.Status__c = 'Errore';
-        itemError.StatusDescription__c = message;
-        return itemError;
-    }
+    //public MassiveLoaderRequestItem__c setErrorItem(String itemId, String message){
+    //    MassiveLoaderRequestItem__c itemError = new MassiveLoaderRequestItem__c();
+    //    itemError.Id = itemId;
+    //    itemError.Status__c = 'Errore';
+    //    itemError.StatusDescription__c = message;
+    //    return itemError;
+    //}
 
 }
