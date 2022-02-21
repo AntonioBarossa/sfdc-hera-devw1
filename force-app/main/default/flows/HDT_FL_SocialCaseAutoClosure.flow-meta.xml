@@ -2,16 +2,16 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
     <decisions>
-        <name>open_integration_activities_exist_decision</name>
-        <label>Esistono Attività d&apos;Integrazione Aperte?</label>
+        <name>open_activities_exist_decision</name>
+        <label>Esistono altre Attività Aperte?</label>
         <locationX>182</locationX>
         <locationY>455</locationY>
         <defaultConnectorLabel>Yes</defaultConnectorLabel>
         <rules>
-            <name>No</name>
+            <name>open_activities_exist_decision_no</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>open_integration_activities_get.Id</leftValueReference>
+                <leftValueReference>open_activities_get.Id</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -45,22 +45,15 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>open_integration_activities_get</name>
-        <label>Integrazioni Aperte</label>
+        <name>open_activities_get</name>
+        <label>Attività Aperte</label>
         <locationX>182</locationX>
         <locationY>335</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>open_integration_activities_exist_decision</targetReference>
+            <targetReference>open_activities_exist_decision</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
-        <filters>
-            <field>Type__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Integrazione Richiesta Social</stringValue>
-            </value>
-        </filters>
         <filters>
             <field>wrts_prcgvr__IsClosed__c</field>
             <operator>EqualTo</operator>
@@ -105,15 +98,28 @@
         <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>open_integration_activities_get</targetReference>
+            <targetReference>open_activities_get</targetReference>
         </connector>
-        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-        <filterLogic>and</filterLogic>
+        <filterLogic>(1 OR 2) AND 3 AND 4</filterLogic>
         <filters>
             <field>Type__c</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Gestione Richiesta Social</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Integrazione Richiesta Social</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>wrts_prcgvr__IsClosed__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <filters>
