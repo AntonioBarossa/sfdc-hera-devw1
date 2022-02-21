@@ -48,18 +48,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
             tempSplitedFields = new List<String>();
             tempSplitedFields = item.Data__c.split(splitCharacter, -1);
 
-            Integer count = 0;
-            for(String field : tempSplitedFields){
-
-                if(mapRequiredByPosition.containsKey(count) && mapRequiredByPosition.get(count) != null && String.isBlank(tempSplitedFields[count])) {
-                    System.debug(LoggingLevel.DEBUG, '>>> Missing Required Field');
-                    item.Status__c = 'Errore';
-                    item.StatusDescription__c = 'Missing Required Field: ' + mapHeaderByPosition.get(count);
-                    break;
-                }
-                count++;
-            }
-            
+            checkRequiredFields(item, tempSplitedFields);
             System.debug(LoggingLevel.DEBUG, '>>> itemStatus' + item.Status__c);
 
             if(item.Status__c.equalsIgnoreCase('Errore')){

@@ -35,19 +35,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             tempSplitedFields = new List<String>();
             tempSplitedFields = item.Data__c.split(splitCharacter, -1);
-
-            Integer count = 0;
-            for(String field : tempSplitedFields){
-
-                if(mapRequiredByPosition.containsKey(count) && mapRequiredByPosition.get(count) != null && String.isBlank(tempSplitedFields[count])) {
-                    System.debug(LoggingLevel.DEBUG, '>>> Missing Required Field');
-                    item.Status__c = 'Errore';
-                    item.StatusDescription__c = 'Missing Required Field: ' + mapHeaderByPosition.get(count);
-                    break;
-                }
-                count++;
-            }
             
+            checkRequiredFields(item, tempSplitedFields);
             System.debug(LoggingLevel.DEBUG, '>>> itemStatus' + item.Status__c);
 
             if(item.Status__c.equalsIgnoreCase('Errore')){
@@ -565,6 +554,12 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             // -- Account / Contact
             tempList.add('Residenziale'); // Tipo
             tempList.add('true'); // FlagVerificato
+
+            //if(n==1){
+            //    tempList.add('854455666'); // FAX - 
+            //} else {
+            //    tempList.add(''); // FAX - 854455666
+            //}
             tempList.add(''); // FAX - 854455666
             tempList.add(''); // Stato
             tempList.add(''); // BP

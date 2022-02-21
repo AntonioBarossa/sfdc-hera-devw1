@@ -161,6 +161,21 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
                 ];
     }
 
+    public MassiveLoaderRequestItem__c checkRequiredFields(MassiveLoaderRequestItem__c item, List<String> tempSplitedFields){
+        Integer count = 0;
+        for(String field : tempSplitedFields){
+
+            if(mapRequiredByPosition.containsKey(count) && mapRequiredByPosition.get(count) != null && String.isBlank(tempSplitedFields[count])) {
+                System.debug(LoggingLevel.DEBUG, '>>> Missing Required Field');
+                item.Status__c = 'Errore';
+                item.StatusDescription__c = 'Missing Required Field: ' + mapHeaderByPosition.get(count);
+                break;
+            }
+            count++;
+        }
+        return item;
+    }
+
     /**
    * @description mapping Contact by Account
    **/
