@@ -1823,6 +1823,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Attivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento</fullName>
             <default>false</default>
         </values>
