@@ -33,8 +33,8 @@ public with sharing class HDT_LC_AgentMatrixSearchToolController {
         }
     }
 
-    @SuppressWarnings('PMD.ApexCRUDViolation')
     @AuraEnabled
+    @SuppressWarnings('PMD.ApexCRUDViolation')
     public static String updateRule(String ruleId, String agentCode){
         try {
             update new AssignmentRule__c(
