@@ -509,7 +509,8 @@ public inherited sharing class HDT_QR_Order {
             VASType__c,
             ProcessCode__c,
             DistributorCode__c,
-            Commodity__c
+            Commodity__c,
+            ComfortCallDaysDue__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
