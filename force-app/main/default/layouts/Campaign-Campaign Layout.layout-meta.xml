@@ -130,6 +130,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>PositiveOutcomeDefaultStatus__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>DefaultFinalState__c</field>
             </layoutItems>
             <layoutItems>
