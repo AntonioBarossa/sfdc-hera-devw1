@@ -78,10 +78,19 @@
                             </lightning-input-field>
                         </div>
                         <div if:true={showDefaultFinalState} class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                            <lightning-input-field field-name="DefaultFinalState__c" >
-                            </lightning-input-field>
+                            <lightning-input-field required={showDefaultFinalState} field-name="PositiveOutcomeDefaultStatus__c"></lightning-input-field>
                         </div>
                     </div>
+                    <template if:true={showCampaignInboundFields}>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                <lightning-input-field field-name="CaseCategory__c" required={campaignInboundFields}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                <lightning-input-field field-name="CaseSubCategory__c" required={campaignInboundFields}></lightning-input-field>
+                            </div>
+                        </div>
+                    </template>
                     <div class="slds-grid">
                         <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
                             <lightning-input-field field-name="Description"></lightning-input-field>
@@ -98,16 +107,7 @@
                         </template>
                     </div>
 
-                    <template if:true={showCampaignInboundFields}>
-                        <div class="slds-grid slds-wrap">
-                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                                <lightning-input-field field-name="CaseCategory__c" required={campaignInboundFields}></lightning-input-field>
-                            </div>
-                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                                <lightning-input-field field-name="CaseSubCategory__c" required={campaignInboundFields}></lightning-input-field>
-                            </div>
-                        </div>
-                    </template>
+
 
                     <template if:true={campaignOutboundFields}>
                         <div class="slds-grid slds-wrap">

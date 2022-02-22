@@ -147,7 +147,6 @@ public inherited sharing class HDT_LC_CampaignsController {
             if(valDate!=null){
                 cm.NumberingValidityStartDate__c=valDate;
             }
-            System.debug('oooo: '+cm);
             assignedMembers.add(cm);
             allUnassignedMembers.remove(0);            
         }
