@@ -12,16 +12,25 @@ export default class HdtCampaignMemberAgencyAssignment extends LightningElement 
     @track assignmentType = 'Percentuale';
     @track inputFormatStyle = 'percent-fixed';
     @track maxValue;
-    @track showResults = true;
+    @track showResults = true; 
     @track membersList = [];
     @track totalResults;
     @track remainingToAssign;
     @track rangeOverflowMessage;
-
+    @track validityDate;
+    @track lavorazioneMap=[];
+    @track tot_req_perc_num=0;
     get options() {
         return [
             { label: 'Percentuale', value: 'Percentuale' },
             { label: 'Numerico', value: 'Numerico' },
+        ];
+    }
+
+    get optionsLavorazione() {
+        return [
+            { label: 'Predictive', value: 'Predictive' },
+            { label: 'Preview', value: 'Preview' },
         ];
     }
 
@@ -110,7 +119,15 @@ export default class HdtCampaignMemberAgencyAssignment extends LightningElement 
         inputs.forEach(inp => {
             assignedSoFar += inp.value ? parseInt(inp.value) : 0;
         });
-
+        if(currentElem.value){
+            this.template.querySelector("[data-index='" + event.currentTarget.dataset.id + "']").required=true;
+        }
+        else{
+            console.log('in else');
+            let perc_num = this.template.querySelector("[data-index='" + event.currentTarget.dataset.id + "']");
+            perc_num.setCustomValidity( "" );
+            perc_num.reportValidity();
+        }
         //calculate max value allowed to insert
         if (this.assignmentType == 'Percentuale') {
             let assignedSoFarNum = Math.floor(assignedSoFar * this.totalResults / 100);
@@ -133,11 +150,30 @@ export default class HdtCampaignMemberAgencyAssignment extends LightningElement 
         });
     }
 
+    handleChange(event){
+            let valore = event.currentTarget.value;
+            let id=event.currentTarget.dataset.index;
+            this.lavorazioneMap.push({id , valore});
+            let perc_num = this.template.querySelector("[data-index='" + event.currentTarget.dataset.index + "']");
+            let currentElem = this.template.querySelector("[data-id='" + event.currentTarget.dataset.index + "']");
+
+            if(perc_num.value && currentElem.value){
+                perc_num.setCustomValidity( "" );
+                perc_num.reportValidity();
+            }
+            console.log("tot_req_perc_num: "+this.tot_req_perc_num);
+
+            console.log('Krist: '+JSON.stringify(this.lavorazioneMap));
+            console.log('Krist2: '+id);
+    }
+
     @api handleAssignAgency() {
         let assignedObj = [];
         let totalValues = 0;
         this.agencies.forEach(agency => {
             let val = this.template.querySelector("[data-id='" + agency.id + "']").value;
+            let perc_num= this.template.querySelector("[data-id='" + agency.id + "']").value;
+            let lav = this.template.querySelector("[data-index='" + agency.id + "']").value;
             val = this.assignmentType == 'Percentuale' && val > 0 && val != null ? Math.round(val * this.totalResults / 100) : val;
             console.log(val);
             if (val > 0) {
@@ -153,12 +189,20 @@ export default class HdtCampaignMemberAgencyAssignment extends LightningElement 
                     }
                 }
             }
+            if(perc_num && !lav){
+                this.tot_req_perc_num=this.tot_req_perc_num+1;
+            }
         });
         console.log(JSON.stringify(assignedObj));
         console.log(totalValues + ' - ' + this.totalResults);
-        if (totalValues > 0 && totalValues <= this.totalResults) {
+        console.log("tot_req_perc_num: "+this.tot_req_perc_num);
+
+        this.validityDate = this.template.querySelector("[data-id='valDate']").value ? this.template.querySelector("[data-id='valDate']").value : null;
+
+        if (totalValues > 0 && totalValues <= this.totalResults && this.validityDate && this.tot_req_perc_num==0) {
             //update the agencies
-            assignCampaignMemberAgency({ campaignId: this.recordId, toAssignObj: assignedObj }).then((result) => {
+            
+            assignCampaignMemberAgency({ campaignId: this.recordId, toAssignObj: assignedObj, Lavorazione: this.lavorazioneMap, valDate: this.validityDate}).then((result) => {
                 //console.log(JSON.stringify(result));
                 if (result.length > 0) {
                     this.totalResults -= result.length;
@@ -173,8 +217,18 @@ export default class HdtCampaignMemberAgencyAssignment extends LightningElement 
                 this.dispatchEvent(
                     new CustomEvent('showError', { detail: { errmsg } })
                 );
+                this.tot_req_perc_num=0;
             });
             console.log("submited");
+        }
+        else{
+            const event = new ShowToastEvent({
+                title: 'Attenzione!',
+                variant: 'warning',
+                message:'Assegnare almeno una numerazione ad una Agenzia e compilare tutti i campi obbligatori',
+            });
+            this.dispatchEvent(event);    
+            this.tot_req_perc_num=0;
         }
     }
 }
