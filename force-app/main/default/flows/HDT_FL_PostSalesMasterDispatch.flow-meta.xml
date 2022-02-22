@@ -919,6 +919,22 @@
             <targetReference>Switch_Subflow</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Valorizzazione_Status_Campaign_Member</name>
+        <label>Valorizzazione Status Campaign Member</label>
+        <locationX>6672</locationX>
+        <locationY>4358</locationY>
+        <assignmentItems>
+            <assignToReference>CampaignMember_Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CampaignMember_Record.Campaign.PositiveOutcomeDefaultStatus__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiornamento_record_Campaign_Member</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>ModificaDatiContattoChoice</name>
         <choiceText>Modifica Dati di Contatto (Telefono, Email, PEC, Fax, Marcatura)</choiceText>
@@ -1014,6 +1030,35 @@
                 <targetReference>Compatibilita</targetReference>
             </connector>
             <label>BillingProfile</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Campaign_Member_presente</name>
+        <label>Campaign Member presente?</label>
+        <locationX>6584</locationX>
+        <locationY>4118</locationY>
+        <defaultConnector>
+            <targetReference>CampaignMember_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>SI</defaultConnectorLabel>
+        <rules>
+            <name>Campaign_Member_presente_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CampaignMemberId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CampaignMemberId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>NO</label>
         </rules>
     </decisions>
     <decisions>
@@ -7212,6 +7257,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
+        <name>CampaignMember_Record</name>
+        <label>Record Campaign Member</label>
+        <locationX>6672</locationX>
+        <locationY>4238</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Valorizzazione_Status_Campaign_Member</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CampaignMemberId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CampaignMember</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>CaseFatturazione_0</name>
         <label>CaseFatturazione</label>
         <locationX>3658</locationX>
@@ -8009,6 +8075,13 @@
         <inputReference>CaseFatturazione_0</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>Aggiornamento_record_Campaign_Member</name>
+        <label>Aggiornamento record Campaign Member</label>
+        <locationX>6672</locationX>
+        <locationY>4478</locationY>
+        <inputReference>CampaignMember_Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Set_Contratto_e_fornitura</name>
         <label>Set Contratto e fornitura</label>
         <locationX>4714</locationX>
@@ -8502,6 +8575,9 @@
         <label>Cambio Uso Fittizio</label>
         <locationX>12722</locationX>
         <locationY>2246</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_CambioUso</flowName>
         <inputAssignments>
             <name>inputCaseId</name>
@@ -8675,6 +8751,9 @@
         <label>Gestione Annullamento Subflow</label>
         <locationX>9378</locationX>
         <locationY>2366</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -8694,6 +8773,9 @@
         <label>Gestione Autoletture Subflow</label>
         <locationX>7354</locationX>
         <locationY>2126</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneAutoletture</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -8707,6 +8789,9 @@
         <label>Gestione Canone Rai Subflow</label>
         <locationX>8498</locationX>
         <locationY>2678</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneCanoneRai</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -8720,6 +8805,9 @@
         <label>Gestione Contratto Non Richiesto</label>
         <locationX>9906</locationX>
         <locationY>2246</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneContrattoNonRichiesto</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -8733,6 +8821,9 @@
         <label>Gestione Fatturazione Subflow</label>
         <locationX>3790</locationX>
         <locationY>3374</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneFatturazione</flowName>
         <inputAssignments>
             <name>HasPartiteNonFatturate</name>
@@ -8758,6 +8849,9 @@
         <label>Gestione Informative SubFlow</label>
         <locationX>7882</locationX>
         <locationY>2246</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneInformative</flowName>
         <inputAssignments>
             <name>Context</name>
@@ -8777,6 +8871,9 @@
         <label>Gestione Modifiche Anagrafiche</label>
         <locationX>5242</locationX>
         <locationY>3902</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneModificheAnagrafiche</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -8796,6 +8893,9 @@
         <label>Gestione Morosita Subflow</label>
         <locationX>3130</locationX>
         <locationY>2246</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneMorosita</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -8810,6 +8910,9 @@
         <label>Gestione Notifiche</label>
         <locationX>11402</locationX>
         <locationY>2246</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneNotifiche</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -8823,6 +8926,9 @@
         <label>Gestione Preventivi Subflow</label>
         <locationX>2514</locationX>
         <locationY>3134</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestionePreventivi</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -8837,6 +8943,9 @@
         <label>Gestione Preventivi Subflow</label>
         <locationX>1898</locationX>
         <locationY>2918</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestionePreventivi</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -8851,6 +8960,9 @@
         <label>Gestione Reclami Subflow</label>
         <locationX>6298</locationX>
         <locationY>2246</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneReclami</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -8864,6 +8976,9 @@
         <label>Gestione Variazioni Subflow</label>
         <locationX>10522</locationX>
         <locationY>3230</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneVariazioni</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -8889,6 +9004,9 @@
         <label>Gestione Verifiche Subflow</label>
         <locationX>314</locationX>
         <locationY>2582</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneVerifiche</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -8903,6 +9021,9 @@
         <label>Gestione Voltura Tecnica SubFlow</label>
         <locationX>11930</locationX>
         <locationY>2246</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_VolturaTecnica</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -9672,6 +9793,9 @@
         <label>Subflow Gestione Disattivazioni</label>
         <locationX>842</locationX>
         <locationY>2246</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneDisattivazioni</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -9686,6 +9810,9 @@
         <label>Subflow Segnalazioni VAS</label>
         <locationX>12194</locationX>
         <locationY>1886</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_SegnalazioniVAS</flowName>
         <inputAssignments>
             <name>Case</name>
@@ -9700,6 +9827,9 @@
         <label>SubFlow Gestione Pagamenti</label>
         <locationX>1370</locationX>
         <locationY>2342</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestionePagamenti</flowName>
         <inputAssignments>
             <name>createDocuments</name>
@@ -9732,6 +9862,9 @@
         <label>Votive Modena SubFlow</label>
         <locationX>6826</locationX>
         <locationY>2126</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneVotiveModena</flowName>
         <inputAssignments>
             <name>AccountId</name>
@@ -9770,6 +9903,13 @@
     </variables>
     <variables>
         <name>CampaignId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CampaignMemberId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

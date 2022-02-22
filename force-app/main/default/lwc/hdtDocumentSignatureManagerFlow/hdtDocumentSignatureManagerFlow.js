@@ -20,12 +20,15 @@ import InvoicingPlace from '@salesforce/schema/Case.InvoicingPlace__c';
 import InvoicingStreetName from '@salesforce/schema/Case.InvoicingStreetName__c';
 import InvoicingCountry from '@salesforce/schema/Case.InvoicingCountry__c';
 import InvoicingProvince from '@salesforce/schema/Case.InvoicingProvince__c';
+import Origin from '@salesforce/schema/Case.Origin';
+import SignMode from '@salesforce/schema/Case.SignMode__c';
 import AddressFormula from '@salesforce/schema/Case.AddressFormula__c';
 import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import { NavigationMixin } from 'lightning/navigation';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import updateContactForScartoDocumentale from '@salesforce/apex/HDT_UTL_Scarti.updateContactForScartoDocumentale'; //costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+import getFlowCase from '@salesforce/apex/HDT_SRV_ScriptManager.getFlowCase';
 const FIELDS = ['Case.ContactMobile', 
                 'Case.ContactEmail',
                 'Case.DeliveryAddress__c',
@@ -54,7 +57,8 @@ const FIELDS = ['Case.ContactMobile',
 				'Case.InvoicingPlace__c',
 				'Case.InvoicingStreetName__c',
 				'Case.InvoicingCountry__c',
-                'Case.InvoicingProvince__c'];
+                'Case.InvoicingProvince__c',
+                'Case.Origin'];
 
 export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(LightningElement) {
     
@@ -92,17 +96,25 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
         else 
             return "brand"
     }
-
+    
     @api
     get labelButton(){
         if(this.nextLabel != null && this.nextLabel!="" && this.nextLabel != "unedfined")
-            return this.nextLabel;
+        return this.nextLabel;
         else 
-            return "Conferma Pratica"
+        return "Conferma Pratica"
     }
     oldSignMode = '';
+    
+    scriptAvailable = false;
+    openModal = false;
+    flowFound = false;
+    isLoading = true;
 
     connectedCallback(){
+        console.log('Origin: ' + Origin);
+        console.log('SignMode: ' + SignMode);
+
         if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
             this.labelConfirm = 'Conferma pratica';
             this.showPreviewButton = false;
@@ -146,6 +158,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 var codiceViaStradarioSAP='';
                 var flagForzato=false;
                 var flagVerificato=false;
+                var canale = '';
 
                 var contactEmail = this.caseRecord.fields.ContactEmail.value;
                 var caseEmail = this.caseRecord.fields.Email__c.value;
@@ -231,6 +244,11 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                     sendMode:this.caseRecord.fields.SendMode__c.value,
                     signMode:this.caseRecord.fields.SignMode__c.value 
                 }
+                canale = this.caseRecord.fields.Origin.value;
+                if( canale === 'Telefono Inbound' || canale === 'Telefono Outbound'){
+                    this.scriptAvailable = true;
+                }
+
                 this.inputParams = JSON.stringify(inputParams);
                 this.oldSignMode = this.caseRecord.fields.SignMode__c.value;
                 console.log(this.inputParams);
@@ -496,5 +514,35 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 variant: variant
             }),
         );
+    }
+
+    launchScript(){
+
+        this.openModal = true;
+
+        getFlowCase({caseId: this.recordId}).then(flowUrl => {
+            console.log('flowUrl returned: ' + flowUrl);
+            if (flowUrl !== null && flowUrl !== '' && flowUrl !== 'flow not found') {
+                this.flowFound = true;
+                this.flowUrl = flowUrl;
+            }else{
+                this.flowFound = false;
+            }
+    
+            this.isLoading = false;
+        },error => {
+            console.log(error);
+            const evt = new ShowToastEvent({
+                title: 'Errore caricamento Script',
+                message: 'Non è stato possibile recuperare le informazioni relative agli script',
+                variant: 'error'
+            });
+            this.dispatchEvent(evt);
+        });
+    }
+
+    closeModal(){
+        this.openModal = false;
+        this.dispatchEvent(new CustomEvent('close'));
     }
 }
