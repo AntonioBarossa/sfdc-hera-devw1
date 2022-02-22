@@ -29,7 +29,7 @@ export default class HdtOrderScriptLauncher extends LightningElement {
             console.log('isSignatureEnabled: ' + isSignatureEnabled);
             console.log('Status Order: ' + this.order.fields.Status.value);
 
-            return (this.order.fields.Status.value=='In Lavorazione' && isChannelEnabled && isSignatureEnabled);
+            return (this.order.fields.Status.value=='In Lavorazione' && (isChannelEnabled || isSignatureEnabled));
         }
         else return false;
     }
