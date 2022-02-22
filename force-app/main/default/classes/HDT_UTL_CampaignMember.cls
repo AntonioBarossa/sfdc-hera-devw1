@@ -214,6 +214,11 @@ public with sharing class HDT_UTL_CampaignMember {
     }
 
     public static void handleStatusChange(List<CampaignMember> newList, Map<Id,CampaignMember> oldMap) {
+        User currentUser = [SELECT Id, Name, LoginChannel__c FROM User WHERE Id =: UserInfo.getUserId() WITH SECURITY_ENFORCED];
+        if(currentUser.Name.contains('Mulesoft')) {
+            currentUser.LoginChannel__c = 'Telefonico Outbound';
+        }
+
         Map<String, HDT_CampaignMemberStatus__mdt> statusMap =  new Map<String, HDT_CampaignMemberStatus__mdt>();
         Map<String, HDT_CampaignMemberStatus__mdt> statusCodeMap =  new Map<String, HDT_CampaignMemberStatus__mdt>();
         for(HDT_CampaignMemberStatus__mdt status : HDT_CampaignMemberStatus__mdt.getAll().values()) {
@@ -234,6 +239,28 @@ public with sharing class HDT_UTL_CampaignMember {
                 member.Status = status.StatusName__c;
                 member.ResultType__c = status.OutcomeType__c;
                 member.ResultCategory__c = status.OutcomeCategory__c;
+            }
+
+            if(status != null && status.HasResponded__c) {
+                member.FinalStateUser__c = currentUser.Id;
+                member.FinalStateChannel__c = currentUser.LoginChannel__c;
+                member.FinalStatusDate__c = Date.today();
+            }
+
+            status = null;
+        }
+    }
+
+    public static void setValidityStartDate(List<CampaignMember> members) {
+        Set<Id> parentCampaignsIds = new Set<Id>();
+        for(CampaignMember member : members) {
+            parentCampaignsIds.add(member.CampaignId);
+        }
+        Map<Id,Campaign> parentCampaignsMap = new Map<Id,Campaign>([SELECT Id,Channel__c FROM Campaign WHERE Id IN: parentCampaignsIds WITH SECURITY_ENFORCED]);
+        Date todaysDate = Date.today();
+        for(CampaignMember member : members) {
+            if(parentCampaignsMap.get(member.CampaignId).Channel__c == 'Telefonico Outbound' && member.NumberingValidityStartDate__c == null) {
+                member.NumberingValidityStartDate__c = todaysDate;
             }
         }
     }
