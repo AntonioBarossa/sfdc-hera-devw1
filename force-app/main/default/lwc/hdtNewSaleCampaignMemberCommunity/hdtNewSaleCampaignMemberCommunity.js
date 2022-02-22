@@ -41,11 +41,11 @@ export default class hdtNewSaleCampaignMemberCommunity extends NavigationMixin(L
                         name: "WizardVendita__c"
                     },
                     state: {
-                        c__accountId: data.GenericField1__c,
+                        c__accountId: data.Contact.AccountId,
                         c__campaignCommissioningId: data.CampaignId,
                     }
                 }).then(url => {
-                    window.open(url, "_blank");
+                    window.open(url, "_self");
                 });
             }
         }).catch(error => {
