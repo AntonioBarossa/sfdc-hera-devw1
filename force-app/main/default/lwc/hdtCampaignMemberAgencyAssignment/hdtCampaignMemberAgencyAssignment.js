@@ -120,7 +120,9 @@ export default class HdtCampaignMemberAgencyAssignment extends LightningElement 
             assignedSoFar += inp.value ? parseInt(inp.value) : 0;
         });
         if(currentElem.value){
-            this.template.querySelector("[data-index='" + event.currentTarget.dataset.id + "']").required=true;
+            let perc_num = this.template.querySelector("[data-index='" + event.currentTarget.dataset.id + "']");
+            perc_num.setCustomValidity( "Selezionare un valore" );
+            perc_num.reportValidity();
         }
         else{
             console.log('in else');
