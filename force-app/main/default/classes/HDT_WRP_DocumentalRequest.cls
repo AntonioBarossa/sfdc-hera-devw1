@@ -72,6 +72,7 @@ public class HDT_WRP_DocumentalRequest{
         public string expireAfter { get; set; }
         public string expireEnabled { get; set; }
         public String roleName { get; set; }
+        public String clientUserId { get; set; }
     }
 
     public class HDT_WRP_DocumentalTemplate

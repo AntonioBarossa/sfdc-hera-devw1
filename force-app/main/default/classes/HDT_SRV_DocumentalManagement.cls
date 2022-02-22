@@ -733,6 +733,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 			//customerInfo
 			String email = String.isNotBlank(emailCase)?emailCase:emailOrder;
 			String creationUrl = formParams.get('signMode') == 'OTP Remoto'? 'false':'true';
+			String clientUserId = formParams.get('signMode') == 'OTP Coopresenza'? '1':null;
 			String vatCode = HDT_UTL_DocumentalManagement.getValue('Account','VATNumber__c',0,inputs,formParams);
 			String fiscalCode = HDT_UTL_DocumentalManagement.getValue('Account','FiscalCode__c',0,inputs,formParams);
 			String accountName = HDT_UTL_DocumentalManagement.getValue('PrimaryContact','Name',0,inputs,formParams);
@@ -756,6 +757,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 			customerInfo.fiscalCode = fiscalCode;
 			customerInfo.vatNumber = vatCode;
 			customerInfo.creationUrl = creationUrl;
+			customerInfo.clientUserId = clientUserId;
 			customerInfo.emailSubject = 'HERA - ' + processType;
 			customerInfo.roleName = 'Cliente';
 			//@ealpi nuovi campi inviati
