@@ -86,6 +86,11 @@ public with sharing class HDT_SRV_ScriptManagerTst {
 
         List<CampaignMember> cmpMemberList = HDT_UTL_DataFactoryTst.createCampaignMember(true,campaignId,leadList,conList);
         List<CampaignMember> cmpMemberList2 = HDT_UTL_DataFactoryTst.createCampaignMember(true,campaignId2,leadList,conList);
+
+        List<Contract> contractsList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].Id);
+
+        Case caso = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].Id, null, null, contractsList[0].Id, null)[0];
+        insert caso;
     }
 
     @isTest
@@ -171,6 +176,25 @@ public with sharing class HDT_SRV_ScriptManagerTst {
 
         Test.startTest();
         String result = HDT_SRV_ScriptManager.getFlowCampaign(cmpMember.Id);
+        Test.stopTest();
+    
+        System.assertNotEquals(result, null, 'Si è verificato un errore in fase di get del flow');
+    }
+
+    @isTest
+    static void testGetFlowCase(){
+
+        Case caseRetrieved = [SELECT Id FROM Case WITH SECURITY_ENFORCED LIMIT 1];
+
+        List<HDT_ScriptPerCommOffer__mdt> scriptsMapMock = HDT_SRV_ScriptManager.scriptsMapping;
+
+        HDT_ScriptPerCommOffer__mdt mappingMock = new HDT_ScriptPerCommOffer__mdt();
+        mappingMock.Object__c = 'Case';
+        mappingMock.ScriptFlowName__c = 'HDT_Script_Consenso_Privacy';
+        scriptsMapMock.add(mappingMock);
+
+        Test.startTest();
+        String result = HDT_SRV_ScriptManager.getFlowCase(caseRetrieved.Id);
         Test.stopTest();
     
         System.assertNotEquals(result, null, 'Si è verificato un errore in fase di get del flow');
