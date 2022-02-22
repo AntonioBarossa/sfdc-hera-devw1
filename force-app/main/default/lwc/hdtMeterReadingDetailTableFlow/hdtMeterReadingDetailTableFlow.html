@@ -1,5 +1,4 @@
 <template>
-
     <c-hdt-meter-reading-detail-table
         columnsobj={meterReadingColumns}
         contract-number={contractNumber}
@@ -7,8 +6,6 @@
         onrowselection={handleRowSelection}
         non-stand-alone={nonStandAlone}>
     </c-hdt-meter-reading-detail-table>
-
-
     <div if:false={nonStandAlone} class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
         <div class="actionsLeft">
         </div>
@@ -17,14 +14,15 @@
                 class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
                 variant={variantButton} type="button" name="save" label={labelButton} onclick={handleGoNext}>
             </lightning-button>
-            <lightning-button
-            class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-            variant="neutral" type="button" name="previous" label="Indietro" onclick={handleGoBack}>
-        </lightning-button>
+            <template if:true={previousButton}> 
+                <lightning-button
+                    class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                    variant="neutral" type="button" name="previous" label="Indietro" onclick={handleGoBack}>
+                </lightning-button>
+            </template>
             <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
                 variant="brand" type="button" name="cancel" label="Annulla pratica" onclick={handleCancel}>
             </lightning-button>
         </div>
     </div>
-
 </template>
