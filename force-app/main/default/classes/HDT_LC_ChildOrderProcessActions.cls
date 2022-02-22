@@ -316,6 +316,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
         }
 
+        string exciseEle;
+        if( order.RecordType.DeveloperName.contains('HDT_RT_CambioUso') ){
+            exciseEle = String.isBlank(orderToUpdate.ExciseEle__c)? currentOrder.ExciseEle__c:orderToUpdate.ExciseEle__c;
+            if( order.RecordType.DeveloperName.contains('HDT_RT_CambioUso') && !HDT_UTL_ServicePoint.checkTaxesCoerence( currentOrder.SupplyType__c, exciseEle ) ){                          
+                throw new AuraHandledException('Dati incompleti o non coerenti.');
+            }
+        }
+
         orderSrv.updateRecord(orderToUpdate);
         if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
             HDT_LC_ChildOrderProcessDetails.createActivityAccise(orderToUpdate.FacilitationExcise__c,orderToUpdate.VATfacilitationFlag__c,orderToUpdate.id,orderToUpdate.accountid);

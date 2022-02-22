@@ -922,7 +922,7 @@
     <assignments>
         <name>Valorizzazione_Status_Campaign_Member</name>
         <label>Valorizzazione Status Campaign Member</label>
-        <locationX>6672</locationX>
+        <locationX>6716</locationX>
         <locationY>4358</locationY>
         <assignmentItems>
             <assignToReference>CampaignMember_Record.Status</assignToReference>
@@ -1043,10 +1043,10 @@
         <defaultConnectorLabel>SI</defaultConnectorLabel>
         <rules>
             <name>Campaign_Member_presente_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>CampaignMemberId</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue></stringValue>
                 </rightValue>
@@ -1055,7 +1055,7 @@
                 <leftValueReference>CampaignMemberId</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <label>NO</label>
@@ -7259,7 +7259,7 @@
     <recordLookups>
         <name>CampaignMember_Record</name>
         <label>Record Campaign Member</label>
-        <locationX>6672</locationX>
+        <locationX>6716</locationX>
         <locationY>4238</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8077,7 +8077,7 @@
     <recordUpdates>
         <name>Aggiornamento_record_Campaign_Member</name>
         <label>Aggiornamento record Campaign Member</label>
-        <locationX>6672</locationX>
+        <locationX>6716</locationX>
         <locationY>4478</locationY>
         <inputReference>CampaignMember_Record</inputReference>
     </recordUpdates>

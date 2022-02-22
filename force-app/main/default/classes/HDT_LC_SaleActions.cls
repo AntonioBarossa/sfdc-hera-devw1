@@ -210,10 +210,9 @@ public inherited sharing class HDT_LC_SaleActions {
 
         //update campaignMember Status
         if (campaignMemberId != null) {
-            Campaign myCampaign = new Campaign(
-                Id = campaignMemberId
-            );            
-            HDT_LC_CampaignsController.updateCampaignMemberStatus(campaignMemberId, myCampaign.PositiveOutcomeDefaultStatus__c);
+            CampaignMember myCampaignMember = [select id, Campaign.PositiveOutcomeDefaultStatus__c  from CampaignMember where Id = :campaignMemberId];   
+            String myStatus = myCampaignMember.Campaign.PositiveOutcomeDefaultStatus__c;
+            HDT_LC_CampaignsController.updateCampaignMemberStatus(campaignMemberId, myStatus);
         }
 
         //update campaignMember siblings Status a 'Non Proposto Auto'
