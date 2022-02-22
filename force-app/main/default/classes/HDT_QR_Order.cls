@@ -620,6 +620,7 @@ public inherited sharing class HDT_QR_Order {
             DocumentLow80__c,
             DistributorFormula__c,
             VASType__c,
+            ComfortCallDaysDue__c,
             DateComfortCall__c,
             DocumentPackage__c,
             ProcessType__c,
