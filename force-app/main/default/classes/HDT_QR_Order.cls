@@ -192,6 +192,7 @@ public inherited sharing class HDT_QR_Order {
             OrderReference__c,
             OrderReference__r.SBQQ__Quote__c,
             OrderReference__r.ServicePoint__r.ServicePointCode__c,
+            OrderReference__r.ServicePoint__c,
             SBQQ__Quote__c,
             ContractReference__r.ContractNumber,
             OrderReference__r.OrderNumber,
@@ -1192,7 +1193,7 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getOrderForComfort(String id){
-        return [Select id,Phase__c,ProcessType__c,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
+        return [Select id,Phase__c,ProcessType__c,VASType__c,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
     }
 
     //@frpanico getExciseTranscode
