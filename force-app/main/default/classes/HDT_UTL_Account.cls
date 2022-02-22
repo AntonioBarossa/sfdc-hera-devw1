@@ -212,23 +212,23 @@ public with sharing class HDT_UTL_Account {
                 acc.CustomerCode__c = res.data.codiceBP;
                // update acc;
             }
-            else if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) || 'Piccoli Condomini'.equalsIgnoreCase(acc.Category__c)) {
-                // amministratore di condominio viene identificato  dalla category 
-                req = callAmCaCreate(acc,cont);
-                resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert amministratore
-                if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
-                    acc.CustomerCode__c = resCreate.data.codiceBP; 
-                 //   update acc;
-                } // TODO gestire l'errore 
-            }
-            else {
-                req=callBpCaCreate(acc,cont);
-                resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
-                if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
-                    acc.CustomerCode__c = resCreate.data.codiceBP; 
-                   // update acc;
-                } // TODO gestire l'errore 
-            }
+            // else if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) || 'Piccoli Condomini'.equalsIgnoreCase(acc.Category__c)) {
+            //     // amministratore di condominio viene identificato  dalla category 
+            //     req = callAmCaCreate(acc,cont);
+            //     resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert amministratore
+            //     if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
+            //         acc.CustomerCode__c = resCreate.data.codiceBP; 
+            //      //   update acc;
+            //     } // TODO gestire l'errore 
+            // }
+            // else {
+            //     req=callBpCaCreate(acc,cont);
+            //     resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
+            //     if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
+            //         acc.CustomerCode__c = resCreate.data.codiceBP; 
+            //        // update acc;
+            //     } // TODO gestire l'errore 
+            // }
         } // TODO else per la gestione dell'errore
         return acc;
     }
