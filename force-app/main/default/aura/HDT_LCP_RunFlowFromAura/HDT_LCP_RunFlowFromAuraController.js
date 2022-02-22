@@ -124,7 +124,7 @@
 
         if(caseId === null || caseId === 'undefined' || caseId === undefined){
             console.log('# CaseId is NULL');
-            if (accId != null && accId != '{!Case.AccountId}'){
+            if (accId != null){
                 inputVariables.push({ name : 'AccountId', type : 'String', value : accId });
             }
             inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
