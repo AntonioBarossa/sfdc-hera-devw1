@@ -249,6 +249,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>LeadId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>ProcessTypeCalculated</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>

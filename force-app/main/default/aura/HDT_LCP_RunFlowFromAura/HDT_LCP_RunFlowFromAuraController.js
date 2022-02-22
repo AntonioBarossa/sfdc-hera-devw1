@@ -124,7 +124,7 @@
 
         if(caseId === null || caseId === 'undefined' || caseId === undefined){
             console.log('# CaseId is NULL');
-            if (accId != null){
+            if (accId != null && accId != '{!Case.AccountId}'){
                 inputVariables.push({ name : 'AccountId', type : 'String', value : accId });
             }
             inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
@@ -201,10 +201,7 @@
        || event.getParam("status") === "FINISHED_SCREEN"
        || event.getParam("status") === "ERROR") {
 			           
-            //var accountTabId = component.get("v.accountTabId");
-            //var leadTabId = component.get("v.leadTabId");
-            //var subTabToClose = component.get("v.subTabToClose");
-            //var enableRefresh = component.get('v.enableRefresh');
+        
             var flowfinal = component.find("flowData");
 			flowfinal.destroy();
            	component.set("v.isLoading", true);
@@ -280,136 +277,6 @@
             }else{
                 helper.finishFlow(component, newCaseId);
             }
-            
-            /*flowfinal.destroy();
-
-            console.log('# Refresh page -> ' + enableRefresh);
-
-            console.log('# close -> ' + subTabToClose + ' - refresh -> ' + accountTabId);
-
-            console.log('# outputVariable -> '+outputVariables);
-            console.log('# newCaseId -> '+newCaseId);
-            //Gestione chiusura errore in creazione
-            if(newCaseId == null || newCaseId == undefined){
-                
-                workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
-                    console.log('# Refresh page -> ' + enableRefresh);
-                    
-                    console.log('# OK Refresh page #');
-                    $A.get('e.force:refreshView').fire();
-                
-                    if(accountTabId != null){
-                        workspaceAPI.focusTab({tabId : accountTabId}).
-                        then(function(response) {
-                            workspaceAPI.refreshTab({
-                                    tabId: accountTabId,
-                                    includeAllSubtabs: true
-                                }).catch(function(error) {
-                                    console.log(error);
-                                });
-                        });
-                    } else if(leadTabId != null){
-                        workspaceAPI.focusTab({tabId : leadTabId}).
-                        then(function(response) {
-                            workspaceAPI.refreshTab({
-                                    tabId: leadTabId,
-                                    includeAllSubtabs: true
-                                }).catch(function(error) {
-                                    console.log(error);
-                                });
-                        });
-                    }
-
-                }).catch(function(error) {
-                    console.log(error);
-                });
-
-                return;
-
-            }
-            if(!enableRefresh && accountTabId != null){
-                workspaceAPI.openSubtab({
-                    parentTabId: accountTabId,
-                    pageReference: {
-                        type: "standard__recordPage",
-                        attributes: {
-                            recordId: newCaseId,
-                            objectApiName: "Case",
-                            actionName: "view"
-                        }
-                    },
-                    focus: true
-                }).then(function(response){
-
-                    workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
-                        console.log('# Refresh page -> ' + enableRefresh);
-                        console.log('# OK Refresh page #');
-                        $A.get('e.force:refreshView').fire();
-                        
-        
-                        //workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
-                        //    workspaceAPI.refreshTab({
-                        //        tabId: subTabToRefresh,
-                        //        includeAllSubtabs: true
-                        //    }).catch(function(error) {
-                        //        console.log(error);
-                        //    });
-                        //});
-        
-                        }).catch(function(error) {
-                            console.log(error);
-                        });
-                    });
-            }else{
-
-                workspaceAPI.focusTab({
-                    pageReference: {
-                    type: "standard__recordPage",
-                    attributes: {
-                        recordId: newCaseId,
-                        objectApiName: "Case",
-                        actionName: "view"
-                    }
-                },
-                focus: true
-                })
-                .then(function(response) {
-                    workspaceAPI.closeTab({ tabId: subTabToClose}).then(function(response){
-                        console.log('# Refresh page -> ' + enableRefresh);
-                        
-                        console.log('# OK Refresh page #');
-                        $A.get('e.force:refreshView').fire();
-                    }).catch(function(error){
-                        console.log(error);
-                    });
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
-
-
-                workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
-                        console.log('# Refresh page -> ' + enableRefresh);
-                        
-                        console.log('# OK Refresh page #');
-                        $A.get('e.force:refreshView').fire();
-                    
-        
-                        workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
-                        workspaceAPI.refreshTab({
-                                tabId: subTabToRefresh,
-                                includeAllSubtabs: true
-                            }).catch(function(error) {
-                                console.log(error);
-                            });
-                        });
-        
-                }).catch(function(error) {
-                    console.log(error);
-                });
-
-
-            }*/
         }
     },
     onTabClosed : function(component, event, helper) {
