@@ -19,7 +19,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     public static List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> init(Order order){
         List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> processesList = new List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process>();
 
-        if (order.ServicePoint__c != null) {//returns processes that are different from VAS
+        if (order.ServicePoint__c != null && order.IsVAS__c == false) {//returns processes that are different from VAS
             processesList = HDT_UTL_OrderProcessAssignment.getAvailableProcesses(order);
         }
 
