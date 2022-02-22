@@ -285,7 +285,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
 
         relatedSobjectsToInsert.addAll(getActivitiesRicontatto(assetToOrderKoFornitore, 'CBS_ATT003__KO_FORNITORE', 'HDT_RT_Default'));
         relatedSobjectsToInsert.addAll(getActivitiesRicontatto(assetMigratedKoFornitore, 'CBS_ATT012__KO_FORNITORE', 'HDT_RT_Default'));
-        relatedSobjectsToInsert.addAll(getActivitiesRicontatto(assetToAccountEsitiFornitore, 'VAS001_GESTIONE_ESITI_FORNITORE', ''));
+        //relatedSobjectsToInsert.addAll(getActivitiesRicontatto(assetToAccountEsitiFornitore, 'VAS001_GESTIONE_ESITI_FORNITORE', ''));
         relatedSobjectsToInsert.addAll(casesDisattVas);
         if(!relatedSobjectsToInsert.isEmpty()){
             HDT_UTL_DatabaseService.insertSObject(relatedSobjectsToInsert);
