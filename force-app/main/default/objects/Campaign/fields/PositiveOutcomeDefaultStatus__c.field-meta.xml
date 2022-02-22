@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PositiveOutcomeDefaultStatus__c</fullName>
+    <externalId>false</externalId>
+    <label>Stato Default Esito Positivo</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Conferma IVR</fullName>
+                <default>false</default>
+                <label>Conferma IVR</label>
+            </value>
+            <value>
+                <fullName>Contattato positivo - Vendita VAS</fullName>
+                <default>false</default>
+                <label>Contattato positivo - Vendita VAS</label>
+            </value>
+            <value>
+                <fullName>Contattato positivo - Bonus</fullName>
+                <default>false</default>
+                <label>Contattato positivo - Bonus</label>
+            </value>
+            <value>
+                <fullName>Contattato positivo - Cambio offerta</fullName>
+                <default>false</default>
+                <label>Contattato positivo - Cambio offerta</label>
+            </value>
+            <value>
+                <fullName>Vendita Extra VO</fullName>
+                <default>false</default>
+                <label>Vendita Extra VO</label>
+            </value>
+            <value>
+                <fullName>Contatto positivo - no vendita</fullName>
+                <default>false</default>
+                <label>Contatto positivo - no vendita</label>
+            </value>
+            <value>
+                <fullName>Conferma WEB</fullName>
+                <default>false</default>
+                <label>Conferma WEB</label>
+            </value>
+            <value>
+                <fullName>Conferma già avvenuta</fullName>
+                <default>false</default>
+                <label>Conferma già avvenuta</label>
+            </value>
+            <value>
+                <fullName>Contratto Accettato</fullName>
+                <default>false</default>
+                <label>Contratto Accettato</label>
+            </value>
+            <value>
+                <fullName>Conferma CC</fullName>
+                <default>false</default>
+                <label>Conferma CC</label>
+            </value>
+            <value>
+                <fullName>Conferma e Recupero</fullName>
+                <default>false</default>
+                <label>Conferma e Recupero</label>
+            </value>
+            <value>
+                <fullName>Conferma MAIL</fullName>
+                <default>false</default>
+                <label>Conferma MAIL</label>
+            </value>
+            <value>
+                <fullName>Cont.to positivo Cambio off. e vend. VAS</fullName>
+                <default>false</default>
+                <label>Cont.to positivo Cambio off. e vend. VAS</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

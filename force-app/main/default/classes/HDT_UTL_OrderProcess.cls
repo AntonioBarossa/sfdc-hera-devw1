@@ -144,7 +144,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             String phaseStory = order.PhaseStory__c;
             if(order.Phase__c!=oldOrder.Phase__c 
                 && oldOrder.Phase__c == 'Documentazione validata' 
-                && order.Phase__c == 'Comunicazione Verso Heroku'
+                && (order.Phase__c == 'Comunicazione Verso Heroku' || order.Phase__c == 'Comunicazione Motore VAS')
                 && order.QualityCall__c
                 && isMonitoringList.contains(order.AgencyCode__c)
                 && !phaseStory.contains('Quality Call OK')){
@@ -159,7 +159,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              */
             if(order.Phase__c != oldOrder.Phase__c
             && oldOrder.Phase__c == 'Documentazione validata' 
-            && order.Phase__c == 'Comunicazione Verso Heroku'
+            && (order.Phase__c == 'Comunicazione Verso Heroku' || order.Phase__c == 'Comunicazione Motore VAS')
             && order.ComfortCallDaysDue__c != null
             )
             {
@@ -553,13 +553,20 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         for (Order childOrder : parentOrderIds) {
             if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
+                newVasPhase = newVasPhase.containsIgnoreCase('Esportazione VS Siebel') 
+                    ? newVasPhase 
+                    : childOrder.VASType__c?.equalsIgnoreCase('VAS Fatturabili') 
+                        ? 'Comunicazione verso Heroku' : 'Comunicazione Motore VAS';
                 if (childOrder.Phase__c == currentVasPhase) {
-                    String phaseVas = childOrder.VASType__c?.equals('VAS Servizio')? 'In attesa tempi di ripensamento' : newVasPhase;
+                    String phaseVas = 
+                        childOrder.VASType__c?.equals('VAS Servizio') 
+                        ? childOrder.ComfortCallDaysDue__c == null 
+                                ? 'In attesa tempi di ripensamento'
+                                : 'In attesa conferma cliente' 
+                        : newVasPhase;
                     vasOrdersToUpdate.put(childOrder.Id, phaseVas);
                 }
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged ) {
-                //MODIFICARE IN ATTESA DI SVILUPPO MATRICE, TEMPORANEA ATTIVAZIONE FABIANA BUG 18/09/21
-                //Valore distributore STABBATO  
                 if (childOrder.Phase__c == currentPhase
                         && !childOrder.QualityCall__c
                         && !isMonitoringList.contains(childOrder.AgencyCode__c)
@@ -607,6 +614,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                             AND   Commodity__c =:ord.Commodity__c 
                             AND   ServiceCode__c =:ord.ProcessCode__c
                             AND   Type__c =:ord.ProcessType__c
+                            AND   Active__c = true
                             WITH SECURITY_ENFORCED];
 
         return ( count > 0 );

@@ -453,7 +453,7 @@
         <defaultConnectorLabel>Inserimento Consensi</defaultConnectorLabel>
         <rules>
             <name>Stampa</name>
-            <conditionLogic>4 AND (1 OR 2 OR 3)</conditionLogic>
+            <conditionLogic>4 AND (1 OR 2 OR 3 OR 5 OR 6)</conditionLogic>
             <conditions>
                 <leftValueReference>FlowCase.Origin</leftValueReference>
                 <operator>EqualTo</operator>
@@ -480,6 +480,20 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Bozza</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>FlowCase.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Telefono Outbound</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>FlowCase.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Telefono Inbound</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -638,7 +652,7 @@
     <recordUpdates>
         <name>Predefault_Case</name>
         <label>Predefault Case</label>
-        <locationX>1745</locationX>
+        <locationX>1746</locationX>
         <locationY>347</locationY>
         <connector>
             <targetReference>Next_Step_Processo</targetReference>
@@ -652,6 +666,24 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>Email__c</field>
+            <value>
+                <elementReference>Get_Lead.Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FirstName__c</field>
+            <value>
+                <elementReference>Get_Lead.FirstName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FiscalCode__c</field>
+            <value>
+                <elementReference>Get_Lead.FiscalCode__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>HasOptedOutOfEmail__c</field>
             <value>
                 <elementReference>Get_Individual.HasOptedOutOfEmail__c</elementReference>
@@ -664,15 +696,33 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>LastName__c</field>
+            <value>
+                <elementReference>Get_Lead.LastName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>MarketingPrivacy__c</field>
             <value>
                 <elementReference>Get_Individual.MarketingPrivacy__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>PhoneNumber__c</field>
+            <value>
+                <elementReference>Get_Lead.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ProfilingPrivacy__c</field>
             <value>
                 <elementReference>Get_Individual.ProfilingPrivacy__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>VatNumber__c</field>
+            <value>
+                <elementReference>Get_Lead.VATNumber__c</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>

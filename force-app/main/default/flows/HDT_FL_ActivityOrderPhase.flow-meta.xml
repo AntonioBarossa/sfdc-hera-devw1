@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Chiudi_Attivit</name>
+        <label>Chiudi Attività</label>
+        <locationX>182</locationX>
+        <locationY>518</locationY>
+        <actionName>HDT_LC_EditScartiComplessi</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>checkErrorMessage</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Errore_Chiusura_Activity_From_Action</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>input</name>
+            <value>
+                <elementReference>activityId</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>errorMessage</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
     <apiVersion>52.0</apiVersion>
     <assignments>
         <name>changePhase</name>
         <label>changePhase</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>getOrder.Phase__c</assignToReference>
@@ -14,9 +39,41 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateOrder</targetReference>
+            <targetReference>Chiudi_Attivit</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>checkErrorMessage</name>
+        <label>checkErrorMessage</label>
+        <locationX>182</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>Errore_Chiusura_Activity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Error</defaultConnectorLabel>
+        <rules>
+            <name>No_error</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>errorMessage</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>errorMessage</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>updateOrder</targetReference>
+            </connector>
+            <label>No error</label>
+        </rules>
+    </decisions>
     <description>fire al clickdel pulsante &quot;RiLavora scarto&quot; e solo se è uno scarto transitorio</description>
     <interviewLabel>HDT_FL_ActivityOrderPhase {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_ActivityOrderPhase</label>
@@ -42,7 +99,7 @@
     <recordLookups>
         <name>getActivity</name>
         <label>getActivity</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -63,7 +120,7 @@
     <recordLookups>
         <name>getOrder</name>
         <label>getOrder</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -84,8 +141,8 @@
     <recordUpdates>
         <name>updateOrder</name>
         <label>updateOrder</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
         <connector>
             <targetReference>endTextFlow</targetReference>
         </connector>
@@ -94,8 +151,8 @@
     <screens>
         <name>endTextFlow</name>
         <label>endTextFlow</label>
-        <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationX>50</locationX>
+        <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -107,8 +164,40 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Errore_Chiusura_Activity</name>
+        <label>Errore Chiusura Activity</label>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>errorMessageText</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Errore durante la chiusura dell&apos;activity.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Errore_Chiusura_Activity_From_Action</name>
+        <label>Errore Chiusura Activity From Action</label>
+        <locationX>578</locationX>
+        <locationY>638</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>errorMessageFromAction</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Si è verificato il seguente errore durante la chiusura dell&apos;attività:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>getActivity</targetReference>
@@ -128,5 +217,15 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
 </Flow>

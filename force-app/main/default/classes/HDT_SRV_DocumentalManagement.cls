@@ -355,7 +355,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
 		if(docSendTracking != null){
 			if(docSendTracking.get('Case__c') != null){
-				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact.IndividualId,Type FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
+				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact.IndividualId,Type,Lead__r.IndividualId FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
 				return caseList[0];
 			}else {
 				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
@@ -446,8 +446,12 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 			if(record.getSobjectType() == Case.getSobjectType()){
 				Case caseRecord = (Case) record;
 				Contact caseContact = (Contact) caseRecord.Contact;
+				Lead caseLead;
 				if (caseContact != null){
 					individualId = caseContact.IndividualId;
+				}else {
+					caseLead = (Lead) caseRecord.Lead__r;
+					individualId = caseLead != null? caseLead.IndividualId:'';
 				}
 			}else{
 				Order orderRecord = (Order) record;
@@ -577,6 +581,10 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
 				}
 			}
+		}else{
+			record.put('DocumentalPhase__c','Plico firmato');
+			record.put('Phase__c','Documentazione Gestita');
+			HDT_UTL_DatabaseService.updateSObject(record);
 		}
 	}
 	private static void handleLandRegistry(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio){
@@ -725,6 +733,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 			//customerInfo
 			String email = String.isNotBlank(emailCase)?emailCase:emailOrder;
 			String creationUrl = formParams.get('signMode') == 'OTP Remoto'? 'false':'true';
+			String clientUserId = formParams.get('signMode') == 'OTP Coopresenza'? '1':null;
 			String vatCode = HDT_UTL_DocumentalManagement.getValue('Account','VATNumber__c',0,inputs,formParams);
 			String fiscalCode = HDT_UTL_DocumentalManagement.getValue('Account','FiscalCode__c',0,inputs,formParams);
 			String accountName = HDT_UTL_DocumentalManagement.getValue('PrimaryContact','Name',0,inputs,formParams);
@@ -738,11 +747,17 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 			if(String.isNotBlank(processTypeCase)){
 				processType = processTypeCase;
 			}
+			if(String.isBlank(accountName)){
+				firstName = HDT_UTL_DocumentalManagement.getValue('Case','FirstName__c',0,inputs,formParams);
+				lastName = HDT_UTL_DocumentalManagement.getValue('Case','LastName__c',0,inputs,formParams);
+				accountName = firstName + ' ' + lastName;
+			}
 			customerInfo.email = email;
 			customerInfo.name = accountName;
 			customerInfo.fiscalCode = fiscalCode;
 			customerInfo.vatNumber = vatCode;
 			customerInfo.creationUrl = creationUrl;
+			customerInfo.clientUserId = clientUserId;
 			customerInfo.emailSubject = 'HERA - ' + processType;
 			customerInfo.roleName = 'Cliente';
 			//@ealpi nuovi campi inviati

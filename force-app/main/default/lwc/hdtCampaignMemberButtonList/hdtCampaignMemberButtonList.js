@@ -6,11 +6,12 @@ import getCampaignAndAccountByMember from '@salesforce/apex/HDT_LC_CampaignsCont
 export default class hdtCampaignMemberButtonList extends NavigationMixin(LightningElement) {
     @api recordId;
     caseObj = null;
-
+    CampaignProcessType = '';
     connectedCallback() {
         getCampaignAndAccountByMember({ campaignMemberId: this.recordId }).then(data => {
             console.log(JSON.stringify(data));
-
+            this.CampaignProcessType = data.Campaign.ProcessType__c;
+            console.log('CampaignProcessType --> '+this.CampaignProcessType);
             this.caseObj = {
                 'Subject': 'PostVendita',
                 'AccountId': data.Contact.AccountId,
@@ -62,7 +63,8 @@ export default class hdtCampaignMemberButtonList extends NavigationMixin(Lightni
                             c__recordTypeName: obj['c__recordTypeName'],
                             c__accid: obj['c__accid'],
                             c__flowName: obj['c__flowName'],
-                            c__campaignId: obj['c__campaignId']
+                            c__campaignId: obj['c__campaignId'],
+                            c__campaignMemberId: this.recordId
                         }
                     }).then(url => {
                        window.open(url, "_self");
@@ -88,5 +90,9 @@ export default class hdtCampaignMemberButtonList extends NavigationMixin(Lightni
                 })
             );
         }
+    }
+
+    get manageDisable(){
+        return this.CampaignProcessType == 'Nuova Vendita' || this.CampaignProcessType == '';
     }
 }

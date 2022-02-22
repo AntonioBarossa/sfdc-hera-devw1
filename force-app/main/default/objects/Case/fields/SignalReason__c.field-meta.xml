@@ -132,6 +132,36 @@
                 <default>false</default>
                 <label>Tesla model 3</label>
             </value>
+            <value>
+                <fullName>Con RFID</fullName>
+                <default>false</default>
+                <label>Con RFID</label>
+            </value>
+            <value>
+                <fullName>Senza RFID</fullName>
+                <default>false</default>
+                <label>Senza RFID</label>
+            </value>
+            <value>
+                <fullName>WallBox 2</fullName>
+                <default>false</default>
+                <label>WallBox 2</label>
+            </value>
+            <value>
+                <fullName>Colonnina</fullName>
+                <default>false</default>
+                <label>Colonnina</label>
+            </value>
+            <value>
+                <fullName>Polestation</fullName>
+                <default>false</default>
+                <label>Polestation</label>
+            </value>
+            <value>
+                <fullName>Renault Kangoo ZE</fullName>
+                <default>false</default>
+                <label>Renault Kangoo ZE</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

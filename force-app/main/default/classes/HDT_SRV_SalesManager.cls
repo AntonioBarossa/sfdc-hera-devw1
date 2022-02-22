@@ -121,10 +121,13 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
                         errorDescription = res.exceptionMessage;
                     }
                     else {
-                        errorDescription = res.errorDetails[0].message;
+                        String resString = JSON.serialize(res);
+                        if(resString.contains(PHASE_KO_PRODOTTO)){
+                            errorDescription = 'Cod. offerta non mappato';
+                        }
                     }
                 }
-                newPhase = isSuccess?'Comunicazione verso Motore VAS OK': errorDescription.startsWithIgnoreCase(PHASE_KO_PRODOTTO)? 'Ko prodotto vas' : 'Comunicazione verso Motore VAS KO';
+                newPhase = isSuccess?'Comunicazione verso Motore VAS OK': errorDescription.contains(PHASE_KO_PRODOTTO)? 'Ko prodotto vas' : 'Comunicazione verso Motore VAS KO';
             }
             when 'deactivation'{
                 res = HDT_WS_MotoreVas.deactivationCallout(sobjectId);
@@ -141,6 +144,16 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
             }
             when 'service26' {
                 res = HDT_SRV_ServiceTwentySix.callService26(sobjectId);
+                Boolean isSuccess = (res.statusCode==200 || res.statusCode==201);
+                newPhase = isSuccess ? 'Comunicazione verso Heroku OK' : 'Comunicazione verso Heroku OK';
+                if (!isSuccess) {
+                    if (String.isNotBlank(res.exceptionMessage)){
+                        errorDescription = res.exceptionMessage;
+                    }
+                    else {
+                        errorDescription = res.errorDetails[0].message;
+                    }
+                }
             }
         }
 

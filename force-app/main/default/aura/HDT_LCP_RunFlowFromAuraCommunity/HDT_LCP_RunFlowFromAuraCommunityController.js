@@ -15,6 +15,7 @@
         var processType = '';
         var recordTypeName = '';
         var campaignId = '';
+        var campaignMemberId = '';
 
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),
                         sURLVariables = sPageURL.split('&'),
@@ -40,11 +41,15 @@
                         if(testParam[0] == 'c__recordTypeName'){
                             recordTypeName = testParam[1];
                         }
+                        if(testParam[0] == 'c__campaignMemberId'){
+                            campaignMemberId = testParam[1];
+                        }
                         
                     }
 
         var caseId = null;
         component.set("v.campaignId",campaignId);
+        component.set("v.campaignMemberId",campaignMemberId);
         /*
         var flowName = myPageRef.state.c__flowName;
         var accId = myPageRef.state.c__accid;
@@ -90,6 +95,7 @@
        console.log('# accId -> ' + accId);
         console.log('# processType -> ' + processType);
         console.log('# recordTypeName -> ' + recordTypeName);
+        console.log('# campaignMemberId -> ' + campaignMemberId);
         //console.log('# cluster -> ' + cluster);
         /*   console.log('# recordToCancell -> ' + recordToCancell);
         console.log('# sObjectRecordToCancell -> ' + sObjectRecordToCancell);
@@ -186,6 +192,9 @@
         if(campaignId != null){
             inputVariables.push({ name : 'CampaignId', type : 'String', value : campaignId});
         }
+        if(campaignMemberId != null){
+            inputVariables.push({ name : 'CampaignMemberId', type : 'String', value : campaignMemberId});
+        }
       //  if(leadId != null){
        //     inputVariables.push({ name : 'LeadId', type : 'String', value : leadId});
      //   }
@@ -278,13 +287,15 @@
             console.log('# newCaseId -> '+newCaseId);
             var campaignId = component.get("v.campaignId");
             console.log('# campaignId -> ' +campaignId);
+            var campaignMemberId = component.get("v.campaignMemberId");
+            console.log('# campaignMemberId -> ' +campaignMemberId);
             var navService = component.find("navService");
             var pageReference = 
             {
                 "type":"standard__recordPage",
                 "attributes":
                 {
-                    "recordId": campaignId,
+                    "recordId": campaignMemberId,
                     "actionName" : "view"
                 }
             }

@@ -178,8 +178,8 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         CaliberAvailable__c,
         CausalCode__c
         FROM Case
-        WHERE Type = : 'Voltura Tecnica'
-        AND Phase__c = : 'In attesa Data Decorrenza'
+        WHERE Type = 'Voltura Tecnica'
+        AND Phase__c = 'In attesa Data Decorrenza'
         AND SuspensionDate__c <= :this.todayDate
         WITH SECURITY_ENFORCED
         ];

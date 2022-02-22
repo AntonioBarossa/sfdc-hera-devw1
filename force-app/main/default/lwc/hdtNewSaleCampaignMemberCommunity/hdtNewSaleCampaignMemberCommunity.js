@@ -5,7 +5,23 @@ import getAccountAndCampaign from '@salesforce/apex/HDT_LC_CampaignsController.g
 
 export default class hdtNewSaleCampaignMemberCommunity extends NavigationMixin(LightningElement) {
     @api recordId;
-
+    CampaignProcessType = '';
+    connectedCallback() {
+        getAccountAndCampaign({ campaignMemberId: this.recordId }).then(data => {
+            console.log(JSON.stringify(data));
+            this.CampaignProcessType = data.Campaign.ProcessType__c;
+            console.log('CampaignProcessType Sale --> '+this.CampaignProcessType);
+        }).catch(error => {
+            console.log(error);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: `${error.status}`,
+                    message: `${error.body.message}`,
+                    variant: "error"
+                })
+            );
+        });
+    }
     navigateToNewSale() {
         getAccountAndCampaign({ campaignMemberId: this.recordId }).then(data => {
             console.log(JSON.stringify(data));
@@ -25,11 +41,11 @@ export default class hdtNewSaleCampaignMemberCommunity extends NavigationMixin(L
                         name: "WizardVendita__c"
                     },
                     state: {
-                        c__accountId: data.GenericField1__c,
+                        c__accountId: data.Contact.AccountId,
                         c__campaignCommissioningId: data.CampaignId,
                     }
                 }).then(url => {
-                    window.open(url, "_blank");
+                    window.open(url, "_self");
                 });
             }
         }).catch(error => {
@@ -42,5 +58,9 @@ export default class hdtNewSaleCampaignMemberCommunity extends NavigationMixin(L
                 })
             );
         });
+    }
+
+    get manageDisable(){
+        return this.CampaignProcessType == 'Nuovo Caso' || this.CampaignProcessType == '';
     }
 }

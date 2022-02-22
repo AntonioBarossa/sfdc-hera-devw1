@@ -34,6 +34,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     service = '';
     pickValue = '';
     causaleContendibilita = '';
+    creditCheck = false;
 
     get isNotBillable(){
         return this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && !this.order.IsBillableVas__c;
@@ -334,6 +335,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         //EVERIS
 
         //EVERIS: Aggiunta variabile Order
+        //Questo pasaggio è un passaggio obbligatorio altrimenti va in errore durante l'assegnazione.
+        this.order = JSON.parse(JSON.stringify(this.order));
+        this.order.CreditCheckInProgress__c = this.creditCheck;
+
         next({order: this.order,orderId: this.order.Id, selectedProcessObject: this.selectedProcessObject, deliberate: this.deliberation, extraParams: extraParams, srRequest: this.serviceRequest}).then(data =>{
             if(data != '' && data != this.order.OrderNumber){
                 const toastErrorMessage = new ShowToastEvent({
@@ -373,9 +378,14 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          * HDT_RT_VAS (Solo Se: OrderReference__c <> null & ContractReference <> null)
          */
          console.log('****12');
+         console.log('# SelectedProcess.RecordType >>> ' + this.selectedProcessObject.recordType === 'HDT_RT_VAS');
+         console.log('# Quote Condition >>> ' + this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c);
+         console.log('# RecordType condition >>> ' + ['HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType));
+         console.log('# ProcessType Conditio >>> ' + this.selectedProcessObject.processType !== 'Switch in Ripristinatorio');
+         console.log('# Full Condition >>> ' + (this.selectedProcessObject.recordType === 'HDT_RT_VAS' && this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c ) || (['HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType !== 'Switch in Ripristinatorio'));
         //if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
         if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c ) || (['HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
-            this.order.CreditCheckInProgress__c = true;
+            this.creditCheck = true;
             this.callCreditCheckSAP();
         }
         console.log('****13');
@@ -515,10 +525,6 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             }
         ];
 
-        console.log('#Calling Credit Check......');
-        this.callCreditCheckSAP();
-        console.log('#End Credit Check......');
-        console.log('CallBack end');
     }
 
     typeVisibility(type){
@@ -704,7 +710,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             data["alternativeCustomerId"] = fiscalData;
         }
         console.log("this.4"); 
-
+        console.log("@@@@request --> " + JSON.stringify(data)); 
         return data; 
     }
     // END @Picchiri 07/06/21 Credit Check
