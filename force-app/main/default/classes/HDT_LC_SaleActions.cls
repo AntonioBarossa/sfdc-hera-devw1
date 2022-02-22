@@ -209,7 +209,7 @@ public inherited sharing class HDT_LC_SaleActions {
         quoteSrv.updateRecords(quoteList);
 
         //update campaignMember Status
-        if (campaignMemberId != null) {
+        if (string.isNotBlank(campaignMemberId)) {
             CampaignMember myCampaignMember = [select id, Campaign.PositiveOutcomeDefaultStatus__c  from CampaignMember where Id = :campaignMemberId];   
             String myStatus = myCampaignMember.Campaign.PositiveOutcomeDefaultStatus__c;
             HDT_LC_CampaignsController.updateCampaignMemberStatus(campaignMemberId, myStatus);
