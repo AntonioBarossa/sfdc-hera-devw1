@@ -1,6 +1,6 @@
 /**
 * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
-* @date 14/12/2020
+* @date 14/12/2020updateCampaignMembersStatus
 * @description Apex controller for hdtSaleActions.js component
 * @history Keltin Mesonjesi – 14/12/2020 – Created class
 */
@@ -210,7 +210,10 @@ public inherited sharing class HDT_LC_SaleActions {
 
         //update campaignMember Status
         if (campaignMemberId != null) {
-            HDT_LC_CampaignsController.updateCampaignMemberStatus(campaignMemberId, 'Positivo');
+            Campaign myCampaign = new Campaign(
+                Id = campaignMemberId
+            );            
+            HDT_LC_CampaignsController.updateCampaignMemberStatus(campaignMemberId, myCampaign.PositiveOutcomeDefaultStatus__c);
         }
 
         //update campaignMember siblings Status a 'Non Proposto Auto'

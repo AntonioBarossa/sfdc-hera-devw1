@@ -298,11 +298,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
         }
 
-        if(currentOrder.CreditCheckInProgress__c && String.isBlank(currentOrder.IncomingCreditCheckResult__c) && String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
+        orderToUpdate.CreditCheckInProgress__c = false;
+
+       /*  if(currentOrder.CreditCheckInProgress__c && String.isBlank(currentOrder.IncomingCreditCheckResult__c) && String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
             orderToUpdate.Phase__c = 'Attesa Credit Check';
         }
-        else if(!String.isBlank(currentOrder.IncomingCreditCheckResult__c) || !String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
-            orderToUpdate.CreditCheckInProgress__c = false;
+        else  */if(!String.isBlank(currentOrder.IncomingCreditCheckResult__c) || !String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
+            //orderToUpdate.CreditCheckInProgress__c = false;
             /**@frpanico 17/02/2022
              * Aggiunto il null check 
              * l'Or nella condizioni di sopra puo comunque
