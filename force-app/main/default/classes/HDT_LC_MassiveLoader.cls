@@ -228,8 +228,8 @@ public with sharing class HDT_LC_MassiveLoader {
 
                             if (numberRequestProcessing==0 && !test.isRunningTest()) {
                                 request.Status__c = constantsUtl.MASSIVLOADER_STATUS_INLAVORAZIONE;
-                                HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(listRequestItem.get(0).MassiveLoaderRequest__c); 
-                                Database.executeBatch(processReq,1);
+                                //HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(listRequestItem.get(0).MassiveLoaderRequest__c); 
+                                //Database.executeBatch(processReq,1);
                             }
                         }
                         massiveLoaderRequestSrv.updateRequestRecord(new List<MassiveLoaderRequest__c>{request});
@@ -309,6 +309,89 @@ public with sharing class HDT_LC_MassiveLoader {
             return response;
 
         }
+    }
+
+    public static void convertLargeCsvExample(Id contentVersionId){
+
+        HDT_QR_ContentVersion contentVersionQr = new HDT_QR_ContentVersion();
+        ContentVersion uploadedFile = contentVersionQr.getRecordById(contentVersionId);
+    
+        System.debug('>>> HeapSize at start: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
+    
+        String fileBody = uploadedFile.VersionData.toString();
+    
+        System.debug('>>> HeapSize after body to string: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
+    
+        List<MassiveLoaderRequestItem__c> requestItemList = new List<MassiveLoaderRequestItem__c>();
+        List<String> csvRowList = new List<String>();
+        Integer headerNewLineCharIndex = fileBody.indexof('\n');
+    
+        String newLine = fileBody.substring(0, headerNewLineCharIndex);
+        System.debug('>>> header row : ' + newLine);
+    
+        fileBody = fileBody.substring(headerNewLineCharIndex + 1);
+    
+        Boolean hasNewRow = true;
+        Integer currentHeapSize = 0;
+        Integer limitHeapSize = Limits.getLimitHeapSize();
+        Integer rowNewLineCharIndex = fileBody.indexof('\n');
+        String csvNewLine = '';
+        MassiveLoaderRequestItem__c newRequestItem;
+        Id massiveLoaderRequestId = 'a3d3O000000X5WEQA0';
+        
+        while(hasNewRow){
+            
+            newRequestItem = new MassiveLoaderRequestItem__c();
+            newRequestItem.Data__c = fileBody.substring(0, rowNewLineCharIndex);
+            newRequestItem.MassiveLoaderRequest__c = massiveLoaderRequestId;
+            requestItemList.add(newRequestItem);
+    
+            fileBody = fileBody.substring(rowNewLineCharIndex + 1);
+            rowNewLineCharIndex = fileBody.indexof('\n');
+    
+            currentHeapSize = Limits.getHeapSize();
+    
+            if(currentHeapSize > limitHeapSize){
+                // having problem with limit...do something...
+            }
+    
+            if(fileBody == null || rowNewLineCharIndex == -1){
+                MassiveLoaderRequestItem__c lastRequestItem = new MassiveLoaderRequestItem__c();
+                lastRequestItem.Data__c = fileBody;
+                lastRequestItem.MassiveLoaderRequest__c = massiveLoaderRequestId;
+                requestItemList.add(lastRequestItem);
+                hasNewRow = false;
+            }
+    
+            /*
+            csvNewLine = fileBody.substring(0, rowNewLineCharIndex);
+            //System.debug('>>> csvNewLine: ' + csvNewLine);
+    
+            csvRowList.add(csvNewLine);
+    
+            fileBody = fileBody.substring(rowNewLineCharIndex + 1);
+    
+            rowNewLineCharIndex = fileBody.indexof('\n');
+            //System.debug('>>> rowNewLineCharIndex: ' + rowNewLineCharIndex);
+            //System.debug('>>> body to elaborate...');
+            //System.debug('>>> ' + fileBody);
+    
+            if(fileBody == null || rowNewLineCharIndex == -1){
+    
+                csvRowList.add(fileBody);
+                hasNewRow = false;
+            }
+            */
+    
+        }
+    
+        insert requestItemList;
+        System.debug('>>> csvRowList: ' + csvRowList.size());
+    
+        System.debug('>>> CpuTime: ' + String.valueOf(Limits.getCpuTime()) + ' of ' + String.valueOf(Limits.getLimitCpuTime()));
+        System.debug('>>> DML: ' + String.valueOf(Limits.getDMLStatements()) + ' of ' + String.valueOf(Limits.getLimitDMLStatements()));
+        System.debug('>>> HeapSize at finish: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
+    
     }
 
 }
