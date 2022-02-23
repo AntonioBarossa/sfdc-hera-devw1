@@ -1719,15 +1719,16 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
                 data: [
                     //constructor(label, apiname, typeVisibility, required, disabled, processVisibility)
-                    new fieldData('Ordine di riferimento','OrderReference__c', true, false, true, ''),
-                    new fieldData('Società di vendita','SalesCompany__c', true, false, true, ''),
-                    new fieldData('Campagna','Campaign__c', true, false, true, ''),
-                    new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
-                    new fieldData('POD/PDR','ServicePointCode__c', true, false, true, ''),
-                    new fieldData('Tipo VAS','VASType__c', true, false, true, ''),
-                    new fieldData('Sottotipo VAS','VasSubtype__c', true, false, true, ''),
-                    new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, true, ''),
-                    new fieldData('Azione Commerciale','CommercialAction__c', true, false, false, '')
+                    new fieldData('Ordine di riferimento',  'OrderReference__c',    true, false, true, ''),
+                    new fieldData('Società di vendita',     'SalesCompany__c',      true, false, true, ''),
+                    new fieldData('Campagna',               'Campaign__c',          true, false, true, ''),
+                    new fieldData('Categoria Cliente',      'CustomerCategory__c',  true, false, true, ''),
+                    new fieldData('POD/PDR',                'ServicePointCode__c',  true, false, true, ''),
+                    new fieldData('Tipo VAS',               'VASType__c',           true, false, true, ''),
+                    new fieldData('Attivazione Anticipata', 'IsEarlyActivation__c', true, false, this.order.VASType__c == 'VAS Servizio', ''),
+                    new fieldData('Sottotipo VAS',          'VASSubtype__c',        true, false, true, ''),//
+                    new fieldData('Recapito Telefonico',    'PhoneNumber__c',       true, false, true, ''),
+                    new fieldData('Azione Commerciale',     'CommercialAction__c',  true, false, false, '')
                 ]
             },
             {
