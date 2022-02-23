@@ -553,13 +553,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         for (Order childOrder : parentOrderIds) {
             if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
-                newVasPhase = newVasPhase.containsIgnoreCase('Esportazione VS Siebel') 
-                    ? newVasPhase 
-                    : childOrder.VASType__c?.equalsIgnoreCase('VAS Fatturabili') 
-                        ? 'Comunicazione verso Heroku' : 'Comunicazione Motore VAS';
                 if (childOrder.Phase__c == currentVasPhase) {
-                    String phaseVas = 
-                        childOrder.VASType__c?.equals('VAS Servizio') 
+                    /**@frpanico 23/02/2022
+                     * Vas va sempre in Attesa Tempi Ripensamento/Comfort Call
+                     * Se non é a transitorio
+                     */
+                    String phaseVas = newVasPhase.containsIgnoreCase('Esportazione VS Siebel') 
                         ? childOrder.ComfortCallDaysDue__c == null 
                                 ? 'In attesa tempi di ripensamento'
                                 : 'In attesa conferma cliente' 
