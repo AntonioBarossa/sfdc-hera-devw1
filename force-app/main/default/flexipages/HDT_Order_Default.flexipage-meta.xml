@@ -554,21 +554,11 @@
                         <valueListItems>
                             <value>CustomButton.Order.Ripristina_Annullamento</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
+                                <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Phase__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Annullamento - Comunicazione verso Heroku KO</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Annullamento - Esito KO da DL/SII</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Annullamento - Ammissibilità KO</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Phase__c}</leftValue>
