@@ -202,6 +202,13 @@ public with sharing class HDT_UTL_CaseProcess {
                     caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
                     return true;
                 }
+                //Gestione Risottomissione Annullamento
+                if ((oldPhase.equalsIgnoreCase('Annullamento - Ammissibilità KO') || oldPhase.equalsIgnoreCase('Annullamento - Esito KO da DL/SII')) && newPhase.equalsIgnoreCase('Annullamento - Da Inviare')){
+                    caseNew.PhaseStory__c = !String.isBlank(caseNew.PhaseStory__c) 
+                        ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c
+                        : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
+                    return true;
+                }
                 return false;
             /**@frpanico 22/10/2021
              * Add Comment:
