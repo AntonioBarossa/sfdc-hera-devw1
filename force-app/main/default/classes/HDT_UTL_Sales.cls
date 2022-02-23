@@ -233,12 +233,12 @@ public with sharing class HDT_UTL_Sales {
         for(Order ord : orderNew){
             if(ord.RecordType.DeveloperName == 'HDT_RT_OrderDossier'){ //&& ord.TecnicalPhase__c != null){
                 if(ord.phase__c == 'Documentazione da inviare'){
-                    if((ord.Sale__r.Channel__c == 'Teleselling Outbound' || ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
+                    if((ord.Sale__r.Channel__c == 'Teleselling Outbound'  || ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Registrazione  da validare';
                         listActivityToCreate.add(instanceActVocalOrd(ord.accountid,ord.id,rt));
                         childToUpdate.add(ord);
                     }
-                    else if(ord.Sale__r.Channel__c == 'Teleselling Outbound' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
+                    else if((ord.Sale__r.Channel__c == 'Teleselling Outbound' || ord.Sale__r.Channel__c == 'Teleselling Inbound') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
                         ord.Phase__c = 'Documentazione da Firmare';
                         childToUpdate.add(ord);
                     }
@@ -339,7 +339,7 @@ public with sharing class HDT_UTL_Sales {
                         listActivityToCreate.add(instanceActVocalOrd(ord.accountid,ord.id,rt));
                         childToUpdate.add(ord);
                     }
-                    else if(ord.Sale__r.Channel__c == 'Teleselling Outbound' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
+                    else if((ord.Sale__r.Channel__c == 'Teleselling Outbound' || ord.Sale__r.Channel__c == 'Teleselling Inbound') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
                         ord.Phase__c = 'Documentazione da Firmare';
                         childToUpdate.add(ord);
                     }
