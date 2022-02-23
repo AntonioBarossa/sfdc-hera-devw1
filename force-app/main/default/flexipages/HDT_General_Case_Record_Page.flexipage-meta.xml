@@ -906,6 +906,11 @@
                 <componentName>flexipage:tabset</componentName>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>HDT_LCP_CaseTabManagement</componentName>
+            </componentInstance>
+        </itemInstances>
         <mode>Replace</mode>
         <name>rightsidebar</name>
         <type>Region</type>

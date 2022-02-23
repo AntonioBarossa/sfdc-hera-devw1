@@ -192,6 +192,9 @@
         if(campaignId != null){
             inputVariables.push({ name : 'CampaignId', type : 'String', value : campaignId});
         }
+        if(campaignMemberId != null){
+            inputVariables.push({ name : 'CampaignMemberId', type : 'String', value : campaignMemberId});
+        }
       //  if(leadId != null){
        //     inputVariables.push({ name : 'LeadId', type : 'String', value : leadId});
      //   }
