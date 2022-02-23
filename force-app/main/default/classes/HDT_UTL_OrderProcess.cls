@@ -553,19 +553,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         for (Order childOrder : parentOrderIds) {
             if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
-                newVasPhase = newVasPhase.containsIgnoreCase('Esportazione VS Siebel') 
-                    ? newVasPhase 
-                    : childOrder.VASType__c?.equalsIgnoreCase('VAS Fatturabili') 
-                        ? 'Comunicazione verso Heroku' : 'Comunicazione Motore VAS';
-                if (childOrder.Phase__c == currentVasPhase) {
-                    String phaseVas = 
-                        childOrder.VASType__c?.equals('VAS Servizio') 
-                        ? childOrder.ComfortCallDaysDue__c == null 
-                                ? 'In attesa tempi di ripensamento'
-                                : 'In attesa conferma cliente' 
-                        : newVasPhase;
-                    vasOrdersToUpdate.put(childOrder.Id, phaseVas);
-                }
+                newVasPhase = HDT_UTL_VasManagement.updateVasPhase( newVasPhase, childOrder );
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged ) {
                 if (childOrder.Phase__c == currentPhase
                         && !childOrder.QualityCall__c
