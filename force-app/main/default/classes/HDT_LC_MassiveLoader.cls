@@ -23,7 +23,7 @@ public with sharing class HDT_LC_MassiveLoader {
 
     @AuraEnabled
     public static Map<String, Object> getCsvBody(String selectedProcessName) {
-        //System.debug('HDT_LC_MassiveLoader.getCsvBody : '+selectedProcessName);
+        //System.debug(LoggingLevel.DEBUG, 'HDT_LC_MassiveLoader.getCsvBody : '+selectedProcessName);
         Map<String, Object> response = new Map<String, Object>();
         
         try {
@@ -146,6 +146,187 @@ public with sharing class HDT_LC_MassiveLoader {
     /**​
     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
     * @date 30/03/2021
+    * @description HDT_LC_MassiveLoader.updateMassiveLoaderRequest() – updates request if the user changes process type
+    * @param massiveLoaderRequestId Id of the Massive Loader Request to update
+    * @param selectedProcessName New process name selected by user
+    * @return Map containig the result of the update
+    */
+
+    @AuraEnabled
+    public static Map<String, Object> updateMassiveLoaderRequest(String massiveLoaderRequestId, String selectedProcessName){
+
+        Map<String, Object> response = new map<String, Object>();
+        try {
+
+            MassiveLoaderRequest__c request = new MassiveLoaderRequest__c(Id = massiveLoaderRequestId, 
+                                                                          ProcessType__c = selectedProcessName);
+
+            massiveLoaderRequestSrv.updateRequestRecord(new List<MassiveLoaderRequest__c>{request});
+
+            response.put('error', false);
+
+            return response;
+            
+        } catch (Exception e) {
+            
+            response.put('error', true);
+            response.put('errorMessage', e.getMessage());
+            response.put('errorStackTraceString', e.getStackTraceString());
+
+            return response;
+
+        }
+    }
+
+    @AuraEnabled
+    public static Map<String, Object> convertCsvToRequestItem(String fileName, String contentVersionId, String selectedProcessName, String massiveLoaderRequestId){
+
+        //massiveLoaderRequestId = 'a3d3O000000X5WEQA0';
+
+        System.debug(LoggingLevel.DEBUG, '>>> fileName: ' + fileName);
+        System.debug(LoggingLevel.DEBUG, '>>> contentVersionId: ' + contentVersionId);
+        System.debug(LoggingLevel.DEBUG, '>>> selectedProcessName: ' + selectedProcessName);
+        System.debug(LoggingLevel.DEBUG, '>>> massiveLoaderRequestId: ' + massiveLoaderRequestId);
+
+        HDT_QR_ContentVersion contentVersionQr = new HDT_QR_ContentVersion();
+        Map<String, Object> response = new Map<String, Object>();
+        Integer csvLinesLimit = 4500;
+        ContentVersion uploadedFile = contentVersionQr.getRecordById(contentVersionId);
+        HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(selectedProcessName);
+
+        if(!fileName.equalsIgnoreCase(selectedProcess.DeveloperName   + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION)) {                
+            response.put('error', true);
+            response.put('errorMessage', Label.MassiveLoaderFileNameError);
+            return response;
+        }
+
+        if(uploadedFile.FileType.toUpperCase() != constantsUtl.MASSIVLOADER_FILE_EXTENTION.toUpperCase()) {
+            response.put('error', true);
+            response.put('errorMessage', Label.MassiveLoaderExtentionError);
+            return response;
+        }
+
+        System.debug(LoggingLevel.DEBUG, '>>> HeapSize at start: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
+    
+        String fileBody = uploadedFile.VersionData.toString();
+
+        Integer totLinesCounter = fileBody.countMatches('\n');
+        System.debug(LoggingLevel.DEBUG, '>>> totLinesCounter: ' + totLinesCounter);
+
+        if(totLinesCounter > csvLinesLimit){
+            response.put('error', true);
+            response.put('errorMessage', 'Il file csv contiene più di 1500 righe.');
+            return response;
+        }
+
+        uploadedFile = null;
+    
+        System.debug(LoggingLevel.DEBUG, '>>> HeapSize after body to string: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
+    
+        List<MassiveLoaderRequestItem__c> requestItemList = new List<MassiveLoaderRequestItem__c>();
+        List<String> csvRowList = new List<String>();
+        Integer headerNewLineCharIndex = fileBody.indexof('\n');
+    
+        String newLine = fileBody.substring(0, headerNewLineCharIndex);
+        System.debug(LoggingLevel.DEBUG, '>>> header row : ' + newLine);
+    
+        fileBody = fileBody.substring(headerNewLineCharIndex + 1);
+    
+        Boolean hasNewRow = true;
+        Integer currentHeapSize = 0;
+        Integer limitHeapSize = Limits.getLimitHeapSize();
+        Integer rowNewLineCharIndex = fileBody.indexof('\n');
+        String csvNewLine = '';
+        MassiveLoaderRequestItem__c newRequestItem;
+        
+        while(hasNewRow){
+            
+            newRequestItem = new MassiveLoaderRequestItem__c();
+            newRequestItem.Data__c = fileBody.substring(0, rowNewLineCharIndex);
+            newRequestItem.MassiveLoaderRequest__c = massiveLoaderRequestId;
+            requestItemList.add(newRequestItem);
+    
+            fileBody = fileBody.substring(rowNewLineCharIndex + 1);
+            rowNewLineCharIndex = fileBody.indexof('\n');
+    
+            currentHeapSize = Limits.getHeapSize();
+    
+            if(currentHeapSize > limitHeapSize){
+                // having problem with limit...do something...
+            }
+    
+            if(fileBody == null || rowNewLineCharIndex == -1){
+                MassiveLoaderRequestItem__c lastRequestItem = new MassiveLoaderRequestItem__c();
+                lastRequestItem.Data__c = fileBody;
+                lastRequestItem.MassiveLoaderRequest__c = massiveLoaderRequestId;
+                requestItemList.add(lastRequestItem);
+                hasNewRow = false;
+            }
+    
+            /*
+            csvNewLine = fileBody.substring(0, rowNewLineCharIndex);
+            //System.debug(LoggingLevel.DEBUG, '>>> csvNewLine: ' + csvNewLine);
+    
+            csvRowList.add(csvNewLine);
+    
+            fileBody = fileBody.substring(rowNewLineCharIndex + 1);
+    
+            rowNewLineCharIndex = fileBody.indexof('\n');
+            //System.debug(LoggingLevel.DEBUG, '>>> rowNewLineCharIndex: ' + rowNewLineCharIndex);
+            //System.debug(LoggingLevel.DEBUG, '>>> body to elaborate...');
+            //System.debug(LoggingLevel.DEBUG, '>>> ' + fileBody);
+    
+            if(fileBody == null || rowNewLineCharIndex == -1){
+    
+                csvRowList.add(fileBody);
+                hasNewRow = false;
+            }
+            */
+    
+        }
+    
+        try{
+            insert requestItemList;
+        } catch(Exception e){
+            response.put('error', false);
+            response.put('reqName', e.getMessage());
+            return response;
+        }
+        
+        System.debug(LoggingLevel.DEBUG, '>>> csvRowList: ' + csvRowList.size());
+    
+        List<MassiveLoaderRequest__c> reqMass = [
+            SELECT Id, Name, TotalRequest__c, Status__c
+            FROM MassiveLoaderRequest__c
+            WHERE Id = :massiveLoaderRequestId
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
+        reqMass[0].TotalRequest__c = totLinesCounter;
+        reqMass[0].Status__c = constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE;
+        //massReq.Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO
+
+        try{
+            update reqMass;
+        } catch(Exception e){
+            System.debug(LoggingLevel.DEBUG, '>>> Exception: ' + e.getMessage());
+        }
+
+        response.put('error', false);
+        response.put('reqName', reqMass[0].Name);
+
+        System.debug(LoggingLevel.DEBUG, '>>> CpuTime: ' + String.valueOf(Limits.getCpuTime()) + ' of ' + String.valueOf(Limits.getLimitCpuTime()));
+        System.debug(LoggingLevel.DEBUG, '>>> DML: ' + String.valueOf(Limits.getDMLStatements()) + ' of ' + String.valueOf(Limits.getLimitDMLStatements()));
+        System.debug(LoggingLevel.DEBUG, '>>> HeapSize at finish: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
+
+        return response;
+            
+    }
+
+    /**​
+    * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
+    * @date 30/03/2021
     * @description HDT_LC_MassiveLoader.checkCsv() – Check file uploaded by the user
     * @param fileName the Name of the file as it was uploaded
     * @param contentVersionId the Id of the content version givven by the file uploader
@@ -155,11 +336,11 @@ public with sharing class HDT_LC_MassiveLoader {
 
     @AuraEnabled
     public static Map<String, Object> checkCsv(String fileName, String contentVersionId, String selectedProcessName, String massiveLoaderRequestId){
-       /* System.debug('HDT_LC_MassiveLoader.checkCsv');
-        System.debug('fileName: '+fileName);
-        System.debug('contentVersionId: '+contentVersionId);
-        System.debug('selectedProcessName: '+selectedProcessName );
-        System.debug('massiveLoaderRequestId: '+massiveLoaderRequestId );*/
+       /* System.debug(LoggingLevel.DEBUG, 'HDT_LC_MassiveLoader.checkCsv');
+        System.debug(LoggingLevel.DEBUG, 'fileName: '+fileName);
+        System.debug(LoggingLevel.DEBUG, 'contentVersionId: '+contentVersionId);
+        System.debug(LoggingLevel.DEBUG, 'selectedProcessName: '+selectedProcessName );
+        System.debug(LoggingLevel.DEBUG, 'massiveLoaderRequestId: '+massiveLoaderRequestId );*/
         Map<String, Object> response = new Map<String, Object>();
         List<MassiveLoaderRequestItem__c> listRequestItem = new List<MassiveLoaderRequestItem__c>();
         try {
@@ -168,13 +349,13 @@ public with sharing class HDT_LC_MassiveLoader {
 
             ContentVersion uploadedFile = contentVersionQr.getRecordById(contentVersionId);
             Boolean deleteUploadedFile = false;
-            System.debug('selectedProcessName '+selectedProcessName);
+            System.debug(LoggingLevel.DEBUG, 'selectedProcessName '+selectedProcessName);
 
             if (fileName.equalsIgnoreCase(selectedProcess.DeveloperName   + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION)) {                
                 if(uploadedFile.FileType.toUpperCase() == constantsUtl.MASSIVLOADER_FILE_EXTENTION.toUpperCase()) {
-                    System.debug('selectedProcessName '+selectedProcessName);
+                    System.debug(LoggingLevel.DEBUG, 'selectedProcessName '+selectedProcessName);
                     List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName );
-                    System.debug('staticResources '+staticResources.size());
+                    System.debug(LoggingLevel.DEBUG, 'staticResources '+staticResources.size());
                     Integer expectedNumberOfFields = staticResources.get(0).Body.toString().split(',').size();
 
                     String fileBody = uploadedFile.VersionData.toString();
@@ -186,10 +367,10 @@ public with sharing class HDT_LC_MassiveLoader {
                     for (String fileRow : fileBody.split('\n')) {
                         fileRow=fileRow.replaceAll(',,', ',null,');
                         List<String> rowFields = fileRow.split(',');
-                        System.debug('row size '+rowFields.size());
-                        System.debug('expectedNumberOfFields '+expectedNumberOfFields);
+                        System.debug(LoggingLevel.DEBUG, 'row size '+rowFields.size());
+                        System.debug(LoggingLevel.DEBUG, 'expectedNumberOfFields '+expectedNumberOfFields);
                         if (rowFields.size() != expectedNumberOfFields) {
-                            System.debug('problemi con la riga  '+fileLines);
+                            System.debug(LoggingLevel.DEBUG, 'problemi con la riga  '+fileLines);
            
                             parsingError = true;
                             break;
@@ -274,124 +455,6 @@ public with sharing class HDT_LC_MassiveLoader {
             return response;
 
         }
-    }
-
-    /**​
-    * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
-    * @date 30/03/2021
-    * @description HDT_LC_MassiveLoader.updateMassiveLoaderRequest() – updates request if the user changes process type
-    * @param massiveLoaderRequestId Id of the Massive Loader Request to update
-    * @param selectedProcessName New process name selected by user
-    * @return Map containig the result of the update
-    */
-
-    @AuraEnabled
-    public static Map<String, Object> updateMassiveLoaderRequest(String massiveLoaderRequestId, String selectedProcessName){
-
-        Map<String, Object> response = new map<String, Object>();
-        try {
-
-            MassiveLoaderRequest__c request = new MassiveLoaderRequest__c(Id = massiveLoaderRequestId, 
-                                                                          ProcessType__c = selectedProcessName);
-
-            massiveLoaderRequestSrv.updateRequestRecord(new List<MassiveLoaderRequest__c>{request});
-
-            response.put('error', false);
-
-            return response;
-            
-        } catch (Exception e) {
-            
-            response.put('error', true);
-            response.put('errorMessage', e.getMessage());
-            response.put('errorStackTraceString', e.getStackTraceString());
-
-            return response;
-
-        }
-    }
-
-    public static void convertLargeCsvExample(Id contentVersionId){
-
-        HDT_QR_ContentVersion contentVersionQr = new HDT_QR_ContentVersion();
-        ContentVersion uploadedFile = contentVersionQr.getRecordById(contentVersionId);
-    
-        System.debug('>>> HeapSize at start: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
-    
-        String fileBody = uploadedFile.VersionData.toString();
-    
-        System.debug('>>> HeapSize after body to string: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
-    
-        List<MassiveLoaderRequestItem__c> requestItemList = new List<MassiveLoaderRequestItem__c>();
-        List<String> csvRowList = new List<String>();
-        Integer headerNewLineCharIndex = fileBody.indexof('\n');
-    
-        String newLine = fileBody.substring(0, headerNewLineCharIndex);
-        System.debug('>>> header row : ' + newLine);
-    
-        fileBody = fileBody.substring(headerNewLineCharIndex + 1);
-    
-        Boolean hasNewRow = true;
-        Integer currentHeapSize = 0;
-        Integer limitHeapSize = Limits.getLimitHeapSize();
-        Integer rowNewLineCharIndex = fileBody.indexof('\n');
-        String csvNewLine = '';
-        MassiveLoaderRequestItem__c newRequestItem;
-        Id massiveLoaderRequestId = 'a3d3O000000X5WEQA0';
-        
-        while(hasNewRow){
-            
-            newRequestItem = new MassiveLoaderRequestItem__c();
-            newRequestItem.Data__c = fileBody.substring(0, rowNewLineCharIndex);
-            newRequestItem.MassiveLoaderRequest__c = massiveLoaderRequestId;
-            requestItemList.add(newRequestItem);
-    
-            fileBody = fileBody.substring(rowNewLineCharIndex + 1);
-            rowNewLineCharIndex = fileBody.indexof('\n');
-    
-            currentHeapSize = Limits.getHeapSize();
-    
-            if(currentHeapSize > limitHeapSize){
-                // having problem with limit...do something...
-            }
-    
-            if(fileBody == null || rowNewLineCharIndex == -1){
-                MassiveLoaderRequestItem__c lastRequestItem = new MassiveLoaderRequestItem__c();
-                lastRequestItem.Data__c = fileBody;
-                lastRequestItem.MassiveLoaderRequest__c = massiveLoaderRequestId;
-                requestItemList.add(lastRequestItem);
-                hasNewRow = false;
-            }
-    
-            /*
-            csvNewLine = fileBody.substring(0, rowNewLineCharIndex);
-            //System.debug('>>> csvNewLine: ' + csvNewLine);
-    
-            csvRowList.add(csvNewLine);
-    
-            fileBody = fileBody.substring(rowNewLineCharIndex + 1);
-    
-            rowNewLineCharIndex = fileBody.indexof('\n');
-            //System.debug('>>> rowNewLineCharIndex: ' + rowNewLineCharIndex);
-            //System.debug('>>> body to elaborate...');
-            //System.debug('>>> ' + fileBody);
-    
-            if(fileBody == null || rowNewLineCharIndex == -1){
-    
-                csvRowList.add(fileBody);
-                hasNewRow = false;
-            }
-            */
-    
-        }
-    
-        insert requestItemList;
-        System.debug('>>> csvRowList: ' + csvRowList.size());
-    
-        System.debug('>>> CpuTime: ' + String.valueOf(Limits.getCpuTime()) + ' of ' + String.valueOf(Limits.getLimitCpuTime()));
-        System.debug('>>> DML: ' + String.valueOf(Limits.getDMLStatements()) + ' of ' + String.valueOf(Limits.getLimitDMLStatements()));
-        System.debug('>>> HeapSize at finish: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
-    
     }
 
 }
