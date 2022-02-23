@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DefaultFinalState__c</fullName>
+    <fullName>PositiveOutcomeDefaultStatus__c</fullName>
     <externalId>false</externalId>
-    <label>Stato Finale di Default</label>
+    <label>Stato Default Esito Positivo</label>
     <required>false</required>
     <type>Picklist</type>
     <valueSet>
@@ -30,9 +30,9 @@
                 <label>Contattato positivo - Cambio offerta</label>
             </value>
             <value>
-                <fullName>VENDITA EXTRA VO</fullName>
+                <fullName>Vendita Extra VO</fullName>
                 <default>false</default>
-                <label>VENDITA EXTRA VO</label>
+                <label>Vendita Extra VO</label>
             </value>
             <value>
                 <fullName>Contatto positivo - no vendita</fullName>
@@ -68,6 +68,11 @@
                 <fullName>Conferma MAIL</fullName>
                 <default>false</default>
                 <label>Conferma MAIL</label>
+            </value>
+            <value>
+                <fullName>Cont.to positivo Cambio off. e vend. VAS</fullName>
+                <default>false</default>
+                <label>Cont.to positivo Cambio off. e vend. VAS</label>
             </value>
         </valueSetDefinition>
     </valueSet>

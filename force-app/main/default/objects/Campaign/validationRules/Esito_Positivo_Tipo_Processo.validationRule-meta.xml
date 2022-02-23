@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Esito_Positivo_Tipo_Processo</fullName>
+    <active>true</active>
+    <description>Stato Default Esito Positivo è obbligatorio se Tipo Processo è valorizzato</description>
+    <errorConditionFormula>AND(NOT(ISPICKVAL(ProcessType__c, &apos;&apos;)), ISPICKVAL(PositiveOutcomeDefaultStatus__c, &apos;&apos;))</errorConditionFormula>
+    <errorMessage>Stato Default Esito Positivo non può essere vuoto se Tipo Processo è valorizzato</errorMessage>
+</ValidationRule>

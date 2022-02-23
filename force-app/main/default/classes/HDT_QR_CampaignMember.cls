@@ -235,7 +235,8 @@ public inherited sharing class HDT_QR_CampaignMember {
             LeadId, 
             CampaignId, 
             GenericField1__c,
-            Campaign.ProcessType__c
+            Campaign.ProcessType__c,
+            Contact.AccountId
             FROM CampaignMember 
             WHERE Id = :campaignMemberId
             WITH SECURITY_ENFORCED

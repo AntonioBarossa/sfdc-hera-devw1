@@ -144,6 +144,16 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
             }
             when 'service26' {
                 res = HDT_SRV_ServiceTwentySix.callService26(sobjectId);
+                Boolean isSuccess = (res.statusCode==200 || res.statusCode==201);
+                newPhase = isSuccess ? 'Comunicazione verso Heroku OK' : 'Comunicazione verso Heroku OK';
+                if (!isSuccess) {
+                    if (String.isNotBlank(res.exceptionMessage)){
+                        errorDescription = res.exceptionMessage;
+                    }
+                    else {
+                        errorDescription = res.errorDetails[0].message;
+                    }
+                }
             }
         }
 
