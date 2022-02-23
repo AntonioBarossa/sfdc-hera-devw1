@@ -50,7 +50,7 @@
             <assignToReference>Case.Order__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Subscription.SBQQ__Contract__r.SBQQ__Order__c</elementReference>
+                <elementReference>Get_Subscription.SBQQ__OrderProduct__r.Order.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
