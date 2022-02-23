@@ -2977,6 +2977,10 @@
         <values>
             <fullName>E-Canone fisso</fullName>
             <default>false</default>
+        </values>        
+        <values>
+            <fullName>Modalita Fatturazione VAS</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
