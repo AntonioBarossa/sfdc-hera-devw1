@@ -738,7 +738,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     if(activity2.RecordTypeId != rtScarto.Id){
                         activity2.RecordTypeId = rtScarto.Id;
                     }
-                    activity2.DiscardCategory__c = 'Tracciatura';
+                    activity2.DiscardCategory__c = 'Gestionale';
                     activity2.DiscardDescription__c = 'Canone RAI';
                     activity2.wrts_prcgvr__Status__c = 'Aperta';
                     activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAITEMPLATENAME); 
@@ -746,7 +746,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     if(activity2.RecordTypeId != rtScarto.Id){
                         activity2.RecordTypeId = rtScarto.Id;
                     }
-                    activity2.DiscardCategory__c = 'Tracciatura';
+                    activity2.DiscardCategory__c = 'Gestionale';
                     activity2.DiscardDescription__c = 'Bonus Sociale';
                     activity2.wrts_prcgvr__Status__c = 'Aperta';
                     activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALETEMPLATENAME); 
