@@ -58,7 +58,7 @@ public inherited sharing class HDT_UTL_Order {
         Order o = orQr.getRecordById(ord.id);
         boolean res = false;
         String code = '';
-        List<RateCategory__c> listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__c != null ? o.ServicePoint__r.CommoditySector__c : 'Energia Elettrica',o.ServicePoint__r.distributor__r.code__c,o.CommercialProduct__c,o.ServicePoint__c != null ? o.SupplyType__c : o.supplyTypeTechnical__c);
+        List<RateCategory__c> listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__c != null ? o.ServicePoint__r.CommoditySector__c : 'Energia Elettrica',o.ServicePoint__r.distributor__r.code__c,o.CommercialProduct__c,o.SupplyType__c != null ? o.SupplyType__c : o.supplyTypeTechnical__c);
         for(RateCategory__c r : listRate){
             if(r.DistributorCode__c == o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Uguale'){
                 code = r.CalculatedValue__c;
@@ -77,7 +77,7 @@ public inherited sharing class HDT_UTL_Order {
             }
         }
         if(!res){
-            listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__c != null ? o.ServicePoint__r.CommoditySector__c : 'Energia Elettrica',o.ServicePoint__r.distributor__r.code__c,'N/A',o.ServicePoint__c != null ? o.SupplyType__c : o.supplyTypeTechnical__c);
+            listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__c != null ? o.ServicePoint__r.CommoditySector__c : 'Energia Elettrica',o.ServicePoint__r.distributor__r.code__c,'N/A',o.SupplyType__c != null ? o.SupplyType__c : o.supplyTypeTechnical__c);
             for(RateCategory__c r : listRate){
                 if(r.DistributorCode__c == o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Uguale'){
                     code = r.CalculatedValue__c;

@@ -40,7 +40,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
             switch on ordComf[0].RecordType.DeveloperName {
                 when  'HDT_RT_VAS'{
-                    phase = ordComf[0].VASType__c?.equals('VAS Servizio') ?  'In attesa tempi di ripensamento' : 'Comunicazione Motore VAS';
+                    phase = 'In attesa tempi di ripensamento';
                 }
                 when 'HDT_RT_CambioOfferta' {
                     phase = 'Comunicazione verso Heroku';
