@@ -1,10 +1,11 @@
 public with sharing class HDT_LC_EditScartiComplessi {
     @AuraEnabled
     public static string getInitData(String recordId){
-        Map<String,Object> responseMap = new Map<String,Object>();
+        //Gestione Risottomissione Annullamento --> inserita nuovo elemento annullamento
+        Map<String,Object> responseMap = new Map<String,Object>{'annullamento' => 'NO'};
         Boolean hasOwnership = true;
         try {
-            wrts_prcgvr__Activity__c activity = (wrts_prcgvr__Activity__c)HDT_QR_GenericQuery.getGenericRecords('Id,Case__c, Type__c, OwnerId, Order__c,Order__r.ParentOrder__c,Order__r.ParentOrder__r.AccountId, Order__r.ParentOrder__r.Sale__c,Order__r.Sale__c, Order__r.AccountId,Order__r.ServicePoint__r.Account__c, Order__r.ServicePoint__r.CommoditySector__c,Order__r.RecordType.DeveloperName, Order__r.SwitchOutDate__c', 'wrts_prcgvr__Activity__c', 'Id =\''+recordId+'\'')[0];
+            wrts_prcgvr__Activity__c activity = (wrts_prcgvr__Activity__c)HDT_QR_GenericQuery.getGenericRecords('Id,Case__c,Case__r.Phase__c, Type__c, OwnerId, Order__c,Order__r.Phase__c,Order__r.ParentOrder__c,Order__r.ParentOrder__r.AccountId, Order__r.ParentOrder__r.Sale__c,Order__r.Sale__c, Order__r.AccountId,Order__r.ServicePoint__r.Account__c, Order__r.ServicePoint__r.CommoditySector__c,Order__r.RecordType.DeveloperName, Order__r.SwitchOutDate__c', 'wrts_prcgvr__Activity__c', 'Id =\''+recordId+'\'')[0];
             if(activity.OwnerId!= Userinfo.getUserId()){
                 hasOwnership=false;
             }
@@ -12,13 +13,24 @@ public with sharing class HDT_LC_EditScartiComplessi {
                 if (activity.Case__c != null){
                     responseMap.put('objectId',recordId);
                     responseMap.put('objectType','Case');
+                    //Gestione Risottomissione Annullamento
+                    if ('Annullamento - Ammissibilità KO'.equalsIgnoreCase(activity.Case__r.Phase__c) || 'Annullamento - Esito KO da DL/SII'.equalsIgnoreCase(activity.Case__r.Phase__c)){
+                        responseMap.put('annullamento','SI');
+                        responseMap.put('recordId',activity.Case__c);
+                    }
                 }else if(activity.Order__c != null){
                     if(activity.Type__c!=null && activity.Type__c.equals('Busta Docusign non consegnata')){
                         responseMap.put('object',activity);
                         responseMap.put('objectType','wrts_prcgvr__Activity__c');
                     }
                     else {
-                        setStep(activity);
+                        //Gestione Risottomissione Annullamento
+                        if ('Annullamento - Ammissibilità KO'.equalsIgnoreCase(activity.Order__r.Phase__c) || 'Annullamento - Esito KO da DL/SII'.equalsIgnoreCase(activity.Order__r.Phase__c)){
+                            responseMap.put('annullamento','SI');
+                            responseMap.put('recordId',activity.Order__c);
+                        }else{
+                            setStep(activity);
+                        }
                         responseMap.put('objectType','Order');
                         responseMap.put('object',activity.Order__r);
                     }

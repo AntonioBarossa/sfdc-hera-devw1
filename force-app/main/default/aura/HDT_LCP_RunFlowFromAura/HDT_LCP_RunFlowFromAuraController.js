@@ -44,6 +44,11 @@
         // id dell'Interaction
         var interactionId = myPageRef.state.c__interactionId;
 
+        //Gestione Risottomissione Annullamento
+        let discardRework = (myPageRef.state.c__discardRework === true || myPageRef.state.c__discardRework === 'true') ? true : false;
+        console.log('# discardRework -> '                 + discardRework);
+        //Fine Gestione Risottomissione Annullamento
+
         console.log('# attribute to run flow #');
         console.log('# caseId -> ' + caseId);
         component.set("v.recordid", caseId)
@@ -137,6 +142,8 @@
             if(processType === 'Annullamento prestazione' || processType === 'Ripristina fase' || processType === 'Ripensamento'
                 || processType === 'KO Definitivo' || processType === 'KO Forzato' || processType === 'KO Risolto'){
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
+                //Gestione Risottomissione Annullamento
+                inputVariables.push({ name : 'discardRework', type : 'Boolean', value : discardRework });
             }
 
             component.set('v.enableRefresh', true);
