@@ -2800,7 +2800,7 @@
         <values>
             <fullName>E-Canone fisso</fullName>
             <default>false</default>
-        </values>
+        </values>        
     </picklistValues>
     <picklistValues>
         <picklist>VAT__c</picklist>
