@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">Sospensione Canone Rai Calamit�</value>
+        <value xsi:type="xsd:string">Sospensione Canone Rai Calamità</value>
     </values>
 </CustomMetadata>

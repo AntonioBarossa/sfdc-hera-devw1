@@ -314,10 +314,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullamento dal SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Annullamento RC per disattivazione della fornitura</fullName>
             <default>false</default>
         </values>
@@ -378,6 +374,10 @@
         </values>
         <values>
             <fullName>Annullamento da cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento dal SII</fullName>
             <default>false</default>
         </values>
         <values>
