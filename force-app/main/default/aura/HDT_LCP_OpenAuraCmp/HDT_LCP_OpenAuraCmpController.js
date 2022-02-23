@@ -41,6 +41,10 @@
         // id dell'interaction
         var interactionId = myPageRef.state.c__interactionId;
 
+        //Gestione Risottomissione Annullamento
+        let discardRework = (myPageRef.state.c__discardRework === true || myPageRef.state.c__discardRework === 'true') ? true : false;
+        console.log('# discardRework -> '                 + discardRework);
+        //Fine Gestione Risottomissione Annullamento
 
         console.log('# context -> '                 + context);
         console.log('# accId -> '                   + accId);
@@ -122,7 +126,9 @@
                         c__serviceRequestId: serviceRequestId,
                         c__compatibile: compatibile,
                         c__orderId: orderId,
-                        c__interactionId: interactionId
+                        c__interactionId: interactionId,
+                        //Gestione Risottomissione Annullamento
+                        c__discardRework: discardRework
                     }
                 },
                 focus: true

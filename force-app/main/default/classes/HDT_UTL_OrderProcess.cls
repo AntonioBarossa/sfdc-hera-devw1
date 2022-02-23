@@ -553,13 +553,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         for (Order childOrder : parentOrderIds) {
             if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
-                newVasPhase = newVasPhase.containsIgnoreCase('Esportazione VS Siebel') 
-                    ? newVasPhase 
-                    : childOrder.VASType__c?.equalsIgnoreCase('VAS Fatturabili') 
-                        ? 'Comunicazione verso Heroku' : 'Comunicazione Motore VAS';
                 if (childOrder.Phase__c == currentVasPhase) {
-                    String phaseVas = 
-                        childOrder.VASType__c?.equals('VAS Servizio') 
+                    /**@frpanico 23/02/2022
+                     * Vas va sempre in Attesa Tempi Ripensamento/Comfort Call
+                     * Se non é a transitorio
+                     */
+                    String phaseVas = newVasPhase.containsIgnoreCase('Esportazione VS Siebel') 
                         ? childOrder.ComfortCallDaysDue__c == null 
                                 ? 'In attesa tempi di ripensamento'
                                 : 'In attesa conferma cliente' 
@@ -965,6 +964,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     || newPhase.containsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
                 {
 				    orderNew.PhaseStory__c = !String.isBlank(orderNew.PhaseStory__c) 
+                        ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c
+                        : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
+                    return true;
+                }
+                //Gestione Risottomissione Annullamento
+                if ((oldPhase.equalsIgnoreCase('Annullamento - Ammissibilità KO') || oldPhase.equalsIgnoreCase('Annullamento - Esito KO da DL/SII')) && newPhase.equalsIgnoreCase('Annullamento - Da Inviare')){
+                    orderNew.PhaseStory__c = !String.isBlank(orderNew.PhaseStory__c) 
                         ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c
                         : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
                     return true;
