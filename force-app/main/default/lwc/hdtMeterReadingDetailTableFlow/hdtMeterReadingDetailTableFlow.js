@@ -1,9 +1,11 @@
-import { LightningElement,track,api } from 'lwc';
+import { LightningElement,track,api,wire } from 'lwc';
 import getConfigurationData from '@salesforce/apex/HDT_LC_MeterReadingController.getConfigurationData';
 import { FlowNavigationNextEvent, FlowNavigationFinishEvent, FlowNavigationBackEvent, FlowAttributeChangeEvent} from 'lightning/flowSupport';
+import { getRecord } from 'lightning/uiRecordApi';
 
 export default class HdtMeterReadingDetailTableFlow extends LightningElement {
-
+    
+    @api previousButton;
     @api availableActions = [];
     @api cancelCase;
     @api nextLabel;
@@ -52,6 +54,11 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
         console.log('contract number: ' + this.contractNumber);
         this.configurationData();
         //this.template.querySelector('c-hdt-meter-reading-detail-table').loadingData();
+
+        if(this.previousButton && !this.availableActions.find(action => action === 'BACK')){
+            this.previousButton = false;
+        }
+        
     }
 
     configurationData(){
@@ -183,9 +190,9 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
 
     handleGoBack(){
 
-        const navigateBackEvent = new FlowNavigationBackEvent();
-
-        this.dispatchEvent(navigateBackEvent);
-
+        if(this.availableActions.find(action => action === 'BACK')){
+            const navigateBackEvent = new FlowNavigationBackEvent();
+            this.dispatchEvent(navigateBackEvent);
+        }
     }
 }
