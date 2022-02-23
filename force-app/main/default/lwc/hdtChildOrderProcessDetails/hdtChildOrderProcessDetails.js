@@ -1943,12 +1943,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 hasIvaAcciseUploadButton: true,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' 
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
+                                || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' 
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' 
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' 
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica' 
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' 
+                                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' 
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data: [
