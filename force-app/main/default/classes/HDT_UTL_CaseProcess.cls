@@ -288,7 +288,7 @@ public with sharing class HDT_UTL_CaseProcess {
         List<ServiceRequest__c> srvRequestsToDelete = new List<ServiceRequest__c>();
         for(ServiceRequest__c s: srvRequests){
             s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(caseStatuses.get(s.Case__c), 'Case');
-            if( s.Status__c == 'Closed' ){
+            if( s.Status__c.equalsIgnoreCase('Chiuso') ){
                 srvRequestsToDelete.add(s);
             } else {
                 sReqToUpdate.add(s);
