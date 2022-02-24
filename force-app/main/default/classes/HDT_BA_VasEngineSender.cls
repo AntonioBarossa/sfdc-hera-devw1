@@ -10,7 +10,8 @@ public with sharing class HDT_BA_VasEngineSender implements Database.Batchable<S
     private static final Integer AFTERTHOUGHT_DAYS_NUMBER = 14;
     private static final String ORDER_RT_VAS = 'HDT_RT_VAS';
     private static final String ORDER_PHASE_WAIT_FOR_AFTERTHOUGHT = 'In attesa tempi di ripensamento';
-    private static final String ORDER_PHASE_VAS_COMMUNICATION = 'Comunicazione Motore VAS';
+    private static final String ORDER_PHASE_VAS_ENGINE_COMMUNICATION = 'Comunicazione Motore VAS';
+    private static final String ORDER_PHASE_VAS_HEROKU_COMMUNICATION = 'Comunicazione verso Heroku';
 
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
 
@@ -32,7 +33,7 @@ public with sharing class HDT_BA_VasEngineSender implements Database.Batchable<S
     public Database.QueryLocator start(Database.BatchableContext bc) {
         Date nDaysAgo = Date.today().addDays(AFTERTHOUGHT_DAYS_NUMBER*-1);
         System.debug('nDaysAgo value: '+nDaysAgo);
-        String query = 'SELECT Id FROM Order';
+        String query = 'SELECT Id, VASType__c FROM Order';
         query += ' WHERE Phase__c = :ORDER_PHASE_WAIT_FOR_AFTERTHOUGHT';
         query += ' AND RecordType.DeveloperName = :ORDER_RT_VAS';
         query += ' AND SignedDate__c <= :nDaysAgo';
@@ -47,7 +48,7 @@ public with sharing class HDT_BA_VasEngineSender implements Database.Batchable<S
     **/
     public void execute(Database.BatchableContext bc, List<Order> orders) {
         for (Order currentOrder:orders) {
-            currentOrder.Phase__c = ORDER_PHASE_VAS_COMMUNICATION;
+            currentOrder.Phase__c = currentOrder.VASType__c?.equalsIgnoreCase('VAS Fatturabili') ? ORDER_PHASE_VAS_HEROKU_COMMUNICATION : ORDER_PHASE_VAS_ENGINE_COMMUNICATION;
         }
 
         orderSrv.updateRecords(orders);

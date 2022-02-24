@@ -510,7 +510,8 @@ public inherited sharing class HDT_QR_Order {
             ProcessCode__c,
             DistributorCode__c,
             Commodity__c,
-            ComfortCallDaysDue__c
+            ComfortCallDaysDue__c,
+            IsEarlyActivation__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -626,7 +627,8 @@ public inherited sharing class HDT_QR_Order {
             DocumentPackage__c,
             ProcessType__c,
             ParentOrder__c,
-            ParentOrder__r.Phase__c
+            ParentOrder__r.Phase__c,
+            IsEarlyActivation__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
@@ -1195,7 +1197,7 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getOrderForComfort(String id){
-        return [Select id,Phase__c,ProcessType__c,VASType__c,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
+        return [Select id,Phase__c,ProcessType__c,VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
     }
 
     //@frpanico getExciseTranscode

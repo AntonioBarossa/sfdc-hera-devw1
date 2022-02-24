@@ -2319,6 +2319,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Del. 40 gestione doc.invio a DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Documentale%2FCopia Contratto</fullName>
             <default>false</default>
         </values>
