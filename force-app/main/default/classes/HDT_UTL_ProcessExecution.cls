@@ -11,25 +11,30 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public HDT_WRP_ProcessEntities              currentProcess                                                  ;
 
 
-    
+    public String splitCharacter = '\\|';
     //public  MassiveLoaderRequestItem__c varRequestItem;
     public  String processName;
-    public  Map<Integer, String> mapHeaderByPosition    = new  Map<Integer, String>(); 
+    public  Map<Integer, String> mapHeaderByPosition    = new  Map<Integer, String>();
+    public  Map<String, Integer> mapHeaderForWrapper    = new  Map<String, Integer>(); 
     public  Map<Integer, String> mapRequiredByPosition  = new  Map<Integer, String>(); 
     public  Id recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
     public  Id recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
 
-    public void setMassiveLoaderRequestItem(MassiveLoaderRequestItem__c requestItem){
+    //public List<Id> accountIdList = new List<Id>();
 
-        currentProcess=new HDT_WRP_ProcessEntities();
-        this.currentProcess.currentRequestItem=requestItem;   
+    // --------- montors fix for bulk develop  ---------
+    public void setMassiveLoaderRequestItemList(list<MassiveLoaderRequestItem__c> requestItemList){
+
+        currentProcess = new HDT_WRP_ProcessEntities();
+        this.currentProcess.currentRequestItemList = requestItemList;   
        
-
-        if ( String.isBlank( this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c)) {
-            throw new HDT_WRP_ProcessEntitiesException( 'NullPointerExceptions','ProcessType can\'t be null');
+        for(MassiveLoaderRequestItem__c item : this.currentProcess.currentRequestItemList){
+            if ( String.isBlank(item.MassiveLoaderRequest__r.ProcessType__c)) {
+                throw new HDT_WRP_ProcessEntitiesException( 'NullPointerExceptions','ProcessType can\'t be null');
+            }
         }
     
-        this.processName= this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c;
+        this.processName = this.currentProcess.currentRequestItemList[0].MassiveLoaderRequest__r.ProcessType__c;
         HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(processName);
         List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName);
  
@@ -42,9 +47,38 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
                 mapRequiredByPosition.put(count,temp);
             }
             mapHeaderByPosition.put(count,temp);
+            mapHeaderForWrapper.put(temp, count);
             count++;
         }
     }
+    // --------- montors fix for bulk develop  ---------
+
+    //public void setMassiveLoaderRequestItem(MassiveLoaderRequestItem__c requestItem){
+    //
+    //    currentProcess=new HDT_WRP_ProcessEntities();
+    //    this.currentProcess.currentRequestItem=requestItem;   
+    //   
+    //
+    //    if ( String.isBlank( this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c)) {
+    //        throw new HDT_WRP_ProcessEntitiesException( 'NullPointerExceptions','ProcessType can\'t be null');
+    //    }
+    //
+    //    this.processName= this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c;
+    //    HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(processName);
+    //    List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName);
+    //
+    //
+    //    mapHeaderByPosition = new Map<Integer, String>();
+    //    Integer count=0;
+    //    for (String temp : staticResources.get(0).Body.toString().remove('\r').remove('\n').split(',')) {
+    //       if (temp.containsIgnoreCase('*')) {
+    //            temp=temp.remove('*');
+    //            mapRequiredByPosition.put(count,temp);
+    //        }
+    //        mapHeaderByPosition.put(count,temp);
+    //        count++;
+    //    }
+    //}
 
     public virtual void checks(){
         System.debug('checks');
@@ -71,6 +105,12 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
 
     }
    
+    // --------- montors fix for bulk develop  ---------
+    public virtual void manageCatchException(Integer batchSize, List<MassiveLoaderRequestItem__c> itemList, String message){
+        System.debug('manageCatchException');
+    }
+    // --------- montors fix for bulk develop  ---------
+
     /**
     * @description :
     * @param objName 
@@ -83,29 +123,33 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
         return fieldTypeName;
     }
 
-    public void mapTypeField(SObject sObj,Map<String, String> mapSobjField,Integer position,String value){
+    public String mapTypeField(SObject sObj, Map<String, String> mapSobjField, Integer position, String value){
 
-
-        String typeField=getTypeField(String.valueOf(sObj.getSObjectType()),mapSobjField.get(mapHeaderByPosition.get(position)));
-        switch on typeField.toUpperCase() {
-            when 'BOOLEAN'  {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Boolean.valueOf(value));
+        try {
+            String typeField=getTypeField(String.valueOf(sObj.getSObjectType()),mapSobjField.get(mapHeaderByPosition.get(position)));
+            switch on typeField.toUpperCase() {
+                when 'BOOLEAN'  {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Boolean.valueOf(value));
+                }
+                when 'DOUBLE'  {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Decimal.valueOf(value));
+                }
+                when 'INTEGER'  {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Integer.valueOf(value));
+                }
+                when 'DATETIME'  {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Datetime.valueOf(value));
+                }
+                when 'DATE'  {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Date.valueOf(value));
+                }
+                when else {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),value);
+                }
             }
-             when 'DOUBLE'  {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Decimal.valueOf(value));
-             }
-             when 'INTEGER'  {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Integer.valueOf(value));
-             }
-             when 'DATETIME'  {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Datetime.valueOf(value));
-             }
-             when 'DATE'  {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Date.valueOf(value));
-             }
-            when else {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),value);
-            }
+            return null;
+        } catch (Exception e){
+            return e.getMessage() + ' - on filed [' + mapSobjField.get(mapHeaderByPosition.get(position)) + ']';
         }
     }
 
@@ -115,6 +159,21 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
                 WHERE objectType__c=:objectType AND processType__c=:processType
                 WITH SECURITY_ENFORCED
                 ];
+    }
+
+    public MassiveLoaderRequestItem__c checkRequiredFields(MassiveLoaderRequestItem__c item, List<String> tempSplitedFields){
+        Integer count = 0;
+        for(String field : tempSplitedFields){
+
+            if(mapRequiredByPosition.containsKey(count) && mapRequiredByPosition.get(count) != null && String.isBlank(tempSplitedFields[count])) {
+                System.debug(LoggingLevel.DEBUG, '>>> Missing Required Field');
+                item.Status__c = 'Errore';
+                item.StatusDescription__c = 'Missing Required Field: ' + mapHeaderByPosition.get(count);
+                break;
+            }
+            count++;
+        }
+        return item;
     }
 
     /**
@@ -206,6 +265,29 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
         }  
     }
 
+    public Account verifyAccountAddress(Account account){
+        HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse resp= HDT_WS_HerokuAddressSearch.callServiceMass(
+            account.BillingCity,
+            account.BillingStreetName__c,
+            account.BillingStreetNumber__c
+        );
+
+        List<HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj> listPrestazioni = resp.prestazione;
+        HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj retObj = analizeRespVerifyAddress(listPrestazioni, account.BillingCity, account.BillingStreetName__c, account.BillingStreetNumber__c, account.BillingPostalCode);
+        
+        if(retObj != null) {
+            account.BillingCity = retObj.city1;
+            account.BillingCityCode__c = retObj.cityCode;
+            account.BillingStreetName__c = retObj.street;
+            account.BillingPlaceCode__c = retObj.cityPCode;
+            account.BillingPlace__c = retObj.cityPName;
+            account.BillingIsAddressVerified__c = true;
+        } else {
+            account.BillingIsAddressVerified__c = false;
+        }
+        return account;
+    }
+
     /** 
     * @description confronta gli indirizzi che restituisce il servizio con l'indirizzo in input  
     * restituisce l'indirizzo che ha il numero matching points maggiore 
@@ -266,6 +348,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
       public ServicePoint__c              currentServicePoint           ;
       public BillingProfile__c            currentBillingProfile         ;
       public MassiveLoaderRequestItem__c  currentRequestItem            ;
+      public List<MassiveLoaderRequestItem__c>  currentRequestItemList  ;
       public AccountContactRelation       currentAccountContactRelation ;
       public Sale__c                      currentSale                   ;
       public OrderItem                    currentOrderItem              ;
@@ -300,5 +383,14 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
             this.Type      = varType;
             this.message   = varMessage;
         }
-    }    
+    }
+
+    //public MassiveLoaderRequestItem__c setErrorItem(String itemId, String message){
+    //    MassiveLoaderRequestItem__c itemError = new MassiveLoaderRequestItem__c();
+    //    itemError.Id = itemId;
+    //    itemError.Status__c = 'Errore';
+    //    itemError.StatusDescription__c = message;
+    //    return itemError;
+    //}
+
 }
