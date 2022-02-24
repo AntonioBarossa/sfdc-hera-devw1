@@ -394,7 +394,7 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     searchInSAP(){
         
-        this.callApi(this.searchInputValue).then(() => {
+        this.callApi(this.searchInputValue, 'searchSap').then(() => {
             this.preloading = true;
             this.closeModal();
             if(this.serviceRequestId == null || (this.serviceRequestId != null && !this.isIncompatible)){
@@ -407,7 +407,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         });
     }
 
-    callApi(event){
+    callApi(event, isFrom){
         return new Promise((resolve) => {
             this.preloading = true;
             this.isRicercainSAP= true;
@@ -433,7 +433,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                     });
                 }
                 else{
-                    if(this.postSales){
+                    if(this.postSales || isFrom == 'searchSap'){
                         this.alert('Errore','Il dato ricercato non è stato trovato in SAP, Modificare i parametri di ricerca o procedere alla creazione manuale.','error');
                         this.preloading = false;
                     }
@@ -589,7 +589,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.preloading = true;
         let servPoint = this.rowToSend;
         let pointCode = servPoint['Codice Punto'];
-        this.callApi(pointCode).then(() => {
+        this.callApi(pointCode, 'confirm').then(() => {
             this.preloading = true;
             this.closeModal();
             if(this.serviceRequestId == null || (this.serviceRequestId != null && !this.isIncompatible)){
