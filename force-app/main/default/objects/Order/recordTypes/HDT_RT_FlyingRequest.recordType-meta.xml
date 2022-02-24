@@ -3196,7 +3196,11 @@
         <values>
             <fullName>E-Canone fisso</fullName>
             <default>false</default>
-        </values>
+        </values>          
+        <values>
+            <fullName>F-Standalone</fullName>
+            <default>false</default>
+        </values>   
     </picklistValues>
     <picklistValues>
         <picklist>VAT__c</picklist>
