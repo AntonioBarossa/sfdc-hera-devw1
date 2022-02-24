@@ -183,10 +183,10 @@ public with sharing class HDT_LC_MassiveLoader {
 
         //massiveLoaderRequestId = 'a3d3O000000X5WEQA0';
 
-        System.debug(LoggingLevel.DEBUG, '>>> fileName: ' + fileName);
-        System.debug(LoggingLevel.DEBUG, '>>> contentVersionId: ' + contentVersionId);
-        System.debug(LoggingLevel.DEBUG, '>>> selectedProcessName: ' + selectedProcessName);
-        System.debug(LoggingLevel.DEBUG, '>>> massiveLoaderRequestId: ' + massiveLoaderRequestId);
+        //System.debug(LoggingLevel.DEBUG, '>>> fileName: ' + fileName);
+        //System.debug(LoggingLevel.DEBUG, '>>> contentVersionId: ' + contentVersionId);
+        //System.debug(LoggingLevel.DEBUG, '>>> selectedProcessName: ' + selectedProcessName);
+        //System.debug(LoggingLevel.DEBUG, '>>> massiveLoaderRequestId: ' + massiveLoaderRequestId);
 
         HDT_QR_ContentVersion contentVersionQr = new HDT_QR_ContentVersion();
         Map<String, Object> response = new Map<String, Object>();
@@ -286,7 +286,14 @@ public with sharing class HDT_LC_MassiveLoader {
         }
     
         try{
-            insert requestItemList;
+
+            SObjectType objtype = Schema.getGlobalDescribe().get('MassiveLoaderRequestItem__c');
+            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+     
+            if(objRes.isCreateable() && objRes.isUpdateable()){
+                insert requestItemList;
+            }
+
         } catch(Exception e){
             response.put('error', false);
             response.put('reqName', e.getMessage());
@@ -308,7 +315,12 @@ public with sharing class HDT_LC_MassiveLoader {
         //massReq.Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO
 
         try{
-            update reqMass;
+            SObjectType objtype = Schema.getGlobalDescribe().get('MassiveLoaderRequest__c');
+            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+     
+            if(objRes.isCreateable() && objRes.isUpdateable()){
+                update reqMass;
+            }
         } catch(Exception e){
             System.debug(LoggingLevel.DEBUG, '>>> Exception: ' + e.getMessage());
         }
@@ -355,7 +367,7 @@ public with sharing class HDT_LC_MassiveLoader {
                 if(uploadedFile.FileType.toUpperCase() == constantsUtl.MASSIVLOADER_FILE_EXTENTION.toUpperCase()) {
                     //System.debug(LoggingLevel.DEBUG, 'selectedProcessName '+selectedProcessName);
                     List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName );
-                    System.debug(LoggingLevel.DEBUG, 'staticResources '+staticResources.size());
+                    //System.debug(LoggingLevel.DEBUG, 'staticResources '+staticResources.size());
                     Integer expectedNumberOfFields = staticResources.get(0).Body.toString().split(',').size();
 
                     String fileBody = uploadedFile.VersionData.toString();
@@ -368,7 +380,7 @@ public with sharing class HDT_LC_MassiveLoader {
                         fileRow=fileRow.replaceAll(',,', ',null,');
                         List<String> rowFields = fileRow.split(',');
                         System.debug(LoggingLevel.DEBUG, 'row size '+rowFields.size());
-                        System.debug(LoggingLevel.DEBUG, 'expectedNumberOfFields '+expectedNumberOfFields);
+                        //System.debug(LoggingLevel.DEBUG, 'expectedNumberOfFields '+expectedNumberOfFields);
                         if (rowFields.size() != expectedNumberOfFields) {
                             System.debug(LoggingLevel.DEBUG, 'problemi con la riga  '+fileLines);
            
@@ -404,7 +416,14 @@ public with sharing class HDT_LC_MassiveLoader {
                                                                                       );
                                                                                       
                         if (listRequestItem!=null && listRequestItem.size()>0) {
-                            insert listRequestItem;
+
+                            SObjectType objtype = Schema.getGlobalDescribe().get('MassiveLoaderRequestItem__c');
+                            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+                     
+                            if(objRes.isCreateable() && objRes.isUpdateable()){
+                                insert listRequestItem;
+                            }
+
                             integer  numberRequestProcessing= database.countQuery('SELECT count() FROM MassiveLoaderRequest__c WHERE  Status__c =\'In Lavorazione\'');
 
                             if (numberRequestProcessing==0 && !test.isRunningTest()) {
