@@ -63,10 +63,10 @@
                 return;
             }
         	console.log('HELPER_SECOND_CONDITION');
-            if(!enableRefresh && accountTabId != null){
-                
+            if(!enableRefresh && (accountTabId != null || leadTabId != null)){
+                var parentTabId = accountTabId != null ? accountTabId : leadTabId;
                 workspaceAPI.openSubtab({
-                    parentTabId: accountTabId,
+                    parentTabId: parentTabId,
                     pageReference: {
                         type: "standard__recordPage",
                         attributes: {
