@@ -552,8 +552,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             isNotManaged = isNotManaged(notManagedOrder);
         }
         for (Order childOrder : parentOrderIds) {
-            if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
+            if(childOrder.recordType.Developername == 'HDT_RT_VAS' && childOrder.Phase__c == currentPhase){
                 newVasPhase = HDT_UTL_VasManagement.updateVasPhase( newVasPhase, childOrder );
+                Order orderToUpdate = new Order(Id = childOrder.Id, Phase__c = newVasPhase);
+                childOrdersToUpdate.add(orderToUpdate);
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged ) {
                 if (childOrder.Phase__c == currentPhase
                         && !childOrder.QualityCall__c
