@@ -209,7 +209,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         system.debug(LoggingLevel.DEBUG, 'Start creditCheckKoPrecedenteCliente --->');
 
         HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
-        Id recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_CreditCheckKO');
+        Id recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_KoPrecedeteCliente', 'wrts_prcgvr__Activity__c');
         
         List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
         for(Integer i = 0; i < newActList.size(); i++){

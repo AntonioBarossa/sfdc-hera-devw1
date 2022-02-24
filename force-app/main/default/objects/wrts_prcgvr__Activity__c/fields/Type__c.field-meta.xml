@@ -612,6 +612,11 @@
                 <default>false</default>
                 <label>Busta Docusign non consegnata</label>
             </value>
+            <value>
+                <fullName>Del. 40 gestione doc.invio a DL</fullName>
+                <default>false</default>
+                <label>Del. 40 gestione doc.invio a DL</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
