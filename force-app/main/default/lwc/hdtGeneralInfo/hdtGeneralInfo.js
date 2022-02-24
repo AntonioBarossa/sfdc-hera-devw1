@@ -669,7 +669,7 @@ export default class HdtGeneralInfo extends LightningElement {
             });
         }
         else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Outbound') {
-            this.channelValue = 'Telefono';
+            //this.channelValue = 'Telefono';
             this.ChannelSelection = 'Telefono';
             channelCheck = 'Telefono';
             this.channelDisabled = true;
@@ -693,7 +693,7 @@ export default class HdtGeneralInfo extends LightningElement {
             });
         }
         else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Inbound') {
-            this.channelValue = 'Telefono';
+            //this.channelValue = 'Telefono';
             this.ChannelSelection = 'Telefono';
             channelCheck = 'Telefono';
             this.channelDisabled = true;

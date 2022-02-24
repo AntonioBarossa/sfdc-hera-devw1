@@ -298,11 +298,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
         }
 
-        if(currentOrder.CreditCheckInProgress__c && String.isBlank(currentOrder.IncomingCreditCheckResult__c) && String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
+        orderToUpdate.CreditCheckInProgress__c = false;
+
+       /*  if(currentOrder.CreditCheckInProgress__c && String.isBlank(currentOrder.IncomingCreditCheckResult__c) && String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
             orderToUpdate.Phase__c = 'Attesa Credit Check';
         }
-        else if(!String.isBlank(currentOrder.IncomingCreditCheckResult__c) || !String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
-            orderToUpdate.CreditCheckInProgress__c = false;
+        else  */if(!String.isBlank(currentOrder.IncomingCreditCheckResult__c) || !String.isBlank(currentOrder.OutgoingCreditCheckResult__c)){
+            //orderToUpdate.CreditCheckInProgress__c = false;
             /**@frpanico 17/02/2022
              * Aggiunto il null check 
              * l'Or nella condizioni di sopra puo comunque
@@ -311,6 +313,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             if((!String.isBlank(currentOrder.IncomingCreditCheckResult__c) && currentOrder.IncomingCreditCheckResult__c.containsIgnoreCase('KO')) 
                 || (!String.isBlank(currentOrder.OutgoingCreditCheckResult__c) && currentOrder.OutgoingCreditCheckResult__c.containsIgnoreCase('KO'))){
                 orderToUpdate.Phase__c = 'Credit Check KO';
+            }
+        }
+
+        string exciseEle;
+        if( order.RecordType.DeveloperName.contains('HDT_RT_CambioUso') ){
+            exciseEle = String.isBlank(orderToUpdate.ExciseEle__c)? currentOrder.ExciseEle__c:orderToUpdate.ExciseEle__c;
+            if( order.RecordType.DeveloperName.contains('HDT_RT_CambioUso') && !HDT_UTL_ServicePoint.checkTaxesCoerence( currentOrder.SupplyType__c, exciseEle ) ){                          
+                throw new AuraHandledException('Dati incompleti o non coerenti.');
             }
         }
 

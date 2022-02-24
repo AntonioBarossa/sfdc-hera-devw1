@@ -3,134 +3,289 @@
     <types>
         <members>HDT_Activity_Default_Record_Page</members>
         <members>HDT_General_Case_Record_Page</members>
-        <members>Lavorazione_FUB_Record_Page</members>
-        <members>Regola_di_Assegnazione_Record_Page</members>
-        <members>Social_Post_Record_Page</members>
+        <members>HDT_Order_Default</members>
         <name>FlexiPage</name>
     </types>
     <types>
-        <members>HDT_BatchMapping__mdt</members>
-        <name>CustomObject</name>
+        <members>HDT_BillingModeVAS</members>
+        <name>GlobalValueSet</name>
     </types>
     <types>
-        <members>hdtAgentMatrixSearchTool</members>
-        <members>hdtCampaignMemberButtonList</members>
+        <members>hdtAdvancedSearch</members>
+        <members>hdtCampaignMemberAgencyAssignment</members>
+        <members>hdtChildOrderProcessDetails</members>
         <members>hdtChildOrderProcessPrecheck</members>
         <members>hdtCreateCampaign</members>
+        <members>hdtDocumentSignatureManagerFlow</members>
+        <members>hdtGeneralInfo</members>
+        <members>hdtMassiveLoader</members>
+        <members>hdtMeterReadingDetailTableFlow</members>
         <members>hdtNewSaleCampaignMemberCommunity</members>
+        <members>hdtOrderScriptLauncher</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>wrts_prcgvr__Activity__c.HDT_KO_Definitivo</members>
-        <members>wrts_prcgvr__Activity__c.HDT_KO_Forzato</members>
-        <members>wrts_prcgvr__Activity__c.HDT_KO_Risolto</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RipristinaFase</members>
         <name>WebLink</name>
     </types>
     <types>
         <members>Admin</members>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera Standard User OneShot</members>
+        <members>Hera Standard User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <members>Hera Teleseller Partner User</members>
         <name>Profile</name>
     </types>
     <types>
+        <members>HDT_FL_ActivityCustomClose</members>
+        <members>HDT_FL_ActivityOrderPhase</members>
         <members>HDT_FL_CreditCheckManagement</members>
+        <members>HDT_FL_GestioneAnnullamento</members>
+        <members>HDT_FL_GestioneInnescoDocumentaleCase</members>
         <members>HDT_FL_GestioneModificheAnagrafiche</members>
-        <members>HDT_FL_SegnalazioniVAS</members>
-        <members>HDT_FL_SocialCaseAutoClosure</members>
-        <members>HDT_FL_SocialLeadAssignCompanyOwner</members>
-        <members>HDT_FL_SocialPostActivityAndCaseHandler</members>
+        <members>HDT_FL_Gestione_Modifiche_Anagrafiche_Modifica_Privacy</members>
+        <members>HDT_FL_PostSalesMasterDispatch</members>
+        <members>HDT_FL_PostSalesMasterDispatchSales</members>
+        <members>HDT_FL_PostSalesVAS</members>
         <name>Flow</name>
     </types>
     <types>
-        <members>Lead.Check_Contatti_Obbligatori</members>
+        <members>Campaign.Esito_Positivo_Tipo_Processo</members>
         <name>ValidationRule</name>
     </types>
     <types>
-        <members>Case.HDT_RT_FatturazioneConsumi</members>
-        <members>Case.HDT_RT_FlyingRequest</members>
-        <members>Case.HDT_RT_GenericheAttivazioni</members>
+        <members>CustomLabels</members>
+        <name>CustomLabels</name>
+    </types>
+    <types>
+        <members>Case.HDT_RT_Morosita</members>
         <members>Case.HDT_RT_PostSalesVAS</members>
+        <members>Order.HDT_RT_Attivazione</members>
+        <members>Order.HDT_RT_AttivazioneConModifica</members>
+        <members>Order.HDT_RT_CambioOfferta</members>
+        <members>Order.HDT_RT_CambioUso</members>
+        <members>Order.HDT_RT_ConnessioneConAttivazione</members>
+        <members>Order.HDT_RT_Default</members>
+        <members>Order.HDT_RT_FlyingRequest</members>
+        <members>Order.HDT_RT_OrderDossier</members>
+        <members>Order.HDT_RT_Proroga</members>
+        <members>Order.HDT_RT_ScontiBonus</members>
+        <members>Order.HDT_RT_Subentro</members>
+        <members>Order.HDT_RT_SwitchIn</members>
+        <members>Order.HDT_RT_TemporaneaNuovaAtt</members>
+        <members>Order.HDT_RT_VAS</members>
+        <members>Order.HDT_RT_Voltura</members>
+        <members>Order.HDT_RT_VolturaConSwitch</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Default</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Scarto</members>
         <name>RecordType</name>
     </types>
     <types>
         <members>Campaign-Campaign Layout</members>
-        <members>Case-HDT_AltreInformative</members>
-        <members>Order-Cambio Offerta</members>
-        <members>Order-HDT_Voltura</members>
-        <members>Order-Prima attivazione con modifica</members>
-        <members>Order-Prima attivazione</members>
-        <members>Order-Sconti o Bonus VAS</members>
-        <members>Order-Subentro</members>
-        <members>Order-Switch in</members>
+        <members>HDT_MassiveLoaderProcess__mdt-HDT Massive Loader Process Layout</members>
+        <members>Lead-Lead Layout</members>
         <members>Order-VAS</members>
-        <members>SocialPersona-Social Persona Layout</members>
-        <members>wrts_prcgvr__Activity__c-HDT_CCheckOld</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_ApexClasses</members>
+        <members>HDT_ActiveMonitoringEditor</members>
+        <members>HDT_ComplaintProcess</members>
+        <members>HDT_ForceNewCAcreation</members>
         <name>PermissionSet</name>
     </types>
     <types>
-        <members>HDT_BA_PostSalesMasterBatch</members>
-        <members>HDT_BA_PostSalesMasterBatchTst</members>
-        <members>HDT_LC_AgentMatrixSearchToolController</members>
+        <members>HDT_BA_ErrorRequestItem</members>
+        <members>HDT_BA_ProcessRequestItem</members>
+        <members>HDT_BA_ProcessSales</members>
+        <members>HDT_BA_QualityCall</members>
+        <members>HDT_BA_VasEngineSender</members>
+        <members>HDT_BA_VasSupplierTable</members>
         <members>HDT_LC_CampaignsController</members>
+        <members>HDT_LC_CaseTabManagement</members>
         <members>HDT_LC_ChildOrderProcessActions</members>
-        <members>HDT_LC_ConfigureProduct</members>
+        <members>HDT_LC_ChildOrderProcessPrecheck</members>
+        <members>HDT_LC_EditScartiComplessi</members>
+        <members>HDT_LC_MassiveLoader</members>
+        <members>HDT_LC_OrderDossierWizardActions</members>
+        <members>HDT_LC_OrdersForComfortQualityList</members>
+        <members>HDT_LC_SaleActions</members>
         <members>HDT_QR_CampaignMember</members>
-        <members>HDT_QR_HerokuPostSalesManager</members>
-        <members>HDT_QR_PostSalesMasterBatch</members>
-        <members>HDT_SCH_ClearLogs</members>
+        <members>HDT_QR_MassiveLoaderProcess</members>
+        <members>HDT_QR_Order</members>
+        <members>HDT_QR_OrderItem</members>
+        <members>HDT_QR_ProcessPostSales</members>
+        <members>HDT_QR_ProcessSales</members>
+        <members>HDT_SCH_ProcessRequestItem</members>
         <members>HDT_SRV_DocumentalManagement</members>
+        <members>HDT_SRV_ProcessRequestItem</members>
         <members>HDT_SRV_SalesManager</members>
-        <members>HDT_TRH_CampaignMember</members>
-        <members>HDT_UTL_CampaignMember</members>
-        <members>HDT_UTL_ElegibilityCriteriaCheck</members>
-        <members>HDT_UTL_HerokuPostSalesManager</members>
-        <members>HDT_UTL_LeadProcess</members>
-        <members>HDT_UTL_NotifVasHelper</members>
+        <members>HDT_SRV_ScriptManager</members>
+        <members>HDT_SRV_ScriptManagerTst</members>
+        <members>HDT_UTL_Account</members>
+        <members>HDT_UTL_ActivityCustomProcess</members>
+        <members>HDT_UTL_CaseProcess</members>
+        <members>HDT_UTL_Order</members>
+        <members>HDT_UTL_OrderFieldsAlignment</members>
+        <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_ProcessCommonOperations</members>
+        <members>HDT_UTL_ProcessDisattivazioni</members>
+        <members>HDT_UTL_ProcessExecution</members>
+        <members>HDT_UTL_ProcessModificheAnagrafiche</members>
+        <members>HDT_UTL_ProcessMorosita</members>
+        <members>HDT_UTL_ProcessSales</members>
+        <members>HDT_UTL_ProcessSalesOutboundWs</members>
+        <members>HDT_UTL_ProcessVariazioni</members>
+        <members>HDT_UTL_Sales</members>
+        <members>HDT_UTL_Scarti</members>
+        <members>HDT_UTL_ServicePoint</members>
         <members>HDT_UTL_VasManagement</members>
-        <members>HDT_WS_ArrichmentDataEntityResponse</members>
-        <members>HDT_WS_RunBatch</members>
+        <members>HDT_WRP_DocumentalRequest</members>
+        <members>HDT_WS_HTTPServiceCall</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Campaign.DefaultFinalState__c</members>
-        <members>Case.SignalCategory__c</members>
-        <members>Case.SignalReason__c</members>
-        <members>HDT_BatchMapping__mdt.BatchSize__c</members>
+        <members>Campaign.PositiveOutcomeDefaultStatus__c</members>
+        <members>HDT_MassiveLoaderProcess__mdt.BatchSize__c</members>
+        <members>HDT_ScriptPerCommOffer__mdt.Object__c</members>
+        <members>MassiveLoaderRequestItem__c.NextStepData__c</members>
+        <members>MassiveLoaderRequest__c.ProcessType__c</members>
+        <members>VasSupplierTable__c.Status__c</members>
+        <members>wrts_prcgvr__Activity__c.Type__c</members>
         <name>CustomField</name>
     </types>
     <types>
         <members>HDT_LCP_CampaignMemberAgencyAssignment</members>
+        <members>HDT_LCP_CaseTabManagement</members>
+        <members>HDT_LCP_EditScartiComplessi</members>
+        <members>HDT_LCP_OpenAuraCmp</members>
         <members>HDT_LCP_RunFlowFromAura</members>
         <members>HDT_LCP_RunFlowFromAuraCommunity</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>HDT_CampaignMembers</members>
-        <name>ApexTrigger</name>
-    </types>
-    <types>
-        <members>HDT_Dependant_Picklist_VAS.DPV58</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV59</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV6</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV60</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV61</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV62</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV63</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV64</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV65</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV66</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV67</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV68</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV69</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV7</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV70</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV71</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV72</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV73</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV74</members>
-        <members>HDT_Dependant_Picklist_VAS.DPV75</members>
+        <members>HDT_GestioneScarti.Esito_KO_da_DL_SII</members>
+        <members>HDT_IntegrationObject.Documentale_Context2</members>
+        <members>HDT_MassiveFieldsObjectMap.Disat_ACCOUNTID</members>
+        <members>HDT_MassiveFieldsObjectMap.Disat_CONTRATTO</members>
+        <members>HDT_MassiveFieldsObjectMap.Disat_DATA_COMUNICAZIONE_RECESSO_CLIENTE</members>
+        <members>HDT_MassiveFieldsObjectMap.Disat_DATA_RICEZIONE_RICHIESTA</members>
+        <members>HDT_MassiveFieldsObjectMap.Disat_DA_ESEGUIRE_NON_PRIMA_DEL</members>
+        <members>HDT_MassiveFieldsObjectMap.Disat_NOTE_DL</members>
+        <members>HDT_MassiveFieldsObjectMap.Disat_ORDER_VOLTURA</members>
+        <members>HDT_MassiveFieldsObjectMap.Disat_POD</members>
+        <members>HDT_MassiveFieldsObjectMap.Disat_PROCESSO</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_ACCOUNTID</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_CELLULARE</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_CODICE_FISCALE</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_CODICE_UFF_DEST</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_COGNOME</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_CONTO_CONTRATTUALE</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_CertifiedEmail_ModAnag</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_DATA_CONSENSO_PEC</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_DATA_FINE_GIVA</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_DATA_INIZIO_GIVA</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_EMAIL</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_EMAIL_INVIO_BOLL</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_FAX</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_FLAG_IVA</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_FLAG_SOLLECITO</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_IVA_GRUPPO</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_MOD_INVIO_BOLL</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_MOD_INVIO_FATT_ELET</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_NOME</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_PARTIVA_IVA</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_PEC_FATT_ELET</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_PEC_INVIO_BOLL</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_PEC_SOLLECITO</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_PRESSO</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_PROCESSO</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_RES_CAP</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_RES_CIVICO</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_RES_COMUNE</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_RES_INDIRIZZO_COMPLETO</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_RES_LOCALITA</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_RES_NAZIONE</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_RES_PROVINCIA</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_RES_VIA</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_SOTTOPROCESSO</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_SPED_CAP</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_SPED_CIVICO</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_SPED_COMUNE</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_SPED_ESTENSIONE_CIV</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_SPED_INDIRIZZO_COMPLETO</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_SPED_LOCALITA</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_SPED_NAZIONE</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_SPED_PROVINCIA</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_SPED_VIA</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_TELEFONO</members>
+        <members>HDT_MassiveFieldsObjectMap.ModAnag_TIPO_XML</members>
+        <members>HDT_MassiveFieldsObjectMap.Mor_ACCOUNTID</members>
+        <members>HDT_MassiveFieldsObjectMap.Mor_CONTRATTO</members>
+        <members>HDT_MassiveFieldsObjectMap.Mor_DATA_PAGAMENTO</members>
+        <members>HDT_MassiveFieldsObjectMap.Mor_POD</members>
+        <members>HDT_MassiveFieldsObjectMap.Mor_PROCESSO</members>
+        <members>HDT_MassiveFieldsObjectMap.Mor_UFFICIO_COMPETENTE</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_ACCOUNTID</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_CAP</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_CATEGORIA_USO</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_CIVICO</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_COMUNE</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_CONTRATTO</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_CORRETTORE</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_DATA_DECORRENZA</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_DATA_LETTURA</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_DATA_VARIAZIONE</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_DATA_VAR_RESIDENZA</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_ELEMENTI_DETTAGLIO</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_ESTENSIONE_CIVICO</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_IMPOSTE</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_INDIRIZZO_FORN</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_IVA</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_LOCALITA</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_MATRICOLA</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_NAZIONE</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_NOTE_DL</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_POD</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_PROCESSO</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_PROVINCIA</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_RESIDENTE</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_RIF_VOLTURA</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_SERVIZIO_ENERGIA</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_SOTTOPROCESSO</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_TIPO_FORNITURA</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_TIPO_IMPIANTO</members>
+        <members>HDT_MassiveFieldsObjectMap.Var_VIA</members>
+        <members>HDT_MassiveFieldsObjectMap.VoltTec_ACCOUNTID</members>
+        <members>HDT_MassiveFieldsObjectMap.VoltTec_ADDEBITO</members>
+        <members>HDT_MassiveFieldsObjectMap.VoltTec_CONTRATTO</members>
+        <members>HDT_MassiveFieldsObjectMap.VoltTec_POD</members>
+        <members>HDT_MassiveFieldsObjectMap.VoltTec_PROCESSO</members>
+        <members>HDT_MassiveFieldsObjectMap.VoltTec_SOTTOPROCESSO</members>
+        <members>HDT_MassiveLoaderProcess.CambioOfferta</members>
+        <members>HDT_MassiveLoaderProcess.CambioUso</members>
+        <members>HDT_MassiveLoaderProcess.CaricamentoCGC</members>
+        <members>HDT_MassiveLoaderProcess.Disattivazioni</members>
+        <members>HDT_MassiveLoaderProcess.Lead</members>
+        <members>HDT_MassiveLoaderProcess.MUC</members>
+        <members>HDT_MassiveLoaderProcess.ModificheAnagrafiche</members>
+        <members>HDT_MassiveLoaderProcess.Morosita</members>
+        <members>HDT_MassiveLoaderProcess.PrimaAttivazione</members>
+        <members>HDT_MassiveLoaderProcess.RilavorazioneScarti</members>
+        <members>HDT_MassiveLoaderProcess.Subentro</members>
+        <members>HDT_MassiveLoaderProcess.SubentroSuGdMChiuso</members>
+        <members>HDT_MassiveLoaderProcess.SwitchIn</members>
+        <members>HDT_MassiveLoaderProcess.SwitchInReseller</members>
+        <members>HDT_MassiveLoaderProcess.TariffeSconti</members>
+        <members>HDT_MassiveLoaderProcess.VAS</members>
+        <members>HDT_MassiveLoaderProcess.Variazioni</members>
+        <members>HDT_MassiveLoaderProcess.VolturaTecnica</members>
+        <members>HDT_PraticheBloccanti.Config19</members>
+        <members>HDT_StatoMotoreVas.ANNUL_PER_CESSAZIONE</members>
+        <members>HDT_StatoMotoreVas.ANNUL_PER_RECESSO</members>
+        <members>HDT_StatoMotoreVas.ANNUL_PER_RIPENS</members>
         <name>CustomMetadata</name>
     </types>
     <version>49</version>

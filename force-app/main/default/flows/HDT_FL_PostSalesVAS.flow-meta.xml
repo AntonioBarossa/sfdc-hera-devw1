@@ -50,14 +50,7 @@
             <assignToReference>Case.Order__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Subscription.SBQQ__Contract__r.SBQQ__Order__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Case.Commodity__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Subscription.SBQQ__Contract__r.SBQQ__Order__r.Commodity__c</elementReference>
+                <elementReference>Get_Subscription.SBQQ__OrderProduct__r.Order.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -71,7 +64,7 @@
             <assignToReference>Case.Commodity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Subscription.SBQQ__OrderProduct__r.Order.Commodity__c</elementReference>
+                <elementReference>Get_Subscription.SBQQ__OrderProduct__r.Order.CommodityFormula__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>

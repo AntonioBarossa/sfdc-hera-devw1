@@ -720,28 +720,35 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         }
 
 
-        List<Account> listAccounts=[SELECT Id, CustomerCode__c 
+        List<Account> listAccounts=[SELECT Id, CustomerCode__c, CompanyOwner__c
                                     FROM Account 
                                     WHERE CustomerCode__c IN: codiciClienti 
                                     WITH SECURITY_ENFORCED];
-        Map<String, Id> accIdsPerBPcode = new Map<String, Id>();
+        Map<String, Account> accIdsPerBPcode = new Map<String, Account>();
         for(Account singleAccount: listAccounts){
-            accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount.Id);
+            accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount);
         }
         for(wrts_prcgvr__Activity__c activity2: inputData){
-            if(activity2.Account__c == null && !String.isBlank(activity2.BPCode__c)){
-                activity2.Account__c = accIdsPerBPcode.get(activity2.BPCode__c);
+            if(activity2.Account__c == null && !String.isBlank(activity2.BPCode__c) && accIdsPerBPcode.containsKey(activity2.BPCode__c)){
+                activity2.Account__c = accIdsPerBPcode.get(activity2.BPCode__c).Id;
+                activity2.CompanyOwner__c = accIdsPerBPcode.get(activity2.BPCode__c).CompanyOwner__c;
             }
             if(activity2.wrts_prcgvr__ActivityTemplate__c == null){
                 if('CanoneRAI'.equalsIgnoreCase(activity2.Type__c)){
                     if(activity2.RecordTypeId != rtScarto.Id){
                         activity2.RecordTypeId = rtScarto.Id;
                     }
+                    activity2.DiscardCategory__c = 'Gestionale';
+                    activity2.DiscardDescription__c = 'Canone RAI';
+                    activity2.wrts_prcgvr__Status__c = 'Aperta';
                     activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAITEMPLATENAME); 
                 }else if('Bonussociale'.equalsIgnoreCase(activity2.Type__c)){
                     if(activity2.RecordTypeId != rtScarto.Id){
                         activity2.RecordTypeId = rtScarto.Id;
                     }
+                    activity2.DiscardCategory__c = 'Gestionale';
+                    activity2.DiscardDescription__c = 'Bonus Sociale';
+                    activity2.wrts_prcgvr__Status__c = 'Aperta';
                     activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALETEMPLATENAME); 
                 }
             }

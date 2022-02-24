@@ -342,6 +342,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }
     }
 
+    //metodo non corretto. In caso di multi offerta o vas standalone riporta su tutti gli order l'offerta della prima quoteLine parent.
+    //sostituito con metodo alignPrimaryOrderProduct
     private static void alignPrimaryProduct(Order orderToUpdate, String quoteId) {
 
         quoteLineSrv.checkReadAccess('SBQQ__Product__r.ProductCode,SBQQ__Product__r.Version__c');
@@ -355,7 +357,17 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.VasServiceActivationDate__c = quoteLineList[0].DelayEffectiveDate__c;
             orderToUpdate.CommercialProductLink__c = quoteLineList[0].SBQQ__Product__c;//gabriele.rota@webresults.it - 01/10/2021
         }
-
+    }
+    private static void alignPrimaryOrderProduct(Order orderToUpdate) {
+        List<OrderItem> orderItemList = orderItemQr.getMainItem(orderToUpdate.Id);
+        if(!orderItemList.isEmpty()){
+            orderToUpdate.CommercialProductCode__c = orderItemList[0].Product2.ProductCode;
+            orderToUpdate.CommercialProductVersion__c = orderItemList[0].Product2.Version__c;
+            orderToUpdate.CommercialProduct__c = orderItemList[0].Product2.Name;
+            orderToUpdate.VasServiceActivationDate__c = orderItemList[0].DelayEffectiveDate__c;
+            orderToUpdate.CommercialProductLink__c = orderItemList[0].Product2Id;
+        }
+        
     }
 
     private static void alignQuote(Order orderToUpdate, String quoteId, Order order) {
@@ -405,7 +417,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }
         system.debug('ivaste 1');
         if(!sconti.contains(mainItems[0].Product2.Family)){
-            system.debug('ivaste 1 '+mainItems[0].Product2.ProductCode);//only for vas
+            system.debug(loggingLevel.DEBUG,'ivaste 1 '+mainItems[0].Product2.ProductCode);//only for vas
             orderToUpdate.CommercialProductCode__c = mainItems[0].Product2.ProductCode;
             orderToUpdate.CommercialProductVersion__c = mainItems[0].Product2.Version__c;
             orderToUpdate.CommercialProduct__c = mainItems[0].Product2.DescriptionSAP__c;
@@ -415,19 +427,21 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.VASSubtype__c=orderToUpdate.isVas__c? mainItems[0].Product2.Name.abbreviate(30) : '';
             orderToUpdate.VASBillingMode__c= mainItems[0].VASBillingMode__c;
             Id idToFilter = mainItems[0]?.SBQQ__QuoteLine__r?.ServicePointLinkItem__r?.ServicePoint__c;
-            system.debug('ivaste 2 '+idToFilter);
+            system.debug(loggingLevel.DEBUG,'ivaste 2 '+idToFilter);
             idToFilter= idToFilter!=null? idToFilter : mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c;
-            system.debug('ivaste 3'+idToFilter);
+            system.debug(loggingLevel.DEBUG,'ivaste 3'+idToFilter);
             if(orderToUpdate.isVas__c && originalOrder.OrderReference__c==null && idToFilter!=null){
                 //fai il match con l'orderItem di tipo pod che ha lo stesso quote
                 List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, idToFilter);
                 if(!orderItemsPod.isEmpty()){
                     orderToUpdate.OrderReference__c=orderItemsPod[0].OrderId;
                     orderToUpdate.ServicePointCode__c=orderItemsPod[0].Order?.ServicePoint__r?.ServicePointCode__c;
+                    orderToUpdate.ServicePoint__c = orderItemsPod[0].Order?.ServicePoint__c;
                 }
             }else if(originalOrder.OrderReference__c!=null || originalOrder.ContractReference__c!=null){
                 Sobject reference = originalOrder.OrderReference__c!=null? (Sobject) originalOrder.OrderReference__r : (Sobject) originalOrder.ContractReference__r;
                 orderToUpdate.ServicePointCode__c=(String) reference.getSObject('ServicePoint__r')?.get('ServicePointCode__c');
+                orderToUpdate.ServicePoint__c = (String) reference.get('ServicePoint__c');
             }
         }
         
@@ -517,7 +531,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         alignSaleFields(orderToUpdate, order.Sale__c);
 
         if(order.SBQQ__Quote__c != null) {
-            alignPrimaryProduct(orderToUpdate, order.SBQQ__Quote__c);
+            //alignPrimaryProduct(orderToUpdate, order.SBQQ__Quote__c);
+            alignPrimaryOrderProduct(orderToUpdate);
             alignQuote(orderToUpdate, order.SBQQ__Quote__c, order);
         }
 

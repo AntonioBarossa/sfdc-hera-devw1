@@ -151,7 +151,8 @@ public inherited sharing class HDT_QR_OrderItem {
             Product2.DescriptionSAP__c,
             VASBillingMode__c,
             SBQQ__QuoteLine__r.SBQQ__RequiredBy__c,
-            SBQQ__QuoteLine__r.ServicePointLinkItem__r.ServicePoint__c
+            SBQQ__QuoteLine__r.ServicePointLinkItem__r.ServicePoint__c,
+            DelayEffectiveDate__c
             FROM 
             OrderItem 
             WHERE OrderId = :orderId
@@ -159,8 +160,7 @@ public inherited sharing class HDT_QR_OrderItem {
             WITH SECURITY_ENFORCED
         ];
     }
-
-
+    
 
     /**
     * @description 
@@ -173,7 +173,8 @@ public inherited sharing class HDT_QR_OrderItem {
         return [
             SELECT
             OrderId,
-            Order.ServicePoint__r.ServicePointCode__c
+            Order.ServicePoint__r.ServicePointCode__c,
+            Order.ServicePoint__c
             FROM
             OrderItem
             WHERE

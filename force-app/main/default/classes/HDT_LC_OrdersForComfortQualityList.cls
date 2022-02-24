@@ -40,7 +40,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
             switch on ordComf[0].RecordType.DeveloperName {
                 when  'HDT_RT_VAS'{
-                    phase ='Comunicazione Motore VAS';
+                    phase = HDT_UTL_VasManagement.updateVasPhase(ordComf[0].Phase__c, ordComf[0] );
                 }
                 when 'HDT_RT_CambioOfferta' {
                     phase = 'Comunicazione verso Heroku';

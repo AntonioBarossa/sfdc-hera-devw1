@@ -144,7 +144,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             String phaseStory = order.PhaseStory__c;
             if(order.Phase__c!=oldOrder.Phase__c 
                 && oldOrder.Phase__c == 'Documentazione validata' 
-                && order.Phase__c == 'Comunicazione Verso Heroku'
+                && (order.Phase__c == 'Comunicazione Verso Heroku' || order.Phase__c == 'Comunicazione Motore VAS')
                 && order.QualityCall__c
                 && isMonitoringList.contains(order.AgencyCode__c)
                 && !phaseStory.contains('Quality Call OK')){
@@ -159,7 +159,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              */
             if(order.Phase__c != oldOrder.Phase__c
             && oldOrder.Phase__c == 'Documentazione validata' 
-            && order.Phase__c == 'Comunicazione Verso Heroku'
+            && (order.Phase__c == 'Comunicazione Verso Heroku' || order.Phase__c == 'Comunicazione Motore VAS')
             && order.ComfortCallDaysDue__c != null
             )
             {
@@ -552,14 +552,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             isNotManaged = isNotManaged(notManagedOrder);
         }
         for (Order childOrder : parentOrderIds) {
-            if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
-                if (childOrder.Phase__c == currentVasPhase) {
-                    String phaseVas = childOrder.VASType__c?.equals('VAS Servizio')? 'In attesa tempi di ripensamento' : newVasPhase;
-                    vasOrdersToUpdate.put(childOrder.Id, phaseVas);
-                }
+            if(childOrder.recordType.Developername == 'HDT_RT_VAS' && childOrder.Phase__c == currentPhase){
+                newVasPhase = HDT_UTL_VasManagement.updateVasPhase( newVasPhase, childOrder );
+                Order orderToUpdate = new Order(Id = childOrder.Id, Phase__c = newVasPhase);
+                childOrdersToUpdate.add(orderToUpdate);
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged ) {
-                //MODIFICARE IN ATTESA DI SVILUPPO MATRICE, TEMPORANEA ATTIVAZIONE FABIANA BUG 18/09/21
-                //Valore distributore STABBATO  
                 if (childOrder.Phase__c == currentPhase
                         && !childOrder.QualityCall__c
                         && !isMonitoringList.contains(childOrder.AgencyCode__c)
@@ -607,6 +604,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                             AND   Commodity__c =:ord.Commodity__c 
                             AND   ServiceCode__c =:ord.ProcessCode__c
                             AND   Type__c =:ord.ProcessType__c
+                            AND   Active__c = true
                             WITH SECURITY_ENFORCED];
 
         return ( count > 0 );
@@ -961,6 +959,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
                     return true;
                 }
+                //Gestione Risottomissione Annullamento
+                if ((oldPhase.equalsIgnoreCase('Annullamento - Ammissibilità KO') || oldPhase.equalsIgnoreCase('Annullamento - Esito KO da DL/SII')) && newPhase.equalsIgnoreCase('Annullamento - Da Inviare')){
+                    orderNew.PhaseStory__c = !String.isBlank(orderNew.PhaseStory__c) 
+                        ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c
+                        : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
+                    return true;
+                }
                 return false;
             /**@frpanico 22/10/2021
              * Si entra nello skip soltanto se la fase di arrivo non e' di annullamento
@@ -1038,7 +1043,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     if((String.isNotBlank(o.IncomingCreditCheckResult__c) && o.IncomingCreditCheckResult__c.containsIgnoreCase('KO')) || (String.isNotBlank(o.OutgoingCreditCheckResult__c) && o.OutgoingCreditCheckResult__c.containsIgnoreCase('KO'))){
                         o.Phase__c = 'Credit Check KO';
                     }
-                    else{
+                    else if((String.isNotBlank(o.IncomingCreditCheckResult__c) && o.IncomingCreditCheckResult__c.containsIgnoreCase('OK')) || (String.isNotBlank(o.OutgoingCreditCheckResult__c) && o.OutgoingCreditCheckResult__c.containsIgnoreCase('OK'))){
                         o.Phase__c = 'Da Inviare'; 
                         Order currentOrder = currentOrders.get(o.Id);
                         switch on currentOrder.RecordType.DeveloperName {
