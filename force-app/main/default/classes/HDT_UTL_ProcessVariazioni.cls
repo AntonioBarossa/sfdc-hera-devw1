@@ -19,7 +19,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
     private Integer contractIndex;
     private Integer accountIdIndex;
     private Integer orderVolturaIndex;
-    private String RIF_VOLTURA = 'RIF_VOLTURA';
+    private String rifVoltura = 'RIF_VOLTURA';
 
     public override void checks(){
         System.debug(LoggingLevel.DEBUG, 'checks');
@@ -36,9 +36,9 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
         contractIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CONTRATTO'));
         accountIdIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
 
-        if(mapWrapperCaseFields.containsKey(RIF_VOLTURA)){
-            if(mapHeaderForWrapper.containsKey(mapWrapperCaseFields.get(RIF_VOLTURA))){
-                orderVolturaIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get(RIF_VOLTURA));
+        if(mapWrapperCaseFields.containsKey(rifVoltura)){
+            if(mapHeaderForWrapper.containsKey(mapWrapperCaseFields.get(rifVoltura))){
+                orderVolturaIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get(rifVoltura));
             }
         }
         
@@ -300,7 +300,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
         private List<String> csvSplitted;
     }
 
-    public static void setDataForTest(Integer numRecords){
+    /*public static void setDataForTest(Integer numRecords){
 
         Id massiveLoaderRequestId = 'a3d3O000000WwZOQA0';
         Set<Id> docId = new Set<Id>();
@@ -381,6 +381,6 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
         mlr.Status__c = 'In attesa di lavorazione';
         update mlr;
     
-    }
+    }*/
 
 }

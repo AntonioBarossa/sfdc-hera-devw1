@@ -221,7 +221,7 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
         private List<String> csvSplitted;
     }
 
-    public static void setDataForTest(Integer numRecords){
+    /*public static void setDataForTest(Integer numRecords){
 
         Id massiveLoaderRequestId = 'a3d3O000000WuAYQA0';
         Set<Id> docId = new Set<Id>();
@@ -286,6 +286,6 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
         mlr.Status__c = 'In attesa di lavorazione';
         update mlr;
     
-    }
+    }*/
 
 }

@@ -488,7 +488,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         public String servPointId;
     }
 
-    public static void setDataForTest(Integer numRecords){
+    /*public static void setDataForTest(Integer numRecords){
 
         Id massiveLoaderRequestId = 'a3d3O000000WyvQQAS';
         Set<Id> docId = new Set<Id>();
@@ -662,6 +662,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         mlr.Status__c = 'In attesa di lavorazione';
         update mlr;
     
-    }
+    }*/
 
 }

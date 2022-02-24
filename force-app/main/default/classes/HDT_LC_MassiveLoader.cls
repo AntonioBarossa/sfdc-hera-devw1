@@ -349,11 +349,11 @@ public with sharing class HDT_LC_MassiveLoader {
 
             ContentVersion uploadedFile = contentVersionQr.getRecordById(contentVersionId);
             Boolean deleteUploadedFile = false;
-            System.debug(LoggingLevel.DEBUG, 'selectedProcessName '+selectedProcessName);
+            //System.debug(LoggingLevel.DEBUG, 'selectedProcessName '+selectedProcessName);
 
             if (fileName.equalsIgnoreCase(selectedProcess.DeveloperName   + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION)) {                
                 if(uploadedFile.FileType.toUpperCase() == constantsUtl.MASSIVLOADER_FILE_EXTENTION.toUpperCase()) {
-                    System.debug(LoggingLevel.DEBUG, 'selectedProcessName '+selectedProcessName);
+                    //System.debug(LoggingLevel.DEBUG, 'selectedProcessName '+selectedProcessName);
                     List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName );
                     System.debug(LoggingLevel.DEBUG, 'staticResources '+staticResources.size());
                     Integer expectedNumberOfFields = staticResources.get(0).Body.toString().split(',').size();

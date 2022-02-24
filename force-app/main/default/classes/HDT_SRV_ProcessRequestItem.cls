@@ -1,4 +1,4 @@
-public without sharing class HDT_SRV_ProcessRequestItem {
+public inherited sharing class HDT_SRV_ProcessRequestItem {
 
     private static HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
 

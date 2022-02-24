@@ -288,7 +288,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
         private List<String> csvSplitted;
     }
 
-    public static void setDataForTest(Integer numRecords){
+    /*public static void setDataForTest(Integer numRecords){
 
         Id massiveLoaderRequestId = 'a3d3O000000WuVqQAK';
         Set<Id> docId = new Set<Id>();
@@ -386,6 +386,6 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
         mlr.Status__c = 'In attesa di lavorazione';
         update mlr;
     
-    }
+    }*/
 
 }

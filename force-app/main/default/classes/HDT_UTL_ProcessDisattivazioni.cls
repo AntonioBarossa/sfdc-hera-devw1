@@ -24,7 +24,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
     public override void checks(){
         System.debug(LoggingLevel.DEBUG, 'checks');
 
-        System.debug(LoggingLevel.DEBUG, '>>> this.processName: ' + this.processName);
+        //System.debug(LoggingLevel.DEBUG, '>>> this.processName: ' + this.processName);
 
         mapFieldsObject();
 
@@ -296,7 +296,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
         private List<String> csvSplitted;
     }
 
-    public static void setDataForTest(Integer numRecords){
+    /*public static void setDataForTest(Integer numRecords){
 
         Id massiveLoaderRequestId = 'a3d3O000000WlXDQA0';
         Set<Id> docId = new Set<Id>();
@@ -423,6 +423,6 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
         mlr.Status__c = 'In attesa di lavorazione';
         update mlr;
     
-    }
+    }*/
 
 }
