@@ -1,4 +1,4 @@
-import { LightningElement, api,wire } from 'lwc';
+import { LightningElement,track,api,wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 import getActivity from '@salesforce/apex/HDT_QR_ActivityCustom.getRecordByOrderIdAndType';
@@ -7,6 +7,7 @@ import save from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.save';
 import save2 from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.save2';
 import cancel from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.cancel';
 import isSaveDisabled from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.isSaveDisabled';
+import isCommunity from '@salesforce/apex/HDT_LC_SellingWizardController.checkCommunityLogin';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
 import getPicklistValue from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.getActivePicklistValue';
@@ -18,7 +19,7 @@ import SIGNED_FIELD from '@salesforce/schema/Order.ContractSigned__c';
 import OLDSIGN_FIELD from '@salesforce/schema/Order.SignMode__c';
 
 export default class hdtOrderDossierWizardActions extends NavigationMixin(LightningElement) {
-    
+    @track isModalOpen = false;
     @api orderParentRecord;
     @api recordId
     currentStep = 2;
@@ -92,9 +93,24 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         });
     }
 
+    handleModalPreview(){
+        isCommunity().then(result =>{
+            if(result == true){
+                this.isModalOpen = true;
+            }
+            else{
+                this.handlePreview();
+            }
+
+        }).catch(error => {
+            this.loading = false;
+            console.error(error);
+        });
+    }
+
     handlePreview(){
         try{
-            
+            console.log('Entrato in handlePreview.');
             this.loading = true;
             var formParams = {
                 mode : 'Preview',
@@ -118,7 +134,6 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                             var sliceSize = 512;
                             var byteCharacters = window.atob(base64);
                             var byteArrays = [];
-
                             for ( var offset = 0; offset < byteCharacters.length; offset = offset + sliceSize ) {
                                 var slice = byteCharacters.slice(offset, offset + sliceSize);
                                 var byteNumbers = new Array(slice.length);
@@ -129,9 +144,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
 
                                 byteArrays.push(byteArray);
                             }
-
                             this.blob = new Blob(byteArrays, { type: 'application/pdf' });
-
                             const blobURL = URL.createObjectURL(this.blob);
                             this.loading = false;
                             this[NavigationMixin.Navigate](
@@ -152,6 +165,15 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                         this.loading = false;
                         this.showMessage('Attenzione','Errore nella composizione del plico','error');
                     }
+                    if(this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare')){
+                        const toastSuccessMessage = new ShowToastEvent({
+                            title: 'Successo',
+                            message: 'Ordine sottomesso, in attesa validazione',
+                            variant: 'success',
+                            mode: 'sticky'
+                        });
+                        this.dispatchEvent(toastSuccessMessage);
+                    }
                 })
                 .catch(error => {
                     this.loading = false;
@@ -161,6 +183,16 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         }catch(error){
             console.error();
         }
+    }
+
+    closeModal() {
+        this.isModalOpen = false;
+    }
+
+    confirmPreview() {
+        this.closeModal();
+        this.handlePreview();
+        
     }
 
     showMessage(title,message,variant){
