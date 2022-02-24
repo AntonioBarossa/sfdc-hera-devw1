@@ -122,6 +122,24 @@ public with sharing class HDT_UTL_VasManagement {
         return null;
     }
 
+    public static String updateVasPhase(string vasPhase, Order ord ) {
+//.equalsIgnoreCase
+        if ( vasPhase == 'Esportazione VS Siebel'){
+            return vasPhase;
+        }
+        if ( ord.ComfortCallDaysDue__c != null && !vasPhase.equalsIgnoreCase('In attesa conferma cliente') ){
+            return 'In attesa conferma cliente';
+        }
+        if ( ord.VASType__c == 'VAS Servizio' && !ord.IsEarlyActivation__c ){
+            return 'In attesa tempi di ripensamento';
+        }else if( ord.VASType__c == 'VAS Fatturabili' ){
+            return 'Comunicazione verso Heroku';
+        }else{
+            return 'Comunicazione Motore VAS';
+        }
+
+    }
+
     /**
     * @description Class for common fields of activation/deactivation requests
     * @author gabriele.rota@webresults.it | 2021-07-13 

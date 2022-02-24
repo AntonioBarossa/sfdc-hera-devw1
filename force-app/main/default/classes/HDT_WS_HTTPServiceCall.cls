@@ -1,4 +1,3 @@
-
 @SuppressWarnings('PMD.ApexSuggestUsingNamedCred, PMD.ClassNamingConventions, PMD.CyclomaticComplexity')
 public class HDT_WS_HTTPServiceCall {
        

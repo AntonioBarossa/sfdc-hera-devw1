@@ -552,19 +552,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             isNotManaged = isNotManaged(notManagedOrder);
         }
         for (Order childOrder : parentOrderIds) {
-            if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
-                if (childOrder.Phase__c == currentVasPhase) {
-                    /**@frpanico 23/02/2022
-                     * Vas va sempre in Attesa Tempi Ripensamento/Comfort Call
-                     * Se non é a transitorio
-                     */
-                    String phaseVas = newVasPhase.containsIgnoreCase('Esportazione VS Siebel') 
-                        ? childOrder.ComfortCallDaysDue__c == null 
-                                ? 'In attesa tempi di ripensamento'
-                                : 'In attesa conferma cliente' 
-                        : newVasPhase;
-                    vasOrdersToUpdate.put(childOrder.Id, phaseVas);
-                }
+            if(childOrder.recordType.Developername == 'HDT_RT_VAS' && childOrder.Phase__c == currentPhase){
+                newVasPhase = HDT_UTL_VasManagement.updateVasPhase( newVasPhase, childOrder );
+                Order orderToUpdate = new Order(Id = childOrder.Id, Phase__c = newVasPhase);
+                childOrdersToUpdate.add(orderToUpdate);
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged ) {
                 if (childOrder.Phase__c == currentPhase
                         && !childOrder.QualityCall__c
@@ -1052,7 +1043,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     if((String.isNotBlank(o.IncomingCreditCheckResult__c) && o.IncomingCreditCheckResult__c.containsIgnoreCase('KO')) || (String.isNotBlank(o.OutgoingCreditCheckResult__c) && o.OutgoingCreditCheckResult__c.containsIgnoreCase('KO'))){
                         o.Phase__c = 'Credit Check KO';
                     }
-                    else{
+                    else if((String.isNotBlank(o.IncomingCreditCheckResult__c) && o.IncomingCreditCheckResult__c.containsIgnoreCase('OK')) || (String.isNotBlank(o.OutgoingCreditCheckResult__c) && o.OutgoingCreditCheckResult__c.containsIgnoreCase('OK'))){
                         o.Phase__c = 'Da Inviare'; 
                         Order currentOrder = currentOrders.get(o.Id);
                         switch on currentOrder.RecordType.DeveloperName {
