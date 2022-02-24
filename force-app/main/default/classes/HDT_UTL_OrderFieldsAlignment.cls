@@ -342,6 +342,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }
     }
 
+    //metodo non corretto. In caso di multi offerta o vas standalone riporta su tutti gli order l'offerta della prima quoteLine parent.
+    //sostituito con metodo alignPrimaryOrderProduct
     private static void alignPrimaryProduct(Order orderToUpdate, String quoteId) {
 
         quoteLineSrv.checkReadAccess('SBQQ__Product__r.ProductCode,SBQQ__Product__r.Version__c');
@@ -355,7 +357,17 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.VasServiceActivationDate__c = quoteLineList[0].DelayEffectiveDate__c;
             orderToUpdate.CommercialProductLink__c = quoteLineList[0].SBQQ__Product__c;//gabriele.rota@webresults.it - 01/10/2021
         }
-
+    }
+    private static void alignPrimaryOrderProduct(Order orderToUpdate) {
+        List<OrderItem> orderItemList = orderItemQr.getMainItem(orderToUpdate.Id);
+        if(!orderItemList.isEmpty()){
+            orderToUpdate.CommercialProductCode__c = orderItemList[0].Product2.ProductCode;
+            orderToUpdate.CommercialProductVersion__c = orderItemList[0].Product2.Version__c;
+            orderToUpdate.CommercialProduct__c = orderItemList[0].Product2.Name;
+            orderToUpdate.VasServiceActivationDate__c = orderItemList[0].DelayEffectiveDate__c;
+            orderToUpdate.CommercialProductLink__c = orderItemList[0].Product2Id;
+        }
+        
     }
 
     private static void alignQuote(Order orderToUpdate, String quoteId, Order order) {
@@ -519,7 +531,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         alignSaleFields(orderToUpdate, order.Sale__c);
 
         if(order.SBQQ__Quote__c != null) {
-            alignPrimaryProduct(orderToUpdate, order.SBQQ__Quote__c);
+            //alignPrimaryProduct(orderToUpdate, order.SBQQ__Quote__c);
+            alignPrimaryOrderProduct(orderToUpdate);
             alignQuote(orderToUpdate, order.SBQQ__Quote__c, order);
         }
 
