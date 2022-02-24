@@ -39,6 +39,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return handleAmountVas(inputs,formParams);
                 }when 'handleFlagResident'{
                     return handleFlagResident(inputs,formParams);
+                }when 'handlePromotion'{
+                    return handlePromotion(inputs,formParams);
                 }
                 when else {
                     return '';
@@ -50,6 +52,24 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         return result;
     }
     
+    private String handlePromotion(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String toReturn = '';
+        HDT_QR_OrderItem qrItem = new HDT_QR_OrderItem();
+        try{
+            String orderId = HDT_UTL_DocumentalManagement.getValue('ParentOrder', 'Id', 0, inputs, formParams);
+            String servicePointId =  HDT_UTL_DocumentalManagement.getValue('Order', 'ServicePoint__c', 0, inputs, formParams);
+            if(String.isNotBlank(servicePointId) && String.isNotBlank(orderId)){
+                List<OrderItem> orderItemList = qrItem.getPromoItems(orderId,servicePointId);
+                if (!orderItemList.isEmpty()) {
+                    toReturn = orderItemList[0].Product2.Name;
+                }
+            }
+            return toReturn;
+        }catch(Exception ex){
+            return toReturn;
+        }
+        
+    }
     
     @TestVisible
     private String handleAmountVas(Map<String,List<sObject>> inputs, Map<String,Object> formParams){

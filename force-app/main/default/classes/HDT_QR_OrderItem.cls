@@ -207,4 +207,24 @@ public inherited sharing class HDT_QR_OrderItem {
         ];
     }
 
+    /**
+    * @author NTTDATA
+    * @description getPromo
+    * @param orderId
+    * @return List<OrderItem>
+    */
+    public List<OrderItem> getPromoItems(String parentOrderId, String servicePoint){
+        return [
+            SELECT 
+            Id,
+            Product2.Name 
+            FROM
+            OrderItem
+            WHERE  Product2.Family = 'Promozione'
+            AND ServicePoint__c =:servicePoint
+            AND Order.ProcessType__c like 'Aggiunta Sconti o Bonus VAS%' 
+            AND Order.ParentOrder__c =:parentOrderId
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }
