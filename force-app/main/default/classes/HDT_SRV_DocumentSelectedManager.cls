@@ -60,6 +60,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
         List<HDT_WRP_DocumentSelectedResponse> responseList = new List<HDT_WRP_DocumentSelectedResponse>();
         
         try {
+            HDT_QR_Case qrCase = new HDT_QR_Case();
             HDT_QR_BillingProfile bpQueryHandler = new HDT_QR_BillingProfile();
             String queryString = 'SELECT Id,Context__c,DocumentSelected__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].recordId+'\'';
             String queryObject = 'AccountStatementFilter__c';
@@ -79,6 +80,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             }
 
             Case caseRecord = new Case();
+            Case caseCommitted;
             
             Date dataEmissione = formatDate((String) primolivello.get('dataEmissione'));
             Date dataScadenza = formatDate((String) primolivello.get('dataScadenza'));
@@ -88,7 +90,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             
             String contractCode = (String) secondoLivello.get('contratto') != null? (String) secondoLivello.get('contratto'):(String) primolivello.get('contratto');
             String tipoDocumento = (String) secondoLivello.get('testoDettaglio');
-            
+            String processType = '';
             String contoContrattuale = (String) primolivello.get('contoContrattuale');
             BillingProfile__c billingProfile = bpQueryHandler.getRecordByContractAccount(contoContrattuale);
             if (billingProfile != null) {
@@ -107,7 +109,8 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             
             caseRecord.Id = inputs[0].caseId;
             //caseRecord.ReadType__c = (String) secondoLivello.get('importo'); --> Richiamare WS ad hoc
-            
+            caseCommitted = qrCase.getRecordById(inputs[0].caseId);
+            processType = caseCommitted != null? caseCommitted.Type:'';
             response.caseRecord = caseRecord;
             response.contractCode = contractCode;
             response.tipoDocumento = tipoDocumento;
@@ -132,7 +135,11 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     singleDocument.Type__c = (String) primolivello.get('tipoDocumento');
                     singleDocument.IssueDate__c = dataEmissione;
                     singleDocument.ExpirationDate__c = dataScadenza;
-                    singleDocument.Amount__c = totaleCopertina != null? totaleCopertina:importo;
+                    if(processType.equalsIgnoreCase('Piano Rateizzazione') && Double.valueOf(primolivello.get('residuo')) == 0){
+                        singleDocument.Amount__c = importo;
+                    }else {
+                        singleDocument.Amount__c = totaleCopertina != null? totaleCopertina:importo;
+                    }
                     singleDocument.DocumentResidue__c = Double.valueOf(primolivello.get('residuo'));
                     singleDocument.Extension__c = (String) primolivello.get('dilazione');
                     singleDocument.PaymentMode__c = (String) primolivello.get('modalitaPagamento');
