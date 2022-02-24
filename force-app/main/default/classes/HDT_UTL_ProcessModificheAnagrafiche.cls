@@ -19,6 +19,7 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
 
     public override void checks(){
         System.debug(LoggingLevel.DEBUG, 'checks');
+        itemsToSave = new List<MassiveLoaderRequestItem__c>();
         mapFieldsObject();
 
         System.debug(LoggingLevel.DEBUG, '>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
@@ -37,6 +38,14 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
             processObj = new HDT_WRP_ProcessObjects();
             processObj.requestItem = item;
             processObj.csvSplitted = item.Data__c.split(splitCharacter, -1);
+
+            checkRequiredFields(item, processObj.csvSplitted);
+            System.debug(LoggingLevel.DEBUG, '>>> itemStatus' + item.Status__c);
+
+            if(item.Status__c.equalsIgnoreCase('Errore')){
+                itemsToSave.add(item);
+                continue;
+            }
 
             accountIdSet.add(processObj.csvSplitted[accountIdIndex]);
             contractCodeSet.add(processObj.csvSplitted[contractIndex]);
@@ -75,7 +84,6 @@ public with sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_UTL_Pr
 
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
-        itemsToSave = new List<MassiveLoaderRequestItem__c>();
         requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
 
         List<String> emptyCsvField;
