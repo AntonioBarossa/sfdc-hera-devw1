@@ -20,10 +20,17 @@
         <default>false</default>
         <label>E-Canone fisso</label>
     </customValue>
+    <customValue>
+        <fullName>F-Standalone</fullName>
+        <default>false</default>
+        <label>F-Standalone</label>
+    </customValue>
     <description>A-Rate fisse
 C-Fattura SD 
 D-Fattura SD 
-E-Canone fisso</description>
+E-Canone fisso
+F-Standalone
+    </description>
     <masterLabel>Modalita Fatturazione VAS</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
