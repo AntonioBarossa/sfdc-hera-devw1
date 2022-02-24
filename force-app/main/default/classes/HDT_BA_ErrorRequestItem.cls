@@ -34,7 +34,8 @@ public with sharing class HDT_BA_ErrorRequestItem implements Database.Batchable<
         }
         List<StaticResource> staticResources = staticResourceQr.getRecordByName(processName);
         String header=staticResources.get(0).Body.toString().remove('\r').remove('\n');
-        header=header+',Errore'+'\n';
+        //header=header+',Errore'+'\n';
+        header=header+'|Errore'+'\n';
 
         if (String.isNotBlank(row)) {
             Blob generateFileBlob = Blob.valueof(header+row);
