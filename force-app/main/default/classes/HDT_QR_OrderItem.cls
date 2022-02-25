@@ -227,4 +227,11 @@ public inherited sharing class HDT_QR_OrderItem {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    public static List<OrderItem> getItemFromOrderIdList(List<String> ordIdList){
+
+        List<OrderItem> ordItemList = new List<OrderItem>();
+        ordItemList = [SELECT Id, OrderId, Product2.CancelableQC__c FROM OrderItem WHERE OrderId IN :ordIdList WITH SECURITY_ENFORCED];
+        return ordItemList;
+    }
 }
