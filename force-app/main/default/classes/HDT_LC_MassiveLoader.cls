@@ -255,33 +255,15 @@ public with sharing class HDT_LC_MassiveLoader {
                 // having problem with limit...do something...
             }
     
-            if(fileBody == null || rowNewLineCharIndex == -1){
+            System.debug('>>> ' + fileBody + ' : ' + rowNewLineCharIndex);
+            if(String.isNotEmpty(fileBody)){
+            //if(fileBody != null || rowNewLineCharIndex == -1){
                 MassiveLoaderRequestItem__c lastRequestItem = new MassiveLoaderRequestItem__c();
                 lastRequestItem.Data__c = fileBody;
                 lastRequestItem.MassiveLoaderRequest__c = massiveLoaderRequestId;
                 requestItemList.add(lastRequestItem);
                 hasNewRow = false;
             }
-    
-            /*
-            csvNewLine = fileBody.substring(0, rowNewLineCharIndex);
-            //System.debug(LoggingLevel.DEBUG, '>>> csvNewLine: ' + csvNewLine);
-    
-            csvRowList.add(csvNewLine);
-    
-            fileBody = fileBody.substring(rowNewLineCharIndex + 1);
-    
-            rowNewLineCharIndex = fileBody.indexof('\n');
-            //System.debug(LoggingLevel.DEBUG, '>>> rowNewLineCharIndex: ' + rowNewLineCharIndex);
-            //System.debug(LoggingLevel.DEBUG, '>>> body to elaborate...');
-            //System.debug(LoggingLevel.DEBUG, '>>> ' + fileBody);
-    
-            if(fileBody == null || rowNewLineCharIndex == -1){
-    
-                csvRowList.add(fileBody);
-                hasNewRow = false;
-            }
-            */
     
         }
     
@@ -310,7 +292,7 @@ public with sharing class HDT_LC_MassiveLoader {
             LIMIT 1
         ];
 
-        reqMass[0].TotalRequest__c = totLinesCounter;
+        reqMass[0].TotalRequest__c = requestItemList.size();
         reqMass[0].Status__c = constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE;
         //massReq.Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO
 
