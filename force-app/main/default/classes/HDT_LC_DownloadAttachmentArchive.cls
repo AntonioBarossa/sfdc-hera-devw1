@@ -13,6 +13,8 @@ public with sharing class HDT_LC_DownloadAttachmentArchive {
     @AuraEnabled
     public static Map<String,String> getUrlNameDocumentLink(String rId){
         try {
+            
+            String namedCredential = 'Archive';
             //if (Schema.sObjectType.SiebelDocumentLink__x.fields.FILE_NAME__c.isAccessible()) {
             //    // Update contact phone number
             //    return '';
@@ -23,12 +25,38 @@ public with sharing class HDT_LC_DownloadAttachmentArchive {
             nameFile.put('NOME_FILE_DOWNLOAD__c', objectDLink.NOME_FILE_DOWNLOAD__c);
             nameFile.put('FILE_NAME__c', objectDLink.FILE_NAME__c);
             nameFile.put('FILE_EXT__c', objectDLink.FILE_EXT__c);
-            return nameFile;
+            list<NamedCredential> nc = [select id, Endpoint from NamedCredential where DeveloperName =: namedCredential limit 1];
+            if(nc.size()==0){
+                throw new AuraHandledException('Missing named credential: '+namedCredential);
+            }
+            nameFile.put('endpoint', nc.get(0).Endpoint);
+            nameFile.put('fileExist', 'false');
+            
+            
+            HttpRequest req = new HttpRequest();
+            
+            string NOME_FILE_DOWNLOAD_Encoded = (String)EncodingUtil.urlEncode(objectDLink.NOME_FILE_DOWNLOAD__c, 'UTF-8').replaceAll('\\+','%20');
+            req.setEndpoint('callout:'+namedCredential+'/sbldownload/'+NOME_FILE_DOWNLOAD_Encoded);
+            req.setMethod('GET');
+            Http http = new Http();
+            try{
+           		HTTPResponse res = http.send(req);
+                if(res.getStatusCode() == 200 && Integer.valueOf(res.getHeader('Content-Length')) > 0 ){
+                    nameFile.put('fileExist', 'true');
+                } 
+            }catch(exception e){
+                system.debug(e);
+                if(e.getMessage().contains('Exceeded max size')){
+                    nameFile.put('fileExist', 'true');
+                }
+            }
+			return nameFile;
             //END Modifica>>> marco.arci@webresults.it 10/11/21
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
     }
+
 
 
     /**
