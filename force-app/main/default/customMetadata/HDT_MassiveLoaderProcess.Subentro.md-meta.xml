@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">HDT_UTL_ProcessTakeOver</value>
     </values>
     <values>
+        <field>BatchSize__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>IsActive__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>

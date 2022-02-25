@@ -2,6 +2,7 @@ public with sharing class HDT_BA_ErrorRequestItem implements Database.Batchable<
     public static HDT_QR_StaticResource staticResourceQr = new HDT_QR_StaticResource();
     private id idLoaderRequest;
 	public Integer fileNumber;
+    public String splitCharacter = '|';
 
     public HDT_BA_ErrorRequestItem(Id varIdLoaderRequest) {
         this.idLoaderRequest=varIdLoaderRequest;
@@ -26,14 +27,15 @@ public with sharing class HDT_BA_ErrorRequestItem implements Database.Batchable<
             if (String.isBlank(reqName)){
                 reqName=tempReq.MassiveLoaderRequest__r.Name;
             }
-            if (tempReq.StatusDescription__c.contains(',')) {
-                tempReq.StatusDescription__c=tempReq.StatusDescription__c.replace(',', '|');
-            }
-            row=String.isBlank(row)?tempReq.Data__c+','+tempReq.StatusDescription__c:row+'\n'+tempReq.Data__c+','+tempReq.StatusDescription__c;
+            //if (tempReq.StatusDescription__c.contains(',')) {
+            //    tempReq.StatusDescription__c=tempReq.StatusDescription__c.replace(',', '|');
+            //}
+            row = String.isBlank(row) ? tempReq.Data__c + splitCharacter + tempReq.StatusDescription__c : row + '\n' + tempReq.Data__c + splitCharacter + tempReq.StatusDescription__c;
         }
         List<StaticResource> staticResources = staticResourceQr.getRecordByName(processName);
         String header=staticResources.get(0).Body.toString().remove('\r').remove('\n');
-        header=header+',Errore'+'\n';
+        //header=header+',Errore'+'\n';
+        header=header+'|Errore'+'\n';
 
         if (String.isNotBlank(row)) {
             Blob generateFileBlob = Blob.valueof(header+row);

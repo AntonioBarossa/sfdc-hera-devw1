@@ -890,4 +890,25 @@
         <shortDescription>Cpq_ProductAssociation_EnabledProfile</shortDescription>
         <value>Attenzione! Non possiedi i privilegi per questa funzionalità.</value>
     </labels>
+    <labels>
+        <fullName>VARIAZIONI_INDIRIZZO_FORNITURA</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>VARIAZIONI_INDIRIZZO_FORNITURA</shortDescription>
+        <value>Variazione indirizzo di fornitura</value>
+    </labels>
+    <labels>
+        <fullName>VARIAZIONI_MARCATURA_USO_PDR</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>VARIAZIONI_MARCATURA_USO_PDR</shortDescription>
+        <value>Marcatura/Uso PdR</value>
+    </labels>
+    <labels>
+        <fullName>VARIAZIONI_TARIFFA_RES_NONRES</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>VARIAZIONI_TARIFFA_RES_NONRES</shortDescription>
+        <value>Modifica Tariffa Residente/Non Residente</value>
+    </labels>
 </CustomLabels>

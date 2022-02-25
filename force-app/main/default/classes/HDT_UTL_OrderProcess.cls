@@ -552,8 +552,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             isNotManaged = isNotManaged(notManagedOrder);
         }
         for (Order childOrder : parentOrderIds) {
-            if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
+            if(childOrder.recordType.Developername == 'HDT_RT_VAS' && childOrder.Phase__c == currentPhase){
                 newVasPhase = HDT_UTL_VasManagement.updateVasPhase( newVasPhase, childOrder );
+                Order orderToUpdate = new Order(Id = childOrder.Id, Phase__c = newVasPhase);
+                childOrdersToUpdate.add(orderToUpdate);
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged ) {
                 if (childOrder.Phase__c == currentPhase
                         && !childOrder.QualityCall__c
@@ -1004,7 +1006,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         for(ServiceRequest__c s: srvRequests){
             // ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
             s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(orderStatuses.get(s.Order__c), 'Order');
-            if( s.Status__c == 'Activated' || s.Status__c == 'Annullato' ){
+            if( s.Status__c.equalsIgnoreCase('Chiuso') || s.Status__c.equalsIgnoreCase('Annullato') ){
                 srvRequestsToDelete.add(s);
             } else {
                 sReqToUpdate.add(s);
