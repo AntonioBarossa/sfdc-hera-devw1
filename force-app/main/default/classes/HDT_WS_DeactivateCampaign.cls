@@ -1,4 +1,5 @@
 public with sharing class HDT_WS_DeactivateCampaign {
+    private static final String REQUEST_PATH = '/campaigns/workgroups';
     public static wrapResponseGetData callDeactivateCampaign(String campaignId) {
         Datetime dt = Datetime.now();
         Long getTime = dt.getTime();
@@ -9,7 +10,7 @@ public with sharing class HDT_WS_DeactivateCampaign {
             'dateTime' => getTime,
             'token' => String.valueOf(token)
         };
-        return  (wrapResponseGetData)HDT_WS_HTTPServiceCall.sendRequest('arrestocampaign', getParams, wrapResponseGetData.class);
+        return  (wrapResponseGetData)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH,'PUT', getParams, wrapResponseGetData.class);
     }
 
     public class wrapResponseGetData extends HDT_WS_Response{

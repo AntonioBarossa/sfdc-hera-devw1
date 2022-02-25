@@ -29,6 +29,26 @@ public class HDT_WS_HTTPServiceCall {
         }
         return resp;  
     }
+    public static HDT_WS_Response sendRequest(String namedCredential,String path,String method,List<HDT_WS_Request> request,type respClass){
+        HTTP h = new Http();
+        HTTPRequest req = new HTTPRequest();
+        req.setTimeout(120000);
+        req.setHeader('Content-type', 'application/json');
+        req.setEndpoint('Callout:'+namedCredential+path);
+        req.setMethod(method);        
+        req.setBody(JSON.serialize(request));
+        HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
+
+        try{
+            HTTPResponse res = h.send(req);
+            resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
+            resp.statusCode = res.getStatusCode();
+        }
+        catch(Exception e){
+            resp.exceptionMessage = e.getMessage();
+        }
+        return resp;        
+    }
     public static HDT_WS_Response sendRequest(String nomeApi,HDT_WS_Request request,type respClass){
         
         HDT_WebServiceConfiguration__c conf = HDT_WebServiceConfiguration__c.getValues(nomeApi);

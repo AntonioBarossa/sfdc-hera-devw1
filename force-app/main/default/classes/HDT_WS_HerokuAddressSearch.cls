@@ -1,11 +1,11 @@
 public class HDT_WS_HerokuAddressSearch {
     
-    
+    private static final String REQUEST_PATH = '/stradario/indirizzi';
     @AuraEnabled
     public static HDT_WS_HerokuAddressSearchResponse callServiceCom(String city){
         
         HDT_WS_HerokuAddressSearchRequestCom req = new HDT_WS_HerokuAddressSearchRequestCom(city);
-        HDT_WS_HerokuAddressSearchResponse res = (HDT_WS_HerokuAddressSearchResponse)HDT_WS_HTTPServiceCall.sendRequest('VerifIndirizzo', req,HDT_WS_HerokuAddressSearchResponse.class);
+        HDT_WS_HerokuAddressSearchResponse res = (HDT_WS_HerokuAddressSearchResponse)HDT_WS_HTTPServiceCall.sendRequest('HerokuBasePath',REQUEST_PATH,'POST', req,HDT_WS_HerokuAddressSearchResponse.class);
         
         return res;
     }    
@@ -13,7 +13,7 @@ public class HDT_WS_HerokuAddressSearch {
     public static HDT_WS_HerokuAddressSearchResponse callServiceInd(String street,String cityCode){
         
         HDT_WS_HerokuAddressSearchRequestInd req = new HDT_WS_HerokuAddressSearchRequestInd(street,cityCode);
-        HDT_WS_HerokuAddressSearchResponse res = (HDT_WS_HerokuAddressSearchResponse)HDT_WS_HTTPServiceCall.sendRequest('VerifIndirizzo', req,HDT_WS_HerokuAddressSearchResponse.class);
+        HDT_WS_HerokuAddressSearchResponse res = (HDT_WS_HerokuAddressSearchResponse)HDT_WS_HTTPServiceCall.sendRequest('HerokuBasePath',REQUEST_PATH,'POST', req,HDT_WS_HerokuAddressSearchResponse.class);
         
         return res;
     }    
@@ -21,13 +21,13 @@ public class HDT_WS_HerokuAddressSearch {
     public static HDT_WS_HerokuAddressSearchResponse callServiceVer(String modality,String cityCode,String streetCode,String houseNumCode){
         
         HDT_WS_HerokuAddressSearchRequestVer req = new HDT_WS_HerokuAddressSearchRequestVer(modality,cityCode,streetCode,houseNumCode);
-        HDT_WS_HerokuAddressSearchResponse res = (HDT_WS_HerokuAddressSearchResponse)HDT_WS_HTTPServiceCall.sendRequest('VerifIndirizzo', req,HDT_WS_HerokuAddressSearchResponse.class);
+        HDT_WS_HerokuAddressSearchResponse res = (HDT_WS_HerokuAddressSearchResponse)HDT_WS_HTTPServiceCall.sendRequest('HerokuBasePath',REQUEST_PATH,'POST', req,HDT_WS_HerokuAddressSearchResponse.class);
         
         return res;
     }  
     public static HDT_WS_HerokuAddressSearchResponse callServiceMass(String city1,String street,String houseNum1){  
         HDT_WS_HerokuAddressSearchRequestMass req = new HDT_WS_HerokuAddressSearchRequestMass(city1,street,houseNum1);
-        HDT_WS_HerokuAddressSearchResponse res = (HDT_WS_HerokuAddressSearchResponse)HDT_WS_HTTPServiceCall.sendRequest('VerifIndirizzo', req,HDT_WS_HerokuAddressSearchResponse.class);
+        HDT_WS_HerokuAddressSearchResponse res = (HDT_WS_HerokuAddressSearchResponse)HDT_WS_HTTPServiceCall.sendRequest('HerokuBasePath',REQUEST_PATH,'POST', req,HDT_WS_HerokuAddressSearchResponse.class);
         return res;
     }
 
