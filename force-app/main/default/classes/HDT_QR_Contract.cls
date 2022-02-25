@@ -254,4 +254,18 @@ public inherited sharing class HDT_QR_Contract {
         LIMIT 1];
     }
 
+    public SBQQ__Subscription__c  getSubscriptionFromContract(String contractId){
+        return [SELECT Id,
+        ProductCode__c,
+        SBQQ__ProductName__c,
+        CategoryFamily__c,
+        VersionFormula__c, 
+        SBQQ__Product__r.Family 
+        FROM SBQQ__Subscription__c 
+        WHERE SBQQ__Contract__c =:contractId 
+        AND SBQQ__Product__r.Family = 'Offerta commerciale'
+        WITH SECURITY_ENFORCED
+        LIMIT 1];
+    }
+
 }
