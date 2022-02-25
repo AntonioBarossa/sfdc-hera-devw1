@@ -122,21 +122,28 @@ public with sharing class HDT_UTL_VasManagement {
         return null;
     }
 
-    public static String updateVasPhase(string vasPhase, Order ord ) {
+    public static void updateVasPhase(string vasPhase, Order ord ) {
 //.equalsIgnoreCase
+        String newPhase = '';
         if ( vasPhase == 'Esportazione VS Siebel'){
-            return vasPhase;
+            newPhase = vasPhase;
         }
-        if ( ord.ComfortCallDaysDue__c != null && !vasPhase.equalsIgnoreCase('In attesa conferma cliente') ){
-            return 'In attesa conferma cliente';
+        else if ( ord.ComfortCallDaysDue__c != null){
+            newPhase = 'In attesa conferma cliente';
         }
-        if ( ord.VASType__c == 'VAS Servizio' && !ord.IsEarlyActivation__c ){
-            return 'In attesa tempi di ripensamento';
+        else if ( ord.VASType__c == 'VAS Servizio' && !ord.IsEarlyActivation__c ){
+            newPhase =  'In attesa tempi di ripensamento';
         }else if( ord.VASType__c == 'VAS Fatturabili' ){
-            return 'Comunicazione verso Heroku';
+            newPhase = 'Comunicazione verso Heroku';
         }else{
-            return 'Comunicazione Motore VAS';
+            newPhase =  'Comunicazione Motore VAS';
         }
+        Order orderToUpdate = new Order();
+        orderToUpdate.Id = ord.Id;
+        orderToUpdate.Phase__c = newPhase;
+        HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
+        platEvent.SerializedSobj__c = JSON.serialize(orderToUpdate);
+        Database.SaveResult sr = Eventbus.publish(platEvent);
 
     }
 
