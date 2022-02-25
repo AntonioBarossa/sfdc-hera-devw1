@@ -99,7 +99,8 @@ public inherited sharing class HDT_QR_Contract {
             SAPContractCode__c,
             ServicePoint__r.ServicePointCode__c,
             ServicePoint__r.SupplyAddress__c,
-            ServicePoint__r.SupplyCity__c
+            ServicePoint__r.SupplyCity__c,
+            ServicePoint__r.Vendor__c
             FROM
             Contract
             WHERE AccountId = :accountId									 

@@ -428,7 +428,7 @@ public inherited sharing class HDT_LC_SaleVas {
             FriendCode__c = sale.FriendCode__c,
             CampaignCode__c = sale.CampaignCode__c,
             CreatedBy__c = sale.CreatedBy__c,
-            SalesCompany__c = 'Hera Comm S.p.A.',//ribaltare da contract
+            SalesCompany__c = contract?.ServicePoint__r?.Vendor__c,
             Campaign__c = sale.Campaign__c,
             SupplyCity__c = null, //to do (other logic to get supplyCity)
             IsVAS__c = true,

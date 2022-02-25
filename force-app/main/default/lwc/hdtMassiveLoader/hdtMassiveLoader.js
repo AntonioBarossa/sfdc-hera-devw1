@@ -4,7 +4,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 //Apex Methods
 import getCSVBody from '@salesforce/apex/HDT_LC_MassiveLoader.getCsvBody';
 import initialize from '@salesforce/apex/HDT_LC_MassiveLoader.initialize';
-import checkCSV from '@salesforce/apex/HDT_LC_MassiveLoader.checkCsv';
+//import checkCSV from '@salesforce/apex/HDT_LC_MassiveLoader.checkCsv';
+import checkCSV from '@salesforce/apex/HDT_LC_MassiveLoader.convertCsvToRequestItem';
 import createMassiveLoaderRequest from '@salesforce/apex/HDT_LC_MassiveLoader.createMassiveLoaderRequest';
 import updateMassiveLoaderRequest from '@salesforce/apex/HDT_LC_MassiveLoader.updateMassiveLoaderRequest';
 

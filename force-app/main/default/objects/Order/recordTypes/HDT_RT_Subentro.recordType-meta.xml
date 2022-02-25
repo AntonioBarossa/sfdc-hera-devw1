@@ -2909,6 +2909,10 @@
         <values>
             <fullName>E-Canone fisso</fullName>
             <default>false</default>
+        </values>         
+        <values>
+            <fullName>F-Standalone</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>

@@ -8,7 +8,8 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
 
-        String query = 'SELECT Id,IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
+        String query = 'SELECT Id,IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c FROM Order '+
+        'Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
         return Database.getQueryLocator(query);
     }
 
@@ -48,9 +49,25 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         ordersIdsList.addAll(orderIdsSet);
         
         List<wrts_prcgvr__Activity__c> activitiesAssigned = HDT_QR_ActivityCustom.getRecordByOrderListAndQuality(ordersIdsList);
+        List<wrts_prcgvr__Activity__c> activitiesToClose = new List<wrts_prcgvr__Activity__c>();
+        Map<String, wrts_prcgvr__Activity__c> orderToActivityMap = new Map<String, wrts_prcgvr__Activity__c>();
         Set<Id> ordersAlreadyAssigned = new Set<Id>();
         for (wrts_prcgvr__Activity__c activityAssigned : activitiesAssigned) {
             ordersAlreadyAssigned.add(activityAssigned.Order__c);
+        }
+        for(wrts_prcgvr__Activity__c activity : activitiesAssigned){
+            orderToActivityMap.put(activity.Order__c, activity);
+        }
+
+        Map<String, List<OrderItem>> orderToItemMap = new Map<String, List<OrderItem>>();
+        for(OrderItem item : HDT_QR_OrderItem.getItemFromOrderIdList(ordersIdsList)){
+            if(orderToItemMap.get(item.OrderId) != null){
+                orderToItemMap.get(item.OrderId).add(item);
+            }
+            else {
+                orderToItemMap.put(item.OrderId, new List<OrderItem>());
+                orderToItemMap.get(item.OrderId).add(item);
+            }
         }
 
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
@@ -78,13 +95,34 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 
                 Order ordToUpd = new Order(Id = ord.Id);
 
-                if ((ord.ActivityQualityToBeCanceled__c || isMonitoringList.contains(ord.AgencyCode__c))
-                    && (ord.IsVAS__c && !notCancelNonBillable.contains(ord.Phase__c) && !notCancelBillable.contains(ord.Phase__c))) {
+                if (isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c && !notCancelNonBillable.contains(ord.Phase__c) && !notCancelBillable.contains(ord.Phase__c)) {
                     ordToUpd.Phase__c = 'Annullato';
                     ordToUpd.Status = 'Activated';
                 }
                 else {
                     ordToUpd.QualityCall__c = false;
+                    if(orderToItemMap.get(ord.Id) != null){
+                        for(OrderItem item : orderToItemMap.get(ord.Id)){
+                            if(item.Product2.CancelableQC__c){
+                                ordToUpd.Phase__c = 'Annullato';
+                                ordToUpd.Status = 'Activated';
+                                break;
+                            }
+                        }
+                    }
+
+                    wrts_prcgvr__Activity__c activityToClose = new wrts_prcgvr__Activity__c();
+                    
+                    if(orderToActivityMap.get(ord.Id) != null){
+                        activityToClose = orderToActivityMap.get(ord.Id);
+                        activityToClose.wrts_prcgvr__Status__c = 'Non Esitata';
+                        activitiesToClose.add(activityToClose);
+                    }
+                    else if(orderToActivityMap.get(ord.ParentOrder__c) != null){
+                        activityToClose = orderToActivityMap.get(ord.ParentOrder__c);
+                        activityToClose.wrts_prcgvr__Status__c = 'Non Esitata';
+                        activitiesToClose.add(activityToClose);
+                    }
                 }
 
                 if ((ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))) {
@@ -137,6 +175,9 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         }
         if (!callActivities.isEmpty()) {
             insert callActivities;
+        }
+        if(activitiesToClose.size() > 0){
+            update activitiesToClose;
         }
 
         List<String> contactList = new List<String>();
