@@ -31402,7 +31402,7 @@
         <layout>AuthorizationFormText-Authorization Form Text Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>BillingProfile__c-Billing Profile Layout</layout>
+        <layout>BillingProfile__c-Profilo di fatturazione</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>BlackList__c-BlackList Layout</layout>
