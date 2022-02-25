@@ -107,6 +107,18 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     @AuraEnabled
     public static String createActivityVocalOrder(Order orderParent){
 
+        //Aggiornamento CampaignMember
+        Boolean isCommunity = HDT_LC_SellingWizardController.checkCommunityLogin();
+        if(isCommunity){
+            Order ord = [SELECT Id, Sale__r.CommissioningCampaign__c, Sale__r.SalesContact__c FROM Order WHERE Id =: orderParent.Id WITH SECURITY_ENFORCED LIMIT 1];
+            CampaignMember cm = [SELECT Id, Campaign.PositiveOutcomeDefaultStatus__c 
+                                 FROM CampaignMember 
+                                 WHERE CampaignId =: ord.Sale__r.CommissioningCampaign__c 
+                                 AND ContactId =: ord.Sale__r.SalesContact__c WITH SECURITY_ENFORCED LIMIT 1];
+            String myStatus = cm.Campaign.PositiveOutcomeDefaultStatus__c;
+            HDT_LC_CampaignsController.updateCampaignMemberStatus(cm.Id, myStatus);
+        }
+
         List<Order> ordersToUpdate = new List<Order>();
         
         Order orderToUpdate = new Order(

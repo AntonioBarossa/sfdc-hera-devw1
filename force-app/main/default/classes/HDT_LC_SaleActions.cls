@@ -209,11 +209,12 @@ public inherited sharing class HDT_LC_SaleActions {
         quoteSrv.updateRecords(quoteList);
 
         //update campaignMember Status
-        if (string.isNotBlank(campaignMemberId)) {
-            CampaignMember myCampaignMember = [select id, Campaign.PositiveOutcomeDefaultStatus__c  from CampaignMember where Id = :campaignMemberId];   
-            String myStatus = myCampaignMember.Campaign.PositiveOutcomeDefaultStatus__c;
-            HDT_LC_CampaignsController.updateCampaignMemberStatus(campaignMemberId, myStatus);
-        }
+        // if (string.isNotBlank(campaignMemberId)) {
+        //     CampaignMember myCampaignMember = [select id, Campaign.PositiveOutcomeDefaultStatus__c  from CampaignMember where Id = :campaignMemberId WITH SECURITY_ENFORCED];   
+        //     String myStatus = myCampaignMember.Campaign.PositiveOutcomeDefaultStatus__c;
+        //     system.debug('CampaignMember-MyStatus --> '+ myStatus);
+        //     HDT_LC_CampaignsController.updateCampaignMemberStatus(campaignMemberId, myStatus);
+        // }
 
         //update campaignMember siblings Status a 'Non Proposto Auto'
         List<String> accountIds = new List<String>();

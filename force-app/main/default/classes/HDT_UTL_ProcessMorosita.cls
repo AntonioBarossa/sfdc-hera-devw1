@@ -18,6 +18,8 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
 
     public override void checks(){
         System.debug(LoggingLevel.DEBUG, 'checks');
+        itemsToSave = new List<MassiveLoaderRequestItem__c>();
+
         mapFieldsObject();
 
         podIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('POD'));
@@ -30,6 +32,14 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
             processObj = new HDT_WRP_ProcessObjects();
             processObj.requestItem = item;
             processObj.csvSplitted = item.Data__c.split(splitCharacter, -1);
+
+            checkRequiredFields(item, processObj.csvSplitted);
+            System.debug(LoggingLevel.DEBUG, '>>> itemStatus' + item.Status__c);
+
+            if(item.Status__c.equalsIgnoreCase('Errore')){
+                itemsToSave.add(item);
+                continue;
+            }
 
             accountIdSet.add(processObj.csvSplitted[accountIdIndex]);
             contractCodeSet.add(processObj.csvSplitted[contractIndex]);
@@ -67,7 +77,6 @@ public with sharing virtual class HDT_UTL_ProcessMorosita extends  HDT_UTL_Proce
 
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
         List<Case> caseToInsert = new List<Case>();
-        itemsToSave = new List<MassiveLoaderRequestItem__c>();
         requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
 
         String type = 'Sospensione Fornitura';
