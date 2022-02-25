@@ -213,6 +213,12 @@ public with sharing class HDT_LC_MassiveLoader {
         Integer totLinesCounter = fileBody.countMatches('\n');
         System.debug(LoggingLevel.DEBUG, '>>> totLinesCounter: ' + totLinesCounter);
 
+        if(totLinesCounter == 0){
+            response.put('error', true);
+            response.put('errorMessage', 'Il file csv non contiene nulla.');
+            return response;
+        }
+
         if(totLinesCounter > csvLinesLimit){
             response.put('error', true);
             response.put('errorMessage', 'Il file csv contiene più di 1500 righe.');
@@ -231,21 +237,37 @@ public with sharing class HDT_LC_MassiveLoader {
         System.debug(LoggingLevel.DEBUG, '>>> header row : ' + newLine);
     
         fileBody = fileBody.substring(headerNewLineCharIndex + 1);
-    
+
         Boolean hasNewRow = true;
         Integer currentHeapSize = 0;
         Integer limitHeapSize = Limits.getLimitHeapSize();
         Integer rowNewLineCharIndex = fileBody.indexof('\n');
         String csvNewLine = '';
         MassiveLoaderRequestItem__c newRequestItem;
-        
+
+        if(String.isEmpty(fileBody)){
+            response.put('error', true);
+            response.put('errorMessage', 'Il file csv non contiene nulla.');
+            return response;
+        }
+
         while(hasNewRow){
-            
+
+            if(rowNewLineCharIndex == -1){
+                if(String.isNotEmpty(fileBody)){
+                    newRequestItem = new MassiveLoaderRequestItem__c();
+                    newRequestItem.Data__c = fileBody;
+                    newRequestItem.MassiveLoaderRequest__c = massiveLoaderRequestId;
+                    requestItemList.add(newRequestItem);           
+                }
+                break;
+            }
+
             newRequestItem = new MassiveLoaderRequestItem__c();
             newRequestItem.Data__c = fileBody.substring(0, rowNewLineCharIndex);
             newRequestItem.MassiveLoaderRequest__c = massiveLoaderRequestId;
             requestItemList.add(newRequestItem);
-    
+
             fileBody = fileBody.substring(rowNewLineCharIndex + 1);
             rowNewLineCharIndex = fileBody.indexof('\n');
     
@@ -254,8 +276,7 @@ public with sharing class HDT_LC_MassiveLoader {
             if(currentHeapSize > limitHeapSize){
                 // having problem with limit...do something...
             }
-    
-            System.debug('>>> ' + fileBody + ' : ' + rowNewLineCharIndex);
+
             if(String.isNotEmpty(fileBody)){
             //if(fileBody != null || rowNewLineCharIndex == -1){
                 MassiveLoaderRequestItem__c lastRequestItem = new MassiveLoaderRequestItem__c();
@@ -408,11 +429,11 @@ public with sharing class HDT_LC_MassiveLoader {
 
                             integer  numberRequestProcessing= database.countQuery('SELECT count() FROM MassiveLoaderRequest__c WHERE  Status__c =\'In Lavorazione\'');
 
-                            if (numberRequestProcessing==0 && !test.isRunningTest()) {
-                                request.Status__c = constantsUtl.MASSIVLOADER_STATUS_INLAVORAZIONE;
-                                //HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(listRequestItem.get(0).MassiveLoaderRequest__c); 
-                                //Database.executeBatch(processReq,1);
-                            }
+                            //if (numberRequestProcessing==0 && !test.isRunningTest()) {
+                            //    request.Status__c = constantsUtl.MASSIVLOADER_STATUS_INLAVORAZIONE;
+                            //    HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(listRequestItem.get(0).MassiveLoaderRequest__c); 
+                            //    Database.executeBatch(processReq,1);
+                            //}
                         }
                         massiveLoaderRequestSrv.updateRequestRecord(new List<MassiveLoaderRequest__c>{request});
                         list <MassiveLoaderRequest__c> lrequest=[SELECT Id,Name  FROM MassiveLoaderRequest__c WHERE Id=:massiveLoaderRequestId  WITH SECURITY_ENFORCED LIMIT 1];
