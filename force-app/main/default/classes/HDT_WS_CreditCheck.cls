@@ -6,6 +6,7 @@
                  chiamata al servizio attraverso la classe “HDT_WS_HTTPServiceCall”. 
 */
 public class HDT_WS_CreditCheck {
+    private static final String REQUEST_PATH = '/credit-check/evaluations';
 
     @AuraEnabled
     public static HDT_WS_CreditCheckResponse callService(HDT_WS_CreditCheckRequest req){
@@ -15,7 +16,7 @@ public class HDT_WS_CreditCheck {
         System.debug(LoggingLevel.DEBUG, 'HDT_WS_CreditCheck - HDT_WS_CreditCheckResponse - callService: req ----> ');
         System.debug(LoggingLevel.DEBUG, JSON.serializepretty(req));
         
-        HDT_WS_CreditCheckResponse res = (HDT_WS_CreditCheckResponse)HDT_WS_HTTPServiceCall.sendRequest('CreditCheck', req,HDT_WS_CreditCheckResponse.class);
+        HDT_WS_CreditCheckResponse res = (HDT_WS_CreditCheckResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH,'POST', req,HDT_WS_CreditCheckResponse.class);
         
         System.debug(LoggingLevel.DEBUG, 'HDT_WS_CreditCheck - HDT_WS_CreditCheckResponse - callService: res ----> ' + JSON.serialize(res));
         

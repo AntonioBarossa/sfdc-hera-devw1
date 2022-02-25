@@ -65,10 +65,17 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
             }
             when 'contracted'{
                 asyncUpdateContracted(objectId);
+            }when'handleContractVariation'{
+                handleContractVariation(sender);
             }
         }
         
         return null;
+    }
+
+    private static void handleContractVariation(SObject sender){
+        HDT_UTL_Sales saleUtl = new HDT_UTL_Sales();
+        HDT_UTL_Sales.handleContractVariation((Order)sender);
     }
 
 

@@ -432,4 +432,43 @@ public with sharing class HDT_UTL_Sales {
         return new wrts_prcgvr__Activity__c(account__c = accountid,wrts_prcgvr__Status__c= 'Aperta',wrts_prcgvr__IsRequired__c=true,order__c = orderid,type__c='Validazione Documentale',recordtypeid=recordtypeid);
     }
 
+    public static void handleContractVariation(Order order){
+        String processType = '';
+        String contractId = '';
+        String servicePointId = '';
+        String parentOrderId = '';
+        HDT_QR_Contract qrContract = new HDT_QR_Contract();
+        HDT_QR_OrderItem qrOrderItems = new HDT_QR_OrderItem();
+        try{
+                    
+
+            if(order != null){
+                processType = order.ProcessType__c;
+                if(String.isNotBlank(processType) && processType.contains('Aggiunta Sconti o Bonus VAS')){
+                    contractId = order.ContractReference__c;
+                    servicePointId = order.ServicePoint__c;
+                    parentOrderId = order.ParentOrder__c;
+                
+                    if(String.isNotBlank(contractId)){
+                        SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractId);
+                        if(subscription != null){
+                            order.CommercialProduct__c = subscription.SBQQ__ProductName__c;
+                            order.CommercialProductCode__c = subscription.ProductCode__c;
+                            order.CommercialProductVersion__c = subscription.VersionFormula__c;
+                        }
+                    }else if(String.isNotBlank(servicePointId) && String.isNotBlank(parentOrderId)) {
+                        //Get offer from OrderItem Activation
+                        OrderItem orderItem = qrOrderItems.getOfferActivationItem(parentOrderId,servicePointId);
+                        if(orderItem != null){
+                            order.CommercialProduct__c = orderItem.Product2.Name;
+                            order.CommercialProductCode__c = orderItem.Product2.ProductCode;
+                            order.CommercialProductVersion__c = orderItem.Product2.Version__c;            
+                        }
+                    }
+                }
+            }
+        }catch(Exception ex){
+            System.debug(LoggingLevel.DEBUG, ex.getMessage());
+        }
+    }
 }
