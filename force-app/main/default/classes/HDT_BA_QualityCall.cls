@@ -55,9 +55,19 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         for (wrts_prcgvr__Activity__c activityAssigned : activitiesAssigned) {
             ordersAlreadyAssigned.add(activityAssigned.Order__c);
         }
-
         for(wrts_prcgvr__Activity__c activity : activitiesAssigned){
             orderToActivityMap.put(activity.Order__c, activity);
+        }
+
+        Map<String, List<OrderItem>> orderToItemMap = new Map<String, List<OrderItem>>();
+        for(OrderItem item : HDT_QR_OrderItem.getItemFromOrderIdList(ordersIdsList)){
+            if(orderToItemMap.get(item.OrderId) != null){
+                orderToItemMap.get(item.OrderId).add(item);
+            }
+            else {
+                orderToItemMap.put(item.OrderId, new List<OrderItem>());
+                orderToItemMap.get(item.OrderId).add(item);
+            }
         }
 
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
@@ -91,6 +101,15 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 }
                 else {
                     ordToUpd.QualityCall__c = false;
+                    if(orderToItemMap.get(ord.Id) != null){
+                        for(OrderItem item : orderToItemMap.get(ord.Id)){
+                            if(item.Product2.CancelableQC__c){
+                                ordToUpd.Phase__c = 'Annullato';
+                                ordToUpd.Status = 'Activated';
+                                break;
+                            }
+                        }
+                    }
 
                     wrts_prcgvr__Activity__c activityToClose = new wrts_prcgvr__Activity__c();
                     

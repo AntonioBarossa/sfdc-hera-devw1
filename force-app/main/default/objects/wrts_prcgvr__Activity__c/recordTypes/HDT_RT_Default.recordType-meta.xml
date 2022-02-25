@@ -919,9 +919,36 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Priority__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Process__c</picklist>
         <values>
             <fullName>Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aggiunta Bonus o VAS</fullName>
             <default>false</default>
         </values>
         <values>
@@ -941,6 +968,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento Prestazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Attivazione Click%26Pay</fullName>
             <default>false</default>
         </values>
@@ -950,6 +981,10 @@
         </values>
         <values>
             <fullName>Blocco al Sollecito ed Interessi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bonus commerciale</fullName>
             <default>false</default>
         </values>
         <values>
@@ -966,6 +1001,14 @@
         </values>
         <values>
             <fullName>Cambio contatore non registrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio offerta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio uso</fullName>
             <default>false</default>
         </values>
         <values>
@@ -993,6 +1036,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Connessione con attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Consegna copia chiave GDM</fullName>
             <default>false</default>
         </values>
@@ -1002,6 +1049,10 @@
         </values>
         <values>
             <fullName>Copia Bolletta%2FBollettino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Copia contratto firmato o non ricevuto</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1145,6 +1196,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Prima Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima attivazione con modifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Processi attivi venditore entrante</fullName>
             <default>false</default>
         </values>
@@ -1186,6 +1245,10 @@
         </values>
         <values>
             <fullName>Riattivazione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riattivazioni non morose</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1277,7 +1340,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Subentro su GdM chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch In</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch In ripristinatorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Switch-out dal SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporanea - Nuova attivazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1366,6 +1445,10 @@
         </values>
         <values>
             <fullName>Voltura Tecnica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura con Switch</fullName>
             <default>false</default>
         </values>
         <values>
