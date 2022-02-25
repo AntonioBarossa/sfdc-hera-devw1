@@ -113,12 +113,12 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
                     wrts_prcgvr__Activity__c activityToClose = new wrts_prcgvr__Activity__c();
                     
-                    if(orderToActivityMap.get(ord.Id) != null){
+                   if(orderToActivityMap.get(ord.Id) != null && orderToActivityMap.get(ord.Id).wrts_prcgvr__Status__c != 'Non Esitata'){
                         activityToClose = orderToActivityMap.get(ord.Id);
                         activityToClose.wrts_prcgvr__Status__c = 'Non Esitata';
                         activitiesToClose.add(activityToClose);
                     }
-                    else if(orderToActivityMap.get(ord.ParentOrder__c) != null){
+                    else if(orderToActivityMap.get(ord.ParentOrder__c) != null && orderToActivityMap.get(ord.ParentOrder__c).wrts_prcgvr__Status__c != 'Non Esitata'){
                         activityToClose = orderToActivityMap.get(ord.ParentOrder__c);
                         activityToClose.wrts_prcgvr__Status__c = 'Non Esitata';
                         activitiesToClose.add(activityToClose);
