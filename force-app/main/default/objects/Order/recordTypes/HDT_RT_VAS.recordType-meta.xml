@@ -2177,6 +2177,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Comunicazione verso Heroku</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Credit Check KO</fullName>
             <default>false</default>
         </values>
