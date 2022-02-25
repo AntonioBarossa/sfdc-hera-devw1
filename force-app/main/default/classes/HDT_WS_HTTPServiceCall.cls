@@ -49,6 +49,7 @@ public class HDT_WS_HTTPServiceCall {
         }
         return resp;        
     }
+    /*
     public static HDT_WS_Response sendRequest(String namedCredential,String path,String method,Map<String,String> getParams,type respClass){
         
         String endpoint = '';
@@ -86,7 +87,7 @@ public class HDT_WS_HTTPServiceCall {
             resp.exceptionMessage = e.getMessage();
         }
         return resp;        
-    }
+    }*/
     public static HDT_WS_Response sendRequest(String namedCredential,String path,String method,Map<String,Object> request,type respClass){
                 
         HTTP h = new Http();
