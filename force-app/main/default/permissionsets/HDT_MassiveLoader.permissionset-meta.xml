@@ -5,6 +5,14 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>HDT_UTL_ProcessSalesOutboundWs</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_ProcessSales</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_ProcessPostSales</apexClass>
         <enabled>true</enabled>
     </classAccesses>
