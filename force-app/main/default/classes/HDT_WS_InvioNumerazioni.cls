@@ -1,4 +1,6 @@
 public inherited sharing class HDT_WS_InvioNumerazioni {
+    private static final String REQUEST_PATH = '/campaigns/numbers'; 
+
     @AuraEnabled
     public static HDT_WS_Response callService(String macroactivity,String phonenumber){
         HDT_WS_InvioNumerazioniRequest r = new HDT_WS_InvioNumerazioniRequest();
@@ -8,7 +10,7 @@ public inherited sharing class HDT_WS_InvioNumerazioni {
         req.put('macroactivity', macroactivity);
         req.put('phonenumber', phonenumber);*/
 
-        HDT_WS_Response res = HDT_WS_HTTPServiceCall.sendRequest('InvioNumerazioni', r, HDT_WS_Response.class);
+        HDT_WS_Response res = HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH,'POST', r, HDT_WS_Response.class);
         
         return res;
     }

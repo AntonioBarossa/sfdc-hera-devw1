@@ -361,7 +361,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static void alignPrimaryOrderProduct(Order orderToUpdate) {
         List<OrderItem> orderItemList = orderItemQr.getMainItem(orderToUpdate.Id);
         if(!orderItemList.isEmpty()){
-            orderToUpdate.CommercialProductCode__c = orderItemList[0].Product2.ProductCode;
+            if(orderItemList[0].Product2.Family.equalsIgnoreCase('Offerta commerciale')){
+                orderToUpdate.CommercialProductCode__c = orderItemList[0].Product2.ProductCode;
+            }  
+            else{
+                orderToUpdate.CommercialProductCode__c = orderItemList[0].Product2.DescriptionSAP__c;
+            }
             orderToUpdate.CommercialProductVersion__c = orderItemList[0].Product2.Version__c;
             orderToUpdate.CommercialProduct__c = orderItemList[0].Product2.Name;
             orderToUpdate.VasServiceActivationDate__c = orderItemList[0].DelayEffectiveDate__c;
