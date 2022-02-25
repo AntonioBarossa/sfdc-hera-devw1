@@ -19,6 +19,66 @@
                 <default>false</default>
                 <label>Subentro</label>
             </value>
+            <value>
+                <fullName>Disattivazioni</fullName>
+                <default>false</default>
+                <label>Disattivazioni</label>
+            </value>
+            <value>
+                <fullName>Morosita</fullName>
+                <default>false</default>
+                <label>Morosità</label>
+            </value>
+            <value>
+                <fullName>VolturaTecnica</fullName>
+                <default>false</default>
+                <label>Voltura Tecnica</label>
+            </value>
+            <value>
+                <fullName>ModificheAnagrafiche</fullName>
+                <default>false</default>
+                <label>Modifiche Anagrafiche</label>
+            </value>
+            <value>
+                <fullName>Variazioni</fullName>
+                <default>false</default>
+                <label>Variazioni</label>
+            </value>
+            <value>
+                <fullName>Subentro su Gdm Chiuso</fullName>
+                <default>false</default>
+                <label>Subentro su Gdm Chiuso</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione</fullName>
+                <default>false</default>
+                <label>Prima Attivazione</label>
+            </value>
+            <value>
+                <fullName>Voltura</fullName>
+                <default>false</default>
+                <label>Voltura</label>
+            </value>
+            <value>
+                <fullName>Nuovi Bonus e VAS</fullName>
+                <default>false</default>
+                <label>Nuovi Bonus e VAS</label>
+            </value>
+            <value>
+                <fullName>Cambio uso</fullName>
+                <default>false</default>
+                <label>Cambio uso</label>
+            </value>
+            <value>
+                <fullName>Cambio offerta</fullName>
+                <default>false</default>
+                <label>Cambio offerta</label>
+            </value>
+            <value>
+                <fullName>Tariffe e Sconti</fullName>
+                <default>false</default>
+                <label>Tariffe e Sconti</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

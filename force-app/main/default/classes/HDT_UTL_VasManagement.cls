@@ -74,7 +74,7 @@ public with sharing class HDT_UTL_VasManagement {
             ContractReference__r.SAPContractCode__c,OrderReference__c,ContractReference__c,
             ContractReference__r.ServicePoint__r.ServicePointCode__c, OrderReference__r.ServicePointCodeFormula__c,
             SBQQ__Quote__r.SBQQ__ListAmount__c, SBQQ__Quote__r.SBQQ__TotalCustomerDiscountAmount__c, SBQQ__Quote__r.SBQQ__PriceBook__r.Name,
-            SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
+            SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,CommercialProductLink__r.FreeVas__c,
             (SELECT Quantity, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
                 DurationDay__c, PaymentMode__c, IVA__c,
                 Product2.Name, Product2.NumberRateMonthly__c, Product2.DescriptionSAP__c,DelayEffectiveDate__c
@@ -120,6 +120,24 @@ public with sharing class HDT_UTL_VasManagement {
         }
         
         return null;
+    }
+
+    public static String updateVasPhase(string vasPhase, Order ord ) {
+//.equalsIgnoreCase
+        if ( vasPhase == 'Esportazione VS Siebel'){
+            return vasPhase;
+        }
+        if ( ord.ComfortCallDaysDue__c != null && !vasPhase.equalsIgnoreCase('In attesa conferma cliente') ){
+            return 'In attesa conferma cliente';
+        }
+        if ( ord.VASType__c == 'VAS Servizio' && !ord.IsEarlyActivation__c ){
+            return 'In attesa tempi di ripensamento';
+        }else if( ord.VASType__c == 'VAS Fatturabili' ){
+            return 'Comunicazione verso Heroku';
+        }else{
+            return 'Comunicazione Motore VAS';
+        }
+
     }
 
     /**
@@ -296,7 +314,7 @@ public with sharing class HDT_UTL_VasManagement {
             //rfid = null
 
             //isContCambioOfferta = currentOrder.ContractReference__c ???
-            //isVasOmaggio = ???
+            isVasOmaggio = currentOrder?.CommercialProductLink__r?.FreeVas__c;
         }
     }
 

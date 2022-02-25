@@ -30476,6 +30476,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.SendingDlManaged__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ServicePointCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -31421,7 +31426,7 @@
         <layout>AuthorizationFormText-Authorization Form Text Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>BillingProfile__c-Billing Profile Layout</layout>
+        <layout>BillingProfile__c-Profilo di fatturazione</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>BlackList__c-BlackList Layout</layout>

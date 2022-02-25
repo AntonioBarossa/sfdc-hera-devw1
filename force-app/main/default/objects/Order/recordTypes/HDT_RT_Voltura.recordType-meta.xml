@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_Voltura</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Order_Compact_Layout</compactLayoutAssignment>
     <description>Record Type per processo di Voltura</description>
     <label>Voltura</label>
     <picklistValues>
@@ -373,6 +374,10 @@
         </values>
         <values>
             <fullName>Annullamento da cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento dal SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2976,6 +2981,10 @@
         </values>
         <values>
             <fullName>E-Canone fisso</fullName>
+            <default>false</default>
+        </values>         
+        <values>
+            <fullName>F-Standalone</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -9,7 +9,13 @@
             if (response.getState() === "SUCCESS"){
                 console.log('@@@data ' + response.getReturnValue());
                 let data = JSON.parse(response.getReturnValue());
-                if(data.objectType === "wrts_prcgvr__Activity__c"){
+                //Gestione Risottomissione Annullamento
+                if (data.annullamento == 'SI'){
+                    console.log('@@@Gestione Annullamento');
+                    component.set('v.inputRecordId',data.recordId);
+                    component.set('v.objectToCancell',data.objectType);
+                    helper.openWizardForAnnulment(component,event);
+                }else if(data.objectType === "wrts_prcgvr__Activity__c"){
                     console.log('@@@In Activity');
                     component.set('v.activity', data.object);
                     helper.openWizardForActivity(component,event);

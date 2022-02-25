@@ -43,6 +43,7 @@ export default class hdtNewSaleCampaignMemberCommunity extends NavigationMixin(L
                     state: {
                         c__accountId: data.Contact.AccountId,
                         c__campaignCommissioningId: data.CampaignId,
+                        c__campaignMemberId: this.recordId
                     }
                 }).then(url => {
                     window.open(url, "_self");
