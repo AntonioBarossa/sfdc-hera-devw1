@@ -51,7 +51,7 @@ public class HDT_WS_HTTPServiceCall {
     }
     public static HDT_WS_Response sendRequest(String namedCredential,String path,String method,Map<String,String> getParams,type respClass){
         
-        String endpoint = 'Callout:';
+        String endpoint = '';
         
         HTTP h = new Http();
         HTTPRequest req = new HTTPRequest();
@@ -73,7 +73,7 @@ public class HDT_WS_HTTPServiceCall {
         }else{
             endpoint+= namedCredential + path;
         }
-        req.setEndpoint(endpoint);
+        req.setEndpoint('Callout:'+endpoint);
         req.setMethod(method);
         HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
 
