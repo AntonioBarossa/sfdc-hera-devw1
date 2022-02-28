@@ -463,6 +463,10 @@
                 <behavior>Edit</behavior>
                 <field>RdsCodeSiebel__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>DiscardReason__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
