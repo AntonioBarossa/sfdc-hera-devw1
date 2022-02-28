@@ -13,16 +13,23 @@ import createActivity from '@salesforce/apex/HDT_LC_CtToolbar.createActivity';
 import updateActivity from '@salesforce/apex/HDT_LC_CtToolbar.updateActivity';
 import saveEcidInSales from '@salesforce/apex/HDT_LC_CtToolbar.saveEcidInSales';
 import createActivityInbound from '@salesforce/apex/HDT_LC_CtToolbar.createActivityInbound';
+import cacheUuid from '@salesforce/apex/HDT_LC_CtToolbar.cacheUuid';    // params: uuid
+import getCachedUuid from '@salesforce/apex/HDT_LC_CtToolbar.getCachedUuid';    // params: n/a
 
 export default class HdtCtToolbarContainer extends NavigationMixin(LightningElement) {
-
     showPanel = false;
     numberToCall = '';
     @api objectApiName;
     @track showRecallMe = false;
     @track showModal = false;
     @track toolbarAttributes = [];
-    @track uuid = '';
+    uuid;
+    get uuid() {
+        console.log('#LR10 GETTER TEST');
+    }
+    set uuid(value) {
+        console.log('#LR9: UUID SETTER: ' + this.uuid + ' --> ' + value);
+    }
     @api agentidc;
     @api isHide = false;
     @api ecid = '';
@@ -76,8 +83,9 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
     }
 
     closeModal() {
-        console.log('****BEFORESAVE:' + this.uuid);
-        window.TOOLBAR.EASYCIM.saveScript('68-60f69967@pddialer1.saashra.priv', "Appuntamento telefonico personale", true);
+        console.log('#LR5: closeModal - UUID: ' + this.uuid);
+        window.TOOLBAR.EASYCIM.saveScript(this.uuid, "Appuntamento telefonico personale", true);
+        // window.TOOLBAR.EASYCIM.saveScript('68-60f69967@pddialer1.saashra.priv', "Appuntamento telefonico personale", true);
         // window.open("/s/campaignmember/" + this.campaignMemberId, "_self");
         /* this[NavigationMixin.Navigate]({
           type: 'standard__recordPage',
@@ -90,7 +98,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
         console.log('****AFTERSENDSAVE');
     }
 
-    toolbarEvent(event) {
+    async toolbarEvent(event) {
         console.log('>>> toolbarEvent');
         console.log('********** EVENT TYPE > ' + event.detail.eventType);
         console.log('>>> EVENT OBJ > ' + JSON.stringify(event.detail.eventObj));
@@ -106,9 +114,15 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
             case 'CONNECTIONCLEARED':
                 console.log("*****DentroConnection");
                 this.toolbarAttributes = event.detail.eventObj;
-                this.uuid = this.toolbarAttributes.id;
+                // if(this.toolbarAttributes.id) {
+                    this.uuid = this.toolbarAttributes.id;
+                    if(this.uuid) {
+                        await cacheUuid({uuid: this.uuid});
+                    }
+                    console.log('#LR3: toolbarEvent - UUID SET: ' + this.uuid);
+                // }
                 if (this.toolbarAttributes.type != null && this.toolbarAttributes.type != undefined && this.toolbarAttributes.type == 'inbound') {
-
+                    console.log('#LR2: saveScript in toolbarEvent. UUID: ' + this.uuid);
                     this.saveScript('Positivo', true);
                 }
                 else {
@@ -140,7 +154,14 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                 //if (count == 0) {
                 console.log('*******INSIDEPOPUP');
                 this.toolbarAttributes = event.detail.eventObj;
-                this.uuid = this.toolbarAttributes.id;
+                
+                // if(this.toolbarAttributes.id) {
+                    this.uuid = this.toolbarAttributes.id;
+                    if(this.uuid) {
+                        await cacheUuid({uuid: this.uuid});
+                    }
+                    console.log('#LR6: toolbarEvent - UUID SET: ' + this.uuid);
+                // }
                 callData = event.detail.CallData;
                 //get ecid value from callData
                 console.log('******preIF Inbound');
@@ -161,6 +182,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                     console.log('******postIF Inbound3');
                     console.log('******postIF Inbound3:' + username);
                     console.log('******postIF Inbound3:' + password);
+                    console.log('#LR7: toolbarEvent. UUID: ' + this.uuid);
                     let searchparams2 = 'filter={"filter":{"uuid":"' + this.uuid + '"},"sort":{"startTs":-1},"index":0}'   ; 
                     let searchparams = encodeURI(searchparams2);
                     let reiteklink = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?' + searchparams;//this.regLink.replace(url.searchParams.get('filter'), newparams);
@@ -206,6 +228,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                         })
                     }*/
 
+                    console.log('#LR8: toolbarEvent - UUID: ' + this.uuid);
                     window.TOOLBAR.EASYCIM.openScript(this.uuid, this.ecid, false).then(
                         function (data) {
                             console.log('******DATAOPENSCRIPT:' + JSON.stringify(data));
@@ -332,10 +355,15 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
             });
     }
 
-    @api saveScript(esito, isResponsed) {
+    @api async saveScript(esito, isResponsed) {
+        console.log('#LR4: saveScript - UUID: ' + this.uuid);
+        if(!this.uuid) {
+            console.log('#LR12: saveScript - GETTING CACHED UUID');
+            this.uuid = await getCachedUuid();
+            console.log('#LR11: saveScript - CACHED UUID: ' + this.uuid);
+        }
         window.TOOLBAR.EASYCIM.saveScript(this.uuid, esito, isResponsed);
     }
-
 
     @api getSlot() {
         console.log('getSlot');
@@ -377,6 +405,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
         }).then((response) => {
             console.log('******' + response);
             if (response != '' && response != null) {
+                console.log('#LR1: saveScript in SendStatus. UUID: ' + this.uuid);
                 this.saveScript(response, true);
             } else {
                 this.isHide = true;
@@ -400,12 +429,21 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
         }).then(data => {
             console.log(JSON.stringify('postAppointment response: ' + data));
             if (data == 'success') {
+                
                 //update campaignMember status
                 //this.saveScript('Appuntamento telefonico personale', true);
                 this.updateMemberStatus('Appuntamento telefonico personale');
             }
         }).catch(err => {
+            const event = new ShowToastEvent({
+                title: 'Errore!',
+                variant: 'error', 
+                message: 'Non è stato possibile completare l\'operazione',
+            });
+            this.dispatchEvent(event);
+
             console.log(JSON.stringify(err));
+
         })
         //  });
     }
@@ -458,9 +496,22 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
             isToSendStatusReitek: true
         }).then(data => {
             if (data) {
+                const event = new ShowToastEvent({
+                    title: 'Success!',
+                    variant: 'success', 
+                    message: 'Operazione completata con successo',
+                });
+                this.dispatchEvent(event);
+
                 console.log('stato aggiornato con successo');
             }
         }).catch(err => {
+            const event = new ShowToastEvent({
+                title: 'Errore!',
+                variant: 'error', 
+                message: 'Non è stato possibile completare l\'operazione',
+            });
+            this.dispatchEvent(event);
             console.log(JSON.stringify(err));
         });
     }
