@@ -77,7 +77,7 @@ const DATA_ACCESS_MAP = {
     'SUBS_ANALISI_CONSUMI':{
         label : 'Subscriptions Analisi Consumi',
         sObjectName: 'SBQQ__Subscription__c',
-        emptyMessage: 'Non ci sono subscriptions',
+        emptyMessage: 'Non ci sono subscriptions, oppure vi è già una richiesta aperta.',
         dataProcessFunction: (data) => {
             data.forEach((item) => {
                 item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.ContractNumber : '';
@@ -96,7 +96,7 @@ const DATA_ACCESS_MAP = {
     'SUBS_VAS_SERVIZIO':{
         label : 'VAS Servizio',
         sObjectName: 'SBQQ__Subscription__c',
-        emptyMessage: 'Non ci sono subscriptions',
+        emptyMessage: 'Non ci sono subscriptions, oppure vi è già una richiesta aperta.',
         dataProcessFunction: (data) => {
             data.forEach((item) => {
                 item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.ContractNumber : '';
