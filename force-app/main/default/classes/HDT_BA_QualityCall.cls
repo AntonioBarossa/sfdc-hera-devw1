@@ -18,7 +18,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         List<String> notCancelNonBillable = new List<String>{
             'Completata',
             'Comunicazione verso Motore VAS OK',
-            'Accettato Motore VAS',
+            'Accettato Motore Vas',
             'Comunicazione verso Motore VAS'
         };
 
@@ -111,18 +111,19 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                         }
                     }
 
-                    wrts_prcgvr__Activity__c activityToClose = new wrts_prcgvr__Activity__c();
+                    //wrts_prcgvr__Activity__c activityToClose = new wrts_prcgvr__Activity__c();
                     
-                   if(orderToActivityMap.get(ord.Id) != null && orderToActivityMap.get(ord.Id).wrts_prcgvr__Status__c != 'Non Esitata'){
+                    //DV 28/02/2022 --> SEMBRA CHE ALL'ANNULLAMENTO DELL'ORDINE L'ACTIVITY VENGA CHIUSA IN AUTOMATICO!
+                   /*if(orderToActivityMap.get(ord.Id) != null && orderToActivityMap.get(ord.Id).wrts_prcgvr__Status__c != 'Non Esitata' && orderToActivityMap.get(ord.Id).wrts_prcgvr__Status__c != 'Chiusa'){
                         activityToClose = orderToActivityMap.get(ord.Id);
                         activityToClose.wrts_prcgvr__Status__c = 'Non Esitata';
                         activitiesToClose.add(activityToClose);
                     }
-                    else if(orderToActivityMap.get(ord.ParentOrder__c) != null && orderToActivityMap.get(ord.ParentOrder__c).wrts_prcgvr__Status__c != 'Non Esitata'){
+                    else if(orderToActivityMap.get(ord.ParentOrder__c) != null && orderToActivityMap.get(ord.ParentOrder__c).wrts_prcgvr__Status__c != 'Non Esitata' && orderToActivityMap.get(ord.ParentOrder__c).wrts_prcgvr__Status__c != 'Chiusa'){
                         activityToClose = orderToActivityMap.get(ord.ParentOrder__c);
                         activityToClose.wrts_prcgvr__Status__c = 'Non Esitata';
                         activitiesToClose.add(activityToClose);
-                    }
+                    }*/
                 }
 
                 if ((ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))) {
