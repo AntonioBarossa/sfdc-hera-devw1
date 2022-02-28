@@ -116,10 +116,13 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                 mode : 'Preview',
                 Archiviato : 'N',
             };
+            console.log('punto 1');
+            
             saveActivityVO({
                 orderParent : this.orderParentRecord
-            }).then(result => {
-                if(result == 'Documentazione da validare'){
+            }).then(data => {
+                this.template.querySelector("c-hdt-ct-toolbar-container").saveScript(data.campaignMemberStatus, true);
+                if(data.orderPhase == 'Documentazione da validare'){
                     this.orderParentRecord.Phase__c = 'Documentazione da validare';
                 }
                 previewDocumentFile({
@@ -176,11 +179,31 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                     }
                 })
                 .catch(error => {
+                    console.log('ERROR 1');
                     this.loading = false;
+                    const toastSuccessMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Errore nella procedura di creazione dell\'activity.',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                    this.dispatchEvent(toastSuccessMessage);
                     console.error(error);
                 });
+            }).catch(error => {
+                console.log('ERROR 2');
+                this.loading = false;
+                const toastSuccessMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Errore nella procedura di creazione dell\'activity.',
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastSuccessMessage);
+                console.error(error);
             });
         }catch(error){
+            this.loading = false;
             console.error();
         }
     }
