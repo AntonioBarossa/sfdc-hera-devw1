@@ -1,4 +1,6 @@
-public without sharing virtual class HDT_UTL_ProcessExecution {
+@SuppressWarnings('PMD.AvoidDebugStatements')
+public inherited sharing virtual class HDT_UTL_ProcessExecution {
+
     public static HDT_QR_StaticResource         staticResourceQr        = new HDT_QR_StaticResource()           ;
     public HDT_QR_Account                       qrAcc                   = new HDT_QR_Account()                  ;
     public HDT_QR_ServicePoint                  qrSerPoint              = new HDT_QR_ServicePoint()             ;
@@ -9,6 +11,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public HDT_UTL_Constants                    constant                = new HDT_UTL_Constants()               ;
     private static HDT_QR_MassiveLoaderProcess massiveLoaderProcessQr   = new HDT_QR_MassiveLoaderProcess()     ;
     public HDT_WRP_ProcessEntities              currentProcess                                                  ;
+    public List<MassiveLoaderRequestItem__c> requestItemList;
 
 
     public String splitCharacter = '\\|';
@@ -24,18 +27,19 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     //public List<Id> accountIdList = new List<Id>();
 
     // --------- montors fix for bulk develop  ---------
-    public void setMassiveLoaderRequestItemList(list<MassiveLoaderRequestItem__c> requestItemList){
+    public void setMassiveLoaderRequestItemList(List<MassiveLoaderRequestItem__c> requestItemList){
 
-        currentProcess = new HDT_WRP_ProcessEntities();
-        this.currentProcess.currentRequestItemList = requestItemList;   
+        //currentProcess = new HDT_WRP_ProcessEntities();
+        //this.currentProcess.currentRequestItemList = requestItemList;
+        this.requestItemList = requestItemList;
        
-        for(MassiveLoaderRequestItem__c item : this.currentProcess.currentRequestItemList){
+        for(MassiveLoaderRequestItem__c item : this.requestItemList){
             if ( String.isBlank(item.MassiveLoaderRequest__r.ProcessType__c)) {
                 throw new HDT_WRP_ProcessEntitiesException( 'NullPointerExceptions','ProcessType can\'t be null');
             }
         }
     
-        this.processName = this.currentProcess.currentRequestItemList[0].MassiveLoaderRequest__r.ProcessType__c;
+        this.processName = this.requestItemList[0].MassiveLoaderRequest__r.ProcessType__c;
         HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(processName);
         List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName);
  
