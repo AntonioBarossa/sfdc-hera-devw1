@@ -20,10 +20,20 @@ public with sharing class HDT_TRH_VoltureChangeManagerUpdateSobj extends HDT_TRH
         {
             List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> platformEvents =(List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>)Trigger.new;
             List<SObject> sobjectList = new List<SObject>();
+            /**@frpanico 28/02/2022
+             * Since the Order's trigger happens to run multiple time
+             * On the same Record
+             * A duplicate prevention has been enabled
+             */
+            Set<Id> idToUpdate = new Set<Id>();
             for(HDT_PEV_VoltureChangeManagerUpdateSObj__e singleEvent : platformEvents)
             {
                 SObject sobj = (SObject)JSON.deserialize(singleEvent.SerializedSobj__c, SObject.class);
-                sobjectList.add(sobj);
+                if(!(idToUpdate.contains((String)sobj.get('Id'))))
+                {
+                    idToUpdate.add((String)sobj.get('Id'));
+                    sobjectList.add(sobj);
+                }
             }
             if(sobjectList.size() > 0)
             {

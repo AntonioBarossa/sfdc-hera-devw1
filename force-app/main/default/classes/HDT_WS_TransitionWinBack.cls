@@ -1,20 +1,11 @@
 public with sharing class HDT_WS_TransitionWinBack {
-    
+    private static final String REQUEST_PATH = '/sale/status/pods'; 
     @AuraEnabled
     public static HDT_WS_TransitionWinBackResponse callTransitionCom(String pod){
         List<HDT_WS_TransitionWinBackRequest> listReq = new List<HDT_WS_TransitionWinBackRequest>();
         HDT_WS_TransitionWinBackRequest requ = new HDT_WS_TransitionWinBackRequest(pod);
         listReq.add(requ);
-        HDT_WS_TransitionWinBackResponse re = (HDT_WS_TransitionWinBackResponse)HDT_WS_HTTPServiceCall.sendRequest('TransitorioWinback', listReq,HDT_WS_TransitionWinBackResponse.class);
-       /* List<HDT_WS_TransitionWinBackResponse> re = new List<HDT_WS_TransitionWinBackResponse>();
-        type r = HDT_WS_TransitionWinBackResponse.class;
-        List<object> arra = (List<object>)HDT_WS_HTTPServiceCall.sendRequest('TransitorioWinback', listReq,HDT_WS_TransitionWinBackResponse.class);
-        for(object ar : arra){
-            String s = JSON.serialize(ar);
-            HDT_WS_TransitionWinBackResponse respT = (HDT_WS_TransitionWinBackResponse)JSON.deserialize(s,HDT_WS_TransitionWinBackResponse.class);
-            re.add(respT);
-        }
-*/
+        HDT_WS_TransitionWinBackResponse re = (HDT_WS_TransitionWinBackResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH,'POST', listReq,HDT_WS_TransitionWinBackResponse.class);
         return re;
     }  
 

@@ -13978,6 +13978,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.isSwitchReseller__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.IsVAS__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -30736,6 +30741,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Sale__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.SendingDlManaged__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

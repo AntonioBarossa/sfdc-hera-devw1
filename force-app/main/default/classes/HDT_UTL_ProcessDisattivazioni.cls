@@ -25,6 +25,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
         System.debug(LoggingLevel.DEBUG, 'checks');
 
         //System.debug(LoggingLevel.DEBUG, '>>> this.processName: ' + this.processName);
+        itemsToSave = new List<MassiveLoaderRequestItem__c>();
 
         mapFieldsObject();
 
@@ -116,7 +117,6 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
 
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
-        itemsToSave = new List<MassiveLoaderRequestItem__c>();
         requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
 
         HDT_QR_CausalCodeCalculation causalCodeCalculation = new HDT_QR_CausalCodeCalculation();
@@ -228,24 +228,24 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
 
         }
 
-        if(caseToInsert.size() > 0){
+       if(caseToInsert.size() > 0){
 
-            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse;
-            saveResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
+           HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse;
+           saveResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
 
-            caseToInsert.clear();
+           caseToInsert.clear();
 
-            HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE CREATION & Enrichment');
+           HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE CREATION & Enrichment');
 
-            if(saveResponse.reponseItemList.size() > 0){
-                itemsToSave.addAll(saveResponse.reponseItemList);
-            }
+           if(saveResponse.reponseItemList.size() > 0){
+               itemsToSave.addAll(saveResponse.reponseItemList);
+           }
 
-            if(saveResponse.savedObject.size() > 0){
-                HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedObject);
-            }
+           if(saveResponse.savedObject.size() > 0){
+               HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedObject);
+           }
 
-        }  
+       }  
 
     }
 

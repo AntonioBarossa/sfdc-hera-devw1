@@ -1123,6 +1123,13 @@
                     <stringValue>Esito KO da SII</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito KO da SAP</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_Fase_Precedente</targetReference>
             </connector>
@@ -1155,7 +1162,7 @@
         </rules>
         <rules>
             <name>Inviata_0</name>
-            <conditionLogic>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND (NOT(7))</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>GetOrderAggiornato_0.HerokuPracticeCode__c</leftValueReference>
                 <operator>IsNull</operator>
@@ -1192,17 +1199,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>GetOrderAggiornato_0.PhaseStory__c</leftValueReference>
-                <operator>Contains</operator>
+                <leftValueReference>SwitchCancellationEligibility</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Amm. Precheck OK SII</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>GetOrderAggiornato_0.PhaseStory__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Ammissibilità OK</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1451,6 +1451,13 @@
         <name>OrderCancellationPhase</name>
         <dataType>String</dataType>
         <expression>IF({!ProcessType}=&quot;Ripensamento&quot;,&quot;Ripensamento - Da Inviare&quot;,&quot;Annullamento - Da Inviare&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>SwitchCancellationEligibility</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(CONTAINS(TEXT({!GetOrderAggiornato_0.ProcessType__c}),&quot;Switch in&quot;)
+        ,IF(CONTAINS({!GetOrderAggiornato_0.PhaseStory__c},&quot;Ammissibilità OK&quot;),true,false)
+        ,true)</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestioneAnnullamenti {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Annullamento</label>
@@ -2586,8 +2593,8 @@
     <subflows>
         <name>Chiudi_Activity_Custom_Ripristino_Fase_Case</name>
         <label>Chiudi Activity Custom Ripristino Fase Case</label>
-        <locationX>3188</locationX>
-        <locationY>1509</locationY>
+        <locationX>3111</locationX>
+        <locationY>1790</locationY>
         <connector>
             <targetReference>Aggiorna_Ripristino_Fase</targetReference>
         </connector>
