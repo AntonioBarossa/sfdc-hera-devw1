@@ -13809,6 +13809,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.isSwitchReseller__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.IsVAS__c</field>
         <readable>true</readable>
     </fieldPermissions>
