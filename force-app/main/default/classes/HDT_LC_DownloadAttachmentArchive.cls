@@ -36,7 +36,9 @@ public with sharing class HDT_LC_DownloadAttachmentArchive {
             HttpRequest req = new HttpRequest();
             
             string NOME_FILE_DOWNLOAD_Encoded = (String)EncodingUtil.urlEncode(objectDLink.NOME_FILE_DOWNLOAD__c, 'UTF-8').replaceAll('\\+','%20');
-            req.setEndpoint('callout:'+namedCredential+'/sbldownload/'+NOME_FILE_DOWNLOAD_Encoded);
+            string path = '/sbldownload/';
+            string startEndpoint = 'callout:';
+            req.setEndpoint(startEndpoint+namedCredential+path+NOME_FILE_DOWNLOAD_Encoded);
             req.setMethod('GET');
             Http http = new Http();
             try{
