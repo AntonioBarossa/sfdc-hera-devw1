@@ -24,12 +24,6 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
     @track showModal = false;
     @track toolbarAttributes = [];
     uuid;
-    get uuid() {
-        console.log('#LR10 GETTER TEST');
-    }
-    set uuid(value) {
-        console.log('#LR9: UUID SETTER: ' + this.uuid + ' --> ' + value);
-    }
     @api agentidc;
     @api isHide = false;
     @api ecid = '';
@@ -83,7 +77,6 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
     }
 
     closeModal() {
-        console.log('#LR5: closeModal - UUID: ' + this.uuid);
         window.TOOLBAR.EASYCIM.saveScript(this.uuid, "Appuntamento telefonico personale", true);
         // window.TOOLBAR.EASYCIM.saveScript('68-60f69967@pddialer1.saashra.priv', "Appuntamento telefonico personale", true);
         // window.open("/s/campaignmember/" + this.campaignMemberId, "_self");
@@ -119,10 +112,8 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                     if(this.uuid) {
                         await cacheUuid({uuid: this.uuid});
                     }
-                    console.log('#LR3: toolbarEvent - UUID SET: ' + this.uuid);
                 // }
                 if (this.toolbarAttributes.type != null && this.toolbarAttributes.type != undefined && this.toolbarAttributes.type == 'inbound') {
-                    console.log('#LR2: saveScript in toolbarEvent. UUID: ' + this.uuid);
                     this.saveScript('Positivo', true);
                 }
                 else {
@@ -160,7 +151,6 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                     if(this.uuid) {
                         await cacheUuid({uuid: this.uuid});
                     }
-                    console.log('#LR6: toolbarEvent - UUID SET: ' + this.uuid);
                 // }
                 callData = event.detail.CallData;
                 //get ecid value from callData
@@ -182,7 +172,6 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                     console.log('******postIF Inbound3');
                     console.log('******postIF Inbound3:' + username);
                     console.log('******postIF Inbound3:' + password);
-                    console.log('#LR7: toolbarEvent. UUID: ' + this.uuid);
                     let searchparams2 = 'filter={"filter":{"uuid":"' + this.uuid + '"},"sort":{"startTs":-1},"index":0}'   ; 
                     let searchparams = encodeURI(searchparams2);
                     let reiteklink = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?' + searchparams;//this.regLink.replace(url.searchParams.get('filter'), newparams);
@@ -228,7 +217,6 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                         })
                     }*/
 
-                    console.log('#LR8: toolbarEvent - UUID: ' + this.uuid);
                     window.TOOLBAR.EASYCIM.openScript(this.uuid, this.ecid, false).then(
                         function (data) {
                             console.log('******DATAOPENSCRIPT:' + JSON.stringify(data));
@@ -356,11 +344,8 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
     }
 
     @api async saveScript(esito, isResponsed) {
-        console.log('#LR4: saveScript - UUID: ' + this.uuid);
         if(!this.uuid) {
-            console.log('#LR12: saveScript - GETTING CACHED UUID');
             this.uuid = await getCachedUuid();
-            console.log('#LR11: saveScript - CACHED UUID: ' + this.uuid);
         }
         window.TOOLBAR.EASYCIM.saveScript(this.uuid, esito, isResponsed);
     }
@@ -405,7 +390,6 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
         }).then((response) => {
             console.log('******' + response);
             if (response != '' && response != null) {
-                console.log('#LR1: saveScript in SendStatus. UUID: ' + this.uuid);
                 this.saveScript(response, true);
             } else {
                 this.isHide = true;
