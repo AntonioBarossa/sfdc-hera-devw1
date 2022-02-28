@@ -29,6 +29,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
         for(MassiveLoaderRequestItem__c item : requestItemList){
+        //for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
             processObj = new HDT_WRP_ProcessObjects();
             processObj.requestItem = item;
             processObj.csvSplitted = item.Data__c.split(splitCharacter, -1);
@@ -120,15 +121,16 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
                 continue;
             }
 
-            if(podToCaseIdMap.containsKey(processObj.csvSplitted[podIndex])){
-                processObj.newCase.ParentId = podToCaseIdMap.get(processObj.csvSplitted[podIndex]);
-                //processObj.newCase.RelatedCase__c
-            } else {
-                //itemsToSave.add(setErrorItem(itemId, 'pod non presente'));
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = 'pod non presente';
-                itemsToSave.add(processObj.requestItem);
-                continue;
+            if(processObj.newCase.Type.equalsIgnoreCase('Riattivazione Fornitura')){
+                if(podToCaseIdMap.containsKey(processObj.csvSplitted[podIndex])){
+                    processObj.newCase.ParentId = podToCaseIdMap.get(processObj.csvSplitted[podIndex]);
+                } else {
+                    //itemsToSave.add(setErrorItem(itemId, 'pod non presente'));
+                    processObj.requestItem.Status__c = 'Errore';
+                    processObj.requestItem.StatusDescription__c = 'pod non presente';
+                    itemsToSave.add(processObj.requestItem);
+                    continue;
+                }
             }
             
             Contract contract;

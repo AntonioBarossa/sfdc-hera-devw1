@@ -24,26 +24,20 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     public  Id recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
     public  Id recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
 
-    //public List<Id> accountIdList = new List<Id>();
-
     // --------- montors fix for bulk develop  ---------
+
+    public void setProcess(String processName){
+        this.processName = processName;
+        System.debug(LoggingLevel.DEBUG, '>>> set this process: ' + this.processName);
+    }
+
     public void setMassiveLoaderRequestItemList(List<MassiveLoaderRequestItem__c> requestItemList){
 
-        //currentProcess = new HDT_WRP_ProcessEntities();
-        //this.currentProcess.currentRequestItemList = requestItemList;
         this.requestItemList = requestItemList;
-       
-        for(MassiveLoaderRequestItem__c item : this.requestItemList){
-            if ( String.isBlank(item.MassiveLoaderRequest__r.ProcessType__c)) {
-                throw new HDT_WRP_ProcessEntitiesException( 'NullPointerExceptions','ProcessType can\'t be null');
-            }
-        }
-    
-        this.processName = this.requestItemList[0].MassiveLoaderRequest__r.ProcessType__c;
+
         HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(processName);
         List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName);
  
-
         mapHeaderByPosition = new Map<Integer, String>();
         Integer count=0;
         for (String temp : staticResources.get(0).Body.toString().remove('\r').remove('\n').split(splitCharacter)) {
@@ -55,6 +49,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
             mapHeaderForWrapper.put(temp, count);
             count++;
         }
+        
     }
     // --------- montors fix for bulk develop  ---------
 
@@ -86,22 +81,22 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     //}
 
     public virtual void checks(){
-        System.debug('checks');
+        System.debug(LoggingLevel.DEBUG, 'checks');
     }
     public virtual void getRecords(){
-        System.debug('getRecords');
+        System.debug(LoggingLevel.DEBUG, 'getRecords');
     }
     public virtual void registryCreation(){
-        System.debug('registryCreation');
+        System.debug(LoggingLevel.DEBUG, 'registryCreation');
     }
     public virtual void makeProcess(){ // creazione processo
-        System.debug('makeProcess');
+        System.debug(LoggingLevel.DEBUG, 'makeProcess');
     }
     public virtual void finalUpdate(){
-        System.debug('finalUpdate');
+        System.debug(LoggingLevel.DEBUG, 'finalUpdate');
     }
     public virtual void execute(){
-        System.debug('execute');
+        System.debug(LoggingLevel.DEBUG, 'execute');
         checks();
         getRecords();
         registryCreation();
@@ -112,7 +107,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
    
     // --------- montors fix for bulk develop  ---------
     public virtual void manageCatchException(Integer batchSize, List<MassiveLoaderRequestItem__c> itemList, String message){
-        System.debug('manageCatchException');
+        System.debug(LoggingLevel.DEBUG, 'manageCatchException');
     }
     // --------- montors fix for bulk develop  ---------
 
@@ -390,12 +385,10 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
         }
     }
 
-    //public MassiveLoaderRequestItem__c setErrorItem(String itemId, String message){
-    //    MassiveLoaderRequestItem__c itemError = new MassiveLoaderRequestItem__c();
-    //    itemError.Id = itemId;
-    //    itemError.Status__c = 'Errore';
-    //    itemError.StatusDescription__c = message;
-    //    return itemError;
-    //}
+    public MassiveLoaderRequestItem__c setErrorItem(MassiveLoaderRequestItem__c itemError, String message){
+        itemError.Status__c = 'Errore';
+        itemError.StatusDescription__c = message;
+        return itemError;
+    }
 
 }

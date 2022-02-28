@@ -209,10 +209,6 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
                 }
             }
 
-            // only to test insert failure
-            //if(processObj.csvSplitted[8]=='customError')
-            //    processObj.newCase.CareOf__c = 'abcdefghilmnopqrstuvzabcdefghilmnopqrstuvz';
-
             try{
                 String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(processObj.csvSplitted[podIndex], null);
                 processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, processObj.newCase);
@@ -220,9 +216,9 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
                 requestItemForUpsert.add(processObj.requestItem);
             } catch(Exception e){
                 System.debug(LoggingLevel.DEBUG, '>>> arricchimentoError ' + e.getMessage());
-                //itemsToSave.add(setErrorItem(itemId, 'Errore arricchimento dati # '));
+                //itemsToSave.add(setErrorItem(itemId, 'Errore arricchimento dati #'));
                 processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = 'Errore arricchimento dati # ';
+                processObj.requestItem.StatusDescription__c = 'Errore arricchimento dati #';
                 itemsToSave.add(processObj.requestItem);
             }
 
