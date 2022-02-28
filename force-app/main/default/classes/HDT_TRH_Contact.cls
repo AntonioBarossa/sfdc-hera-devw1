@@ -16,6 +16,7 @@
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
         HDT_UTL_GestionePrivacy.checkCloneCompany(trigger.new);
         changeRecordType(trigger.new);
+        updateGlobalMigrationKey(trigger.new, null);
     }
 
     public override void afterInsert(){
@@ -39,13 +40,40 @@
     public override void beforeUpdate(){
         // System.debug('*******TriggerContact');
         HDT_UTL_GestionePrivacy.updateContactPointFromObjectContact(trigger.new,trigger.old);
+        updateGlobalMigrationKey(trigger.new, trigger.old);
     }
+
     private static void changeRecordType(List<Contact> listContract ){
         Id recordTypeIdAfter = Schema.SObjectType.Contact.getRecordTypeInfosByDeveloperName().get('HDT_RT_AfterCreate').getRecordTypeId();
         for (Contact con : listContract) {
             con.recordTypeId=recordTypeIdAfter;
         }
     }
+
+    //>>>START 28/02/2022 marco.arci@webresults.it popolazione campo migration key per contact amministratori di condominio
+    private static void updateGlobalMigrationKey(List<Contact> newContacts, List<Contact> oldContacts){
+        for (Integer i = 0; i < newContacts.size(); i++) {
+            if(trigger.isInsert || 
+               newContacts[i].ContactCode__c != oldContacts[i].ContactCode__c || 
+               newContacts[i].CompanyOwner__c != oldContacts[i].CompanyOwner__c){
+                if(newContacts[i].ContactCode__c != null && newContacts[i].ContactCode__c.startsWithIgnoreCase('19')){ 
+                    newContacts[i].GlobalMigrationKey__c = 'C_COND_'+newContacts[i].ContactCode__c+'_'+newContacts[i].CompanyOwner__c;
+                }
+            }
+        }
+
+/*
+        for(contact item : newContacts){
+            if(item.ContactCode__c != null && item.ContactCode__c.startsWithIgnoreCase('19')){ 
+                item.GlobalMigrationKey__c = 'C_COND_'+item.ContactCode__c+'_'+item.CompanyOwner__c;
+            }
+            if(item.ContactCode__c != null){
+
+            }
+        }
+        */
+    }
+    //>>>END 28/02/2022 marco.arci@webresults.it campo migration key per contact amministratori di condominio
     
    /* public override void afterUpdate(){
         System.debug('*******TriggerContact');
