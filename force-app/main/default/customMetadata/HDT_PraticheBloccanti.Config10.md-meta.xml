@@ -3,6 +3,10 @@
     <label>Config10</label>
     <protected>false</protected>
     <values>
+        <field>Active__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
         <field>Cluster__c</field>
         <value xsi:type="xsd:string">Variazioni</value>
     </values>

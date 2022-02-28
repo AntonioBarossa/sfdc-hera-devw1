@@ -316,6 +316,11 @@
                 <label>Esito KO da DL</label>
             </value>
             <value>
+                <fullName>Esito KO da DL/SII</fullName>
+                <default>false</default>
+                <label>Esito KO da DL/SII</label>
+            </value>
+            <value>
                 <fullName>KO Credit Check</fullName>
                 <default>false</default>
                 <label>KO Credit Check</label>
@@ -606,6 +611,11 @@
                 <fullName>Busta Docusign non consegnata</fullName>
                 <default>false</default>
                 <label>Busta Docusign non consegnata</label>
+            </value>
+            <value>
+                <fullName>Del. 40 gestione doc.invio a DL</fullName>
+                <default>false</default>
+                <label>Del. 40 gestione doc.invio a DL</label>
             </value>
         </valueSetDefinition>
     </valueSet>

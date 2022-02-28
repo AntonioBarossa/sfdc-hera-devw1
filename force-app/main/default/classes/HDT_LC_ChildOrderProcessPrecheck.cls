@@ -26,6 +26,25 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         return processesList;
     }
 
+    @AuraEnabled
+    public static Integer getConsumptionAnnualForVas(String orderId){
+        
+        try{
+            Integer consumptionAnnual = null;
+            if(orderId != null && orderId != ''){
+                List<OrderItem> orderItemList = [SELECT Id,ConsumptionAnnual__c FROM OrderItem WHERE OrderId = :orderId AND Order.IsVAS__c = true AND ConsumptionAnnual__c != null WITH SECURITY_ENFORCED];
+                if(!orderItemList.isEmpty()){
+                    consumptionAnnual = (Integer)orderItemList[0].ConsumptionAnnual__c;
+                }
+            }
+            return consumptionAnnual;
+        }
+        catch(Exception ex){
+            return null;
+        }
+        
+    }
+
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @date 06/02/2021

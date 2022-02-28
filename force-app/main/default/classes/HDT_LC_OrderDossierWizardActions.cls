@@ -8,6 +8,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    public static HDT_WRP_CreateActivityVocalOrder wrpActivityVo = new HDT_WRP_CreateActivityVocalOrder();
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -105,7 +106,20 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     }
 
     @AuraEnabled
-    public static String createActivityVocalOrder(Order orderParent){
+    public static HDT_WRP_CreateActivityVocalOrder createActivityVocalOrder(Order orderParent){
+
+        //Aggiornamento CampaignMember
+        Boolean isCommunity = HDT_LC_SellingWizardController.checkCommunityLogin();
+        if(isCommunity){
+            Order ord = [SELECT Id, Sale__r.Campaign__c, Sale__r.SalesContact__c FROM Order WHERE Id =: orderParent.Id WITH SECURITY_ENFORCED LIMIT 1];
+            CampaignMember cm = [SELECT Id, Campaign.PositiveOutcomeDefaultStatus__c 
+                                 FROM CampaignMember 
+                                 WHERE CampaignId =: ord.Sale__r.Campaign__c 
+                                 AND ContactId =: ord.Sale__r.SalesContact__c WITH SECURITY_ENFORCED LIMIT 1];
+            String myStatus = cm.Campaign.PositiveOutcomeDefaultStatus__c;
+            HDT_LC_CampaignsController.updateCampaignMemberStatus(cm.Id, myStatus);
+            wrpActivityVo.campaignMemberStatus = myStatus;
+        }
 
         List<Order> ordersToUpdate = new List<Order>();
         
@@ -123,7 +137,9 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             ordersToUpdate.add(orderToUpdate );
             orderSrv.updateRecords(ordersToUpdate);
         }
-        return orderToUpdate.Phase__c;
+        wrpActivityVo.orderPhase = orderToUpdate.Phase__c;
+        
+        return wrpActivityVo;
     }
 
     @AuraEnabled
@@ -367,6 +383,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         }
         return activeValue;
+    }
+
+    public class HDT_WRP_CreateActivityVocalOrder{
+        public String orderPhase {get; set;}
+        public String campaignMemberStatus {get; set;}
     }
 
 }

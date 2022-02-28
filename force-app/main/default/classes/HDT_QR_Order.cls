@@ -510,7 +510,8 @@ public inherited sharing class HDT_QR_Order {
             ProcessCode__c,
             DistributorCode__c,
             Commodity__c,
-            ComfortCallDaysDue__c
+            ComfortCallDaysDue__c,
+            IsEarlyActivation__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -587,7 +588,7 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getChildOrdersForDateCalculation(List<String> parentOrderIds){
         return [
             SELECT
-            Id,EffectiveDate__c,ClientCategoryFormula__c,CommodityFormula__c,RecordType.DeveloperName,WizardCompletedDate__c,Account.RecordType.DeveloperName,Channel__c,Market__c,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c,IsActivationDeferred__c,ProcessType__c,MarketOrigin__c,ServicePoint__r.CommoditySector__c,VoltageLevel__c,SupplyType__c,CustomerCategory__c,SignatureMethod__c,DocSendingMethod__c
+            Id,EffectiveDate__c,RecessNotice__c,ClientCategoryFormula__c,CommodityFormula__c,RecordType.DeveloperName,WizardCompletedDate__c,Account.RecordType.DeveloperName,Channel__c,Market__c,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c,IsActivationDeferred__c,ProcessType__c,MarketOrigin__c,ServicePoint__r.CommoditySector__c,VoltageLevel__c,SupplyType__c,CustomerCategory__c,SignatureMethod__c,DocSendingMethod__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
@@ -626,7 +627,8 @@ public inherited sharing class HDT_QR_Order {
             DocumentPackage__c,
             ProcessType__c,
             ParentOrder__c,
-            ParentOrder__r.Phase__c
+            ParentOrder__r.Phase__c,
+            IsEarlyActivation__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
@@ -1195,7 +1197,7 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getOrderForComfort(String id){
-        return [Select id,Phase__c,ProcessType__c,VASType__c,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
+        return [Select id,Phase__c,ProcessType__c,VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
     }
 
     //@frpanico getExciseTranscode

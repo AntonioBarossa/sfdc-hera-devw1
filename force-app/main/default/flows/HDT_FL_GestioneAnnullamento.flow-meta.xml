@@ -658,7 +658,7 @@
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
-            <targetReference>AggiornaOrder</targetReference>
+            <targetReference>Check_Discard_Rework_Ripristino_Fase_Order</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -906,9 +906,59 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Ripristino_Fase</targetReference>
+            <targetReference>Check_Discard_Rework_Ripristina_Fase_Case</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Check_Discard_Rework_Ripristina_Fase_Case</name>
+        <label>Check Discard Rework Ripristina Fase Case</label>
+        <locationX>3179</locationX>
+        <locationY>1281</locationY>
+        <defaultConnector>
+            <targetReference>Aggiorna_Ripristino_Fase</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
+        <rules>
+            <name>Gestione_Scarti_Case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>discardRework</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Chiudi_Activity_Custom_Ripristino_Fase_Case</targetReference>
+            </connector>
+            <label>Gestione Scarti Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Discard_Rework_Ripristino_Fase_Order</name>
+        <label>Check Discard Rework Ripristino Fase Order</label>
+        <locationX>4557</locationX>
+        <locationY>992</locationY>
+        <defaultConnector>
+            <targetReference>AggiornaOrder</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
+        <rules>
+            <name>Gestione_Scarti_Order</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>discardRework</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Chiusuraa_Activity_Ripristino_Fase_Order</targetReference>
+            </connector>
+            <label>Gestione Scarti Order</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Fase</name>
         <label>Fase?</label>
@@ -1014,12 +1064,27 @@
     <decisions>
         <name>InviataHeroku</name>
         <label>Inviata ad Heroku?</label>
-        <locationX>1163</locationX>
+        <locationX>1172</locationX>
         <locationY>2080</locationY>
         <defaultConnector>
             <targetReference>Get_Activities</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non inviata</defaultConnectorLabel>
+        <rules>
+            <name>Discard_Rework_Case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>discardRework</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Chiudi_Attivit_Custom_Invio_Case</targetReference>
+            </connector>
+            <label>Discard Rework</label>
+        </rules>
         <rules>
             <name>Inviata</name>
             <conditionLogic>and</conditionLogic>
@@ -1058,6 +1123,13 @@
                     <stringValue>Esito KO da SII</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito KO da SAP</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_Fase_Precedente</targetReference>
             </connector>
@@ -1074,8 +1146,23 @@
         </defaultConnector>
         <defaultConnectorLabel>Non inviata</defaultConnectorLabel>
         <rules>
+            <name>Discard_Rework_Order</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>discardRework</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Chiusura_Activity_Invio_Order</targetReference>
+            </connector>
+            <label>Discard Rework</label>
+        </rules>
+        <rules>
             <name>Inviata_0</name>
-            <conditionLogic>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND (NOT(7))</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>GetOrderAggiornato_0.HerokuPracticeCode__c</leftValueReference>
                 <operator>IsNull</operator>
@@ -1112,17 +1199,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>GetOrderAggiornato_0.PhaseStory__c</leftValueReference>
-                <operator>Contains</operator>
+                <leftValueReference>SwitchCancellationEligibility</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Amm. Precheck OK SII</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>GetOrderAggiornato_0.PhaseStory__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Ammissibilità OK</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1371,6 +1451,13 @@
         <name>OrderCancellationPhase</name>
         <dataType>String</dataType>
         <expression>IF({!ProcessType}=&quot;Ripensamento&quot;,&quot;Ripensamento - Da Inviare&quot;,&quot;Annullamento - Da Inviare&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>SwitchCancellationEligibility</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(CONTAINS(TEXT({!GetOrderAggiornato_0.ProcessType__c}),&quot;Switch in&quot;)
+        ,IF(CONTAINS({!GetOrderAggiornato_0.PhaseStory__c},&quot;Ammissibilità OK&quot;),true,false)
+        ,true)</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestioneAnnullamenti {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Annullamento</label>
@@ -2503,6 +2590,70 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Chiudi_Activity_Custom_Ripristino_Fase_Case</name>
+        <label>Chiudi Activity Custom Ripristino Fase Case</label>
+        <locationX>3111</locationX>
+        <locationY>1790</locationY>
+        <connector>
+            <targetReference>Aggiorna_Ripristino_Fase</targetReference>
+        </connector>
+        <flowName>HDT_FL_ActivityCustomClose</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>GetRecord.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Chiudi_Attivit_Custom_Invio_Case</name>
+        <label>Chiudi Attività Custom Invio Case</label>
+        <locationX>1183</locationX>
+        <locationY>2320</locationY>
+        <connector>
+            <targetReference>Annullamento_Da_inviare</targetReference>
+        </connector>
+        <flowName>HDT_FL_ActivityCustomClose</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>GetCaseAggiornato.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Chiusura_Activity_Invio_Order</name>
+        <label>Chiusura Activity Invio Order</label>
+        <locationX>3675</locationX>
+        <locationY>2607</locationY>
+        <connector>
+            <targetReference>Ripensamento_Da_inviare</targetReference>
+        </connector>
+        <flowName>HDT_FL_ActivityCustomClose</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>GetOrderAggiornato_0.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Chiusuraa_Activity_Ripristino_Fase_Order</name>
+        <label>Chiusuraa Activity Ripristino Fase Order</label>
+        <locationX>4565</locationX>
+        <locationY>1160</locationY>
+        <connector>
+            <targetReference>AggiornaOrder</targetReference>
+        </connector>
+        <flowName>HDT_FL_ActivityCustomClose</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>GetOrder.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>ActivityCollection</name>
         <dataType>SObject</dataType>
@@ -2524,6 +2675,16 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>discardRework</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>InputCase</name>

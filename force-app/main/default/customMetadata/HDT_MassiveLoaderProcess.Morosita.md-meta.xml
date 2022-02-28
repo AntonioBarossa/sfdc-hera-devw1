@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>SMorosità</label>
+    <label>Morosità</label>
     <protected>false</protected>
     <values>
         <field>ApexClass__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">HDT_UTL_ProcessMorosita</value>
+    </values>
+    <values>
+        <field>BatchSize__c</field>
+        <value xsi:type="xsd:double">20.0</value>
     </values>
     <values>
         <field>IsActive__c</field>

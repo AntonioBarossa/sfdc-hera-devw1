@@ -202,6 +202,13 @@ public with sharing class HDT_UTL_CaseProcess {
                     caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
                     return true;
                 }
+                //Gestione Risottomissione Annullamento
+                if ((oldPhase.equalsIgnoreCase('Annullamento - Ammissibilità KO') || oldPhase.equalsIgnoreCase('Annullamento - Esito KO da DL/SII')) && newPhase.equalsIgnoreCase('Annullamento - Da Inviare')){
+                    caseNew.PhaseStory__c = !String.isBlank(caseNew.PhaseStory__c) 
+                        ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c
+                        : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
+                    return true;
+                }
                 return false;
             /**@frpanico 22/10/2021
              * Add Comment:
@@ -281,7 +288,7 @@ public with sharing class HDT_UTL_CaseProcess {
         List<ServiceRequest__c> srvRequestsToDelete = new List<ServiceRequest__c>();
         for(ServiceRequest__c s: srvRequests){
             s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(caseStatuses.get(s.Case__c), 'Case');
-            if( s.Status__c == 'Closed' ){
+            if( s.Status__c.equalsIgnoreCase('Chiuso') ){
                 srvRequestsToDelete.add(s);
             } else {
                 sReqToUpdate.add(s);

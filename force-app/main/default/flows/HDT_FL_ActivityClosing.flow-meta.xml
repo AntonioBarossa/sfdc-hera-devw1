@@ -4,7 +4,7 @@
     <assignments>
         <name>Assegna_Note</name>
         <label>Assegna Note</label>
-        <locationX>182</locationX>
+        <locationX>50</locationX>
         <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>activity.ClosingNote__c</assignToReference>
@@ -76,6 +76,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Sending_DL_Managed</name>
+        <label>Assign Sending DL Managed</label>
+        <locationX>314</locationX>
+        <locationY>1094</locationY>
+        <assignmentItems>
+            <assignToReference>activity.SendingDlManaged__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Gestito_Invio_DL</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Chiudi_Activity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>HDT_CloseActivity_AND_HDT_CloseManualActivity</name>
         <label>HDT_CloseActivity AND HDT_CloseManualActivity</label>
         <locationX>578</locationX>
@@ -114,6 +130,22 @@
             <targetReference>Set_Note</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>No</name>
+        <choiceText>NO</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Yes</name>
+        <choiceText>SI</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Si</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>ActivityType_0</name>
         <label>ActivityType</label>
@@ -151,6 +183,21 @@
                 <targetReference>Assegna_Note</targetReference>
             </connector>
             <label>HDT_CloseManualActivity</label>
+        </rules>
+        <rules>
+            <name>Delibera</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Activity.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Del. 40 gestione doc.invio a DL</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Sending_DL_Managed</targetReference>
+            </connector>
+            <label>Delibera</label>
         </rules>
     </decisions>
     <decisions>
@@ -341,6 +388,25 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>HDT_RT_DistributorCommunication</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Gestito_Invio_DL</name>
+            <choiceReferences>Yes</choiceReferences>
+            <choiceReferences>No</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Gestito Invio DL</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Activity.Type__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Del. 40 gestione doc.invio a DL</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
