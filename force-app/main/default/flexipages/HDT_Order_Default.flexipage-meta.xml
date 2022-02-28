@@ -579,6 +579,13 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Order.Riprendi_Processo</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Caricamento Siebel OK</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Order.HDT_CreateDistributorApointment</value>

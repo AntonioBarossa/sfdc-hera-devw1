@@ -201,6 +201,12 @@ public inherited sharing class HDT_LC_SaleActions {
             quoteLinesListToUpdate.add(quoteLineToUpdate);
         }
         //if(sale.Id=='a3I3N00000042c6UAA') throw new AuraHandledException('Mio test');
+        if(!String.isBlank(campaignMemberId)){
+            CampaignMember cm = new CampaignMember();
+            cm.Id = campaignMemberId;
+
+            saleToUpdate.Campaign__c = [SELECT Id, CampaignId FROM CampaignMember WHERE Id =: campaignMemberId WITH SECURITY_ENFORCED LIMIT 1].CampaignId;
+        }
 
         //7 - Execute actions
         opportunitySrv.updateRecords(opps);
@@ -215,6 +221,10 @@ public inherited sharing class HDT_LC_SaleActions {
         //     system.debug('CampaignMember-MyStatus --> '+ myStatus);
         //     HDT_LC_CampaignsController.updateCampaignMemberStatus(campaignMemberId, myStatus);
         // }
+
+        
+
+        
 
         //update campaignMember siblings Status a 'Non Proposto Auto'
         List<String> accountIds = new List<String>();
