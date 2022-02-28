@@ -524,6 +524,13 @@
         <field>MatriceRemiCode__c.VATNumberUdb__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <!-- Start HRADTR_GV 28/02/2022-->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.Vendor__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <!-- End HRADTR_GV 28/02/2022-->
     <fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.IsDigitalMarking__c</field>
