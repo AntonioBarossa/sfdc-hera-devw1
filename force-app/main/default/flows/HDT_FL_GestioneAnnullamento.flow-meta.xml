@@ -1123,6 +1123,13 @@
                     <stringValue>Esito KO da SII</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito KO da SAP</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_Fase_Precedente</targetReference>
             </connector>
