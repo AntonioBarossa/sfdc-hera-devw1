@@ -75,7 +75,7 @@ public with sharing class HDT_UTL_VasManagement {
             OrderReference__r.ServicePointCodeFormula__c,SBQQ__Quote__r.SBQQ__ListAmount__c, SBQQ__Quote__r.SBQQ__TotalCustomerDiscountAmount__c,
             SBQQ__Quote__r.SBQQ__PriceBook__r.Name, SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
             CommercialProductLink__r.FreeVas__c, CommercialProductLink__r.DurationDay__c, CommercialProductLink__r.DurationDayGas__c, 
-            (SELECT Quantity, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
+            (SELECT Quantity, UnitPrice, ListPrice, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
                 DurationDay__c, PaymentMode__c, IVA__c,
                 Product2.Name, Product2.NumberRateMonthly__c, Product2.DescriptionSAP__c,DelayEffectiveDate__c
                 FROM OrderItems)
@@ -359,8 +359,8 @@ public with sharing class HDT_UTL_VasManagement {
         public HDT_WRP_VASActivationReqItem(OrderItem ordItem) {
             ItemProdotto = ordItem.Product2?.DescriptionSAP__c?.abbreviate(33)?.removeEnd('...');
             Quantita = ordItem.Quantity;
-            PrezzoNetto = ordItem.PriceNet__c;
-            PrezzoNettoScontato = ordItem.PriceNetDiscounted__c;
+            PrezzoNetto = ordItem.ListPrice;
+            PrezzoNettoScontato = ordItem.UnitPrice;
             PercentualeIva = ordItem.Percentage__c==null? 0.0 : ordItem.Percentage__c;
         }
     }
