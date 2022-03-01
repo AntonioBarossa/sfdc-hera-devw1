@@ -466,18 +466,43 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             /* @frpanico 01/03/2022 */
             /* Get Service Point from the quoteLine */
             /* not amendment */
-            List<SBQQ__QuoteLine__c> quoteLine = [SELECT ServicePoint__c 
-                FROM SBQQ__QuoteLine__c 
-                WHERE SBQQ__Quote__c = :originalOrder.SBQQ__Quote__c
-                AND SBQQ__ProductFamily__c NOT IN ('VAS Fatturabili')
-                WITH SECURITY_ENFORCED];
-            
-            if(!quoteLine.isEmpty())
+
+            List<SBQQ__Quote__c> quotes = [SELECT ContractReference__c,
+            ContractReference__r.ServicePoint__c,
+            ContractReference__r.ServicePoint__r.ServicePointCode__c,
+            OrderReference__c,
+            OrderReference__r.ServicePoint__c,
+            OrderReference__r.ServicePoint__r.ServicePointCode__c
+            FROM SBQQ__Quote__c
+            WHERE Id = :originalOrder.SBQQ__Quote__c
+            WITH SECURITY_ENFORCED];
+
+            if(!quotes.isEmpty())
             {
-                System.debug(LoggingLevel.DEBUG, '# QuoteLine > ' + JSON.serialize(quoteLine));
-                if(String.isNotBlank(quoteLine[0].ServicePoint__c))
+
+                SObject reference = quotes[0].ContractReference__c != null ? (SObject) quotes[0].ContractReference__r : quotes[0].OrderReference__c != null ? (SObject) quotes[0].OrderReference__r : null;
+                if(reference != null)
                 {
-                    orderToUpdate.ServicePoint__c = quoteLine[0].ServicePoint__c;
+                    orderToUpdate.ServicePointCode__c=(String) reference.getSObject('ServicePoint__r')?.get('ServicePointCode__c');
+                    orderToUpdate.ServicePoint__c = (String) reference.get('ServicePoint__c');
+                }
+                else{
+                
+                
+                    List<SBQQ__QuoteLine__c> quoteLine = [SELECT ServicePoint__c 
+                        FROM SBQQ__QuoteLine__c 
+                        WHERE SBQQ__Quote__c = :originalOrder.SBQQ__Quote__c
+                        AND SBQQ__ProductFamily__c NOT IN ('VAS Fatturabili')
+                        WITH SECURITY_ENFORCED];
+                    
+                    if(!quoteLine.isEmpty())
+                    {
+                        System.debug(LoggingLevel.DEBUG, '# QuoteLine > ' + JSON.serialize(quoteLine));
+                        if(String.isNotBlank(quoteLine[0].ServicePoint__c))
+                        {
+                            orderToUpdate.ServicePoint__c = quoteLine[0].ServicePoint__c;
+                        }
+                    }
                 }
             }
         }
