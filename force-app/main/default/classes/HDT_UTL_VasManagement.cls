@@ -141,9 +141,17 @@ public with sharing class HDT_UTL_VasManagement {
         Order orderToUpdate = new Order();
         orderToUpdate.Id = ord.Id;
         orderToUpdate.Phase__c = newPhase;
-        HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
+        HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
+        if(newPhase.equalsIgnoreCase('Comunicazione verso Heroku') || newPhase.equalsIgnoreCase('Comunicazione Motore VAS'))
+        {
+            Schedulable instance = (Schedulable) wrts_prcgvr.VersionManager.newClassInstance('AsyncJobBatchSchedule');
+            instance.execute(null);
+        }
+
+        /* Platform Event non sembra partire correttamente */
+        /*HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
         platEvent.SerializedSobj__c = JSON.serialize(orderToUpdate);
-        Database.SaveResult sr = Eventbus.publish(platEvent);
+        Database.SaveResult sr = Eventbus.publish(platEvent);*/
 
     }
 
