@@ -80,7 +80,7 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
     public override void registryCreation(){
         System.debug(LoggingLevel.DEBUG, 'registryCreation');
 
-        HDT_UTL_ProcessCommonOperations.getLimitDetails('START registryCreation');
+        getLimitDetails('START registryCreation');
 
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
@@ -166,7 +166,7 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
 
             newCase.AccountId = processObj.csvSplitted[accountIdIndex];
             newCase.Cluster__c = 'Modifiche Anagrafiche';
-            newCase = HDT_UTL_ProcessCommonOperations.setCaseField(newCase, recordTypeId);
+            newCase = setCaseField(newCase, recordTypeId);
 
             caseToInsert.add(newCase); 
             requestItemForUpsert.add(processObj.requestItem);
@@ -174,18 +174,18 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
 
         if(caseToInsert.size() > 0){
 
-            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse;
-            saveResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
+            HDT_WRP_SaveResponse saveResponse;
+            saveResponse = databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
             caseToInsert.clear();
 
-            HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE CREATION & Enrichment');
+            getLimitDetails('AFTER CASE CREATION & Enrichment');
 
             if(saveResponse.reponseItemList.size() > 0){
                 itemsToSave.addAll(saveResponse.reponseItemList);
             }
 
             if(saveResponse.savedObject.size() > 0){
-                HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedObject);
+                runCompatibility(saveResponse.savedObject);
             }
 
         }  

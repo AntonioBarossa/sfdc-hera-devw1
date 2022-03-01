@@ -72,7 +72,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
     public override void registryCreation(){
 
-        HDT_UTL_ProcessCommonOperations.getLimitDetails('START registryCreation');
+        getLimitDetails('START registryCreation');
 
         if(processObjList.size() == 0){
             return;
@@ -197,8 +197,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         }
 
-        HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveAccountResponse;
-        saveAccountResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(accountToInsert, requestItemForUpsert, 'Account');
+        HDT_WRP_SaveResponse saveAccountResponse;
+        saveAccountResponse = databaseUpsert(accountToInsert, requestItemForUpsert, 'Account');
 
         System.debug(LoggingLevel.DEBUG, '>>> savedObject ' + saveAccountResponse.savedObject);
         System.debug(LoggingLevel.DEBUG, '>>> itemIdToObjId: ' + saveAccountResponse.itemIdToObjId);
@@ -228,10 +228,10 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             }
         }
 
-        HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveContactResponse;
+        HDT_WRP_SaveResponse saveContactResponse;
         if(saveContactList.size() > 0){
             System.debug(LoggingLevel.DEBUG, '>>> save contact');
-            saveContactResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(saveContactList, requestItemForUpsert, 'Contact');
+            saveContactResponse = databaseUpsert(saveContactList, requestItemForUpsert, 'Contact');
             System.debug('>>>>> ' + saveContactResponse.errorItemMap);
         }
 
@@ -274,21 +274,21 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         System.debug(LoggingLevel.DEBUG, '>>> save billProf and servPoint');
 
-        HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveBillProfResponse;
-        HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveServPointResponse;
+        HDT_WRP_SaveResponse saveBillProfResponse;
+        HDT_WRP_SaveResponse saveServPointResponse;
         
         System.debug(LoggingLevel.DEBUG, '>>> saveBillProfList ' + saveBillProfList.size());
         System.debug(LoggingLevel.DEBUG, '>>> saveServPointList ' + saveServPointList.size());
 
         if(saveBillProfList.size() > 0){
             System.debug(LoggingLevel.DEBUG, '>>> save BillingProfile__c');
-            saveBillProfResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(saveBillProfList, requestItemForUpsert, 'BillingProfile__c');
+            saveBillProfResponse = databaseUpsert(saveBillProfList, requestItemForUpsert, 'BillingProfile__c');
             System.debug(LoggingLevel.DEBUG, '>>> saveBillProfResponse: ' + saveBillProfResponse.itemIdToObjId);
         }
         
         if(saveServPointList.size() > 0){
             System.debug(LoggingLevel.DEBUG, '>>> save ServicePoint__c');
-            saveServPointResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(saveServPointList, requestItemForUpsert, 'ServicePoint__c');
+            saveServPointResponse = databaseUpsert(saveServPointList, requestItemForUpsert, 'ServicePoint__c');
             System.debug(LoggingLevel.DEBUG, '>>> saveServPointResponse: ' + saveServPointResponse.itemIdToObjId);
         }
         
@@ -307,7 +307,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             update acrList;
         }
 
-        HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER OBJs CREATION');
+        getLimitDetails('AFTER OBJs CREATION');
 
         HDT_WRP_NextDataObj nextDataObj;
 

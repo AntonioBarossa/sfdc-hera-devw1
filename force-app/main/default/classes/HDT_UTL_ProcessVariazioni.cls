@@ -84,7 +84,7 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
     public override void registryCreation(){
         System.debug(LoggingLevel.DEBUG, 'registryCreation');
 
-        HDT_UTL_ProcessCommonOperations.getLimitDetails('START registryCreation');
+        getLimitDetails('START registryCreation');
 
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
@@ -173,7 +173,7 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
 
             processObj.newCase.AccountId = processObj.csvSplitted[accountIdIndex];
             processObj.newCase.Cluster__c = 'Variazioni';
-            processObj.newCase = HDT_UTL_ProcessCommonOperations.setCaseField(processObj.newCase, currentRecordTypeId);
+            processObj.newCase = setCaseField(processObj.newCase, currentRecordTypeId);
 
             if(processObj.newCase.Type.equalsIgnoreCase('Cambio contatore non registrato') && orderVolturaIndex != null){
                 String currentOrderNum = processObj.csvSplitted[orderVolturaIndex];
@@ -203,20 +203,20 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
 
         if(caseToInsert.size() > 0){
 
-            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse;
-            saveResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
+            HDT_WRP_SaveResponse saveResponse;
+            saveResponse = databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
             runAlignment(saveResponse.savedObject);
             caseToInsert.clear();
 
-            HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE CREATION / Enrichment / Alignment');
+            getLimitDetails('AFTER CASE CREATION / Enrichment / Alignment');
 
             if(saveResponse.reponseItemList.size() > 0){
                 itemsToSave.addAll(saveResponse.reponseItemList);
             }
 
             if(saveResponse.savedObject.size() > 0){
-                HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedObject);
-                HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE Compatibility');
+                runCompatibility(saveResponse.savedObject);
+                getLimitDetails('AFTER CASE Compatibility');
             }
 
         }  

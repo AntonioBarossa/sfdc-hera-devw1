@@ -113,7 +113,7 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
     public override void registryCreation(){
         System.debug(LoggingLevel.DEBUG, 'registryCreation');
 
-        HDT_UTL_ProcessCommonOperations.getLimitDetails('START registryCreation');
+        getLimitDetails('START registryCreation');
 
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
@@ -188,7 +188,7 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
             }
 
             processObj.newCase.Cluster__c = 'Disattivazioni';
-            processObj.newCase = HDT_UTL_ProcessCommonOperations.setCaseField(processObj.newCase, recordTypeId);
+            processObj.newCase = setCaseField(processObj.newCase, recordTypeId);
             
             if(!String.isEmpty(contract.ServicePoint__r.CommoditySector__c)){
                 causalCode = causalCodeCalculation.calculateCausalCode(this.processName, processObj.newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
@@ -226,19 +226,19 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
 
        if(caseToInsert.size() > 0){
 
-           HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse;
-           saveResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
+           HDT_WRP_SaveResponse saveResponse;
+           saveResponse = databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
 
            caseToInsert.clear();
 
-           HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE CREATION & Enrichment');
+           getLimitDetails('AFTER CASE CREATION & Enrichment');
 
            if(saveResponse.reponseItemList.size() > 0){
                itemsToSave.addAll(saveResponse.reponseItemList);
            }
 
            if(saveResponse.savedObject.size() > 0){
-               HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedObject);
+               runCompatibility(saveResponse.savedObject);
            }
 
        }  

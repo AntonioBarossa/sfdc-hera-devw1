@@ -147,7 +147,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
             }
 
             processObj.newCase.Cluster__c = 'Morosità';
-            processObj.newCase = HDT_UTL_ProcessCommonOperations.setCaseField(processObj.newCase, recordTypeId);
+            processObj.newCase = setCaseField(processObj.newCase, recordTypeId);
             // ContactId ???
 
             causalCode = causalCodeCalculation.calculateCausalCode(this.processName, processObj.newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
@@ -176,7 +176,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
 
         if(caseToInsert.size() > 0){
 
-            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
+            HDT_WRP_SaveResponse saveResponse = databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
             caseToInsert.clear();
 
             if(saveResponse.reponseItemList.size() > 0){
@@ -184,7 +184,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
             }
 
             if(saveResponse.savedObject.size() > 0){
-                HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedObject);
+                runCompatibility(saveResponse.savedObject);
             }
 
         }  

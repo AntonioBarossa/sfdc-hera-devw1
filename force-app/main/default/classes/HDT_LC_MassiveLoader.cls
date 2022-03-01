@@ -194,7 +194,9 @@ public with sharing class HDT_LC_MassiveLoader {
         ContentVersion uploadedFile = contentVersionQr.getRecordById(contentVersionId);
         HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(selectedProcessName);
 
-        if(!fileName.equalsIgnoreCase(selectedProcess.DeveloperName   + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION)) {                
+        if(!fileName.equalsIgnoreCase(selectedProcess.DeveloperName + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION) &&
+           !fileName.equalsIgnoreCase(selectedProcess.MasterLabel + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION)
+            ) {                
             response.put('error', true);
             response.put('errorMessage', Label.MassiveLoaderFileNameError);
             return response;

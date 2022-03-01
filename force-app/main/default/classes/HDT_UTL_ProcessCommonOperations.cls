@@ -1,6 +1,6 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_UTL_ProcessCommonOperations {
-
+/*
     public static HDT_WRP_SaveResponse databaseUpsert(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType){
         HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
         saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
@@ -160,5 +160,5 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
         public Map<Id, Id> itemIdToObjId;
         public Map<Id, String> errorItemMap;
     }
-
+*/
 }
