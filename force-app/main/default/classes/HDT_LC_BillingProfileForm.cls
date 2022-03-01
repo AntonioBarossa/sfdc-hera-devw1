@@ -36,6 +36,16 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             // 'CareOf__c' //Presso
         };
 
+        List<String> bonificoBancario = new List<String>{
+            'BillSendingMethod__c',
+            'InvoiceEmailAddress__c',
+            'InvoiceCertifiedEmailAddress__c',
+            'SendCertifiedEmailConsentDate__c',
+            'DivergentSubject__c',
+            'CreateContractAccount__c'
+            // 'CareOf__c' //Presso
+        };
+
         List<String> rid = new List<String>{
             'BillSendingMethod__c',
             'InvoiceEmailAddress__c',
@@ -80,8 +90,8 @@ public inherited sharing class HDT_LC_BillingProfileForm {
         billingProfileSRV.checkReadAccess(String.join(fieldsToCheck,','));
 
         switch on paymentMethod {
-            when  'Bollettino'{
-                resultMap.put('choosenFields', bollettionoPostale);
+            when  'Bonifico bancario'{
+                resultMap.put('choosenFields', bonificoBancario);
             }
             when  'Bollettino postale'{
                 resultMap.put('choosenFields', bollettionoPostale);

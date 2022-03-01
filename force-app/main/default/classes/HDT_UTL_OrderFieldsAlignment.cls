@@ -463,6 +463,23 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 orderToUpdate.BillingProfile__c=mixedData.billProf;
                 alignBillingProfileFields(orderToUpdate, orderToUpdate.BillingProfile__c);
             }
+            /* @frpanico 01/03/2022 */
+            /* Get Service Point from the quoteLine */
+            /* not amendment */
+            List<SBQQ__QuoteLine__c> quoteLine = [SELECT ServicePoint__c 
+                FROM SBQQ__QuoteLine__c 
+                WHERE SBQQ__Quote__c = :originalOrder.SBQQ__Quote__c
+                AND SBQQ__ProductFamily__c NOT IN ('VAS Fatturabili')
+                WITH SECURITY_ENFORCED];
+            
+            if(!quoteLine.isEmpty())
+            {
+                System.debug(LoggingLevel.DEBUG, '# QuoteLine > ' + JSON.serialize(quoteLine));
+                if(String.isNotBlank(quoteLine[0].ServicePoint__c))
+                {
+                    orderToUpdate.ServicePoint__c = quoteLine[0].ServicePoint__c;
+                }
+            }
         }
     }
 
