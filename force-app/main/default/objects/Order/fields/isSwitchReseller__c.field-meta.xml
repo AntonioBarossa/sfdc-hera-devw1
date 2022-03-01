@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>isSwitchReseller__c</fullName>
+    <externalId>false</externalId>
+    <formula>( ISPICKVAL(ProcessType__c, &quot;Switch in Ele&quot;) || ISPICKVAL(ProcessType__c, &quot;Switch in Gas&quot;) )  &amp;&amp; ( CONTAINS(DistributorCode__c, &apos;10R&apos;) ||  CONTAINS(DistributorCode__c, &apos;10D&apos;) )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Switch In Reseller</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

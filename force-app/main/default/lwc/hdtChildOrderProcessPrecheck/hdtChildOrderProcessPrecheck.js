@@ -3,6 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import init from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.init';
 import next from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.next';
 import checkVasAndCommodity from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.checkVasAndCommodity';
+import getConsumptionAnnualForVas from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.getConsumptionAnnualForVas';
 import checkContendibilita from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.checkContendibilita';
 import checkCompatibility from '@salesforce/apex/HDT_UTL_MatrixCompatibility.checkCompatibilitySales';
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
@@ -34,6 +35,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     service = '';
     pickValue = '';
     causaleContendibilita = '';
+    consumptionAnnualForVas;
 
     get isNotBillable(){
         return this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && !this.order.IsBillableVas__c;
@@ -464,7 +466,13 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                         // this.checkCompatibilityProcess();
                     }
                 }
-    
+                if(this.order.IsVAS__c){
+                    getConsumptionAnnualForVas({orderId: this.order.Id}).then(data =>{
+                       this.consumptionAnnualForVas = data; 
+                    }).catch(error => {
+                        console.log(error.body.message);                    
+                    });
+                }
             }).catch(error => {
                 this.loaded = true;
                 console.log(error.body.message);
@@ -686,6 +694,11 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             data["postCode"] = this.order.ServicePoint__r.SupplyPostalCode__c;
 
             data["details"][0] = { ...data["details"][0], "annualConsumption":this.order.ServicePoint__r.AnnualConsumption__c};
+        }
+        else{
+            if(this.consumptionAnnualForVas != null){
+                data["details"][0] = { ...data["details"][0], "annualConsumption":this.consumptionAnnualForVas};
+            }
         }
         console.log("this.3"); 
 

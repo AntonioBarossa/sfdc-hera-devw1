@@ -228,6 +228,28 @@ public inherited sharing class HDT_QR_OrderItem {
         ];
     }
 
+    /**
+    * @author NTTDATA
+    * @description getPromo
+    * @param orderId
+    * @return List<OrderItem>
+    */
+    public OrderItem getOfferActivationItem(String parentOrderId, String servicePoint){
+        return [
+            SELECT 
+            Id,
+            Product2.Name,
+            Product2.ProductCode,
+            Product2.Version__c
+            FROM
+            OrderItem
+            WHERE  Product2.Family = 'Offerta commerciale'
+            AND Order.ServicePoint__c =:servicePoint 
+            AND Order.ParentOrder__c =:parentOrderId
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+    }
     public static List<OrderItem> getItemFromOrderIdList(List<String> ordIdList){
 
         List<OrderItem> ordItemList = new List<OrderItem>();
