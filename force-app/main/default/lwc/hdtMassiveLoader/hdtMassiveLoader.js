@@ -256,8 +256,8 @@ export default class HdtMassiveLoader extends LightningElement {
                 console.log('hdtMassiveLoader.checkCSV - Error: ' + result.errorMessage);
                 console.log('hdtMassiveLoader.checkCSV - ErrorStackTrace: ' + result.errorStackTraceString);
 
-                // this.handleToastEvent(error + '!', result.errorMessage, 'error');
-                this.handleToastEvent(error + '!', this.labels.massiveLoaderFileCheckError, 'error', null);
+                this.handleToastEvent(error + '!', result.errorMessage, 'error');
+                //this.handleToastEvent(error + '!', this.labels.massiveLoaderFileCheckError, 'error', null);
 
             }
             this.spinner=false;
