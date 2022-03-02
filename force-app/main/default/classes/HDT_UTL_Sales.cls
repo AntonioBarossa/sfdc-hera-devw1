@@ -330,7 +330,7 @@ public with sharing class HDT_UTL_Sales {
     public static Order validationActivityPhaseTransition(Order ord){
         List<wrts_prcgvr__Activity__c> listActivityToCreate = new List<wrts_prcgvr__Activity__c>();
         List<Order> childToUpdate = new List<Order>();
-        Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
+        Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
       //  List<String> orderParentToActivityDocument = new List<String>();
             if(ord.RecordType.DeveloperName == 'HDT_RT_OrderDossier'){ //&& ord.TecnicalPhase__c != null){
                 if(ord.phase__c == 'Documentazione da inviare'){
