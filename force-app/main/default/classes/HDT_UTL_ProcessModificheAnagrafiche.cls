@@ -147,9 +147,12 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
                 continue;
             }
 
+            Boolean enableBillProfEdit = (newCase.Subprocess__c.equalsIgnoreCase('Modifica Dati Di Recapito'));
+            System.debug(LoggingLevel.DEBUG, '>>> enableBillProfEdit: ' + enableBillProfEdit);
+
             if(emptyCsvField.size() > 0){
                 System.debug(LoggingLevel.DEBUG, '>>> we need to set empty fields');
-                convertionError = setEmptyCsvFields(emptyCsvField, newCase, processObj.csvSplitted[accountIdIndex], processObj.csvSplitted[contractIndex]);
+                convertionError = setEmptyCsvFields(emptyCsvField, newCase, processObj.csvSplitted[accountIdIndex], processObj.csvSplitted[contractIndex], enableBillProfEdit);
 
                 if(!String.isEmpty(convertionError)){
                     //itemsToSave.add(setErrorItem(itemId, convertionError));
@@ -161,11 +164,19 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
 
             }
 
-            System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + newCase);
+            if(enableBillProfEdit && contractToBillProfMap.containsKey(processObj.csvSplitted[contractIndex])){
+                newCase.BillingProfile__c = contractToBillProfMap.get(processObj.csvSplitted[contractIndex]).Id;
+            }
+
+            if(accountContactMap.containsKey(processObj.csvSplitted[accountIdIndex])){
+                newCase.ContactId = accountContactMap.get(processObj.csvSplitted[accountIdIndex]).ContactId;
+            }
 
             newCase.AccountId = processObj.csvSplitted[accountIdIndex];
             newCase.Cluster__c = 'Modifiche Anagrafiche';
             newCase = setCaseField(newCase, recordTypeId);
+
+            System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + newCase);
 
             caseToInsert.add(newCase); 
             requestItemForUpsert.add(processObj.requestItem);
@@ -187,24 +198,28 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
                 runCompatibility(saveResponse.savedObject);
             }
 
-        }  
+        }
 
     }
 
-    private String setEmptyCsvFields(List<String> emptyFieldToSet, Case caseToSet, String accountId, String contractAccountCode){
+    private String setEmptyCsvFields(List<String> emptyFieldToSet, Case caseToSet, String accountId, String contractAccountCode, Boolean enableBillProfEdit){
 
         System.debug(LoggingLevel.DEBUG, '>>> setEmptyCsvFields');
         Map<String, Object> fieldsToValue;
         Object newValueToSet;
-
-        Boolean enableBillProfEdit = (caseToSet.Subprocess__c.equalsIgnoreCase('Modifica Dati Di Recapito'));
-        System.debug(LoggingLevel.DEBUG, '>>> enableBillProfEdit: ' + enableBillProfEdit);
 
         HDT_MassiveFieldsObjectMap__mdt massiveFieldsObject;
         AccountContactRelation accContRel;
         BillingProfile__c billingProfile;
         for(String emptyField : emptyFieldToSet){
             System.debug(LoggingLevel.DEBUG, '>>> empty field to set -> ' + emptyField);
+
+            if(sobjectMap.containsKey(emptyField)){
+                System.debug(LoggingLevel.DEBUG, '>>> emptyField ' + emptyField);
+            } else {
+                System.debug(LoggingLevel.DEBUG, '>>> map error...');
+                continue;
+            }
 
             massiveFieldsObject = sobjectMap.get(emptyField);
             System.debug(LoggingLevel.DEBUG, '>>> massiveFieldsObject -> ' + massiveFieldsObject);
@@ -233,7 +248,7 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
                 when 'BillingProfile__c' {
 
                     if(!enableBillProfEdit){
-                        return null;
+                        continue;
                     }
 
                     if(contractToBillProfMap.containsKey(contractAccountCode)){
