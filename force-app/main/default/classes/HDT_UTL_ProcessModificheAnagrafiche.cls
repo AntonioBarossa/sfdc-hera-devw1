@@ -170,6 +170,7 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
 
             if(accountContactMap.containsKey(processObj.csvSplitted[accountIdIndex])){
                 newCase.ContactId = accountContactMap.get(processObj.csvSplitted[accountIdIndex]).ContactId;
+                newCase.Category__c = accountContactMap.get(processObj.csvSplitted[accountIdIndex]).Account.Category__c;
             }
 
             newCase.AccountId = processObj.csvSplitted[accountIdIndex];

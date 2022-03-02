@@ -468,7 +468,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
                     srvRequest.BillingProfile__c = cs.BillingProfile__c;
                 }
     
-                srvRequest.ProcessType__c = HDT_UTL_MatrixCompatibility.getProcessType(cs.Type, 'Case', cs.Commodity__c);
+                srvRequest.ProcessType__c = HDT_UTL_MatrixCompatibility.getProcessType(cs.Type, 'Case', cs.CommodityFormula__c);
 
                 System.debug(LoggingLevel.DEBUG, '>>> srvRequest: ' + srvRequest);
 
