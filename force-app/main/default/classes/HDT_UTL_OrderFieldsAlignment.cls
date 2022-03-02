@@ -420,21 +420,19 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         if((originalOrder.ServicePoint__c != null && !sconti.contains(mainItems[0].Product2.Family)) || mainItems.isEmpty()){
             return;
         }
-        system.debug('ivaste 1');
         if(!sconti.contains(mainItems[0].Product2.Family)){
-            system.debug(loggingLevel.DEBUG,'ivaste 1 '+mainItems[0].Product2.ProductCode);//only for vas
+            
+            
             orderToUpdate.CommercialProductCode__c = mainItems[0].Product2.ProductCode;
             orderToUpdate.CommercialProductVersion__c = mainItems[0].Product2.Version__c;
             orderToUpdate.CommercialProduct__c = mainItems[0].Product2.DescriptionSAP__c;
-        
+
             orderToUpdate.isVas__c= mainItems[0].Product2.Family.startsWith('VAS');
             orderToUpdate.VASType__c=orderToUpdate.isVas__c? mainItems[0].Product2.Family : '';
             orderToUpdate.VASSubtype__c=orderToUpdate.isVas__c? mainItems[0].Product2.Name.abbreviate(30) : '';
             orderToUpdate.VASBillingMode__c= mainItems[0].VASBillingMode__c;
             Id idToFilter = mainItems[0]?.SBQQ__QuoteLine__r?.ServicePointLinkItem__r?.ServicePoint__c;
-            system.debug(loggingLevel.DEBUG,'ivaste 2 '+idToFilter);
             idToFilter= idToFilter!=null? idToFilter : mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c;
-            system.debug(loggingLevel.DEBUG,'ivaste 3'+idToFilter);
             if(orderToUpdate.isVas__c && originalOrder.OrderReference__c==null && idToFilter!=null){
                 //fai il match con l'orderItem di tipo pod che ha lo stesso quote
                 List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, idToFilter);
@@ -451,6 +449,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }
         
         if(sconti.contains(mainItems[0].Product2.Family)){
+            HDT_UTL_Sales.handleContractVariation(orderToUpdate);
             //only for Amend Bonus
             List<OrderItem> billableVas = orderToUpdate.isVas__c? null : orderItemQr.getAnalisiConsumi(orderToUpdate.id);
             if(billableVas?.size() > 0){
