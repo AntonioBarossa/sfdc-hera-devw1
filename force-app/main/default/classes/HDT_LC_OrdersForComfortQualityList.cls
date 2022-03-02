@@ -40,7 +40,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
             switch on ordComf[0].RecordType.DeveloperName {
                 when  'HDT_RT_VAS'{
-                    phase = HDT_UTL_VasManagement.updateVasPhase(ordComf[0].Phase__c, ordComf[0] );
+                    phase = calculateVasPhase(ordComf[0]);
                 }
                 when 'HDT_RT_CambioOfferta' {
                     phase = 'Comunicazione verso Heroku';
@@ -149,5 +149,18 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         return processActivityMap.get(orderRecordType);
 
+    }
+
+    private static String calculateVasPhase(Order currentOrder)
+    {
+        String newPhase = '';
+        if( currentOrder.VASType__c == 'VAS Servizio' && !currentOrder.IsEarlyActivation__c ){
+            newPhase =  'In attesa tempi di ripensamento';
+        }else if( currentOrder.VASType__c == 'VAS Fatturabili' ){
+            newPhase = 'Comunicazione verso Heroku';
+        }else{
+            newPhase =  'Comunicazione Motore VAS';
+        }
+        return newPhase;
     }
 }

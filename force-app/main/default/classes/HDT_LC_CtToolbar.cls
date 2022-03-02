@@ -158,4 +158,14 @@ public with sharing class HDT_LC_CtToolbar {
             throw new AuraHandledException(e.getMessage());
         }
     }
+
+    @AuraEnabled
+    public static void cacheUuid(String uuid) {
+        Cache.Session.put('local.ReitekAgentsSessionCache.uuid', uuid);
+    }
+
+    @AuraEnabled
+    public static String getCachedUuid() {
+        return (String) Cache.Session.get('local.ReitekAgentsSessionCache.uuid');
+    }
 }
