@@ -31,7 +31,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         processObjList = new List<HDT_WRP_ProcessObjects>();
         itemsToUpdate = new List<MassiveLoaderRequestItem__c>();
         List<String> tempSplitedFields;
-        for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
+        for(MassiveLoaderRequestItem__c item : requestItemList){
 
             tempSplitedFields = new List<String>();
             tempSplitedFields = item.Data__c.split(splitCharacter, -1);
@@ -72,7 +72,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
     public override void registryCreation(){
 
-        HDT_UTL_ProcessCommonOperations.getLimitDetails('START registryCreation');
+        getLimitDetails('START registryCreation');
 
         if(processObjList.size() == 0){
             return;
@@ -197,8 +197,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         }
 
-        HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveAccountResponse;
-        saveAccountResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(accountToInsert, requestItemForUpsert, 'Account');
+        HDT_WRP_SaveResponse saveAccountResponse;
+        saveAccountResponse = databaseUpsert(accountToInsert, requestItemForUpsert, 'Account');
 
         System.debug(LoggingLevel.DEBUG, '>>> savedObject ' + saveAccountResponse.savedObject);
         System.debug(LoggingLevel.DEBUG, '>>> itemIdToObjId: ' + saveAccountResponse.itemIdToObjId);
@@ -228,10 +228,10 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             }
         }
 
-        HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveContactResponse;
+        HDT_WRP_SaveResponse saveContactResponse;
         if(saveContactList.size() > 0){
             System.debug(LoggingLevel.DEBUG, '>>> save contact');
-            saveContactResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(saveContactList, requestItemForUpsert, 'Contact');
+            saveContactResponse = databaseUpsert(saveContactList, requestItemForUpsert, 'Contact');
             System.debug('>>>>> ' + saveContactResponse.errorItemMap);
         }
 
@@ -274,21 +274,21 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         System.debug(LoggingLevel.DEBUG, '>>> save billProf and servPoint');
 
-        HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveBillProfResponse;
-        HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveServPointResponse;
+        HDT_WRP_SaveResponse saveBillProfResponse;
+        HDT_WRP_SaveResponse saveServPointResponse;
         
         System.debug(LoggingLevel.DEBUG, '>>> saveBillProfList ' + saveBillProfList.size());
         System.debug(LoggingLevel.DEBUG, '>>> saveServPointList ' + saveServPointList.size());
 
         if(saveBillProfList.size() > 0){
             System.debug(LoggingLevel.DEBUG, '>>> save BillingProfile__c');
-            saveBillProfResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(saveBillProfList, requestItemForUpsert, 'BillingProfile__c');
+            saveBillProfResponse = databaseUpsert(saveBillProfList, requestItemForUpsert, 'BillingProfile__c');
             System.debug(LoggingLevel.DEBUG, '>>> saveBillProfResponse: ' + saveBillProfResponse.itemIdToObjId);
         }
         
         if(saveServPointList.size() > 0){
             System.debug(LoggingLevel.DEBUG, '>>> save ServicePoint__c');
-            saveServPointResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(saveServPointList, requestItemForUpsert, 'ServicePoint__c');
+            saveServPointResponse = databaseUpsert(saveServPointList, requestItemForUpsert, 'ServicePoint__c');
             System.debug(LoggingLevel.DEBUG, '>>> saveServPointResponse: ' + saveServPointResponse.itemIdToObjId);
         }
         
@@ -307,7 +307,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             update acrList;
         }
 
-        HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER OBJs CREATION');
+        getLimitDetails('AFTER OBJs CREATION');
 
         HDT_WRP_NextDataObj nextDataObj;
 
@@ -487,181 +487,5 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         public String billProfId;
         public String servPointId;
     }
-
-    /*public static void setDataForTest(Integer numRecords){
-
-        Id massiveLoaderRequestId = 'a3d3O000000WyvQQAS';
-        Set<Id> docId = new Set<Id>();
-
-        delete [
-            SELECT Id, Data__c, NextStepData__c, Status__c, StatusDescription__c, MassiveLoaderRequest__c
-            FROM MassiveLoaderRequestItem__c
-            WHERE MassiveLoaderRequest__c = :massiveLoaderRequestId
-        ];
-
-        delete [
-            SELECT Id, Name, RecordTypeId, RecordType.Name, CustomerCode__c, FiscalCode__c, VATNumber__c, CustomerMarking__c 
-            FROM Account
-            WHERE CreatedById = '0051X0000055rbNQAQ'
-        ];
-        
-        delete [
-            SELECT Id, FirstName, Account.CustomerCode__c
-            FROM Contact
-            WHERE CreatedById = '0051X0000055rbNQAQ'
-        ];
-
-        delete [
-            SELECT Id, Account__r.CustomerCode__c
-            FROM BillingProfile__c
-            WHERE CreatedById = '0051X0000055rbNQAQ'
-        ];
-
-        delete [
-            SELECT Id, Name, Account__r.CustomerCode__c, ServicePointCode__c
-            FROM ServicePoint__c
-            WHERE CreatedById = '0051X0000055rbNQAQ'
-        ];
-
-        List<ContentDocumentLink> cdlList = [
-            SELECT Id, LinkedEntityId, ContentDocumentId
-            FROM ContentDocumentLink
-            WHERE LinkedEntityId = :massiveLoaderRequestId
-        ];
-
-        if(cdlList.size() > 0){
-            for(ContentDocumentLink c : cdlList){
-                docId.add(c.ContentDocumentId);
-            }
-
-            delete cdlList;
-            delete [SELECT Id FROM ContentDocument WHERE Id IN :docId];
-        }
-
-        List<MassiveLoaderRequestItem__c> itemsList = new List<MassiveLoaderRequestItem__c>();
-        MassiveLoaderRequestItem__c item;
-    
-        List<String> tempList;
-        String iteration = '';
-        for(Integer n=0; n<numRecords; n++){
-            item = new MassiveLoaderRequestItem__c();
-            item.MassiveLoaderRequest__c = massiveLoaderRequestId;
-            tempList = new List<String>();
-            item.Status__c = 'In attesa di lavorazione';
-
-            iteration = String.valueOf(n);
-
-            // -- Account / Contact
-            tempList.add('Residenziale'); // Tipo
-            tempList.add('true'); // FlagVerificato
-
-            //if(n==1){
-            //    tempList.add('854455666'); // FAX - 
-            //} else {
-            //    tempList.add(''); // FAX - 854455666
-            //}
-            tempList.add(''); // FAX - 854455666
-            tempList.add(''); // Stato
-            tempList.add(''); // BP
-            tempList.add('Roma'); // Comune
-            tempList.add('Adam'); // Nome
-            tempList.add(''); // Professione
-            tempList.add('AAA-EBT'); // Silos
-            tempList.add('Roma'); // Localita
-            tempList.add(''); // ComuneNascita
-            tempList.add('55'); // Civico
-            tempList.add('Daniel'); // Cognome
-            tempList.add(''); // CodiceVia
-            tempList.add(''); // Provincia
-            tempList.add('25'); // CodiceLocalita
-            tempList.add(''); // IndirizzoEstero
-            tempList.add('00166'); // CAP
-            tempList.add('Piccoli condomini'); // Categoria
-            tempList.add(''); // DataNascita
-            tempList.add('AAS Parti comuni'); // Marcatura
-            tempList.add(''); // TitoloStudio
-            tempList.add('via roma'); // NomeVia
-            tempList.add(''); // Email
-            tempList.add(''); // PrefTelefono
-            tempList.add(''); // EstensCivico
-            tempList.add(''); // AltroTelefono
-            tempList.add('1234567' + iteration); // PI - 12345678
-            tempList.add(''); // Cellulare
-            tempList.add('SXSRLA45H28H' + iteration); // CF - SXSRLA45H28H5
-            tempList.add(''); // Sesso
-            tempList.add(''); // PrefCell
-            //tempList.add('');
-            tempList.add('100361621' + iteration); // CSN - 1003616210
-            tempList.add('00166'); // CodiceCitta
-
-            // -- Billing Profile
-            tempList.add('sono un numero'); // NumeroConto
-            tempList.add(''); // IBAN
-            tempList.add(''); // ABI
-            tempList.add(''); // EmailInvioBolletta
-            tempList.add(''); // BPComune
-            tempList.add(''); // BPVia
-            tempList.add(''); // CFsottoscrittoreCC
-            tempList.add(''); // CognomeSottoscrittoreCC
-            tempList.add(''); // CINIBAN
-            tempList.add(''); // TiploXML
-            tempList.add(''); // BPCivico
-            tempList.add(''); // CodiceDestinatario
-            tempList.add(''); // ModalitaInvioFattElettr
-            tempList.add(''); // ModalitaPagamento
-            tempList.add(''); // IBANEstero
-            tempList.add(''); // TipoSottoscrittore
-            tempList.add(''); // ModalitaInvioBolletta
-            tempList.add(''); // CAB
-            tempList.add(''); // CIN
-            tempList.add(''); // Paese
-            tempList.add(''); // PecFattElettronica
-            tempList.add(''); // DestinatarioDivergente
-            tempList.add(''); // NomeSottoscrittoreCC
-            tempList.add(''); // ContoContrattuale
-
-            // -- Service Point
-            tempList.add(''); // SPVia
-            tempList.add('25'); // ConsumoAnnuo
-            tempList.add(''); // SPCodice
-            tempList.add(''); // PotenzialitaMassimaRichiesta
-            tempList.add(''); // CategoriaUso
-            tempList.add(''); // SP_IndirizzoEstero
-            tempList.add(''); // ClassePrelievo
-            tempList.add(''); // Distributore
-            tempList.add(''); // Servizio
-            tempList.add(''); // ClasseContatore
-            tempList.add(''); // PotenzaContrattuale
-            tempList.add(''); // LivelloPressione
-            tempList.add(''); // PresenzaAllaccio
-            tempList.add(''); // PotenzaDisponibile
-            tempList.add(''); // TipologiaDisalimentabilita
-            tempList.add(''); // MatricolaContatore
-            tempList.add(''); // CodiceRemi
-            tempList.add(''); // TelefonoNonDisalimentabili
-            tempList.add(''); // SPComune
-            tempList.add(''); // PotenzaRichiesta
-            tempList.add(''); // MercatoProvenienza
-            tempList.add(''); // TensioneConsegna
-            tempList.add(''); // TipologiaImpianto
-            tempList.add(''); // Disalimentabile
-            tempList.add(''); // TipoFornitura
-            tempList.add(''); // FaseRichiesta
-            tempList.add(''); // Residente
-            tempList.add(''); // SP_Civico
-            tempList.add(''); // TipoApparecchiatura
-            tempList.add('IT001E04893470'); // CodicePunto
-            tempList.add('');// CodiceImpianto
-            item.Data__c = String.join(tempList, '|');
-            itemsList.add(item);
-        }
-        insert itemsList;
-    
-        MassiveLoaderRequest__c mlr = new MassiveLoaderRequest__c();
-        mlr.Id = massiveLoaderRequestId;
-        mlr.Status__c = 'In attesa di lavorazione';
-        update mlr;
-    
-    }*/
 
 }

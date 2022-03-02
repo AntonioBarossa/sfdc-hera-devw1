@@ -617,7 +617,12 @@
         <field>Order.IsEarlyActivation__c</field>
         <readable>true</readable>
     </fieldPermissions>
-     <fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.isSwitchReseller__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Order.ResidentialStreetNumberExtension__c</field>
         <readable>true</readable>
@@ -16802,6 +16807,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.ProductCode</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Product2.ProductDescFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
