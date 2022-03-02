@@ -554,6 +554,11 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>hdtAccountSelector</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
             </componentInstance>
         </itemInstances>

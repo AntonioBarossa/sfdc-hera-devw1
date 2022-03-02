@@ -883,6 +883,18 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>hdtAccountSelector</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Channel__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Social</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>rightSidebarTabs</value>
