@@ -1,7 +1,7 @@
 import { LightningElement,api } from 'lwc';
 
 const ALERT_VARIANTS = {
-    valid: ['base', 'error', 'offline', 'warning'],
+    valid: ['base', 'error', 'offline', 'warning', 'success'],
     default: 'base'
 };
 export default class HdtAppointmentAlert extends LightningElement {
@@ -30,7 +30,11 @@ export default class HdtAppointmentAlert extends LightningElement {
         return this._isDismissible;
     }
     set isDismissible(value) {
-        this._isDismissible = value;
+        if(value==="true" || value===true){
+            this._isDismissible=true;
+        }
+        console.log('@@@'+value);
+
     }
 
     get variantInverse() {
@@ -51,12 +55,15 @@ export default class HdtAppointmentAlert extends LightningElement {
                 newClass+=' slds-theme_offline';
             }else if (this.variant === 'warning'){
                 newClass+=' slds-theme_warning';
+            }else if (this.variant === 'success'){
+                newClass+=' slds-theme_success';
             }
         return newClass;
     }
 
     closeAlert() {
-        this.hideAlert = true;
+        this.dispatchEvent(new CustomEvent('cancelevent',{detail : false}));
+        //this.hideAlert = true;
         this.closeAction();
     }
 }

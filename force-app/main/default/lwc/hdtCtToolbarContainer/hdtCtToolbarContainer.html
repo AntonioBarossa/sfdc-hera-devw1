@@ -1,5 +1,8 @@
 <template>
     <c-hdt-ct-toolbar show-panel={showPanel} ontoolbarevent={toolbarEvent} ></c-hdt-ct-toolbar>
+    <c-hdt-appointment-alert oncancelevent={cancelEvent} if:true={showmessage} variant={variant} is-dismissible="false">
+        <h2>{message}</h2>
+    </c-hdt-appointment-alert>
     <!-- <lightning-button variant="neutral" label="Esita" title="Esita" onclick={closeModal}>
     </lightning-button> --> 
 </template>

@@ -12,13 +12,13 @@
                 <lightning-quick-action-panel header="Gestisci Appuntamento">
                     <div class="slds-modal__content" id="welcome-mat-403-content">
                         <template if:true={confirmed}>
-                            <c-hdt-appointment-alert variant="error" is-dismissible="false">
+                            <c-hdt-appointment-alert variant="error" is-dismissible="true">
                                 <h2>L'appuntamento è già stato confermato. Per modificarlo o annullarlo contatta il servizio clienti.</h2>
                             </c-hdt-appointment-alert>
                         </template>
                         <template if:false={confirmed}>
                             <template if:true={isCommunity}>
-                                <c-hdt-appointment-alert variant={variant} is-dismissible="false">
+                                <c-hdt-appointment-alert variant={variant} is-dismissible="true">
                                     <h2>{alertMessage}</h2>
                                 </c-hdt-appointment-alert>
                             </template>

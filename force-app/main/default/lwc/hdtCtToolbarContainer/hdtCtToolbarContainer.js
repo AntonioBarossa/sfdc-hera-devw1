@@ -1,5 +1,6 @@
 import { LightningElement, track, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import cttoolbar from '@salesforce/resourceUrl/toolbar_sdk';
 import { loadScript } from 'lightning/platformResourceLoader';
 import id from '@salesforce/user/Id';
@@ -43,6 +44,9 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
     @api regListParam = 'filter={"filter":{"ecid":"[PLACE]"},"sort":{"startTs":-1},"index":0}';
     @track registrationLinkVo;
     @track saleId;
+    showmessage;
+    message;
+    variant;
 
     iconName = '';
     agentStatus = '';
@@ -397,14 +401,19 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
             appointment: selectedTimeSlot,
             appointmentType: 'PERSONALE',
             campaignMemberId: this.campaignMemberId
-        }).then(data => {
+        }).then((data) => {
             console.log(JSON.stringify('postAppointment response: ' + data));
-            if (data == 'success') {
+            if (data) {
                 //update campaignMember status
                 //this.saveScript('Appuntamento telefonico personale', true);
                 this.updateMemberStatus('Appuntamento telefonico personale');
             }
-        }).catch(err => {
+            else{
+                this.setmessage(true);
+                console.log('postAppointment->else');
+            }
+        }).catch((err) => {
+            this.setmessage(true);
             console.log(JSON.stringify(err));
         })
         //  });
@@ -456,12 +465,39 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
             status: status,
             campaignMember: this.campaignMemberId,
             isToSendStatusReitek: true
-        }).then(data => {
+        }).then((data) => {
             if (data) {
+                this.setmessage(false);
                 console.log('stato aggiornato con successo');
             }
-        }).catch(err => {
+            else{
+                this.setmessage(true);
+                console.log('Updatemember->else');
+            }
+        }).catch((err) => {
+            this.setmessage(true);
             console.log(JSON.stringify(err));
         });
     }
+
+    setmessage(isError){
+        if(isError){
+            this.showmessage=true;
+            this.message='Non è stato possibile completare l\'operazione!';
+            this.variant='error';
+        }
+        else{
+            this.showmessage=true;
+            this.message='Operazione completata con successo';
+            this.variant='success';
+        }
+    }
+
+    cancelEvent(event){
+        this.params = {};
+        if(event.detail === false){
+            this.showmessage=false;         
+        }
+    }
+    
 }
