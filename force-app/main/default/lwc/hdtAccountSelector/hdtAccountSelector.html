@@ -6,7 +6,10 @@
 		</span>
 		<lightning-button variant="destructive" label="Reset" onclick={handleReset} disabled={resetButtonDisabled} class="slds-col_bump-left"></lightning-button>
 	</div>
-	<div class="slds-grid slds-grid_vertical slds-box slds-theme_default custom-body">
+	<div class="slds-grid slds-grid_vertical slds-box slds-theme_default slds-is-relative custom-body">
+		<template if:true={showSpinner}>
+			<lightning-spinner variant="brand" aria-label="test" alternative-text="Loading" class="spins"></lightning-spinner>
+		</template>
 		<template if:false={changesCommitted}>
 			<template if:true={isCall}>
 				<span class="slds-size_1-of-1 slds-text-align_center slds-p-bottom_medium">
@@ -28,7 +31,7 @@
 					type="search"
 				></lightning-input>
 			</div>
-			<div class="slds-grid slds-grid_vertical slds-size_1-of-1">
+			<div class="slds-grid slds-grid_vertical slds-size_1-of-1 slds-scrollable_y max-height">
 				<template if:false={searchResults}>
 					<span class="slds-p-horizontal_medium slds-p-top_medium slds-text-align_center">
 						Nessuna corrispondenza. <br>
@@ -66,7 +69,7 @@
 						Nessun account trovato.
 					</span>
 				</template>
-				<template if:true={accountsFound}>
+				<template if:true={accountsFound} class="slds-scrollable_y">
 					<span>
 						Account correlati:
 					</span>
