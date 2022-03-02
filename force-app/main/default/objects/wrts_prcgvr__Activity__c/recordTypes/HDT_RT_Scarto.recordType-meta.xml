@@ -2459,6 +2459,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DL/SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errore Lavorazione SAP</fullName>
             <default>false</default>
         </values>
@@ -2476,6 +2488,10 @@
         </values>
         <values>
             <fullName>Errore invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Busta Docusign non consegnata</fullName>
             <default>false</default>
         </values>
     </picklistValues>

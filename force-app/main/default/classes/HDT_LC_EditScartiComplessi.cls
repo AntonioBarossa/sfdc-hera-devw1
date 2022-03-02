@@ -1,21 +1,49 @@
 public with sharing class HDT_LC_EditScartiComplessi {
     @AuraEnabled
     public static string getInitData(String recordId){
-        Map<String,Object> responseMap = new Map<String,Object>();
+        //Gestione Risottomissione Annullamento --> inserita nuovo elemento annullamento
+        Map<String,Object> responseMap = new Map<String,Object>{'annullamento' => 'NO'};
+        Boolean hasOwnership = true;
         try {
-            wrts_prcgvr__Activity__c activity = (wrts_prcgvr__Activity__c)HDT_QR_GenericQuery.getGenericRecords('Id,Case__c, Order__c,Order__r.ParentOrder__c, Order__r.AccountId,Order__r.ServicePoint__r.Account__c, Order__r.ServicePoint__r.CommoditySector__c,Order__r.RecordType.DeveloperName, Order__r.SwitchOutDate__c', 'wrts_prcgvr__Activity__c', 'Id =\''+recordId+'\'')[0];
-            if (activity.Case__c != null){
-                responseMap.put('objectId',recordId);
-                responseMap.put('objectType','Case');
-            }else if(activity.Order__c != null){
-                setStep(activity);
-                responseMap.put('objectType','Order');
-                responseMap.put('object',activity.Order__r);
-            }else{
-                throw new AuraHandledException('Attività Non Valida');
+            wrts_prcgvr__Activity__c activity = (wrts_prcgvr__Activity__c)HDT_QR_GenericQuery.getGenericRecords('Id,Case__c,Case__r.Phase__c, Type__c, OwnerId, Order__c,Order__r.Phase__c,Order__r.ParentOrder__c,Order__r.ParentOrder__r.AccountId, Order__r.ParentOrder__r.Sale__c,Order__r.Sale__c, Order__r.AccountId,Order__r.ServicePoint__r.Account__c, Order__r.ServicePoint__r.CommoditySector__c,Order__r.RecordType.DeveloperName, Order__r.SwitchOutDate__c', 'wrts_prcgvr__Activity__c', 'Id =\''+recordId+'\'')[0];
+            if(activity.OwnerId!= Userinfo.getUserId()){
+                hasOwnership=false;
+            }
+            else{
+                if (activity.Case__c != null){
+                    responseMap.put('objectId',recordId);
+                    responseMap.put('objectType','Case');
+                    //Gestione Risottomissione Annullamento
+                    if ('Annullamento - Ammissibilità KO'.equalsIgnoreCase(activity.Case__r.Phase__c) || 'Annullamento - Esito KO da DL/SII'.equalsIgnoreCase(activity.Case__r.Phase__c)){
+                        responseMap.put('annullamento','SI');
+                        responseMap.put('recordId',activity.Case__c);
+                    }
+                }else if(activity.Order__c != null){
+                    if(activity.Type__c!=null && activity.Type__c.equals('Busta Docusign non consegnata')){
+                        responseMap.put('object',activity);
+                        responseMap.put('objectType','wrts_prcgvr__Activity__c');
+                    }
+                    else {
+                        //Gestione Risottomissione Annullamento
+                        if ('Annullamento - Ammissibilità KO'.equalsIgnoreCase(activity.Order__r.Phase__c) || 'Annullamento - Esito KO da DL/SII'.equalsIgnoreCase(activity.Order__r.Phase__c)){
+                            responseMap.put('annullamento','SI');
+                            responseMap.put('recordId',activity.Order__c);
+                        }else{
+                            setStep(activity);
+                        }
+                        responseMap.put('objectType','Order');
+                        responseMap.put('object',activity.Order__r);
+                    }
+                }else{
+                    throw new AuraHandledException('Attività Non Valida');
+                }
             }
         } catch (Exception e) {
             throw new AuraHandledException('Non è stata trovata l\'attività richiesta.');
+        }
+
+        if(!hasOwnership){
+            throw new AuraHandledException('L\'attività può essere gestita solamente dall\'assegnatario');
         }
         return JSON.serialize(responseMap);
     }
@@ -23,8 +51,16 @@ public with sharing class HDT_LC_EditScartiComplessi {
     @AuraEnabled
     public static String resubmissionPractice(String orderId,String activityId, String processType){
         String response;
-        String fase = 'Voltura'.equalsIgnoreCase(processType) ? 'Documentazione Validata' : 'Comunicazione verso Heroku';
-        Order orderToUpdate = new Order(Id = orderId,Phase__c = fase);
+        String fase = 'Comunicazione verso Heroku';
+        switch on processType {
+            when  'Voltura' {
+                fase = 'Documentazione Validata';
+            }
+            when 'VAS' {
+                fase = 'Comunicazione Motore VAS';
+            }
+        }
+        Order orderToUpdate = new Order(Id = orderId,Phase__c = fase, DiscardReason__c = null);
         System.Savepoint sp = Database.setSavePoint();
         try {
             if (!HDT_UTL_Scarti.updateCloseDiscardActivity(activityId)){
@@ -78,6 +114,7 @@ public with sharing class HDT_LC_EditScartiComplessi {
         return step;
     }
 
+    @TestVisible
     private static Double setStepForVoltureWithSwitch(ServicePoint__c serv, Id accountId){
         Double step = 4;
         if (serv != null && serv.Account__c != accountId){

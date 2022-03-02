@@ -69,15 +69,15 @@ public inherited sharing class HDT_LC_SaleVas {
     }
 
     /**
-     * @description transitionCheck2
+     * @description transitionCheckNew
      * @param salesId
      * @param comune
      * @param tipologia
      * @return wrapReturn
      */
     @AuraEnabled
-    public static wrapReturn transitionCheck2(String salesId,String comune,string tipologia){
-        Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c,Account__r.CompanyOwner__c');
+    public static wrapReturn transitionCheckNew(String salesId,String comune,string tipologia){
+        Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c,Account__r.CompanyOwner__c,Account__r.CustomerMarking__c');
         boolean check = true;
         //HDT_UTL_Sales.isTransitionNoUp()
         //System.debug('*****MAVUOIANNA:'+ transitionlist);
@@ -99,9 +99,17 @@ public inherited sharing class HDT_LC_SaleVas {
                 wrpRes.messRes = 'city';
             }
         }
-        if(HDT_UTL_Sales.isTransitionVas(com, sal)){
+        if(HDT_UTL_Sales.isTransitionVas(com, sal) ){
             check = false;
             wrpRes.messRes = 'transitorio';
+
+            String result = '';
+            String regex = '^D[0-9] - .*';
+            Pattern regexPattern = Pattern.compile(regex);
+            if( regexPattern.matcher(sal.Account__r.CustomerMarking__c).matches() ){
+                check = false;
+                wrpRes.messRes = 'AccountMigratoTransitorio';
+            }
         }
         wrpRes.res = check;
         System.debug('*****VUOIANNA2:' + check);
@@ -217,7 +225,7 @@ public inherited sharing class HDT_LC_SaleVas {
                     FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Fatturabili' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
 
                 //removing subscriptions which already have a deactivation Case
-                List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE (Status<>'Bozza' AND  Phase__c!='Annullato') AND Type='Disattivazione VAS'
+                List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE Phase__c NOT IN ('Annullato','Bozza Annullata') AND Type='Disattivazione VAS'
                     AND Subscription__c IN :recordMap.keySet() WITH SECURITY_ENFORCED];
                 for (Case subCase:subsCases) {
                     recordMap.remove(subCase.Subscription__c);
@@ -230,7 +238,7 @@ public inherited sharing class HDT_LC_SaleVas {
                     FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Servizio' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
 
                 //removing subscriptions which already have a deactivation Case
-                List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE (Status<>'Bozza' AND  Phase__c!='Annullato') AND Type='Disattivazione VAS'
+                List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE Phase__c NOT IN ('Annullato','Bozza Annullata') AND Type='Disattivazione VAS'
                     AND Subscription__c IN :recordMap.keySet() WITH SECURITY_ENFORCED];
                 for (Case subCase:subsCases) {
                     recordMap.remove(subCase.Subscription__c);
@@ -344,7 +352,11 @@ public inherited sharing class HDT_LC_SaleVas {
             AccountId = order.AccountId
         ));
 
-        SBQQ__Quote__c newQuote = quoteSrv.createRecord(new SBQQ__Quote__c(
+        /**@frpanico 09/02/2022
+         * Inserimento puntamento
+         * al contratto
+         */
+        SBQQ__Quote__c newQuote = new SBQQ__Quote__c(
             Sale__c = sale.Id,
             OrderReference__c = order.Id,
             SBQQ__Opportunity2__c = newOpportunity.Id,
@@ -363,7 +375,14 @@ public inherited sharing class HDT_LC_SaleVas {
             IsBillableVas__c = false,
             IsTransition__c = currentSale[0].IsTransition__c,
             SBQQ__PricebookId__c = checkCommodityOrder(order.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
-        ));
+        );
+
+        if(order.ContractReference__c != null)
+        {
+            newQuote.ContractReference__c = order.ContractReference__c;
+        }
+
+        newQuote = quoteSrv.createRecord(newQuote);
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
 
@@ -409,7 +428,7 @@ public inherited sharing class HDT_LC_SaleVas {
             FriendCode__c = sale.FriendCode__c,
             CampaignCode__c = sale.CampaignCode__c,
             CreatedBy__c = sale.CreatedBy__c,
-            SalesCompany__c = 'Hera Comm S.p.A.',//ribaltare da contract
+            SalesCompany__c = contract?.ServicePoint__r?.Vendor__c,
             Campaign__c = sale.Campaign__c,
             SupplyCity__c = null, //to do (other logic to get supplyCity)
             IsVAS__c = true,

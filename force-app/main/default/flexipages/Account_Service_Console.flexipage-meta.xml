@@ -31,7 +31,7 @@
                             <value>Account.Scheda_Cliente</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Account.HDT_VasOrders</value>
+                            <value>Account.HDT_VasPracticesView</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Global.EscalationCmp</value>

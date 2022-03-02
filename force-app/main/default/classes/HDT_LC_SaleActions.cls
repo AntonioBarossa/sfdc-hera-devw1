@@ -1,6 +1,6 @@
 /**
 * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
-* @date 14/12/2020
+* @date 14/12/2020updateCampaignMembersStatus
 * @description Apex controller for hdtSaleActions.js component
 * @history Keltin Mesonjesi – 14/12/2020 – Created class
 */
@@ -16,6 +16,7 @@ public inherited sharing class HDT_LC_SaleActions {
     private static HDT_SRV_QuoteLineGroup quoteLineGroupSrv = new HDT_SRV_QuoteLineGroup();
     private static HDT_SRV_QuoteProcess quoteProcessSrv = new HDT_SRV_QuoteProcess();
     private static HDT_QR_QuoteProcess quoteProcessQr = new HDT_QR_QuoteProcess();
+    private static HDT_QR_AccountContactRelation accountContactRelationQr = new HDT_QR_AccountContactRelation();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -200,6 +201,12 @@ public inherited sharing class HDT_LC_SaleActions {
             quoteLinesListToUpdate.add(quoteLineToUpdate);
         }
         //if(sale.Id=='a3I3N00000042c6UAA') throw new AuraHandledException('Mio test');
+        if(!String.isBlank(campaignMemberId)){
+            CampaignMember cm = new CampaignMember();
+            cm.Id = campaignMemberId;
+
+            saleToUpdate.Campaign__c = [SELECT Id, CampaignId FROM CampaignMember WHERE Id =: campaignMemberId WITH SECURITY_ENFORCED LIMIT 1].CampaignId;
+        }
 
         //7 - Execute actions
         opportunitySrv.updateRecords(opps);
@@ -208,9 +215,16 @@ public inherited sharing class HDT_LC_SaleActions {
         quoteSrv.updateRecords(quoteList);
 
         //update campaignMember Status
-        if (campaignMemberId != null) {
-            HDT_LC_CampaignsController.updateCampaignMemberStatus(campaignMemberId, 'Positivo');
-        }
+        // if (string.isNotBlank(campaignMemberId)) {
+        //     CampaignMember myCampaignMember = [select id, Campaign.PositiveOutcomeDefaultStatus__c  from CampaignMember where Id = :campaignMemberId WITH SECURITY_ENFORCED];   
+        //     String myStatus = myCampaignMember.Campaign.PositiveOutcomeDefaultStatus__c;
+        //     system.debug('CampaignMember-MyStatus --> '+ myStatus);
+        //     HDT_LC_CampaignsController.updateCampaignMemberStatus(campaignMemberId, myStatus);
+        // }
+
+        
+
+        
 
         //update campaignMember siblings Status a 'Non Proposto Auto'
         List<String> accountIds = new List<String>();
@@ -230,7 +244,8 @@ public inherited sharing class HDT_LC_SaleActions {
          * In ogni caso, se l'account non ha il Codice Cliente
          * viene chiamato il servizio di Crea BP/CA
          */
-        
+
+        System.enqueueJob(new HDT_QBL_BpCaRequest( accountContactRelationQr.getCreateBpCa( accountIds[0] ), sale.Id ) );
 
     }
 

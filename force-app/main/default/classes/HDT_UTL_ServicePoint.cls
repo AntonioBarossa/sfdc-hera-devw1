@@ -45,7 +45,7 @@ public with sharing class HDT_UTL_ServicePoint {
             else if(mapRes.get('STATODEVICE')== 'I'){
                 spNew.MeterStatus__c  ='Inattivo' ;
             }
-            else{
+            else if(!String.isBlank(mapRes.get('STATODEVICE'))){
                 spNew.MeterStatus__c  = 'Bozza';
             }
         }
@@ -424,5 +424,15 @@ public with sharing class HDT_UTL_ServicePoint {
             }
         }
         return h;
+    }
+
+    public static Boolean checkTaxesCoerence (String tipoFornitura, String accise){
+
+        if((tipoFornitura == 'Domestico' && accise == 'Imposta usi domestici') || (tipoFornitura == 'Non Domestico' && accise != 'Imposta usi domestici')){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

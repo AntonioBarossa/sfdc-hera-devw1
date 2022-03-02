@@ -3,6 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import init from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.init';
 import next from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.next';
 import checkVasAndCommodity from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.checkVasAndCommodity';
+import getConsumptionAnnualForVas from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.getConsumptionAnnualForVas';
 import checkContendibilita from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.checkContendibilita';
 import checkCompatibility from '@salesforce/apex/HDT_UTL_MatrixCompatibility.checkCompatibilitySales';
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
@@ -34,6 +35,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     service = '';
     pickValue = '';
     causaleContendibilita = '';
+    consumptionAnnualForVas;
 
     get isNotBillable(){
         return this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && !this.order.IsBillableVas__c;
@@ -334,6 +336,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         //EVERIS
 
         //EVERIS: Aggiunta variabile Order
+
         next({order: this.order,orderId: this.order.Id, selectedProcessObject: this.selectedProcessObject, deliberate: this.deliberation, extraParams: extraParams, srRequest: this.serviceRequest}).then(data =>{
             if(data != '' && data != this.order.OrderNumber){
                 const toastErrorMessage = new ShowToastEvent({
@@ -373,9 +376,14 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          * HDT_RT_VAS (Solo Se: OrderReference__c <> null & ContractReference <> null)
          */
          console.log('****12');
+         console.log('# SelectedProcess.RecordType >>> ' + this.selectedProcessObject.recordType === 'HDT_RT_VAS');
+         console.log('# Quote Condition >>> ' + this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c);
+         console.log('# RecordType condition >>> ' + ['HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType));
+         console.log('# ProcessType Conditio >>> ' + this.selectedProcessObject.processType !== 'Switch in Ripristinatorio');
+         console.log('# Full Condition >>> ' + (this.selectedProcessObject.recordType === 'HDT_RT_VAS' && this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c ) || (['HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType !== 'Switch in Ripristinatorio'));
         //if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
-        if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c ) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
-                this.callCreditCheckSAP();
+        if( (['HDT_RT_VAS','HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
+            this.callCreditCheckSAP();
         }
         console.log('****13');
         
@@ -458,7 +466,13 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                         // this.checkCompatibilityProcess();
                     }
                 }
-    
+                if(this.order.IsVAS__c){
+                    getConsumptionAnnualForVas({orderId: this.order.Id}).then(data =>{
+                       this.consumptionAnnualForVas = data; 
+                    }).catch(error => {
+                        console.log(error.body.message);                    
+                    });
+                }
             }).catch(error => {
                 this.loaded = true;
                 console.log(error.body.message);
@@ -513,8 +527,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 'processVisibility': ''
             }
         ];
-
-        console.log('CallBack end');
+        
     }
 
     typeVisibility(type){
@@ -546,7 +559,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         let isVasAndCommodity = false;
 
         try {
-            isVasAndCommodity = await checkVasAndCommodity({parentOrdId: this.order.ParentOrder__c});
+            isVasAndCommodity = await checkVasAndCommodity({ ord: this.order, recordTypeName: this.selectedProcessObject.recordType });
             console.log('isVasAndCommodity: ' + isVasAndCommodity);
         } catch (error) {
             console.log(JSON.parse(JSON.stringify(error)));
@@ -682,6 +695,11 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
             data["details"][0] = { ...data["details"][0], "annualConsumption":this.order.ServicePoint__r.AnnualConsumption__c};
         }
+        else{
+            if(this.consumptionAnnualForVas != null){
+                data["details"][0] = { ...data["details"][0], "annualConsumption":this.consumptionAnnualForVas};
+            }
+        }
         console.log("this.3"); 
 
         if((this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_Voltura') && (this.order.Account.Id != this.order.ServicePoint__r?.Account__r?.Id) ){
@@ -700,7 +718,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             data["alternativeCustomerId"] = fiscalData;
         }
         console.log("this.4"); 
-
+        console.log("@@@@request --> " + JSON.stringify(data)); 
         return data; 
     }
     // END @Picchiri 07/06/21 Credit Check

@@ -4,7 +4,7 @@
  * @description HDT_UTL_Scarti - Utility scarti
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
-@SuppressWarnings('PMD.AvoidGlobalModifier')
+@SuppressWarnings('PMD.EmptyStatementBlock , PMD.AvoidGlobalModifier , PMD.AvoidDebugStatements, PMD.LocalVariableNamingConventions, PMD.MethodNamingConventions, PMD.CyclomaticComplexity, PMD.AvoidDeeplyNestedIfStmts, PMD.ExcessivePublicCount, PMD.ExcessiveParameterList, PMD.ExcessiveClassLength')
 global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.IApexCriteria, Queueable{
     private List<wrts_prcgvr__Activity__c> newActivities;
     private List<wrts_prcgvr__Activity__c> oldActivities;
@@ -14,15 +14,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     static final string SCARTODOCUMENTALEPOSTSALESTEMPLATENAME='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
     static final string SCARTODOCUMENTALESALESTEMPLATENAME='CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
     
-    /* 
-    //Gestione scarti SAP commentata per nuova gestione tramite custom metadata type 
-    private Static final Set<String> TRACCIATURATYPES = new Set<String>{'Richiesta non identificata',
-                                                                                 'Esito ricevuto su richiesta chiusa',
-                                                                                 'Esito non elaborato',
-                                                                                 'Errore invio a SAP',
-                                                                                 'Eliminato esito in scarto',
-                                                                                 'Errore determinazione variante SAP',
-                                                                                 'Errore Lavorazione SAP'}; */
 
     static final Map<String, String> TRACCIAMENTOHEROKUSALES = new Map<String, String>{ 'Esito ricevuto su richiesta chiusa' => 'CBS_HER007__ESITO_RICEVUTO_SU_RICHIESTA_CHIUSA_SALES',
                                                                                         'Esito non elaborato' => 'CBS_HER006__ESITO_NON_ELABORATO_DA_DLSII_SALES',
@@ -75,16 +66,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                                                                    'CreatedByUsername__c' => 'UTENZA',
                                                                                    'StartDate__c' => 'DATA_EVENTO',
                                                                                    'wrts_prcgvr__Description__c' => 'ERROR_MESSAGE'};
-    /*
-    global Object execute(Object args){
-        Map<String, Object> argsMap = (Map<String, Object>) args;
-        SObject transition = (SObject) argsMap.get('transition');
-        SObject action = (SObject) argsMap.get('action');
-        String method = (String) argsMap.get('method');
-        SObject sender = (SObject) argsMap.get('sender');		
-		
-    }
-	*/
+    
     global HDT_UTL_Scarti(){}//need empty constructor for Dynamically creating instance of this class
 
     public HDT_UTL_Scarti(List<wrts_prcgvr__Activity__c> newActs, List<wrts_prcgvr__Activity__c> oldActs) {
@@ -93,7 +75,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     }
 
     public void execute(QueueableContext context) {
-        system.debug('HDT_UTL_Scarti execute start QueueableContext: ' + context);
+        system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti execute start QueueableContext: ' + context);
         updatePraticaForScartoDocumentaleQueue(newActivities, oldActivities);
     }
 
@@ -120,8 +102,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         try{
             activityCreationOutcome = checkActivityCreation((Id)record.get('Id'), method.substringAfter('___'));
         } catch(Exception e){
-            system.debug(e.getMessage());
-            system.debug(e.getStackTraceString());
+            system.debug(LoggingLevel.DEBUG, e.getMessage());
+            system.debug(LoggingLevel.DEBUG, e.getStackTraceString());
         }
 		
 		if(method.startsWith('checkActivityCreation')){
@@ -189,12 +171,22 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     HDT_UTL_DatabaseService.insertSObject(act);
                     outputRecordId = act.Id;
                 }
+                when 'selfReading'{
+                    Map <String, Object> mapParam=new Map<String,object>();
+                    case c=new case(Id=inputParam[0].objectId);
+                    Map <String,String> reqType=new Map <String, String>();
+                    reqType.put('requestType', 'InvioLettureForzato');
+                    mapParam.put('sender', c);
+                    mapParam.put('parameters', reqType);
+                    HDT_SRV_SelfReadingsFacade selfReadingsFacade=new HDT_SRV_SelfReadingsFacade();
+                    selfReadingsFacade.execute((Object)mapParam);
+                }
             }
             output.recordId=outputRecordId;
             output.esito='OK';
             output.dettaglioEsito='OK';
         }catch(Exception e){
-            System.debug('ERROR: ' + e.getMessage() + ' @@ ' + e.getStackTraceString());
+            system.debug(LoggingLevel.DEBUG, 'ERROR: ' + e.getMessage() + ' @@ ' + e.getStackTraceString());
             output.esito='KO';
             output.dettaglioEsito= e.getMessage() + ' @@ ' + e.getStackTraceString();
         }
@@ -212,22 +204,27 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         Set<String> orderNameSet = new Set<String>();
         List<Map<String,String>> dataForAttivitaTracciaturaCreation = new List<Map<String,String>>();
         List<wrts_prcgvr__Activity__c> dataForCheckEsitiIntermedi = new List<wrts_prcgvr__Activity__c>();
+        Map<String, String> activitiesValues = new Map<String,String>();
         for (HDT_WRP_MrrRequest.HDT_WRP_Request request : inboundRequests) {
             HDT_WRP_MrrResponse.HDT_WRP_Response parsedResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
             for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : parsedResponseItem.objects){
                 for(HDT_WRP_MrrResponse.HDT_WRP_Field curField : curObj.fields){
-                    system.debug('handleMRRInboundRequest curField: ' + curField.name + ' ' + curField.value);
+                    activitiesValues.put(curField.name,curField.value);
+                    system.debug(LoggingLevel.DEBUG, 'handleMRRInboundRequest curField: ' + curField.name + ' ' + curField.value);
                     /* 
                     //Gestione scarti SAP commentata per nuova gestione tramite custom metadata type 
                     if('ATTIVITA'.equalsIgnoreCase(curField.name) && TRACCIATURATYPES.contains(curField.value)){ */
                     if('ATTIVITA'.equalsIgnoreCase(curField.name) && 'Richiesta non identificata'.equalsIgnoreCase(curField.value)){
                         Map<String,String> newData = new Map<String,String>();
                         for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){ newData.put(curField2.name, curField2.value); }
+                        /* 
+                        Commentato perché nella Richiesta non identificata, il curObj.fields è vuoto ed in ogni caso non serve.
                         for(HDT_WRP_MrrRequest.HDT_WRP_Field curField3 : request.header.fields){ newData.put(curField3.name, curField3.value); }
+                         */
                         dataForAttivitaTracciaturaCreation.add(newData);
                     }
-                    if('FASE'.equalsIgnoreCase(curField.name) && new List<String>{'Completata', 'Ammissibilità OK'}.contains(curField.value)){
-                    	system.debug('handleMRRInboundRequest curField: ' + curField.name + ' ' + curField.value);
+                    if('FASE'.equalsIgnoreCase(curField.name) && String.isNotBlank(curField.value)/*&& new List<String>{'Completata', 'Ammissibilità OK'}.contains(curField.value)*/){
+                    	system.debug(LoggingLevel.DEBUG, 'handleMRRInboundRequest curField: ' + curField.name + ' ' + curField.value);
                         for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
                             if('RECORD_ID'.equalsIgnoreCase(curField2.name)){
                                 if(curField2.value.length() == 18 ){
@@ -250,7 +247,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 }
             }
         }
-        System.debug('MRREQUEST orderNameSet' + JSON.serializePretty(orderNameSet));
+        system.debug(LoggingLevel.DEBUG, 'MRREQUEST orderNameSet' + JSON.serializePretty(orderNameSet));
         if(!orderNameSet.isEmpty()){
             for(Order curOrder : [SELECT Id FROM Order WHERE OrderNumber IN :orderNameSet]){
                 wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c(DiscardCategory__c = 'Tracciatura');
@@ -259,10 +256,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 dataForCheckEsitiIntermedi.add(tempAct);
             }
         }
-        System.debug('MRREQUEST dataForAttivitaTracciaturaCreation' + JSON.serializePretty(dataForAttivitaTracciaturaCreation));
-        System.debug('MRREQUEST dataForCheckEsitiIntermedi' + JSON.serializePretty(dataForCheckEsitiIntermedi));
+        system.debug(LoggingLevel.DEBUG, 'MRREQUEST dataForAttivitaTracciaturaCreation' + JSON.serializePretty(dataForAttivitaTracciaturaCreation));
+        system.debug(LoggingLevel.DEBUG, 'MRREQUEST dataForCheckEsitiIntermedi' + JSON.serializePretty(dataForCheckEsitiIntermedi));
         if(!dataForAttivitaTracciaturaCreation.isEmpty()){ createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation); }
-        if(!dataForCheckEsitiIntermedi.isEmpty()){ checkForEsitiIntermedi(dataForCheckEsitiIntermedi); }
+        if(!dataForCheckEsitiIntermedi.isEmpty()){ checkForEsitiIntermedi(dataForCheckEsitiIntermedi,activitiesValues); }
     }
 
 
@@ -324,14 +321,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @param sourceData - List<Map<String,String>>
     */
     public static void createAttivitaTracciaturaHeroku(List<Map<String,String>> sourceData){
-        System.debug('createAttivitaTracciaturaHeroku start' + sourceData);
+        system.debug(LoggingLevel.DEBUG, 'createAttivitaTracciaturaHeroku start' + sourceData);
         List<wrts_prcgvr__Activity__c> toInsert = new List<wrts_prcgvr__Activity__c>();
-        /* Map<String, Map<String,String>> dataForSalesHandlingByRecordIdField = new Map<String, Map<String,String>>();
-        Map<String, Map<String,String>> dataForKOSAPHandling = new Map<String, Map<String,String>>();
- */
         for(Map<String,String> curData : sourceData){
             if('Richiesta non identificata'.equalsIgnoreCase(curData.get('ATTIVITA'))){
-                system.debug('anonima' + JSON.serializePretty(curData));
+                system.debug(LoggingLevel.DEBUG, 'anonima' + JSON.serializePretty(curData));
                 wrts_prcgvr__Activity__c newAct = new wrts_prcgvr__Activity__c();
                 for(String curActField : ANONIMAMAPPING.keySet()){
                     if('StartDate__c'.equalsIgnoreCase(curActField)){
@@ -341,127 +335,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     }
                 }
                 toInsert.add(newAct);
-            }/* 
-            //Gestione scarti SAP commentata per nuova gestione tramite custom metadata type 
-            else if(TRACCIAMENTOHEROKUSALES.keySet().contains(curData.get('ATTIVITA')) && String.isNotBlank(curData.get('RECORD_ID'))){//va bene controllare solo su una mappa, tanto i keyset sono uguali
-                system.debug('scarto transitorio' + JSON.serializePretty(curData));
-                if('sales'.equalsIgnoreCase(curData.get('PROCESS_CATEGORY'))){
-                    dataForSalesHandlingByRecordIdField.put(curData.get('RECORD_ID'), curData);
-                }else if('postsales'.equalsIgnoreCase(curData.get('PROCESS_CATEGORY'))){
-                    wrts_prcgvr__Activity__c newAct;
-                    newAct = createActivityByObjectIdAndTemplateName(curData.get('RECORD_ID'), TRACCIAMENTOHEROKUPOSTSALES.get(curData.get('ATTIVITA')));
-                    for(String curActField : TRACCIAMENTOMAPPING.keySet()){
-                        if(curData.get(TRACCIAMENTOMAPPING.get(curActField)) != null){
-                            switch on curActField{
-                                when 'StartDate__c'{ newAct.put(curActField, Date.valueOf(curData.get(TRACCIAMENTOMAPPING.get(curActField)))); }
-                                when 'DiscardCount__c'{ newAct.put(curActField, Decimal.valueOf(curData.get(TRACCIAMENTOMAPPING.get(curActField)))); }
-                                when else{ newAct.put(curActField, curData.get(TRACCIAMENTOMAPPING.get(curActField))); }
-                            }
-                        }
-                    }
-                    toInsert.add(newAct);
-                }
-            }
-            else if('Errore lavorazione SAP'.equalsIgnoreCase(curData.get('ATTIVITA')) && String.isNotBlank(curData.get('RECORD_ID'))){
-                system.debug('ko sap' + JSON.serializePretty(curData));
-                dataForKOSAPHandling.put(curData.get('RECORD_ID'), curData);
-            } */
-        }
-        
-        /* System.debug('createAttivitaTracciaturaHeroku dataForSalesHandlingByRecordIdField' + dataForSalesHandlingByRecordIdField);
-        if(!dataForSalesHandlingByRecordIdField.keySet().isEmpty()){
-            Map<String, Map<String,String>> filanCollection = new Map<String, Map<String,String>>();
-
-            Set<String> orderNumbers = new Set<String>();
-            for(String curValue : dataForSalesHandlingByRecordIdField.keySet()){
-                if(curValue.startsWithIgnoreCase('O-')){
-                    orderNumbers.add(curValue);
-                } else{
-                    filanCollection.put(curValue, dataForSalesHandlingByRecordIdField.get(curValue));
-                }
-            }
-            Map<Id, Order> orders = new Map<Id, Order>([SELECT Id, OrderNumber
-                                                        FROM Order 
-                                                        WHERE OrderNumber IN :orderNumbers]);
-            for(Order curOrder : orders.values()){
-                filanCollection.put(curOrder.Id, dataForSalesHandlingByRecordIdField.get(curOrder.OrderNumber));
-            }
-            for(String curId : filanCollection.keySet()){
-                Map<String,String> curData = filanCollection.get(curId);
-                wrts_prcgvr__Activity__c newAct = createActivityByObjectIdAndTemplateName(curId, TRACCIAMENTOHEROKUSALES.get(curData.get('ATTIVITA')));
-                for(String curActField : TRACCIAMENTOMAPPING.keySet()){
-                    if(curData.get(TRACCIAMENTOMAPPING.get(curActField)) != null){
-                        switch on curActField{
-                            when 'StartDate__c'{ newAct.put(curActField, Date.valueOf(curData.get(TRACCIAMENTOMAPPING.get(curActField)))); }
-                            when 'DiscardCount__c'{ newAct.put(curActField, Decimal.valueOf(curData.get(TRACCIAMENTOMAPPING.get(curActField)))); }
-                            when else{ newAct.put(curActField, curData.get(TRACCIAMENTOMAPPING.get(curActField))); }
-                        }
-                    }
-                }
-                toInsert.add(newAct);
             }
         }
-        
-        System.debug('createAttivitaTracciaturaHeroku dataForKOSAPHandling' + dataForKOSAPHandling);
-        if(!dataForKOSAPHandling.keySet().isEmpty()){
-            Map<String,String> requestData;
-            Set<String> orderNumbers = new Set<String>();
-            Set<String> caseNumbers = new Set<String>();
-            Set<Id> orderIds = new Set<Id>();
-            Set<Id> caseIds = new Set<Id>();
-            for(String curRecordId : dataForKOSAPHandling.keySet()){
-                if(curRecordId.startsWithIgnoreCase('O-')){ orderNumbers.add(curRecordId); }
-                else if(curRecordId.startsWithIgnoreCase('C-')){caseNumbers.add(curRecordId);}
-                else if(Schema.Order.SObjectType == Id.valueOf(curRecordId).getSobjectType()){ orderIds.add(curRecordId); }
-                else if(Schema.Case.SObjectType == Id.valueOf(curRecordId).getSobjectType()){ caseIds.add(curRecordId); }
-            }
-            if(!orderNumbers.isEmpty() || !orderIds.isEmpty()){
-                Map<Id, Order> ordersMap = new Map<Id, Order>([SELECT Id, RecordType.DeveloperName, OrderNumber
-                                                                FROM Order
-                                                                WHERE Id IN :orderIds
-                                                                OR OrderNumber IN :orderNumbers]);
-                for(Id curId : ordersMap.keySet()){
-                    if(dataForKOSAPHandling.get(curId) != null){ requestData = dataForKOSAPHandling.get(curId); }
-                    else { requestData = dataForKOSAPHandling.get(ordersMap.get(curId).OrderNumber); }
-                    wrts_prcgvr__Activity__c newAct = createActivityByObjectIdAndTemplateName(curId, TRACCIAMENTOKOSAPSALES.get(ordersMap.get(curId).RecordType.DeveloperName));
-                    for(String curActField : TRACCIAMENTOMAPPING.keySet()){
-                        if(requestData.get(TRACCIAMENTOMAPPING.get(curActField)) != null){
-                            switch on curActField{
-                                when 'StartDate__c'{ newAct.put(curActField, Date.valueOf(requestData.get(TRACCIAMENTOMAPPING.get(curActField)))); }
-                                when 'DiscardCount__c'{ newAct.put(curActField, Decimal.valueOf(requestData.get(TRACCIAMENTOMAPPING.get(curActField)))); }
-                                when else{ newAct.put(curActField, requestData.get(TRACCIAMENTOMAPPING.get(curActField))); }
-                            }
-                        }
-                    }
-                    toInsert.add(newAct);
-                }
-            }
-            if(!(caseIds.isEmpty() && caseNumbers.isEmpty())){
-                Map<Id, Case> casesMap = new Map<Id, Case>([SELECT Id, RecordType.DeveloperName, CaseNumber
-                                                            FROM Case
-                                                            WHERE Id IN :caseIds OR CaseNumber IN :caseNumbers]);
-                for(Id curId : casesMap.keySet()){
-                    //requestData = dataForKOSAPHandling.get(curId);
-                    if(dataForKOSAPHandling.get(curId) != null){ requestData = dataForKOSAPHandling.get(curId); }
-                    else { requestData = dataForKOSAPHandling.get(casesMap.get(curId).CaseNumber); }
-                    wrts_prcgvr__Activity__c newAct = createActivityByObjectIdAndTemplateName(curId, TRACCIAMENTOKOSAPPOSTSALES.get(casesMap.get(curId).RecordType.DeveloperName));
-                    for(String curActField : TRACCIAMENTOMAPPING.keySet()){
-                        if(requestData.get(TRACCIAMENTOMAPPING.get(curActField)) != null){
-                            switch on curActField{
-                                when 'StartDate__c'{ newAct.put(curActField, Date.valueOf(requestData.get(TRACCIAMENTOMAPPING.get(curActField)))); }
-                                when 'DiscardCount__c'{ newAct.put(curActField, Decimal.valueOf(requestData.get(TRACCIAMENTOMAPPING.get(curActField)))); }
-                                when else{ newAct.put(curActField, requestData.get(TRACCIAMENTOMAPPING.get(curActField))); }
-                            }
-                        }
-                    }
-                    toInsert.add(newAct);
-                }
-            }
-        } 
-        //FINE Gestione scarti SAP commentata per nuova gestione tramite custom metadata type 
-        */
-        
-        System.debug('createAttivitaTracciaturaHeroku end' + toInsert);
+        system.debug(LoggingLevel.DEBUG, 'createAttivitaTracciaturaHeroku end' + toInsert);
         HDT_UTL_DatabaseService.insertSObject(toInsert);
     }
 
@@ -477,8 +353,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         return createActivityByObjectIdAndTemplateName(objectId,templateName,getObjectName(objectId));
     }
     public static wrts_prcgvr__Activity__c createActivityByObjectIdAndTemplateName(String objectId, String templateName, String objectType){
-        system.debug('HDT_UTL_Scarti objectId ' + objectId);
-        system.debug('HDT_UTL_Scarti templateName ' + templateName);
+        system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti objectId ' + objectId);
+        system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti templateName ' + templateName);
         try{
             Map<String, wrts_prcgvr__ActivityTemplate__c> template;
             if (String.isEmpty(objectType)){ 
@@ -486,7 +362,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }else{
                 template = getTemplatesMapByName(new Set<String>{templateName},objectType);
             }
-            system.debug('HDT_UTL_Scarti template ' + template);
+            system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti template ' + template);
             if(template.values().size() > 0){
                 wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
                 List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(template.values().get(0).wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>objectId});
@@ -499,14 +375,14 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 if(activities.get(0).Order__c == null && Schema.Order.SObjectType == Id.valueOf(objectId).getSobjectType()){
                     activities.get(0).Order__c = objectId;
                 }
-                system.debug('HDT_UTL_Scarti end ' + activities.get(0));
+                system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti end ' + activities.get(0));
                 return activities.get(0);
             }
-            system.debug('HDT_UTL_Scarti end');
+            system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti end');
             return null;
         }
         catch(Exception e){
-            system.debug('HDT_UTL_Scarti catch ' + e);
+            system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti catch ' + e);
             return null;
         }
     }
@@ -520,27 +396,27 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @return list<wrts_prcgvr__Activity__c>
     */
     public static list<wrts_prcgvr__Activity__c> createActivityByObjectIdAndTemplateNameBulk(list<String> objectIds, String templateName){
-        system.debug('HDT_UTL_Scarti objectIds ' + objectIds);
-        system.debug('HDT_UTL_Scarti templateName ' + templateName);
+        system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti objectIds ' + objectIds);
+        system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti templateName ' + templateName);
         try{
             Map<String, wrts_prcgvr__ActivityTemplate__c> template = getTemplatesMapByName(new Set<String>{templateName});
-            system.debug('HDT_UTL_Scarti template ' + template);
+            system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti template ' + template);
             if(template.values().size() > 0){
                 wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
                 List<wrts_prcgvr__Activity__c> resultActivities = new List<wrts_prcgvr__Activity__c>();
                 for(String singleObjectId: objectIds){
                     List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(template.values().get(0).wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>singleObjectId});
-                    system.debug('HDT_UTL_Scarti single activity ' + activities.get(0));
+                    system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti single activity ' + activities.get(0));
                     resultActivities.add(activities.get(0));
                 }
-                system.debug('HDT_UTL_Scarti end ' + resultActivities);
+                system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti end ' + resultActivities);
                 return resultActivities;
             }
-            system.debug('HDT_UTL_Scarti end');
+            system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti end');
             return null;
         }
         catch(Exception e){
-            system.debug('HDT_UTL_Scarti catch ' + e);
+            system.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti catch ' + e);
             return null;
         }
     }
@@ -554,7 +430,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @return Boolean
     */
     public static Boolean checkActivityCreation(Id recordId, String templateName){
-        System.debug('checkActivityCreation start recordId: ' + recordId + '; templateName: ' + templateName);
+        system.debug(LoggingLevel.DEBUG, 'checkActivityCreation start recordId: ' + recordId + '; templateName: ' + templateName);
         Map<String, wrts_prcgvr__ActivityTemplate__c> templateMap = getTemplatesMapByName(new Set<String>{templateName});
         if(!templateMap.isEmpty()){
             List<wrts_prcgvr__ActivityAction__c> actions = [SELECT Id, wrts_prcgvr__Field__c, wrts_prcgvr__Value__c 
@@ -579,7 +455,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @return boolean : true if it has to do annullment; false instead
     */
     public static boolean checkDiscardAnnullmentRule(Id recordId, String activityType){
-        System.debug('checkDiscardAnnullmentRule start recordId: ' + recordId + '; activityType: ' + activityType);
+        return checkDiscardAnnullmentRule(recordId, activityType,'');
+    }
+
+    public static boolean checkDiscardAnnullmentRule(Id recordId, String activityType,String discardMessage){
+        system.debug(LoggingLevel.DEBUG, 'checkDiscardAnnullmentRule start recordId: ' + recordId + '; activityType: ' + activityType);
         Boolean outcome = false;
         
 
@@ -587,9 +467,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         List<DiscardAnnullmentRule__c> rules = [SELECT ControllingValue__c, ProcessValue__c, DiscardNoteReliability__c
                                                 FROM DiscardAnnullmentRule__c
                                                 WHERE ActivityType__c = :activityType
+                                                AND IsActive__c = true
                                                 WITH SECURITY_ENFORCED];
 		
-        System.debug('checkDiscardAnnullmentRule rules: ' + JSON.serializePretty(rules));
+        system.debug(LoggingLevel.DEBUG, 'checkDiscardAnnullmentRule rules: ' + JSON.serializePretty(rules));
         if(!rules.isEmpty()){
             String processField = '';
             String ctrField = '';
@@ -598,7 +479,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 List<Case> parentCase = [SELECT Id,Type,DiscardDescription__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED];
                 if(!parentCase.isEmpty()){
                     processField = parentCase.get(0).Type;
-                    ctrField = parentCase.get(0).DiscardDescription__c;
+                    ctrField = String.isNotBlank(discardMessage) ? discardMessage : parentCase.get(0).DiscardDescription__c;
                 }
             }
             if(Schema.Order.SObjectType == recordId.getSobjectType()){
@@ -606,7 +487,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 List<Order> parentOrder = [SELECT Id,ProcessType__c,DiscardReason__c FROM Order WHERE Id =:recordId WITH SECURITY_ENFORCED];
                 if(!parentOrder.isEmpty()){
                     processField = parentOrder.get(0).ProcessType__c;
-                    ctrField = parentOrder.get(0).DiscardReason__c;
+                    ctrField = String.isNotBlank(discardMessage) ? discardMessage : parentOrder.get(0).DiscardReason__c;
                 }
             }
             if (String.isNotEmpty(processField) && String.isNotEmpty(ctrField)){
@@ -630,7 +511,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 }
             }
         }
-        System.debug('checkDiscardAnnullmentRule outcome: ' + outcome);
+        system.debug(LoggingLevel.DEBUG, 'checkDiscardAnnullmentRule outcome: ' + outcome);
         return outcome;
     }
 
@@ -659,8 +540,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     //////////////////////////////////////////////////////////////////////////
     @AuraEnabled
     public static void updatePraticaForScartoDocumentaleQueue(List<wrts_prcgvr__Activity__c> newActivities, List<wrts_prcgvr__Activity__c> oldActivities){
-        System.debug('updatePraticaForScartoDocumentale start newActivities: ' + JSON.serializePretty(newActivities));
-        System.debug('updatePraticaForScartoDocumentale start oldActivities: ' + JSON.serializePretty(oldActivities));
+        system.debug(LoggingLevel.DEBUG, 'updatePraticaForScartoDocumentale start newActivities: ' + JSON.serializePretty(newActivities));
+        system.debug(LoggingLevel.DEBUG, 'updatePraticaForScartoDocumentale start oldActivities: ' + JSON.serializePretty(oldActivities));
         try{
         Map<id,wrts_prcgvr__Activity__c> oldMapActivities = new Map<Id,wrts_prcgvr__Activity__c>(oldActivities);
         String oldPhone; 
@@ -690,8 +571,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                      WHERE Id in :relatedIds
                                      WITH SECURITY_ENFORCED]);
 
-        System.debug('updatePraticaForScartoDocumentale relatedCases: ' + JSON.serializePretty(relatedCases));
-        System.debug('updatePraticaForScartoDocumentale relatedOrders: ' + JSON.serializePretty(relatedOrders));
+        system.debug(LoggingLevel.DEBUG, 'updatePraticaForScartoDocumentale relatedCases: ' + JSON.serializePretty(relatedCases));
+        system.debug(LoggingLevel.DEBUG, 'updatePraticaForScartoDocumentale relatedOrders: ' + JSON.serializePretty(relatedOrders));
         
         for(wrts_prcgvr__Activity__c currActivity : activities){
                 if(currActivity.Case__c != null){
@@ -711,14 +592,14 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     updateContactForScartoDocumentale(relatedOrders.get(currActivity.Order__c).AccountId, oldPhone, oldEmail, currActivity.NewMobile__c, currActivity.NewEmail__c);
                 }
         }
-        System.debug('updatePraticaForScartoDocumentale end relatedObjectsToUpdate: ' + JSON.serializePretty(relatedObjectsToUpdate));
+        system.debug(LoggingLevel.DEBUG, 'updatePraticaForScartoDocumentale end relatedObjectsToUpdate: ' + JSON.serializePretty(relatedObjectsToUpdate));
         if(!relatedObjectsToUpdate.isEmpty()){
             HDT_UTL_DatabaseService.updateSObject(relatedObjectsToUpdate);
         }
         }
         catch(Exception e){
-            System.debug('updatePraticaForScartoDocumentale errorMessage: ' + e.getMessage());
-            System.debug('updatePraticaForScartoDocumentale errorStackTraceString: ' + e.getStackTraceString());
+            system.debug(LoggingLevel.DEBUG, 'updatePraticaForScartoDocumentale errorMessage: ' + e.getMessage());
+            system.debug(LoggingLevel.DEBUG, 'updatePraticaForScartoDocumentale errorStackTraceString: ' + e.getStackTraceString());
         }
     }
 
@@ -733,11 +614,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     */
     @AuraEnabled
     public static void updateContactForScartoDocumentale(Id accountId, String oldPhone, String oldEmail, String newPhone, String newMail){
-        System.debug('updateContactForScartoDocumentale start accountId: ' + accountId);
-        System.debug('updateContactForScartoDocumentale start oldPhone: ' + oldPhone );
-        System.debug('updateContactForScartoDocumentale start oldEmail: ' + oldEmail);
-        System.debug('updateContactForScartoDocumentale start newPhone: ' + newPhone);
-        System.debug('updateContactForScartoDocumentale start newMail: ' + newMail);
+        system.debug(LoggingLevel.DEBUG, 'updateContactForScartoDocumentale start accountId: ' + accountId);
+        system.debug(LoggingLevel.DEBUG, 'updateContactForScartoDocumentale start oldPhone: ' + oldPhone );
+        system.debug(LoggingLevel.DEBUG, 'updateContactForScartoDocumentale start oldEmail: ' + oldEmail);
+        system.debug(LoggingLevel.DEBUG, 'updateContactForScartoDocumentale start newPhone: ' + newPhone);
+        system.debug(LoggingLevel.DEBUG, 'updateContactForScartoDocumentale start newMail: ' + newMail);
         try{
         List<Contact> relatedContacts = [SELECT Id, IndividualId
                                          FROM Contact 
@@ -791,15 +672,15 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     }
                 }
             }
-            System.debug('updateContactForScartoDocumentale end recordsForDML: ' + JSON.serializePretty(recordsForDML));
+            system.debug(LoggingLevel.DEBUG, 'updateContactForScartoDocumentale end recordsForDML: ' + JSON.serializePretty(recordsForDML));
             if(!recordsForDML.isEmpty()){
                 HDT_UTL_DatabaseService.upsertSObject(recordsForDML);
             }
         }
         }
         catch(Exception e){
-            System.debug('updateContactForScartoDocumentale errorMessage: ' + e.getMessage());
-            System.debug('updateContactForScartoDocumentale errorStackTraceString: ' + e.getStackTraceString());
+            system.debug(LoggingLevel.DEBUG, 'updateContactForScartoDocumentale errorMessage: ' + e.getMessage());
+            system.debug(LoggingLevel.DEBUG, 'updateContactForScartoDocumentale errorStackTraceString: ' + e.getStackTraceString());
         }
     }
 
@@ -811,7 +692,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @return List<wrts_prcgvr__Activity__c> 
     */
     public static List<wrts_prcgvr__Activity__c> setLookupFields(List<wrts_prcgvr__Activity__c> inputData){
-        System.debug('setLookupFields start' + inputData);
+        system.debug(LoggingLevel.DEBUG, 'setLookupFields start' + inputData);
         list<string> codiciClienti= new list<String>();
         set<string> activityTypes= new set<string>();
 
@@ -825,8 +706,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 activityTypes.add(activity.Type__c);
             }
         }
-        System.debug('setLookupFields codiciClienti' + codiciClienti);
-        System.debug('setLookupFields activityTypes' + activityTypes);
+        system.debug(LoggingLevel.DEBUG, 'setLookupFields codiciClienti' + codiciClienti);
+        system.debug(LoggingLevel.DEBUG, 'setLookupFields activityTypes' + activityTypes);
 
         map<string,Id> mapActivityTemplates= new map<string,Id>();
         list<wrts_prcgvr__ActivityTemplate__c> activityTemplates=[SELECT Id, Name 
@@ -839,28 +720,35 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         }
 
 
-        List<Account> listAccounts=[SELECT Id, CustomerCode__c 
+        List<Account> listAccounts=[SELECT Id, CustomerCode__c, CompanyOwner__c
                                     FROM Account 
                                     WHERE CustomerCode__c IN: codiciClienti 
                                     WITH SECURITY_ENFORCED];
-        Map<String, Id> accIdsPerBPcode = new Map<String, Id>();
+        Map<String, Account> accIdsPerBPcode = new Map<String, Account>();
         for(Account singleAccount: listAccounts){
-            accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount.Id);
+            accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount);
         }
         for(wrts_prcgvr__Activity__c activity2: inputData){
-            if(activity2.Account__c == null && !String.isBlank(activity2.BPCode__c)){
-                activity2.Account__c = accIdsPerBPcode.get(activity2.BPCode__c);
+            if(activity2.Account__c == null && !String.isBlank(activity2.BPCode__c) && accIdsPerBPcode.containsKey(activity2.BPCode__c)){
+                activity2.Account__c = accIdsPerBPcode.get(activity2.BPCode__c).Id;
+                activity2.CompanyOwner__c = accIdsPerBPcode.get(activity2.BPCode__c).CompanyOwner__c;
             }
             if(activity2.wrts_prcgvr__ActivityTemplate__c == null){
                 if('CanoneRAI'.equalsIgnoreCase(activity2.Type__c)){
                     if(activity2.RecordTypeId != rtScarto.Id){
                         activity2.RecordTypeId = rtScarto.Id;
                     }
+                    activity2.DiscardCategory__c = 'Gestionale';
+                    activity2.DiscardDescription__c = 'Canone RAI';
+                    activity2.wrts_prcgvr__Status__c = 'Aperta';
                     activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAITEMPLATENAME); 
                 }else if('Bonussociale'.equalsIgnoreCase(activity2.Type__c)){
                     if(activity2.RecordTypeId != rtScarto.Id){
                         activity2.RecordTypeId = rtScarto.Id;
                     }
+                    activity2.DiscardCategory__c = 'Gestionale';
+                    activity2.DiscardDescription__c = 'Bonus Sociale';
+                    activity2.wrts_prcgvr__Status__c = 'Aperta';
                     activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALETEMPLATENAME); 
                 }
             }
@@ -868,7 +756,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 activity2.RecordTypeId = rtScarto.Id;
             }
         }
-        System.debug('setLookupFields end' + inputData);
+        system.debug(LoggingLevel.DEBUG, 'setLookupFields end' + inputData);
         return inputData;
     }
 
@@ -936,7 +824,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @param inputData - list<wrts_prcgvr__Activity__c>  of Herokus's scarti (activity(custom) 
     */
     public static void checkForEsitiIntermedi(List<wrts_prcgvr__Activity__c> inputData){
-        system.debug('checkForEsitiIntermedi start' + JSON.serializePretty(inputData));
+        checkForEsitiIntermedi(inputData, new Map<String, String>());
+    }
+
+    public static void checkForEsitiIntermedi(List<wrts_prcgvr__Activity__c> inputData,Map<String,String> activityValues){
+        system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi start' + JSON.serializePretty(inputData));
         Set<String> categories = new Set<String>();
         Schema.DescribeFieldResult fieldResult = wrts_prcgvr__Activity__c.DiscardCategory__c.getDescribe();
 		List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
@@ -964,10 +856,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
         }
         
-        system.debug('checkForEsitiIntermedi parentObjectCase' + JSON.serializePretty(parentObjectCase));
-        system.debug('checkForEsitiIntermedi parentObjectOrder' + JSON.serializePretty(parentObjectOrder));
-        system.debug('checkForEsitiIntermedi categories' + JSON.serializePretty(categories));
-        system.debug('checkForEsitiIntermedi inputDataIds' + JSON.serializePretty(inputDataIds));
+        system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi parentObjectCase' + JSON.serializePretty(parentObjectCase));
+        system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi parentObjectOrder' + JSON.serializePretty(parentObjectOrder));
+        system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi categories' + JSON.serializePretty(categories));
+        system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi inputDataIds' + JSON.serializePretty(inputDataIds));
 
         list<wrts_prcgvr__Activity__c> relatedActs = [SELECT id, wrts_prcgvr__Status__c 
                                                       FROM wrts_prcgvr__Activity__c 
@@ -975,19 +867,31 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                                       AND DiscardCategory__c IN :categories 
                                                       AND Id NOT IN :inputDataIds
                                                       AND wrts_prcgvr__Status__c NOT IN ('Chiusa','Sospesa')
+                                                      AND wrts_prcgvr__IsClosed__c = false
+                                                      AND Type__c NOT IN ('Ammissibilità KO','Esito KO da DL','Esito KO da SII')
                                                       WITH SECURITY_ENFORCED];
 
-        system.debug('checkForEsitiIntermedi relatedActs' + JSON.serializePretty(relatedActs));
+        system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi relatedActs' + JSON.serializePretty(relatedActs));
+        String endDate = activityValues.get('DATA_ELABORAZIONE');
+        String cmp = activityValues.get('CMP');
+        String utenza = activityValues.get('UTENZA');
+        Date endDateVal = null;
+        if(String.isNotBlank(endDate)){
+            endDateVal = date.valueOf(endDate);
+        }
 
         for(wrts_prcgvr__Activity__c relatedAct: relatedActs){
-            system.debug(relatedAct);
+            system.debug(LoggingLevel.DEBUG, relatedAct);
             relatedAct.wrts_prcgvr__Status__c='Chiusa';
+            relatedAct.EndDate__c = endDateVal!=null ? endDateVal : null;
+            relatedAct.UserCompany__c = String.isNotBlank(cmp) ? cmp : null;
+            relatedAct.ClosedByUsername__c = String.isNotBlank(utenza) ? utenza : null;
             toUpdate.add(relatedAct);
         }
 
         
         if(!toUpdate.IsEmpty()){
-            system.debug('checkForEsitiIntermedi toUpdate' + JSON.serializePretty(inputData));
+            system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi toUpdate' + JSON.serializePretty(inputData));
             HDT_UTL_DatabaseService.updateSObject(toUpdate);
         }
     }
@@ -1000,19 +904,20 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @param oldActsMap
     */
     public static void handleEditButtonPress(List<wrts_prcgvr__Activity__c> newActs, Map<Id, wrts_prcgvr__Activity__c> oldActsMap){
-        System.debug('handleEditButtonPress start');
+        system.debug(LoggingLevel.DEBUG, 'handleEditButtonPress start');
         RecordType rtScarto = new HDT_QR_RecordType().getRecordType('HDT_RT_Scarto', 'wrts_prcgvr__Activity__c');
         for(wrts_prcgvr__Activity__c curAct : newActs){
             if('Chiusa'.equalsIgnoreCase(curAct.wrts_prcgvr__Status__c)
                && curAct.wrts_prcgvr__Status__c != oldActsMap.get(curAct.Id).wrts_prcgvr__Status__c
                && rtScarto.Id == curAct.RecordTypeId){
-        		System.debug('handleEditButtonPress found ' + curAct.Id);
+        		system.debug(LoggingLevel.DEBUG, 'handleEditButtonPress found ' + curAct.Id);
                 if('Scarto Complesso'.equalsIgnoreCase(curAct.DiscardCategory__c)
                    || 'Contattare il cliente'.equalsIgnoreCase(curAct.Type__c)){
                 	curAct.wrts_prcgvr__Status__c = 'Aperta';
                 }
-                else curAct.wrts_prcgvr__Status__c = 'Chiusa';
+                else {curAct.wrts_prcgvr__Status__c = 'Chiusa';
             	curAct.DiscardWorked__c = true;
+                }
         	}
         }
     }
@@ -1024,15 +929,13 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @param objectId - Id
     */
     public static void annullaPratica(Id objectId){
+        String objectName = '';
         if(Schema.Case.SObjectType == objectId.getSobjectType()){
-            Case caseRecord= new Case(Id=objectId, Phase__c='Annullato', Status='Closed', CancellationReason__c='Gestione Scarto');
-            /*eventuali modifiche*/
-            HDT_UTL_DatabaseService.updateSObject(caseRecord);
+            objectName = 'Case';
         }else if(Schema.Order.SObjectType == objectId.getSobjectType()){
-            Order orderRecord = new Order(Id=objectId, Phase__c='Annullato', Status='Activated', CancellationReason__c='Gestione Scarto');
-            /*eventuali modifiche*/
-            HDT_UTL_DatabaseService.updateSObject(orderRecord);
+            objectName = 'Order';
         }
+        annulmentProcess(objectId, objectName);
     }
 
     /**
@@ -1043,27 +946,23 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     */
     public static void chiudiAttivita(Id objectId){
         List<wrts_prcgvr__Activity__c> toUpdateActivities = new list<wrts_prcgvr__Activity__c>();
-        if(Schema.Case.SObjectType == objectId.getSobjectType()){
-            toUpdateActivities = [SELECT id, wrts_prcgvr__Status__c
-                                  FROM wrts_prcgvr__Activity__c
-                                  WHERE Case__c= :objectId 
-                                  AND wrts_prcgvr__Status__c != 'Chiusa'
-                                  WITH SECURITY_ENFORCED]; 
-            for(wrts_prcgvr__Activity__c singleActivity : toUpdateActivities){
-                singleActivity.wrts_prcgvr__Status__c='Chiusa';
-            }
-            HDT_UTL_DatabaseService.updateSObject(toUpdateActivities);
-        }else if(Schema.Order.SObjectType == objectId.getSobjectType()){
-            toUpdateActivities = [SELECT id, wrts_prcgvr__Status__c
-                        FROM wrts_prcgvr__Activity__c
-                        WHERE Order__c= :objectId 
-                        AND wrts_prcgvr__Status__c != 'Chiusa'
-                        WITH SECURITY_ENFORCED];
-            for(wrts_prcgvr__Activity__c singleActivity : toUpdateActivities){
-                singleActivity.wrts_prcgvr__Status__c='Chiusa';
-            }
-            HDT_UTL_DatabaseService.updateSObject(toUpdateActivities);
-        }    
+        toUpdateActivities = [SELECT id, wrts_prcgvr__Status__c
+                                FROM wrts_prcgvr__Activity__c
+                                WHERE (Case__c= :objectId OR Order__c= :objectId)  
+                                AND (wrts_prcgvr__Status__c != 'Chiusa' AND wrts_prcgvr__Status__c != 'Completed' 
+                                    AND wrts_prcgvr__Status__c != 'Annullata' AND wrts_prcgvr__Status__c != 'Comunicazione inviata')
+                                WITH SECURITY_ENFORCED]; 
+        List<User> u = [SELECT ID, UserCompany__c, Username FROM User WHERE ID =: Userinfo.getUserId()];
+        for(wrts_prcgvr__Activity__c singleActivity : toUpdateActivities){
+            singleActivity.wrts_prcgvr__Status__c='Chiusa';
+            singleActivity.EndDate__c = Date.today();
+            singleActivity.UserCompany__c = u[0].UserCompany__c;
+            singleActivity.ClosedByUsername__c=u[0].Username;
+        }
+        if(!toUpdateActivities.isEmpty()){
+            HDT_UTL_DatabaseService.updateSObject(toUpdateActivities); 
+        }   
+        
     }
 
     //EVERIS: Gestione Scarti SAP
@@ -1073,24 +972,20 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     }
 
     public static wrts_prcgvr__Activity__c closeDiscardActivity(Id activityId){
-        return new wrts_prcgvr__Activity__c(Id =  activityId, wrts_prcgvr__Status__c ='Chiusa', EndDate__c = Date.today());
+        List<User> u = [SELECT ID, UserCompany__c, Username FROM User WHERE ID =: Userinfo.getUserId()];
+        return new wrts_prcgvr__Activity__c(Id =  activityId, wrts_prcgvr__Status__c ='Chiusa', EndDate__c = Date.today(), UserCompany__c = u[0].UserCompany__c, ClosedByUsername__c=u[0].Username );
     }
 
     public static Boolean manageSapDiscard(List<SObject> newObjectList, Map<Id,SObject> oldObjectMap){
         SObject newObject = newObjectList[0];
         SObject oldObject = oldObjectMap.get((Id)newObject.get('Id'));
-        String newPhase = (String)newObject.get('Phase__c');
-        String oldPhase = (String)oldObject.get('Phase__c');
-        DateTime nowDateTime = DateTime.now();
-
-        for(Sobject obj : newObjectList){
-            SObject oldObj = oldObjectMap.get((Id)obj.get('Id'));
-            String phaseStoryOld = oldObj.get('PhaseStory__c') != null ? (String)oldObj.get('PhaseStory__c') : '';
-            String phaseStrory = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+phaseStoryOld;
-            obj.put('PhaseStory__c',phaseStrory);
-        }
- 
+        String newPhase = newObject.get('Phase__c') != null ? (String)newObject.get('Phase__c') : '';
+        String oldPhase = oldObject.get('Phase__c') != null ?  (String)oldObject.get('Phase__c') : '';
         if (String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && !newPhase.equalsIgnoreCase(oldPhase)){
+            DateTime nowDateTime = DateTime.now();
+            String phaseStoryOld = oldObject.get('PhaseStory__c') != null ? (String)oldObject.get('PhaseStory__c') : '';
+            String phaseStrory = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+phaseStoryOld;
+            newObject.put('PhaseStory__c',phaseStrory);
             return HDT_UTL_GestioneScartiSap.skipPhaseManager(newPhase);
         }
         return false;
@@ -1106,6 +1001,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 mapFieldValue.put('Phase__c',fase);
             }
             List<HDT_GestioneScartiSap__mdt> rules = HDT_UTL_GestioneScartiSap.getRuleFromActivity(mapFieldValue);
+            
             if (!rules.isEmpty()){
                 System.enqueueJob(new HDT_QBL_GestioneScartiSap(objectId,rules,mapActivityField));
             }
@@ -1122,6 +1018,101 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             objectName = 'Account';
         }
         return objectName;
+    }
+
+    public static void discardManagement(Map<String,String> requestDiscardManagemnt){
+        if (String.isNotBlank(requestDiscardManagemnt.get('FASE')) && String.isNotBlank(requestDiscardManagemnt.get('RECORD_ID')) && String.isNotBlank(requestDiscardManagemnt.get('OBJECT_TYPE'))){
+            Id recordId = (Id)requestDiscardManagemnt.get('RECORD_ID');
+            String fase = requestDiscardManagemnt.get('FASE');
+            String objectType = requestDiscardManagemnt.get('OBJECT_TYPE');
+            String templateName = '';
+            for (HDT_GestioneScarti__mdt conf : [SELECT OrderTemplate__c, CaseTemplate__c FROM HDT_GestioneScarti__mdt WHERE IsActive__c = true AND Phase__c =:fase WITH SECURITY_ENFORCED]){
+                templateName = 'Case'.equalsIgnoreCase(requestDiscardManagemnt.get('OBJECT_TYPE')) ? conf.CaseTemplate__c : conf.OrderTemplate__c;
+                break; //Se per sbaglio vengono configurate più configurazioni prende la prima che trova
+            }
+            System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> Discard Message: ' +  requestDiscardManagemnt.get('DISCARD_MESSAGE'));
+            System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> templateName: ' +  templateName);
+            System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> checkDiscardAnnullmentRule: ' +  checkDiscardAnnullmentRule(recordId, fase,requestDiscardManagemnt.get('DISCARD_MESSAGE')));
+            if (String.isNotEmpty(templateName) && !checkDiscardAnnullmentRule(recordId, fase,requestDiscardManagemnt.get('DISCARD_MESSAGE'))){
+                wrts_prcgvr__Activity__c act = createActivityByObjectIdAndTemplateName(recordId, templateName,objectType);
+                act.DiscardDescription__c = requestDiscardManagemnt.get('DISCARD_MESSAGE');
+                System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> act: ' +  act);
+                HDT_UTL_DatabaseService.insertSObject(act);
+            }else if (String.isNotEmpty(templateName)){
+                annulmentProcess(recordId, objectType);
+            }
+        }
+    }
+
+    public static void discardManagement(List<HDT_WRP_MrrRequest.HDT_WRP_Request> inboundRequests){
+        Map<String,String> requestDiscardManagemnt = createRequestMap(inboundRequests);
+        discardManagement(requestDiscardManagemnt);
+    }
+
+    private static Map<String,String> createRequestMap(List<HDT_WRP_MrrRequest.HDT_WRP_Request> inboundRequests){
+        Map<String,String> requestMap = new Map<String,String>();
+        String discardError = '';
+        for (HDT_WRP_MrrRequest.HDT_WRP_Request request : inboundRequests) {
+            HDT_WRP_MrrResponse.HDT_WRP_Response parsedResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
+            for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : parsedResponseItem.objects){
+                for(HDT_WRP_MrrResponse.HDT_WRP_Field curField : curObj.fields){
+                    if (String.isBlank(curField.value)){
+                        continue;
+                    }
+                    if ('FASE'.equalsIgnoreCase(curField.name)){
+                        requestMap.put('FASE',curField.value);
+                    }else if('RECORD_ID'.equalsIgnoreCase(curField.name)){
+                        requestMap.putAll(getRecordId(curField.value));
+                    }
+                    //
+                    if(('NOTE_ERR'.equalsIgnoreCase(curField.name) 
+                    || 'DES_ERR_AEEG'.equalsIgnoreCase(curField.name)
+                    || 'TESTO_ERRR'.equalsIgnoreCase(curField.name)
+                    || 'ANNOTAZIONI'.equalsIgnoreCase(curField.name)) 
+                    && String.isNotBlank(curField.value)){
+                        discardError += HDT_UTL_Accents.removeDiacritics(curField.value) + '\n';
+                    }
+                }
+            }
+        }
+        requestMap.put('DISCARD_MESSAGE',discardError);
+        return requestMap;
+    }
+
+    private static Map<String,String> getRecordId(String recordIdToWork){
+        Map<String,String> requestMap = new Map<String,String>();
+        String objectType = '';
+        if(recordIdToWork instanceOf Id){
+            if(Schema.Case.SObjectType == Id.valueOf(recordIdToWork).getSobjectType()){
+                objectType = 'Case';
+            }else if(Schema.Order.SObjectType == Id.valueOf(recordIdToWork).getSobjectType()){
+                objectType = 'Order';
+            }
+        }
+        else if(recordIdToWork.startsWith('O-') ){
+            List<Order> orderList = HDT_QR_GenericQuery.getGenericRecords('Id', 'Order', 'OrderNumber = \''+String.escapeSingleQuotes(recordIdToWork)+'\'');
+            if(!orderList.isEmpty()){
+                objectType = 'Order';
+                recordIdToWork = orderList[0].Id;
+            }
+        }
+        if (String.isNotEmpty(objectType)){
+            requestMap.put('RECORD_ID', recordIdToWork);
+            requestMap.put('OBJECT_TYPE',objectType);
+        }
+        return requestMap;
+    }
+
+    private static void annulmentProcess(Id recordId,String objectType){
+        if (String.isNotEmpty(objectType)){
+            SObject objectToUpdate = Schema.getGlobalDescribe().get(objectType).newSObject();
+            String status = 'Case'.equalsIgnoreCase(objectType)? 'Closed' : 'Annullato';
+            objectToUpdate.put('Id',recordId);
+            objectToUpdate.put('CancellationReason__c','Gestione scarto');
+            objectToUpdate.put('Phase__c','Annullato');
+            objectToUpdate.put('Status',status);
+            HDT_UTL_DatabaseService.updateSObject(objectToUpdate);
+        }
     }
     //EVERIS: END Gestione Scarti SAP
 }

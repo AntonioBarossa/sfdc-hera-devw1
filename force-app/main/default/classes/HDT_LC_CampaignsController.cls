@@ -123,7 +123,13 @@ public inherited sharing class HDT_LC_CampaignsController {
     }
     
     @AuraEnabled
-    public static List<CampaignMember> assignCampaignMemberAgency(String campaignId, List<Id> toAssignObj){
+    public static List<CampaignMember> assignCampaignMemberAgency(String campaignId, List<Id> toAssignObj, List<Object> Lavorazione, Date valDate){
+        Map<String, String> mapLavorazione=new Map <String, String>();
+        for (Object o : Lavorazione){
+            string s=JSON.serialize(o);
+            map<String, Object> tempMap=(map<String, Object>)JSON.deserializeUntyped(s);
+            mapLavorazione.put(string.valueOf(tempMap.get('id')), string.valueOf(tempMap.get('valore')));
+        }
         List<CampaignMember> allUnassignedMembers = campaignMemberQr.getUnassignedCampaignMembers(campaignId);
         List<CampaignMember> assignedMembers = new List<CampaignMember>();
         List<CampaignMemberAssigmentItem__c> items = cmAssignmentItem.getItemsByAgency(toAssignObj);
@@ -134,7 +140,13 @@ public inherited sharing class HDT_LC_CampaignsController {
         for (Id agencyId : toAssignObj) {
             CampaignMember cm = allUnassignedMembers[0];
             cm.Agency__c = agencyId;
-            cm.ProcessingType__c = agencyProcessingTypeMap.get((String)agencyId);
+            //cm.ProcessingType__c = agencyProcessingTypeMap.get((String)agencyId);
+            if(mapLavorazione.containsKey(agencyId)){
+                cm.ProcessingType__c=mapLavorazione.get(agencyId);
+            }
+            if(valDate!=null){
+                cm.NumberingValidityStartDate__c=valDate;
+            }
             assignedMembers.add(cm);
             allUnassignedMembers.remove(0);            
         }
@@ -429,7 +441,7 @@ public inherited sharing class HDT_LC_CampaignsController {
     @AuraEnabled(cacheable=true)
     public static CampaignMember getCampaignAndAccountByMember(String campaignMemberId){
         try {
-            CampaignMember cm = [SELECT Id, GenericField1__c ,Contact.AccountId, CampaignId, Campaign.CaseCategory__c, Campaign.CaseSubCategory__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED];
+            CampaignMember cm = [SELECT Id, GenericField1__c ,Contact.AccountId, CampaignId, Campaign.CaseCategory__c, Campaign.CaseSubCategory__c, Campaign.ProcessType__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED];
             System.debug(cm);
             return cm;
         } catch (Exception e) {

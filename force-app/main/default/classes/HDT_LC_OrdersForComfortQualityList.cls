@@ -40,7 +40,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
             switch on ordComf[0].RecordType.DeveloperName {
                 when  'HDT_RT_VAS'{
-                    phase ='Comunicazione Motore VAS';
+                    phase = calculateVasPhase(ordComf[0]);
                 }
                 when 'HDT_RT_CambioOfferta' {
                     phase = 'Comunicazione verso Heroku';
@@ -109,7 +109,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             if ('Firma Falsa'.equalsIgnoreCase(causal) || 'Volontà estorta'.equalsIgnoreCase(causal)) {
                 activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
                     Id = activityId,
-                    wrts_prcgvr__Status__c = 'Esitata',
+                    //wrts_prcgvr__Status__c = 'Esitata',
                     ContactResult__c	 = 'Annullato'
                 ));
 
@@ -133,7 +133,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
             activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
                 Id = activityId,
-                wrts_prcgvr__Status__c = 'Esitata',
+                //wrts_prcgvr__Status__c = 'Esitata',
                 ContactResult__c	 = 'Annullato'
             ));
         }
@@ -149,5 +149,18 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         return processActivityMap.get(orderRecordType);
 
+    }
+
+    private static String calculateVasPhase(Order currentOrder)
+    {
+        String newPhase = '';
+        if( currentOrder.VASType__c == 'VAS Servizio' && !currentOrder.IsEarlyActivation__c ){
+            newPhase =  'In attesa tempi di ripensamento';
+        }else if( currentOrder.VASType__c == 'VAS Fatturabili' ){
+            newPhase = 'Comunicazione verso Heroku';
+        }else{
+            newPhase =  'Comunicazione Motore VAS';
+        }
+        return newPhase;
     }
 }

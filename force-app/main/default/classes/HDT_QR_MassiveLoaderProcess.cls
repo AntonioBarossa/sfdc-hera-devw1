@@ -16,7 +16,7 @@ public with sharing class HDT_QR_MassiveLoaderProcess {
     
     public List<HDT_MassiveLoaderProcess__mdt> getAllRecords() {
 
-        return [SELECT DeveloperName, MasterLabel, Priority__c, IsActive__c,ApexClass__c 
+        return [SELECT DeveloperName, MasterLabel, Priority__c, IsActive__c, ApexClass__c, BatchSize__c
                 FROM HDT_MassiveLoaderProcess__mdt 
                 WHERE IsActive__c = true
                 WITH SECURITY_ENFORCED

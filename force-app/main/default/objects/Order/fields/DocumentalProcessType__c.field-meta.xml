@@ -13,7 +13,7 @@
 								IF(ISPICKVAL(ProcessType__c,&apos;Proroga Temporanea&apos;),&apos;Proroga Connessione Temporanea&apos;,
 									IF(ISPICKVAL(ProcessType__c,&apos;Temporanea - Nuova Attivazione&apos;),&apos;Temporanea-Nuova attivazione&apos;,
 										IF(ISPICKVAL(ProcessType__c,&apos;Riattivazione non morose&apos;),&apos;Riatt. Fornitura non Morosa&apos;,
-											IF(CONTAINS(TEXT(ProcessType__c),&apos;VAS&apos;),&apos;Nuovi Bonus Contributi VAS&apos;,
+											IF(CONTAINS(TEXT(ProcessType__c),&apos;VAS&apos;),&apos;VAS&apos;,
 												IF(AND(ISPICKVAL(ProcessType__c,&apos;Voltura&apos;),ISPICKVAL(Subprocess__c,&apos;Standard&apos;)),&apos;Voltura&apos;,
 													IF(AND(ISPICKVAL(ProcessType__c,&apos;Voltura&apos;),ISPICKVAL(Subprocess__c,&apos;Con Autolettura&apos;)),&apos;Voltura con autolettura&apos;,
 														IF(AND(ISPICKVAL(ProcessType__c,&apos;Voltura&apos;),ISPICKVAL(Subprocess__c,&apos;Retroattiva&apos;)),&apos;Voltura retroattiva&apos;,

@@ -1,0 +1,164 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
+public with sharing class HDT_UTL_ProcessCommonOperations {
+/*
+    public static HDT_WRP_SaveResponse databaseUpsert(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType){
+        HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
+        saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
+        saveResponse.savedObject = new List<sObject>();
+        saveResponse.itemIdToObjId = new Map<Id, Id>();
+        saveResponse.errorItemMap = new Map<Id, String>();
+
+        SObjectType objtype = Schema.getGlobalDescribe().get(sObjectType);
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+ 
+        if(objRes.isCreateable()){
+
+            List<Database.UpsertResult> upsertResults = Database.upsert(sObjectList, false);
+
+            for(Integer n=0; n<upsertResults.size(); n++){
+                Database.UpsertResult sr = upsertResults[n];
+
+                if(sr.isSuccess()) {
+                    requetItems[n].Status__c = 'Chiuso';
+                    saveResponse.reponseItemList.add(requetItems[n]);
+                    saveResponse.savedObject.add(sObjectList[n]);
+                    saveResponse.itemIdToObjId.put(requetItems[n].Id, sr.getId());
+
+                } else {
+                    requetItems[n].Status__c = 'Errore';
+
+                    String errorMessage = '';
+                    for(Database.Error err : sr.getErrors()) {
+                        errorMessage += '[' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + '] ';
+                        System.debug(LoggingLevel.DEBUG, '>>> errorMessage ' + errorMessage);
+                    }
+
+                    requetItems[n].StatusDescription__c = errorMessage.abbreviate(250);
+                    saveResponse.errorItemMap.put(requetItems[n].Id, errorMessage.abbreviate(250));
+                    saveResponse.reponseItemList.add(requetItems[n]);
+                    
+                }
+            }
+        }
+
+        return saveResponse;
+
+    }
+
+    public static void runCompatibility(List<Case> savedCase){
+        Map<Id, String> compatibilityMap = checkCompatibilityPostSales(savedCase);
+        System.debug(LoggingLevel.DEBUG, '>>> compatibilityMap ' + String.valueOf(compatibilityMap));
+        updateCaseAfterCompatibility(compatibilityMap, savedCase);
+        getLimitDetails('AFTER Compatibility');
+
+    }
+    
+    private static Map<Id, String> checkCompatibilityPostSales(List<Case> csList){
+
+        List<ServiceRequest__c> srList = new List<ServiceRequest__c>();
+        List<ServiceRequest__c> srListToDelete = new List<ServiceRequest__c>();
+        Map<Id, String> caseIdToCompatibility = new Map<Id, String>();
+
+        try {
+            String compatibility = '';
+            Formula.recalculateFormulas(csList);
+            ServiceRequest__c srvRequest;
+            for(Case cs : csList){
+                srvRequest = new ServiceRequest__c();
+                srvRequest.Case__c = cs.Id;
+                srvRequest.ServicePointCode__c = cs.PODPDRFormula__c;
+                srvRequest.Status__c = HDT_UTL_MatrixCompatibility.getStatus(cs.Status, 'Case');
+                srvRequest.CommoditySector__c = cs.CommodityFormula__c;
+                srvRequest.Type__c = 'Case';
+    
+                if(cs.ServicePoint__c != null){
+                    srvRequest.ServicePoint__c = cs.ServicePoint__c;
+                } else {
+                    srvRequest.Account__c = cs.AccountId;
+                    srvRequest.BillingProfile__c = cs.BillingProfile__c;
+                }
+    
+                srvRequest.ProcessType__c = HDT_UTL_MatrixCompatibility.getProcessType(cs.Type, 'Case', cs.Commodity__c);
+
+                System.debug(LoggingLevel.DEBUG, '>>> srvRequest: ' + srvRequest);
+
+                srList.add(srvRequest);
+            }
+
+            HDT_UTL_DatabaseService.insertSObject(srList);
+
+            for(ServiceRequest__c sReq : srList){
+                wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = HDT_UTL_MatrixCompatibility.checkCompatibility(sReq);
+
+                System.debug(LoggingLevel.DEBUG, '>>> ObjectCompatibility: ' + result);
+
+                //list of incompatible records
+                if(!result.incompatibilities.isEmpty()){
+                    compatibility = HDT_UTL_MatrixCompatibility.getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
+                    System.debug(LoggingLevel.DEBUG, '>>> compatibilityMessage: ' + compatibility);
+
+                    caseIdToCompatibility.put(sReq.Case__c, compatibility);
+                    srListToDelete.add(sReq);
+                }
+
+            }
+            
+            if(srListToDelete.size() > 0){
+                HDT_UTL_DatabaseService.deleteSObject(srListToDelete);
+            }
+
+            return caseIdToCompatibility;
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    private static void updateCaseAfterCompatibility(Map<Id, String> incompatibleCaseIdSet, List<Case> savedCase){
+
+        for(Case c : savedCase){
+            if(incompatibleCaseIdSet.containsKey(c.Id)){
+                c.Phase__c = 'Bozza Annullata';
+                c.Status = 'Closed';
+                c.CancellationReason__c = 'Processo incompatibile';
+            } else {
+                c.Phase__c = 'Da Inviare';
+            }
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(savedCase);
+
+    }
+
+    public static Case setCaseField(Case newCase, Id recordTypeId){
+        newCase.RecordTypeId = recordTypeId;
+        newCase.Status = 'In Lavorazione';
+        newCase.Phase__c = 'Bozza';
+        newCase.CompanyOwner__c = 'HERA COMM';
+        newCase.Commodity__c = 'Energia Elettrica';
+        return newCase;
+    }
+
+    public static void getLimitDetails(String stageName){
+        List<String> limitList = new List<String>();
+        limitList.add('>>> CpuTime: ' + String.valueOf(Limits.getCpuTime()) + ' of ' + String.valueOf(Limits.getLimitCpuTime()));
+        limitList.add('>>> DML: ' + String.valueOf(Limits.getDMLStatements()) + ' of ' + String.valueOf(Limits.getLimitDMLStatements()));
+        limitList.add('>>> HeapSize: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
+        limitList.add('>>> Queries: ' + String.valueOf(Limits.getQueries()) + ' of ' + String.valueOf(Limits.getLimitQueries()));
+        limitList.add('>>> Callouts: ' + String.valueOf(Limits.getCallouts()) + ' of ' + String.valueOf(Limits.getLimitCallouts()));
+
+        System.debug(LoggingLevel.DEBUG, '---------------- ' + stageName + ' ----------------');
+        for(String s : limitList){
+            System.debug(s);
+        }
+
+    }
+
+    public class HDT_WRP_SaveResponse {
+        public List<MassiveLoaderRequestItem__c> reponseItemList;
+        public List<sObject> savedObject;
+        public Map<Id, Id> itemIdToObjId;
+        public Map<Id, String> errorItemMap;
+    }
+*/
+}

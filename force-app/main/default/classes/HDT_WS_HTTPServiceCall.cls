@@ -1,9 +1,117 @@
+@SuppressWarnings('PMD.ApexSuggestUsingNamedCred, PMD.ClassNamingConventions, PMD.CyclomaticComplexity')
 public class HDT_WS_HTTPServiceCall {
-       
+    
+    public static  HDT_WS_Response sendRequest(String namedCredential,String path,String method,HDT_WS_Request request,type respClass){
+               
+        HTTP h = new Http();
+        HTTPRequest req = new HTTPRequest();
+        req.setTimeout(120000); 
+        req.setHeader('Content-type', 'application/json');
+        req.setEndpoint('Callout:'+namedCredential+path);
+        req.setMethod(method);        
+        req.setBody(JSON.serialize(request));
+        HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
+        try{
+            HTTPResponse res = h.send(req);
+
+            if(res.getStatusCode()/100 == 2){
+                resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
+                resp.statusCode = res.getStatusCode();
+            }
+            else {
+                resp.statusCode = res.getStatusCode();
+                resp.status = 'KO';
+                resp.errorDetails = res.getBody();
+            }
+        }
+        catch(Exception e){
+            resp.exceptionMessage = e.getMessage();
+        }
+        return resp;  
+    }
+    public static HDT_WS_Response sendRequest(String namedCredential,String path,String method,List<HDT_WS_Request> request,type respClass){
+        HTTP h = new Http();
+        HTTPRequest req = new HTTPRequest();
+        req.setTimeout(120000);
+        req.setHeader('Content-type', 'application/json');
+        req.setEndpoint('Callout:'+namedCredential+path);
+        req.setMethod(method);        
+        req.setBody(JSON.serialize(request));
+        HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
+
+        try{
+            HTTPResponse res = h.send(req);
+            resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
+            resp.statusCode = res.getStatusCode();
+        }
+        catch(Exception e){
+            resp.exceptionMessage = e.getMessage();
+        }
+        return resp;        
+    }
+    /*
+    public static HDT_WS_Response sendRequest(String namedCredential,String path,String method,Map<String,String> getParams,type respClass){
+        
+        String endpoint = '';
+        
+        HTTP h = new Http();
+        HTTPRequest req = new HTTPRequest();
+        req.setTimeout(120000);
+        req.setHeader('Content-type', 'application/json');
+        String contactParamsForGet= '';
+        for(String key : getParams.keyset()){
+            if(getParams.get(key) != null){
+                if(contactParamsForGet == null || contactParamsForGet == ''){
+                    contactParamsForGet += '?' + key + '=' + getParams.get(key);
+                }
+                else{
+                    contactParamsForGet += '&' + key + '=' + getParams.get(key);
+                }
+            }
+        }
+        if(contactParamsForGet != null){
+            endpoint+= namedCredential + path + contactParamsForGet;
+        }else{
+            endpoint+= namedCredential + path;
+        }
+        req.setEndpoint('Callout:'+endpoint);
+        req.setMethod(method);
+        HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
+
+        try{
+            HTTPResponse res = h.send(req);
+            resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
+            resp.statusCode = res.getStatusCode();
+        }
+        catch(Exception e){
+            resp.exceptionMessage = e.getMessage();
+        }
+        return resp;        
+    }*/
+    public static HDT_WS_Response sendRequest(String namedCredential,String path,String method,Map<String,Object> request,type respClass){
+                
+        HTTP h = new Http();
+        HTTPRequest req = new HTTPRequest();
+        req.setTimeout(120000);
+        req.setHeader('Content-type', 'application/json');
+        req.setBody(JSON.serialize(request));
+        req.setEndpoint('Callout:'+namedCredential+path);
+        req.setMethod(method);
+        
+        HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
+
+        try{
+            HTTPResponse res = h.send(req);
+            resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
+            resp.statusCode = res.getStatusCode();
+        }
+        catch(Exception e){
+            resp.exceptionMessage = e.getMessage();
+        }
+        return resp;        
+    }
     public static HDT_WS_Response sendRequest(String nomeApi,HDT_WS_Request request,type respClass){
         
-        System.debug('-----------------------------');
-        System.debug('-- - Send Request - ---------');
         HDT_WebServiceConfiguration__c conf = HDT_WebServiceConfiguration__c.getValues(nomeApi);
         HDT_WebServiceCredential__c cred = HDT_WebServiceCredential__c.getValues(conf.User__c);
         
@@ -19,36 +127,30 @@ public class HDT_WS_HTTPServiceCall {
             String authorizationHeader = 'Basic ' + EncodingUtil.base64Encode(headerCred);
             req.setHeader('Authorization', authorizationHeader);
         }
-        else{
-            System.debug('********** Username e Password ARE NOT VALORIZE INSIDE THE CUSTOM SETTINGS');
-        }
         
         req.setBody(JSON.serialize(request));
-        System.debug('*********Request:' + req.getBody());
         HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
-		//String r;
         try{
-            System.debug('**********req:' + req);
             HTTPResponse res = h.send(req);
-            System.debug('*************RESP:' + res.getBody());
-            System.debug('*************STATUS:' + res.getStatusCode());
 
-            resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
-            resp.statusCode = res.getStatusCode();
-
-        }catch(Exception e){
-            System.debug('************ERROR SEND Request');
-            System.debug('************:' + e.getMessage());
+            if(res.getStatusCode()/100 == 2){
+                resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
+                resp.statusCode = res.getStatusCode();
+            }
+            else {
+                resp.statusCode = res.getStatusCode();
+                resp.status = 'KO';
+                resp.errorDetails = res.getBody();
+            }
+        }
+        catch(Exception e){
             resp.exceptionMessage = e.getMessage();
         }
-		//System.debug('***********:response:' + r);
-        return resp;
-        
+        return resp;        
     }
+
     public static HDT_WS_Response sendRequest(String nomeApi,List<HDT_WS_Request> request,type respClass){
         
-        System.debug('-----------------------------');
-        System.debug('-- - Send Request - ---------');
         HDT_WebServiceConfiguration__c conf = HDT_WebServiceConfiguration__c.getValues(nomeApi);
         HDT_WebServiceCredential__c cred = HDT_WebServiceCredential__c.getValues(conf.User__c);
         
@@ -64,33 +166,23 @@ public class HDT_WS_HTTPServiceCall {
             String authorizationHeader = 'Basic ' + EncodingUtil.base64Encode(headerCred);
             req.setHeader('Authorization', authorizationHeader);
         }
-        else{
-            System.debug('********** Username e Password ARE NOT VALORIZE INSIDE THE CUSTOM SETTINGS');
-        }
         
         req.setBody(JSON.serialize(request));
-        System.debug('*********Request:' + req.getBody());
         HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
-		String r;
+
         try{
-            System.debug('**********req:' + req);
             HTTPResponse res = h.send(req);
-            System.debug('*************RESP:' + res.getBody());
             resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
             resp.statusCode = res.getStatusCode();
-        }catch(Exception e){
-            System.debug('************ERROR SEND Request');
-            System.debug('************:' + e.getMessage());
+        }
+        catch(Exception e){
             resp.exceptionMessage = e.getMessage();
         }
-		System.debug('***********:response:' + r);
-        return resp;
-        
+        return resp;        
     }
+
     public static HDT_WS_Response sendRequest(String nomeApi,Map<String,String> getParams,type respClass){
         
-        System.debug('-----------------------------');
-        System.debug('-- - Send Request - ---------');
         HDT_WebServiceConfiguration__c conf = HDT_WebServiceConfiguration__c.getValues(nomeApi);
         HDT_WebServiceCredential__c cred = HDT_WebServiceCredential__c.getValues(conf.User__c);
         
@@ -121,31 +213,22 @@ public class HDT_WS_HTTPServiceCall {
             String authorizationHeader = 'Basic ' + EncodingUtil.base64Encode(headerCred);
             req.setHeader('Authorization', authorizationHeader);
         }
-        else{
-            System.debug('********** Username e Password ARE NOT VALORIZE INSIDE THE CUSTOM SETTINGS');
-        }
+
         HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
-		String r;
+
         try{
-            System.debug('**********req:' + req);
             HTTPResponse res = h.send(req);
-            System.debug('*************RESP:' + res.getBody());
             resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
             resp.statusCode = res.getStatusCode();
-        }catch(Exception e){
-            System.debug('************ERROR SEND Request');
-            System.debug('************:' + e.getMessage());
+        }
+        catch(Exception e){
             resp.exceptionMessage = e.getMessage();
         }
-		System.debug('***********:response:' + r);
-        return resp;
-        
+        return resp;        
     }
 
     public static HDT_WS_Response sendRequest(String nomeApi,Map<String,Object> request,type respClass){
         
-        System.debug('-----------------------------');
-        System.debug('-- - Send Request - ---------');
         HDT_WebServiceConfiguration__c conf = HDT_WebServiceConfiguration__c.getValues(nomeApi);
         HDT_WebServiceCredential__c cred = HDT_WebServiceCredential__c.getValues(conf.User__c);
         
@@ -162,24 +245,17 @@ public class HDT_WS_HTTPServiceCall {
             String authorizationHeader = 'Basic ' + EncodingUtil.base64Encode(headerCred);
             req.setHeader('Authorization', authorizationHeader);
         }
-        else{
-            System.debug('********** Username e Password ARE NOT VALORIZE INSIDE THE CUSTOM SETTINGS');
-        }
+
         HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
-		String r;
+
         try{
-            System.debug('**********req:' + req);
             HTTPResponse res = h.send(req);
-            System.debug('*************RESP:' + res.getBody());
             resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
             resp.statusCode = res.getStatusCode();
-        }catch(Exception e){
-            System.debug('************ERROR SEND Request');
-            System.debug('************:' + e.getMessage());
+        }
+        catch(Exception e){
             resp.exceptionMessage = e.getMessage();
         }
-		System.debug('***********:response:' + r);
-        return resp;
-        
+        return resp;        
     }
 }

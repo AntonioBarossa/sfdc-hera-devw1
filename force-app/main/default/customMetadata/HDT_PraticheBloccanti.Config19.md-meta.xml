@@ -3,6 +3,10 @@
     <label>Config19</label>
     <protected>false</protected>
     <values>
+        <field>Active__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Cluster__c</field>
         <value xsi:type="xsd:string">Canone RAI</value>
     </values>
@@ -16,6 +20,6 @@
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">Sospensione Canone Rai Calamit�</value>
+        <value xsi:type="xsd:string">Sospensione Canone Rai Calamità</value>
     </values>
 </CustomMetadata>

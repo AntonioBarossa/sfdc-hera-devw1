@@ -104,8 +104,13 @@ public inherited sharing class HDT_SRV_ScriptManager {
     
             String flowUrl = '';
             String nomeOfferta = '';
-    
-            if (offerNames.size() > 0){
+            if ('OTP Remoto'.equals(parentOrder.SignatureMethod__c)){
+                HDT_ScriptPerCommOffer__mdt miniVoMdt = HDT_ScriptPerCommOffer__mdt.getInstance('Mini_VO');
+
+                flowUrl = '/flow/' + miniVoMdt.ScriptFlowName__c + '?idOrdinePadreInput='+ orderParentId;
+                configs.add(new HDT_WRP_ScriptConfig('Mini Vocal Order', flowUrl));
+            }
+            else if (offerNames.size() > 0){
                 for (AggregateResult offerName : offerNames){
                     for (HDT_ScriptPerCommOffer__mdt scriptPerOffer : scriptsMapping) {
                         if (scriptPerOffer.Object__c == 'Order' && scriptPerOffer.SignatureMethod__c == parentOrder.SignatureMethod__c) {
@@ -133,6 +138,69 @@ public inherited sharing class HDT_SRV_ScriptManager {
         } catch (Exception e) {
             System.debug(LoggingLevel.DEBUG, 'Si è verificato un errore: ' + e.getStackTraceString());
             throw e;
+        }
+    }
+
+    @AuraEnabled
+    public static String getFlowCampaign(Id campaignMemberId){
+
+        String flowUrl = '';
+        String flowName = '';
+
+        Set<String> allowedCampaignTypes = new Set<String>{'Quality Call', 'Comfort Call'};
+
+        CampaignMember campMemb = [SELECT CampaignId, Campaign.Tipology__c, Campaign.FlowType__c FROM CampaignMember WHERE Id =: campaignMemberId WITH SECURITY_ENFORCED];
+
+        if(campMemb != null){
+
+            for (HDT_ScriptPerCommOffer__mdt scriptPerOffer : scriptsMapping) {
+    
+                if(String.isBlank(campMemb.Campaign.Tipology__c) || !allowedCampaignTypes.contains(campMemb.Campaign.Tipology__c)){
+                    if (!String.isBlank(campMemb.Campaign.FlowType__c) && campMemb.Campaign.FlowType__c == scriptPerOffer.OfferName__c && 'Campaign'.equals(scriptPerOffer.Object__c)){
+                        flowName = scriptPerOffer.ScriptFlowName__c;
+                        continue;
+                    }
+                }else if (campMemb.Campaign.Tipology__c == scriptPerOffer.ActivityType__c && 'Campaign'.equals(scriptPerOffer.Object__c)){
+                    flowName = scriptPerOffer.ScriptFlowName__c;
+                    continue; 
+                }
+            }
+
+            if(!String.isBlank(flowName)){
+                return flowUrl = '/flow/' + flowName +'?idCampaignMemberInput='+ campaignMemberId;
+            }else{
+                return 'flow not found';
+            }
+            
+        }else{
+            throw new AuraHandledException('Si è verificato un errore  in fase di get delle informazioni su CampaignMember');
+        }
+    }
+
+    @AuraEnabled
+    public static String getFlowCase(Id caseId){
+
+        String flowUrl = '';
+        Case caseRetrieved = [SELECT Id FROM Case WHERE Id =: caseId WITH SECURITY_ENFORCED LIMIT 1];
+
+        if(caseRetrieved != null){
+
+            for (HDT_ScriptPerCommOffer__mdt scriptPerOffer : scriptsMapping) {
+
+                if('Case'.equals(scriptPerOffer.Object__c)){
+                    flowUrl = '/flow/' + scriptPerOffer.ScriptFlowName__c +'?idCaseInput='+ caseRetrieved.Id;
+                    break;
+                }
+            }
+
+            if(!String.isBlank(flowUrl)){
+                return flowUrl;
+            }else{
+                return 'flow not found';
+            }
+
+        }else{
+            throw new AuraHandledException('Si è verificato un errore  in fase di get delle informazioni su Case');
         }
     }
 

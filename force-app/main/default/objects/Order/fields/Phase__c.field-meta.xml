@@ -141,6 +141,11 @@
                 <label>Attesa conferma preventivo cliente</label>
             </value>
             <value>
+                <fullName>Attesa Credit Check</fullName>
+                <default>false</default>
+                <label>Attesa Credit Check</label>
+            </value>
+            <value>
                 <fullName>BL010</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -169,13 +174,11 @@
             <value>
                 <fullName>Caricamento Siebel KO</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Caricamento Siebel KO</label>
             </value>
             <value>
                 <fullName>Caricamento Siebel OK</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Caricamento Siebel OK</label>
             </value>
             <value>
@@ -227,6 +230,11 @@
                 <fullName>Conferma Appuntamento KO</fullName>
                 <default>false</default>
                 <label>Conferma Appuntamento KO</label>
+            </value>
+            <value>
+                <fullName>Credit Check KO</fullName>
+                <default>false</default>
+                <label>Credit Check KO</label>
             </value>
             <value>
                 <fullName>Da Inviare</fullName>
@@ -389,6 +397,11 @@
                 <fullName>In attesa validazione</fullName>
                 <default>false</default>
                 <label>In attesa validazione</label>
+            </value>
+            <value>
+                <fullName>In Corso caricamento Siebel</fullName>
+                <default>false</default>
+                <label>In Corso caricamento Siebel</label>
             </value>
             <value>
                 <fullName>In Lavorazione</fullName>
@@ -567,13 +580,17 @@
             <value>
                 <fullName>Registrazione da validare</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Registrazione da validare</label>
             </value>
             <value>
                 <fullName>Registrazione  da validare</fullName>
                 <default>false</default>
                 <label>Registrazione  da validare</label>
+            </value>
+            <value>
+                <fullName>Registrazione validata</fullName>
+                <default>false</default>
+                <label>Registrazione validata</label>
             </value>
             <value>
                 <fullName>Registrazione validata  Firmato/Inviato</fullName>
@@ -681,6 +698,16 @@
                 <fullName>Comunicazione EngageOne KO</fullName>
                 <default>false</default>
                 <label>Comunicazione EngageOne KO</label>
+            </value>
+            <value>
+                <fullName>Check TIMOE OK</fullName>
+                <default>false</default>
+                <label>Check TIMOE OK</label>
+            </value>
+            <value>
+                <fullName>Dati TIMOE Ricevuti</fullName>
+                <default>false</default>
+                <label>Dati TIMOE Ricevuti</label>
             </value>
         </valueSetDefinition>
     </valueSet>

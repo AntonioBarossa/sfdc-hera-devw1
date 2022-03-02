@@ -148,6 +148,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             caseUpdate.add(caseNew);
             HDT_UTL_DatabaseService.updateSObject(caseUpdate);
             if(currentCase.Type == 'Allineamento Anagrafica' && phase == 'Esito OK da SII'){
+                caseNew.TecnicalPhase__c = '';
                 caseNew.Phase__c = 'Completata';
                 caseNew.Status = 'Closed';
                 updateFuture(JSON.serialize(caseNew));
@@ -229,7 +230,16 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             mapActivityField.put('CMP',cmp);
             mapActivityField.put('DATA_ELABORAZIONE',dataElab);
             //EVERIS: Gestione Scarti SAP
-            HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase,mapActivityField);
+            if(errDescr.containsIgnoreCase('Pratica in attesa') && 
+               nextPhase.equalsIgnoreCase('Errore Lavorazione SAP') &&
+               String.valueOf(recordCase.get('Type')).equalsIgnoreCase('Rettifica Consumi') && 
+               String.valueOf(recordCase.get('Subprocess__c')).equalsIgnoreCase('Errore Stima Consumi')){
+                nextPhase = 'Pratica In Attesa';
+                currentCase.Description = errDescr;
+            }
+            else{
+                HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase,mapActivityField);
+            }
             //Gestione Esito Appuntamento;
             HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
             appService.updateExtraSystemAppointment(nextPhase, recordCase.Id);
@@ -407,7 +417,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Phase__c = 'Elaborazione Manuale';
             }else if(recordCase.Type.equalsIgnoreCase('Rimborso') && nextPhase.equalsIgnoreCase('Completata') && recordCase.IbanIsForeign__c){
                 currentCase.Phase__c = 'Elaborazione Manuale';
-            }else{
+            }else if(recordCase.Type.equalsIgnoreCase('Allineamento Anagrafica') && nextPhase.equalsIgnoreCase('Completata') && (!recordCase.Phase__c.equalsIgnoreCase('Esito OK da SII') && !recordCase.Phase__c.equalsIgnoreCase('Errore Lavorazione SAP'))){
+                noActionNeeded = true;//no action needed
+            }
+            else{
                 currentCase.Phase__c = nextPhase;
                 Map<String, Object> extraParams = new Map<String,Object>();
                 extraParams.put('oldContractCode',recordCase?.ContractCode__c); 

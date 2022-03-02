@@ -19,11 +19,30 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     public static List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> init(Order order){
         List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> processesList = new List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process>();
 
-        if (order.ServicePoint__c != null) {//returns processes that are different from VAS
+        if (order.ServicePoint__c != null && order.IsVAS__c == false) {//returns processes that are different from VAS
             processesList = HDT_UTL_OrderProcessAssignment.getAvailableProcesses(order);
         }
 
         return processesList;
+    }
+
+    @AuraEnabled
+    public static Integer getConsumptionAnnualForVas(String orderId){
+        
+        try{
+            Integer consumptionAnnual = null;
+            if(orderId != null && orderId != ''){
+                List<OrderItem> orderItemList = [SELECT Id,ConsumptionAnnual__c FROM OrderItem WHERE OrderId = :orderId AND Order.IsVAS__c = true AND ConsumptionAnnual__c != null WITH SECURITY_ENFORCED];
+                if(!orderItemList.isEmpty()){
+                    consumptionAnnual = (Integer)orderItemList[0].ConsumptionAnnual__c;
+                }
+            }
+            return consumptionAnnual;
+        }
+        catch(Exception ex){
+            return null;
+        }
+        
     }
 
     /**
@@ -134,9 +153,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             newOrder.ProcessType__c = processType;
             newOrder.ProcessCode__c = processCode;
             newOrder.Phase__c = 'Bozza';
-
+            
             //Logica Superficie Servita Start
-            newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas' && selectedProcessObject.get('recordType') != 'HDT_RT_Voltura') ? 75 : null;
+            newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas') ? 75 : null;
             //Logica Superficie Servita End
             orderSrv.updateRecord(newOrder);
             //EVERIS 
@@ -192,31 +211,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     }
 
     @AuraEnabled
-    public static Boolean checkVasAndCommodity(String parentOrdId){
+    public static Boolean checkVasAndCommodity(Order ord, String recordTypeName){
         try {
-            List<Order> childOrders = orderQr.getChildOrdersByParentId(parentOrdId);
-
-            Order ordCommodity = new Order();
-            Order vasOrd = new Order();
-
-            if (childOrders.size() > 1) {
-                for (Order ord : childOrders) {
-                    if (ord.RecordType.DeveloperName != 'HDT_RT_VAS') {
-                        ordCommodity = ord;
-                    } else {
-                        vasOrd.Id = ord.Id;
-                    }
-                }
-
-                if (vasord.Id != null) {
-                    vasOrd.IncomingCreditCheckResult__c = ordCommodity.IncomingCreditCheckResult__c;
-                    vasOrd.OutgoingCreditCheckResult__c = ordCommodity.OutgoingCreditCheckResult__c;
-                    vasOrd.CreditCheckDescription__c = ordCommodity.CreditCheckDescription__c;
-                    orderSrv.updateRecord(vasOrd);
-                }
-            }
-
-            return childOrders.size() > 1 ? true : false;
+            Boolean response = HDT_UTL_OrderProcess.checkRecordTypeForCreditCheck(recordTypeName, ord); 
+            /* Commentato perchè è stata tolta la fase AttesaCC
+            if (response){
+                HDT_UTL_DatabaseService.updateSObject(new Order(Id = ord.Id, CreditCheckInProgress__c = true));
+            } */
+            return response;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }

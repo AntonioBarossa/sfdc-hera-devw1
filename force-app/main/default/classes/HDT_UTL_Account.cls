@@ -176,8 +176,8 @@ public with sharing class HDT_UTL_Account {
                 acc.CustomerCode__c = res.data.codiceBP;
                 update acc;
             }
-          
-            else if(('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) || 'Piccoli Condomini'.equalsIgnoreCase(acc.Category__c))&& ('BP non rilevato'.equalsIgnoreCase(res.data.commenti))) {
+            /* Commentato in quanto errata gestione della registrazione dell'amministratore */
+            /*else if(('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) || 'Piccoli Condomini'.equalsIgnoreCase(acc.Category__c))&& ('BP non rilevato'.equalsIgnoreCase(res.data.commenti))) {
                 // amministratore di condominio viene identificato  dalla category 
                 req = callAmCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert amministratore
@@ -186,13 +186,13 @@ public with sharing class HDT_UTL_Account {
                     acc.CustomerCode__c = resCreate.data.codiceBP; 
                     update acc;
                 } // TODO gestire l'errore 
-            }
+            }*/
             /**@frpanico 17/01/2022
              * Commentata parte di codice della creazione Account
              * L'account viene creato in un secondo momento
              * Per gestire correttamente nuova e vecchia marcatura.
              */
-            else if ( 'BP non rilevato'.equalsIgnoreCase(res.data.commenti)){
+/*             else if ( 'BP non rilevato'.equalsIgnoreCase(res.data.commenti)){
                 req=callBpCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
               //  System.debug('resCreate BP : ' + resCreate);
@@ -200,7 +200,7 @@ public with sharing class HDT_UTL_Account {
                     acc.CustomerCode__c = resCreate.data.codiceBP; 
                     update acc;
                 } // TODO gestire l'errore 
-            }
+            } */
         } // TODO else per la gestione dell'errore
         //return acc;
     }
@@ -212,23 +212,23 @@ public with sharing class HDT_UTL_Account {
                 acc.CustomerCode__c = res.data.codiceBP;
                // update acc;
             }
-            else if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) || 'Piccoli Condomini'.equalsIgnoreCase(acc.Category__c)) {
-                // amministratore di condominio viene identificato  dalla category 
-                req = callAmCaCreate(acc,cont);
-                resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert amministratore
-                if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
-                    acc.CustomerCode__c = resCreate.data.codiceBP; 
-                 //   update acc;
-                } // TODO gestire l'errore 
-            }
-            else {
-                req=callBpCaCreate(acc,cont);
-                resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
-                if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
-                    acc.CustomerCode__c = resCreate.data.codiceBP; 
-                   // update acc;
-                } // TODO gestire l'errore 
-            }
+            // else if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) || 'Piccoli Condomini'.equalsIgnoreCase(acc.Category__c)) {
+            //     // amministratore di condominio viene identificato  dalla category 
+            //     req = callAmCaCreate(acc,cont);
+            //     resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert amministratore
+            //     if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
+            //         acc.CustomerCode__c = resCreate.data.codiceBP; 
+            //      //   update acc;
+            //     } // TODO gestire l'errore 
+            // }
+            // else {
+            //     req=callBpCaCreate(acc,cont);
+            //     resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
+            //     if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
+            //         acc.CustomerCode__c = resCreate.data.codiceBP; 
+            //        // update acc;
+            //     } // TODO gestire l'errore 
+            // }
         } // TODO else per la gestione dell'errore
         return acc;
     }
@@ -312,44 +312,157 @@ public with sharing class HDT_UTL_Account {
         return categoryCode;
     }
 
-    public static String customerMarkingToCustomerType(String customerMarking){
-        String customerType = '';
-
-        if (customerMarking == null) {
-            return customerType;
-        }
-
-        // Logica ereditata dagli lwc hdtFormAccountBusiness e hdtFormAccountResidenziale
-        if (customerMarking.containsIgnoreCase('Persona fisica') || customerMarking.containsIgnoreCase('Ditta individuale')) {
-            customerType = 'Persona Fisica';
-        } else {
-            customerType = 'Organizzazione';
-        }
-
-        return customerType;
-    }
-
     /**@frpanico 17/01/2022
      * Creato metodo per la creazione del BP/CA
      */
     
-    public static void createBpCa(List<AccountContactRelation> accountContactRelList)
+    public static void createBpCa(List<AccountContactRelation> accountContactRelList, string saleId)
     {
         /**@frpanico 17/01/2022
          * Se presente accountContactRel Amm. Condominio/Legale Rappresentante
          * Viene utilizzato l'accountContactRel dell'Amministratore di Condominio/Legale Rappresentante
          * Altrimenti viene utilizzato quello titolare
          */
-        for(AccountContactRelation accountContactRel : accountContactRelList)
-        {
-            break;
+
+        Map<String, SObject> accountContactMap = new Map<String, SObject>();
+        Boolean isAmministratore = false;
+
+        for(AccountContactRelation accountContactRel : accountContactRelList){
+            //AccountContactRelation del Amm. o del Legale se presenti
+            if( accountContactRel.Roles == 'Amministratore condominio' || accountContactRel.Roles == 'Legale rappresentante' ){
+                accountContactMap = generateAccountContact(accountContactRel);
+                if( accountContactRel.Roles == 'Amministratore condominio'){
+                    isAmministratore = true;
+                }
+                break;
+            }else if( accountContactRel.Roles == 'Titolare' ){
+                //if AccountId not in the list yet, insert
+                if( !accountContactMap.containsKey('Account')){
+                    accountContactMap = generateAccountContact(accountContactRel);
+                }
+            }
         }
+        /**@frpanico 09/02/2022
+         * Se presente il customer code
+         * Non viene registrato su sap l'account
+         */
+        if(String.isBlank(((String)((Account)accountContactMap.get('Account')).get('CustomerCode__c'))))
+        {
+            //CustomerMarking D* and update
+            Account acc = checkCustomerMarking( (Account)accountContactMap.get('Account') , saleId );
+            Contact cont = (Contact)accountContactMap.get('Contact');
+        
+            //HRADTR_GV Modifiche 03/02/2022 - Inizio
+            List<SObject> listToUpdate = new List<SObject>();
+            HDT_WS_RicCreBpCaRequest   req;
+            HDT_WS_RichCreBpCaResponse resCreate;
+            req = callBpCaCreate(acc,cont);
+            resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
+            if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
+                acc.CustomerCode__c = resCreate.data.codiceBP;
+                listToUpdate.add(acc); 
+            } // TODO gestire l'errore 
+
+            if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) && isAmministratore ){
+                req = callAmCaCreate(acc,cont);
+                resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
+                if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
+                    cont.ContactCode__c = resCreate.data.codiceBP;
+                    listToUpdate.add(cont); 
+                } // TODO gestire l'errore 
+            }
+            HDT_UTL_DatabaseService.updateSObject( listToUpdate ); 
+        }
+        else
+        {
+            return;    
+        }
+        //HRADTR_GV Modifiche 03/02/2022 - Fine
+
+    }
+
+    private static Account checkCustomerMarking( Account acc , string saleId)
+    {
+        //Modifiche HRADTR_GV 03/02/2022 - Inizio
+        Boolean checkSaleId = false;
+        Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+        
+        if(saleId instanceof Id){
+            List<Sale__c> isAccountInTransition = [ SELECT Id, Account__c, isTransition__c FROM Sale__c WHERE Sale__c.Id=:saleId WITH SECURITY_ENFORCED ]; 
+            checkSaleId = isAccountInTransition[0].IsTransition__c;
+        }
+        else{
+            checkSaleId = (!stabbedData.contains(saleId));
+        }
+        //Modifiche HRADTR_GV 03/02/2022 - FIne
+        //IsTransition__c = false && CustomerMarking !LIKE «D*» (es. Persona Fisica)
+        if(!checkSaleId){ //Modifiche HRADTR_GV 03/02/2022 
+            switch on acc.CustomerMarking__c {
+                when 'Persona fisica' {
+                    acc.CustomerMarking__c = 'D1 - Persona fisica';
+                }    
+                when 'Ditta individuale' {
+                    acc.CustomerMarking__c = 'D2 - Ditta individuale';
+                }
+                when 'Azienda' {
+                    acc.CustomerMarking__c = 'D3 - Azienda';
+                }
+                when 'Parti comuni' {
+                    acc.CustomerMarking__c = 'D4 - Parti comuni';
+                }
+                when 'Condominio' {
+                    acc.CustomerMarking__c = 'D5 - Condominio';
+                }
+                when 'Associazione' {
+                    acc.CustomerMarking__c = 'D6 - Associazione';
+                }
+                when 'BP Doppio' {
+                    acc.CustomerMarking__c = 'D7 - BP Doppio';
+                }
+                when 'Marcatura nulla' {
+                    acc.CustomerMarking__c = 'D8 - Marcatura nulla';
+                }
+            }
+        }
+        return acc;
     }
     
 
     private static Map<String, SObject> generateAccountContact(AccountContactRelation accountContactRel)
     {
+        accountContactRel = HDT_QR_AccountContactRelation.getAccountContactData(accountContactRel.Id)[0];
+
         Map<String, SObject> accountContactMap = new Map<String, SObject>();
+        Account newAccount = new Account();
+        Contact newContact = new Contact();
+        Map<String, HDT_CreateBpCa__mdt> newBpCaMap = HDT_CreateBpCa__mdt.getAll(); 
+
+        for( String strKey: newBpCaMap.keySet() ){ // strKey:FiscalCode__c, Id, ...
+            if( newBpCaMap.get(strKey).Object__c == 'Account' ){
+                if( !newBpCaMap.get(strKey).NotBlankable__c ){
+                    if( newBpCaMap.get(strKey).Field__c == 'Id' ){
+                        newAccount.put( newBpCaMap.get(strKey).Field__c, accountContactRel.AccountId );
+                    }else if( accountContactRel.Account.get(newBpCaMap.get(strKey).Field__c) != null ){
+                        newAccount.put( newBpCaMap.get(strKey).Field__c, accountContactRel.Account.get(newBpCaMap.get(strKey).Field__c) );
+                    }else{
+                        newAccount.put(newBpCaMap.get(strKey).Field__c,null); 
+                    }
+                }
+            }else if( newBpCaMap.get(strKey).Object__c == 'Contact' ){
+                if( !newBpCaMap.get(strKey).NotBlankable__c ){
+                    if( newBpCaMap.get(strKey).Field__c == 'Id' ){
+                        newContact.put( newBpCaMap.get(strKey).Field__c, accountContactRel.ContactId );
+                    }else if( accountContactRel.Contact.get(newBpCaMap.get(strKey).Field__c)!=null ){     
+                        newContact.put( newBpCaMap.get(strKey).Field__c, accountContactRel.Contact.get(newBpCaMap.get(strKey).Field__c));
+                    }else{  
+                        newContact.put(newBpCaMap.get(strKey).Field__c,null);  
+                    }
+                }
+            }
+        }
+
+        accountContactMap.put('Account',newAccount);
+        accountContactMap.put('Contact',newContact);
         return accountContactMap;
     }
 

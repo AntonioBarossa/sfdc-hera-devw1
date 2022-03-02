@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>DPV69</label>
+    <protected>false</protected>
+    <values>
+        <field>AdditionalConfiguration__c</field>
+        <value xsi:type="xsd:string">MODIFICA_DATI_CONSUMI</value>
+    </values>
+    <values>
+        <field>Description__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>HasAssetSelection__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>HasSubSelection__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Has_Attachment__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Process_Type__c</field>
+        <value xsi:type="xsd:string">Autoelettrica</value>
+    </values>
+    <values>
+        <field>Reporting_Category__c</field>
+        <value xsi:type="xsd:string">Hera Ricarica Business</value>
+    </values>
+    <values>
+        <field>Reporting_Subcategory__c</field>
+        <value xsi:type="xsd:string">Form digitale</value>
+    </values>
+    <values>
+        <field>Reporting_Type__c</field>
+        <value xsi:type="xsd:string">Vas Autoelettrica</value>
+    </values>
+    <values>
+        <field>UserInputFlow__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Value__c</field>
+        <value xsi:type="xsd:string">Colonnina</value>
+    </values>
+</CustomMetadata>

@@ -1,4 +1,6 @@
-public without sharing virtual class HDT_UTL_ProcessExecution {
+@SuppressWarnings('PMD.AvoidDebugStatements')
+public inherited sharing virtual class HDT_UTL_ProcessExecution {
+
     public static HDT_QR_StaticResource         staticResourceQr        = new HDT_QR_StaticResource()           ;
     public HDT_QR_Account                       qrAcc                   = new HDT_QR_Account()                  ;
     public HDT_QR_ServicePoint                  qrSerPoint              = new HDT_QR_ServicePoint()             ;
@@ -9,60 +11,92 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public HDT_UTL_Constants                    constant                = new HDT_UTL_Constants()               ;
     private static HDT_QR_MassiveLoaderProcess massiveLoaderProcessQr   = new HDT_QR_MassiveLoaderProcess()     ;
     public HDT_WRP_ProcessEntities              currentProcess                                                  ;
+    public List<MassiveLoaderRequestItem__c> requestItemList;
 
 
-    
+    public String splitCharacter = '\\|';
+    //public String splitCharacter = ',';
     //public  MassiveLoaderRequestItem__c varRequestItem;
     public  String processName;
-    public  Map<Integer, String> mapHeaderByPosition    = new  Map<Integer, String>(); 
+    public  Map<Integer, String> mapHeaderByPosition    = new  Map<Integer, String>();
+    public  Map<String, Integer> mapHeaderForWrapper    = new  Map<String, Integer>(); 
     public  Map<Integer, String> mapRequiredByPosition  = new  Map<Integer, String>(); 
     public  Id recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
     public  Id recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
 
-    public void setMassiveLoaderRequestItem(MassiveLoaderRequestItem__c requestItem){
+    // --------- montors fix for bulk develop  ---------
 
-        currentProcess=new HDT_WRP_ProcessEntities();
-        this.currentProcess.currentRequestItem=requestItem;   
-       
+    public void setProcess(String processName){
+        this.processName = processName;
+        System.debug(LoggingLevel.DEBUG, '>>> set this process: ' + this.processName);
+    }
 
-        if ( String.isBlank( this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c)) {
-            throw new HDT_WRP_ProcessEntitiesException( 'NullPointerExceptions','ProcessType can\'t be null');
-        }
-    
-        this.processName= this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c;
+    public void setMassiveLoaderRequestItemList(List<MassiveLoaderRequestItem__c> requestItemList){
+
+        this.requestItemList = requestItemList;
+
         HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(processName);
         List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName);
  
-
         mapHeaderByPosition = new Map<Integer, String>();
         Integer count=0;
-        for (String temp : staticResources.get(0).Body.toString().remove('\r').remove('\n').split(',')) {
+        for (String temp : staticResources.get(0).Body.toString().remove('\r').remove('\n').split(splitCharacter)) {
            if (temp.containsIgnoreCase('*')) {
                 temp=temp.remove('*');
                 mapRequiredByPosition.put(count,temp);
             }
             mapHeaderByPosition.put(count,temp);
+            mapHeaderForWrapper.put(temp, count);
             count++;
         }
+
     }
+    // --------- montors fix for bulk develop  ---------
+
+    //public void setMassiveLoaderRequestItem(MassiveLoaderRequestItem__c requestItem){
+    //
+    //    currentProcess=new HDT_WRP_ProcessEntities();
+    //    this.currentProcess.currentRequestItem=requestItem;   
+    //   
+    //
+    //    if ( String.isBlank( this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c)) {
+    //        throw new HDT_WRP_ProcessEntitiesException( 'NullPointerExceptions','ProcessType can\'t be null');
+    //    }
+    //
+    //    this.processName= this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c;
+    //    HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(processName);
+    //    List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName);
+    //
+    //
+    //    mapHeaderByPosition = new Map<Integer, String>();
+    //    Integer count=0;
+    //    for (String temp : staticResources.get(0).Body.toString().remove('\r').remove('\n').split(',')) {
+    //       if (temp.containsIgnoreCase('*')) {
+    //            temp=temp.remove('*');
+    //            mapRequiredByPosition.put(count,temp);
+    //        }
+    //        mapHeaderByPosition.put(count,temp);
+    //        count++;
+    //    }
+    //}
 
     public virtual void checks(){
-        System.debug('checks');
+        System.debug(LoggingLevel.DEBUG, 'checks');
     }
     public virtual void getRecords(){
-        System.debug('getRecords');
+        System.debug(LoggingLevel.DEBUG, 'getRecords');
     }
     public virtual void registryCreation(){
-        System.debug('registryCreation');
+        System.debug(LoggingLevel.DEBUG, 'registryCreation');
     }
     public virtual void makeProcess(){ // creazione processo
-        System.debug('makeProcess');
+        System.debug(LoggingLevel.DEBUG, 'makeProcess');
     }
     public virtual void finalUpdate(){
-        System.debug('finalUpdate');
+        System.debug(LoggingLevel.DEBUG, 'finalUpdate');
     }
     public virtual void execute(){
-        System.debug('execute');
+        System.debug(LoggingLevel.DEBUG, 'execute');
         checks();
         getRecords();
         registryCreation();
@@ -71,6 +105,12 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
 
     }
    
+    // --------- montors fix for bulk develop  ---------
+    public virtual void manageCatchException(Integer batchSize, List<MassiveLoaderRequestItem__c> itemList, String message){
+        System.debug(LoggingLevel.DEBUG, 'manageCatchException');
+    }
+    // --------- montors fix for bulk develop  ---------
+
     /**
     * @description :
     * @param objName 
@@ -83,29 +123,33 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
         return fieldTypeName;
     }
 
-    public void mapTypeField(SObject sObj,Map<String, String> mapSobjField,Integer position,String value){
+    public String mapTypeField(SObject sObj, Map<String, String> mapSobjField, Integer position, String value){
 
-
-        String typeField=getTypeField(String.valueOf(sObj.getSObjectType()),mapSobjField.get(mapHeaderByPosition.get(position)));
-        switch on typeField.toUpperCase() {
-            when 'BOOLEAN'  {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Boolean.valueOf(value));
+        try {
+            String typeField=getTypeField(String.valueOf(sObj.getSObjectType()),mapSobjField.get(mapHeaderByPosition.get(position)));
+            switch on typeField.toUpperCase() {
+                when 'BOOLEAN'  {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Boolean.valueOf(value));
+                }
+                when 'DOUBLE'  {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Decimal.valueOf(value));
+                }
+                when 'INTEGER'  {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Integer.valueOf(value));
+                }
+                when 'DATETIME'  {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Datetime.valueOf(value));
+                }
+                when 'DATE'  {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Date.valueOf(value));
+                }
+                when else {
+                    sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),value);
+                }
             }
-             when 'DOUBLE'  {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Decimal.valueOf(value));
-             }
-             when 'INTEGER'  {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Integer.valueOf(value));
-             }
-             when 'DATETIME'  {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Datetime.valueOf(value));
-             }
-             when 'DATE'  {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Date.valueOf(value));
-             }
-            when else {
-                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),value);
-            }
+            return null;
+        } catch (Exception e){
+            return e.getMessage() + ' - on filed [' + mapSobjField.get(mapHeaderByPosition.get(position)) + ']';
         }
     }
 
@@ -115,6 +159,21 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
                 WHERE objectType__c=:objectType AND processType__c=:processType
                 WITH SECURITY_ENFORCED
                 ];
+    }
+
+    public MassiveLoaderRequestItem__c checkRequiredFields(MassiveLoaderRequestItem__c item, List<String> tempSplitedFields){
+        Integer count = 0;
+        for(String field : tempSplitedFields){
+
+            if(mapRequiredByPosition.containsKey(count) && mapRequiredByPosition.get(count) != null && String.isBlank(tempSplitedFields[count])) {
+                System.debug(LoggingLevel.DEBUG, '>>> Missing Required Field');
+                item.Status__c = 'Errore';
+                item.StatusDescription__c = 'Missing Required Field: ' + mapHeaderByPosition.get(count);
+                break;
+            }
+            count++;
+        }
+        return item;
     }
 
     /**
@@ -206,6 +265,29 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
         }  
     }
 
+    public Account verifyAccountAddress(Account account){
+        HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse resp= HDT_WS_HerokuAddressSearch.callServiceMass(
+            account.BillingCity,
+            account.BillingStreetName__c,
+            account.BillingStreetNumber__c
+        );
+
+        List<HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj> listPrestazioni = resp.prestazione;
+        HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj retObj = analizeRespVerifyAddress(listPrestazioni, account.BillingCity, account.BillingStreetName__c, account.BillingStreetNumber__c, account.BillingPostalCode);
+        
+        if(retObj != null) {
+            account.BillingCity = retObj.city1;
+            account.BillingCityCode__c = retObj.cityCode;
+            account.BillingStreetName__c = retObj.street;
+            account.BillingPlaceCode__c = retObj.cityPCode;
+            account.BillingPlace__c = retObj.cityPName;
+            account.BillingIsAddressVerified__c = true;
+        } else {
+            account.BillingIsAddressVerified__c = false;
+        }
+        return account;
+    }
+
     /** 
     * @description confronta gli indirizzi che restituisce il servizio con l'indirizzo in input  
     * restituisce l'indirizzo che ha il numero matching points maggiore 
@@ -266,6 +348,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
       public ServicePoint__c              currentServicePoint           ;
       public BillingProfile__c            currentBillingProfile         ;
       public MassiveLoaderRequestItem__c  currentRequestItem            ;
+      public List<MassiveLoaderRequestItem__c>  currentRequestItemList  ;
       public AccountContactRelation       currentAccountContactRelation ;
       public Sale__c                      currentSale                   ;
       public OrderItem                    currentOrderItem              ;
@@ -300,5 +383,172 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
             this.Type      = varType;
             this.message   = varMessage;
         }
-    }    
+    }
+
+    public MassiveLoaderRequestItem__c setErrorItem(MassiveLoaderRequestItem__c itemError, String message){
+        itemError.Status__c = 'Errore';
+        itemError.StatusDescription__c = message;
+        return itemError;
+    }
+
+    public static HDT_WRP_SaveResponse databaseUpsert(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType){
+        HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
+        saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
+        saveResponse.savedObject = new List<sObject>();
+        saveResponse.itemIdToObjId = new Map<Id, Id>();
+        saveResponse.errorItemMap = new Map<Id, String>();
+
+        SObjectType objtype = Schema.getGlobalDescribe().get(sObjectType);
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+ 
+        if(objRes.isCreateable()){
+
+            List<Database.UpsertResult> upsertResults = Database.upsert(sObjectList, false);
+
+            for(Integer n=0; n<upsertResults.size(); n++){
+                Database.UpsertResult sr = upsertResults[n];
+
+                if(sr.isSuccess()) {
+                    requetItems[n].Status__c = 'Chiuso';
+                    saveResponse.reponseItemList.add(requetItems[n]);
+                    saveResponse.savedObject.add(sObjectList[n]);
+                    saveResponse.itemIdToObjId.put(requetItems[n].Id, sr.getId());
+
+                } else {
+                    requetItems[n].Status__c = 'Errore';
+
+                    String errorMessage = '';
+                    for(Database.Error err : sr.getErrors()) {
+                        errorMessage += '[' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + '] ';
+                        System.debug(LoggingLevel.DEBUG, '>>> errorMessage ' + errorMessage);
+                    }
+
+                    requetItems[n].StatusDescription__c = errorMessage.abbreviate(250);
+                    saveResponse.errorItemMap.put(requetItems[n].Id, errorMessage.abbreviate(250));
+                    saveResponse.reponseItemList.add(requetItems[n]);
+                    
+                }
+            }
+        }
+
+        return saveResponse;
+
+    }
+
+    public static void runCompatibility(List<Case> savedCase){
+        Map<Id, String> compatibilityMap = checkCompatibilityPostSales(savedCase);
+        System.debug(LoggingLevel.DEBUG, '>>> compatibilityMap ' + String.valueOf(compatibilityMap));
+        updateCaseAfterCompatibility(compatibilityMap, savedCase);
+        getLimitDetails('AFTER Compatibility');
+
+    }
+    
+    private static Map<Id, String> checkCompatibilityPostSales(List<Case> csList){
+
+        List<ServiceRequest__c> srList = new List<ServiceRequest__c>();
+        List<ServiceRequest__c> srListToDelete = new List<ServiceRequest__c>();
+        Map<Id, String> caseIdToCompatibility = new Map<Id, String>();
+
+        try {
+            String compatibility = '';
+            Formula.recalculateFormulas(csList);
+            ServiceRequest__c srvRequest;
+            for(Case cs : csList){
+                srvRequest = new ServiceRequest__c();
+                srvRequest.Case__c = cs.Id;
+                srvRequest.ServicePointCode__c = cs.PODPDRFormula__c;
+                srvRequest.Status__c = HDT_UTL_MatrixCompatibility.getStatus(cs.Status, 'Case');
+                srvRequest.CommoditySector__c = cs.CommodityFormula__c;
+                srvRequest.Type__c = 'Case';
+    
+                if(cs.ServicePoint__c != null){
+                    srvRequest.ServicePoint__c = cs.ServicePoint__c;
+                } else {
+                    srvRequest.Account__c = cs.AccountId;
+                    srvRequest.BillingProfile__c = cs.BillingProfile__c;
+                }
+    
+                srvRequest.ProcessType__c = HDT_UTL_MatrixCompatibility.getProcessType(cs.Type, 'Case', cs.Commodity__c);
+
+                System.debug(LoggingLevel.DEBUG, '>>> srvRequest: ' + srvRequest);
+
+                srList.add(srvRequest);
+            }
+
+            HDT_UTL_DatabaseService.insertSObject(srList);
+
+            for(ServiceRequest__c sReq : srList){
+                wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = HDT_UTL_MatrixCompatibility.checkCompatibility(sReq);
+
+                System.debug(LoggingLevel.DEBUG, '>>> ObjectCompatibility: ' + result);
+
+                //list of incompatible records
+                if(!result.incompatibilities.isEmpty()){
+                    compatibility = HDT_UTL_MatrixCompatibility.getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
+                    System.debug(LoggingLevel.DEBUG, '>>> compatibilityMessage: ' + compatibility);
+
+                    caseIdToCompatibility.put(sReq.Case__c, compatibility);
+                    srListToDelete.add(sReq);
+                }
+
+            }
+            
+            if(srListToDelete.size() > 0){
+                HDT_UTL_DatabaseService.deleteSObject(srListToDelete);
+            }
+
+            return caseIdToCompatibility;
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    private static void updateCaseAfterCompatibility(Map<Id, String> incompatibleCaseIdSet, List<Case> savedCase){
+
+        for(Case c : savedCase){
+            if(incompatibleCaseIdSet.containsKey(c.Id)){
+                c.Phase__c = 'Bozza Annullata';
+                c.Status = 'Closed';
+                c.CancellationReason__c = 'Processo incompatibile';
+            } else {
+                c.Phase__c = 'Da Inviare';
+            }
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(savedCase);
+
+    }
+
+    public static Case setCaseField(Case newCase, Id recordTypeId){
+        newCase.RecordTypeId = recordTypeId;
+        newCase.Status = 'In Lavorazione';
+        newCase.Phase__c = 'Bozza';
+        newCase.CompanyOwner__c = 'HERA COMM';
+        newCase.Commodity__c = 'Energia Elettrica';
+        return newCase;
+    }
+
+    public static void getLimitDetails(String stageName){
+        List<String> limitList = new List<String>();
+        limitList.add('>>> CpuTime: ' + String.valueOf(Limits.getCpuTime()) + ' of ' + String.valueOf(Limits.getLimitCpuTime()));
+        limitList.add('>>> DML: ' + String.valueOf(Limits.getDMLStatements()) + ' of ' + String.valueOf(Limits.getLimitDMLStatements()));
+        limitList.add('>>> HeapSize: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
+        limitList.add('>>> Queries: ' + String.valueOf(Limits.getQueries()) + ' of ' + String.valueOf(Limits.getLimitQueries()));
+        limitList.add('>>> Callouts: ' + String.valueOf(Limits.getCallouts()) + ' of ' + String.valueOf(Limits.getLimitCallouts()));
+
+        System.debug(LoggingLevel.DEBUG, '---------------- ' + stageName + ' ----------------');
+        for(String s : limitList){
+            System.debug(s);
+        }
+
+    }
+
+    public class HDT_WRP_SaveResponse {
+        public List<MassiveLoaderRequestItem__c> reponseItemList;
+        public List<sObject> savedObject;
+        public Map<Id, Id> itemIdToObjId;
+        public Map<Id, String> errorItemMap;
+    }
+
 }

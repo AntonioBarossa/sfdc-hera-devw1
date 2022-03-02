@@ -22,6 +22,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     verifyFieldsAddressDisabled= true;
     disableVerifIndiButton = true;
     disableLocalita= false;
+    showSpinner = false;
     @api recordtype;
     @api headertoshow;
     @api checkBoxFieldValue = false;
@@ -419,6 +420,13 @@ handleAddressFromAccount()
             this.theRecord['Codice Via Stradario SAP']= data['Codice Via Stradario SAP'];
             this.theRecord['Flag Verificato']= true;
             this.theRecord['Indirizzo Estero']=false;
+            if(this.codstradariosap != undefined && this.codstradariosap != ''){
+                this.handleAddressVerification();
+            }else{
+                this.flagverificato=false;
+                this.theRecord['Flag Verificato']= false;
+                this.alert('Indirizzo da verificare','Attenzione! Indirizzo non censito sullo stradario SAP, inserisci una nuova Via','warn');
+            }
             
 
         }
@@ -588,7 +596,14 @@ handleAddressValuesIfSap(servicepointretrieveddata){
             this.theRecord['IndirizzoEstero'] = this.IndEstero;
            // this.theRecord['Flag Verificato'] = this.FlagVerificato;
            this.theRecord['Flag Verificato'] = true;
-            
+           if(this.codstradariosap != undefined && this.codstradariosap != ''){
+                this.handleAddressVerification();
+            }else{
+                this.flagverificato=false;
+                this.theRecord['Flag Verificato']= true;
+                this.alert('Indirizzo da verificare','Attenzione! Indirizzo non censito sullo stradario SAP, inserisci una nuova Via','warn');
+            } 
+           
 
         this.preloading = false;
         console.log(' THERECORD**************'+JSON.stringify(this.theRecord));
@@ -1310,44 +1325,44 @@ handleChangeIndirizz(event){
     }else{
 
     
-    if((event.target.value.length==5 && event.target.name =='Via')){
-        getAddressInd({street:event.target.value,cityCode:this.codcomunesap}).then(data =>
-            {
-                console.log("******HOLAHOLA:" + JSON.stringify(data));
-                if(data['statusCode'] == 200 && data['prestazione'].length > 0){
-                    console.log("Sucessoooooooooooo:" + JSON.stringify(data));
-                    this.herokuAddressServiceData = data['prestazione'];
-                    this.headertoshow = 'Via';
-                    this.booleanForm=false;
-                    this.booleanForm=true;
+        if((event.target.value.length==5 && event.target.name =='Via')){
+            getAddressInd({street:event.target.value,cityCode:this.codcomunesap}).then(data =>
+                {
+                    console.log("******HOLAHOLA:" + JSON.stringify(data));
+                    if(data['statusCode'] == 200 && data['prestazione'].length > 0){
+                        console.log("Sucess:" + JSON.stringify(data));
+                        this.herokuAddressServiceData = data['prestazione'];
+                        this.headertoshow = 'Via';
+                        this.booleanForm=false;
+                        this.booleanForm=true;
 
-                    this.template.querySelector('c-hdt-selection-address-response').openedForm2();
-                    this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Via');
-                }
-                else{
-                    let event2;
-                    if(data['statusCode'] != 200){
-                        event2 = new ShowToastEvent({
-                            title: 'Errore',
-                            variant: 'error',
-                            message: "errore di connessione, riprovare o contattare l'amministratore"
-                        });
-                        
+                        this.template.querySelector('c-hdt-selection-address-response').openedForm2();
+                        this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Via');
                     }
                     else{
-                        event2 = new ShowToastEvent({
-                            title: 'Errore',
-                            variant: 'error',
-                            message: 'Non sono presenti Indirizzi corrispondenti ai caratteri inseriti . Digitare nuovamente per effettuare una nuova ricerca.',
-                        });
+                        let event2;
+                        if(data['statusCode'] != 200){
+                            event2 = new ShowToastEvent({
+                                title: 'Errore',
+                                variant: 'error',
+                                message: "errore di connessione, riprovare o contattare l'amministratore"
+                            });
+                            
+                        }
+                        else{
+                            event2 = new ShowToastEvent({
+                                title: 'Errore',
+                                variant: 'error',
+                                message: 'Non sono presenti Indirizzi corrispondenti ai caratteri inseriti . Digitare nuovamente per effettuare una nuova ricerca.',
+                            });
+                        }
+                        this.dispatchEvent(event2);
                     }
-                    this.dispatchEvent(event2);
-                }
-                
-    
-    
-        });
-    }
+                    
+        
+        
+            });
+        }
     }
     
 
@@ -1708,13 +1723,14 @@ disabledverifyFieldsAddressDisabled(){
      * Verify address
      */
     handleAddressVerification(){
-
+        this.showSpinner = true;
+        console.log('*** spinner '  +this.showSpinner );
         getAddressRev({modality:'S',cityCode:this.codcomunesap,streetCode:this.codstradariosap,houseNumCode:this.civico}).then(data =>
             {
-                
+                this.showSpinner = true;
                 console.log("******:" + JSON.stringify(data));
                 if(data['statusCode'] == 200 && data['prestazione'].length > 0){
-                    console.log("Successoooooooooooo:" + JSON.stringify(data));
+                    console.log("Success:" + JSON.stringify(data));
                     this.comune = data['prestazione'][0].city1;
                     this.codcomunesap = data['prestazione'][0].cityCode;
                     this.codstradariosap = data['prestazione'][0].streetCode;
@@ -1737,12 +1753,13 @@ disabledverifyFieldsAddressDisabled(){
                     this.theRecord['Flag Verificato'] = true;
                  
                     this.dispEvent(true);
-               
+                    this.showSpinner = false;
                 }
                 else{
-                    console.log("ErrorrrrrreeeeeeeeeEeee:" + JSON.stringify(data));
+                    console.log("Error:" + JSON.stringify(data));
                     this.dispEvent(false);
-
+                    this.showSpinner = false;
+                    this.alert('Indirizzo da verificare','Attenzione! Indirizzo non censito sullo stradario SAP, inserisci una nuova Via','warn');
                 }
                 
     
@@ -1752,7 +1769,7 @@ disabledverifyFieldsAddressDisabled(){
             this.theRecord['Stato']=='ITALIA';
             this.stato='ITALIA';
         }
-
+        
 
       //  this.hasAddressBeenVerified = true;
         

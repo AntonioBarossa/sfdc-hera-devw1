@@ -68,16 +68,16 @@ public with sharing class HDT_UTL_VasManagement {
     private static Order getOrderData(Id orderId) {
         //TODO: move query in HDT_QR_Order class
         return [SELECT SalesCompany__c, ContractAccountCode__c, CustomerCode__c, CustomerFiscalCode__c, CustomerVATNumber__c,
-            ServicePointCode__c, SalesCompanyCode__c, CustomerName__c, CustomerLastName__c, CommercialProduct__c, CommercialProductVersion__c, OrderNumber,
-            VasServiceActivationDate__c, ShippingStreetToponym__c, ShippingStreetName__c, ShippingStreetNumber__c,
+            ServicePointCode__c, SalesCompanyCode__c, CustomerName__c, CustomerLastName__c, CommercialProduct__c, CommercialProductVersion__c,
+            OrderNumber, VasServiceActivationDate__c, ShippingStreetToponym__c, ShippingStreetName__c, ShippingStreetNumber__c,
             ShippingCity__c, ShippingPlace__c, ShippingPostalCode__c, ShippingProvince__c, PhoneNumber__c, ShippingMail__c, SignedDate__c,
-            ContractReference__r.SAPContractCode__c,OrderReference__c,ContractReference__c,
-            ContractReference__r.ServicePoint__r.ServicePointCode__c, OrderReference__r.ServicePointCodeFormula__c,
-            SBQQ__Quote__r.SBQQ__ListAmount__c, SBQQ__Quote__r.SBQQ__TotalCustomerDiscountAmount__c, SBQQ__Quote__r.SBQQ__PriceBook__r.Name,
-            SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
-            (SELECT Quantity, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
+            ContractReference__r.SAPContractCode__c,OrderReference__c,ContractReference__c,ContractReference__r.ServicePoint__r.ServicePointCode__c,
+            OrderReference__r.ServicePointCodeFormula__c,SBQQ__Quote__r.SBQQ__ListAmount__c, SBQQ__Quote__r.SBQQ__TotalCustomerDiscountAmount__c,
+            SBQQ__Quote__r.SBQQ__PriceBook__r.Name, SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
+            CommercialProductLink__r.FreeVas__c, CommercialProductLink__r.DurationDay__c, CommercialProductLink__r.DurationDayGas__c, 
+            (SELECT Quantity, UnitPrice, ListPrice, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
                 DurationDay__c, PaymentMode__c, IVA__c,
-                Product2.Name, Product2.NumberRateMonthly__c, Product2.DescriptionSAP__c
+                Product2.Name, Product2.NumberRateMonthly__c, Product2.DescriptionSAP__c,DelayEffectiveDate__c
                 FROM OrderItems)
             FROM Order WHERE Id = :orderId WITH SECURITY_ENFORCED];
     }
@@ -105,15 +105,54 @@ public with sharing class HDT_UTL_VasManagement {
     * @return String 
     **/
     private static String getCompanyCode(String salesCompany, String servicePointCode){
-        if(STRING.isBlank(servicePointCode)){
+        if(String.isBlank(servicePointCode) && String.isBlank(salesCompany)){
             return null;
+        }else if(String.isNotBlank(salesCompany)){
+            List<HDT_HeraCompany__mdt> companies = [select CompanyCode__c from HDT_HeraCompany__mdt where SalesCompany__c=:salesCompany WITH SECURITY_ENFORCED];
+            return companies.isEmpty()? null : companies?.get(0)?.CompanyCode__c; 
         }
-        List<ServicePoint__c> lpc = [Select Vendor__c from ServicePoint__c where ServicePointCode__c=:servicePointCode WITH SECURITY_ENFORCED LIMIT 1 ];
-        if(lpc.size()>0){
-            List<HDT_HeraCompany__mdt> companies = [select CompanyCode__c from HDT_HeraCompany__mdt where SalesCompany__c=:lpc[0].Vendor__c WITH SECURITY_ENFORCED];
-            return companies.isEmpty()? null : companies?.get(0)?.CompanyCode__c;
+        else{
+            List<ServicePoint__c> lpc = [Select Vendor__c from ServicePoint__c where ServicePointCode__c=:servicePointCode WITH SECURITY_ENFORCED LIMIT 1 ];
+            if(lpc.size()>0){
+                List<HDT_HeraCompany__mdt> companies = [select CompanyCode__c from HDT_HeraCompany__mdt where SalesCompany__c=:lpc[0].Vendor__c WITH SECURITY_ENFORCED];
+                return companies.isEmpty()? null : companies?.get(0)?.CompanyCode__c;
+            }
         }
+        
         return null;
+    }
+
+    public static void updateVasPhase(string vasPhase, Order ord ) {
+//.equalsIgnoreCase
+        String newPhase = '';
+        if ( vasPhase == 'Esportazione VS Siebel'){
+            newPhase = vasPhase;
+        }
+        else if ( ord.ComfortCallDaysDue__c != null){
+            newPhase = 'In attesa conferma cliente';
+        }
+        else if ( ord.VASType__c == 'VAS Servizio' && !ord.IsEarlyActivation__c ){
+            newPhase =  'In attesa tempi di ripensamento';
+        }else if( ord.VASType__c == 'VAS Fatturabili' ){
+            newPhase = 'Comunicazione verso Heroku';
+        }else{
+            newPhase =  'Comunicazione Motore VAS';
+        }
+        Order orderToUpdate = new Order();
+        orderToUpdate.Id = ord.Id;
+        orderToUpdate.Phase__c = newPhase;
+        HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
+        if(newPhase.equalsIgnoreCase('Comunicazione verso Heroku') || newPhase.equalsIgnoreCase('Comunicazione Motore VAS'))
+        {
+            Schedulable instance = (Schedulable) wrts_prcgvr.VersionManager.newClassInstance('AsyncJobBatchSchedule');
+            instance.execute(null);
+        }
+
+        /* Platform Event non sembra partire correttamente */
+        /*HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
+        platEvent.SerializedSobj__c = JSON.serialize(orderToUpdate);
+        Database.SaveResult sr = Eventbus.publish(platEvent);*/
+
     }
 
     /**
@@ -278,9 +317,16 @@ public with sharing class HDT_UTL_VasManagement {
             telefono = currentOrder.PhoneNumber__c;
             mail = currentOrder.ShippingMail__c;
             modalitaFatturazione = parentOrderItem?.VASBillingMode__c?.substring(0,1);
-            dataDecorrenza = parentOrderItem?.VasActivationDate__c;
+            dataDecorrenza = parentOrderItem.VasActivationDate__c != null ? parentOrderItem?.VasActivationDate__c : parentOrderItem?.DelayEffectiveDate__c;
             dataFirma = currentOrder.SignedDate__c;
             durataServizioGg = parentOrderItem?.DurationDay__c;
+            if(currentOrder.CommercialProductLink__r.DurationDay__c > 0){
+                dataCessazione = dataAttivazione.addDays((Integer)currentOrder.CommercialProductLink__r.DurationDay__c);
+            }else if(currentOrder.CommercialProductLink__r.DurationDayGas__c > 0){
+                dataCessazione = dataAttivazione.addDays((Integer)currentOrder.CommercialProductLink__r.DurationDayGas__c);
+            }else{
+                dataCessazione = Date.newInstance(3999, 12, 31);
+            }
             //modalitaPagamento = parentOrderItem?.PaymentMode__c;
             
             isVasStandAlone = (currentOrder.SBQQ__Quote__r?.SBQQ__PriceBook__r?.Name?.toUpperCase() == VAS_STANDALONE_PRICEBOOK);
@@ -290,7 +336,7 @@ public with sharing class HDT_UTL_VasManagement {
             //rfid = null
 
             //isContCambioOfferta = currentOrder.ContractReference__c ???
-            //isVasOmaggio = ???
+            isVasOmaggio = currentOrder?.CommercialProductLink__r?.FreeVas__c;
         }
     }
 
@@ -313,8 +359,8 @@ public with sharing class HDT_UTL_VasManagement {
         public HDT_WRP_VASActivationReqItem(OrderItem ordItem) {
             ItemProdotto = ordItem.Product2?.DescriptionSAP__c?.abbreviate(33)?.removeEnd('...');
             Quantita = ordItem.Quantity;
-            PrezzoNetto = ordItem.PriceNet__c;
-            PrezzoNettoScontato = ordItem.PriceNetDiscounted__c;
+            PrezzoNetto = ordItem.ListPrice;
+            PrezzoNettoScontato = ordItem.UnitPrice;
             PercentualeIva = ordItem.Percentage__c==null? 0.0 : ordItem.Percentage__c;
         }
     }
