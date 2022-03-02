@@ -218,7 +218,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             if (response){
                 HDT_UTL_DatabaseService.updateSObject(new Order(Id = ord.Id, CreditCheckInProgress__c = true));
             } */
-            return response;
+            return !response;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
