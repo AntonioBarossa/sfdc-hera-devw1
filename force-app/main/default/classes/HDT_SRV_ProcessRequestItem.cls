@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_SRV_ProcessRequestItem {
 
     private static HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
@@ -37,9 +38,11 @@ public inherited sharing class HDT_SRV_ProcessRequestItem {
 
             Integer batchSize = Integer.valueOf(processPriorityMap.get(processWithPriority.ProcessType__c).BatchSize__c);
             String processToRun = processPriorityMap.get(processWithPriority.ProcessType__c).DeveloperName;
-            System.debug('>>> new HDT_BA_ProcessRequestItem(' + processWithPriority.Id + ',' + batchSize + ',' + processToRun + ');');
+            System.debug(LoggingLevel.DEBUG, '>>> new HDT_BA_ProcessRequestItem(' + processWithPriority.Id + ',' + batchSize + ',' + processToRun + ');');
+
             HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(processWithPriority.Id, batchSize, processToRun);
             Database.executeBatch(processReq, batchSize);
+            
         }
     }
 

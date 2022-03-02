@@ -1,6 +1,6 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_UTL_ProcessCommonOperations {
-
+/*
     public static HDT_WRP_SaveResponse databaseUpsert(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType){
         HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
         saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
@@ -45,70 +45,9 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
 
     }
 
-    //public static HDT_WRP_SaveResponse databaseInsert(List<sObject> itemList, List<String> itemIds, String sObjectType){
-    //    HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
-    //    saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
-    //    saveResponse.savedObject = new List<sObject>();
-    //    saveResponse.itemIdToObjId = new Map<Id, Id>();
-    //    saveResponse.errorItemMap = new Map<Id, String>();
-
-    //    SObjectType objtype = Schema.getGlobalDescribe().get(sObjectType);
-    //    Schema.DescribeSObjectResult objRes = objtype.getDescribe();
- 
-    //    if(objRes.isCreateable()){
-
-    //        List<Database.UpsertResult> upsertResults = Database.upsert(itemList, false);
-
-    //        for(Integer n=0; n<upsertResults.size(); n++){
-    //            Database.UpsertResult sr = upsertResults[n];
-
-    //            if(sr.isSuccess()) {
-
-    //                MassiveLoaderRequestItem__c itemSuccess;
-    //                itemSuccess = new MassiveLoaderRequestItem__c();
-    //                itemSuccess.Id = itemIds[n];
-    //                itemSuccess.Status__c = 'Chiuso';
-    //                saveResponse.reponseItemList.add(itemSuccess);
-    //                saveResponse.savedObject.add(itemList[n]);
-    //                saveResponse.itemIdToObjId.put(itemIds[n], sr.getId());
-
-    //            } else {
-
-    //                MassiveLoaderRequestItem__c itemError;
-    //                itemError = new MassiveLoaderRequestItem__c();
-    //                itemError.Id = itemIds[n];
-    //                itemError.Status__c = 'Errore';
-
-    //                String errorMessage = '';
-    //                for(Database.Error err : sr.getErrors()) {
-    //                    errorMessage += '[' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + '] ';
-    //                    System.debug(LoggingLevel.DEBUG, '>>> errorMessage ' + errorMessage);
-    //                }
-
-    //                itemError.StatusDescription__c = errorMessage.abbreviate(250);
-    //                saveResponse.errorItemMap.put(itemIds[n], errorMessage.abbreviate(250));
-    //                saveResponse.reponseItemList.add(itemError);
-    //                
-    //            }
-    //        }
-    //    }
-
-    //    return saveResponse;
-
-    //}
-
     public static void runCompatibility(List<Case> savedCase){
         Map<Id, String> compatibilityMap = checkCompatibilityPostSales(savedCase);
-        //System.debug(LoggingLevel.DEBUG, '>>> compatibilityMap ' + String.valueOf(compatibilityMap));
-
-        //***************** */
-        // example to test Phase__c => Da Inviare           
-        //Set<Id> i = compatibilityMap.keySet();
-        //List<Id> listkey = new List<Id>();
-        //listkey.addAll(i);
-        //compatibilityMap.remove(listkey[0]);
-        //***************** */
-
+        System.debug(LoggingLevel.DEBUG, '>>> compatibilityMap ' + String.valueOf(compatibilityMap));
         updateCaseAfterCompatibility(compatibilityMap, savedCase);
         getLimitDetails('AFTER Compatibility');
 
@@ -122,7 +61,7 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
 
         try {
             String compatibility = '';
-
+            Formula.recalculateFormulas(csList);
             ServiceRequest__c srvRequest;
             for(Case cs : csList){
                 srvRequest = new ServiceRequest__c();
@@ -139,8 +78,10 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
                     srvRequest.BillingProfile__c = cs.BillingProfile__c;
                 }
     
-                //srvRequest.ProcessType__c = 'Chiusura contatore - EE';
                 srvRequest.ProcessType__c = HDT_UTL_MatrixCompatibility.getProcessType(cs.Type, 'Case', cs.Commodity__c);
+
+                System.debug(LoggingLevel.DEBUG, '>>> srvRequest: ' + srvRequest);
+
                 srList.add(srvRequest);
             }
 
@@ -154,15 +95,16 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
                 //list of incompatible records
                 if(!result.incompatibilities.isEmpty()){
                     compatibility = HDT_UTL_MatrixCompatibility.getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
+                    System.debug(LoggingLevel.DEBUG, '>>> compatibilityMessage: ' + compatibility);
+
                     caseIdToCompatibility.put(sReq.Case__c, compatibility);
                     srListToDelete.add(sReq);
-                } else {
-                    caseIdToCompatibility.put(sReq.Case__c, '');
                 }
+
             }
             
             if(srListToDelete.size() > 0){
-                //HDT_UTL_DatabaseService.deleteSObject(srListToDelete);
+                HDT_UTL_DatabaseService.deleteSObject(srListToDelete);
             }
 
             return caseIdToCompatibility;
@@ -218,5 +160,5 @@ public with sharing class HDT_UTL_ProcessCommonOperations {
         public Map<Id, Id> itemIdToObjId;
         public Map<Id, String> errorItemMap;
     }
-
+*/
 }
