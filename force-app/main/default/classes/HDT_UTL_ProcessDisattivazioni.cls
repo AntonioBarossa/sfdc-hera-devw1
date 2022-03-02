@@ -1,5 +1,5 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
-public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_ProcessExecution {
+public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_ProcessExecution {
 
     private Map<String, String> mapCaseFields;
     private Map<String, String> mapWrapperCaseFields;
@@ -44,7 +44,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
         List<String> tempSplitedFields;
-        for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
+        for(MassiveLoaderRequestItem__c item : requestItemList){
 
             tempSplitedFields = new List<String>();
             tempSplitedFields = item.Data__c.split(splitCharacter, -1);
@@ -113,7 +113,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
     public override void registryCreation(){
         System.debug(LoggingLevel.DEBUG, 'registryCreation');
 
-        HDT_UTL_ProcessCommonOperations.getLimitDetails('START registryCreation');
+        getLimitDetails('START registryCreation');
 
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
@@ -188,7 +188,7 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
             }
 
             processObj.newCase.Cluster__c = 'Disattivazioni';
-            processObj.newCase = HDT_UTL_ProcessCommonOperations.setCaseField(processObj.newCase, recordTypeId);
+            processObj.newCase = setCaseField(processObj.newCase, recordTypeId);
             
             if(!String.isEmpty(contract.ServicePoint__r.CommoditySector__c)){
                 causalCode = causalCodeCalculation.calculateCausalCode(this.processName, processObj.newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
@@ -209,10 +209,6 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
                 }
             }
 
-            // only to test insert failure
-            //if(processObj.csvSplitted[8]=='customError')
-            //    processObj.newCase.CareOf__c = 'abcdefghilmnopqrstuvzabcdefghilmnopqrstuvz';
-
             try{
                 String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(processObj.csvSplitted[podIndex], null);
                 processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, processObj.newCase);
@@ -220,9 +216,9 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
                 requestItemForUpsert.add(processObj.requestItem);
             } catch(Exception e){
                 System.debug(LoggingLevel.DEBUG, '>>> arricchimentoError ' + e.getMessage());
-                //itemsToSave.add(setErrorItem(itemId, 'Errore arricchimento dati # '));
+                //itemsToSave.add(setErrorItem(itemId, 'Errore arricchimento dati #'));
                 processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = 'Errore arricchimento dati # ';
+                processObj.requestItem.StatusDescription__c = 'Errore arricchimento dati #';
                 itemsToSave.add(processObj.requestItem);
             }
 
@@ -230,19 +226,19 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
 
        if(caseToInsert.size() > 0){
 
-           HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse;
-           saveResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
+           HDT_WRP_SaveResponse saveResponse;
+           saveResponse = databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
 
            caseToInsert.clear();
 
-           HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE CREATION & Enrichment');
+           getLimitDetails('AFTER CASE CREATION & Enrichment');
 
            if(saveResponse.reponseItemList.size() > 0){
                itemsToSave.addAll(saveResponse.reponseItemList);
            }
 
            if(saveResponse.savedObject.size() > 0){
-               HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedObject);
+               runCompatibility(saveResponse.savedObject);
            }
 
        }  
@@ -295,134 +291,5 @@ public with sharing class HDT_UTL_ProcessDisattivazioni extends  HDT_UTL_Process
         private MassiveLoaderRequestItem__c requestItem;
         private List<String> csvSplitted;
     }
-
-    /*public static void setDataForTest(Integer numRecords){
-
-        Id massiveLoaderRequestId = 'a3d3O000000WlXDQA0';
-        Set<Id> docId = new Set<Id>();
-
-        delete [
-            SELECT Id, Data__c, NextStepData__c, Status__c, StatusDescription__c, MassiveLoaderRequest__c
-            FROM MassiveLoaderRequestItem__c
-            WHERE MassiveLoaderRequest__c = :massiveLoaderRequestId
-        ];
-
-        delete [
-            SELECT Id, Type, AccountId, NotPerformedBefore__c, WrittenReceiptRequestDate__c, CustomerRecessDate__c, VulturePracticeReference__c,
-                   DistributorNote__c, ServicePoint__c, BillingProfile__c, Contract__c, RecordTypeId, ContactId, CausalCode__c, 
-                   Phase__c, Status, CancellationReason__c
-            FROM Case
-            WHERE CreatedById = '0051X0000055rbNQAQ'
-        ];
-    
-        List<ContentDocumentLink> cdlList = [
-            SELECT Id, LinkedEntityId, ContentDocumentId
-            FROM ContentDocumentLink
-            WHERE LinkedEntityId = :massiveLoaderRequestId
-        ];
-
-        if(cdlList.size() > 0){
-            for(ContentDocumentLink c : cdlList){
-                docId.add(c.ContentDocumentId);
-            }
-
-            delete cdlList;
-            delete [SELECT Id FROM ContentDocument WHERE Id IN :docId];
-        }
-
-        List<MassiveLoaderRequestItem__c> itemsList = new List<MassiveLoaderRequestItem__c>();
-        MassiveLoaderRequestItem__c item;
-    
-        for(Integer n=0; n<numRecords; n++){
-            item = new MassiveLoaderRequestItem__c();
-            item.MassiveLoaderRequest__c = 'a3d3O000000WlXDQA0';
-            item.Status__c = 'In attesa di lavorazione';
-            if(n>=0 && n<= 10){
-                item.Data__c = 'Chiusura Contatore|0011X00000owtvoQAA|IT001E32452366|3019602323|2021-12-23|2021-11-23|2021-10-23|x|errorArrich';
-            } else if(n>10 && n<=15){
-                switch on n {
-                    when 11 {
-                        item.Data__c = 'Chiusura Contatore|0011X00000jcKXUQA2|IT001E00032928|3019602323|2021-12-23|2021-11-23|2021-10-23|00000155|success';
-                    }	
-                    when 12 {
-                        item.Data__c = 'Recesso per altri motivi|0011X00000jcKXUQA2|IT001E00032928|3019602323|2021-12-23|2021-11-23|2021-10-23|00000157|success';
-                    }
-                    when 13 {
-                        item.Data__c = 'Recesso per rifiuto voltura|0011X00000jcKXUQA2|IT001E00032928|3019602323|2021-12-23|2021-11-23|2021-10-23|00000160|success';
-                    }
-                    when 14 {
-                        item.Data__c = 'Chiusura Contatore|0011X00000jcKXUQA2|IT001E00032928|3019602323|2021-12-23|2021-11-23|2021-10-23|00000166|success';
-                    }
-                    when 15 {
-                        item.Data__c = 'Chiusura Contatore|0011X00000jcKXUQA2|IT001E00032928|3019602323|2021-12-23|2021-11-23|2021-10-23|00000168|success';
-                    }
-                }
-        
-            } else if(n>15){
-                item.Data__c = 'Chiusura Contatore|0011X00000jcKXUQA2|IT001E00032928|3019602323|2021-12-23|2021-11-23|x|x|customError';
-            }
-            itemsList.add(item);
-        }
-        insert itemsList;
-    
-        MassiveLoaderRequest__c mlr = new MassiveLoaderRequest__c();
-        mlr.Id = 'a3d3O000000WlXDQA0';
-        mlr.Status__c = 'In attesa di lavorazione';
-        update mlr;
-    
-    }
-
-    public static void setDataForTest_VolturaTecnica(Integer numRecords){
-
-        Id massiveLoaderRequestId = 'a3d3O000000WuVlQAK';
-        Set<Id> docId = new Set<Id>();
-
-        delete [
-            SELECT Id, Data__c, NextStepData__c, Status__c, StatusDescription__c, MassiveLoaderRequest__c
-            FROM MassiveLoaderRequestItem__c
-            WHERE MassiveLoaderRequest__c = :massiveLoaderRequestId
-        ];
-
-        delete [
-            SELECT Id, Type, AccountId, NotPerformedBefore__c, WrittenReceiptRequestDate__c, CustomerRecessDate__c, VulturePracticeReference__c,
-                   DistributorNote__c, ServicePoint__c, BillingProfile__c, Contract__c, RecordTypeId, ContactId, CausalCode__c, 
-                   Phase__c, Status, CancellationReason__c
-            FROM Case
-            WHERE CreatedById = '0051X0000055rbNQAQ'
-        ];
-    
-        List<ContentDocumentLink> cdlList = [
-            SELECT Id, LinkedEntityId, ContentDocumentId
-            FROM ContentDocumentLink
-            WHERE LinkedEntityId = :massiveLoaderRequestId
-        ];
-
-        if(cdlList.size() > 0){
-            for(ContentDocumentLink c : cdlList){
-                docId.add(c.ContentDocumentId);
-            }
-
-            delete cdlList;
-            delete [SELECT Id FROM ContentDocument WHERE Id IN :docId];
-        }
-
-        List<MassiveLoaderRequestItem__c> itemsList = new List<MassiveLoaderRequestItem__c>();
-        MassiveLoaderRequestItem__c item;
-    
-        for(Integer n=0; n<numRecords; n++){
-            item = new MassiveLoaderRequestItem__c();
-            item.MassiveLoaderRequest__c = massiveLoaderRequestId;
-            item.Status__c = 'In attesa di lavorazione';
-            item.Data__c = 'Chiusura Contatore,0011X00000jcKXUQA2,IT001E00032928,3019602323,Ordinaria,No';
-            itemsList.add(item);
-        }
-        insert itemsList;
-    
-        MassiveLoaderRequest__c mlr = new MassiveLoaderRequest__c();
-        mlr.Id = massiveLoaderRequestId;
-        mlr.Status__c = 'In attesa di lavorazione';
-        update mlr;
-    
-    }*/
 
 }

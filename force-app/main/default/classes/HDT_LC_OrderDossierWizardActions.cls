@@ -110,6 +110,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         //Aggiornamento CampaignMember
         Boolean isCommunity = HDT_LC_SellingWizardController.checkCommunityLogin();
+        wrpActivityVo.isCommunity = isCommunity;
         if(isCommunity){
             Order ord = [SELECT Id, Sale__r.Campaign__c, Sale__r.SalesContact__c FROM Order WHERE Id =: orderParent.Id WITH SECURITY_ENFORCED LIMIT 1];
             CampaignMember cm = [SELECT Id, Campaign.PositiveOutcomeDefaultStatus__c 
@@ -388,6 +389,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     public class HDT_WRP_CreateActivityVocalOrder{
         public String orderPhase {get; set;}
         public String campaignMemberStatus {get; set;}
+        public Boolean isCommunity {get; set;}
     }
 
 }
