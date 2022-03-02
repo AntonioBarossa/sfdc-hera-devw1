@@ -195,7 +195,7 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
             processObj.newCase = setCaseField(processObj.newCase, recordTypeId);
             
             if(!String.isEmpty(contract.ServicePoint__r.CommoditySector__c)){
-                causalCode = causalCodeCalculation.calculateCausalCode(this.processName, processObj.newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
+                causalCode = causalCodeCalculation.calculateCausalCode(processObj.newCase.Cluster__c, processObj.newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
             }
 
             if(causalCode != null){
