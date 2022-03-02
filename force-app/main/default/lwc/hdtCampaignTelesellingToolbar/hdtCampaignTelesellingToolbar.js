@@ -11,8 +11,8 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
     @track showRecallMe = false;
     @track showModal = false;
     @track toolbarAttributes = [];
-    @track uuid = '';
-    @track ecid = '';
+    // @track uuid = '';
+    // @track ecid = '';
     @track campaignMemberId;
     @api isSelectedDate ;
     @track selectedTimeSlot = [];
