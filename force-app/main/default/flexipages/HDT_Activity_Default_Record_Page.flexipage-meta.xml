@@ -1585,6 +1585,11 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldItem>Record.ActivityStartTime__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
                 <fieldItem>Record.Note__c</fieldItem>
             </fieldInstance>
         </itemInstances>
@@ -1605,6 +1610,11 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.IBMUnicaCampaignCreationDate__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.ActivityEndTime__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
