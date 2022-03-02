@@ -93,7 +93,6 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
 
             Integer count = 0;
             String convertionError;
-            String setEmptyCsvFields;
             String csvHeader;
             String objField;
             emptyCsvField = new List<String>();
@@ -198,6 +197,9 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
         Map<String, Object> fieldsToValue;
         Object newValueToSet;
 
+        Boolean enableBillProfEdit = (caseToSet.Subprocess__c.equalsIgnoreCase('Modifica Dati Di Recapito'));
+        System.debug(LoggingLevel.DEBUG, '>>> enableBillProfEdit: ' + enableBillProfEdit);
+
         HDT_MassiveFieldsObjectMap__mdt massiveFieldsObject;
         AccountContactRelation accContRel;
         BillingProfile__c billingProfile;
@@ -229,6 +231,11 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
                     }    
                 }
                 when 'BillingProfile__c' {
+
+                    if(!enableBillProfEdit){
+                        return null;
+                    }
+
                     if(contractToBillProfMap.containsKey(contractAccountCode)){
                         billingProfile = contractToBillProfMap.get(contractAccountCode);
                         fieldsToValue = billingProfile.getPopulatedFieldsAsMap();
