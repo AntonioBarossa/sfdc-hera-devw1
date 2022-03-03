@@ -150,9 +150,18 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
             }
 
             if(String.isNotEmpty(convertionError)){
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = convertionError;
-                itemsToSave.add(processObj.requestItem);
+                //processObj.requestItem.Status__c = 'Errore';
+                //processObj.requestItem.StatusDescription__c = convertionError;
+                //itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, convertionError));
+                continue;
+            }
+
+            if(errorForPicklistValue('Case', 'Type', processObj.newCase.Type)){
+                //processObj.requestItem.Status__c = 'Errore';
+                //processObj.requestItem.StatusDescription__c = 'Valore processo non corretto: ' + processObj.newCase.Type;
+                //itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, 'Valore processo non corretto: ' + processObj.newCase.Type));
                 continue;
             }
 
@@ -165,10 +174,10 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
                 processObj.newCase.ServicePoint__c = contract.ServicePoint__c;
                 processObj.newCase.BillingProfile__c = contract.BillingProfile__c;
             } else {
-                //itemsToSave.add(setErrorItem(itemId, 'pod non presente'));
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = 'pod non presente';
-                itemsToSave.add(processObj.requestItem);
+                //processObj.requestItem.Status__c = 'Errore';
+                //processObj.requestItem.StatusDescription__c = 'pod non presente';
+                //itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, 'pod non presente'));
                 continue;
             }
             
@@ -178,10 +187,10 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
             if(accountContactMap.containsKey(accountId)){
                 processObj.newCase.ContactId = accountContactMap.get(accountId);
             } else {
-                //itemsToSave.add(setErrorItem(itemId, 'account non presente'));
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = 'account non presente';
-                itemsToSave.add(processObj.requestItem);
+                //processObj.requestItem.Status__c = 'Errore';
+                //processObj.requestItem.StatusDescription__c = 'account non presente';
+                //itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, 'account non presente'));
                 continue;
             }
 
@@ -200,8 +209,6 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
 
             if(causalCode != null){
                 processObj.newCase.CausalCode__c = causalCode.CausalCode__c;//'D01' for example
-            } else {
-                //do something -> record error
             }
 
             if(processObj.newCase.Type.equalsIgnoreCase('Recesso per Rifiuto Voltura')){
@@ -220,10 +227,10 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
                 requestItemForUpsert.add(processObj.requestItem);
             } catch(Exception e){
                 System.debug(LoggingLevel.DEBUG, '>>> arricchimentoError ' + e.getMessage());
-                //itemsToSave.add(setErrorItem(itemId, 'Errore arricchimento dati #'));
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = 'Errore arricchimento dati #';
-                itemsToSave.add(processObj.requestItem);
+                //processObj.requestItem.Status__c = 'Errore';
+                //processObj.requestItem.StatusDescription__c = 'Errore arricchimento dati #';
+                //itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, 'Errore arricchimento dati #'));
             }
 
         }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SiebelCatalog__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( AND(SupplyTypeTechnical__c  = &quot;Domestico&quot; , ISPICKVAL(CommercialProductLink__r.TypeOffer__c , &quot;Scaffale&quot;) ) , 
+				&quot;MM offerte a scaffale&quot;, 
+				IF( AND(SupplyTypeTechnical__c  = &quot;Non Domestico&quot; , ISPICKVAL(CommercialProductLink__r.TypeOffer__c , &quot;Scaffale&quot;) ) ,
+							&quot;SME offerte a scaffale&quot;,
+						 &quot;Offerte a progetto&quot;)
+		)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Catalogo Siebel</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -947,7 +947,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     System.debug(Logginglevel.Debug, 'Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
                 }
                 if(orderNew.ProcessType__c != null && 
-                    (orderNew.ProcessType__c.equalsIgnoreCase('Volutra') ||  orderNew.ProcessType__c.containsIgnoreCase('Cambio Offerta'))
+                    (orderNew.ProcessType__c.equalsIgnoreCase('Voltura') ||  orderNew.ProcessType__c.containsIgnoreCase('Cambio Offerta'))
                     )
                 {
                     Case nonReqContract = new Case();
