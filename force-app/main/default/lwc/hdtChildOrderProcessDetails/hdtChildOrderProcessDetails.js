@@ -1404,37 +1404,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 recordId: this.order.Id,
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus',
                 data: [
-                    new fieldData(
-                        'Numero Contratto','ContractReference__c',
-                        true, 
-                        false, true, '',''
-                    ), 
-                    new fieldData(
-                        'Uso energia','UseTypeEnergy__c', 
-                        this.order.ServicePoint__c,
-                        false, true, '',''
-                    ),                  
-                    new fieldData(
-                        'POD/PDR','ServicePointCode__c', 
-                        this.order.ServicePoint__c,
-                        false, true, '',''
-                    ),  
-                    new fieldData(
-                        'Azione commerciale','CommercialAction__c',
-                        this.typeVisibility('both'),
-                        false, false, '',''
-                    ), 
+                    new fieldData('Numero Contratto','ContractReference__c',true,false, true, '',''), 
+                    new fieldData('Uso energia','UseTypeEnergy__c',this.order.ServicePoint__c,false, true, '',''),                  
+                    new fieldData('POD/PDR','ServicePointCode__c',this.order.ServicePoint__c,false, true, '',''),  
+                    new fieldData('Azione commerciale','CommercialAction__c',this.typeVisibility('both'),false, false, '',''), 
                     new fieldData('Tipo VAS','VASType__c', true, false, true, ''),
-                    /*new fieldData(
-                        'Sottotipo Vas','VasSubtype__c', //BUG 68
-                        this.typeVisibility('both'), 
-                        false, true, '',''
-                    ),*/
                     new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
                     new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, true, ''),
                     new fieldData('Soc Vendita','SalesCompany__c', true, false, true, ''),
-
-                    
                 ]
             },
             {
@@ -1445,26 +1422,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 recordId: this.analisiConsumi.Id !== undefined ? this.analisiConsumi.Id : '',//this.analisiConsumi.Id
                 processVisibility: ( this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus' ) && this.analisiConsumi.Id !== undefined,
                 data: [
-                    new fieldData(
-                        'Proprietario','OwnerAC__c',
-                        this.typeVisibility('both'), 
-                        false, true, '',''
-                    ), 
-                    new fieldData(
-                        'Tipo Casa','DwellingType__c', 
-                        this.typeVisibility('both'), 
-                        false, true, '',''
-                    ),                  
-                    new fieldData(
-                        'N. Abitanti','OccupantsNumber__c', 
-                        this.typeVisibility('both'),
-                        false, true, '',''
-                    ),
-                    new fieldData(
-                        'Mq. Casa','Surface__c',
-                        this.typeVisibility('both'),
-                        false, true, '',''
-                    )
+                    new fieldData('Proprietario','OwnerAC__c',this.typeVisibility('both'),false, true, '',''), 
+                    new fieldData('Tipo Casa','DwellingType__c',this.typeVisibility('both'),false, true, '',''),                  
+                    new fieldData('N. Abitanti','OccupantsNumber__c',this.typeVisibility('both'),false, true, '',''),
+                    new fieldData('Mq. Casa','Surface__c',this.typeVisibility('both'),false, true, '','')
                 ]
             },            
             {
