@@ -182,6 +182,11 @@
                 <label>Caricamento Siebel OK</label>
             </value>
             <value>
+                <fullName>Check TIMOE OK</fullName>
+                <default>false</default>
+                <label>Check TIMOE OK</label>
+            </value>
+            <value>
                 <fullName>Chiuso</fullName>
                 <default>false</default>
                 <label>Chiuso</label>
@@ -190,6 +195,11 @@
                 <fullName>Completata</fullName>
                 <default>false</default>
                 <label>Completata</label>
+            </value>
+            <value>
+                <fullName>Comunicazione EngageOne KO</fullName>
+                <default>false</default>
+                <label>Comunicazione EngageOne KO</label>
             </value>
             <value>
                 <fullName>Comunicazione Motore VAS</fullName>
@@ -252,6 +262,11 @@
                 <label>Dati Tecnici Ricevuti</label>
             </value>
             <value>
+                <fullName>Dati TIMOE Ricevuti</fullName>
+                <default>false</default>
+                <label>Dati TIMOE Ricevuti</label>
+            </value>
+            <value>
                 <fullName>DL accertamento OK</fullName>
                 <default>false</default>
                 <label>DL accertamento OK</label>
@@ -290,7 +305,7 @@
                 <fullName>Documentazione Validata</fullName>
                 <default>false</default>
                 <label>Documentazione Validata</label>
-            </value>        
+            </value>
             <value>
                 <fullName>Errore invio a DL/SII</fullName>
                 <default>false</default>
@@ -670,6 +685,11 @@
                 <label>Ripensato</label>
             </value>
             <value>
+                <fullName>Ripensato KO</fullName>
+                <default>false</default>
+                <label>Ripensato KO</label>
+            </value>
+            <value>
                 <fullName>Sequenzializzato</fullName>
                 <default>false</default>
                 <label>Sequenzializzato</label>
@@ -693,21 +713,6 @@
                 <fullName>Voltura Rifiutata</fullName>
                 <default>false</default>
                 <label>Voltura Rifiutata</label>
-            </value>
-            <value>
-                <fullName>Comunicazione EngageOne KO</fullName>
-                <default>false</default>
-                <label>Comunicazione EngageOne KO</label>
-            </value>
-            <value>
-                <fullName>Check TIMOE OK</fullName>
-                <default>false</default>
-                <label>Check TIMOE OK</label>
-            </value>
-            <value>
-                <fullName>Dati TIMOE Ricevuti</fullName>
-                <default>false</default>
-                <label>Dati TIMOE Ricevuti</label>
             </value>
         </valueSetDefinition>
     </valueSet>

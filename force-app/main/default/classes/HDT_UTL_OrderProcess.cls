@@ -313,7 +313,41 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if (!childOrdersDocValid.isEmpty()) {
                 orderSrv.updateRecords(childOrdersDocValid);
             }
-            
+            /**@frpanico 03/03/2022
+             * Nel caso in cui il trigger gira sull'order padre
+             * il codice dalla riga 320 alla rgia 337 non funziona
+             * in quanto l'order figlio ancora non è stato aggiornato
+             * nella fase Documentazione validata.
+             * La gestione degli order figli è stata spostata
+             * alla riga 345
+             */
+            /*List<Order> ordersHeroku = new List<Order>();
+            List<Order> ordersSiebel = new List<Order>();
+
+            for(Order o:filtered){
+                if(o.sale__r.isTransition__c==true){
+                    ordersSiebel.add(o);
+                }else{
+                    ordersHeroku.add(o);
+                }
+            }
+            Map<Id, String> vasOrdersToUpdate = 
+                updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Esportazione VS Siebel ','Documentazione Validata','Esportazione VS Siebel ');
+            vasOrdersToUpdate.putAll(
+                updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS')
+            );
+            if(!vasOrdersToUpdate.isEmpty()){
+                system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(vasOrdersToUpdate));
+            }
+            */
+        }
+        /**@frpanico 03/03/2022
+         * Nel caso il trigger giri sugli order figli
+         * viene gestito l'avanzamento di fase
+         * da Documentazione Validata alla fase successiva
+         */
+        if(!filtered.isEmpty())
+        {
             List<Order> ordersHeroku = new List<Order>();
             List<Order> ordersSiebel = new List<Order>();
 
@@ -969,9 +1003,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              * Si entra nello skip soltanto se la fase di partenza non e' di annullamento
              * Dunque non sono previste activity
              */
-			if(newPhase.indexOf('Annullamento') > -1 || newPhase.containsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
+			if((newPhase.indexOf('Annullamento') > -1 || newPhase.indexOf('Annullamento') == -1) || newPhase.containsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
                 if((oldPhase.indexOf('Annullamento - ') == -1 && oldPhase.indexOf('Ripensamento - ') == -1)
-                    || newPhase.containsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+                    || newPhase.containsIgnoreCase('Annullato') || newPhase.indexOf('Ripensato') > -1)
                 {
 				    orderNew.PhaseStory__c = !String.isBlank(orderNew.PhaseStory__c) 
                         ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c
