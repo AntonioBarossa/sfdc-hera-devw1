@@ -1,222 +1,86 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_PG_ApprovatoriAccolloBonus</members>
-        <members>HDT_PG_LeadManagement</members>
-        <name>Group</name>
+        <members>Hera_Archive</members>
+        <name>ExternalDataSource</name>
     </types>
     <types>
-        <members>HDT_Activity_Default_Record_Page</members>
-        <name>FlexiPage</name>
+        <members>Order.HDT_RT_SwitchIn</members>
+        <members>Order.HDT_RT_VAS</members>
+        <name>RecordType</name>
     </types>
     <types>
-        <members>HDT_MassiveFieldsObjectMap__mdt.Disattivazioni</members>
-        <members>HDT_MassiveFieldsObjectMap__mdt.ModificheAnagrafiche</members>
-        <members>HDT_MassiveFieldsObjectMap__mdt.MorositaView</members>
-        <members>HDT_MassiveFieldsObjectMap__mdt.Sales</members>
-        <members>HDT_MassiveFieldsObjectMap__mdt.Variazioni</members>
-        <members>HDT_MassiveFieldsObjectMap__mdt.VolturaTecnica</members>
-        <members>HDT_MassiveLoaderProcess__mdt.All_processes</members>
-        <name>ListView</name>
-    </types>
-    <types>
-        <members>HDT_Archive</members>
-        <members>HDT_MassiveLoader</members>
+        <members>HDT_ApexClasses</members>
         <name>PermissionSet</name>
     </types>
     <types>
-        <members>HDT_BA_ProcessRequestItem</members>
-        <members>HDT_BA_QualityCall</members>
-        <members>HDT_LC_BillingProfileForm</members>
-        <members>HDT_LC_ChildOrderProcessPrecheck</members>
-        <members>HDT_LC_CtToolbar</members>
-        <members>HDT_LC_MassiveLoader</members>
+        <members>HDT_LC_CanaleContattoIVRLogin</members>
+        <members>HDT_LC_EditScartiComplessi</members>
         <members>HDT_LC_OrderDossierWizardActions</members>
-        <members>HDT_LC_OrdersForComfortQualityList</members>
+        <members>HDT_QBL_CancelLinkedOrders</members>
         <members>HDT_QBL_VoltureChangeManager</members>
-        <members>HDT_QR_Order</members>
-        <members>HDT_QR_OrderItem</members>
-        <members>HDT_QR_ProcessPostSales</members>
-        <members>HDT_QR_RecordType</members>
-        <members>HDT_SRV_ProcessRequestItem</members>
-        <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_SRV_VoltureChangeDispatcher</members>
         <members>HDT_SRV_VoltureChangeManager</members>
-        <members>HDT_TRH_CampaignMember</members>
         <members>HDT_TRH_Order</members>
-        <members>HDT_UTL_ActivityCustom</members>
-        <members>HDT_UTL_ActivityCustomProcess</members>
-        <members>HDT_UTL_CampaignMember</members>
+        <members>HDT_UTL_Case</members>
+        <members>HDT_UTL_CheckFiscalCodeTaxNumber</members>
         <members>HDT_UTL_OrderFieldsAlignment</members>
         <members>HDT_UTL_OrderProcess</members>
         <members>HDT_UTL_OrderTriggerVas</members>
         <members>HDT_UTL_PostSalesManager</members>
-        <members>HDT_UTL_ProcessCommonOperations</members>
         <members>HDT_UTL_ProcessDateManager</members>
         <members>HDT_UTL_ProcessDisattivazioni</members>
-        <members>HDT_UTL_ProcessDisattivazioniTst</members>
         <members>HDT_UTL_ProcessExecution</members>
         <members>HDT_UTL_ProcessModificheAnagrafiche</members>
-        <members>HDT_UTL_ProcessModificheAnagraficheTst</members>
         <members>HDT_UTL_ProcessMorosita</members>
-        <members>HDT_UTL_ProcessMorositaTst</members>
-        <members>HDT_UTL_ProcessSales</members>
-        <members>HDT_UTL_ProcessSalesTst</members>
         <members>HDT_UTL_ProcessVariazioni</members>
-        <members>HDT_UTL_ProcessVariazioniTst</members>
         <members>HDT_UTL_Sales</members>
         <members>HDT_UTL_Scarti</members>
         <members>HDT_UTL_VasManagement</members>
-        <members>HDT_WRP_VoltureChangeManager</members>
-        <members>HDT_WS_SalesApexCalloutAction</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>CampaignMember.FinalStateChannel__c</members>
-        <members>HDT_PraticheBloccanti__mdt.Active__c</members>
-        <members>Order.DocumentalProcessType__c</members>
+        <members>HDT_VasEngineStatus</members>
+        <name>GlobalValueSet</name>
+    </types>
+    <types>
+        <members>Lead.Lead_Id__c</members>
+        <members>Order.NotRethinkable__c</members>
+        <members>Order.Phase__c</members>
+        <members>Order.SiebelCatalog__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>Disattivazioni</members>
-        <members>ModificheAnagrafiche</members>
-        <members>Morosita</members>
-        <members>SwitchIn</members>
-        <members>Variazioni</members>
-        <members>VolturaTecnica</members>
-        <name>StaticResource</name>
+        <members>archivingaccess</members>
+        <name>AuthProvider</name>
     </types>
     <types>
-        <members>ReitekAgentsSessionCache</members>
-        <name>PlatformCachePartition</name>
+        <members>HDT_LCP_RunFlowFromAuraCommunity</members>
+        <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>hdtCampaignTelesellingToolbar</members>
+        <members>hdtChildOrderProcessActions</members>
         <members>hdtChildOrderProcessDetails</members>
-        <members>hdtChildOrderProcessPrecheck</members>
-        <members>hdtCtToolbarContainer</members>
-        <members>hdtMassiveLoader</members>
         <members>hdtOrderDossierWizardActions</members>
+        <members>hdtSaveScriptLauncher</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>HDT_FiltriProcessiSelFornitura.Riattivazione_Fornitura</members>
-        <members>HDT_IntegrationObject.Documentale_Context1</members>
-        <members>HDT_MassiveFieldsObjectMap.ModAnag_MARCATURA</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_BP</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_CAP</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_CF</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_CSN</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_Categoria</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_CategoriaUso</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_Civico</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_ClasseContatore</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_ClassePrelievo</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_CodiceCitta</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_CodiceImpianto</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_CodiceLocalita</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_CodicePunto</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_CodiceRemi</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_Cognome</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_Comune</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_ConsumoAnnuo</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_Disalimentabile</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_Distributore</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_FAX</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_FaseRichiesta</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_FlagVerificato</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_LivelloPressione</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_Localita</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_Marcatura</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_MatricolaContatore</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_MercatoProvenienza</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_Nome</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_NomeVia</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_NumeroConto</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_PI</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_PotenzaContrattuale</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_PotenzaDisponibile</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_PotenzaRichiesta</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_PotenzialitaMassimaRichiesta</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_PresenzaAllaccio</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_Residente</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_SPComune</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_SPVia</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_SP_Civico</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_SP_IndirizzoEstero</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_Servizio</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_Silos</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_Stato</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_TelefonoNonDisalimentabili</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_TensioneConsegna</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_Tipo</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_TipoApparecchiatura</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_TipoFornitura</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_TipologiaDisalimentabilita</members>
-        <members>HDT_MassiveFieldsObjectMap.Sales_TipologiaImpianto</members>
-        <members>HDT_PraticheBloccanti.Config1</members>
-        <members>HDT_PraticheBloccanti.Config10</members>
-        <members>HDT_PraticheBloccanti.Config11</members>
-        <members>HDT_PraticheBloccanti.Config12</members>
-        <members>HDT_PraticheBloccanti.Config13</members>
-        <members>HDT_PraticheBloccanti.Config14</members>
-        <members>HDT_PraticheBloccanti.Config15</members>
-        <members>HDT_PraticheBloccanti.Config16</members>
-        <members>HDT_PraticheBloccanti.Config17</members>
-        <members>HDT_PraticheBloccanti.Config18</members>
-        <members>HDT_PraticheBloccanti.Config19</members>
-        <members>HDT_PraticheBloccanti.Config2</members>
-        <members>HDT_PraticheBloccanti.Config20</members>
-        <members>HDT_PraticheBloccanti.Config21</members>
-        <members>HDT_PraticheBloccanti.Config22</members>
-        <members>HDT_PraticheBloccanti.Config23</members>
-        <members>HDT_PraticheBloccanti.Config24</members>
-        <members>HDT_PraticheBloccanti.Config25</members>
-        <members>HDT_PraticheBloccanti.Config26</members>
-        <members>HDT_PraticheBloccanti.Config27</members>
-        <members>HDT_PraticheBloccanti.Config28</members>
-        <members>HDT_PraticheBloccanti.Config29</members>
-        <members>HDT_PraticheBloccanti.Config3</members>
-        <members>HDT_PraticheBloccanti.Config30</members>
-        <members>HDT_PraticheBloccanti.Config31</members>
-        <members>HDT_PraticheBloccanti.Config32</members>
-        <members>HDT_PraticheBloccanti.Config33</members>
-        <members>HDT_PraticheBloccanti.Config34</members>
-        <members>HDT_PraticheBloccanti.Config35</members>
-        <members>HDT_PraticheBloccanti.Config36</members>
-        <members>HDT_PraticheBloccanti.Config37</members>
-        <members>HDT_PraticheBloccanti.Config38</members>
-        <members>HDT_PraticheBloccanti.Config39</members>
-        <members>HDT_PraticheBloccanti.Config4</members>
-        <members>HDT_PraticheBloccanti.Config40</members>
-        <members>HDT_PraticheBloccanti.Config41</members>
-        <members>HDT_PraticheBloccanti.Config42</members>
-        <members>HDT_PraticheBloccanti.Config43</members>
-        <members>HDT_PraticheBloccanti.Config44</members>
-        <members>HDT_PraticheBloccanti.Config45</members>
-        <members>HDT_PraticheBloccanti.Config46</members>
-        <members>HDT_PraticheBloccanti.Config47</members>
-        <members>HDT_PraticheBloccanti.Config48</members>
-        <members>HDT_PraticheBloccanti.Config49</members>
-        <members>HDT_PraticheBloccanti.Config5</members>
-        <members>HDT_PraticheBloccanti.Config50</members>
-        <members>HDT_PraticheBloccanti.Config51</members>
-        <members>HDT_PraticheBloccanti.Config52</members>
-        <members>HDT_PraticheBloccanti.Config53</members>
-        <members>HDT_PraticheBloccanti.Config54</members>
-        <members>HDT_PraticheBloccanti.Config55</members>
-        <members>HDT_PraticheBloccanti.Config56</members>
-        <members>HDT_PraticheBloccanti.Config57</members>
-        <members>HDT_PraticheBloccanti.Config58</members>
-        <members>HDT_PraticheBloccanti.Config59</members>
-        <members>HDT_PraticheBloccanti.Config6</members>
-        <members>HDT_PraticheBloccanti.Config60</members>
-        <members>HDT_PraticheBloccanti.Config61</members>
-        <members>HDT_PraticheBloccanti.Config62</members>
-        <members>HDT_PraticheBloccanti.Config7</members>
-        <members>HDT_PraticheBloccanti.Config8</members>
-        <members>HDT_PraticheBloccanti.Config9</members>
-        <members>HDT_StatoMotoreVas.VAS_OMAGGIO</members>
-        <name>CustomMetadata</name>
+        <members>Admin</members>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera Standard User OneShot</members>
+        <members>Hera Standard User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <members>Hera Teleseller Partner User</members>
+        <name>Profile</name>
+    </types>
+    <types>
+        <members>HDT_FL_AccountFromLeadEdit</members>
+        <members>HDT_FL_GestioneAnnullamento</members>
+        <members>HDT_FL_PostSalesMasterDispatch</members>
+        <name>Flow</name>
     </types>
     <version>49</version>
 </Package>

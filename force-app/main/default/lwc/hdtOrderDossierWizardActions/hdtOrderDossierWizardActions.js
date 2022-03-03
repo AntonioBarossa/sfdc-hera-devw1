@@ -121,9 +121,14 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             
             saveActivityVO({
                 orderParent : this.orderParentRecord
-            }).then(data => {
-                if(data.isCommunity){
+            }).then(result => {
+                let data = JSON.parse(result);
+                console.log('DATA.ISCOMMUNITY -->'+data.isCommunity);
+                 if(data.isCommunity){
+                    console.log('SAVESCRIPT METHOD START');
+                    console.log('CAMPAIGN MEMBER STATUS --> '+data.campaignMemberStatus);
                     this.saveScript(data.campaignMemberStatus, true);
+                    console.log('SAVESCRIPT METHOD END');
                 }
                 if(data.orderPhase == 'Documentazione da validare'){
                     this.orderParentRecord.Phase__c = 'Documentazione da validare';
@@ -425,6 +430,8 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     }
 
     @api async saveScript(esito, isResponsed) {
+        let result = await getCachedUuid();
+        console.log('GETCACHEDUUID --> '+result);
         window.TOOLBAR.EASYCIM.saveScript(await getCachedUuid(), esito, isResponsed);
     }
 

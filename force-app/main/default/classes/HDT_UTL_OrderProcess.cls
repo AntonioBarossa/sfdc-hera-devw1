@@ -313,7 +313,41 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if (!childOrdersDocValid.isEmpty()) {
                 orderSrv.updateRecords(childOrdersDocValid);
             }
-            
+            /**@frpanico 03/03/2022
+             * Nel caso in cui il trigger gira sull'order padre
+             * il codice dalla riga 320 alla rgia 337 non funziona
+             * in quanto l'order figlio ancora non è stato aggiornato
+             * nella fase Documentazione validata.
+             * La gestione degli order figli è stata spostata
+             * alla riga 345
+             */
+            /*List<Order> ordersHeroku = new List<Order>();
+            List<Order> ordersSiebel = new List<Order>();
+
+            for(Order o:filtered){
+                if(o.sale__r.isTransition__c==true){
+                    ordersSiebel.add(o);
+                }else{
+                    ordersHeroku.add(o);
+                }
+            }
+            Map<Id, String> vasOrdersToUpdate = 
+                updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Esportazione VS Siebel ','Documentazione Validata','Esportazione VS Siebel ');
+            vasOrdersToUpdate.putAll(
+                updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS')
+            );
+            if(!vasOrdersToUpdate.isEmpty()){
+                system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(vasOrdersToUpdate));
+            }
+            */
+        }
+        /**@frpanico 03/03/2022
+         * Nel caso il trigger giri sugli order figli
+         * viene gestito l'avanzamento di fase
+         * da Documentazione Validata alla fase successiva
+         */
+        if(!filtered.isEmpty())
+        {
             List<Order> ordersHeroku = new List<Order>();
             List<Order> ordersSiebel = new List<Order>();
 
@@ -400,11 +434,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     ){
                         if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
                             newOrder.DateSentToSII__c = Date.today();
-                            newOrdersListRecalc.add(newOrder);
+                            if(newOrder.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
+                                newOrdersListRecalc.add(newOrder);
+                            }
                         }else {
                             newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                         }
-                    }else if((oldOrder.ConfirmCustomerContract__c == null || (oldOrder.ConfirmCustomerContract__c != null && newOrder.ConfirmCustomerContract__c!=null)) && newOrder.ConfirmCustomerContract__c == 'Comfort call'){
+                    }else if(
+                            (oldOrder.ConfirmCustomerContract__c == null || 
+                                (oldOrder.ConfirmCustomerContract__c != null 
+                                && oldOrder.ConfirmCustomerContract__c != newOrder.ConfirmCustomerContract__c)
+                            ) 
+                            && (newOrder.ConfirmCustomerContract__c == 'Comfort call' || newOrder.ConfirmCustomerContract__c == 'Web')
+                        ){
                         newOrdersListComfort.add(newOrder);
                     }
                 }
@@ -939,7 +981,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     System.debug(Logginglevel.Debug, 'Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
                 }
                 if(orderNew.ProcessType__c != null && 
-                    (orderNew.ProcessType__c.containsIgnoreCase('Volutra') ||  orderNew.ProcessType__c.containsIgnoreCase('Cambio Offerta'))
+                    (orderNew.ProcessType__c.equalsIgnoreCase('Voltura') ||  orderNew.ProcessType__c.containsIgnoreCase('Cambio Offerta'))
                     )
                 {
                     Case nonReqContract = new Case();
@@ -949,6 +991,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     {
                         nonReqContract.Phase__c = 'Completata';
                         HDT_UTL_DatabaseService.updateSObject(nonReqContract);
+                    }
+                    if ( orderNew.ProcessType__c.equalsIgnoreCase('Voltura') ){
+                        System.enqueueJob( new HDT_QBL_VoltureChangeManager(orderNew,'S0') );
                     }
                 }
             }
@@ -960,9 +1005,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              * Si entra nello skip soltanto se la fase di partenza non e' di annullamento
              * Dunque non sono previste activity
              */
-			if(newPhase.indexOf('Annullamento') > -1 || newPhase.containsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
+			if((newPhase.indexOf('Annullamento') > -1 || newPhase.indexOf('Annullamento') == -1) || newPhase.containsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
                 if((oldPhase.indexOf('Annullamento - ') == -1 && oldPhase.indexOf('Ripensamento - ') == -1)
-                    || newPhase.containsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+                    || newPhase.containsIgnoreCase('Annullato') || newPhase.indexOf('Ripensato') > -1)
                 {
 				    orderNew.PhaseStory__c = !String.isBlank(orderNew.PhaseStory__c) 
                         ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c
@@ -1096,5 +1141,28 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }       
         }
+    }
+    //EVERIS Gestione Scarto Transitorio
+    public static Boolean transitorySiebelManagement(List<SObject> newOrderList,Map<Id,SObject> oldOrderMap){
+        Boolean response = false;
+        Map<Id,String> newActivityObjectRelatedMap = new Map<Id,String>();
+        DateTime nowDateTime = DateTime.now();
+        for (Order newOrder : (List<Order>) newOrderList){
+            String newPhase = newOrder.Phase__c;
+            String oldPhase = ((Order)oldOrderMap.get(newOrder.Id)).Phase__c;
+            if (String.isNotEmpty(newPhase) && !newPhase.equalsIgnoreCase(oldPhase) && ('Caricamento Siebel OK'.equalsIgnoreCase(newPhase) || 'Caricamento Siebel KO'.equalsIgnoreCase(newPhase)) && 'In Corso caricamento Siebel'.equalsIgnoreCase(oldPhase)){
+                newOrder.PhaseStory__c = !String.isBlank(newOrder.PhaseStory__c) 
+                        ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+newOrder.PhaseStory__c
+                        : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
+                response = true;
+                if ('Caricamento Siebel KO'.equalsIgnoreCase(newPhase)){
+                    newActivityObjectRelatedMap.put(newOrder.Id,newOrder.DiscardReason__c);
+                }
+            }
+        }
+        if (response && !newActivityObjectRelatedMap.isEmpty()){
+            HDT_UTL_Scarti.createActivityForKoSiebel(newActivityObjectRelatedMap);
+        }
+        return response;
     }
 }
