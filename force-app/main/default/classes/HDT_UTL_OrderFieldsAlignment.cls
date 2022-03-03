@@ -505,6 +505,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 }
             }
         }
+        if(orderToUpdate.ServicePoint__c != null)
+        {
+            alignServicePointFields(orderToUpdate, orderToUpdate.ServicePoint__c);
+        }
     }
 
     /**
