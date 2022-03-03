@@ -150,6 +150,11 @@
         <default>false</default>
         <label>VO</label>
     </customValue>
+    <customValue>
+        <fullName>VAS OMAGGIO</fullName>
+        <default>false</default>
+        <label>VAS OMAGGIO</label>
+    </customValue>
     <description>Elenco stati ricevuti da motore vas.</description>
     <masterLabel>Stato Motore Vas</masterLabel>
     <sorted>false</sorted>
