@@ -194,4 +194,49 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         System.enqueueJob(new HDT_QBL_VoltureChangeManager(myOrder));
 
     }
+
+    public static String calloutVolture(Order order, string codiceCausale){
+
+        HttpRequest request = new HttpRequest();
+        Http http = new Http();
+        
+        HDT_WRP_VoltureChangeManager.HDT_WRP_BodyCall requestBody = new HDT_WRP_VoltureChangeManager.HDT_WRP_BodyCall();
+        requestBody.rds = (string)order.getSObject('ParentOrder__r')?.get('OrderNumber');
+        requestBody.rdo = (string)order.get('OrderNumber');
+        requestBody.pod = (string)order.get('ServicePointCode__c');
+        requestBody.contratto = (string)order.get('SapContractCode__c');
+        requestBody.prestazione = (string)order.get('HerokuPracticeCode__c');
+        requestBody.causale = codiceCausale;
+        requestBody.tipologia = (string)order.get('DocumentalProcessType__c');
+
+        HttpResponse response = new HttpResponse();
+        
+        try{
+            request.setEndpoint('Callout:MulesoftBasePath/transfers/lock-unlock-calculations');
+            request.setMethod('POST');
+            request.setBody( JSON.serialize(requestBody) );
+            request.setTimeout(12000);
+            request.setHeader('Accept','application/json');
+            request.setHeader('Content-Type','application/json');
+            response = http.send(request);
+        }catch(Exception e){
+            response = null;
+        }
+
+        if (response != null ){
+            HDT_WRP_VoltureChangeManager.HDT_WRP_Response responseBody = new HDT_WRP_VoltureChangeManager.HDT_WRP_Response( (Map<String, Object>)JSON.deserializeUntyped( response.getBody() ) );
+            return descriptionConstructor(responseBody.prestazione.tipoAttivita, responseBody.prestazione.note);
+        }else {
+            return 'Errore nella comunicazione Blocco/Sblocco al calcolo';
+        }
+        
+    }
+
+    private static string descriptionConstructor(string tipoAttivita, string note){
+        Datetime nowDate = Datetime.now();
+        String descr = nowDate.format('dd/MM/yyyy h:mm a') + ' ';
+        descr = tipoAttivita!=null? descr+': '+tipoAttivita+' - ': descr ;
+        return note!=null? descr+note: descr ;
+    }
+
 }
