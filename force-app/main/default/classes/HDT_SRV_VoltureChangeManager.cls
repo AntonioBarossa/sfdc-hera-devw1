@@ -195,6 +195,12 @@ public with sharing class HDT_SRV_VoltureChangeManager{
 
     }
 
+    public void bloccoVoltura(Order myOrder, string codiceCausale){
+
+        System.enqueueJob(new HDT_QBL_VoltureChangeManager(myOrder, codiceCausale));
+
+    }
+
     public static String calloutVolture(Order order, string codiceCausale){
 
         HttpRequest request = new HttpRequest();
@@ -234,9 +240,10 @@ public with sharing class HDT_SRV_VoltureChangeManager{
 
     private static string descriptionConstructor(string tipoAttivita, string note){
         Datetime nowDate = Datetime.now();
-        String descr = nowDate.format('dd/MM/yyyy h:mm a') + ' ';
-        descr = tipoAttivita!=null? descr+': '+tipoAttivita+' - ': descr ;
+        String descr = nowDate.format('dd/MM/yyyy h:mm a') + ': ';
+        descr = tipoAttivita!=null? descr+tipoAttivita+' - ': descr ;
         return note!=null? descr+note: descr ;
     }
+    // data: tipoaAttivita - ntoe
 
 }
