@@ -1,5 +1,24 @@
 public with sharing class HDT_UTL_ProcessDateManager {
 
+	@AuraEnabled
+	public static Boolean isAfterthoughtDaysZero(Order order){
+		try {
+			
+			List<HDT_AfterthoughtDays__mdt> afterthoughtDays = [SELECT AfterthoughtDays__c FROM HDT_AfterthoughtDays__mdt WHERE 
+			Channel__c =: order.Channel__c AND 
+			Market__c =: order.Market__c AND 
+			AccountType__c =: order.CustomerCategory__c AND 
+			SignatureMode__c =: order.SignatureMethod__c AND 
+			DocumentSendingMode__c =: order.DocSendingMethod__c
+			WITH SECURITY_ENFORCED];
+
+			return ( afterthoughtDays[0].AfterthoughtDays__c == 0 );
+
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
     public static void calculateOrderProcessDate(List<Order> orderList){
         setMaxAfterthoughtDate(orderList);
         setDateSentToSii(orderList);
@@ -106,6 +125,10 @@ public with sharing class HDT_UTL_ProcessDateManager {
 					order.EffectiveDate__c = order.SignedDate__c;
 					break;
 				}
+
+				if (order.IsActivationDeferred__c==true) {
+					break;
+				}
 				//SWITCH IN BUSINESS CON PREAVVISO DI RECESSO - DATA FIRMA + GG RECESSO + 1 MESE
 				if(order.DocumentalProcessType__c.equalsIgnoreCase('Switch In') && order.ClientCategoryFormula__c != 'Famiglie' && order.RecessNotice__c != null){
 					Date dateDecorrenzaTmp = dateToFrom.addMonths((Integer)order.RecessNotice__c);
@@ -113,9 +136,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
 					order.EffectiveDate__c = effectiveDateTmp;
 					break;
 				}
-				if (order.IsActivationDeferred__c==true) {
-					break;
-				}
+				
 				if(dateToFrom != null){
                     Boolean founded = false;
 					for(FulfillmentDateMatrix__c singleRecord : afterthoughtDays){
