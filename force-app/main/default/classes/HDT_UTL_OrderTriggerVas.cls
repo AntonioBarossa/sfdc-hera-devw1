@@ -37,6 +37,18 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
         if(canceledOrderIds.isEmpty() && canceledOrderQuotesIds.isEmpty())
             return;
 
+        Boolean limitQueueablesOk = Limits.getQueueableJobs() < Limits.getLimitQueueableJobs();
+
+        if(limitQueueablesOk){
+            //enqueueJob
+            System.enqueueJob(new HDT_QBL_CancelLinkedOrders(canceledOrderIds, canceledOrderQuotesIds));
+        }
+        else{
+            cancelLinkedOrders(canceledOrderIds, canceledOrderQuotesIds);
+        }
+    }
+
+    public static void cancelLinkedOrders(Set<Id> canceledOrderIds, Set<Id> canceledOrderQuotesIds){
         List<Order> vasOrdersToCancel = [SELECT Id FROM Order WHERE RecordType.DeveloperName IN('HDT_RT_VAS','HDT_RT_ScontiBonus') AND (OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds) WITH SECURITY_ENFORCED];
         if(vasOrdersToCancel.isEmpty())
             return;

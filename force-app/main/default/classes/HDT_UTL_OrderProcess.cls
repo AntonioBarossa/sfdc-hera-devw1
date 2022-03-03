@@ -1103,4 +1103,27 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }       
         }
     }
+    //EVERIS Gestione Scarto Transitorio
+    public static Boolean transitorySiebelManagement(List<SObject> newOrderList,Map<Id,SObject> oldOrderMap){
+        Boolean response = false;
+        Map<Id,String> newActivityObjectRelatedMap = new Map<Id,String>();
+        DateTime nowDateTime = DateTime.now();
+        for (Order newOrder : (List<Order>) newOrderList){
+            String newPhase = newOrder.Phase__c;
+            String oldPhase = ((Order)oldOrderMap.get(newOrder.Id)).Phase__c;
+            if (String.isNotEmpty(newPhase) && !newPhase.equalsIgnoreCase(oldPhase) && ('Caricamento Siebel OK'.equalsIgnoreCase(newPhase) || 'Caricamento Siebel KO'.equalsIgnoreCase(newPhase)) && 'In Corso caricamento Siebel'.equalsIgnoreCase(oldPhase)){
+                newOrder.PhaseStory__c = !String.isBlank(newOrder.PhaseStory__c) 
+                        ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+newOrder.PhaseStory__c
+                        : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
+                response = true;
+                if ('Caricamento Siebel KO'.equalsIgnoreCase(newPhase)){
+                    newActivityObjectRelatedMap.put(newOrder.Id,newOrder.DiscardReason__c);
+                }
+            }
+        }
+        if (response && !newActivityObjectRelatedMap.isEmpty()){
+            HDT_UTL_Scarti.createActivityForKoSiebel(newActivityObjectRelatedMap);
+        }
+        return response;
+    }
 }
