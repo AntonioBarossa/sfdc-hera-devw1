@@ -434,7 +434,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     ){
                         if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
                             newOrder.DateSentToSII__c = Date.today();
-                            newOrdersListRecalc.add(newOrder);
+                            if(newOrder.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
+                                newOrdersListRecalc.add(newOrder);
+                            }
                         }else {
                             newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                         }

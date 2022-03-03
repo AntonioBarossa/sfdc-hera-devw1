@@ -44,6 +44,25 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
+        <name>getIsCommunityValue</name>
+        <label>Valorizzazione variabile isCommunity</label>
+        <locationX>7260</locationX>
+        <locationY>4478</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Sono_in_Community</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>CheckIsCommunity</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>ManageDocument</name>
         <label>ManageDocument</label>
         <locationX>8278</locationX>
@@ -922,13 +941,27 @@
     <assignments>
         <name>Valorizzazione_Status_Campaign_Member</name>
         <label>Valorizzazione Status Campaign Member</label>
-        <locationX>6716</locationX>
-        <locationY>4358</locationY>
+        <locationX>7260</locationX>
+        <locationY>5510</locationY>
         <assignmentItems>
             <assignToReference>CampaignMember_Record.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>CampaignMember_Record.Campaign.PositiveOutcomeDefaultStatus__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Status_CampaignMember</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CampaignMember_Record.Campaign.PositiveOutcomeDefaultStatus__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>isCommunity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getIsCommunityValue.isCommunity</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1038,7 +1071,7 @@
         <locationX>6584</locationX>
         <locationY>4118</locationY>
         <defaultConnector>
-            <targetReference>CampaignMember_Record</targetReference>
+            <targetReference>Record_Case</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>SI</defaultConnectorLabel>
         <rules>
@@ -1059,6 +1092,35 @@
                 </rightValue>
             </conditions>
             <label>NO</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Case_Annullato</name>
+        <label>Case Annullato?</label>
+        <locationX>6897</locationX>
+        <locationY>4358</locationY>
+        <defaultConnector>
+            <targetReference>getIsCommunityValue</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NO</defaultConnectorLabel>
+        <rules>
+            <name>Case_Annullato_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Record_Case.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Bozza Annullata</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Record_Case.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Annullato</stringValue>
+                </rightValue>
+            </conditions>
+            <label>SI</label>
         </rules>
     </decisions>
     <decisions>
@@ -1433,6 +1495,57 @@
                 <targetReference>Crea_Case_Canone_Rai_0_0</targetReference>
             </connector>
             <label>Senza Selezione</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Confermato</name>
+        <label>Confermato?</label>
+        <locationX>7018</locationX>
+        <locationY>4838</locationY>
+        <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
+        <rules>
+            <name>Annulla</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>FlowNavButton.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>FlowNavButton.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SubFlow_Annullamento</targetReference>
+            </connector>
+            <label>Annulla</label>
+        </rules>
+        <rules>
+            <name>Conferma</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>FlowNavButton.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>FlowNavButton.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CampaignMember_Record</targetReference>
+            </connector>
+            <label>Conferma</label>
         </rules>
     </decisions>
     <decisions>
@@ -2404,6 +2517,31 @@
                 <targetReference>CreaCaseVariazioni_0_0</targetReference>
             </connector>
             <label>Processi Generici</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Sono_in_Community</name>
+        <label>Sono in Community?</label>
+        <locationX>7260</locationX>
+        <locationY>4598</locationY>
+        <defaultConnector>
+            <targetReference>CampaignMember_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NO</defaultConnectorLabel>
+        <rules>
+            <name>Sono_in_Community_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getIsCommunityValue.isCommunity</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ScreenEsitoCampaignMember</targetReference>
+            </connector>
+            <label>SI</label>
         </rules>
     </decisions>
     <decisions>
@@ -7259,8 +7397,8 @@
     <recordLookups>
         <name>CampaignMember_Record</name>
         <label>Record Campaign Member</label>
-        <locationX>6716</locationX>
-        <locationY>4238</locationY>
+        <locationX>7260</locationX>
+        <locationY>5390</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Valorizzazione_Status_Campaign_Member</targetReference>
@@ -8064,6 +8202,27 @@
         <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Record_Case</name>
+        <label>Record Case</label>
+        <locationX>6897</locationX>
+        <locationY>4238</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Case_Annullato</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_Case_Fatturazione_0</name>
         <label>Aggiorna Case Fatturazione</label>
@@ -8077,8 +8236,8 @@
     <recordUpdates>
         <name>Aggiornamento_record_Campaign_Member</name>
         <label>Aggiornamento record Campaign Member</label>
-        <locationX>6716</locationX>
-        <locationY>4478</locationY>
+        <locationX>7260</locationX>
+        <locationY>5630</locationY>
         <inputReference>CampaignMember_Record</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -8125,6 +8284,69 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>ScreenEsitoCampaignMember</name>
+        <label>ScreenEsitoCampaignMember</label>
+        <locationX>7018</locationX>
+        <locationY>4718</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Confermato</targetReference>
+        </connector>
+        <fields>
+            <name>FlowNavButton_Label</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Record_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;L&apos;esitazione deve avvenire solo a termine chiamata in fase di off-line.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>FlowNavButton</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
@@ -9789,6 +10011,25 @@
         </outputAssignments>
     </subflows>
     <subflows>
+        <name>SubFlow_Annullamento</name>
+        <label>SubFlow Annullamento</label>
+        <locationX>6798</locationX>
+        <locationY>4958</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Subflow_Gestione_Disattivazioni</name>
         <label>Subflow Gestione Disattivazioni</label>
         <locationX>842</locationX>
@@ -9996,6 +10237,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>isCommunity</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
         <name>IsCompatibile</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -10088,6 +10336,13 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Status_CampaignMember</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>TargetContact</name>
