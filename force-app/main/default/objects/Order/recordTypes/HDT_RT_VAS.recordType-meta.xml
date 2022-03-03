@@ -3063,6 +3063,10 @@
             <fullName>VO</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>VAS OMAGGIO</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>VoltageLevel__c</picklist>
