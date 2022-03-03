@@ -404,7 +404,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         }else {
                             newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                         }
-                    }else if((oldOrder.ConfirmCustomerContract__c == null || (oldOrder.ConfirmCustomerContract__c != null && newOrder.ConfirmCustomerContract__c!=null)) && newOrder.ConfirmCustomerContract__c == 'Comfort call'){
+                    }else if(
+                            (oldOrder.ConfirmCustomerContract__c == null || 
+                                (oldOrder.ConfirmCustomerContract__c != null 
+                                && oldOrder.ConfirmCustomerContract__c != newOrder.ConfirmCustomerContract__c)
+                            ) 
+                            && (newOrder.ConfirmCustomerContract__c == 'Comfort call' || newOrder.ConfirmCustomerContract__c == 'Web')
+                        ){
                         newOrdersListComfort.add(newOrder);
                     }
                 }
