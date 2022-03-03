@@ -269,6 +269,8 @@
             var outputVariables = event.getParam('outputVariables');
             var outputVar;
             var newCaseId;
+            var isCommunity;
+            var statusCampaignMember;
 
             console.log('# recordid -> ' +component.get("v.recordid"));
             if(outputVariables != null){      
@@ -278,9 +280,21 @@
                     if(outputVar.name === "CaseId") {
                         newCaseId = outputVar.value;
                     }
+                    if(outputVar.name === "isCommunity") {
+                        isCommunity = outputVar.value;
+                    }
+                    if(outputVar.name === "Status_CampaignMember") {
+                        statusCampaignMember = outputVar.value;
+                    }
                 }
             }else{
                 newCaseId=component.get("v.recordid");
+            }
+
+            if(isCommunity && statusCampaignMember != null && statusCampaignMember != ''){
+                //Richiamo saveScript
+                var SaveScriptLauncher=component.find('SaveScriptLauncher');
+                SaveScriptLauncher.saveScript(statusCampaignMember, true);
             }
 
             console.log('# outputVariable -> '+outputVariables);
@@ -299,6 +313,7 @@
                     "actionName" : "view"
                 }
             }
+
             navService.navigate(pageReference);
             /* ToDo: inserire redirect alla pagina del campaign member o campaign */
             // var navEvt = $A.get("e.force:navigateToSObject");
