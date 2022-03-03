@@ -939,7 +939,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     System.debug(Logginglevel.Debug, 'Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
                 }
                 if(orderNew.ProcessType__c != null && 
-                    (orderNew.ProcessType__c.containsIgnoreCase('Volutra') ||  orderNew.ProcessType__c.containsIgnoreCase('Cambio Offerta'))
+                    (orderNew.ProcessType__c.equalsIgnoreCase('Voltura') ||  orderNew.ProcessType__c.containsIgnoreCase('Cambio Offerta'))
                     )
                 {
                     Case nonReqContract = new Case();
@@ -949,6 +949,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     {
                         nonReqContract.Phase__c = 'Completata';
                         HDT_UTL_DatabaseService.updateSObject(nonReqContract);
+                    }
+                    if ( orderNew.ProcessType__c.equalsIgnoreCase('Voltura') ){
+                        System.enqueueJob( new HDT_QBL_VoltureChangeManager(orderNew,'S0') );
                     }
                 }
             }

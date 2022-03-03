@@ -17,9 +17,15 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
     public void execute(QueueableContext context) {
 
         if( !String.isBlank(codiceCausale) ){
+            List<Order> orderList = [SELECT ParentOrder__r.OrderNumber, OrderNumber, DocumentalProcessType__c, description FROM Order WHERE Id =: this.order.Id];
+            orderList[0].ServicePointCode__c = this.order.ServicePointCode__c;
+            orderList[0].SapContractCode__c = this.order.SapContractCode__c;
+            orderList[0].HerokuPracticeCode__c = this.order.HerokuPracticeCode__c;
             Order newOrder = new Order();
             newOrder.Id = this.order.Id;
-            newOrder.description = HDT_SRV_VoltureChangeManager.calloutVolture(newOrder,codiceCausale);
+            newOrder.description =  orderList[0].description!=null? 
+                                        HDT_SRV_VoltureChangeManager.calloutVolture(orderList[0],codiceCausale)+'\n'+orderList[0].description:
+                                        HDT_SRV_VoltureChangeManager.calloutVolture(orderList[0],codiceCausale);
             HDT_UTL_DatabaseService.updateSObject(newOrder);
         }else{
             Case newCase = new Case();
