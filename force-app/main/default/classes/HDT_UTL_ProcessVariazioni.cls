@@ -14,6 +14,8 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
     private List<Contract> contractList;
     private List<String> orderNumberList = new List<String>();
     private List<Order> orderList = new List<Order>();
+    private Map<String, AccountContactRelation> accountContactMap;
+    private List<AccountContactRelation> accContRelationList;
     private Id recordTypeId;
     private Integer podIndex;
     private Integer contractIndex;
@@ -65,6 +67,7 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
 
         contractList = HDT_QR_ProcessPostSales.getContracts(contractList, contractCodeSet);
         orderList = HDT_QR_ProcessPostSales.getOrderByOrderNumber(orderList, orderNumberList);
+        accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
 
         recordTypeId = HDT_QR_ProcessPostSales.getRecordTypeId('HDT_RT_VariazioniEle');
         recordTypeMap.put('Energia Elettrica', recordTypeId);
@@ -77,6 +80,10 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
 
         for(Order o : orderList){
             orderIdsMap.put(o.OrderNumber, o.Id);
+        }
+
+        for(AccountContactRelation singleRelation : accContRelationList){
+            accountContactMap.put(singleRelation.AccountId, singleRelation);
         }
 
     }
@@ -174,6 +181,10 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
             processObj.newCase.AccountId = processObj.csvSplitted[accountIdIndex];
             processObj.newCase.Cluster__c = 'Variazioni';
             processObj.newCase = setCaseField(processObj.newCase, currentRecordTypeId);
+
+            if(accountContactMap.containsKey(processObj.csvSplitted[accountIdIndex])){
+                processObj.newCase.ContactId = accountContactMap.get(processObj.csvSplitted[accountIdIndex]).ContactId;
+            }
 
             if(processObj.newCase.Type.equalsIgnoreCase('Cambio contatore non registrato') && orderVolturaIndex != null){
                 String currentOrderNum = processObj.csvSplitted[orderVolturaIndex];

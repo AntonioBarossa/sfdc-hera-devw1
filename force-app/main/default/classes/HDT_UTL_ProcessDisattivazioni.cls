@@ -85,17 +85,15 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
         //System.debug(LoggingLevel.DEBUG, '>>> contractList ' + String.valueOf(contractList));
         //System.debug(LoggingLevel.DEBUG, '>>> orderList ' + String.valueOf(orderList));
 
-        if(!isVolturaProcess){
-
+        if(isVolturaProcess){
+            rtDeveloperName = 'HDT_RT_VolturaTecnica';
+        } else {
             rtDeveloperName = 'HDT_RT_Disattivazioni';
             orderList = HDT_QR_ProcessPostSales.getOrderByOrderNumber(orderList, orderNumberList);
 
             for(Order o : orderList){
                 orderIdMap.put(o.OrderNumber, o.Id);
             }
-
-        } else {
-            rtDeveloperName = 'HDT_RT_VolturaTecnica';
         }
 
         for(Contract singleContract : contractList){
@@ -187,17 +185,23 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
                 continue;
             }
 
-            processObj.newCase.Cluster__c = 'Disattivazioni';
+            //per voltura tecnica -> cluster = voltura tecnica
+            if(isVolturaProcess){
+                processObj.newCase.Cluster__c = 'Voltura';
+            } else {
+                processObj.newCase.Cluster__c = 'Disattivazioni';
+            }
+            
             processObj.newCase = setCaseField(processObj.newCase, recordTypeId);
             
             if(!String.isEmpty(contract.ServicePoint__r.CommoditySector__c)){
-                causalCode = causalCodeCalculation.calculateCausalCode(this.processName, processObj.newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
+                causalCode = causalCodeCalculation.calculateCausalCode(processObj.newCase.Cluster__c, processObj.newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
+            }
 
-                if(causalCode != null){
-                    processObj.newCase.CausalCode__c = causalCode.CausalCode__c;//'D01' for example
-                } else {
-                    //do something -> record error
-                }
+            if(causalCode != null){
+                processObj.newCase.CausalCode__c = causalCode.CausalCode__c;//'D01' for example
+            } else {
+                //do something -> record error
             }
 
             if(processObj.newCase.Type.equalsIgnoreCase('Recesso per Rifiuto Voltura')){

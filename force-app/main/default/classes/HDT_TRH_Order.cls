@@ -5,9 +5,11 @@
  * @history Keltin Mesonjesi – 17/09/2021 – Created Class
  */
 public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
-    	
+    
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public override void beforeUpdate(){
 
+        system.debug(LoggingLevel.DEBUG,'Inizio beforeUpdate - Query utilizzate: '+Limits.getQueries()+'/'+Limits.getLimitQueries());
         HDT_UTL_OrderProcess.updatePhase(trigger.new,trigger.old);
 
         /**@frpanico 15/12/2021 
@@ -32,9 +34,15 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         HDT_UTL_Dependencies.processSequentializationBefore(Trigger.newMap,Trigger.oldMap,'Order');
         HDT_UTL_PclickBulkActionVas.checkVasContractAlignmentBeforeUpdate(trigger.new);
-    }
 
+        system.debug(LoggingLevel.DEBUG,'Fine beforeUpdate - Query utilizzate: '+Limits.getQueries()+'/'+Limits.getLimitQueries());
+
+    }
+    
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public override void afterUpdate() {
+
+        system.debug(LoggingLevel.DEBUG,'Inizio afterUpdate - Query utilizzate: '+Limits.getQueries()+'/'+Limits.getLimitQueries());
 
         HDT_UTL_OrderProcess.overturningFields((List<Order>)Trigger.old,(List<Order>)Trigger.new);
         //Execute creation Activities 
@@ -48,6 +56,9 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         HDT_UTL_OrderProcess.calculateOrderDate(trigger.new,trigger.old);
         HDT_UTL_OrderProcess.creditCheckManager2(trigger.newMap,trigger.oldMap);
         HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
-        HDT_UTL_OrderTriggerVas.cancelLinkedVasOrders(Trigger.newMap, Trigger.oldMap);        
+        HDT_UTL_OrderTriggerVas.cancelLinkedVasOrders(Trigger.newMap, Trigger.oldMap);     
+        
+        system.debug(LoggingLevel.DEBUG,'Fine afterUpdate - Query utilizzate: '+Limits.getQueries()+'/'+Limits.getLimitQueries());
+        
     }
 }
