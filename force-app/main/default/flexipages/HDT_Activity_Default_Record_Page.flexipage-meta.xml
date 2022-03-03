@@ -233,7 +233,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_EditScartiComplessi</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.DiscardCategory__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -243,6 +243,11 @@
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>HDT_RT_Scarto</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__IsClosed__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -1585,6 +1590,11 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldItem>Record.ActivityStartTime__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
                 <fieldItem>Record.Note__c</fieldItem>
             </fieldInstance>
         </itemInstances>
@@ -1605,6 +1615,11 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.IBMUnicaCampaignCreationDate__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.ActivityEndTime__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
