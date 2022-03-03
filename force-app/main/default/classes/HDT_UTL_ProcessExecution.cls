@@ -514,6 +514,11 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
             } else {
                 c.Phase__c = 'Da Inviare';
             }
+
+            if(c.Type.equalsIgnoreCase('Modifica Tariffa Residente/Non Residente')){
+                c.Phase__c = 'In Attesa Allineamento Anagrafica';
+            }
+
         }
 
         HDT_UTL_DatabaseService.updateSObject(savedCase);
