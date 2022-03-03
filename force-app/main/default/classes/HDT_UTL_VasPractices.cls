@@ -1,28 +1,25 @@
 public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSupport {
 
-    private Map<String, Object> responseMap;
+    HDT_WRP_Reponse responseObj;
 
     public override void checkResponse(){
         System.debug(LoggingLevel.DEBUG, '>>> checkResponse');
-        responseMap = (Map<String, Object>)JSON.deserializeUntyped(res.getBody());
+        responseObj = (HDT_WRP_Reponse)JSON.deserialize(res.getBody(), HDT_WRP_Reponse.class);
 
-        Object statusResult = responseMap.get('status');
-        System.debug('>>> status: ' + String.valueOf(statusResult));
+        System.debug('>>> status: ' + String.valueOf(responseObj.status));
 
-        success = String.valueOf(statusResult).equalsIgnoreCase('success');
-
-        if(!success){
+        if(!responseObj.status.equalsIgnoreCase('success')){
             errorMessage = '';
-            errorMessage += 'correlationId: ' + responseMap.get('correlationId') + '; ';
-            errorMessage += 'timestamp: ' + responseMap.get('timestamp') + ';';
-            List<Object> errorDetails = (List<Object>)responseMap.get('errorDetails');
-            Map<String, Object> errorMap;
-            for(Object errorItem : errorDetails){
-                errorMap = (Map<String, Object>)errorItem;
-                errorMessage += String.valueOf(errorMap.get('code')) + '; ';
-                errorMessage += String.valueOf(errorMap.get('message')) + '; ';
-                errorMessage += String.valueOf(errorMap.get('additionalInfo')) + '; ';
-            }
+            errorMessage += 'correlationId: ' + responseObj.correlationId + '; ';
+            errorMessage += 'timestamp: ' +responseObj.timestamp + ';';
+            //List<Object> errorDetails = (List<Object>)responseMap.get('errorDetails');
+            //Map<String, Object> errorMap;
+            //for(Object errorItem : errorDetails){
+            //    errorMap = (Map<String, Object>)errorItem;
+            //    errorMessage += String.valueOf(errorMap.get('code')) + '; ';
+            //    errorMessage += String.valueOf(errorMap.get('message')) + '; ';
+            //    errorMessage += String.valueOf(errorMap.get('additionalInfo')) + '; ';
+            //}
         }
 
     }
@@ -31,47 +28,48 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
         System.debug(LoggingLevel.DEBUG, '>>> HDT_UTL_VasPractices');
 
         HDT_WRP_DataTable dataTable = new HDT_WRP_DataTable();
-        dataTable.details = new List<Object>();
-        dataTable.rate = new List<Object>();
+        dataTable.details = new List<HDT_WRP_DetailObj>();
+        dataTable.rate = new List<HDT_WRP_RateDetail>();
 
-        //Object dataList = (Object)responseMap.get('data');
-        Map<String, Object> dataMap = (Map<String, Object>)responseMap.get('data');
+        List<String> orderNumerList = new List<String>();
+        Map<String, Id> orderMap = new Map<String, Id>();
 
-        System.debug(LoggingLevel.DEBUG, '>>> ' + dataMap);
+        for(HDT_WRP_DetailObj singleDetail : responseObj.data.detail){
 
-        List<Object> detailsList = (List<Object>)dataMap.get('detail');
+            if(!singleDetail.vasType.equalsIgnoreCase('CANONE RAI')){
+                System.debug(LoggingLevel.DEBUG, '>>> current type: ' + singleDetail.vasType);
+                orderNumerList.add(singleDetail.rds);
 
-        Map<String, Object> detailItemMap;
-        List<Object> rateList;
-        String type;
-        String practice;
-        String jsonString;
-        List<HDT_WRP_RateDetail> rateListDes;
-        for(Object singleDetail : detailsList){
-            detailItemMap = (Map<String, Object>)singleDetail;
-            type = String.valueOf(detailItemMap.get('vasType'));
-            practice = String.valueOf(detailItemMap.get('practice'));
-
-            if(!type.equalsIgnoreCase('CANONE RAI')){
-                System.debug(LoggingLevel.DEBUG, '>>> current type: ' + type);
-                rateList = (List<Object>)detailItemMap.get('rate');
-                dataTable.details.add(singleDetail);
-
-                jsonString = JSON.serialize(rateList);
-                rateListDes = (List<HDT_WRP_RateDetail>)JSON.deserialize(jsonString, List<HDT_WRP_RateDetail>.class);
-
-                if(rateListDes != null && rateListDes.size() > 0){
-                    for(HDT_WRP_RateDetail singleRate : rateListDes){
-                        singleRate.practice = practice;
+                if(singleDetail.rate != null && singleDetail.rate.size() > 0){
+                    for(HDT_WRP_RateDetail singleRate : singleDetail.rate){
+                        singleRate.practice = singleDetail.practice;
                     }
-                    dataTable.rate.addAll(rateListDes);
+                    dataTable.rate.addAll(singleDetail.rate);
                 }
-
+                singleDetail.rate = null;
+                dataTable.details.add(singleDetail);
             }
         }
         
-        //System.debug(LoggingLevel.DEBUG, '>>> details -> ' + String.valueOf(dataTable.details));
-        //System.debug(LoggingLevel.DEBUG, '>>> rate -> ' + String.valueOf(dataTable.rate));
+        List<Order> orderList = new List<Order>();
+        orderList = [
+            SELECT Id, OrderNumber
+            FROM Order
+            WHERE OrderNumber IN :orderNumerList
+            WITH SECURITY_ENFORCED
+        ];
+
+        for(Order singleOrder : orderList){
+            orderMap.put(singleOrder.OrderNumber, singleOrder.Id);
+        }
+
+        for(HDT_WRP_DetailObj obj : dataTable.details){
+            if(orderMap.containsKey(obj.rds)){
+                obj.id = orderMap.get(obj.rds);
+            } else {
+                obj.id = '/8011X000001oilqQAA';
+            }
+        }
 
         result = dataTable;
     }
@@ -83,8 +81,49 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
     }
 
     public class HDT_WRP_DataTable {
-        @AuraEnabled public List<Object> details;
-        @AuraEnabled public List<Object> rate;
+        @AuraEnabled public List<HDT_WRP_DetailObj> details;
+        @AuraEnabled public List<HDT_WRP_RateDetail> rate;
+    }
+
+
+
+    //{
+    //    "status": "success",
+    //    "correlationId": "5a7cc1b0-9b05-11ec-9c4b-0640e6dd9ebc",
+    //    "timestamp": "2022-03-03T16:19:44",
+    //    "data": {
+    //        "partner": "1003559816",
+    //        "detail": [
+
+    public class HDT_WRP_Reponse {
+        public String status;
+        public String correlationId;
+        public String timestamp;
+        public HDT_WRP_Data data;
+    }
+
+    public class HDT_WRP_Data {
+        public String partner;
+        public List<HDT_WRP_DetailObj> detail;
+    }
+
+    public class HDT_WRP_DetailObj {
+        @AuraEnabled public String id;
+        @AuraEnabled public String practice;
+        @AuraEnabled public String company;
+        @AuraEnabled public String rds;
+        @AuraEnabled public String practiceResultCode;
+        @AuraEnabled public String descriptionResultCode;
+        @AuraEnabled public String rateNumber;
+        @AuraEnabled public String vasType;
+        @AuraEnabled public String vasImport;
+        @AuraEnabled public String orderSendingDate;
+        @AuraEnabled public String orderInsertDate;
+        @AuraEnabled public String shippingDateDdt;
+        @AuraEnabled public String expectedDeliveryDate;
+        @AuraEnabled public String withdrawalDate;
+        @AuraEnabled public String rfid;
+        public List<HDT_WRP_RateDetail> rate;
     }
 
     public class HDT_WRP_RateDetail {
