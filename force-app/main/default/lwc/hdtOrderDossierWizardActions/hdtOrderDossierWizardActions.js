@@ -1,6 +1,7 @@
 import { LightningElement,track,api,wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
+import getCachedUuid from '@salesforce/apex/HDT_LC_CtToolbar.getCachedUuid';    // params: n/a
 import getActivity from '@salesforce/apex/HDT_QR_ActivityCustom.getRecordByOrderIdAndType';
 import saveActivityVO from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.createActivityVocalOrder'
 import save from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.save';
@@ -120,8 +121,15 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             
             saveActivityVO({
                 orderParent : this.orderParentRecord
-            }).then(data => {
-                this.template.querySelector("c-hdt-ct-toolbar-container").saveScript(data.campaignMemberStatus, true);
+            }).then(result => {
+                let data = JSON.parse(result);
+                console.log('DATA.ISCOMMUNITY -->'+data.isCommunity);
+                 if(data.isCommunity){
+                    console.log('SAVESCRIPT METHOD START');
+                    console.log('CAMPAIGN MEMBER STATUS --> '+data.campaignMemberStatus);
+                    this.saveScript(data.campaignMemberStatus, true);
+                    console.log('SAVESCRIPT METHOD END');
+                }
                 if(data.orderPhase == 'Documentazione da validare'){
                     this.orderParentRecord.Phase__c = 'Documentazione da validare';
                 }
@@ -419,6 +427,12 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             this.loading = false;
             console.error(error);
         });
+    }
+
+    @api async saveScript(esito, isResponsed) {
+        let result = await getCachedUuid();
+        console.log('GETCACHEDUUID --> '+result);
+        window.TOOLBAR.EASYCIM.saveScript(await getCachedUuid(), esito, isResponsed);
     }
 
 }

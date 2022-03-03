@@ -68,6 +68,10 @@ public inherited sharing class HDT_UTL_Case {
         else if(process.equalsIgnoreCase('CreaBpCa')){
             System.enqueueJob(new HDT_QBL_BpCaRequest( accountContactRelationQr.getCreateBpCa( currentCase.AccountId ), currentCase.SupplyProvince__c ) );
         }
+        else if(process.equalsIgnoreCase('CheckIsCommunity')){
+            output.isCommunity = HDT_LC_SellingWizardController.checkCommunityLogin();
+        }
+
 
         outputs.add(output);
 
@@ -112,6 +116,8 @@ public inherited sharing class HDT_UTL_Case {
         public List<Case> childCases;
         @InvocableVariable
         public String cancellationNote;
+        @InvocableVariable
+        public Boolean isCommunity;
 
     }
 

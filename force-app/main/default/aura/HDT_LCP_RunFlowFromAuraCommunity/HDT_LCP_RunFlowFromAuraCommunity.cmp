@@ -52,5 +52,6 @@
     <div class="slds-box slds-theme_default">
     	<lightning:flow aura:id="flowData" onstatuschange="{!c.handleStatusChange}" />
     </div>
+    <c:hdtSaveScriptLauncher aura:id="saveScriptLauncher"></c:hdtSaveScriptLauncher>
 
 </aura:component>

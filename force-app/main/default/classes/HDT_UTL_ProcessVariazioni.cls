@@ -1,5 +1,5 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
-public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecution {
+public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecution {
 
     private Map<String, HDT_MassiveFieldsObjectMap__mdt> sobjectMap;
     private Map<String, String> mapCaseFields;
@@ -14,6 +14,8 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
     private List<Contract> contractList;
     private List<String> orderNumberList = new List<String>();
     private List<Order> orderList = new List<Order>();
+    private Map<String, AccountContactRelation> accountContactMap = new Map<String, AccountContactRelation>();
+    private List<AccountContactRelation> accContRelationList;
     private Id recordTypeId;
     private Integer podIndex;
     private Integer contractIndex;
@@ -25,12 +27,11 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
         System.debug(LoggingLevel.DEBUG, 'checks');
         mapFieldsObject();
 
-        System.debug(LoggingLevel.DEBUG, '>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
-        System.debug(LoggingLevel.DEBUG, '>>> mapWrapperCaseFields: ' + String.valueOf(mapWrapperCaseFields));
-        System.debug(LoggingLevel.DEBUG, '>>> mapHeaderForWrapper: ' + String.valueOf(mapHeaderForWrapper));
-        System.debug(LoggingLevel.DEBUG, '>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
-
-        System.debug(LoggingLevel.DEBUG, '>>> sobjectMap: ' + String.valueOf(sobjectMap));
+        //System.debug(LoggingLevel.DEBUG, '>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
+        //System.debug(LoggingLevel.DEBUG, '>>> mapWrapperCaseFields: ' + String.valueOf(mapWrapperCaseFields));
+        //System.debug(LoggingLevel.DEBUG, '>>> mapHeaderForWrapper: ' + String.valueOf(mapHeaderForWrapper));
+        //System.debug(LoggingLevel.DEBUG, '>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
+        //System.debug(LoggingLevel.DEBUG, '>>> sobjectMap: ' + String.valueOf(sobjectMap));
 
         podIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('POD'));
         contractIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CONTRATTO'));
@@ -44,10 +45,18 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
         
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
-        for(MassiveLoaderRequestItem__c item : currentProcess.currentRequestItemList){
+        for(MassiveLoaderRequestItem__c item : requestItemList){
             processObj = new HDT_WRP_ProcessObjects();
             processObj.requestItem = item;
             processObj.csvSplitted = item.Data__c.split(splitCharacter, -1);
+
+            checkRequiredFields(item, processObj.csvSplitted);
+            System.debug(LoggingLevel.DEBUG, '>>> itemStatus' + item.Status__c);
+
+            if(item.Status__c.equalsIgnoreCase('Errore')){
+                itemsToSave.add(item);
+                continue;
+            }
 
             accountIdSet.add(processObj.csvSplitted[accountIdIndex]);
             contractCodeSet.add(processObj.csvSplitted[contractIndex]);
@@ -65,6 +74,7 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
 
         contractList = HDT_QR_ProcessPostSales.getContracts(contractList, contractCodeSet);
         orderList = HDT_QR_ProcessPostSales.getOrderByOrderNumber(orderList, orderNumberList);
+        accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
 
         recordTypeId = HDT_QR_ProcessPostSales.getRecordTypeId('HDT_RT_VariazioniEle');
         recordTypeMap.put('Energia Elettrica', recordTypeId);
@@ -79,12 +89,16 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
             orderIdsMap.put(o.OrderNumber, o.Id);
         }
 
+        for(AccountContactRelation singleRelation : accContRelationList){
+            accountContactMap.put(singleRelation.AccountId, singleRelation);
+        }
+
     }
 
     public override void registryCreation(){
         System.debug(LoggingLevel.DEBUG, 'registryCreation');
 
-        HDT_UTL_ProcessCommonOperations.getLimitDetails('START registryCreation');
+        getLimitDetails('START registryCreation');
 
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
@@ -111,12 +125,6 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
                 if ('null'.equalsIgnoreCase(tempField)) {
                    tempField = '';
                 }
-            
-                if (mapRequiredByPosition.get(count) != null && String.isBlank(tempField)) {
-                    System.debug(LoggingLevel.DEBUG, '>>> throw new HDT_WRP_ProcessEntitiesException');
-                    //throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field', 'Missing Required Field: ' + mapHeaderByPosition.get(count));
-                    convertionError = 'Missing Required Field: ' + mapHeaderByPosition.get(count);
-                }
 
                 if(!String.isEmpty(convertionError)){
                     // error happened -> exit
@@ -136,10 +144,18 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
             }
 
             if(!String.isEmpty(convertionError)){
-                //itemsToSave.add(setErrorItem(itemId, convertionError));
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = convertionError;
-                itemsToSave.add(processObj.requestItem);
+                //processObj.requestItem.Status__c = 'Errore';
+                //processObj.requestItem.StatusDescription__c = convertionError;
+                //itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, convertionError));
+                continue;
+            }
+
+            if(errorForPicklistValue('Case', 'Type', processObj.newCase.Type)){
+                //processObj.requestItem.Status__c = 'Errore';
+                //processObj.requestItem.StatusDescription__c = 'Valore processo non corretto: ' + processObj.newCase.Type;
+                //itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, 'Valore processo non corretto: ' + processObj.newCase.Type));
                 continue;
             }
 
@@ -152,28 +168,31 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
                 processObj.newCase.ServicePoint__c = contract.ServicePoint__c;
                 processObj.newCase.BillingProfile__c = contract.BillingProfile__c;
             } else {
-                //itemsToSave.add(setErrorItem(itemId, 'pod non presente'));
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = 'pod non presente';
-                itemsToSave.add(processObj.requestItem);
+                //processObj.requestItem.Status__c = 'Errore';
+                //processObj.requestItem.StatusDescription__c = 'pod non presente';
+                //itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, 'pod non presente'));
                 continue;
             }
                         
-            if(!String.isEmpty(contract.ServicePoint__r.CommoditySector__c)){
-                causalCode = causalCodeCalculation.calculateCausalCode(this.processName, processObj.newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
+            processObj.newCase.Cluster__c = 'Variazioni';
+
+            if(String.isNotEmpty(contract.ServicePoint__r.CommoditySector__c)){
+                causalCode = causalCodeCalculation.calculateCausalCode(processObj.newCase.Cluster__c, processObj.newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
 
                 if(causalCode != null){
                     processObj.newCase.CausalCode__c = causalCode.CausalCode__c;//'D01' for example
-                } else {
-                    //do something -> record error
                 }
 
                 currentRecordTypeId = recordTypeMap.get(contract.ServicePoint__r.CommoditySector__c);
             }
 
             processObj.newCase.AccountId = processObj.csvSplitted[accountIdIndex];
-            processObj.newCase.Cluster__c = 'Variazioni';
-            processObj.newCase = HDT_UTL_ProcessCommonOperations.setCaseField(processObj.newCase, currentRecordTypeId);
+            processObj.newCase = setCaseField(processObj.newCase, currentRecordTypeId);
+
+            if(accountContactMap.containsKey(processObj.csvSplitted[accountIdIndex])){
+                processObj.newCase.ContactId = accountContactMap.get(processObj.csvSplitted[accountIdIndex]).ContactId;
+            }
 
             if(processObj.newCase.Type.equalsIgnoreCase('Cambio contatore non registrato') && orderVolturaIndex != null){
                 String currentOrderNum = processObj.csvSplitted[orderVolturaIndex];
@@ -187,36 +206,36 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
             try{
                 String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(processObj.csvSplitted[podIndex], null);
                 System.debug(LoggingLevel.DEBUG, '>>> arricchimentoResponse: ' + arricchimentoResponse);
+
                 processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, processObj.newCase);
-                //processObj.newCase.Taxes__c = null;
                 caseToInsert.add(processObj.newCase); 
                 requestItemForUpsert.add(processObj.requestItem);
             } catch(Exception e){
                 System.debug(LoggingLevel.DEBUG, '>>> arricchimentoError ' + e.getMessage());
-                //itemsToSave.add(setErrorItem(itemId, 'Errore arricchimento dati # '));
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = 'Errore arricchimento dati # ';
-                itemsToSave.add(processObj.requestItem);
+                //processObj.requestItem.Status__c = 'Errore';
+                //processObj.requestItem.StatusDescription__c = 'Errore arricchimento dati # ';
+                //itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, 'Errore arricchimento dati # '));
             }
 
         }
 
         if(caseToInsert.size() > 0){
 
-            HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse saveResponse;
-            saveResponse = HDT_UTL_ProcessCommonOperations.databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
+            HDT_WRP_SaveResponse saveResponse;
+            saveResponse = databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
             runAlignment(saveResponse.savedObject);
             caseToInsert.clear();
 
-            HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE CREATION / Enrichment / Alignment');
+            getLimitDetails('AFTER CASE CREATION / Enrichment / Alignment');
 
             if(saveResponse.reponseItemList.size() > 0){
                 itemsToSave.addAll(saveResponse.reponseItemList);
             }
 
             if(saveResponse.savedObject.size() > 0){
-                HDT_UTL_ProcessCommonOperations.runCompatibility(saveResponse.savedObject);
-                HDT_UTL_ProcessCommonOperations.getLimitDetails('AFTER CASE Compatibility');
+                runCompatibility(saveResponse.savedObject);
+                getLimitDetails('AFTER CASE Compatibility');
             }
 
         }  
@@ -299,88 +318,5 @@ public with sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_ProcessExecu
         private MassiveLoaderRequestItem__c requestItem;
         private List<String> csvSplitted;
     }
-
-    /*public static void setDataForTest(Integer numRecords){
-
-        Id massiveLoaderRequestId = 'a3d3O000000WwZOQA0';
-        Set<Id> docId = new Set<Id>();
-
-        delete [
-            SELECT Id, Data__c, NextStepData__c, Status__c, StatusDescription__c, MassiveLoaderRequest__c
-            FROM MassiveLoaderRequestItem__c
-            WHERE MassiveLoaderRequest__c = :massiveLoaderRequestId
-        ];
-
-        delete [
-            SELECT Id, Type, AccountId, NotPerformedBefore__c, WrittenReceiptRequestDate__c, CustomerRecessDate__c, VulturePracticeReference__c,
-                   DistributorNote__c, ServicePoint__c, BillingProfile__c, Contract__c, RecordTypeId, ContactId, CausalCode__c, 
-                   Phase__c, Status, CancellationReason__c
-            FROM Case
-            WHERE CreatedById = '0051X0000055rbNQAQ'
-        ];
-    
-        List<ContentDocumentLink> cdlList = [
-            SELECT Id, LinkedEntityId, ContentDocumentId
-            FROM ContentDocumentLink
-            WHERE LinkedEntityId = :massiveLoaderRequestId
-        ];
-
-        if(cdlList.size() > 0){
-            for(ContentDocumentLink c : cdlList){
-                docId.add(c.ContentDocumentId);
-            }
-
-            delete cdlList;
-            delete [SELECT Id FROM ContentDocument WHERE Id IN :docId];
-        }
-
-        List<MassiveLoaderRequestItem__c> itemsList = new List<MassiveLoaderRequestItem__c>();
-        MassiveLoaderRequestItem__c item;
-    
-        for(Integer n=0; n<numRecords; n++){
-            item = new MassiveLoaderRequestItem__c();
-            item.MassiveLoaderRequest__c = massiveLoaderRequestId;
-            item.Status__c = 'In attesa di lavorazione';
-            item.Data__c = '';
-            item.Data__c += 'Variazione indirizzo di fornitura|';// PROCESSO
-            item.Data__c += '0011X00000pJuhFQAS|';// ACCOUNTID
-            item.Data__c += '|';// SOTTOPROCESSO
-            item.Data__c += '15750000008418|';// POD
-            item.Data__c += '3019671256|';// CONTRATTO
-            item.Data__c += '|';// ELEMENTI_DETTAGLIO
-            item.Data__c += '|';// SERVIZIO_ENERGIA
-            item.Data__c += '|';// DATA_VARIAZIONE
-            item.Data__c += '|';// MATRICOLA
-            item.Data__c += '|';// RIF_VOLTURA
-            item.Data__c += '|';// NOTE_DL
-            item.Data__c += '|';// CORRETTORE
-            item.Data__c += '|';// DATA_LETTURA
-            item.Data__c += '|';// DATA_VAR_RESIDENZA
-            item.Data__c += '|';// RESIDENTE
-            item.Data__c += 'VIA RANUCCI RENATO 1 , FERRARA FE, 44100 ITALIA|';// INDIRIZZO_FORN
-            item.Data__c += 'FERRARA|';// COMUNE
-            item.Data__c += 'ITALIA|';// NAZIONE
-            item.Data__c += '|';// LOCALITA
-            item.Data__c += '44100|';// CAP
-            item.Data__c += 'FE|';// PROVINCIA
-            item.Data__c += 'VIA RANUCCI RENATO|';// VIA
-            item.Data__c += '1|';// CIVICO
-            item.Data__c += '|';// ESTENSIONE_CIVICO
-            item.Data__c += '004-Uso tecnologico|';// CATEGORIA_USO
-            item.Data__c += '|';// TIPO_FORNITURA
-            item.Data__c += '|';// TIPO_IMPIANTO
-            item.Data__c += '|';// IMPOSTE
-            item.Data__c += '|';// DATA_DECORRENZA
-            item.Data__c += ''; // IVA
-            itemsList.add(item);
-        }
-        insert itemsList;
-    
-        MassiveLoaderRequest__c mlr = new MassiveLoaderRequest__c();
-        mlr.Id = massiveLoaderRequestId;
-        mlr.Status__c = 'In attesa di lavorazione';
-        update mlr;
-    
-    }*/
 
 }

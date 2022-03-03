@@ -33,6 +33,10 @@ global with sharing class HDT_SRV_VoltureChangeDispatcher implements wrts_prcgvr
                 
                 voltureChangeSrv.createCaseFromOrder((Order)sender);
             }
+            when 'bloccoVoltura'{
+                
+                voltureChangeSrv.bloccoVoltura((Order)sender,'B0');
+            }
         }
 
         return null;

@@ -502,7 +502,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             ord.Phase__c = 'Annullamento - Da inviare';
                             orderSrv.updateRecord(ord);
                         }
-                    }else if(mapRequestFields.get('RECORD_ID')!= null && String.isNotBlank(activityName)){
+                    }else if(String.isNotBlank(mapRequestFields.get('RECORD_ID')) && String.isNotBlank(activityName)){
                         //EVERIS: Gestione Scarti SAP Aggiunta logica creazione scarti se viene inviata solo l'attività
                         String recordId = mapRequestFields.get('RECORD_ID');
                         String errDescr = mapRequestFields.get('NOTE_ERR')!=null ? mapRequestFields.get('NOTE_ERR') : '';

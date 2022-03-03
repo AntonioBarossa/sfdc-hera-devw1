@@ -2394,6 +2394,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ripensato KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Voltura c%2Fo VT</fullName>
             <default>false</default>
         </values>

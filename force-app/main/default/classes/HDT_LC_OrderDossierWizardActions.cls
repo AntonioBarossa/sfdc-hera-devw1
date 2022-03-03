@@ -106,16 +106,21 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     }
 
     @AuraEnabled
-    public static HDT_WRP_CreateActivityVocalOrder createActivityVocalOrder(Order orderParent){
+    public static String createActivityVocalOrder(Order orderParent){
 
-        //Aggiornamento CampaignMember
-        Boolean isCommunity = HDT_LC_SellingWizardController.checkCommunityLogin();
-        if(isCommunity){
-            Order ord = [SELECT Id, Sale__r.Campaign__c, Sale__r.SalesContact__c FROM Order WHERE Id =: orderParent.Id WITH SECURITY_ENFORCED LIMIT 1];
+        //Aggiornamento/Esitazione CampaignMember
+         Boolean isCommunity = HDT_LC_SellingWizardController.checkCommunityLogin();
+         
+        Order ord = [SELECT Id, Sale__r.Campaign__c, Sale__r.SalesContact__c FROM Order WHERE Id =: orderParent.Id WITH SECURITY_ENFORCED LIMIT 1];
+        Boolean campaignPresent = ord.Sale__r.Campaign__c != null;
+        wrpActivityVo.isCommunity = isCommunity == true && campaignPresent == true;
+
+        if(ord.Sale__r.Campaign__c != null){
             CampaignMember cm = [SELECT Id, Campaign.PositiveOutcomeDefaultStatus__c 
-                                 FROM CampaignMember 
-                                 WHERE CampaignId =: ord.Sale__r.Campaign__c 
-                                 AND ContactId =: ord.Sale__r.SalesContact__c WITH SECURITY_ENFORCED LIMIT 1];
+                                    FROM CampaignMember 
+                                    WHERE CampaignId =: ord.Sale__r.Campaign__c 
+                                    AND ContactId =: ord.Sale__r.SalesContact__c WITH SECURITY_ENFORCED LIMIT 1];
+
             String myStatus = cm.Campaign.PositiveOutcomeDefaultStatus__c;
             HDT_LC_CampaignsController.updateCampaignMemberStatus(cm.Id, myStatus);
             wrpActivityVo.campaignMemberStatus = myStatus;
@@ -139,7 +144,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         }
         wrpActivityVo.orderPhase = orderToUpdate.Phase__c;
         
-        return wrpActivityVo;
+        return JSON.serialize(wrpActivityVo);
     }
 
     @AuraEnabled
@@ -388,6 +393,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     public class HDT_WRP_CreateActivityVocalOrder{
         public String orderPhase {get; set;}
         public String campaignMemberStatus {get; set;}
+        public Boolean isCommunity {get; set;}
     }
 
 }

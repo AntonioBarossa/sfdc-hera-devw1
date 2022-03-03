@@ -37,6 +37,7 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
                 childOrd.Id = childOrder.Id;
                 childOrd.Phase__c = 'Comunicazione verso Heroku';
                 childOrd.SignedDate__c = System.today();
+                childOrd.ConfirmCustomerContract__c = 'Web';
                 platformEvents.add(new HDT_PEV_VoltureChangeManagerUpdateSObj__e(SerializedSobj__c=JSON.serialize(childOrd)));
             }
             List<Database.SaveResult> srList = Eventbus.publish(platformEvents);   
@@ -208,7 +209,7 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
     System.debug('********:2User:' + parentOrd.SignatureMethod__c);
     System.debug('********:2User:' + parentOrd.Account.category__c);
     System.debug('********:2User:' + parentOrd.Username__c);*/
-    if (parentOrd.Account.category__c == 'Famiglie' && parentOrd.Sale__r.Channel__c == 'Teleselling Outbound' && parentOrd.SignatureMethod__c == 'Vocal Order' && parentOrd.Username__c == null){
+    if (parentOrd.Account.category__c == 'Famiglie' /*&& parentOrd.Sale__r.Channel__c == 'Teleselling Outbound'*/ && parentOrd.SignatureMethod__c == 'Vocal Order' && parentOrd.Username__c == null){
       //System.debug('********:3User2');
       String podCode = childOrder.ServicePoint__r.ServicePointCode__c;
       Integer lengthOfPodCode = podCode.length();

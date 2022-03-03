@@ -152,7 +152,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     public static void updateTimeRefAppointment(List<wrts_prcgvr__Activity__c> oldList,List<wrts_prcgvr__Activity__c> newList){
         Map<String,wrts_prcgvr__Activity__c> mapOld = new Map<String,wrts_prcgvr__Activity__c>();
         try {
-            ID recTypeId = rtQr.getRecordTypeIdByName(APPOINTMENTDEVELOPERNAME);
+            ID recTypeId = rtQr.getRecordTypeIdByName(APPOINTMENTDEVELOPERNAME, 'wrts_prcgvr__Activity__c');
             for(wrts_prcgvr__Activity__c act : oldList){
                 mapOld.put(act.id,act);
             }
@@ -177,10 +177,12 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 actsToCheck.add(act.Id);
             }
         }
-        List<wrts_prcgvr__Activity__c> actsWithAttachments = [select Id, (select Id from AttachedContentDocuments ) from wrts_prcgvr__Activity__c where id IN :actsToCheck WITH Security_Enforced];
-        for(wrts_prcgvr__Activity__c act : actsWithAttachments){
-            if(!(act.AttachedContentDocuments?.size()>0)){//if AttachedContentDocuments.isEmpty() or null
-                newActsMap.get(act.id).addError('Allegare Documentazione Obbligatoria');
+        if(!actsToCheck.isEmpty()){
+            List<wrts_prcgvr__Activity__c> actsWithAttachments = [select Id, (select Id from AttachedContentDocuments ) from wrts_prcgvr__Activity__c where id IN :actsToCheck WITH Security_Enforced];
+            for(wrts_prcgvr__Activity__c act : actsWithAttachments){
+                if(!(act.AttachedContentDocuments?.size()>0)){//if AttachedContentDocuments.isEmpty() or null
+                    newActsMap.get(act.id).addError('Allegare Documentazione Obbligatoria');
+                }
             }
         }
     }
@@ -193,7 +195,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             oldActivity.wrts_prcgvr__status__c = 'Chiusa';
             Date d = System.today();
             Date dataAnnullRich = d.addDays(30); 
-            wrts_prcgvr__Activity__c newActivity = new wrts_prcgvr__Activity__c(account__c = oldActivity.account__c,wrts_prcgvr__Status__c= 'Aperta',order__c = oldActivity.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali'),RequestedCancellationDate__c=dataAnnullRich, ClosingNote__c=noteChiusura);
+            wrts_prcgvr__Activity__c newActivity = new wrts_prcgvr__Activity__c(account__c = oldActivity.account__c,wrts_prcgvr__Status__c= 'Aperta',order__c = oldActivity.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c'),RequestedCancellationDate__c=dataAnnullRich, ClosingNote__c=noteChiusura);
             activityCustomSrv.createRecord(newActivity);
             String res = 'Creata';  
             activityCustomSrv.updateRecord(oldActivity);
@@ -254,7 +256,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             }  */ 
             Date d = System.today();
             Date dataAnnullRich = d.addDays(30); 
-            wrts_prcgvr__Activity__c newActivity = new wrts_prcgvr__Activity__c(account__c = oldActivity.account__c,wrts_prcgvr__Status__c= 'Aperta',order__c = oldActivity.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali'),RequestedCancellationDate__c=dataAnnullRich);
+            wrts_prcgvr__Activity__c newActivity = new wrts_prcgvr__Activity__c(account__c = oldActivity.account__c,wrts_prcgvr__Status__c= 'Aperta',order__c = oldActivity.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c'),RequestedCancellationDate__c=dataAnnullRich);
             activityCustomSrv.createRecord(newActivity);
             res = 'Creata';  
          }
