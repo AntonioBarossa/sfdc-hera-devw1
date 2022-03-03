@@ -449,7 +449,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }
         
         if(sconti.contains(mainItems[0].Product2.Family)){
-            HDT_UTL_Sales.handleContractVariation(orderToUpdate);
+            HDT_UTL_Sales.handleContractVariation(orderToUpdate,originalOrder);
             //only for Amend Bonus
             List<OrderItem> billableVas = orderToUpdate.isVas__c? null : orderItemQr.getAnalisiConsumi(orderToUpdate.id);
             if(billableVas?.size() > 0){
