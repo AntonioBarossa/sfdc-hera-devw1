@@ -9,7 +9,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
     private Map<String, Contract> contractMap = new Map<String, Contract>();
     private List<HDT_WRP_ProcessObjects> processObjList;
     private List<AccountContactRelation> accContRelationList;
-    private Map<String, AccountContactRelation> accountContactMap;
+    private Map<String, AccountContactRelation> accountContactMap = new Map<String, AccountContactRelation>();
     private Set<String> accountIdSet = new Set<String>();
     private Set<String> contractCodeSet = new Set<String>();
     private Set<String> podSet = new Set<String>();
@@ -87,7 +87,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
         List<Case> caseToInsert = new List<Case>();
         requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
 
-        String type = 'Sospensione Fornitura';
+        //String type = 'Sospensione Fornitura';
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
@@ -103,11 +103,6 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
                    tempField = '';
                 }
             
-                //if (mapRequiredByPosition.get(count) != null && String.isBlank(tempField)) {
-                //    System.debug(LoggingLevel.DEBUG, '>>> throw new HDT_WRP_ProcessEntitiesException');
-                //   //throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field','Missing Required Field ' + mapHeaderByPosition.get(count));
-                //}
-            
                 if(String.isNotBlank(mapCaseFields.get(mapHeaderByPosition.get(count))) && String.isNotBlank(tempField)){
                     System.debug(LoggingLevel.DEBUG, '>>> tempField: ' + tempField + ' # Header: ' + mapHeaderByPosition.get(count) + ' # CaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
                     convertionError = mapTypeField(processObj.newCase, mapCaseFields, count, tempField);
@@ -121,10 +116,12 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
             }
 
             if(!String.isEmpty(convertionError)){
-                //itemsToSave.add(setErrorItem(itemId, convertionError));
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = convertionError;
-                itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, convertionError));
+                continue;
+            }
+
+            if(errorForPicklistValue('Case', 'Type', processObj.newCase.Type)){
+                itemsToSave.add(setErrorItem(processObj.requestItem, 'Valore processo non corretto: ' + processObj.newCase.Type));
                 continue;
             }
 
@@ -133,10 +130,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
                     processObj.newCase.ParentId = podToCaseIdMap.get(processObj.csvSplitted[podIndex]).ParentId;
                     processObj.newCase.RelatedCase__c = podToCaseIdMap.get(processObj.csvSplitted[podIndex]).Id;
                 } else {
-                    //itemsToSave.add(setErrorItem(itemId, 'pod non presente'));
-                    processObj.requestItem.Status__c = 'Errore';
-                    processObj.requestItem.StatusDescription__c = 'pod non presente';
-                    itemsToSave.add(processObj.requestItem);
+                    itemsToSave.add(setErrorItem(processObj.requestItem, 'Case di Sospensione fornitura non presente'));
                     continue;
                 }
             }
@@ -148,9 +142,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
                 processObj.newCase.ServicePoint__c = contract.ServicePoint__c;
                 processObj.newCase.BillingProfile__c = contract.BillingProfile__c;
             } else {
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = 'Contratto non presente';
-                itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, 'Contratto non presente'));
                 continue;
             }
 
@@ -161,13 +153,11 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
                 processObj.newCase.ContactId = accountContactMap.get(processObj.csvSplitted[accountIdIndex]).ContactId;
             }
 
-            causalCode = causalCodeCalculation.calculateCausalCode(this.processName, processObj.newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
+            causalCode = causalCodeCalculation.calculateCausalCode(processObj.newCase.Cluster__c, processObj.newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
 
             if(causalCode != null){
                 processObj.newCase.CausalCode__c = causalCode.CausalCode__c;//'D01' for example
-            } else {
-                //do something -> record error
-            } 
+            }
 
             System.debug(LoggingLevel.DEBUG, '>>> processObj.newCase: ' + String.valueOf(processObj.newCase));
 
@@ -177,10 +167,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
                 caseToInsert.add(processObj.newCase); 
                 requestItemForUpsert.add(processObj.requestItem);
             } catch(Exception e){
-                //itemsToSave.add(setErrorItem(itemId, 'Errore arricchimento dati # '));
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = 'Errore arricchimento dati # ';
-                itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, 'Errore arricchimento dati # '));
             }
 
         }
