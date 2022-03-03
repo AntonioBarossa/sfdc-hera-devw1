@@ -406,12 +406,16 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     public void closeRiattivazione(SObject inputCase)
     {
         Case currentCase = (Case)inputCase;
+        Case caseToUdpate = new Case();
+        caseToUdpate.Id = currentCase.Id;
         if(currentCase.Type.equalsIgnoreCase('Riattivazione Fornitura') && (currentCase.HerokuPracticeCode__c == null || currentCase.HerokuPracticeCode__c == ''))
         {
-            currentCase.Phase__c = 'Annullato';
-            currentCase.Status = 'Closed';
+            caseToUdpate.Phase__c = 'Annullato';
+            caseToUdpate.Status = 'Closed';
         }
-        updateFuture(JSON.serialize(currentCase));
+        HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
+        event.SerializedCase__c = JSON.serialize(caseToUdpate);
+        EventBus.publish(event);
     }    
     
     public void updateDataFineContratto(SObject inputCase){
