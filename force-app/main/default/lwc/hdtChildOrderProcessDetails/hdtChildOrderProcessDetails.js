@@ -1265,7 +1265,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 },
                 new fieldData('ConnectionType__c','ConnectionType__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), true, this.order.ProcessType__c==='Prima Attivazione Ele' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica', '',''),
                 new fieldData('Preavviso di recesso (numerico)','RecessNotice__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', true, false, '',''),
-                new fieldData('Rinuncia Diritto di Ripensamento','WaiverRightAfterthought__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', true, (this.order.ProcessType__c == 'Switch in Ripristinatorio' || this.loginChannel == 'SPORTELLO') && !isNoDayAfterthought, isNoDayAfterthought , '',''),
+                new fieldData('Rinuncia Diritto di Ripensamento','WaiverRightAfterthought__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', true, (this.order.ProcessType__c == 'Switch in Ripristinatorio' || this.loginChannel == 'SPORTELLO') && !this.isNoDayAfterthought, this.isNoDayAfterthought , '',''),
                 new fieldData('Società di vendita','SalesCompany__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Opzione richiesta','RequestOption__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta'), true, this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt', '',''),
                 {
@@ -1404,37 +1404,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 recordId: this.order.Id,
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus',
                 data: [
-                    new fieldData(
-                        'Numero Contratto','ContractReference__c',
-                        true, 
-                        false, true, '',''
-                    ), 
-                    new fieldData(
-                        'Uso energia','UseTypeEnergy__c', 
-                        this.order.ServicePoint__c,
-                        false, true, '',''
-                    ),                  
-                    new fieldData(
-                        'POD/PDR','ServicePointCode__c', 
-                        this.order.ServicePoint__c,
-                        false, true, '',''
-                    ),  
-                    new fieldData(
-                        'Azione commerciale','CommercialAction__c',
-                        this.typeVisibility('both'),
-                        false, false, '',''
-                    ), 
+                    new fieldData('Numero Contratto','ContractReference__c',true,false, true, '',''), 
+                    new fieldData('Uso energia','UseTypeEnergy__c',this.order.ServicePoint__c,false, true, '',''),                  
+                    new fieldData('POD/PDR','ServicePointCode__c',this.order.ServicePoint__c,false, true, '',''),  
+                    new fieldData('Azione commerciale','CommercialAction__c',this.typeVisibility('both'),false, false, '',''), 
                     new fieldData('Tipo VAS','VASType__c', true, false, true, ''),
-                    /*new fieldData(
-                        'Sottotipo Vas','VasSubtype__c', //BUG 68
-                        this.typeVisibility('both'), 
-                        false, true, '',''
-                    ),*/
                     new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
                     new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, true, ''),
                     new fieldData('Soc Vendita','SalesCompany__c', true, false, true, ''),
-
-                    
                 ]
             },
             {
@@ -1445,26 +1422,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 recordId: this.analisiConsumi.Id !== undefined ? this.analisiConsumi.Id : '',//this.analisiConsumi.Id
                 processVisibility: ( this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus' ) && this.analisiConsumi.Id !== undefined,
                 data: [
-                    new fieldData(
-                        'Proprietario','OwnerAC__c',
-                        this.typeVisibility('both'), 
-                        false, true, '',''
-                    ), 
-                    new fieldData(
-                        'Tipo Casa','DwellingType__c', 
-                        this.typeVisibility('both'), 
-                        false, true, '',''
-                    ),                  
-                    new fieldData(
-                        'N. Abitanti','OccupantsNumber__c', 
-                        this.typeVisibility('both'),
-                        false, true, '',''
-                    ),
-                    new fieldData(
-                        'Mq. Casa','Surface__c',
-                        this.typeVisibility('both'),
-                        false, true, '',''
-                    )
+                    new fieldData('Proprietario','OwnerAC__c',this.typeVisibility('both'),false, true, '',''), 
+                    new fieldData('Tipo Casa','DwellingType__c',this.typeVisibility('both'),false, true, '',''),                  
+                    new fieldData('N. Abitanti','OccupantsNumber__c',this.typeVisibility('both'),false, true, '',''),
+                    new fieldData('Mq. Casa','Surface__c',this.typeVisibility('both'),false, true, '','')
                 ]
             },            
             {
@@ -2338,7 +2299,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
 
         if ( this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale'){
-            isNoDayAfterthought = await isAfterthoughtDaysZero({order: this.order});
+            this.isNoDayAfterthought = await isAfterthoughtDaysZero({order: this.order});
         }
 
         console.log('hdtChildOrderProcessDetails - connectedCallback - END');
