@@ -468,7 +468,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
                     srvRequest.BillingProfile__c = cs.BillingProfile__c;
                 }
     
-                srvRequest.ProcessType__c = HDT_UTL_MatrixCompatibility.getProcessType(cs.Type, 'Case', cs.Commodity__c);
+                srvRequest.ProcessType__c = HDT_UTL_MatrixCompatibility.getProcessType(cs.Type, 'Case', cs.CommodityFormula__c);
 
                 System.debug(LoggingLevel.DEBUG, '>>> srvRequest: ' + srvRequest);
 
@@ -525,8 +525,22 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
         newCase.Status = 'In Lavorazione';
         newCase.Phase__c = 'Bozza';
         newCase.CompanyOwner__c = 'HERA COMM';
-        newCase.Commodity__c = 'Energia Elettrica';
+        //newCase.Commodity__c = 'Energia Elettrica';
         return newCase;
+    }
+
+    public static Boolean checkPicklistValue(String objType, String fieldType, String valueToCheck){
+
+        Schema.DescribeFieldResult fieldResult = Schema.getGlobalDescribe().get(objType).getDescribe().fields.getMap().get(fieldType).getDescribe();
+
+        for(Schema.PicklistEntry pickListVal : fieldResult.getPicklistValues()){
+            if(valueToCheck.equalsIgnoreCase(pickListVal.getLabel()) && pickListVal.isActive()){
+                return true;
+            }
+        }
+
+        return false;
+
     }
 
     public static void getLimitDetails(String stageName){
