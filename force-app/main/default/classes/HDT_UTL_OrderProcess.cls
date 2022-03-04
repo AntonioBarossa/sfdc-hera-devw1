@@ -218,12 +218,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             Order oldOrder = orderMapOld.get(newOrder.Id);
             String oldValue = oldOrder.Phase__c;
             String newValue = newOrder.Phase__c;
-            System.debug(oldValue + ' ' + newOrder.RecordType.DeveloperName + ' ' + newOrder.Phase__c + ' ' + newOrder.Channel__c);
-            if(String.isNotBlank(oldValue) && String.isNotBlank(newValue) &&
+            Date oldDate = oldOrder.SignedDate__c;
+            Date newDate = newOrder.SignedDate__c;
+            if((String.isNotBlank(oldValue) && String.isNotBlank(newValue) &&
                 !newValue.equalsIgnoreCase(oldValue) && 
                 newOrder.ParentOrder__c == null && 
                 newOrder.Phase__c == 'Documentazione Gestita' &&
-                !newOrder.Channel__c.equalsIgnoreCase('Teleselling Outbound')
+                !newOrder.Channel__c.equalsIgnoreCase('Teleselling Outbound'))
+            || (newOrder.ParentOrder__c == null && (oldDate == null && newDate != null) || (oldDate != null && newDate != null && oldDate != newDate))
             ){
                 orderParentIds.add(newOrder.Id);
             }
@@ -970,11 +972,17 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 try
                 {
                     activities = orderQr.getOpenActivitiesByOrderId(orderNew.Id);
+                    List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
                     for(wrts_prcgvr__Activity__c activity : activities)
                     {
-                        activity.wrts_prcgvr__Status__c = 'Chiusa';
+                        if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)){
+                            activity.wrts_prcgvr__Status__c = 'Chiusa';
+                            activitiesToUpdate.add(activity);
+                        }
                     }
-                    HDT_UTL_DatabaseService.updateSObject(activities);
+                    if (!activitiesToUpdate.isEmpty()){
+                        HDT_UTL_DatabaseService.updateSObject(activitiesToUpdate);
+                    }
                 }
                 catch(Exception e)
                 {
@@ -999,7 +1007,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
             if(newPhase.containsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
             {
-                orderNew.Status = 'Annullato';
+                if(orderNew.VasStatus__c == null || (orderNew.VasStatus__c != null  && !orderNew.VasStatus__c.equalsIgnoreCase('ANNUL PER RIPENS')))
+                {
+                    orderNew.Status = 'Annullato';
+                }
             }
             /**@frpanico 22/10/2021
              * Si entra nello skip soltanto se la fase di partenza non e' di annullamento

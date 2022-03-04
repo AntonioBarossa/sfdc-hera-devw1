@@ -76,7 +76,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
                 }
     
                 Date dateSentToSii= null;
-                if(signedDate != null  && order.ProcessType__c.contains('Switch In')){
+                if(signedDate != null  && order.ProcessType__c.containsIgnoreCase('Switch In')){
                     if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
                         // DIRITTO DI RINUNCIA DI RIPENSAMENTO
                         if (order.WaiverRightAfterthought__c == 'Si') { 
