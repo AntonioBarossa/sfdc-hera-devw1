@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>HDT_PSG_AddettoBackOffice</label>
+    <permissionSets>HDT_ApexClasses</permissionSets>
+    <permissionSets>HDT_ApproveRejectCase</permissionSets>
+    <permissionSets>HDT_CadutaLineaChiamataMuta</permissionSets>
+    <permissionSets>HDT_CambioUsoFittizio</permissionSets>
+    <permissionSets>HDT_CancelResolution</permissionSets>
+    <permissionSets>HDT_CloneCanceledOrder</permissionSets>
+    <permissionSets>HDT_ComplaintProcess</permissionSets>
+    <permissionSets>HDT_ComunicazioneDiFallimento</permissionSets>
+    <permissionSets>HDT_ContenzionsoInCorso</permissionSets>
+    <permissionSets>HDT_ContrattoNonRichiesto</permissionSets>
+    <permissionSets>HDT_EditCompatibility</permissionSets>
+    <permissionSets>HDT_EditPublicListView</permissionSets>
+    <permissionSets>HDT_EditReports</permissionSets>
+    <permissionSets>HDT_EinsteinAgentLicense</permissionSets>
+    <permissionSets>HDT_EinsteinSearchLicense</permissionSets>
+    <permissionSets>HDT_EnableCreditCheck</permissionSets>
+    <permissionSets>HDT_EnableMUC</permissionSets>
+    <permissionSets>HDT_ErroreChiamata</permissionSets>
+    <permissionSets>HDT_ForceNewCAcreation</permissionSets>
+    <permissionSets>HDT_PostsalesProcess</permissionSets>
+    <permissionSets>HDT_PraticheM01M02</permissionSets>
+    <permissionSets>HDT_PrescrizioneFatture</permissionSets>
+    <permissionSets>HDT_ProtocolManualActivities</permissionSets>
+    <permissionSets>HDT_RicostruzioneConsumi</permissionSets>
+    <permissionSets>HDT_SalesProcess</permissionSets>
+    <permissionSets>HDT_SalesforceCPQLicense</permissionSets>
+    <permissionSets>HDT_SuperUserCPQ</permissionSets>
+    <permissionSets>HDT_SupplySelectionSearch</permissionSets>
+    <permissionSets>HDT_TypeInstallmentPlan</permissionSets>
+    <permissionSets>HDT_ViewReports</permissionSets>
+    <permissionSets>HDT_VolturaRetroattiva</permissionSets>
+    <permissionSets>HDT_VolturaTecnica</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

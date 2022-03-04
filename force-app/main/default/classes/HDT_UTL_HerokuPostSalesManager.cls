@@ -124,7 +124,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         || currentCase.Phase__c == 'Preventivo accettato' 
         || currentCase.Phase__c == 'Esito OK da SAP' // per le autoletture da cliente.
         || currentCase.Phase__c == 'Comunicazione verso Heroku KO'
-        || currentCase.Phase__c == 'Annullamento - Da inviare'){
+        || currentCase.Phase__c == 'Annullamento - Da inviare'
+        || currentCase.Phase__c == 'In Lavorazione' /* Disattivazioni VAS */){
 
             System.debug(LoggingLevel.DEBUG, 'SRV_Class_Phase--> '+phase);
             System.debug(LoggingLevel.DEBUG, 'SRV_Class_HerokuPracticeCode--> '+herokuCode);
