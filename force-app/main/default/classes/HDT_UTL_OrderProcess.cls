@@ -218,12 +218,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             Order oldOrder = orderMapOld.get(newOrder.Id);
             String oldValue = oldOrder.Phase__c;
             String newValue = newOrder.Phase__c;
-            System.debug(oldValue + ' ' + newOrder.RecordType.DeveloperName + ' ' + newOrder.Phase__c + ' ' + newOrder.Channel__c);
-            if(String.isNotBlank(oldValue) && String.isNotBlank(newValue) &&
+            Date oldDate = oldOrder.SignedDate__c;
+            Date newDate = newOrder.SignedDate__c;
+            if((String.isNotBlank(oldValue) && String.isNotBlank(newValue) &&
                 !newValue.equalsIgnoreCase(oldValue) && 
                 newOrder.ParentOrder__c == null && 
                 newOrder.Phase__c == 'Documentazione Gestita' &&
-                !newOrder.Channel__c.equalsIgnoreCase('Teleselling Outbound')
+                !newOrder.Channel__c.equalsIgnoreCase('Teleselling Outbound'))
+            || (newOrder.ParentOrder__c == null && (oldDate == null && newDate != null) || (oldDate != null && newDate != null && oldDate != newDate))
             ){
                 orderParentIds.add(newOrder.Id);
             }
