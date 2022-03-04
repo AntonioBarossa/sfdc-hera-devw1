@@ -48,7 +48,7 @@
             <value>
                 <fullName>Eseguire Gestione Manuale SAP</fullName>
                 <default>false</default>
-                <labelEseguire Gestione Manuale SAP</label>
+                <label>Eseguire Gestione Manuale SAP</label>
             </value>
             <value>
                 <fullName>Sportello</fullName>
