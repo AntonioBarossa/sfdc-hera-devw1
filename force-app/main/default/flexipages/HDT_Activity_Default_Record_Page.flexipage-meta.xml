@@ -946,6 +946,21 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.SuspensionNote__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.SuspensionNote__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-89e09c30-566d-4833-be03-3b926e0c4b28</name>
         <type>Facet</type>
     </flexiPageRegions>
