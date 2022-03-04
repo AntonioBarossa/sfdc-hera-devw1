@@ -227,13 +227,17 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>ChangeOwner</excludeButtons>
+        <excludeButtons>ChangeStatus</excludeButtons>
+        <excludeButtons>MassClose</excludeButtons>
         <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.SUBJECT</fields>
-        <fields>CASES.CREATED_DATE</fields>
         <fields>CASES.PRIORITY</fields>
-        <relatedList>Case.RelatedCase__c</relatedList>
+        <fields>CASES.CREATED_DATE</fields>
+        <fields>CASES.STATUS</fields>
+        <fields>OWNER_NAME</fields>
+        <relatedList>RelatedChildCaseList</relatedList>
         <sortField>CASES.CASE_NUMBER</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
