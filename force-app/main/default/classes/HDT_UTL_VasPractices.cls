@@ -67,6 +67,7 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
             if(orderMap.containsKey(obj.rds)){
                 obj.id = orderMap.get(obj.rds);
             } else {
+                //obj.id = 'javascript:void(0)';
                 obj.id = '/8011X000001oilqQAA';
             }
         }
@@ -84,16 +85,6 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
         @AuraEnabled public List<HDT_WRP_DetailObj> details;
         @AuraEnabled public List<HDT_WRP_RateDetail> rate;
     }
-
-
-
-    //{
-    //    "status": "success",
-    //    "correlationId": "5a7cc1b0-9b05-11ec-9c4b-0640e6dd9ebc",
-    //    "timestamp": "2022-03-03T16:19:44",
-    //    "data": {
-    //        "partner": "1003559816",
-    //        "detail": [
 
     public class HDT_WRP_Reponse {
         public String status;

@@ -24,8 +24,12 @@ public inherited sharing class HDT_WRP_Practices {
 
     public class HDT_WRP_TypeAttributes {
         @AuraEnabled public HDT_WRP_Label label; 
-        @AuraEnabled public String tooltip;
+        @AuraEnabled public HDT_WRP_Tooltip tooltip;
         @AuraEnabled public String target;
+    }
+
+    public class HDT_WRP_Tooltip {
+        @AuraEnabled public String fieldName;
     }
 
     public class HDT_WRP_Label {
