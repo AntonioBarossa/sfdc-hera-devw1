@@ -3,13 +3,10 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
 
     private Map<String, String> mapLeadFields;
     private Map<String, String> mapIndividualFields;
-    private List<Lead> listLead;
+    private List<Lead> existingLeadList;
     private List<HDT_WRP_ProcessObjects> processObjList;
     private List<MassiveLoaderRequestItem__c> itemsToSave;
-
-    private Set<String> firstNameSet = new Set<String>();
-    private Set<String> lastNameSet = new Set<String>();
-    private Set<String> companyOwnerSet = new Set<String>();
+    private HDT_WRP_LeadDataForRetrieve leadDataForRetrieve;
 
     public override void checks(){
 
@@ -18,6 +15,7 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
         mapFieldsObject();
 
         HDT_WRP_ProcessObjects processObj;
+        leadDataForRetrieve = new HDT_WRP_LeadDataForRetrieve();
         processObjList = new List<HDT_WRP_ProcessObjects>();
         List<String> tempSplitedFields;
         for(MassiveLoaderRequestItem__c item : requestItemList){
@@ -44,11 +42,6 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
                 if ('null'.equalsIgnoreCase(tempField)) {
                    tempField = '';
                 }
-
-                //// Se devo essere aggiunti altri campi req
-                //if(String.isNotBlank(mapLeadFields.get(mapHeaderByPosition.get(count)))&& String.isNotBlank(tempField) ){
-                //    mapTypeField(currentProcess.currentLead,mapLeadFields,count,tempField);
-                //}
 
                 if(String.isNotBlank(mapLeadFields.get(mapHeaderByPosition.get(count))) && String.isNotBlank(tempField) ){
                     convertionError = mapTypeField(processObj.newLead, mapLeadFields, count, tempField);
@@ -87,56 +80,80 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
             processObjList.add(processObj);
             setValueToSets(processObj.newLead);
 
-            System.debug('>>> current lead: ' + processObj.newLead);
-            System.debug('>>> current individual: ' + processObj.newIndividual);
+            System.debug(LoggingLevel.DEBUG, '>>> current lead: ' + processObj.newLead);
+            System.debug(LoggingLevel.DEBUG, '>>> current individual: ' + processObj.newIndividual);
 
         }
 
     }
 
-    /*public override void getRecords(){
-
-        if(String.isNotBlank(currentProcess.currentLead.FirstName) &&
-           String.isNotBlank(currentProcess.currentLead.LastName) &&
-           String.isNotBlank(currentProcess.currentLead.CompanyOwner__c)
-        ) {
-            listLead = HDT_QR_Lead.getCurrentRecords(currentProcess.currentLead);
-        }
-       
+    public override void getRecords(){
+        existingLeadList = new List<Lead>();
+        existingLeadList = HDT_QR_Lead.getCurrentRecords(leadDataForRetrieve);
     }
 
-    /*public override void registryCreation(){
+    public override void registryCreation(){
 
-        if (listLead!=null && listLead.size()>0) {
-            Lead oldLead=listLead.get(0);
-            for (String tempField : mapLeadFields.values()) {
-                if ( String.isBlank(String.valueOf(oldLead.get(tempField))) ||'LeadValidityEndDate__c'.equalsIgnoreCase(tempField)) {
-                    oldLead.put(tempField,currentProcess.currentLead.get(tempField));
+        System.debug(LoggingLevel.DEBUG, '>>> existingLeadList: ' + existingLeadList.size());
+        System.debug(LoggingLevel.DEBUG, '>>> requestItemList: ' + requestItemList.size());
+
+        List<Lead> leadtoUpsert = new List<Lead>();
+        List<MassiveLoaderRequestItem__c> itemList = new List<MassiveLoaderRequestItem__c>();
+
+        Lead existingLead;
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+            existingLead = searchLead(processObj.newLead);
+
+            if(existingLead != null){
+                // in this case upsert existing lead
+                System.debug(LoggingLevel.DEBUG, '>>> existingLead: ' + existingLead.Id);
+
+                for(String tempField : mapLeadFields.values()) {
+                    if(String.isBlank(String.valueOf(existingLead.get(tempField))) || 'LeadValidityEndDate__c'.equalsIgnoreCase(tempField)) {
+                        existingLead.put(tempField, processObj.newLead.get(tempField));
+                    }
                 }
+               
+                existingLead.LeadReceptionDate__c = processObj.newLead.LeadReceptionDate__c;
+                processObj.newLead = existingLead;
+
+            } else {
+                // in this case insert lead
+                System.debug(LoggingLevel.DEBUG, '>>> no lead in db');
             }
-           
-            oldLead.LeadReceptionDate__c=currentProcess.currentLead.LeadReceptionDate__c;
-            currentProcess.currentLead=oldLead;
+            
+            leadtoUpsert.add(processObj.newLead);
+            itemList.add(processObj.requestItem);
 
-            update currentProcess.currentLead;
-        }
-        else {
-            insert currentProcess.currentLead;
         }
 
-        List<Lead> listAfterInsert = HDT_QR_Lead.getCurrentRecords(currentProcess.currentLead);
-        currentProcess.currentLead = listAfterInsert.get(0);
-        currentProcess.currentIndividual.id = currentProcess.currentLead.IndividualId;
-        update currentProcess.currentIndividual;
+        HDT_WRP_SaveResponse leadUpsertResponse;
+        leadUpsertResponse = databaseUpsert(leadtoUpsert, itemList, 'Lead');
+
+        //System.debug(LoggingLevel.DEBUG, '>>> reponseItemList: ' + leadUpsertResponse.reponseItemList);
+        //System.debug(LoggingLevel.DEBUG, '>>> savedObject: ' + leadUpsertResponse.savedObject);
+        System.debug(LoggingLevel.DEBUG, '>>> itemIdToObjId: ' + leadUpsertResponse.itemIdToObjId);
+        System.debug(LoggingLevel.DEBUG, '>>> errorItemMap: ' + leadUpsertResponse.errorItemMap);
+
+        if(leadUpsertResponse.reponseItemList.size() > 0){
+            itemsToSave.addAll(leadUpsertResponse.reponseItemList);
+        }
+
+        //List<Lead> listAfterInsert = HDT_QR_Lead.getCurrentRecords(currentProcess.currentLead);
+        //currentProcess.currentLead = listAfterInsert.get(0);
+        //currentProcess.currentIndividual.id = currentProcess.currentLead.IndividualId;
+        //update currentProcess.currentIndividual;
 
     }
-
 
     public override void finalUpdate(){
-        currentProcess.currentRequestItem.Lead__c = currentProcess.currentLead.Id;
-        currentProcess.currentRequestItem.Status__c = constant.MASSIVLOADER_STATUS_CHIUSO;
-        update currentProcess.currentRequestItem;
-    }*/
+        System.debug(LoggingLevel.DEBUG, '>>> finalUpdate');
+
+        if(itemsToSave.size() > 0){
+            update itemsToSave;
+        }
+
+    }
 
     private void mapFieldsObject(){
 
@@ -159,16 +176,58 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
     private void setValueToSets(Lead currentLead){
 
         if(String.isNotBlank(currentLead.FirstName)){
-            firstNameSet.add(currentLead.FirstName);
+            leadDataForRetrieve.firstNameSet.add(currentLead.FirstName);
         }
 
         if(String.isNotBlank(currentLead.LastName)){
-            lastNameSet.add(currentLead.LastName);
+            leadDataForRetrieve.lastNameSet.add(currentLead.LastName);
         }
 
         if(String.isNotBlank(currentLead.CompanyOwner__c)){
-            companyOwnerSet.add(currentLead.CompanyOwner__c);
+            leadDataForRetrieve.companyOwnerSet.add(currentLead.CompanyOwner__c);
         }
+
+        if(String.isNotBlank(currentLead.MobilePhone)){
+            leadDataForRetrieve.mobilePhoneSet.add(currentLead.MobilePhone);
+        }
+
+        if(String.isNotBlank(currentLead.Phone)){
+            leadDataForRetrieve.phoneSet.add(currentLead.Phone);
+        }
+
+        if(String.isNotBlank(currentLead.Email)){
+            leadDataForRetrieve.emailSet.add(currentLead.Email);
+        }
+
+    }
+
+    private Lead searchLead(Lead newLead){
+
+        Boolean firstName;
+        Boolean lastName;
+        Boolean companyOwner;
+        Boolean mobilePhone;
+        Boolean phone;
+        Boolean email;
+
+        Lead leadFound;
+
+        for(Lead l : existingLeadList){
+
+            firstName = l.FirstName == newLead.FirstName;
+            lastName = l.LastName == newLead.LastName;
+            companyOwner = l.CompanyOwner__c == newLead.CompanyOwner__c;
+            mobilePhone = l.MobilePhone == newLead.MobilePhone;
+            phone = l.Phone == newLead.Phone;
+            email = l.Email == newLead.Email;
+
+            if( firstName && lastName && companyOwner && (mobilePhone || phone || email) ) {
+                leadFound = l;
+                break;
+            }
+        }
+
+        return leadFound;
 
     }
 
@@ -177,6 +236,25 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
         private Individual newIndividual;
         private MassiveLoaderRequestItem__c requestItem;
         private List<String> csvSplitted;
+    }
+
+    public class HDT_WRP_LeadDataForRetrieve {
+        public Set<String> firstNameSet;
+        public Set<String> lastNameSet;
+        public Set<String> companyOwnerSet;
+        public Set<String> mobilePhoneSet;
+        public Set<String> phoneSet;
+        public Set<String> emailSet;
+
+        public HDT_WRP_LeadDataForRetrieve(){
+            firstNameSet = new Set<String>();
+            lastNameSet = new Set<String>();
+            companyOwnerSet = new Set<String>();
+            mobilePhoneSet = new Set<String>();
+            phoneSet = new Set<String>();
+            emailSet = new Set<String>();
+        }
+
     }
 
 }
