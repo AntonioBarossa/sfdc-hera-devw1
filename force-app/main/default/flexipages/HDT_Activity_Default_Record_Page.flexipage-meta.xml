@@ -434,10 +434,21 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_CloseActivity</value>
                             <visibilityRule>
+                                <booleanFilter>1 OR ( 2 AND 3 )</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.ShowcompletedActivity__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCount__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>2</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Vocal Order non validato</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -2147,7 +2158,7 @@
             <componentInstance>
                 <componentName>hdtDocumentActivityValidation</componentName>
                 <visibilityRule>
-                    <booleanFilter>(1 OR 2) AND (3 OR 4 OR 5) AND 6</booleanFilter>
+                    <booleanFilter>(1 OR 2) AND (3 OR 4 OR 5 OR ( 7 AND 8 )) AND 6</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
@@ -2177,6 +2188,16 @@
                         <leftValue>{!Record.wrts_prcgvr__IsClosed__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>false</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Vocal Order non validato</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.DiscardCount__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>2</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
