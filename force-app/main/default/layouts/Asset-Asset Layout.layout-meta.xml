@@ -35,6 +35,10 @@
                 <behavior>Edit</behavior>
                 <field>VasPracticeCode__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Contract__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
