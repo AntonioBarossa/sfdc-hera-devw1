@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ExternalDataSource xmlns="http://soap.sforce.com/2006/04/metadata">
+    <authProvider>archivingaccess</authProvider>
     <customConfiguration>{&quot;inlineCountEnabled&quot;:&quot;false&quot;,&quot;requestCompression&quot;:&quot;false&quot;,&quot;pagination&quot;:&quot;CLIENT&quot;,&quot;noIdMapping&quot;:&quot;false&quot;,&quot;format&quot;:&quot;JSON&quot;,&quot;searchFunc&quot;:&quot;&quot;,&quot;compatibility&quot;:&quot;DEFAULT&quot;,&quot;timeout&quot;:&quot;120&quot;,&quot;searchEnabled&quot;:&quot;false&quot;,&quot;ChangeTrackingEnabled&quot;:&quot;false&quot;}</customConfiguration>
     <customHttpHeaders>
         <headerFieldName>username</headerFieldName>
@@ -11,10 +12,10 @@
         <headerFieldValue>$UserRole.Name</headerFieldValue>
         <isActive>true</isActive>
     </customHttpHeaders>
-    <endpoint>https://archiviazione.azurewebsites.net/odata</endpoint>
+    <endpoint>https://archiviazione-dev.azurewebsites.net/odata</endpoint>
     <isWritable>false</isWritable>
     <label>Hera Archive</label>
     <principalType>NamedUser</principalType>
-    <protocol>NoAuthentication</protocol>
+    <protocol>Oauth</protocol>
     <type>OData4</type>
 </ExternalDataSource>

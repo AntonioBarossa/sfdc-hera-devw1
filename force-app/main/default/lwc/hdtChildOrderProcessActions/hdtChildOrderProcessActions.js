@@ -27,7 +27,8 @@ export default class hdtChildOrderProcessActions extends LightningElement {
         resubmission({
             orderId : this.order.Id,
             activityId : this.activityIdToClose,
-            processType : this.order.ProcessType__c
+            processType : this.order.ProcessType__c,
+            phase : this.order.Phase__c
         }).then(response => {
             let _message = 'Risottomissione avvenuta con successo';
             let _title = 'Success';

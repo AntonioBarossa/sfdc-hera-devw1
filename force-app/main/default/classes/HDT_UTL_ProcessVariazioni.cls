@@ -14,6 +14,8 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
     private List<Contract> contractList;
     private List<String> orderNumberList = new List<String>();
     private List<Order> orderList = new List<Order>();
+    private Map<String, AccountContactRelation> accountContactMap = new Map<String, AccountContactRelation>();
+    private List<AccountContactRelation> accContRelationList;
     private Id recordTypeId;
     private Integer podIndex;
     private Integer contractIndex;
@@ -25,12 +27,11 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
         System.debug(LoggingLevel.DEBUG, 'checks');
         mapFieldsObject();
 
-        System.debug(LoggingLevel.DEBUG, '>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
-        System.debug(LoggingLevel.DEBUG, '>>> mapWrapperCaseFields: ' + String.valueOf(mapWrapperCaseFields));
-        System.debug(LoggingLevel.DEBUG, '>>> mapHeaderForWrapper: ' + String.valueOf(mapHeaderForWrapper));
-        System.debug(LoggingLevel.DEBUG, '>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
-
-        System.debug(LoggingLevel.DEBUG, '>>> sobjectMap: ' + String.valueOf(sobjectMap));
+        //System.debug(LoggingLevel.DEBUG, '>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
+        //System.debug(LoggingLevel.DEBUG, '>>> mapWrapperCaseFields: ' + String.valueOf(mapWrapperCaseFields));
+        //System.debug(LoggingLevel.DEBUG, '>>> mapHeaderForWrapper: ' + String.valueOf(mapHeaderForWrapper));
+        //System.debug(LoggingLevel.DEBUG, '>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
+        //System.debug(LoggingLevel.DEBUG, '>>> sobjectMap: ' + String.valueOf(sobjectMap));
 
         podIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('POD'));
         contractIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CONTRATTO'));
@@ -49,6 +50,14 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
             processObj.requestItem = item;
             processObj.csvSplitted = item.Data__c.split(splitCharacter, -1);
 
+            checkRequiredFields(item, processObj.csvSplitted);
+            System.debug(LoggingLevel.DEBUG, '>>> itemStatus' + item.Status__c);
+
+            if(item.Status__c.equalsIgnoreCase('Errore')){
+                itemsToSave.add(item);
+                continue;
+            }
+
             accountIdSet.add(processObj.csvSplitted[accountIdIndex]);
             contractCodeSet.add(processObj.csvSplitted[contractIndex]);
 
@@ -65,6 +74,7 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
 
         contractList = HDT_QR_ProcessPostSales.getContracts(contractList, contractCodeSet);
         orderList = HDT_QR_ProcessPostSales.getOrderByOrderNumber(orderList, orderNumberList);
+        accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
 
         recordTypeId = HDT_QR_ProcessPostSales.getRecordTypeId('HDT_RT_VariazioniEle');
         recordTypeMap.put('Energia Elettrica', recordTypeId);
@@ -77,6 +87,10 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
 
         for(Order o : orderList){
             orderIdsMap.put(o.OrderNumber, o.Id);
+        }
+
+        for(AccountContactRelation singleRelation : accContRelationList){
+            accountContactMap.put(singleRelation.AccountId, singleRelation);
         }
 
     }
@@ -111,12 +125,6 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
                 if ('null'.equalsIgnoreCase(tempField)) {
                    tempField = '';
                 }
-            
-                if (mapRequiredByPosition.get(count) != null && String.isBlank(tempField)) {
-                    System.debug(LoggingLevel.DEBUG, '>>> throw new HDT_WRP_ProcessEntitiesException');
-                    //throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field', 'Missing Required Field: ' + mapHeaderByPosition.get(count));
-                    convertionError = 'Missing Required Field: ' + mapHeaderByPosition.get(count);
-                }
 
                 if(!String.isEmpty(convertionError)){
                     // error happened -> exit
@@ -136,10 +144,18 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
             }
 
             if(!String.isEmpty(convertionError)){
-                //itemsToSave.add(setErrorItem(itemId, convertionError));
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = convertionError;
-                itemsToSave.add(processObj.requestItem);
+                //processObj.requestItem.Status__c = 'Errore';
+                //processObj.requestItem.StatusDescription__c = convertionError;
+                //itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, convertionError));
+                continue;
+            }
+
+            if(errorForPicklistValue('Case', 'Type', processObj.newCase.Type)){
+                //processObj.requestItem.Status__c = 'Errore';
+                //processObj.requestItem.StatusDescription__c = 'Valore processo non corretto: ' + processObj.newCase.Type;
+                //itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, 'Valore processo non corretto: ' + processObj.newCase.Type));
                 continue;
             }
 
@@ -152,28 +168,31 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
                 processObj.newCase.ServicePoint__c = contract.ServicePoint__c;
                 processObj.newCase.BillingProfile__c = contract.BillingProfile__c;
             } else {
-                //itemsToSave.add(setErrorItem(itemId, 'pod non presente'));
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = 'pod non presente';
-                itemsToSave.add(processObj.requestItem);
+                //processObj.requestItem.Status__c = 'Errore';
+                //processObj.requestItem.StatusDescription__c = 'pod non presente';
+                //itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, 'pod non presente'));
                 continue;
             }
                         
-            if(!String.isEmpty(contract.ServicePoint__r.CommoditySector__c)){
-                causalCode = causalCodeCalculation.calculateCausalCode(this.processName, processObj.newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
+            processObj.newCase.Cluster__c = 'Variazioni';
+
+            if(String.isNotEmpty(contract.ServicePoint__r.CommoditySector__c)){
+                causalCode = causalCodeCalculation.calculateCausalCode(processObj.newCase.Cluster__c, processObj.newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
 
                 if(causalCode != null){
                     processObj.newCase.CausalCode__c = causalCode.CausalCode__c;//'D01' for example
-                } else {
-                    //do something -> record error
                 }
 
                 currentRecordTypeId = recordTypeMap.get(contract.ServicePoint__r.CommoditySector__c);
             }
 
             processObj.newCase.AccountId = processObj.csvSplitted[accountIdIndex];
-            processObj.newCase.Cluster__c = 'Variazioni';
             processObj.newCase = setCaseField(processObj.newCase, currentRecordTypeId);
+
+            if(accountContactMap.containsKey(processObj.csvSplitted[accountIdIndex])){
+                processObj.newCase.ContactId = accountContactMap.get(processObj.csvSplitted[accountIdIndex]).ContactId;
+            }
 
             if(processObj.newCase.Type.equalsIgnoreCase('Cambio contatore non registrato') && orderVolturaIndex != null){
                 String currentOrderNum = processObj.csvSplitted[orderVolturaIndex];
@@ -187,16 +206,16 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
             try{
                 String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(processObj.csvSplitted[podIndex], null);
                 System.debug(LoggingLevel.DEBUG, '>>> arricchimentoResponse: ' + arricchimentoResponse);
+
                 processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, processObj.newCase);
-                //processObj.newCase.Taxes__c = null;
                 caseToInsert.add(processObj.newCase); 
                 requestItemForUpsert.add(processObj.requestItem);
             } catch(Exception e){
                 System.debug(LoggingLevel.DEBUG, '>>> arricchimentoError ' + e.getMessage());
-                //itemsToSave.add(setErrorItem(itemId, 'Errore arricchimento dati # '));
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = 'Errore arricchimento dati # ';
-                itemsToSave.add(processObj.requestItem);
+                //processObj.requestItem.Status__c = 'Errore';
+                //processObj.requestItem.StatusDescription__c = 'Errore arricchimento dati # ';
+                //itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, 'Errore arricchimento dati # '));
             }
 
         }
