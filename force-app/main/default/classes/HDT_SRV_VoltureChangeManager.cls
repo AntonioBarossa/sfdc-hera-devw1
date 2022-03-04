@@ -188,10 +188,79 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         platEvent.SerializedSobj__c = JSON.serialize(ordToUpdate);
         Eventbus.publish(platEvent);            
     }
-
+    public void orderPrecheckOk(List<Order> myOrderList){
+        Date today = System.today();
+        List<Order> orderListUpdate = new List<Order>();
+        List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> pltformEventList = new List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>();
+        for(Order singleOrder : myOrderList){
+            if(singleOrder.Phase__c.equalsIgnoreCase('Amm. Precheck OK SII') && (singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') || singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch'))){
+                Order ordToUpdate = new Order();
+                ordToUpdate.Id = singleOrder.Id;        
+                ordToUpdate.Phase__c = singleOrder.DateSentToSII__c > today ? 'In attesa tempi di ripensamento' : 'Comunicazione verso Heroku';
+                HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
+                platEvent.SerializedSobj__c = JSON.serialize(ordToUpdate);
+                pltformEventList.add(platEvent);
+            }
+        }
+        if(!pltformEventList.isEmpty()){
+            Eventbus.publish(pltformEventList);  
+        }       
+    }
     public void createCaseFromOrder(Order myOrder){
 
         System.enqueueJob(new HDT_QBL_VoltureChangeManager(myOrder));
 
     }
+
+    public void bloccoVoltura(Order myOrder, string codiceCausale){
+
+        System.enqueueJob(new HDT_QBL_VoltureChangeManager(myOrder, codiceCausale));
+
+    }
+
+    public static String calloutVolture(Order order, string codiceCausale){
+
+        HttpRequest request = new HttpRequest();
+        Http http = new Http();
+        
+        HDT_WRP_VoltureChangeManager.HDT_WRP_BodyCall requestBody = new HDT_WRP_VoltureChangeManager.HDT_WRP_BodyCall();
+        requestBody.rds = (string)order.getSObject('ParentOrder__r')?.get('OrderNumber');
+        requestBody.rdo = (string)order.get('OrderNumber');
+        requestBody.pod = (string)order.get('ServicePointCode__c');
+        requestBody.contratto = (string)order.get('SapContractCode__c');
+        requestBody.prestazione = (string)order.get('HerokuPracticeCode__c');
+        requestBody.causale = codiceCausale;
+        requestBody.tipologia = (string)order.get('DocumentalProcessType__c');
+
+        HttpResponse response = new HttpResponse();
+        
+        try{
+            request.setEndpoint('Callout:MulesoftBasePath/transfers/lock-unlock-calculations');
+            request.setMethod('POST');
+            request.setBody( JSON.serialize(requestBody) );
+            request.setTimeout(12000);
+            request.setHeader('Accept','application/json');
+            request.setHeader('Content-Type','application/json');
+            response = http.send(request);
+        }catch(Exception e){
+            response = null;
+        }
+
+        if (response != null ){
+            HDT_WRP_VoltureChangeManager.HDT_WRP_Response responseBody = new HDT_WRP_VoltureChangeManager.HDT_WRP_Response( (Map<String, Object>)JSON.deserializeUntyped( response.getBody() ) );
+            return descriptionConstructor(responseBody.prestazione.tipoAttivita, responseBody.prestazione.note);
+        }else {
+            return 'Errore nella comunicazione Blocco/Sblocco al calcolo';
+        }
+        
+    }
+
+    private static string descriptionConstructor(string tipoAttivita, string note){
+        Datetime nowDate = Datetime.now();
+        String descr = nowDate.format('dd/MM/yyyy h:mm a') + ': ';
+        descr = tipoAttivita!=null? descr+tipoAttivita+' - ': descr ;
+        return note!=null? descr+note: descr ;
+    }
+    // data: tipoaAttivita - ntoe
+
 }

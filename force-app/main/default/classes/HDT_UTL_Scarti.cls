@@ -719,14 +719,15 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             mapActivityTemplates.put(singleTemplate.Name,singleTemplate.Id);
         }
 
-
-        List<Account> listAccounts=[SELECT Id, CustomerCode__c, CompanyOwner__c
-                                    FROM Account 
-                                    WHERE CustomerCode__c IN: codiciClienti 
-                                    WITH SECURITY_ENFORCED];
         Map<String, Account> accIdsPerBPcode = new Map<String, Account>();
-        for(Account singleAccount: listAccounts){
-            accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount);
+        if(!codiciClienti.isEmpty()){
+            List<Account> listAccounts=[SELECT Id, CustomerCode__c, CompanyOwner__c
+                                        FROM Account 
+                                        WHERE CustomerCode__c IN: codiciClienti 
+                                        WITH SECURITY_ENFORCED];
+            for(Account singleAccount: listAccounts){
+                accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount);
+            }
         }
         for(wrts_prcgvr__Activity__c activity2: inputData){
             if(activity2.Account__c == null && !String.isBlank(activity2.BPCode__c) && accIdsPerBPcode.containsKey(activity2.BPCode__c)){
@@ -757,7 +758,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
         }
         system.debug(LoggingLevel.DEBUG, 'setLookupFields end' + inputData);
+    
         return inputData;
+
     }
 
     /**
@@ -1115,4 +1118,31 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         }
     }
     //EVERIS: END Gestione Scarti SAP
+
+
+    //EVERIS Gestione Scarto Transitorio
+    public static void createActivityForKoSiebel(Map<Id,String> objectRelated){
+        List<wrts_prcgvr__ActivityTemplate__c> template = HDT_QR_GenericQuery.getGenericRecords('Id, Name', 'wrts_prcgvr__ActivityTemplate__c', 'Name = \'ORDER_CARICAMENTO_SIEBEL_KO\' AND wrts_prcgvr__ObjectType__c =\'Order\'');
+        Id recorcTypeId = new HDT_QR_RecordType().getRecordTypeIdByName('HDT_RT_Scarto', 'wrts_prcgvr__Activity__c');
+        Id templateId;
+        if (!template.isEmpty()){
+            templateId = template[0].Id;
+        }
+        List<wrts_prcgvr__Activity__c> activitiesToCreate = new List<wrts_prcgvr__Activity__c>();
+        for (Id orderId : objectRelated.keySet()){
+            wrts_prcgvr__Activity__c newAct = new wrts_prcgvr__Activity__c();
+            newAct.Type__c = 'Scarto Transitorio';
+            newAct.RecordTypeId = recorcTypeId;
+            newAct.DiscardCategory__c = 'Scarto complesso';
+            newAct.DiscardDescription__c = 'Scarto Transitorio';
+            newAct.wrts_prcgvr__Status__c = 'Aperta';
+            newAct.wrts_prcgvr__ActivityTemplate__c = templateId;
+            newAct.wrts_prcgvr__ObjectId__c = orderId;
+            newAct.Order__c = orderId;
+            newAct.wrts_prcgvr__Description__c = objectRelated.get(orderId);
+            activitiesToCreate.add(newAct);
+        }
+        HDT_UTL_DatabaseService.insertSObject(activitiesToCreate);
+    }
+    //EVERIS fine Gestione Scarto Transitorio
 }

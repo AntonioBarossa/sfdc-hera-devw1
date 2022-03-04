@@ -22,12 +22,11 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
         itemsToSave = new List<MassiveLoaderRequestItem__c>();
         mapFieldsObject();
 
-        System.debug(LoggingLevel.DEBUG, '>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
-        System.debug(LoggingLevel.DEBUG, '>>> mapWrapperCaseFields: ' + String.valueOf(mapWrapperCaseFields));
-        System.debug(LoggingLevel.DEBUG, '>>> mapHeaderForWrapper: ' + String.valueOf(mapHeaderForWrapper));
-        System.debug(LoggingLevel.DEBUG, '>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
-
-        System.debug(LoggingLevel.DEBUG, '>>> sobjectMap: ' + String.valueOf(sobjectMap));
+        //System.debug(LoggingLevel.DEBUG, '>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
+        //System.debug(LoggingLevel.DEBUG, '>>> mapWrapperCaseFields: ' + String.valueOf(mapWrapperCaseFields));
+        //System.debug(LoggingLevel.DEBUG, '>>> mapHeaderForWrapper: ' + String.valueOf(mapHeaderForWrapper));
+        //System.debug(LoggingLevel.DEBUG, '>>> mapHeaderByPosition: ' + String.valueOf(mapHeaderByPosition));
+        //System.debug(LoggingLevel.DEBUG, '>>> sobjectMap: ' + String.valueOf(sobjectMap));
 
         accountIdIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
         contractIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CONTO_CONTRATTUALE'));
@@ -93,7 +92,6 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
 
             Integer count = 0;
             String convertionError;
-            String setEmptyCsvFields;
             String csvHeader;
             String objField;
             emptyCsvField = new List<String>();
@@ -108,12 +106,6 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
                 
                 csvHeader = mapHeaderByPosition.get(count);
                 objField = mapCaseFields.get(csvHeader);
-
-                if (mapRequiredByPosition.get(count) != null && String.isBlank(tempField)) {
-                    System.debug(LoggingLevel.DEBUG, '>>> throw new HDT_WRP_ProcessEntitiesException');
-                    //throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field', 'Missing Required Field: ' + mapHeaderByPosition.get(count));
-                    convertionError = 'Missing Required Field: ' + mapHeaderByPosition.get(count);
-                }
 
                 if(!String.isEmpty(convertionError)){
                     // error happened -> exit
@@ -141,32 +133,52 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
             }
 
             if(!String.isEmpty(convertionError)){
-                //itemsToSave.add(setErrorItem(itemId, convertionError));
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = convertionError;
-                itemsToSave.add(processObj.requestItem);
+                //processObj.requestItem.Status__c = 'Errore';
+                //processObj.requestItem.StatusDescription__c = convertionError;
+                //itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, convertionError));
                 continue;
             }
 
+            if(errorForPicklistValue('Case', 'Type', newCase.Type)){
+                //processObj.requestItem.Status__c = 'Errore';
+                //processObj.requestItem.StatusDescription__c = 'Valore processo non corretto: ' + newCase.Type;
+                //itemsToSave.add(processObj.requestItem);
+                itemsToSave.add(setErrorItem(processObj.requestItem, 'Valore processo non corretto: ' + newCase.Type));
+                continue;
+            }
+
+            Boolean enableBillProfEdit = (newCase.Subprocess__c.equalsIgnoreCase('Modifica Dati Di Recapito'));
+            System.debug(LoggingLevel.DEBUG, '>>> enableBillProfEdit: ' + enableBillProfEdit);
+
             if(emptyCsvField.size() > 0){
                 System.debug(LoggingLevel.DEBUG, '>>> we need to set empty fields');
-                convertionError = setEmptyCsvFields(emptyCsvField, newCase, processObj.csvSplitted[accountIdIndex], processObj.csvSplitted[contractIndex]);
+                convertionError = setEmptyCsvFields(emptyCsvField, newCase, processObj.csvSplitted[accountIdIndex], processObj.csvSplitted[contractIndex], enableBillProfEdit);
 
                 if(!String.isEmpty(convertionError)){
-                    //itemsToSave.add(setErrorItem(itemId, convertionError));
-                    processObj.requestItem.Status__c = 'Errore';
-                    processObj.requestItem.StatusDescription__c = convertionError;
-                    itemsToSave.add(processObj.requestItem);
+                    //processObj.requestItem.Status__c = 'Errore';
+                    //processObj.requestItem.StatusDescription__c = convertionError;
+                    //itemsToSave.add(processObj.requestItem);
+                    itemsToSave.add(setErrorItem(processObj.requestItem, convertionError));
                     continue;
                 }
 
             }
 
-            System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + newCase);
+            if(enableBillProfEdit && contractToBillProfMap.containsKey(processObj.csvSplitted[contractIndex])){
+                newCase.BillingProfile__c = contractToBillProfMap.get(processObj.csvSplitted[contractIndex]).Id;
+            }
+
+            if(accountContactMap.containsKey(processObj.csvSplitted[accountIdIndex])){
+                newCase.ContactId = accountContactMap.get(processObj.csvSplitted[accountIdIndex]).ContactId;
+                newCase.Category__c = accountContactMap.get(processObj.csvSplitted[accountIdIndex]).Account.Category__c;
+            }
 
             newCase.AccountId = processObj.csvSplitted[accountIdIndex];
             newCase.Cluster__c = 'Modifiche Anagrafiche';
             newCase = setCaseField(newCase, recordTypeId);
+
+            System.debug(LoggingLevel.DEBUG, '>>> currentCase: ' + newCase);
 
             caseToInsert.add(newCase); 
             requestItemForUpsert.add(processObj.requestItem);
@@ -188,11 +200,11 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
                 runCompatibility(saveResponse.savedObject);
             }
 
-        }  
+        }
 
     }
 
-    private String setEmptyCsvFields(List<String> emptyFieldToSet, Case caseToSet, String accountId, String contractAccountCode){
+    private String setEmptyCsvFields(List<String> emptyFieldToSet, Case caseToSet, String accountId, String contractAccountCode, Boolean enableBillProfEdit){
 
         System.debug(LoggingLevel.DEBUG, '>>> setEmptyCsvFields');
         Map<String, Object> fieldsToValue;
@@ -229,6 +241,11 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
                     }    
                 }
                 when 'BillingProfile__c' {
+
+                    if(!enableBillProfEdit){
+                        continue;
+                    }
+
                     if(contractToBillProfMap.containsKey(contractAccountCode)){
                         billingProfile = contractToBillProfMap.get(contractAccountCode);
                         fieldsToValue = billingProfile.getPopulatedFieldsAsMap();

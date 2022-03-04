@@ -7,7 +7,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
 
     public static void changeAssignRelatedRecord(List<wrts_prcgvr__Activity__c> triggernew , List<wrts_prcgvr__Activity__c> triggerold){
         HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
-        String recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_VisitaD2D');
+        String recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_VisitaD2D', 'wrts_prcgvr__Activity__c');
         HDT_QR_Contact contactQr = new HDT_QR_Contact();
         HDT_SRV_Account accountSrv = new HDT_SRV_Account();
         Map<id,String> mapIdOwnerIdBef = new Map<Id,String>();
@@ -38,24 +38,26 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 }
             }
         }
-        List<Contact> contactList = contactQr.getRecordsById(listContactId);
-        List<AccountShare> lAccSh = new List<AccountShare>();
-        for(Contact c : contactList){
-            if(mapContactIdOwner.get(c.id)!= null && c.AccountId != null){
-                system.debug(LoggingLevel.DEBUG, '************:'+c.AccountId);
-                lAccSh.add(HDT_UTL_RecordShare.accountShareEditCreate(c.AccountId,mapContactIdOwner.get(c.id)));
-                listAccount.add(new Account(id=c.AccountId,ownerId=mapContactIdOwner.get(c.id)));
-            }
-        }
-        /*if(lAccSh != null && !lAccSh.isEmpty()){
-            system.debug(LoggingLevel.DEBUG, 'PROVAPROVA:' + lAccSh);
-            HDT_SRV_RecordShare.createRecordWithout(lAccSh);
-        }*/
         if(listLead != null && !listLead.isEmpty()){
             HDT_SRV_Lead.updateRecord(listLead);
         }
-        if(listAccount != null && !listAccount.isEmpty()){
-            accountSrv.updateRecordsNoShare(listAccount);
+        if(!listContactId.isEmpty()){
+            List<Contact> contactList = contactQr.getRecordsById(listContactId);
+            List<AccountShare> lAccSh = new List<AccountShare>();
+            for(Contact c : contactList){
+                if(mapContactIdOwner.get(c.id)!= null && c.AccountId != null){
+                    system.debug(LoggingLevel.DEBUG, '************:'+c.AccountId);
+                    lAccSh.add(HDT_UTL_RecordShare.accountShareEditCreate(c.AccountId,mapContactIdOwner.get(c.id)));
+                    listAccount.add(new Account(id=c.AccountId,ownerId=mapContactIdOwner.get(c.id)));
+                }
+            }
+            /*if(lAccSh != null && !lAccSh.isEmpty()){
+                system.debug(LoggingLevel.DEBUG, 'PROVAPROVA:' + lAccSh);
+                HDT_SRV_RecordShare.createRecordWithout(lAccSh);
+            }*/            
+            if(listAccount != null && !listAccount.isEmpty()){
+                accountSrv.updateRecordsNoShare(listAccount);
+            }
         }
     }
 
@@ -155,21 +157,22 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 orderIdToAnnullamento.add(act.Order__c);                 
             }
         }
-
-        system.debug(LoggingLevel.DEBUG, 'orderIdToAnnullamento ----> ' + orderIdToAnnullamento);        
-        List<Order> orderToAnnullamento = [SELECT id,Status, RecordType.DeveloperName FROM Order WHERE id IN :orderIdToAnnullamento WITH SECURITY_ENFORCED];
-        for(Order order : orderToAnnullamento){        
-            if(order.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_Voltura')){
-                order.Phase__c = 'Accettazione Voltura';
-            }        
-            else {
-                order.Status = 'Annullato';     
-                order.Phase__c = 'Annullato'; 
-                order.CancellationReason__c = 'Gestione Scarto';  
-            }                             
+        if(!orderIdToAnnullamento.isEmpty()){
+            system.debug(LoggingLevel.DEBUG, 'orderIdToAnnullamento ----> ' + orderIdToAnnullamento);        
+            List<Order> orderToAnnullamento = [SELECT id,Status, RecordType.DeveloperName FROM Order WHERE id IN :orderIdToAnnullamento WITH SECURITY_ENFORCED];
+            for(Order order : orderToAnnullamento){        
+                if(order.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_Voltura')){
+                    order.Phase__c = 'Accettazione Voltura';
+                }        
+                else {
+                    order.Status = 'Annullato';     
+                    order.Phase__c = 'Annullato'; 
+                    order.CancellationReason__c = 'Gestione Scarto';  
+                }                             
+            }
+            orderSrv.updateRecords(orderToAnnullamento);
+            //update orderToAnnullamento;
         }
-        orderSrv.updateRecords(orderToAnnullamento);
-        //update orderToAnnullamento;
     }
 
 
@@ -383,7 +386,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             List<wrts_prcgvr__Activity__c> activities = HDT_QR_ActivityCustom.getRecordsForCancelQualityNoResult(activityIdList);
 
             HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
-            String recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_ComfortQualityCall');
+            String recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_ComfortQualityCall', 'wrts_prcgvr__Activity__c');
             List<Order> ordersToUpdate = new List<Order>();
             for (wrts_prcgvr__Activity__c activity : activities) {
                 if (activity.RecordTypeId == recordtypeid 

@@ -637,6 +637,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_PracticesView</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_ProcessesContainer</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1645,6 +1649,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_PracticesView</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_PrescrizioneFattura</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2317,6 +2325,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_PracticesSupport</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_PrClickDoubleTransaction</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2473,6 +2485,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_VasPractices</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_VoltureChangeManager</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2582,6 +2598,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WRP_PaperProcessing</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WRP_Practices</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
