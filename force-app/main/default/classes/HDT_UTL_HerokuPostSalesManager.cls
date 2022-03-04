@@ -568,7 +568,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     createActivity(null,(String)recordObj.get('Id'), '', activity, activity);
                 }
             } */
-            HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName((String)recordObj.get('Id'),activity,objectType);
+            wrts_prcgvr__Activity__c act  = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName((String)recordObj.get('Id'),activity,objectType);
+            if (act != null){
+                HDT_UTL_DatabaseService.insertSObject(act);
+            }
         }
     }
 
