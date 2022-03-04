@@ -3,10 +3,10 @@ public inherited sharing class HDT_WRP_Practices {
     public class HDT_WRP_ReturnMetadataObj {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
-        @AuraEnabled public List<HDT_WRP_TableMetadata> tables;
+        @AuraEnabled public String tables;
     }
 
-    public class HDT_WRP_TableMetadata {
+    /*public class HDT_WRP_TableMetadata {
         @AuraEnabled public String tableTitle;
         @AuraEnabled public String tableName;
         @AuraEnabled public String iconName;
@@ -34,5 +34,5 @@ public inherited sharing class HDT_WRP_Practices {
 
     public class HDT_WRP_Label {
         @AuraEnabled public String fieldName;
-    }
+    }*/
 }
