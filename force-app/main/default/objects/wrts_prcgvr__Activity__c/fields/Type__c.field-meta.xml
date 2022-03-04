@@ -46,6 +46,11 @@
                 <label>Gestione Iva e Accise</label>
             </value>
             <value>
+                <fullName>Eseguire Gestione Manuale SAP</fullName>
+                <default>false</default>
+                <label>Eseguire Gestione Manuale SAP</label>
+            </value>
+            <value>
                 <fullName>Sportello</fullName>
                 <default>false</default>
                 <label>Sportello</label>
