@@ -249,11 +249,13 @@ public inherited sharing class HDT_LC_SaleVas {
             //Segnalazioni VAS - START
             when 'CONTRACTS_VAS'{ 
                 Set<Id> contractIds = new Set<Id>();
-                for(Order o : [SELECT ContractReference__c FROM Order WHERE RecordType.DeveloperName='HDT_RT_VAS' AND AccountId=:searchString AND ContractReference__c!=null WITH SECURITY_ENFORCED]){
+                Set<Id> servicePointIds = new Set<Id>();
+                for(Order o : [SELECT ContractReference__c, ServicePoint__c FROM Order WHERE (RecordType.DeveloperName='HDT_RT_VAS' OR RecordType.DeveloperName='Aggiunta Sconti o Bonus VAS') AND AccountId=:searchString AND (ContractReference__c!=null OR ServicePoint__c!= null) WITH SECURITY_ENFORCED]){
                     contractIds.add(o.ContractReference__c);
+                    servicePointIds.add(o.ServicePoint__c);
                 }
                 records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract
-                    WHERE Id IN :contractIds WITH SECURITY_ENFORCED];
+                    WHERE Id IN :contractIds OR ServicePoint__c IN :servicePointIds WITH SECURITY_ENFORCED];
             }
             when 'SUBS_FROM_CONTRACT'{ 
                 records = [SELECT Name, SBQQ__ProductName__c
