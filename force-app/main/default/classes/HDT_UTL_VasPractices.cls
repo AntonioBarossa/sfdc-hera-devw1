@@ -66,8 +66,7 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
             if(orderMap.containsKey(obj.rds)){
                 obj.id = orderMap.get(obj.rds);
             } else {
-                //obj.id = 'javascript:void(0)';
-                obj.id = '/8011X000001oilqQAA';
+                obj.id = 'javascript:void(0)';
             }
         }
 
