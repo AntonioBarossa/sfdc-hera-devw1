@@ -560,13 +560,17 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             recordObj.put('Phase__c', 'Annullato SII');
             updateFutureSobject(JSON.serialize(recordObj));
         }else if(String.isNotBlank(activity) && activity.equalsIgnoreCase('Eseguire Gestione Manuale SAP')){
-            switch on objectType {
+            /* switch on objectType {
                 when 'Case' {
-                    createActivity((String)recordObj.get('Id'),null, '', activity, activity);
+                    createActivity((String)recordObj.get('Id'),null, '', activity, activity);  
                 }
                 when else {
                     createActivity(null,(String)recordObj.get('Id'), '', activity, activity);
                 }
+            } */
+            wrts_prcgvr__Activity__c act  = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName((String)recordObj.get('Id'),activity,objectType);
+            if (act != null){
+                HDT_UTL_DatabaseService.insertSObject(act);
             }
         }
     }
