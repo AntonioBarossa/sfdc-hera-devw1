@@ -1005,7 +1005,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
             if(newPhase.containsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
             {
-                orderNew.Status = 'Annullato';
+                if(orderNew.VasStatus__c == null || (orderNew.VasStatus__c != null  && !orderNew.VasStatus__c.equalsIgnoreCase('ANNUL PER RIPENS')))
+                {
+                    orderNew.Status = 'Annullato';
+                }
             }
             /**@frpanico 22/10/2021
              * Si entra nello skip soltanto se la fase di partenza non e' di annullamento
