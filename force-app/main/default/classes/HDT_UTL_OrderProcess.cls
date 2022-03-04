@@ -970,11 +970,17 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 try
                 {
                     activities = orderQr.getOpenActivitiesByOrderId(orderNew.Id);
+                    List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
                     for(wrts_prcgvr__Activity__c activity : activities)
                     {
-                        activity.wrts_prcgvr__Status__c = 'Chiusa';
+                        if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)){
+                            activity.wrts_prcgvr__Status__c = 'Chiusa';
+                            activitiesToUpdate.add(activity);
+                        }
                     }
-                    HDT_UTL_DatabaseService.updateSObject(activities);
+                    if (!activitiesToUpdate.isEmpty()){
+                        HDT_UTL_DatabaseService.updateSObject(activitiesToUpdate);
+                    }
                 }
                 catch(Exception e)
                 {
@@ -999,7 +1005,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
             if(newPhase.containsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
             {
-                orderNew.Status = 'Annullato';
+                if(orderNew.VasStatus__c == null || (orderNew.VasStatus__c != null  && !orderNew.VasStatus__c.equalsIgnoreCase('ANNUL PER RIPENS')))
+                {
+                    orderNew.Status = 'Annullato';
+                }
             }
             /**@frpanico 22/10/2021
              * Si entra nello skip soltanto se la fase di partenza non e' di annullamento

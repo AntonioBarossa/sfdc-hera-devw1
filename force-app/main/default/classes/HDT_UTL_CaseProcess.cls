@@ -124,27 +124,33 @@ public with sharing class HDT_UTL_CaseProcess {
                                 customNotif = knowledgeQr.getCustomNotificationType();
                                 activities = caseQr.getCaseActivities(caseIds);
                                 if(activities != null){
+                                    List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
                                     for(wrts_prcgvr__Activity__c activity : activities){
-                                        activitiesOwnerId.clear();
-                                        if(activity.OwnedByUser__c != null && String.isNotBlank(activity.OwnedByUser__c)){
-                                            activityId = activity.OwnedByUser__c;
-                                        }else{
-                                            activityId = activity.OwnerId;
-                                        }
-                                        activitiesOwnerId.add(activityId);
-                                        activity.wrts_prcgvr__Status__c = 'Chiusa';
-                                        //Notification Fire to activity's owner
-                                        try{
-                                            if(customNotif != null && activitiesOwnerId.size() > 0){
-                                                String title = 'Activity Annullata';
-                                                String body = 'L\'Activity ' + activity.wrts_prcgvr__ActivityTemplate__r.Name + ' è stata annullata';
-                                                HDT_UTL_NewsNotificationCenter.fireNotification(title,body,activity.Id,activitiesOwnerId);
+                                        if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)){
+                                            activitiesOwnerId.clear();
+                                            if(activity.OwnedByUser__c != null && String.isNotBlank(activity.OwnedByUser__c)){
+                                                activityId = activity.OwnedByUser__c;
+                                            }else{
+                                                activityId = activity.OwnerId;
                                             }
-                                        } catch(Exception e){
-                                            System.debug(LoggingLevel.DEBUG, 'Impossibile inviare notifica: ' + e.getMessage() + '. Error at line: ' + e.getLineNumber());
+                                            activitiesOwnerId.add(activityId);
+                                            activity.wrts_prcgvr__Status__c = 'Chiusa';
+                                            //Notification Fire to activity's owner
+                                            try{
+                                                if(customNotif != null && activitiesOwnerId.size() > 0){
+                                                    String title = 'Activity Annullata';
+                                                    String body = 'L\'Activity ' + activity.wrts_prcgvr__ActivityTemplate__r.Name + ' è stata annullata';
+                                                    HDT_UTL_NewsNotificationCenter.fireNotification(title,body,activity.Id,activitiesOwnerId);
+                                                }
+                                            } catch(Exception e){
+                                                System.debug(LoggingLevel.DEBUG, 'Impossibile inviare notifica: ' + e.getMessage() + '. Error at line: ' + e.getLineNumber());
+                                            }
+                                            activitiesToUpdate.add(activity);
                                         }
                                     }
-                                    updateList.addAll(activities);
+                                    if (!activitiesToUpdate.isEmpty()){
+                                        updateList.addAll(activitiesToUpdate);
+                                    }
                                 }
                             }catch(Exception e){
                                 System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
