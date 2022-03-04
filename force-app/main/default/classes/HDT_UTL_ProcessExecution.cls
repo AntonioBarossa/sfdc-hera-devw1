@@ -154,11 +154,13 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     }
 
     public List<HDT_MassiveFieldsObjectMap__mdt> getMapFieldsObject(String objectType, String processType){
-        return [SELECT objectType__c, labelField__c, nameField__c 
-                FROM HDT_MassiveFieldsObjectMap__mdt 
-                WHERE objectType__c=:objectType AND processType__c=:processType
-                WITH SECURITY_ENFORCED
-                ];
+        return [
+            SELECT objectType__c, labelField__c, nameField__c 
+            FROM HDT_MassiveFieldsObjectMap__mdt 
+            WHERE objectType__c = :objectType
+            AND processType__c = :processType
+            WITH SECURITY_ENFORCED
+        ];
     }
 
     public MassiveLoaderRequestItem__c checkRequiredFields(MassiveLoaderRequestItem__c item, List<String> tempSplitedFields){
