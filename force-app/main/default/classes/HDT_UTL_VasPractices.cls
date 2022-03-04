@@ -1,25 +1,24 @@
 public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSupport {
 
-    HDT_WRP_Reponse responseObj;
+    HDT_WRP_Response responseObj;
 
     public override void checkResponse(){
         System.debug(LoggingLevel.DEBUG, '>>> checkResponse');
-        responseObj = (HDT_WRP_Reponse)JSON.deserialize(res.getBody(), HDT_WRP_Reponse.class);
+        responseObj = (HDT_WRP_Response)JSON.deserialize(res.getBody().replaceAll('"\"', '"'), HDT_WRP_Response.class);
 
         System.debug('>>> status: ' + String.valueOf(responseObj.status));
+        success = responseObj.status.equalsIgnoreCase('success');
 
-        if(!responseObj.status.equalsIgnoreCase('success')){
+        if(!success){
             errorMessage = '';
             errorMessage += 'correlationId: ' + responseObj.correlationId + '; ';
-            errorMessage += 'timestamp: ' +responseObj.timestamp + ';';
-            //List<Object> errorDetails = (List<Object>)responseMap.get('errorDetails');
-            //Map<String, Object> errorMap;
-            //for(Object errorItem : errorDetails){
-            //    errorMap = (Map<String, Object>)errorItem;
-            //    errorMessage += String.valueOf(errorMap.get('code')) + '; ';
-            //    errorMessage += String.valueOf(errorMap.get('message')) + '; ';
-            //    errorMessage += String.valueOf(errorMap.get('additionalInfo')) + '; ';
-            //}
+            errorMessage += 'timestamp: ' + responseObj.timestamp + ';';
+
+            for(HDT_WRP_ErrorDetails errorItem : responseObj.errorDetails){
+                errorMessage += errorItem.code + '; ';
+                errorMessage += errorItem.message + '; ';
+                errorMessage += errorItem.additionalInfo + '; ';
+            }
         }
 
     }
@@ -86,11 +85,18 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
         @AuraEnabled public List<HDT_WRP_RateDetail> rate;
     }
 
-    public class HDT_WRP_Reponse {
+    public class HDT_WRP_Response {
         public String status;
         public String correlationId;
         public String timestamp;
         public HDT_WRP_Data data;
+        public List<HDT_WRP_ErrorDetails> errorDetails;
+    }
+
+    public class HDT_WRP_ErrorDetails {
+        public String code;
+        public String message;
+        public String additionalInfo;
     }
 
     public class HDT_WRP_Data {
