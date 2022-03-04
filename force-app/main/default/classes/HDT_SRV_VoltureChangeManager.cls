@@ -188,7 +188,24 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         platEvent.SerializedSobj__c = JSON.serialize(ordToUpdate);
         Eventbus.publish(platEvent);            
     }
-
+    public void orderPrecheckOk(List<Order> myOrderList){
+        Date today = System.today();
+        List<Order> orderListUpdate = new List<Order>();
+        List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> pltformEventList = new List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>();
+        for(Order singleOrder : myOrderList){
+            if(singleOrder.Phase__c.equalsIgnoreCase('Amm. Precheck OK SII') && (singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') || singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch'))){
+                Order ordToUpdate = new Order();
+                ordToUpdate.Id = singleOrder.Id;        
+                ordToUpdate.Phase__c = singleOrder.DateSentToSII__c > today ? 'In attesa tempi di ripensamento' : 'Comunicazione verso Heroku';
+                HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
+                platEvent.SerializedSobj__c = JSON.serialize(ordToUpdate);
+                pltformEventList.add(platEvent);
+            }
+        }
+        if(!pltformEventList.isEmpty()){
+            Eventbus.publish(pltformEventList);  
+        }       
+    }
     public void createCaseFromOrder(Order myOrder){
 
         System.enqueueJob(new HDT_QBL_VoltureChangeManager(myOrder));
