@@ -30,8 +30,16 @@
       },
       {
         &quot;label&quot;: &quot;RDS/Order&quot;,
-        &quot;fieldName&quot;: &quot;rds&quot;,
-        &quot;initialWidth&quot;: 140
+        &quot;fieldName&quot;: &quot;id&quot;,
+        &quot;type&quot;: &quot;url&quot;,
+        &quot;initialWidth&quot;: 140,
+        &quot;typeAttributes&quot;: {
+          &quot;label&quot;: {
+            &quot;fieldName&quot;: &quot;rds&quot;
+          },
+          &quot;tooltip&quot;: { &quot;fieldName&quot;: &quot;id&quot; },
+          &quot;target&quot;: &quot;_self&quot;
+        }
       },
       {
         &quot;label&quot;: &quot;Codice Esito Pratica&quot;,

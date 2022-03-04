@@ -4,7 +4,7 @@ public inherited sharing class HDT_SRV_PracticesView {
     public static HDT_WRP_Practices.HDT_WRP_ReturnMetadataObj getTableConfigHelper(String recordId, String type, HDT_WRP_Practices.HDT_WRP_ReturnMetadataObj retObj){
         
         retObj = new HDT_WRP_Practices.HDT_WRP_ReturnMetadataObj();
-        retObj.tables = new List<HDT_WRP_Practices.HDT_WRP_TableMetadata>();
+        //retObj.tables = new List<HDT_WRP_Practices.HDT_WRP_TableMetadata>();
 
         List<HDT_AccountDataEnrichment__mdt> enrichmentbMetadataList;
         enrichmentbMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(enrichmentbMetadataList, type);
@@ -13,16 +13,18 @@ public inherited sharing class HDT_SRV_PracticesView {
             throw new AuraHandledException('Attenzione! mancano i metadati delle tabelle.');
         }
 
-        try {
-            retObj.tables = (List<HDT_WRP_Practices.HDT_WRP_TableMetadata>)JSON.deserialize(enrichmentbMetadataList[0].ColumnData__c, List<HDT_WRP_Practices.HDT_WRP_TableMetadata>.class);
-        } catch (Exception e) {
-            System.debug('ERROR > ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
-            throw new AuraHandledException('Errore durante l\'elaborazione dei metadati delle tabelle.');
-        }
+        retObj.tables = enrichmentbMetadataList[0].ColumnData__c;
 
-        if(retObj.tables.size()==0){
-            throw new AuraHandledException('Errore durante l\'elaborazione dei metadati delle tabelle.');
-        }
+        //try {
+        //    retObj.tables = enrichmentbMetadataList[0].ColumnData__c;
+        //} catch (Exception e) {
+        //    System.debug('ERROR > ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
+        //    throw new AuraHandledException('Errore durante l\'elaborazione dei metadati delle tabelle.');
+        //}
+
+        //if(retObj.tables.size()==0){
+        //    throw new AuraHandledException('Errore durante l\'elaborazione dei metadati delle tabelle.');
+        //}
 
         return retObj;
     }
