@@ -37,7 +37,7 @@
           &quot;label&quot;: {
             &quot;fieldName&quot;: &quot;rds&quot;
           },
-          &quot;tooltip&quot;: &quot;rds&quot;,
+          &quot;tooltip&quot;: { &quot;fieldName&quot;: &quot;id&quot; },
           &quot;target&quot;: &quot;_self&quot;
         }
       },
