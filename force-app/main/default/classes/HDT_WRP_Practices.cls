@@ -18,7 +18,21 @@ public inherited sharing class HDT_WRP_Practices {
         @AuraEnabled public String label;
         @AuraEnabled public Integer initialWidth;
         @AuraEnabled public String type;
+        @AuraEnabled public HDT_WRP_TypeAttributes typeAttributes;
         @AuraEnabled public Boolean sortable;
     }
 
+    public class HDT_WRP_TypeAttributes {
+        @AuraEnabled public HDT_WRP_Label label; 
+        @AuraEnabled public HDT_WRP_Tooltip tooltip;
+        @AuraEnabled public String target;
+    }
+
+    public class HDT_WRP_Tooltip {
+        @AuraEnabled public String fieldName;
+    }
+
+    public class HDT_WRP_Label {
+        @AuraEnabled public String fieldName;
+    }
 }
