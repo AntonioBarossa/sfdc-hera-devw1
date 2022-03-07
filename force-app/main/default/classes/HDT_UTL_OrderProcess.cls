@@ -1016,7 +1016,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              * Si entra nello skip soltanto se la fase di partenza non e' di annullamento
              * Dunque non sono previste activity
              */
-			if((newPhase.indexOf('Annullamento') > -1 || newPhase.indexOf('Annullamento') == -1) || newPhase.containsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
+			if((newPhase.indexOf('Annullamento') > -1 /*|| newPhase.indexOf('Annullamento') == -1*/) || newPhase.containsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
                 if((oldPhase.indexOf('Annullamento - ') == -1 && oldPhase.indexOf('Ripensamento - ') == -1)
                     || newPhase.containsIgnoreCase('Annullato') || newPhase.indexOf('Ripensato') > -1)
                 {
