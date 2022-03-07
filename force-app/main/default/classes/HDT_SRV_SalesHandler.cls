@@ -96,7 +96,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         String utenza = mapRequestFields.get('UTENZA')!=null ? mapRequestFields.get('UTENZA') : '';
                         String cmp = mapRequestFields.get('CMP')!=null ? mapRequestFields.get('CMP') : '';
                         String dataElab = mapRequestFields.get('DATA_ELABORAZIONE')!=null ? mapRequestFields.get('DATA_ELABORAZIONE') : '';
-                        String oldDescription = ordRetrieved.Description;
+                        String oldDescription = ordRetrieved.Description != null ? ordRetrieved.Description : '';
                         Map<String, String> mapActivityField = new Map<String, String>();
                         mapActivityField.put('NOTE_ERR',errDescr);
                         mapActivityField.put('UTENZA',utenza);
