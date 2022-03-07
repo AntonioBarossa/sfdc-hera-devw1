@@ -4,7 +4,7 @@ public inherited sharing class HDT_BA_ProcessRequestItem implements Database.Bat
     private Id idLoaderRequest;
     private Integer batchSize;
     private String process;
-
+    private HDT_MassiveLoaderProcess__mdt selectedProcess;
     private static HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
     private static HDT_QR_MassiveLoaderProcess massiveLoaderProcessQr = new HDT_QR_MassiveLoaderProcess();
 
@@ -13,6 +13,10 @@ public inherited sharing class HDT_BA_ProcessRequestItem implements Database.Bat
         this.idLoaderRequest = varIdLoaderRequest;
         this.batchSize = batchSize;
         this.process = process;
+
+        selectedProcess = massiveLoaderProcessQr.getRecordByName(this.process);
+        System.debug(LoggingLevel.DEBUG, '>>> Apex Class: ' + selectedProcess.ApexClass__c);
+
     }
 
    	public Database.QueryLocator start(Database.BatchableContext bc) {
@@ -30,12 +34,7 @@ public inherited sharing class HDT_BA_ProcessRequestItem implements Database.Bat
         System.debug(LoggingLevel.DEBUG, '>>> HDT_BA_ProcessRequestItem execute...');
 
         HDT_UTL_ProcessExecution cls;
-        
-        HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(process);
-        System.debug(LoggingLevel.DEBUG, '>>> Apex Class: ' + selectedProcess.ApexClass__c);
-
         Type t = Type.forName(selectedProcess.ApexClass__c);
-
         cls = (HDT_UTL_ProcessExecution)t.newInstance();
         cls.setProcess(process);
         cls.setMassiveLoaderRequestItemList(scope);
@@ -56,7 +55,11 @@ public inherited sharing class HDT_BA_ProcessRequestItem implements Database.Bat
 
         System.debug(LoggingLevel.DEBUG, '>>> HDT_BA_ProcessRequestItem finish ');
 
-        if(process.equalsIgnoreCase('SwitchIn')){
+        Set<String> apexClassesForBatch = new Set<String>();
+        apexClassesForBatch.add('HDT_UTL_ProcessSales');
+
+        if(apexClassesForBatch.contains(selectedProcess.ApexClass__c)){
+            System.debug(LoggingLevel.DEBUG, '>>> continue with HDT_BA_ProcessSales...');
             HDT_BA_ProcessSales processReq = new HDT_BA_ProcessSales(idLoaderRequest, batchSize, process);
             Database.executeBatch(processReq, batchSize);
         } else {

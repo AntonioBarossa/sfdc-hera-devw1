@@ -60,6 +60,8 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
         HDT_UTL_OrderTriggerVas.cancelLinkedVasOrders(Trigger.newMap, Trigger.oldMap);     
         
+        HDT_SRV_VoltureChangeManager vltMgr = new HDT_SRV_VoltureChangeManager();
+        vltMgr.orderPrecheckOk(Trigger.new);
         system.debug(LoggingLevel.DEBUG,'Fine afterUpdate - Query utilizzate: '+Limits.getQueries()+'/'+Limits.getLimitQueries());
         
     }
