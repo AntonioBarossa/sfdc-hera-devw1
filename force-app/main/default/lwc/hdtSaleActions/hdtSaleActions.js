@@ -50,6 +50,7 @@ export default class hdtSaleActions extends LightningElement {
 
     saveSaleCall(){
         this.loading = true;
+        console.log('Campaign Member Id --> '+this.campaignMemberId);
         save({sale: this.saleRecord, campaignMemberId: this.campaignMemberId}).then(data =>{
             this.loading = false;
             const toastSuccessMessage = new ShowToastEvent({

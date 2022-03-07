@@ -1803,6 +1803,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Sale__c.CampaignMemberId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Sale__c.AreaManager__c</field>
         <readable>true</readable>
     </fieldPermissions>
