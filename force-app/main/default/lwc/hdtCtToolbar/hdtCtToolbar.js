@@ -3,6 +3,7 @@ import { loadScript } from 'lightning/platformResourceLoader';
 import cttoolbar from '@salesforce/resourceUrl/toolbar_sdk';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 import { NavigationMixin } from 'lightning/navigation';
+import cacheUuid from '@salesforce/apex/HDT_LC_CtToolbar.cacheUuid';    // params: uuid
 
 var DataObj;
 
@@ -65,15 +66,16 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
     }
 
     contactCallback = () => {
-        console.log('# RICEVUTO EVENTO ' + DataObj.event + ' #');
-
+        console.log('RICEVUTO EVENTO ' + DataObj.event);
+        console.log('RICEVUTO EVENTO ID ' + DataObj.id);
+        if(DataObj.id) {
+            cacheUuid({uuid: DataObj.id})
+        }
         this.manageEvent();
-
         const toolbarEvent = new CustomEvent("toolbarevent", {
             detail: {eventType: DataObj.event, eventObj: DataObj}
         });
         this.dispatchEvent(toolbarEvent);
-
     };
 
     manageEvent(){

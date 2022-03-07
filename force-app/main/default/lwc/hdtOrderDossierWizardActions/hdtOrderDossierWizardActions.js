@@ -18,6 +18,9 @@ import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';
 import SIGNED_FIELD from '@salesforce/schema/Order.ContractSigned__c';
 //Il seguente campo è stato utilizzato per tracciare l'ultimo SignatureMethod inviato a docusign.
 import OLDSIGN_FIELD from '@salesforce/schema/Order.SignMode__c';
+// TOOLBAR STUFF
+import { loadScript } from 'lightning/platformResourceLoader';
+import cttoolbar from '@salesforce/resourceUrl/toolbar_sdk';
 
 export default class hdtOrderDossierWizardActions extends NavigationMixin(LightningElement) {
     @track isModalOpen = false;
@@ -125,10 +128,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                 let data = JSON.parse(result);
                 console.log('DATA.ISCOMMUNITY -->'+data.isCommunity);
                  if(data.isCommunity){
-                    console.log('SAVESCRIPT METHOD START');
-                    console.log('CAMPAIGN MEMBER STATUS --> '+data.campaignMemberStatus);
                     this.saveScript(data.campaignMemberStatus, true);
-                    console.log('SAVESCRIPT METHOD END');
                 }
                 if(data.orderPhase == 'Documentazione da validare'){
                     this.orderParentRecord.Phase__c = 'Documentazione da validare';
@@ -429,10 +429,19 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         });
     }
 
-    @api async saveScript(esito, isResponsed) {
-        let result = await getCachedUuid();
-        console.log('GETCACHEDUUID --> '+result);
-        window.TOOLBAR.EASYCIM.saveScript(await getCachedUuid(), esito, isResponsed);
+    saveScript(esito, isResponsed) {
+        // LOAD TOOLBAR STUFF
+        Promise.all([
+            loadScript(this, cttoolbar)
+        ])
+        .then(() => {
+            getCachedUuid()
+            .then(uuid => {
+                console.log('CACHED UUID: ' + uuid);
+                window.TOOLBAR.EASYCIM.saveScript(uuid, esito, isResponsed);
+                console.log('SAVESCRIPT DONE');
+            });
+        })
+        .catch(error => console.error(error));
     }
-
 }
