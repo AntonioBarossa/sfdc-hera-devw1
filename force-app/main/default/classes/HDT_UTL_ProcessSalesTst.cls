@@ -1,6 +1,52 @@
 @isTest
 public with sharing class HDT_UTL_ProcessSalesTst {
 
+        /*
+        List<sObject> objList = new List<sObject>();
+        Contact cont = new Contact();
+        cont.FirstName = 'test';
+        cont.LastName = 'last';
+        cont.GlobalMigrationKey__c = '1';
+        Account accReference = new Account();
+        accReference.GlobalMigrationKey__c = '1';
+        cont.Account = accReference;
+        Account newAccount = new Account();
+        newAccount.recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
+        newAccount.Name = 'test account';
+        newAccount.CompanyOwner__c = 'AAA-EBT';
+        newAccount.CustomerMarking__c = 'AAS Associazione';
+        newAccount.Category__C = 'Aziende SME';
+        newAccount.BillingCityCode__c = 'Roma';
+        newAccount.BillingStreetName__c = 'via roma';
+        newAccount.BillingStreetNumber__c = '55';
+        newAccount.LastName__c = 'test account';
+        newAccount.BillingIsAddressVerified__c = true;
+        newAccount.FiscalCode__c = 'SXSRLA45H28H5';
+        newAccount.VATNumber__c = '12345678';
+        newAccount.IsWrongFiscalData__c = false;
+        newAccount.CustomerCode__c = '1003616210';
+        newAccount.GlobalMigrationKey__c = '1';
+        objList.add(newAccount);
+        objList.add(cont);
+        Database.insert(objList);
+
+        HDT_WS_ArrichmentDataEntityResponse serResp = HDT_WS_ArrichmentDataEntityInvoker.callService('',currentProcess.currentServicePoint.ServicePointCode__c);
+        HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(currentProcess.currentServicePoint, serResp);
+
+
+        try {
+            List<ServicePoint__c> spList = [SELECT Id, MeterStatus__c,Distributor__c,Account__c FROM ServicePoint__c WHERE ServicePointCode__c  = 'IT001E04893470' LIMIT 1];
+            HDT_WS_ArrichmentDataEntityResponse serResp=HDT_WS_ArrichmentDataEntityInvoker.callService('', 'IT001E04893470');
+            System.debug(serResp);
+            List<ServicePoint__c> spListWs = HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(spList[0], serResp);
+            System.debug(spListWs);
+        } catch (Exception e){
+            System.debug('Exception > ' + e.getMessage());
+        }
+        System.debug('CpuTime > ' + limits.getCpuTime());
+
+        */
+
         /*public static void setDataForTest(Integer numRecords){
 
         Id massiveLoaderRequestId = 'a3d3O000000WyvQQAS';
