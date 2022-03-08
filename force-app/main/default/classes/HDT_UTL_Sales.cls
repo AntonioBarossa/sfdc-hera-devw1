@@ -483,7 +483,7 @@ public with sharing class HDT_UTL_Sales {
 
             if(orderOriginal != null){
                 processType = orderOriginal.ProcessType__c;
-                if(String.isNotBlank(processType) && processType.contains('Aggiunta Sconti o Bonus VAS')){
+                //if(String.isNotBlank(processType) && processType.contains('Aggiunta Sconti o Bonus VAS')){
                     contractId = orderOriginal.ContractReference__c;
                     servicePointId = orderOriginal.ServicePoint__c;
                     parentOrderId = orderOriginal.ParentOrder__c;
@@ -504,7 +504,7 @@ public with sharing class HDT_UTL_Sales {
                             order.CommercialProductVersion__c = orderItem.Product2.Version__c;            
                         }
                     }
-                }
+                //}
             }
         }catch(Exception ex){
             System.debug(LoggingLevel.DEBUG, ex.getMessage());

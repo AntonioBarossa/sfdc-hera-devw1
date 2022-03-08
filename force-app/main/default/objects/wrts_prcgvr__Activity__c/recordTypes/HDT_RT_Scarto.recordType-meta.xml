@@ -2287,6 +2287,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Eseguire Gestione Manuale SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gestione Iva e Accise</fullName>
             <default>false</default>
         </values>

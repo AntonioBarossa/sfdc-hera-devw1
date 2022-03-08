@@ -48,6 +48,9 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 when 'HDT_RT_SwitchIn' {
                     phase = 'Comunicazione verso Heroku';
                 }
+                when 'HDT_RT_Voltura'{
+                    phase = 'Documentazione Validata';
+                }
             }
             
             orderUpdate.SignedDate__c = Date.today();
