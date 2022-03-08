@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
     <label>HDT_PSG_AddettoBackOffice</label>
     <permissionSets>HDT_ApexClasses</permissionSets>
     <permissionSets>HDT_ApproveRejectCase</permissionSets>
