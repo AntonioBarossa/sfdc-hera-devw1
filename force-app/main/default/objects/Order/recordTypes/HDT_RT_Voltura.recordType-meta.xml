@@ -2290,7 +2290,7 @@
             <fullName>Pratica In Attesa</fullName>
             <default>false</default>
         </values> -->
-        <values>
+        <!-- <values>
             <fullName>Ripensamento - Ammissibilità KO</fullName>
             <default>false</default>
         </values>
@@ -2321,13 +2321,17 @@
         <values>
             <fullName>Ripensamento - Inviato al SII</fullName>
             <default>false</default>
-        </values>
+        </values> -->
 <!--         <values>
             <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
         </values> -->
         <values>
             <fullName>Ripensato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa conferma cliente</fullName>
             <default>false</default>
         </values>
         <values>

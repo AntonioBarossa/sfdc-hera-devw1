@@ -96,6 +96,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         String utenza = mapRequestFields.get('UTENZA')!=null ? mapRequestFields.get('UTENZA') : '';
                         String cmp = mapRequestFields.get('CMP')!=null ? mapRequestFields.get('CMP') : '';
                         String dataElab = mapRequestFields.get('DATA_ELABORAZIONE')!=null ? mapRequestFields.get('DATA_ELABORAZIONE') : '';
+                        String oldDescription = ordRetrieved.Description != null ? ordRetrieved.Description : '';
                         Map<String, String> mapActivityField = new Map<String, String>();
                         mapActivityField.put('NOTE_ERR',errDescr);
                         mapActivityField.put('UTENZA',utenza);
@@ -127,7 +128,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.DiscardCodeHeroku__c = mapRequestFields.get('CODERR_AEEG');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
-                                ord.Description = mapRequestFields.get('ANNOTAZIONI');
+                                ord.Description = writeDescription(mapRequestFields.get('ANNOTAZIONI'), oldDescription);
 
                                  /*
                                  if((ord.CausalCode__c == '032' || ord.CausalCode__c == '033')
@@ -225,7 +226,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                                 //ord.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('DES_ERR_AEEG'));
-                                ord.Description = mapRequestFields.get('ANNOTAZIONI');
+                                ord.Description = writeDescription(mapRequestFields.get('ANNOTAZIONI'), oldDescription);
                             }
                             when 'Esito OK da DL' {
                                 //Gestione Esito Appuntamento;
@@ -417,7 +418,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                         {
                                             HDT_UTL_ContractProcess.moveOut(ordRetrieved.Id, 'ContractReference__c');
                                         }
-                                        ord.Description = mapRequestFields.get('NOTA_HK');
+                                        ord.Description =writeDescription(mapRequestFields.get('NOTA_HK'), oldDescription);
                                         ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
                                         ord.OrderODV__c = mapRequestFields.get('VBELN');
                                         ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
@@ -825,6 +826,21 @@ public with sharing class HDT_SRV_SalesHandler {
         }
         
         return localMapRequestFields;
+    }
+
+    private static String writeDescription(String newDescription, String oldDescription)
+    {
+        String returnDescr = oldDescription != null ? oldDescription : '';
+
+        if(newDescription != null && String.isNotEmpty(newDescription))
+        {
+            Datetime nowDate = Datetime.now();
+            String descr = nowDate.format('dd/MM/yyyy h:mm a') + ': ' + newDescription;
+            returnDescr = descr + '\n' + returnDescr;
+        }
+
+        return returnDescr;
+        
     }
 
 }
