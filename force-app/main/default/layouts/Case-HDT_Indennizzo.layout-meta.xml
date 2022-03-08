@@ -289,7 +289,8 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
-        <customButtons>CreaAttivitaManuale</customButtons>
+        <customButtons>CreaattivitamanualeActivity</customButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Type__c</fields>
         <fields>wrts_prcgvr__Description__c</fields>
