@@ -1,68 +1,80 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Hera_Archive</members>
-        <name>ExternalDataSource</name>
+        <members>wrts_prcgvr__Activity__c.SospendiAttivita</members>
+        <name>QuickAction</name>
     </types>
     <types>
-        <members>Order.HDT_RT_SwitchIn</members>
-        <members>Order.HDT_RT_VAS</members>
+        <members>HDT_Activity_Default_Record_Page</members>
+        <members>HDT_General_Case_Record_Page</members>
+        <members>Interazione_Record_Page</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>Order.HDT_RT_Voltura</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Scarto</members>
         <name>RecordType</name>
     </types>
     <types>
-        <members>HDT_ApexClasses</members>
+        <members>Asset-Asset Layout</members>
+        <members>Case-HDT_AltreInformative</members>
+        <members>Case-HDT_PraticaInVolo</members>
+        <members>Case-HDT_SospensioneRiattivazione</members>
+        <members>Order-HDT_PraticaInVolo</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_DataModelAdmin</members>
         <name>PermissionSet</name>
     </types>
     <types>
+        <members>HDT_BA_ProcessRequestItem</members>
+        <members>HDT_LC_AccountSelectorController</members>
+        <members>HDT_LC_AppointmentExtraSist</members>
+        <members>HDT_LC_AppointmentExtraSistTst</members>
         <members>HDT_LC_CanaleContattoIVRLogin</members>
-        <members>HDT_LC_EditScartiComplessi</members>
-        <members>HDT_LC_OrderDossierWizardActions</members>
-        <members>HDT_QBL_CancelLinkedOrders</members>
-        <members>HDT_QBL_VoltureChangeManager</members>
-        <members>HDT_SRV_VoltureChangeDispatcher</members>
+        <members>HDT_LC_ChildOrderProcessActions</members>
+        <members>HDT_LC_CommunicazioniDistributoreTst</members>
+        <members>HDT_LC_OrdersForComfortQualityList</members>
+        <members>HDT_LC_SaleVas</members>
+        <members>HDT_QR_ActivityCustom</members>
+        <members>HDT_QR_Lead</members>
+        <members>HDT_QR_Order</members>
+        <members>HDT_QR_SystemCapacityConversion</members>
+        <members>HDT_SRV_AppointmentAgendaTst</members>
+        <members>HDT_SRV_PracticesView</members>
+        <members>HDT_SRV_SalesHandler</members>
         <members>HDT_SRV_VoltureChangeManager</members>
         <members>HDT_TRH_Order</members>
-        <members>HDT_UTL_Case</members>
-        <members>HDT_UTL_CheckFiscalCodeTaxNumber</members>
-        <members>HDT_UTL_OrderFieldsAlignment</members>
+        <members>HDT_UTL_ActivityCustom</members>
+        <members>HDT_UTL_CaseProcess</members>
+        <members>HDT_UTL_HerokuPostSalesManager</members>
+        <members>HDT_UTL_NotifVasHelper</members>
         <members>HDT_UTL_OrderProcess</members>
-        <members>HDT_UTL_OrderTriggerVas</members>
-        <members>HDT_UTL_PostSalesManager</members>
         <members>HDT_UTL_ProcessDateManager</members>
-        <members>HDT_UTL_ProcessDisattivazioni</members>
         <members>HDT_UTL_ProcessExecution</members>
-        <members>HDT_UTL_ProcessModificheAnagrafiche</members>
-        <members>HDT_UTL_ProcessMorosita</members>
-        <members>HDT_UTL_ProcessVariazioni</members>
+        <members>HDT_UTL_ProcessLead</members>
         <members>HDT_UTL_Sales</members>
-        <members>HDT_UTL_Scarti</members>
-        <members>HDT_UTL_VasManagement</members>
+        <members>HDT_UTL_VasPractices</members>
+        <members>HDT_WRP_Practices</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_VasEngineStatus</members>
-        <name>GlobalValueSet</name>
-    </types>
-    <types>
-        <members>Lead.Lead_Id__c</members>
-        <members>Order.NotRethinkable__c</members>
-        <members>Order.Phase__c</members>
-        <members>Order.SiebelCatalog__c</members>
+        <members>HDT_ProcessCancellationReason__mdt.Process_Cancellation_Reason__c</members>
+        <members>PaperProcessing__c.Status__c</members>
+        <members>wrts_prcgvr__Activity__c.AssignmentRule__c</members>
+        <members>wrts_prcgvr__Activity__c.LastAssignmentDate__c</members>
+        <members>wrts_prcgvr__Activity__c.SuspensionNote__c</members>
+        <members>wrts_prcgvr__Activity__c.Type__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>archivingaccess</members>
-        <name>AuthProvider</name>
-    </types>
-    <types>
-        <members>HDT_LCP_RunFlowFromAuraCommunity</members>
-        <name>AuraDefinitionBundle</name>
-    </types>
-    <types>
-        <members>hdtChildOrderProcessActions</members>
+        <members>hdtAccountSelector</members>
         <members>hdtChildOrderProcessDetails</members>
-        <members>hdtOrderDossierWizardActions</members>
-        <members>hdtSaveScriptLauncher</members>
+        <members>hdtDocumentActivityValidation</members>
+        <members>hdtPracticesView</members>
+        <members>hdtSelezFornituraFlow</members>
+        <members>hdtSystemCapacityConversion</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
@@ -77,10 +89,9 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_FL_AccountFromLeadEdit</members>
-        <members>HDT_FL_GestioneAnnullamento</members>
-        <members>HDT_FL_PostSalesMasterDispatch</members>
-        <name>Flow</name>
+        <members>HDT_AccountDataEnrichment.vasPractices</members>
+        <members>HDT_ProcessCancellationReason.Config85</members>
+        <name>CustomMetadata</name>
     </types>
     <version>49</version>
 </Package>

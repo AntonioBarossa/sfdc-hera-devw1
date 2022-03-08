@@ -586,6 +586,11 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>hdtAccountSelector</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>sidebartabs</value>

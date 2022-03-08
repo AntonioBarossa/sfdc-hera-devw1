@@ -3,7 +3,7 @@
     <fullName>AssignmentRule__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
-    <label>Regola di Assegnazione</label>
+    <label>Regola di Asgn.</label>
     <referenceTo>AssignmentRule__c</referenceTo>
     <relationshipLabel>Activities (Custom)</relationshipLabel>
     <relationshipName>Activities_Custom</relationshipName>
