@@ -55,6 +55,7 @@ public inherited sharing class HDT_LC_CampaignsController {
             Status = statusValue
             );
             campaignMemberSrv.updateRecord(cm);
+            system.debug('STATUS -->'+cm.Status);
             return cm;
         } catch (Exception e) {
             System.debug(e.getMessage());
@@ -89,13 +90,14 @@ public inherited sharing class HDT_LC_CampaignsController {
         return newCase;
     }
     @AuraEnabled
-    public static String getServiceCatalogUrlByCaseType(Case c){
+    public static String getServiceCatalogUrlByCaseType(Case c, string campaignMemberId){
         //Case newCase = caseSrv.createRecord(c);
         String s = HDT_QR_ServiceCatalog.getServiceLinkItemAccountRedirectUrlByCategory(c.cluster__c, c.type);
         String res = '';
         if(s != null){
             res = s.replace('{!Id}',c.AccountId);
             res = res + '&c__campaignId=' + c.Campaign__c;
+            res = res + '&c__campaignMemberId=' + campaignMemberId;
             //s = s.replace('', arg1)
         }
         else{

@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>VasPresentiAssign</name>
+        <label>VasPresentiAssign</label>
+        <locationX>886</locationX>
+        <locationY>3206</locationY>
+        <assignmentItems>
+            <assignToReference>VasPresentiBool</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Order_Items_Vas_Loop</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Bonus_Decision</name>
         <label>Bonus Decision</label>
@@ -279,7 +295,7 @@
             <name>isFamiglie</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.CustomerCategory__c</leftValueReference>
+                <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Famiglie</stringValue>
@@ -289,6 +305,85 @@
                 <targetReference>LoopOrdiniFigliOfferta</targetReference>
             </connector>
             <label>isFamiglie</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Categoria_Cliente_Decision_0</name>
+        <label>Categoria Cliente Decision</label>
+        <locationX>622</locationX>
+        <locationY>3518</locationY>
+        <defaultConnector>
+            <targetReference>Durata_Contratto_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isAziende</defaultConnectorLabel>
+        <rules>
+            <name>isFamiglie_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Famiglie</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Durata_Contratto</targetReference>
+            </connector>
+            <label>isFamiglie</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Categoria_Cliente_Decision_0_0</name>
+        <label>Categoria Cliente Decision</label>
+        <locationX>820</locationX>
+        <locationY>3974</locationY>
+        <defaultConnector>
+            <targetReference>Conferma_Adesione_Screen_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isAziende</defaultConnectorLabel>
+        <rules>
+            <name>isFamiglie_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Famiglie</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Conferma_Adesione_Screen_0_0</targetReference>
+            </connector>
+            <label>isFamiglie</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isVASDecisional</name>
+        <label>isVASDecisional</label>
+        <locationX>622</locationX>
+        <locationY>3854</locationY>
+        <defaultConnector>
+            <targetReference>Categoria_Cliente_Decision_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotVAS</defaultConnectorLabel>
+        <rules>
+            <name>isVAS2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>VasPresentiBool</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>VasPresentiBool</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>isVAS</label>
         </rules>
     </decisions>
     <decisions>
@@ -391,6 +486,64 @@
             <label>isEE</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Vas_Presenti_Decision</name>
+        <label>Vas Presenti Decision</label>
+        <locationX>798</locationX>
+        <locationY>3086</locationY>
+        <defaultConnector>
+            <targetReference>VasPresentiAssign</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isVAS</defaultConnectorLabel>
+        <rules>
+            <name>isNotVAS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>HDT_Script_VAS.outputVasType</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Order_Items_Vas_Loop</targetReference>
+            </connector>
+            <label>isNotVAS</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>NomeOffertaCalcolato_Introduzione</name>
+        <dataType>String</dataType>
+        <expression>IF(CONTAINS({!HDT_FL_Script_Gestione_Ordini.NomeOffertaOutput} , &quot;Linear&quot;), &quot;Nuova Impronta Zero Casa Linear&quot;,IF(CONTAINS({!HDT_FL_Script_Gestione_Ordini.NomeOffertaOutput} , &quot;Imola&quot;), &quot;Nuova Impronta Zero Casa Linear&quot;,&quot;Nuova Impronta Zero Casa&quot;))</expression>
+    </formulas>
+    <formulas>
+        <name>NomeOffertaCE_Aziende</name>
+        <dataType>String</dataType>
+        <expression>IF(CONTAINS({!LoopOrdiniFigliOfferta_0.CommercialProduct__c} , &quot;Special Web&quot;), &quot;Prezzo Netto Special Web Lavoro&quot;, 
+ IF(CONTAINS({!LoopOrdiniFigliOfferta_0.CommercialProduct__c} , &quot;Imola&quot;), &quot;Prezzo Netto Natura Lavoro Imola&quot;, 
+  IF(CONTAINS({!LoopOrdiniFigliOfferta_0.CommercialProduct__c} , &quot;Lavoro&quot;), &quot;Prezzo Netto Natura Lavoro&quot;, &quot;Prezzo Netto&quot;)))</expression>
+    </formulas>
+    <formulas>
+        <name>NomeOffertaCE_Famiglie</name>
+        <dataType>String</dataType>
+        <expression>IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;Linear&quot;), &quot;Nuova Impronta Zero Casa Linear&quot;, 
+ IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;Imola&quot;), &quot;Nuova Impronta Zero Casa Imola&quot;, 
+  IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;Casa&quot;), &quot;Nuova Impronta Zero Casa&quot;, &quot;Nuova Impronta Zero Casa&quot;)))</expression>
+    </formulas>
+    <formulas>
+        <name>ProfiloCalcolato_Aziende</name>
+        <dataType>String</dataType>
+        <expression>IF(CONTAINS({!LoopOrdiniFigliOfferta_0.CommercialProduct__c} , &quot;24&quot;), &quot;24&quot;, 
+ IF(CONTAINS({!LoopOrdiniFigliOfferta_0.CommercialProduct__c} , &quot;Sole&quot;), &quot;Sole-Luna&quot;, 
+  IF(CONTAINS({!LoopOrdiniFigliOfferta_0.CommercialProduct__c} , &quot;Luna&quot;), &quot;Sole-Luna&quot;, &quot;&quot;)))</expression>
+    </formulas>
+    <formulas>
+        <name>ProfiloCalcolato_Famiglie</name>
+        <dataType>String</dataType>
+        <expression>IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;24&quot;), &quot;24&quot;, 
+ IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;Sole&quot;), &quot;Sole-Luna&quot;, 
+  IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;Luna&quot;), &quot;Sole-Luna&quot;, &quot;&quot;)))</expression>
+    </formulas>
     <interviewLabel>HDL FL VO Script - Nuova Impronta Zero {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDL FL VO Script - Nuova Impronta Zero</label>
     <loops>
@@ -460,7 +613,7 @@
             <targetReference>HDT_Script_VAS</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Durata_Contratto</targetReference>
+            <targetReference>Categoria_Cliente_Decision_0</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -537,23 +690,13 @@
         </connector>
         <fields>
             <name>text_0_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[3. Condizioni economiche Energia elettrica per Nuova Impronta Zero Lavoro]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;[3. Condizioni economiche Energia Elettrica per {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}]&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0_0</name>
-            <fieldText>&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 24 mesi di {!LoopOrdiniFigliOfferta_0.CommercialProduct__c} per la sua attività economica.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 24 mesi di {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} per la sua attività economica.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Hera Placet Luce Lavoro</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_0</name>
@@ -571,8 +714,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Condizioni_Economiche_Famiglie_EE_Text2_0_1</name>
-            <fieldText>&lt;p&gt;•	Il prezzo descritto, al netto delle perdite pari al 10,2% per un cliente in bassa tensione e del 3,8% per un cliente in media tensione, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 67%	 della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,002 €/kWh, corrispettivo di commercializzazione, pari a 144,00 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 33% circa della spesa annua.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <name>text24</name>
+            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di 0,1598 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a 0,145 €/kWh&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione e 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -586,14 +729,14 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Condizioni_Economiche_Famiglie_EE_Text2_0_2</name>
-            <fieldText>&lt;p&gt;•	Il prezzo descritto, al netto delle perdite pari al 10,2% per un cliente in bassa tensione e del 3,8% per un cliente in media tensione, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 66% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,002 €/kWh, corrispettivo di commercializzazione, pari a 144,00 €/punto di fornitura/anno e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 34% circa della spesa annua.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <name>Condizioni_Economiche_Famiglie_EE_Text2_0_1</name>
+            <fieldText>&lt;p&gt;•	Il prezzo descritto, al netto delle perdite pari al 10,2% per un cliente in bassa tensione e del 3,8% per un cliente in media tensione, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 67%	 della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,002 €/kWh, corrispettivo di commercializzazione, pari a 144,00 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 33% circa della spesa annua.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Lavoro Luce</stringValue>
                     </rightValue>
@@ -607,8 +750,8 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Lavoro Imola Luce</stringValue>
                     </rightValue>
@@ -663,23 +806,13 @@
         </connector>
         <fields>
             <name>text_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[3. Condizioni economiche Energia elettrica per Nuova Impronta Zero Lavoro]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;[3. Condizioni economiche Energia Elettrica per {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}]&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 24 mesi di {!LoopOrdiniFigliOfferta_0.CommercialProduct__c} per la sua attività economica.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 24 mesi di {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} per la sua attività economica.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Hera Placet Luce Lavoro</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_0_0_0</name>
@@ -718,8 +851,8 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Lavoro Luce</stringValue>
                     </rightValue>
@@ -733,8 +866,8 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Lavoro Imola Luce</stringValue>
                     </rightValue>
@@ -789,12 +922,12 @@
         </connector>
         <fields>
             <name>text_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[3. Condizioni economiche Energia elettrica per Nuova Impronta Zero Lavoro]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;[3. Condizioni economiche Gas per {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}]&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>text_0_0_0_0_1</name>
-            <fieldText>&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 24 mesi di {!LoopOrdiniFigliOfferta_0.CommercialProduct__c} per la sua attività economica.&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo da lei scelto, è pari a 0,70 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 24 mesi di {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} per la sua attività economica.&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo da lei scelto, è pari a 0,70 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -804,8 +937,8 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Lavoro Gas</stringValue>
                     </rightValue>
@@ -855,12 +988,12 @@
         </connector>
         <fields>
             <name>text_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[3. Condizioni economiche Energia elettrica per Nuova Impronta Zero Lavoro]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;[3. Condizioni economiche Gas per {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}]&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>text_0_0_0_0_1_0</name>
-            <fieldText>&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 24 mesi di {!LoopOrdiniFigliOfferta_0.CommercialProduct__c} per la sua attività economica.&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo da lei scelto, è pari a 0,70 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 24 mesi di {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} per la sua attività economica.&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo da lei scelto, è pari a 0,70 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -870,8 +1003,8 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Lavoro Gas</stringValue>
                     </rightValue>
@@ -983,7 +1116,7 @@
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text7</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;[3. Condizioni economiche Energia elettrica per: &lt;/span&gt;&lt;span style=&quot;font-size: 11pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;{!LoopOrdiniFigliOfferta.CommercialProduct__c}]&lt;/span&gt;&lt;/p&gt;&lt;p&gt;•	Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProduct__c}, che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt;&quot;&gt;[3. Condizioni economiche Energia elettrica per: &lt;/span&gt;&lt;span style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 11pt;&quot;&gt;{!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}]&lt;/span&gt;&lt;/p&gt;&lt;p&gt;•	Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1030,15 +1163,15 @@
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa Luce</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa Linear Luce</stringValue>
                     </rightValue>
@@ -1052,8 +1185,8 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa Imola Luce</stringValue>
                     </rightValue>
@@ -1103,7 +1236,7 @@
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text7_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;[3. Condizioni economiche Energia elettrica per: &lt;/span&gt;&lt;span style=&quot;font-size: 11pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;{!LoopOrdiniFigliOfferta.CommercialProduct__c}]&lt;/span&gt;&lt;/p&gt;&lt;p&gt;•	Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProduct__c}, che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt;&quot;&gt;[3. Condizioni economiche Energia elettrica per: &lt;/span&gt;&lt;span style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 11pt;&quot;&gt;{!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}]&lt;/span&gt;&lt;/p&gt;&lt;p&gt;•	Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1150,15 +1283,15 @@
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa Luce</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa Linear Luce</stringValue>
                     </rightValue>
@@ -1172,8 +1305,8 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa Imola Luce</stringValue>
                     </rightValue>
@@ -1207,11 +1340,6 @@
             <fieldText>&lt;p&gt;•	Sono inoltre a suo carico tasse, IVA ed imposte previste dalla legge.&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <fields>
-            <name>Promo_Text_1</name>
-            <fieldText>&lt;p&gt;&amp;nbsp;[PROMO HERA]&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -1228,12 +1356,12 @@
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text1</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[4. Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProduct__c}]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;[4. Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text7</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo di fornitura da lei scelto, è pari a 0,690 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo di fornitura da lei scelto, è pari a 0,690 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1268,11 +1396,6 @@
             <fieldText>&lt;p&gt;•	Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <fields>
-            <name>Promo_Text_2</name>
-            <fieldText>&lt;p&gt;[NUOVA IMPRONTA ZERO CASA/ NUOVA IMPRONTA ZERO CASA IMOLA]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;[PROMO HERA]&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -1289,12 +1412,12 @@
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text1_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[4. Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProduct__c}]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;[4. Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text7_0</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo di fornitura da lei scelto, è pari a 0,690 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo di fornitura da lei scelto, è pari a 0,690 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1329,9 +1452,36 @@
             <fieldText>&lt;p&gt;•	Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Conferma_Adesione_Screen_0</name>
+        <label>Conferma Adesione Screen</label>
+        <locationX>952</locationX>
+        <locationY>4094</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
         <fields>
-            <name>Promo_Text_2_0</name>
-            <fieldText>&lt;p&gt;[NUOVA IMPRONTA ZERO CASA/ NUOVA IMPRONTA ZERO CASA IMOLA]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;[PROMO HERA]&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <name>textCA2_0</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;[9. Conferma adesione]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma quindi che aderisce all’offerta Luce e all’offerta Gas?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Se deve inviare un reclamo o richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	La informo che, qualora lei abbia i requisiti previsti per legge e voglia l’applicazione dell’aliquota IVA ridotta al 10%, ci dovrà restituire, debitamente compilata, la modulistica predisposta a tale scopo che troverà all’interno del plico contrattuale che riceverà per posta.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento della nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;•	Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Contact__r.LastName} abbiamo terminato la registrazione, benvenuto/a in HERA COMM/ HERA COMM MARCHE/ESTENERGY&lt;/p&gt;&lt;p&gt;&amp;nbsp;[***FINE REGISTRAZIONE***]&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Conferma_Adesione_Screen_0_0</name>
+        <label>Conferma Adesione Screen</label>
+        <locationX>688</locationX>
+        <locationY>4094</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>newtext1_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;[9. Conferma adesione]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi Luce e Gas che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;•	Le ricordo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le invieremo tramite posta il plico contrattuale con le specifiche che le ho elencato per la sua fornitura, e comprensivo della scheda di confrontabilità dell’offerta, rispetto al regime di tutela.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Per il contratto di fornitura, entro 14 giorni dal ricevimento, potrà esercitare il diritto di ripensamento, inviando un fax al numero verde 800.999.600, oppure una e-mail all’indirizzo contratti@gruppohera.it oppure una raccomandata con ricevuta di ritorno presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente, può ricorrere al Servizio di Conciliazione ARERA oppure alla Conciliazione Paritetica attraverso le modalità indicate sul sito www.gruppohera.it&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento per:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	la fornitura di gas in regime di tutela.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;•	CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.LastName__c} abbiamo terminato la registrazione, benvenuto in Hera Comm/Hera Comm Marche/ESTEnergy.&lt;/p&gt;&lt;p&gt;&lt;b&gt;[***FINE REGISTRAZIONE**]&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1350,7 +1500,7 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text1_0_0</name>
-            <fieldText>&lt;p&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è DATO_MANCANTE?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta della luce [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura] ?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta della luce [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura] ?&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c}&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;{!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1370,7 +1520,7 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text3_0_0</name>
-            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la tensione di fornitura è {!LoopOrdiniFigliOfferta_0.VoltageLevel__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la potenza impegnata è {!LoopOrdiniFigliOfferta_0.PowerCommitted__c} kW?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;•	Mi conferma che il profilo scelto è il DATO_MANCANTE e la durata del prezzo fisso è DATO_MANCANTE mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la tensione di fornitura è {!LoopOrdiniFigliOfferta_0.VoltageLevel__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la potenza impegnata è {!LoopOrdiniFigliOfferta_0.PowerCommitted__c} kW?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;•	Mi conferma che il profilo scelto è il {!ProfiloCalcolato_Aziende} e la durata del prezzo fisso è 12 mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1389,7 +1539,7 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text1_0_0_0</name>
-            <fieldText>&lt;p&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è DATO_MANCANTE?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta della luce [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura] ?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta della luce [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura] ?&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c}&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;{!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1409,7 +1559,7 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text3_0_0_0</name>
-            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la tensione di fornitura è {!LoopOrdiniFigliOfferta_0.VoltageLevel__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la potenza impegnata è {!LoopOrdiniFigliOfferta_0.PowerCommitted__c} kW?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;•	Mi conferma che il profilo scelto è il DATO_MANCANTE e la durata del prezzo fisso è DATO_MANCANTE mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la tensione di fornitura è {!LoopOrdiniFigliOfferta_0.VoltageLevel__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la potenza impegnata è {!LoopOrdiniFigliOfferta_0.PowerCommitted__c} kW?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;•	Mi conferma che il profilo scelto è il {!ProfiloCalcolato_Aziende} e la durata del prezzo fisso è 12 mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1428,7 +1578,7 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1_0_0</name>
-            <fieldText>&lt;p&gt;[Dati Tecnici Gas]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è DATO_MANCANTE?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura]?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;[Dati Tecnici Gas]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura]?&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c}&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1448,13 +1598,23 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text3_0_0</name>
-            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta_0.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che  la durata del prezzo fisso è DATO_MANCANTE mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta_0.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;•	Mi conferma che  la durata del prezzo fisso è 12 mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text8_0_0</name>
-            <fieldText>&lt;p&gt;[Se il cliente ha un’attività per cui ha diritto ad agevolazioni fiscali]&lt;/p&gt;&lt;p&gt;•	Le ricordo che in alcuni casi le forniture di gas naturale sono soggette all’imposta di consumo statale ed alle addizionali regionali agevolate. Mi conferma che la sua attività è XXXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Bene, allora la informo che troverà la modulistica di richiesta all’interno del plico contrattuale da restituire debitamente compilata.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[Se il cliente ha un’attività per cui ha diritto ad agevolazioni fiscali]&lt;/p&gt;&lt;p&gt;•	Le ricordo che in alcuni casi le forniture di gas naturale sono soggette all’imposta di consumo statale ed alle addizionali regionali agevolate. Mi conferma che la sua attività è {!LoopOrdiniFigliOfferta_0.Account.LastName__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Bene, allora la informo che troverà la modulistica di richiesta all’interno del plico contrattuale da restituire debitamente compilata.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.FacilitationExcise__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -1472,12 +1632,12 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1_0_0_0</name>
-            <fieldText>&lt;p&gt;[Dati Tecnici Gas]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è DATO_MANCANTE?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura]?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;[Dati Tecnici Gas]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura]?&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c}&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text2_0_0_0</name>
-            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/p&gt;&lt;p&gt;•	[Se esiste per il precedente venditore (facoltativo)] Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/p&gt;&lt;p&gt;•	[Se esiste per il precedente venditore (facoltativo)] Conferma che il codice cliente è XXXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1492,13 +1652,23 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text3_0_0_0</name>
-            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta_0.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che  la durata del prezzo fisso è DATO_MANCANTE mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta_0.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;•	Mi conferma che  la durata del prezzo fisso è 12 mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text8_0_0_0</name>
-            <fieldText>&lt;p&gt;[Se il cliente ha un’attività per cui ha diritto ad agevolazioni fiscali]&lt;/p&gt;&lt;p&gt;•	Le ricordo che in alcuni casi le forniture di gas naturale sono soggette all’imposta di consumo statale ed alle addizionali regionali agevolate. Mi conferma che la sua attività è XXXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Bene, allora la informo che troverà la modulistica di richiesta all’interno del plico contrattuale da restituire debitamente compilata.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[Se il cliente ha un’attività per cui ha diritto ad agevolazioni fiscali]&lt;/p&gt;&lt;p&gt;•	Le ricordo che in alcuni casi le forniture di gas naturale sono soggette all’imposta di consumo statale ed alle addizionali regionali agevolate. Mi conferma che la sua attività è {!LoopOrdiniFigliOfferta_0.Account.LastName__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Bene, allora la informo che troverà la modulistica di richiesta all’interno del plico contrattuale da restituire debitamente compilata.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.FacilitationExcise__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -1516,12 +1686,12 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text1</name>
-            <fieldText>&lt;p&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è DATO_MANCANTE?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta della luce sono presenti i dati anagrafici della persona cui va intestato il contratto? [nel caso siano presenti procedere; in caso contrario chiedere autorizzazione a voltura]&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta della luce sono presenti i dati anagrafici della persona cui va intestato il contratto? [nel caso siano presenti procedere; in caso contrario chiedere autorizzazione a voltura]&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text2</name>
-            <fieldText>&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura.&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma di essere titolare del diritto di [proprietà/locazione/comodato] sull’immobile?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHolderLastName__c} {!LoopOrdiniFigliOfferta.PreviousHolderFirstName__c} e {!LoopOrdiniFigliOfferta.PreviousHolderFiscalCode__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	[Se esiste per il precedente venditore (facoltativo)] Conferma che il codice cliente è {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura.&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma di essere titolare del diritto di [proprietà/locazione/comodato] sull’immobile?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferma che Cognome, Nome e codice Fiscale del precedente intestatario sono {!LoopOrdiniFigliOfferta.PreviousHolderLastName__c} {!LoopOrdiniFigliOfferta.PreviousHolderFirstName__c} e {!LoopOrdiniFigliOfferta.PreviousHolderFiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	[Se esiste per il precedente venditore (facoltativo)] Conferma che il codice cliente è {!LoopOrdiniFigliOfferta.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1536,34 +1706,52 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text3</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la potenza impegnata è {!LoopOrdiniFigliOfferta.PowerCommitted__c} kW?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il profilo scelto è il &lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;DATO_MANCANTE &lt;/span&gt;e la durata del prezzo fisso è DATO_MANCANTE mesi?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la potenza impegnata è  {!LoopOrdiniFigliOfferta.PowerCommitted__c}kW?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il profilo scelto è il {!ProfiloCalcolato_Famiglie} e la durata del prezzo fisso è 12 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text4</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Se prima attivazione o subentro su GDM:&amp;nbsp;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Operatore: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità. Può restituire il modulo tramite sportello o inviandolo all&apos;indirizzo e-mail [per HC] Heracomm: contratti@gruppohera.it / [per HCM] clienti@heracomm-marche.it&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Operatore: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità. Può restituire il modulo tramite sportello o inviandolo all&apos;indirizzo e-mail [per HC] Heracomm: contratti@gruppohera.it / [per HCM] clienti@heracomm-marche.it&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Prima Attivazione</stringValue>
+                        <stringValue>Prima Attivazione Ele</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Subentro</stringValue>
+                        <stringValue>Prima Attivazione Fuori delibera</stringValue>
                     </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prima Attivazione In delibera</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prima Attivazione con modifica</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text5</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;In caso di contratto con preventivo&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Operatore: Mi conferma che il codice POD relativo alla sua nuova fornitura ci verrà comunicato direttamente dal Distributore a seguito della richiesta di preventivo subordinata al presente contratto?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Operatore: Mi conferma che la &quot;Tipologia di contratto&quot; è [Utenza domestica – Residente o Utenza domestica – Non residente]?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Operatore: Mi conferma che il codice POD relativo alla sua nuova fornitura ci verrà comunicato direttamente dal Distributore a seguito della richiesta di preventivo subordinata al presente contratto?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Operatore: Mi conferma che la &quot;Tipologia di contratto&quot; è [Utenza domestica – Residente o Utenza domestica – Non residente]?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1578,15 +1766,15 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text6</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Se cliente diverso con HC e precedente attivo a tutela&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Operatore: Mi conferma che autorizza Hera Comm/EstEnergy ad espletare le pratiche per volturare il contratto di luce del precedente intestatario?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Operatore: La informo che, per gestire la pratica di voltura, la data di attivazione delle condizioni che sta sottoscrivendo verrà confermata dal Distributore Locale e potrebbe subire variazioni rispetto al plico contrattuale che riceverà per posta. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Operatore: Mi conferma che autorizza Hera Comm/EstEnergy ad espletare le pratiche per volturare il contratto di luce del precedente intestatario?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Operatore: La informo che, per gestire la pratica di voltura, la data di attivazione delle condizioni che sta sottoscrivendo verrà confermata dal Distributore Locale e potrebbe subire variazioni rispetto al plico contrattuale che riceverà per posta. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>(1 OR 4) AND 2 AND 3</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Voltura</stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -1603,43 +1791,63 @@
                         <stringValue>FUI</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text7</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Se cliente diverso e contatore attivo con HC&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Operatore: Effettuerò dunque una voltura sul POD. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto.&lt;/p&gt;&lt;p&gt;Mi conferma la data della voltura che rappresenta quindi la decorrenza del suo contratto?&lt;/p&gt;&lt;p&gt;Cliente: CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Operatore: Effettuerò dunque una voltura sul POD. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto.&lt;/p&gt;&lt;p&gt;Mi conferma la data della voltura che rappresenta quindi la decorrenza del suo contratto?&lt;/p&gt;&lt;p&gt;Cliente: CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>oltura</stringValue>
+                        <stringValue>Voltura con Switch</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.SalesCompany__c</leftValueReference>
-                    <operator>IsNull</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text8</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Se cliente diverso e contatore chiuso&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Operatore: Richiederemo dunque un&apos;apertura al distributore locale. La data di apertura rappresenterà dunque la decorrenza del suo contratto. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto.&lt;/p&gt;&lt;p&gt;Nuova attivazione (valida per tutti i Distributori)&lt;/p&gt;&lt;p&gt;Operatore: Le ricordo che dovrà inviarci l&apos;Istanza di attivazione, al ricevimento richiederemo l&apos;apertura al distributore locale. La data di apertura rappresenterà la decorrenza del suo contratto. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Dati_Tecnici_Famiglie_EE_Text9</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Nuova attivazione (valida per tutti i Distributori)&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Operatore: Le ricordo che dovrà inviarci l&apos;Istanza di attivazione, al ricevimento richiederemo l&apos;apertura al distributore locale. La data di apertura rappresenterà la decorrenza del suo contratto. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Operatore: Richiederemo dunque un&apos;apertura al distributore locale. La data di apertura rappresenterà dunque la decorrenza del suo contratto. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto.&lt;/p&gt;&lt;p&gt;Nuova attivazione (valida per tutti i Distributori)&lt;/p&gt;&lt;p&gt;Operatore: Le ricordo che dovrà inviarci l&apos;Istanza di attivazione, al ricevimento richiederemo l&apos;apertura al distributore locale. La data di apertura rappresenterà la decorrenza del suo contratto. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Prima Attivazione</stringValue>
+                        <stringValue>Subentro Ele</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Dati_Tecnici_Famiglie_EE_Text9</name>
+            <fieldText>&lt;p&gt;Operatore: Le ricordo che dovrà inviarci l&apos;Istanza di attivazione, al ricevimento richiederemo l&apos;apertura al distributore locale. La data di apertura rappresenterà la decorrenza del suo contratto. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Temporanea - Nuova Attivazione</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1660,7 +1868,7 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text1_0</name>
-            <fieldText>&lt;p&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è DATO_MANCANTE?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta della luce sono presenti i dati anagrafici della persona cui va intestato il contratto? [nel caso siano presenti procedere; in caso contrario chiedere autorizzazione a voltura]&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta della luce sono presenti i dati anagrafici della persona cui va intestato il contratto? [nel caso siano presenti procedere; in caso contrario chiedere autorizzazione a voltura]&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1680,7 +1888,7 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text3_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la potenza impegnata è {!LoopOrdiniFigliOfferta.PowerCommitted__c} kW?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il profilo scelto è il DATO_MANCANTE&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt; &lt;/span&gt;e la durata del prezzo fisso è DATO_MANCANTE mesi?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la potenza impegnata è {!LoopOrdiniFigliOfferta.PowerCommitted__c} kW?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il profilo scelto è il {!ProfiloCalcolato_Famiglie} e la durata del prezzo fisso è 12 mesi?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1699,7 +1907,7 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1</name>
-            <fieldText>&lt;p&gt;[Dati Tecnici Gas]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è DATO_MANCANTE?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta del gas sono presenti i dati anagrafici della persona cui va intestato il contratto? [nel caso siano presenti procedere; in caso contrario chiedere autorizzazione a voltura]&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[Dati Tecnici Gas]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta del gas sono presenti i dati anagrafici della persona cui va intestato il contratto? [nel caso siano presenti procedere; in caso contrario chiedere autorizzazione a voltura]&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1719,34 +1927,55 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text3</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che usa il gas per il riscaldamento?&lt;/p&gt;&lt;p&gt;CONFERMO [cottura e acqua calda].&lt;/p&gt;&lt;p&gt;NO [solo cottura e/o acqua calda].&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che usa il gas per il riscaldamento?&lt;/p&gt;&lt;p&gt;CONFERMO [cottura e acqua calda].&lt;/p&gt;&lt;p&gt;NO [solo cottura e/o acqua calda].&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la durata del prezzo fisso scelta è 12 mesi?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text4</name>
-            <fieldText>&lt;p&gt;Se prima attivazione o subentro su GDM&amp;nbsp;&lt;/p&gt;&lt;p&gt;Operatore: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità. Può restituire il modulo tramite sportello o inviandolo all&apos;indirizzo e-mail [per HC] Heracomm: contratti@gruppohera.it / [per HCM] clienti@heracomm-marche.it.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Operatore: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità. Può restituire il modulo tramite sportello o inviandolo all&apos;indirizzo e-mail [per HC] Heracomm: contratti@gruppohera.it / [per HCM] clienti@heracomm-marche.it.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Prima Attivazione</stringValue>
+                        <stringValue>Prima Attivazione In delibera</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>ubentro</stringValue>
+                        <stringValue>Prima Attivazione In delibera</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prima Attivazione Fuori delibera</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prima Attivazione con modifica</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Subentro Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text5</name>
-            <fieldText>&lt;p&gt;Se cliente diverso e contatore attivo con HC (voltura/voltura con autolettura)&lt;/p&gt;&lt;p&gt;Operatore: Effettuerò dunque una voltura sul PDR …&lt;/p&gt;&lt;p&gt;Mi comunica la lettura attuale del contatore?&lt;/p&gt;&lt;p&gt;Cliente: XXXXXX&lt;/p&gt;&lt;p&gt;Operatore: Ho recepito la lettura, consideri che la lettura di voltura verrà determinata dal Distributore Locale alla data di effettiva decorrenza. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Operatore: Effettuerò dunque una voltura sul PDR …&lt;/p&gt;&lt;p&gt;Mi comunica la lettura attuale del contatore?&lt;/p&gt;&lt;p&gt;Cliente: XXXXXX&lt;/p&gt;&lt;p&gt;Operatore: Ho recepito la lettura, consideri che la lettura di voltura verrà determinata dal Distributore Locale alla data di effettiva decorrenza. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1761,12 +1990,22 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text6</name>
-            <fieldText>&lt;p&gt;Se contatore chiuso e soggetto a D40 – solo Distributore &quot;In Rete&quot;&lt;/p&gt;&lt;p&gt;Operatore: Una volta effettuato l&apos;accertamento della modulistica che lei invierà in autonomia al Distributore, le verrà comunicata la data di apertura che rappresenterà la decorrenza del suo contratto. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Operatore: Una volta effettuato l&apos;accertamento della modulistica che lei invierà in autonomia al Distributore, le verrà comunicata la data di apertura che rappresenterà la decorrenza del suo contratto. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Subentro Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text7</name>
-            <fieldText>&lt;p&gt;Se cliente diverso e contatore chiuso&lt;/p&gt;&lt;p&gt;Operatore: Richiederemo dunque un&apos;apertura al distributore locale. La data di apertura rappresenterà dunque la decorrenza del suo contratto. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Operatore: Richiederemo dunque un&apos;apertura al distributore locale. La data di apertura rappresenterà dunque la decorrenza del suo contratto. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1795,7 +2034,7 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1_0</name>
-            <fieldText>&lt;p&gt;[Dati Tecnici Gas]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è DATO_MANCANTE?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta del gas sono presenti i dati anagrafici della persona cui va intestato il contratto? [nel caso siano presenti procedere; in caso contrario chiedere autorizzazione a voltura]&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[Dati Tecnici Gas]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nella bolletta del gas sono presenti i dati anagrafici della persona cui va intestato il contratto? [nel caso siano presenti procedere; in caso contrario chiedere autorizzazione a voltura]&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1824,14 +2063,36 @@
     <screens>
         <name>Durata_Contratto</name>
         <label>Durata Contratto</label>
-        <locationX>622</locationX>
-        <locationY>3182</locationY>
+        <locationX>490</locationX>
+        <locationY>3638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>isVASDecisional</targetReference>
+        </connector>
         <fields>
             <name>Durata_Contratto_Text1</name>
-            <fieldText>&lt;p&gt;In riferimento all’offerta Luce e/o Gas le ricordo le seguenti condizioni contrattuali:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordiamo che le condizioni economiche durano 12 mesi e che almeno 3 mesi prima della scadenza riceverà una comunicazione scritta con la proposizione delle nuove condizioni economiche che saranno applicate.&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta bimestrale per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 5000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 5000 smc/anno.&lt;/p&gt;&lt;p&gt;•	In mancanza di consumi reali, questi saranno stimati, con successivo conguaglio.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt;&quot;&gt;[8. Durata contratto]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;In riferimento all’offerta Luce e/o Gas {!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 30 giorni presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta bimestrale per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 3000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 3000 smc/anno.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste le può essere sospesa la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Qualora la fornitura si interrompa prima del periodo scelto, ci riserviamo la possibilità di conguagliare tutti i consumi, utilizzando il prezzo del profilo con durata più prossima a quella effettiva della fornitura&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Durata_Contratto_0</name>
+        <label>Durata Contratto</label>
+        <locationX>754</locationX>
+        <locationY>3638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>isVASDecisional</targetReference>
+        </connector>
+        <fields>
+            <name>textDC1_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 12pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;[8. Durata contratto]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;•	La informo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 9 mesi presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Qualora il punto di fornitura di energia elettrica sia connesso in bassa tensione e/o&amp;nbsp;i consumi di gas non siano superiori a 200.000 Smc/anno può recedere in qualsiasi momento entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1855,10 +2116,10 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>OrdinePadre.Email__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>OrdinePadre.Account.PrimaryEmail__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1870,10 +2131,10 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>OrdinePadre.Email__c</leftValueReference>
-                    <operator>EqualTo</operator>
+                    <leftValueReference>OrdinePadre.Account.PrimaryEmail__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1892,6 +2153,11 @@
         <connector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </connector>
+        <fields>
+            <name>textBun2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt;&quot;&gt;[7. Servizi in bundle alle offerte&lt;/span&gt;&lt;span style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt; color: black;&quot;&gt;]&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>Bundle_Text1_0</name>
             <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, il servizio DIARIO DEI CONSUMI. A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di addetti che lavorano nella sua attività è XXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	la superficie dello stabile è XXXX metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Il report di DIARIO DEI CONSUMI le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio non sarà più disponibile.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il servizio citato è descritto in dettaglio nel plico contrattuale che riceverà.&lt;/p&gt;</fieldText>
@@ -1917,7 +2183,7 @@
             <targetReference>HDT_FL_Script_Gestione_Ordini</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>HDT_FL_Script_Gestione_Ordini</name>
         <label>HDT_FL_Script_Gestione_Ordini</label>
@@ -1928,15 +2194,15 @@
         </connector>
         <flowName>HDT_FL_Script_Gestione_Ordini</flowName>
         <inputAssignments>
-            <name>idOrdinePadreInput</name>
-            <value>
-                <elementReference>idOrdinePadreInput</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <name>famigliaProdottoOffertaInput</name>
             <value>
                 <elementReference>offertaInput</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>idOrdinePadreInput</name>
+            <value>
+                <elementReference>idOrdinePadreInput</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -1953,13 +2219,19 @@
         <inputAssignments>
             <name>callType</name>
             <value>
-                <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.LoginChannel__c</elementReference>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>categoriaChiamata</name>
             <value>
                 <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.CustomerCategory__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ModalitaPagamentoInput</name>
+            <value>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.modalitaPagamentoOutput</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1991,9 +2263,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <name>channelInput</name>
+            <value>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>isAxa</name>
             <value>
-                <stringValue>N</stringValue>
+                <stringValue>Y</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>offerNameInput</name>
+            <value>
+                <elementReference>NomeOffertaCalcolato_Introduzione</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2006,22 +2290,22 @@
     <subflows>
         <name>HDT_Script_VAS</name>
         <label>HDT Script - VAS</label>
-        <locationX>710</locationX>
+        <locationX>798</locationX>
         <locationY>2966</locationY>
         <connector>
-            <targetReference>Order_Items_Vas_Loop</targetReference>
+            <targetReference>Vas_Presenti_Decision</targetReference>
         </connector>
         <flowName>HDT_Script_VAS</flowName>
         <inputAssignments>
             <name>getInputCanale</name>
             <value>
-                <stringValue>Inbound</stringValue>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>getInputCategoria</name>
             <value>
-                <stringValue>Famiglie</stringValue>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2053,5 +2337,15 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Order</objectType>
+    </variables>
+    <variables>
+        <name>VasPresentiBool</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
 </Flow>

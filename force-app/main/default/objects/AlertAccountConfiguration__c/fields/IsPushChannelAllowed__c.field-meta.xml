@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <formula>AlertConfiguration__r.IsPushChannelActive__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Canale Push</label>
+    <label>Push</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

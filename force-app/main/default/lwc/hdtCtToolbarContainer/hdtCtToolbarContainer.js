@@ -13,7 +13,6 @@ import createActivity from '@salesforce/apex/HDT_LC_CtToolbar.createActivity';
 import updateActivity from '@salesforce/apex/HDT_LC_CtToolbar.updateActivity';
 import saveEcidInSales from '@salesforce/apex/HDT_LC_CtToolbar.saveEcidInSales';
 import createActivityInbound from '@salesforce/apex/HDT_LC_CtToolbar.createActivityInbound';
-import cacheUuid from '@salesforce/apex/HDT_LC_CtToolbar.cacheUuid';    // params: uuid
 import getCachedUuid from '@salesforce/apex/HDT_LC_CtToolbar.getCachedUuid';    // params: n/a
 
 export default class HdtCtToolbarContainer extends NavigationMixin(LightningElement) {
@@ -109,9 +108,6 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                 this.toolbarAttributes = event.detail.eventObj;
                 // if(this.toolbarAttributes.id) {
                     this.uuid = this.toolbarAttributes.id;
-                    if(this.uuid) {
-                        await cacheUuid({uuid: this.uuid});
-                    }
                 // }
                 if (this.toolbarAttributes.type != null && this.toolbarAttributes.type != undefined && this.toolbarAttributes.type == 'inbound') {
                     this.saveScript('Positivo', true);
@@ -148,9 +144,6 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                 
                 // if(this.toolbarAttributes.id) {
                     this.uuid = this.toolbarAttributes.id;
-                    if(this.uuid) {
-                        await cacheUuid({uuid: this.uuid});
-                    }
                 // }
                 callData = event.detail.CallData;
                 //get ecid value from callData
