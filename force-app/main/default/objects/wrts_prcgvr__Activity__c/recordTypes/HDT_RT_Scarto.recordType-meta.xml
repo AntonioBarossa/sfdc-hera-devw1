@@ -2319,6 +2319,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>KO Fornitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Lavorazione Reclamo Post Survey</fullName>
             <default>false</default>
         </values>
