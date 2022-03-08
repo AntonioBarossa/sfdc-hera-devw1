@@ -1022,7 +1022,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
             if(newPhase.containsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
             {
-                if(orderNew.VasStatus__c == null || (orderNew.VasStatus__c != null  && !orderNew.VasStatus__c.equalsIgnoreCase('ANNUL PER RIPENS')))
+                if((orderNew.VasStatus__c == null || (orderNew.VasStatus__c != null  && !orderNew.VasStatus__c.equalsIgnoreCase('ANNUL PER RIPENS'))) && !'Activated'.equalsIgnoreCase(orderNew.StatusCode))
                 {
                     orderNew.Status = 'Annullato';
                 }
