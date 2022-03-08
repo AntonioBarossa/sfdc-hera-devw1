@@ -18,7 +18,7 @@ public without sharing class HDT_BA_ExpireMigratedContracts implements Database.
         List<Database.SaveResult> results = Database.update(contractsChunk, false);
         for(Database.SaveResult result : results) {
             if(!result.isSuccess()) {
-                this.errors.add(result.getId() + ' | ' + result.getErrors());
+                this.errors.add((result.getId() + ' | ' + result.getErrors()).abbreviate(155));
             }
         }
     }
