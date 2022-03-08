@@ -41,7 +41,7 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Databa
             toAddresses.add(this.usersEmail.get(activity.Owner.Name)); 
             emailMsg.setToAddresses(toAddresses);
             emailMsg.setSubject('Attività sospesa');
-            String emailBody = String.format('Gentile utente, <br/> ti segnaliamo che l’attività {0} ha raggiunto la data fine sospensione <br/> Motivo sopsensione: {1}', new List<String>{activity.Name, activity.SuspensionReason__c});
+            String emailBody = String.format('Gentile utente, <br/> ti segnaliamo che l’attività {0} ha raggiunto la data fine sospensione <br/> Motivo sospensione: {1}', new List<String>{activity.Name, activity.SuspensionReason__c});
             emailMsg.setHtmlBody(emailBody);
             emailMsg.setOrgWideEmailAddressId(orgWideAddress.Id);
             emailList.add(emailMsg);
