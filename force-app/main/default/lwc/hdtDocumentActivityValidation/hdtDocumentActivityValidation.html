@@ -1,28 +1,31 @@
 <template>
-    <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large">
-    </lightning-spinner>
+  <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
+  <template if:true={isValidazioneDocumentale}>
     <lightning-button onclick={approve} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Documenti Validati" title="Riassegna"></lightning-button>
     <lightning-button onclick={reject} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Documenti non Validati" title="Riassegna"></lightning-button>
-    
-    <template if:true={showModal}>
-        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" class="slds-modal slds-fade-in-open">
-            <div class="slds-modal__container">
-              <div class="slds-modal__header">
-                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Modal header</h1>
-              </div>
-              <div class="slds-modal__content" id="modal-content-id-1">
-                    <lightning-spinner variant="brand" if:true={showModalSpinner} alternative-text="Saving..." size="large">
-                    </lightning-spinner>            
-                    <div class="slds-m-around_medium">
-                        <lightning-input onchange={handleInputChange} label="Notes" type="text" id="text-input-id-47" placeholder="Closing Notes..." maxlength="255"></lightning-input>
-                    </div>
-              </div>
-              <div class="slds-modal__footer">
-                <button onclick={closeModal} class="slds-button slds-button_neutral">Cancel</button>
-                <button onclick={rejectAct} class="slds-button slds-button_brand">Save</button>
-              </div>
-            </div>
-          </section>
-          <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
-    </template>
+  </template>  
+  <template if:false={isValidazioneDocumentale}>
+    <lightning-button onclick={approve} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Vocal Order Validati" title="Riassegna"></lightning-button>
+    <lightning-button onclick={reject} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Vocal Order Non Validati" title="Riassegna"></lightning-button>
+  </template>
+  <template if:true={showModal}>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+        <div class="slds-modal__header">
+          <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Modal header</h1>
+        </div>
+        <div class="slds-modal__content" id="modal-content-id-1">
+          <lightning-spinner variant="brand" if:true={showModalSpinner} alternative-text="Saving..." size="large"></lightning-spinner>            
+          <div class="slds-m-around_medium">
+              <lightning-input onchange={handleInputChange} label="Notes" type="text" id="text-input-id-47" placeholder="Closing Notes..." maxlength="255"></lightning-input>
+          </div>
+        </div>
+        <div class="slds-modal__footer">
+          <button onclick={closeModal} class="slds-button slds-button_neutral">Cancel</button>
+          <button onclick={rejectAct} class="slds-button slds-button_brand">Save</button>
+        </div>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+  </template>
 </template>

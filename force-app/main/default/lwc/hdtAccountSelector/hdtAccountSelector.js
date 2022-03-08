@@ -6,7 +6,7 @@ import init from '@salesforce/apex/HDT_LC_AccountSelectorController.init';
 import search from '@salesforce/apex/HDT_LC_AccountSelectorController.search';
 import handleLead from '@salesforce/apex/HDT_LC_AccountSelectorController.handleLead';
 import handleAccount from '@salesforce/apex/HDT_LC_AccountSelectorController.handleAccountSerialized';
-import updateActivity from '@salesforce/apex/HDT_LC_AccountSelectorController.updateActivity';
+import updateRecord from '@salesforce/apex/HDT_LC_AccountSelectorController.updateRecord';
 import reset from '@salesforce/apex/HDT_LC_AccountSelectorController.reset';
 
 export default class HdtAccountSelector extends NavigationMixin(LightningElement) {
@@ -19,6 +19,7 @@ export default class HdtAccountSelector extends NavigationMixin(LightningElement
 	contacts;
 	accounts;
 	changesCommitted;
+	showSpinner;
 	navigateOnSelectAccount = true;
 	get resetButtonDisabled() {
 		return !this.contactId && !this.accountId && !this.leadId;
@@ -46,6 +47,7 @@ export default class HdtAccountSelector extends NavigationMixin(LightningElement
 	}
 
 	connectedCallback() {
+		this.showSpinner = true;
 		init({recordId: this.recordId})
 		.then(result => {
 			var res = JSON.parse(result);
@@ -66,6 +68,9 @@ export default class HdtAccountSelector extends NavigationMixin(LightningElement
 			// WIP
 			console.error(error);
 			this.showGenericErrorToast();
+		})
+		.then(() => {
+			this.showSpinner = false;
 		});
 	}
 
@@ -73,9 +78,10 @@ export default class HdtAccountSelector extends NavigationMixin(LightningElement
 		const isEnterKey = (event.keyCode === 13);
 		if (isEnterKey) {
 			if(this.showContactSearchPanel) {
+				this.showSpinner = true;
 				var queryString = event.target.value;
 				if(queryString) {
-					search({queryString: queryString})
+					search({queryString: queryString, recordId: this.recordId})
 					.then(result => {
 						var resObj = JSON.parse(result);
 						console.log('### ' + result);
@@ -88,6 +94,9 @@ export default class HdtAccountSelector extends NavigationMixin(LightningElement
 						// WIP
 						console.error(error);
 						this.showGenericErrorToast();
+					})
+					.then(() => {
+						this.showSpinner = false;
 					});
 				}
 			}
@@ -95,6 +104,7 @@ export default class HdtAccountSelector extends NavigationMixin(LightningElement
 	}
 
 	handleClick(event) {
+		this.showSpinner = true;
 		var selectedRecordId = event.currentTarget.dataset.id;
 		switch(event.currentTarget.dataset.sobjtype) {
 			case 'Account' :
@@ -102,11 +112,11 @@ export default class HdtAccountSelector extends NavigationMixin(LightningElement
 				if(!this.contactId) {
 					this.contactId = this.contacts[0] ? this.contacts[0].Id : null;
 				}
-				updateActivity({activityId: this.recordId, contactId: this.contactId, accountId: this.accountId})
+				updateRecord({recordId: this.recordId, contactId: this.contactId, accountId: this.accountId})
 				.then(result => {
 					this.changesCommitted = true;
 					this.refreshPage();
-					this.showToast('success', 'Successo', 'L\'activity è stata aggiornata.');
+					this.showToast('success', 'Successo', 'Il record è stato aggiornato.');
 
 					if(this.navigateOnSelectAccount) {
 						this.navigateToRecordPage(this.accountId, 'Account');
@@ -120,14 +130,14 @@ export default class HdtAccountSelector extends NavigationMixin(LightningElement
 			break;
 			case 'Contact' :
 				this.contactId = selectedRecordId;
-				handleAccount({contactId: this.contactId, activityId: this.recordId})
+				handleAccount({contactId: this.contactId, recordId: this.recordId})
 				.then(result => {
 					var resultObj = JSON.parse(result);
 					if(resultObj.length == 1) {
 						this.accountId = resultObj[0].Id;
 						this.changesCommitted = true;
 						this.refreshPage();
-						this.showToast('success', 'Account Trovato', 'L\'account è stato automaticamente associato all\'activity corrente.');
+						this.showToast('success', 'Account Trovato', 'L\'account è stato automaticamente associato al record corrente.');
 
 						if(this.navigateOnSelectAccount) {
 							this.navigateToRecordPage(this.accountId, 'Account');
@@ -143,11 +153,11 @@ export default class HdtAccountSelector extends NavigationMixin(LightningElement
 			break;
 			case 'Lead' :
 				this.leadId = selectedRecordId;
-				handleLead({leadId: this.leadId, activityId: this.recordId})
+				handleLead({leadId: this.leadId, recordId: this.recordId})
 				.then(result => {
 					this.changesCommitted = true;
 					this.refreshPage();
-					this.showToast('success', 'Successo', 'L\'activity è stata aggiornata.');
+					this.showToast('success', 'Successo', 'Il record è stato aggiornato.');
 				})
 				.catch(error => {
 					// WIP
@@ -156,9 +166,11 @@ export default class HdtAccountSelector extends NavigationMixin(LightningElement
 				});
 			break;
 		}
+		this.showSpinner = false;
 	}
 
 	handleReset(event) {
+		this.showSpinner = true;
 		this.contactId = undefined;
 		this.accountId = undefined;
 		this.leadId = undefined;
@@ -166,7 +178,7 @@ export default class HdtAccountSelector extends NavigationMixin(LightningElement
 		this.accounts = undefined;
 		this.leads = undefined;
 		if(this.changesCommitted) {
-			reset({activityId: this.recordId})
+			reset({recordId: this.recordId})
 			.then(result => {
 				this.refreshPage();
 			})
@@ -175,6 +187,7 @@ export default class HdtAccountSelector extends NavigationMixin(LightningElement
 				console.error(error);
 			});
 		}
+		this.showSpinner = false;
 	}
 
 	showGenericErrorToast() {

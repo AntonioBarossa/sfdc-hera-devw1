@@ -193,9 +193,24 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             wrts_prcgvr__Activity__c oldActivity = HDT_QR_ActivityCustom.getRecordByIdValidation(recordId);
             oldActivity.validation__c = 'No';
             oldActivity.wrts_prcgvr__status__c = 'Chiusa';
+            oldActivity.ClosingNote__c = noteChiusura;
             Date d = System.today();
-            Date dataAnnullRich = d.addDays(30); 
-            wrts_prcgvr__Activity__c newActivity = new wrts_prcgvr__Activity__c(account__c = oldActivity.account__c,wrts_prcgvr__Status__c= 'Aperta',order__c = oldActivity.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c'),RequestedCancellationDate__c=dataAnnullRich, ClosingNote__c=noteChiusura);
+            Date dataAnnullRich = d.addDays(30);
+            string activityType = ( oldActivity.type__c== 'Validazione Documentale'|| oldActivity.type__c== 'Documenti non validati' )? 
+                                        'Documenti non validati':
+                                        'Vocal Order non validato';
+            wrts_prcgvr__Activity__c newActivity = new wrts_prcgvr__Activity__c(account__c = oldActivity.account__c,
+                                                                                wrts_prcgvr__Status__c= 'Aperta',
+                                                                                order__c = oldActivity.order__c,
+                                                                                type__c = activityType,
+                                                                                recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c'),
+                                                                                RequestedCancellationDate__c=dataAnnullRich, 
+                                                                                OpeningNote__c=noteChiusura);
+            if( ( oldActivity.type__c== 'Validazione Vocal Order' || oldActivity.type__c== 'Vocal Order non validato') && oldActivity.DiscardCount__c == null ){
+                newActivity.DiscardCount__c = 1;
+            }else if ( ( oldActivity.type__c== 'Validazione Vocal Order' || oldActivity.type__c== 'Vocal Order non validato') && oldActivity.DiscardCount__c == 1){
+                newActivity.DiscardCount__c = 2;
+            }
             activityCustomSrv.createRecord(newActivity);
             String res = 'Creata';  
             activityCustomSrv.updateRecord(oldActivity);

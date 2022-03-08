@@ -45,18 +45,21 @@ export default class HdtPracticesView extends LightningElement {
 
             console.log('# getTableConfig #');
  
+            var tableObj = JSON.parse(result.tables);
+
             this.showSecondTable = true;
-            this.tableTitle = result.tables[0].tableTitle;
-            this.tableName1 = result.tables[0].tableName;
-            this.iconName = result.tables[0].iconName;
-            this.columns = result.tables[0].columns;
+            this.tableTitle = tableObj[0].tableTitle;
+            this.tableName1 = tableObj[0].tableName;
+            this.iconName = tableObj[0].iconName;
+            this.columns = tableObj[0].columns;
             this.height1 = 'topTable';
 
-            this.tableTitle2 = result.tables[1].tableTitle;
-            this.tableName2 = result.tables[1].tableName;
-            this.iconName2 = result.tables[1].iconName;
-            this.columns2 = result.tables[1].columns;
+            this.tableTitle2 = tableObj[1].tableTitle;
+            this.tableName2 = tableObj[1].tableName;
+            this.iconName2 = tableObj[1].iconName;
+            this.columns2 = tableObj[1].columns;
             this.height2 = 'bottomTable';
+
             this.backendCall();
         }).catch(error => {
             console.log('# error -> ' + JSON.stringify(error));
