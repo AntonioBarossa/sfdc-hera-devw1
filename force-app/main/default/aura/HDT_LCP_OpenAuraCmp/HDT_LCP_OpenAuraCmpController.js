@@ -23,6 +23,10 @@
         //variabile per innesco da campagne
         var campaignId = myPageRef.state.c__campaignId;
 
+        var campaignMemberId = myPageRef.state.c__campaignMemberId;
+        console.log('campaignMemberId --> '+campaignMemberId);
+
+
         // id del lead oggetto del process.
         var leadId = myPageRef.state.c__leadId;
 
@@ -128,7 +132,8 @@
                         c__orderId: orderId,
                         c__interactionId: interactionId,
                         //Gestione Risottomissione Annullamento
-                        c__discardRework: discardRework
+                        c__discardRework: discardRework,
+                        c__campaignMemberId: campaignMemberId
                     }
                 },
                 focus: true

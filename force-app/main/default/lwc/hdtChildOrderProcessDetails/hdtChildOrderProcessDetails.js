@@ -896,8 +896,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('','Subprocess__c',this.order.RecordType.DeveloperName === 'HDT_RT_Voltura', false, true,'',''),
                     new fieldData('Nome','FirstName__c',this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', false, true,'',''),
                     new fieldData('Cognome','LastName__c',this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' , false, true,'',''),
-                    new fieldData('Codice Fiscale','FiscalCode__c',this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', false, true,'',''),
-                    new fieldData('Partita IVA','VATNumber__c',this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, true,'',''),
+                    new fieldData('Codice Fiscale','FiscalCode__c',true, false, true,'',''),
+                    new fieldData('Partita IVA','VATNumber__c',true, false, true,'',''),
                     new fieldData('Ragione Sociale','Name',this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, true,'','')
                 ]
             },

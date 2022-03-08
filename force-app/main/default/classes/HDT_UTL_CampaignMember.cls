@@ -200,17 +200,160 @@ public with sharing class HDT_UTL_CampaignMember {
     @SuppressWarnings('PMD.ApexCRUDViolation')
     public static void checkTipoEsito(List<CampaignMember> newCampMembList, Map<Id, CampaignMember> campMembOldMap){
 
-        List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
+        Set<String> ordIdSet = new Set<String>();
+        Set<String> actIdSet = new Set<String>();
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+        List<wrts_prcgvr__Activity__c> actToCancelList = new List<wrts_prcgvr__Activity__c>();
+        Map<String, Order> actToOrderIdMap = new Map<String, Order>();
+        Map<String, List<Order>> orderToChildMap = new Map<String, List<Order>>();
+        Map<String, List<String>> actToOrdersToCancelMap = new Map<String, List<String>>();
+        HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
 
-        for(CampaignMember member : newCampMembList){
-            if(member.ResultType__c == 'Macchina' && member.ResultType__c != campMembOldMap.get(member.Id).ResultType__c && member.RelatedActivity__c != null){
-                activitiesToUpdate.add(new wrts_prcgvr__Activity__c(Id = member.RelatedActivity__c, wrts_prcgvr__Status__c = 'Non Esitata'));
+        for(CampaignMember campMemb : newCampMembList){
+            if(campMemb.RelatedActivity__c != null){
+                actIdSet.add(campMemb.RelatedActivity__c);
             }
         }
 
-        if(!activitiesToUpdate.isEmpty()){
-            update activitiesToUpdate;
+        if(actIdSet.size() > 0) {
+            for(wrts_prcgvr__Activity__c act : HDT_QR_Activity.getActivityFromIdList(actIdSet)){
+                if(act.Order__c != null){
+                    actToOrderIdMap.put(act.Id, act.Order__r);
+                    ordIdSet.add(act.Order__c);
+                }
+            }
         }
+
+        for(Order ord : HDT_QR_Order.getOrderQuality(ordIdSet)){
+            if(!ord.RecordType.Developername.equalsIgnoreCase('HDT_RT_OrderDossier')){
+                if(orderToChildMap.get(ord.ParentOrder__c) != null){
+                    orderToChildMap.get(ord.ParentOrder__c).add(ord);
+                }
+                else {
+                    orderToChildMap.put(ord.ParentOrder__c, new List<Order>());
+                    orderToChildMap.get(ord.ParentOrder__c).add(ord);
+                }
+            }
+        }
+
+        for(CampaignMember member : newCampMembList){
+            if(member.ResultType__c == 'Macchina' && member.ResultType__c != campMembOldMap.get(member.Id).ResultType__c && member.RelatedActivity__c != null){
+                if(actToOrderIdMap.get(member.RelatedActivity__c) != null && isMonitoringList.contains(actToOrderIdMap.get(member.RelatedActivity__c).AgencyCode__c)){
+                    if(!actToOrderIdMap.get(member.RelatedActivity__c).RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_OrderDossier')){
+                        actToOrdersToCancelMap.put(member.RelatedActivity__c, new List<String>());
+                        actToOrdersToCancelMap.get(member.RelatedActivity__c).add(actToOrderIdMap.get(member.RelatedActivity__c).Id);
+                    }
+                    else {
+                        actToOrdersToCancelMap.put(member.RelatedActivity__c, new List<String>());
+                        String ordParentId = actToOrderIdMap.get(member.RelatedActivity__c).Id;
+                        for(Order ord : orderToChildMap.get(ordParentId)){
+                            actToOrdersToCancelMap.get(member.RelatedActivity__c).add(ord.Id);
+                        }
+                    }
+                }
+                else {
+                    wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = member.RelatedActivity__c, ContactResult__c = 'Annullato', wrts_prcgvr__Status__c = 'Non Esitata');
+                    actToCancelList.add(act);
+                }
+            }
+        }
+
+        if(actToOrdersToCancelMap.size() > 0){
+            cancelContract(actToOrdersToCancelMap);
+        }
+
+        if(actToCancelList.size() > 0){
+            activitySrv.updateRecords(actToCancelList);
+        }
+    }
+
+    public static void cancelContract(Map<String, List<String>> actToOrdersToCancelMap){
+
+        List<String> notCancelPhase = new List<String>{
+            'Esito Ok da DL',
+            'Dati discordanti',
+            'Annullato',
+            'In lavorazione SAP',
+            'Errore lavorazione SAP',
+            'Completata',
+            'Esito OK da SII',
+            'Esito KO da SII',
+            'KO rilavorato',
+            'KO definitivo'
+        };
+
+        List<String> notCancelNonBillable = new List<String>{
+            'Completata',
+            'Comunicazione verso Motore VAS OK',
+            'Accettato Motore VAS',
+            'Comunicazione verso Motore VAS'
+        };
+
+        List<String> notCancelBillable = new List<String>{
+            'Comunicazione verso Heroku Ok',
+            'Completata',
+            'Comunicazione verso Heroku'
+        };
+
+        HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
+        HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+        HDT_QR_RecordType recTypeQr = new HDT_QR_RecordType();
+        HDT_QR_Order orderQr = new HDT_QR_Order();
+        List<String> ordIdList = new List<String>();
+        List<wrts_prcgvr__Activity__c> actToCloseList = new List<wrts_prcgvr__Activity__c>();
+        List<wrts_prcgvr__Activity__c> actToCreateList = new List<wrts_prcgvr__Activity__c>();
+        List<Order> ordToCloseList = new List<Order>();
+        RecordType attGestRt = recTypeQr.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
+
+        for(String str : actToOrdersToCancelMap.keySet()){
+            ordIdList.addAll(actToOrdersToCancelMap.get(str));
+        }
+        Map<String, Order> ordToCheckMap = new Map<String, Order>(orderQr.getOrdersList(ordIdList));
+
+        for (String actId : actToOrdersToCancelMap.keySet()) {
+
+            wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = actId, ContactResult__c = 'Annullato', wrts_prcgvr__Status__c = 'Non Esitata');
+            actToCloseList.add(act);
+
+            for(String ordId : actToOrdersToCancelMap.get(actId)){
+
+                Order ordToCheck = ordToCheckMap.get(ordId);
+
+                if (notCancelPhase.contains(ordToCheck.Phase__c) || notCancelNonBillable.contains(ordToCheck.Phase__c) || notCancelBillable.contains(ordToCheck.Phase__c)) {                
+                    wrts_prcgvr__Activity__c actNew = new wrts_prcgvr__Activity__c(
+                        RecordTypeId= attGestRt.Id,
+                        Cluster__c = 'Attivazioni',
+                        Process__c = transcodeProcessForActivity(ordToCheck.RecordType.DeveloperName) != null ? transcodeProcessForActivity(ordToCheck.RecordType.DeveloperName) : ordToCheck.ProcessType__c,
+                        Note__c = 'Non è stato possibile procedere all’annullamento, inserire un case di Annullamento contratti'
+                    );
+                    actToCreateList.add(actNew);
+                }
+                else {
+                    Order ordToCancel = new Order(Id = ordId, Phase__c = 'Annullato', CancellationReason__c = 'Contatto Quality Fallito', Status = 'Activated');
+                    ordToCloseList.add(ordToCancel);
+                }
+            }
+        }
+
+        if(actToCloseList.size() > 0){
+            activitySrv.updateRecords(actToCloseList);
+        }
+        if(actToCreateList.size() > 0){
+            activitySrv.createRecord(actToCreateList);
+        }
+        if(ordToCloseList.size() > 0){
+            orderSrv.updateRecords(ordToCloseList);
+        }
+    }
+
+    public static String transcodeProcessForActivity(String orderRecordType){
+
+        Map<String,String> processActivityMap = new Map<String,String>{
+            'HDT_RT_SwitchIn' => 'Switch In',
+            'HDT_RT_CambioOfferta' => 'Cambio offerta',
+            'HDT_RT_VAS' => 'Segnalazioni VAS'
+        };
+        return processActivityMap.get(orderRecordType);
     }
 
     public static void handleStatusChange(List<CampaignMember> newList, Map<Id,CampaignMember> oldMap) {
