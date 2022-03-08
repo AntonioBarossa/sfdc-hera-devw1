@@ -76,17 +76,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             when 'HDT_RT_SwitchIn' {
 
                 List<Order> listOrd = new List<Order>{order};
-                Map<String,Boolean> mapAccountRes = HDT_UTL_SwtichInProcess.checkAccountOrderIsResidential(listOrd);
+                //Map<String,Boolean> mapAccountRes = HDT_UTL_SwtichInProcess.checkAccountOrderIsResidential(listOrd);
                 //orderToUpdate.IsActivationDeferred__c = order.IsActivationDeferred__c;
 
-                try {       
+                /*try {       
                     if(order.SignedDate__c != null){                    
                         orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
                     }
                 }
                 catch (Exception e) { 
                     throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
-                }
+                }*/
                 
                 if (order.ProcessType__c == 'Switch in Fittizio') {
                     orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
@@ -98,20 +98,20 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 else {
                     if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
   
-                        try { 
+                        /*try { 
                             if(order.SignedDate__c != null && mapAccountRes.get(order.AccountId)){
                                 orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
                             }                                                            
                         } 
                         catch (Exception e) { 
                             throw new AuraHandledException('Dati incompleti o errati per la generazione della data massima di ripensamento.');
-                        }                                                                 
+                        }         */                                                        
 
                         if(order.SignedDate__c == null){
                             orderToUpdate.Status = 'In lavorazione';
                             orderToUpdate.Phase__c = 'Da Inviare' ;                        
                         }
-            
+                        /*
                         try {    
                             if(order.SignedDate__c != null && !order.ProcessType__c.contains('Cambio Offerta')){                         
                                 orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order); 
@@ -120,14 +120,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         catch (Exception e) { 
                             throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
                         }                            
-    
+                        */
                         if (order.VolturaThirdTrader__c == true) {
                             orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                         }
                         orderToUpdate.CIAccoutn__c = 'Richiesto';                        
                     }
                     else {
-                        
+                       /* 
                         try {   
                             if(order.SignedDate__c != null && !order.ProcessType__c.contains('Cambio Offerta')){                          
                                 orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
@@ -143,7 +143,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         }
                         catch (Exception e) { 
                             throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
-                        }        
+                        }       */ 
                         if (order.VolturaThirdTrader__c) {
                             orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                         }    

@@ -669,6 +669,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Asset__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.RdoCodeSiebel__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1915,6 +1920,11 @@
      <fieldPermissions>
         <editable>true</editable>
         <field>Sale__c.isTransition__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Sale__c.CampaignMemberId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -30533,6 +30543,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.SuspensionDueDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.SuspensionNote__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

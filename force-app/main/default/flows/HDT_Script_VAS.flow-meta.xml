@@ -1505,7 +1505,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_Generico_1_4_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;XXXXX [SI/NO]&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;XXXXX [SI/NO]&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma inoltre che oggi è il {!DataOggi}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, sig/a. {!GetOrder.Account.Name} abbiamo terminato la registrazione, &lt;b&gt;benvenuto/a in {!GetOrder.SalesCompany__c}!&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;[***FINE REGISTRAZIONE***]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;SI/NO&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;SI/NO&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma inoltre che oggi è il {!DataOggi}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, sig/a. {!GetOrder.Account.Name} abbiamo terminato la registrazione, &lt;b&gt;benvenuto/a in {!GetOrder.SalesCompany__c}!&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1934,7 +1934,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_GENERICO_0</name>
-            <fieldText>&lt;p&gt;Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale o agli altri canali di contatto indicati nella bolletta.&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;XXXX [SI/NO]&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;XXXX [SI/NO]&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Prima di concludere la registrazione, mi conferma oggi è il {!DataOggi}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, sig. {!GetOrder.Account.Name} abbiamo terminato la registrazione.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;[***FINE REGISTRAZIONE**]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale o agli altri canali di contatto indicati nella bolletta.&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;SI/NO&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;SI/NO&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Prima di concludere la registrazione, mi conferma oggi è il {!DataOggi}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, sig. {!GetOrder.Account.Name} abbiamo terminato la registrazione.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -2119,11 +2119,6 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     </rightValue>
                 </conditions>
             </visibilityRule>
-        </fields>
-        <fields>
-            <name>VAS_Generico_1_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;La informo che ogni contratto sarà concluso al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&amp;nbsp;&lt;/li&gt;&lt;li&gt;Nei prossimi 10 giorni provvederemo a verificare la ricezione della documentazione contrattuale e la conclusione [del/di ogni] contratto. La verifica potrà avvenire in due modalità:&lt;ul&gt;&lt;li&gt;Attraverso un nostro operatore che la ricontatterà per chiederle conferma;&lt;/li&gt;&lt;li&gt;Con le credenziali personali che troverà indicate all’interno della documentazione contrattuale e con le quali potrà accedere al sito internet per confermare la conclusione [del/di ogni] contratto ed ascoltare la registrazione di questa telefonata.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>VAS_Generico_TRANNE_NOPROBLEM_LUCEGAS_0</name>
@@ -2317,11 +2312,6 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     </rightValue>
                 </conditions>
             </visibilityRule>
-        </fields>
-        <fields>
-            <name>VAS_Generico_1_4</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale o agli altri canali di contatto indicati nella bolletta. Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;XXXX [SI/NO]&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;XXXX [SI/NO]&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Prima di concludere la registrazione, mi conferma oggi è il {!DataOggi}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, sig. {!GetOrder.Account.Name} abbiamo terminato la registrazione, &lt;b&gt;benvenuto/a in {!GetOrder.SalesCompany__c}!&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;[***FINE REGISTRAZIONE***]&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>

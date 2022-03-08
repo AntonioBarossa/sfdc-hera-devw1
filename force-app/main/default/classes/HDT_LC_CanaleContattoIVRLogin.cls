@@ -35,7 +35,7 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
             {
                 Order childOrd = new Order();
                 childOrd.Id = childOrder.Id;
-                childOrd.Phase__c = 'Comunicazione verso Heroku';
+                //childOrd.Phase__c = 'Comunicazione verso Heroku';
                 childOrd.SignedDate__c = System.today();
                 childOrd.ConfirmCustomerContract__c = 'Web';
                 platformEvents.add(new HDT_PEV_VoltureChangeManagerUpdateSObj__e(SerializedSobj__c=JSON.serialize(childOrd)));
@@ -204,33 +204,38 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
     //Order parentOrd = orderQr.getRecordById(parentOrder);
     Order childOrder = orderQr.getRecordById(child);
     Order parentOrd = orderQr.getRecordById(childOrder.parentOrder__c);
-    /*System.debug('********:2User');
-    System.debug('********:2User:' + parentOrd.Sale__r.Channel__c);
-    System.debug('********:2User:' + parentOrd.SignatureMethod__c);
-    System.debug('********:2User:' + parentOrd.Account.category__c);
-    System.debug('********:2User:' + parentOrd.Username__c);*/
-    if (parentOrd.Account.category__c == 'Famiglie' /*&& parentOrd.Sale__r.Channel__c == 'Teleselling Outbound'*/ && parentOrd.SignatureMethod__c == 'Vocal Order' && parentOrd.Username__c == null){
-      //System.debug('********:3User2');
+    
+    if (/*parentOrd.Account.category__c == 'Famiglie' && parentOrd.Sale__r.Channel__c == 'Teleselling Outbound' &&*/ parentOrd.SignatureMethod__c == 'Vocal Order' && parentOrd.Username__c == null){
+      
       String podCode = childOrder.ServicePoint__r.ServicePointCode__c;
       Integer lengthOfPodCode = podCode.length();
-      //System.debug('********:3User3');
+      
       Integer startingCharacter = lengthOfPodCode - 8;
       String partOne = podCode.substring(startingCharacter,lengthOfPodCode);
       String thirdPosition = partOne.substring(2,3);
-      //System.debug('********:3User4');
+      
       String sixthPosition = partOne.substring(5,6);
       Integer ninthPosition = 9 - Integer.valueof(thirdPosition);
       Integer tenthPosition = 9 - Integer.valueof(sixthPosition);
-      //System.debug('********:3User5');
+      
       String username = partOne + String.valueOf(ninthPosition) + String.valueOf(tenthPosition);
-
-      Date birthDate = (Date)childOrder.Account.BirthDate__c != null?(Date)childOrder.Account.BirthDate__c:HDT_UTL_CheckFiscalCodeTaxNumber.getBirthDayFromCode(childOrder.Account.FiscalCode__c);  
+      String contactFiscalCode = childOrder.Contact__c != null? childOrder.Contact__r.FiscalCode__c:'';
+      String accountFiscalCode = childOrder.Account.FiscalCode__c;
+      Date birthDate;
+      if(String.isNotBlank(accountFiscalCode) && accountFiscalCode.isAlphanumeric()){
+        birthDate = HDT_UTL_CheckFiscalCodeTaxNumber.getBirthDayFromCode(accountFiscalCode);
+      }else if(String.isNotBlank(contactFiscalCode) && contactFiscalCode.isAlphanumeric()) {
+        birthDate = HDT_UTL_CheckFiscalCodeTaxNumber.getBirthDayFromCode(contactFiscalCode);
+      }else {
+        birthDate = Date.today();
+      }
+      //Date birthDate = (Date)childOrder.Account.BirthDate__c != null?(Date)childOrder.Account.BirthDate__c:HDT_UTL_CheckFiscalCodeTaxNumber.getBirthDayFromCode(childOrder.Account.FiscalCode__c);  
       String year = String.valueOf(birthDate.year());
-      //System.debug('********:3User6');
+      
       String month = birthDate.month() > 9 ? String.valueOf(birthDate.month()) : '0'+String.valueOf(birthDate.month());
       String day = birthDate.day() > 9 ? String.valueOf(birthDate.day()) : '0'+String.valueOf(birthDate.day());
       String password = day + month + year.substring(2,4);
-      //System.debug('********:4User');
+      
 
       String ecid = parentOrd.Sale__r.Ecid__c;
       //text to encrypt
@@ -241,7 +246,6 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
       //encrypted string
       String encodedCipherText = EncodingUtil.base64Encode(cipherText);
 
-
       Order newOrder = new Order();
       newOrder.Id = childOrder.parentOrder__c;
       newOrder.UniqueCredentials__c = username + '_' + password;
@@ -250,7 +254,6 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
       newOrder.Password__c = password;
       orderSrv.updateRecord(newOrder);
     }
-      
 }
 
 

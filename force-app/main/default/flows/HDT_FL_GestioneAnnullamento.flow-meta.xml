@@ -319,8 +319,8 @@
     <assignments>
         <name>Annullato_0</name>
         <label>Annullato</label>
-        <locationX>4510</locationX>
-        <locationY>3383</locationY>
+        <locationX>4552</locationX>
+        <locationY>3496</locationY>
         <assignmentItems>
             <assignToReference>GetOrderAggiornato_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -726,6 +726,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assignment_RipensatoKO</name>
+        <label>Assignment</label>
+        <locationX>4154</locationX>
+        <locationY>3428</locationY>
+        <assignmentItems>
+            <assignToReference>GetOrderAggiornato_0.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ripensato KO</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetOrderAggiornato_0.CancellationReasonCode__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Order</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Bozza_Annullata</name>
         <label>Bozza Annullata</label>
         <locationX>1229</locationX>
@@ -835,8 +855,8 @@
     <assignments>
         <name>Ripensato</name>
         <label>Ripensato</label>
-        <locationX>4213</locationX>
-        <locationY>3312</locationY>
+        <locationX>4051</locationX>
+        <locationY>3310</locationY>
         <assignmentItems>
             <assignToReference>GetOrderAggiornato_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1056,7 +1076,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Ripensato</targetReference>
+                <targetReference>Ripensato_KO_Switch</targetReference>
             </connector>
             <label>Ripensamento</label>
         </rules>
@@ -1139,7 +1159,7 @@
     <decisions>
         <name>InviataHeroku_0</name>
         <label>Inviata ad Heroku?</label>
-        <locationX>3667</locationX>
+        <locationX>3669</locationX>
         <locationY>2375</locationY>
         <defaultConnector>
             <targetReference>Get_Activities_0</targetReference>
@@ -1200,6 +1220,13 @@
             </conditions>
             <conditions>
                 <leftValueReference>SwitchCancellationEligibility</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>SwitchRethinkableEligibility</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -1341,6 +1368,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Ripensato_KO_Switch</name>
+        <label>Ripensato KO Switch?</label>
+        <locationX>4177</locationX>
+        <locationY>3249</locationY>
+        <defaultConnector>
+            <targetReference>Ripensato</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Ripensato</defaultConnectorLabel>
+        <rules>
+            <name>Ripensato_KO</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.ProcessType__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Switch in</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>SwitchRethinkableEligibility</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assignment_RipensatoKO</targetReference>
+            </connector>
+            <label>Ripensato KO</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Salva_In_Bozza_o_Conferma</name>
         <label>Salva In Bozza o Conferma?</label>
         <locationX>1906</locationX>
@@ -1458,6 +1517,15 @@
         <expression>IF(CONTAINS(TEXT({!GetOrderAggiornato_0.ProcessType__c}),&quot;Switch in&quot;)
         ,IF(CONTAINS({!GetOrderAggiornato_0.PhaseStory__c},&quot;Ammissibilità OK&quot;),true,false)
         ,true)</expression>
+    </formulas>
+    <formulas>
+        <description>Se ProcessType non è ripensamento non deve ostacolare l&apos;invio dell&apos;annullamento.
+Altrimenti se la data corrente è minore del dieci del mese precedente alla data decorrenza posso inviare il ripensamento altrimenti no</description>
+        <name>SwitchRethinkableEligibility</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(AND({!ProcessType}=&quot;Ripensamento&quot;,CONTAINS(TEXT({!GetOrderAggiornato_0.ProcessType__c}),&quot;Switch in&quot;)),
+IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrderAggiornato_0.EffectiveDate__c})-1,10),true,false)
+,true)</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestioneAnnullamenti {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Annullamento</label>

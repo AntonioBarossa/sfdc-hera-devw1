@@ -1801,6 +1801,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Sale__c.CampaignMemberId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Sale__c.AreaManager__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -30821,6 +30826,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.SuspensionDueDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.SuspensionNote__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

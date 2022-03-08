@@ -35,4 +35,12 @@ public inherited sharing class HDT_QR_Activity {
         return activity;
     }
 
+    public static List<wrts_prcgvr__Activity__c> getActivityFromIdList(Set<String> actIdSet){
+        
+        List<wrts_prcgvr__Activity__c> actList = new List<wrts_prcgvr__Activity__c>();
+
+        actList = [SELECT Id, RecordTypeId, Order__c, Order__r.Id, Order__r.AgencyCode__c, Order__r.RecordType.DeveloperName FROM wrts_prcgvr__Activity__c WHERE Id = :actIdSet WITH SECURITY_ENFORCED];
+
+        return actList;
+    }
 }
