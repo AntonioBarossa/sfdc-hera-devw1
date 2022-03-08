@@ -281,10 +281,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_BA_MassiveLoader</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_BA_OldDraftSales</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -606,14 +602,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_LC_ActivityReassignmentToolTst</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_LC_ActivityScriptLauncher</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_LC_ActivityScriptLauncherTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2249,10 +2237,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_QR_UserQueriesOriginal</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_QR_UserQueriesTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -3730,10 +3714,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_Dependencies</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_DependenciesTestWithData</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
