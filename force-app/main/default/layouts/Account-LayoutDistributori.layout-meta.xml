@@ -2,6 +2,9 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>SBQQ__Amend_Assets</customButtons>
     <customButtons>SBQQ__Renew_Assets</customButtons>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
     <excludeButtons>SendEmail</excludeButtons>
     <excludeButtons>XClean</excludeButtons>
@@ -22,10 +25,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>FiscalCode__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>IsWrongFiscalData__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -84,14 +83,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>DataLimitation__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RecordTypeName__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ExternalPartnerNumber__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -229,82 +220,21 @@
         </quickActionListItems>
     </quickActionList>
     <relatedLists>
-        <fields>OPPORTUNITY.NAME</fields>
-        <fields>OPPORTUNITY.STAGE_NAME</fields>
-        <fields>OPPORTUNITY.CREATED_DATE</fields>
-        <fields>OPPORTUNITY.CLOSE_DATE</fields>
-        <relatedList>RelatedOpportunityList</relatedList>
-        <sortField>OPPORTUNITY.CREATED_DATE</sortField>
-        <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>ORDERS.ORDER_NUMBER</fields>
-        <fields>ParentOrder__c</fields>
-        <fields>ORDERS.CREATED_DATE</fields>
-        <fields>ORDERS.STATUS</fields>
-        <fields>Phase__c</fields>
-        <fields>Sale__c</fields>
-        <fields>Channel__c</fields>
-        <fields>CREATEDBY_USER.ALIAS</fields>
-        <fields>ServicePointCodeFormula__c</fields>
-        <fields>ProcessType__c</fields>
-        <relatedList>RelatedOrderList</relatedList>
-        <sortField>ORDERS.ORDER_NUMBER</sortField>
-        <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>SBQQ__Status__c</fields>
-        <relatedList>SBQQ__Quote__c.SBQQ__Account__c</relatedList>
-        <sortField>CREATED_DATE</sortField>
-        <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <customButtons>CreaattivitamanualeActivity</customButtons>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>wrts_prcgvr__Status__c</fields>
-        <fields>Type__c</fields>
-        <fields>EndDate__c</fields>
-        <fields>OwnedByUser__c</fields>
-        <relatedList>wrts_prcgvr__Activity__c.Account__c</relatedList>
-        <sortField>CREATED_DATE</sortField>
-        <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>CAMPAIGN.NAME</fields>
-        <fields>CAMPAIGN.CAMPAIGN_TYPE</fields>
-        <fields>CAMPAIGN.START_DATE</fields>
-        <fields>CAMPAIGN.BUDGETED_COST</fields>
-        <fields>CAMPAIGN.STATUS</fields>
-        <relatedList>RelatedAccountCampaignList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
         <fields>CREATED__c</fields>
         <fields>TODO_CD__c</fields>
         <fields>EVT_STAT_CD__c</fields>
         <relatedList>SiebelActivity__x.TARGET_OU_ID_SF__c</relatedList>
-        <sortField>CREATED__c</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>New</excludeButtons>
+        <fields>ExternalId</fields>
         <fields>ASSET_NUM__c</fields>
-        <fields>STATUS_CD__c</fields>
-        <fields>IMPIANTO_PROD_CATG_CD__c</fields>
-        <fields>START_DT__c</fields>
         <fields>END_DT__c</fields>
-        <fields>X_SHIP_ADDR__c</fields>
+        <fields>IMPIANTO_PROD_CATG_CD__c</fields>
         <relatedList>SiebelContract__x.SERV_ACCT_SALESFORCE__c</relatedList>
-        <sortField>START_DT__c</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
@@ -315,6 +245,10 @@
         <fields>CREATED_DATE</fields>
         <fields>Text__c</fields>
         <relatedList>SolTracking__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>DistributorPointCode__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -337,7 +271,6 @@
         <fields>ContactCode__c</fields>
         <fields>ACCCONRELATION.START_DATE</fields>
         <fields>ACCCONRELATION.END_DATE</fields>
-        <fields>IsManagerSOL__c</fields>
         <relatedList>RelatedAccountContactRelationList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -345,18 +278,55 @@
         <fields>ContractAccountCode__c</fields>
         <fields>PaymentMethod__c</fields>
         <fields>BillSendingMethod__c</fields>
-        <fields>InvoicingAddressFormula__c</fields>
         <fields>InvoiceEmailAddress__c</fields>
         <fields>InvoiceCertifiedEmailAddress__c</fields>
         <fields>SendCertifiedEmailConsentDate__c</fields>
         <relatedList>BillingProfile__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>New</excludeButtons>
+        <fields>FULL_NAME</fields>
+        <fields>CONTACT.TITLE</fields>
+        <fields>CONTACT.EMAIL</fields>
+        <fields>CONTACT.PHONE1</fields>
+        <relatedList>RelatedContactList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>ORDERS.STATUS</fields>
+        <fields>ORDERS.EFFECTIVE_DATE</fields>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>ORDERS.TOTAL_AMOUNT</fields>
+        <relatedList>RelatedOrderList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <customButtons>CreaattivitamanualeActivity</customButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>Type__c</fields>
+        <fields>ActivityStartTime__c</fields>
+        <fields>ActivityEndTime__c</fields>
+        <fields>wrts_prcgvr__Status__c</fields>
+        <relatedList>wrts_prcgvr__Activity__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>OPPORTUNITY.NAME</fields>
+        <fields>OPPORTUNITY.STAGE_NAME</fields>
+        <fields>OPPORTUNITY.CLOSE_DATE</fields>
+        <fields>SBQQ__Contracted__c</fields>
+        <relatedList>RelatedOpportunityList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>SBQQ__NetAmount__c</fields>
+        <fields>SBQQ__Status__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>SBQQ__Primary__c</fields>
+        <relatedList>SBQQ__Quote__c.SBQQ__Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>CONTRACT.NAME</fields>
         <fields>SAPContractCode__c</fields>
-        <fields>ServicePoint__c</fields>
-        <fields>BillingProfile__c</fields>
         <fields>CONTRACT.STATUS</fields>
         <fields>CONTRACT.START_DATE</fields>
         <fields>CONTRACT.END_DATE</fields>
@@ -368,10 +338,12 @@
     </relatedLists>
     <relatedLists>
         <fields>ASSET.NAME</fields>
-        <fields>ASSET.DIGITAL_ASSET_STATUS</fields>
-        <fields>VasPracticeCode__c</fields>
+        <fields>ASSET.SERIAL_NUMBER</fields>
         <fields>ASSET.INSTALL_DATE</fields>
         <fields>ASSET.QUANTITY</fields>
+        <fields>CONTACT.NAME</fields>
+        <fields>ASSET.STATUS</fields>
+        <fields>ASSET.IS_COMPETITOR_PRODUCT</fields>
         <relatedList>RelatedAssetList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -384,18 +356,13 @@
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
-        <fields>Cluster__c</fields>
+        <fields>Phase__c</fields>
+        <fields>CASES.STATUS</fields>
         <fields>CASES.TYPE</fields>
         <fields>Subprocess__c</fields>
-        <fields>MacroTopic__c</fields>
-        <fields>InformationDetail__c</fields>
-        <fields>Phase__c</fields>
-        <fields>ComplaintEntryChannel__c</fields>
-        <fields>CASES.CLOSED_DATE</fields>
+        <fields>Cluster__c</fields>
+        <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
         <relatedList>RelatedCaseList</relatedList>
-        <sortField>CASES.CREATED_DATE_DATE_ONLY</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
@@ -413,9 +380,13 @@
         <fields>TASK.WHO_NAME</fields>
         <fields>TASK.WHAT_NAME</fields>
         <fields>ACTIVITY.TASK</fields>
-        <fields>IsSms__c</fields>
-        <fields>IsPec__c</fields>
+        <fields>TASK.DUE_DATE</fields>
+        <fields>CORE.USERS.FULL_NAME</fields>
+        <fields>TASK.LAST_UPDATE</fields>
         <relatedList>RelatedHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -423,7 +394,7 @@
         <fields>SupplyAddress__c</fields>
         <fields>MeterSN__c</fields>
         <fields>CommoditySector__c</fields>
-        <fields>DistributorNameFormula__c</fields>
+        <fields>Distributor__c</fields>
         <fields>Resident__c</fields>
         <fields>FlowComputerSN__c</fields>
         <relatedList>ServicePoint__c.Account__c</relatedList>
@@ -438,6 +409,7 @@
         <fields>et4ae5__DateOpened__c</fields>
         <fields>CaseID__c</fields>
         <fields>OrderID__c</fields>
+        <fields>BounceType__c</fields>
         <fields>et4ae5__Contact_ID__c</fields>
         <relatedList>et4ae5__IndividualEmailResult__c.Account__c</relatedList>
     </relatedLists>
@@ -462,14 +434,11 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>Status__c</fields>
         <fields>Channel__c</fields>
-        <fields>CreatedBy__c</fields>
         <fields>Agency__c</fields>
+        <fields>Status__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Sale__c.Account__c</relatedList>
-        <sortField>CREATED_DATE</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -500,34 +469,20 @@
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>Type__c</fields>
         <fields>SendDate__c</fields>
-        <fields>SendMode__c</fields>
         <fields>Receiver__c</fields>
+        <fields>SendMode__c</fields>
+        <fields>BounceReason__c</fields>
         <fields>EnvelopeId__c</fields>
-        <fields>IsBounced__c</fields>
         <relatedList>DocumentSendTracking__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>SR_NUM__c</fields>
-        <fields>CREATED__c</fields>
+        <fields>ExternalId</fields>
+        <fields>Rds_CREATED__c</fields>
         <fields>INS_PRODUCT__c</fields>
         <fields>SR_AREA__c</fields>
-        <fields>SR_STAT_ID__c</fields>
+        <fields>X_ATTRIB_54__c</fields>
         <relatedList>SiebelRds__x.CST_OU_ID_SALESFORCE__c</relatedList>
-        <sortField>CREATED__c</sortField>
-        <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>ExternalId</fields>
-        <fields>OGGETTO_MSG__c</fields>
-        <fields>STATO_NOTIFICA__c</fields>
-        <fields>FLG_LETTO__c</fields>
-        <fields>DATA_INVIO__c</fields>
-        <relatedList>SiebelMsgNotifica__x.ID_BP_SALESFORCE__c</relatedList>
-        <sortField>DATA_INVIO__c</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -536,7 +491,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1j000002So66</masterLabel>
+        <masterLabel>00h1X000002lOCM</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
