@@ -13,6 +13,9 @@
         <nextValueConnector>
             <targetReference>HDT_Script_VAS</targetReference>
         </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Conferma_Adesione</targetReference>
+        </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -82,6 +85,32 @@
         <object>Order</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <screens>
+        <name>Conferma_Adesione</name>
+        <label>Conferma Adesione</label>
+        <locationX>176</locationX>
+        <locationY>974</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Vas_Generico_3</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;[6. Conferma Adesione VAS]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Vas_Generico_1</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;La informo che ogni contratto sarà concluso al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&amp;nbsp;&lt;/li&gt;&lt;li&gt;Nei prossimi 10 giorni provvederemo a verificare la ricezione della documentazione contrattuale e la conclusione [del/di ogni] contratto. La verifica potrà avvenire in due modalità:&lt;ul&gt;&lt;li&gt;Attraverso un nostro operatore che la ricontatterà per chiederle conferma;&lt;/li&gt;&lt;li&gt;Con le credenziali personali che troverà indicate all’interno della documentazione contrattuale e con le quali potrà accedere al sito internet per confermare la conclusione [del/di ogni] contratto ed ascoltare la registrazione di questa telefonata.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Vas_Generico_2</name>
+            <fieldText>&lt;p&gt;Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale o agli altri canali di contatto indicati nella bolletta. Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;SI/NO&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;SI/NO&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Prima di concludere la registrazione, mi conferma oggi è il {!$Flow.CurrentDateTime}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, sig. {!GetOrderPadre.Account.LastName__c} abbiamo terminato la registrazione, benvenuto/a in&lt;b&gt; &lt;/b&gt;Hera Comm/Hera Comm Marche / Hera Comm NordEst!&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;[***FINE REGISTRAZIONE***]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -89,7 +118,7 @@
             <targetReference>GetOrderPadre</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>HDT_Script_Anagrafica</name>
         <label>HDT Script - Anagrafica</label>
