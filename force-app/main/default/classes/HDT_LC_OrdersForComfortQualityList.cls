@@ -106,12 +106,13 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         List<Order> ordToCheck = orderQr.getOrderForComfort(ordId);
 
         if (notCancelPhase.contains(ordToCheck[0].Phase__c) || notCancelNonBillable.contains(ordToCheck[0].Phase__c) || notCancelBillable.contains(ordToCheck[0].Phase__c)) {
-            if ('Firma Falsa'.equalsIgnoreCase(causal) || 'Volontà estorta'.equalsIgnoreCase(causal)) {
-                activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
-                    Id = activityId,
-                    //wrts_prcgvr__Status__c = 'Esitata',
-                    ContactResult__c	 = 'Annullato'
-                ));
+            if ('Firma Falsa'.equalsIgnoreCase(causal) || 'Volontà estorta'.equalsIgnoreCase(causal) || causal.equalsIgnoreCase('Contatto Quality Fallito')) {
+
+                wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = activityId, ContactResult__c = 'Annullato');
+                if(causal.equalsIgnoreCase('Contatto Quality Fallito')){
+                    act.wrts_prcgvr__Status__c = 'Non Esitata';
+                }    
+                activitySrv.updateRecord(act);
 
                 RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
                 activitySrv.createRecord(new wrts_prcgvr__Activity__c(
@@ -121,9 +122,11 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                     Note__c = 'Non è stato possibile procedere all’annullamento, inserire un case di Annullamento contratti'
                 ));
             }
-            throw new AuraHandledException('Non è possibile procedere all’annullamento, effettuare una richiesta di recesso');
-        } else {
-
+            if(!causal.equalsIgnoreCase('Contatto Quality Fallito')){
+                throw new AuraHandledException('Non è possibile procedere all’annullamento, effettuare una richiesta di recesso');
+            }
+        }
+        else {
             orderSrv.updateRecord(new Order(
                 Id = ordId,
                 Phase__c = 'Annullato',
@@ -131,11 +134,12 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 Status = 'Activated'
             ));
 
-            activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
-                Id = activityId,
-                //wrts_prcgvr__Status__c = 'Esitata',
-                ContactResult__c	 = 'Annullato'
-            ));
+            wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = activityId, ContactResult__c = 'Annullato');
+            if(causal.equalsIgnoreCase('Contatto Quality Fallito')){
+                act.wrts_prcgvr__Status__c = 'Non Esitata';
+            }
+
+            activitySrv.updateRecord(act);
         }
     }
 
