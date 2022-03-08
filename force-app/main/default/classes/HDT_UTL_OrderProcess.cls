@@ -176,6 +176,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 order.Phase__c = newPhase;
                 order.PhaseStory__c =  oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
             }
+            /**@frpanico 07/03/2022
+             * Aggiunta comfort per voltura
+             */
+            if(order.Phase__c != oldOrder.Phase__c
+            && order.ProcessType__c == 'Voltura'
+            && oldOrder.Phase__c == 'In attesa validazione' 
+            && (order.Phase__c == 'Documentazione Validata')
+            && order.ComfortCallDaysDue__c != null
+            )
+            {
+                String newPhase = 'In attesa conferma cliente';
+                DateTime nowDateTime = DateTime.now();
+                order.Phase__c = newPhase;
+                order.PhaseStory__c =  oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
+            }
 
             if(order.Phase__c!=oldOrder.Phase__c 
                 && oldOrder.Phase__c == 'In attesa di quality call' 
