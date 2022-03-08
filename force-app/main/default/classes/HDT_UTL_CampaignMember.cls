@@ -253,7 +253,7 @@ public with sharing class HDT_UTL_CampaignMember {
                 }
                 else {
                     wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = member.RelatedActivity__c, ContactResult__c = 'Annullato', wrts_prcgvr__Status__c = 'Non Esitata');
-                    actToCancelList.add(act);                
+                    actToCancelList.add(act);
                 }
             }
         }
