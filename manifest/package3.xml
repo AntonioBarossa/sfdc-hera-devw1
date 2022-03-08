@@ -1,81 +1,120 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>wrts_prcgvr__Activity__c.SospendiAttivita</members>
-        <name>QuickAction</name>
+        <members>AlertAccountConfiguration__c</members>
+        <name>CustomObject</name>
     </types>
     <types>
-        <members>HDT_Activity_Default_Record_Page</members>
-        <members>HDT_General_Case_Record_Page</members>
-        <members>Interazione_Record_Page</members>
-        <name>FlexiPage</name>
-    </types>
-    <types>
-        <members>Order.HDT_RT_Voltura</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Scarto</members>
-        <name>RecordType</name>
-    </types>
-    <types>
-        <members>Asset-Asset Layout</members>
+        <members>Account-CPQ Account Layout Service Console</members>
+        <members>Case-Case Layout</members>
+        <members>Case-HDT_AlertDisassociazioneUtenteWeb</members>
+        <members>Case-HDT_AllineamentoAnagrafica</members>
         <members>Case-HDT_AltreInformative</members>
+        <members>Case-HDT_Annullamento</members>
+        <members>Case-HDT_Autolettura</members>
+        <members>Case-HDT_CanoneRai</members>
+        <members>Case-HDT_ComportamentoVenditori</members>
+        <members>Case-HDT_ComunicazionePagamento</members>
+        <members>Case-HDT_Disattivazioni</members>
+        <members>Case-HDT_Documentale_Copia_contratto</members>
+        <members>Case-HDT_Domiciliazione</members>
+        <members>Case-HDT_FatturazioneConsumi</members>
+        <members>Case-HDT_GenericheAttivazioni</members>
+        <members>Case-HDT_GestioneBolletta</members>
+        <members>Case-HDT_GestioneBonusSociale</members>
+        <members>Case-HDT_GestionePrivacy</members>
+        <members>Case-HDT_Indennizzo</members>
+        <members>Case-HDT_Informative</members>
+        <members>Case-HDT_InversioneContatore</members>
+        <members>Case-HDT_Morosita</members>
+        <members>Case-HDT_PagamentiAltriProcessi</members>
+        <members>Case-HDT_PianoRateizzazione</members>
         <members>Case-HDT_PraticaInVolo</members>
+        <members>Case-HDT_PreventiviEle</members>
+        <members>Case-HDT_PreventiviGas</members>
+        <members>Case-HDT_ReclamiScrittiRichInfo</members>
+        <members>Case-HDT_RichiestaParere</members>
+        <members>Case-HDT_Rimborso</members>
         <members>Case-HDT_SospensioneRiattivazione</members>
+        <members>Case-HDT_UnificazioneSeparazioneCABolletta</members>
+        <members>Case-HDT_VariazioneAmministratore</members>
+        <members>Case-HDT_VariazioneAnagraficaCliente</members>
+        <members>Case-HDT_VariazioniEle</members>
+        <members>Case-HDT_VariazioniGas</members>
+        <members>Case-HDT_VerificaDatiAlDl</members>
+        <members>Case-HDT_VerificaTitolaritaPodPdr</members>
+        <members>Case-HDT_VerificheEle</members>
+        <members>Case-HDT_VerificheGas</members>
+        <members>Case-HDT_VolturaTecnica</members>
+        <members>Case-HDT_VotiveModena</members>
+        <members>Order-Cambio Offerta</members>
+        <members>Order-Dossier</members>
         <members>Order-HDT_PraticaInVolo</members>
+        <members>Order-HDT_Voltura</members>
+        <members>Order-Prima attivazione con modifica</members>
+        <members>Order-Prima attivazione</members>
+        <members>Order-Sconti o Bonus VAS</members>
+        <members>Order-Subentro</members>
+        <members>Order-Switch in</members>
+        <members>Order-VAS</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_DataModelAdmin</members>
+        <members>HDT_ApexClasses</members>
         <name>PermissionSet</name>
     </types>
     <types>
-        <members>HDT_BA_ProcessRequestItem</members>
-        <members>HDT_LC_AccountSelectorController</members>
-        <members>HDT_LC_AppointmentExtraSist</members>
-        <members>HDT_LC_AppointmentExtraSistTst</members>
-        <members>HDT_LC_CanaleContattoIVRLogin</members>
-        <members>HDT_LC_ChildOrderProcessActions</members>
-        <members>HDT_LC_CommunicazioniDistributoreTst</members>
+        <members>HDT_LC_CampaignsController</members>
+        <members>HDT_LC_CtToolbar</members>
+        <members>HDT_LC_OrderDossierWizardActions</members>
         <members>HDT_LC_OrdersForComfortQualityList</members>
+        <members>HDT_LC_SaleActions</members>
         <members>HDT_LC_SaleVas</members>
-        <members>HDT_QR_ActivityCustom</members>
-        <members>HDT_QR_Lead</members>
+        <members>HDT_QR_Activity</members>
         <members>HDT_QR_Order</members>
-        <members>HDT_QR_SystemCapacityConversion</members>
-        <members>HDT_SRV_AppointmentAgendaTst</members>
-        <members>HDT_SRV_PracticesView</members>
-        <members>HDT_SRV_SalesHandler</members>
-        <members>HDT_SRV_VoltureChangeManager</members>
-        <members>HDT_TRH_Order</members>
-        <members>HDT_UTL_ActivityCustom</members>
-        <members>HDT_UTL_CaseProcess</members>
-        <members>HDT_UTL_HerokuPostSalesManager</members>
-        <members>HDT_UTL_NotifVasHelper</members>
-        <members>HDT_UTL_OrderProcess</members>
-        <members>HDT_UTL_ProcessDateManager</members>
-        <members>HDT_UTL_ProcessExecution</members>
-        <members>HDT_UTL_ProcessLead</members>
-        <members>HDT_UTL_Sales</members>
-        <members>HDT_UTL_VasPractices</members>
-        <members>HDT_WRP_Practices</members>
+        <members>HDT_UTL_CampaignMember</members>
+        <members>HDT_UTL_CompanyOwner</members>
+        <members>HDT_UTL_OrderProcessAssignment</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_ProcessCancellationReason__mdt.Process_Cancellation_Reason__c</members>
-        <members>PaperProcessing__c.Status__c</members>
-        <members>wrts_prcgvr__Activity__c.AssignmentRule__c</members>
-        <members>wrts_prcgvr__Activity__c.LastAssignmentDate__c</members>
-        <members>wrts_prcgvr__Activity__c.SuspensionNote__c</members>
-        <members>wrts_prcgvr__Activity__c.Type__c</members>
+        <members>HDT_CancellationReason</members>
+        <name>GlobalValueSet</name>
+    </types>
+    <types>
+        <members>AgentMatrix__c.AgentCode__c</members>
+        <members>AgentMatrix__c.LowerChannelAgency__c</members>
+        <members>AlertAccountConfiguration__c.IsEmailChannelActive__c</members>
+        <members>AlertAccountConfiguration__c.IsEmailChannelAllowed__c</members>
+        <members>AlertAccountConfiguration__c.IsPushChannelActive__c</members>
+        <members>AlertAccountConfiguration__c.IsPushChannelAllowed__c</members>
+        <members>AlertAccountConfiguration__c.IsSmsChannelActive__c</members>
+        <members>AlertAccountConfiguration__c.IsSmsChannelAllowed__c</members>
+        <members>AlertAccountConfiguration__c.IsSolChannelActive__c</members>
+        <members>AlertAccountConfiguration__c.IsSolChannelAllowed__c</members>
+        <members>Sale__c.CampaignMemberId__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>hdtAccountSelector</members>
+        <members>HDT_LCP_OpenAuraCmp</members>
+        <members>HDT_LCP_RunFlowFromAura</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>hdtAccountAlerts</members>
+        <members>hdtCampaignToAccountList</members>
         <members>hdtChildOrderProcessDetails</members>
-        <members>hdtDocumentActivityValidation</members>
-        <members>hdtPracticesView</members>
-        <members>hdtSelezFornituraFlow</members>
-        <members>hdtSystemCapacityConversion</members>
+        <members>hdtCtToolbar</members>
+        <members>hdtCtToolbarContainer</members>
+        <members>hdtNewCampaignCase</members>
+        <members>hdtNewCampaignSale</members>
+        <members>hdtPopover</members>
+        <members>hdtSaleActions</members>
         <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>wrts_prcgvr__Activity__c.CreaattivitamanualeActivity</members>
+        <name>WebLink</name>
     </types>
     <types>
         <members>Admin</members>
@@ -89,9 +128,34 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_AccountDataEnrichment.vasPractices</members>
-        <members>HDT_ProcessCancellationReason.Config85</members>
+        <members>HDT_AdminServiceDispatcher.Aggiunta_Attacco_Gas</members>
+        <members>HDT_AdminServiceDispatcher.Aggiunta_Attacco_Gas_01</members>
         <name>CustomMetadata</name>
+    </types>
+    <types>
+        <members>HDL_FL_Script_Comfort_Call</members>
+        <members>HDL_FL_Script_Quality_Call</members>
+        <members>HDL_FL_VO_Script_Hera_Bebe</members>
+        <members>HDL_FL_VO_Script_Hera_Etapiu</members>
+        <members>HDL_FL_VO_Script_Mini_VO</members>
+        <members>HDL_FL_VO_Script_Nuova_Impronta_Zero</members>
+        <members>HDL_FL_VO_Script_Prezzo_Fisso_Leggero</members>
+        <members>HDL_FL_VO_Script_Prezzo_Sicurezza</members>
+        <members>HDL_FL_VO_Script_Simply_Hera</members>
+        <members>HDL_FL_VO_Scripts_Prezzo_Fisso_Leggero</members>
+        <members>HDL_FL_VO_Scripts_Prezzo_Netto</members>
+        <members>HDT_FL_CreationManualActivity</members>
+        <members>HDT_FL_Script_Gestione_Bundle</members>
+        <members>HDT_FL_Script_Gestione_Ordini</members>
+        <members>HDT_FL_Script_HVAC</members>
+        <members>HDT_FL_Script_Survey_Abbandono</members>
+        <members>HDT_Script_Aggiornamento_Anagrafica</members>
+        <members>HDT_Script_Anagrafica</members>
+        <members>HDT_Script_Consenso_Privacy</members>
+        <members>HDT_Script_Introduzione</members>
+        <members>HDT_Script_VAS</members>
+        <members>HDT_Script_Vas_Standalone</members>
+        <name>Flow</name>
     </types>
     <version>49</version>
 </Package>

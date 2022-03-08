@@ -100,6 +100,11 @@
                 <default>false</default>
                 <label>WEB_SELF</label>
             </value>
+            <value>
+                <fullName>AGENZIE BUSINESS</fullName>
+                <default>false</default>
+                <label>AGENZIE BUSINESS</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
