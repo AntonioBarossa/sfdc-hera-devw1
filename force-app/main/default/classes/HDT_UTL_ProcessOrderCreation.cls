@@ -156,7 +156,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
     public override void registryCreation(){
 
-        List<Order> orderToInsert = new List<Order>();
+        List<Order> parentOrderToInsert = new List<Order>();
+        List<Order> childOrderToInsert = new List<Order>();
         List<OrderItem> orderItemToInsert = new List<OrderItem>();
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
@@ -169,7 +170,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             processObj.childOrder.Pricebook2Id = priceBookEntryMap.get(processObj.prodCommOff.Id).Pricebook2Id;
             processObj.childOrder.AccountId = processObj.accountId;
 
-            // orderItem cretion for "Offerta commerciale"
+            // orderItem creation for "Offerta commerciale"
             processObj.orderItemCommOff.Product2Id = processObj.prodCommOff.Id;
 
             // orderItem creation for "Punto fornitura"
@@ -179,11 +180,13 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
             processObj.parentOrder = createFatherOrder(processObj.childOrder, processObj.parentOrder);
 
-            orderToInsert.add(processObj.childOrder);
+            parentOrderToInsert.add(processObj.parentOrder);
+            childOrderToInsert.add(processObj.childOrder);
 
         }
 
-        insert orderToInsert;
+        System.debug(String.valueOf(parentOrderToInsert));
+        insert childOrderToInsert;
         
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
@@ -211,7 +214,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         insert orderItemToInsert;
 
-        System.debug('>>> order created: ' + orderToInsert);
+        System.debug('>>> order created: ' + childOrderToInsert);
 
     }
 
