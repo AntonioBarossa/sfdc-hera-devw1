@@ -973,6 +973,7 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getRecordByOrderNumber(String orderNumber){
         return [SELECT id,
         phase__c,
+        Description,
         Status,
         PrecheckResultSII__c,
         ProcessType__c,
@@ -1031,7 +1032,7 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getRecordByOrderId(String recordId){
-        return [Select id,IsTechnicalTransfer__c,phase__c,Status,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, CancellationNote__c, AccountId from Order where Id = :recordId WITH SECURITY_ENFORCED];
+        return [Select id,Description,IsTechnicalTransfer__c,phase__c,Status,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, CancellationNote__c, AccountId from Order where Id = :recordId WITH SECURITY_ENFORCED];
     }
 
     /**
@@ -1200,7 +1201,11 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getOrderForComfort(String id){
-        return [Select id,Phase__c,ProcessType__c,VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
+        return [SELECT Id, Phase__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, RecordType.DeveloperName FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
+    }
+
+    public List<Order> getOrdersList(List<String> ordIdList){
+        return [SELECT Id, Phase__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, RecordType.DeveloperName FROM Order WHERE Id = :ordIdList WITH SECURITY_ENFORCED];
     }
 
     //@frpanico getExciseTranscode
@@ -1225,5 +1230,14 @@ public inherited sharing class HDT_QR_Order {
     public List<wrts_prcgvr__Activity__c> getOpenActivitiesByOrderId(String orderId)
     {
         return [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Chiusa' AND Order__c = :orderId WITH SECURITY_ENFORCED];
+    }
+
+    public static List<Order> getOrderQuality(Set<String> ordIdSet) {
+        
+        List<Order> ordList = new List<Order>();
+        
+        ordList = [SELECT Id, RecordType.DeveloperName, ParentOrder__c, ParentOrder__r.Id, ParentOrder__r.RecordType.DeveloperName FROM Order WHERE (Id = :ordIdSet OR ParentOrder__c = :ordIdSet) AND QualityCall__c = true WITH SECURITY_ENFORCED];
+
+        return ordList;
     }
 }

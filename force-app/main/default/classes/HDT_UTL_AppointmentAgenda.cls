@@ -16,7 +16,6 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         String codApp = '';
         String codFlusso = '';
         String esito = '';
-        String stato = String.isEmpty(activity.wrts_prcgvr__Status__c)? '' : activity.wrts_prcgvr__Status__c.toUpperCase();
         switch on requestMethod {
             when FIRST_SEARCH {
                 codFlusso = '0160';
@@ -56,7 +55,8 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         if (appointmentDate != null){
             String day = (appointmentDate.day() > 9)? String.valueOf(appointmentDate.day()) : '0'+String.valueOf(appointmentDate.day());
             String month = (appointmentDate.month() > 9 )? String.valueOf(appointmentDate.month()) : '0'+ String.valueOf(appointmentDate.month());
-            formattedAppointment = appointmentDate.year()+'-'+month+'-'+day;
+            //formattedAppointment = appointmentDate.year()+'-'+month+'-'+day;
+            formattedAppointment = day+'/'+month+'/'+appointmentDate.year();
         }
         appointment.appData = formattedAppointment;
         appointment.appFasciaOrario = timeSlot;
@@ -293,7 +293,6 @@ public with sharing class HDT_UTL_AppointmentAgenda {
     public static Blob criptId(Id idToCript){
         Blob key = Crypto.generateAesKey(128);
         Blob data = Blob.valueOf((String)idToCript);
-        System.debug('original Blob -->' +JSON.serialize(data));
         return Crypto.encryptWithManagedIV('AES128', key, data);
     }
 

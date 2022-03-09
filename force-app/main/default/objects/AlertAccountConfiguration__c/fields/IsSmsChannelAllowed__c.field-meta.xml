@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <formula>AlertConfiguration__r.IsSmsChannelActive__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Canale SMS</label>
+    <label>SMS</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

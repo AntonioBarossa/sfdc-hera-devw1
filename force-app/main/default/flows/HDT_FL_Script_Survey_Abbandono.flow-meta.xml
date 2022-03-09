@@ -253,7 +253,7 @@
         <inputAssignments>
             <field>SurveyCRM__c</field>
             <value>
-                <elementReference>GetSurvey.Id</elementReference>
+                <elementReference>GetSurvey_0.Id</elementReference>
             </value>
         </inputAssignments>
         <object>SurveyResponse__c</object>
@@ -287,7 +287,7 @@
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Screen1</targetReference>
+            <targetReference>GetSurvey_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -302,13 +302,13 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>GetSurvey</name>
+        <name>GetSurvey_0</name>
         <label>GetSurvey</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>GetSurveyResponse</targetReference>
+            <targetReference>Screen1</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -350,7 +350,7 @@
             <field>SurveyCRM__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>GetSurvey.Id</elementReference>
+                <elementReference>GetSurvey_0.Id</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -430,12 +430,12 @@
         <name>Screen1</name>
         <label>Screen1</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>GetSurvey</targetReference>
+            <targetReference>GetSurveyResponse</targetReference>
         </connector>
         <fields>
             <name>text1</name>
@@ -646,6 +646,16 @@
             <name>text7</name>
             <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Per caso ricorda in che modo la hanno contattata per la sottoscrizione del contratto?&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RB1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>RB2</name>
@@ -729,7 +739,7 @@
             <targetReference>GetCampaignMember</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>Collection</name>
         <dataType>String</dataType>

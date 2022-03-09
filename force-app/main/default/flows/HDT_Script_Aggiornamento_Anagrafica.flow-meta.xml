@@ -42,6 +42,31 @@
         </value>
     </choices>
     <decisions>
+        <name>Aggiornamento_Anagrafica_Decision</name>
+        <label>Aggiornamento Anagrafica Decision</label>
+        <locationX>220</locationX>
+        <locationY>758</locationY>
+        <defaultConnector>
+            <targetReference>ScreenSi_2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotAggiornamento</defaultConnectorLabel>
+        <rules>
+            <name>isAggiornamentoAnagrafica</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RBSi_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Si</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Modifica_Anagrafica_Flow</targetReference>
+            </connector>
+            <label>isAggiornamentoAnagrafica</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Confermato_Decision</name>
         <label>Confermato Decision</label>
         <locationX>176</locationX>
@@ -154,7 +179,7 @@
         </connector>
         <fields>
             <name>text1</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Buon giorno, sono Nome e Cognome Operatore, la informo che la presente telefonata proviene dall&apos;Italia ed è registrata.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Vorrei parlare con il Sig./Sig.ra {!GetOrder.Account.LastName__c} {!GetOrder.Account.FirstName__c}&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Buon giorno, sono Nome e Cognome Operatore, la informo che la presente telefonata proviene dall&apos;Italia ed è registrata.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Vorrei parlare con il Sig./Sig.ra {!GetCampaignMember.FirstName} {!GetCampaignMember.LastName}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -162,7 +187,6 @@
             <choiceReferences>RB1_Confermo</choiceReferences>
             <choiceReferences>RB1_NonConfermo</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>RB1</fieldText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
@@ -170,13 +194,22 @@
             <name>text2</name>
             <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: La contatto dal Gruppo Hera al fine di verificare insieme a lei i dati di contatto in nostro possesso ed aggiornarli se necessario. Mi conferma che possiamo procedere?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RB1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>RB1_Confermo</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>RB2</name>
             <choiceReferences>RB2Choice_Si</choiceReferences>
             <choiceReferences>RB2Choice_No</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>RB2</fieldText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
             <visibilityRule>
@@ -211,7 +244,7 @@
     <screens>
         <name>Screen_No</name>
         <label>Screen No</label>
-        <locationX>440</locationX>
+        <locationX>528</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -226,7 +259,6 @@
             <choiceReferences>RB2Choice_Si</choiceReferences>
             <choiceReferences>RB3_No</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>RB3</fieldText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
@@ -266,30 +298,61 @@
     <screens>
         <name>Screen_Si</name>
         <label>Screen_Si</label>
-        <locationX>176</locationX>
+        <locationX>220</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Aggiornamento_Anagrafica_Decision</targetReference>
+        </connector>
         <fields>
             <name>text1_Si</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Innanzitutto le riepilogo quali dati di contatto sono in nostro possesso e poi nel caso ci sia da aggiornare qualcosa procederemo immediatamente&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Questi sono i dati di contatto in nostro possesso:&lt;/p&gt;&lt;p&gt;Telefono Fisso 1: {!GetOrder.Account.Phone}&lt;/p&gt;&lt;p&gt;Telefono Fisso 2: {!GetOrder.Account.OtherPhone__c}&amp;nbsp;&lt;/p&gt;&lt;p&gt;Telefono Cellulare1: {!GetOrder.Account.MobilePhone__c}&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&amp;nbsp;Mail: {!GetOrder.Account.PrimaryEmail__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;EVENTUALE MODIFICA DEI DATI&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Bene Sig./Sig.ra&amp;nbsp;&amp;nbsp;{!GetOrder.Account.FirstName__c} {!GetOrder.Account.LastName__c}&amp;nbsp;&amp;nbsp;visto che abbiamo riconfermato/modificato i suoi dati è necessario aggiornare anche i consensi privacy&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Conferisce il suo consenso a contattarla per ricevere notizie in merito ad offerte riguardanti beni e servizi proposti da Hera Comm o dai suoi fornitori e per indagini di mercato, tramite l’utilizzo del telefono, compresi sistemi automatizzati di chiamata, di comunicazioni elettroniche, quali e-mail, sms e mms e della posta cartacea?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: SI – NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Conferisce il suo consenso allo svolgimento di attività volte all&apos;analisi delle sue preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: SI – NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Grazie mille Sig./Sig.ra {!GetOrder.Account.FirstName__c} {!GetOrder.Account.LastName__c} mi conferma che oggi è il {!$Flow.CurrentDate}?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: La telefonata si conclude qui, la salto&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: La ringrazio comunque per la disponibilità e la informo che in qualsiasi momento può contattare il nostro servizio cliente per modificare in autonomia i suoi dati di contatto oppure in alternativa può utilizzare la app MyHera&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: SI – NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Consenso 1 SI + Consenso 2 SI&amp;nbsp;-&amp;gt; tab di Vendita AZIENDA&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Innanzitutto le riepilogo quali dati di contatto sono in nostro possesso e poi nel caso ci sia da aggiornare qualcosa procederemo immediatamente&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Questi sono i dati di contatto in nostro possesso:&lt;/p&gt;&lt;p&gt;Telefono Fisso 1: {!GetCampaignMember.Contact.Account.Phone}&lt;/p&gt;&lt;p&gt;Telefono Fisso 2: {!GetCampaignMember.Contact.Account.OtherPhone__c}&lt;/p&gt;&lt;p&gt;Telefono Cellulare1: {!GetCampaignMember.Contact.Account.MobilePhone__c}&lt;/p&gt;&lt;p&gt;&amp;nbsp;Mail: {!GetCampaignMember.Contact.Account.PrimaryEmail__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ci sono dati da aggiornare?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>text2_Si</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Operatore&lt;/b&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;: La ringrazio comunque per la disponibilità e la informo che in qualsiasi momento può contattare il nostro servizio cliente per modificare in autonomia i suoi dati di contatto oppure in alternativa può utilizzare la app MyHera&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>RBSi_1</name>
+            <choiceReferences>RB2Choice_Si</choiceReferences>
+            <choiceReferences>RB3_No</choiceReferences>
+            <dataType>String</dataType>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>ScreenSi_2</name>
+        <label>ScreenSi_2</label>
+        <locationX>220</locationX>
+        <locationY>1094</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Consensi_Privacy_Flow</targetReference>
+        </connector>
+        <fields>
+            <name>Si_screen2</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Bene Sig./Sig.ra&amp;nbsp;{!GetCampaignMember.FirstName} {!GetCampaignMember.LastName}&amp;nbsp;&amp;nbsp;visto che abbiamo riconfermato/modificato i suoi dati è necessario aggiornare anche i consensi privacy&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Conferisce il suo consenso a contattarla per ricevere notizie in merito ad offerte riguardanti beni e servizi proposti da Hera Comm o dai suoi fornitori e per indagini di mercato, tramite l’utilizzo del telefono, compresi sistemi automatizzati di chiamata, di comunicazioni elettroniche, quali e-mail, sms e mms e della posta cartacea?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: SI – NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Conferisce il suo consenso allo svolgimento di attività volte all&apos;analisi delle sue preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: SI – NO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>RB2</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>RB2Choice_No</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>ScreenSi_3</name>
+        <label>ScreenSi_3</label>
+        <locationX>220</locationX>
+        <locationY>1334</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>text5</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Grazie mille Sig./Sig.ra {!GetCampaignMember.FirstName} {!GetCampaignMember.LastName} mi conferma che oggi è il {!$Flow.CurrentDate}?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: La telefonata si conclude qui, la salto&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: La ringrazio comunque per la disponibilità e la informo che in qualsiasi momento può contattare il nostro servizio cliente per modificare in autonomia i suoi dati di contatto oppure in alternativa può utilizzare la app MyHera&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: SI – NO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -302,6 +365,64 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Consensi_Privacy_Flow</name>
+        <label>Consensi Privacy Flow</label>
+        <locationX>220</locationX>
+        <locationY>1214</locationY>
+        <connector>
+            <targetReference>ScreenSi_3</targetReference>
+        </connector>
+        <flowName>HDT_FL_PostSalesMasterDispatch</flowName>
+        <inputAssignments>
+            <name>AccountId</name>
+            <value>
+                <elementReference>GetCampaignMember.Contact.Account.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Modifica Privacy</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>RecordTypeName</name>
+            <value>
+                <stringValue>HDT_RT_GestionePrivacy</stringValue>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Modifica_Anagrafica_Flow</name>
+        <label>Modifica Anagrafica Flow</label>
+        <locationX>88</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>ScreenSi_2</targetReference>
+        </connector>
+        <flowName>HDT_FL_PostSalesMasterDispatch</flowName>
+        <inputAssignments>
+            <name>AccountId</name>
+            <value>
+                <elementReference>GetCampaignMember.Contact.Account.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Variazione Anagrafica Cliente</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>RecordTypeName</name>
+            <value>
+                <stringValue>HDT_RT_VariazioneAnagraficaCliente</stringValue>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
     <variables>
         <name>idCampaignMemberInput</name>
         <dataType>String</dataType>

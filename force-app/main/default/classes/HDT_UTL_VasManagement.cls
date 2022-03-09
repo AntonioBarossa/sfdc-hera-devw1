@@ -230,15 +230,14 @@ public with sharing class HDT_UTL_VasManagement {
             super(currentOrder, currentCase);
             /**@frpanico 03/03/2022
              * Fix keyServizio
-             * Fix Ancora non confermata, per cui viene rilasciata commentata.
              */
-            /*String keyString = (String)currentCase.getSObject('Asset')?.get('VasPracticeCode__c')!= null 
+            String keyString = (String)currentCase.getSObject('Asset')?.get('VasPracticeCode__c')!= null 
             ? (String)currentCase.getSObject('Asset')?.get('VasPracticeCode__c')
             : (String)currentCase.getSObject('Subscription__r')?.get('VasPracticeCode__c') != null
                 ? (String)currentCase.getSObject('Subscription__r')?.get('VasPracticeCode__c')
                 : (String)currentOrder.get('VasPracticeCode__c');
 
-            keyServizio = keyString;*/
+            keyServizio = keyString;
 
             nrContrattoIp = currentOrder.ContractReference__r?.SAPContractCode__c;
 
