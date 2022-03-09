@@ -40,7 +40,9 @@ public inherited sharing class HDT_UTL_CompanyOwner {
 
                 for(SObject s: objs){
                     objectApiName=String.valueOf(s.getSObjectType());
-                    if(objectApiName=='Account' || objectApiName=='Lead' /*|| objectApiName=='Campaign'*/){
+                    String rtName = 'HDT_RT_Distributore';
+                    String rtId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(rtName).getRecordTypeId();
+                    if((objectApiName=='Account' && !s.get('RecordTypeId').equals(rtId)) || objectApiName=='Lead' /*|| objectApiName=='Campaign'*/){
                         if(s.get('CompanyOwner__c') == null){
                             s.addError('Company Owner must be completed!');
                         }

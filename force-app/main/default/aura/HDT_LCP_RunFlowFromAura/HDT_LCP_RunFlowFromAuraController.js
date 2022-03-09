@@ -26,6 +26,9 @@
         //variabile per innesco da campagne
         var campaignId = myPageRef.state.c__campaignId;
 
+        var campaignMemberId = myPageRef.state.c__campaignMemberId;
+        console.log('campaignMemberId -->'+campaignMemberId);
+
         // id del lead oggetto del process.
         var leadId = myPageRef.state.c__leadId;
 
@@ -169,6 +172,9 @@
         }
         if(campaignId != null){
             inputVariables.push({ name : 'CampaignId', type : 'String', value : campaignId});
+        }
+        if(campaignMemberId != null){
+            inputVariables.push({ name : 'CampaignMemberId', type : 'String', value : campaignMemberId});
         }
         if(leadId != null){
             inputVariables.push({ name : 'LeadId', type : 'String', value : leadId});
