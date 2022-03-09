@@ -254,16 +254,11 @@
                         <valueListItems>
                             <value>CustomButton.wrts_prcgvr__Activity__c.annullaPratica</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2 OR 3) AND  4 AND 5 AND 6 AND 7 AND 8 AND 9</booleanFilter>
+                                <booleanFilter>(1 OR 2) AND 3 AND  4 AND 5 AND 6 AND 7 AND 8</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Esito KO da DL</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>KO Fornitore</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.DiscardCategory__c}</leftValue>
@@ -543,6 +538,32 @@
                                     <leftValue>{!Record.Order__r.Phase__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Annullamento - Esito KO da DL/SII</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.wrts_prcgvr__Activity__c.HDT_DisattivaVas</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>HDT_RT_Scarto</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Gestionale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>KO Fornitore</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__IsClosed__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
