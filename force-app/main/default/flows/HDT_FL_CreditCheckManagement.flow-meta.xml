@@ -82,6 +82,13 @@
                 <stringValue>Attesa Credit Check</stringValue>
             </value>
         </assignmentItems-->
+        <assignmentItems>
+            <assignToReference>getActivity.CreditCheckResults__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>OK</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Azione_0</targetReference>
         </connector>
