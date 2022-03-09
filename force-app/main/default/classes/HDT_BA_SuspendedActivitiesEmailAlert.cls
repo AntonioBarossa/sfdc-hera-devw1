@@ -5,12 +5,11 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Databa
     Map<wrts_prcgvr__Activity__c, User> activityOwner = new Map<wrts_prcgvr__Activity__c, User> ();
     public HDT_BA_SuspendedActivitiesEmailAlert() {
         //old this.activities = [SELECT Id, Name, SuspensionDueDate__c, wrts_prcgvr__Status__c, OwnedByUser__c FROM wrts_prcgvr__Activity__c WHERE SuspensionDueDate__c = TODAY AND wrts_prcgvr__Status__c = 'Sospesa' WITH SECURITY_ENFORCED];
-        this.activities = [SELECT Id, Name, SuspensionDueDate__c, wrts_prcgvr__Status__c, OwnerId, Owner.Name 
+        this.activities = [SELECT Id, Name, SuspensionReason__c, SuspensionDueDate__c, wrts_prcgvr__Status__c, OwnerId, Owner.Name 
                            FROM wrts_prcgvr__Activity__c WHERE SuspensionDueDate__c = TODAY 
                            AND wrts_prcgvr__Status__c = 'Sospesa' 
                            AND RecordType.DeveloperName = 'HDT_RT_Scarto'
                            WITH SECURITY_ENFORCED]; //Marco Arci
-        system.debug('-----'+this.activities); //Marco arci debug temporaneo
         if (this.activities.size() > 0) {
             List<String> userNames = new List<String>();
             for (wrts_prcgvr__Activity__c act : this.activities) {
@@ -22,7 +21,6 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Databa
             for (User user : users) {
                 this.usersEmail.put(user.Name, user.Email);
             }
-            system.debug('------'+this.usersEmail); //Marco Arci debug temporaneo
         }
     }
 
@@ -43,11 +41,10 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Databa
             toAddresses.add(this.usersEmail.get(activity.Owner.Name)); 
             emailMsg.setToAddresses(toAddresses);
             emailMsg.setSubject('Attività sospesa');
-            String emailBody = String.format('Gentile utente, <br/> ti segnaliamo che l’attività {0} ha raggiunto la data fine sospensione <br/>', new List<String>{activity.Name});
+            String emailBody = String.format('Gentile utente, <br/> ti segnaliamo che l’attività {0} ha raggiunto la data fine sospensione <br/> Motivo sospensione: {1}', new List<String>{activity.Name, activity.SuspensionReason__c});
             emailMsg.setHtmlBody(emailBody);
             emailMsg.setOrgWideEmailAddressId(orgWideAddress.Id);
             emailList.add(emailMsg);
-            system.debug('-----'+toAddresses); //Marco Arci debug temporaneo
         }
         if(emailList.size() > 0){
             Messaging.sendEmail(emailList);
@@ -55,7 +52,6 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Databa
     }   
 
     public void finish(Database.BatchableContext bc){
-        System.debug('-------- finish batch');
     }
     
 }
