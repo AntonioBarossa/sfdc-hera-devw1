@@ -411,4 +411,31 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         system.debug(LoggingLevel.DEBUG, '>>cancelQualityNoResult end');
 
     }
+
+    public static void sendCloseNotification(List<wrts_prcgvr__Activity__c> newTriggerList , Map<Id,SObject> oldTriggerMap){
+        List<wrts_prcgvr__Activity__c> activityToSendNotify = new List<wrts_prcgvr__Activity__c>();
+        for (wrts_prcgvr__Activity__c activity : newTriggerList){
+            wrts_prcgvr__Activity__c oldActivity = (wrts_prcgvr__Activity__c)oldTriggerMap.get(activity.Id);
+            if ('Manuale'.equalsIgnoreCase(activity.DiscardCategory__c) && 'Chiusa'.equalsIgnoreCase(activity.wrts_prcgvr__Status__c) && !activity.wrts_prcgvr__Status__c.equalsIgnoreCase(oldActivity.wrts_prcgvr__Status__c)){
+                activityToSendNotify.add(activity);
+            }
+        }
+
+        if (!activityToSendNotify.isEmpty()){
+            HDT_QR_Knowledge qrKb = new HDT_QR_Knowledge();
+            CustomNotificationType notificationType = qrKb.getCustomNotificationType();
+            for (wrts_prcgvr__Activity__c activity : activityToSendNotify){
+                try{
+                    Messaging.CustomNotification notification = new Messaging.CustomNotification();
+                    notification.setTitle('Chiusura Attività');
+                    notification.setBody('L\'attività manuale ' + activity.Name + ' è stata chiusa');
+                    notification.setNotificationTypeId(notificationType.Id);
+                    notification.setTargetId(activity.Id);
+                    notification.send(new Set<String>{activity.CreatedById});
+                } catch(Exception e){
+                    System.debug(LoggingLevel.DEBUG, 'Impossibile inviare notifica: ' + e.getMessage() + '. Error at line: ' + e.getLineNumber());
+                }
+            }
+        } 
+    }
 }
