@@ -100,6 +100,12 @@ public inherited sharing class HDT_UTL_ContractProcess {
         contract.SBQQ__AmendmentPricebookId__c = orderCompleted.Pricebook2Id;
         contract.CommercialProduct__c = orderCompleted.CommercialProduct__c ;
         HDT_UTL_DatabaseService.insertSObject(contract);
+        if(String.isNotBlank(orderCompleted.ServicePoint__c)){
+            ServicePoint__c sp = new ServicePoint__c();
+            sp.Id = orderCompleted.ServicePoint__c;
+            sp.MeterStatus__c='Attivo';
+            HDT_UTL_DatabaseService.updateSObject(sp);
+        }
         return contract;
     }
     private static SBQQ__Subscription__c createSubscription(OrderItem item,Contract contract,Order orderCompleted){
