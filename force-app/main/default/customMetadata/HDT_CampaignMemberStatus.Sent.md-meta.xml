@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>CH_UP_CO</label>
+    <label>Sent</label>
     <protected>false</protected>
     <values>
         <field>Category__c</field>
-        <value xsi:type="xsd:string">Entrambi</value>
+        <value xsi:type="xsd:string">Ciccio</value>
     </values>
     <values>
         <field>Channel__c</field>
-        <value xsi:type="xsd:string">Tutti</value>
+        <value xsi:type="xsd:string">Pasticcio</value>
     </values>
     <values>
         <field>Default__c</field>
@@ -16,11 +16,11 @@
     </values>
     <values>
         <field>HasResponded__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>OutcomeCategory__c</field>
-        <value xsi:type="xsd:string">Utile Positivo</value>
+        <value xsi:type="xsd:string">Non Utile</value>
     </values>
     <values>
         <field>OutcomeType__c</field>
@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>StatusName__c</field>
-        <value xsi:type="xsd:string">Contattato positivo - Cambio offerta</value>
+        <value xsi:type="xsd:string">Sent</value>
     </values>
 </CustomMetadata>
