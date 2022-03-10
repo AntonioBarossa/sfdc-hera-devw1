@@ -29,7 +29,7 @@ public with sharing class HDT_LC_ConfigurePaymentMethodsTst {
             List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accountList[0].id, 'Bozza');
             List<wrts_prcgvr__Activity__c> activityCustomList = HDT_UTL_DataFactoryTst.createActivityCustom(1, false, accountList[0].id);
 			activityCustomList[0].Type__c = 'Approvazione Offerte';
-            activityCustomList[0].wrts_prcgvr__Status__c = 'Creata';
+            activityCustomList[0].wrts_prcgvr__Status__c = 'Aperta';
             activityCustomList[0].Sale__c = saleList[0].id;
             activityCustomList[0].Approved__c = 'No';
 			insert activityCustomList;

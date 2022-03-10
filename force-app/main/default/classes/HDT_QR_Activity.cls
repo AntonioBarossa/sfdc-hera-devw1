@@ -20,7 +20,7 @@ public inherited sharing class HDT_QR_Activity {
         String saleId =  (String)o.get('Id');
 
         String type = 'Approvazione Offerte';
-        String status ='Creata';
+        String status ='Aperta';
         String query = 'SELECT '+ fields +
                 ' FROM wrts_prcgvr__Activity__c WHERE Type__c=: type AND Account__c =: idAcc AND Status__c=:status AND Sale__c=: saleId WITH SECURITY_ENFORCED';
 
