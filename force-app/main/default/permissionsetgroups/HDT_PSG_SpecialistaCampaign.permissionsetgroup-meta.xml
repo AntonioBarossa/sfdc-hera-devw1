@@ -9,7 +9,6 @@
     <permissionSets>HDT_EinsteinSearchLicense</permissionSets>
     <permissionSets>HDT_FUBjobsManagement</permissionSets>
     <permissionSets>HDT_SalesforceCPQLicense</permissionSets>
-    <permissionSets>HDT_SalesforceCPQUser</permissionSets>
     <permissionSets>HDT_ViewReports</permissionSets>
     <permissionSets>force__EinsteinAnalyticsPlusAdmin</permissionSets>
     <status>Updated</status>

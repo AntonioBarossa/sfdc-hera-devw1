@@ -11,6 +11,5 @@
     <permissionSets>HDT_PostsalesProcess</permissionSets>
     <permissionSets>HDT_SalesProcess</permissionSets>
     <permissionSets>HDT_SalesforceCPQLicense</permissionSets>
-    <permissionSets>HDT_SalesforceCPQUser</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
