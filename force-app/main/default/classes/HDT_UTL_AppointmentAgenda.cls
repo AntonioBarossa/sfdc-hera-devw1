@@ -16,6 +16,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         String codApp = '';
         String codFlusso = '';
         String esito = '';
+        String stato = String.isBlank(activity.wrts_prcgvr__Status__c)? '' : activity.wrts_prcgvr__Status__c;
         switch on requestMethod {
             when FIRST_SEARCH {
                 codFlusso = '0160';
@@ -24,7 +25,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
                 codFlusso = '0170';
                 esito = '1';
                 codApp = activity.AppointmentCode__c;
-                modApp = STATE_FOR_APPMODE.contains(activity.wrts_prcgvr__Status__c) ? 'X' : '';
+                modApp = STATE_FOR_APPMODE.contains(stato.toUpperCase()) ? 'X' : '';
             }
             when EDIT {
                 codFlusso = '0185';
@@ -33,7 +34,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
             when CONFIRM {
                 codFlusso = '0170';
                 esito = '0';
-                modApp = STATE_FOR_APPMODE.contains(activity.wrts_prcgvr__Status__c) ? 'X' : '';
+                modApp = STATE_FOR_APPMODE.contains(stato.toUpperCase()) ? 'X' : '';
             }
             when CANCELLATION {
                 codFlusso = '0170';

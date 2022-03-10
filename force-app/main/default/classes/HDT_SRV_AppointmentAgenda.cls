@@ -26,6 +26,8 @@ public with sharing class HDT_SRV_AppointmentAgenda {
         appointment.zLimApp= mapAppointment.get('dataLimite');
         appointment.zLimAppOra = mapAppointment.get('oraLimite');
         appointment.zStimaDurApp = mapAppointment.get('stima');
+        request.appData = appointment.appData;
+        request.appFasciaOrario = appointment.appFasciaOrario;
         HDT_UTL_AppointmentAgenda.setAppointmentCode(request, appointment.codiceApp);
         HDT_WRP_Appuntamento.HDT_WRP_ResponseAppuntamento response = HDT_UTL_AppointmentAgenda.executeCallout(request);
         return HDT_UTL_AppointmentAgenda.manageResponse(response, activityId, HDT_UTL_AppointmentAgenda.requestType.CONFIRM,appointment);
