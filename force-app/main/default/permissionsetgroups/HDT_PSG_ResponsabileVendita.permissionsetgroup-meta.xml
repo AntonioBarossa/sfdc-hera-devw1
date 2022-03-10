@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
-    <label>HDT_PSG_ResponsabileProgettiClienti</label>
+    <label>HDT_PSG_ResponsabileVendita</label>
     <permissionSets>HDT_ApexClasses</permissionSets>
     <permissionSets>HDT_EditReports</permissionSets>
     <permissionSets>HDT_EinsteinAgentLicense</permissionSets>
     <permissionSets>HDT_EinsteinSearchLicense</permissionSets>
-    <permissionSets>HDT_MassiveLoader</permissionSets>
-    <permissionSets>HDT_OneShotAdmin</permissionSets>
-    <permissionSets>HDT_PostsalesProcess</permissionSets>
-    <permissionSets>HDT_SalesProcess</permissionSets>
     <permissionSets>HDT_SalesforceCPQLicense</permissionSets>
-    <permissionSets>HDT_SalesforceCPQTabs</permissionSets>
     <permissionSets>HDT_SalesforceCPQUser</permissionSets>
     <permissionSets>HDT_ViewReports</permissionSets>
     <permissionSets>force__EinsteinAnalyticsPlusAdmin</permissionSets>
