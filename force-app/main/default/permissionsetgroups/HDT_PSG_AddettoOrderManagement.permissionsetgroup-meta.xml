@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>HDT_PSG_AddettoOrderManagement</label>
+    <permissionSets>HDT_ApexClasses</permissionSets>
+    <permissionSets>HDT_CambioUsoFittizio</permissionSets>
+    <permissionSets>HDT_EditReports</permissionSets>
+    <permissionSets>HDT_EinsteinAgentLicense</permissionSets>
+    <permissionSets>HDT_EinsteinSearchLicense</permissionSets>
+    <permissionSets>HDT_EnableMUC</permissionSets>
+    <permissionSets>HDT_ForceNewCAcreation</permissionSets>
+    <permissionSets>HDT_MassiveLoader</permissionSets>
+    <permissionSets>HDT_OneShotUser</permissionSets>
+    <permissionSets>HDT_PostsalesProcess</permissionSets>
+    <permissionSets>HDT_SalesProcess</permissionSets>
+    <permissionSets>HDT_SalesforceCPQLicense</permissionSets>
+    <permissionSets>HDT_SalesforceCPQUser</permissionSets>
+    <permissionSets>HDT_SuperUserCPQ</permissionSets>
+    <permissionSets>HDT_ViewReports</permissionSets>
+    <permissionSets>HDT_VolturaTecnica</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
