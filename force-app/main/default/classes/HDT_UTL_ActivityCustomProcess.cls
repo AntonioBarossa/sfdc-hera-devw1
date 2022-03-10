@@ -246,6 +246,13 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         
             String typeOfCommodity = act.Order__r.ServicePoint__r.CommoditySector__c;
             String fiscalData = null;
+            String bpClass = null;
+            
+            if (act.Order__r != null && act.Order__r.Account != null && String.isNotBlank(act.Order__r.Account.CustomerMarking__c) && Pattern.matches('[D][0-9][ ]+[-][ ]+[a-z A-Z]+', act.Order__r.Account.CustomerMarking__c)){
+                bpClass = act.Order__r.Account.CustomerMarking__c.replaceFirst('[D][0-9][ ]+[-][ ]+','');
+            }else if (act.Order__r != null && act.Order__r.Account != null && String.isNotBlank(act.Order__r.Account.CustomerMarking__c)){
+                bpClass = act.Order__r.Account.CustomerMarking__c;
+            }
             //Boolean precedenteCliente = null;
 
             if(act.Order__r.RecordType.DeveloperName == 'HDT_RT_Subentro' || act.Order__r.RecordType.DeveloperName == 'HDT_RT_Voltura'){
@@ -288,7 +295,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             iw.sistema = 'eEnergy';
             iw.caso = 'Transazionale';
             iw.crmEntity = 'Order';
-            iw.crmId = act.Order__r.OrderNumber;
+            iw.crmId = String.valueOf(act.Order__c).substring(0,15);
             iw.userId = act.Order__r.CreatedById;
             iw.activationUser = 'AccountCommercialePRM';
             iw.account = 'AccountCommercialePRM';
@@ -297,7 +304,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             iw.companyName = act.Order__r.SalesCompany__c;
             iw.externalCustomerId = act.Order__r.Account.FiscalCode__c;
             iw.secondaryCustomerId = act.Order__r.Account.VATNumber__c;
-            iw.bpClass =  act.Order__r.Account.CustomerMarking__c;
+            iw.bpClass =  bpClass;
             iw.bpCategory = act.Order__r.Account.Category__c; 
             iw.bpType = act.Order__r.Account.CustomerType__c;
             iw.customerType = 'CT0';
