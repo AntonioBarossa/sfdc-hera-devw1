@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>TipoProcesso__c</field>
-        <value xsi:type="xsd:string">Variazione Fase (Pari Potenza) - Prevent</value>
+        <value xsi:type="xsd:string">Variazione Fase</value>
     </values>
     <values>
         <field>TipoServizio__c</field>
