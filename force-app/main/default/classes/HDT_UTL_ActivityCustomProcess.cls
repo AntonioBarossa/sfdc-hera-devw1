@@ -214,27 +214,34 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
         Id recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_KoPrecedeteCliente', 'wrts_prcgvr__Activity__c');
         
-        List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
+        List<Id> actListToRecheck = new List<Id>();
         for(Integer i = 0; i < newActList.size(); i++){
             wrts_prcgvr__Activity__c act = newActList[i];
             wrts_prcgvr__Activity__c actOld = oldActList[i];
             if(act.recordtypeid == recordtypeid && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && (act.Reason__c == 'Dimostrata Estraneità' || act.Reason__c == 'Saldo Pagato') && act.wrts_prcgvr__Status__c == 'KO Risolto'){                    
-                actListToRecheck.add(act);                    
+                actListToRecheck.add(act.Id);                    
             }
         }
 
         system.debug(LoggingLevel.DEBUG, 'actListToRecheck' + JSON.serializePretty(actListToRecheck));
 
-        if(!actListToRecheck.isEmpty()){
+        /* if(!actListToRecheck.isEmpty()){
             recheckCreditCheck(actListToRecheck);
+        } */
+
+        Boolean limitQueueablesOk = Limits.getQueueableJobs() < Limits.getLimitQueueableJobs();
+        if(!actListToRecheck.isEmpty() && limitQueueablesOk){
+            System.enqueueJob(new HDT_QBL_CreditCheckCall(actListToRecheck));
         }
-        
     
     }
 
     // @Picchiri 15.06.21 chiamata Mulesoft
-    public static void recheckCreditCheck(List<wrts_prcgvr__Activity__c> actListToRecheck){
+    public static void recheckCreditCheck(List<Id> actIdListToRecheck){
         system.debug(LoggingLevel.DEBUG, 'Start recheckCreditCheck --->');
+        
+        
+        List<wrts_prcgvr__Activity__c> actListToRecheck = HDT_QR_ActivityCustom.getActivityKoPrecedenteClienteByIds(actIdListToRecheck);
         for(wrts_prcgvr__Activity__c act : actListToRecheck){  
         
             String typeOfCommodity = act.Order__r.ServicePoint__r.CommoditySector__c;
@@ -294,7 +301,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             iw.bpCategory = act.Order__r.Account.Category__c; 
             iw.bpType = act.Order__r.Account.CustomerType__c;
             iw.customerType = 'CT0';
-            if(act.Order__r.RecordType.DeveloperName == 'HDT_RT_VAS' ){
+            if(act.Order__r.RecordType.DeveloperName != 'HDT_RT_VAS' ){
                 iw.address = act.Order__r.ServicePoint__r.SupplyStreetName__c;
                 iw.municipality = act.Order__r.ServicePoint__r.SupplyCity__c;
                 iw.district = act.Order__r.ServicePoint__r.SupplyProvince__c;
@@ -309,7 +316,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 iw.bpAlternative = act.Order__r.ServicePoint__r.Account__r.CustomerCode__c;
                 iw.alternativeCustomerId = fiscalData;            
             }*/
-            system.debug(LoggingLevel.DEBUG, 'act.Order__r.RecordType.DeveloperName ---> ' + JSON.serialize(iw)); 
+            system.debug(LoggingLevel.DEBUG, 'request ' + JSON.serialize(iw)); 
             HDT_WS_CreditCheck.callService(iw);
         }
     }
