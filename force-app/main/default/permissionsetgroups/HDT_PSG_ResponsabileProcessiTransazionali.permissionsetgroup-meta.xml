@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
-    <label>HDT_PSG_AddettoContactCenter</label>
+    <label>HDT_PSG_ResponsabileProcessiTransazionali</label>
     <permissionSets>HDT_ApexClasses</permissionSets>
     <permissionSets>HDT_CadutaLineaChiamataMuta</permissionSets>
+    <permissionSets>HDT_CambioUsoFittizio</permissionSets>
+    <permissionSets>HDT_EditReports</permissionSets>
     <permissionSets>HDT_EinsteinAgentLicense</permissionSets>
     <permissionSets>HDT_EinsteinSearchLicense</permissionSets>
     <permissionSets>HDT_ErroreChiamata</permissionSets>
+    <permissionSets>HDT_ForceNewCAcreation</permissionSets>
     <permissionSets>HDT_OneShotUser</permissionSets>
     <permissionSets>HDT_PostsalesProcess</permissionSets>
     <permissionSets>HDT_SalesProcess</permissionSets>
     <permissionSets>HDT_SalesforceCPQLicense</permissionSets>
     <permissionSets>HDT_SalesforceCPQUser</permissionSets>
-    <status>Updated</status>
+    <permissionSets>HDT_ViewReports</permissionSets>
+    <permissionSets>HDT_VolturaTecnica</permissionSets>
+    <permissionSets>force__EinsteinAnalyticsPlusAdmin</permissionSets>
+    <status>Updating</status>
 </PermissionSetGroup>
