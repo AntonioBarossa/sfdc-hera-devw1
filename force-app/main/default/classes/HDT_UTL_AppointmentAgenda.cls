@@ -16,6 +16,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         String codApp = '';
         String codFlusso = '';
         String esito = '';
+        String stato = String.isBlank(activity.wrts_prcgvr__Status__c)? '' : activity.wrts_prcgvr__Status__c;
         switch on requestMethod {
             when FIRST_SEARCH {
                 codFlusso = '0160';
@@ -24,7 +25,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
                 codFlusso = '0170';
                 esito = '1';
                 codApp = activity.AppointmentCode__c;
-                modApp = STATE_FOR_APPMODE.contains(activity.wrts_prcgvr__Status__c) ? 'X' : '';
+                modApp = STATE_FOR_APPMODE.contains(stato.toUpperCase()) ? 'X' : '';
             }
             when EDIT {
                 codFlusso = '0185';
@@ -33,7 +34,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
             when CONFIRM {
                 codFlusso = '0170';
                 esito = '0';
-                modApp = STATE_FOR_APPMODE.contains(activity.wrts_prcgvr__Status__c) ? 'X' : '';
+                modApp = STATE_FOR_APPMODE.contains(stato.toUpperCase()) ? 'X' : '';
             }
             when CANCELLATION {
                 codFlusso = '0170';
@@ -321,6 +322,15 @@ public with sharing class HDT_UTL_AppointmentAgenda {
                 System.enqueueJob(new HDT_QBL_AppointmentActivityUpdate(activities));
             }
         }
+    }
+
+    public static String dateConverter(String dateWrongFormat){
+        String responseDate = dateWrongFormat;
+        if (String.isNotEmpty(dateWrongFormat) && Pattern.matches('[0-9]{4}[-](0?[1-9]|[1][0-2])[-](0?[1-9]|[1-2][0-9]|[3][0-1])',dateWrongFormat)){
+            List<String> dataArray = dateWrongFormat.split('-');
+            responseDate = dataArray.get(2)+'/'+dataArray.get(1)+'/'+dataArray.get(0);
+        }
+        return responseDate;
     }
     
     private static String formatDate(String dateToWork){
