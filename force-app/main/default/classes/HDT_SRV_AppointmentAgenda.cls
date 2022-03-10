@@ -21,7 +21,7 @@ public with sharing class HDT_SRV_AppointmentAgenda {
         Map<String,String> mapAppointment = (Map<String,String>) JSON.deserialize(appointmentJson, Map<String,String>.class);
         HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento appointment = new HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento();
         appointment.codiceApp = mapAppointment.get('codice');
-        appointment.appData = mapAppointment.get('data');
+        appointment.appData = HDT_UTL_AppointmentAgenda.dateConverter(mapAppointment.get('data'));
         appointment.appFasciaOrario = mapAppointment.get('fascia');
         appointment.zLimApp= mapAppointment.get('dataLimite');
         appointment.zLimAppOra = mapAppointment.get('oraLimite');
@@ -30,6 +30,7 @@ public with sharing class HDT_SRV_AppointmentAgenda {
         HDT_WRP_Appuntamento.HDT_WRP_ResponseAppuntamento response = HDT_UTL_AppointmentAgenda.executeCallout(request);
         return HDT_UTL_AppointmentAgenda.manageResponse(response, activityId, HDT_UTL_AppointmentAgenda.requestType.CONFIRM,appointment);
     }
+
 
     public String handleCancellation(Id activityId,String appointmentCode){
         HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento request = HDT_UTL_AppointmentAgenda.initAppointmentRequest(activityId, HDT_UTL_AppointmentAgenda.requestType.CANCELLATION);
@@ -45,7 +46,6 @@ public with sharing class HDT_SRV_AppointmentAgenda {
     }
 
     public String handleAppointmentUpdate(Map<String,String> inputMap){
-        System.debug('@@@@@input Map '+ JSON.serialize(inputMap));
         inputMap = HDT_UTL_AppointmentAgenda.herokuRequestConverter(inputMap);
         String response = '';
         if (inputMap.containsKey('flowCode')){

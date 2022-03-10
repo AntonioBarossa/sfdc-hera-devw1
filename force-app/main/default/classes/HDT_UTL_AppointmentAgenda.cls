@@ -322,6 +322,15 @@ public with sharing class HDT_UTL_AppointmentAgenda {
             }
         }
     }
+
+    public static String dateConverter(String dateWrongFormat){
+        String responseDate = dateWrongFormat;
+        if (String.isNotEmpty(dateWrongFormat) && Pattern.matches('[0-9]{4}[-](0?[1-9]|[1][0-2])[-](0?[1-9]|[1-2][0-9]|[3][0-1])',dateWrongFormat)){
+            List<String> dataArray = dateWrongFormat.split('-');
+            responseDate = dataArray.get(2)+'/'+dataArray.get(1)+'/'+dataArray.get(0);
+        }
+        return responseDate;
+    }
     
     private static String formatDate(String dateToWork){
         String newDate = dateToWork;
