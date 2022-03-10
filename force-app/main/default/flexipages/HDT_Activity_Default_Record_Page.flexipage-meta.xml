@@ -1638,6 +1638,94 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <flexiPageRegions>
+            <itemInstances>
+                <fieldInstance>
+                    <fieldInstanceProperties>
+                        <name>uiBehavior</name>
+                        <value>required</value>
+                    </fieldInstanceProperties>
+                    <fieldItem>Record.MalfunctionDate__c</fieldItem>
+                    <identifier>RecordMalfunctionDate_cField1</identifier>
+                </fieldInstance>
+            </itemInstances>
+            <itemInstances>
+                <fieldInstance>
+                    <fieldInstanceProperties>
+                        <name>uiBehavior</name>
+                        <value>required</value>
+                    </fieldInstanceProperties>
+                    <fieldItem>Record.MalfunctionDescription__c</fieldItem>
+                    <identifier>RecordMalfunctionDescription_cField1</identifier>
+                </fieldInstance>
+            </itemInstances>
+            <itemInstances>
+                <fieldInstance>
+                    <fieldInstanceProperties>
+                        <name>uiBehavior</name>
+                        <value>required</value>
+                    </fieldInstanceProperties>
+                    <fieldItem>Record.CustomerImpact__c</fieldItem>
+                    <identifier>RecordCustomerImpact_cField1</identifier>
+                </fieldInstance>
+            </itemInstances>
+            <itemInstances>
+                <fieldInstance>
+                    <fieldInstanceProperties>
+                        <name>uiBehavior</name>
+                        <value>required</value>
+                    </fieldInstanceProperties>
+                    <fieldItem>Record.ExpectedBehavior__c</fieldItem>
+                    <identifier>RecordExpectedBehavior_cField1</identifier>
+                </fieldInstance>
+            </itemInstances>
+            <name>Facet-5187c261-921f-47bd-be09-682698895acc</name>
+            <type>Facet</type>
+        </flexiPageRegions>
+        <flexiPageRegions>
+            <itemInstances>
+                <fieldInstance>
+                    <fieldInstanceProperties>
+                        <name>uiBehavior</name>
+                        <value>required</value>
+                    </fieldInstanceProperties>
+                    <fieldItem>Record.MalfunctioningFeature__c</fieldItem>
+                    <identifier>RecordMalfunctioningFeature_cField1</identifier>
+                </fieldInstance>
+            </itemInstances>
+            <itemInstances>
+                <fieldInstance>
+                    <fieldInstanceProperties>
+                        <name>uiBehavior</name>
+                        <value>required</value>
+                    </fieldInstanceProperties>
+                    <fieldItem>Record.MalfunctionsCount__c</fieldItem>
+                    <identifier>RecordMalfunctionsCount_cField1</identifier>
+                </fieldInstance>
+            </itemInstances>
+            <itemInstances>
+                <fieldInstance>
+                    <fieldInstanceProperties>
+                        <name>uiBehavior</name>
+                        <value>required</value>
+                    </fieldInstanceProperties>
+                    <fieldItem>Record.OperationImpacts__c</fieldItem>
+                    <identifier>RecordOperationImpacts_cField1</identifier>
+                </fieldInstance>
+            </itemInstances>
+            <itemInstances>
+                <fieldInstance>
+                    <fieldInstanceProperties>
+                        <name>uiBehavior</name>
+                        <value>required</value>
+                    </fieldInstanceProperties>
+                    <fieldItem>Record.AnomalyExample__c</fieldItem>
+                    <identifier>RecordAnomalyExample_cField1</identifier>
+                </fieldInstance>
+            </itemInstances>
+            <name>Facet-24c67681-e10a-4348-b3c0-40093af964cf</name>
+            <type>Facet</type>
+        </flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -1821,6 +1909,27 @@
                     <value>Altre informazioni</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+            </componentInstance>
+        </itemInstances>
+                <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-b07cf6ac-8d16-4ccb-ad03-33035a24f2c1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Dati Malfunzionamento</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection1</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Supporto Anomalia processo/sistema</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
