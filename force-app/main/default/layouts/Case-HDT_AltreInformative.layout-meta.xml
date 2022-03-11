@@ -179,7 +179,8 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
-        <customButtons>CreaAttivitaManuale</customButtons>
+        <customButtons>CreaattivitamanualeActivity</customButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>wrts_prcgvr__Description__c</fields>
         <fields>OWNER.LAST_NAME</fields>
@@ -218,11 +219,28 @@
         <relatedList>et4ae5__IndividualEmailResult__c.CaseID__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>Name</fields>
-        <fields>Persona</fields>
-        <fields>Headline</fields>
-        <fields>Who</fields>
+        <fields>Content</fields>
+        <fields>CreatedDate</fields>
         <relatedList>SocialPosts</relatedList>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>ChangeOwner</excludeButtons>
+        <excludeButtons>ChangeStatus</excludeButtons>
+        <excludeButtons>MassClose</excludeButtons>
+        <excludeButtons>NewCase</excludeButtons>
+        <fields>CASES.CASE_NUMBER</fields>
+        <fields>CASES.SUBJECT</fields>
+        <fields>CASES.PRIORITY</fields>
+        <fields>CASES.CREATED_DATE</fields>
+        <fields>CASES.STATUS</fields>
+        <fields>OWNER_NAME</fields>
+        <relatedList>RelatedChildCaseList</relatedList>
+        <sortField>CASES.CASE_NUMBER</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

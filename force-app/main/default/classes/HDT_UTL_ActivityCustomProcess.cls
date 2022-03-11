@@ -214,31 +214,45 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
         Id recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_KoPrecedeteCliente', 'wrts_prcgvr__Activity__c');
         
-        List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
+        List<Id> actListToRecheck = new List<Id>();
         for(Integer i = 0; i < newActList.size(); i++){
             wrts_prcgvr__Activity__c act = newActList[i];
             wrts_prcgvr__Activity__c actOld = oldActList[i];
             if(act.recordtypeid == recordtypeid && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && (act.Reason__c == 'Dimostrata Estraneità' || act.Reason__c == 'Saldo Pagato') && act.wrts_prcgvr__Status__c == 'KO Risolto'){                    
-                actListToRecheck.add(act);                    
+                actListToRecheck.add(act.Id);                    
             }
         }
 
         system.debug(LoggingLevel.DEBUG, 'actListToRecheck' + JSON.serializePretty(actListToRecheck));
 
-        if(!actListToRecheck.isEmpty()){
+        /* if(!actListToRecheck.isEmpty()){
             recheckCreditCheck(actListToRecheck);
+        } */
+
+        Boolean limitQueueablesOk = Limits.getQueueableJobs() < Limits.getLimitQueueableJobs();
+        if(!actListToRecheck.isEmpty() && limitQueueablesOk){
+            System.enqueueJob(new HDT_QBL_CreditCheckCall(actListToRecheck));
         }
-        
     
     }
 
     // @Picchiri 15.06.21 chiamata Mulesoft
-    public static void recheckCreditCheck(List<wrts_prcgvr__Activity__c> actListToRecheck){
+    public static void recheckCreditCheck(List<Id> actIdListToRecheck){
         system.debug(LoggingLevel.DEBUG, 'Start recheckCreditCheck --->');
+        
+        
+        List<wrts_prcgvr__Activity__c> actListToRecheck = HDT_QR_ActivityCustom.getActivityKoPrecedenteClienteByIds(actIdListToRecheck);
         for(wrts_prcgvr__Activity__c act : actListToRecheck){  
         
             String typeOfCommodity = act.Order__r.ServicePoint__r.CommoditySector__c;
             String fiscalData = null;
+            String bpClass = null;
+            
+            if (act.Order__r != null && act.Order__r.Account != null && String.isNotBlank(act.Order__r.Account.CustomerMarking__c) && Pattern.matches('[D][0-9][ ]+[-][ ]+[a-z A-Z]+', act.Order__r.Account.CustomerMarking__c)){
+                bpClass = act.Order__r.Account.CustomerMarking__c.replaceFirst('[D][0-9][ ]+[-][ ]+','');
+            }else if (act.Order__r != null && act.Order__r.Account != null && String.isNotBlank(act.Order__r.Account.CustomerMarking__c)){
+                bpClass = act.Order__r.Account.CustomerMarking__c;
+            }
             //Boolean precedenteCliente = null;
 
             if(act.Order__r.RecordType.DeveloperName == 'HDT_RT_Subentro' || act.Order__r.RecordType.DeveloperName == 'HDT_RT_Voltura'){
@@ -281,7 +295,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             iw.sistema = 'eEnergy';
             iw.caso = 'Transazionale';
             iw.crmEntity = 'Order';
-            iw.crmId = act.Order__r.OrderNumber;
+            iw.crmId = String.valueOf(act.Order__c).substring(0,15);
             iw.userId = act.Order__r.CreatedById;
             iw.activationUser = 'AccountCommercialePRM';
             iw.account = 'AccountCommercialePRM';
@@ -290,11 +304,11 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             iw.companyName = act.Order__r.SalesCompany__c;
             iw.externalCustomerId = act.Order__r.Account.FiscalCode__c;
             iw.secondaryCustomerId = act.Order__r.Account.VATNumber__c;
-            iw.bpClass =  act.Order__r.Account.CustomerMarking__c;
+            iw.bpClass =  bpClass;
             iw.bpCategory = act.Order__r.Account.Category__c; 
             iw.bpType = act.Order__r.Account.CustomerType__c;
             iw.customerType = 'CT0';
-            if(act.Order__r.RecordType.DeveloperName == 'HDT_RT_VAS' ){
+            if(act.Order__r.RecordType.DeveloperName != 'HDT_RT_VAS' ){
                 iw.address = act.Order__r.ServicePoint__r.SupplyStreetName__c;
                 iw.municipality = act.Order__r.ServicePoint__r.SupplyCity__c;
                 iw.district = act.Order__r.ServicePoint__r.SupplyProvince__c;
@@ -309,7 +323,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 iw.bpAlternative = act.Order__r.ServicePoint__r.Account__r.CustomerCode__c;
                 iw.alternativeCustomerId = fiscalData;            
             }*/
-            system.debug(LoggingLevel.DEBUG, 'act.Order__r.RecordType.DeveloperName ---> ' + JSON.serialize(iw)); 
+            system.debug(LoggingLevel.DEBUG, 'request ' + JSON.serialize(iw)); 
             HDT_WS_CreditCheck.callService(iw);
         }
     }
@@ -410,5 +424,32 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
 
         system.debug(LoggingLevel.DEBUG, '>>cancelQualityNoResult end');
 
+    }
+
+    public static void sendCloseNotification(List<wrts_prcgvr__Activity__c> newTriggerList , Map<Id,SObject> oldTriggerMap){
+        List<wrts_prcgvr__Activity__c> activityToSendNotify = new List<wrts_prcgvr__Activity__c>();
+        for (wrts_prcgvr__Activity__c activity : newTriggerList){
+            wrts_prcgvr__Activity__c oldActivity = (wrts_prcgvr__Activity__c)oldTriggerMap.get(activity.Id);
+            if ('Manuale'.equalsIgnoreCase(activity.DiscardCategory__c) && 'Chiusa'.equalsIgnoreCase(activity.wrts_prcgvr__Status__c) && !activity.wrts_prcgvr__Status__c.equalsIgnoreCase(oldActivity.wrts_prcgvr__Status__c)){
+                activityToSendNotify.add(activity);
+            }
+        }
+
+        if (!activityToSendNotify.isEmpty()){
+            HDT_QR_Knowledge qrKb = new HDT_QR_Knowledge();
+            CustomNotificationType notificationType = qrKb.getCustomNotificationType();
+            for (wrts_prcgvr__Activity__c activity : activityToSendNotify){
+                try{
+                    Messaging.CustomNotification notification = new Messaging.CustomNotification();
+                    notification.setTitle('Chiusura Attività');
+                    notification.setBody('L\'attività manuale ' + activity.Name + ' è stata chiusa');
+                    notification.setNotificationTypeId(notificationType.Id);
+                    notification.setTargetId(activity.Id);
+                    notification.send(new Set<String>{activity.CreatedById});
+                } catch(Exception e){
+                    System.debug(LoggingLevel.DEBUG, 'Impossibile inviare notifica: ' + e.getMessage() + '. Error at line: ' + e.getLineNumber());
+                }
+            }
+        } 
     }
 }

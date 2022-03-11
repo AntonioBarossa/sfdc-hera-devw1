@@ -37,7 +37,7 @@
         <name>OrdiniFigliVASBonusAssign</name>
         <label>OrdiniFigliVASBonusAssign</label>
         <locationX>264</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>AssignOrdiniFigliVASBonusOutput</assignToReference>
             <operator>Add</operator>
@@ -49,7 +49,43 @@
             <targetReference>LoopOrdiniFigliOfferta</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>ValoriFigli_Assign</name>
+        <label>ValoriFigli Assign</label>
+        <locationX>264</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>NomeOffertaOutput</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LoopOrdiniFigliOfferta.CommercialProduct__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>modalitaPagamentoOutput</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LoopOrdiniFigliOfferta.PaymentMode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ChannelOutput</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LoopOrdiniFigliOfferta.Channel__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetOrderFiglioVASBonus</targetReference>
+        </connector>
+    </assignments>
     <description>Utilizzato come subflow per la gestione e il retrieve degli ordini necessari.</description>
+    <formulas>
+        <name>ProdottoOffertaRicalcolata</name>
+        <dataType>String</dataType>
+        <expression>IF(CONTAINS({!famigliaProdottoOffertaInput} , &quot;Impronta Zero&quot;), &quot;Impronta Zero&quot;, 
+ IF(CONTAINS({!famigliaProdottoOffertaInput} , &quot;Netto&quot;), &quot;Prezzo Netto&quot;, &quot;&quot;))</expression>
+    </formulas>
     <interviewLabel>HDT {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_Script_Gestione_Ordini</label>
     <loops>
@@ -60,7 +96,7 @@
         <collectionReference>GetOrdiniFigliOfferta</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>GetOrderFiglioVASBonus</targetReference>
+            <targetReference>ValoriFigli_Assign</targetReference>
         </nextValueConnector>
     </loops>
     <processMetadataValues>
@@ -86,7 +122,7 @@
         <name>GetOrderFiglioVASBonus</name>
         <label>GetOrderFiglioVASBonus</label>
         <locationX>264</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>OrdiniFigliVASBonusAssign</targetReference>
@@ -154,7 +190,7 @@
         <connector>
             <targetReference>OrdiniFigliAssign</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>1 AND 2 AND 3 AND 4 AND 5 AND (6 OR 7)</filterLogic>
         <filters>
             <field>ParentOrder__c</field>
             <operator>EqualTo</operator>
@@ -195,6 +231,13 @@
             <operator>Contains</operator>
             <value>
                 <elementReference>famigliaProdottoOffertaInput</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CommercialProduct__c</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>ProdottoOffertaRicalcolata</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -242,6 +285,16 @@
         <objectType>Order</objectType>
     </variables>
     <variables>
+        <name>ChannelOutput</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>Inbound</stringValue>
+        </value>
+    </variables>
+    <variables>
         <name>famigliaProdottoOffertaInput</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -254,5 +307,25 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>modalitaPagamentoOutput</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>Bollettino postale</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>NomeOffertaOutput</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <elementReference>famigliaProdottoOffertaInput</elementReference>
+        </value>
     </variables>
 </Flow>

@@ -71,6 +71,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
         Set<String> errorCodes = new Set<String>();
         Set<String> errorCodesDescriptionSet = new Set<String>();
         Set<Id> caseIdSet = new Set<Id>();
+        Set<Id> caseToGetCommodity = new Set<Id>();
         for (HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData outcomeData : data) {
             if (String.isBlank(outcomeData.caseId)) {
                 continue; 
@@ -79,6 +80,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
             if (String.isNotBlank(outcomeData.activityType)) {
                 if (outcomeData.activityType.equalsIgnoreCase('Esito KO da SAP') || outcomeData.activityType.equalsIgnoreCase('KO Pre-MDM')) {
                     errorCodes.add(outcomeData.errorCode);
+                    caseToGetCommodity.add(outcomeData.caseId);
                     if(String.isNotBlank(outcomeData.errorCode)){
                         errorCodesDescriptionSet.add(outcomeData.errorCode);
                     }else if(String.isNotBlank(outcomeData.errorDescription)) {
@@ -90,10 +92,19 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
         System.debug(LoggingLevel.DEBUG, 'handleRequest - errorCodes size: ' + errorCodes.size());
         System.debug(LoggingLevel.DEBUG, 'handleRequest - errorCodesDescriptionSet size: ' + errorCodesDescriptionSet.size());
 
-        Map<String, Boolean> isAutomaticDiscardMap = HDT_UTL_SelfReadings.isAutomaticDiscard(errorCodesDescriptionSet);
+        Map<String, DiscardAnnullmentRule__c> isAutomaticDiscardMap = HDT_UTL_SelfReadings.isAutomaticDiscard(errorCodesDescriptionSet);
         Map<Id, Boolean> isAutomaticDiscardCasesMap = new Map<Id,Boolean>();
-
-        Map<Id,Case> mapCaseInAnnulato = new Map<Id,Case>([SELECT Id FROM Case WHERE Phase__c = 'Annullato' AND Id IN :caseIdSet]); 
+        Map<Id,Case> mapCaseInAnnulato = new Map<Id,Case>(); 
+        Map<Id,String> mapCaseCommodity = new Map<Id,String>();
+        for (Case c : [SELECT Id, Phase__c, ServicePoint__r.CommoditySector__c FROM Case WHERE Id IN :caseIdSet WITH SECURITY_ENFORCED]){
+            if (caseToGetCommodity.contains(c.Id) && c.ServicePoint__r != null && String.isNotBlank(c.ServicePoint__r.CommoditySector__c)){
+                mapCaseCommodity.put(c.Id, (c.ServicePoint__r.CommoditySector__c));
+            }
+            if ('Annullato'.equalsIgnoreCase(c.Phase__c)){
+                mapCaseInAnnulato.put(c.Id,c);
+            }
+        }
+        
         caseIdSet = null;
         // TODO: verificare quanti record ci passa mulesoft per non sforare i limiti di sfdc.
         Id actRecordTypeId;
@@ -124,22 +135,24 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                 }
             }
 
-            Boolean isAutomaticDiscard = false;
+            DiscardAnnullmentRule__c dar;
             if (String.isNotBlank(outcomeData.errorCode)) {
                 try {
-                    isAutomaticDiscard = isAutomaticDiscardMap.get(outcomeData.errorCode);
+                    dar = isAutomaticDiscardMap.get(outcomeData.errorCode);
                 } catch (Exception e) {
                     System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage());
                     System.debug(LoggingLevel.DEBUG, 'Stacktrace: ' + e.getStackTraceString());
                 }
             }else if(String.isNotBlank(outcomeData.errorDescription)){
                 try {
-                    isAutomaticDiscard = isAutomaticDiscardMap.get(outcomeData.errorDescription);
+                    dar = isAutomaticDiscardMap.get(outcomeData.errorDescription);
                 } catch (Exception e) {
                     System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage());
                     System.debug(LoggingLevel.DEBUG, 'Stacktrace: ' + e.getStackTraceString());
                 }
             }
+
+            Boolean isAutomaticDiscard = (dar != null && dar.IsActive__c && (String.isBlank(dar.ControllingCommodity__c)  || dar.ControllingCommodity__c.equalsIgnoreCase(mapCaseCommodity.get(caseToUpdate.Id))));
             
             if (isAutomaticDiscard) {
                 System.debug(LoggingLevel.DEBUG, 'Entering isAutomaticDiscard');

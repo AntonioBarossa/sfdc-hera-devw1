@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Flag per accendere/spegnere la delivery dell&apos;alert sul canale SMS</description>
     <externalId>false</externalId>
-    <label>Canale SMS</label>
+    <label>SMS</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

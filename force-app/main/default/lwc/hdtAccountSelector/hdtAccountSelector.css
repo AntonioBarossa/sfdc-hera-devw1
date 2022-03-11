@@ -12,3 +12,14 @@
     border-radius: 0 0 0.25em 0.25em !important;
     border-top: 0 !important;
 }
+.spins::after {
+    position: absolute;
+    content: 'Potrebbe volerci un po\'...';
+    width: 100%;
+    text-align: center;
+    top: calc(50% + 3em);
+    font-weight: bold;
+}
+.max-height {
+    max-height: 400px;
+}

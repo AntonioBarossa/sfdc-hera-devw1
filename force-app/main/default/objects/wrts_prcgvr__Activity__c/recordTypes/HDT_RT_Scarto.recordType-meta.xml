@@ -2287,6 +2287,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Eseguire Gestione Manuale SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gestione Iva e Accise</fullName>
             <default>false</default>
         </values>
@@ -2312,6 +2316,10 @@
         </values>
         <values>
             <fullName>KO Motore VAS da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Fornitore</fullName>
             <default>false</default>
         </values>
         <values>

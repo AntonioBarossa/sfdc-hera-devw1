@@ -62,10 +62,16 @@
         <assignmentItems>
             <assignToReference>getOrder.CreditCheckDescription__c</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getOrder.OutgoingCreditCheckResult__c</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getActivity.Reason__c</assignToReference>
@@ -82,6 +88,20 @@
                 <stringValue>Attesa Credit Check</stringValue>
             </value>
         </assignmentItems-->
+        <assignmentItems>
+            <assignToReference>getActivity.CreditCheckResults__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>OK</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivity.CreditCheckReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Azione_0</targetReference>
         </connector>

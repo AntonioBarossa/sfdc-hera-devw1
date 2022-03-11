@@ -14,10 +14,10 @@ const columns = [
     { label: 'Regola Alert', fieldName: 'AlertRule__c' },
     { label: 'Stato Alert', fieldName: 'AlertState__c' },
     { label: 'Flag Attivazione', fieldName: 'IsActive__c', type: 'boolean', editable : 'true'},
-    { label: 'Canale Email', fieldName: 'IsEmailChannelActive__c', type: 'boolean', editable : 'true'},
-    { label: 'Canale SMS', fieldName: 'IsSmsChannelActive__c', type: 'boolean', editable : 'true'},
-    { label: 'Canale Push', fieldName: 'IsPushChannelActive__c', type: 'boolean', editable : 'true'},
-    { label: 'Canale SOL', fieldName: 'IsSolChannelActive__c', type: 'boolean', editable : 'true'},
+    { label: 'Email', fieldName: 'IsEmailChannelActive__c', type: 'boolean', editable : 'true'},
+    { label: 'SMS', fieldName: 'IsSmsChannelActive__c', type: 'boolean', editable : 'true'},
+    { label: 'Push', fieldName: 'IsPushChannelActive__c', type: 'boolean', editable : 'true'},
+    { label: 'SOL', fieldName: 'IsSolChannelActive__c', type: 'boolean', editable : 'true'},
     { label: 'Contatto SOL', fieldName: 'ContactName', type: 'text'}
 ];
 

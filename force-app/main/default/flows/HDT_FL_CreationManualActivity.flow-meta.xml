@@ -3,7 +3,7 @@
     <actionCalls>
         <name>CreatActivityPClick</name>
         <label>CreatActivityPClick</label>
-        <locationX>772</locationX>
+        <locationX>992</locationX>
         <locationY>318</locationY>
         <actionName>HDT_UTL_Scarti</actionName>
         <actionType>apex</actionType>
@@ -45,7 +45,7 @@
     <actionCalls>
         <name>Redirect_to_activity</name>
         <label>Redirect to activity</label>
-        <locationX>1247</locationX>
+        <locationX>1467</locationX>
         <locationY>268</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
@@ -62,8 +62,8 @@
     <assignments>
         <name>SetFields</name>
         <label>SetFields</label>
-        <locationX>602</locationX>
-        <locationY>274</locationY>
+        <locationX>747</locationX>
+        <locationY>142</locationY>
         <assignmentItems>
             <assignToReference>Activity.Account__c</assignToReference>
             <operator>Assign</operator>
@@ -83,9 +83,32 @@
         </connector>
     </assignments>
     <assignments>
+        <name>SetFields_0</name>
+        <label>SetFields</label>
+        <locationX>729</locationX>
+        <locationY>376</locationY>
+        <assignmentItems>
+            <assignToReference>Activity.Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tipologiaSelezionata</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Tipologia</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CreatActivityPClick</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Update_with_opening_notes</name>
         <label>Update with opening notes</label>
-        <locationX>919</locationX>
+        <locationX>1139</locationX>
         <locationY>417</locationY>
         <assignmentItems>
             <assignToReference>Activity.Id</assignToReference>
@@ -113,6 +136,38 @@
             <stringValue>CBS_CRP001__CONTATTARE_IL_CLIENTE</stringValue>
         </value>
     </choices>
+    <decisions>
+        <name>is_recordId_Valorized_0</name>
+        <label>is recordId Valorized?</label>
+        <locationX>494</locationX>
+        <locationY>237</locationY>
+        <defaultConnector>
+            <targetReference>SetFields_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Si</defaultConnectorLabel>
+        <rules>
+            <name>No_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetFields</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
     <interviewLabel>HDT_FL_CreationManualActivity {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_CreationManualActivity</label>
     <processMetadataValues>
@@ -137,7 +192,7 @@
     <recordUpdates>
         <name>Update_activity</name>
         <label>Update activity</label>
-        <locationX>972</locationX>
+        <locationX>1192</locationX>
         <locationY>234</locationY>
         <connector>
             <targetReference>ScreenEsito</targetReference>
@@ -147,13 +202,13 @@
     <screens>
         <name>Nuova_Attivita</name>
         <label>Nuova Attività</label>
-        <locationX>463</locationX>
-        <locationY>204</locationY>
+        <locationX>170</locationX>
+        <locationY>255</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>SetFields</targetReference>
+            <targetReference>is_recordId_Valorized_0</targetReference>
         </connector>
         <fields>
             <name>FlowError</name>
@@ -197,6 +252,23 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>recordId</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>recordId</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Tipologia</name>
@@ -218,7 +290,7 @@
     <screens>
         <name>ScreenEsito</name>
         <label>Screen Esito</label>
-        <locationX>1123</locationX>
+        <locationX>1343</locationX>
         <locationY>134</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -261,7 +333,7 @@
     </screens>
     <start>
         <locationX>50</locationX>
-        <locationY>50</locationY>
+        <locationY>34</locationY>
         <connector>
             <targetReference>Nuova_Attivita</targetReference>
         </connector>
@@ -312,6 +384,13 @@
         <value>
             <stringValue></stringValue>
         </value>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>tipologiaSelezionata</name>

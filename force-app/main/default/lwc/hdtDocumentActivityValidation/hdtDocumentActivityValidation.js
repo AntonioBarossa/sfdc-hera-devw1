@@ -1,11 +1,10 @@
 import { LightningElement,api,wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { updateRecord } from 'lightning/uiRecordApi';
+import { updateRecord, getRecord } from 'lightning/uiRecordApi';
 import valida from '@salesforce/apex/HDT_UTL_ActivityCustom.validaActivityDocument';
 import rejectActivity from '@salesforce/apex/HDT_UTL_ActivityCustom.rejectActivityDocument';
 
 export default class hdtDocumentActivityValidation extends LightningElement {
-
 
     @api isRiassignButton = false;
     @api loading = false;
@@ -17,6 +16,17 @@ export default class hdtDocumentActivityValidation extends LightningElement {
     @api showModal=false;
     @track note='';
     @api showModalSpinner=false;
+
+    @track ActType='';
+    @track isValidazioneDocumentale=false;
+    @track error;
+    @wire(getRecord, { recordId: '$recordId', fields: ['wrts_prcgvr__Activity__c.Type__c'] })
+    wiredAccount({ error, data }) {
+        if (data) {
+            this.ActType = data.fields.Type__c.value;
+            this.isValidazioneDocumentale = (this.ActType === 'Validazione Documentale'||this.ActType === 'Documenti non validati')? true:false;//false = Vocal Order
+        }
+    }
 
     approve(){
         valida({
