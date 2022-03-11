@@ -37,6 +37,15 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
             HDT_UTL_PclickBulkActionVas.checkVasContractAlignmentBeforeUpdate(trigger.new);
 
         }
+        /**@frpanico 2022-03-10
+         * Gestione Aggiornamento in Completata
+         * Alla ricezione del Pratica Gestita
+         * Sblocco Pratica Vas/Bonus associata
+         */
+        else
+        {
+            HDT_UTL_OrderProcess.transitoryPhaseManagement(Trigger.new, Trigger.oldMap);
+        }
         system.debug(LoggingLevel.DEBUG,'Fine beforeUpdate - Query utilizzate: '+Limits.getQueries()+'/'+Limits.getLimitQueries());
 
     }
