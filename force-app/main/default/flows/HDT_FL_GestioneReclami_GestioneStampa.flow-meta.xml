@@ -10,6 +10,7 @@
         <connector>
             <targetReference>Indennizzo_Confermato</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>accountId</name>
             <value>
@@ -52,6 +53,7 @@
         <connector>
             <targetReference>LoopToUpdateInRIspostaInviata</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>currentCase</name>
             <value>
@@ -69,6 +71,7 @@
             <name>childCases</name>
         </outputParameters>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>AggiornaFase</name>
         <label>AggiornaFase</label>
@@ -649,6 +652,7 @@
         <connector>
             <targetReference>AssegnaActivityToLoop</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Case__c</field>
             <operator>EqualTo</operator>
@@ -676,6 +680,7 @@
         <connector>
             <targetReference>CreateActivity</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
             <operator>EqualTo</operator>
@@ -696,6 +701,7 @@
         <connector>
             <targetReference>Screen_Documentale</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -716,6 +722,7 @@
         <connector>
             <targetReference>AssegnaCase</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -736,6 +743,7 @@
         <connector>
             <targetReference>CountContentDocumentLinkAfter</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>LinkedEntityId</field>
             <operator>EqualTo</operator>
@@ -756,6 +764,7 @@
         <connector>
             <targetReference>AssignSize</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>LinkedEntityId</field>
             <operator>EqualTo</operator>
@@ -776,6 +785,7 @@
         <connector>
             <targetReference>GetContentDocumentLinkInput</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>

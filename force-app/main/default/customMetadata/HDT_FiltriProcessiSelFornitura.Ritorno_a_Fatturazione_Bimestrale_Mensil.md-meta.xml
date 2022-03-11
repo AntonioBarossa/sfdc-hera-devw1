@@ -26,7 +26,7 @@
         <field>TipoProcesso__c</field>
         <value xsi:type="xsd:string">Ritorno a Fatturazione Bimestrale/Mensile</value>
     </values>
-    <values>
+    <values> 
         <field>TipoServizio__c</field>
         <value xsi:type="xsd:string">Gas,Energia Elettrica</value>
     </values>

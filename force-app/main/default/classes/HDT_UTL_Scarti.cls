@@ -464,7 +464,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         
 
         //Gestione Scarti SAP tolti i campi parent Object process field e controlling field
-        List<DiscardAnnullmentRule__c> rules = [SELECT ControllingValue__c, ProcessValue__c, DiscardNoteReliability__c
+        List<DiscardAnnullmentRule__c> rules = [SELECT ControllingValue__c, ProcessValue__c, DiscardNoteReliability__c, ControllingCommodity__c
                                                 FROM DiscardAnnullmentRule__c
                                                 WHERE ActivityType__c = :activityType
                                                 AND IsActive__c = true
@@ -474,25 +474,28 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         if(!rules.isEmpty()){
             String processField = '';
             String ctrField = '';
+            String commodity = '';
             if(Schema.Case.SObjectType == recordId.getSobjectType()){
                 //Gestione Scarti SAP il processField per il case è sempre il type ed il controlField è sempre il DiscardDescription
-                List<Case> parentCase = [SELECT Id,Type,DiscardDescription__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED];
+                List<Case> parentCase = [SELECT Id,Type,DiscardDescription__c, ServicePoint__r.CommoditySector__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED];
                 if(!parentCase.isEmpty()){
                     processField = parentCase.get(0).Type;
                     ctrField = String.isNotBlank(discardMessage) ? discardMessage : parentCase.get(0).DiscardDescription__c;
+                    commodity = (parentCase.get(0).ServicePoint__r == null) ? '' : parentCase.get(0).ServicePoint__r.CommoditySector__c;
                 }
             }
             if(Schema.Order.SObjectType == recordId.getSobjectType()){
                 //Gestione Scarti SAP il processField per l'order è sempre il type ed il controlField è sempre il DiscardReason
-                List<Order> parentOrder = [SELECT Id,ProcessType__c,DiscardReason__c FROM Order WHERE Id =:recordId WITH SECURITY_ENFORCED];
+                List<Order> parentOrder = [SELECT Id,ProcessType__c,DiscardReason__c, ServicePoint__r.CommoditySector__c FROM Order WHERE Id =:recordId WITH SECURITY_ENFORCED];
                 if(!parentOrder.isEmpty()){
                     processField = parentOrder.get(0).ProcessType__c;
                     ctrField = String.isNotBlank(discardMessage) ? discardMessage : parentOrder.get(0).DiscardReason__c;
+                    commodity = (parentOrder.get(0).ServicePoint__r == null) ? '' : parentOrder.get(0).ServicePoint__r.CommoditySector__c;
                 }
             }
             if (String.isNotEmpty(processField) && String.isNotEmpty(ctrField)){
                 for(DiscardAnnullmentRule__c curRule : rules){
-                    if(curRule.ProcessValue__c.equalsIgnoreCase(processField)){
+                    if(curRule.ProcessValue__c.equalsIgnoreCase(processField) && (String.isBlank(curRule.ControllingCommodity__c) || curRule.ControllingCommodity__c.equalsIgnoreCase(commodity))){
                         switch on curRule.DiscardNoteReliability__c {
                             when 'Alta'{
                                 if (ctrField.equalsIgnoreCase(curRule.ControllingValue__c)){
