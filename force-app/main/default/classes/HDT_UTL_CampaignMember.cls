@@ -32,7 +32,7 @@ public with sharing class HDT_UTL_CampaignMember {
             for(HDT_CampaignMemberStatus__mdt cmdt : campaignStatusMdt){
                 if (
                     (cmdt.Category__c == 'Tutte' && cmdt.Channel__c == 'Tutti') ||
-                    (c.Category__c == 'Campagna CRM' && cmdt.Category__c == 'Inbound' && cmdt.Channel__c == 'Tutti') || (
+                    (c.Category__c == 'Campagna CRM' && (cmdt.Category__c == 'Inbound' || cmdt.Category__c == 'Entrambi') && cmdt.Channel__c == 'Tutti') || (
                         (c.Category__c == 'Campagna Outbound' && cmdt.Category__c == 'Outbound') && (
                             (c.Channel__c == 'Telefonico Outbound' && cmdt.Channel__c == 'Telefonico Outbound') ||
                             (c.Channel__c == 'Cartaceo' && cmdt.Channel__c == 'Cartaceo')

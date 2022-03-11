@@ -622,7 +622,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         for (Order childOrder : parentOrderIds) {
             if(childOrder.recordType.Developername == 'HDT_RT_VAS' && childOrder.Phase__c == currentPhase){
-                HDT_UTL_VasManagement.updateVasPhase( newVasPhase, childOrder );
+                String phase = HDT_UTL_VasManagement.updateVasPhase( newVasPhase, childOrder );
+                Order orderToUpdate = new Order(
+                    Id = childOrder.Id,
+                    Phase__c = phase
+                );
+                childOrdersToUpdate.add(orderToUpdate);
                 // Order orderToUpdate = new Order(Id = childOrder.Id, Phase__c = newVasPhase);
                 // childOrdersToUpdate.add(orderToUpdate);
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged ) {
@@ -1189,10 +1194,91 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     newActivityObjectRelatedMap.put(newOrder.Id,newOrder.DiscardReason__c);
                 }
             }
+            /**@frpanico 2022-03-11
+             * Aggiunta gestione rientro 
+             * Pratica Gestita
+             * per pratiche a transitorio
+             */
+            if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))&&((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Pratica Gestita'))
+            {
+                response = true;
+            }
         }
         if (response && !newActivityObjectRelatedMap.isEmpty()){
             HDT_UTL_Scarti.createActivityForKoSiebel(newActivityObjectRelatedMap);
         }
         return response;
+    }
+    /**@frpanico 2022-03-10
+     * Gestione Aggiornamento in Completata
+     * Alla ricezione del Pratica Gestita
+     * Sblocco Pratica Vas/Bonus associata
+     */
+    public static void transitoryPhaseManagement(List<SObject> newOrderList, Map<Id,SObject> oldOrderMap)
+    {
+        Id bonusScontiRtId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId();
+        Set<Id> orderIds = new Set<Id>();
+        Set<Id> parentOrderIds = new Set<Id>();
+
+
+        for(Order newOrder : (List<Order>) newOrderList)
+        {
+            String newPhase = 'Completata';
+            String oldPhase = newOrder.Phase__c;
+            Order oldOrder = (Order) oldOrderMap.get(newOrder.Id);
+            DateTime nowDateTime = DateTime.now();
+            if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c')) && String.isNotEmpty((String)oldOrder.get('SiebelStatus__c'))
+                && !(((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase((String)oldOrder.get('SiebelStatus__c')))
+                && ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Pratica Gestita'))
+            {
+                /* Update Fase e Status */
+                newOrder.Phase__c = newPhase;
+                newOrder.Status = 'Activated';
+                newOrder.PhaseStory__c = !String.isBlank(newOrder.PhaseStory__c) 
+                ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+newOrder.PhaseStory__c
+                : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
+                /* Contracted */
+                if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& newOrder.Status.equalsIgnoreCase('Activated') && !newOrder.SBQQ__Contracted__c && !oldOrder.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) 
+                { 
+                    newOrder.SBQQ__Contracted__c=true; 
+                }      
+                if(!orderIds.contains(newOrder.Id))
+                {
+                    orderIds.add(newOrder.Id);
+                    parentOrderIds.add(newOrder.ParentOrder__c);
+                }
+            }
+        }
+        if(!orderIds.isEmpty())
+        {
+            List<ServiceRequest__c> serviceRequestToDelete = [SELECT Id FROM ServiceRequest__c WHERE Order__c IN :orderIds WITH SECURITY_ENFORCED];
+            List<Order> vasScontiOrders = [SELECT Phase__c, Status FROM Order
+            WHERE ParentOrder__c IN :parentOrderIds
+            AND Id NOT IN :orderIds
+            AND Phase__c = 'Sequenzializzato'
+            AND IsTransition__c = true
+            WITH SECURITY_ENFORCED];
+            for(Order vasScontiOrder : vasScontiOrders)
+            {
+                vasScontiOrder.Phase__c = 'Esportazione VS Siebel';
+                vasScontiOrder.Status = 'In Lavorazione';
+            }
+            /* Delete Service Request */
+            if(!serviceRequestToDelete.isEmpty())
+            {
+                HDT_SRV_ServiceRequest.deleteRecord(serviceRequestToDelete);
+            }
+            /* Update related ScontiBonus/VAS */
+            if(!vasScontiOrders.isEmpty())
+            {
+                updateFutureList(JSON.serialize(vasScontiOrders));
+            }
+        }
+    }
+    @future
+    private static void updateFutureList(String serializedList)
+    {
+        List<SObject> sobjList = (List<SObject>)JSON.deserialize(serializedList, List<SObject>.class);
+        HDT_UTL_DatabaseService.updateSObject(sobjList);
     }
 }

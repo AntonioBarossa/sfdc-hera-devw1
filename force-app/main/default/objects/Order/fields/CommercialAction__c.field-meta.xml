@@ -110,6 +110,17 @@
                 <default>false</default>
                 <label>XLISTA FAM</label>
             </value>
+            <value>
+                <fullName>FIDUCIA</fullName>
+                <default>false</default>
+                <label>FIDUCIA</label>
+            </value>
+            <value>
+                <fullName>WELFARE 2019</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>WELFARE 2019</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

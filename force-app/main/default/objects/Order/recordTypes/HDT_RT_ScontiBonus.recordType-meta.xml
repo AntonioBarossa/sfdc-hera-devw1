@@ -316,7 +316,6 @@
             <default>false</default>
         </values>
     </picklistValues>
-    </picklistValues>
     <picklistValues>
         <picklist>CancellationReasonDescription__c</picklist>
         <values>
@@ -561,6 +560,10 @@
         </values>
         <values>
             <fullName>CORE PL AZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FIDUCIA</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1791,7 +1794,7 @@
     <picklistValues>
         <picklist>DocSendingMethod__c</picklist>
         <values>
-            <fullName>E-mail</fullName>
+            <fullName>E-Mail</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2108,10 +2111,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
-<!--         <values>
-            <fullName>Amm%2E Precheck OK SII</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
@@ -2140,10 +2139,14 @@
             <fullName>Bozza</fullName>
             <default>true</default>
         </values>
-<!--         <values>
-            <fullName>Bozza Annullata</fullName>
+        <values>
+            <fullName>Caricamento Siebel KO</fullName>
             <default>false</default>
-        </values> -->
+        </values>
+        <values>
+            <fullName>Caricamento Siebel OK</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Completata</fullName>
             <default>false</default>
@@ -2181,23 +2184,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In Lavorazione</fullName>
-            <default>false</default>
-        </values>
-<!--         <values>
-            <fullName>In Lavorazione SAP</fullName>
-            <default>false</default>
-        </values> -->
-<!--         <values>
-            <fullName>In attesa conferma cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa tempi di ripensamento</fullName>
-            <default>false</default>
-        </values> -->
-        <values>
-            <fullName>In attesa validazione</fullName>
+            <fullName>Esportazione VS Siebel</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2205,29 +2192,17 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Esportazione VS Siebel</fullName>
+            <fullName>In Lavorazione</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Caricamento Siebel OK</fullName>
+            <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Caricamento Siebel KO</fullName>
-            <default>false</default>
-        </values>
-<!--         <values>
-            <fullName>In sequenzializzazione</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
- <!--        <values>
-            <fullName>OK SAP</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Sequenzializzato</fullName>
             <default>false</default>
@@ -2502,6 +2477,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Contratto già firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>OTP Coopresenza</fullName>
             <default>false</default>
         </values>
@@ -2511,10 +2490,6 @@
         </values>
         <values>
             <fullName>Vocal Order</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Contratto già firmato</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2525,6 +2500,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Contratto già firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>OTP Coopresenza</fullName>
             <default>false</default>
         </values>
@@ -2534,10 +2513,6 @@
         </values>
         <values>
             <fullName>Vocal Order</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Contratto già firmato</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2792,7 +2767,7 @@
         <values>
             <fullName>E-Canone fisso</fullName>
             <default>false</default>
-        </values>         
+        </values>
         <values>
             <fullName>F-Standalone</fullName>
             <default>false</default>

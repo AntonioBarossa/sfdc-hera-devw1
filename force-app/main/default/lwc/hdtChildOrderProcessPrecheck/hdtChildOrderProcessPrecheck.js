@@ -702,7 +702,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         }
         console.log("this.3"); 
 
-        if((this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_Voltura') && (this.order.Account.Id != this.order.ServicePoint__r?.Account__r?.Id) ){
+        if((this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_Voltura' || this.checkOutcomingVolturaWithSwitch(this.selectedProcessObject.recordType, this.order) ) && (this.order.Account.Id != this.order.ServicePoint__r?.Account__r?.Id) ){
             console.log("this.31:" + JSON.stringify(this.order.Account.RecordType.DeveloperName)); 
             console.log("this.310:" + JSON.stringify(this.order.ServicePoint__r)); 
             if(this.order.ServicePoint__r?.Account__r?.RecordType?.DeveloperName === 'HDT_RT_Residenziale'){
@@ -921,5 +921,15 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 });
                 this.dispatchEvent(toastErrorMessage);
             });
+    }
+
+    checkOutcomingVolturaWithSwitch(recordTypeName,order){
+        let response  = (recordTypeName === 'HDT_RT_VolturaConSwitch' && order.ServicePoint__r && order.ServicePoint__r.Account__r && order.ServicePoint__r.Account__r.Id);
+		if (response){
+			console.log('@@@@ checkOutcomingVolturaWithSwitch --> ' + true);
+		}else{
+			console.log('@@@@ checkOutcomingVolturaWithSwitch --> ' + false);
+		}
+        return response;
     }
 }

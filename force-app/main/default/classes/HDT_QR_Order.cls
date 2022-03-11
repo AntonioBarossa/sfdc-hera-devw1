@@ -1240,4 +1240,9 @@ public inherited sharing class HDT_QR_Order {
 
         return ordList;
     }
+
+    public static Order getOrderWithLines(String orderId){
+        if(String.isBlank(orderId))return null;
+        return [SELECT Id,ServicePoint__c,BillingProfile__c,Market__c,PaymentMode__c,BillSendMode__c,VAT__c ,SapContractCode__c,Pricebook2Id,CommercialProduct__c, ProcessType__c,AccountId,EffectiveDate__c, EndDate,SignedDate__c,SalesCompany__c,RemiCode__c,Contact__c,(select Id,ProductFamily__c,Service__c, Product2Id,CompanyOwner__c,PaymentMode__c,Product2.Version__c,Surface__c, OccupantsNumber__c,SBQQ__RequiredBy__c from OrderItems) FROM Order WHERE Id=:orderId];
+    }
 }

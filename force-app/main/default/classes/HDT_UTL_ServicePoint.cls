@@ -47,6 +47,8 @@ public with sharing class HDT_UTL_ServicePoint {
             }
             else if(!String.isBlank(mapRes.get('STATODEVICE'))){
                 spNew.MeterStatus__c  = 'Bozza';
+            }else{
+                spNew.MeterStatus__c  = 'Inattivo';
             }
         }
         if(mapRes.get('PRESSIONE')!=null && !String.isBlank(mapRes.get('PRESSIONE'))){

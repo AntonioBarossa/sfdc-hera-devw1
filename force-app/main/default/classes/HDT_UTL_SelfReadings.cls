@@ -293,25 +293,26 @@ public inherited sharing class HDT_UTL_SelfReadings {
         } 
     }
 
-    public static Map<String,Boolean> isAutomaticDiscard(Set<String> errorCodes) {
+    public static Map<String,DiscardAnnullmentRule__c> isAutomaticDiscard(Set<String> errorCodes) {
         if (errorCodes == null) {
             return null;
         }
 
-        Map<String, Boolean> isAutomaticDiscardMap = new Map<String, Boolean>();
+        Map<String, DiscardAnnullmentRule__c> isAutomaticDiscardMap = new Map<String, DiscardAnnullmentRule__c>();
 
         HDT_QR_SelfReadings queryHandler = new HDT_QR_SelfReadings();
         List<DiscardAnnullmentRule__c> configs = queryHandler.getDiscardConfigurations(errorCodes);
 
         if (configs.isEmpty()) {
-            return null;
+            return new Map<String,DiscardAnnullmentRule__c>();
         }
 
         for (DiscardAnnullmentRule__c conf : configs) {
             if(String.isNotBlank(conf.DiscardCode__c)){
-                isAutomaticDiscardMap.put(conf.DiscardCode__c, conf.IsActive__c);
-            }else {
-                isAutomaticDiscardMap.put(conf.ControllingValue__c, conf.IsActive__c);
+                isAutomaticDiscardMap.put(conf.DiscardCode__c, conf);
+            }
+            if(String.isNotBlank(conf.ControllingValue__c)){
+                isAutomaticDiscardMap.put(conf.ControllingValue__c, conf);
             }
         }
 
