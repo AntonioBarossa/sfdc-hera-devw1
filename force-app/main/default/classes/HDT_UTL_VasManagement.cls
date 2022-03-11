@@ -122,7 +122,7 @@ public with sharing class HDT_UTL_VasManagement {
         return null;
     }
 
-    public static void updateVasPhase(string vasPhase, Order ord ) {
+    public static String updateVasPhase(string vasPhase, Order ord ) {
 //.equalsIgnoreCase
         String newPhase = '';
         if ( vasPhase == 'Esportazione VS Siebel'){
@@ -138,7 +138,7 @@ public with sharing class HDT_UTL_VasManagement {
         }else{
             newPhase =  'Comunicazione Motore VAS';
         }
-        Order orderToUpdate = new Order();
+        /*Order orderToUpdate = new Order();
         orderToUpdate.Id = ord.Id;
         orderToUpdate.Phase__c = newPhase;
         HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
@@ -146,12 +146,14 @@ public with sharing class HDT_UTL_VasManagement {
         {
             Schedulable instance = (Schedulable) wrts_prcgvr.VersionManager.newClassInstance('AsyncJobBatchSchedule');
             instance.execute(null);
-        }
+        }*/
 
         /* Platform Event non sembra partire correttamente */
         /*HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
         platEvent.SerializedSobj__c = JSON.serialize(orderToUpdate);
         Database.SaveResult sr = Eventbus.publish(platEvent);*/
+
+        return newPhase;
 
     }
 

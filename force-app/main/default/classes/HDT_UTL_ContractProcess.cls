@@ -141,7 +141,7 @@ public inherited sharing class HDT_UTL_ContractProcess {
         sub.SendingBillMode__c=orderCompleted.BillSendMode__c;
         sub.ServicePoint__c=orderCompleted.ServicePoint__c;
         //sub.Service__c= item.Service__c;
-        sub.Version__c=item.Product2.Version__c;
+        sub.Version__c = item.Product2.Version__c;
         sub.Surface__c = item.Surface__c;
         sub.OccupantsNumber__c = item.OccupantsNumber__c;
         return sub;
