@@ -1,6 +1,77 @@
 public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
+    /*
+    Crea nuovo oggetto Sales__c e setta la Lookup all'Account e al Contact (Account__c - SalesContact__c)
+
+    Sale__c
+    Account__c
+    SalesContact__c
+    AccountFiscalCode__c
+    AccountVAT__c
+    Agency__c
+    SalesContactRole__c = Titolare
+    Status__c = Attiva
+    AgencyCode__c
+    VendorFirstName__c
+    VendorLastName__c
+    CommercialId__c
+    LowerChannelAgency__c
+    UpperChannelAgency__c
+    Channel__c
+    
+    
+    Opportunity opp = new Opportunity();
+    opp.Sale__c = params.get('saleId');
+    opp.Id = params.get('opportunityId');
+    HDT_UTL_DatabaseService.updateSObject(opp);
+        
+        
+    Order parentOrderNew = new Order();
+    parentOrderNew.Name = 'Ordine ' + sale.Name, 
+    parentOrderNew.AccountId = sale.Account__c, 
+    parentOrderNew.Contact__c = sale.SalesContact__c, 
+    parentOrderNew.Sale__c = sale.Id, 
+    parentOrderNew.Status = 'Draft', 
+    parentOrderNew.RecordTypeId = Schema.getGlobalDescribe().get(‘Order’).getDescribe().getRecordTypeInfosByDeveloperName().get(‘HDT_RT_OrderDossier‘).getRecordTypeId(); 
+    parentOrderNew.EffectiveDate = Date.today(), 
+    parentOrderNew.Step__c = 2, 
+    parentOrderNew.Channel__c = sale.Channel__c, 
+    parentOrderNew.LoginChannel__c = sale.Channel__c, 
+    parentOrderNew.VendorLastName__c = sale.VendorLastName__c, 
+    parentOrderNew.VendorFirstName__c = sale.VendorFirstName__C, 
+    parentOrderNew.CommercialId__c = sale.CommercialId__c, 
+    parentOrderNew.AgencyCode__c = sale.AgencyCode__c, 
+    parentOrderNew.Agency__c = sale.Agency__c, 
+    parentOrderNew.AreaManager__c = sale.AreaManager__c 
+    parentOrderNew.SignedDate__c = TRACCIATO.DataFirma 
+    parentOrderNew.ContractSigned__c = true
+    parentOrderNew.SignMode__c = TRACCIATO.ModalitaFirma
+    parentOrderNew.DocSendingMethod__c = TRACCIATO.ModalitaSpedizione
+    parentOrderNew.ShippingMail__c = TRACCIATO.EmailContratto
+    parentOrderNew.PhoneNumber__c = TRACCIATO.TelefonoContratto
+    parentOrderNew.Phase__c = 'Documentazione da firmare'
+    parentOrderNew.Status = 'In Lavorazione'
+                    
+    
+    Account
+    BillinProfile
+    ServicePoint
+    Sale
+    Product2
+    */
 
     private static void alignAccountFields(Order orderToUpdate, Account account){
+
+        List<Id> accIds = new List<Id>();
+        List<Account> accList = [
+            SELECT BillingStreetNumberExtension__c, CustomerCode__c, CustomerType__c, Category__c, BillingPlace__c, BillingCountry, BillingPostalCode, BillingState, BillingCity, BillingIsAddressVerified__c,
+                   BillingStreetNumber__c, BillingStreetName__c, CustomerMarking__c, BillingCityCode__c, BPSAPModel__c, FiscalCode__c, VATNumber__c, RecordType.DeveloperName, Name, FirstName__c, LastName__c,
+                   PrimaryEmail__c, Phone
+            FROM Account
+            WHERE Id IN :accIds
+            WITH SECURITY_ENFORCED
+        ];
+
+        Map<Id, Account> accountMap = new Map<Id, Account>(accList);
 
         if (account.RecordType.DeveloperName == 'HDT_RT_Business') {
 
@@ -45,6 +116,17 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
 
     private static void alignSaleFields(Order orderToUpdate, Sale__c sale){
 
+        List<Id> saleIds = new List<Id>();
+        List<Sale__c> saleList = [
+            SELECT Agency__c, AgencyCode__c, CommercialId__c, VendorFirstName__c, VendorLastName__c, Channel__c, UpperChannelAgency__c, LowerChannelAgency__c, SaleBy__c, Campaign__c, Campaign__r.Name,
+                   CommissioningCampaign__c, CommissioningCampaign__r.Name, SalesContact__c, SalesContact__r.IndividualId, SalesContact__r.Individual.MarketingPrivacy__c, SalesContact__r.Individual.ProfilingPrivacy__c,
+                   SalesContact__r.Phone, SalesContact__r.MobilePhone, CreatedBy.LoginChannel__c, CreatedBy.Station__c, CreatedBy.CreatorGroup__c, AreaManager__c
+            FROM Sale__c
+            WHERE Id IN :saleIds
+        ];
+
+        Map<Id, Sale__c> saleMap = new Map<Id, Sale__c>(saleList);
+
 		orderToUpdate.SaleBy__c = sale.SaleBy__c;
         orderToUpdate.CommissioningCampaign__c = sale.CommissioningCampaign__c;
         orderToUpdate.Campaign__c = sale.Campaign__c;
@@ -73,6 +155,19 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
     }
 
     private static void alignBillingProfileFields(Order orderToUpdate, BillingProfile__c billingProfile){
+
+        List<Id> idsList = new List<Id>();
+        List<BillingProfile__c> billingProfileList = [
+            SELECT ContractAccountCode__c, IbanCountry__c, CreateContractAccount__c, SendCertifiedEmailConsentDate__c, SubjectCode__c, InvoiceCertifiedEmailAddress__c, ElectronicInvoicingMethod__c, XMLType__c,
+                   CIG__c, CUP__c, IbanIsForeign__c, IbanCIN_IBAN__c, IbanABI__c, IbanCAB__c, IbanCodeNumber__c, BankAccountSignatoryFiscalCode__c, BankAccountSignatoryFirstName__c, BankAccountSignatoryLastName__c,
+                   BillSendingMethod__c, PaymentMethod__c, InvoicingCity__c, InvoicingCountry__c, InvoicingProvince__c, InvoicingStreetName__c, InvoicingStreetNumber__c, InvoicingPostalCode__c, InvoicingCityCode__c,
+                   InvoiceEmailAddress__c
+            FROM BillingProfile__c
+            WHERE Id IN :idsList
+            WITH SECURITY_ENFORCED
+        ];
+
+        Map<Id, BillingProfile__c> billingProfileMap = new Map<Id, BillingProfile__c>(billingProfileList);
 
 		orderToUpdate.SubjectCode__c = billingProfile.SubjectCode__c;
         orderToUpdate.InvoiceCertifiedEmailAddress__c = billingProfile.InvoiceCertifiedEmailAddress__c;
@@ -113,6 +208,20 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
     }
 
     private static void alignServicePointFields(Order orderToUpdate, ServicePoint__c servicePoint){
+
+        List<Id> idsList = new List<Id>();
+        List<ServicePoint__c> servicePointList = [
+            SELECT SwitchOutDate__c, SupplyStreetNumberExtension__c, SupplyTypeTemp__c, exciseEle__c, ExciseGas__c, Vat__c, CommoditySector__c, IsRemoteManaged__c, MeterType__c, SwitchInWinback__c, PowerRequested__c,
+                   RequestPhase__c, PressureLevel__c, Distributor__r.Code__c, SupplyType__c, MeterClass__c, RecordType.DeveloperName, DisconnectibilityType__c, Disconnectable__c, ImplantType__c, ImplantTypeTemp__c,
+                   SupplySAPCityCode__c, AnnualConsumption__c, MarketOrigin__c, PowerAvailable__c, Pressure__c, VoltageLevel__c, DisconnectibilityPhone__c, MaxRequiredPotential__c, UseTypeEnergy__c, UseCategory__c,
+                   WithdrawalClass__c, MeterSN__c, Resident__c, RemiCode__c, VATNumberUdb__c, SupplyCity__c, SupplyStreet__c, SupplyStreetNumber__c, SupplyPlace__c, SupplyProvince__c, SupplyPostalCode__c, SupplyCountry__c,
+                   PowerContractual__c, ServicePointCode__c, SAPImplantCode__c, MeterStatus__c
+            FROM ServicePoint__c
+            WHERE Id IN :idsList
+            WITH SECURITY_ENFORCED
+        ];
+
+        Map<Id, ServicePoint__c> servicePointMap = new Map<Id, ServicePoint__c>(servicePointList);
 
         HDT_WRP_Data mixedData = new HDT_WRP_Data();
         Map<String, String> mapIvaIdToValue2 = generateMap('mapIvaIdToValue2');
