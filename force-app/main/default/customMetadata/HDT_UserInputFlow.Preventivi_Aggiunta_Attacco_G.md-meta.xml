@@ -7,7 +7,7 @@
         <value xsi:type="xsd:string">[
 {&quot;FieldName&quot;:&quot;SupplyType__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;Market__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;TaxRate__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;Taxes__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;PointToConnect__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
+{&quot;FieldName&quot;:&quot;Taxes__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;PointToConnect__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;CaliberRequested__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;ServicePointType__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;Distributor__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;DistributorNote__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}
@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>ValidateClass__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">HDT_UTL_CaseValidations</value>
     </values>
 </CustomMetadata>

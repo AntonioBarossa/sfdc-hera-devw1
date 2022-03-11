@@ -8,6 +8,7 @@ public inherited sharing class HDT_QR_CaseValidations {
         Type,
         Subprocess__c,
         Cluster__c,
+        Commodity__c,
         CommodityFormula__c,
         ServicePoint__r.ServicePointCode__c,
         OpinionRequest__c,
