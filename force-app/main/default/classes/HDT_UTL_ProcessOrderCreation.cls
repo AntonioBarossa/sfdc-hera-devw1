@@ -2,20 +2,22 @@
 public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_ProcessExecution{
 
     /*
-    List<MassiveLoaderRequestItem__c> scope;
-    scope = [
-        SELECT Id, Data__c, NextStepData__c
-        FROM MassiveLoaderRequestItem__c
-        WHERE MassiveLoaderRequest__c = 'a3d3O000000XFIJQA4'
-        AND Status__c = 'In attesa di lavorazione'
-    ];
-    HDT_UTL_ProcessExecution cls;
-    Type t = Type.forName('HDT_UTL_ProcessOrderCreation');
-    cls = (HDT_UTL_ProcessExecution)t.newInstance();
-    cls.setProcess('TestSales');
-    cls.setMassiveLoaderRequestItemList(scope);
-    cls.execute();
+        List<MassiveLoaderRequestItem__c> scope;
+        scope = [
+            SELECT Id, Data__c, NextStepData__c
+            FROM MassiveLoaderRequestItem__c
+            WHERE MassiveLoaderRequest__c = 'a3d3O000000XFIJQA4'
+            AND Status__c = 'In attesa di lavorazione'
+        ];
+        HDT_UTL_ProcessExecution cls;
+        Type t = Type.forName('HDT_UTL_ProcessOrderCreation');
+        cls = (HDT_UTL_ProcessExecution)t.newInstance();
+        cls.setProcess('TestSales');
+        cls.setMassiveLoaderRequestItemList(scope);
+        cls.execute();
     */
+
+    private Map<String, HDT_MassiveFieldsObjectMap__mdt> sobjectMap;
     private List<MassiveLoaderRequestItem__c> itemsToSave;
     private List<HDT_WRP_ProcessObjects> processObjList;
     private List<Product2> commOfferForRetrieve;
@@ -25,6 +27,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private Map<String, Product2> commOfferMap;
     private Map<String, Map<String, String>> additionalOrderItemMap;
     List<PricebookEntry> pbeOptionalSkuList = new List<PricebookEntry>();
+    private Map<String, String> mapAllFields;
 
     Map<String, String> product2ForActivationMap;
     Map<String, HDT_MassiveFieldsObjectMap__mdt> product2ForAdditionalMap;
@@ -60,11 +63,47 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             System.debug('>>> ' + obj.billProfId);
             System.debug('>>> ' + obj.servPointId);
 
-            String convertionError;
-
             processObj.sale = setSaleObject(processObj.sale);
             processObj.opportunity = setOpportunityObj(processObj.opportunity);
             processObj = buildWrapperOrderStructure(processObj, tempSplitedFields, obj);
+
+            String csvHeader;
+            String convertionError;
+            String tempValue;
+            String objField;
+            for(Integer count=0; count < tempSplitedFields.size(); count++){
+                tempValue = tempSplitedFields[count];
+                csvHeader = mapHeaderByPosition.get(count);
+                objField = mapAllFields.get(csvHeader);
+
+                if(String.isNotBlank(objField) && String.isNotBlank(tempValue)){
+                    continue;
+                }
+
+                if(sobjectMap.containsKey(csvHeader)){
+                    switch on sobjectMap.get(csvHeader).objectType__c {
+                        when 'Sale__c' {
+                            //convertionError = mapTypeField(processObj.account, mapAllFields, count, tempValue);
+                        }
+                        when 'Opportunity' {
+
+                        }
+                        when 'ServicePoint__c' {
+
+                        }
+                    }
+                }
+
+                if(String.isNotEmpty(convertionError)){
+                    // error happened -> exit
+                    System.debug(LoggingLevel.DEBUG, '>>> break for loop...' + csvHeader + ' - ' + tempValue);
+                    break;
+                }
+
+
+            }
+
+
             processObjList.add(processObj);
 
         }
@@ -216,6 +255,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                         }
 
                     }
+
+                    processObj.parentOrder = createFatherOrder(childOrder.childOrder, processObj.parentOrder);
+                    parentOrderToInsert.add(processObj.parentOrder);
                 }
 
                 if(childOrder.orderType.equalsIgnoreCase('Aggiuntivo')){
@@ -244,20 +286,22 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
             System.debug(JSON.serializePretty(processObj));
 
-            //processObj.parentOrder = createFatherOrder(processObj.childOrder, processObj.parentOrder);
-            //parentOrderToInsert.add(processObj.parentOrder);
-
         }
 
+        insert parentOrderToInsert;
 
-        //System.debug(String.valueOf(parentOrderToInsert));
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+            for(HDT_WRP_ChildOrder childOrder : processObj.childOrderList){
+                childOrder.childOrder.ParentOrder__c = processObj.parentOrder.Id;            
+            }
+        }
+
         insert childOrderToInsert;
         
         for(Order o : childOrderToInsert){
             System.debug('>>> order Id ' + o.Id);
         }
 
-        //-------------------------------------
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
             for(HDT_WRP_ChildOrder childOrder : processObj.childOrderList){
@@ -270,12 +314,10 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 }
             
             }
-
             
         }
 
         insert orderItemToInsert;
-        //-------------------------------------
 
     }
 
@@ -283,7 +325,22 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         product2ForAdditionalMap = new Map<String, HDT_MassiveFieldsObjectMap__mdt>();
         product2ForActivationMap = new Map<String, String>();
+        mapAllFields = new Map<String, String>();
         wrpForStructureMap = new Map<String, HDT_MassiveFieldsObjectMap__mdt>();
+        List<HDT_MassiveFieldsObjectMap__mdt> allFieldForThisProcess;
+
+        sobjectMap = new Map<String, HDT_MassiveFieldsObjectMap__mdt>();
+        allFieldForThisProcess = HDT_QR_ProcessPostSales.getMapFieldsObjectByDeveloperName('Sales%');
+
+        for(HDT_MassiveFieldsObjectMap__mdt temp : allFieldForThisProcess){
+
+            if(temp.objectType__c.equalsIgnoreCase('OrderWrapper')){
+
+            } else {
+                mapAllFields.put(temp.MasterLabel, temp.nameField__c);
+            }
+            sobjectMap.put(temp.MasterLabel, temp);
+        }
 
         List<HDT_MassiveFieldsObjectMap__mdt> product2MdtList = [
             SELECT MasterLabel, labelField__c, nameField__c, objectType__c, processType__c
@@ -440,15 +497,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         return processObject;
 
-    }
-
-    private HDT_WRP_OrderItem setWrpOrderItem(HDT_WRP_OrderItem wrpOrderItem, String itemType, String productCode, String version){
-        wrpOrderItem = new HDT_WRP_OrderItem();
-        wrpOrderItem.itemType = itemType;
-        wrpOrderItem.product = new Product2();
-        wrpOrderItem.product.ProductCode = (String.isNotEmpty(productCode)) ? productCode : null;
-        wrpOrderItem.product.Version__c = (String.isNotEmpty(version)) ? version : null;
-        return wrpOrderItem;
     }
 
     private class HDT_WRP_ProcessObjects {
