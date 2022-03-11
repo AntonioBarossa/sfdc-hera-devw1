@@ -1311,6 +1311,17 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.AppointmentOutcome__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.AppointmentOutcome__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-b9b5c7cf-4a59-410a-b0ae-6275ef133cf3</name>
         <type>Facet</type>
     </flexiPageRegions>
