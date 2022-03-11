@@ -1119,10 +1119,47 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     public string validatePreventivi(string fields, Case currentCase)
     {
         String result;
+        String supplyType = getFieldValue(fields, 'SupplyType__c');
+        String taxes = getFieldValue(fields, 'Taxes__c');
+        String servicePointType = getFieldValue(fields, 'ServicePointType__c');
         if(currentCase.Type.equalsIgnoreCase('Nuovo Impianto') || currentCase.Type.equalsIgnoreCase('Aggiunta Attacco')){
             if(currentCase.ShipmentAddressAssign__c == null){
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Indirizzo di Fornitura'));
-            } else {
+            } 
+            else if(currentCase.Commodity__c == null){
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Servizio mancante'));
+            }
+            else if(currentCase.Commodity__c != null){
+                if(currentCase.Commodity__c == 'Gas' && 
+                (String.isNotBlank(supplyType))
+                ){
+                    String taxesFormatted = taxes.substringBetween('(Cod. ',')');
+                    List<FieldCoerenceServicePoint__c> coerenceList = [SELECT Id, 
+                                                                              AccountCategory__c, 
+                                                                              UseCategory__c, 
+                                                                              Commodity__c, 
+                                                                              SupplyType__c, 
+                                                                              ImplantType__c, 
+                                                                              IsActive__c, 
+                                                                              Taxes__c 
+                                                                        FROM FieldCoerenceServicePoint__c
+                                                                        WHERE Commodity__c =: currentCase.Commodity__c AND
+                                                                              SupplyType__c =: supplyType AND
+                                                                              ImplantType__c =: servicePointType AND
+                                                                              (Taxes__c =: taxesFormatted OR Taxes__c = null) AND
+                                                                              AccountCategory__c = 'Famiglie' WITH SECURITY_ENFORCED];
+                    //Boolean isCoerence = HDT_SRV_FieldCoerenceServicePoint.checkCoerence(inputFieldMap);
+                    if(coerenceList.isEmpty()){
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Assenza coerenza campi'));
+                    }
+                    else{
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+                    }
+                }else{
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+                }
+            }            
+            else {
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
             }
         }
