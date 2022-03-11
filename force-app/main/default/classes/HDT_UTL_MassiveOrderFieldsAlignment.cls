@@ -59,7 +59,7 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
     Product2
     */
 
-    private static void alignAccountFields(Order orderToUpdate, Account account){
+    private static Order alignAccountFields(Order orderToUpdate, Account account){
 
         List<Id> accIds = new List<Id>();
         List<Account> accList = [
@@ -112,9 +112,10 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
         orderToUpdate.CustomerType__c = account.CustomerType__c;
         orderToUpdate.CustomerCode__c = account.CustomerCode__c;
 
+        return orderToUpdate;
     }
 
-    private static void alignSaleFields(Order orderToUpdate, Sale__c sale){
+    private static Order alignSaleFields(Order orderToUpdate, Sale__c sale){
 
         List<Id> saleIds = new List<Id>();
         List<Sale__c> saleList = [
@@ -148,13 +149,14 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
         orderToUpdate.AgencyCode__c = sale.AgencyCode__c;
         orderToUpdate.Agency__c = sale.Agency__c;
         orderToUpdate.AreaManager__c = sale.AreaManager__c;
-        orderToUpdate.LoginChannel__c=sale.CreatedBy.LoginChannel__c;
-        orderToUpdate.LoginWorkstation__c= sale.CreatedBy.Station__c;
-        orderToUpdate.CreatorGroup__c= sale.CreatedBy.CreatorGroup__c;
+        orderToUpdate.LoginChannel__c = sale.CreatedBy.LoginChannel__c;
+        orderToUpdate.LoginWorkstation__c = sale.CreatedBy.Station__c;
+        orderToUpdate.CreatorGroup__c = sale.CreatedBy.CreatorGroup__c;
 
+        return orderToUpdate;
     }
 
-    private static void alignBillingProfileFields(Order orderToUpdate, BillingProfile__c billingProfile){
+    private static Order alignBillingProfileFields(Order orderToUpdate, BillingProfile__c billingProfile){
 
         List<Id> idsList = new List<Id>();
         List<BillingProfile__c> billingProfileList = [
@@ -205,9 +207,10 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
         orderToUpdate.IbanCountry__c = billingProfile.IbanCountry__c;
         orderToUpdate.ContractAccountCode__c = billingProfile.ContractAccountCode__c;
 
+        return orderToUpdate;
     }
 
-    private static void alignServicePointFields(Order orderToUpdate, ServicePoint__c servicePoint){
+    private static Order alignServicePointFields(Order orderToUpdate, ServicePoint__c servicePoint){
 
         List<Id> idsList = new List<Id>();
         List<ServicePoint__c> servicePointList = [
@@ -241,7 +244,7 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
 
         } else if(servicePoint.CommoditySector__c == 'Gas'){
 
-            orderToUpdate.ExciseGas__c =  mapAcciseGas.get(servicePoint.ExciseGas__c) != null ? mapAcciseGas.get(servicePoint.ExciseGas__c) : mapAcciseGas.get('ALTRO');
+            orderToUpdate.ExciseGas__c = mapAcciseGas.get(servicePoint.ExciseGas__c) != null ? mapAcciseGas.get(servicePoint.ExciseGas__c) : mapAcciseGas.get('ALTRO');
 
             if ((servicePoint.ExciseGas__c == null || servicePoint.ExciseGas__c == '') && servicePoint.SupplyTypeTemp__c != 'A-Domestico') {
 
@@ -313,16 +316,18 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
         //Aggiunta valorizzazione Commodity
         orderToUpdate.Commodity__c = servicePoint.CommoditySector__c;
         orderToUpdate.Pressure__c = servicePoint.Pressure__c;
-        mixedData.servicePointStatus=servicePoint.MeterStatus__c;
+        mixedData.servicePointStatus = servicePoint.MeterStatus__c;
 
+        return orderToUpdate;
     }
 
-    private static void alignOrderProductFields(Order orderToUpdate, Product2 product2) {
+    private static Order alignOrderProductFields(Order orderToUpdate, Product2 product2) {
         //orderToUpdate.CommercialProductCode__c = product2.ProductCode
         //orderToUpdate.CommercialProductVersion__c = orderItemList[0].Product2.Version__c;
         //orderToUpdate.CommercialProduct__c = product2.Name;
         //orderToUpdate.VasServiceActivationDate__c = DelayEffectiveDate__c;
         //orderToUpdate.CommercialProductLink__c = Product2Id;
+        return orderToUpdate;
     }
 
     private static Map<String, String> generateMap(String mapType){
