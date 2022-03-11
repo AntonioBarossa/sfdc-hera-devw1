@@ -622,7 +622,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         for (Order childOrder : parentOrderIds) {
             if(childOrder.recordType.Developername == 'HDT_RT_VAS' && childOrder.Phase__c == currentPhase){
-                HDT_UTL_VasManagement.updateVasPhase( newVasPhase, childOrder );
+                String phase = HDT_UTL_VasManagement.updateVasPhase( newVasPhase, childOrder );
+                Order orderToUpdate = new Order(
+                    Id = childOrder.Id,
+                    Phase__c = phase
+                );
+                childOrdersToUpdate.add(orderToUpdate);
                 // Order orderToUpdate = new Order(Id = childOrder.Id, Phase__c = newVasPhase);
                 // childOrdersToUpdate.add(orderToUpdate);
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged ) {
