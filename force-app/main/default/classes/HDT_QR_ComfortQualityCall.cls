@@ -89,7 +89,7 @@ public inherited sharing class HDT_QR_ComfortQualityCall {
             WITH SECURITY_ENFORCED
         ];
     }
-
+ 
     public static List<ComfortQualityCall__c> getRecordsWithDocumentValidation(String canaleInvio){
         return [
             SELECT

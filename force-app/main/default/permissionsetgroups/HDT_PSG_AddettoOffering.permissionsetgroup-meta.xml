@@ -7,7 +7,6 @@
     <permissionSets>HDT_EinsteinAgentLicense</permissionSets>
     <permissionSets>HDT_EinsteinSearchLicense</permissionSets>
     <permissionSets>HDT_SalesforceCPQLicense</permissionSets>
-    <permissionSets>HDT_SalesforceCPQUser</permissionSets>
     <permissionSets>HDT_ViewReports</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
