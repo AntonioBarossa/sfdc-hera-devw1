@@ -122,7 +122,7 @@ public with sharing class HDT_UTL_VasManagement {
         return null;
     }
 
-    public String updateVasPhase(string vasPhase, Order ord ) {
+    public static String updateVasPhase(string vasPhase, Order ord ) {
 //.equalsIgnoreCase
         String newPhase = '';
         if ( vasPhase == 'Esportazione VS Siebel'){
