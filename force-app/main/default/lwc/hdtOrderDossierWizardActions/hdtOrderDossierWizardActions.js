@@ -18,6 +18,7 @@ import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';
 import SIGNED_FIELD from '@salesforce/schema/Order.ContractSigned__c';
 //Il seguente campo è stato utilizzato per tracciare l'ultimo SignatureMethod inviato a docusign.
 import OLDSIGN_FIELD from '@salesforce/schema/Order.SignMode__c';
+import isOnlyAmend from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.isOnlyAmend';
 
 export default class hdtOrderDossierWizardActions extends NavigationMixin(LightningElement) {
     @track isModalOpen = false;
@@ -34,7 +35,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     parentOrder;
     isVocalAndActivityNotClose = true;
     enableDocumental = true;
-
+    isAmend = false;
 
     get disablePrintButtonFunction() {
         return this.isPrintButtonDisabled  || (this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare'));
@@ -72,6 +73,23 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         if (this.orderParentRecord.Status === 'Completed') {
             this.isCancelButtonDisabled = true;
         }
+    }
+
+    getIsOnlyAmend(){
+        isOnlyAmend({orderParent: this.orderParentRecord}).then(data =>{
+            console.log('isOnlyAmend: ', data);
+            this.isAmend = data;
+
+        }).catch(error => {
+            console.log((error.body.message !== undefined) ? error.body.message : error.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
     }
 
     getSaveButtonStatus(){
@@ -409,6 +427,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
 
     connectedCallback(){
         this.getSaveButtonStatus();
+        this.getIsOnlyAmend();
         this.getCancelButtonStatus();
         this.getActivityVocalOrder();
     }
