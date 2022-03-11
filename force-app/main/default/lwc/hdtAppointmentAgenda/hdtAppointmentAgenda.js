@@ -213,7 +213,7 @@ export default class HdtAppointmentAgenda extends LightningElement {
                 let slots = [];
                 try{
                     slots = data.appuntamento;
-
+                    this.records = [];
                     slots.forEach(element => {
                         this.addRecord({
                             codice : element.codiceApp, 

@@ -162,6 +162,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
         return [
             SELECT
             Id,
+            Order__c,
             Order__r.ServicePoint__r.CommoditySector__c,
             Order__r.RecordType.DeveloperName,
             Order__r.Account.RecordType.DeveloperName,

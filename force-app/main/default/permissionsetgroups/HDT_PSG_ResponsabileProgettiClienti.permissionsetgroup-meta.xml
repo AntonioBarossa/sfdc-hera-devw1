@@ -15,5 +15,5 @@
     <permissionSets>HDT_SalesforceCPQUser</permissionSets>
     <permissionSets>HDT_ViewReports</permissionSets>
     <permissionSets>force__EinsteinAnalyticsPlusAdmin</permissionSets>
-    <status>Updating</status>
+    <status>Updated</status>
 </PermissionSetGroup>

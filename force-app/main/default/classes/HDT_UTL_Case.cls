@@ -12,7 +12,7 @@ public inherited sharing class HDT_UTL_Case {
     public static List<HDT_UTL_FlowOutputs> caseFlowPredefaults(List<HDT_UTL_FlowInputs> inputs){
 
         HDT_QR_Case caseQr = new HDT_QR_Case();
-
+        
         List<HDT_UTL_FlowOutputs> outputs = new List<HDT_UTL_FlowOutputs>();
         List<Case> childCases = new List<Case>();
         HDT_UTL_FlowOutputs output = new HDT_UTL_FlowOutputs();
@@ -26,6 +26,7 @@ public inherited sharing class HDT_UTL_Case {
         Case currentCase = inputs[0].currentCase;
         String cancellationNote = inputs[0].cancellationNote;
         
+        
 
         if(process == 'Voltura Tecnica'){
 
@@ -38,8 +39,15 @@ public inherited sharing class HDT_UTL_Case {
             output.effectiveDate = effectiveDate;
         
         } else if(cluster == 'Preventivi'){
+            HDT_UTL_CalculateTransition calculateTransition = new HDT_UTL_CalculateTransition(currentCase.SupplyCity__c, currentCase.Commodity__c, currentCase.Distributor__r.Code__c);
+            Map<String,Object> companyInfosMap = new Map<String,Object>();
+            companyInfosMap = calculateTransition.calculateCompanyInfos();
+            City__c city = (City__c)companyInfosMap.get('cityObj');
+
             output.option = calculateOption(implantType, powerRequested);
-            output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
+            // output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
+            output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
+            output.salesCompany = city.SDV__c;
         } 
         else if(process.equalsIgnoreCase('Compatibilita'))
         {
@@ -110,6 +118,8 @@ public inherited sharing class HDT_UTL_Case {
         public String option;
         @InvocableVariable
         public String salesCompanyCode;
+        @InvocableVariable
+        public String salesCompany;
         @InvocableVariable
         public String isCompatible;
         @InvocableVariable
