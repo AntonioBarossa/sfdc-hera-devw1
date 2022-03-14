@@ -998,6 +998,16 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.DiscardDescription__c</fieldItem>
+                <identifier>RecordDiscardDescription_cField1</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.wrts_prcgvr__Description__c</fieldItem>
                 <identifier>Recordwrts_prcgvr__Description__cField</identifier>
             </fieldInstance>
