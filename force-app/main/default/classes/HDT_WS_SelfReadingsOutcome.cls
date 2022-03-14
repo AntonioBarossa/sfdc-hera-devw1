@@ -109,7 +109,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
         // TODO: verificare quanti record ci passa mulesoft per non sforare i limiti di sfdc.
         Id actRecordTypeId;
         try {
-            actRecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByName().get('HDT_RT_Scarto').getRecordTypeId();
+            actRecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
         } catch (Exception ex) {
             System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_WS_SelfReadingsOutcome metodo handleRequest ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
         }
