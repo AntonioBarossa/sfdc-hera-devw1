@@ -1074,7 +1074,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     if(('NOTE_ERR'.equalsIgnoreCase(curField.name) 
                     || 'DES_ERR_AEEG'.equalsIgnoreCase(curField.name)
                     || 'TESTO_ERRR'.equalsIgnoreCase(curField.name)
-                    || 'ANNOTAZIONI'.equalsIgnoreCase(curField.name)) 
+                    || 'ANNOTAZIONI'.equalsIgnoreCase(curField.name)
+                    || 'NOTE_ANN'.equalsIgnoreCase(curField.name)
+                    || 'ANNOTAZIONI_ANN'.equalsIgnoreCase(curField.name))
                     && String.isNotBlank(curField.value)){
                         discardError += HDT_UTL_Accents.removeDiacritics(curField.value) + '\n';
                     }
