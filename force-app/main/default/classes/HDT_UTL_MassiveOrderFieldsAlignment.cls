@@ -51,7 +51,7 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
                 SELECT ContractAccountCode__c, IbanCountry__c, CreateContractAccount__c, SendCertifiedEmailConsentDate__c, SubjectCode__c, InvoiceCertifiedEmailAddress__c, ElectronicInvoicingMethod__c, XMLType__c,
                        CIG__c, CUP__c, IbanIsForeign__c, IbanCIN_IBAN__c, IbanABI__c, IbanCAB__c, IbanCodeNumber__c, BankAccountSignatoryFiscalCode__c, BankAccountSignatoryFirstName__c, BankAccountSignatoryLastName__c,
                        BillSendingMethod__c, PaymentMethod__c, InvoicingCity__c, InvoicingCountry__c, InvoicingProvince__c, InvoicingStreetName__c, InvoicingStreetNumber__c, InvoicingPostalCode__c, InvoicingCityCode__c,
-                       InvoiceEmailAddress__c
+                       InvoiceEmailAddress__c, IbanCIN__c, InvoicingStreetNumberExtension__c, SignatoryType__c
                 FROM BillingProfile__c
                 WHERE Id IN :idsList
                 WITH SECURITY_ENFORCED
@@ -85,7 +85,7 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
 
     }
 
-    private static Order alignAccountFields(Order orderToUpdate, Account account){
+    public static Order alignAccountFields(Order orderToUpdate, Account account){
 
         if (account.RecordType.DeveloperName == 'HDT_RT_Business') {
 
@@ -129,7 +129,7 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
         return orderToUpdate;
     }
 
-    private static Order alignSaleFields(Order orderToUpdate, Sale__c sale){
+    public static Order alignSaleFields(Order orderToUpdate, Sale__c sale){
 
 		orderToUpdate.SaleBy__c = sale.SaleBy__c;
         orderToUpdate.CommissioningCampaign__c = sale.CommissioningCampaign__c;
@@ -159,7 +159,7 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
         return orderToUpdate;
     }
 
-    private static Order alignBillingProfileFields(Order orderToUpdate, BillingProfile__c billingProfile){
+    public static Order alignBillingProfileFields(Order orderToUpdate, BillingProfile__c billingProfile){
 
 		orderToUpdate.SubjectCode__c = billingProfile.SubjectCode__c;
         orderToUpdate.InvoiceCertifiedEmailAddress__c = billingProfile.InvoiceCertifiedEmailAddress__c;
@@ -200,7 +200,7 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
         return orderToUpdate;
     }
 
-    private static Order alignServicePointFields(Order orderToUpdate, ServicePoint__c servicePoint){
+    public static Order alignServicePointFields(Order orderToUpdate, ServicePoint__c servicePoint){
 
         HDT_WRP_Data mixedData = new HDT_WRP_Data();
         Map<String, String> mapIvaIdToValue2 = generateMap('mapIvaIdToValue2');
