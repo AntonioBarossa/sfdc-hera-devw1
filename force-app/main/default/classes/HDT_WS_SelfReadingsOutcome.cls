@@ -145,7 +145,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                 }
             }else if(String.isNotBlank(outcomeData.errorDescription)){
                 try {
-                    dar = isAutomaticDiscardMap.get(outcomeData.errorDescription);
+                    dar = isAutomaticDiscardMap.get(HDT_UTL_Accents.removeDiacritics(outcomeData.errorDescription));
                 } catch (Exception e) {
                     System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage());
                     System.debug(LoggingLevel.DEBUG, 'Stacktrace: ' + e.getStackTraceString());
