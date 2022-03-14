@@ -974,6 +974,7 @@ public inherited sharing class HDT_QR_Order {
         return [SELECT id,
         phase__c,
         Description,
+        PhaseStory__c,
         Status,
         PrecheckResultSII__c,
         ProcessType__c,
@@ -994,7 +995,8 @@ public inherited sharing class HDT_QR_Order {
         VoltageLevel__c,
         AccountId,
         IsTechnicalTransfer__c
-        FROM Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+        FROM Order 
+        WHERE ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
     /**@frpanico 26/10/2021
      * Added Supply Address Fields
@@ -1032,7 +1034,22 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getRecordByOrderId(String recordId){
-        return [Select id,Description,IsTechnicalTransfer__c,phase__c,Status,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, CancellationNote__c, AccountId from Order where Id = :recordId WITH SECURITY_ENFORCED];
+        return [SELECT id,
+        Description,
+        PhaseStory__c,
+        IsTechnicalTransfer__c,
+        phase__c,
+        Status,
+        PrecheckResultSII__c,
+        ProcessType__c,
+        BillingProfile__c, 
+        Vat__c, 
+        ServicePoint__c,
+        ServicePoint__r.Distributor__r.Name, 
+        CancellationNote__c, 
+        AccountId 
+        FROM Order 
+        WHERE Id = :recordId WITH SECURITY_ENFORCED];
     }
 
     /**
