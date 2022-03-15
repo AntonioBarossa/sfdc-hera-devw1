@@ -895,10 +895,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetRecord.CancellationReason__c</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>GetRecord.CancellationReasonDescription__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
