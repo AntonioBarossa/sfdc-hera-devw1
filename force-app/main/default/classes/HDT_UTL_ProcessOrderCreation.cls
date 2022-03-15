@@ -190,10 +190,12 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         List<Id> optnionalSkuIdList = new List<Id>();
         
         for(SBQQ__ProductOption__c prodOpt : productOptionList){
-            Map<String, String> tempMap = additionalOrderItemMap.get(prodOpt.SBQQ__ConfiguredSKU__c);
-            tempMap.put(prodOpt.SBQQ__OptionalSKU__r.ProductCode, prodOpt.SBQQ__OptionalSKU__c);
-            additionalOrderItemMap.put(prodOpt.SBQQ__ConfiguredSKU__c, tempMap);
-            optnionalSkuIdList.add(prodOpt.SBQQ__OptionalSKU__c);
+            if(additionalOrderItemMap.containsKey(prodOpt.SBQQ__ConfiguredSKU__c)){
+                Map<String, String> tempMap = additionalOrderItemMap.get(prodOpt.SBQQ__ConfiguredSKU__c);
+                tempMap.put(prodOpt.SBQQ__OptionalSKU__r.ProductCode, prodOpt.SBQQ__OptionalSKU__c);
+                additionalOrderItemMap.put(prodOpt.SBQQ__ConfiguredSKU__c, tempMap);
+                optnionalSkuIdList.add(prodOpt.SBQQ__OptionalSKU__c);
+            }
         }
         
         
@@ -205,9 +207,11 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         ];
 
         for(PricebookEntry pbe : pbeOptionalSkuList){
-            Map<Id, Id> tempMap = pricebookEntryForOptionalMap.get(pbe.Pricebook2Id);
-            tempMap.put(pbe.Product2Id, pbe.Id);
-            pricebookEntryForOptionalMap.put(pbe.Pricebook2Id, tempMap);
+            if(pricebookEntryForOptionalMap.containsKey(pbe.Pricebook2Id)){
+                Map<Id, Id> tempMap = pricebookEntryForOptionalMap.get(pbe.Pricebook2Id);
+                tempMap.put(pbe.Product2Id, pbe.Id);
+                pricebookEntryForOptionalMap.put(pbe.Pricebook2Id, tempMap);
+            }
         }
 
         System.debug(LoggingLevel.DEBUG, '>>> commOfferMap: ' + commOfferMap);
@@ -229,7 +233,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
     public override void registryCreation(){
 
-        
         List<Order> parentOrderToInsert = new List<Order>();
         List<Order> childOrderToInsert = new List<Order>();
         List<OrderItem> orderItemToInsert = new List<OrderItem>();
