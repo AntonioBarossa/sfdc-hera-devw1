@@ -151,9 +151,9 @@
                 <label>Supporto Catalogo Prodotti</label>
             </value>
             <value>
-                <fullName>Anomalia processo%2Fsistema</fullName>
+                <fullName>Anomalia processo/sistema</fullName>
                 <default>false</default>
-                <label>Anomalia processo%2Fsistema</label>
+                <label>Anomalia processo/sistema</label>
             </value>
             <value>
                 <fullName>Supporto caricamenti contratti</fullName>
