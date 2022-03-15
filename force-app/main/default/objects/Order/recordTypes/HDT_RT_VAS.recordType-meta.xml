@@ -411,6 +411,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Contatto Quality Fallito</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Disattivato%2FDisdetto %28Servizio%29</fullName>
             <default>false</default>
         </values>
