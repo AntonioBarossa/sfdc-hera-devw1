@@ -41,6 +41,7 @@ public inherited sharing class HDT_QR_Case {
             Phase__c,
             Type,
             SalesCompanyCode__c,
+            CausalCode__c,
             RecordType.DeveloperName
             FROM Case
             where Id = :Id
