@@ -2526,10 +2526,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto Esercizio Sistemi</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Supporto Front</fullName>
             <default>false</default>
         </values>
