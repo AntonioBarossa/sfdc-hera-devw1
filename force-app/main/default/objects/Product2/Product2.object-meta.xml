@@ -154,5 +154,5 @@
         <searchResultsAdditionalFields>DurationDay__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>DurationDayGas__c</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Read</sharingModel>
 </CustomObject>
