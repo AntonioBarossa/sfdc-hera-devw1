@@ -185,7 +185,7 @@ public with sharing class HDT_UTL_CaseProcess {
                     }
 
                 }
-                if(caseNew.Cluster__c == 'Autolettura'){
+                /*if(caseNew.Cluster__c == 'Autolettura'){
                     // Annullamento dopo l'invio al DL
                     if (caseNew.PhaseStory__c != null && caseNew.PhaseStory__c.containsIgnoreCase('Comunicazione verso Heroku OK')){
                         HDT_UTL_Case.createActivity(caseNew.Id, 'Gestione M01/M02','Gestione M01/M02','Gestione M01/M02');
@@ -194,7 +194,7 @@ public with sharing class HDT_UTL_CaseProcess {
                     else if (caseNew.PhaseStory__c != null && caseNew.PhaseStory__c.containsIgnoreCase('Esito OK da SAP') && !caseNew.PhaseStory__c.containsIgnoreCase('Comunicazione verso Heroku OK')){
                         HDT_UTL_Case.createActivity(caseNew.Id, 'Gestione Manuale SAP','Gestione Manuale SAP','Gestione Manuale SAP');
                     }
-                }
+                }*/
                 /**@frpanico 22/10/2021
                  * Reintrodotto PhaseManager per annullamento
                  * viene skippato solo in entrata e in uscita dall'annullamento dove non sono previste activity
