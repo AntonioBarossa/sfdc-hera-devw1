@@ -1044,8 +1044,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Consumi Anno',
                     'apiname': 'AnnualConsumption__c',
                     'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
-                    'disabled': false,
+                    'required': false,
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
