@@ -48,7 +48,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 HDT_UTL_ActivityCustom.createActivityWithParams(new Map<String,String>{
                                     'RecordTypeDeveloperName' => 'HDT_RT_AttivitaGestionali',
                                     'Type__c'                 => 'Gestione Switch in Ripristinatorio',
-                                    'Status__c'               => 'Creata',
+                                    'wrts_prcgvr__Status__c'               => 'Creata',
                                     'ServicePointCode__c'     => mapRequestFields.get('COD_PDR'),
                                     'FiscalCode__c'           => mapRequestFields.get('CODICE_FISCALE'),
                                     'VATNumber__c'            => mapRequestFields.get('PIVA'),
@@ -447,7 +447,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                                     throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating Billing Profile, VKONT Already not Unique - '+e.getMessage());
                                                 }
                                             }
-                                            if(ordRetrieved.ProcessType__c.containsIgnoreCase('Subentro') || ordRetrieved.ProcessType__c.containsIgnoreCase('Voltura')){
+                                            if(ordRetrieved.ProcessType__c.containsIgnoreCase('Subentro') || (ordRetrieved.ProcessType__c.containsIgnoreCase('Voltura') && !ordRetrieved.PhaseStory__c.containsIgnoreCase('Voltura Rifiutata'))){
                                                 mapRequestFields.put('NuovoAccount',ordRetrieved.AccountId);
                                             }
 

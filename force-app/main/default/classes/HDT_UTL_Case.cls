@@ -39,15 +39,19 @@ public inherited sharing class HDT_UTL_Case {
             output.effectiveDate = effectiveDate;
         
         } else if(cluster == 'Preventivi'){
-            HDT_UTL_CalculateTransition calculateTransition = new HDT_UTL_CalculateTransition(currentCase.SupplyCity__c, currentCase.Commodity__c, currentCase.Distributor__r.Code__c);
-            Map<String,Object> companyInfosMap = new Map<String,Object>();
-            companyInfosMap = calculateTransition.calculateCompanyInfos();
-            City__c city = (City__c)companyInfosMap.get('cityObj');
-
             output.option = calculateOption(implantType, powerRequested);
-            // output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
-            output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
-            output.salesCompany = city.SDV__c;
+            if(currentCase.Type.equalsIgnoreCase('Nuovo Impianto') || currentCase.Type.equalsIgnoreCase('Aggiunta Attacco'))
+            {
+                HDT_UTL_CalculateTransition calculateTransition = new HDT_UTL_CalculateTransition(currentCase.SupplyCity__c, currentCase.Commodity__c, currentCase.Distributor__r.Code__c);
+                Map<String,Object> companyInfosMap = new Map<String,Object>();
+                companyInfosMap = calculateTransition.calculateCompanyInfos();
+                City__c city = (City__c)companyInfosMap.get('cityObj');
+
+                
+                // output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
+                output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
+                output.salesCompany = city.SDV__c;
+            }
         } 
         else if(process.equalsIgnoreCase('Compatibilita'))
         {

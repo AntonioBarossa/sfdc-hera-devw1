@@ -425,9 +425,26 @@ public with sharing class HDT_UTL_Sales {
         return ord;
     }
 
-    public static wrts_prcgvr__Activity__c instanceActVocalOrd(String accountid,String orderid,id recordtypeid){
-        return new wrts_prcgvr__Activity__c(account__c = accountid,wrts_prcgvr__Status__c= 'Aperta',order__c = orderid,type__c='Validazione Vocal Order',recordtypeid=recordtypeid, RecordingLink__c='https://herapresfdc.cloudando.com/ctreplay/externalView/search?filter={"filter":{"ecid":"saashrapp|1|123|17"},"sort":{"startTs":-1},"index":0}');
+    public static wrts_prcgvr__Activity__c instanceActVocalOrd(String accountId, String orderId, Id recordtypeId) {
+        String link;
+        try {
+            link = [SELECT Id, RecordingLink__c FROM wrts_prcgvr__Activity__c WHERE CreatedById =: UserInfo.getUserId() AND Type__c = 'Chiamata outbound' WITH SECURITY_ENFORCED ORDER BY CreatedDate DESC  LIMIT 1].RecordingLink__c;
+        } catch (Exception e) {
+            link = 'ERRORE - ATTIVITA CHIAMATA OUTBOUND NON TROVATA';
+        }
+        if(String.isBlank(link)) {
+            link = 'ERRORE - NESSUN LINK REGISTRAZIONE NELL\'ATTIVITA DI CHIAMATA OUTBOUND';
+        }
+        return new wrts_prcgvr__Activity__c(
+            account__c = accountId,
+            wrts_prcgvr__Status__c = 'Aperta',
+            order__c = orderId,
+            type__c = 'Validazione Vocal Order',
+            recordtypeid = recordtypeId, 
+            RecordingLink__c = link
+        );
     }
+
     public static wrts_prcgvr__Activity__c instanceActValidazioneDocumentale(String accountid,String orderid,id recordtypeid){
         return new wrts_prcgvr__Activity__c(account__c = accountid,wrts_prcgvr__Status__c= 'Aperta',wrts_prcgvr__IsRequired__c=true,order__c = orderid,type__c='Validazione Documentale',recordtypeid=recordtypeid);
     }

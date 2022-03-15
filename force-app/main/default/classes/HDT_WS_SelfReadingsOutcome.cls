@@ -109,7 +109,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
         // TODO: verificare quanti record ci passa mulesoft per non sforare i limiti di sfdc.
         Id actRecordTypeId;
         try {
-            actRecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByName().get('HDT_RT_Scarto').getRecordTypeId();
+            actRecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
         } catch (Exception ex) {
             System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_WS_SelfReadingsOutcome metodo handleRequest ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
         }
@@ -145,7 +145,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                 }
             }else if(String.isNotBlank(outcomeData.errorDescription)){
                 try {
-                    dar = isAutomaticDiscardMap.get(outcomeData.errorDescription);
+                    dar = isAutomaticDiscardMap.get(HDT_UTL_Accents.removeDiacritics(outcomeData.errorDescription));
                 } catch (Exception e) {
                     System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage());
                     System.debug(LoggingLevel.DEBUG, 'Stacktrace: ' + e.getStackTraceString());
