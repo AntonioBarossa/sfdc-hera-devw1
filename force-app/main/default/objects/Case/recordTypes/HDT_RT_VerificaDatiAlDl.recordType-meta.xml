@@ -7713,7 +7713,7 @@
             <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
             <default>false</default>
         </values>
-        <values>
+        <values> 
             <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
             <default>false</default>
         </values>
