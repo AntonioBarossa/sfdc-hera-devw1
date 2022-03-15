@@ -183,7 +183,7 @@
         <translation></translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>Supporto Anomalia processo/sistema</masterLabel>
+        <masterLabel>Anomalia processo%2Fsistema</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>
@@ -192,10 +192,6 @@
     </picklistValues>
     <picklistValues>
         <masterLabel>Supporto Contact Center</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Supporto Esercizio Sistemi</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>
