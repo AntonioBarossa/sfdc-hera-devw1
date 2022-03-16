@@ -192,8 +192,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
         if(order.TemporaryConnectionStartDate__c != null 
         && order.TemporaryConnectionEndDate__c != null
-        && order.TemporaryConnectionEndDate__c < order.TemporaryConnectionStartDate__c){
+        && order.TemporaryConnectionEndDate__c <= order.TemporaryConnectionStartDate__c){
             throw new AuraHandledException('La data fine connessione temporanea non puo essere precedente alla data inizio!');
+        }
+
+        if(currentOrder.RecordType.DeveloperName == 'HDT_RT_ScontiBonus' && order.EffectiveDate__c != null && order.EffectiveDate__c < ( (System.today().addMonths(1)).toStartOfMonth()))
+        {
+            throw new AuraHandledException('La data decorrenza non può essere inferiore al primo del mese successivo');
         }
 
         exeChecks(order);
