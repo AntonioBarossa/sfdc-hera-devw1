@@ -594,6 +594,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.NumeratorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.MarketingPrivacyAcquired__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -25320,6 +25325,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.NumeratorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.ActivationEleExternalDistributor__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -35536,7 +35546,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>ServicePoint__c</tab>
-        <visibility>DefaultOff</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>VisitAssignmentRules__c</tab>

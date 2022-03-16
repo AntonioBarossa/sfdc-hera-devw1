@@ -481,6 +481,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.NumeratorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.IsWrongFiscalData__c</field>
         <readable>true</readable>
@@ -603,6 +608,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.IsExportSIE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.NumeratorGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -37632,6 +37642,10 @@
     <tabVisibilities>
         <tab>MassiveLoaderRequest__c</tab>
         <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>ServicePoint__c</tab>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>PercentageRulesForAssigningVisits__c</tab>

@@ -7,6 +7,18 @@
     <picklistValues>
         <picklist>ActivityOutcome__c</picklist>
         <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso - non necessario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso inserito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti dal DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Negativo</fullName>
             <default>false</default>
         </values>
