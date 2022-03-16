@@ -66,19 +66,21 @@
         <label>Web</label>
     </customValue>
     <customValue>
+        <fullName>Associazioni</fullName>
+        <default>false</default>
+        <label>Associazioni</label>
+    </customValue>
+    <customValue>
         <fullName>Consip</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Consip</label>
     </customValue>
     <customValue>
         <fullName>Reseller</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Reseller</label>
-    </customValue>
-    <customValue>
-        <fullName>Associazioni</fullName>
-        <default>false</default>
-        <label>Associazioni</label>
     </customValue>
     <description>Canale vendita associato all&apos;utente</description>
     <masterLabel>Canale Vendita</masterLabel>

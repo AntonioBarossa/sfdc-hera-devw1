@@ -335,14 +335,14 @@ public with sharing class HDT_UTL_CampaignMember {
             }
         }
 
-        if(actToCloseList.size() > 0){
-            activitySrv.updateRecords(actToCloseList);
-        }
         if(actToCreateList.size() > 0){
             activitySrv.createRecord(actToCreateList);
         }
         if(ordToCloseList.size() > 0){
             orderSrv.updateRecords(ordToCloseList);
+        }
+        if(actToCloseList.size() > 0){
+            activitySrv.updateRecords(actToCloseList);
         }
     }
 
