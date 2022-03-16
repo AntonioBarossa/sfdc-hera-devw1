@@ -151,14 +151,9 @@
                 <label>Supporto Catalogo Prodotti</label>
             </value>
             <value>
-                <fullName>Supporto Anomalia processo/sistema</fullName>
+                <fullName>Anomalia processo/sistema</fullName>
                 <default>false</default>
-                <label>Supporto Anomalia processo/sistema</label>
-            </value>
-            <value>
-                <fullName>Supporto Esercizio Sistemi</fullName>
-                <default>false</default>
-                <label>Supporto Esercizio Sistemi</label>
+                <label>Anomalia processo/sistema</label>
             </value>
             <value>
                 <fullName>Supporto caricamenti contratti</fullName>
