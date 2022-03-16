@@ -167,6 +167,6 @@
         <searchResultsAdditionalFields>ProcessValue__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ControllingValue__c</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Read</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

@@ -62,6 +62,7 @@ export default class hdtSaleServiceContainer extends LightningElement {
 
     handleConfirmServicePointEvent(event){
 
+        this.loading = true;
         if(event.detail.newServicePoint !== undefined) {
             this.servicePoint = event.detail.newServicePoint;
         }
@@ -98,6 +99,7 @@ export default class hdtSaleServiceContainer extends LightningElement {
 
             }
 
+            this.loading = false;
             
         }).catch(error => {
             const toastErrorMessage = new ShowToastEvent({

@@ -47,6 +47,10 @@ public inherited sharing class HDT_UTL_Case {
                 companyInfosMap = calculateTransition.calculateCompanyInfos();
                 City__c city = (City__c)companyInfosMap.get('cityObj');
 
+                AtecoMatrix__c atecoMatrix = [SELECT AtecoCode__c FROM AtecoMatrix__c WHERE AtecoCode__c =: currentCase.SupplyCity__c WITH SECURITY_ENFORCED LIMIT 1];
+
+                output.atecoCode = atecoMatrix.AtecoCode__c;
+
                 
                 // output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
                 output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
@@ -132,6 +136,8 @@ public inherited sharing class HDT_UTL_Case {
         public String cancellationNote;
         @InvocableVariable
         public Boolean isCommunity;
+        @InvocableVariable
+        public String atecoCode;
 
     }
 

@@ -683,10 +683,6 @@
             <assignToReference>GetOrder.CancellationRequestDate__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetOrder.CancellationNote__c</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
         <connector>
             <targetReference>Check_Discard_Rework_Ripristino_Fase_Order</targetReference>
         </connector>
@@ -943,14 +939,6 @@
             <value>
                 <booleanValue>false</booleanValue>
             </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetRecord.CancellationNote__c</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetRecord.CancellationReason__c</assignToReference>
-            <operator>Assign</operator>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetRecord.CancellationReasonDescription__c</assignToReference>
