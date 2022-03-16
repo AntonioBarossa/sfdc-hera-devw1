@@ -796,7 +796,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Map<String,List<Order>> orderMapNew = new Map<String,List<Order>>();
         List<Order> orderListOldCustomer = new List<Order>();                        
         List<Order> orderListNewCustomer = new List<Order>();   
-        List<Order> orderListcreditCheckPhaseManager = new List<Order>();                        
+        List<Order> orderListcreditCheckPhaseManager = new List<Order>();
+        List<Id> orderParentList = new List<Id>();                        
 
         for (Order newOrder : (List<Order>) newOrdersMap.values()) {
             Order oldOrder = (Order) oldOrdersMap.get(newOrder.id); 
@@ -813,6 +814,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 if((oldOrder.IncomingCreditCheckResult__c!=null && oldOrder.IncomingCreditCheckResult__c.contains('KO')) && (newOrder.IncomingCreditCheckResult__c != null && newOrder.IncomingCreditCheckResult__c.contains('OK'))){
                     orderListcreditCheckPhaseManager.add(newOrder);
                 }
+                //Gestione Documentazione Gestita
+                if ('Da Inviare'.equalsIgnoreCase(newOrder.Phase__c) && !newOrder.Phase__c.equalsIgnoreCase(oldOrder.Phase__c) && !orderParentList.contains(newOrder.ParentOrder__c)){
+                    orderParentList.add(newOrder.ParentOrder__c);
+                }
             }
         }
 
@@ -824,7 +829,18 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }        
         if(!orderListcreditCheckPhaseManager.isEmpty()){
             creditCheckPhaseManager(orderListcreditCheckPhaseManager);                     
-        }        
+        }   
+        
+        if (!orderParentList.isEmpty()){
+            List<Order> orderParents = new List<Order>();
+            for (Order o : [SELECT id FROM Order WHERE Id IN :orderParentList AND Phase__c = 'Documentazione Gestita' WITH SECURITY_ENFORCED]){
+                o.Description = 'Aggiornato Post Credit Check';
+                orderParents.add(o);
+            }
+            if (!orderParents.isEmpty()){
+                updateFutureList(JSON.serialize(orderParents));
+            }
+        }
     }        
 
     public static Boolean checkRecordTypeForCreditCheck(String recordTypeName, Order newOrder){
