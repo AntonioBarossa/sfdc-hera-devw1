@@ -20,10 +20,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>X_USG_SOC__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>X_OFFER_ID__c</field>
             </layoutItems>
             <layoutItems>
@@ -45,6 +41,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_DEPOSITO_OBIET__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>IMPIANTO_ATTRIB_34__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -189,10 +189,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>IMPIANTO_ATTRIB_34__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>IMPIANTO_X_BRAND_SOC__c</field>
             </layoutItems>
             <layoutItems>
@@ -215,12 +211,12 @@
                 <behavior>Readonly</behavior>
                 <field>IMPIANTO_ATTRIB_40__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>DESC_TEXT__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>IMPIANTO_INSTALL_DT__c</field>
@@ -521,7 +517,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000002YavL</masterLabel>
+        <masterLabel>00h1X000002V5G0</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

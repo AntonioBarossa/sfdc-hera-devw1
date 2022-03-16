@@ -134,7 +134,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 Id = ordId,
                 Phase__c = 'Annullato',
                 CancellationReason__c = causal,
-                Status = 'Activated'
+                Status = 'Annullato'
             ));
 
             wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = activityId, ContactResult__c = 'Annullato');

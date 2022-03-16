@@ -1044,8 +1044,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Consumi Anno',
                     'apiname': 'AnnualConsumption__c',
                     'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
-                    'disabled': false,
+                    'required': false,
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1320,7 +1320,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 {
                     'label': 'Convenzione/Associazione',
                     'apiname': 'ConventionAssociation__c',
-                    'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt') && (this.order.SupplyType__c !== null && this.order.SupplyType__c === 'Non Domestico'),
+                    'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt') && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
                     'required': false,
                     'disabled': false,
                     'value': '',

@@ -414,6 +414,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Contatto Quality Fallito</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Disattivato%2FDisdetto %28Servizio%29</fullName>
             <default>false</default>
         </values>
@@ -2117,6 +2121,38 @@
         </values>
         <values>
             <fullName>Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>
         </values>
         <values>

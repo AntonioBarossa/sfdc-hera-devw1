@@ -39,15 +39,23 @@ public inherited sharing class HDT_UTL_Case {
             output.effectiveDate = effectiveDate;
         
         } else if(cluster == 'Preventivi'){
-            HDT_UTL_CalculateTransition calculateTransition = new HDT_UTL_CalculateTransition(currentCase.SupplyCity__c, currentCase.Commodity__c, currentCase.Distributor__r.Code__c);
-            Map<String,Object> companyInfosMap = new Map<String,Object>();
-            companyInfosMap = calculateTransition.calculateCompanyInfos();
-            City__c city = (City__c)companyInfosMap.get('cityObj');
-
             output.option = calculateOption(implantType, powerRequested);
-            // output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
-            output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
-            output.salesCompany = city.SDV__c;
+            if(currentCase.Type.equalsIgnoreCase('Nuovo Impianto') || currentCase.Type.equalsIgnoreCase('Aggiunta Attacco'))
+            {
+                HDT_UTL_CalculateTransition calculateTransition = new HDT_UTL_CalculateTransition(currentCase.SupplyCity__c, currentCase.Commodity__c, currentCase.Distributor__r.Code__c);
+                Map<String,Object> companyInfosMap = new Map<String,Object>();
+                companyInfosMap = calculateTransition.calculateCompanyInfos();
+                City__c city = (City__c)companyInfosMap.get('cityObj');
+
+                AtecoMatrix__c atecoMatrix = [SELECT AtecoCode__c FROM AtecoMatrix__c WHERE AtecoCode__c =: currentCase.SupplyCity__c WITH SECURITY_ENFORCED LIMIT 1];
+
+                output.atecoCode = atecoMatrix.AtecoCode__c;
+
+                
+                // output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
+                output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
+                output.salesCompany = city.SDV__c;
+            }
         } 
         else if(process.equalsIgnoreCase('Compatibilita'))
         {
@@ -128,6 +136,8 @@ public inherited sharing class HDT_UTL_Case {
         public String cancellationNote;
         @InvocableVariable
         public Boolean isCommunity;
+        @InvocableVariable
+        public String atecoCode;
 
     }
 

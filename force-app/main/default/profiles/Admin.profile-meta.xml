@@ -484,6 +484,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.NumeratorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.SupplyTypeTemp__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -609,6 +614,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.NumeratorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.AnnualWithdrawal__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -620,6 +630,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.isSwitchReseller__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.reportPhase__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -416,6 +416,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Contatto Quality Fallito</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Delibera ARERA 155%2F2020</fullName>
             <default>false</default>
         </values>
@@ -513,6 +517,10 @@
         </values>
         <values>
             <fullName>Il cliente rinuncia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento per dati discordanti</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2403,6 +2411,10 @@
         </values>
         <values>
             <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Dati discordanti</fullName>
             <default>false</default>
         </values>
     </picklistValues>

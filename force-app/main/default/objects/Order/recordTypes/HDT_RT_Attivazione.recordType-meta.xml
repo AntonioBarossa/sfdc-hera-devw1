@@ -385,7 +385,7 @@
         </values>
         <values>
             <fullName>Annullamento da cliente</fullName>
-            <default>false</default>
+            <default>false</default>Contatto Quality Fallito
         </values>
         <values>
             <fullName>Annullo cambio offerta</fullName>
@@ -413,6 +413,10 @@
         </values>
         <values>
             <fullName>Contattare banca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contatto Quality Fallito</fullName>
             <default>false</default>
         </values>
         <values>

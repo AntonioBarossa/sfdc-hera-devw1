@@ -32,44 +32,46 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
 
         List<String> orderNumerList = new List<String>();
         Map<String, Id> orderMap = new Map<String, Id>();
+        if(responseObj.data != null && responseObj.data.detail != null){
 
-        for(HDT_WRP_DetailObj singleDetail : responseObj.data.detail){
+       
+            for(HDT_WRP_DetailObj singleDetail : responseObj.data.detail){
 
-            if(!singleDetail.vasType.equalsIgnoreCase('CANONE RAI')){
-                System.debug(LoggingLevel.DEBUG, '>>> current type: ' + singleDetail.vasType);
-                orderNumerList.add(singleDetail.rds);
+                if(!singleDetail.vasType.equalsIgnoreCase('CANONE RAI')){
+                    System.debug(LoggingLevel.DEBUG, '>>> current type: ' + singleDetail.vasType);
+                    orderNumerList.add(singleDetail.rds);
 
-                if(singleDetail.rate != null && singleDetail.rate.size() > 0){
-                    for(HDT_WRP_RateDetail singleRate : singleDetail.rate){
-                        singleRate.practice = singleDetail.practice;
+                    if(singleDetail.rate != null && singleDetail.rate.size() > 0){
+                        for(HDT_WRP_RateDetail singleRate : singleDetail.rate){
+                            singleRate.practice = singleDetail.practice;
+                        }
+                        dataTable.rate.addAll(singleDetail.rate);
                     }
-                    dataTable.rate.addAll(singleDetail.rate);
+                    singleDetail.rate = null;
+                    dataTable.details.add(singleDetail);
                 }
-                singleDetail.rate = null;
-                dataTable.details.add(singleDetail);
+            }
+            
+            List<Order> orderList = new List<Order>();
+            orderList = [
+                SELECT Id, OrderNumber
+                FROM Order
+                WHERE OrderNumber IN :orderNumerList
+                WITH SECURITY_ENFORCED
+            ];
+
+            for(Order singleOrder : orderList){
+                orderMap.put(singleOrder.OrderNumber, singleOrder.Id);
+            }
+
+            for(HDT_WRP_DetailObj obj : dataTable.details){
+                if(orderMap.containsKey(obj.rds)){
+                    obj.id = orderMap.get(obj.rds);
+                } else {
+                    obj.id = 'javascript:void(0)';
+                }
             }
         }
-        
-        List<Order> orderList = new List<Order>();
-        orderList = [
-            SELECT Id, OrderNumber
-            FROM Order
-            WHERE OrderNumber IN :orderNumerList
-            WITH SECURITY_ENFORCED
-        ];
-
-        for(Order singleOrder : orderList){
-            orderMap.put(singleOrder.OrderNumber, singleOrder.Id);
-        }
-
-        for(HDT_WRP_DetailObj obj : dataTable.details){
-            if(orderMap.containsKey(obj.rds)){
-                obj.id = orderMap.get(obj.rds);
-            } else {
-                obj.id = 'javascript:void(0)';
-            }
-        }
-
         result = dataTable;
     }
 

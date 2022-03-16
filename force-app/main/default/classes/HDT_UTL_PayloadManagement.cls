@@ -77,8 +77,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             List<SObject> itemVasList = inputs.get('ItemVAS');
             System.debug(LoggingLevel.DEBUG, 'itemVasList: ' + itemVasList);
             
-            Double amountNoIva = 0;
-            Double fixedAmountNoIva = 0;
+            Double amountNoIva = 0; //ListPrice
+            Double fixedAmountNoIva = 0; //Unit Price
+            Double amountWithIva = 0;
+            Double fixedAmountWithIva = 0;
+            Integer iva = 0;
+            String ivaString = '';
             Integer quantity = 0;
             if (itemVasList == null){
                 return '||';
@@ -86,17 +90,31 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             Integer i = 0;
             for (SObject singleVas : itemVasList) {
                 Integer singleQuantity = Integer.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'Quantity', i, inputs, formParams));
-                amountNoIva += Double.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'UnitPrice', i, inputs, formParams)) * singleQuantity;
-                fixedAmountNoIva += Double.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'PriceNetDiscounted__c', i, inputs, formParams)) * singleQuantity;
+                amountNoIva += Double.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'ListPrice', i, inputs, formParams)) * singleQuantity;
+                fixedAmountNoIva += Double.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'UnitPrice', i, inputs, formParams)) * singleQuantity;
+                if(iva == 0){
+                    ivaString = HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'IVA__c', i, inputs, formParams);
+                    if(String.isNotBlank(ivaString)){
+                        iva = Integer.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'IVA__c', i, inputs, formParams));
+                    }
+                }
                 quantity += singleQuantity;
                 i++;
             }
+            if(iva > 0){
+                amountWithIva = amountNoIva + ((amountNoIva*100)/iva);
+                fixedAmountWithIva = fixedAmountNoIva + ((fixedAmountNoIva*100)/iva);
+            }else {
+                amountWithIva = amountNoIva;
+                fixedAmountWithIva = fixedAmountNoIva;
+            }
             
-            return amountNoIva + '|' + fixedAmountNoIva + '|' + quantity;
+            //PREZZO LORDO SCONTATO|PREZZO LORDO INTERO|PREZZO NETTO INTERO SCONTATO|PREZZO NETTO INTERO|QUANTITA
+            return fixedAmountWithIva +'|' + amountWithIva + '|'+ amountNoIva + '|' + fixedAmountNoIva + '|' + quantity;
+            
         } catch (Exception ex) {
-            return '||';
-        }
-        
+            return '||||';
+        }        
     }
     
     

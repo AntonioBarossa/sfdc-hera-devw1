@@ -92,7 +92,10 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             Account__c = !accountListRetrieved.isEmpty() ? accountListRetrieved[0].Id : null,
             wrts_prcgvr__Status__c = params.get('wrts_prcgvr__Status__c'),
             EffectiveDate__c = String.isNotBlank(params.get('EffectiveDate__c')) ? Date.valueOf(params.get('EffectiveDate__c')) : null,
-            HerokuPracticeCode__c = params.get('HerokuPracticeCode__c')
+            HerokuPracticeCode__c = params.get('HerokuPracticeCode__c'),
+            FiscalCode__c = params.get('FiscalCode__c'),
+            VATNumber__c = params.get('VATNumber__c')
+
         ));
 
         System.debug(LoggingLevel.DEBUG,'HDT_UTL_ActivityCustom END');
