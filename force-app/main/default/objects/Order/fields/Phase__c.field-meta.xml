@@ -714,6 +714,11 @@
                 <default>false</default>
                 <label>Voltura Rifiutata</label>
             </value>
+            <value>
+                <fullName>Annullamento - Dati discordanti</fullName>
+                <default>false</default>
+                <label>Annullamento - Dati discordanti</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
