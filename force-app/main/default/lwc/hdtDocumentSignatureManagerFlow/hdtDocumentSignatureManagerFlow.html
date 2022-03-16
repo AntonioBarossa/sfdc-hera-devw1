@@ -24,11 +24,11 @@
                 variant={variantButton} type="button" name="save" label='Preview' onclick={handlePreview}>
             </lightning-button>
             </template>
-        <lightning-button
+        <lightning-button if:true={previousButton}
             class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
             variant="neutral" type="button" name="previous" label="Indietro" onclick={handleGoBack}>
         </lightning-button>
-            <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
+            <lightning-button if:true={cancelButton} class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
                 variant={variantButton} type="button" name="cancel" label="Annulla" onclick={handleCancel}>
             </lightning-button>
         </div>
