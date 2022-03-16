@@ -289,7 +289,7 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
             if(this.addressType.localeCompare('ServicePoint') == 0){
                 fields[SupplyPostalCode.fieldApiName] = this.addressWrapper.CAP;
                 fields[SupplyStreetNumber.fieldApiName] = this.addressWrapper.Civico;
-                fields[SupplyCityCode.fieldApiName] = this.addressWrapper.CodiceComuneSAP;
+                fields[SupplyCityCode.fieldApiName] = this.addressWrapper['Codice Comune SAP'];
                 fields[SupplyStreetCode.fieldApiName] = this.addressWrapper.CodiceViaStradarioSAP;
                 fields[SupplyCity.fieldApiName] = this.addressWrapper.Comune;
                 fields[SupplyStreetNumberExtension.fieldApiName] = this.addressWrapper.EstensCivico;
@@ -303,7 +303,7 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
             }else if(this.addressType.localeCompare('BillingProfile') == 0){
                 fields[InvoicingPostalCode.fieldApiName] = this.addressWrapper.CAP;
                 fields[InvoicingStreetNumber.fieldApiName] = this.addressWrapper.Civico;
-                fields[InvoicingCityCode.fieldApiName] = this.addressWrapper.CodiceComuneSAP;
+                fields[InvoicingCityCode.fieldApiName] = this.addressWrapper['Codice Comune SAP'];
                 fields[InvoicingStreetCode.fieldApiName] = this.addressWrapper.CodiceViaStradarioSAP;
                 fields[InvoicingCity.fieldApiName] = this.addressWrapper.Comune;
                 fields[InvoicingStreetNumberExtension.fieldApiName] = this.addressWrapper.EstensCivico;
@@ -316,7 +316,7 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
             } else {
                 fields[BillingPostalCode__c.fieldApiName] = this.addressWrapper.CAP;
                 fields[BillingStreetNumber__c.fieldApiName] = this.addressWrapper.Civico;
-                fields[BillingCityCode__c.fieldApiName] = this.addressWrapper.CodiceComuneSAP;
+                fields[BillingCityCode__c.fieldApiName] = this.addressWrapper['Codice Comune SAP'];
                 fields[BillingStreetCode__c.fieldApiName] = this.addressWrapper.CodiceViaStradarioSAP;
                 fields[BillingCity__c.fieldApiName] = this.addressWrapper.Comune;
                 fields[BillingStreetNumberExtension__c.fieldApiName] = this.addressWrapper.EstensCivico;

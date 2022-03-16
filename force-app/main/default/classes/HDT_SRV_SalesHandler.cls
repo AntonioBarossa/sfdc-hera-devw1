@@ -474,6 +474,11 @@ public with sharing class HDT_SRV_SalesHandler {
                                     cancellationOrder.Id = ord.Id;
                                     utlClass.handlePassiveCancellation(cancellationOrder, 'Order', mapRequestFields.get('STORNO'), mapRequestFields.get('ATTIVITA'));
                                 }
+                                when 'Annullato'{
+                                    if(mapRequestFields.get('IND_DIST_DEL40') != null){
+                                        ord.Description = writeDescription(mapRequestFields.get('IND_DIST_DEL40'), oldDescription);
+                                    }
+                                }
                             }
                         }
 
