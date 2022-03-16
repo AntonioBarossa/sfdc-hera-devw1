@@ -420,6 +420,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.NumeratorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.IsWrongFiscalData__c</field>
         <readable>true</readable>
@@ -542,6 +547,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.IsExportSIE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.NumeratorGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
