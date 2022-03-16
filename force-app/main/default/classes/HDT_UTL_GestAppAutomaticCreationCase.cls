@@ -32,7 +32,9 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreationCase implements w
         HDT_QR_Case caseQr= new HDT_QR_Case();
         HDT_SRV_ActivityCustom actSrv = new  HDT_SRV_ActivityCustom();
         Case ca = CaseQr.getRecordById(idObject);
-        HDT_AppointmentSetting__mdt conf = HDT_UTL_AppointmentSetting.getAtoaFlag(method, ca.ServicePoint__r.distributor__r.name, ca.ServicePoint__r.CommoditySector__c, ca.SalesCompanyCode__c);
+        String nomeDistributore = ca.ServicePoint__r != null ? ca.ServicePoint__r.distributor__r.name : ca.Distributor__r.Name;
+        String commodity = ca.ServicePoint__r != null ? ca.ServicePoint__r.CommoditySector__c : ca.Commodity__c;
+        HDT_AppointmentSetting__mdt conf = HDT_UTL_AppointmentSetting.getAtoaFlag(method, nomeDistributore, commodity, ca.SalesCompanyCode__c);
         if (conf != null){
             id rec = rcQr.getRecordTypeIdByName('HDT_RT_DistributorAppointment');
             wrts_prcgvr__Activity__c w = new wrts_prcgvr__Activity__c();
