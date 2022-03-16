@@ -11,6 +11,7 @@
             <property name="quoteType" type="String" label="Tipo Preventivo" description="Tipologia del preventivo" role="inputOnly"/>
             <property name="nextLabel" type="String" label="Next Label" description="Label next Button" role="inputOnly" default="Conferma Pratica"/>
             <property name="nextVariant" type="String" label="Next Variant" description="Variant del next Button" role="inputOnly" default="success"/>
+            <property name="cancelButton" type="Boolean" label="Cancel Button" description="Cancel Button" role="inputOnly"/>
             <property name="outcome" type="String" label="outcome" description="outcome" role="outputOnly"/>
             <property name="cancelCase" type="Boolean" label="cancelCase" description="if true case has to be cancelled" role="outputOnly"/>
             <property name="recordId" type="String" label="Record Id" description="Record Id" role="inputOnly"/>

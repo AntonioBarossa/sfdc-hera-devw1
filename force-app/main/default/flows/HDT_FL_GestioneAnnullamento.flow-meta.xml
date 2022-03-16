@@ -325,7 +325,7 @@
             <assignToReference>GetOrderAggiornato_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Annullato</stringValue>
+                <elementReference>faseAnnullato</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -348,6 +348,36 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Order</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Causale_Annullamento</name>
+        <label>Assegna Causale Annullamento</label>
+        <locationX>3436</locationX>
+        <locationY>905</locationY>
+        <assignmentItems>
+            <assignToReference>GetOrder.CancellationReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullamento per dati discordanti</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>skipCancellationReason</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaValori_1</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -708,8 +738,8 @@
     <assignments>
         <name>AssegnaValori_1</name>
         <label>AssegnaValori</label>
-        <locationX>3656</locationX>
-        <locationY>1072</locationY>
+        <locationX>3645</locationX>
+        <locationY>1039</locationY>
         <assignmentItems>
             <assignToReference>GetOrder.CancellationRequestDate__c</assignToReference>
             <operator>Assign</operator>
@@ -807,6 +837,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Order</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Fase_Annullamento_per_dati_discordanti</name>
+        <label>Fase Annullamento per dati discordanti</label>
+        <locationX>4552</locationX>
+        <locationY>3127</locationY>
+        <assignmentItems>
+            <assignToReference>faseAnnullato</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullamento - Dati discordanti</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Annullato_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1033,7 +1079,7 @@
         <name>Fase_0</name>
         <label>Fase?</label>
         <locationX>4119</locationX>
-        <locationY>3132</locationY>
+        <locationY>3133</locationY>
         <defaultConnector>
             <targetReference>Annullato_0</targetReference>
         </defaultConnector>
@@ -1067,6 +1113,21 @@
                 <targetReference>Ripensato_KO_Switch</targetReference>
             </connector>
             <label>Ripensamento</label>
+        </rules>
+        <rules>
+            <name>Gestione_Dati_Discordanti_Set_fase</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>skipCancellationReason</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Fase_Annullamento_per_dati_discordanti</targetReference>
+            </connector>
+            <label>Gestione Dati Discordanti</label>
         </rules>
     </decisions>
     <decisions>
@@ -1220,6 +1281,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Dati discordanti</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_Fase_Precedente_0</targetReference>
             </connector>
@@ -1354,6 +1422,21 @@
             </connector>
             <label>Ripristina Fase</label>
         </rules>
+        <rules>
+            <name>Gestione_Dati_Discordanti</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gestione Dati Discordanti</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Causale_Annullamento</targetReference>
+            </connector>
+            <label>Gestione Dati Discordanti</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Ripensato_KO_Switch</name>
@@ -1481,6 +1564,31 @@
                 </rightValue>
             </conditions>
             <label>Annulla</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Skip_Cancellation_Reason_Update</name>
+        <label>Skip Cancellation Reason Update</label>
+        <locationX>4070</locationX>
+        <locationY>1520</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Motivo_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
+        <rules>
+            <name>Discordant_Management</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>skipCancellationReason</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Codice_Ripensamento</targetReference>
+            </connector>
+            <label>Discordant Management</label>
         </rules>
     </decisions>
     <description>Flow che si occupa della gestione dei processi di Post Sales Cluster Annullamento.</description>
@@ -1746,7 +1854,7 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <locationY>1357</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Assegna_Motivo_0_0_0</targetReference>
+            <targetReference>Skip_Cancellation_Reason_Update</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2560,6 +2668,16 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
                 <assignToReference>DefaultReason</assignToReference>
                 <name>selectedReason</name>
             </outputParameters>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>skipCancellationReason</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>hdtOrderFormFlow</name>
@@ -2743,6 +2861,16 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         </value>
     </variables>
     <variables>
+        <name>faseAnnullato</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Annullato</stringValue>
+        </value>
+    </variables>
+    <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -2762,6 +2890,16 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>skipCancellationReason</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>sObjectRecordToCancell</name>

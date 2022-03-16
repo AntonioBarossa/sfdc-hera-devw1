@@ -914,7 +914,7 @@ export default class hdtBillingProfileForm extends LightningElement {
 
         this.handleWrapAddressObject();
 
-        if(this.validFields()){
+        if(this.validFields() === true){
             this.saveErrorMessage = [];
 
             this.dataToSubmit['Account__c'] = this.accountId;
