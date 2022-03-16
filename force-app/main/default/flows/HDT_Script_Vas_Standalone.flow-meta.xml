@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
+    <description>VAS Singolo assciato all&apos;offerta o Standalone</description>
     <interviewLabel>HDT Script - Vas Standalone {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>HDT Script - Vas Standalone</label>
+    <label>HDT FL Script - Vas</label>
     <loops>
         <name>LoopOrdiniFigli</name>
         <label>LoopOrdiniFigli</label>

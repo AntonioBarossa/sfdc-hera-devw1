@@ -2551,7 +2551,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto Anomalia processo%2Fsistema</fullName>
+            <fullName>Anomalia processo/sistema</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2560,10 +2560,6 @@
         </values>
         <values>
             <fullName>Supporto Contact Center</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supporto Esercizio Sistemi</fullName>
             <default>false</default>
         </values>
         <values>

@@ -681,7 +681,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                             AND   Active__c = true
                             WITH SECURITY_ENFORCED];
 
-        return ( count > 0 );
+        return ( count == 0 );
 
     }
 

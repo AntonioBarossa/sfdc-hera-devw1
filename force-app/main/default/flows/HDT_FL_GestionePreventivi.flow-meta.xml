@@ -316,6 +316,13 @@
                 <elementReference>Opzione.salesCompany</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.AtecoCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Opzione.atecoCode</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_2</targetReference>
         </connector>
