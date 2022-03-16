@@ -190,6 +190,11 @@
         <default>false</default>
         <label>Registrazione non conforme</label>
     </customValue>
+    <customValue>
+        <fullName>Annullamento per dati discordanti</fullName>
+        <default>false</default>
+        <label>Annullamento per dati discordanti</label>
+    </customValue>
     <masterLabel>Motivazione Annullamento</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
