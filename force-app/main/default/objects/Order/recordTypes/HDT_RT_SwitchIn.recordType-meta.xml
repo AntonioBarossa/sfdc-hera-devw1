@@ -515,6 +515,10 @@
             <fullName>Il cliente rinuncia</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Annullamento per dati discordanti</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>ChamberCommerceRegistration__c</picklist>
@@ -2403,6 +2407,10 @@
         </values>
         <values>
             <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Dati discordanti</fullName>
             <default>false</default>
         </values>
     </picklistValues>
