@@ -102,6 +102,7 @@ export default class hdtSaleServiceContainer extends LightningElement {
             this.loading = false;
             
         }).catch(error => {
+            this.loading = false;
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: error.body.message,
