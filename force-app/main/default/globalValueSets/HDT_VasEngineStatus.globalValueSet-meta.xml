@@ -155,6 +155,11 @@
         <default>false</default>
         <label>VAS OMAGGIO</label>
     </customValue>
+    <customValue>
+        <fullName>BLOCCO AL RINNOVO</fullName>
+        <default>false</default>
+        <label>BLOCCO AL RINNOVO</label>
+    </customValue>
     <description>Elenco stati ricevuti da motore vas.</description>
     <masterLabel>Stato Motore Vas</masterLabel>
     <sorted>false</sorted>

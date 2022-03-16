@@ -23,6 +23,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
     @track showModal = false;
     @track toolbarAttributes = [];
     uuid;
+    saveScriptDone;
     @api agentidc;
     @api isHide = false;
     @api ecid = '';
@@ -76,7 +77,8 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
     }
 
     closeModal() {
-        window.TOOLBAR.EASYCIM.saveScript(this.uuid, "Appuntamento telefonico personale", true);
+        this.saveScript("Appuntamento telefonico personale", true);
+        // window.TOOLBAR.EASYCIM.saveScript(this.uuid, "Appuntamento telefonico personale", true);
         // window.TOOLBAR.EASYCIM.saveScript('68-60f69967@pddialer1.saashra.priv', "Appuntamento telefonico personale", true);
         // window.open("/s/campaignmember/" + this.campaignMemberId, "_self");
         /* this[NavigationMixin.Navigate]({
@@ -90,7 +92,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
         console.log('****AFTERSENDSAVE');
     }
 
-    async toolbarEvent(event) {
+    toolbarEvent(event) {
         console.log('>>> toolbarEvent');
         console.log('********** EVENT TYPE > ' + event.detail.eventType);
         console.log('>>> EVENT OBJ > ' + JSON.stringify(event.detail.eventObj));
@@ -106,13 +108,12 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
             case 'CONNECTIONCLEARED':
                 console.log("*****DentroConnection");
                 this.toolbarAttributes = event.detail.eventObj;
-                // if(this.toolbarAttributes.id) {
+                if(this.toolbarAttributes.id) {
                     this.uuid = this.toolbarAttributes.id;
-                // }
+                }
                 if (this.toolbarAttributes.type != null && this.toolbarAttributes.type != undefined && this.toolbarAttributes.type == 'inbound') {
                     this.saveScript('Positivo', true);
-                }
-                else {
+                } else {
                     callData = event.detail.CallData;
                     this.endCallDateTime = this.toolbarAttributes.endTime;
                     this.callDuration = this.toolbarAttributes.time_duration_sec != null ? (parseInt(this.toolbarAttributes.time_duration_sec) / 60).toFixed(2) : 0; // convert in minutes
@@ -124,6 +125,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                     if (this.activityId != null) {
                         this.trackActivity('updatectivity');
                     }
+
                     updateActivity({
                         ecid: ecid2,
                         endCall: this.endCallDateTime,
@@ -136,6 +138,21 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                     });
                     console.log('*********ConnectionCleared:');
                 }
+                if(this.saveScriptDone) {
+                    console.log('BEFORE OFFLINEEND');
+                    if(this.uuid) {
+                        console.log('WITH UUID');
+                        window.TOOLBAR.CONTACT.OfflineEnd(this.uuid);
+                    } else {
+                        console.log('WITHOUT UUID');
+                        getCachedUuid()
+                        .then(cachedUuid => {
+                            console.log('WITHOUT UUID RETRIEVED : ' + cachedUuid);
+                            window.TOOLBAR.CONTACT.OfflineEnd(cachedUuid)
+                        });
+                    }
+                }
+                this.saveScriptDone = false;
                 break;
             case 'POPUP':
                 //if (count == 0) {
@@ -189,9 +206,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                     }).catch(err => {
                         console.log(JSON.stringify(err));
                     });
-
-                }
-                else{
+                } else {
                     let ecid = window.TOOLBAR.CONTACT.GetCallDataValueByName(this.toolbarAttributes, "ECID");
                     this.ecid = ecid;// window.TOOLBAR.CONTACT.GetCallDataValueByName(this.toolbarAttributes, "ECID")
 
@@ -199,125 +214,55 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                         this.showRecallMe = true;
                     }
 
-                    //update sale record adding ecid value
-                /* if (this.saleId != null && this.ecid != null) {
-                        saveEcidInSales({ 'saleId': this.saleId, 'ecid': this.ecid }).then(data => {
-                            if (data) {
-                                console.log('Ecid saved in Sale ' + this.saleId);
-                            }
-                        }).catch(err => {
-                            console.log(JSON.stringify(err));
-                        })
-                    }*/
+                    console.log('window.TOOLBAR.EASYCIM.openScript --> params: uuid =' + this.uuid + ', ecid = ' + this.ecid);
+                    let promise = window.TOOLBAR.EASYCIM.openScript(this.uuid, this.ecid, false);
+                    setTimeout(() => {
+                        console.log("TIMOUT 20 SEC");
+                        console.log('PROMISE');
+                        console.log(promise);
+                    }, 20000);
+                    promise.then(data => {
+                        console.log('******DATAOPENSCRIPT:');
+                        console.log(data);
+                        window.TOOLBAR.AGENT.getAgentID()
+                        .then(agentId => {
+                            console.log("data.listFieldValueList:");
+                            // console.log(dataArray);
+                            data.listFieldValueList.forEach(field => {
+                                if (field.fieldName == 'campaignmemberid' || field.fieldName == 'campaignMemberId') {
+                                    console.log('campaignMemberId: ' + field.value);
+                                    let phoneNum = event.detail.eventObj.dnis
+                                    let searchparams2 = 'filter={"filter":{"ecid":"' + ecid + '"},"sort":{"startTs":-1},"index":0}';
+                                    let searchparams = encodeURI(searchparams2);
+                                    let reiteklink = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?' + searchparams;
+                                    this.registrationLinkVo = reiteklink;
 
-                    window.TOOLBAR.EASYCIM.openScript(this.uuid, this.ecid, false).then(
-                        function (data) {
-                            console.log('******DATAOPENSCRIPT:' + JSON.stringify(data));
-                            window.TOOLBAR.AGENT.getAgentID().then(
-                                function (data2) {
-                                    let dataArray = data.listFieldValueList;
-                                    console.log("******DataArray:" + dataArray);
-                                    for (let i = 0; i < dataArray.length; i++) {
-                                        if (dataArray[i].fieldName == 'campaignmemberid' || dataArray[i].fieldName == 'campaignMemberId') {
-                                            this.campaignMemberId = dataArray[i].value;
-                                            console.log('campaignMemberId' + this.campaignMemberId);
-                                            console.log('ecid' + this.ecid);
-                                            let phoneNum = event.detail.eventObj.dnis
-                                            console.log('******ecid' + ecid);
-                                            console.log('*****:1');
-                                            //let startCallDateTime = event.detail.eventObj.startTime;
-                                            console.log('*****:2');
-                                            //this.startCallDateTime = null;
-                                            console.log('*****:3');
-                                        // let url = new URL(this.regLink);
-                                            console.log('*****:4');
-                                        // let searchparams3 = this.regListParam;
-                                            console.log('*****:4.1');
-                                            let searchparams2 = 'filter={"filter":{"ecid":"' + ecid + '"},"sort":{"startTs":-1},"index":0}'   ; 
-                                            console.log('*****:5 : ' + searchparams2);
-                                            let searchparams = encodeURI(searchparams2);
-                                            //searchparams.filter.ecid = this.ecid;
-                                            console.log('*****:6 ' + searchparams);
-                                            //let newparams = JSON.stringify(searchparams);
-                                            console.log('*****:7');
-                                            let reiteklink = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?' + searchparams;//this.regLink.replace(url.searchParams.get('filter'), newparams);
-                                            console.log('*****:8');
-                                            this.registrationLinkVo = reiteklink;
-                                            console.log('*****:9');
-                                            /*const event = new CustomEvent('getreiteklink', {
-                                                detail: { reiteklink }
-                                            });
-                                            this.dispatchEvent(event);
-                                            */
-
-                                            console.log('*****:10:' + phoneNum);
-                                            console.log('*****:10:' + reiteklink);
-                                            console.log('*****:10:' + ecid);
-                                            console.log('*****:10:' + this.campaignMemberId);
-                                            console.log('*****:10:' + data2);
-
-
-                                            createActivity({
-                                                //startCall: startCallDateTime,
-                                                'clientNumber': phoneNum +'',
-                                                'registrationLink': reiteklink,
-                                                'ecid': ecid,
-                                                'campaignMemberId': this.campaignMemberId,
-                                                'agent': data2
-                                            }).then(data => {
-                                                console.log('******createActivity --- ' + JSON.stringify(data));
-                                                this.activityId = data.Id;
-                                                console.log('CAMPAINGCHECK:' + this.campaignMemberId);
-                                            // var hostname = window.location.hostname;
-                                            /*   var arr = hostname.split(".");
-                                                var instance = arr[0];
-                                                console.log("*******Instance:" + instance);*/
-                                                console.log("PRIMA DI REDIRECT");
-                                                window.open("/s/campaignmember/" + this.campaignMemberId, "_self");
-                                            }).catch(err => {
-                                                console.log(JSON.stringify(err));
-                                            });
-
-                                        /*   saveEcid({
-                                                'ecid': ecid,
-                                                'campaignMember': this.campaignMemberId,
-                                                'agent': data2
-                                            }).then((response) => {
-
-                                                console.log('CAMPAINGCHECK:' + this.campaignMemberId);
-                                                var hostname = window.location.hostname;
-                                                var arr = hostname.split(".");
-                                                var instance = arr[0];
-                                                console.log("*******Instance:" + instance);
-                                                console.log("PRIMA DI REDIRECT");
-                                                window.open("/s/campaignmember/" + this.campaignMemberId, "_self");*/
-                                                /* this[NavigationMixin.Navigate]({
-                                                    type: 'comm__namedPage',
-                                                    attributes: {
-                                                    name: 'Campaign_Member_Detail__c',
-                                                    },
-                                                    state: {
-                                                    'recordId': this.campaignMemberId
-                                                    }
-                                                    });*/
-                                                /* this[NavigationMixin.Navigate]({
-                                                    type:'comm__namedPage',
-                                                    attributes:{
-                                                        "pageName" :'Campaign_Member_Detail__c'
-                                                    }
-                                                });*/
-                                        //   });
-                                        }
-                                    }
-                                });
-                        }, function (err) { console.log("*******ErrorOpenScript:", err); }
-                    );
+                                    createActivity({
+                                        'clientNumber': String(phoneNum),
+                                        'registrationLink': reiteklink,
+                                        'ecid': ecid,
+                                        'campaignMemberId': field.value,
+                                        'agent': agentId
+                                    })
+                                    .then(data => {
+                                        this.activityId = data.Id;
+                                        window.open("/s/campaignmember/" + field.value, "_self");
+                                    })
+                                    .catch(error => console.error(error));
+                                }
+                            });
+                        });
+                    }, error => {
+                        console.log('ERROR')
+                        console.log(error)
+                    });
+                    // .catch(error => {
+                    //     console.log(error);
+                    // });
                 }
                 break;
             case 'ESTABLISHED':
                 console.log('*******INSIDE_ESTABLISHED');
-               // this.startCallDateTime = event.detail.eventObj.startTime;
-               // this.trackActivity('createActivity');
                 break;
             default:
                 break;
@@ -336,11 +281,28 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
             });
     }
 
-    @api async saveScript(esito, isResponsed) {
-        if(!this.uuid) {
-            this.uuid = await getCachedUuid();
-        }
-        window.TOOLBAR.EASYCIM.saveScript(this.uuid, esito, isResponsed);
+    @api saveScript(esito, isResponsed) {
+        // let doSaveScript = ((cachedUuid, esito, isResponsed) => {
+        //     window.TOOLBAR.EASYCIM.saveScript(cachedUuid, esito, isResponsed)
+        //     .then(() => this.saveScriptDone = true);
+        // })
+
+        // if(!this.uuid) {
+            console.log('INSIDE SAVESCRIPT');
+            getCachedUuid().then(cachedUuid => {
+                console.log('getCachedUuid().then' + cachedUuid);
+                window.TOOLBAR.EASYCIM.saveScript(cachedUuid, esito, isResponsed)
+                .then(() => {
+                    console.log('getCachedUuid().then savescript.then()' + cachedUuid);
+                    this.saveScriptDone = true;
+                });
+            });
+        // } else {
+        //     window.TOOLBAR.EASYCIM.saveScript(this.uuid, esito, isResponsed)
+        //     .then(() => {
+        //         this.saveScriptDone = true;
+        //     });
+        // }
     }
 
     @api getSlot() {
@@ -355,7 +317,6 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
     }
 
     @api getSlotConfirm(startRange) {
-
         console.log(this.campaignMemberId);
         console.log(startRange);
         //let st = startRange;
@@ -463,7 +424,6 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                 console.log(JSON.stringify(err));
             });
         }
-
     }
 
     updateMemberStatus(status) {

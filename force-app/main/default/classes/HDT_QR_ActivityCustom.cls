@@ -158,6 +158,42 @@ public inherited sharing class HDT_QR_ActivityCustom {
         ];
     }
 
+    public static List<wrts_prcgvr__Activity__c> getActivityKoPrecedenteClienteByIds(List<Id> activityIdList) {
+        return [
+            SELECT
+            Id,
+            Order__c,
+            Order__r.ServicePoint__r.CommoditySector__c,
+            Order__r.RecordType.DeveloperName,
+            Order__r.Account.RecordType.DeveloperName,
+            Order__r.ServicePoint__r.Account__r.FiscalCode__c,
+            Order__r.ServicePoint__r.Account__r.VATNumber__c,
+            Order__r.ServicePoint__c,
+            Order__r.ServicePoint__r.AnnualConsumptionStandardM3__c,
+            Order__r.OrderNumber,
+            Order__r.CreatedById,
+            Order__r.Channel__c,
+            Order__r.Account.CustomerCode__c,
+            Order__r.SalesCompany__c,
+            Order__r.Account.FiscalCode__c,
+            Order__r.Account.VATNumber__c,
+            Order__r.Account.CustomerMarking__c,
+            Order__r.Account.Category__c,
+            Order__r.Account.CustomerType__c,
+            Order__r.ServicePoint__r.SupplyStreetName__c,
+            Order__r.ServicePoint__r.SupplyCity__c,
+            Order__r.ServicePoint__r.SupplyProvince__c,
+            Order__r.ServicePoint__r.SupplyPostalCode__c,
+            Order__r.ProcessType__c,
+            Order__r.Market__c,
+            Order__r.Catalog__c,
+            Order__r.ServicePoint__r.Account__r.CustomerCode__c
+            FROM wrts_prcgvr__Activity__c
+            WHERE Id IN :activityIdList 
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     /**
     * @description getRecordByCaseId
     * @param caseId

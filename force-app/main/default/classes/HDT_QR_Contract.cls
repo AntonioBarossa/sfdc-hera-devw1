@@ -268,4 +268,9 @@ public inherited sharing class HDT_QR_Contract {
         LIMIT 1];
     }
 
+    public static Contract getContractWithSubscriptions(Id servicePointId){
+        if(String.isBlank(servicePointId))return null;
+        return [SELECT Id,EndDate, StartDate,(select Id,SBQQ__RequiredById__c from SBQQ__Subscriptions__r) FROM Contract WHERE ServicePoint__c =:servicePointId AND Status='Attivo' LIMIT 1];
+    }
+
 }

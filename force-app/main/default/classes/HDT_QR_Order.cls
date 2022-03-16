@@ -337,7 +337,8 @@ public inherited sharing class HDT_QR_Order {
             CommercialProductCode__c,
             IsEarlyActivation__c,
             DistributorFormula__c,
-            CreditCheckInProgress__c
+            CreditCheckInProgress__c,
+            Contact__r.FiscalCode__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -511,7 +512,9 @@ public inherited sharing class HDT_QR_Order {
             DistributorCode__c,
             Commodity__c,
             ComfortCallDaysDue__c,
-            IsEarlyActivation__c
+            IsEarlyActivation__c,
+            Contact__r.FiscalCode__c,
+            Contact__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -974,6 +977,7 @@ public inherited sharing class HDT_QR_Order {
         return [SELECT id,
         phase__c,
         Description,
+        PhaseStory__c,
         Status,
         PrecheckResultSII__c,
         ProcessType__c,
@@ -994,7 +998,8 @@ public inherited sharing class HDT_QR_Order {
         VoltageLevel__c,
         AccountId,
         IsTechnicalTransfer__c
-        FROM Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+        FROM Order 
+        WHERE ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
     /**@frpanico 26/10/2021
      * Added Supply Address Fields
@@ -1032,7 +1037,22 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getRecordByOrderId(String recordId){
-        return [Select id,Description,IsTechnicalTransfer__c,phase__c,Status,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, CancellationNote__c, AccountId from Order where Id = :recordId WITH SECURITY_ENFORCED];
+        return [SELECT id,
+        Description,
+        PhaseStory__c,
+        IsTechnicalTransfer__c,
+        phase__c,
+        Status,
+        PrecheckResultSII__c,
+        ProcessType__c,
+        BillingProfile__c, 
+        Vat__c, 
+        ServicePoint__c,
+        ServicePoint__r.Distributor__r.Name, 
+        CancellationNote__c, 
+        AccountId 
+        FROM Order 
+        WHERE Id = :recordId WITH SECURITY_ENFORCED];
     }
 
     /**
@@ -1229,7 +1249,7 @@ public inherited sharing class HDT_QR_Order {
     //@frpanico getOpenActivities
     public List<wrts_prcgvr__Activity__c> getOpenActivitiesByOrderId(String orderId)
     {
-        return [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Chiusa' AND Order__c = :orderId WITH SECURITY_ENFORCED];
+        return [SELECT Id, wrts_prcgvr__Status__c,Type__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Chiusa' AND Order__c = :orderId WITH SECURITY_ENFORCED];
     }
 
     public static List<Order> getOrderQuality(Set<String> ordIdSet) {
@@ -1239,5 +1259,10 @@ public inherited sharing class HDT_QR_Order {
         ordList = [SELECT Id, RecordType.DeveloperName, ParentOrder__c, ParentOrder__r.Id, ParentOrder__r.RecordType.DeveloperName FROM Order WHERE (Id = :ordIdSet OR ParentOrder__c = :ordIdSet) AND QualityCall__c = true WITH SECURITY_ENFORCED];
 
         return ordList;
+    }
+
+    public static Order getOrderWithLines(String orderId){
+        if(String.isBlank(orderId))return null;
+        return [SELECT Id,ServicePoint__c,BillingProfile__c,Market__c,PaymentMode__c,BillSendMode__c,VAT__c ,SapContractCode__c,Pricebook2Id,CommercialProduct__c, ProcessType__c,AccountId,EffectiveDate__c, EndDate,SignedDate__c,SalesCompany__c,RemiCode__c,Contact__c,(select Id,ProductFamily__c,Service__c, Product2Id,CompanyOwner__c,PaymentMode__c,Product2.Version__c,Surface__c, OccupantsNumber__c,SBQQ__RequiredBy__c from OrderItems) FROM Order WHERE Id=:orderId];
     }
 }

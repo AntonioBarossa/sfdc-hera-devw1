@@ -411,6 +411,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Contatto Quality Fallito</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Disattivato%2FDisdetto %28Servizio%29</fullName>
             <default>false</default>
         </values>
@@ -2957,6 +2961,10 @@
         </values>
         <values>
             <fullName>ANNULLATO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BLOCCO AL RINNOVO</fullName>
             <default>false</default>
         </values>
         <values>

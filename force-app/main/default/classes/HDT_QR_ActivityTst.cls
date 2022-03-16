@@ -23,7 +23,7 @@ public class HDT_QR_ActivityTst{
 
 			List<wrts_prcgvr__Activity__c> custActivity=HDT_UTL_DataFactoryTst.createActivityCustom(1, false, accList[0].Id);
 			custActivity[0].Type__c='Approvazione Offerte';
-			custActivity[0].wrts_prcgvr__Status__c='Creata';
+			custActivity[0].wrts_prcgvr__Status__c='Aperta';
 			custActivity[0].Sale__c=sales[0].Id;
 			insert custActivity;
 		}

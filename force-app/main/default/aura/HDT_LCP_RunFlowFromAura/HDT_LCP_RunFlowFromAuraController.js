@@ -48,7 +48,12 @@
         var interactionId = myPageRef.state.c__interactionId;
 
         //Gestione Risottomissione Annullamento
-        let discardRework = (myPageRef.state.c__discardRework === true || myPageRef.state.c__discardRework === 'true') ? true : false;
+        let discardRework = undefined;
+        if (myPageRef.state.c__discardRework === true || myPageRef.state.c__discardRework === 'true'){
+            discardRework = true;
+        } else if (myPageRef.state.c__discardRework === false || myPageRef.state.c__discardRework === 'false'){
+            discardRework = false;
+        }
         console.log('# discardRework -> '                 + discardRework);
         //Fine Gestione Risottomissione Annullamento
 
@@ -146,7 +151,9 @@
                 || processType === 'KO Definitivo' || processType === 'KO Forzato' || processType === 'KO Risolto'){
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
                 //Gestione Risottomissione Annullamento
-                inputVariables.push({ name : 'discardRework', type : 'Boolean', value : discardRework });
+                if (discardRework !== undefined){
+                    inputVariables.push({ name : 'discardRework', type : 'Boolean', value : discardRework });
+                } 
             }
 
             component.set('v.enableRefresh', true);

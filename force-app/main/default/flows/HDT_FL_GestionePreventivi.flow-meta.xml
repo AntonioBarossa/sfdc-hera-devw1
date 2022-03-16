@@ -232,6 +232,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>Get_Input_Case_0</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>implantType</name>
             <value>
                 <elementReference>Get_Input_Case_0.ServicePointType__c</elementReference>
@@ -301,6 +307,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Opzione.salesCompanyCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Opzione.salesCompany</elementReference>
             </value>
         </assignmentItems>
         <connector>

@@ -12,6 +12,7 @@
     <permissionSets>HDT_PostsalesProcess</permissionSets>
     <permissionSets>HDT_SalesProcess</permissionSets>
     <permissionSets>HDT_SalesforceCPQLicense</permissionSets>
+    <permissionSets>HDT_SalesforceCPQUser</permissionSets>
     <permissionSets>HDT_ViewReports</permissionSets>
     <permissionSets>HDT_VolturaTecnica</permissionSets>
     <permissionSets>force__EinsteinAnalyticsPlusAdmin</permissionSets>

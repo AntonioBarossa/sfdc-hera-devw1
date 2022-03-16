@@ -46,7 +46,12 @@
         var interactionId = myPageRef.state.c__interactionId;
 
         //Gestione Risottomissione Annullamento
-        let discardRework = (myPageRef.state.c__discardRework === true || myPageRef.state.c__discardRework === 'true') ? true : false;
+        let discardRework = undefined;
+        if (myPageRef.state.c__discardRework === true || myPageRef.state.c__discardRework === 'true'){
+            discardRework = true;
+        } else if (myPageRef.state.c__discardRework === false || myPageRef.state.c__discardRework === 'false'){
+            discardRework = false;
+        }
         console.log('# discardRework -> '                 + discardRework);
         //Fine Gestione Risottomissione Annullamento
 

@@ -62,20 +62,24 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
                 this.dispatchEvent(selectedEvent);
           }
         }
-
     }
 
     contactCallback = () => {
-        console.log('# RICEVUTO EVENTO ' + DataObj.event + ' #');
-        cacheUuid({uuid: DataObj})
-        .then(() => {
-            this.manageEvent();
-            const toolbarEvent = new CustomEvent("toolbarevent", {
-                detail: {eventType: DataObj.event, eventObj: DataObj}
-            });
-            this.dispatchEvent(toolbarEvent);
-        });
+        console.log('# RICEVUTO EVENTO ' + DataObj.event);
+        console.log(DataObj);
 
+        if(DataObj && DataObj.id) {
+            cacheUuid({uuid: DataObj.id})
+            .then(() => {
+                console.log('# UUID CACHED: ' + DataObj.id);
+            });
+        }
+
+        this.manageEvent();
+        const toolbarEvent = new CustomEvent("toolbarevent", {
+            detail: {eventType: DataObj.event, eventObj: DataObj}
+        });
+        this.dispatchEvent(toolbarEvent);
     };
 
     manageEvent(){

@@ -4,11 +4,11 @@
     <protected>false</protected>
     <values>
         <field>Category__c</field>
-        <value xsi:type="xsd:string">Outbound</value>
+        <value xsi:type="xsd:string">Entrambi</value>
     </values>
     <values>
         <field>Channel__c</field>
-        <value xsi:type="xsd:string">Telefonico Outbound</value>
+        <value xsi:type="xsd:string">Tutti</value>
     </values>
     <values>
         <field>Default__c</field>

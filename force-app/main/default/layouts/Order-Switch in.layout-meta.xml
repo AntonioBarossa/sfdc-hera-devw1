@@ -101,6 +101,10 @@
                 <behavior>Readonly</behavior>
                 <field>DiscardReason__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Cs1Outcome__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

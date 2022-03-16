@@ -27,10 +27,10 @@ public inherited sharing class HDT_LC_ConfigurePaymentMethods {
     @AuraEnabled
     public static Boolean disableMyButtons(SObject mySale){
         boolean toBeDisabled;
-        List<SBQQ__Quote__c> myQuoteList = [select id, IsVAS__c, IsBillableVas__c, OrderReference__c, ContractReference__c from SBQQ__Quote__c where Sale__c = :mySale.Id with security_enforced];
+        List<SBQQ__Quote__c> myQuoteList = [select id, IsVAS__c,SBQQ__Type__c, IsBillableVas__c, OrderReference__c, ContractReference__c from SBQQ__Quote__c where Sale__c = :mySale.Id with security_enforced];
         if(myQuoteList != null){    
             for(SBQQ__Quote__c myQuote : myQuoteList){
-                if(myQuote.IsVAS__c && !myQuote.IsBillableVas__c && (myQuote.OrderReference__c != null || myQuote.ContractReference__c != null)){
+                if(((myQuote.IsVAS__c  && !myQuote.IsBillableVas__c) || myQuote.SBQQ__Type__c.equalsIgnoreCase('Amendment')) && (myQuote.OrderReference__c != null || myQuote.ContractReference__c != null)){
                     toBeDisabled = true;
                 }else{
                     toBeDisabled = false;

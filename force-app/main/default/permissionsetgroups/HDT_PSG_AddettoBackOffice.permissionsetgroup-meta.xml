@@ -28,6 +28,7 @@
     <permissionSets>HDT_RicostruzioneConsumi</permissionSets>
     <permissionSets>HDT_SalesProcess</permissionSets>
     <permissionSets>HDT_SalesforceCPQLicense</permissionSets>
+    <permissionSets>HDT_SalesforceCPQUser</permissionSets>
     <permissionSets>HDT_SuperUserCPQ</permissionSets>
     <permissionSets>HDT_SupplySelectionSearch</permissionSets>
     <permissionSets>HDT_TypeInstallmentPlan</permissionSets>

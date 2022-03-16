@@ -159,19 +159,22 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
-        
+        Boolean isOnlyAmend = false;
+        for (Order childOrder : childOrders) {
+            if (childOrder.ProcessType__c != null && !childOrder.ProcessType__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS')) {
+                isOnlyAmend = false;
+                break;
+            }else {
+                isOnlyAmend = true;
+            }
+        }
         Order orderToUpdate = new Order(
             Id = orderParent.Id
         );
-
-          //fix CC Generazione Credential LG MB
-        //  orderToUpdate = HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate);
-        // if (orderParent.ContractSigned__c == false) {
-        //     orderToUpdate.Phase__c = 'Documentazione da inviare';
-        // } else {
-                // LG Ripristino logica 18/09 FF
-        System.debug('********LOL:' + orderParent);
-        if(orderParent.Phase__c == 'In Lavorazione'){
+        if(isOnlyAmend){
+            orderToUpdate.Phase__c = 'Documentazione Gestita';
+            orderToUpdate.Status = 'Completed';
+        }else if(orderParent.Phase__c == 'In Lavorazione'){
             if (orderParent.ContractSigned__c == false) {
                 orderToUpdate.Phase__c = 'Documentazione da inviare';
             } else{
@@ -359,6 +362,30 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         }
 
         return result || orderParent.Status == 'Completed';
+    }
+    /**
+    * @author NTTDATA
+    * @date 11/03/2022
+    * @description Check if is Only Aggiunta Bonus
+    * @param String orderParentId
+    * @return Boolean
+    */
+    @AuraEnabled
+    public static Boolean isOnlyAmend(Order orderParent){
+        Boolean result = false;
+        
+        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
+        
+        for (Order childOrder : childOrders) {
+            if (childOrder.ProcessType__c != null && !childOrder.ProcessType__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS')) {
+                result = false;
+                break;
+            }else {
+                result = true;
+            }
+        }
+
+        return result;
     }
     /*@frpanico 08/02/2022
     * Aggiunta gestione Annullamento

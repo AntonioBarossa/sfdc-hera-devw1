@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Category</fullName>
+    <active>true</active>
+    <description>Valori ammessi:
+- Inbound
+- Outbound
+- Entrambi</description>
+    <errorConditionFormula>NOT(OR(Category__c = &apos;Inbound&apos;, Category__c = &apos;Outbound&apos;, Category__c = &apos;Entrambi&apos;))</errorConditionFormula>
+    <errorMessage>Sono ammessi i seguenti valori nel campo Category :
+- Inbound
+- Outbound
+- Entrambi</errorMessage>
+</ValidationRule>
