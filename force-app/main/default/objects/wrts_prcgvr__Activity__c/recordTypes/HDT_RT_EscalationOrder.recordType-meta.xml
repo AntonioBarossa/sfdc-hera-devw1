@@ -2070,6 +2070,10 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
+            <fullName>Anomalia processo/sistema</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gestione processi Ultima Istanza</fullName>
             <default>false</default>
         </values>
@@ -2086,19 +2090,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto Anomalia processo%2Fsistema</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Supporto Catalogo Prodotti</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Supporto Contact Center</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supporto Esercizio Sistemi</fullName>
             <default>false</default>
         </values>
         <values>
