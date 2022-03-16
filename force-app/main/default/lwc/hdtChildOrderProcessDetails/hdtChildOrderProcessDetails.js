@@ -759,6 +759,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
                 return;
             }
+            if(this.checkFieldAvailable('TemporaryConnectionStartDate__c', true) === ''
+                || this.checkFieldAvailable('TemporaryConnectionEndDate__c', true) === ''
+                || this.checkFieldAvailable('HoursOfUse__c', true) === '')
+            {
+                this.showMessage('Errore', 'Popolare i campi obbligatori: Data inizio/fine connessione temporanea e Ore di utilizzo', 'error');
+                return;
+            }
             isPreventivo({ord:this.order}).then(result=>{
                 this.loading=false;
             }).catch(error=>{
