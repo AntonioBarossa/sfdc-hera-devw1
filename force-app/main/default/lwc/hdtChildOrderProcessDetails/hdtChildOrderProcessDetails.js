@@ -535,7 +535,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                this.showMessage('Errore', 'Popolare il campo Prelievo Annuo', 'error');
                return;
            }
-           if(this.checkFieldAvailable('MaxRequiredPotential__c', true) === '')
+           if(this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
            {
                this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
                return;
@@ -926,7 +926,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('','EffectiveDate__c',this.typeVisibility('both'),true,false,'',''),
                     new fieldData('','SignedDate__c',this.order.ParentOrder__r.SignedDate__c != null,true,true,'',this.order.ParentOrder__r.SignedDate__c),
                     new fieldData('','NotRegisteredMeterCase__c',this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,false,'',''),
-                    new fieldData('','MaxRequiredPotential__c',this.typeVisibility('both'),this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,'',''),
+                    new fieldData('','MaxRequiredPotential__c',this.typeVisibility('gas'),this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,'',''),
                     new fieldData('','AccountId',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','PhoneNumber__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','Email__c',this.typeVisibility('both'),false,true,'',''),
@@ -1377,7 +1377,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Numero Contratto','ContractReference__c',true,false, true, '',''), 
                     new fieldData('Uso energia','UseTypeEnergy__c',this.order.ServicePoint__c,false, true, '',''),                  
                     new fieldData('POD/PDR','ServicePointCode__c',this.order.ServicePoint__c,false, true, '',''),  
-                    new fieldData('Azione commerciale','CommercialAction__c',this.typeVisibility('both'),false, false, '',''), 
+                    new fieldData('Azione commerciale','CommercialAction__c',this.typeVisibility('both'),false, false, '',''),
+                    new fieldData('Data Decorrenza','EffectiveDate__c',this.typeVisibility('both'),false, false, '',''),  
                     new fieldData('Tipo VAS','VASType__c', true, false, true, ''),
                     new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
                     new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, true, ''),
