@@ -22,13 +22,14 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private List<HDT_WRP_ProcessObjects> processObjList;
     private List<Product2> commOfferForRetrieve;
     private List<Product2> additionalProduct2;
+    private List<SaleServiceItem__c> saleServiceToInsert = new List<SaleServiceItem__c>();
     private Map<Id, PricebookEntry> priceBookEntryMap = new Map<Id, PricebookEntry>();
     private Map<Id, PricebookEntry> priceBookEntry2Map = new Map<Id, PricebookEntry>();
     private Map<String, Product2> commOfferMap;
     private Map<String, Map<String, String>> additionalOrderItemMap;
     List<PricebookEntry> pbeOptionalSkuList = new List<PricebookEntry>();
     private Map<String, String> mapAllFields;
-
+    List<Opportunity> opportunityToinsert = new List<Opportunity>();
     Map<String, String> product2ForActivationMap;
     Map<String, HDT_MassiveFieldsObjectMap__mdt> product2ForAdditionalMap;
     Map<String, HDT_MassiveFieldsObjectMap__mdt> wrpForStructureMap;
@@ -37,9 +38,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     List<Id> billProfToRetrieve;
     List<Id> servPointToRetrieve;
     Map<Id, Account> accountMap;
-    Map<Id, Sale__c> saleMap;
     Map<Id, BillingProfile__c> billingProfileMap;
     Map<Id, ServicePoint__c> servicePointMap;
+    Id childOrderRecordTypeId;
 
     public override void checks(){
 
@@ -54,7 +55,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         accountIdToRetrieve = new List<Id>();
         billProfToRetrieve = new List<Id>();
         servPointToRetrieve = new List<Id>();
-        List<Sale__c> saleToInsert = new List<Sale__c>();
+
+        childOrderRecordTypeId = getOrderRecordTypeMap(processName);
 
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
@@ -71,6 +73,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             processObj.requestItem = item;
 
             processObj.accountId = nextDataObj.accountId;
+            processObj.contactId = nextDataObj.contactId;
             processObj.billProfId = nextDataObj.billProfId;
             processObj.servPointId = nextDataObj.servPointId;
 
@@ -78,8 +81,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             billProfToRetrieve.add(nextDataObj.billProfId);
             servPointToRetrieve.add(nextDataObj.servPointId);
 
-            processObj.sale = setSaleObject(processObj.sale);
-            processObj.opportunity = setOpportunityObj(processObj.opportunity);
             processObj = buildWrapperOrderStructure(processObj, tempSplitedFields, nextDataObj);
 
             String csvHeader;
@@ -112,20 +113,11 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                     break;
                 }
 
-
             }
 
-            processObj.sale.Account__c = nextDataObj.accountId;
-            //processObj.sale.SalesContact__c = [SELECT Id, ContactId FROM accountContactRelation WHERE AccountId = :obj.accountId AND Roles = 'titolare' LIMIT 1].ContactId;
-            processObj.sale.SalesContact__c = nextDataObj.contactId;
-            processObj.sale = setSaleObject(processObj.sale);
-
             processObjList.add(processObj);
-            saleToInsert.add(processObj.sale);
-            
-        }
 
-        insert saleToInsert;
+        }
 
     }
 
@@ -215,21 +207,19 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             }
         }
 
-        System.debug(LoggingLevel.DEBUG, '>>> commOfferMap: ' + commOfferMap);
-        System.debug(LoggingLevel.DEBUG, '>>> product2RetrievedFromDb: ' + product2RetrievedFromDb);
-        System.debug(LoggingLevel.DEBUG, '>>> priceBookEntryMap: ' + priceBookEntryMap);
+        //System.debug(LoggingLevel.DEBUG, '>>> commOfferMap: ' + commOfferMap);
+        //System.debug(LoggingLevel.DEBUG, '>>> product2RetrievedFromDb: ' + product2RetrievedFromDb);
+        //System.debug(LoggingLevel.DEBUG, '>>> priceBookEntryMap: ' + priceBookEntryMap);
         //System.debug(LoggingLevel.DEBUG, '>>> additionalOrderItemMap: ' + additionalOrderItemMap);
 
         List<Account> accList = HDT_UTL_MassiveOrderFieldsAlignment.getAccountByIds(accountIdToRetrieve);
-        //HDT_UTL_MassiveOrderFieldsAlignment.getSaleByIds
         List<BillingProfile__c> billProfList = HDT_UTL_MassiveOrderFieldsAlignment.getBillingProfileByIds(billProfToRetrieve);
         List<ServicePoint__c> servPointList = HDT_UTL_MassiveOrderFieldsAlignment.getServicePointByIds(servPointToRetrieve);
 
-        saleMap = new Map<Id, Sale__c>();
         accountMap = new Map<Id, Account>(accList);
         billingProfileMap = new Map<Id, BillingProfile__c>(billProfList);
         servicePointMap = new Map<Id, ServicePoint__c>(servPointList);
-
+        
     }
 
     public override void registryCreation(){
@@ -237,9 +227,20 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         List<Order> parentOrderToInsert = new List<Order>();
         List<Order> childOrderToInsert = new List<Order>();
         List<OrderItem> orderItemToInsert = new List<OrderItem>();
+        List<Sale__c> saleToInsert = new List<Sale__c>();
 
         Id commOffId;
         Id priceBookId;
+
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+            processObj.sale = setSaleObject(processObj.sale, processObj.accountId, processObj.contactId);
+            processObj.opportunity = setOpportunityObj(processObj.opportunity, processObj.sale, processObj.accountId);
+            saleToInsert.add(processObj.sale);
+            opportunityToinsert.add(processObj.opportunity);
+        }
+
+        insert saleToInsert;
+        insert opportunityToinsert;
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
@@ -317,16 +318,23 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 childOrderToInsert.add(childOrder.childOrder);
 
             }
-
+            processObj = setSaleServiceItem(processObj);
+            saleServiceToInsert.add(processObj.saleServiceItem);
             //System.debug(LoggingLevel.DEBUG, JSON.serializePretty(processObj));
 
         }
 
         insert parentOrderToInsert;
+        insert saleServiceToInsert;
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
             for(HDT_WRP_ChildOrder childOrder : processObj.childOrderList){
+
                 childOrder.childOrder.ParentOrder__c = processObj.parentOrder.Id;
+                childOrder.childOrder.Contact__c = processObj.contactId;
+                childOrder.childOrder.SalesContact__c = processObj.contactId;
+                childOrder.childOrder.Sale__c = processObj.sale.Id;
+
                 childOrder.childOrder = HDT_UTL_MassiveOrderFieldsAlignment.alignAccountFields(childOrder.childOrder, accountMap.get(processObj.accountId));
                 childOrder.childOrder = HDT_UTL_MassiveOrderFieldsAlignment.alignSaleFields(childOrder.childOrder, processObj.sale);
                 childOrder.childOrder = HDT_UTL_MassiveOrderFieldsAlignment.alignBillingProfileFields(childOrder.childOrder, billingProfileMap.get(processObj.billProfId));
@@ -365,6 +373,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         }
 
         update orderItemToInsert;
+
+        getLimitDetails('---processEnd---');
 
     }
 
@@ -445,8 +455,12 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
     }
 
-    private Sale__c setSaleObject(Sale__c sale){
-        sale.Name = 'Vendita contactName';
+    private Sale__c setSaleObject(Sale__c sale, Id accountId, Id contactId){
+
+        sale.Account__c = accountId;
+        //sale.sale.SalesContact__c = [SELECT Id, ContactId FROM accountContactRelation WHERE AccountId = :obj.accountId AND Roles = 'titolare' LIMIT 1].ContactId;
+        sale.SalesContact__c = contactId;
+        sale.Name = 'Vendita ' + accountMap.get(accountId).Name;
         sale.SalesContactRole__c = 'Titolare';
         sale.Status__c = 'Attiva';
         /*
@@ -470,14 +484,19 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         return sale;
     }
 
-    private Opportunity setOpportunityObj(Opportunity opportunity){
+    private static HDT_WRP_ProcessObjects setSaleServiceItem(HDT_WRP_ProcessObjects processObj){
+        processObj.saleServiceItem.Opportunity__c = processObj.opportunity.Id;
+        processObj.saleServiceItem.ServicePoint__c = processObj.servPointId;
+        return processObj;
+    }
 
-        //Opportunity opp = new Opportunity();
-        //opp.Sale__c = params.get('saleId');
-        //opp.Id = params.get('opportunityId');
-        //HDT_UTL_DatabaseService.updateSObject(opp);   
-
-        return opportunity;
+    private Opportunity setOpportunityObj(Opportunity opp, Sale__c sale, String accountId){
+        opp.Sale__c = sale.Id;
+        opp.AccountId = accountId;
+        opp.Name = 'Opportunity ' + sale.Name;
+        opp.StageName = 'Proposal';
+        opp.CloseDate = Date.today().addDays(20);
+        return opp;
     }
 
     private Order createFatherOrder(Order childOrder, Order parentOrder, Sale__c sale){
@@ -526,6 +545,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             HDT_WRP_ChildOrder wrpChildOrder = new HDT_WRP_ChildOrder();
             wrpChildOrder.orderType = 'Attivazione';
             wrpChildOrder.childOrder = new Order();
+            wrpChildOrder.childOrder.RecordTypeId = childOrderRecordTypeId;
+            wrpChildOrder.childOrder.ProcessType__c = 'Subentro Ele';
             wrpChildOrder.childOrder.AccountId = nextDataObj.accountId;
             wrpChildOrder.childOrder.ServicePoint__c = nextDataObj.servPointId;
             wrpChildOrder.childOrder.BillingProfile__c = nextDataObj.billProfId;
@@ -578,6 +599,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             HDT_WRP_ChildOrder wrpChildOrder = new HDT_WRP_ChildOrder();
             wrpChildOrder.orderType = 'Aggiuntivo';
             wrpChildOrder.childOrder = new Order();
+            wrpChildOrder.childOrder.RecordTypeId = childOrderRecordTypeId;
+            wrpChildOrder.childOrder.ProcessType__c = 'Subentro Ele';
             wrpChildOrder.childOrder.AccountId = nextDataObj.accountId;
             wrpChildOrder.childOrder.ServicePoint__c = nextDataObj.servPointId;
             wrpChildOrder.childOrder.BillingProfile__c = nextDataObj.billProfId;
@@ -624,24 +647,20 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
     }
 
-    private static void getOrderRecordTypeMap(){
-        Map<String, Id> processNameToRtIdMap = new Map<String, Id>();
-        Map<String, Schema.RecordTypeInfo> rtMap = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName();
+    private static Id getOrderRecordTypeMap(String processName){
         Map<String, String> rtNameMap = new Map<String, String>();
+        rtNameMap.put('Switch In', 'HDT_RT_SwitchIn');
+        rtNameMap.put('Subentro', 'HDT_RT_Subentro');
+        rtNameMap.put('Prima Attivazione', 'HDT_RT_Attivazione');
+        rtNameMap.put('Voltura', 'HDT_RT_Voltura');
+        rtNameMap.put('VAS', 'HDT_RT_VAS');
+        rtNameMap.put('Cambio Uso', 'HDT_RT_CambioUso');
+        rtNameMap.put('Cambio Offerta', 'HDT_RT_CambioOfferta');
+        rtNameMap.put('MUC', '');
+        rtNameMap.put('Tariffe/Sconti', 'HDT_RT_ScontiBonus');
 
-        rtNameMap.put('HDT_RT_SwitchIn', 'Switch In');
-        rtNameMap.put('HDT_RT_Subentro', 'Subentro');
-        rtNameMap.put('HDT_RT_Attivazione', 'Prima Attivazione');
-        rtNameMap.put('HDT_RT_Voltura', 'Voltura');
-        rtNameMap.put('HDT_RT_VAS', 'VAS');
-        rtNameMap.put('HDT_RT_CambioUso', 'Cambio Uso');
-        rtNameMap.put('HDT_RT_CambioOfferta', 'Cambio Offerta');
-        rtNameMap.put('HDT_???', 'MUC');
-        rtNameMap.put('HDT_RT_ScontiBonus', 'Tariffe/Sconti');
-    
-        for(String devName : rtMap.keySet()){
-            processNameToRtIdMap.put(rtNameMap.get(devName), rtMap.get(devName).getRecordTypeId());
-        }
+        String devName = rtNameMap.get(processName);
+        return Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(devName).getRecordTypeId();
 
     }
 
@@ -652,8 +671,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         private Order parentOrder;
         private List<HDT_WRP_ChildOrder> childOrderList;
         private MassiveLoaderRequestItem__c requestItem;
-
         private Id accountId;
+        private Id contactId;
         private Id billProfId;
         private Id servPointId;
 
