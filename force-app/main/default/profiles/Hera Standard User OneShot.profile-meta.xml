@@ -35546,7 +35546,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>ServicePoint__c</tab>
-        <visibility>DefaultOff</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>VisitAssignmentRules__c</tab>

@@ -37644,6 +37644,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>ServicePoint__c</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>PercentageRulesForAssigningVisits__c</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
