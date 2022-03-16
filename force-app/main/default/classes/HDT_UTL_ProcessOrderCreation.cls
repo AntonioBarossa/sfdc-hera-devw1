@@ -59,28 +59,28 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
         List<String> tempSplitedFields;
-        HDT_UTL_ProcessSales.HDT_WRP_NextDataObj obj;
+        HDT_UTL_ProcessSales.HDT_WRP_NextDataObj nextDataObj;
         for(MassiveLoaderRequestItem__c item : requestItemList){
 
             tempSplitedFields = item.Data__c.split(splitCharacter, -1);
             if(!String.isEmpty(item.NextStepData__c)){
-                obj = (HDT_UTL_ProcessSales.HDT_WRP_NextDataObj)JSON.deserialize(item.NextStepData__c, HDT_UTL_ProcessSales.HDT_WRP_NextDataObj.class);
+                nextDataObj = (HDT_UTL_ProcessSales.HDT_WRP_NextDataObj)JSON.deserialize(item.NextStepData__c, HDT_UTL_ProcessSales.HDT_WRP_NextDataObj.class);
             }
 
             processObj = new HDT_WRP_ProcessObjects();
             processObj.requestItem = item;
 
-            processObj.accountId = obj.accountId;
-            processObj.billProfId = obj.billProfId;
-            processObj.servPointId = obj.servPointId;
+            processObj.accountId = nextDataObj.accountId;
+            processObj.billProfId = nextDataObj.billProfId;
+            processObj.servPointId = nextDataObj.servPointId;
 
-            accountIdToRetrieve.add(obj.accountId);
-            billProfToRetrieve.add(obj.billProfId);
-            servPointToRetrieve.add(obj.servPointId);
+            accountIdToRetrieve.add(nextDataObj.accountId);
+            billProfToRetrieve.add(nextDataObj.billProfId);
+            servPointToRetrieve.add(nextDataObj.servPointId);
 
             processObj.sale = setSaleObject(processObj.sale);
             processObj.opportunity = setOpportunityObj(processObj.opportunity);
-            processObj = buildWrapperOrderStructure(processObj, tempSplitedFields, obj);
+            processObj = buildWrapperOrderStructure(processObj, tempSplitedFields, nextDataObj);
 
             String csvHeader;
             String convertionError;
@@ -115,8 +115,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
             }
 
-            processObj.sale.Account__c = obj.accountId;
-            processObj.sale.SalesContact__c = [SELECT Id, ContactId FROM accountContactRelation WHERE AccountId = :obj.accountId AND Roles = 'titolare' LIMIT 1].ContactId;
+            processObj.sale.Account__c = nextDataObj.accountId;
+            //processObj.sale.SalesContact__c = [SELECT Id, ContactId FROM accountContactRelation WHERE AccountId = :obj.accountId AND Roles = 'titolare' LIMIT 1].ContactId;
+            processObj.sale.SalesContact__c = nextDataObj.contactId;
             processObj.sale = setSaleObject(processObj.sale);
 
             processObjList.add(processObj);
