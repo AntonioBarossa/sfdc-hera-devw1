@@ -452,4 +452,42 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             }
         } 
     }
+
+    public static void shareRecordAppointmentSelf(List<wrts_prcgvr__Activity__c> newTriggerList , Map<Id,SObject> oldTriggerMap){
+        HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
+        String recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_DistributorAppointment', 'wrts_prcgvr__Activity__c');
+        List<String> accountIdToShare = new List<String>();
+        List<String> caseIdToShare = new List<String>();
+        for (wrts_prcgvr__Activity__c newActivity : newTriggerList){
+            wrts_prcgvr__Activity__c oldActivity = (wrts_prcgvr__Activity__c)oldTriggerMap.get(newActivity.Id);
+            if (newActivity.RecordTypeId == recordtypeid && newActivity.isSelfAppointment__c && newActivity.isSelfAppointment__c != oldActivity.isSelfAppointment__c ){
+                setSobjectId(newActivity, accountIdToShare, caseIdToShare);    
+            }
+        }
+
+        setShareForAppointment(accountIdToShare, 'Account');
+        setShareForAppointment(caseIdToShare, 'Case');
+    }
+
+    private static void setSobjectId(wrts_prcgvr__Activity__c activity,List<String> accountIdToShare,List<String> caseIdToShare){
+        if (activity.Case__c != null && !caseIdToShare.contains('\'' + activity.Case__c + '\'')){
+            caseIdToShare.add('\'' + activity.Case__c + '\'');
+        }else if (activity.Order__c != null && !accountIdToShare.contains('\'' + activity.Account__c + '\'')){
+            accountIdToShare.add('\'' + activity.Account__c + '\'');
+        }
+    }
+
+    private static void setShareForAppointment(List<String> sbojectIdList,String objectName){
+        if (!sbojectIdList.isEmpty()){
+            String conditions = 'Id IN (' + String.join(sbojectIdList, ',')+') AND ShareForAppointment__c = false';
+            List<SObject> objectsToWork = HDT_QR_GenericQuery.getGenericRecords('Id, ShareForAppointment__c', objectName, conditions);
+            for (SObject obj : objectsToWork){
+                obj.put('ShareForAppointment__c',true);
+            }
+            if (!objectsToWork.isEmpty()){
+                HDT_UTL_DatabaseService.updateSObject(objectsToWork);
+            }
+        }
+
+    }
 }
