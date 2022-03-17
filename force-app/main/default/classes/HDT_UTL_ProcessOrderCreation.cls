@@ -24,7 +24,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private List<Product2> additionalProduct2;
     private List<SaleServiceItem__c> saleServiceToInsert = new List<SaleServiceItem__c>();
     private Map<Id, PricebookEntry> priceBookEntryMap = new Map<Id, PricebookEntry>();
-    private Map<Id, PricebookEntry> priceBookEntry2Map = new Map<Id, PricebookEntry>();
     private Map<String, Product2> commOfferMap;
     private Map<String, Map<String, String>> additionalOrderItemMap;
     List<PricebookEntry> pbeOptionalSkuList = new List<PricebookEntry>();
@@ -33,7 +32,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     Map<String, String> product2ForActivationMap;
     Map<String, HDT_MassiveFieldsObjectMap__mdt> product2ForAdditionalMap;
     Map<String, HDT_MassiveFieldsObjectMap__mdt> wrpForStructureMap;
-    Map<Id, Map<Id, Id>> pricebookEntryForOptionalMap;
+    Map<Id, Map<Id, PriceBookEntry>> pricebookEntryForOptionalMap;
     List<Id> accountIdToRetrieve;
     List<Id> billProfToRetrieve;
     List<Id> servPointToRetrieve;
@@ -45,9 +44,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     public override void checks(){
 
         mapFieldsObject();
-
-        System.debug(LoggingLevel.DEBUG, '>>> mapHeaderByPosition ' + mapHeaderByPosition);
-        System.debug(LoggingLevel.DEBUG, '>>> product2ForActivationMap ' + product2ForActivationMap);
 
         itemsToSave = new List<MassiveLoaderRequestItem__c>();
         commOfferForRetrieve = new List<Product2>();
@@ -101,9 +97,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                         when 'Sale__c' {
                             convertionError = mapTypeField(processObj.sale, mapAllFields, count, tempValue);
                         }
-                        when 'Opportunity' {
-
-                        }
                     }
                 }
 
@@ -131,7 +124,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         List<SBQQ__ProductOption__c> productOptionList = new List<SBQQ__ProductOption__c>();
         commOfferMap = new Map<String, Product2>();
         additionalOrderItemMap = new Map<String, Map<String, String>>();
-        pricebookEntryForOptionalMap = new Map<Id, Map<Id, Id>>();
+        pricebookEntryForOptionalMap = new Map<Id, Map<Id, PriceBookEntry>>();
 
         Map<Id, Id> skuMap = new Map<Id, Id>();
 
@@ -150,6 +143,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             WHERE ProductCode IN :productCodeList AND ProductCode != null
             AND Version__c IN :versionList AND Version__c != null
             AND Family = 'Offerta commerciale'
+            WITH SECURITY_ENFORCED
         ];
 
         for(Product2 p : product2RetrievedFromDb){
@@ -163,13 +157,14 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             FROM PricebookEntry
             WHERE Product2Id IN :product2IdList
             AND Pricebook2.IsStandard = false
+            WITH SECURITY_ENFORCED
         ];
         
         for(PriceBookEntry pbe : pbeList){
             priceBookEntryMap.put(pbe.Product2Id, pbe);
 
             if(!pricebookEntryForOptionalMap.containsKey(pbe.Pricebook2Id)){
-                pricebookEntryForOptionalMap.put(pbe.Pricebook2Id, new Map<Id, Id>());
+                pricebookEntryForOptionalMap.put(pbe.Pricebook2Id, new Map<Id, PriceBookEntry>());
             }
 
         }
@@ -178,6 +173,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             SELECT SBQQ__ConfiguredSKU__c, SBQQ__OptionalSKU__c, SBQQ__OptionalSKU__r.ProductCode
             FROM SBQQ__ProductOption__c
             WHERE SBQQ__ConfiguredSKU__c IN :product2IdList
+            WITH SECURITY_ENFORCED
         ];
 
         List<Id> optnionalSkuIdList = new List<Id>();
@@ -191,26 +187,21 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             }
         }
         
-        
         pbeOptionalSkuList = [
             SELECT Id, Pricebook2Id, Product2Id, UnitPrice
             FROM PricebookEntry
             WHERE Product2Id IN :optnionalSkuIdList
             AND Pricebook2.IsStandard = false
+            WITH SECURITY_ENFORCED
         ];
 
         for(PricebookEntry pbe : pbeOptionalSkuList){
             if(pricebookEntryForOptionalMap.containsKey(pbe.Pricebook2Id)){
-                Map<Id, Id> tempMap = pricebookEntryForOptionalMap.get(pbe.Pricebook2Id);
-                tempMap.put(pbe.Product2Id, pbe.Id);
+                Map<Id, PriceBookEntry> tempMap = pricebookEntryForOptionalMap.get(pbe.Pricebook2Id);
+                tempMap.put(pbe.Product2Id, pbe);
                 pricebookEntryForOptionalMap.put(pbe.Pricebook2Id, tempMap);
             }
         }
-
-        //System.debug(LoggingLevel.DEBUG, '>>> commOfferMap: ' + commOfferMap);
-        //System.debug(LoggingLevel.DEBUG, '>>> product2RetrievedFromDb: ' + product2RetrievedFromDb);
-        //System.debug(LoggingLevel.DEBUG, '>>> priceBookEntryMap: ' + priceBookEntryMap);
-        //System.debug(LoggingLevel.DEBUG, '>>> additionalOrderItemMap: ' + additionalOrderItemMap);
 
         List<Account> accList = HDT_UTL_MassiveOrderFieldsAlignment.getAccountByIds(accountIdToRetrieve);
         List<BillingProfile__c> billProfList = HDT_UTL_MassiveOrderFieldsAlignment.getBillingProfileByIds(billProfToRetrieve);
@@ -237,14 +228,14 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             saleToInsert.add(processObj.sale);
         }
 
-        insert saleToInsert;
+        HDT_UTL_DatabaseService.insertSObject(saleToInsert);
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
             processObj.opportunity = setOpportunityObj(processObj.opportunity, processObj.sale, processObj.accountId);
             opportunityToinsert.add(processObj.opportunity);
         }
 
-        insert opportunityToinsert;
+        HDT_UTL_DatabaseService.insertSObject(opportunityToinsert);
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
@@ -257,6 +248,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                             orderItem.product = commOfferMap.get(orderItem.product.ProductCode + '-' + orderItem.product.Version__c);
                             commOffId = orderItem.product.Id;
                             orderItem.orderItem.PriceBookEntryId = priceBookEntryMap.get(commOffId).Id;
+                            orderItem.orderItem.UnitPrice = priceBookEntryMap.get(commOffId).UnitPrice;
                             orderItem.orderItem.Product2Id = commOffId;
                             priceBookId = priceBookEntryMap.get(commOffId).Pricebook2Id;
                             System.debug(LoggingLevel.DEBUG, '>>> pbeId offComm ' + orderItem.orderItem.PriceBookEntryId);
@@ -269,7 +261,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
             for(HDT_WRP_ChildOrder childOrder : processObj.childOrderList){
 
-                Map<Id, Id> pbeOptionalMap = pricebookEntryForOptionalMap.get(priceBookId);
+                Map<Id, PriceBookEntry> pbeOptionalMap = pricebookEntryForOptionalMap.get(priceBookId);
 
                 if(childOrder.orderType.equalsIgnoreCase('Attivazione')){
                     System.debug(LoggingLevel.DEBUG, '>>> activation');
@@ -285,7 +277,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                             if(tempMap.containsKey(orderItem.product.ProductCode)){
                                 orderItem.product.Id = tempMap.get(orderItem.product.ProductCode);
                                 orderItem.orderItem.Product2Id = orderItem.product.Id;
-                                orderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(orderItem.product.Id);
+                                orderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(orderItem.product.Id).Id;
+                                orderItem.orderItem.UnitPrice = pbeOptionalMap.get(orderItem.product.Id).UnitPrice;
                                 System.debug(LoggingLevel.DEBUG, '>>> pbeId pod-pdr ' + orderItem.orderItem.PriceBookEntryId);
                             } else {
                                 orderItem = null;
@@ -310,7 +303,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                         if(tempMap.containsKey(orderItem.product.ProductCode)){
                             orderItem.product.Id = tempMap.get(orderItem.product.ProductCode);
                             orderItem.orderItem.Product2Id = orderItem.product.Id;
-                            orderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(orderItem.product.Id);
+                            orderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(orderItem.product.Id).Id;
+                            orderItem.orderItem.UnitPrice = pbeOptionalMap.get(orderItem.product.Id).UnitPrice;
                             System.debug(LoggingLevel.DEBUG, '>>> pbeId aggint ' + orderItem.orderItem.PriceBookEntryId);
                         } else {
                             orderItem = null;
@@ -328,8 +322,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         }
 
-        insert parentOrderToInsert;
-        insert saleServiceToInsert;
+        HDT_UTL_DatabaseService.insertSObject(parentOrderToInsert);
+        HDT_UTL_DatabaseService.insertSObject(saleServiceToInsert);
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
             for(HDT_WRP_ChildOrder childOrder : processObj.childOrderList){
@@ -346,7 +340,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             }
         }
 
-        insert childOrderToInsert;
+        HDT_UTL_DatabaseService.insertSObject(childOrderToInsert);
         
         for(Order o : childOrderToInsert){
             System.debug(LoggingLevel.DEBUG, '>>> order Id ' + o.Id);
@@ -357,7 +351,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 for(HDT_WRP_OrderItem orderItem : childOrder.orderItemList){
                     orderItem.orderItem.OrderId = childOrder.childOrder.Id;                    
                     orderItem.orderItem.Quantity = 1;
-                    orderItem.orderItem.UnitPrice = 1;
+                    //orderItem.orderItem.UnitPrice = 1;
                     orderItemToInsert.add(orderItem.orderItem);
                 }
             
@@ -365,7 +359,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             
         }
 
-        insert orderItemToInsert;
+        HDT_UTL_DatabaseService.insertSObject(orderItemToInsert);
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
             for(HDT_WRP_ChildOrder childOrder : processObj.childOrderList){
@@ -376,7 +370,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             
         }
 
-        update orderItemToInsert;
+        HDT_UTL_DatabaseService.updateSObject(orderItemToInsert);
 
         getLimitDetails('---processEnd---');
 

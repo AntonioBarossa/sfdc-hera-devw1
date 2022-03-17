@@ -33,6 +33,7 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
                     SalesContact__r.Phone, SalesContact__r.MobilePhone, CreatedBy.LoginChannel__c, CreatedBy.Station__c, CreatedBy.CreatorGroup__c, AreaManager__c
                 FROM Sale__c
                 WHERE Id IN :saleIds
+                WITH SECURITY_ENFORCED
             ];
         }
 
