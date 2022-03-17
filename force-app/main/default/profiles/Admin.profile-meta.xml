@@ -484,6 +484,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.NumeratorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.SupplyTypeTemp__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -605,6 +610,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.IsExportSIE__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.NumeratorGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -37319,7 +37329,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Lead.HDT_RT_Main</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>

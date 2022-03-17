@@ -388,8 +388,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Description = newDescription + '\n' + currentDescription;
             }
 
-            //Il currentCase.Phase__c viene modificato all'inizio di questo ramo dell'if, ed è valorizzato con il nextPhase
-            if('Validazione OK DL simulata'.equalsIgnoreCase(currentCase.Phase__c) || 'Validazione OK DL'.equalsIgnoreCase(currentCase.Phase__c)){
+            //Creare attività solo se esito successivo ad annullato
+            if(('Validazione OK DL simulata'.equalsIgnoreCase(currentCase.Phase__c) || 'Validazione OK DL'.equalsIgnoreCase(currentCase.Phase__c)) && 'Annullato'.equalsIgnoreCase(currentPhase)){
                 createActivity(currentCase.Id,null, 'Gestione M01/M02', 'Gestione M01/M02', 'Gestione M01/M02');
                 //Se la fase è in Annullato allora non viene cambiata.
                 if ('Annullato'.equalsIgnoreCase(currentPhase)){

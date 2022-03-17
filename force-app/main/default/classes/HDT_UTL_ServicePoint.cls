@@ -27,6 +27,15 @@ public with sharing class HDT_UTL_ServicePoint {
             }            
         }
         
+        /**@frpanico 2022-03-15
+         * Aggiunto campo
+         * GRUPPONUMERATORE
+         * Per processo Sconti e Bonus
+         */
+        if(mapRes.get('GRUPPONUMERATORE')!=null)
+        {
+            spNew.NumeratorGroup__c = mapRes.get('GRUPPONUMERATORE');
+        }
         if(mapRes.get('IMPOSTE')!=null){
             if(mapRes.get('DESCRCOMM')=='Gas'){
                 spNew.ExciseGas__c  = mapRes.get('IMPOSTE') != null ? mapRes.get('IMPOSTE') : 'ALTRO';                

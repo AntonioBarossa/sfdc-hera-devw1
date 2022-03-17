@@ -20,10 +20,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>X_USG_SOC__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>X_OFFER_ID__c</field>
             </layoutItems>
             <layoutItems>
