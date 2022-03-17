@@ -234,12 +234,16 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
             processObj.sale = setSaleObject(processObj.sale, processObj.accountId, processObj.contactId);
-            processObj.opportunity = setOpportunityObj(processObj.opportunity, processObj.sale, processObj.accountId);
             saleToInsert.add(processObj.sale);
-            opportunityToinsert.add(processObj.opportunity);
         }
 
         insert saleToInsert;
+
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+            processObj.opportunity = setOpportunityObj(processObj.opportunity, processObj.sale, processObj.accountId);
+            opportunityToinsert.add(processObj.opportunity);
+        }
+
         insert opportunityToinsert;
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
