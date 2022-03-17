@@ -29,8 +29,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     List<PricebookEntry> pbeOptionalSkuList = new List<PricebookEntry>();
     private Map<String, String> mapAllFields;
     List<Opportunity> opportunityToinsert = new List<Opportunity>();
-    Map<String, String> product2ForActivationMap;
-    Map<String, HDT_MassiveFieldsObjectMap__mdt> product2ForAdditionalMap;
+    Map<String, String> productForActivationMap;
+    Map<String, HDT_MassiveFieldsObjectMap__mdt> productForAdditionalMap ;
     Map<String, HDT_MassiveFieldsObjectMap__mdt> wrpForStructureMap;
     Map<Id, Map<Id, PriceBookEntry>> pricebookEntryForOptionalMap;
     List<Id> accountIdToRetrieve;
@@ -118,8 +118,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         List<String> productCodeList = new List<String>();
         List<String> versionList = new List<String>();
-        List<Product2> product2RetrievedFromDb = new List<Product2>();
-        List<Id> product2IdList = new List<Id>();
+        List<Product2> productRetrievedFromDb = new List<Product2>();
+        List<Id> productIdList = new List<Id>();
         List<PriceBookEntry> pbeList = new List<PriceBookEntry>();
         List<SBQQ__ProductOption__c> productOptionList = new List<SBQQ__ProductOption__c>();
         commOfferMap = new Map<String, Product2>();
@@ -137,7 +137,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             productCodeList.add(orderItemSupplyPoint.ProductCode);
         }
 
-        product2RetrievedFromDb = [
+        productRetrievedFromDb = [
             SELECT Id, ProductCode, Version__c
             FROM Product2
             WHERE ProductCode IN :productCodeList AND ProductCode != null
@@ -146,8 +146,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             WITH SECURITY_ENFORCED
         ];
 
-        for(Product2 p : product2RetrievedFromDb){
-            product2IdList.add(p.Id);
+        for(Product2 p : productRetrievedFromDb){
+            productIdList.add(p.Id);
             commOfferMap.put(p.ProductCode + '-' + p.Version__c, p);
             additionalOrderItemMap.put(p.Id, new Map<String, String>());
         }
@@ -155,7 +155,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         pbeList = [
             SELECT Id, Pricebook2Id, Product2Id, UnitPrice
             FROM PricebookEntry
-            WHERE Product2Id IN :product2IdList
+            WHERE Product2Id IN :productIdList
             AND Pricebook2.IsStandard = false
             WITH SECURITY_ENFORCED
         ];
@@ -172,7 +172,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         productOptionList = [
             SELECT SBQQ__ConfiguredSKU__c, SBQQ__OptionalSKU__c, SBQQ__OptionalSKU__r.ProductCode
             FROM SBQQ__ProductOption__c
-            WHERE SBQQ__ConfiguredSKU__c IN :product2IdList
+            WHERE SBQQ__ConfiguredSKU__c IN :productIdList
             WITH SECURITY_ENFORCED
         ];
 
@@ -401,8 +401,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
     private void mapFieldsObject(){
 
-        product2ForAdditionalMap = new Map<String, HDT_MassiveFieldsObjectMap__mdt>();
-        product2ForActivationMap = new Map<String, String>();
+        productForAdditionalMap  = new Map<String, HDT_MassiveFieldsObjectMap__mdt>();
+        productForActivationMap = new Map<String, String>();
         mapAllFields = new Map<String, String>();
         wrpForStructureMap = new Map<String, HDT_MassiveFieldsObjectMap__mdt>();
         List<HDT_MassiveFieldsObjectMap__mdt> allFieldForThisProcess;
@@ -420,7 +420,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             sobjectMap.put(temp.MasterLabel, temp);
         }
 
-        List<HDT_MassiveFieldsObjectMap__mdt> product2MdtList = [
+        List<HDT_MassiveFieldsObjectMap__mdt> productMdtList  = [
             SELECT MasterLabel, labelField__c, nameField__c, objectType__c, processType__c
             FROM HDT_MassiveFieldsObjectMap__mdt 
             WHERE DeveloperName LIKE 'Sales_%'
@@ -428,13 +428,13 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             WITH SECURITY_ENFORCED
         ];
 
-        for(HDT_MassiveFieldsObjectMap__mdt mdt : product2MdtList){
+        for(HDT_MassiveFieldsObjectMap__mdt mdt : productMdtList ){
             if(mdt.labelField__c.equalsIgnoreCase('Attivazione')){
-                product2ForActivationMap.put(mdt.MasterLabel, mdt.nameField__c);
+                productForActivationMap.put(mdt.MasterLabel, mdt.nameField__c);
             }
 
             if(mdt.labelField__c.equalsIgnoreCase('Aggiuntivi')){
-                product2ForAdditionalMap.put(mdt.MasterLabel, mdt);
+                productForAdditionalMap .put(mdt.MasterLabel, mdt);
             }
             
         }
