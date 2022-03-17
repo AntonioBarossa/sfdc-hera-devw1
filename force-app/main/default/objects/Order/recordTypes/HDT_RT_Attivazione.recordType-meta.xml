@@ -384,6 +384,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento dal SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento per dati discordanti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento da cliente</fullName>
             <default>false</default>Contatto Quality Fallito
         </values>

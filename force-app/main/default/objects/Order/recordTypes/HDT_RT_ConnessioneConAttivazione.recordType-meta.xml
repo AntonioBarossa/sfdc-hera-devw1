@@ -394,6 +394,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento dal SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Classificazione errata</fullName>
             <default>false</default>
         </values>

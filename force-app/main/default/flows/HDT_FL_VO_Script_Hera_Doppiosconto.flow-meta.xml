@@ -201,8 +201,8 @@
  IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;Sole&quot;), &quot;Sole-Luna&quot;, 
   IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;Luna&quot;), &quot;Sole-Luna&quot;, &quot;&quot;)))</expression>
     </formulas>
-    <interviewLabel>HDL FL VO Script - Hera Etapiu {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>HDL FL VO Script - Hera Etapiu</label>
+    <interviewLabel>HDT FL VO Script - Hera Doppiosconto {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>HDT FL VO Script - Hera Doppiosconto</label>
     <loops>
         <name>Bonus_Loop</name>
         <label>Bonus Loop</label>
@@ -322,7 +322,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text8_0</name>
-            <fieldText>&lt;p&gt;&amp;nbsp;Il profilo Sole- Luna prevede un prezzo applicato alla componente energia biorario, differenziato cioè tra ore piene ed ore vuote.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Le ore piene, sono quelle dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali. Le ore vuote sono invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Il prezzo della componente energia assumerà il valore di {!PrezzoLordoPieneFormula}€/kWh nelle ore piene e {!PrezzoLordoVuoteFormula}€/kWh nelle ore vuote.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: Ore Piene: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePick__c} €/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Ore Vuote: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePickOut__c}€/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo Sole- Luna prevede un prezzo applicato alla componente energia biorario, differenziato cioè tra ore piene ed ore vuote.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Le ore piene, sono quelle dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali. Le ore vuote sono invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Il prezzo della componente energia assumerà il valore di {!PrezzoLordoPieneFormula}€/kWh nelle ore piene e {!PrezzoLordoVuoteFormula}€/kWh nelle ore vuote.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: Ore Piene: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePick__c}€/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Ore Vuote: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePickOut__c}€/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -388,6 +388,43 @@
             <name>Condizioni_Economiche_Famiglie_EE_Text4_0</name>
             <fieldText>&lt;p&gt;•	Sono inoltre a suo carico tasse, IVA ed imposte previste dalla legge.&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_EE_Text4_1</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;[BONUS %]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;SCONTO DIGITAL&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Solo per i nuovi clienti, grazie alla scelta della domiciliazione bancaria come metodo di pagamento e la mail come metodo di ricezione della bolletta verrà applicato uno sconto del 20% sul prezzo a copertura della componente energia.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.DocSendingMethod__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>E-Mail</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.BillSendMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Bolletta per e-mail</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_EE_Text4_2</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;SCONTO LUCE&amp;amp;GAS - SOLO PER DUAL FUEL&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Solo per i nuovi clienti, grazie alla scelta di Hera DoppioSconto anche per la fornitura gas verrà applicato uno sconto del 20% sul prezzo a copertura della componente energia per 12 mesi.&lt;/p&gt;&lt;p&gt;Se, nei 12 mesi successivi alla sottoscrizione dell’offerta, non risultassero attive con Hera Comm forniture gas sullo stesso indirizzo di fornitura, Hera Comm si riserva la possibilità di revocare lo Sconto Luce&amp;amp;Gas.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ProfiloCalcolato_Famiglie</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>aaa</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -503,7 +540,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text2</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 79% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio, pari a 102 €/punto di fornitura/anno e 0,02 €/Smc, ed oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 21% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 55% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio, pari a 102 €/punto di fornitura/anno e 0,02 €/Smc, ed oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 45% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -532,6 +569,48 @@
             <name>Condizioni_Economiche_Famiglie_GAS_Text5</name>
             <fieldText>&lt;p&gt;•	Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_GAS_Text6</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;[BONUS %]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_GAS_Text6_1</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;[SCONTO DIGITAL]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Solo per i nuovi clienti, grazie alla scelta della domiciliazione bancaria come metodo di pagamento e la mail come metodo di ricezione della bolletta verrà applicato uno sconto del 20% sul prezzo a copertura del corrispettivo di commercializzazione all’ingrosso.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.BillSendMode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Bolletta per e-mail</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.DocSendingMethod__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>E-Mail</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_GAS_Text6_2</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;[SCONTO LUCE&amp;amp;GAS] (in caso di sottoscrizione di dual fuel)&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Solo per i nuovi clienti, grazie alla scelta di Hera DoppioSconto anche per la fornitura luce verrà applicato uno sconto del 20% sul prezzo a copertura del corrispettivo di commercializzazione all’ingrosso.&lt;/p&gt;&lt;p&gt;Se, nei 12 mesi successivi alla sottoscrizione dell’offerta, non risultassero attive con Hera Comm forniture di energia elettrica sullo stesso indirizzo di fornitura, Hera Comm si riserva la possibilità di revocare lo Sconto Luce&amp;amp;Gas.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ProfiloCalcolato_Famiglie</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>bbb</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -602,7 +681,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>textCA</name>
-            <fieldText>&lt;p&gt;[9. Conferma adesione]&lt;/p&gt;&lt;p&gt;La informo che il contratto di fornitura [ed il contratto [Hera Thermo/Hera LED/Hera ContaWatt/Hera NoProblem Luce/Hera NoProblem Gas/Hera Caldaia Sicura/Hera Ricarica Privata/Hera NoProblem Acqua] si [concluderà/ concluderanno] al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&lt;/p&gt;&lt;p&gt;•	Nei prossimi 10 giorni provvederemo a verificare la ricezione della documentazione contrattuale e la conclusione del contratto. La verifica potrà avvenire in due modalità:&lt;/p&gt;&lt;p&gt;o	Attraverso un nostro operatore che la ricontatterà per chiederle conferma;&lt;/p&gt;&lt;p&gt;o	Con le credenziali personali che troverà indicate all’interno della documentazione contrattuale e con le quali potrà chiamare il numero verde oppure accedere al sito internet per confermare la conclusione del contratto ed ascoltare la registrazione di questa telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Per il contratto di fornitura, entro 14 giorni dalla conferma del ricevimento della documentazione contrattuale, Lei potrà esercitare il diritto di ripensamento, inviando un fax al numero verde 800.999.600, oppure una e-mail all’indirizzo Contratti@gruppohera.it oppure una raccomandata con ricevuta di ritorno presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	 Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente, può ricorrere al Servizio di Conciliazione ARERA oppure può ricorrere alla Conciliazione Paritetica attraverso le modalità indicate sul sito www.gruppohera.it&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento per:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	-&amp;nbsp;la fornitura di gas in regime di tutela.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	- la nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;XXXX [SI/NO]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;XXXX [SI/NO]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;•	CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.LastName__c} abbiamo terminato la registrazione, benvenuto in Hera Comm/Hera Comm Marche/Estenergy.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;[***FINE REGISTRAZIONE**]&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[9. Conferma adesione]&lt;/p&gt;&lt;p&gt;La informo che il contratto di fornitura [ed il contratto [Hera Thermo/Hera LED/Hera ContaWatt/Hera NoProblem Luce/Hera NoProblem Gas/Hera Caldaia Sicura/Hera Ricarica Privata/Hera NoProblem Acqua] si [concluderà/ concluderanno] al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&lt;/p&gt;&lt;p&gt;•	Nei prossimi 10 giorni provvederemo a verificare la ricezione della documentazione contrattuale e la conclusione del contratto. La verifica potrà avvenire in due modalità:&lt;/p&gt;&lt;p&gt;o	Attraverso un nostro operatore che la ricontatterà per chiederle conferma;&lt;/p&gt;&lt;p&gt;o	Con le credenziali personali che troverà indicate all’interno della documentazione contrattuale e con le quali potrà chiamare il numero verde oppure accedere al sito internet per confermare la conclusione del contratto ed ascoltare la registrazione di questa telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Per il contratto di fornitura, entro 14 giorni dalla conferma del ricevimento della documentazione contrattuale, Lei potrà esercitare il diritto di ripensamento, inviando un fax al numero verde 800.999.600, oppure una e-mail all’indirizzo Contratti@gruppohera.it oppure una raccomandata con ricevuta di ritorno presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	 Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente, può ricorrere al Servizio di Conciliazione ARERA oppure può ricorrere alla Conciliazione Paritetica attraverso le modalità indicate sul sito www.gruppohera.it&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento per:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	-&amp;nbsp;la fornitura di gas in regime di tutela.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	- la nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;•	CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.LastName__c} abbiamo terminato la registrazione, benvenuto in Hera Comm/Hera Comm Marche/Estenergy.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;[***FINE REGISTRAZIONE**]&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1070,8 +1149,23 @@
         </fields>
         <fields>
             <name>Servizi_Bundle_text3</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[“POLIZZA ASSISTENZA SALUTE Hera EtaPiu” (HC EST e HCM]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;[Se ha sottoscritto solo Offerta LUCE Hera EtaPiu o solo Offerta GAS Hera EtaPiu]&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta [Luce/GAS] Hera EtaPiu potrà beneficiare gratuitamente della Polizza Protezione Hera EtaPiu, che fornisce servizi di assistenza sanitaria per il sottoscrittore della polizza e per il coniuge over 65. La polizza si attiva il settimo giorno successivo all’attivazione del contratto luce.&amp;nbsp;&lt;/p&gt;&lt;p&gt;[Se ha sottoscritto Offerta LUCE Hera EtaPiu e Offerta GAS Hera EtaPiu]&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce e GAS Hera EtaPiu potrà beneficiare gratuitamente della Polizza Protezione Hera EtaPiu, che fornisce servizi di assistenza sanitaria per il sottoscrittore della polizza e per il coniuge over 65. La polizza si attiva il settimo giorno successivo all’attivazione del contratto gas.&lt;/p&gt;&lt;p&gt;Operazione a premi valida dal 07/05/2020 al 07/05/2021. Regolamento su heracomm.com&lt;/p&gt;&lt;p&gt;All’interno del plico contrattuale riceverà la Nota Sintetica della Polizza dove sono dettagliati i servizi e le coperture comprese.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;[“POLIZZA ASSISTENZA SALUTE Hera DOPPIOSCONTO” (HC EST e HCM]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta [Luce/GAS] Hera DOPPIOSCONTO potrà beneficiare gratuitamente della Polizza Protezione Hera DOPPIOSCONTO, che fornisce servizi di assistenza sanitaria per il sottoscrittore della polizza e per il coniuge over 65. La polizza si attiva il settimo giorno successivo all’attivazione del contratto luce.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Servizi_Bundle_text4</name>
+            <fieldText>&lt;p&gt;[Se ha sottoscritto Offerta LUCE Hera DOPPIOSCONTO e Offerta GAS Hera DOPPIOSCONTO]&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce e GAS Hera DOPPIOSCONTO potrà beneficiare gratuitamente della Polizza Protezione Hera DOPPIOSCONTO, che fornisce servizi di assistenza sanitaria per il sottoscrittore della polizza e per il coniuge over 65. La polizza si attiva il settimo giorno successivo all’attivazione del contratto gas.&lt;/p&gt;&lt;p&gt;Operazione a premi valida dal 07/05/2020 al 07/05/2021. Regolamento su heracomm.com&lt;/p&gt;&lt;p&gt;All’interno del plico contrattuale riceverà la Nota Sintetica della Polizza dove sono dettagliati i servizi e le coperture comprese.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ProfiloCalcolato_Famiglie</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>aaas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -1083,7 +1177,7 @@
             <targetReference>HDT_FL_Script_Gestione_Ordini</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>HDT_FL_Script_Gestione_Ordini</name>
         <label>HDT_FL_Script_Gestione_Ordini</label>
