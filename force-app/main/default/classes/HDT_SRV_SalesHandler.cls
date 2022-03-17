@@ -377,7 +377,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                         ord.Phase__c = previousPhase;
                                         ord.Status = 'Completed';
                                     }
-                                    /**@frpanico 02/02/2022
+                                    /*@frpanico 02/02/2022
                                      * Aggiunta gestione 
                                      * Annullato -Errore Lavorazione SAP - Annullato
                                      */
@@ -475,8 +475,9 @@ public with sharing class HDT_SRV_SalesHandler {
                                     utlClass.handlePassiveCancellation(cancellationOrder, 'Order', mapRequestFields.get('STORNO'), mapRequestFields.get('ATTIVITA'));
                                 }
                                 when 'Annullato'{
-                                    if(mapRequestFields.get('IND_DIST_DEL40') != null){
-                                        ord.Description = writeDescription(mapRequestFields.get('IND_DIST_DEL40'), oldDescription);
+                                    if(mapRequestFields.get('NOTE_ANN') != null){
+                                        ord.CancellationNote__c = mapRequestFields.get('NOTE_ANN');
+                                        //ord.DiscardReason__c = mapRequestFields.get('NOTE_ANN');
                                     }
                                 }
                             }
