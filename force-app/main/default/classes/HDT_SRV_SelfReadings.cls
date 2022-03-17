@@ -425,10 +425,10 @@ public with sharing class HDT_SRV_SelfReadings {
             }
             when else {
                 /*
-                * @Author: Salvatore A. Sarà 18/10/2021
-                * Risoluzione "Avoid Empty Block Statements"
+                * @Author: NTTDATA 17/03/2022
+                * Risoluzione "Restituiamo true per tutti gli altri canali in quanto il case in caso di KO si deve Annullare"
                 */
-                return closeCase;
+                closeCase = true;
             }
         }
 
