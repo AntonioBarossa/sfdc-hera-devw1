@@ -285,9 +285,16 @@ public with sharing class HDT_SRV_SelfReadings {
                 }
                 HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 if (isClosingError(errorMessage, currentReadingCase.Origin)) {
-                    readingCaseToUpdate.Status = 'Closed';
-                    readingCaseToUpdate.TecnicalPhase__c = 'Annullato';
-                    HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                    
+                    if(currentReadingCase.Origin.equalsIgnoreCase('Web') || currentReadingCase.Origin.equalsIgnoreCase('App')){
+                        readingCaseToUpdate.Status = 'Closed';
+                        readingCaseToUpdate.Phase__c = 'Annullato';
+                        updateFuture(JSON.serialize(readingCaseToUpdate));
+                    }else{
+                        readingCaseToUpdate.Status = 'Closed';
+                        readingCaseToUpdate.TecnicalPhase__c = 'Annullato';
+                        HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                    }
                 }
                 
             }
