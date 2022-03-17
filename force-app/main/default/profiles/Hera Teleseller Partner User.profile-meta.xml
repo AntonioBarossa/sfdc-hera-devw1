@@ -1448,6 +1448,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.ShareforAppointment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.ShippingAddress</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5010,6 +5015,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.SecondaryContact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.ShareforAppointment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
