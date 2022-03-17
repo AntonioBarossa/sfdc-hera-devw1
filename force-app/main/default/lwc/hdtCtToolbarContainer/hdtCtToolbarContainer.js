@@ -416,33 +416,18 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
             campaignMemberId: this.campaignMemberId
         }).then((data) => {
             console.log(JSON.stringify('postAppointment response: ' + data));
-<<<<<<< HEAD
             if (data) {
-=======
-            if (data == 'success') {
-                
->>>>>>> DEVW1
                 //update campaignMember status
                 //this.saveScript('Appuntamento telefonico personale', true);
                 this.updateMemberStatus('Appuntamento telefonico personale');
             }
-<<<<<<< HEAD
             else{
                 this.setmessage(true);
                 console.log('postAppointment->else');
             }
         }).catch((err) => {
             this.setmessage(true);
-=======
-        }).catch(err => {
-            const event = new ShowToastEvent({
-                title: 'Errore!',
-                variant: 'error', 
-                message: 'Non è stato possibile completare l\'operazione',
-            });
-            this.dispatchEvent(event);
 
->>>>>>> DEVW1
             console.log(JSON.stringify(err));
 
         })
@@ -497,7 +482,6 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
             isToSendStatusReitek: true
         }).then((data) => {
             if (data) {
-<<<<<<< HEAD
                 this.setmessage(false);
                 console.log('stato aggiornato con successo');
             }
@@ -507,24 +491,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
             }
         }).catch((err) => {
             this.setmessage(true);
-=======
-                const event = new ShowToastEvent({
-                    title: 'Success!',
-                    variant: 'success', 
-                    message: 'Operazione completata con successo',
-                });
-                this.dispatchEvent(event);
 
-                console.log('stato aggiornato con successo');
-            }
-        }).catch(err => {
-            const event = new ShowToastEvent({
-                title: 'Errore!',
-                variant: 'error', 
-                message: 'Non è stato possibile completare l\'operazione',
-            });
-            this.dispatchEvent(event);
->>>>>>> DEVW1
             console.log(JSON.stringify(err));
         });
     }
