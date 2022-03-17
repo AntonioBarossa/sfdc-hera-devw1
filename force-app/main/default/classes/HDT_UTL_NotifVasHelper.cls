@@ -35,7 +35,7 @@ public inherited sharing class HDT_UTL_NotifVasHelper {
                 }
             }
             when 'Case' {
-                List<Order> orders = orderQr.getRecordByOrderNumber(sObjectKey);
+                List<Order> orders = orderQr.getRecordByVasPracticeCode(sObjectKey);
                 if (!orders.isEmpty()) {
                     sObjMap.put('Order', orders.get(0));
 

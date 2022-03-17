@@ -294,6 +294,7 @@ public with sharing class HDT_UTL_VasManagement {
             super(currentOrder);
 
             OrderItem parentOrderItem;
+            List<OrderItem> childOrderItems = new List<OrderItem>();
             items = new List<HDT_WRP_VASActivationReqItem>();
             for (OrderItem ordItem:currentOrder.OrderItems) {
                 if (String.isBlank(ordItem.SBQQ__RequiredBy__c)) {
@@ -308,11 +309,31 @@ public with sharing class HDT_UTL_VasManagement {
             dataAttivazione = String.isNotBlank(currentOrder.VasServiceActivationDate__c?.format())? currentOrder.VasServiceActivationDate__c : Date.today();
             Decimal tempRate = parentOrderItem?.Product2?.NumberRateMonthly__c ;
             nrRate = tempRate!=null? tempRate : 0;
+            
+            Decimal totaleNoScontoIva = 0.0;
+            Decimal totaleScontoIva = 0.0;
+            Decimal iva = 0.0;
+            for(OrderItem item : childOrderItems)
+            {
+                totaleNoScontoIva += (item.ListPrice  * item.Quantity);
+                totaleScontoIva += (item.UnitPrice * item.Quantity);
+                if((Decimal)item.getSobject('Product2').get('IVA__c') != null && (Decimal)item.getSobject('Product2').get('IVA__c') != 0.0 && iva == 0.0)
+                {
+                    iva = (Decimal)item.getSobject('Product2').get('IVA__c');
+                }
+            }
+            Deciaml percentualIva = iva/100.0;
+            totaleNoScontoIva += (totaleNoScontoIva * percentualIva);
+            totaleScontoIva += (totaleScontoIva * percentualIva);
+            importo = totaleNoScontoIva;
+            importoIvaInclusa = totaleScontoIva;
+            scontoIvaInclusa = totaleNoScontoIva - totaleScontoIva;
+            
+            /*
             importo = currentOrder.SBQQ__Quote__r?.SBQQ__ListAmount__c;
-
             importoIvaInclusa = currentOrder.SBQQ__Quote__r?.ListAmountVAT__c;
             scontoIvaInclusa = currentOrder.SBQQ__Quote__r?.TotalDiscountAmountVAT__c;
-
+            */
             List<String> strValues = new List<String>{
                 currentOrder.ShippingStreetToponym__c,
                 currentOrder.ShippingStreetName__c,
@@ -373,7 +394,7 @@ public with sharing class HDT_UTL_VasManagement {
             Quantita = ordItem.Quantity;
             PrezzoNetto = ordItem.ListPrice;
             PrezzoNettoScontato = ordItem.UnitPrice;
-            PercentualeIva = ordItem.Percentage__c==null? 0.0 : ordItem.Percentage__c;
+            PercentualeIva = ordItem.Product2.IVA__c != null ? ordItem.Product2.IVA__c : 0.0;
         }
     }
 }
