@@ -323,6 +323,13 @@
                 <elementReference>Opzione.atecoCode</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.RateCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RateCategoryFromCaseCommodity</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_2</targetReference>
         </connector>
@@ -2169,6 +2176,13 @@ IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICK
         <expression>IF( OR(TEXT({!Get_Input_Case.Type}) = &quot;Nuovo Impianto&quot;,TEXT({!Get_Input_Case.Type}) = &quot;Aggiunta Attacco&quot;),
 &quot;Preventivi Riepilogo Nuovo Impianto&quot;,
 &quot;Preventivi Riepilogo&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>Valorizzo il campo &quot;RateCategory__c&quot; dal campo &quot;Commodity&quot; del Case</description>
+        <name>RateCategoryFromCaseCommodity</name>
+        <dataType>String</dataType>
+        <expression>IF(ISPICKVAL({!Get_Input_Case_0.Commodity__c}, &quot;Gas&quot;), &quot;GAS_ALLACCIAMENTO&quot;,
+IF(ISPICKVAL({!Get_Input_Case_0.Commodity__c}, &quot;Energia Elettrica&quot;), &quot;ELE_ALLACCIAMENTO&quot;, &quot;&quot;))</expression>
     </formulas>
     <formulas>
         <name>RecordTypeDevNameFormula</name>
