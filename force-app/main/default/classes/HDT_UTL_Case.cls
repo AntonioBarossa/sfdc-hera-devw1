@@ -47,7 +47,9 @@ public inherited sharing class HDT_UTL_Case {
                 companyInfosMap = calculateTransition.calculateCompanyInfos();
                 City__c city = (City__c)companyInfosMap.get('cityObj');
 
-                AtecoMatrix__c atecoMatrix = [SELECT AtecoCode__c FROM AtecoMatrix__c WHERE City__c =: currentCase.SupplyCity__c WITH SECURITY_ENFORCED LIMIT 1];
+
+                AtecoMatrix__c atecoMatrix = [SELECT AtecoCode__c, City__c FROM AtecoMatrix__c WHERE City__c =: currentCase.SupplyCity__c WITH SECURITY_ENFORCED LIMIT 1];
+
 
                 output.atecoCode = atecoMatrix.AtecoCode__c;
 
