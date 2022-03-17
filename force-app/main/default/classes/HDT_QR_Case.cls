@@ -42,6 +42,8 @@ public inherited sharing class HDT_QR_Case {
             Type,
             Distributor__r.Name,
             Commodity__c,
+            SalesCompanyCode__c,
+            CausalCode__c,
             RecordType.DeveloperName
             FROM Case
             where Id = :Id
