@@ -6,7 +6,19 @@ const actions = [
  
 ];
 const columns = [
-    { label: 'Referente', fieldName: 'contactName' },
+    // { label: 'Referente', fieldName: 'contactName' },
+    {
+        label: 'Referente',
+        sortable: false,
+        type: 'button',
+        initialWidth: 132,
+        typeAttributes:{
+            variant: 'base',
+            style:'border: none;background: none;',
+            label: {fieldName: 'contactName'},
+            name: 'redirectContact'
+        }
+    },
     { label: 'Ruolo', fieldName: 'roles' },
     { label: 'Telefono Cellulare', fieldName: 'contactMobilePhone' },
     { label: 'Telefono fisso', fieldName: 'contactHomePhone' },
