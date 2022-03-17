@@ -7,6 +7,18 @@
     <picklistValues>
         <picklist>ActivityOutcome__c</picklist>
         <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso - non necessario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso inserito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti dal DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Negativo</fullName>
             <default>false</default>
         </values>
@@ -2287,6 +2299,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Eseguire Gestione Manuale SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gestione Iva e Accise</fullName>
             <default>false</default>
         </values>
@@ -2312,6 +2328,10 @@
         </values>
         <values>
             <fullName>KO Motore VAS da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Fornitore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2355,7 +2375,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto Anomalia processo%2Fsistema</fullName>
+            <fullName>Anomalia processo/sistema</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2364,10 +2384,6 @@
         </values>
         <values>
             <fullName>Supporto Contact Center</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supporto Esercizio Sistemi</fullName>
             <default>false</default>
         </values>
         <values>

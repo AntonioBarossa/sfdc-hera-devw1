@@ -326,7 +326,7 @@ public inherited sharing class HDT_LC_ConfigureProduct {
                     }
                     List<wrts_prcgvr__Activity__c> listActivityToCreate = new List<wrts_prcgvr__Activity__c>();
                     for(String s : idToCreateActivity){
-                        listActivityToCreate.add(new wrts_prcgvr__Activity__c(QuoteLine__c=s, RecordTypeId= recTypeId, Type__c= 'Approvazione Offerte',Account__c=sale.Account__r.Id,Sale__c=sale.id,wrts_prcgvr__Status__c='Creata'));
+                        listActivityToCreate.add(new wrts_prcgvr__Activity__c(QuoteLine__c=s, RecordTypeId= recTypeId, Type__c= 'Approvazione Offerte',Account__c=sale.Account__r.Id,Sale__c=sale.id,wrts_prcgvr__Status__c='Aperta'));
                     }
                     for(String s : quoteToUpdateId){
                         quoteToUpdate.add(new SBQQ__Quote__C(id=s,SBQQ__Status__c='In Revisione'));

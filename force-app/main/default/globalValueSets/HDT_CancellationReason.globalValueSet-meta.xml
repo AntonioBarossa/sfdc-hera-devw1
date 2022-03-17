@@ -31,6 +31,11 @@
         <label>Contattare banca</label>
     </customValue>
     <customValue>
+        <fullName>Contatto Quality Fallito</fullName>
+        <default>false</default>
+        <label>Contatto Quality Fallito</label>
+    </customValue>
+    <customValue>
         <fullName>Disattivazione in corso</fullName>
         <default>false</default>
         <label>Disattivazione in corso</label>
@@ -184,6 +189,11 @@
         <fullName>Registrazione non conforme</fullName>
         <default>false</default>
         <label>Registrazione non conforme</label>
+    </customValue>
+    <customValue>
+        <fullName>Annullamento per dati discordanti</fullName>
+        <default>false</default>
+        <label>Annullamento per dati discordanti</label>
     </customValue>
     <masterLabel>Motivazione Annullamento</masterLabel>
     <sorted>false</sorted>

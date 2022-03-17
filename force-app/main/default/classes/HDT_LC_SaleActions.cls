@@ -204,7 +204,7 @@ public inherited sharing class HDT_LC_SaleActions {
         if(!String.isBlank(campaignMemberId)){
             CampaignMember cm = new CampaignMember();
             cm.Id = campaignMemberId;
-
+            saleToUpdate.CampaignMemberId__c = campaignMemberId;
             saleToUpdate.Campaign__c = [SELECT Id, CampaignId FROM CampaignMember WHERE Id =: campaignMemberId WITH SECURITY_ENFORCED LIMIT 1].CampaignId;
         }
 

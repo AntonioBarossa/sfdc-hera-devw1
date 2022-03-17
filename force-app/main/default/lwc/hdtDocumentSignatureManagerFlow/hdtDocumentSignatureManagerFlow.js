@@ -79,6 +79,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
     @api nextVariant;
     @api documents;
     @api disableSignMode;
+    @api cancelButton;
     //@frpanico 07/09 added EntryChannel
     @api entryChannel;
     caseRecord;
@@ -89,6 +90,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
     @track labelConfirm = 'Conferma pratica';
     @track showConfirmButton = false;
     @track showPreviewButton = true;
+    @track previousButton;
     @api
     get variantButton(){
         if(this.nextVariant != null && this.nextVariant !="" && this.nextVariant != "unedfined")
@@ -103,6 +105,13 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
         return this.nextLabel;
         else 
         return "Conferma Pratica"
+    }
+    get cancelButton()
+    {
+        if(this.cancelButton === null || this.cancelButton === undefined)
+        {
+            return true;
+        }
     }
     oldSignMode = '';
     
@@ -122,6 +131,15 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
         }else{
             this.labelConfirm = 'Invia documenti';
         }
+
+        if(!this.availableActions.find(action => action === 'BACK')){
+            this.previousButton = false;
+        }
+        else
+        {
+            this.previousButton = true;
+        }
+
     }
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
         wiredCase({ error, data }) {

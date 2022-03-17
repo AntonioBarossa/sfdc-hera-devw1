@@ -25,6 +25,11 @@
                 <default>false</default>
                 <label>In Corso</label>
             </value>
+            <value>
+                <fullName>File inviato</fullName>
+                <default>false</default>
+                <label>File inviato</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

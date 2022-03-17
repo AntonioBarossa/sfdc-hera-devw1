@@ -202,13 +202,47 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
 
     public static Date getBirthDayFromCode(String fiscalCode){
         fiscalCode = fiscalCode.replaceAll( '\\s+', '');
-        String year = '19' + fiscalCode.substring(6,8);
+        String year =  getRootYear(fiscalCode.substring(6,8)) + fiscalCode.substring(6,8);
         String month = fiscalCode.substring(8,9);
         String day = fiscalCode.substring(9,11);
+        /**@frpanico 03/03/2022
+         * Nel CF Italiano alle donne
+         * viene aggiunto 40 al giorno di nascita
+         */
+        if(Integer.valueOf(day) > 31)
+        {
+            day = String.valueOf(Integer.valueOf(day) - 40);
+        }
         Boolean isValid=true;
         month =  monthsLetters.get(month);
         Date birthDay = Date.newInstance(Integer.valueOf(year), Integer.valueOf(month), Integer.valueOf(day));
         return birthDay;
+    }
+    /**@frpanico 03/03/2022
+     * The method returns the root of the year
+     * Taking the currentyear root
+     * If the last two digits of the year from the fiscal code are greater than current year root - 18 
+     * the root of the year will be the currentYear root - 1
+     * Else the root of the year will be currentYear root
+     * e.g if we are in 2022 and the date from fiscal code is '38'
+     * Since 22 (current year root) - 18 is 4, the root of the fiscal code year is for sure 19
+     * uncertainties are present when the year is, in the current example, 01 to 04
+     * In this case we are casting out people with more than 118 year which are unlikely to apply for a contract.
+     */
+    private static String getRootYear(String fiscalCodeYear)
+    {
+        String fiscalCodeYearRoot;
+        Integer currentYearRoot = Integer.valueOf(String.valueOf(System.today().year()).substring(0,2));
+        Integer currentYear = Integer.valueOf(String.valueOf(System.today().year()).substring(2,4));
+        if(Integer.valueOf(fiscalCodeYear) > (currentYear - 18))
+        {
+            fiscalCodeYearRoot = String.valueOf(currentYearRoot - 1);
+        }
+        else
+        {
+            fiscalCodeYearRoot = String.valueOf(currentYearRoot);
+        }
+        return fiscalCodeYearRoot;
     }
     // Start 27-08-2021 HRAWRM-351
     public static Map<String,HDT_WRP_FiscalObject> getDataFromFiscalCode(Set<String> fiscalCodes){

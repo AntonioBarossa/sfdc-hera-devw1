@@ -153,6 +153,17 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     listToUpdate.addAll(accToUpdate);// HRAWRM-802 21/10/2021
                    // update accToUpdate;
                 }
+                /**@frpanico 2022-03-11
+                 * Predefault ruolo Titolare
+                 * Quando viene convertito lead
+                 */
+                if(accounts.size() == 1)
+                {
+                    List<AccountContactRelation> listAccCon= accoContRelQr.getContactsByAccountWithRoles(accounts[0].Id);
+                    listAccCon[0].Roles = 'Titolare';
+                    listToUpdate.add(listAccCon[0]);
+
+                }
                 if (conList.size()>0) {
                     //contactSrv.createRecords(conList);
                     insert conList;// HRAWRM-802 21/10/2021

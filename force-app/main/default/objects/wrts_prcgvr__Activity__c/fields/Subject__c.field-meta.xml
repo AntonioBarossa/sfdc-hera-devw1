@@ -884,15 +884,15 @@
             <valueName>Verifica colonnine</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Supporto Anomalia processo/sistema</controllingFieldValue>
+            <controllingFieldValue>Anomalia processo/sistema</controllingFieldValue>
             <valueName>C_Malfunzionamento processi</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Supporto Anomalia processo/sistema</controllingFieldValue>
+            <controllingFieldValue>Anomalia processo/sistema</controllingFieldValue>
             <valueName>C_Malfunzionamento sistemi/funzionalità</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Supporto Anomalia processo/sistema</controllingFieldValue>
+            <controllingFieldValue>Anomalia processo/sistema</controllingFieldValue>
             <valueName>C_Post avvio progetti</valueName>
         </valueSettings>
         <valueSettings>
@@ -1016,23 +1016,35 @@
             <valueName>Problemi catalogo prodotti</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Supporto Esercizio Sistemi</controllingFieldValue>
+            <controllingFieldValue>Anomalia processo/sistema</controllingFieldValue>
             <valueName>Amministrazione Assegnatore regole</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Supporto Esercizio Sistemi</controllingFieldValue>
+            <controllingFieldValue>Anomalia processo/sistema</controllingFieldValue>
             <valueName>Amministrazione Attività - campi</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Supporto Esercizio Sistemi</controllingFieldValue>
+            <controllingFieldValue>Anomalia processo/sistema</controllingFieldValue>
             <valueName>Amministrazione Sistemi</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Supporto Esercizio Sistemi</controllingFieldValue>
+            <controllingFieldValue>Anomalia processo/sistema</controllingFieldValue>
             <valueName>Attività concordate</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Supporto Esercizio Sistemi</controllingFieldValue>
+            <controllingFieldValue>Anomalia processo/sistema</controllingFieldValue>
+            <valueName>C_Malfunzionamento processi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Anomalia processo/sistema</controllingFieldValue>
+            <valueName>C_Malfunzionamento sistemi/funzionalità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Anomalia processo/sistema</controllingFieldValue>
+            <valueName>C_Post avvio progetti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Anomalia processo/sistema</controllingFieldValue>
             <valueName>Permessi File Server rptcomfs.hdc.local</valueName>
         </valueSettings>
         <valueSettings>

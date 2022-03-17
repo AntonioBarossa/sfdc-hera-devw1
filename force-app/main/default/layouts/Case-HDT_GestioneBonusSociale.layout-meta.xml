@@ -342,6 +342,8 @@
         <relatedList>et4ae5__IndividualEmailResult__c.CaseID__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <customButtons>CreaattivitamanualeActivity</customButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>wrts_prcgvr__Description__c</fields>
         <fields>OWNER.LAST_NAME</fields>

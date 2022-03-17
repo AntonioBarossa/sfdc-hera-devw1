@@ -523,6 +523,7 @@ public inherited sharing class HDT_QR_QuoteLine {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 02/02/2021
     * @description Get records that are displayed on "Configura Prodotti" section of Selling Wizard
+    * @update aggiunto filtro su SBQQ__UpgradedSubscription__c poichè in caso di amend deve estrarre solo le quoteline New
     * @param saleId - Sale__c
     * @return List<SBQQ__QuoteLine__c>
     */
@@ -541,6 +542,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            AND SBQQ__UpgradedSubscription__c = null
             WITH SECURITY_ENFORCED
         ];
     }

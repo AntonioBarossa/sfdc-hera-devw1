@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuthProvider xmlns="http://soap.sforce.com/2006/04/metadata">
+    <authorizeUrl>https://login.microsoftonline.com/05f73a75-999a-4b6f-83c1-8a9511c3f90d/oauth2/authorize?resource=api%3A%2F%2Fa3153a4e-2b82-4d96-bde9-cef800cec53d</authorizeUrl>
+    <consumerKey>b11f7f0a-198a-403c-b36b-320c6b2fb06c</consumerKey>
+    <friendlyName>archivingaccess</friendlyName>
+    <includeOrgIdInIdentifier>false</includeOrgIdInIdentifier>
+    <providerType>OpenIdConnect</providerType>
+    <sendAccessTokenInHeader>true</sendAccessTokenInHeader>
+    <sendClientCredentialsInHeader>true</sendClientCredentialsInHeader>
+    <sendSecretInApis>false</sendSecretInApis>
+    <tokenUrl>https://login.microsoftonline.com/05f73a75-999a-4b6f-83c1-8a9511c3f90d/oauth2/token</tokenUrl>
+</AuthProvider>

@@ -330,7 +330,7 @@ public with sharing class HDT_UTL_Sales {
     public static Order validationActivityPhaseTransition(Order ord){
         List<wrts_prcgvr__Activity__c> listActivityToCreate = new List<wrts_prcgvr__Activity__c>();
         List<Order> childToUpdate = new List<Order>();
-        Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
+        Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
       //  List<String> orderParentToActivityDocument = new List<String>();
             if(ord.RecordType.DeveloperName == 'HDT_RT_OrderDossier'){ //&& ord.TecnicalPhase__c != null){
                 if(ord.phase__c == 'Documentazione da inviare'){
@@ -425,9 +425,26 @@ public with sharing class HDT_UTL_Sales {
         return ord;
     }
 
-    public static wrts_prcgvr__Activity__c instanceActVocalOrd(String accountid,String orderid,id recordtypeid){
-        return new wrts_prcgvr__Activity__c(account__c = accountid,wrts_prcgvr__Status__c= 'Aperta',order__c = orderid,type__c='Validazione Vocal Order',recordtypeid=recordtypeid, RecordingLink__c='https://herapresfdc.cloudando.com/ctreplay/externalView/search?filter={"filter":{"ecid":"saashrapp|1|123|17"},"sort":{"startTs":-1},"index":0}');
+    public static wrts_prcgvr__Activity__c instanceActVocalOrd(String accountId, String orderId, Id recordtypeId) {
+        String link;
+        try {
+            link = [SELECT Id, RecordingLink__c FROM wrts_prcgvr__Activity__c WHERE CreatedById =: UserInfo.getUserId() AND Type__c = 'Chiamata outbound' WITH SECURITY_ENFORCED ORDER BY CreatedDate DESC  LIMIT 1].RecordingLink__c;
+        } catch (Exception e) {
+            link = 'ERRORE - ATTIVITA CHIAMATA OUTBOUND NON TROVATA';
+        }
+        if(String.isBlank(link)) {
+            link = 'ERRORE - NESSUN LINK REGISTRAZIONE NELL\'ATTIVITA DI CHIAMATA OUTBOUND';
+        }
+        return new wrts_prcgvr__Activity__c(
+            account__c = accountId,
+            wrts_prcgvr__Status__c = 'Aperta',
+            order__c = orderId,
+            type__c = 'Validazione Vocal Order',
+            recordtypeid = recordtypeId, 
+            RecordingLink__c = link
+        );
     }
+
     public static wrts_prcgvr__Activity__c instanceActValidazioneDocumentale(String accountid,String orderid,id recordtypeid){
         return new wrts_prcgvr__Activity__c(account__c = accountid,wrts_prcgvr__Status__c= 'Aperta',wrts_prcgvr__IsRequired__c=true,order__c = orderid,type__c='Validazione Documentale',recordtypeid=recordtypeid);
     }
@@ -466,6 +483,45 @@ public with sharing class HDT_UTL_Sales {
                         }
                     }
                 }
+            }
+        }catch(Exception ex){
+            System.debug(LoggingLevel.DEBUG, ex.getMessage());
+        }
+    }
+    public static void handleContractVariation(Order order,Order orderOriginal){
+        String processType = '';
+        String contractId = '';
+        String servicePointId = '';
+        String parentOrderId = '';
+        HDT_QR_Contract qrContract = new HDT_QR_Contract();
+        HDT_QR_OrderItem qrOrderItems = new HDT_QR_OrderItem();
+        try{
+                    
+
+            if(orderOriginal != null){
+                processType = orderOriginal.ProcessType__c;
+                //if(String.isNotBlank(processType) && processType.contains('Aggiunta Sconti o Bonus VAS')){
+                    contractId = orderOriginal.ContractReference__c;
+                    servicePointId = orderOriginal.ServicePoint__c;
+                    parentOrderId = orderOriginal.ParentOrder__c;
+                
+                    if(String.isNotBlank(contractId)){
+                        SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractId);
+                        if(subscription != null){
+                            order.CommercialProduct__c = subscription.SBQQ__ProductName__c;
+                            order.CommercialProductCode__c = subscription.ProductCode__c;
+                            order.CommercialProductVersion__c = subscription.VersionFormula__c;
+                        }
+                    }else if(String.isNotBlank(servicePointId) && String.isNotBlank(parentOrderId)) {
+                        //Get offer from OrderItem Activation
+                        OrderItem orderItem = qrOrderItems.getOfferActivationItem(parentOrderId,servicePointId);
+                        if(orderItem != null){
+                            order.CommercialProduct__c = orderItem.Product2.Name;
+                            order.CommercialProductCode__c = orderItem.Product2.ProductCode;
+                            order.CommercialProductVersion__c = orderItem.Product2.Version__c;            
+                        }
+                    }
+                //}
             }
         }catch(Exception ex){
             System.debug(LoggingLevel.DEBUG, ex.getMessage());

@@ -4,10 +4,10 @@
             <!-- <c-hdt-popover-settings-menu></c-hdt-popover-settings-menu>
             <c-hdt-refresh-button></c-hdt-refresh-button> -->
             <template if:true={showNewCaseButton}>
-                <c-hdt-new-campaign-case account-id={recordId} campaign-id={campaignId} case-cluster={caseCluster} case-type={caseType}></c-hdt-new-campaign-case>
+                <c-hdt-new-campaign-case account-id={recordId} campaign-id={campaignId} campaign-member-id={campaignMemberId} case-cluster={caseCluster} case-type={caseType}></c-hdt-new-campaign-case>
             </template>
             <template if:true={showNewSaleButton}>
-                <c-hdt-new-campaign-sale campaign-id={campaignId} record-id={recordId}></c-hdt-new-campaign-sale>
+                <c-hdt-new-campaign-sale campaign-id={campaignId} record-id={recordId} campaign-member-id={campaignMemberId}></c-hdt-new-campaign-sale>
             </template>
             <c-hdt-not-proposed campaign-member-id={campaignMemberId} onstatusupdate={statusUpdate}>
             </c-hdt-not-proposed>

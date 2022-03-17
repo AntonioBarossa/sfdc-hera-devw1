@@ -50,6 +50,11 @@ public with sharing class HDT_LC_EditScartiComplessi {
 
     @AuraEnabled
     public static String resubmissionPractice(String orderId,String activityId, String processType){
+        return resubmissionPractice(orderId, activityId,  processType, '');
+    }
+
+    @AuraEnabled
+    public static String resubmissionPractice(String orderId,String activityId, String processType, String phase){
         String response;
         String fase = 'Comunicazione verso Heroku';
         switch on processType {
@@ -59,6 +64,9 @@ public with sharing class HDT_LC_EditScartiComplessi {
             when 'VAS' {
                 fase = 'Comunicazione Motore VAS';
             }
+        }
+        if ('Caricamento Siebel KO'.equalsIgnoreCase(phase)){
+            fase = 'Esportazione VS Siebel';
         }
         Order orderToUpdate = new Order(Id = orderId,Phase__c = fase, DiscardReason__c = null);
         System.Savepoint sp = Database.setSavePoint();

@@ -8,6 +8,7 @@ export default class HdtNewCampaignCase extends NavigationMixin(LightningElement
     @api caseCluster;
     @api caseType;
     @api campaignId;
+    @api campaignMemberId;
     caseObj = null;
 
     connectedCallback() {
@@ -21,8 +22,10 @@ export default class HdtNewCampaignCase extends NavigationMixin(LightningElement
     }
 
     handleNewCase() {
-        createNewCase({ c: this.caseObj }).then(data => {
-            console.log(JSON.stringify(data));
+        console.log('campaignMemberId -->'+this.campaignMemberId);
+        createNewCase({ c: this.caseObj, campaignMemberId: this.campaignMemberId }).then(data => {
+            //console.log(JSON.stringify(data));
+            console.log('DATA --> '+JSON.stringify(data));
             //navigate to new created case
             if(data != null){
                 this[NavigationMixin.Navigate]({

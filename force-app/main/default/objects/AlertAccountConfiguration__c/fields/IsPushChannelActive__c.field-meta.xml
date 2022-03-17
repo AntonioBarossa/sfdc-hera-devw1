@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Flag per accendere/spegnere la delivery dell&apos;alert sul canale Push</description>
     <externalId>false</externalId>
-    <label>Canale Push</label>
+    <label>Push</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

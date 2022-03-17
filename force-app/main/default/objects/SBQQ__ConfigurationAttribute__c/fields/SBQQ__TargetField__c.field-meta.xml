@@ -217,6 +217,21 @@
                 <default>false</default>
                 <label>Durata servizio GG - VAS</label>
             </value>
+            <value>
+                <fullName>SpecialDay__c</fullName>
+                <default>false</default>
+                <label>Giorno speciale</label>
+            </value>
+            <value>
+                <fullName>StartTimeSlot__c</fullName>
+                <default>false</default>
+                <label>Inizio fascia oraria</label>
+            </value>
+            <value>
+                <fullName>CommercialId__c</fullName>
+                <default>false</default>
+                <label>Codice Agente</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

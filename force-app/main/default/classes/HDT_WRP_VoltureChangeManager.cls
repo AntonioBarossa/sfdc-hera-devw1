@@ -61,4 +61,42 @@ public with sharing class HDT_WRP_VoltureChangeManager {
             this.sobj = sobj;
         }
     }
+
+    public class HDT_WRP_BodyCall
+    {
+        public String rds;
+        public String rdo;
+        public String pod;
+        public String contratto;
+        public String prestazione;
+        public String causale;
+        public String tipologia;
+    }
+
+    public class HDT_WRP_Prestazione
+    {        
+        public String rds ='';
+        public String rdo ='';
+        public String pod ='';
+        public String contratto ='';
+        public String tipoAttivita ='';
+        public String note ='';
+    }
+
+    public class HDT_WRP_Response
+    {
+        public String status ='';
+        public String correlationId ='';
+        public String timestamp ='';
+        public HDT_WRP_Prestazione prestazione; 
+
+        public HDT_WRP_Response( Map<String, Object> mapResponseBody )
+        {
+            this.status  = (String) mapResponseBody.get('status');
+            this.correlationId = (String) mapResponseBody.get('correlationId');
+            this.timestamp = (String) mapResponseBody.get('timestamp');
+            this.prestazione = (HDT_WRP_Prestazione)JSON.deserialize(JSON.serialize((Map<String, Object>)mapResponseBody.get('prestazione')),HDT_WRP_Prestazione.class);
+        }
+    }
+
 }

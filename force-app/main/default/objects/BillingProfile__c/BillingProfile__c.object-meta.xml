@@ -58,16 +58,22 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>Edit</actionName>
-        <type>Default</type>
+        <comment>Sovrascritta action Edit per non poter permettere la modifica dalla vista dei Billing Profiles nella Service Console</comment>
+        <content>HDT_LCP_DisableEditButtonStandard</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>Edit</actionName>
-        <formFactor>Large</formFactor>
-        <type>Default</type>
+        <comment>Sovrascritta action Edit per non poter permettere la modifica dalla vista dei Billing Profiles nella Service Console</comment>
+        <content>HDT_LCP_DisableEditButtonStandard</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>Edit</actionName>
-        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -86,16 +92,22 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>New</actionName>
+        <comment>Sovrascritta action New per non poter permettere la creazione dalla vista dei Billing Profiles nella Service Console</comment>
+        <content>HDT_LCP_DisableNewButtonStandard</content>
         <formFactor>Large</formFactor>
-        <type>Default</type>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
+        <comment>Sovrascritta action New per non poter permettere la creazione dalla vista dei Billing Profiles nella Service Console</comment>
+        <content>HDT_LCP_DisableNewButtonStandard</content>
         <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>

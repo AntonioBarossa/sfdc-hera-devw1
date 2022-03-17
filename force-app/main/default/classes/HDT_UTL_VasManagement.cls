@@ -38,7 +38,7 @@ public with sharing class HDT_UTL_VasManagement {
             when 'Case'{
                 Id caseId = sobjId;
                 currentCase = [SELECT CaseNumber, VasStatus__c, Order__c, Asset.SBQQ__OrderProduct__r.OrderId,
-                Subscription__r.SBQQ__Contract__r.SBQQ__Order__c
+                Subscription__r.SBQQ__Contract__r.SBQQ__Order__c, Asset.VasPracticeCode__c,Subscription__r.VasPracticeCode__c
                 FROM Case WHERE Id = :caseId WITH SECURITY_ENFORCED LIMIT 1];
             
                 orderId = currentCase.Order__c;
@@ -74,7 +74,7 @@ public with sharing class HDT_UTL_VasManagement {
             ContractReference__r.SAPContractCode__c,OrderReference__c,ContractReference__c,ContractReference__r.ServicePoint__r.ServicePointCode__c,
             OrderReference__r.ServicePointCodeFormula__c,SBQQ__Quote__r.SBQQ__ListAmount__c, SBQQ__Quote__r.SBQQ__TotalCustomerDiscountAmount__c,
             SBQQ__Quote__r.SBQQ__PriceBook__r.Name, SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
-            CommercialProductLink__r.FreeVas__c, CommercialProductLink__r.DurationDay__c, CommercialProductLink__r.DurationDayGas__c, 
+            CommercialProductLink__r.FreeVas__c, CommercialProductLink__r.DurationDay__c, CommercialProductLink__r.DurationDayGas__c, VasPracticeCode__c, 
             (SELECT Quantity, UnitPrice, ListPrice, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
                 DurationDay__c, PaymentMode__c, IVA__c,
                 Product2.Name, Product2.NumberRateMonthly__c, Product2.DescriptionSAP__c,DelayEffectiveDate__c
@@ -122,7 +122,7 @@ public with sharing class HDT_UTL_VasManagement {
         return null;
     }
 
-    public static void updateVasPhase(string vasPhase, Order ord ) {
+    public static String updateVasPhase(string vasPhase, Order ord ) {
 //.equalsIgnoreCase
         String newPhase = '';
         if ( vasPhase == 'Esportazione VS Siebel'){
@@ -138,7 +138,7 @@ public with sharing class HDT_UTL_VasManagement {
         }else{
             newPhase =  'Comunicazione Motore VAS';
         }
-        Order orderToUpdate = new Order();
+        /*Order orderToUpdate = new Order();
         orderToUpdate.Id = ord.Id;
         orderToUpdate.Phase__c = newPhase;
         HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
@@ -146,12 +146,14 @@ public with sharing class HDT_UTL_VasManagement {
         {
             Schedulable instance = (Schedulable) wrts_prcgvr.VersionManager.newClassInstance('AsyncJobBatchSchedule');
             instance.execute(null);
-        }
+        }*/
 
         /* Platform Event non sembra partire correttamente */
         /*HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
         platEvent.SerializedSobj__c = JSON.serialize(orderToUpdate);
         Database.SaveResult sr = Eventbus.publish(platEvent);*/
+
+        return newPhase;
 
     }
 
@@ -228,6 +230,16 @@ public with sharing class HDT_UTL_VasManagement {
         **/
         public HDT_WRP_VASDisactivationReq(Order currentOrder, Case currentCase) {
             super(currentOrder, currentCase);
+            /**@frpanico 03/03/2022
+             * Fix keyServizio
+             */
+            String keyString = (String)currentCase.getSObject('Asset')?.get('VasPracticeCode__c')!= null 
+            ? (String)currentCase.getSObject('Asset')?.get('VasPracticeCode__c')
+            : (String)currentCase.getSObject('Subscription__r')?.get('VasPracticeCode__c') != null
+                ? (String)currentCase.getSObject('Subscription__r')?.get('VasPracticeCode__c')
+                : (String)currentOrder.get('VasPracticeCode__c');
+
+            keyServizio = keyString;
 
             nrContrattoIp = currentOrder.ContractReference__r?.SAPContractCode__c;
 

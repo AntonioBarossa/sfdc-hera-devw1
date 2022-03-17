@@ -106,19 +106,30 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     }
 
     @AuraEnabled
-    public static HDT_WRP_CreateActivityVocalOrder createActivityVocalOrder(Order orderParent){
+    public static String createActivityVocalOrder(Order orderParent){
 
-        //Aggiornamento CampaignMember
-        Boolean isCommunity = HDT_LC_SellingWizardController.checkCommunityLogin();
-        wrpActivityVo.isCommunity = isCommunity;
-        if(isCommunity){
-            Order ord = [SELECT Id, Sale__r.Campaign__c, Sale__r.SalesContact__c FROM Order WHERE Id =: orderParent.Id WITH SECURITY_ENFORCED LIMIT 1];
+        //Aggiornamento/Esitazione CampaignMember
+         Boolean isCommunity = HDT_LC_SellingWizardController.checkCommunityLogin();
+         
+        Order ord = [SELECT Id, Sale__r.Campaign__c, Sale__r.SalesContact__c, Sale__r.CampaignMemberId__c FROM Order WHERE Id =: orderParent.Id WITH SECURITY_ENFORCED LIMIT 1];
+        Boolean campaignPresent = ord.Sale__r.Campaign__c != null;
+        wrpActivityVo.isCommunity = isCommunity == true && campaignPresent == true;
+
+        if(ord.Sale__r.CampaignMemberId__c != null){
+            // CampaignMember cm = [SELECT Id, Campaign.PositiveOutcomeDefaultStatus__c 
+            //                         FROM CampaignMember 
+            //                         WHERE CampaignId =: ord.Sale__r.Campaign__c 
+            //                         AND ContactId =: ord.Sale__r.SalesContact__c WITH SECURITY_ENFORCED LIMIT 1];
             CampaignMember cm = [SELECT Id, Campaign.PositiveOutcomeDefaultStatus__c 
-                                 FROM CampaignMember 
-                                 WHERE CampaignId =: ord.Sale__r.Campaign__c 
-                                 AND ContactId =: ord.Sale__r.SalesContact__c WITH SECURITY_ENFORCED LIMIT 1];
+            FROM CampaignMember 
+            WHERE Id =: ord.Sale__r.CampaignMemberId__c WITH SECURITY_ENFORCED LIMIT 1];
+            
+            System.debug('ord.Sale__r.CampaignMemberId__c --> '+ord.Sale__r.CampaignMemberId__c);
+            System.debug('cm --> '+cm.Id);
             String myStatus = cm.Campaign.PositiveOutcomeDefaultStatus__c;
-            HDT_LC_CampaignsController.updateCampaignMemberStatus(cm.Id, myStatus);
+            System.debug('PositiveOutcomeDefaultStatus__c --> '+myStatus);
+            CampaignMember campaignMember = HDT_LC_CampaignsController.updateCampaignMemberStatus(cm.Id, myStatus);
+            System.debug('campaignMember Status -->'+campaignMember.Status);
             wrpActivityVo.campaignMemberStatus = myStatus;
         }
 
@@ -140,7 +151,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         }
         wrpActivityVo.orderPhase = orderToUpdate.Phase__c;
         
-        return wrpActivityVo;
+        return JSON.serialize(wrpActivityVo);
     }
 
     @AuraEnabled
@@ -148,19 +159,22 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
-        
+        Boolean isOnlyAmend = false;
+        for (Order childOrder : childOrders) {
+            if (childOrder.ProcessType__c != null && !childOrder.ProcessType__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS')) {
+                isOnlyAmend = false;
+                break;
+            }else {
+                isOnlyAmend = true;
+            }
+        }
         Order orderToUpdate = new Order(
             Id = orderParent.Id
         );
-
-          //fix CC Generazione Credential LG MB
-        //  orderToUpdate = HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate);
-        // if (orderParent.ContractSigned__c == false) {
-        //     orderToUpdate.Phase__c = 'Documentazione da inviare';
-        // } else {
-                // LG Ripristino logica 18/09 FF
-        System.debug('********LOL:' + orderParent);
-        if(orderParent.Phase__c == 'In Lavorazione'){
+        if(isOnlyAmend){
+            orderToUpdate.Phase__c = 'Documentazione Gestita';
+            orderToUpdate.Status = 'Completed';
+        }else if(orderParent.Phase__c == 'In Lavorazione'){
             if (orderParent.ContractSigned__c == false) {
                 orderToUpdate.Phase__c = 'Documentazione da inviare';
             } else{
@@ -348,6 +362,30 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         }
 
         return result || orderParent.Status == 'Completed';
+    }
+    /**
+    * @author NTTDATA
+    * @date 11/03/2022
+    * @description Check if is Only Aggiunta Bonus
+    * @param String orderParentId
+    * @return Boolean
+    */
+    @AuraEnabled
+    public static Boolean isOnlyAmend(Order orderParent){
+        Boolean result = false;
+        
+        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
+        
+        for (Order childOrder : childOrders) {
+            if (childOrder.ProcessType__c != null && !childOrder.ProcessType__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS')) {
+                result = false;
+                break;
+            }else {
+                result = true;
+            }
+        }
+
+        return result;
     }
     /*@frpanico 08/02/2022
     * Aggiunta gestione Annullamento

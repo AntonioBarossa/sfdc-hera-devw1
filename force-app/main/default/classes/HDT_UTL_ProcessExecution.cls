@@ -154,11 +154,13 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     }
 
     public List<HDT_MassiveFieldsObjectMap__mdt> getMapFieldsObject(String objectType, String processType){
-        return [SELECT objectType__c, labelField__c, nameField__c 
-                FROM HDT_MassiveFieldsObjectMap__mdt 
-                WHERE objectType__c=:objectType AND processType__c=:processType
-                WITH SECURITY_ENFORCED
-                ];
+        return [
+            SELECT objectType__c, labelField__c, nameField__c 
+            FROM HDT_MassiveFieldsObjectMap__mdt 
+            WHERE objectType__c = :objectType
+            AND processType__c = :processType
+            WITH SECURITY_ENFORCED
+        ];
     }
 
     public MassiveLoaderRequestItem__c checkRequiredFields(MassiveLoaderRequestItem__c item, List<String> tempSplitedFields){
@@ -385,7 +387,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
         }
     }
 
-    public MassiveLoaderRequestItem__c setErrorItem(MassiveLoaderRequestItem__c itemError, String message){
+    public static MassiveLoaderRequestItem__c setErrorItem(MassiveLoaderRequestItem__c itemError, String message){
         itemError.Status__c = 'Errore';
         itemError.StatusDescription__c = message;
         return itemError;
@@ -468,7 +470,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
                     srvRequest.BillingProfile__c = cs.BillingProfile__c;
                 }
     
-                srvRequest.ProcessType__c = HDT_UTL_MatrixCompatibility.getProcessType(cs.Type, 'Case', cs.Commodity__c);
+                srvRequest.ProcessType__c = HDT_UTL_MatrixCompatibility.getProcessType(cs.Type, 'Case', cs.CommodityFormula__c);
 
                 System.debug(LoggingLevel.DEBUG, '>>> srvRequest: ' + srvRequest);
 
@@ -514,6 +516,11 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
             } else {
                 c.Phase__c = 'Da Inviare';
             }
+
+            if(c.Type.equalsIgnoreCase('Modifica Tariffa Residente/Non Residente')){
+                c.Phase__c = 'In Attesa Allineamento Anagrafica';
+            }
+
         }
 
         HDT_UTL_DatabaseService.updateSObject(savedCase);
@@ -525,8 +532,21 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
         newCase.Status = 'In Lavorazione';
         newCase.Phase__c = 'Bozza';
         newCase.CompanyOwner__c = 'HERA COMM';
-        newCase.Commodity__c = 'Energia Elettrica';
         return newCase;
+    }
+
+    public static Boolean errorForPicklistValue(String objType, String fieldType, String valueToCheck){
+
+        Schema.DescribeFieldResult fieldResult = Schema.getGlobalDescribe().get(objType).getDescribe().fields.getMap().get(fieldType).getDescribe();
+
+        for(Schema.PicklistEntry pickListVal : fieldResult.getPicklistValues()){
+            if(valueToCheck.equalsIgnoreCase(pickListVal.getLabel()) && pickListVal.isActive()){
+                return false;
+            }
+        }
+
+        return true;
+
     }
 
     public static void getLimitDetails(String stageName){
