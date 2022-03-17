@@ -199,7 +199,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 BrandLogo__c = brand,
                 Campaign__c = sale.Campaign__c,
                 SupplyCity__c = servicePoint.SupplySAPCityCode__c,
-                AmendmentAllowed__c = amendmentAllowed && !isTransition,
+                AmendmentAllowed__c = amendmentAllowed /*&& !isTransition*/,
                 isTransition__c = isTransition,
                 //ContractReference__c = contractReference,
                 AllowChangeUse__c = allowChangeUse,
