@@ -192,7 +192,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
         if(order.TemporaryConnectionStartDate__c != null 
         && order.TemporaryConnectionEndDate__c != null
-        && order.TemporaryConnectionEndDate__c < order.TemporaryConnectionStartDate__c){
+        && order.TemporaryConnectionEndDate__c <= order.TemporaryConnectionStartDate__c){
             throw new AuraHandledException('La data fine connessione temporanea non puo essere precedente alla data inizio!');
         }
 
