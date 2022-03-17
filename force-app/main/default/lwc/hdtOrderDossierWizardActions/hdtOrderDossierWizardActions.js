@@ -134,9 +134,16 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         try{
             console.log('Entrato in handlePreview.');
             this.loading = true;
+            var sendMode = this.parentOrder.fields.DocSendingMethod__c.value;
+            var signMode = this.parentOrder.fields.SignatureMethod__c.value; 
+            if(sendMode.localeCompare('Stampa Cartacea')===0){
+                sendMode = 'Sportello';
+            }
             var formParams = {
                 mode : 'Preview',
                 Archiviato : 'N',
+                sendMode : sendMode,
+                signMode : signMode,
             };
             console.log('punto 1');
             
