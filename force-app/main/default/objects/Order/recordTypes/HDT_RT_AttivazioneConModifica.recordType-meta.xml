@@ -392,6 +392,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento dal SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullo voltura</fullName>
             <default>false</default>
         </values>
