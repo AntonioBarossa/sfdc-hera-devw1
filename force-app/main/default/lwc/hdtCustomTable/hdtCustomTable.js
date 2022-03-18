@@ -6,17 +6,12 @@ const actions = [
  
 ];
 const columns = [
-    // { label: 'Referente', fieldName: 'contactName' },
     {
-        label: 'Referente',
-        sortable: false,
-        type: 'button',
-        initialWidth: 132,
-        typeAttributes:{
-            variant: 'base',
-            style:'border: none;background: none;',
-            label: {fieldName: 'contactName'},
-            name: 'redirectContact'
+        label: 'Referente', fieldName: 'contactURL', type: 'url',
+        typeAttributes: {
+            label: {
+                fieldName: 'contactName'
+            }
         }
     },
     { label: 'Ruolo', fieldName: 'roles' },
@@ -35,12 +30,11 @@ const columns = [
 export default class HdtCustomTable extends NavigationMixin(LightningElement)  {
 
     @track columns=columns;
-
     @api mydata;
 
     connectedCallback() {
       
-        
+
     }
 
     handleRowAction(event) {
