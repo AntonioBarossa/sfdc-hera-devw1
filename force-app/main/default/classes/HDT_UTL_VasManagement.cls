@@ -74,7 +74,7 @@ public with sharing class HDT_UTL_VasManagement {
             ContractReference__r.SAPContractCode__c,OrderReference__c,ContractReference__c,ContractReference__r.ServicePoint__r.ServicePointCode__c,
             OrderReference__r.ServicePointCodeFormula__c,SBQQ__Quote__r.SBQQ__ListAmount__c, SBQQ__Quote__r.SBQQ__TotalCustomerDiscountAmount__c,
             SBQQ__Quote__r.SBQQ__PriceBook__r.Name, SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
-            CommercialProductLink__r.FreeVas__c, CommercialProductLink__r.DurationDay__c, CommercialProductLink__r.DurationDayGas__c, VasPracticeCode__c, 
+            CommercialProductLink__r.FreeVas__c, CommercialProductLink__r.DurationDay__c, CommercialProductLink__r.DurationDayGas__c, VasPracticeCode__c, TotalAmount,
             (SELECT Quantity, UnitPrice, ListPrice, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
                 DurationDay__c, PaymentMode__c, IVA__c,
                 Product2.Name, Product2.NumberRateMonthly__c, Product2.DescriptionSAP__c,DelayEffectiveDate__c
@@ -311,18 +311,21 @@ public with sharing class HDT_UTL_VasManagement {
             nrRate = tempRate!=null? tempRate : 0;
             
             Decimal totaleNoScontoIva = 0.0;
-            Decimal totaleScontoIva = 0.0;
+            Decimal totaleScontoIva = currentOrder.TotalAmount != null ? currentOrder.TotalAmount : 0.0;
             Decimal iva = 0.0;
             for(OrderItem item : childOrderItems)
             {
                 totaleNoScontoIva += (item.ListPrice  * item.Quantity);
-                totaleScontoIva += (item.UnitPrice * item.Quantity);
+                if(currentOrder.TotalAmount == null)
+                {
+                    totaleScontoIva += (item.UnitPrice * item.Quantity);
+                }
                 if((Decimal)item.getSobject('Product2').get('IVA__c') != null && (Decimal)item.getSobject('Product2').get('IVA__c') != 0.0 && iva == 0.0)
                 {
                     iva = (Decimal)item.getSobject('Product2').get('IVA__c');
                 }
             }
-            Deciaml percentualIva = iva/100.0;
+            Decimal percentualIva = iva/100.0;
             totaleNoScontoIva += (totaleNoScontoIva * percentualIva);
             totaleScontoIva += (totaleScontoIva * percentualIva);
             importo = totaleNoScontoIva;
