@@ -56,8 +56,13 @@ public with sharing class HDT_LC_ReletedListAccount {
         //HRAWRM-500 Start 04/10/2021
         List<AccountContactRelation> listAccountContactRelation = accoContRelQr.getContactsByAccountWithRoles(accountId);
         List<HDT_WRP_AccountContactRelation> lWrap = new List<HDT_WRP_AccountContactRelation>();
+
         for (AccountContactRelation temp : listAccountContactRelation) {
             HDT_WRP_AccountContactRelation n= new HDT_WRP_AccountContactRelation();
+            Date endDate = temp.EndDate;
+            Date startDate = temp.StartDate;
+            // String dateStr = endDate.day() + '/' + endDate.month() + '/' + endDate.year();
+            // String dateStr = startDate.day() + '/' + startDate.month() + '/' + startDate.year();
             n.AccountId             = temp.AccountId                ;
             n.contactId             = temp.ContactId                ;
             n.contactName           = temp.Contact.name             ;
@@ -68,9 +73,12 @@ public with sharing class HDT_LC_ReletedListAccount {
             n.contactIndividualId   = temp.Contact.IndividualId     ;
           //n.bpInterlocutor        = temp.Contact.BPInterlocutor__c;
             n.contactCode           = temp.Contact.ContactCode__c   ;
-            n.endDate               = String.valueOf(temp.EndDate)  ;
-            n.startDate             = String.valueOf(temp.StartDate);
-
+            // n.endDate               = String.valueOf(temp.EndDate)  ;
+            // n.startDate             = String.valueOf(temp.StartDate);
+            if(endDate != null && startDate != null){
+            n.endDate               = String.valueOf(endDate.day() + '/' + endDate.month() + '/' + endDate.year());
+            n.startDate             = String.valueOf(startDate.day() + '/' + startDate.month() + '/' + startDate.year());
+            }
            lWrap.add(n);
         }
         //HRAWRM-500 End 04/10/2021
