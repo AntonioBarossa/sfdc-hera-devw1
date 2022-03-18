@@ -16,15 +16,16 @@ public with sharing class HDT_LCP_CreateDistributorApointment {
     public static Map<String, Object> createActivity(Id objectId){
 
         Map<String, Object> result = new Map<String,Object>();
-
+        String nameDistributor = '';
+        String commodity = '';
+        String salesCode = '';
+        String processCode = '';
         try {
 
             String objectType = String.valueOf(objectId.getSobjectType());
 
             wrts_prcgvr__Activity__c newActivity;
 
-            System.debug('ObjectId ' + objectId);
-            System.debug('objectType ' + objectType);
             HDT_SRV_AppointmentAgenda agendaSrv = new HDT_SRV_AppointmentAgenda();
             switch on objectType {
                 when 'Case' {
@@ -39,6 +40,10 @@ public with sharing class HDT_LCP_CreateDistributorApointment {
                     newActivity.Case__c = currentCase.Id;
                     newActivity.Distributor__c = currentCase.ServicePoint__r.Distributor__c;
                     agendaSrv.setContactData(newActivity, currentCase.Contact);
+                    nameDistributor = currentCase.ServicePoint__r != null ? currentCase.ServicePoint__r.distributor__r.name : currentCase.Distributor__r.Name;
+                    commodity = currentCase.ServicePoint__r != null ? currentCase.ServicePoint__r.CommoditySector__c : currentCase.Commodity__c;
+                    salesCode =  currentCase.SalesCompanyCode__c;
+                    processCode = currentCase.CausalCode__c;
                 }
                 when 'Order' {
 
@@ -51,7 +56,11 @@ public with sharing class HDT_LCP_CreateDistributorApointment {
                     newActivity.Contact__c = currentOrder.Contact__c;
                     newActivity.Order__c = currentOrder.Id;
                     newActivity.Distributor__c = currentOrder.ServicePoint__r.Distributor__c;
-                    agendaSrv.setContactData(newActivity, currentOrder.SalesContact__r);
+                    agendaSrv.setContactData(newActivity, currentOrder.Sale__r.SalesContact__r);
+                    nameDistributor = currentOrder.ServicePoint__r.distributor__r.name;
+                    commodity = currentOrder.ServicePoint__r.CommoditySector__c;
+                    salesCode =  currentOrder.SalesCompanyCode__c;
+                    processCode = currentOrder.ProcessCode__c;
                 }
                 when else {
 
@@ -63,9 +72,9 @@ public with sharing class HDT_LCP_CreateDistributorApointment {
             }
 
             if (newActivity != null) {
-
+                HDT_AppointmentSetting__mdt conf = HDT_UTL_AppointmentSetting.getAtoaFlag(processCode, nameDistributor, commodity, salesCode);
+                newActivity.isAtoa__c = conf != null ? conf.Flag__c : false;
                 activitySrv.createRecord(newActivity);
-
             }
 
             result.put('newActivity', newActivity);
