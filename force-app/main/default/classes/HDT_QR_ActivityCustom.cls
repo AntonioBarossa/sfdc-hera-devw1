@@ -427,7 +427,44 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     WITH SECURITY_ENFORCED 
                 ];
         }
-
+        public static List<wrts_prcgvr__Activity__c> getRecordScartoDiscordante(String orderId){
+            return [SELECT 
+                    Id,
+                    Account__c,
+                    Contact__c,
+                    order__c,
+                    Distributor__c,
+                    AppointmentDate__c,
+                    RecordTypeId
+                    FROM wrts_prcgvr__Activity__c
+                    WHERE 
+                    RecordType.developername = 'HDT_RT_Scarto'
+                    AND type__c = 'Gestione dati discordanti'
+                    AND Order__c = :orderId
+                    AND wrts_prcgvr__Status__c = 'Aperta'
+                    WITH SECURITY_ENFORCED 
+                ];
+        }
+        public List<wrts_prcgvr__Activity__c> getEsitoActivityDiscordante(String orderId){
+            return [SELECT 
+                    Id,
+                    Account__c,
+                    Contact__c,
+                    order__c,
+                    Distributor__c,
+                    AppointmentDate__c,
+                    ActivityOutcome__c,
+                    RecordTypeId
+                    FROM wrts_prcgvr__Activity__c
+                    WHERE 
+                    RecordType.developername = 'HDT_RT_Scarto'
+                    AND type__c = 'Gestione dati discordanti'
+                    AND Order__c = :orderId
+                    AND wrts_prcgvr__Status__c = 'Chiusa'
+                    WITH SECURITY_ENFORCED 
+                    ORDER BY LastModifiedDate DESC
+                ];
+        }
         /**
          * @description getRecordByOrderAndQuality
          * @param orderid

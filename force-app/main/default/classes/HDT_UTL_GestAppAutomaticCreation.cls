@@ -29,25 +29,24 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_
         SObject obj = (sObject) argsMap.get('sender');
         String idObject = (String)obj.get('Id');
         //HDT_QR_Order orderQr= new HDT_QR_Order();
-        List<Order> ordList = [Select id,SalesCompanyCode__c, Sale__r.SalesContact__c,Sale__r.SalesContact__r.FiscalCode__c,Sale__r.SalesContact__r.VATNumber__c, servicePoint__c,AccountId,ServicePoint__r.CommoditySector__c,ServicePoint__r.distributor__r.name from order where id =:idObject WITH SECURITY_ENFORCED];
-        if(ordList != null && !ordList.isEmpty()){
-            Order ord = ordList[0];
-            HDT_AppointmentSetting__mdt conf = HDT_UTL_AppointmentSetting.getAtoaFlag(method, ord.ServicePoint__r.distributor__r.name, ord.ServicePoint__r.CommoditySector__c, ord.SalesCompanyCode__c);
-            if(conf != null){
-                id rec = rcQr.getRecordTypeIdByName('HDT_RT_DistributorAppointment');
-                wrts_prcgvr__Activity__c w = new wrts_prcgvr__Activity__c();
-                w.order__c = ord.id;
-                w.Distributor__c = ord.servicePoint__r.distributor__c;
-                w.servicePoint__c = ord.ServicePoint__c;
-                w.account__c = ord.AccountId;
-                w.contact__c = ord.Sale__r.SalesContact__c ;
-                w.isAtoa__c = conf.Flag__c;
-                w.recordtypeid = rec;
-                w.wrts_prcgvr__Status__c = 'Creata';
-                agendaSrv.setContactData(w, ord.Sale__r.SalesContact__r);
-                actSrv.createRecord(w);
+        //List<Order> ordList = [Select id,SalesCompanyCode__c, Sale__r.SalesContact__c,Sale__r.SalesContact__r.FiscalCode__c,Sale__r.SalesContact__r.VATNumber__c, servicePoint__c,AccountId,ServicePoint__r.CommoditySector__c,ServicePoint__r.distributor__r.name from order where id =:idObject WITH SECURITY_ENFORCED];
+        HDT_QR_Order orderQr = new HDT_QR_Order();
+        Order ord = orderQr.getRecordById(idObject);
+        HDT_AppointmentSetting__mdt conf = HDT_UTL_AppointmentSetting.getAtoaFlag(method, ord.ServicePoint__r.distributor__r.name, ord.ServicePoint__r.CommoditySector__c, ord.SalesCompanyCode__c);
+        if(conf != null){
+            id rec = rcQr.getRecordTypeIdByName('HDT_RT_DistributorAppointment');
+            wrts_prcgvr__Activity__c w = new wrts_prcgvr__Activity__c();
+            w.order__c = ord.id;
+            w.Distributor__c = ord.servicePoint__r.distributor__c;
+            w.servicePoint__c = ord.ServicePoint__c;
+            w.account__c = ord.AccountId;
+            w.contact__c = ord.Sale__r.SalesContact__c ;
+            w.isAtoa__c = conf.Flag__c;
+            w.recordtypeid = rec;
+            w.wrts_prcgvr__Status__c = 'Creata';
+            agendaSrv.setContactData(w, ord.Sale__r.SalesContact__r);
+            actSrv.createRecord(w);
 
-            }
         }
 
         return true;

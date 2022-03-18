@@ -285,9 +285,16 @@ public with sharing class HDT_SRV_SelfReadings {
                 }
                 HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 if (isClosingError(errorMessage, currentReadingCase.Origin)) {
-                    readingCaseToUpdate.Status = 'Closed';
-                    readingCaseToUpdate.TecnicalPhase__c = 'Annullato';
-                    HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                    
+                    if(currentReadingCase.Origin.equalsIgnoreCase('Web') || currentReadingCase.Origin.equalsIgnoreCase('App')){
+                        readingCaseToUpdate.Status = 'Closed';
+                        readingCaseToUpdate.Phase__c = 'Annullato';
+                        updateFuture(JSON.serialize(readingCaseToUpdate));
+                    }else{
+                        readingCaseToUpdate.Status = 'Closed';
+                        readingCaseToUpdate.TecnicalPhase__c = 'Annullato';
+                        HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                    }
                 }
                 
             }
@@ -418,10 +425,10 @@ public with sharing class HDT_SRV_SelfReadings {
             }
             when else {
                 /*
-                * @Author: Salvatore A. Sarà 18/10/2021
-                * Risoluzione "Avoid Empty Block Statements"
+                * @Author: NTTDATA 17/03/2022
+                * Risoluzione "Restituiamo true per tutti gli altri canali in quanto il case in caso di KO si deve Annullare"
                 */
-                return closeCase;
+                closeCase = true;
             }
         }
 
