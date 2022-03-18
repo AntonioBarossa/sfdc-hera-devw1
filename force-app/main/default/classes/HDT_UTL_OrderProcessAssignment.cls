@@ -222,7 +222,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         if(!items.isEmpty()){
             system.debug('entra sconti2');
             OrderItem itm =  items[0];
-            return getFamilySconto().contains(itm.Product2.Family);
+            return getFamilySconto().contains((itm.Product2.Family).toUpperCase());
         }
         return false;
 
@@ -256,7 +256,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         Set<String> famils = new Set<String>();
         for(AggregateResult ag : lgr){
             if(String.isNotBlank((String) ag.get('fam')))
-                famils.add((String) ag.get('fam'));
+                famils.add(((String) ag.get('fam')).toUpperCase());
         }
         famils.add('Promozione');
         return famils;
