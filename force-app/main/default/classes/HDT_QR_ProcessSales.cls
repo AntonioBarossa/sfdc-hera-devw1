@@ -26,7 +26,7 @@ public inherited sharing class HDT_QR_ProcessSales {
     public static List<AccountContactRelation> getAccountContactRelationByAccountId(List<AccountContactRelation> acrList, List<Id> accountIdsList){
         acrList = new List<AccountContactRelation>();
         acrList = [
-            SELECT Id, Roles
+            SELECT Id, Roles, ContactId, AccountId
             FROM AccountContactRelation
             WHERE AccountId IN :accountIdsList
             WITH SECURITY_ENFORCED

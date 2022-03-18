@@ -1001,6 +1001,34 @@ public inherited sharing class HDT_QR_Order {
         FROM Order 
         WHERE ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
+    public List<Order> getRecordByVasPracticeCode(String vasPracticeCode){
+        return [SELECT id,
+        phase__c,
+        Description,
+        PhaseStory__c,
+        Status,
+        PrecheckResultSII__c,
+        ProcessType__c,
+        BillingProfile__c, 
+        Vat__c, 
+        ServicePoint__c,
+        ServicePoint__r.Distributor__r.Name, 
+        CancellationNote__c,
+        SupplyStreetName__c,
+        SupplyStreetNumber__c,
+        SupplyPostalCode__c,
+        SupplyCityCode__c,
+        SupplyCity__c,
+        SupplyState__c,
+        SupplyCountry__c,
+        PowerCommitted__c,
+        PowerAvailable__c,
+        VoltageLevel__c,
+        AccountId,
+        IsTechnicalTransfer__c
+        FROM Order 
+        WHERE VasPracticeCode__c = :vasPracticeCode WITH SECURITY_ENFORCED];
+    }
     /**@frpanico 26/10/2021
      * Added Supply Address Fields
      * Added Power Available/Committed
