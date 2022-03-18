@@ -7,7 +7,7 @@ const actions = [
 ];
 const columns = [
     {
-        label: 'Referente', fieldName: 'contactURL', type: 'url',
+        label: 'Referente', fieldName: 'contactUrl', type: 'url',
         typeAttributes: {
             label: {
                 fieldName: 'contactName'
