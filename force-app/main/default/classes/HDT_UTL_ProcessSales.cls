@@ -18,6 +18,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     private Integer contoContrattualeIndex;
     private Integer codicePuntoIndex;
     private Integer recTypeIndex;
+    private Map<Id, Id> accountContactMap = new Map<Id, Id>();
 
     public override void checks(){
         System.debug(LoggingLevel.DEBUG, 'checks');
@@ -301,7 +302,10 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         if(acrList != null && acrList.size() > 0){
             for(AccountContactRelation acr : acrList){
-                acr.Roles = 'Titolare';
+                if(String.isEmpty(acr.Roles)){
+                    acr.Roles = 'Titolare';
+                }
+                accountContactMap.put(acr.AccountId, acr.ContactId);
             }
 
             update acrList;
@@ -333,9 +337,12 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             }
 
             nextDataObj = new HDT_WRP_NextDataObj();
-            if(saveAccountResponse.itemIdToObjId.containsKey(processObj.requestItem.Id)){
-                nextDataObj.accountId = saveAccountResponse.itemIdToObjId.get(processObj.requestItem.Id);
-            }
+            //if(saveAccountResponse.itemIdToObjId.containsKey(processObj.requestItem.Id)){
+            //    nextDataObj.accountId = saveAccountResponse.itemIdToObjId.get(processObj.requestItem.Id);
+            //}
+
+            nextDataObj.accountId = processObj.account.Id;
+            nextDataObj.contactId = (accountContactMap.containsKey(nextDataObj.accountId)) ? accountContactMap.get(nextDataObj.accountId) : null;
 
             if(saveBillProfResponse.itemIdToObjId.containsKey(processObj.requestItem.Id)){
                 nextDataObj.billProfId = saveBillProfResponse.itemIdToObjId.get(processObj.requestItem.Id);
@@ -484,6 +491,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
     public class HDT_WRP_NextDataObj {
         public String accountId;
+        public String contactId;
         public String billProfId;
         public String servPointId;
     }
