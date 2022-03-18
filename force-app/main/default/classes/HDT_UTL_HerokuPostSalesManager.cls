@@ -237,8 +237,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                String.valueOf(recordCase.get('Subprocess__c')).equalsIgnoreCase('Errore Stima Consumi')){
                 nextPhase = 'Pratica In Attesa';
                 currentCase.Description = errDescr;
-            }else if(String.valueOf(recordCase.get('Type')).containsIgnoreCase('Autolettura') && String.isNotBlank(activity) && activity.equalsIgnoreCase('Esito ricevuto su richiesta chiusa')){
-                String description = String.isNotBlank(currentCase.Description)?currentCase.Description:'';
+            }else if(String.valueOf(recordCase.get('Type')).containsIgnoreCase('Autolettura') && String.isNotBlank(activity) && (activity.equalsIgnoreCase('Esito ricevuto su richiesta chiusa') || activity.equalsIgnoreCase('Eliminato esito in scarto'))){
+                String description = String.isNotBlank(recordCase.Description)?recordCase.Description:'';
                 currentCase.Description = errDescr + '\n' + description;
             }
             else{

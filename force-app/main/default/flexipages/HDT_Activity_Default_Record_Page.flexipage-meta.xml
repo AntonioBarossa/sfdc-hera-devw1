@@ -830,6 +830,22 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Subject__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>Escalation</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Account__c</fieldItem>
             </fieldInstance>
         </itemInstances>
@@ -975,7 +991,7 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.ActivityOutcome__c</fieldItem>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
@@ -985,6 +1001,11 @@
                         <leftValue>{!Record.DiscardCategory__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Manuale</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Gestione dati discordanti</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1069,6 +1090,18 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.HerokuPracticeCode__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Gestione Switch in Ripristinatorio</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-89e09c30-566d-4833-be03-3b926e0c4b28</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1126,7 +1159,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.MalfunctionsCount__c</fieldItem>
             </fieldInstance>

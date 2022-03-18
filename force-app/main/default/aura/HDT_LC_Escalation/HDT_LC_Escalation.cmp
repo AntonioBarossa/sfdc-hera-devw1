@@ -4,6 +4,7 @@
     <aura:attribute name="showMalfunctionFields" type="Boolean"/>
     <aura:attribute name="showForm" type="Boolean"/>
     <aura:attribute name="showSpinner" type="Boolean"/>
+    <aura:attribute name="showPriorityField" type="Boolean"/>
 
     <aura:handler name="init" value="{! this }" action="{! c.doGetRecordData }" />
 
@@ -13,6 +14,9 @@
                 <lightning:inputField fieldName="Type__c" required="true" onchange="{! c.onTypeChange }"/>
                 <lightning:inputField fieldName="Subject__c" required="true"/>
                 <lightning:inputField fieldName="Note__c" required="true"/>
+                <aura:if isTrue="{! v.showPriorityField }">
+                    <lightning:inputField fieldName="wrts_prcgvr__Priority__c" required="true"/>
+                </aura:if>
                 <aura:if isTrue="{! v.showMalfunctionFields }">
                     <lightning:inputField fieldName="MalfunctionDate__c" required="true"/>
                     <lightning:inputField fieldName="MalfunctionDescription__c" required="true"/>

@@ -89,7 +89,8 @@
     <formulas>
         <name>notification_body_formula</name>
         <dataType>String</dataType>
-        <expression>&quot;La tua attività di escalation &quot; &amp; {!$Record.Name} &amp; &quot; è stata avanzata allo stato &quot; &amp; TEXT({!$Record.wrts_prcgvr__Status__c}) &amp; &quot;.&quot;</expression>
+        <expression>&quot;La tua attività di escalation &quot; &amp; {!$Record.Name} &amp; &quot; è stata avanzata allo stato &quot; &amp; TEXT({!$Record.wrts_prcgvr__Status__c}) &amp; &quot;.&quot; &amp; BR() &amp; BR() &amp; &quot;Note di Chiusura:&quot; &amp; BR() &amp;
+{!$Record.ClosingNote__c}</expression>
     </formulas>
     <interviewLabel>Activity Escalation - Notifica Chiusura {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Activity Escalation - Notifica Chiusura</label>
