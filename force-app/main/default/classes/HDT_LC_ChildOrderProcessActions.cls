@@ -41,10 +41,24 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         orderToUpdate.Step__c = 20;
         orderToUpdate.WizardCompletedDate__c = Date.today();
         
+
+        /**@frpanico 2022-03-18
+         * Gestione Dati Discordanti
+         * Necessario chiudere Activity
+         * Prima di poter chiudere il wizard
+         */
+        if(((String)currentOrder.get('ProcessType__c')).equalsIgnoreCase('Switch in Fittizio'))
+        {
+            List<wrts_prcgvr__Activity__c> activityDiscordante = HDT_QR_ActivityCustom.getRecordScartoDiscordante(currentOrder.Id);
+            if(!activityDiscordante.isEmpty())
+            {
+                throw new AuraHandledException('Prima di poter procedere alla conferma dell\'order risulta necessario chiudere l\'attivita di Gestione Dati Discordanti');
+            }
+        }
         /**@frpanico 25/10/2021
          * Spostato in alto la sezione di codice in cui vengono inseriti i dati dell'ultimo step
          */
-       if (lastStepData != null) {
+        if (lastStepData != null) {
             for (String lastStepField : lastStepData.keySet()) {
                 if (lastStepField == 'EffectiveDate__c') {
                     String dateString = String.valueOf(lastStepData.get(lastStepField));
@@ -158,11 +172,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
                     orderToUpdate.DocumentLow80__c = 'Richiesto';
-                    orderToUpdate.Instance326__c = 'Richiesto';
+                    if(((String)currentOrder.get('Commodity__c')).equalsIgnoreCase('Energia Elettrica'))
+                    {
+                        orderToUpdate.Instance326__c = 'Richiesto';
+                    }
                 }
                 else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                     orderToUpdate.CILegalRepresentative__c = 'Richiesto';
-                    orderToUpdate.Instance326__c = 'Richiesto';
+                    if(((String)currentOrder.get('Commodity__c')).equalsIgnoreCase('Energia Elettrica'))
+                    {
+                        orderToUpdate.Instance326__c = 'Richiesto';
+                    }
                 }
                 Decimal serCost = getFixedFee(order.id, order.RecordType.DeveloperName);
                 orderToUpdate.ServiceCost__c = serCost != null ? serCost.setScale(2) : null;
@@ -171,7 +191,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
                     orderToUpdate.DocumentLow80__c = 'Richiesto';
-                    orderToUpdate.Instance326__c = 'Richiesto';
+                    if(((String)currentOrder.get('Commodity__c')).equalsIgnoreCase('Energia Elettrica'))
+                    {
+                        orderToUpdate.Instance326__c = 'Richiesto';
+                    }
                     if('Rapido'.equalsIgnoreCase(order.QuotationType__c)){
                         orderToUpdate.QuickQuote__c = 'Richiesto';
                     }
@@ -182,7 +205,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     if('Rapido'.equalsIgnoreCase(order.QuotationType__c)){
                         orderToUpdate.QuickQuote__c = 'Richiesto';
                     }
-                    orderToUpdate.Instance326__c = 'Richiesto';
+                    if(((String)currentOrder.get('Commodity__c')).equalsIgnoreCase('Energia Elettrica'))
+                    {
+                        orderToUpdate.Instance326__c = 'Richiesto';
+                    }
                 }
             }
             when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'{
@@ -219,10 +245,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             when 'HDT_RT_ConnessioneConAttivazione' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.DocumentLow80__c = 'Richiesto';
-                    orderToUpdate.Instance326__c = 'Richiesto';
+                    if(((String)currentOrder.get('Commodity__c')).equalsIgnoreCase('Energia Elettrica'))
+                    {
+                        orderToUpdate.Instance326__c = 'Richiesto';
+                    }
                 }
                 else {
-                    orderToUpdate.Instance326__c = 'Richiesto';
+                    if(((String)currentOrder.get('Commodity__c')).equalsIgnoreCase('Energia Elettrica'))
+                    {
+                        orderToUpdate.Instance326__c = 'Richiesto';
+                    }
                 }
             }
             when 'HDT_RT_TemporaneaNuovaAtt' {

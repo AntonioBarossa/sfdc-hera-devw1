@@ -62,7 +62,7 @@ export default class HdtCommercialRiassignButton extends LightningElement {
             causale : this.causale
         }).then(result => {
             console.log('prerefresh');
-            if(result){
+            if(result == true){
                 console.log('prerefreshPOST');
                // this.isRiassignButton = false;
                // this.isApproveFase = true;
@@ -73,10 +73,9 @@ export default class HdtCommercialRiassignButton extends LightningElement {
                 });
                 this.dispatchEvent(event);*/
                 //this.dispatchEvent(new CustomEvent('refreshpage'));
-                window.location.reload();
             }
         });
-     
+        window.location.reload();
     }
 
     approve(){
@@ -92,10 +91,10 @@ export default class HdtCommercialRiassignButton extends LightningElement {
                     variant: 'success',
                 });
                 this.dispatchEvent(event);*/
-                window.location.reload();
+                //window.location.reload();
             }
         });
-     
+        window.location.reload();
     }
 
     reject(){
@@ -104,17 +103,17 @@ export default class HdtCommercialRiassignButton extends LightningElement {
             recordId : this.recordId,
             causale : 'No'
         }).then(result => {
-            if(result){
+            if(result == true){
                /* const event = new ShowToastEvent({
                     title: 'Successo',
                     message: 'Rifiutato',
                     variant: 'success',
                 });
                 this.dispatchEvent(event);*/
-                window.location.reload();
+                //window.location.reload();
             }
         });
-     
+        window.location.reload();
     }
 
 

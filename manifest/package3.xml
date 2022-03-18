@@ -1,39 +1,265 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
+        <members>CDO_PPT_DISCO</members>
+        <members>HCM_BACK_Contattare_il_cliente</members>
+        <members>HCM_BACK_Disattivazioni</members>
+        <members>HCM_BACK_Escalation</members>
+        <members>HCM_BACK_Fatturazione</members>
+        <members>HCM_BACK_Morosita</members>
+        <members>HCM_BACK_Pagamenti</members>
+        <members>HCM_BACK_Preventivi</members>
+        <members>HCM_BACK_Protocollo</members>
+        <members>HCM_BACK_Reclami</members>
+        <members>HCM_BACK_Variazioni</members>
+        <members>HCM_BACK_Verifiche</members>
+        <members>HCM_CON_Fatturazione</members>
+        <members>HCM_DISCO_Appuntamenti</members>
+        <members>HCM_DISCO_Escalation</members>
+        <members>HCM_DISCO_Heroku</members>
+        <members>HCM_DISCO_Notifiche</members>
+        <members>HCM_TRG_Fatturazione</members>
+        <members>HCM_TRG_Modifiche_anagrafiche</members>
+        <members>HCM_TRG_Pagamenti</members>
+        <members>HCM_TRG_Variazioni</members>
+        <members>HC_CDO_OM</members>
+        <members>HC_CDO_OM_Attivazioni_HC</members>
+        <members>HC_CDO_OM_Attivazioni_Service_A</members>
+        <members>HC_CDO_OM_Attivazioni_Service_B</members>
+        <members>HC_CDO_OM_OUT</members>
+        <members>HC_CDO_PPT_QMMUI</members>
+        <members>HC_CDO_PPT_QMMUI_OUT</members>
+        <members>HC_CRM_CC_CMD</members>
+        <members>HC_CRM_CC_KNBO_TL</members>
+        <members>HC_CRM_CC_KNBO_qualita</members>
+        <members>HC_CRM_CC_KNVK_TL</members>
+        <members>HC_CRM_CC_LT_TL</members>
+        <members>HC_CRM_Escalation_CC_KNBO_TL</members>
+        <members>HC_CRM_Escalation_CC_KNBO_qualita</members>
+        <members>HC_CRM_Escalation_CC_KNVK_TL</members>
+        <members>HC_CRM_Escalation_CC_LT_TL</members>
+        <members>HC_CRM_Escalation_HD</members>
+        <members>HC_CRM_Quality_CC</members>
+        <members>HC_CRM_SIND</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Annullamento_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Annullamento_Koine</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Appuntamenti_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Appuntamenti_Koine</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Attivazioni_Conservice</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Attivazioni_Front_Koine</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Attivazioni_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Attivazioni_Koine</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Autolettura_Conservice</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Autolettura_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Campagne_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Cross_Front_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Cross_Front_KN</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Disattivazioni_Conservice</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Disattivazioni_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Escalation_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Escalation_Koine</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Fatturazione_Conservice</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Fatturazione_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Fatturazione_Koine</members>
+        <members>HC_CVMBO_CORPMUI_CORP_HEROKU_CONSERVICE</members>
+        <members>HC_CVMBO_CORPMUI_CORP_HEROKU_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_ModificheAnag_Conservice</members>
+        <members>HC_CVMBO_CORPMUI_CORP_ModificheAnag_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Morosita_CONSERVICE</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Morosita_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Notifiche_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Pagamenti_Conservice</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Pagamenti_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Pagamenti_Linetech</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Preventivi_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Preventivi_Koine</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Reclami_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Reclami_LIN</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Variazioni_Conservice</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Variazioni_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Verifiche_HC</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Verifiche_Koine</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Voltura_Conservice</members>
+        <members>HC_CVMBO_CORPMUI_CORP_Voltura_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Annullamento_Koine</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Appuntamenti_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Appuntamenti_Koine</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Attivazioni_Conservice</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Attivazioni_Front_Koine</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Attivazioni_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Attivazioni_Koine</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Autolettura_Conservice</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Autolettura_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Campagne_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Cross_Front_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Cross_Front_KN</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Disattivazioni_Conservice</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Disattivazioni_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Escalation_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Escalation_Koine</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Fatturazione_Conservice</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Fatturazione_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Fatturazione_Koine</members>
+        <members>HC_CVMBO_CORPMUI_MUI_HEROKU_CONSERVICE</members>
+        <members>HC_CVMBO_CORPMUI_MUI_HEROKU_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_ModificheAnag_Conservice</members>
+        <members>HC_CVMBO_CORPMUI_MUI_ModificheAnag_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Morosita_CONSERVICE</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Morosita_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Notifiche_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Pagamenti_Conservice</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Pagamenti_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Pagamenti_Linetech</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Preventivi_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Preventivi_Koine</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Reclami_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Reclami_LIN</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Variazioni_Conservice</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Variazioni_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Verifiche_HC</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Verifiche_Koine</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Voltura_Conservice</members>
+        <members>HC_CVMBO_CORPMUI_MUI_Voltura_HC</members>
+        <members>HC_CVMBO_CORPMUI_PTA_SD_singola_HC</members>
+        <members>HC_CVMBO_CSREG_Bonus_Sociale_Energy</members>
+        <members>HC_CVMBO_CSREG_Bonus_Sociale_Energy_Target</members>
+        <members>HC_CVMBO_CSREG_Canone_Rai</members>
+        <members>HC_CVMBO_MICO_Miglioramento_Continuo</members>
+        <members>HC_CVMBO_MMSME_CFBS_Accise_Conservice</members>
+        <members>HC_CVMBO_MMSME_CFBS_Accise_HC</members>
+        <members>HC_CVMBO_MMSME_CFBS_Appuntamenti_Koine</members>
+        <members>HC_CVMBO_MMSME_CFBS_Bonif_Anagr_da_DAFC_HC</members>
+        <members>HC_CVMBO_MMSME_CFBS_Bonif_Anagr_da_DAFC_Target</members>
+        <members>HC_CVMBO_MMSME_CFBS_Com_Pag_Koine</members>
+        <members>HC_CVMBO_MMSME_CFBS_Contratti_Preventivi_HC</members>
+        <members>HC_CVMBO_MMSME_CFBS_Contratti_Preventivi_Koine</members>
+        <members>HC_CVMBO_MMSME_CFBS_Disattivazioni_HC</members>
+        <members>HC_CVMBO_MMSME_CFBS_Disattivazioni_Koine</members>
+        <members>HC_CVMBO_MMSME_CFBS_Doc_Contratti_HC</members>
+        <members>HC_CVMBO_MMSME_CFBS_Doppi_pagamenti_incassi_Rimborso_Koine</members>
+        <members>HC_CVMBO_MMSME_CFBS_Escalation_HC</members>
+        <members>HC_CVMBO_MMSME_CFBS_Fatturazione</members>
+        <members>HC_CVMBO_MMSME_CFBS_Fatturazione_Elettronica_HC</members>
+        <members>HC_CVMBO_MMSME_CFBS_Fatturazione_Elettronica_Linetech</members>
+        <members>HC_CVMBO_MMSME_CFBS_Fatturazione_Service_A</members>
+        <members>HC_CVMBO_MMSME_CFBS_Fatturazione_Service_B</members>
+        <members>HC_CVMBO_MMSME_CFBS_Mod_Anag_Scarti_Heroku_HC</members>
+        <members>HC_CVMBO_MMSME_CFBS_Modifiche_Anagrafiche_HC</members>
+        <members>HC_CVMBO_MMSME_CFBS_Modifiche_Anagrafiche_Target</members>
+        <members>HC_CVMBO_MMSME_CFBS_Morosita_Target</members>
+        <members>HC_CVMBO_MMSME_CFBS_Pagamenti_scarti_Heroku_Koine</members>
+        <members>HC_CVMBO_MMSME_CFBS_Paperless_Koine</members>
+        <members>HC_CVMBO_MMSME_CFBS_Piano_Rateizzazione_Koine</members>
+        <members>HC_CVMBO_MMSME_CFBS_Preventivi_HC</members>
+        <members>HC_CVMBO_MMSME_CFBS_Preventivi_Koine</members>
+        <members>HC_CVMBO_MMSME_CFBS_Rettifica_Consumi_Conservice</members>
+        <members>HC_CVMBO_MMSME_CFBS_Rettifica_Consumi_Linetech</members>
+        <members>HC_CVMBO_MMSME_CFBS_Rich_Parere_HC</members>
+        <members>HC_CVMBO_MMSME_CFBS_Rit_a_Fatt_Bim_Men_Linetech</members>
+        <members>HC_CVMBO_MMSME_CFBS_Scarto_Documentale_HC</members>
+        <members>HC_CVMBO_MMSME_CFBS_Testo_Contratto_in_Bolletta_Koine</members>
+        <members>HC_CVMBO_MMSME_CFBS_Unif_Sep_BP_CA_Bolletta_Koine</members>
+        <members>HC_CVMBO_MMSME_CFBS_Variazioni_Linetech</members>
+        <members>HC_CVMBO_MMSME_CFBS_Verifiche_HC</members>
+        <members>HC_CVMBO_MMSME_CFBS_Verifiche_Koine</members>
+        <members>HC_CVMBO_MMSME_CRBO_Copia_bolletta_bollettino_HC</members>
+        <members>HC_CVMBO_MMSME_CRBO_Copia_bolletta_bollettino_Linetech</members>
+        <members>HC_CVMBO_MMSME_CRBO_Protocollo_Contratti_Linetech</members>
+        <members>HC_CVMBO_MMSME_CRBO_Protocollo_Disatt_e_Variaz_HC</members>
+        <members>HC_CVMBO_MMSME_CRBO_Protocollo_Fatt_e_Pag_Linetech</members>
+        <members>HC_CVMBO_MMSME_CRBO_Protocollo_Morosita_Linetech</members>
+        <members>HC_CVMBO_MMSME_CRBO_Protocollo_Preventivi_HC</members>
+        <members>HC_CVMBO_MMSME_CRBO_Protocollo_Smart_HC</members>
+        <members>HC_CVMBO_MMSME_CRBO_Richiesta_domiciliazione_HC</members>
+        <members>HC_CVMBO_MMSME_CRBO_Richiesta_domiciliazione_Linetech</members>
+        <members>HC_CVMBO_MMSME_CVMCONTR_Attivazioni_HC</members>
+        <members>HC_CVMBO_MMSME_CVMCONTR_Attivazioni_Service_A</members>
+        <members>HC_CVMBO_MMSME_CVMCONTR_Attivazioni_Service_B</members>
+        <members>HC_CVMBO_MMSME_CVMC_Annullamento_contratti_HC</members>
+        <members>HC_CVMBO_MMSME_CVMC_Annullamento_contratti_Target</members>
+        <members>HC_CVMBO_MMSME_CVMC_Comportamento_Venditori_HC</members>
+        <members>HC_CVMBO_MMSME_CVMC_Comportamento_Venditori_Target</members>
+        <members>HC_CVMBO_MMSME_CVMC_Contratto_non_richiesto_HC</members>
+        <members>HC_CVMBO_MMSME_CVMC_Contratto_non_richiesto_Target</members>
+        <members>HC_CVMBO_MMSME_CVMC_Credit_Check_HC</members>
+        <members>HC_CVMBO_MMSME_CVMC_Credit_Check_Target</members>
+        <members>HC_CVMBO_MMSME_CVMC_Escalation_HC</members>
+        <members>HC_CVMBO_MMSME_CVMC_M01_M02_Esiti_KO_CVMC_HC</members>
+        <members>HC_CVMBO_MMSME_CVMC_M01_M02_Esiti_KO_CVMC_Target</members>
+        <members>HC_CVMBO_MMSME_CVMC_Protocollo_Reclami_HC</members>
+        <members>HC_CVMBO_MMSME_CVMC_Protocollo_Reclami_Target</members>
+        <members>HC_CVMBO_MMSME_CVMC_Protocollo_VAS_HC</members>
+        <members>HC_CVMBO_MMSME_CVMC_Protocollo_VAS_Target</members>
+        <members>HC_CVMBO_MMSME_CVMC_Recessi_HC</members>
+        <members>HC_CVMBO_MMSME_CVMC_Recessi_Target</members>
+        <members>HC_CVMBO_MMSME_CVMC_Reclami_HC</members>
+        <members>HC_CVMBO_MMSME_CVMC_Rich_Parere_HC</members>
+        <members>HC_CVMBO_MMSME_CVMC_VAS_HC</members>
+        <members>HC_CVMBO_MMSME_CVMC_Verifica_titolarita_POD_PDR_HC</members>
+        <members>HC_CVMBO_MMSME_CVMC_Verifica_titolarita_POD_PDR_Target</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Autoletture_Linetech</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Errore_di_fatturazione_Conservice</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Errore_di_fatturazione_HC</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Escalation_HC</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Inversione_del_contatore_HC</members>
+        <members>HC_CVMBO_MMSME_CVMPV_M01_M02_Esiti_KO_CVMPV_HC</members>
+        <members>HC_CVMBO_MMSME_CVMPV_M01_M02_Esiti_KO_CVMPV_Linetech</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Prescrizione_Fatture_Conservice</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Prescrizione_Fatture_HC</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Protocollo_Reclami_HC</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Protocollo_Reclami_Linetec</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Reclami_HC</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Rich_Parere_HC</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Ricostruzione_Consumi_Attesa_Cli_HC</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Ricostruzione_Consumi_Gestione_HC</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Ricostruzione_Consumi_Monitoraggio_HC</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Ricostruzione_Consumi_Scarti_Heroku_HC</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Soll_Emissione_Bolletta_Conservice</members>
+        <members>HC_CVMBO_MMSME_CVMPV_Soll_Emissione_Bolletta_HC</members>
+        <members>HC_CVMBO_MMSME_POM_Protocollo_da_gestire</members>
+        <members>HC_CVMBO_MMSME_STS_Annullamento_prestazioni_HC</members>
+        <members>HC_CVMBO_MMSME_STS_Annullamento_prestazioni_Target</members>
+        <members>HC_CVMBO_MMSME_STS_Appuntamenti_Contratti_Koine</members>
+        <members>HC_CVMBO_MMSME_STS_Contratti_Energy_HC</members>
+        <members>HC_CVMBO_MMSME_STS_Contratti_Energy_Target</members>
+        <members>HC_CVMBO_MMSME_STS_Escalation_HC</members>
+        <members>HC_CVMBO_RESC_Esercizio_Sistemi_Clienti</members>
+        <members>HC_VenditaMM</members>
+        <name>Group</name>
+    </types>
+    <types>
+        <members>Elemento_Della_Richiesta_Record_Page</members>
         <members>HDT_Activity_Default_Record_Page</members>
+        <members>Richiesta_di_Caricamento_Record_Page</members>
         <name>FlexiPage</name>
     </types>
     <types>
-        <members>BillingProfile__c</members>
-        <members>DiscardAnnullmentRule__c</members>
-        <members>Order</members>
-        <members>Product2</members>
+        <members>FUBProcessing__c</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>Order.CompactFlyingRequest</members>
-        <name>CompactLayout</name>
-    </types>
-    <types>
-        <members>HDT_SalesChannel</members>
-        <members>HDT_VasEngineStatus</members>
+        <members>HDT_CancellationReason</members>
         <name>GlobalValueSet</name>
     </types>
     <types>
-        <members>hdtAppointmentAgenda</members>
-        <members>hdtChildOrderProcessDetails</members>
-        <members>hdtChildOrderProcessPrecheck</members>
-        <members>hdtCtToolbar</members>
-        <members>hdtCtToolbarContainer</members>
-        <members>hdtGeneralInfo</members>
-        <members>hdtOrderDossierWizardActions</members>
-        <members>hdtSaleServiceContainer</members>
-        <name>LightningComponentBundle</name>
+        <members>Lead</members>
+        <members>Subentro</members>
+        <name>StaticResource</name>
     </types>
     <types>
-        <members>wrts_prcgvr__Activity__c.HDT_DisattivaVas</members>
-        <name>WebLink</name>
+        <members>hdtAdvanceDocumentManager</members>
+        <members>hdtBillingProfileForm</members>
+        <members>hdtChildOrderProcessDetails</members>
+        <members>hdtCommercialRiassignButton</members>
+        <members>hdtCustomTable</members>
+        <members>hdtDocumentSignatureManagerFlow</members>
+        <members>hdtGenericAddressChooserFlow</members>
+        <members>hdtOrderDossierWizardActions</members>
+        <members>hdtRecordEditFormFlow</members>
+        <members>hdtSaleServiceContainer</members>
+        <members>hdtSelfReading</members>
+        <members>hdtSelfReadingRegister</members>
+        <name>LightningComponentBundle</name>
     </types>
     <types>
         <members>Admin</members>
@@ -47,230 +273,367 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>HDL_FL_VO_Script_Mini_VO</members>
-        <members>HDT_FL_CreditCheckManagement</members>
+        <members>HDL_FL_VO_Script_Hera_Bebe</members>
+        <members>HDL_FL_VO_Script_Hera_Etapiu</members>
+        <members>HDL_FL_VO_Script_Prezzo_Sicurezza</members>
+        <members>HDL_FL_VO_Script_Simply_Hera</members>
+        <members>HDL_FL_VO_Scripts_Prezzo_Netto</members>
+        <members>HDL_FL_VO_Scripts_Prezzo_Sicurezza</members>
+        <members>HDT_FL_ActivityClosing</members>
+        <members>HDT_FL_ActivityEscalationNotifyClosure</members>
+        <members>HDT_FL_CambioUso</members>
         <members>HDT_FL_GestioneAnnullamento</members>
         <members>HDT_FL_GestionePreventivi</members>
         <members>HDT_FL_GestioneReclami_GestioneStampa</members>
         <members>HDT_FL_SupplierKOManagement</members>
+        <members>HDT_FL_VO_Script_Hera_Doppiosconto</members>
+        <members>HDT_Script_VAS</members>
+        <members>HDT_Script_Vas_Standalone</members>
         <name>Flow</name>
     </types>
     <types>
-        <members>HDT_CampaignMemberStatus__mdt.Check_Category</members>
-        <name>ValidationRule</name>
+        <members>HDT_MassiveFieldsObjectMap__mdt.Lead</members>
+        <name>ListView</name>
     </types>
     <types>
-        <members>OrderStatus-it</members>
-        <name>StandardValueSetTranslation</name>
-    </types>
-    <types>
-        <members>Case.HDT_RT_AlertDisassociazioneUtenteWeb</members>
-        <members>Case.HDT_RT_AllineamentoAnagrafica</members>
-        <members>Case.HDT_RT_AltreInformative</members>
-        <members>Case.HDT_RT_AltriProcessiPagamenti</members>
-        <members>Case.HDT_RT_Annullamento</members>
-        <members>Case.HDT_RT_AttivazionePODVariazionePDR</members>
-        <members>Case.HDT_RT_Autolettura</members>
-        <members>Case.HDT_RT_CambioUsoTec</members>
-        <members>Case.HDT_RT_CanoneRai</members>
-        <members>Case.HDT_RT_ComportamentoVenditori</members>
-        <members>Case.HDT_RT_ComunicazionePagamento</members>
-        <members>Case.HDT_RT_Disattivazioni</members>
-        <members>Case.HDT_RT_DocCopiaContratto</members>
-        <members>Case.HDT_RT_Domiciliazione</members>
-        <members>Case.HDT_RT_FatturazioneConsumi</members>
-        <members>Case.HDT_RT_FlyingRequest</members>
-        <members>Case.HDT_RT_GenericheAttivazioni</members>
-        <members>Case.HDT_RT_GenericheVas</members>
-        <members>Case.HDT_RT_GestioneBolletta</members>
-        <members>Case.HDT_RT_GestioneBonusSociale</members>
-        <members>Case.HDT_RT_GestionePrivacy</members>
-        <members>Case.HDT_RT_Indennizzo</members>
-        <members>Case.HDT_RT_Informative</members>
-        <members>Case.HDT_RT_InversioneContatore</members>
-        <members>Case.HDT_RT_ModContrattoPreAtt</members>
-        <members>Case.HDT_RT_Morosita</members>
-        <members>Case.HDT_RT_PianoRateizzazione</members>
-        <members>Case.HDT_RT_PostSalesVAS</members>
-        <members>Case.HDT_RT_PreventiviEle</members>
-        <members>Case.HDT_RT_PreventiviGas</members>
-        <members>Case.HDT_RT_ProrogaTemporanea</members>
-        <members>Case.HDT_RT_ReclamiScrittiRichiesteInfo</members>
-        <members>Case.HDT_RT_RiattivazioniNonMorose</members>
-        <members>Case.HDT_RT_RichiestaParere</members>
-        <members>Case.HDT_RT_Rimborso</members>
-        <members>Case.HDT_RT_SospensioneRiattivazione</members>
-        <members>Case.HDT_RT_Subentro_EE</members>
-        <members>Case.HDT_RT_Subentro_GAS</members>
-        <members>Case.HDT_RT_UnificazioneSeparazioneCABolletta</members>
-        <members>Case.HDT_RT_VariazioneAmministratore</members>
-        <members>Case.HDT_RT_VariazioneAnagraficaCliente</members>
-        <members>Case.HDT_RT_VariazioniEle</members>
-        <members>Case.HDT_RT_VariazioniGas</members>
-        <members>Case.HDT_RT_VerificaDatiAlDl</members>
-        <members>Case.HDT_RT_VerificaTitolaritaPodPdr</members>
-        <members>Case.HDT_RT_VerificheEle</members>
-        <members>Case.HDT_RT_VerificheGas</members>
-        <members>Case.HDT_RT_VolturaTecnica</members>
-        <members>Case.HDT_RT_VotiveModena</members>
         <members>Order.HDT_RT_Attivazione</members>
         <members>Order.HDT_RT_AttivazioneConModifica</members>
         <members>Order.HDT_RT_CambioOfferta</members>
         <members>Order.HDT_RT_CambioUso</members>
         <members>Order.HDT_RT_ConnessioneConAttivazione</members>
-        <members>Order.HDT_RT_Default</members>
-        <members>Order.HDT_RT_FlyingRequest</members>
-        <members>Order.HDT_RT_OrderDossier</members>
-        <members>Order.HDT_RT_Proroga</members>
-        <members>Order.HDT_RT_ScontiBonus</members>
         <members>Order.HDT_RT_Subentro</members>
         <members>Order.HDT_RT_SwitchIn</members>
         <members>Order.HDT_RT_TemporaneaNuovaAtt</members>
-        <members>Order.HDT_RT_VAS</members>
-        <members>Order.HDT_RT_Voltura</members>
-        <members>Order.HDT_RT_VolturaConSwitch</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_ChiamataOutbound</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_CommunicationReject</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Default</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationAccountLead</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationCase</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationGeneric</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationInteraction</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationOpportunity</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_EscalationOrder</members>
         <members>wrts_prcgvr__Activity__c.HDT_RT_Scarto</members>
         <name>RecordType</name>
     </types>
     <types>
         <members>Account-CPQ Account Layout Service Console</members>
-        <members>Case-HDT_Morosita</members>
-        <members>DiscardAnnullmentRule__c-Regola Annullamento Scarto Layout</members>
-        <members>Order-Sconti o Bonus VAS</members>
+        <members>CampaignMember-Campaign Member Page Layout</members>
+        <members>Contact-Contact Layout</members>
+        <members>MassiveLoaderRequestItem__c-Massive Loader Request Request Item Layout</members>
+        <members>MassiveLoaderRequest__c-Richiesta Caricatore Massivo Layout</members>
         <members>Order-Switch in</members>
-        <members>SiebelContract__x-SiebelContract Layout</members>
-        <members>SiebelCustomer__x-SiebelCustomer Layout</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_ActiveMonitoringEditor</members>
-        <members>HDT_ApexClasses</members>
-        <members>HDT_DiscardAnnullmentRule</members>
+        <members>HDT_MassiveLoader</members>
         <name>PermissionSet</name>
     </types>
     <types>
-        <members>HDT_BA_ExpireMigratedContracts</members>
-        <members>HDT_BA_ExpireMigratedContractsTest</members>
-        <members>HDT_BA_SuspendedActivitiesEmailAlert</members>
-        <members>HDT_LC_ConfigurePaymentMethods</members>
-        <members>HDT_LC_ConfigurePaymentMethodsTst</members>
-        <members>HDT_LC_ConfigureProduct</members>
-        <members>HDT_LC_OrderDossierWizardActions</members>
-        <members>HDT_LC_OrdersForComfortQualityList</members>
-        <members>HDT_QBL_CreditCheckCall</members>
-        <members>HDT_QR_Activity</members>
+        <members>HDT_BA_ErrorRequestItem</members>
+        <members>HDT_BA_ProcessOrderCreation</members>
+        <members>HDT_BA_ProcessSales</members>
+        <members>HDT_LCP_CreateDistributorApointment</members>
+        <members>HDT_LC_BillingProfileForm</members>
+        <members>HDT_LC_ChildOrderProcessActions</members>
+        <members>HDT_LC_ChildOrderProcessDetails</members>
+        <members>HDT_LC_ChildOrderProcessPrecheck</members>
+        <members>HDT_LC_EscalationController</members>
+        <members>HDT_LC_ReletedListAccount</members>
+        <members>HDT_QR_AccountContactRelation</members>
         <members>HDT_QR_ActivityCustom</members>
-        <members>HDT_QR_ActivityTst</members>
+        <members>HDT_QR_AnagAlignment</members>
         <members>HDT_QR_Case</members>
-        <members>HDT_QR_CaseValidations</members>
-        <members>HDT_QR_ComfortQualityCall</members>
-        <members>HDT_QR_Contract</members>
         <members>HDT_QR_Order</members>
-        <members>HDT_QR_QuoteLine</members>
-        <members>HDT_QR_SelfReadings</members>
+        <members>HDT_QR_ProcessSales</members>
+        <members>HDT_QR_VoltureChangeManager</members>
         <members>HDT_SRV_AnagAlignment</members>
-        <members>HDT_SRV_AppointmentAgenda</members>
+        <members>HDT_SRV_SaleServiceItem</members>
         <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_SRV_SelfReadings</members>
         <members>HDT_TRH_ActivityCustom</members>
-        <members>HDT_TRH_Lead</members>
-        <members>HDT_TRH_Order</members>
-        <members>HDT_TRH_ServicePoint</members>
-        <members>HDT_UTL_ActivityCustom</members>
         <members>HDT_UTL_ActivityCustomProcess</members>
-        <members>HDT_UTL_AppointmentAgenda</members>
         <members>HDT_UTL_CalculateTransition</members>
-        <members>HDT_UTL_CampaignMember</members>
+        <members>HDT_UTL_CalculateTransitionTst</members>
         <members>HDT_UTL_Case</members>
-        <members>HDT_UTL_CaseProcess</members>
-        <members>HDT_UTL_CaseValidations</members>
-        <members>HDT_UTL_CompanyOwner</members>
-        <members>HDT_UTL_ContractProcess</members>
-        <members>HDT_UTL_DatabaseService</members>
-        <members>HDT_UTL_Dependencies</members>
-        <members>HDT_UTL_GestAppAutomaticCreationCase</members>
+        <members>HDT_UTL_GestAppAutomaticCreation</members>
         <members>HDT_UTL_HerokuPostSalesManager</members>
-        <members>HDT_UTL_OrderFieldsAlignment</members>
+        <members>HDT_UTL_MassiveOrderFieldsAlignment</members>
+        <members>HDT_UTL_NotifVasHelper</members>
         <members>HDT_UTL_OrderProcess</members>
-        <members>HDT_UTL_OrderTriggerVas</members>
-        <members>HDT_UTL_PayloadManagement</members>
-        <members>HDT_UTL_Sales</members>
-        <members>HDT_UTL_Scarti</members>
-        <members>HDT_UTL_SelfReadings</members>
-        <members>HDT_UTL_ServicePoint</members>
+        <members>HDT_UTL_ProcessExecution</members>
+        <members>HDT_UTL_ProcessOrderCreation</members>
+        <members>HDT_UTL_ProcessSales</members>
+        <members>HDT_UTL_ProcessSalesOutboundWs</members>
+        <members>HDT_UTL_ProcessSalesTst</members>
         <members>HDT_UTL_VasManagement</members>
-        <members>HDT_UTL_VasPractices</members>
+        <members>HDT_WS_SalesApexCalloutAction</members>
         <members>HDT_WS_SelfReadingsOutcome</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>DiscardAnnullmentRule__c.ControllingCommodity__c</members>
-        <members>Order.CommercialAction__c</members>
-        <members>Order.NumeratorGroup__c</members>
-        <members>Order.reportPhase__c</members>
-        <members>SBQQ__ConfigurationAttribute__c.SBQQ__TargetField__c</members>
-        <members>SBQQ__ProductOption__c.CommercialId__c</members>
-        <members>SBQQ__ProductOption__c.PriceGas__c</members>
-        <members>SBQQ__QuoteLine__c.CommercialId__c</members>
-        <members>SBQQ__QuoteLine__c.Opportunity__c</members>
-        <members>ServicePoint__c.NumeratorGroup__c</members>
-        <members>ServicePoint__c.SupplyAddress__c</members>
+        <members>Account.ShareForAppointment__c</members>
+        <members>Case.ShareForAppointment__c</members>
+        <members>City__c.IsNotTransition__c</members>
+        <members>Contact.BPInterlocutor__c</members>
+        <members>Order.Phase__c</members>
+        <members>Reading__c.ReadingOldValue7__c</members>
+        <members>Reading__c.ReadingOldValue8__c</members>
+        <members>Reading__c.ReadingOldValue9__c</members>
+        <members>Reading__c.ReadingValue7__c</members>
+        <members>Reading__c.ReadingValue8__c</members>
+        <members>Reading__c.ReadingValue9__c</members>
+        <members>wrts_prcgvr__Activity__c.ActivityOutcome__c</members>
+        <members>wrts_prcgvr__Activity__c.Subject__c</members>
+        <members>wrts_prcgvr__Activity__c.Type__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_LCP_OpenAuraCmp</members>
-        <members>HDT_LCP_RunFlowFromAura</members>
+        <members>HDT_LC_Escalation</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>HDT_ServicePoint</members>
-        <name>ApexTrigger</name>
+        <members>wrts_prcgvr__Activity__c-it</members>
+        <name>CustomObjectTranslation</name>
     </types>
     <types>
-        <members>HDT_CalcoloPreventivi.QF3217J</members>
-        <members>HDT_CalcoloPreventivi.QF3217K</members>
-        <members>HDT_CalcoloPreventivi.QF3217M</members>
-        <members>HDT_CalcoloPreventivi.QF3217N</members>
-        <members>HDT_CampaignMemberStatus.CH_UP</members>
-        <members>HDT_CampaignMemberStatus.CH_UP_BONUS</members>
-        <members>HDT_CampaignMemberStatus.CH_UP_CO</members>
-        <members>HDT_CampaignMemberStatus.CH_UP_CO_VAS</members>
-        <members>HDT_CampaignMemberStatus.CH_UP_VAS</members>
-        <members>HDT_CampaignMemberStatus.CONFERMA_CC</members>
-        <members>HDT_CampaignMemberStatus.CONFERMA_GIA_AVVENUTA</members>
-        <members>HDT_CampaignMemberStatus.CONFERMA_PLICO_IVR</members>
-        <members>HDT_CampaignMemberStatus.CONFERMA_PLICO_MAIL</members>
-        <members>HDT_CampaignMemberStatus.CONFERMA_PLICO_WEB</members>
-        <members>HDT_CampaignMemberStatus.CONF_RECUP</members>
-        <members>HDT_CampaignMemberStatus.Esito_Positivo</members>
-        <members>HDT_CampaignMemberStatus.Non_interessato</members>
-        <members>HDT_CampaignMemberStatus.Non_proposto</members>
-        <members>HDT_CampaignMemberStatus.Sent</members>
-        <members>HDT_CampaignMemberStatus.UP</members>
-        <members>HDT_CampaignMemberStatus.VENDITA_EXTRA_VO</members>
-        <members>HDT_CreateBpCa.Name</members>
-        <members>HDT_CreateBpCa.RecordTypeId</members>
-        <members>HDT_FiltriProcessiSelFornitura.Reclami_Scritti</members>
-        <members>HDT_FiltriProcessiSelFornitura.Reclami_Scritti_richInfo</members>
-        <members>HDT_FiltriProcessiSelFornitura.Ritorno_a_Fatturazione_Bimestrale_Mensil</members>
-        <members>HDT_FiltriProcessiSelFornitura.Variazione_Fase_Pari_Potenza_Prevent</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_1</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_10</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_100</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_101</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_102</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_103</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_104</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_105</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_106</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_107</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_108</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_109</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_11</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_110</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_111</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_112</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_113</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_114</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_115</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_116</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_117</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_118</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_119</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_12</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_120</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_121</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_122</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_123</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_124</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_125</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_126</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_127</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_128</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_129</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_13</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_130</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_131</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_132</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_133</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_134</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_135</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_136</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_137</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_138</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_139</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_14</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_140</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_141</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_142</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_143</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_144</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_145</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_146</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_147</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_148</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_149</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_15</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_150</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_151</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_152</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_153</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_154</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_16</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_17</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_18</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_19</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_2</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_20</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_21</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_22</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_23</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_24</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_25</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_26</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_27</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_28</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_29</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_3</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_30</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_31</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_32</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_33</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_34</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_35</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_36</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_37</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_38</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_39</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_4</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_40</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_41</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_42</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_43</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_44</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_45</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_46</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_47</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_48</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_49</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_5</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_50</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_51</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_52</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_53</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_54</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_55</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_56</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_57</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_58</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_59</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_6</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_60</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_61</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_62</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_63</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_64</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_65</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_66</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_67</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_68</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_69</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_7</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_70</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_71</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_72</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_73</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_74</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_75</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_76</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_77</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_78</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_79</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_8</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_80</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_81</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_82</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_83</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_84</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_85</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_86</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_87</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_88</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_89</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_9</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_90</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_91</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_92</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_93</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_94</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_95</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_96</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_97</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_98</members>
+        <members>HDT_AdminServiceDispatcher.Config10022022_99</members>
+        <members>HDT_CampaignMemberStatus.Riaggancia_e_rifiuta_il_contatto</members>
         <members>HDT_IntegrationObject.Documentale_Context1</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Account</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Agenzia</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_AreaManager</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_AttivaAnalisiConsumi</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_BP</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_CAP</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_CF</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_CSN</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Canale</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_CanaleInferioreAgenzia</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_CanaleSuperioreAgenzia</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Categoria</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_CategoriaUso</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Civico</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_ClasseContatore</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_ClassePrelievo</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_CodiceAgenzia</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_CodiceBonus</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_CodiceCitta</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_CodiceImpianto</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_CodiceLocalita</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_CodiceOfferta</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_CodicePromo</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_CodicePunto</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_CodiceRemi</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Cognome</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_CognomeAgente</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Comune</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_ConsumoAnnuo</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Disalimentabile</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Distributore</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_FAX</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_FaseRichiesta</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_FlagVerificato</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_LivelloPressione</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Localita</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Marcatura</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_MatricolaContatore</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_MercatoProvenienza</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Nome</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_NomeAgente</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_NomeVia</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_NumeroConto</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_PI</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_PotenzaContrattuale</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_PotenzaDisponibile</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_PotenzaRichiesta</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_PotenzialitaMassimaRichiesta</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_PresenzaAllaccio</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Residente</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_SPComune</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_SPVia</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_SP_Civico</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_SP_IndirizzoEstero</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Servizio</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Silos</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Stato</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_TelefonoNonDisalimentabili</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_TensioneConsegna</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_Tipo</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_TipoApparecchiatura</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_TipoFornitura</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_TipologiaDisalimentabilita</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_TipologiaImpianto</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_VendutaDa</members>
+        <members>HDT_MassiveFieldsObjectMap.Sales_VersioneOfferta</members>
+        <members>HDT_MassiveLoaderProcess.Subentro</members>
         <members>HDT_SignModeSettings.Domiciliazione_Sportello_OTP_Remoto</members>
         <members>HDT_SignModeSettings.Mod_Privacy_Sportello_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Piano_Rat_Back_office_OTP_Remoto</members>
         <members>HDT_SignModeSettings.Piano_Rat_Sportello_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Piano_Rat_Tel_Inbound_Cartacea</members>
-        <members>HDT_SignModeSettings.Piano_Rat_Tel_Inbound_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Piano_Rateizzazione_Back_office_Cartacea</members>
         <members>HDT_SignModeSettings.Preventivo_Sportello_OTP_Remoto</members>
+        <members>HDT_SignModeSettings.Reclamo_Back_office_Cartacea</members>
         <members>HDT_SignModeSettings.Rimborso_Sportello_OTP_Remoto</members>
+        <members>HDT_SignModeSettings.Vendita_Agenzie_Cartacea</members>
+        <members>HDT_SignModeSettings.Vendita_Back_office_Cartacea</members>
         <members>HDT_SignModeSettings.Vendita_Sportello_OTP_Remoto</members>
-        <members>HDT_StatoMotoreVas.ANNULLATO</members>
-        <members>HDT_StatoMotoreVas.BLOCCO_AL_RINNOVO</members>
-        <members>HDT_StatoMotoreVas.DIS</members>
-        <members>HDT_StatoMotoreVas.OK</members>
-        <members>HDT_StatoMotoreVas.STORN</members>
-        <members>HDT_StatoMotoreVas.VO</members>
-        <members>HDT_UserInputFlow.Preventivi_Aggiunta_Attacco_G</members>
+        <members>HDT_SignModeSettings.Vendita_Telefono_Inbound_OTP_Remoto</members>
+        <members>HDT_SignModeSettings.Vendita_Telefono_Inbound_Vocal_Order</members>
+        <members>HDT_SignModeSettings.Vendita_Teleselling_OTP_Remoto</members>
+        <members>HDT_SignModeSettings.Vendita_Teleselling_Vocal_Order</members>
+        <members>HDT_UserInputFlow.Attivazioni_Cambio_Uso_Fittizio</members>
         <name>CustomMetadata</name>
     </types>
     <version>49</version>

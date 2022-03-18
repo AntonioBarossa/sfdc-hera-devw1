@@ -6,12 +6,25 @@ const actions = [
  
 ];
 const columns = [
-    { label: 'Referente', fieldName: 'contactName' },
+    // { label: 'Referente', fieldName: 'contactName' },
+    {
+        label: 'Referente',
+        sortable: false,
+        type: 'button',
+        initialWidth: 132,
+        typeAttributes:{
+            variant: 'base',
+            style:'border: none;background: none;',
+            label: {fieldName: 'contactName'},
+            name: 'redirectContact'
+        }
+    },
     { label: 'Ruolo', fieldName: 'roles' },
     { label: 'Telefono Cellulare', fieldName: 'contactMobilePhone' },
     { label: 'Telefono fisso', fieldName: 'contactHomePhone' },
     { label: 'Email', fieldName: 'contactEmail' },
-    { label: 'BP Interlocutore', fieldName: 'bpInterlocutor' },
+  //{ label: 'BP Interlocutore', fieldName: 'bpInterlocutor' },
+    { label: 'Codice Contatto', fieldName: 'contactCode' },
     { label: 'Data inizio validità', fieldName: 'startDate' },
     { label: 'Data fine validità', fieldName: 'endDate' },
     {

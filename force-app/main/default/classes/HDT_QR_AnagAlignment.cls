@@ -101,7 +101,7 @@ public with sharing class HDT_QR_AnagAlignment {
 
     }
 
-    public Order findOrderByTypeAndServicePointCode(String processType, String servicePointCode) {
+    public Order findOrderByTypeAndServicePointCode(Set<String> processTypeSet, String servicePointCode) {
         
         List<Order> orders = [
             SELECT 
@@ -166,9 +166,11 @@ public with sharing class HDT_QR_AnagAlignment {
             CustomerFiscalCode__c,
             Resident__c
             FROM Order 
-            WHERE ProcessType__c = :processType
+            WHERE DocumentalProcessType__c IN:processTypeSet
             AND ServicePointCodeFormula__c = :servicePointCode
+            AND Phase__c != 'Annullato'
             WITH SECURITY_ENFORCED
+            ORDER BY CreatedDate DESC
         ];
 
         if (orders.size() > 0) {

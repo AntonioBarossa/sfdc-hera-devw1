@@ -10,13 +10,14 @@
                 component.set("v.parentEntityField", data.parentEntityField);
                 component.set("v.recordTypeId", data.recordTypeId);
                 component.set("v.showForm", true);
+                component.set("v.showPriorityField", data.showPriorityField);
             }
         });
         $A.enqueueAction(action);
     },
     onTypeChange: function(component, event, helper) {
         let newValue =  event.getSource().get("v.value") ; 
-        component.set("v.showMalfunctionFields", newValue === 'Supporto Anomalia processo/sistema');
+        component.set("v.showMalfunctionFields", newValue === 'Anomalia processo/sistema');
     },
     onRecordSubmit: function(component, event, helper) {
         event.preventDefault(); // stop form submission

@@ -128,6 +128,9 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                     caseToUpdate.Phase__c = 'Esito KO da SAP';
                 } else if (outcomeData.activityType.equalsIgnoreCase('KO Pre-MDM')) {
                     caseToUpdate.Phase__c = 'Esito KO pre-MDM';
+                }else if(outcomeData.activityType.equalsIgnoreCase('Autolettura Forzata')){
+                    caseToUpdate.Phase__c = 'Esito OK da SAP';
+                    caseToUpdate.Description = 'Autolettura Forzata';
                 }
                 
                 if (mapCaseInAnnulato.containsKey(caseToUpdate.Id) && !'Esito OK da SAP'.equalsIgnoreCase(outcomeData.activityType)){
