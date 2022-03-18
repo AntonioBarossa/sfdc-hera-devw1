@@ -56,10 +56,8 @@ public with sharing class HDT_LC_ReletedListAccount {
         //HRAWRM-500 Start 04/10/2021
         List<AccountContactRelation> listAccountContactRelation = accoContRelQr.getContactsByAccountWithRoles(accountId);
         List<HDT_WRP_AccountContactRelation> lWrap = new List<HDT_WRP_AccountContactRelation>();
-
         for (AccountContactRelation temp : listAccountContactRelation) {
             HDT_WRP_AccountContactRelation n= new HDT_WRP_AccountContactRelation();
-
             n.AccountId             = temp.AccountId                ;
             n.contactId             = temp.ContactId                ;
             n.contactName           = temp.Contact.name             ;
@@ -68,9 +66,11 @@ public with sharing class HDT_LC_ReletedListAccount {
             n.contactMobilePhone    = temp.Contact.MobilePhone      ;
             n.contactEmail          = temp.Contact.Email            ;
             n.contactIndividualId   = temp.Contact.IndividualId     ;
-            n.bpInterlocutor        = temp.Contact.BPInterlocutor__c;
+          //n.bpInterlocutor        = temp.Contact.BPInterlocutor__c;
+            n.contactCode           = temp.Contact.ContactCode__c   ;
             n.endDate               = String.valueOf(temp.EndDate)  ;
             n.startDate             = String.valueOf(temp.StartDate);
+
            lWrap.add(n);
         }
         //HRAWRM-500 End 04/10/2021
@@ -99,7 +99,8 @@ public with sharing class HDT_LC_ReletedListAccount {
        public String contactMobilePhone=''  ;
        public String contactEmail=''        ;
        public String contactIndividualId='' ;
-       public String bpInterlocutor=''      ;
+     //public String bpInterlocutor=''      ;
+       public String contactCode=''         ;
        public String endDate=''             ;
        public String startDate=''           ;
     }
