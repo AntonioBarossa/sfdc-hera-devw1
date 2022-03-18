@@ -126,8 +126,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         additionalOrderItemMap = new Map<String, Map<String, String>>();
         pricebookEntryForOptionalMap = new Map<Id, Map<Id, PriceBookEntry>>();
 
-        Map<Id, Id> skuMap = new Map<Id, Id>();
-
         for(Product2 commOffer : commOfferForRetrieve){
             productCodeList.add(commOffer.ProductCode);
             versionList.add(commOffer.Version__c);
@@ -249,6 +247,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                             commOffId = orderItem.product.Id;
                             orderItem.orderItem.PriceBookEntryId = priceBookEntryMap.get(commOffId).Id;
                             orderItem.orderItem.UnitPrice = priceBookEntryMap.get(commOffId).UnitPrice;
+                            orderItem.orderItem.Quantity = 1;
                             orderItem.orderItem.Product2Id = commOffId;
                             priceBookId = priceBookEntryMap.get(commOffId).Pricebook2Id;
                             System.debug(LoggingLevel.DEBUG, '>>> pbeId offComm ' + orderItem.orderItem.PriceBookEntryId);
@@ -279,6 +278,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                                 orderItem.orderItem.Product2Id = orderItem.product.Id;
                                 orderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(orderItem.product.Id).Id;
                                 orderItem.orderItem.UnitPrice = pbeOptionalMap.get(orderItem.product.Id).UnitPrice;
+                                orderItem.orderItem.Quantity = 1;
                                 System.debug(LoggingLevel.DEBUG, '>>> pbeId pod-pdr ' + orderItem.orderItem.PriceBookEntryId);
                             } else {
                                 orderItem = null;
@@ -305,6 +305,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                             orderItem.orderItem.Product2Id = orderItem.product.Id;
                             orderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(orderItem.product.Id).Id;
                             orderItem.orderItem.UnitPrice = pbeOptionalMap.get(orderItem.product.Id).UnitPrice;
+                            orderItem.orderItem.Quantity = 1;
                             System.debug(LoggingLevel.DEBUG, '>>> pbeId aggint ' + orderItem.orderItem.PriceBookEntryId);
                         } else {
                             orderItem = null;
@@ -350,8 +351,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             for(HDT_WRP_ChildOrder childOrder : processObj.childOrderList){
                 for(HDT_WRP_OrderItem orderItem : childOrder.orderItemList){
                     orderItem.orderItem.OrderId = childOrder.childOrder.Id;                    
-                    orderItem.orderItem.Quantity = 1;
-                    //orderItem.orderItem.UnitPrice = 1;
                     orderItemToInsert.add(orderItem.orderItem);
                 }
             
@@ -456,7 +455,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private Sale__c setSaleObject(Sale__c sale, Id accountId, Id contactId){
 
         sale.Account__c = accountId;
-        //sale.sale.SalesContact__c = [SELECT Id, ContactId FROM accountContactRelation WHERE AccountId = :obj.accountId AND Roles = 'titolare' LIMIT 1].ContactId;
         sale.SalesContact__c = contactId;
         sale.Name = 'Vendita ' + accountMap.get(accountId).Name;
         sale.SalesContactRole__c = 'Titolare';
@@ -647,15 +645,15 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
     private static Id getOrderRecordTypeMap(String processName){
         Map<String, String> rtNameMap = new Map<String, String>();
-        rtNameMap.put('Switch In', 'HDT_RT_SwitchIn');
+        rtNameMap.put('SwitchIn', 'HDT_RT_SwitchIn');
         rtNameMap.put('Subentro', 'HDT_RT_Subentro');
-        rtNameMap.put('Prima Attivazione', 'HDT_RT_Attivazione');
+        rtNameMap.put('PrimaAttivazione', 'HDT_RT_Attivazione');
         rtNameMap.put('Voltura', 'HDT_RT_Voltura');
         rtNameMap.put('VAS', 'HDT_RT_VAS');
-        rtNameMap.put('Cambio Uso', 'HDT_RT_CambioUso');
-        rtNameMap.put('Cambio Offerta', 'HDT_RT_CambioOfferta');
+        rtNameMap.put('CambioUso', 'HDT_RT_CambioUso');
+        rtNameMap.put('CambioOfferta', 'HDT_RT_CambioOfferta');
         rtNameMap.put('MUC', '');
-        rtNameMap.put('Tariffe/Sconti', 'HDT_RT_ScontiBonus');
+        rtNameMap.put('TariffeSconti', 'HDT_RT_ScontiBonus');
 
         String devName = rtNameMap.get(processName);
         return Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(devName).getRecordTypeId();
