@@ -49,7 +49,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
          */
         if(((String)currentOrder.get('ProcessType__c')).equalsIgnoreCase('Switch in Fittizio'))
         {
-            List<wrts_prcgvr__Activity__c> activityDiscordante = HDT_QR_ActivityCustom.getRecordScartoDiscordante(currentOrder.Id);
+            List<wrts_prcgvr__Activity__c> activityDiscordante = HDT_QR_ActivityCustom.getRecordScartoDiscordante((String)currentOrder.get('OrderReference__c'));
             if(!activityDiscordante.isEmpty())
             {
                 throw new AuraHandledException('Prima di poter procedere alla conferma dell\'order risulta necessario chiudere l\'attivita di Gestione Dati Discordanti');
