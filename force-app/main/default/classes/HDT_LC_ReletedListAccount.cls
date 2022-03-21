@@ -61,8 +61,6 @@ public with sharing class HDT_LC_ReletedListAccount {
             HDT_WRP_AccountContactRelation n= new HDT_WRP_AccountContactRelation();
             Date endDate = temp.EndDate;
             Date startDate = temp.StartDate;
-            // String dateStr = endDate.day() + '/' + endDate.month() + '/' + endDate.year();
-            // String dateStr = startDate.day() + '/' + startDate.month() + '/' + startDate.year();
             n.AccountId             = temp.AccountId                ;
             n.contactId             = temp.ContactId                ;
             n.contactName           = temp.Contact.name             ;
@@ -71,14 +69,12 @@ public with sharing class HDT_LC_ReletedListAccount {
             n.contactMobilePhone    = temp.Contact.MobilePhone      ;
             n.contactEmail          = temp.Contact.Email            ;
             n.contactIndividualId   = temp.Contact.IndividualId     ;
-          //n.bpInterlocutor        = temp.Contact.BPInterlocutor__c;
             n.contactCode           = temp.Contact.ContactCode__c   ;
-            // n.endDate               = String.valueOf(temp.EndDate)  ;
-            // n.startDate             = String.valueOf(temp.StartDate);
             if(endDate != null && startDate != null){
             n.endDate               = String.valueOf(endDate.day() + '/' + endDate.month() + '/' + endDate.year());
             n.startDate             = String.valueOf(startDate.day() + '/' + startDate.month() + '/' + startDate.year());
             }
+            n.contactUrl            = '/lightning/r/Contact/' +temp.ContactId +'/view';
            lWrap.add(n);
         }
         //HRAWRM-500 End 04/10/2021
@@ -111,6 +107,7 @@ public with sharing class HDT_LC_ReletedListAccount {
        public String contactCode=''         ;
        public String endDate=''             ;
        public String startDate=''           ;
+       public String contactUrl=''          ;
     }
     //HRAWRM-500 End 04/10/2021
 
