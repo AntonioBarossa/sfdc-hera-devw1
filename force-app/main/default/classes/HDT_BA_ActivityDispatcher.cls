@@ -23,7 +23,8 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         'Distributor__c' => '(Case__r.DistributorName__c IN (###) OR Order__r.DistributorFormula__c IN (###))',
         'Market__c' => '(Case__r.Market__c IN (###) OR Order__r.Market__c IN (###))',
         'Vendor__c' => '(Case__r.SalesCompany__c IN (###) OR Order__r.SalesCompany__c IN (###))',
-        // 'SalesAgency__c' => 'Order__r.Agency__c IN (###)',
+        'SalesAgency__c' => 'Order__r.Agency__c IN (###)',
+        'CaseOrderCreatorGroup__c' => '(Case__r.CreatorGroup__c IN (###) OR Order__r.CreatorGroup__c IN (###))',
         'MacroProcess__c' => '(Case__r.Cluster__c IN (###) OR Order__r.Cluster__c IN (###))',
         'Process__c' => '(Case__r.Type IN (###) OR Order__r.ProcessType__c IN (###))',
         'SubProcess__c' => '(Case__r.SubProcess__c IN (###) OR Order__r.Subprocess__c IN (###))',
@@ -34,36 +35,37 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         return [
             SELECT
                 Id,
-                Type__c,
-                BPCode__c,
                 ArrearsOffice__c,
-                Segment__c,
-                Distributor__c,
-                SAPStep__c,
-                QuoteType__c,
-                SalesChannel__c,
-                SalesAgency__c,
-                CompanyOwner__c,
-                MacroProcess__c,
-                Process__c,
-                Subprocess__c,
-                Priority__c,
-                ClientMarking__c,
+                BPCode__c,
                 ClientCategory__c,
+                ClientMarking__c,
                 Commodity__c,
+                CompanyOwner__c,
                 ComplaintSeverity__c,
-                Market__c,
-                UserCreatorChannel__c,
                 CreatorAgency__c,
-                UserCreatorGroup__c,
-                OfferType__c,
+                Distributor__c,
                 FirstLevelOpinion__c,
-                SecondLevelOpinion__c,
-                Vendor__c,
-                SupplyType__c,
                 HighPriorityQueue__c,
+                LinkedEntities__c,
+                LowPriorityQueue__c,
+                MacroProcess__c,
+                Market__c,
                 MediumPriorityQueue__c,
-                LowPriorityQueue__c
+                OfferType__c,
+                Priority__c,
+                Process__c,
+                QuoteType__c,
+                SalesAgency__c,
+                SalesChannel__c,
+                SAPStep__c,
+                SecondLevelOpinion__c,
+                Segment__c,
+                Subprocess__c,
+                SupplyType__c,
+                Type__c,
+                UserCreatorChannel__c,
+                UserCreatorGroup__c,
+                Vendor__c
             FROM AssignmentRule__c
             WHERE
                 Deactivated__c = false AND
@@ -180,14 +182,18 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         List<String> query = new List<String> {'SELECT Id, wrts_prcgvr__Priority__c FROM wrts_prcgvr__Activity__c WHERE Queued__c = false AND ManuallyReassigned__c = false AND wrts_prcgvr__Priority__c != null AND wrts_prcgvr__Status__c IN (\'Aperta\')'};
         String mapping;
         String value;
-        String condition;
         // ADD EACH INDIVIDUAL WHERE CONDITION TO THE QUERY LIST
         for(String key : ruleMap.keySet()) {
-            mapping = MAPPINGS.get(key);
-            if(mapping != null) {
-                value = '\'' + ((String) ruleMap.get(key)).replace(';','\',\'') + '\'';
-                condition = mapping.replace(PLACEHOLDER, value);
-                query.add(condition);
+            if(key == 'LinkedEntities__c') {
+                for(String entityField : rule.LinkedEntities__c.split(';')) {
+                    query.add(entityField + ' != null');
+                }
+            } else  {
+                mapping = MAPPINGS.get(key);
+                if(mapping != null) {
+                    value = '\'' + ((String) ruleMap.get(key)).replace(';','\',\'') + '\'';
+                    query.add(mapping.replace(PLACEHOLDER, value));
+                }
             }
         }
         // RETURN THE UNIFIED VALUES
