@@ -219,10 +219,17 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     private static boolean isScontiBonus(Order ord){
         system.debug('entra sconti');
         List<OrderItem> items = orderItemQr.getMainItem(ord.id);
+        Set<String> familySconto = getFamilySconto();
         if(!items.isEmpty()){
             system.debug('entra sconti2');
             OrderItem itm =  items[0];
-            return getFamilySconto().contains(itm.Product2.Family);
+            for(String family : familySconto)
+            {
+                if(family.equalsIgnoreCase(itm.Product2.Family))
+                {
+                    return true;
+                }
+            }
         }
         return false;
 
