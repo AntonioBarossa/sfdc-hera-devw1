@@ -667,6 +667,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento per dati discordanti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento VSG per errata trasmissione</fullName>
             <default>false</default>
         </values>

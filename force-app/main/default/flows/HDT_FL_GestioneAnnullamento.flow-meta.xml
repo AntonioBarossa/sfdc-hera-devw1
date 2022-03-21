@@ -351,6 +351,36 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Annullamento_Voltura_Tecnica_Dati_Discordanti</name>
+        <label>Assegna Annullamento Voltura Tecnica (Dati Discordanti)</label>
+        <locationX>5056</locationX>
+        <locationY>3471</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Voltura_Tecnica_Dati_Discordanti.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullato</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Voltura_Tecnica_Dati_Discordanti.CancellationRequestDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Voltura_Tecnica_Dati_Discordanti.CancellationReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullamento per dati discordanti</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_Voltura_Tecnica_Dati_Discordanti</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Causale_Annullamento</name>
         <label>Assegna Causale Annullamento</label>
         <locationX>3436</locationX>
@@ -852,7 +882,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Annullato_0</targetReference>
+            <targetReference>Annullamento_Voltura_Tecnica_Dati_Discordanti</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -963,6 +993,63 @@
             <targetReference>Check_Discard_Rework_Ripristina_Fase_Case</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Annullamento_Voltura_Tecnica_Dati_Discordanti</name>
+        <label>Annullamento Voltura Tecnica (Dati Discordanti)</label>
+        <locationX>4679</locationX>
+        <locationY>3275</locationY>
+        <defaultConnector>
+            <targetReference>Annullato_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Processo_Switch_In</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.ProcessType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Switch in Ele</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.ProcessType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Switch in Gas</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Voltura_Tecnica_Dati_Discordanti</targetReference>
+            </connector>
+            <label>Processo Switch In</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Case_Trovati</name>
+        <label>Case Trovati?</label>
+        <locationX>5058</locationX>
+        <locationY>3359</locationY>
+        <defaultConnector>
+            <targetReference>Annullato_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Trovati</defaultConnectorLabel>
+        <rules>
+            <name>Trovati</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Voltura_Tecnica_Dati_Discordanti</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Annullamento_Voltura_Tecnica_Dati_Discordanti</targetReference>
+            </connector>
+            <label>Trovati</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_Discard_Rework_Ripristina_Fase_Case</name>
         <label>Check Discard Rework Ripristina Fase Case</label>
@@ -1822,6 +1909,34 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Voltura_Tecnica_Dati_Discordanti</name>
+        <label>Get Voltura Tecnica (Dati Discordanti)</label>
+        <locationX>5057</locationX>
+        <locationY>3226</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Case_Trovati</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Voltura Tecnica</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Order__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetOrderAggiornato_0.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetCase</name>
         <label>GetCase</label>
         <locationX>1178</locationX>
@@ -2019,6 +2134,16 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <locationX>1162</locationX>
         <locationY>3208</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_Voltura_Tecnica_Dati_Discordanti</name>
+        <label>Aggiorna Case Voltura Tecnica (Dati Discordanti)</label>
+        <locationX>4953</locationX>
+        <locationY>3566</locationY>
+        <connector>
+            <targetReference>Annullato_0</targetReference>
+        </connector>
+        <inputReference>Get_Voltura_Tecnica_Dati_Discordanti</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Causale</name>
