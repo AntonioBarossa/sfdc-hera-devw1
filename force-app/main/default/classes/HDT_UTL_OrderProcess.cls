@@ -161,6 +161,22 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 DateTime nowDateTime = DateTime.now();
                 order.PhaseStory__c = oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
             }
+            /**@frpanico 07/03/2022
+             * Aggiunta quality monitoraggio per voltura
+             */
+            if(order.Phase__c != oldOrder.Phase__c
+            && order.ProcessType__c == 'Voltura'
+            && oldOrder.Phase__c == 'In attesa validazione' 
+            && (order.Phase__c == 'Documentazione Validata')
+            && isMonitoringList.contains(order.AgencyCode__c)
+            && !phaseStory.contains('Quality Call OK')
+            )
+            {
+                String newPhase = 'In attesa di quality call';
+                order.Phase__c = newPhase;
+                DateTime nowDateTime = DateTime.now();
+                order.PhaseStory__c = oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
+            }
             /**@frpanico 04/02/2022
              * Aggiunta gestione per
              * Comfort Call
@@ -196,7 +212,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && oldOrder.Phase__c == 'In attesa di quality call' 
                 && order.Phase__c == 'Quality Call OK'
                 ){
-                String newPhase = 'Comunicazione Verso Heroku';
+                String newPhase = order.ProcessType__c == 'Voltura' ? 'Documentazione Validata' : 'Comunicazione Verso Heroku';
                 order.Phase__c = newPhase;
                 DateTime nowDateTime = DateTime.now();
                 order.PhaseStory__c = oldOrder.Phase__c+'@@'+'Quality Call OK'+'@@'+nowDateTime.getTime()+'@@A||'+ 'Quality Call OK'+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||' +oldOrder.PhaseStory__c;

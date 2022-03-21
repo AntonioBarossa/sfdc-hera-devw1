@@ -532,6 +532,11 @@
     </fieldPermissions>
     <!-- End HRADTR_GV 28/02/2022-->
     <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.BrandLogo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.IsDigitalMarking__c</field>
         <readable>true</readable>
