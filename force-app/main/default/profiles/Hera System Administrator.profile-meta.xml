@@ -7468,6 +7468,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>City__c.IsNotTransition__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>City__c.MunicipalityCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
