@@ -18,7 +18,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     */
 
     private Map<String, HDT_MassiveFieldsObjectMap__mdt> sobjectMap;
-    private List<MassiveLoaderRequestItem__c> itemsToSave;
+    private List<MassiveLoaderRequestItem__c> itemsToUpdate;
     private List<HDT_WRP_ProcessObjects> processObjList;
     private List<Product2> commOfferForRetrieve;
     private List<Product2> additionalProduct2;
@@ -26,26 +26,26 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private Map<Id, PricebookEntry> priceBookEntryMap = new Map<Id, PricebookEntry>();
     private Map<String, Product2> commOfferMap;
     private Map<String, Map<String, String>> additionalOrderItemMap;
-    List<PricebookEntry> pbeOptionalSkuList = new List<PricebookEntry>();
+    private List<PricebookEntry> pbeOptionalSkuList = new List<PricebookEntry>();
     private Map<String, String> mapAllFields;
-    List<Opportunity> opportunityToinsert = new List<Opportunity>();
-    Map<String, String> productForActivationMap;
-    Map<String, HDT_MassiveFieldsObjectMap__mdt> productForAdditionalMap ;
-    Map<String, HDT_MassiveFieldsObjectMap__mdt> wrpForStructureMap;
-    Map<Id, Map<Id, PriceBookEntry>> pricebookEntryForOptionalMap;
-    List<Id> accountIdToRetrieve;
-    List<Id> billProfToRetrieve;
-    List<Id> servPointToRetrieve;
-    Map<Id, Account> accountMap;
-    Map<Id, BillingProfile__c> billingProfileMap;
-    Map<Id, ServicePoint__c> servicePointMap;
-    Id childOrderRecordTypeId;
+    private List<Opportunity> opportunityToinsert = new List<Opportunity>();
+    private Map<String, String> productForActivationMap;
+    private Map<String, HDT_MassiveFieldsObjectMap__mdt> productForAdditionalMap ;
+    private Map<String, HDT_MassiveFieldsObjectMap__mdt> wrpForStructureMap;
+    private Map<Id, Map<Id, PriceBookEntry>> pricebookEntryForOptionalMap;
+    private List<Id> accountIdToRetrieve;
+    private List<Id> billProfToRetrieve;
+    private List<Id> servPointToRetrieve;
+    private Map<Id, Account> accountMap;
+    private Map<Id, BillingProfile__c> billingProfileMap;
+    private Map<Id, ServicePoint__c> servicePointMap;
+    private Id childOrderRecordTypeId;
 
     public override void checks(){
 
         mapFieldsObject();
 
-        itemsToSave = new List<MassiveLoaderRequestItem__c>();
+        itemsToUpdate = new List<MassiveLoaderRequestItem__c>();
         commOfferForRetrieve = new List<Product2>();
         additionalProduct2 = new List<Product2>();
         accountIdToRetrieve = new List<Id>();
@@ -88,7 +88,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 csvHeader = mapHeaderByPosition.get(count);
                 objField = mapAllFields.get(csvHeader);
 
-                if(String.isBlank(objField) && String.isBlank(tempValue)){
+                if(String.isBlank(objField) || String.isBlank(tempValue)){
                     continue;
                 }
 
@@ -96,6 +96,14 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                     switch on sobjectMap.get(csvHeader).objectType__c {
                         when 'Sale__c' {
                             convertionError = mapTypeField(processObj.sale, mapAllFields, count, tempValue);
+                        }
+                        when 'ChildOrder' {
+                            for(HDT_WRP_ChildOrder childOrder : processObj.childOrderList){
+                                convertionError = mapTypeField(childOrder.childOrder, mapAllFields, count, tempValue);
+                            }
+                        }
+                        when 'ParentOrder' {
+                            convertionError = mapTypeField(processObj.parentOrder, mapAllFields, count, tempValue);
                         }
                     }
                 }
@@ -106,6 +114,13 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                     break;
                 }
 
+            }
+
+            if(String.isNotEmpty(convertionError)){
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = convertionError;
+                itemsToUpdate.add(processObj.requestItem);
+                continue;
             }
 
             processObjList.add(processObj);
@@ -217,25 +232,64 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         List<Order> childOrderToInsert = new List<Order>();
         List<OrderItem> orderItemToInsert = new List<OrderItem>();
         List<Sale__c> saleToInsert = new List<Sale__c>();
+        List<MassiveLoaderRequestItem__c> requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
 
         Id commOffId;
         Id priceBookId;
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
+
+            if(processObj.requestItem.Status__c == 'Errore'){
+                continue;
+            }
+
             processObj.sale = setSaleObject(processObj.sale, processObj.accountId, processObj.contactId);
+            requestItemForUpsert.add(processObj.requestItem);
             saleToInsert.add(processObj.sale);
         }
 
-        HDT_UTL_DatabaseService.insertSObject(saleToInsert);
+        //HDT_UTL_DatabaseService.insertSObject(saleToInsert);
+        HDT_WRP_SaveResponse saveSaleResponse;
+        saveSaleResponse = databaseUpsert(saleToInsert, requestItemForUpsert, 'Sale__C');
+
+        requestItemForUpsert.clear();
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
+
+            if(processObj.requestItem.Status__c == 'Errore'){
+                continue;
+            }
+
+            if(saveSaleResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
+                System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c after save');
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = saveSaleResponse.errorItemMap.get(processObj.requestItem.Id);
+                continue;
+            }
+
             processObj.opportunity = setOpportunityObj(processObj.opportunity, processObj.sale, processObj.accountId);
+            requestItemForUpsert.add(processObj.requestItem);
             opportunityToinsert.add(processObj.opportunity);
         }
 
-        HDT_UTL_DatabaseService.insertSObject(opportunityToinsert);
+        //HDT_UTL_DatabaseService.insertSObject(opportunityToinsert);
+        HDT_WRP_SaveResponse saveOpportunityResponse;
+        saveOpportunityResponse = databaseUpsert(opportunityToinsert, requestItemForUpsert, 'Opportunity');
+
+        requestItemForUpsert.clear();
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
+
+            if(processObj.requestItem.Status__c == 'Errore'){
+                continue;
+            }
+
+            if(saveOpportunityResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
+                System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c after save');
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = saveOpportunityResponse.errorItemMap.get(processObj.requestItem.Id);
+                continue;
+            }
 
             for(HDT_WRP_ChildOrder childOrder : processObj.childOrderList){
                 if(childOrder.orderType.equalsIgnoreCase('Attivazione')){
@@ -288,7 +342,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
                     }
 
-                    processObj.parentOrder = createFatherOrder(childOrder.childOrder, processObj.parentOrder, processObj.sale);
+                    processObj.parentOrder = setParentOrder(childOrder.childOrder, processObj.parentOrder, processObj.sale);
                     parentOrderToInsert.add(processObj.parentOrder);
                 }
 
@@ -314,6 +368,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                     }
                 }
 
+                requestItemForUpsert.add(processObj.requestItem);
                 childOrderToInsert.add(childOrder.childOrder);
 
             }
@@ -341,16 +396,31 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             }
         }
 
-        HDT_UTL_DatabaseService.insertSObject(childOrderToInsert);
-        
-        for(Order o : childOrderToInsert){
-            System.debug(LoggingLevel.DEBUG, '>>> order Id ' + o.Id);
-        }
+        //HDT_UTL_DatabaseService.insertSObject(childOrderToInsert);
+        HDT_WRP_SaveResponse saveChildOrderResponse;
+        saveChildOrderResponse = databaseUpsert(childOrderToInsert, requestItemForUpsert, 'Order');
+
+        requestItemForUpsert.clear();
+
+        System.debug(LoggingLevel.DEBUG, '>>> order Id ' + saveChildOrderResponse.itemIdToObjId.values());
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
+
+            if(processObj.requestItem.Status__c == 'Errore'){
+                continue;
+            }
+            
+            if(saveChildOrderResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
+                System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c after save');
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = saveChildOrderResponse.errorItemMap.get(processObj.requestItem.Id);
+                continue;
+            }
+
             for(HDT_WRP_ChildOrder childOrder : processObj.childOrderList){
                 for(HDT_WRP_OrderItem orderItem : childOrder.orderItemList){
-                    orderItem.orderItem.OrderId = childOrder.childOrder.Id;                    
+                    orderItem.orderItem.OrderId = childOrder.childOrder.Id;
+                    requestItemForUpsert.add(processObj.requestItem);                    
                     orderItemToInsert.add(orderItem.orderItem);
                 }
             
@@ -358,21 +428,47 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             
         }
 
-        HDT_UTL_DatabaseService.insertSObject(orderItemToInsert);
+        //HDT_UTL_DatabaseService.insertSObject(orderItemToInsert);
+        HDT_WRP_SaveResponse saveOrderItemResponse;
+        saveOrderItemResponse = databaseUpsert(orderItemToInsert, requestItemForUpsert, 'OrderItem');
+
+        requestItemForUpsert.clear();
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
+
+            itemsToUpdate.add(processObj.requestItem);
+
+            if(processObj.requestItem.Status__c == 'Errore'){
+                continue;
+            }
+            
+            if(saveOrderItemResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
+                System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c after save');
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = saveOrderItemResponse.errorItemMap.get(processObj.requestItem.Id);
+                continue;
+            }
+
             for(HDT_WRP_ChildOrder childOrder : processObj.childOrderList){
                 if( childOrder.orderType == 'Attivazione' ){
                     childOrder.orderItemList = setRequiredByLookup(childOrder.orderItemList);
                 }
             }
-            
+
         }
 
         HDT_UTL_DatabaseService.updateSObject(orderItemToInsert);
 
         getLimitDetails('---processEnd---');
 
+    }
+
+    public override void finalUpdate(){
+        System.debug(LoggingLevel.DEBUG, 'finalUpdate');
+
+        if(itemsToUpdate.size() > 0){
+            update itemsToUpdate;
+        }
     }
 
     private static List<HDT_WRP_OrderItem> setRequiredByLookup(List<HDT_WRP_OrderItem> wrpOrderItemList){
@@ -453,30 +549,11 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     }
 
     private Sale__c setSaleObject(Sale__c sale, Id accountId, Id contactId){
-
         sale.Account__c = accountId;
         sale.SalesContact__c = contactId;
         sale.Name = 'Vendita ' + accountMap.get(accountId).Name;
         sale.SalesContactRole__c = 'Titolare';
         sale.Status__c = 'Attiva';
-        /*
-            campi impostati da csv
-            sale.Account__c
-            sale.SalesContact__c
-            //sale.AccountFiscalCode__c formula
-            //sale.AccountVAT__c formula
-            sale.Agency__c
-            sale.SalesContactRole__c = Titolare
-            sale.Status__c = Attiva
-            sale.AgencyCode__c
-            sale.VendorFirstName__c
-            sale.VendorLastName__c
-            sale.CommercialId__c
-            sale.LowerChannelAgency__c
-            sale.UpperChannelAgency__c
-            sale.Channel__c
-            sale.AreaManager__c
-        */
         return sale;
     }
 
@@ -490,12 +567,12 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         opp.Sale__c = sale.Id;
         opp.AccountId = accountId;
         opp.Name = 'Opportunity ' + sale.Name;
-        opp.StageName = 'Proposal';
-        opp.CloseDate = Date.today().addDays(20);
+        opp.StageName = 'Closed Won';
+        opp.CloseDate = Date.today();
         return opp;
     }
 
-    private Order createFatherOrder(Order childOrder, Order parentOrder, Sale__c sale){
+    private Order setParentOrder(Order childOrder, Order parentOrder, Sale__c sale){
 
         parentOrder.RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_OrderDossier').getRecordTypeId();
         parentOrder.Name = 'Ordine ' + sale.Name;
@@ -515,19 +592,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         parentOrder.AgencyCode__c = sale.AgencyCode__c;
         parentOrder.Agency__c = sale.Agency__c;
         parentOrder.AreaManager__c = sale.AreaManager__c;
-
-        /*
-        ???
         parentOrder.ServicePoint__c = childOrder.ServicePoint__c;
         parentOrder.SignatureMethod__c = childOrder.SignatureMethod__c;
         parentOrder.DocSendingMethod__c = childOrder.DocSendingMethod__c;
-        parentOrder.SignedDate__c = TRACCIATO.DataFirma;
-        parentOrder.SignMode__c = TRACCIATO.ModalitaFirma;
-        parentOrder.DocSendingMethod__c = TRACCIATO.ModalitaSpedizione;
-        parentOrder.ShippingMail__c = TRACCIATO.EmailContratto;
-        parentOrder.PhoneNumber__c = TRACCIATO.TelefonoContratto;
-        */
-
         return parentOrder;
 
     }
@@ -542,7 +609,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             wrpChildOrder.orderType = 'Attivazione';
             wrpChildOrder.childOrder = new Order();
             wrpChildOrder.childOrder.RecordTypeId = childOrderRecordTypeId;
-            wrpChildOrder.childOrder.ProcessType__c = 'Subentro Ele';
+            //wrpChildOrder.childOrder.ProcessType__c = 'Subentro Ele';
             wrpChildOrder.childOrder.AccountId = nextDataObj.accountId;
             wrpChildOrder.childOrder.ServicePoint__c = nextDataObj.servPointId;
             wrpChildOrder.childOrder.BillingProfile__c = nextDataObj.billProfId;
@@ -596,7 +663,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             wrpChildOrder.orderType = 'Aggiuntivo';
             wrpChildOrder.childOrder = new Order();
             wrpChildOrder.childOrder.RecordTypeId = childOrderRecordTypeId;
-            wrpChildOrder.childOrder.ProcessType__c = 'Subentro Ele';
+            //wrpChildOrder.childOrder.ProcessType__c = 'Subentro Ele';
             wrpChildOrder.childOrder.AccountId = nextDataObj.accountId;
             wrpChildOrder.childOrder.ServicePoint__c = nextDataObj.servPointId;
             wrpChildOrder.childOrder.BillingProfile__c = nextDataObj.billProfId;
