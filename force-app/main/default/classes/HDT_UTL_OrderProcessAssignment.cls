@@ -220,14 +220,16 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         system.debug('entra sconti');
         List<OrderItem> items = orderItemQr.getMainItem(ord.id);
         Set<String> familySconto = getFamilySconto();
-        for(String family : familySconto)
-        {
-            family.toUpperCase();
-        }
         if(!items.isEmpty()){
             system.debug('entra sconti2');
             OrderItem itm =  items[0];
-            return getFamilySconto().contains((itm.Product2.Family).toUpperCase());
+            for(String family : familySconto)
+            {
+                if(family.equalsIgnoreCase(itm.Product2.Family))
+                {
+                    return true;
+                }
+            }
         }
         return false;
 
