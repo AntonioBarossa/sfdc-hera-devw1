@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <formula>IF( ISPICKVAL(Account.Category__c , &apos;Piccoli Condomini&apos;) || ISPICKVAL(Account.Category__c , &apos;Grandi Condomini&apos;),Account.CustomerCode__c , &apos;&apos;)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>BP Interlocutore</label>
+    <label>BP</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <type>Text</type>

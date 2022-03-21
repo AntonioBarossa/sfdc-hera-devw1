@@ -57,6 +57,11 @@
         console.log('# discardRework -> '                 + discardRework);
         //Fine Gestione Risottomissione Annullamento
 
+        //Gestione Owner Activity
+        var ownerId = myPageRef.state.c__OwnerId;
+        console.log('# ownerId -> '                 + ownerId);
+        //Fine Gestione Owner Activity
+
         console.log('# attribute to run flow #');
         console.log('# caseId -> ' + caseId);
         component.set("v.recordid", caseId)
@@ -154,6 +159,11 @@
                 if (discardRework !== undefined){
                     inputVariables.push({ name : 'discardRework', type : 'Boolean', value : discardRework });
                 } 
+            }
+
+            if(processType === 'Annullamento da activity'){
+                inputVariables.push({ name : 'ProcessType', type : 'String', value : 'Annullamento prestazione' });
+                inputVariables.push({ name : 'ownerId', type : 'String', value : ownerId });
             }
 
             component.set('v.enableRefresh', true);
