@@ -423,7 +423,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     AND type__c = 'Gestione dati discordanti'
                     AND order__r.AccountId = :accountid
                     AND order__r.servicePoint__c = :servicePoint
-                    AND wrts_prcgvr__Status__c = 'Aperta'
+                    AND order__r.Phase__c = 'Annullato per Dati Discordanti'
                     WITH SECURITY_ENFORCED 
                 ];
         }
