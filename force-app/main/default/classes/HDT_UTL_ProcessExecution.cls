@@ -549,6 +549,11 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
 
     }
 
+    public static List<String> splitCsvRow(String csvRow){
+        String unescapedString = csvRow.unescapeCsv();
+        return unescapedString.split('","');
+    }
+
     public static void getLimitDetails(String stageName){
         List<String> limitList = new List<String>();
         limitList.add('>>> CpuTime: ' + String.valueOf(Limits.getCpuTime()) + ' of ' + String.valueOf(Limits.getLimitCpuTime()));
