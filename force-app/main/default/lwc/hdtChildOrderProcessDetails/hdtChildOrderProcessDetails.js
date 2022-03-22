@@ -812,6 +812,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     readingComponent.handleSaveButton();
                     this.isSavedReading = false;
                     readingComponent.isSaved = false;
+                    console.log('# Child Resume From Draft After>>> ' + this.resumeFromDraftReading);
                 })
             .catch(error => 
                 {
@@ -850,6 +851,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.loading = true;
         let currentSectionName = event.currentTarget.value;
         let currentSectionIndex = this.availableSteps.findIndex(section => section.name === currentSectionName);
+        console.log('# Child Resume From Draft After2>>> ' + this.resumeFromDraftReading);
         let nextIndex = this.availableSteps[currentSectionIndex - 1].name === 'reading' && this.resumeFromDraftReading === false
         ? currentSectionIndex - 2
         : currentSectionIndex - 1
