@@ -316,10 +316,10 @@
             <name>Check_Assegnazione</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>IsNotOwner</leftValueReference>
+                <leftValueReference>Get_Activity.isUserActivity__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -347,11 +347,6 @@
         <name>discordantDataManagement</name>
         <dataType>Boolean</dataType>
         <expression>IF(AND(TEXT({!Get_Activity.Type__c})==&quot;Gestione dati discordanti&quot;,TEXT({!Get_Activity.DiscardCategory__c})==&quot;Gestionale&quot;),true,false)</expression>
-    </formulas>
-    <formulas>
-        <name>IsNotOwner</name>
-        <dataType>Boolean</dataType>
-        <expression>IF(BEGINS({!Get_Activity.OwnerId},{!$User.Id}),false,true)</expression>
     </formulas>
     <interviewLabel>Activity - Chiusura {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Activity - Chiusura</label>
