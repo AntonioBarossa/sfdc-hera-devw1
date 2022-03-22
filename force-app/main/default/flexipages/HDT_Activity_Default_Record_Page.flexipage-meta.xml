@@ -590,6 +590,7 @@
                     <value>10</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -600,6 +601,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>HDT_LCP_CommercialRiassignButton</componentName>
+                <identifier>HDT_LCP_CommercialRiassignButton</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-f4064101-e9bf-4d96-b0b2-8267c88b08d1</name>
@@ -621,6 +623,7 @@
                     <value>Bonus Commerciale</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-73fb4124-f919-4f29-ab41-9819f01ae6f5</name>
@@ -630,6 +633,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtCopiaContrattoInvioRegConfirm</componentName>
+                <identifier>hdtCopiaContrattoInvioRegConfirm</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -664,6 +668,7 @@
                     <value>Invio Registrazione</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab2</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-502cc4d7-0832-4885-ae6a-ff97e12beb8b</name>
@@ -673,6 +678,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtCopiaContrattoInvioRecPostel</componentName>
+                <identifier>hdtCopiaContrattoInvioRecPostel</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -707,6 +713,7 @@
                     <value>Recupero Contratto Postel</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab3</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-62c8292f-63e2-42b5-9307-12ee94de3b01</name>
@@ -716,6 +723,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtCopiaContrattoInvioContratto</componentName>
+                <identifier>hdtCopiaContrattoInvioContratto</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -750,6 +758,7 @@
                     <value>Invio Copia Contratto</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab4</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-hx1tik6gvrk</name>
@@ -759,6 +768,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtActivityIvaAccise</componentName>
+                <identifier>hdtActivityIvaAccise</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
@@ -787,6 +797,7 @@
                     <value>Gestione Iva e Accise</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab5</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-7bc1e462-4b0a-431a-a5e3-55a945d7072a</name>
@@ -808,6 +819,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListContainer</componentName>
+                <identifier>force_relatedListContainer</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -822,6 +834,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Type__c</fieldItem>
+                <identifier>RecordType__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -831,6 +844,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Subject__c</fieldItem>
+                <identifier>RecordSubject__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
@@ -847,6 +861,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Account__c</fieldItem>
+                <identifier>RecordAccount__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -856,6 +871,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Case__c</fieldItem>
+                <identifier>RecordCase__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -865,6 +881,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Order__c</fieldItem>
+                <identifier>RecordOrder__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -874,6 +891,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ClosedByUsername__c</fieldItem>
+                <identifier>RecordClosedByUsername__cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -896,6 +914,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.UserCompany__c</fieldItem>
+                <identifier>RecordUserCompany__cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -918,6 +937,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.RecordingLink__c</fieldItem>
+                <identifier>RecordRecordingLink__cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
@@ -945,6 +965,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.FiscalCode__c</fieldItem>
+                <identifier>RecordFiscalCode__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
@@ -961,6 +982,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.HerokuPracticeCode__c</fieldItem>
+                <identifier>RecordHerokuPracticeCode__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
@@ -968,6 +990,16 @@
                         <rightValue>Gestione Switch in Ripristinatorio</rightValue>
                     </criteria>
                 </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.SuspensionReason__c</fieldItem>
+                <identifier>RecordSuspensionReason_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-52a62b0f-0db8-4db8-a0eb-dde5537c7162</name>
@@ -981,6 +1013,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.wrts_prcgvr__Status__c</fieldItem>
+                <identifier>Recordwrts_prcgvr__Status__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -990,6 +1023,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ActivityOutcome__c</fieldItem>
+                <identifier>RecordActivityOutcome__cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND (2 OR 3)</booleanFilter>
                     <criteria>
@@ -1017,6 +1051,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.wrts_prcgvr__Description__c</fieldItem>
+                <identifier>Recordwrts_prcgvr__Description__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1026,6 +1061,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.OpeningNote__c</fieldItem>
+                <identifier>RecordOpeningNote__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1035,6 +1071,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ClosingNote__c</fieldItem>
+                <identifier>RecordClosingNote__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1044,6 +1081,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.SendingDlManaged__c</fieldItem>
+                <identifier>RecordSendingDlManaged__cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -1066,6 +1104,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.SuspensionNote__c</fieldItem>
+                <identifier>RecordSuspensionNote__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.SuspensionNote__c}</leftValue>
@@ -1081,6 +1120,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.VATNumber__c</fieldItem>
+                <identifier>RecordVATNumber__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
@@ -1093,6 +1133,7 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.HerokuPracticeCode__c</fieldItem>
+                <identifier>RecordHerokuPracticeCode__cField2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
@@ -1100,6 +1141,16 @@
                         <rightValue>Gestione Switch in Ripristinatorio</rightValue>
                     </criteria>
                 </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.SuspensionDueDate__c</fieldItem>
+                <identifier>RecordSuspensionDueDate_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-89e09c30-566d-4833-be03-3b926e0c4b28</name>
@@ -1113,6 +1164,7 @@
                     <value>Facet-52a62b0f-0db8-4db8-a0eb-dde5537c7162</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1122,6 +1174,7 @@
                     <value>Facet-89e09c30-566d-4833-be03-3b926e0c4b28</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column2</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-eb1a4c4d-1967-4b2b-9de4-0c82ceb7a564</name>
@@ -1135,6 +1188,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.MalfunctionDate__c</fieldItem>
+                <identifier>RecordMalfunctionDate__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1144,6 +1198,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.MalfunctioningFeature__c</fieldItem>
+                <identifier>RecordMalfunctioningFeature__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1153,6 +1208,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.MalfunctionDescription__c</fieldItem>
+                <identifier>RecordMalfunctionDescription__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1162,6 +1218,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.MalfunctionsCount__c</fieldItem>
+                <identifier>RecordMalfunctionsCount__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-8b4f40b1-c9bd-4835-a849-f3d7893f8300</name>
@@ -1175,6 +1232,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ExpectedBehavior__c</fieldItem>
+                <identifier>RecordExpectedBehavior__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1184,6 +1242,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CustomerImpact__c</fieldItem>
+                <identifier>RecordCustomerImpact__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1193,6 +1252,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.OperationImpacts__c</fieldItem>
+                <identifier>RecordOperationImpacts__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1202,6 +1262,24 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.AnomalyExample__c</fieldItem>
+                <identifier>RecordAnomalyExample__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.QAdTicketNumber__c</fieldItem>
+                <identifier>RecordQAdTicketNumber_cField1</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Anomalia processo/sistema</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2a31e1b6-d56d-47e1-9f71-1aeb969f4ac9</name>
@@ -1215,6 +1293,7 @@
                     <value>Facet-8b4f40b1-c9bd-4835-a849-f3d7893f8300</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1224,6 +1303,7 @@
                     <value>Facet-2a31e1b6-d56d-47e1-9f71-1aeb969f4ac9</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column4</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-236d0c71-35c0-4b1a-8ad6-96c5912f3fd4</name>
@@ -1237,6 +1317,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ParentActivity__c</fieldItem>
+                <identifier>RecordParentActivity__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1246,11 +1327,13 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Contact__c</fieldItem>
+                <identifier>RecordContact__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.FormalChannelInCharge__c</fieldItem>
+                <identifier>RecordFormalChannelInCharge__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-d5ba7f9e-7be4-4171-baaf-6ed3484e315a</name>
@@ -1264,6 +1347,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.AppointmentDate__c</fieldItem>
+                <identifier>RecordAppointmentDate__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1273,6 +1357,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.AppoitmentTimeSlotConfirmed__c</fieldItem>
+                <identifier>RecordAppoitmentTimeSlotConfirmed__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-e418c964-b2c7-468e-a168-5b8d5eeac285</name>
@@ -1286,6 +1371,7 @@
                     <value>Facet-d5ba7f9e-7be4-4171-baaf-6ed3484e315a</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column5</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1295,6 +1381,7 @@
                     <value>Facet-e418c964-b2c7-468e-a168-5b8d5eeac285</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column6</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-cd708223-3bfb-4cfe-b534-cfde45a95a08</name>
@@ -1308,6 +1395,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.AppointmentCode__c</fieldItem>
+                <identifier>RecordAppointmentCode__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1317,6 +1405,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.AppointmentDateToConfirm__c</fieldItem>
+                <identifier>RecordAppointmentDateToConfirm__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.isAtoA__c}</leftValue>
@@ -1333,6 +1422,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.AppointmentTimeSlotToConfirm__c</fieldItem>
+                <identifier>RecordAppointmentTimeSlotToConfirm__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.isAtoA__c}</leftValue>
@@ -1349,6 +1439,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.AppointmentDate__c</fieldItem>
+                <identifier>RecordAppointmentDate__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1358,6 +1449,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.AppoitmentTimeSlotConfirmed__c</fieldItem>
+                <identifier>RecordAppoitmentTimeSlotConfirmed__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1367,6 +1459,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.URL__c</fieldItem>
+                <identifier>RecordURL__cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -1393,6 +1486,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.AppointmentCompetence__c</fieldItem>
+                <identifier>RecordAppointmentCompetence__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1402,6 +1496,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.isSelfAppointment__c</fieldItem>
+                <identifier>RecordisSelfAppointment__cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -1424,6 +1519,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.MaxDateModificationAppointment__c</fieldItem>
+                <identifier>RecordMaxDateModificationAppointment__cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -1446,6 +1542,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.MaxTimeModificationAppointment__c</fieldItem>
+                <identifier>RecordMaxTimeModificationAppointment__cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -1468,6 +1565,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.AppointmentResultCode__c</fieldItem>
+                <identifier>RecordAppointmentResultCode__cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                     <criteria>
@@ -1505,6 +1603,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Note__c</fieldItem>
+                <identifier>RecordNote__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.isAtoA__c}</leftValue>
@@ -1517,6 +1616,7 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.AppointmentOutcome__c</fieldItem>
+                <identifier>RecordAppointmentOutcome__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.AppointmentOutcome__c}</leftValue>
@@ -1536,6 +1636,7 @@
                     <value>Facet-92caf3f0-d634-4041-a98b-0e0f117d3553</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column7</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1545,6 +1646,7 @@
                     <value>Facet-b9b5c7cf-4a59-410a-b0ae-6275ef133cf3</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column8</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-04bdcb90-d514-454f-9739-893304ff9b28</name>
@@ -1558,6 +1660,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CreditCheckResults__c</fieldItem>
+                <identifier>RecordCreditCheckResults__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1567,6 +1670,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CreditCheckReason__c</fieldItem>
+                <identifier>RecordCreditCheckReason__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1576,6 +1680,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CreditCheckResolutionReason__c</fieldItem>
+                <identifier>RecordCreditCheckResolutionReason__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
@@ -1596,6 +1701,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Reason__c</fieldItem>
+                <identifier>RecordReason__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
@@ -1612,6 +1718,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Account__c</fieldItem>
+                <identifier>RecordAccount__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1621,6 +1728,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Note__c</fieldItem>
+                <identifier>RecordNote__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-1865a7d2-9cba-4b02-b8f6-1a02d2b4f89a</name>
@@ -1634,6 +1742,7 @@
                     <value>Facet-2ec7406d-2c28-4619-94f8-33ab969318d6</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column9</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1643,6 +1752,7 @@
                     <value>Facet-1865a7d2-9cba-4b02-b8f6-1a02d2b4f89a</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column10</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-abc13f34-1276-4e08-99d8-94b8f75d4523</name>
@@ -1656,6 +1766,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.DiscardDescription__c</fieldItem>
+                <identifier>RecordDiscardDescription__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1665,6 +1776,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.FiscalCode__c</fieldItem>
+                <identifier>RecordFiscalCode__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1674,6 +1786,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ServicePointCode__c</fieldItem>
+                <identifier>RecordServicePointCode__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-409a8fcf-87d8-4898-ab11-dc1ea4565ed2</name>
@@ -1687,6 +1800,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.DiscardCode__c</fieldItem>
+                <identifier>RecordDiscardCode__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1696,6 +1810,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ExternalId__c</fieldItem>
+                <identifier>RecordExternalId__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1705,6 +1820,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CreatedByUsername__c</fieldItem>
+                <identifier>RecordCreatedByUsername__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-11abb66d-f5ac-4019-8ccd-da53a634cc7b</name>
@@ -1718,6 +1834,7 @@
                     <value>Facet-409a8fcf-87d8-4898-ab11-dc1ea4565ed2</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column11</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1727,6 +1844,7 @@
                     <value>Facet-11abb66d-f5ac-4019-8ccd-da53a634cc7b</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column12</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-acf547ff-952f-4198-a2d8-4fe8d2aba460</name>
@@ -1740,6 +1858,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ReminderCount__c</fieldItem>
+                <identifier>RecordReminderCount__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-f92f59b7-7518-4adb-ae37-f8532ab079d4</name>
@@ -1753,6 +1872,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ReminderLastDate__c</fieldItem>
+                <identifier>RecordReminderLastDate__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-b3465a46-aec8-4644-b6ae-baf5e27121aa</name>
@@ -1766,6 +1886,7 @@
                     <value>Facet-f92f59b7-7518-4adb-ae37-f8532ab079d4</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column13</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1775,6 +1896,7 @@
                     <value>Facet-b3465a46-aec8-4644-b6ae-baf5e27121aa</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column14</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-3261c2c2-fddf-4932-ba41-9e3235d067de</name>
@@ -1788,6 +1910,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.WorkGroup__c</fieldItem>
+                <identifier>RecordWorkGroup__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1797,11 +1920,13 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Queue__c</fieldItem>
+                <identifier>RecordQueue__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.OwnerId</fieldItem>
+                <identifier>RecordOwnerIdField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-a122172c-02bb-4921-884e-6c5aa9b666da</name>
@@ -1815,6 +1940,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.AssignmentRule__c</fieldItem>
+                <identifier>RecordAssignmentRule__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1824,6 +1950,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.LastAssignmentDate__c</fieldItem>
+                <identifier>RecordLastAssignmentDate__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1833,6 +1960,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.wrts_prcgvr__Priority__c</fieldItem>
+                <identifier>Recordwrts_prcgvr__Priority__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-26fb2eaf-3b02-4253-a217-9933edf75253</name>
@@ -1846,6 +1974,7 @@
                     <value>Facet-a122172c-02bb-4921-884e-6c5aa9b666da</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column15</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1855,6 +1984,7 @@
                     <value>Facet-26fb2eaf-3b02-4253-a217-9933edf75253</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column16</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-48968a13-7701-4552-96ac-41cace52848f</name>
@@ -1868,6 +1998,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.DueDate__c</fieldItem>
+                <identifier>RecordDueDate__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1877,6 +2008,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ActivityStartTime__c</fieldItem>
+                <identifier>RecordActivityStartTime__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1886,6 +2018,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Note__c</fieldItem>
+                <identifier>RecordNote__cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1895,6 +2028,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CampaignExecChannel__c</fieldItem>
+                <identifier>RecordCampaignExecChannel__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-06bbb030-aa2f-49ff-9d4a-0f204df00832</name>
@@ -1908,6 +2042,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.IBMUnicaCampaignCreationDate__c</fieldItem>
+                <identifier>RecordIBMUnicaCampaignCreationDate__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1917,6 +2052,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ActivityEndTime__c</fieldItem>
+                <identifier>RecordActivityEndTime__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1926,6 +2062,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.wrts_prcgvr__IsRequired__c</fieldItem>
+                <identifier>Recordwrts_prcgvr__IsRequired__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-06eb8a61-048a-48c2-b2c6-ed0249776397</name>
@@ -1939,6 +2076,7 @@
                     <value>Facet-06bbb030-aa2f-49ff-9d4a-0f204df00832</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column17</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1948,6 +2086,7 @@
                     <value>Facet-06eb8a61-048a-48c2-b2c6-ed0249776397</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column18</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-6950295a-6426-4e69-8c1b-ffe9478cbc5d</name>
@@ -1961,6 +2100,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CreatedByUsername__c</fieldItem>
+                <identifier>RecordCreatedByUsername__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1970,6 +2110,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.EnvelopeId__c</fieldItem>
+                <identifier>RecordEnvelopeId__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1979,6 +2120,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.IdSiebelActivity__c</fieldItem>
+                <identifier>RecordIdSiebelActivity__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1988,6 +2130,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.RowIdSiebel__c</fieldItem>
+                <identifier>RecordRowIdSiebel__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1997,6 +2140,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.DistributorFirstDate__c</fieldItem>
+                <identifier>RecordDistributorFirstDate__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2006,6 +2150,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ConnectionID__c</fieldItem>
+                <identifier>RecordConnectionID__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2015,6 +2160,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.QAdCallID__c</fieldItem>
+                <identifier>RecordQAdCallID__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2024,6 +2170,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.QAdWorkstationID__c</fieldItem>
+                <identifier>RecordQAdWorkstationID__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2033,6 +2180,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Cluster__c</fieldItem>
+                <identifier>RecordCluster__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2042,6 +2190,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Place__c</fieldItem>
+                <identifier>RecordPlace__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2051,6 +2200,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.PlanEndDate__c</fieldItem>
+                <identifier>RecordPlanEndDate__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-4ac963bf-b4b5-4727-a5bc-8f23fa4f7a3c</name>
@@ -2064,6 +2214,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Documentation__c</fieldItem>
+                <identifier>RecordDocumentation__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2073,6 +2224,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.OwnedByUser__c</fieldItem>
+                <identifier>RecordOwnedByUser__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2082,6 +2234,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.AppointmentDate__c</fieldItem>
+                <identifier>RecordAppointmentDate__cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2091,6 +2244,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.AppoitmentTimeSlotConfirmed__c</fieldItem>
+                <identifier>RecordAppoitmentTimeSlotConfirmed__cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2100,6 +2254,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.BPCode__c</fieldItem>
+                <identifier>RecordBPCode__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2109,6 +2264,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.QAdOfficeID__c</fieldItem>
+                <identifier>RecordQAdOfficeID__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2118,6 +2274,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CreditCheckResults__c</fieldItem>
+                <identifier>RecordCreditCheckResults__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2127,6 +2284,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Process__c</fieldItem>
+                <identifier>RecordProcess__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2136,6 +2294,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.PlanStartDate__c</fieldItem>
+                <identifier>RecordPlanStartDate__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2145,6 +2304,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.SuspensionDate__c</fieldItem>
+                <identifier>RecordSuspensionDate__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-4891ef86-4e1b-4b83-8b97-acc186af43e3</name>
@@ -2158,6 +2318,7 @@
                     <value>Facet-4ac963bf-b4b5-4727-a5bc-8f23fa4f7a3c</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column19</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -2167,6 +2328,7 @@
                     <value>Facet-4891ef86-4e1b-4b83-8b97-acc186af43e3</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column20</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-ae0fbe87-2330-479b-816e-288f306c5521</name>
@@ -2184,6 +2346,7 @@
                     <value>Principale</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -2197,6 +2360,7 @@
                     <value>Dettagli Malfunzionamento</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
@@ -2217,6 +2381,7 @@
                     <value>Informazioni Comunicazione Distributore</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection3</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
@@ -2237,6 +2402,7 @@
                     <value>Dati Appuntamento</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection4</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
@@ -2257,6 +2423,7 @@
                     <value>Dati Credit Check</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection5</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
@@ -2283,6 +2450,7 @@
                     <value>Informazioni Scarto</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection6</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
@@ -2309,6 +2477,7 @@
                     <value>Solleciti</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection7</identifier>
                 <visibilityRule>
                     <booleanFilter>(1 AND 2 AND 3) OR 4</booleanFilter>
                     <criteria>
@@ -2345,6 +2514,7 @@
                     <value>Assegnazione</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection8</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2 AND 3</booleanFilter>
                     <criteria>
@@ -2376,6 +2546,7 @@
                     <value>Altre informazioni</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection9</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -2389,6 +2560,7 @@
                     <value>Migrazione</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection10</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.IsMigrated__c}</leftValue>
@@ -2414,6 +2586,7 @@
                     <value>Standard.Tab.relatedLists</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>relatedListsTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -2431,6 +2604,7 @@
                     <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>detailTab</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -2441,6 +2615,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtCommercialRiassignButton</componentName>
+                <identifier>hdtCommercialRiassignButton</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -2463,6 +2638,7 @@
                     <value>Facet-73fb4124-f919-4f29-ab41-9819f01ae6f5</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -2485,6 +2661,7 @@
                     <value>Facet-502cc4d7-0832-4885-ae6a-ff97e12beb8b</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset2</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -2507,6 +2684,7 @@
                     <value>Facet-62c8292f-63e2-42b5-9307-12ee94de3b01</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset3</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -2529,6 +2707,7 @@
                     <value>Facet-hx1tik6gvrk</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset4</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -2551,6 +2730,7 @@
                     <value>Facet-7bc1e462-4b0a-431a-a5e3-55a945d7072a</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset5</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
@@ -2567,6 +2747,7 @@
                     <value>maintabs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset6</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -2577,6 +2758,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtDocumentActivityValidation</componentName>
+                <identifier>hdtDocumentActivityValidation</identifier>
                 <visibilityRule>
                     <booleanFilter>(1 OR 2) AND (3 OR 4 OR 5 OR ( 7 AND 8 )) AND 6</booleanFilter>
                     <criteria>
@@ -2625,6 +2807,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtAppointmentHandler</componentName>
+                <identifier>hdtAppointmentHandler</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
                     <criteria>
@@ -2658,6 +2841,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtAppointmentExtraSist</componentName>
+                <identifier>hdtAppointmentExtraSist</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8</booleanFilter>
                     <criteria>
@@ -2706,6 +2890,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtAccountSelector</componentName>
+                <identifier>hdtAccountSelector</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
@@ -2724,6 +2909,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>HDT_LCP_RegistryAcquisitionForm</componentName>
+                <identifier>HDT_LCP_RegistryAcquisitionForm</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
                     <criteria>
@@ -2752,6 +2938,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
+                <identifier>runtime_sales_activities_activityPanel</identifier>
                 <visibilityRule>
                     <booleanFilter>(1 OR (2 AND 3 AND 4)) AND 5</booleanFilter>
                     <criteria>
@@ -2805,6 +2992,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR (2 AND 3) OR 4</booleanFilter>
                     <criteria>
