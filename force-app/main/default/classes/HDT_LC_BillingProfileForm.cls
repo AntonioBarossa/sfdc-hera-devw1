@@ -165,6 +165,16 @@ public inherited sharing class HDT_LC_BillingProfileForm {
 
        billingProfile.AccountClass__c = mapCustMarkToAccClass.get(acc.CustomerMarking__c);
 
+       /**@frpanico 2022-03-16
+        * Gestione clona BillingProfile
+        * Se il CA è valorizzato va sbiancato in quanto
+        * il CA è un campo univoco
+        */
+        if(String.isNotEmpty((String)billingProfile.get('ContractAccountCode__c')))
+        {
+            billingProfile.ContractAccountCode__c = '';
+        }
+
         return billingProfileSrv.createRecord(billingProfile);
     }
 

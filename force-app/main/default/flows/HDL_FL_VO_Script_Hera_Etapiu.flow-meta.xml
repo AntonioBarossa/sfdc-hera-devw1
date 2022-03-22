@@ -177,6 +177,24 @@
         </rules>
     </decisions>
     <formulas>
+        <name>PrezzoLordoFormula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}*1.102</expression>
+        <scale>6</scale>
+    </formulas>
+    <formulas>
+        <name>PrezzoLordoPieneFormula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePick__c}*1.102</expression>
+        <scale>6</scale>
+    </formulas>
+    <formulas>
+        <name>PrezzoLordoVuoteFormula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePickOut__c}*1.102</expression>
+        <scale>6</scale>
+    </formulas>
+    <formulas>
         <name>ProfiloCalcolato_Famiglie</name>
         <dataType>String</dataType>
         <expression>IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;24&quot;), &quot;24&quot;, 
@@ -304,7 +322,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text8_0</name>
-            <fieldText>&lt;p&gt;&amp;nbsp;Il profilo Sole- Luna prevede un prezzo applicato alla componente energia biorario, differenziato cioè tra ore piene ed ore vuote.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Le ore piene, sono quelle dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali. Le ore vuote sono invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Il prezzo della componente energia assumerà il valore di 0,1708 €/kWh nelle ore piene e 0,1543 €/kWh nelle ore vuote.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: Ore Piene: 0,155 €/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Ore Vuote: 0,140 €/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&amp;nbsp;Il profilo Sole- Luna prevede un prezzo applicato alla componente energia biorario, differenziato cioè tra ore piene ed ore vuote.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Le ore piene, sono quelle dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali. Le ore vuote sono invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Il prezzo della componente energia assumerà il valore di {!PrezzoLordoPieneFormula}€/kWh nelle ore piene e {!PrezzoLordoVuoteFormula}€/kWh nelle ore vuote.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: Ore Piene: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePick__c} €/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Ore Vuote: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePickOut__c}€/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -326,7 +344,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text9_0</name>
-            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà il valore di 0,1598 €/kWh.&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a: 0,145 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà il valore di {!PrezzoLordoFormula}€/kWh.&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}€/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -392,7 +410,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text8_0_0</name>
-            <fieldText>&lt;p&gt;Il profilo Sole- Luna prevede un prezzo applicato alla componente energia biorario, differenziato cioè tra ore piene ed ore vuote.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Le ore piene, sono quelle dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali. Le ore vuote sono invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Il prezzo della componente energia assumerà il valore di 0,1708 €/kWh nelle ore piene e 0,1543 €/kWh nelle ore vuote.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: Ore Piene: 0,155 €/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Ore Vuote: 0,140 €/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo Sole- Luna prevede un prezzo applicato alla componente energia biorario, differenziato cioè tra ore piene ed ore vuote.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Le ore piene, sono quelle dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali. Le ore vuote sono invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Il prezzo della componente energia assumerà il valore di {!PrezzoLordoPieneFormula}€/kWh nelle ore piene e {!PrezzoLordoVuoteFormula}€/kWh nelle ore vuote.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: Ore Piene: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePick__c}€/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Ore Vuote: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePickOut__c}€/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -414,7 +432,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text9_0_0</name>
-            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà il valore di 0,1598 €/kWh.&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a: 0,145 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà il valore di {!PrezzoLordoFormula}€/kWh.&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}€/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -480,7 +498,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text7</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente gas naturale, per il periodo di fornitura, è pari a 0,690 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente gas naturale, per il periodo di fornitura, è pari a {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}€/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -536,7 +554,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text7_0</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente gas naturale, per il periodo di fornitura, è pari a 0,690 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente gas naturale, per il periodo di fornitura, è pari a {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}€/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>

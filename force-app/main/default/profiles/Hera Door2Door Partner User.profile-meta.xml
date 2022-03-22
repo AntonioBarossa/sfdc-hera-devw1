@@ -541,6 +541,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.NumeratorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.IsWrongFiscalData__c</field>
         <readable>true</readable>
@@ -677,6 +682,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.NumeratorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.AnnualWithdrawal__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -698,6 +708,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.Cs1Outcome__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.reportPhase__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1778,6 +1793,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.SendMode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.ShareforAppointment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4952,6 +4972,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.ShareforAppointment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.AccountClass__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7383,6 +7408,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>City__c.BelfioreCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>City__c.IsNotTransition__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -35086,6 +35116,22 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>ScriptConfig__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>SiebelContact__x</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>SiebelContractAttribute__x</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>SiebelCustomer__x</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>SiebelCustomers__x</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

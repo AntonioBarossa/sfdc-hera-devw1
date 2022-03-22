@@ -359,6 +359,7 @@ export default class HdtSelfReading extends LightningElement {
                 } else if (key.startsWith('herLettura') && lastReadings[key] != null) {
                     let reading = lastReadings[key];
                     reading = reading.split('.').join('');  // rimuoviamo il separatore delle migliaia per poter parsare come int.
+                    reading = reading.replace(/,/g, '.');
                     registers[i].readingOldValue = reading;
                 } else if (key.startsWith('herUnitaDiMisura')) {
                     registers[i].readingUnit = lastReadings[key];

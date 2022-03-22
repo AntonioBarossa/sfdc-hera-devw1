@@ -237,6 +237,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                String.valueOf(recordCase.get('Subprocess__c')).equalsIgnoreCase('Errore Stima Consumi')){
                 nextPhase = 'Pratica In Attesa';
                 currentCase.Description = errDescr;
+            }else if(String.valueOf(recordCase.get('Type')).containsIgnoreCase('Autolettura') && String.isNotBlank(activity) && (activity.equalsIgnoreCase('Esito ricevuto su richiesta chiusa') || activity.equalsIgnoreCase('Eliminato esito in scarto'))){
+                String description = String.isNotBlank(recordCase.Description)?recordCase.Description:'';
+                currentCase.Description = errDescr + '\n' + description;
             }
             else{
                 HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase,mapActivityField);
@@ -388,8 +391,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Description = newDescription + '\n' + currentDescription;
             }
 
-            //Il currentCase.Phase__c viene modificato all'inizio di questo ramo dell'if, ed è valorizzato con il nextPhase
-            if('Validazione OK DL simulata'.equalsIgnoreCase(currentCase.Phase__c) || 'Validazione OK DL'.equalsIgnoreCase(currentCase.Phase__c)){
+            //Creare attività solo se esito successivo ad annullato
+            if(('Validazione OK DL simulata'.equalsIgnoreCase(currentCase.Phase__c) || 'Validazione OK DL'.equalsIgnoreCase(currentCase.Phase__c)) && 'Annullato'.equalsIgnoreCase(currentPhase)){
                 createActivity(currentCase.Id,null, 'Gestione M01/M02', 'Gestione M01/M02', 'Gestione M01/M02');
                 //Se la fase è in Annullato allora non viene cambiata.
                 if ('Annullato'.equalsIgnoreCase(currentPhase)){
