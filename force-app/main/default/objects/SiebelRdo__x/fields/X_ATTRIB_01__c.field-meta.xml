@@ -4,6 +4,7 @@
     <description>X_ATTRIB_01</description>
     <externalDeveloperName>X_ATTRIB_01</externalDeveloperName>
     <externalId>false</externalId>
+    <inlineHelpText>In caso di disattivazione per SWITCH OUT ignorare la descrizione contenuta nel campo. Prendere a riferimento percentuale IVA del cliente</inlineHelpText>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
