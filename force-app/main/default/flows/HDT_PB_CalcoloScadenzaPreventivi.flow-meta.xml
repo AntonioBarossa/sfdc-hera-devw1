@@ -303,7 +303,7 @@
                 <stringValue>TODAY() + 90</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_A1_4419361366</name>
+        <name>formula_2_myRule_1_A1_1289320744</name>
         <dataType>Date</dataType>
         <expression>TODAY() + 90</expression>
     </formulas>
@@ -311,7 +311,7 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>IF([Case].QuotationType__c != &apos;Analitico&apos;,
+                <stringValue>IF( NOT(ISBLANK( [Case].QuotationType__c))  &amp;&amp;  [Case].QuotationType__c != &apos;Analitico&apos;,
     IF(OR(
              CONTAINS([Case].DistributorName__c, &quot;E-D&quot;),
              CONTAINS([Case].Distributor__r.Name , &quot;E-D&quot;)
@@ -324,9 +324,9 @@
 </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_6_myRule_4_A1_1865290259</name>
+        <name>formula_6_myRule_4_A1_8475124519</name>
         <dataType>Date</dataType>
-        <expression>IF({!myVariable_current.QuotationType__c} != &apos;Analitico&apos;,
+        <expression>IF( NOT(ISBLANK( {!myVariable_current.QuotationType__c}))  &amp;&amp;  {!myVariable_current.QuotationType__c} != &apos;Analitico&apos;,
     IF(OR(
              CONTAINS({!myVariable_current.DistributorName__c}, &quot;E-D&quot;),
              CONTAINS({!myVariable_current.Distributor__r.Name} , &quot;E-D&quot;)
@@ -337,7 +337,7 @@
         ) , null
     )</expression>
     </formulas>
-    <interviewLabel>HDT_PB_CalcoloScadenzaPreventivi-12_InterviewLabel</interviewLabel>
+    <interviewLabel>HDT_PB_CalcoloScadenzaPreventivi-8_InterviewLabel</interviewLabel>
     <label>Calcolo Scadenza Preventivi</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -429,7 +429,7 @@
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -440,7 +440,7 @@
             </processMetadataValues>
             <field>ExpirationDate__c</field>
             <value>
-                <elementReference>formula_2_myRule_1_A1_4419361366</elementReference>
+                <elementReference>formula_2_myRule_1_A1_1289320744</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -510,7 +510,7 @@
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -521,7 +521,7 @@
             </processMetadataValues>
             <field>QuotationValidityDate__c</field>
             <value>
-                <elementReference>formula_6_myRule_4_A1_1865290259</elementReference>
+                <elementReference>formula_6_myRule_4_A1_8475124519</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
