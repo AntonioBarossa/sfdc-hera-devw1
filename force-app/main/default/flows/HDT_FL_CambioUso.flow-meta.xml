@@ -5,30 +5,30 @@
         <name>Assegna_Variabili</name>
         <label>Assegna Variabili</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
-            <assignToReference>getCaseFromIdIputVariable.CausalCode__c</assignToReference>
+            <assignToReference>Get_Case_Aggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>CalcolaCodiceCausale.CausalCode__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCaseFromIdIputVariable.OperationCode__c</assignToReference>
+            <assignToReference>Get_Case_Aggiornato.OperationCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>CalcolaCodiceCausale.OperationCode__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCaseFromIdIputVariable.Status</assignToReference>
+            <assignToReference>Get_Case_Aggiornato.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCaseFromIdIputVariable.Phase__c</assignToReference>
+            <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Da Inviare</stringValue>
@@ -38,11 +38,153 @@
             <targetReference>Aggiorna_Case</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>AssignMissingFields</name>
+        <label>AssignMissingFields</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.SalesCompanyCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.SalesCompanyCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.SalesCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.ServicePointType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.ImplantType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.RateCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.RateCategory__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.TaxRate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.VAT__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.Resident__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.Resident__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.IbanCIN_IBAN__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.IbanCIN_IBAN__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.IbanCIN__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.IbanCIN__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.IbanABI__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.IbanABI__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.IbanCAB__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.IbanCAB__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.IbanCodeNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.IbanCodeNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.Disconnectable__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.Disconnectable__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.DisconnectibilityType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.DisconnectibilityType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.IbanIsForeign__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.IbanIsForeign__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.DistributorCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.DistributorCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.TensionOption__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.RequestOption__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.AtecoCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.AtecoCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.SupplyType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.SupplyType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.BillingProfile__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedOrder.BillingProfile__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Quale_Azione</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Quale_Azione</name>
         <label>Quale Azione?</label>
         <locationX>314</locationX>
-        <locationY>398</locationY>
+        <locationY>758</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -114,7 +256,7 @@
         <name>CalcolaCodiceCausale</name>
         <label>CalcolaCodiceCausale</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Variabili</targetReference>
@@ -146,6 +288,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Case_Aggiornato</name>
+        <label>Get Case Aggiornato</label>
+        <locationX>314</locationX>
+        <locationY>398</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>GetRelatedOrder</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getCaseFromIdIputVariable.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getCaseFromIdIputVariable</name>
         <label>getCaseFromIdIputVariable</label>
         <locationX>314</locationX>
@@ -166,12 +329,33 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetRelatedOrder</name>
+        <label>GetRelatedOrder</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssignMissingFields</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.Order__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
-        <inputReference>getCaseFromIdIputVariable</inputReference>
+        <locationY>1118</locationY>
+        <inputReference>Get_Case_Aggiornato</inputReference>
     </recordUpdates>
     <screens>
         <name>Edit_Form</name>
@@ -182,7 +366,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Quale_Azione</targetReference>
+            <targetReference>Get_Case_Aggiornato</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader</name>
@@ -290,7 +474,7 @@
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
         <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationY>878</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
