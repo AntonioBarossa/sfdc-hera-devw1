@@ -56,8 +56,8 @@
         //Fine Gestione Risottomissione Annullamento
 
         //Gestione Owner Activity
-        var ownerId = myPageRef.state.c__OwnerId;
-        console.log('# ownerId -> '                 + ownerId);
+        var isUserActivity = myPageRef.state.c__IsUserActivity;
+        console.log('# isUserActivity -> '                 + isUserActivity);
         //Fine Gestione Owner Activity
         console.log('# context -> '                 + context);
         console.log('# accId -> '                   + accId);
@@ -144,7 +144,7 @@
                         c__discardRework: discardRework,
                         c__campaignMemberId: campaignMemberId,
                         //Gestione Owner Activity
-                        c__OwnerId:ownerId
+                        c__IsUserActivity:isUserActivity
                     }
                 },
                 focus: true
