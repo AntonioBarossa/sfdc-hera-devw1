@@ -124,14 +124,14 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             return '';
         }
         
-        String contractCode = HDT_UTL_DocumentalManagement.getValue('Order', 'ContractId', 1, inputs, formParams);
+        String contractCode = HDT_UTL_DocumentalManagement.getValue('Order', 'ContractId', 0, inputs, formParams);
         if(String.isNotBlank(contractCode)){
             return '';
         }
         
-        String accountAddress = HDT_UTL_DocumentalManagement.getValue('Order', 'ResidentialStreetName__c', 1, inputs, formParams);
-        /*String deliveryAddress = */HDT_UTL_DocumentalManagement.getValue('Order', 'ShippingStreetName__c', 1, inputs, formParams);
-        String supplyAddress = HDT_UTL_DocumentalManagement.getValue('Order', 'SupplyStreetName__c', 1, inputs, formParams);
+        String accountAddress = HDT_UTL_DocumentalManagement.getValue('Order', 'ResidentialStreetName__c', 0, inputs, formParams);
+        /*String deliveryAddress = */HDT_UTL_DocumentalManagement.getValue('Order', 'ShippingStreetName__c', 0, inputs, formParams);
+        String supplyAddress = HDT_UTL_DocumentalManagement.getValue('Order', 'SupplyStreetName__c', 0, inputs, formParams);
         if(supplyAddress.equalsIgnoreCase(supplyAddress)){
             return 'IF';
         }
