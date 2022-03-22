@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Data inizio contratto/Disattivazione Da Eseguire Non Prima Del</label>
+    <label>DataInizio Contr/DisatDaEsegNonPrimaDel</label>
     <required>false</required>
     <type>Date</type>
 </CustomField>
