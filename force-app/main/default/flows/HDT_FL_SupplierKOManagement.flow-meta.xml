@@ -26,7 +26,7 @@
         <name>Redirect_To_Case</name>
         <label>Redirect To Case</label>
         <locationX>578</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -176,7 +176,7 @@
         <locationX>578</locationX>
         <locationY>878</locationY>
         <connector>
-            <targetReference>Redirect_To_Case</targetReference>
+            <targetReference>Work_Case</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Errore_Creazione_Case</targetReference>
@@ -263,6 +263,33 @@
             <field>Id</field>
         </outputAssignments>
     </recordLookups>
+    <recordUpdates>
+        <name>Work_Case</name>
+        <label>Work Case</label>
+        <locationX>578</locationX>
+        <locationY>998</locationY>
+        <connector>
+            <targetReference>Redirect_To_Case</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Errore_Creazione_Case_0</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>newCase.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <screens>
         <name>Empty_Record_Id</name>
         <label>Empty Record Id</label>
@@ -282,7 +309,7 @@
     <screens>
         <name>Errore_Chiusura_Activity</name>
         <label>Errore Chiusura Activity</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -298,14 +325,30 @@
     <screens>
         <name>Errore_Creazione_Case</name>
         <label>Errore Creazione Case</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>998</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>ErrorMessage</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px; color: rgb(255, 0, 0);&quot;&gt;﻿&lt;/b&gt;&lt;b style=&quot;font-size: 12px; color: rgb(255, 0, 0);&quot;&gt;Attenzione!&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Si è verificato il seguente errore durante la creazine del case:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(255, 0, 0); font-size: 14px;&quot;&gt;﻿&lt;/b&gt;&lt;b style=&quot;color: rgb(255, 0, 0); font-size: 12px;&quot;&gt;Attenzione!&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Si è verificato il seguente errore durante la creazione del case:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Errore_Creazione_Case_0</name>
+        <label>Errore Creazione Case</label>
+        <locationX>842</locationX>
+        <locationY>1118</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ErrorMessage_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(255, 0, 0); font-size: 14px;&quot;&gt;﻿&lt;/b&gt;&lt;b style=&quot;color: rgb(255, 0, 0); font-size: 12px;&quot;&gt;Attenzione!&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Si è verificato il seguente errore durante l&apos;aggiornamento del case:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>

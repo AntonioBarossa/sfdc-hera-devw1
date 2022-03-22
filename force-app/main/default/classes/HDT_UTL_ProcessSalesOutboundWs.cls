@@ -117,7 +117,7 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
 
                     servicePointToUpdate.add(servPointFromWs);
 
-                    singleItem.Status__c = 'Chiuso';
+                    //singleItem.Status__c = 'Chiuso';
                     requestItemForUpsert.add(singleItem);
                 }
 

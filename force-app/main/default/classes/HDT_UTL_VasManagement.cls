@@ -74,9 +74,9 @@ public with sharing class HDT_UTL_VasManagement {
             ContractReference__r.SAPContractCode__c,OrderReference__c,ContractReference__c,ContractReference__r.ServicePoint__r.ServicePointCode__c,
             OrderReference__r.ServicePointCodeFormula__c,SBQQ__Quote__r.SBQQ__ListAmount__c, SBQQ__Quote__r.SBQQ__TotalCustomerDiscountAmount__c,
             SBQQ__Quote__r.SBQQ__PriceBook__r.Name, SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
-            CommercialProductLink__r.FreeVas__c, CommercialProductLink__r.DurationDay__c, CommercialProductLink__r.DurationDayGas__c, VasPracticeCode__c, 
+            CommercialProductLink__r.FreeVas__c, CommercialProductLink__r.DurationDay__c, CommercialProductLink__r.DurationDayGas__c, VasPracticeCode__c, TotalAmount,
             (SELECT Quantity, UnitPrice, ListPrice, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
-                DurationDay__c, PaymentMode__c, IVA__c,
+                DurationDay__c, PaymentMode__c, Product2.IVA__c,
                 Product2.Name, Product2.NumberRateMonthly__c, Product2.DescriptionSAP__c,DelayEffectiveDate__c
                 FROM OrderItems)
             FROM Order WHERE Id = :orderId WITH SECURITY_ENFORCED];
@@ -294,6 +294,7 @@ public with sharing class HDT_UTL_VasManagement {
             super(currentOrder);
 
             OrderItem parentOrderItem;
+            List<OrderItem> childOrderItems = new List<OrderItem>();
             items = new List<HDT_WRP_VASActivationReqItem>();
             for (OrderItem ordItem:currentOrder.OrderItems) {
                 if (String.isBlank(ordItem.SBQQ__RequiredBy__c)) {
@@ -302,17 +303,41 @@ public with sharing class HDT_UTL_VasManagement {
                 }
                 HDT_WRP_VASActivationReqItem reqItem = new HDT_WRP_VASActivationReqItem(ordItem);
                 items.add(reqItem);
+                childOrderItems.add(ordItem);
             }
 
             contractAccountSap = currentOrder.ContractAccountCode__c;
             dataAttivazione = String.isNotBlank(currentOrder.VasServiceActivationDate__c?.format())? currentOrder.VasServiceActivationDate__c : Date.today();
             Decimal tempRate = parentOrderItem?.Product2?.NumberRateMonthly__c ;
             nrRate = tempRate!=null? tempRate : 0;
+            
+            Decimal totaleNoScontoIva = 0.0;
+            Decimal totaleScontoIva = currentOrder.TotalAmount != null ? currentOrder.TotalAmount : 0.0;
+            Decimal iva = 0.0;
+            for(OrderItem item : childOrderItems)
+            {
+                totaleNoScontoIva += (item.ListPrice  * item.Quantity);
+                if(currentOrder.TotalAmount == null)
+                {
+                    totaleScontoIva += (item.UnitPrice * item.Quantity);
+                }
+                if((Decimal)item.getSobject('Product2').get('IVA__c') != null && (Decimal)item.getSobject('Product2').get('IVA__c') != 0.0 && iva == 0.0)
+                {
+                    iva = (Decimal)item.getSobject('Product2').get('IVA__c');
+                }
+            }
+            Decimal percentualIva = iva/100.0;
+            totaleNoScontoIva += (totaleNoScontoIva * percentualIva);
+            totaleScontoIva += (totaleScontoIva * percentualIva);
+            importo = totaleNoScontoIva.setScale(2);
+            importoIvaInclusa = totaleScontoIva.setScale(2);
+            scontoIvaInclusa = (totaleNoScontoIva - totaleScontoIva).setScale(2);
+            
+            /*
             importo = currentOrder.SBQQ__Quote__r?.SBQQ__ListAmount__c;
-
             importoIvaInclusa = currentOrder.SBQQ__Quote__r?.ListAmountVAT__c;
             scontoIvaInclusa = currentOrder.SBQQ__Quote__r?.TotalDiscountAmountVAT__c;
-
+            */
             List<String> strValues = new List<String>{
                 currentOrder.ShippingStreetToponym__c,
                 currentOrder.ShippingStreetName__c,
@@ -373,7 +398,7 @@ public with sharing class HDT_UTL_VasManagement {
             Quantita = ordItem.Quantity;
             PrezzoNetto = ordItem.ListPrice;
             PrezzoNettoScontato = ordItem.UnitPrice;
-            PercentualeIva = ordItem.Percentage__c==null? 0.0 : ordItem.Percentage__c;
+            PercentualeIva = ordItem.Product2.IVA__c != null ? ordItem.Product2.IVA__c : 0.0;
         }
     }
 }

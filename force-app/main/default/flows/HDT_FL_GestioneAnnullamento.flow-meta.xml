@@ -1376,8 +1376,8 @@
     <decisions>
         <name>Quale_Oggetto</name>
         <label>Quale Oggetto?</label>
-        <locationX>3188</locationX>
-        <locationY>648</locationY>
+        <locationX>3196</locationX>
+        <locationY>647</locationY>
         <defaultConnector>
             <targetReference>GetOrder</targetReference>
         </defaultConnector>
@@ -1591,11 +1591,48 @@
             <label>Discordant Management</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Wrong_Owner</name>
+        <label>Wrong Owner</label>
+        <locationX>3197</locationX>
+        <locationY>355</locationY>
+        <defaultConnector>
+            <targetReference>Quale_Oggetto</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ownerId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>isNotOwner</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Wrong_Owner_Scrren</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <description>Flow che si occupa della gestione dei processi di Post Sales Cluster Annullamento.</description>
     <formulas>
         <name>EffectiveDateFormula</name>
         <dataType>Date</dataType>
         <expression>DATE( Year(ADDMONTHS({!GetRecord.Contract__r.EndDate},2)),MONTH( ADDMONTHS({!GetRecord.Contract__r.EndDate},2)),1 ) -1</expression>
+    </formulas>
+    <formulas>
+        <name>isNotOwner</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(BEGINS({!ownerId},{!$User.Id}),false,true)</expression>
     </formulas>
     <formulas>
         <name>NoteAnnullamentoFormula</name>
@@ -2756,11 +2793,27 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Wrong_Owner_Scrren</name>
+        <label>Wrong Owner Scrren</label>
+        <locationX>3405</locationX>
+        <locationY>355</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>WrongOwnerMessage</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(255, 0, 0);&quot;&gt;Attenzione!&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;L&apos;attività può essere gestita solo dall&apos;assegnatario.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>3079</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Quale_Oggetto</targetReference>
+            <targetReference>Wrong_Owner</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -2876,6 +2929,16 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ownerId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
     <variables>
         <name>ProcessType</name>
