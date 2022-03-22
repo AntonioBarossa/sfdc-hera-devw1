@@ -35394,10 +35394,6 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>SiebelCustomers__x</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>VisitAssignmentRules__c</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>

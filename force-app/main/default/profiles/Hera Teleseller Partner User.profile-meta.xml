@@ -35105,10 +35105,6 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>SiebelCustomers__x</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>QuoteManagement__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
