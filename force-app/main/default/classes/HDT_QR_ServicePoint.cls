@@ -207,7 +207,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 		
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
 		if(!additionalFilter.contains('status')){
-			servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE ServicePointCode__c = :stringCode '+ String.escapeSingleQuotes(additionalFilter));
+			servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE ServicePointCode__c = :stringCode '+ String.escapeSingleQuotes(additionalFilter).replace('\\', ''));
 		}
 		else{
 			servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) +	' FROM ServicePoint__c WHERE ServicePointCode__c = :stringCode ');

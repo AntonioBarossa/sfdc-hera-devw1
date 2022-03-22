@@ -9906,8 +9906,4 @@
         <object>SiebelRds__x</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <tabSettings>
-        <tab>SiebelCustomer__x</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>
