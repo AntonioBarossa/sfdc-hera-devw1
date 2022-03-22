@@ -35495,10 +35495,6 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>SiebelCustomers__x</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>SurveyCRM__c</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
