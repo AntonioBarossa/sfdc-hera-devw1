@@ -298,7 +298,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>wrts_prcgvr__Activity__c.SospendiAttivita</value>
+                            <value>wrts_prcgvr__Activity__c.HDT_Suspend_Activity</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
                                 <criteria>
@@ -324,7 +324,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>wrts_prcgvr__Activity__c.HDT_ResumeActivity</value>
+                            <value>wrts_prcgvr__Activity__c.HDT_Resume_Activity</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2 AND 3</booleanFilter>
                                 <criteria>
