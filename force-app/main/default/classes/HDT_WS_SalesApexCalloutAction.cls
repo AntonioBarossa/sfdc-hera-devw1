@@ -27,7 +27,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
         
         if('TemporaneaNuovaAttivazioneCreaRich'.equalsIgnoreCase(method) || 'Annullamento'.equalsIgnoreCase(method) || 'Ripensamento'.equalsIgnoreCase(method) || 'SwitchInEECreaRich'.equalsIgnoreCase(method) || 'SwitchInGasCreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusEECreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusGGCreaRich'.equalsIgnoreCase(method) || 'SubentroEECreaRich'.equalsIgnoreCase(method) || 'AttivazioneEECreaRich'.equalsIgnoreCase(method) || 'PrecheckEECreaRich'.equalsIgnoreCase(method) || 'SubentroGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneInDeliberaCreaRich'.equalsIgnoreCase(method) || 'AttivazioneFuoriDeliberaCreaRich'.equalsIgnoreCase(method) || 'PrecheckGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneConModCreaRich'.equalsIgnoreCase(method) || 'PreventivoAccettatoSales'.equalsIgnoreCase(method) || 'PreventivoRifiutatoSales'.equalsIgnoreCase(method) || 'CambioOffertaGasCreaRich'.equalsIgnoreCase(method) || 'CambioOffertaEleCreaRich'.equalsIgnoreCase(method) || 'CambioUsoCreaRich'.equalsIgnoreCase(method) || 'ConnessioneConAttCreaRich'.equalsIgnoreCase(method) || 'TempNuovaAttivazionCereaRich'.equalsIgnoreCase(method) || 'SConVEECreaRich'.equalsIgnoreCase(method) || 'SConVGasCreaRich'.equalsIgnoreCase(method) || 'EsecuzioneLavori'.equalsIgnoreCase(method) || 'ConfPrev'.equalsIgnoreCase(method) || 'SWRipristinatorioEle'.equalsIgnoreCase(method) || 'SWRipristinatorioGas'.equalsIgnoreCase(method) || 'Voltura'.equalsIgnoreCase(method)) {
-
+            
             wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration endpointUtils = ( wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration)  wrts_prcgvr.VersionManager.newClassInstance('EndpointRulesIntegration');
             String endpoint = endpointUtils.getEndpoint(obj);
         
@@ -72,6 +72,34 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             }
             for (integer i = indexOfObjectToRemove.size() - 1 ; i >= 0 ; i--) {
                 multirequestObj.requests[0].objects.remove(indexOfObjectToRemove[i]);
+            }
+            /**@frpanico 2022-03-18
+             * Aggiunta gestione
+             * Switch in Fittizio
+             * Se l'esito dell'activity e' 
+             * Allora si cambia il RECORD_ID con il numero
+             * di ordine della switch in fittizio
+             */
+            if(((String)obj.get('ProcessType__c')).equalsIgnoreCase('Switch in Fittizio'))
+            {
+                HDT_QR_ActivityCustom activityQr = new HDT_QR_ActivityCustom();
+                List<wrts_prcgvr__Activity__c> activityDiscordante = activityQr.getEsitoActivityDiscordante((String)obj.get('OrderReference__c'));
+                if(!activityDiscordante.isEmpty() && ((String)(activityDiscordante[0]).get('ActivityOutcome__c')).equalsIgnoreCase('Dati corretti forniti dal DL'))
+                {
+                    for(wrts_prcgvr.MRR_1_0.WObject wobj : multirequestObj.requests[0].objects)
+                    {
+                        if(wobj.objectType.equalsIgnoreCase('OrderReference__c'))
+                        {
+                            for( wrts_prcgvr.MRR_1_0.Field field : wobj.fields)
+                            {
+                                if(field.name.equalsIgnoreCase('RECORD_ID'))
+                                {
+                                    field.value = (String)obj.get('Id');
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             Map<String,Object> inputClientFunction = new Map<String,Object>();

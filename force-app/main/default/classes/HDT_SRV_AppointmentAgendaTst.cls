@@ -1,4 +1,5 @@
 @IsTest
+@SuppressWarnings('PMD.ExcessivePublicCount')
 public with sharing class HDT_SRV_AppointmentAgendaTst {
     private static HDT_SRV_AppointmentAgenda agenda = new HDT_SRV_AppointmentAgenda();
     private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
@@ -132,8 +133,8 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
     }
 
     @isTest
-    public static void executeAppointmentUpdateSales_0200(){
-        String methodName = 'executeAppointmentUpdateSales_0200: ';
+    public static void executeAppointmentUpdateSalesSecondApp(){
+        String methodName = 'executeAppointmentUpdateSalesSecondApp: ';
         Map<String,String> inputMap = createRequestHeroku('Sales', '0200', null, null);
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         activity.wrts_prcgvr__Status__c = 'Appuntamento confermato';
@@ -147,8 +148,8 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
     }
 
     @isTest
-    public static void executeAppointmentUpdatePostSales_0200(){
-        String methodName = 'executeAppointmentUpdatePostSales_0200: ';
+    public static void executeAppointmentUpdatePostSalesSecondApp(){
+        String methodName = 'executeAppointmentUpdatePostSalesSecondApp: ';
         Map<String,String> inputMap = createRequestHeroku('PostSales', '0200', null, null);
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         activity.wrts_prcgvr__Status__c = 'Appuntamento confermato';
@@ -162,8 +163,8 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
     }
 
     @isTest
-    public static void executeAppointmentUpdateError_0200(){
-        String methodName = 'executeAppointmentUpdateError_0200: ';
+    public static void executeAppointmentUpdateErrorSecondApp(){
+        String methodName = 'executeAppointmentUpdateErrorSecondApp: ';
         Map<String,String> inputMap = createRequestHeroku('No process', '0200', null, null);
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         activity.wrts_prcgvr__Status__c = 'Appuntamento confermato';
@@ -176,8 +177,8 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
     }
 
     @isTest
-    public static void executeAppointmentDistributor_0210(){
-        String methodName = 'executeAppointmentDistributor_0210: ';
+    public static void executeAppointmentDistributorOutcome(){
+        String methodName = 'executeAppointmentDistributorOutcome: ';
         Map<String,String> inputMap = createRequestHeroku(null, '0210', '1', '1111');
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         activity.wrts_prcgvr__Status__c = 'Appuntamento confermato';
@@ -192,8 +193,8 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
     }
 
     @isTest
-    public static void executeAppointmentClient_0210(){
-        String methodName = 'executeAppointmentClient_0210: ';
+    public static void executeAppointmentClientOutcome(){
+        String methodName = 'executeAppointmentClientOutcome: ';
         Map<String,String> inputMap = createRequestHeroku(null, '0210', '0', '1111');
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         activity.wrts_prcgvr__Status__c = 'Appuntamento confermato';
@@ -209,8 +210,8 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
     }
 
     @isTest
-    public static void executeAppointmentOk_0210(){
-        String methodName = 'executeAppointmentOk_0210: ';
+    public static void executeAppointmentOkOutcome(){
+        String methodName = 'executeAppointmentOkOutcome: ';
         Map<String,String> inputMap = createRequestHeroku(null, '0210', '4', '1111');
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         activity.wrts_prcgvr__Status__c = 'Appuntamento confermato';
@@ -224,8 +225,8 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
     }
 
     @isTest
-    public static void executeAppointmentError_0210(){
-        String methodName = 'executeAppointmentError_0210: ';
+    public static void executeAppointmentErrorOutcome(){
+        String methodName = 'executeAppointmentErrorOutcome: ';
         Map<String,String> inputMap = createRequestHeroku(null, '0210', '5', '1111');
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         activity.wrts_prcgvr__Status__c = 'Appuntamento confermato';
@@ -296,15 +297,15 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
         Test.startTest();
             String encryptedId = agenda.criptId(activity.Id);
             try{
-                String activityJson = agenda.getCryptoActivity(encryptedId,new List<String>{'Id'});
+                agenda.getCryptoActivity(encryptedId,new List<String>{'Id'});
             }catch(Exception e){
-
+                System.assertEquals('Index Outbound', e.getMessage(), methodName + 'Non è stato generato l\'errore atteso');
             }
             activity.CustomRecordId__c = encryptedId;
             update activity;
             String activityJson = agenda.getCryptoActivity(encryptedId,new List<String>{'Id'});
             wrts_prcgvr__Activity__c retrievedActivity = (wrts_prcgvr__Activity__c) JSON.deserialize(activityJson,wrts_prcgvr__Activity__c.class);
-            System.assertEquals(activity.Id, retrievedActivity.Id, 'La decodifica non ha funzionato');
+            System.assertEquals(activity.Id, retrievedActivity.Id, methodName+'La decodifica non ha funzionato');
         Test.stopTest();
     }
 
@@ -344,7 +345,7 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
     }
 
     @IsTest
-    public static void executeUpdateExtraSystemAppointmentKO(){
+    public static void executeUpdateExtraSystemAppointmentKo(){
         String methodName = 'executeUpdateExtraSystemAppointmentKO: ';
         wrts_prcgvr__Activity__c activity = [SELECT Id, Case__c FROM wrts_prcgvr__Activity__c];
         activity.isAtoA__c = false;
@@ -359,7 +360,7 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
     }
 
     @IsTest
-    public static void executeUpdateExtraSystemAppointmentOK(){
+    public static void executeUpdateExtraSystemAppointmentOk(){
         String methodName = 'executeUpdateExtraSystemAppointmentOK: ';
         wrts_prcgvr__Activity__c activity = [SELECT Id, Case__c FROM wrts_prcgvr__Activity__c];
         activity.isAtoA__c = false;
@@ -396,7 +397,7 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
         Test.stopTest();
         
     }
-
+    @SuppressWarnings('PMD.ExcessiveParameterList')
     private static Map<String,String> createRequestHeroku(String processType,String codiceFlusso,String outcome, String codiceApp){
         Map<String,String> newMap = new Map<String,String>();
         Map<String,String> herokuKeysMap = HDT_UTL_AppointmentSetting.getResponseKeysMap();

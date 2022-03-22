@@ -5,8 +5,8 @@ public with sharing class HDT_LC_EditScartiComplessi {
         Map<String,Object> responseMap = new Map<String,Object>{'annullamento' => 'NO'};
         Boolean hasOwnership = true;
         try {
-            wrts_prcgvr__Activity__c activity = (wrts_prcgvr__Activity__c)HDT_QR_GenericQuery.getGenericRecords('Id,Case__c,Case__r.Phase__c, Type__c, OwnerId, Order__c,Order__r.Phase__c,Order__r.ParentOrder__c,Order__r.ParentOrder__r.AccountId, Order__r.ParentOrder__r.Sale__c,Order__r.Sale__c, Order__r.AccountId,Order__r.ServicePoint__r.Account__c, Order__r.ServicePoint__r.CommoditySector__c,Order__r.RecordType.DeveloperName, Order__r.SwitchOutDate__c', 'wrts_prcgvr__Activity__c', 'Id =\''+recordId+'\'')[0];
-            if(activity.OwnerId!= Userinfo.getUserId()){
+            wrts_prcgvr__Activity__c activity = (wrts_prcgvr__Activity__c)HDT_QR_GenericQuery.getGenericRecords('Id,Case__c,Case__r.Phase__c, Type__c, isUserActivity__c, Order__c,Order__r.Phase__c,Order__r.ParentOrder__c,Order__r.ParentOrder__r.AccountId, Order__r.ParentOrder__r.Sale__c,Order__r.Sale__c, Order__r.AccountId,Order__r.ServicePoint__r.Account__c, Order__r.ServicePoint__r.CommoditySector__c,Order__r.RecordType.DeveloperName, Order__r.SwitchOutDate__c', 'wrts_prcgvr__Activity__c', 'Id =\''+recordId+'\'')[0];
+            if(!activity.isUserActivity__c){
                 hasOwnership=false;
             }
             else{
@@ -50,6 +50,11 @@ public with sharing class HDT_LC_EditScartiComplessi {
 
     @AuraEnabled
     public static String resubmissionPractice(String orderId,String activityId, String processType){
+        return resubmissionPractice(orderId, activityId,  processType, '');
+    }
+
+    @AuraEnabled
+    public static String resubmissionPractice(String orderId,String activityId, String processType, String phase){
         String response;
         String fase = 'Comunicazione verso Heroku';
         switch on processType {
@@ -59,6 +64,9 @@ public with sharing class HDT_LC_EditScartiComplessi {
             when 'VAS' {
                 fase = 'Comunicazione Motore VAS';
             }
+        }
+        if ('Caricamento Siebel KO'.equalsIgnoreCase(phase)){
+            fase = 'Esportazione VS Siebel';
         }
         Order orderToUpdate = new Order(Id = orderId,Phase__c = fase, DiscardReason__c = null);
         System.Savepoint sp = Database.setSavePoint();

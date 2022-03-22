@@ -6,12 +6,20 @@ const actions = [
  
 ];
 const columns = [
-    { label: 'Referente', fieldName: 'contactName' },
+    {
+        label: 'Referente', fieldName: 'contactUrl', type: 'url',
+        typeAttributes: {
+            label: {
+                fieldName: 'contactName'
+            }
+        }
+    },
     { label: 'Ruolo', fieldName: 'roles' },
     { label: 'Telefono Cellulare', fieldName: 'contactMobilePhone' },
     { label: 'Telefono fisso', fieldName: 'contactHomePhone' },
     { label: 'Email', fieldName: 'contactEmail' },
-    { label: 'BP Interlocutore', fieldName: 'bpInterlocutor' },
+  //{ label: 'BP Interlocutore', fieldName: 'bpInterlocutor' },
+    { label: 'Codice Contatto', fieldName: 'contactCode' },
     { label: 'Data inizio validità', fieldName: 'startDate' },
     { label: 'Data fine validità', fieldName: 'endDate' },
     {
@@ -22,12 +30,11 @@ const columns = [
 export default class HdtCustomTable extends NavigationMixin(LightningElement)  {
 
     @track columns=columns;
-
     @api mydata;
 
     connectedCallback() {
       
-        
+
     }
 
     handleRowAction(event) {

@@ -464,7 +464,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         
 
         //Gestione Scarti SAP tolti i campi parent Object process field e controlling field
-        List<DiscardAnnullmentRule__c> rules = [SELECT ControllingValue__c, ProcessValue__c, DiscardNoteReliability__c
+        List<DiscardAnnullmentRule__c> rules = [SELECT ControllingValue__c, ProcessValue__c, DiscardNoteReliability__c, ControllingCommodity__c
                                                 FROM DiscardAnnullmentRule__c
                                                 WHERE ActivityType__c = :activityType
                                                 AND IsActive__c = true
@@ -474,25 +474,28 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         if(!rules.isEmpty()){
             String processField = '';
             String ctrField = '';
+            String commodity = '';
             if(Schema.Case.SObjectType == recordId.getSobjectType()){
                 //Gestione Scarti SAP il processField per il case è sempre il type ed il controlField è sempre il DiscardDescription
-                List<Case> parentCase = [SELECT Id,Type,DiscardDescription__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED];
+                List<Case> parentCase = [SELECT Id,Type,DiscardDescription__c, ServicePoint__r.CommoditySector__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED];
                 if(!parentCase.isEmpty()){
                     processField = parentCase.get(0).Type;
                     ctrField = String.isNotBlank(discardMessage) ? discardMessage : parentCase.get(0).DiscardDescription__c;
+                    commodity = (parentCase.get(0).ServicePoint__r == null) ? '' : parentCase.get(0).ServicePoint__r.CommoditySector__c;
                 }
             }
             if(Schema.Order.SObjectType == recordId.getSobjectType()){
                 //Gestione Scarti SAP il processField per l'order è sempre il type ed il controlField è sempre il DiscardReason
-                List<Order> parentOrder = [SELECT Id,ProcessType__c,DiscardReason__c FROM Order WHERE Id =:recordId WITH SECURITY_ENFORCED];
+                List<Order> parentOrder = [SELECT Id,ProcessType__c,DiscardReason__c, ServicePoint__r.CommoditySector__c FROM Order WHERE Id =:recordId WITH SECURITY_ENFORCED];
                 if(!parentOrder.isEmpty()){
                     processField = parentOrder.get(0).ProcessType__c;
                     ctrField = String.isNotBlank(discardMessage) ? discardMessage : parentOrder.get(0).DiscardReason__c;
+                    commodity = (parentOrder.get(0).ServicePoint__r == null) ? '' : parentOrder.get(0).ServicePoint__r.CommoditySector__c;
                 }
             }
             if (String.isNotEmpty(processField) && String.isNotEmpty(ctrField)){
                 for(DiscardAnnullmentRule__c curRule : rules){
-                    if(curRule.ProcessValue__c.equalsIgnoreCase(processField)){
+                    if(curRule.ProcessValue__c.equalsIgnoreCase(processField) && (String.isBlank(curRule.ControllingCommodity__c) || curRule.ControllingCommodity__c.equalsIgnoreCase(commodity))){
                         switch on curRule.DiscardNoteReliability__c {
                             when 'Alta'{
                                 if (ctrField.equalsIgnoreCase(curRule.ControllingValue__c)){
@@ -719,14 +722,15 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             mapActivityTemplates.put(singleTemplate.Name,singleTemplate.Id);
         }
 
-
-        List<Account> listAccounts=[SELECT Id, CustomerCode__c, CompanyOwner__c
-                                    FROM Account 
-                                    WHERE CustomerCode__c IN: codiciClienti 
-                                    WITH SECURITY_ENFORCED];
         Map<String, Account> accIdsPerBPcode = new Map<String, Account>();
-        for(Account singleAccount: listAccounts){
-            accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount);
+        if(!codiciClienti.isEmpty()){
+            List<Account> listAccounts=[SELECT Id, CustomerCode__c, CompanyOwner__c
+                                        FROM Account 
+                                        WHERE CustomerCode__c IN: codiciClienti 
+                                        WITH SECURITY_ENFORCED];
+            for(Account singleAccount: listAccounts){
+                accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount);
+            }
         }
         for(wrts_prcgvr__Activity__c activity2: inputData){
             if(activity2.Account__c == null && !String.isBlank(activity2.BPCode__c) && accIdsPerBPcode.containsKey(activity2.BPCode__c)){
@@ -757,7 +761,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
         }
         system.debug(LoggingLevel.DEBUG, 'setLookupFields end' + inputData);
+    
         return inputData;
+
     }
 
     /**
@@ -1036,6 +1042,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             if (String.isNotEmpty(templateName) && !checkDiscardAnnullmentRule(recordId, fase,requestDiscardManagemnt.get('DISCARD_MESSAGE'))){
                 wrts_prcgvr__Activity__c act = createActivityByObjectIdAndTemplateName(recordId, templateName,objectType);
                 act.DiscardDescription__c = requestDiscardManagemnt.get('DISCARD_MESSAGE');
+                act.wrts_prcgvr__Description__c  = requestDiscardManagemnt.get('DISCARD_MESSAGE');
                 System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> act: ' +  act);
                 HDT_UTL_DatabaseService.insertSObject(act);
             }else if (String.isNotEmpty(templateName)){
@@ -1068,7 +1075,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     if(('NOTE_ERR'.equalsIgnoreCase(curField.name) 
                     || 'DES_ERR_AEEG'.equalsIgnoreCase(curField.name)
                     || 'TESTO_ERRR'.equalsIgnoreCase(curField.name)
-                    || 'ANNOTAZIONI'.equalsIgnoreCase(curField.name)) 
+                    || 'ANNOTAZIONI'.equalsIgnoreCase(curField.name)
+                    || 'NOTE_ANN'.equalsIgnoreCase(curField.name)
+                    || 'ANNOTAZIONI_ANN'.equalsIgnoreCase(curField.name))
                     && String.isNotBlank(curField.value)){
                         discardError += HDT_UTL_Accents.removeDiacritics(curField.value) + '\n';
                     }
@@ -1115,4 +1124,31 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         }
     }
     //EVERIS: END Gestione Scarti SAP
+
+
+    //EVERIS Gestione Scarto Transitorio
+    public static void createActivityForKoSiebel(Map<Id,String> objectRelated){
+        List<wrts_prcgvr__ActivityTemplate__c> template = HDT_QR_GenericQuery.getGenericRecords('Id, Name', 'wrts_prcgvr__ActivityTemplate__c', 'Name = \'ORDER_CARICAMENTO_SIEBEL_KO\' AND wrts_prcgvr__ObjectType__c =\'Order\'');
+        Id recorcTypeId = new HDT_QR_RecordType().getRecordTypeIdByName('HDT_RT_Scarto', 'wrts_prcgvr__Activity__c');
+        Id templateId;
+        if (!template.isEmpty()){
+            templateId = template[0].Id;
+        }
+        List<wrts_prcgvr__Activity__c> activitiesToCreate = new List<wrts_prcgvr__Activity__c>();
+        for (Id orderId : objectRelated.keySet()){
+            wrts_prcgvr__Activity__c newAct = new wrts_prcgvr__Activity__c();
+            newAct.Type__c = 'Scarto Transitorio';
+            newAct.RecordTypeId = recorcTypeId;
+            newAct.DiscardCategory__c = 'Scarto complesso';
+            newAct.DiscardDescription__c = 'Scarto Transitorio';
+            newAct.wrts_prcgvr__Status__c = 'Aperta';
+            newAct.wrts_prcgvr__ActivityTemplate__c = templateId;
+            newAct.wrts_prcgvr__ObjectId__c = orderId;
+            newAct.Order__c = orderId;
+            newAct.wrts_prcgvr__Description__c = objectRelated.get(orderId);
+            activitiesToCreate.add(newAct);
+        }
+        HDT_UTL_DatabaseService.insertSObject(activitiesToCreate);
+    }
+    //EVERIS fine Gestione Scarto Transitorio
 }

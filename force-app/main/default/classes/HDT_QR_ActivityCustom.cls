@@ -127,7 +127,8 @@ public inherited sharing class HDT_QR_ActivityCustom {
             Id,
             order__c,
             Account__c,
-            Type__c
+            Type__c,
+            DiscardCount__c
             FROM wrts_prcgvr__Activity__c
             WHERE Id= :activityId
             WITH SECURITY_ENFORCED
@@ -154,6 +155,42 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WHERE Id= :activityId
             WITH SECURITY_ENFORCED
             limit 1
+        ];
+    }
+
+    public static List<wrts_prcgvr__Activity__c> getActivityKoPrecedenteClienteByIds(List<Id> activityIdList) {
+        return [
+            SELECT
+            Id,
+            Order__c,
+            Order__r.ServicePoint__r.CommoditySector__c,
+            Order__r.RecordType.DeveloperName,
+            Order__r.Account.RecordType.DeveloperName,
+            Order__r.ServicePoint__r.Account__r.FiscalCode__c,
+            Order__r.ServicePoint__r.Account__r.VATNumber__c,
+            Order__r.ServicePoint__c,
+            Order__r.ServicePoint__r.AnnualConsumptionStandardM3__c,
+            Order__r.OrderNumber,
+            Order__r.CreatedById,
+            Order__r.Channel__c,
+            Order__r.Account.CustomerCode__c,
+            Order__r.SalesCompany__c,
+            Order__r.Account.FiscalCode__c,
+            Order__r.Account.VATNumber__c,
+            Order__r.Account.CustomerMarking__c,
+            Order__r.Account.Category__c,
+            Order__r.Account.CustomerType__c,
+            Order__r.ServicePoint__r.SupplyStreetName__c,
+            Order__r.ServicePoint__r.SupplyCity__c,
+            Order__r.ServicePoint__r.SupplyProvince__c,
+            Order__r.ServicePoint__r.SupplyPostalCode__c,
+            Order__r.ProcessType__c,
+            Order__r.Market__c,
+            Order__r.Catalog__c,
+            Order__r.ServicePoint__r.Account__r.CustomerCode__c
+            FROM wrts_prcgvr__Activity__c
+            WHERE Id IN :activityIdList 
+            WITH SECURITY_ENFORCED
         ];
     }
 
@@ -390,7 +427,44 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     WITH SECURITY_ENFORCED 
                 ];
         }
-
+        public static List<wrts_prcgvr__Activity__c> getRecordScartoDiscordante(String orderId){
+            return [SELECT 
+                    Id,
+                    Account__c,
+                    Contact__c,
+                    order__c,
+                    Distributor__c,
+                    AppointmentDate__c,
+                    RecordTypeId
+                    FROM wrts_prcgvr__Activity__c
+                    WHERE 
+                    RecordType.developername = 'HDT_RT_Scarto'
+                    AND type__c = 'Gestione dati discordanti'
+                    AND Order__c = :orderId
+                    AND wrts_prcgvr__Status__c = 'Aperta'
+                    WITH SECURITY_ENFORCED 
+                ];
+        }
+        public List<wrts_prcgvr__Activity__c> getEsitoActivityDiscordante(String orderId){
+            return [SELECT 
+                    Id,
+                    Account__c,
+                    Contact__c,
+                    order__c,
+                    Distributor__c,
+                    AppointmentDate__c,
+                    ActivityOutcome__c,
+                    RecordTypeId
+                    FROM wrts_prcgvr__Activity__c
+                    WHERE 
+                    RecordType.developername = 'HDT_RT_Scarto'
+                    AND type__c = 'Gestione dati discordanti'
+                    AND Order__c = :orderId
+                    AND wrts_prcgvr__Status__c = 'Chiusa'
+                    WITH SECURITY_ENFORCED 
+                    ORDER BY LastModifiedDate DESC
+                ];
+        }
         /**
          * @description getRecordByOrderAndQuality
          * @param orderid

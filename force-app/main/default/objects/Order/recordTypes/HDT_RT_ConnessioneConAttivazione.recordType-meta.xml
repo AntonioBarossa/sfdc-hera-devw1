@@ -394,6 +394,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento dal SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Classificazione errata</fullName>
             <default>false</default>
         </values>
@@ -411,6 +415,10 @@
         </values>
         <values>
             <fullName>Contattare banca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contatto Quality Fallito</fullName>
             <default>false</default>
         </values>
         <values>

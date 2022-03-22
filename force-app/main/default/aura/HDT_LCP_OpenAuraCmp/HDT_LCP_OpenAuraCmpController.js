@@ -23,6 +23,10 @@
         //variabile per innesco da campagne
         var campaignId = myPageRef.state.c__campaignId;
 
+        var campaignMemberId = myPageRef.state.c__campaignMemberId;
+        console.log('campaignMemberId --> '+campaignMemberId);
+
+
         // id del lead oggetto del process.
         var leadId = myPageRef.state.c__leadId;
 
@@ -42,10 +46,19 @@
         var interactionId = myPageRef.state.c__interactionId;
 
         //Gestione Risottomissione Annullamento
-        let discardRework = (myPageRef.state.c__discardRework === true || myPageRef.state.c__discardRework === 'true') ? true : false;
+        let discardRework = undefined;
+        if (myPageRef.state.c__discardRework === true || myPageRef.state.c__discardRework === 'true'){
+            discardRework = true;
+        } else if (myPageRef.state.c__discardRework === false || myPageRef.state.c__discardRework === 'false'){
+            discardRework = false;
+        }
         console.log('# discardRework -> '                 + discardRework);
         //Fine Gestione Risottomissione Annullamento
 
+        //Gestione Owner Activity
+        var isUserActivity = myPageRef.state.c__IsUserActivity;
+        console.log('# isUserActivity -> '                 + isUserActivity);
+        //Fine Gestione Owner Activity
         console.log('# context -> '                 + context);
         console.log('# accId -> '                   + accId);
         console.log('# caseId -> '                  + caseId);
@@ -128,7 +141,10 @@
                         c__orderId: orderId,
                         c__interactionId: interactionId,
                         //Gestione Risottomissione Annullamento
-                        c__discardRework: discardRework
+                        c__discardRework: discardRework,
+                        c__campaignMemberId: campaignMemberId,
+                        //Gestione Owner Activity
+                        c__IsUserActivity:isUserActivity
                     }
                 },
                 focus: true

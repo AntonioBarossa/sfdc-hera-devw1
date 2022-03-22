@@ -486,7 +486,7 @@
             <targetReference>GetCampaignMember</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>idCampaignMemberInput</name>
         <dataType>String</dataType>

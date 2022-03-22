@@ -35,7 +35,7 @@ public inherited sharing class HDT_UTL_NotifVasHelper {
                 }
             }
             when 'Case' {
-                List<Order> orders = orderQr.getRecordByOrderNumber(sObjectKey);
+                List<Order> orders = orderQr.getRecordByVasPracticeCode(sObjectKey);
                 if (!orders.isEmpty()) {
                     sObjMap.put('Order', orders.get(0));
 
@@ -43,7 +43,7 @@ public inherited sharing class HDT_UTL_NotifVasHelper {
 
                     List<Case> cases = [SELECT Asset.Id, Subscription__r.Id FROM Case
                         WHERE RecordType.DeveloperName='HDT_RT_PostSalesVAS' AND Type='Disattivazione VAS'
-                        AND (Asset.SBQQ__OrderProduct__r.OrderId=:orderId OR Subscription__r.SBQQ__Contract__r.SBQQ__Order__c=:orderId) AND Status NOT IN ('Closed', 'Bozza')
+                        AND (Asset.SBQQ__OrderProduct__r.OrderId=:orderId OR Subscription__r.SBQQ__Contract__r.SBQQ__Order__c=:orderId OR Order__c = :orderId) AND Status NOT IN ('Closed', 'Bozza')
                         WITH SECURITY_ENFORCED LIMIT 1];
 
                     if (!cases.isEmpty()) {

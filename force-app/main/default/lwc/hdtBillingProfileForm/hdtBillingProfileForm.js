@@ -484,6 +484,7 @@ export default class hdtBillingProfileForm extends LightningElement {
         if (event.target.fieldName === 'BillSendingMethod__c') {
            // this.refreshField = false;
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceCertifiedEmailAddress__c')].visibility = event.target.value === 'Invio tramite PEC';
+            this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceCertifiedEmailAddress__c')].required = event.target.value === 'Invio tramite PEC';
             this.fields[this.fields.findIndex(el => el.fieldName === 'SendCertifiedEmailConsentDate__c')].visibility = event.target.value === 'Invio tramite PEC';
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceEmailAddress__c')].required = event.target.value.includes('e-mail');
             this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceEmailAddress__c')].visibility = event.target.value.includes('e-mail');
@@ -512,8 +513,10 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'SubjectCodeStartDate__c')].disabled = event.target.value === 'Estero';
             this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'SubjectCodeEndDate__c')].disabled = event.target.value === 'Estero';
             this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'ElectronicInvoiceCertifiedEmailAddress__c')].disabled = event.target.value === 'Estero';
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'ElectronicInvoiceCertifiedEmailAddress__c')].required = event.target.value === 'XML + carta/email';
             this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'XMLType__c')].disabled = event.target.value === 'Estero';
-        }
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'XMLType__c')].required = event.target.value.includes('XML');
+            }
 
     }
 
@@ -531,6 +534,13 @@ export default class hdtBillingProfileForm extends LightningElement {
             && !this.validateEmail(this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value)) {
             
             this.saveErrorMessage.push('Email Invio Bolletta non valido');
+        }
+
+        if (this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']") !== null 
+            && (this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']").value !== null && this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']").value.trim() !== '') 
+            && !this.validateEmail(this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']").value)) {
+            
+            this.saveErrorMessage.push('Email PEC Invio Bolletta non valido');
         }
 
         if (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']") !== null 
@@ -610,6 +620,7 @@ export default class hdtBillingProfileForm extends LightningElement {
             && (this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Bolletta per e-mail' || this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Bolletta per e-mail + Carta')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Email Invio Bolletta, ');
         }
+        
 
         if (this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']") !== null 
             && this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']").value === null 
@@ -641,7 +652,7 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
 
         if ((this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null 
-            && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value !== 'XML + carta/email'
+            && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === 'XML + carta/email'
             && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value !== 'Estero')
             && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']") !== null && this.template.querySelector("[data-id='SubjectCode__c']") !== null)
             && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value === null || this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value === '')
@@ -914,7 +925,7 @@ export default class hdtBillingProfileForm extends LightningElement {
 
         this.handleWrapAddressObject();
 
-        if(this.validFields()){
+        if(this.validFields() === true){
             this.saveErrorMessage = [];
 
             this.dataToSubmit['Account__c'] = this.accountId;

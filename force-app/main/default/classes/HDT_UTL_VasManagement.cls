@@ -38,7 +38,7 @@ public with sharing class HDT_UTL_VasManagement {
             when 'Case'{
                 Id caseId = sobjId;
                 currentCase = [SELECT CaseNumber, VasStatus__c, Order__c, Asset.SBQQ__OrderProduct__r.OrderId,
-                Subscription__r.SBQQ__Contract__r.SBQQ__Order__c
+                Subscription__r.SBQQ__Contract__r.SBQQ__Order__c, Asset.VasPracticeCode__c,Subscription__r.VasPracticeCode__c
                 FROM Case WHERE Id = :caseId WITH SECURITY_ENFORCED LIMIT 1];
             
                 orderId = currentCase.Order__c;
@@ -74,9 +74,9 @@ public with sharing class HDT_UTL_VasManagement {
             ContractReference__r.SAPContractCode__c,OrderReference__c,ContractReference__c,ContractReference__r.ServicePoint__r.ServicePointCode__c,
             OrderReference__r.ServicePointCodeFormula__c,SBQQ__Quote__r.SBQQ__ListAmount__c, SBQQ__Quote__r.SBQQ__TotalCustomerDiscountAmount__c,
             SBQQ__Quote__r.SBQQ__PriceBook__r.Name, SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
-            CommercialProductLink__r.FreeVas__c, CommercialProductLink__r.DurationDay__c, CommercialProductLink__r.DurationDayGas__c, 
+            CommercialProductLink__r.FreeVas__c, CommercialProductLink__r.DurationDay__c, CommercialProductLink__r.DurationDayGas__c, VasPracticeCode__c, TotalAmount,
             (SELECT Quantity, UnitPrice, ListPrice, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
-                DurationDay__c, PaymentMode__c, IVA__c,
+                DurationDay__c, PaymentMode__c, Product2.IVA__c,
                 Product2.Name, Product2.NumberRateMonthly__c, Product2.DescriptionSAP__c,DelayEffectiveDate__c
                 FROM OrderItems)
             FROM Order WHERE Id = :orderId WITH SECURITY_ENFORCED];
@@ -122,7 +122,7 @@ public with sharing class HDT_UTL_VasManagement {
         return null;
     }
 
-    public static void updateVasPhase(string vasPhase, Order ord ) {
+    public static String updateVasPhase(string vasPhase, Order ord ) {
 //.equalsIgnoreCase
         String newPhase = '';
         if ( vasPhase == 'Esportazione VS Siebel'){
@@ -138,7 +138,7 @@ public with sharing class HDT_UTL_VasManagement {
         }else{
             newPhase =  'Comunicazione Motore VAS';
         }
-        Order orderToUpdate = new Order();
+        /*Order orderToUpdate = new Order();
         orderToUpdate.Id = ord.Id;
         orderToUpdate.Phase__c = newPhase;
         HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
@@ -146,12 +146,14 @@ public with sharing class HDT_UTL_VasManagement {
         {
             Schedulable instance = (Schedulable) wrts_prcgvr.VersionManager.newClassInstance('AsyncJobBatchSchedule');
             instance.execute(null);
-        }
+        }*/
 
         /* Platform Event non sembra partire correttamente */
         /*HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
         platEvent.SerializedSobj__c = JSON.serialize(orderToUpdate);
         Database.SaveResult sr = Eventbus.publish(platEvent);*/
+
+        return newPhase;
 
     }
 
@@ -228,6 +230,16 @@ public with sharing class HDT_UTL_VasManagement {
         **/
         public HDT_WRP_VASDisactivationReq(Order currentOrder, Case currentCase) {
             super(currentOrder, currentCase);
+            /**@frpanico 03/03/2022
+             * Fix keyServizio
+             */
+            String keyString = (String)currentCase.getSObject('Asset')?.get('VasPracticeCode__c')!= null 
+            ? (String)currentCase.getSObject('Asset')?.get('VasPracticeCode__c')
+            : (String)currentCase.getSObject('Subscription__r')?.get('VasPracticeCode__c') != null
+                ? (String)currentCase.getSObject('Subscription__r')?.get('VasPracticeCode__c')
+                : (String)currentOrder.get('VasPracticeCode__c');
+
+            keyServizio = keyString;
 
             nrContrattoIp = currentOrder.ContractReference__r?.SAPContractCode__c;
 
@@ -282,6 +294,7 @@ public with sharing class HDT_UTL_VasManagement {
             super(currentOrder);
 
             OrderItem parentOrderItem;
+            List<OrderItem> childOrderItems = new List<OrderItem>();
             items = new List<HDT_WRP_VASActivationReqItem>();
             for (OrderItem ordItem:currentOrder.OrderItems) {
                 if (String.isBlank(ordItem.SBQQ__RequiredBy__c)) {
@@ -290,17 +303,41 @@ public with sharing class HDT_UTL_VasManagement {
                 }
                 HDT_WRP_VASActivationReqItem reqItem = new HDT_WRP_VASActivationReqItem(ordItem);
                 items.add(reqItem);
+                childOrderItems.add(ordItem);
             }
 
             contractAccountSap = currentOrder.ContractAccountCode__c;
             dataAttivazione = String.isNotBlank(currentOrder.VasServiceActivationDate__c?.format())? currentOrder.VasServiceActivationDate__c : Date.today();
             Decimal tempRate = parentOrderItem?.Product2?.NumberRateMonthly__c ;
             nrRate = tempRate!=null? tempRate : 0;
+            
+            Decimal totaleNoScontoIva = 0.0;
+            Decimal totaleScontoIva = currentOrder.TotalAmount != null ? currentOrder.TotalAmount : 0.0;
+            Decimal iva = 0.0;
+            for(OrderItem item : childOrderItems)
+            {
+                totaleNoScontoIva += (item.ListPrice  * item.Quantity);
+                if(currentOrder.TotalAmount == null)
+                {
+                    totaleScontoIva += (item.UnitPrice * item.Quantity);
+                }
+                if((Decimal)item.getSobject('Product2').get('IVA__c') != null && (Decimal)item.getSobject('Product2').get('IVA__c') != 0.0 && iva == 0.0)
+                {
+                    iva = (Decimal)item.getSobject('Product2').get('IVA__c');
+                }
+            }
+            Decimal percentualIva = iva/100.0;
+            totaleNoScontoIva += (totaleNoScontoIva * percentualIva);
+            totaleScontoIva += (totaleScontoIva * percentualIva);
+            importo = totaleNoScontoIva.setScale(2);
+            importoIvaInclusa = totaleScontoIva.setScale(2);
+            scontoIvaInclusa = (totaleNoScontoIva - totaleScontoIva).setScale(2);
+            
+            /*
             importo = currentOrder.SBQQ__Quote__r?.SBQQ__ListAmount__c;
-
             importoIvaInclusa = currentOrder.SBQQ__Quote__r?.ListAmountVAT__c;
             scontoIvaInclusa = currentOrder.SBQQ__Quote__r?.TotalDiscountAmountVAT__c;
-
+            */
             List<String> strValues = new List<String>{
                 currentOrder.ShippingStreetToponym__c,
                 currentOrder.ShippingStreetName__c,
@@ -361,7 +398,7 @@ public with sharing class HDT_UTL_VasManagement {
             Quantita = ordItem.Quantity;
             PrezzoNetto = ordItem.ListPrice;
             PrezzoNettoScontato = ordItem.UnitPrice;
-            PercentualeIva = ordItem.Percentage__c==null? 0.0 : ordItem.Percentage__c;
+            PercentualeIva = ordItem.Product2.IVA__c != null ? ordItem.Product2.IVA__c : 0.0;
         }
     }
 }

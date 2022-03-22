@@ -51,6 +51,30 @@
             <label>isEE</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>PrezzoLordoF1Formula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF1__c}*1.102</expression>
+        <scale>6</scale>
+    </formulas>
+    <formulas>
+        <name>PrezzoLordoF2Formula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF2__c}*1.102</expression>
+        <scale>6</scale>
+    </formulas>
+    <formulas>
+        <name>PrezzoLordoF3Formula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF3__c}</expression>
+        <scale>6</scale>
+    </formulas>
+    <formulas>
+        <name>PrezzoLordoFormula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}*1.102</expression>
+        <scale>6</scale>
+    </formulas>
     <interviewLabel>HDL FL VO Scripts - Prezzo Sicurezza {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDL FL VO Scripts - Prezzo Sicurezza</label>
     <loops>
@@ -125,7 +149,7 @@
         </fields>
         <fields>
             <name>CE_text3_0</name>
-            <fieldText>&lt;p&gt;Il profilo 123 prevede un prezzo applicato alla componente energia differenziato secondo le tre fasce orarie F1, F2 ed F3 definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo della componente energia, per il periodo da lei scelto, assumerà il valore di 0,1674 €/kWh in F1, 0,1696 €/kWh in F2 e 0,1531 €/kWh in F3. Qualora il misuratore non sia idoneo alla rilevazione dell’energia elettrica per fascia oraria, sarà applicato invece un prezzo uguale in tutte le ore della giornata e pari a 0,1630 €/kWh.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a:&amp;nbsp;&lt;/p&gt;&lt;p&gt;Profilo F1 0,1519 €/kWh, Profilo F2: 0,1539 €/kWh, F3: 0,1389 €/kWh, F24 ore: 0,1479 €/kWh&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione e 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo 123 prevede un prezzo applicato alla componente energia differenziato secondo le tre fasce orarie F1, F2 ed F3 definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo della componente energia, per il periodo da lei scelto, assumerà il valore di {!PrezzoLordoF1Formula}€/kWh in F1, {!PrezzoLordoF2Formula}€/kWh in F2 e {!PrezzoLordoF3Formula}€/kWh in F3. Qualora il misuratore non sia idoneo alla rilevazione dell’energia elettrica per fascia oraria, sarà applicato invece un prezzo uguale in tutte le ore della giornata e pari a {!PrezzoLordoFormula}€/kWh.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a:&amp;nbsp;&lt;/p&gt;&lt;p&gt;Profilo F1 {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF1__c}€/kWh, Profilo F2: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF2__c}€/kWh, F3: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF3__c}€/kWh, F24 ore: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}€/kWh&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione e 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -147,7 +171,7 @@
         </fields>
         <fields>
             <name>CE_text4_0</name>
-            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di 0,1630 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a 0,1479 €/kWh&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione e 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di {!PrezzoLordoFormula}€/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}€/kWh&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione e 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -184,7 +208,7 @@
         </fields>
         <fields>
             <name>CE_text4_2</name>
-            <fieldText>&lt;p&gt;Il profilo 123 prevede un prezzo applicato alla componente energia differenziato secondo le tre fasce orarie F1, F2 ed F3 definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo della componente energia, per il periodo da lei scelto, assumerà il valore di 0,1674 €/kWh in F1, 0,1526 €/kWh in F2 e 0,1378 €/kWh in F3. Qualora il misuratore non sia idoneo alla rilevazione dell’energia elettrica per fascia oraria, sarà applicato invece un prezzo uguale in tutte le ore della giornata e pari a 0,1550 €/kWh.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a:&amp;nbsp;&lt;/p&gt;&lt;p&gt;Profilo F1 0,1519 €/kWh, Profilo F2: 0,1385 €/kWh, F3: 0,1250 €/kWh, F24 ore: 0,1406 €/kWh&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione e 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo 123 prevede un prezzo applicato alla componente energia differenziato secondo le tre fasce orarie F1, F2 ed F3 definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo della componente energia, per il periodo da lei scelto, assumerà il valore di {!PrezzoLordoF1Formula}€/kWh in F1, {!PrezzoLordoF2Formula}€/kWh in F2 e {!PrezzoLordoF3Formula}€/kWh in F3. Qualora il misuratore non sia idoneo alla rilevazione dell’energia elettrica per fascia oraria, sarà applicato invece un prezzo uguale in tutte le ore della giornata e pari a {!PrezzoLordoFormula}€/kWh.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a:&amp;nbsp;&lt;/p&gt;&lt;p&gt;Profilo F1 {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF1__c}€/kWh, Profilo F2: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF2__c}€/kWh, F3: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF3__c}€/kWh, F24 ore: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}€/kWh&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione e 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -206,7 +230,7 @@
         </fields>
         <fields>
             <name>CE_text4_3</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di 0,1550 €/kWh.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di {!PrezzoLordoFormula}€/kWh.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -228,7 +252,7 @@
         </fields>
         <fields>
             <name>CE_text4_4</name>
-            <fieldText>&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a 0,1406 €/kWh&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione e 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}€/kWh&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione e 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -294,7 +318,7 @@
         </fields>
         <fields>
             <name>CE_text3</name>
-            <fieldText>&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo da lei scelto, è pari a 75,5 c€/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa l’84% della spesa annua per un cliente con 10.000 metri cubi di consumo annuo, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 82,39 €/punto di fornitura/anno e 0,007946 €/Smc e oneri aggiuntivi, come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 16% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo da lei scelto, è pari a {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}c€/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa l’84% della spesa annua per un cliente con 10.000 metri cubi di consumo annuo, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 82,39 €/punto di fornitura/anno e 0,007946 €/Smc e oneri aggiuntivi, come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 16% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -316,7 +340,7 @@
         </fields>
         <fields>
             <name>CE_text4</name>
-            <fieldText>&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo da lei scelto, è pari a 74,5 c€/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa l’84% della spesa annua per un cliente con 10.000 metri cubi di consumo annuo, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 82,39 €/punto di fornitura/anno e 0,007946 €/Smc e oneri aggiuntivi, come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 16% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo da lei scelto, è pari a {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}c€/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa l’84% della spesa annua per un cliente con 10.000 metri cubi di consumo annuo, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 82,39 €/punto di fornitura/anno e 0,007946 €/Smc e oneri aggiuntivi, come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 16% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>

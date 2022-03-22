@@ -1,6 +1,5 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_LC_AccountSelectorController {
-	
 	@TestVisible
 	private class HDT_UTL_Struct {
 		@TestVisible Boolean isCall;
@@ -12,13 +11,30 @@ public with sharing class HDT_LC_AccountSelectorController {
 		@TestVisible List<Contact> contacts;
 		@TestVisible List<Lead> leads;
 	}
-	
+
+	private static final Map<String,Map<String,String>> fieldMappings = new Map<String,Map<String,String>>{
+		'Case' => new Map<String,String> {
+			'account' => 'accountId',
+			'contact' => 'contactId'
+		},
+		'Interaction__c' => new Map<String,String> {
+			'account' => 'Account__c',
+			'contact' => 'Contact__c'
+		},
+		'wrts_prcgvr__Activity__c' => new Map<String,String> {
+			'account' => 'Account__c',
+			'contact' => 'Contact__c'
+		}
+	};
+
 	@AuraEnabled
 	public static String init(String recordId) {
-		try {
+		String sobjectType = getSobjectType(recordId);
+		HDT_UTL_Struct result = new HDT_UTL_Struct();
+
+		if(sobjectType == 'wrts_prcgvr__Activity__c') {
 			wrts_prcgvr__Activity__c activity = [SELECT Id, Account__c, Contact__c, Lead__c, BPCode__c, ClientNumber__c, FiscalCode__c, VATNumber__c, Type__c, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Id =: recordId WITH SECURITY_ENFORCED];
 			
-			HDT_UTL_Struct result = new HDT_UTL_Struct();
 			result.isCall = activity.Type__c.contains('Chiamata');
 			result.accountId = activity.Account__c;
 			result.contactId = activity.Contact__c;
@@ -34,23 +50,13 @@ public with sharing class HDT_LC_AccountSelectorController {
 				} else if(String.isNotBlank(activity.ClientNumber__c)) {
 					result.preFilter = activity.ClientNumber__c;
 				}
-				
-				System.debug(LoggingLevel.DEBUG, 'Init - String.isBlank(activity.Account__c): ' + String.isBlank(activity.Account__c));
-				System.debug(LoggingLevel.DEBUG, 'Init - String.isNotBlank(activity.Contact__c): ' + String.isNotBlank(activity.Contact__c));
-				System.debug(LoggingLevel.DEBUG, 'Init - String.isBlank(activity.Lead__c): ' + String.isBlank(activity.Lead__c));
-				System.debug(LoggingLevel.DEBUG, 'Init - String.isNotBlank(result.preFilter): ' + String.isNotBlank(result.preFilter));
-				System.debug(LoggingLevel.DEBUG, 'Init - result.preFilter: ' + result.preFilter);
 
 				if(String.isBlank(activity.Account__c) && String.isNotBlank(activity.Contact__c)) {
 					result.accounts = handleAccount(activity.Contact__c, activity.Id);
-					
 				} else if(String.isBlank(activity.Contact__c) && String.isBlank(activity.Lead__c) && String.isNotBlank(result.preFilter)) {
-					
 					result.contacts = getContacts(result.preFilter);
-					System.debug(LoggingLevel.DEBUG, 'Init - result.contacts: ' + result.contacts);
 					result.leads = getLeads(result.preFilter);
-					System.debug(LoggingLevel.DEBUG, 'Init - result.leads: ' + result.leads);
-					
+
 					if(result.contacts.size() == 1 && result.leads.isEmpty()) {
 						String contactId = result.contacts.get(0).Id;
 						result.contactId = contactId;
@@ -65,35 +71,31 @@ public with sharing class HDT_LC_AccountSelectorController {
 					}
 				}
 			}
-
-			return JSON.serialize(result);
-		} catch (Exception e) {
-			throw new AuraHandledException('ERROR: ' + e.getMessage());
+		} else {
+			Map<String,String> fieldsMap = fieldMappings.get(sobjectType);
+			SObject sobj = Database.query('SELECT Id,' + fieldsMap.get('account') + ',' + fieldsMap.get('contact') + ' FROM ' + sobjectType + ' WHERE Id =: recordId');
+			result.accountId = (String) sobj.get(fieldsMap.get('account'));
+			result.contactId = (String) sobj.get(fieldsMap.get('contact'));
 		}
+		return JSON.serialize(result);
 	}
 
 	@AuraEnabled
-	public static String search(String queryString) {
-		try {
-			HDT_UTL_Struct result = new HDT_UTL_Struct();
-			if(queryString.startsWith('100') && queryString.isNumeric()) {
-				// return handleBPCodeSearch(queryString);
-				queryString = queryString + '%';
-				result.accounts = getAccountByBPCode(queryString);
-				System.debug(LoggingLevel.DEBUG, 'account Id: ' + result.accounts.get(0).Id);
-				result.contacts = getContactTitolare(result.accounts.get(0).Id);
-			} else {
-				queryString = '%' + queryString + '%';
+	public static String search(String queryString, String recordId) {
+		HDT_UTL_Struct result = new HDT_UTL_Struct();
+		if(queryString.startsWith('100') && queryString.isNumeric()) {
+			// return handleBPCodeSearch(queryString);
+			queryString = queryString + '%';
+			result.accounts = getAccountByBPCode(queryString);
+			result.contacts = getContactTitolare(result.accounts.get(0).Id);
+		} else {
+			queryString = '%' + queryString + '%';
+			if(((Id) recordId).getSobjectType().getDescribe().getName() == 'wrts_prcgvr__Activity__c') {
 				result.leads = getLeads(queryString);
-				result.contacts = getContacts(queryString);
 			}
-			return JSON.serialize(result);
-		} catch (Exception e) {
-			System.debug(LoggingLevel.DEBUG, 'seach - exception message: ' + e.getMessage());
-            System.debug(LoggingLevel.DEBUG, 'seach - exception type name: ' + e.getTypeName());
-            System.debug(LoggingLevel.DEBUG, 'seach - exception stack trace string: ' + e.getStackTraceString());
-			throw new AuraHandledException(e.getMessage());
+			result.contacts = getContacts(queryString);
 		}
+		return JSON.serialize(result);
 	}
 
 	private static List<Account> getAccountByBpCode(String bpCode) {
@@ -106,131 +108,118 @@ public with sharing class HDT_LC_AccountSelectorController {
 
 	@AuraEnabled
 	public static List<Contact> getContacts(String queryString) {
-		try {
-			return [
-				SELECT
-					Id,
-					AccountId,
-					Name,
-					Phone,
-					MobilePhone,
-					Email,
-					FiscalCode__c,
-					VATNumber__c
-				FROM Contact
-				WHERE
-					Name LIKE: queryString OR
-					Phone LIKE: queryString OR
-					MobilePhone LIKE: queryString OR
-					Email LIKE: queryString OR
-					FiscalCode__c LIKE: queryString OR
-					VATNumber__c LIKE: queryString
-				WITH SECURITY_ENFORCED
-			];
-		} catch (Exception e) {
-			throw new AuraHandledException('ERROR: ' + e.getMessage());
-		}
+		return [
+			SELECT
+				Id,
+				AccountId,
+				Name,
+				Phone,
+				MobilePhone,
+				Email,
+				FiscalCode__c,
+				VATNumber__c
+			FROM Contact
+			WHERE
+				Name LIKE: queryString OR
+				Phone LIKE: queryString OR
+				MobilePhone LIKE: queryString OR
+				Email LIKE: queryString OR
+				FiscalCode__c LIKE: queryString OR
+				VATNumber__c LIKE: queryString
+			WITH SECURITY_ENFORCED
+		];
 	}
 
 	@AuraEnabled
 	public static List<Lead> getLeads(String queryString) {
-		try {
-			return [
-				SELECT
-					Id,
-					Name,
-					Phone,
-					MobilePhone,
-					Email,
-					FiscalCode__c,
-					VATNumber__c
-				FROM Lead
-				WHERE
-					Name LIKE: queryString OR
-					Phone LIKE: queryString OR
-					MobilePhone LIKE: queryString OR
-					Email LIKE: queryString OR
-					FiscalCode__c LIKE: queryString OR
-					VATNumber__c LIKE: queryString
-				WITH SECURITY_ENFORCED
-			];
-		} catch (Exception e) {
-			throw new AuraHandledException('ERROR: ' + e.getMessage());
-		}
+		return [
+			SELECT
+				Id,
+				Name,
+				Phone,
+				MobilePhone,
+				Email,
+				FiscalCode__c,
+				VATNumber__c
+			FROM Lead
+			WHERE
+				Name LIKE: queryString OR
+				Phone LIKE: queryString OR
+				MobilePhone LIKE: queryString OR
+				Email LIKE: queryString OR
+				FiscalCode__c LIKE: queryString OR
+				VATNumber__c LIKE: queryString
+			WITH SECURITY_ENFORCED
+		];
 	}
 
 	@AuraEnabled
-	public static void handleLead(String leadId, String activityId){
-		try {
-			updateActivity(activityId, null, null, leadId);
-		} catch (Exception e) {
-			throw new AuraHandledException('ERROR: ' + e.getMessage());
-		}
+	public static void handleLead(String leadId, String recordId){
+		updateRecord(recordId, null, null, leadId);
 	}
 
-	public static List<Account> handleAccount(Id contactId, String activityId) {
-		try {
-			List<Account> accounts = getAccounts(contactId);
+	public static List<Account> handleAccount(Id contactId, String recordId) {
+		List<Account> accounts = getAccounts(contactId);
 
-			if(accounts.size() == 1) {
-				updateActivity(activityId, contactId, accounts[0].Id, null);
-			}
-
-			return accounts;
-		} catch (Exception e) {
-			throw new AuraHandledException('ERROR: ' + e.getMessage());
+		if(accounts.size() == 1) {
+			updateRecord(recordId, contactId, accounts[0].Id, null);
 		}
+
+		return accounts;
 	}
 
 	@AuraEnabled
-	public static String handleAccountSerialized(Id contactId, String activityId) {
-		return JSON.serialize(handleAccount(contactId, activityId));
+	public static String handleAccountSerialized(Id contactId, String recordId) {
+		return JSON.serialize(handleAccount(contactId, recordId));
 	}
 
 	@AuraEnabled
 	public static List<Account> getAccounts(String contactId) {
-		try {
-			return [SELECT Id, Name, CustomerCode__c, FiscalCode__c, VATNumber__c, BillingAddressFormula__c FROM Account WHERE Id IN (SELECT AccountId FROM AccountContactRelation WHERE ContactId =: contactId) WITH SECURITY_ENFORCED];
-		} catch (Exception e) {
-			throw new AuraHandledException('ERROR: ' + e.getMessage());
-		}
+		return [SELECT Id, Name, CustomerCode__c, FiscalCode__c, VATNumber__c, BillingAddressFormula__c FROM Account WHERE Id IN (SELECT AccountId FROM AccountContactRelation WHERE ContactId =: contactId) WITH SECURITY_ENFORCED];
 	}
 
 	@AuraEnabled
-	public static void updateActivity(String activityId, String contactId, String accountId, String leadId) {
-		try {
-			wrts_prcgvr__Activity__c a = new wrts_prcgvr__Activity__c(
-				Id = activityId
-			);
+	public static void updateRecord(String recordId, String contactId, String accountId, String leadId) {
+		String sobjectType = getSobjectType(recordId);
+		Map<String,String> fieldsMap = fieldMappings.get(sobjectType);
+		SObject sobj = instanceSobject(recordId);
 
-			if(contactId != null) {
-				a.Contact__c = contactId;
-			}
-			if(accountId != null) {
-				a.Account__c = accountId;
-			}
-			if(leadId != null) {
-				a.Lead__c = leadId;
-			}
-
-			HDT_UTL_DatabaseService.updateSObject(a);
-		} catch (Exception e) {
-			throw new AuraHandledException('ERROR: ' + e.getMessage());
+		if(contactId != null) {
+			sobj.put(fieldsMap.get('contact'), contactId);
 		}
+		if(accountId != null) {
+			sobj.put(fieldsMap.get('account'), accountId);
+		}
+		if(leadId != null) {
+			sobj.put('Lead__c', leadId);
+		}
+
+		HDT_UTL_DatabaseService.updateSObject(sobj);
 	}
 
 	@AuraEnabled
-	public static String reset(String activityId) {
-		try {
-			HDT_UTL_DatabaseService.updateSObject(new wrts_prcgvr__Activity__c(
-				Id = activityId,
-				Contact__c = null,
-				Account__c = null,
-				Lead__c = null
-			));
-			return null;
-		} catch (Exception e) {
-			throw new AuraHandledException('ERROR: ' + e.getMessage());
+	public static String reset(String recordId) {
+		String sobjectType = getSobjectType(recordId);
+		Map<String,String> fieldsMap = fieldMappings.get(sobjectType);
+		SObject sobj = instanceSobject(recordId);
+		sobj.put(fieldsMap.get('contact'), null);
+		sobj.put(fieldsMap.get('account'), null);
+
+		if(sobjectType == 'wrts_prcgvr__Activity__c') {
+			sobj.put('Lead__c', null);
 		}
+		
+		HDT_UTL_DatabaseService.updateSObject(sobj);
+
+		return null;
+	}
+
+	private static String getSobjectType(String recordId) {
+		return ((Id) recordId).getSobjectType().getDescribe().getName();
+	}
+
+	private static SObject instanceSobject(String recordId) {
+		String sobjectType = getSobjectType(recordId);
+		return Schema.getGlobalDescribe().get(sobjectType).newSObject(recordId);
 	}
 }

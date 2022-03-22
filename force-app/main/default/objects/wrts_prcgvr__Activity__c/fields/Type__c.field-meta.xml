@@ -46,6 +46,11 @@
                 <label>Gestione Iva e Accise</label>
             </value>
             <value>
+                <fullName>Eseguire Gestione Manuale SAP</fullName>
+                <default>false</default>
+                <label>Eseguire Gestione Manuale SAP</label>
+            </value>
+            <value>
                 <fullName>Sportello</fullName>
                 <default>false</default>
                 <label>Sportello</label>
@@ -146,14 +151,9 @@
                 <label>Supporto Catalogo Prodotti</label>
             </value>
             <value>
-                <fullName>Supporto Anomalia processo/sistema</fullName>
+                <fullName>Anomalia processo/sistema</fullName>
                 <default>false</default>
-                <label>Supporto Anomalia processo/sistema</label>
-            </value>
-            <value>
-                <fullName>Supporto Esercizio Sistemi</fullName>
-                <default>false</default>
-                <label>Supporto Esercizio Sistemi</label>
+                <label>Anomalia processo/sistema</label>
             </value>
             <value>
                 <fullName>Supporto caricamenti contratti</fullName>
@@ -565,13 +565,11 @@
                 <default>false</default>
                 <label>Esito KO da SII</label>
             </value>
-            <!-- CanoneRai creato da Mulesoft, utilizziamo una label BSN-friendly -->
             <value>
                 <fullName>CanoneRai</fullName>
                 <default>false</default>
                 <label>Scarto Canone RAI</label>
             </value>
-            <!-- BonusSociale creato da Mulesoft, utilizziamo una label BSN-friendly -->
             <value>
                 <fullName>BonusSociale</fullName>
                 <default>false</default>
@@ -616,6 +614,11 @@
                 <fullName>Del. 40 gestione doc.invio a DL</fullName>
                 <default>false</default>
                 <label>Del. 40 gestione doc.invio a DL</label>
+            </value>
+            <value>
+                <fullName>Vocal Order non validato</fullName>
+                <default>false</default>
+                <label>Vocal Order non validato</label>
             </value>
         </valueSetDefinition>
     </valueSet>

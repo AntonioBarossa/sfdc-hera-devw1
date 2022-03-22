@@ -220,7 +220,7 @@ public inherited sharing class HDT_LC_SaleVas {
                 records = recordMap.values();
             }
             when 'SUBS_ANALISI_CONSUMI'{ 
-                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Contract__r.ContractNumber,
+                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Product__r.Name, SBQQ__Contract__r.ContractNumber,
                     SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
                     FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Fatturabili' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
 
@@ -233,7 +233,7 @@ public inherited sharing class HDT_LC_SaleVas {
                 records = recordMap.values();
             }
             when 'SUBS_VAS_SERVIZIO'{ 
-                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Contract__r.ContractNumber,
+                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Product__r.Name, SBQQ__Contract__r.ContractNumber,
                     SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
                     FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Servizio' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
 
@@ -249,11 +249,13 @@ public inherited sharing class HDT_LC_SaleVas {
             //Segnalazioni VAS - START
             when 'CONTRACTS_VAS'{ 
                 Set<Id> contractIds = new Set<Id>();
-                for(Order o : [SELECT ContractReference__c FROM Order WHERE RecordType.DeveloperName='HDT_RT_VAS' AND AccountId=:searchString AND ContractReference__c!=null WITH SECURITY_ENFORCED]){
+                Set<Id> servicePointIds = new Set<Id>();
+                for(Order o : [SELECT ContractReference__c, ServicePoint__c FROM Order WHERE (RecordType.DeveloperName='HDT_RT_VAS' OR RecordType.DeveloperName='HDT_RT_ScontiBonus') AND AccountId=:searchString AND (ContractReference__c!=null OR ServicePoint__c!= null) WITH SECURITY_ENFORCED]){
                     contractIds.add(o.ContractReference__c);
+                    servicePointIds.add(o.ServicePoint__c);
                 }
                 records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract
-                    WHERE Id IN :contractIds WITH SECURITY_ENFORCED];
+                    WHERE (Id IN :contractIds OR ServicePoint__c IN :servicePointIds) AND Status!='Cessato' WITH SECURITY_ENFORCED];
             }
             when 'SUBS_FROM_CONTRACT'{ 
                 records = [SELECT Name, SBQQ__ProductName__c

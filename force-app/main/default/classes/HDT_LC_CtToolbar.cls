@@ -161,7 +161,9 @@ public with sharing class HDT_LC_CtToolbar {
 
     @AuraEnabled
     public static void cacheUuid(String uuid) {
-        Cache.Session.put('local.ReitekAgentsSessionCache.uuid', uuid);
+        if(String.isNotBlank(uuid)) {
+            Cache.Session.put('local.ReitekAgentsSessionCache.uuid', uuid);
+        }
     }
 
     @AuraEnabled

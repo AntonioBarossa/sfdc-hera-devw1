@@ -98,12 +98,12 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         switch on codicePrestazione {
             when 'A01', 'A40','A02', 'A03', 'S01', 'S02' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
                 Order triggerOrder = null;
-                if (!String.isBlank(codicePraticaDistributore)) {
+                /*if (!String.isBlank(codicePraticaDistributore)) {
                     triggerOrder = queryHandlerOrder.findOrderByDistributorPracticeCode(codicePraticaDistributore);
-                } else {
-                    String processType = getProcessTypeFromCodPrestazione(codicePrestazione);
-                    triggerOrder = queryHandlerOrder.findOrderByTypeAndServicePointCode(processType, codicePresa);
-                }
+                } else {*/
+                    Set<String> processTypeSet = getProcessTypeFromCodPrestazione(codicePrestazione);
+                    triggerOrder = queryHandlerOrder.findOrderByTypeAndServicePointCode(processTypeSet, codicePresa);
+                //}
 
                 if (triggerOrder != null) {
                     anagAlignCase = createAnagAlignmentCase(triggerOrder);
@@ -112,7 +112,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
                     anagAlignCase.Excises__c = transcodeExcises(triggerOrder);
                     anagAlignCase.RegionalAdditional__c = queryHandlerOrder.findRegionalAdditional(triggerOrder.ExciseGAS__c, triggerOrder.SupplyPlace__c, getRegion(triggerOrder.SupplyState__c));
-                    anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+                    if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
+                        anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+                    }
 
                     System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
                     anagAlignCase.Phase__c = 'Da Inviare';
@@ -133,8 +135,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 updateAnagAlignmentCaseCustomerData(anagAlignCase);
                 anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
                 anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
-                anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
-
+                if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
+                    anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+                }
                 for (String field : dataEnrichmentFields) {
                     anagAlignCase.put(field, tempCase.get(field));
                 }
@@ -157,7 +160,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 updateAnagAlignmentCaseCustomerData(anagAlignCase);
                 anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
                 anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
-                anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+                if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
+                    anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+                }
 
                 for (String field : dataEnrichmentFields) {
                     anagAlignCase.put(field, tempCase.get(field));
@@ -556,24 +561,31 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         return anagAlignCases;
     }
-
-    private static String getProcessTypeFromCodPrestazione(String codicePrestazione) {
-        String processType = '';
+    /**
+     * A01 --> Subentro su GdM chiuso - Prima Attivazione
+     * A02 --> Non è gestita
+     * A03 --> Prima attivazione con modifica	
+     * A40 --> Subentro su GdM chiuso - Prima Attivazione
+     * S01 --> Subentro su GdM chiuso
+     * S02 --> Subentro su GdM chiuso
+     */
+    private static Set<String> getProcessTypeFromCodPrestazione(String codicePrestazione) {
+        Set<String> processTypeString = new Set<String>();
 
         switch on codicePrestazione {
-            when 'A01' {
-                processType = 'Prima Attivazione Ele'; // TODO adeguare
+            when 'A01','A40' {
+                processTypeString.add('Subentro su GdM chiuso');
+                processTypeString.add('Prima Attivazione');
             }
-            when else {
-                // TODO
-                /**@frpanico 15/10/2021
-                 * Risoluzione "Avoid empty block statements"
-                 */
-                processType = '';
+            when 'A03'{
+                processTypeString.add('Prima attivazione con modifica');
+            }
+            when 'S01','S02'{
+                processTypeString.add('Subentro su GdM chiuso');
             }
         }
 
-        return processType;
+        return processTypeString;
     }
 
     /**

@@ -518,6 +518,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.isUserActivity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>RateCategory__c.operatore__c</field>
         <readable>true</readable>
@@ -594,6 +599,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.NumeratorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.MarketingPrivacyAcquired__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -615,6 +625,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.Cs1Outcome__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.reportPhase__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -665,6 +680,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ActivatedDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Asset__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1424,6 +1444,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.ShareforAppointment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.ShippingAddress</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1919,6 +1944,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Sale__c.CampaignMemberId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Sale__c.AreaManager__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2118,7 +2148,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>AgentMatrix__c.IsMonitoring__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4914,6 +4944,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.ShareforAppointment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Interaction__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7349,6 +7384,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>City__c.IsNotTransition__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>City__c.MunicipalityCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8814,6 +8854,11 @@
 		<field>DependenciesMatrix__c.MatchingField__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DiscardAnnullmentRule__c.ControllingCommodity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>DiscardAnnullmentRule__c.DiscardNoteReliability__c</field>
@@ -14497,6 +14542,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.ServicePoint__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.SiebelCatalog__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -25295,6 +25345,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.NumeratorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.ActivationEleExternalDistributor__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -30532,6 +30587,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.SuspensionNote__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.SuspensionReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -33248,9 +33308,9 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Product2</object>
@@ -34941,7 +35001,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Lead.HDT_RT_Main</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
@@ -35345,6 +35405,10 @@
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>DiscardAnnullmentRule__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>standard-Contract</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
@@ -35518,7 +35582,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>ServicePoint__c</tab>
-        <visibility>DefaultOff</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>VisitAssignmentRules__c</tab>
@@ -35690,7 +35754,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Product2</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-ProfileSkill</tab>

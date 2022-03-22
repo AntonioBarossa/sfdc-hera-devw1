@@ -86,7 +86,7 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>Edit</actionName>
-        <comment>Sovrascritta action Edit per non poter permettere l&apos;edit dalla vista degli Order nella Service Console</comment>
+        <comment>Sovrascritta action Edit per non poter permettere la modifica dalla vista degli Order nella Service Console</comment>
         <content>HDT_LCP_DisableEditButtonStandard</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
@@ -94,7 +94,7 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>Edit</actionName>
-        <comment>Sovrascritta action Edit per non poter permettere l&apos;edit dalla vista degli Order nella Service Console</comment>
+        <comment>Sovrascritta action Edit per non poter permettere la modifica dalla vista degli Order nella Service Console</comment>
         <content>HDT_LCP_DisableEditButtonStandard</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
@@ -120,16 +120,22 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>New</actionName>
+        <comment>Sovrascritta action New per non poter permettere la creazione dalla vista degli Order nella Service Console</comment>
+        <content>HDT_LCP_DisableNewButtonStandard</content>
         <formFactor>Large</formFactor>
-        <type>Default</type>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
+        <comment>Sovrascritta action New per non poter permettere la creazione dalla vista degli Order nella Service Console</comment>
+        <content>HDT_LCP_DisableNewButtonStandard</content>
         <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -222,9 +228,7 @@
         <searchResultsAdditionalFields>ORDERS.EFFECTIVE_DATE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ORDERS.STATUS</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTRACT.CONTRACT_NUMBER</searchResultsAdditionalFields>
-         <!--Start HRAWRM-366 31-08-2021 -->
         <searchResultsAdditionalFields>EffectiveDate__c</searchResultsAdditionalFields>
-         <!--End HRAWRM-366 31-08-2021 -->
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
 </CustomObject>

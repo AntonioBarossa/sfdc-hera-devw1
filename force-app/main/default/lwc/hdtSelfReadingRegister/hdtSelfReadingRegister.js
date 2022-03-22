@@ -21,8 +21,8 @@ export default class HdtSelfReadingRegister extends LightningElement {
     registerObjEle = [
         {id: 1, name: "readingType", label:"Tipo Lettura ", type: "text", value: null, disabled:true, visible:false},
         {id: 2, name: "readingDate", label:"Data Ultima Lettura ", type: "date", value: null, disabled:true, visible:true},
-        {id: 3, name: "readingOldValue", label:"Ultima Lettura ", type: "number", value: null, disabled:true, visible:true},
-        {id: 4, name: "readingValue", label:"Nuova Lettura ", type: "number", value: null, disabled:false, visible:true},
+        {id: 3, name: "readingOldValue", label:"Ultima Lettura ", type: "number", step:"0",value: null, disabled:true, visible:true},
+        {id: 4, name: "readingValue", label:"Nuova Lettura ", type: "number", step:"0",value: null, disabled:false, visible:true},
         {id: 5, name: "readingBand", label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
         {id: 6, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:true},
         {id: 7, name: "readingUnit", label:"Unita di Misura", type: "text", value: null, disabled:true, visible:false},
@@ -60,6 +60,11 @@ export default class HdtSelfReadingRegister extends LightningElement {
             for(let i=0; i<Object.keys(this.registerObj).length; ++i){
 
                 this.registerObj[i].label += 'F' + this.rowObj.headerIndex;
+                console.log('### ' + this.rowObj.headerText + ' ' + this.registerObj[i].name);
+                if(this.rowObj.headerText === 'Potenza' &&  (this.registerObj[i].name === 'readingValue' || this.registerObj[i].name === 'readingOldValue')){
+                    console.log('###change step');
+                    this.registerObj[i].step = "0.001";
+                }
 
             }
         } else if(this.commodity === 'Gas'){
@@ -237,8 +242,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
             const oldValue = parseInt(this.registerObj[this.registerObj.findIndex(p => p.name === 'readingOldValue')].value);
             const newValue = parseInt(this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value);
-
-            if (this.allowSmallerReading === false && newValue < oldValue) {
+            if (this.allowSmallerReading === false && newValue < oldValue && this.rowObj.headerText != 'Potenza') {
                 this.advanceError = 'Impossibile inserire una lettura inferiore alla precedente.';
             }
     

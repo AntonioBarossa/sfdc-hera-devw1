@@ -36,6 +36,7 @@ export default class PopoverContainer extends NavigationMixin(LightningElement) 
             console.log(error);
         } else if (result.data) {
             if (result.data.length !== 0) {
+                console.log('CAMPAIGNMEMBERS --> '+JSON.stringify(result.data));
                 result.data.forEach(item => {
                     this.allCampaigns.push(item);
                     this.campaignsNumber++;

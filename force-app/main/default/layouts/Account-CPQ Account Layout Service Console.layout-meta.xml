@@ -2,6 +2,9 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>SBQQ__Amend_Assets</customButtons>
     <customButtons>SBQQ__Renew_Assets</customButtons>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
     <excludeButtons>SendEmail</excludeButtons>
     <excludeButtons>XClean</excludeButtons>
@@ -239,15 +242,15 @@
     </relatedLists>
     <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>ProcessType__c</fields>
         <fields>ParentOrder__c</fields>
-        <fields>ORDERS.CREATED_DATE</fields>
         <fields>ORDERS.STATUS</fields>
         <fields>Phase__c</fields>
+        <fields>ORDERS.CREATED_DATE</fields>
         <fields>Sale__c</fields>
         <fields>Channel__c</fields>
         <fields>CREATEDBY_USER.ALIAS</fields>
         <fields>ServicePointCodeFormula__c</fields>
-        <fields>ProcessType__c</fields>
         <relatedList>RelatedOrderList</relatedList>
         <sortField>ORDERS.ORDER_NUMBER</sortField>
         <sortOrder>Desc</sortOrder>
@@ -317,12 +320,14 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>AlertType__c</fields>
-        <fields>AlertConfiguration__c</fields>
         <fields>IsActive__c</fields>
         <fields>IsEmailChannelActive__c</fields>
         <fields>IsSmsChannelActive__c</fields>
         <fields>IsPushChannelActive__c</fields>
         <fields>IsSolChannelActive__c</fields>
+        <fields>Mobile__c</fields>
+        <fields>ActivationDate__c</fields>
+        <fields>InactivationDate__c</fields>
         <relatedList>AlertAccountConfiguration__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -386,11 +391,11 @@
         <fields>Cluster__c</fields>
         <fields>CASES.TYPE</fields>
         <fields>Subprocess__c</fields>
+        <fields>Phase__c</fields>
+        <fields>CASES.ORIGIN</fields>
+        <fields>CASES.CLOSED_DATE</fields>
         <fields>MacroTopic__c</fields>
         <fields>InformationDetail__c</fields>
-        <fields>Phase__c</fields>
-        <fields>ComplaintEntryChannel__c</fields>
-        <fields>CASES.CLOSED_DATE</fields>
         <relatedList>RelatedCaseList</relatedList>
         <sortField>CASES.CREATED_DATE_DATE_ONLY</sortField>
         <sortOrder>Desc</sortOrder>

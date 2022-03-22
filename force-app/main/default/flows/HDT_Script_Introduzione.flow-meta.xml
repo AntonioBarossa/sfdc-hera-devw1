@@ -14,7 +14,7 @@
             <name>isOutbound</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>callType</leftValueReference>
+                <leftValueReference>channelInput</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Outbound</stringValue>
@@ -63,8 +63,8 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
-            <name>Intro_1_Inbound</name>
-            <fieldText>&lt;p&gt;{!Introduzione_Inbound_1}&lt;/p&gt;</fieldText>
+            <name>text_isLinear</name>
+            <fieldText>&lt;p&gt;{!Introduzione_isLinear}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -97,6 +97,21 @@
             <fieldText>&lt;p&gt;{!Introduzione_Inbound_2}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <fields>
+            <name>text1</name>
+            <fieldText>&lt;p&gt;Mi conferma che è intenzionato ad aderire alla nostra offerta a mercato libero {!offerNameInput} per la sua abitazione, procedendo con la registrazione di questa telefonata, anziché in forma scritta?&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.Account.Category__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Famiglie</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -110,7 +125,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Introduzione_Outbound_1_Text</name>
-            <fieldText>&lt;p&gt;{!Introduzione_Outbound_1}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;{!isLinear_Outbound}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -153,7 +168,7 @@
             <targetReference>callTypeDecision</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <textTemplates>
         <name>Introduzione_Inbound_1</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
@@ -162,7 +177,7 @@
     <textTemplates>
         <name>Introduzione_Inbound_2</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;Le ricordo che essere servito sul mercato libero dell’energia significa poter decidere quale fornitore e tipo di contratto scegliere.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da Lei richiesti e potranno essere comunicati al distributore ai fini dell’erogazione del servizio, di cui riceverà l’informativa dettagliata nel plico contrattuale che le invieremo per posta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che è intenzionato ad aderire alla nostra offerta a mercato libero {!OrderData.CommercialProduct__c} Luce/Gas per la sua abitazione, procedendo con la registrazione di questa telefonata, anziché in forma scritta?&lt;/p&gt;</text>
+        <text>&lt;p&gt;Le ricordo che essere servito sul mercato libero dell’energia significa poter decidere quale fornitore e tipo di contratto scegliere.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da Lei richiesti e potranno essere comunicati al distributore ai fini dell’erogazione del servizio, di cui riceverà l’informativa dettagliata nel plico contrattuale che le invieremo per posta.&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>Introduzione_Inbound_isAxa_1</name>
@@ -173,6 +188,11 @@
         <name>Introduzione_isAXA</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>&lt;p&gt;[e l’adesione alla Polizza AXA Assistance Hera NoProblem [Luce/Gas].&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>Introduzione_isLinear</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;[1. Introduzione]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;[*** Inizio registrazione ***]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Per conto di &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!SalesCompanyFormula}&lt;/span&gt; le propongo le nostre offerte a mercato libero libero [e per l’adesione alla Polizza Collettiva Linear Hera NoProblem Gas]&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>Introduzione_Outbound_1</name>
@@ -189,6 +209,11 @@
         <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Chiamo per conto di {!SalesCompanyFormula}, per proporle le nostre offerte a mercato libero [e l’adesione alla Polizza AXA Assistance Hera NoProblem [Luce/Gas].&lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
+    <textTemplates>
+        <name>isLinear_Outbound</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Chiamo per conto di {!SalesCompanyFormula}, per proporle le nostre offerte a mercato libero &lt;/span&gt;libero [e per l’adesione alla Polizza Collettiva Linear Hera NoProblem Gas]&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</text>
+    </textTemplates>
     <variables>
         <name>callType</name>
         <dataType>String</dataType>
@@ -197,11 +222,31 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>channelInput</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Inbound</stringValue>
+        </value>
+    </variables>
+    <variables>
         <name>isAxa</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>offerNameInput</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>OrderData.CommercialProduct__c</elementReference>
+        </value>
     </variables>
     <variables>
         <description>ordine padre</description>

@@ -130,6 +130,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 when 'HDT_RT_SwitchIn' {
                     newOrder.PowerRequested__c  = order.PowerCommitted__c;
                 }
+                /**@frpanico 2022-03-16
+                 * Aggiunta Sconti Bonus
+                 * Predefault Data Decorrenza 
+                 * al primo giorno del mese successivo
+                 */
+                when 'HDT_RT_ScontiBonus'
+                {
+                    newOrder.EffectiveDate__c =  (System.today().addMonths(1)).toStartOfMonth();
+                }
 
             }
 
@@ -218,7 +227,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             if (response){
                 HDT_UTL_DatabaseService.updateSObject(new Order(Id = ord.Id, CreditCheckInProgress__c = true));
             } */
-            return response;
+            return !response;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }

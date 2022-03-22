@@ -6,10 +6,7 @@
     <formula>OR(
 				CONTAINS(TEXT(Phase__c), &quot;Ripensamento&quot;),
 				ISNULL(MaxAfterthoughtDate__c),
-				AND(
-				    MaxAfterthoughtDate__c &lt; TODAY(),
-        DATE(YEAR(EffectiveDate__c),MONTH(EffectiveDate__c)-1,10) &lt; TODAY()
-							)
+				CONTAINS(TEXT(Phase__c), &quot;Ripensato&quot;)
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Non Ripensabile?</label>

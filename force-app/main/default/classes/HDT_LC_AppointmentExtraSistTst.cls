@@ -4,11 +4,6 @@ public with sharing class HDT_LC_AppointmentExtraSistTst {
     public static HDT_QR_RecordType rcTypeQR= new HDT_QR_RecordType();
     @TestSetup
     static void createEnviroment(){
-       
-    }
-    
-    @isTest
-    public static void executeNewTest(){
         HDT_UTL_DataFactoryTst.pClickInstance();
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
         List<Account> acctList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
@@ -38,11 +33,16 @@ public with sharing class HDT_LC_AppointmentExtraSistTst {
         actList[0].Order__c = orders[0].Id;
         actList[0].Case__c = cases[0].Id;
         actList[0].Distributor__c = acctList[0].Id;
-		wrts_prcgvr__Activity__c at = new wrts_prcgvr__Activity__c();
         
         
         insert actList;
-        actList = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Id = :actList[0].Id];
-		String res = HDT_LC_AppointmentExtraSist.getLink(actList[0].Id);
-        }
+    }
+    
+    @isTest
+    public static void executeNewTest(){
+        wrts_prcgvr__Activity__c act = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c LIMIT 1];
+		String res = HDT_LC_AppointmentExtraSist.getLink(act.Id);
+        Map<String,String> response = (Map<String,String>)JSON.deserialize(res, Map<String,String>.class);
+        System.assertEquals('Nessun Link valido per il presente distributore.', response.get('errorMessage'),'La risposta al get link non è quella attesa.');
+    }
 }

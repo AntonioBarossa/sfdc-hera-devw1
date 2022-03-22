@@ -20,7 +20,7 @@ public inherited sharing class HDT_QR_Activity {
         String saleId =  (String)o.get('Id');
 
         String type = 'Approvazione Offerte';
-        String status ='Creata';
+        String status ='Aperta';
         String query = 'SELECT '+ fields +
                 ' FROM wrts_prcgvr__Activity__c WHERE Type__c=: type AND Account__c =: idAcc AND Status__c=:status AND Sale__c=: saleId WITH SECURITY_ENFORCED';
 
@@ -35,4 +35,12 @@ public inherited sharing class HDT_QR_Activity {
         return activity;
     }
 
+    public static List<wrts_prcgvr__Activity__c> getActivityFromIdList(Set<String> actIdSet){
+        
+        List<wrts_prcgvr__Activity__c> actList = new List<wrts_prcgvr__Activity__c>();
+
+        actList = [SELECT Id, RecordTypeId, Order__c, Order__r.Id, Order__r.AgencyCode__c, Order__r.RecordType.DeveloperName FROM wrts_prcgvr__Activity__c WHERE Id = :actIdSet WITH SECURITY_ENFORCED];
+
+        return actList;
+    }
 }

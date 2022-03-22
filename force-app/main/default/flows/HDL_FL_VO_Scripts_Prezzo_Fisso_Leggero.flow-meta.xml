@@ -70,12 +70,12 @@
         </connector>
         <fields>
             <name>CE_text1</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;[3. Condizioni economiche Energia elettrica per Prezzo Fisso Leggero Hera]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;[3. Condizioni economiche Gas Naturale]&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>CE_text2</name>
-            <fieldText>&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 24 mesi di {!LoopOrdiniFigliOfferta.CommercialProduct__c} per la sua attività economica.&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo da lei scelto, è pari a 0,70 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 12 mesi, di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} per la sua attività economica.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -165,7 +165,7 @@
         </connector>
         <fields>
             <name>DT_Gas_Text2</name>
-            <fieldText>&lt;p&gt;[Dati Tecnici Gas]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è DATO_MANCANTE?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura]?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[Dati Tecnici Gas]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura]?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -185,13 +185,23 @@
         </fields>
         <fields>
             <name>DT_Gas_Text5</name>
-            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che  la durata del prezzo fisso è DATO_MANCANTE mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che  la durata del prezzo fisso è 12 mesi?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>DT_Gas_Text6</name>
             <fieldText>&lt;p&gt;[Se il cliente ha un’attività per cui ha diritto ad agevolazioni fiscali]&lt;/p&gt;&lt;p&gt;•	Le ricordo che in alcuni casi le forniture di gas naturale sono soggette all’imposta di consumo statale ed alle addizionali regionali agevolate. Mi conferma che la sua attività è XXXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Bene, allora la informo che troverà la modulistica di richiesta all’interno del plico contrattuale da restituire debitamente compilata.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.FacilitationExcise__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -206,7 +216,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>DC_text1</name>
-            <fieldText>&lt;p&gt;•	La informo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 9 mesi presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Qualora il punto di fornitura di energia elettrica sia connesso in bassa tensione e/o&amp;nbsp;i consumi di gas non siano superiori a 200.000 Smc/anno può recedere in qualsiasi momento entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La informo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 9 mesi presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Qualora il punto di fornitura di energia elettrica sia connesso in bassa tensione e/o&amp;nbsp;i consumi di gas non siano superiori a 200.000 Smc/anno può recedere in qualsiasi momento entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Se deve inviare un reclamo o richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	La informo che, qualora lei abbia i requisiti previsti per legge e voglia l’applicazione dell’aliquota IVA ridotta al 10%, ci dovrà restituire, debitamente compilata, la modulistica predisposta a tale scopo che troverà all’interno del plico contrattuale che riceverà per posta.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento della nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;XXXXX [SI/NO]&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;XXXXX [SI/NO]&lt;/p&gt;&lt;p&gt;•	Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Contact__r.LastName} abbiamo terminato la registrazione, benvenuto/a in HERA COMM/ HERA COMM MARCHE/ESTENERGY&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -255,13 +265,19 @@
         <inputAssignments>
             <name>callType</name>
             <value>
-                <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.LoginChannel__c</elementReference>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>categoriaChiamata</name>
             <value>
                 <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.CustomerCategory__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ModalitaPagamentoInput</name>
+            <value>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.modalitaPagamentoOutput</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -293,9 +309,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <name>channelInput</name>
+            <value>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>isAxa</name>
             <value>
                 <stringValue>N</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>offerNameInput</name>
+            <value>
+                <stringValue>Prezzo Fisso Leggero Hera</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

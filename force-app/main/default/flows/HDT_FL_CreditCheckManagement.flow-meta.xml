@@ -4,8 +4,8 @@
     <assignments>
         <name>Assegnazioni</name>
         <label>Assegnazioni</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>getActivity.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>Assegnazioni_0</name>
         <label>Assegnazioni</label>
-        <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>getActivity.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -50,8 +50,8 @@
     <assignments>
         <name>Assegnazioni_0_0</name>
         <label>Assegnazioni</label>
-        <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationX>842</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>getActivity.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -62,10 +62,16 @@
         <assignmentItems>
             <assignToReference>getOrder.CreditCheckDescription__c</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getOrder.OutgoingCreditCheckResult__c</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getActivity.Reason__c</assignToReference>
@@ -82,6 +88,20 @@
                 <stringValue>Attesa Credit Check</stringValue>
             </value>
         </assignmentItems-->
+        <assignmentItems>
+            <assignToReference>getActivity.CreditCheckResults__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>OK</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivity.CreditCheckReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Azione_0</targetReference>
         </connector>
@@ -105,8 +125,8 @@
     <decisions>
         <name>Azione</name>
         <label>Azione?</label>
-        <locationX>314</locationX>
-        <locationY>398</locationY>
+        <locationX>578</locationX>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>KO_Risolto_Label</targetReference>
         </defaultConnector>
@@ -145,8 +165,8 @@
     <decisions>
         <name>Azione_0</name>
         <label>Azione?</label>
-        <locationX>314</locationX>
-        <locationY>854</locationY>
+        <locationX>578</locationX>
+        <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Update_Order</targetReference>
         </defaultConnector>
@@ -165,6 +185,31 @@
                 <targetReference>Update_Activity</targetReference>
             </connector>
             <label>KO Definitivo</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Assegnazione</name>
+        <label>Check Assegnazione</label>
+        <locationX>314</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>getOrder</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Ok</defaultConnectorLabel>
+        <rules>
+            <name>Not_My_Activity</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getActivity.isUserActivity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>NotMyActivityScreen</targetReference>
+            </connector>
+            <label>Not My Activity</label>
         </rules>
     </decisions>
     <interviewLabel>HDT_FL_CreditCheckManagement {!$Flow.CurrentDateTime}</interviewLabel>
@@ -195,7 +240,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>getOrder</targetReference>
+            <targetReference>Check_Assegnazione</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -212,8 +257,8 @@
     <recordLookups>
         <name>getOrder</name>
         <label>getOrder</label>
-        <locationX>314</locationX>
-        <locationY>278</locationY>
+        <locationX>578</locationX>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Azione</targetReference>
@@ -233,8 +278,8 @@
     <recordUpdates>
         <name>Update_Activity</name>
         <label>Update Activity</label>
-        <locationX>314</locationX>
-        <locationY>1454</locationY>
+        <locationX>578</locationX>
+        <locationY>1574</locationY>
         <faultConnector>
             <targetReference>Error_0</targetReference>
         </faultConnector>
@@ -243,8 +288,8 @@
     <recordUpdates>
         <name>Update_Order</name>
         <label>Update Order</label>
-        <locationX>402</locationX>
-        <locationY>974</locationY>
+        <locationX>666</locationX>
+        <locationY>1094</locationY>
         <connector>
             <targetReference>Update_Activity</targetReference>
         </connector>
@@ -256,8 +301,8 @@
     <screens>
         <name>Error</name>
         <label>Error</label>
-        <locationX>666</locationX>
-        <locationY>1094</locationY>
+        <locationX>930</locationX>
+        <locationY>1214</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -272,8 +317,8 @@
     <screens>
         <name>Error_0</name>
         <label>Error</label>
-        <locationX>930</locationX>
-        <locationY>1574</locationY>
+        <locationX>1194</locationX>
+        <locationY>1694</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -288,8 +333,8 @@
     <screens>
         <name>KO_Definitivo_Label</name>
         <label>KO Definitivo</label>
-        <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -307,8 +352,8 @@
     <screens>
         <name>KO_Forzato_Label</name>
         <label>KO Forzato</label>
-        <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationX>578</locationX>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -326,8 +371,8 @@
     <screens>
         <name>KO_Risolto_Label</name>
         <label>KO Risolto</label>
-        <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationX>842</locationX>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -347,6 +392,22 @@
             <fieldType>ObjectProvided</fieldType>
             <isRequired>false</isRequired>
             <objectFieldReference>getActivity.Note__c</objectFieldReference>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>NotMyActivityScreen</name>
+        <label>NotMyActivityScreen</label>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>NotMyActivityError</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(255, 0, 0);&quot;&gt;Attenzione!&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;L&apos;attività può essere gestita solo dall&apos;assegnatario.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>

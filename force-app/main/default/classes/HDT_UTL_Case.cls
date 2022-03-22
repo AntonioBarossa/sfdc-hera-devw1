@@ -12,7 +12,7 @@ public inherited sharing class HDT_UTL_Case {
     public static List<HDT_UTL_FlowOutputs> caseFlowPredefaults(List<HDT_UTL_FlowInputs> inputs){
 
         HDT_QR_Case caseQr = new HDT_QR_Case();
-
+        
         List<HDT_UTL_FlowOutputs> outputs = new List<HDT_UTL_FlowOutputs>();
         List<Case> childCases = new List<Case>();
         HDT_UTL_FlowOutputs output = new HDT_UTL_FlowOutputs();
@@ -25,6 +25,7 @@ public inherited sharing class HDT_UTL_Case {
         String salesCompany = inputs[0].salesCompany;
         Case currentCase = inputs[0].currentCase;
         String cancellationNote = inputs[0].cancellationNote;
+        
         
 
         if(process == 'Voltura Tecnica'){
@@ -39,7 +40,24 @@ public inherited sharing class HDT_UTL_Case {
         
         } else if(cluster == 'Preventivi'){
             output.option = calculateOption(implantType, powerRequested);
-            output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
+            if(currentCase.Type.equalsIgnoreCase('Nuovo Impianto') || currentCase.Type.equalsIgnoreCase('Aggiunta Attacco'))
+            {
+                HDT_UTL_CalculateTransition calculateTransition = new HDT_UTL_CalculateTransition(currentCase.SupplyCity__c, currentCase.Commodity__c, currentCase.Distributor__r.Code__c);
+                Map<String,Object> companyInfosMap = new Map<String,Object>();
+                companyInfosMap = calculateTransition.calculateCompanyInfos();
+                City__c city = (City__c)companyInfosMap.get('cityObj');
+
+
+                AtecoMatrix__c atecoMatrix = [SELECT AtecoCode__c, City__c FROM AtecoMatrix__c WHERE City__c =: currentCase.SupplyCity__c WITH SECURITY_ENFORCED LIMIT 1];
+
+
+                output.atecoCode = atecoMatrix.AtecoCode__c;
+
+                
+                // output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
+                output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
+                output.salesCompany = city.SDV__c;
+            }
         } 
         else if(process.equalsIgnoreCase('Compatibilita'))
         {
@@ -68,6 +86,10 @@ public inherited sharing class HDT_UTL_Case {
         else if(process.equalsIgnoreCase('CreaBpCa')){
             System.enqueueJob(new HDT_QBL_BpCaRequest( accountContactRelationQr.getCreateBpCa( currentCase.AccountId ), currentCase.SupplyProvince__c ) );
         }
+        else if(process.equalsIgnoreCase('CheckIsCommunity')){
+            output.isCommunity = HDT_LC_SellingWizardController.checkCommunityLogin();
+        }
+
 
         outputs.add(output);
 
@@ -107,11 +129,17 @@ public inherited sharing class HDT_UTL_Case {
         @InvocableVariable
         public String salesCompanyCode;
         @InvocableVariable
+        public String salesCompany;
+        @InvocableVariable
         public String isCompatible;
         @InvocableVariable
         public List<Case> childCases;
         @InvocableVariable
         public String cancellationNote;
+        @InvocableVariable
+        public Boolean isCommunity;
+        @InvocableVariable
+        public String atecoCode;
 
     }
 

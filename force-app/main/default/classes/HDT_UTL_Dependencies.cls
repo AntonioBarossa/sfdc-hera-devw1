@@ -90,13 +90,32 @@ public inherited sharing class HDT_UTL_Dependencies {
     
                 if(tipology.equalsIgnoreCase(TIPOLOGY_SALES)){
                     for(Order order : (List<Order>)processesToUpdate.get('order')){
+                        String oldPhase = ((Order)newSObjectMap.get(order.ID)).Phase__c;
                         ((Order)newSObjectMap.get(order.ID)).Status = STATUS_SEQUENZIALIZZATO;
                         ((Order)newSObjectMap.get(order.ID)).Phase__c = PHASE_SEQUENZIALIZZATO;
+                        /**@frpanico 2022-03-11
+                         * Aggiunta scrittura PhaseStory__c 
+                         * per tracciare passaggio di fase
+                         */
+                        DateTime nowDateTime = DateTime.now();
+                        ((Order)newSObjectMap.get(order.ID)).PhaseStory__c = !String.isBlank(((Order)newSObjectMap.get(order.ID)).PhaseStory__c)
+                        ? oldPhase+'@@'+PHASE_SEQUENZIALIZZATO+'@@'+nowDateTime.getTime()+'@@A||'+((Order)newSObjectMap.get(order.ID)).PhaseStory__c
+                        : oldPhase+'@@'+PHASE_SEQUENZIALIZZATO+'@@'+nowDateTime.getTime()+'@@A||';
                     }
                 }else  if(tipology.equalsIgnoreCase(TIPOLOGY_POSTSALES)){
                     for(Case casePr : (List<Case>)processesToUpdate.get('case')){
+                        String oldPhase = ((Case)newSObjectMap.get(casePr.ID)).Phase__c;
                         ((Case)newSObjectMap.get(casePr.ID)).Status = STATUS_SEQUENZIALIZZATO;
                         ((Case)newSObjectMap.get(casePr.ID)).Phase__c = PHASE_SEQUENZIALIZZATO;
+                        /**@frpanico 2022-03-11
+                         * Aggiunta scrittura PhaseStory__c 
+                         * per tracciare passaggio di fase
+                         */
+                        DateTime nowDateTime = DateTime.now();
+                        ((Case)newSObjectMap.get(casePr.ID)).PhaseStory__c = !String.isBlank(((Case)newSObjectMap.get(casePr.ID)).PhaseStory__c)
+                        ? oldPhase+'@@'+PHASE_SEQUENZIALIZZATO+'@@'+nowDateTime.getTime()+'@@A||'+((Case)newSObjectMap.get(casePr.ID)).PhaseStory__c
+                        : oldPhase+'@@'+PHASE_SEQUENZIALIZZATO+'@@'+nowDateTime.getTime()+'@@A||';
+
                     }
                 }
             }

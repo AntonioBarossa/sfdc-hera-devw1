@@ -433,6 +433,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.isUserActivity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.recordtypeid</field>
         <readable>true</readable>
@@ -475,6 +480,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.IsDigitalMarking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.NumeratorGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -604,12 +614,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.NumeratorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.AnnualWithdrawal__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.IsEarlyActivation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.reportPhase__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -650,6 +670,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ActivatedDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Asset__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1419,6 +1444,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Sale__c.CampaignMemberId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Sale__c.AreaManager__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1735,6 +1765,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.SendMode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.ShareforAppointment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5044,6 +5079,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.ShareforAppointment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.AccountClass__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7489,6 +7529,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>City__c.IsNotTransition__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>City__c.MunicipalityCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8964,6 +9009,11 @@
 		<field>DependenciesMatrix__c.MatchingField__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DiscardAnnullmentRule__c.ControllingCommodity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>DiscardAnnullmentRule__c.DiscardNoteReliability__c</field>
@@ -14892,6 +14942,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.ServicePoint__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.SiebelCatalog__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -30863,6 +30918,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.SuspensionNote__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.SuspensionReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -34979,7 +35039,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Lead.HDT_RT_Main</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>

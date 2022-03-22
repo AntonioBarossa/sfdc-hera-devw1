@@ -20,10 +20,10 @@ public with sharing class HDT_QR_SystemCapacityConversion {
 
             }
             
-            query = 'SELECT ' + fieldToQuery + ' FROM HDT_SystemCapacityConfiguration__mdt WHERE ' + fieldToFilter + ' = \'' + value + '\'';            
+            query = 'SELECT ' + String.escapeSingleQuotes(fieldToQuery) + ' FROM HDT_SystemCapacityConfiguration__mdt WHERE ' + String.escapeSingleQuotes(fieldToFilter) + ' = \'' + String.escapeSingleQuotes(value) + '\'';            
 
 
-            List<HDT_SystemCapacityConfiguration__mdt> listResult = Database.query(String.escapeSingleQuotes(query));
+            List<HDT_SystemCapacityConfiguration__mdt> listResult = Database.query(query);
             
             result = field == 'CaliberClass' ? listResult[0].SystemCapacity__c : listResult[0].CaliberRequested__c;
 

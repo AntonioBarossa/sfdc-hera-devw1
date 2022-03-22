@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>Assegna_Esito_Attivit</name>
+        <label>Assegna Esito Attività</label>
+        <locationX>50</locationX>
+        <locationY>1094</locationY>
+        <assignmentItems>
+            <assignToReference>activity.ActivityOutcome__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Esito_Attivit_Gest_Dati_Disc</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Chiudi_Activity</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Assegna_Note</name>
         <label>Assegna Note</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>activity.ClosingNote__c</assignToReference>
@@ -27,7 +43,7 @@
     <assignments>
         <name>Assign_Activity</name>
         <label>Assign Activity</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>158</locationY>
         <assignmentItems>
             <assignToReference>activity.Id</assignToReference>
@@ -78,7 +94,7 @@
     <assignments>
         <name>Assign_Sending_DL_Managed</name>
         <label>Assign Sending DL Managed</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>activity.SendingDlManaged__c</assignToReference>
@@ -94,7 +110,7 @@
     <assignments>
         <name>HDT_CloseActivity_AND_HDT_CloseManualActivity</name>
         <label>HDT_CloseActivity AND HDT_CloseManualActivity</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>activity.wrts_prcgvr__Status__c</assignToReference>
@@ -117,7 +133,7 @@
     <assignments>
         <name>HDT_CloseDistributorComunicationAssign</name>
         <label>HDT_CloseDistributorComunicationAssign</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>activity.wrts_prcgvr__Status__c</assignToReference>
@@ -131,11 +147,51 @@
         </connector>
     </assignments>
     <choices>
+        <name>GestioneDatiDisc_1</name>
+        <choiceText>Dati corretti forniti da cliente e cambio uso inserito</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Dati corretti forniti da cliente e cambio uso inserito</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>GestioneDatiDisc_2</name>
+        <choiceText>Dati corretti forniti da cliente e cambio uso - non necessario</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Dati corretti forniti da cliente e cambio uso - non necessario</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>GestioneDatiDisc_3</name>
+        <choiceText>Dati corretti forniti dal DL</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Dati corretti forniti dal DL</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Negativo</name>
+        <choiceText>Negativo</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Negativo</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>No</name>
         <choiceText>NO</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Positivo</name>
+        <choiceText>Positivo</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Positivo</stringValue>
         </value>
     </choices>
     <choices>
@@ -149,12 +205,27 @@
     <decisions>
         <name>ActivityType_0</name>
         <label>ActivityType</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Chiudi_Activity</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
+        <rules>
+            <name>Gestione_Dati_Discordanti</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>discordantDataManagement</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Esito_Attivit</targetReference>
+            </connector>
+            <label>Gestione Dati Discordanti</label>
+        </rules>
         <rules>
             <name>HDT_CloseManualActivity_0</name>
             <conditionLogic>and</conditionLogic>
@@ -201,9 +272,41 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Esito_Attivit</name>
+        <label>Check Esito Attività</label>
+        <locationX>446</locationX>
+        <locationY>1430</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Finale</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Chiudi Attività</defaultConnectorLabel>
+        <rules>
+            <name>Annulla_Ordine</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Assegna_Esito_Attivit</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>activity.ActivityOutcome__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Dati corretti forniti dal DL</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annulla_Order</targetReference>
+            </connector>
+            <label>Annulla Ordine</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Tipo_Completa_Attivit</name>
         <label>Tipo Completa Attività</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>HDT_CloseActivity_AND_HDT_CloseManualActivity</targetReference>
@@ -213,10 +316,10 @@
             <name>Check_Assegnazione</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>IsNotOwner</leftValueReference>
+                <leftValueReference>Get_Activity.isUserActivity__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -240,18 +343,10 @@
             <label>RT_HDT_CloseDistributorComunication</label>
         </rules>
     </decisions>
-    <dynamicChoiceSets>
-        <name>EsitoAct</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>ActivityOutcome__c</picklistField>
-        <picklistObject>wrts_prcgvr__Activity__c</picklistObject>
-    </dynamicChoiceSets>
     <formulas>
-        <name>IsNotOwner</name>
+        <name>discordantDataManagement</name>
         <dataType>Boolean</dataType>
-        <expression>IF(BEGINS({!Get_Activity.OwnerId},{!$User.Id}),false,true)</expression>
+        <expression>IF(AND(TEXT({!Get_Activity.Type__c})==&quot;Gestione dati discordanti&quot;,TEXT({!Get_Activity.DiscardCategory__c})==&quot;Gestionale&quot;),true,false)</expression>
     </formulas>
     <interviewLabel>Activity - Chiusura {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Activity - Chiusura</label>
@@ -277,7 +372,7 @@
     <recordLookups>
         <name>Get_Activity</name>
         <label>Get Activity</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -298,18 +393,18 @@
     <recordUpdates>
         <name>Chiudi_Activity</name>
         <label>Chiudi Activity</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>1310</locationY>
         <connector>
-            <targetReference>Screen_Finale</targetReference>
+            <targetReference>Check_Esito_Attivit</targetReference>
         </connector>
         <inputReference>activity</inputReference>
     </recordUpdates>
     <screens>
         <name>Screen_Finale</name>
         <label>Screen Finale</label>
-        <locationX>314</locationX>
-        <locationY>1430</locationY>
+        <locationX>446</locationX>
+        <locationY>1766</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -324,7 +419,7 @@
     <screens>
         <name>Screen_Finale_0</name>
         <label>Screen Finale</label>
-        <locationX>50</locationX>
+        <locationX>182</locationX>
         <locationY>518</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -340,7 +435,7 @@
     <screens>
         <name>Set_Note</name>
         <label>Set Note</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>854</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -348,6 +443,26 @@
         <connector>
             <targetReference>ActivityType_0</targetReference>
         </connector>
+        <fields>
+            <name>Esito_Attivit_Gest_Dati_Disc</name>
+            <choiceReferences>GestioneDatiDisc_1</choiceReferences>
+            <choiceReferences>GestioneDatiDisc_2</choiceReferences>
+            <choiceReferences>GestioneDatiDisc_3</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Esito Attività</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>discordantDataManagement</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <fields>
             <fieldType>ObjectProvided</fieldType>
             <isRequired>false</isRequired>
@@ -436,7 +551,8 @@
         </fields>
         <fields>
             <name>Esito_Attivit</name>
-            <choiceReferences>EsitoAct</choiceReferences>
+            <choiceReferences>Positivo</choiceReferences>
+            <choiceReferences>Negativo</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Esito Attività</fieldText>
             <fieldType>DropdownBox</fieldType>
@@ -463,13 +579,41 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>188</locationX>
+        <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Assign_Activity</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Annulla_Order</name>
+        <label>Annulla Order</label>
+        <locationX>314</locationX>
+        <locationY>1550</locationY>
+        <connector>
+            <targetReference>Screen_Finale</targetReference>
+        </connector>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Get_Activity.Order__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Gestione Dati Discordanti</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Order</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>activity</name>
         <dataType>SObject</dataType>

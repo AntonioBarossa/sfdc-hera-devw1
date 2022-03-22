@@ -80,6 +80,7 @@ const DATA_ACCESS_MAP = {
         emptyMessage: 'Non ci sono subscriptions, oppure vi è già una richiesta aperta.',
         dataProcessFunction: (data) => {
             data.forEach((item) => {
+                item.ProductName = item.SBQQ__Product__r !== undefined ? item.SBQQ__Product__r.Name : '';
                 item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.ContractNumber : '';
                 item.PodPdr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
                     item.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c : '';
@@ -88,6 +89,7 @@ const DATA_ACCESS_MAP = {
             });
         },
         columns: [
+            {label: 'Nome Prodotto', fieldName: 'ProductName', type: 'text'},
             {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
             {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
@@ -99,6 +101,7 @@ const DATA_ACCESS_MAP = {
         emptyMessage: 'Non ci sono subscriptions, oppure vi è già una richiesta aperta.',
         dataProcessFunction: (data) => {
             data.forEach((item) => {
+                item.ProductName = item.SBQQ__Product__r !== undefined ? item.SBQQ__Product__r.Name : '';
                 item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.ContractNumber : '';
                 item.PodPdr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
                     item.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c : '';
@@ -107,6 +110,7 @@ const DATA_ACCESS_MAP = {
             });
         },
         columns: [
+            {label: 'Nome Prodotto', fieldName: 'ProductName', type: 'text'},
             {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
             {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}

@@ -100,6 +100,10 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                             this.error = true;
                         });
                     }
+                    else
+                    {
+                        this.variablesLoaded = true;
+                    }
                 }
             } else if (error) {
                 this.error = true;

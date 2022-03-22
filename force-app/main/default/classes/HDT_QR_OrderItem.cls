@@ -250,6 +250,7 @@ public inherited sharing class HDT_QR_OrderItem {
             LIMIT 1
         ];
     }
+    
     public static List<OrderItem> getItemFromOrderIdList(List<String> ordIdList){
 
         List<OrderItem> ordItemList = new List<OrderItem>();

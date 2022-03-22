@@ -4,10 +4,14 @@
     <isExposed>true</isExposed>
     <targets>
         <target>lightning__RecordAction</target>
+        <target>lightning__FlowScreen</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordAction">
             <actionType>ScreenAction </actionType>
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="recordId" label="Record Id" type="String" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

@@ -1,5 +1,10 @@
 <template>
-    <div class="demo-only demo--inverse" style="height:300px;position:relative">
-        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
-    </div>
+    <template if:false={showMessage}>
+        <div class="demo-only demo--inverse" style="height:300px;position:relative">
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+    </template>
+    <template if:true={showMessage}>
+        <div class={textColor}>{textMessage}</div>
+    </template>
 </template>

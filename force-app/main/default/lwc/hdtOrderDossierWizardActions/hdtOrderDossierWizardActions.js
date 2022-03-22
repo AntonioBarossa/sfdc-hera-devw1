@@ -18,6 +18,10 @@ import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';
 import SIGNED_FIELD from '@salesforce/schema/Order.ContractSigned__c';
 //Il seguente campo è stato utilizzato per tracciare l'ultimo SignatureMethod inviato a docusign.
 import OLDSIGN_FIELD from '@salesforce/schema/Order.SignMode__c';
+import isOnlyAmend from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.isOnlyAmend';
+// TOOLBAR STUFF
+import { loadScript } from 'lightning/platformResourceLoader';
+import cttoolbar from '@salesforce/resourceUrl/toolbar_sdk';
 
 export default class hdtOrderDossierWizardActions extends NavigationMixin(LightningElement) {
     @track isModalOpen = false;
@@ -34,7 +38,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     parentOrder;
     isVocalAndActivityNotClose = true;
     enableDocumental = true;
-
+    isAmend = false;
 
     get disablePrintButtonFunction() {
         return this.isPrintButtonDisabled  || (this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare'));
@@ -72,6 +76,23 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         if (this.orderParentRecord.Status === 'Completed') {
             this.isCancelButtonDisabled = true;
         }
+    }
+
+    getIsOnlyAmend(){
+        isOnlyAmend({orderParent: this.orderParentRecord}).then(data =>{
+            console.log('isOnlyAmend: ', data);
+            this.isAmend = data;
+
+        }).catch(error => {
+            console.log((error.body.message !== undefined) ? error.body.message : error.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
     }
 
     getSaveButtonStatus(){
@@ -113,16 +134,25 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         try{
             console.log('Entrato in handlePreview.');
             this.loading = true;
+            var sendMode = this.parentOrder.fields.DocSendingMethod__c.value;
+            var signMode = this.parentOrder.fields.SignatureMethod__c.value; 
+            if(sendMode.localeCompare('Stampa Cartacea')===0){
+                sendMode = 'Sportello';
+            }
             var formParams = {
                 mode : 'Preview',
                 Archiviato : 'N',
+                sendMode : sendMode,
+                signMode : signMode,
             };
             console.log('punto 1');
             
             saveActivityVO({
                 orderParent : this.orderParentRecord
-            }).then(data => {
-                if(data.isCommunity){
+            }).then(result => {
+                let data = JSON.parse(result);
+                console.log('DATA.ISCOMMUNITY -->'+data.isCommunity);
+                 if(data.isCommunity){
                     this.saveScript(data.campaignMemberStatus, true);
                 }
                 if(data.orderPhase == 'Documentazione da validare'){
@@ -404,6 +434,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
 
     connectedCallback(){
         this.getSaveButtonStatus();
+        this.getIsOnlyAmend();
         this.getCancelButtonStatus();
         this.getActivityVocalOrder();
     }
@@ -424,8 +455,19 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         });
     }
 
-    @api async saveScript(esito, isResponsed) {
-        window.TOOLBAR.EASYCIM.saveScript(await getCachedUuid(), esito, isResponsed);
+    saveScript(esito, isResponsed) {
+        // LOAD TOOLBAR STUFF
+        Promise.all([
+            loadScript(this, cttoolbar)
+        ])
+        .then(() => {
+            getCachedUuid()
+            .then(uuid => {
+                console.log('CACHED UUID: ' + uuid);
+                window.TOOLBAR.EASYCIM.saveScript(uuid, esito, isResponsed);
+                console.log('SAVESCRIPT DONE');
+            });
+        })
+        .catch(error => console.error(error));
     }
-
 }
