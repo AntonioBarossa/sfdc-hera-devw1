@@ -80,6 +80,14 @@
                 <elementReference>Motivo</elementReference>
             </value>
         </assignmentItems>
+        <!-- Commentato perchè tolta la Fase Attesa Credit Check
+        <assignmentItems>
+            <assignToReference>getOrder.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Attesa Credit Check</stringValue>
+            </value>
+        </assignmentItems-->
         <assignmentItems>
             <assignToReference>getActivity.CreditCheckResults__c</assignToReference>
             <operator>Assign</operator>
