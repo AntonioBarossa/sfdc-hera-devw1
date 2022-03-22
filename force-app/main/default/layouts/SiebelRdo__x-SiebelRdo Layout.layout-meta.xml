@@ -1581,7 +1581,7 @@
         <fields>NUM_VAL__c</fields>
         <fields>REQUIRED_FLG__c</fields>
         <relatedList>SiebelRdoAttribute__x.ORDER_ITEM_ID__c</relatedList>
-        <sortField>CREATED__c</sortField>
+        <sortField>HIDDEN_FLG__c</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
