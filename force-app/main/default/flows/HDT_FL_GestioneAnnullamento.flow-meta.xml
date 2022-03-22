@@ -964,6 +964,31 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Can_Proceed</name>
+        <label>Can Proceed?</label>
+        <locationX>3197</locationX>
+        <locationY>355</locationY>
+        <defaultConnector>
+            <targetReference>Wrong_Owner_Scrren</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isCheckOwnerOk</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Quale_Oggetto</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Discard_Rework_Ripristina_Fase_Case</name>
         <label>Check Discard Rework Ripristina Fase Case</label>
         <locationX>3179</locationX>
@@ -1591,48 +1616,11 @@
             <label>Discordant Management</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Wrong_Owner</name>
-        <label>Wrong Owner</label>
-        <locationX>3197</locationX>
-        <locationY>355</locationY>
-        <defaultConnector>
-            <targetReference>Quale_Oggetto</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>ownerId</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>isNotOwner</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Wrong_Owner_Scrren</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
     <description>Flow che si occupa della gestione dei processi di Post Sales Cluster Annullamento.</description>
     <formulas>
         <name>EffectiveDateFormula</name>
         <dataType>Date</dataType>
         <expression>DATE( Year(ADDMONTHS({!GetRecord.Contract__r.EndDate},2)),MONTH( ADDMONTHS({!GetRecord.Contract__r.EndDate},2)),1 ) -1</expression>
-    </formulas>
-    <formulas>
-        <name>isNotOwner</name>
-        <dataType>Boolean</dataType>
-        <expression>IF(BEGINS({!ownerId},{!$User.Id}),false,true)</expression>
     </formulas>
     <formulas>
         <name>NoteAnnullamentoFormula</name>
@@ -2813,7 +2801,7 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <locationX>3079</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Wrong_Owner</targetReference>
+            <targetReference>Can_Proceed</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -2931,13 +2919,13 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>ownerId</name>
-        <dataType>String</dataType>
+        <name>isCheckOwnerOk</name>
+        <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue></stringValue>
+            <booleanValue>true</booleanValue>
         </value>
     </variables>
     <variables>
