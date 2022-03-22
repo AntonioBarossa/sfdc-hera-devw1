@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Data decorrenza TIA</label>
+    <label>Data inizio contratto/Disattivazione Da Eseguire Non Prima Del</label>
     <required>false</required>
     <type>Date</type>
 </CustomField>
