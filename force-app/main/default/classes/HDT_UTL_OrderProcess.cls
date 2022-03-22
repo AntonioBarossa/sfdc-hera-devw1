@@ -152,7 +152,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             String phaseStory = order.PhaseStory__c;
             if(order.Phase__c!=oldOrder.Phase__c 
                 && oldOrder.Phase__c == 'Documentazione validata' 
-                && (order.Phase__c == 'Comunicazione Verso Heroku' || order.Phase__c == 'Comunicazione Motore VAS')
+                && (order.Phase__c == 'Comunicazione Verso Heroku' || order.Phase__c == 'Comunicazione Motore VAS' || order.Phase__c == 'In attesa tempi di ripensamento')
                 && order.QualityCall__c
                 && isMonitoringList.contains(order.AgencyCode__c)
                 && !phaseStory.contains('Quality Call OK')){
@@ -212,13 +212,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && oldOrder.Phase__c == 'In attesa di quality call' 
                 && order.Phase__c == 'Quality Call OK'
                 ){
-                String newPhase = order.ProcessType__c == 'Voltura' ? 'Documentazione Validata' : 'Comunicazione Verso Heroku';
+                String newPhase = (order.ProcessType__c == 'Voltura' || order.ProcessType__c == 'VAS') ? 'Documentazione Validata' : 'Comunicazione Verso Heroku';
                 order.Phase__c = newPhase;
                 DateTime nowDateTime = DateTime.now();
-                order.PhaseStory__c = oldOrder.Phase__c+'@@'+'Quality Call OK'+'@@'+nowDateTime.getTime()+'@@A||'+ 'Quality Call OK'+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||' +oldOrder.PhaseStory__c;
+                order.PhaseStory__c = 'Quality Call OK'+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||' +  oldOrder.Phase__c+'@@'+'Quality Call OK'+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
             }
 
             if (order.Phase__c!=oldOrder.Phase__c 
+                && order.ProcessType__c != 'Voltura'
                 && oldOrder.Phase__c != 'In attesa di quality call'
                 && order.Phase__c == 'Quality Call OK'
                 && isMonitoringList.contains(order.AgencyCode__c)) {
