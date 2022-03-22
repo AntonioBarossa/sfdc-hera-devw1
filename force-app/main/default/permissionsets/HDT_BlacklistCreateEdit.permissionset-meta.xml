@@ -26,7 +26,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>BlacklistCreateEdit</label>
+    <label>HDT_BlacklistCreateEdit</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
