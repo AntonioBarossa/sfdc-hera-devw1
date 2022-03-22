@@ -83,7 +83,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             if(((String)obj.get('ProcessType__c')).equalsIgnoreCase('Switch in Fittizio'))
             {
                 HDT_QR_ActivityCustom activityQr = new HDT_QR_ActivityCustom();
-                List<wrts_prcgvr__Activity__c> activityDiscordante = activityQr.getEsitoActivityDiscordante((String)obj.get('Id'));
+                List<wrts_prcgvr__Activity__c> activityDiscordante = activityQr.getEsitoActivityDiscordante((String)obj.get('OrderReference__c'));
                 if(!activityDiscordante.isEmpty() && ((String)(activityDiscordante[0]).get('ActivityOutcome__c')).equalsIgnoreCase('Dati corretti forniti dal DL'))
                 {
                     for(wrts_prcgvr.MRR_1_0.WObject wobj : multirequestObj.requests[0].objects)
