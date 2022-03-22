@@ -115,7 +115,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 activity.Order__c = order.Id;                
                 activity.Contact__c = order.Contact__c;                                
                 activity.wrts_prcgvr__Status__c = 'Aperta';                
-                activity.Note__c = order.CommentForDL__c;
+                //activity.Note__c = order.CommentForDL__c;
                 activity.OwnerId = order.OwnerId;
                 activity.CvpId__c= order.CvpId__c;
                 activity.CvpCgs__c=order.CvpCgs__c;

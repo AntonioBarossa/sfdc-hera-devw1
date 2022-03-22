@@ -132,10 +132,10 @@
             <name>not_mine</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>IsNotOwner</leftValueReference>
+                <leftValueReference>isMyActivity</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -144,11 +144,6 @@
             <label>Not mine</label>
         </rules>
     </decisions>
-    <formulas>
-        <name>IsNotOwner</name>
-        <dataType>Boolean</dataType>
-        <expression>IF(BEGINS({!ownerId},{!$User.Id}),false,true)</expression>
-    </formulas>
     <interviewLabel>Gestione KO Fornitore {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione KO Fornitore</label>
     <processMetadataValues>
@@ -206,8 +201,8 @@
             <field>Asset__c</field>
         </outputAssignments>
         <outputAssignments>
-            <assignToReference>ownerId</assignToReference>
-            <field>OwnerId</field>
+            <assignToReference>isMyActivity</assignToReference>
+            <field>isUserActivity__c</field>
         </outputAssignments>
     </recordLookups>
     <recordLookups>
@@ -410,22 +405,22 @@
         </value>
     </variables>
     <variables>
+        <name>isMyActivity</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <name>newCase</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
-    </variables>
-    <variables>
-        <name>ownerId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue></stringValue>
-        </value>
     </variables>
     <variables>
         <name>recordTypeId</name>
