@@ -22,7 +22,7 @@ public inherited sharing class HDT_LC_BillingProfileForm {
      * @return Map<String,Set<String>>
      */
     @AuraEnabled
-    public static Map<String,List<String>> valid(String paymentMethod, String accountId){
+    public static Map<String,List<String>> getFormFields(String paymentMethod, String accountId){
         
         Map<String,List<String>> resultMap = new Map<String,List<String>>();
 
