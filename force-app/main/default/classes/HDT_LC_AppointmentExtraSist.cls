@@ -32,7 +32,7 @@ public with sharing class HDT_LC_AppointmentExtraSist {
             try{
                 wrts_prcgvr__Activity__c activity = HDT_UTL_AppointmentAgenda.getActivity(activityId, fieldsToString);
                 response.put('activity',activity);
-                response.put('isNotOwner',activity.isUserActivity__c); 
+                response.put('isNotOwner',!activity.isUserActivity__c); 
             }catch (Exception e){
                 throw new AuraException(e.getMessage());
             }
