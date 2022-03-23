@@ -2348,13 +2348,13 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <description>Check if the current service is managed by the local dispatcher</description>
         <name>Prestazione_Distrubutore</name>
         <label>Prestazione Distrubutore</label>
-        <locationX>886</locationX>
+        <locationX>887</locationX>
         <locationY>4350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Prestazione_Gestita</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 8) AND 3 AND 4 AND 5 AND (6 OR  7)</filterLogic>
+        <filterLogic>(1 OR 9) AND (2 OR 8) AND 3 AND 4 AND 5 AND (6 OR  7)</filterLogic>
         <filters>
             <field>Type__c</field>
             <operator>EqualTo</operator>
@@ -2409,6 +2409,13 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Get_Input_Case_0.Commodity__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
