@@ -201,7 +201,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                         console.log("*******Instance:" + instance);*/
                         console.log("PRIMA DI REDIRECT");
                         if(data != null){
-                            window.open("/s/order/" + data, "_self");
+                            window.open("/HC/s/order/" + data, "_self");
                         }
                     }).catch(err => {
                         console.log(JSON.stringify(err));
@@ -246,7 +246,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                                     })
                                     .then(data => {
                                         this.activityId = data.Id;
-                                        window.open("/s/campaignmember/" + field.value, "_self");
+                                        window.open("/HC/s/campaignmember/" + field.value, "_self");
                                     })
                                     .catch(error => console.error(error));
                                 }

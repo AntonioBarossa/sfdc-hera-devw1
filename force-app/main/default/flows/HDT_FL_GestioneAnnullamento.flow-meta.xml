@@ -772,6 +772,36 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assignment_Voltura_Tecnica_Dati_Discordanti</name>
+        <label>Assignment Voltura Tecnica (Dati Discordanti)</label>
+        <locationX>4990</locationX>
+        <locationY>3445</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Voltura_Tecnica_Dati_Discordanti.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullato</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Voltura_Tecnica_Dati_Discordanti.CancellationReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullamento per dati discordanti</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Voltura_Tecnica_Dati_Discordanti.CancellationRequestDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Voltura_Tecnica_Dati_Discordanti</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Bozza_Annullata</name>
         <label>Bozza Annullata</label>
         <locationX>1229</locationX>
@@ -852,7 +882,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Annullato_0</targetReference>
+            <targetReference>Decision_Voltura_Tecnica_Dati_Discordanti</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1036,6 +1066,63 @@
                 <targetReference>Chiusuraa_Activity_Ripristino_Fase_Order</targetReference>
             </connector>
             <label>Gestione Scarti Order</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Decision_2_Voltura_Tecnica_Dati_Discordanti</name>
+        <label>Decision 2 Voltura Tecnica (Dati Discordanti)</label>
+        <locationX>4775</locationX>
+        <locationY>3356</locationY>
+        <defaultConnector>
+            <targetReference>Annullato_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Case Non Trovato</defaultConnectorLabel>
+        <rules>
+            <name>Case_Trovati</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Voltura_Tecnica_Dati_Discordanti</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assignment_Voltura_Tecnica_Dati_Discordanti</targetReference>
+            </connector>
+            <label>Case Trovato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Decision_Voltura_Tecnica_Dati_Discordanti</name>
+        <label>Decision Voltura Tecnica (Dati Discordanti)</label>
+        <locationX>4737</locationX>
+        <locationY>3208</locationY>
+        <defaultConnector>
+            <targetReference>Annullato_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Switch In</defaultConnectorLabel>
+        <rules>
+            <name>Switch_In</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.ProcessType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Switch in Ele</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.ProcessType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Switch in Gas</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Voltura_Tecnica_Dati_Discordanti</targetReference>
+            </connector>
+            <label>Switch In</label>
         </rules>
     </decisions>
     <decisions>
@@ -1810,6 +1897,27 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Voltura_Tecnica_Dati_Discordanti</name>
+        <label>Get Voltura Tecnica (Dati Discordanti)</label>
+        <locationX>4925</locationX>
+        <locationY>3246</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Decision_2_Voltura_Tecnica_Dati_Discordanti</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Order__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetOrderAggiornato_0.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetCase</name>
         <label>GetCase</label>
         <locationX>1178</locationX>
@@ -2155,6 +2263,16 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
             <targetReference>Fase_0</targetReference>
         </connector>
         <inputReference>ActivityCollection</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Voltura_Tecnica_Dati_Discordanti</name>
+        <label>Update Voltura Tecnica (Dati Discordanti)</label>
+        <locationX>4796</locationX>
+        <locationY>3511</locationY>
+        <connector>
+            <targetReference>Annullato_0</targetReference>
+        </connector>
+        <inputReference>Get_Voltura_Tecnica_Dati_Discordanti</inputReference>
     </recordUpdates>
     <screens>
         <name>Loading_Spinner_Screen</name>
