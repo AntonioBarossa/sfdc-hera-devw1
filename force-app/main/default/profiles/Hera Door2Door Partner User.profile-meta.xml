@@ -17833,6 +17833,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.isUserActivity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Reading__c.ReadingRegisterCorrector__c</field>
         <readable>true</readable>
@@ -34679,7 +34684,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Lead.HDT_RT_Main</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
@@ -35128,10 +35133,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>SiebelCustomer__x</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>SiebelCustomers__x</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

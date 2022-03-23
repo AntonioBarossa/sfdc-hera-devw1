@@ -25788,6 +25788,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.isReseller__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.kActive__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -29931,6 +29936,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.MaxTimeModificationAppointment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.isUserActivity__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions> <!--Email 20/09/2021-->
@@ -35381,10 +35391,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>SiebelCustomer__x</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>SiebelCustomers__x</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

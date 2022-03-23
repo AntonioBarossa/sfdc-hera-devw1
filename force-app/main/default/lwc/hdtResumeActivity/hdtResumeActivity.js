@@ -7,6 +7,9 @@ import SUSPENSION_DATE from '@salesforce/schema/wrts_prcgvr__Activity__c.Suspens
 
 export default class HdtResumeActivity extends LightningElement {
     _recordId;
+    showMessage = false;
+    textColor = 'slds-text-color_default';
+    textMessage = 'L\'attività è stata ripresa.';
 
     @api set recordId(value) {
         this._recordId = value;
@@ -17,17 +20,17 @@ export default class HdtResumeActivity extends LightningElement {
         const recordInput = { fields };
         updateRecord(recordInput).then( () => {
             console.log('OK');
-            this.dispatchEvent(new CloseActionScreenEvent());
+            this.showMessage = true;
         }).catch(error => {
             console.error(error);
             console.log('KO');
-            const event = new ShowToastEvent({
-                title: 'Errore!',
-                message: error.body.message,
-                variant: 'error',
-            });
-            this.dispatchEvent(event);
-            this.dispatchEvent(new CloseActionScreenEvent());
+            this.showMessage = true;
+            if (error.body.message){
+                this.textMessage = 'Si è verificato il seguente errore durante la lavorazione dell\'attività: ' + error.body.message;
+            }else{
+                this.textMessage = 'Si è verificato un errore, contattare l\'amministratore di sistema.';
+            }
+            this.textColor = 'slds-text-color_error';
         });  
         console.log('exit');
     }

@@ -302,6 +302,35 @@
             </connector>
             <label>Annulla Ordine</label>
         </rules>
+        <rules>
+            <name>Aggiorna_Ordine_Dati_Discordanti</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>Assegna_Esito_Attivit</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>activity.ActivityOutcome__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Dati corretti forniti da cliente e cambio uso inserito</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>activity.ActivityOutcome__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Dati corretti forniti da cliente e cambio uso - non necessario</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiorna_Order_Dati_Discordanti</targetReference>
+            </connector>
+            <label>Aggiorna Ordine (Dati Discordanti)</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Tipo_Completa_Attivit</name>
@@ -316,10 +345,10 @@
             <name>Check_Assegnazione</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>IsNotOwner</leftValueReference>
+                <leftValueReference>Get_Activity.isUserActivity__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -347,11 +376,6 @@
         <name>discordantDataManagement</name>
         <dataType>Boolean</dataType>
         <expression>IF(AND(TEXT({!Get_Activity.Type__c})==&quot;Gestione dati discordanti&quot;,TEXT({!Get_Activity.DiscardCategory__c})==&quot;Gestionale&quot;),true,false)</expression>
-    </formulas>
-    <formulas>
-        <name>IsNotOwner</name>
-        <dataType>Boolean</dataType>
-        <expression>IF(BEGINS({!Get_Activity.OwnerId},{!$User.Id}),false,true)</expression>
     </formulas>
     <interviewLabel>Activity - Chiusura {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Activity - Chiusura</label>
@@ -395,6 +419,30 @@
         <object>wrts_prcgvr__Activity__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Aggiorna_Order_Dati_Discordanti</name>
+        <label>Aggiorna Order (Dati Discordanti)</label>
+        <locationX>446</locationX>
+        <locationY>1550</locationY>
+        <connector>
+            <targetReference>Screen_Finale</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Activity.Order__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>AllowSwitchInDummy__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>Order</object>
+    </recordUpdates>
     <recordUpdates>
         <name>Chiudi_Activity</name>
         <label>Chiudi Activity</label>
@@ -594,7 +642,7 @@
     <subflows>
         <name>Annulla_Order</name>
         <label>Annulla Order</label>
-        <locationX>314</locationX>
+        <locationX>182</locationX>
         <locationY>1550</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>

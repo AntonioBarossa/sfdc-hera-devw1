@@ -20,4 +20,24 @@ public with sharing class HDT_LC_AppointmentExtraSist {
             return null;
         }
     }
+
+    @AuraEnabled(cacheable = true)
+    public static String getActivity(String activityId,List<String> fields){
+        if (String.isNotBlank(activityId)){
+            Map<String,Object> response = new Map<String,Object>();
+            String fieldsToString = String.join(fields,',');
+            if (!fieldsToString.containsIgnoreCase('isUserActivity__c')){
+                fieldsToString += ',isUserActivity__c';
+            }
+            try{
+                wrts_prcgvr__Activity__c activity = HDT_UTL_AppointmentAgenda.getActivity(activityId, fieldsToString);
+                response.put('activity',activity);
+                response.put('isNotOwner',activity.isUserActivity__c); 
+            }catch (Exception e){
+                throw new AuraException(e.getMessage());
+            }
+            return JSON.serialize(response);
+        }
+        return null;
+    }
 }

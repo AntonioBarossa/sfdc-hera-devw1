@@ -1,5 +1,6 @@
 import { LightningElement,api,wire,track } from 'lwc';
-import { getRecord } from 'lightning/uiRecordApi';
+//import { getRecord } from 'lightning/uiRecordApi';
+import getRecord  from '@salesforce/apex/HDT_LC_AppointmentExtraSist.getActivity';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { CloseActionScreenEvent } from 'lightning/actions';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -7,19 +8,23 @@ import ID_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.Id';
 import ATOA_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.isAtoA__c';
 import FERMO_SYS_FIELD from '@salesforce/schema/wrts_prcgvr__Activity__c.isManualAppoitment__c';
 
-const OBJECT_FIELDS =[
+/*const OBJECT_FIELDS =[
     ID_FIELD,
     FERMO_SYS_FIELD,
     ATOA_FIELD
-];
-
+]; */
+const OBJECT_FIELDS =[
+    'Id',
+    'isManualAppoitment__c',
+    'isAtoA__c'
+]
 export default class HdtAppointmentStopSystem extends LightningElement {
   
     @api recordId;
     @track showSpinner=true;
     @track activity = {};
 
-    @wire(getRecord, { recordId: '$recordId', fields: OBJECT_FIELDS })
+    @wire(getRecord, { activityId: '$recordId', fields: OBJECT_FIELDS })
     wiredRecord({ error, data }) {
         if (error) {
             let message = 'Unknown error';
@@ -31,36 +36,49 @@ export default class HdtAppointmentStopSystem extends LightningElement {
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Error loading contact',
-                    message,
+                    message: message,
                     variant: 'error',
                 }),
             );
         } else if (data) {
-            this.activity = data;
-            console.log('@@@@data wired method ' + JSON.stringify(data));
+            let response = JSON.parse(data);
+            if (response.isNotOwner === 'true' || response.isNotOwner === true){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'L\'attività può essere gestita solo dall\'assegnatario.',
+                        variant: 'error',
+                    }),
+                );
+                this.closeQuickAction();
+            }else{
+                this.activity = response.activity;
+                console.log('@@@@data wired method ' + JSON.stringify(data));
 
-            let atoa = this.activity.fields.isAtoA__c.value;
-            let fermo = this.activity.fields.isManualAppoitment__c.value;
-            const fields = {};
+                let atoa = this.activity.isAtoA__c;
+                let fermo = this.activity.isManualAppoitment__c;
+                const fields = {};
 
-            if (atoa == true && fermo == false){
+                if (atoa == true && fermo == false){
 
-                fields[ID_FIELD.fieldApiName] = this.activity.fields.Id.value;
-                fields[FERMO_SYS_FIELD.fieldApiName] = true;
-                fields[ATOA_FIELD.fieldApiName] = false;
+                    fields[ID_FIELD.fieldApiName] = this.activity.Id;
+                    fields[FERMO_SYS_FIELD.fieldApiName] = true;
+                    fields[ATOA_FIELD.fieldApiName] = false;
 
-                const recordInput = { fields };
-                this.submitRecord(recordInput);
-            }else if (atoa == false && fermo == true){
+                    const recordInput = { fields };
+                    this.submitRecord(recordInput);
+                }else if (atoa == false && fermo == true){
 
-                fields[ID_FIELD.fieldApiName] = this.activity.fields.Id.value;
-                fields[FERMO_SYS_FIELD.fieldApiName] = false;
-                fields[ATOA_FIELD.fieldApiName] = true;
+                    fields[ID_FIELD.fieldApiName] = this.activity.Id;
+                    fields[FERMO_SYS_FIELD.fieldApiName] = false;
+                    fields[ATOA_FIELD.fieldApiName] = true;
 
-                const recordInput = { fields };
-                this.submitRecord(recordInput);
+                    const recordInput = { fields };
+                    this.submitRecord(recordInput);
+                }
+                console.log('@@@@fine data wired method');
             }
-            console.log('@@@@fine data wired method');
+            
         }
     }
 
