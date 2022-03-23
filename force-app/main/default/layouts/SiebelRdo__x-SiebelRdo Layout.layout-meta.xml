@@ -1582,7 +1582,7 @@
         <fields>REQUIRED_FLG__c</fields>
         <relatedList>SiebelRdoAttribute__x.ORDER_ITEM_ID__c</relatedList>
         <sortField>HIDDEN_FLG__c</sortField>
-        <sortOrder>Desc</sortOrder>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>

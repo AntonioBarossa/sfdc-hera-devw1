@@ -2634,6 +2634,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelRdo__x.ATTRIB_36__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelRdo__x.ATTRIB_41__c</field>
         <readable>true</readable>
     </fieldPermissions>
