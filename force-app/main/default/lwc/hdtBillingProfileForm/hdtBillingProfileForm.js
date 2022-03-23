@@ -515,6 +515,7 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'ElectronicInvoiceCertifiedEmailAddress__c')].disabled = event.target.value === 'Estero';
             this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'XMLType__c')].disabled = event.target.value === 'Estero';
             this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'SubjectCode__c')].required = event.target.value === 'XML PA';
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'XMLType__c')].required = event.target.value.includes('XML');
             }
 
     }
@@ -651,7 +652,7 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
 
         if ((this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null 
-            && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === 'XML'
+            && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === 'XML + carta/email'
             && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value !== 'Estero')
             && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']") !== null && this.template.querySelector("[data-id='SubjectCode__c']") !== null)
             && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value === null || this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value === '')
