@@ -8,7 +8,7 @@
         <actionName>HDT_WS_ArricchimentoDatiTemp</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>HandleResponseDataEnrichment</targetReference>
+            <targetReference>Response_Vuota</targetReference>
         </connector>
         <flowTransactionModel>NewTransaction</flowTransactionModel>
         <inputParameters>
@@ -28,8 +28,8 @@
     <actionCalls>
         <name>HandleResponseDataEnrichment</name>
         <label>Handle Response Data Enrichment</label>
-        <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationX>308</locationX>
+        <locationY>758</locationY>
         <actionName>HDT_UTL_DataEnrichmentPostSales</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -57,8 +57,8 @@
     <assignments>
         <name>Assegna_Altri_Dati</name>
         <label>Assegna Altri Dati</label>
-        <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationX>308</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
             <operator>Assign</operator>
@@ -70,6 +70,35 @@
             <targetReference>Aggiorna_Case</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Response_Vuota</name>
+        <label>Response Vuota?</label>
+        <locationX>176</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>HandleResponseDataEnrichment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Vuota</defaultConnectorLabel>
+        <rules>
+            <name>Vuota</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Arricchimento_Dati</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Arricchimento_Dati</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Vuota</label>
+        </rules>
+    </decisions>
     <description>Flow per la gestione dell&apos;arricchimento dati postSales</description>
     <interviewLabel>Arricchimento Dati PostSales {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Arricchimento Dati PostSales</label>
@@ -158,8 +187,8 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>176</locationX>
-        <locationY>878</locationY>
+        <locationX>308</locationX>
+        <locationY>998</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <start>
