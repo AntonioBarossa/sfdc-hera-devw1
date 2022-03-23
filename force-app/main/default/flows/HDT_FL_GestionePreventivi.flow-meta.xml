@@ -224,6 +224,9 @@
         <connector>
             <targetReference>OptionBlank</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>OptionBlank</targetReference>
+        </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>cluster</name>
@@ -294,7 +297,7 @@
         <name>AggiornaCodici</name>
         <label>AggiornaCodici</label>
         <locationX>2079</locationX>
-        <locationY>3784</locationY>
+        <locationY>3785</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.DistributorCode__c</assignToReference>
             <operator>Assign</operator>
@@ -306,7 +309,7 @@
             <assignToReference>Get_Input_Case_0.SalesCompanyCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Opzione.salesCompanyCode</elementReference>
+                <elementReference>SalesCompanyCodeFormula</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -320,7 +323,7 @@
             <assignToReference>Get_Input_Case_0.AtecoCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Opzione.atecoCode</elementReference>
+                <elementReference>AtecoCodeFormula</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -2071,6 +2074,11 @@
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <formulas>
+        <name>AtecoCodeFormula</name>
+        <dataType>String</dataType>
+        <expression>IF( {!Get_Input_Case_0.Account.RecordType.DeveloperName} = &quot;HDT_RT_Residenziale&quot;, &quot;999999&quot;,&quot;K74878&quot;)</expression>
+    </formulas>
+    <formulas>
         <name>ComponenteVariabile</name>
         <dataType>Number</dataType>
         <expression>{!Get_Input_Case_0.Amount__c} - {!DirittiFissi}</expression>
@@ -2129,7 +2137,7 @@
         <dataType>String</dataType>
         <expression>IF(ISBLANK({!Get_Input_Case.DistributorNote__c}),
 TEXT({!Get_Input_Case.Type}),
-{!Get_Input_Case.DistributorNote__c} &amp; &quot;;&quot; &amp; TEXT({!Get_Input_Case.Type}))</expression>
+{!Get_Input_Case.DistributorNote__c} &amp; &quot;-&quot; &amp; TEXT({!Get_Input_Case.Type}))</expression>
     </formulas>
     <formulas>
         <name>FormulaCodicePrestazione</name>
@@ -2195,6 +2203,12 @@ IF(ISPICKVAL({!Get_Input_Case_0.Commodity__c}, &quot;Energia Elettrica&quot;), &
         <expression>IF(OR(TEXT({!Get_Input_Case.Type}) = &quot;Nuovo Impianto&quot;,TEXT({!Get_Input_Case.Type}) = &quot;Aggiunta Attacco&quot;),
 IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetRecordTypePreventivi.Id}),
 {!Get_Input_Case.RecordType.Id})</expression>
+    </formulas>
+    <formulas>
+        <name>SalesCompanyCodeFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(TEXT({!Get_Input_Case_0.Commodity__c}) = &quot;Gas&quot;, &quot;10V0000160&quot;,
+              IF(TEXT({!Get_Input_Case_0.Commodity__c}) = &quot;Energia Elettrica&quot;, &quot;13V0000000&quot;,&quot;&quot;))</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestionePreventivi {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Preventivi</label>
@@ -2334,13 +2348,13 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <description>Check if the current service is managed by the local dispatcher</description>
         <name>Prestazione_Distrubutore</name>
         <label>Prestazione Distrubutore</label>
-        <locationX>886</locationX>
+        <locationX>887</locationX>
         <locationY>4350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Prestazione_Gestita</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 8) AND 3 AND 4 AND 5 AND (6 OR  7)</filterLogic>
+        <filterLogic>(1 OR 9) AND (2 OR 8) AND 3 AND 4 AND 5 AND (6 OR  7)</filterLogic>
         <filters>
             <field>Type__c</field>
             <operator>EqualTo</operator>
@@ -2395,6 +2409,13 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Get_Input_Case_0.Commodity__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

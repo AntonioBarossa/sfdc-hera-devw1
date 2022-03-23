@@ -23,7 +23,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
 		List<Order> nonDomOrderList = new List<Order>();
 		List<Order> domOrderList = new List<Order>();
 		for(Order order : orderList){
-			if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
+			if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale' || (order.RecessNotice__c == null || (order.RecessNotice__c != null && order.RecessNotice__c == 0))){
 				domOrderList.add(order);
 			}else {
 				nonDomOrderList.add(order);
@@ -77,7 +77,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
     
                 Date dateSentToSii= null;
                 if(signedDate != null  && order.ProcessType__c.containsIgnoreCase('Switch In')){
-                    if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
+                    //if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
                         // DIRITTO DI RINUNCIA DI RIPENSAMENTO
                         if (order.WaiverRightAfterthought__c == 'Si') { 
                             dateSentToSii = Date.today();
@@ -87,11 +87,13 @@ public with sharing class HDT_UTL_ProcessDateManager {
                         }
                         else{
                             Date dataRipensamento = order.MaxAfterthoughtDate__c;
-                            if(dataRipensamento != null){
+                            if(dataRipensamento != null && order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
                                 dateSentToSii = dataRipensamento.addDays(1);
-                            }
+                            }else {
+								dateSentToSii = Date.today();
+							}
                         }            
-                    }
+                    //}
                 }else {
                     break;
                 }

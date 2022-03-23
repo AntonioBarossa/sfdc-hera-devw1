@@ -470,6 +470,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.VatPercentageFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
         <editable>true</editable>
         <field>RateCategory__c.CalculatedValue__c</field>
         <readable>true</readable>
@@ -536,6 +541,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <!-- End HRADTR_GV 28/02/2022-->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.BrandLogo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.IsDigitalMarking__c</field>
@@ -34649,7 +34659,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Lead.HDT_RT_Main</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>

@@ -30,9 +30,7 @@ public inherited sharing class HDT_UTL_Case {
 
         if(process == 'Voltura Tecnica'){
 
-            if(effectiveDate != null){
-                effectiveDate = addBusinessDay(effectiveDate, 3);
-            }else{
+            if(effectiveDate == null){
                 effectiveDate = addBusinessDay(System.today(), 3);
             }
 

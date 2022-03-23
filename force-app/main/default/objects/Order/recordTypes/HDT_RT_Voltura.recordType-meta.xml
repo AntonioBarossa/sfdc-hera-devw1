@@ -2115,6 +2115,18 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>In attesa di quality call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Accettazione Voltura</fullName>
             <default>false</default>
         </values>

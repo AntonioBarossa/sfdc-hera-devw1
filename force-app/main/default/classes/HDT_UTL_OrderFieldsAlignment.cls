@@ -498,12 +498,13 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                         FROM SBQQ__QuoteLine__c 
                         WHERE SBQQ__Quote__c = :originalOrder.SBQQ__Quote__c
                         AND SBQQ__ProductFamily__c NOT IN ('VAS Fatturabili')
+                        AND ServicePoint__c != null 
                         WITH SECURITY_ENFORCED];
                     
                     if(!quoteLine.isEmpty())
                     {
                         System.debug(LoggingLevel.DEBUG, '# QuoteLine > ' + JSON.serialize(quoteLine));
-                        if(String.isNotBlank(quoteLine[0].ServicePoint__c))
+                        if(quoteLine[0].ServicePoint__c != null)
                         {
                             orderToUpdate.ServicePoint__c = quoteLine[0].ServicePoint__c;
                         }
