@@ -191,7 +191,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAttivazioneConModifica: ' + isAttivazioneConModifica(ord));
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - commodity: ' + ord.ServicePoint__r.RecordType.DeveloperName);
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - meterStatus: ' + ord.ServicePoint__r.MeterStatus__c);
-        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAmendmentAllowed: ' + ord.SBQQ__Quote__r.AmendmentAllowed__c);
+        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAmendmentAllowed: ' + isAmendmentAllowed);
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isWinBack: ' + ord.IsWinback__c);
         system.debug(LoggingLevel.DEBUG, 'getAvailableProcesses - isReseller: ' +isReseller);
 
@@ -206,7 +206,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 && process.isAttivazioneConModifica == isAttivazioneConModifica(ord)
                 && (process.commodity == ord.ServicePoint__r.RecordType.DeveloperName || process.commodity == null)
                 && process.isAmendmentAllowed == isAmendmentAllowed
-                && process.isSwitchOut == ord.IsWinback__c
+                && process.isSwitchOut == (ord.IsWinback__c && process.processType.containsIgnoreCase('Switch In'))
                 && process.isReseller == isReseller
             ) {
                 availableProcesses.add(process);

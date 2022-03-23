@@ -414,9 +414,14 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.searchInputValue = event;
             this.dispatchEvent(new CustomEvent('ricercainsap', {
                 detail: this.isRicercainSAP
-            })); 
+            }));
             callService({contratto:'', pod:this.searchInputValue}).then(data =>{                
-                if(data.statusCode=='200'){
+                if(data.statusCode=='200' || this.postSales === true){
+                    if(data.statusCode != '200')
+                    {
+                        resolve();
+                        return;
+                    }
                     this.responseArriccData = data;
                     extractDataFromArriccDataServiceWithExistingSp({sp:'',response:data}).then(datas =>{
                         let sp = datas;
