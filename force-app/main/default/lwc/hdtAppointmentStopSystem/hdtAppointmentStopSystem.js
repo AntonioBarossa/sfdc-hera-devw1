@@ -42,7 +42,7 @@ export default class HdtAppointmentStopSystem extends LightningElement {
                 }),
             );
         } else if (data) {
-            console.log('@@@@data wired method ' + JSON.stringify(data));
+            console.log('@@@@data wired method ');
             this.activity = data;
             
 
@@ -73,9 +73,7 @@ export default class HdtAppointmentStopSystem extends LightningElement {
     }
 
     submitRecord(recordInput){
-        console.log('@@@@@recordInput' + JSON.stringify(recordInput));
         getActivityOwner({activityId: this.recordId}).then(data => {
-            console.log('@@@@@Data' + data);
             if (data === true || data === 'true'){
                 this.dispatchEvent(
                     new ShowToastEvent({
