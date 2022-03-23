@@ -1,5 +1,6 @@
 import { LightningElement,api,wire,track } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
+import getActivityOwner  from '@salesforce/apex/HDT_LC_AppointmentExtraSist.getActivityOwner';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -39,7 +40,7 @@ export default class HdtAppointmentExtraSist extends LightningElement {
     showComponent=false;
     actualState;
     messageConfirmDialog = 'Una volta confermato l\'appuntamento non sarà possibile ritornare allo stato creata. Continuare?';
-
+    isNotOwner;
     //campi record edit form
     slot;
     appCode;
@@ -165,16 +166,30 @@ export default class HdtAppointmentExtraSist extends LightningElement {
     handleSubmit(event){
         event.preventDefault(); 
         if (this.confermaAppuntamento){
-            let appComp= this.template.querySelector("lightning-combobox[data-id='appCompInput']").value;
-            let slot = (this.showAppointmentField) ? this.template.querySelector("lightning-input[data-id='slotInput']").value : ''; 
-            let appointment = (this.showAppointmentField) ? this.template.querySelector("lightning-input[data-id='appointmentInput']").value : null;  
-            let appCode = (this.showAppointmentField) ? this.template.querySelector("lightning-input[data-id='appCodeInput']").value : ''; 
-            if (this.setRecordFieldValue(appointment,slot,appComp,appCode) && (this.notEmpty(appointment,slot,appComp,appCode))){
-                if (!this.showAppointmentField){
-                    this.messageConfirmDialog = 'Attenzione! L\'attività verrà impostata in carico al distributore e non sarà più possibile modificarla. Continuare?';
+            getActivityOwner({activityId: this.recordId}).then(data => {
+                this.isNotOwner = data;
+                if (this.isNotOwner === 'true' || this.isNotOwner === true){
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Attenzione',
+                            message: 'L\'attività può essere gestita solo dall\'assegnatario.',
+                            variant: 'error',
+                        }),
+                    );
+                }else{
+                    let appComp= this.template.querySelector("lightning-combobox[data-id='appCompInput']").value;
+                    let slot = (this.showAppointmentField) ? this.template.querySelector("lightning-input[data-id='slotInput']").value : ''; 
+                    let appointment = (this.showAppointmentField) ? this.template.querySelector("lightning-input[data-id='appointmentInput']").value : null;  
+                    let appCode = (this.showAppointmentField) ? this.template.querySelector("lightning-input[data-id='appCodeInput']").value : ''; 
+                    if (this.setRecordFieldValue(appointment,slot,appComp,appCode) && (this.notEmpty(appointment,slot,appComp,appCode))){
+                        if (!this.showAppointmentField){
+                            this.messageConfirmDialog = 'Attenzione! L\'attività verrà impostata in carico al distributore e non sarà più possibile modificarla. Continuare?';
+                        }
+                        this.showConfirmDialog = true;
+                    }
                 }
-                this.showConfirmDialog = true;
-            }
+            });
+            
         }else{
             console.log('@@@@@else');
             const fields = event.detail.fields;
