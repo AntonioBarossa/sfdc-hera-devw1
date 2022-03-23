@@ -303,7 +303,7 @@
                 <stringValue>TODAY() + 90</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_A1_1289320744</name>
+        <name>formula_2_myRule_1_A1_6910601738</name>
         <dataType>Date</dataType>
         <expression>TODAY() + 90</expression>
     </formulas>
@@ -312,10 +312,11 @@
             <name>originalFormula</name>
             <value>
                 <stringValue>IF( NOT(ISBLANK( [Case].QuotationType__c))  &amp;&amp;  [Case].QuotationType__c != &apos;Analitico&apos;,
-    IF(OR(
+    IF(AND([Case].QuotationType__c = &apos;Predeterminabile&apos;,
+            OR(
              CONTAINS([Case].DistributorName__c, &quot;E-D&quot;),
              CONTAINS([Case].Distributor__r.Name , &quot;E-D&quot;)
-             ),  TODAY() + 30,
+             )),  TODAY() + 30,
         IF(TEXT([Case].VoltageLevelRequested__c )=&quot;BT&quot;, TODAY() + 90, 
             IF(TEXT([Case].VoltageLevelRequested__c )=&quot;MT&quot;, TODAY() + 180, null)  
            ) 
@@ -324,20 +325,21 @@
 </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_6_myRule_4_A1_8475124519</name>
+        <name>formula_6_myRule_4_A1_7235694274</name>
         <dataType>Date</dataType>
         <expression>IF( NOT(ISBLANK( {!myVariable_current.QuotationType__c}))  &amp;&amp;  {!myVariable_current.QuotationType__c} != &apos;Analitico&apos;,
-    IF(OR(
+    IF(AND({!myVariable_current.QuotationType__c} = &apos;Predeterminabile&apos;,
+            OR(
              CONTAINS({!myVariable_current.DistributorName__c}, &quot;E-D&quot;),
              CONTAINS({!myVariable_current.Distributor__r.Name} , &quot;E-D&quot;)
-             ),  TODAY() + 30,
+             )),  TODAY() + 30,
         IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY() + 90, 
             IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;MT&quot;, TODAY() + 180, null)  
            ) 
         ) , null
     )</expression>
     </formulas>
-    <interviewLabel>HDT_PB_CalcoloScadenzaPreventivi-8_InterviewLabel</interviewLabel>
+    <interviewLabel>HDT_PB_CalcoloScadenzaPreventivi-10_InterviewLabel</interviewLabel>
     <label>Calcolo Scadenza Preventivi</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -440,7 +442,7 @@
             </processMetadataValues>
             <field>ExpirationDate__c</field>
             <value>
-                <elementReference>formula_2_myRule_1_A1_1289320744</elementReference>
+                <elementReference>formula_2_myRule_1_A1_6910601738</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -521,7 +523,7 @@
             </processMetadataValues>
             <field>QuotationValidityDate__c</field>
             <value>
-                <elementReference>formula_6_myRule_4_A1_8475124519</elementReference>
+                <elementReference>formula_6_myRule_4_A1_7235694274</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
