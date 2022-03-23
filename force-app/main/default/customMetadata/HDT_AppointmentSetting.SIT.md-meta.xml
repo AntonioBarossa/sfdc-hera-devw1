@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>Value2__c</field>
-        <value xsi:type="xsd:string">https://sitw1-heravendita.cs102.force.com</value>
+        <value xsi:type="xsd:string">https://sitw1-heravendita.cs102.force.com/PrendiAppuntamento/</value>
     </values>
     <values>
         <field>Value3__c</field>
