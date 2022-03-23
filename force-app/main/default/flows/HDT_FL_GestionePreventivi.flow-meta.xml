@@ -178,7 +178,7 @@
         <actionName>HDT_LC_EditScartiComplessi</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Prestazione_Distrubutore</targetReference>
+            <targetReference>Init_Case_For_Sottomissione</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -818,6 +818,29 @@
         </assignmentItems>
         <connector>
             <targetReference>AumentoDiminuzionePotenza</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Init_Case_For_Sottomissione</name>
+        <label>Init Case For Sottomissione</label>
+        <locationX>1195</locationX>
+        <locationY>4341</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.HerokuPracticeCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.DistributorPracticeCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Prestazione_Distrubutore</targetReference>
         </connector>
     </assignments>
     <assignments>
