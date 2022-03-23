@@ -254,6 +254,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     }
                 }
                 if (String.isNotBlank(l.FiscalCode__c) && mapOld.get(l.Id)!=null && (mapOld.get(l.Id).FiscalCode__c!=l.FiscalCode__c)     ) {
+                    l.FiscalCode__c = l.FiscalCode__c.toUpperCase();
                     setFiscalCodes.add(l.FiscalCode__c);
                     leadToCheck.add(l);
                 }
