@@ -161,6 +161,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             newOrder.Deliberation__c = deliberate;
             newOrder.ProcessType__c = processType;
             newOrder.ProcessCode__c = processCode;
+            newOrder.AggregateBilling__c = 'Si';
             newOrder.Phase__c = 'Bozza';
             
             //Logica Superficie Servita Start

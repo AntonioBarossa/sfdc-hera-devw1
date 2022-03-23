@@ -96,20 +96,20 @@ export default class HdtAdvancedSearch extends LightningElement {
 
                         if(statusSplit.length > 1 && statusSplit.length < 3){
                 
-                            this.additionalfilter= ' AND (MeterStatus__c =\''+statusSplit[0]+'\''+'OR MeterStatus__c = \''+statusSplit[1]+'\')';
+                            this.additionalfilter= ' AND (MeterStatus__c =\''+statusSplit[0]+'\''+'OR MeterStatus__c = \''+statusSplit[1]+'\''+ 'OR MeterStatus__c = \'\')';
                             console.log('entra in lenght==1 ');
                         
                     }
                     else if(statusSplit.length > 2){
                         
-                        this.additionalfilter= ' AND (MeterStatus__c =\''+statusSplit[0]+'\''+'OR MeterStatus__c = \''+statusSplit[1]+'\''+'OR MeterStatus__c = \''+statusSplit[2]+'\')';
+                        this.additionalfilter= ' AND (MeterStatus__c =\''+statusSplit[0]+'\''+'OR MeterStatus__c = \''+statusSplit[1]+'\''+'OR MeterStatus__c = \''+statusSplit[2]+'\''+ 'OR MeterStatus__c = \'\')';
                         console.log('entra in lenght>2 si');
                     
                         }
                     else if(statusSplit.length > 0)
                     {
             
-                            this.additionalfilter= 'AND MeterStatus__c =\''+data.StatoFornitura__c+'\''; 
+                            this.additionalfilter= 'AND (MeterStatus__c =\''+data.StatoFornitura__c+'\''+ 'OR MeterStatus__c = \'\')'; 
                     }
                     }
                     

@@ -152,7 +152,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             String phaseStory = order.PhaseStory__c;
             if(order.Phase__c!=oldOrder.Phase__c 
                 && oldOrder.Phase__c == 'Documentazione validata' 
-                && (order.Phase__c == 'Comunicazione Verso Heroku' || order.Phase__c == 'Comunicazione Motore VAS' || order.Phase__c == 'In attesa tempi di ripensamento')
+                && (order.Phase__c == 'Comunicazione Verso Heroku' || order.Phase__c == 'Comunicazione Motore VAS' || order.Phase__c == 'In attesa tempi di ripensamento' || order.Phase__c == 'Esportazione VS Siebel')
                 && order.QualityCall__c
                 && isMonitoringList.contains(order.AgencyCode__c)
                 && !phaseStory.contains('Quality Call OK')){
