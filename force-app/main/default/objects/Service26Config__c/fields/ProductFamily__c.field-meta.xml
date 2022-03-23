@@ -71,6 +71,16 @@
                 <default>false</default>
                 <label>VAS Fatturabili</label>
             </value>
+            <value>
+                <fullName>Bonus Eur/SMC</fullName>
+                <default>false</default>
+                <label>Bonus Eur/SMC</label>
+            </value>
+            <value>
+                <fullName>Contributo Eur/SMC</fullName>
+                <default>false</default>
+                <label>Contributo Eur/SMC</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

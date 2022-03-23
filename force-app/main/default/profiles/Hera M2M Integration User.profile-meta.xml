@@ -354,6 +354,11 @@
         <enabled>true</enabled>
         <name>wrts_prcgvr__ServiceCatalogReportSetting__c</name>
     </customSettingAccesses>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.VatPercentageFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
      <fieldPermissions>
         <editable>true</editable>
         <field>VocalOrderPublicConfirm__c.Order__c</field>
@@ -35391,10 +35396,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>SiebelCustomer__x</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>SiebelCustomers__x</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

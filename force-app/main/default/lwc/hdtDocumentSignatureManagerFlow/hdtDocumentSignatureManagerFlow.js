@@ -106,13 +106,13 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
         else 
         return "Conferma Pratica"
     }
-    get cancelButton()
+    /*get cancelButton()
     {
         if(this.cancelButton === null || this.cancelButton === undefined)
         {
             return true;
         }
-    }
+    }*/
     oldSignMode = '';
     
     scriptAvailable = false;
@@ -131,14 +131,14 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
         }else{
             this.labelConfirm = 'Invia documenti';
         }
-
+        /*
         if(!this.availableActions.find(action => action === 'BACK')){
             this.previousButton = false;
         }
         else
         {
             this.previousButton = true;
-        }
+        }*/
 
     }
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
@@ -518,9 +518,14 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
 
     handleGoBack(){
 
-        const navigateBackEvent = new FlowNavigationBackEvent();
-
-        this.dispatchEvent(navigateBackEvent);
+        if(!this.availableActions.find(action => action === 'BACK')){
+            this.previousButton = false;
+            showMessage('Attenzione','Non è possibile tornare indietro.','error')
+        }else{
+            const navigateBackEvent = new FlowNavigationBackEvent();
+            this.dispatchEvent(navigateBackEvent);
+        }
+        
 
     }
 

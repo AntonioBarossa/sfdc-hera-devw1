@@ -2,6 +2,9 @@ import { LightningElement, api, track,wire } from 'lwc';
 import getActivity from '@salesforce/apex/HDT_LC_AppointmentAgenda.getActivity';
 import { CurrentPageReference } from 'lightning/navigation';
 import { refreshApex } from '@salesforce/apex';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import getActivityOwner  from '@salesforce/apex/HDT_LC_AppointmentExtraSist.getActivityOwner';
+
 
 
 
@@ -29,6 +32,7 @@ export default class HdtAppointmentHandler extends LightningElement{
     @api confirmed = false;
     @api isCommunity = false;
     @api recordId;
+    isNotOwner;
     
     @track tempList = [
         {label: 'Prendi Appuntamento ', name: 'newDate', iconName: 'utility:retail_execution', desc: 'Prendi un nuovo appuntamento con il DL', enable : false, visible : false},
@@ -109,8 +113,35 @@ export default class HdtAppointmentHandler extends LightningElement{
     }
     
     clickOperation(event){
+        if(this.isCommunity){
+            this.showAgendaForm(event.currentTarget.name);
+        }
+        else{
+            let btnName = event.currentTarget.name;
+            getActivityOwner({activityId: this.recordId}).then(data => {
+                this.isNotOwner = data;
+                if (this.isNotOwner === 'true' || this.isNotOwner === true){
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Attenzione',
+                            message: 'L\'attività può essere gestita solo dall\'assegnatario.',
+                            variant: 'error',
+                        }),
+                    );
+                }
+                else{
+                    this.showAgendaForm(btnName);
+                }
+            });
+
+
+        }
+    }
+
+    showAgendaForm(btnName){
+        console.log('btnName --> '+btnName);
         let showAgenda = true;
-        switch (event.currentTarget.name){
+        switch (btnName){
             case 'newDate':
                 this.params ={
                     method : 'handleSearch',
@@ -144,7 +175,7 @@ export default class HdtAppointmentHandler extends LightningElement{
         }else{
             this.showForm = true;
         }
-        
+
     }
 
     cancelEvent(event){

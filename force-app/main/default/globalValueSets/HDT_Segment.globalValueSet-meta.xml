@@ -150,6 +150,11 @@
         <default>false</default>
         <label>Corporate_CONSIP</label>
     </customValue>
+    <customValue>
+        <fullName>MUI_SGT</fullName>
+        <default>false</default>
+        <label>MUI_SGT</label>
+    </customValue>
     <description>Codice Segmento SAP</description>
     <masterLabel>Segmento</masterLabel>
     <sorted>false</sorted>
