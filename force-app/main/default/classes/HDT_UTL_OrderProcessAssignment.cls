@@ -191,7 +191,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAttivazioneConModifica: ' + isAttivazioneConModifica(ord));
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - commodity: ' + ord.ServicePoint__r.RecordType.DeveloperName);
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - meterStatus: ' + ord.ServicePoint__r.MeterStatus__c);
-        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAmendmentAllowed: ' + ord.SBQQ__Quote__r.AmendmentAllowed__c);
+        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAmendmentAllowed: ' + isAmendmentAllowed);
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isWinBack: ' + ord.IsWinback__c);
         system.debug(LoggingLevel.DEBUG, 'getAvailableProcesses - isReseller: ' +isReseller);
 
@@ -201,12 +201,12 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 && (process.marketOrigin.contains(ord.MarketOrigin__c) || process.marketOrigin.isEmpty())
                 && (process.plugPresence == plugPresence || process.commodity == 'HDT_RT_Gas')//aggiustamento plug presence gas
                 && (process.isOwnAccount == isOwnAccount || process.isOwnAccount == null || (process.processType == 'Voltura Ele' && ord.ServicePoint__r.Account__c == null))
-                && process.isChangeUse == isChangeUse
+                && process.isChangeUse == (isChangeUse && process.processType.containsIgnoreCase('Cambio Uso'))
                 && process.isSwitchInRipristinatorio == isSwitchInRipristinatorio(ord)
                 && process.isAttivazioneConModifica == isAttivazioneConModifica(ord)
                 && (process.commodity == ord.ServicePoint__r.RecordType.DeveloperName || process.commodity == null)
                 && process.isAmendmentAllowed == isAmendmentAllowed
-                && process.isSwitchOut == ord.IsWinback__c
+                && process.isSwitchOut == (ord.IsWinback__c && process.processType.containsIgnoreCase('Switch In'))
                 && process.isReseller == isReseller
             ) {
                 availableProcesses.add(process);
@@ -219,10 +219,17 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     private static boolean isScontiBonus(Order ord){
         system.debug('entra sconti');
         List<OrderItem> items = orderItemQr.getMainItem(ord.id);
+        Set<String> familySconto = getFamilySconto();
         if(!items.isEmpty()){
             system.debug('entra sconti2');
             OrderItem itm =  items[0];
-            return getFamilySconto().contains(itm.Product2.Family);
+            for(String family : familySconto)
+            {
+                if(family.equalsIgnoreCase(itm.Product2.Family))
+                {
+                    return true;
+                }
+            }
         }
         return false;
 

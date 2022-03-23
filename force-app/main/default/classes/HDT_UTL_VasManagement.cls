@@ -76,7 +76,7 @@ public with sharing class HDT_UTL_VasManagement {
             SBQQ__Quote__r.SBQQ__PriceBook__r.Name, SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
             CommercialProductLink__r.FreeVas__c, CommercialProductLink__r.DurationDay__c, CommercialProductLink__r.DurationDayGas__c, VasPracticeCode__c, TotalAmount,
             (SELECT Quantity, UnitPrice, ListPrice, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
-                DurationDay__c, PaymentMode__c, IVA__c,
+                DurationDay__c, PaymentMode__c, Product2.IVA__c,
                 Product2.Name, Product2.NumberRateMonthly__c, Product2.DescriptionSAP__c,DelayEffectiveDate__c
                 FROM OrderItems)
             FROM Order WHERE Id = :orderId WITH SECURITY_ENFORCED];
@@ -303,6 +303,7 @@ public with sharing class HDT_UTL_VasManagement {
                 }
                 HDT_WRP_VASActivationReqItem reqItem = new HDT_WRP_VASActivationReqItem(ordItem);
                 items.add(reqItem);
+                childOrderItems.add(ordItem);
             }
 
             contractAccountSap = currentOrder.ContractAccountCode__c;
@@ -328,9 +329,9 @@ public with sharing class HDT_UTL_VasManagement {
             Decimal percentualIva = iva/100.0;
             totaleNoScontoIva += (totaleNoScontoIva * percentualIva);
             totaleScontoIva += (totaleScontoIva * percentualIva);
-            importo = totaleNoScontoIva;
-            importoIvaInclusa = totaleScontoIva;
-            scontoIvaInclusa = totaleNoScontoIva - totaleScontoIva;
+            importo = totaleNoScontoIva.setScale(2);
+            importoIvaInclusa = totaleScontoIva.setScale(2);
+            scontoIvaInclusa = (totaleNoScontoIva - totaleScontoIva).setScale(2);
             
             /*
             importo = currentOrder.SBQQ__Quote__r?.SBQQ__ListAmount__c;

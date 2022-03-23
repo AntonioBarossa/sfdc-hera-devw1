@@ -64,6 +64,8 @@ public with sharing class HDT_LC_FormAccountBusiness {
            
             Account.FiscalCode__c=Account.VATNumber__c;  
         }
+        //HRADTR_GV 22/03/2022
+        account.FiscalCode__c = account.FiscalCode__c.toUpperCase();
         //HRDTR-00_HRAWRM-720 12/10/2021
         accountSrv.checkCreateAccess(account);
         Account acct= accountSrv.createRecord(account);

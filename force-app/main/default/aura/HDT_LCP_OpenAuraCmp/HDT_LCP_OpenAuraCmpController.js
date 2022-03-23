@@ -55,6 +55,10 @@
         console.log('# discardRework -> '                 + discardRework);
         //Fine Gestione Risottomissione Annullamento
 
+        //Gestione Owner Activity
+        var isUserActivity = myPageRef.state.c__IsUserActivity;
+        console.log('# isUserActivity -> '                 + isUserActivity);
+        //Fine Gestione Owner Activity
         console.log('# context -> '                 + context);
         console.log('# accId -> '                   + accId);
         console.log('# caseId -> '                  + caseId);
@@ -138,7 +142,9 @@
                         c__interactionId: interactionId,
                         //Gestione Risottomissione Annullamento
                         c__discardRework: discardRework,
-                        c__campaignMemberId: campaignMemberId
+                        c__campaignMemberId: campaignMemberId,
+                        //Gestione Owner Activity
+                        c__IsUserActivity:isUserActivity
                     }
                 },
                 focus: true

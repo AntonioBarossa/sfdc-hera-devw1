@@ -530,11 +530,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.handleWrapAddressObjectSpedizione();
         }
         if(currentSectionName === 'processVariables'){
-           if(this.checkFieldAvailable('AnnualWithdrawal__c', true) === '')
-           {
-               this.showMessage('Errore', 'Popolare il campo Prelievo Annuo', 'error');
-               return;
-           }
            if(this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
            {
                this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
@@ -817,6 +812,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     readingComponent.handleSaveButton();
                     this.isSavedReading = false;
                     readingComponent.isSaved = false;
+                    console.log('# Child Resume From Draft After>>> ' + this.resumeFromDraftReading);
                 })
             .catch(error => 
                 {
@@ -855,6 +851,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.loading = true;
         let currentSectionName = event.currentTarget.value;
         let currentSectionIndex = this.availableSteps.findIndex(section => section.name === currentSectionName);
+        console.log('# Child Resume From Draft After2>>> ' + this.resumeFromDraftReading);
         let nextIndex = this.availableSteps[currentSectionIndex - 1].name === 'reading' && this.resumeFromDraftReading === false
         ? currentSectionIndex - 2
         : currentSectionIndex - 1
@@ -939,7 +936,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('','Email__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','WithdrawalClass__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','AnnualConsumption__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','AnnualWithdrawal__c',this.typeVisibility('both'),true,false,'',''),
                     new fieldData('','Market__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','SupplyType__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','Commodity__c',this.typeVisibility('both'),false,true,'',''),
@@ -1649,7 +1645,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Civico', 'BillingStreetNumber__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('CAP', 'BillingPostalCode__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('Codice ISTAT', 'BillingCityCode__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('AggregateBilling__c', 'AggregateBilling__c',this.typeVisibility('both'),true,true,'Si','')
+                    new fieldData('AggregateBilling__c', 'AggregateBilling__c',this.typeVisibility('both'),true,false,'','')
                 ]
             },
             {
@@ -1758,7 +1754,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 data: [
                     new fieldData('Data Firma','SignedDate__c',this.typeVisibility('both'), false, true, this.order.ParentOrder__r.SignedDate__c,''),
                     new fieldData('Attivazione Posticipata','IsActivationDeferred__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '',''),
-                    new fieldData('Data decorrenza','EffectiveDate__c',this.typeVisibility('both') && this.order.IsActivationDeferred__c && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '','')
+                    new fieldData('Data decorrenza','EffectiveDate__c',this.typeVisibility('both') && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '','')
                 ]
             },
             {
