@@ -427,7 +427,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 if(caseType.contains('Potenza') && supplyType.equalsIgnoreCase('Domestico')){
                     fixedAmount = '23';
                 }else {
-                    fixedAmount = '48,81';
+                    fixedAmount = '48.81';
                 }
                 variableAmount = String.valueOf(Double.valueOf(amount) - Double.valueOf(fixedAmount));
             }
