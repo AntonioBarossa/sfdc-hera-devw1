@@ -468,7 +468,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     ){
                         if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
                             newOrder.DateSentToSII__c = Date.today();
-                            if(newOrder.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
+                            String category = newOrder.CustomerCategory__c;
+                            if(category.equalsIgnoreCase('Famiglie')){
                                 newOrdersListRecalc.add(newOrder);
                             }
                         }else {
