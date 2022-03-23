@@ -32,7 +32,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
 
         //Get Sale
         saleSrv.checkReadAccess('Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c');
-        Sale__c sale = saleQr.getRecordById(saleId, 'Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c');
+        Sale__c sale = saleQr.getRecordById(saleId, 'CreatedBy.LoginChannel__c,Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c');
         check = sale.Status__c == 'Attiva' ? true : false;
         
         //Get Orders
@@ -77,7 +77,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     EffectiveDate = Date.today(),
                     Step__c = 1,
                     Channel__c = sale.Channel__c,
-                    LoginChannel__c = sale.Channel__c,
+                    LoginChannel__c = sale.CreatedBy.LoginChannel__c,
                     VendorLastName__c = sale.VendorLastName__c,
                     VendorFirstName__c = sale.VendorFirstName__C,
                     CommercialId__c = sale.CommercialId__c,
