@@ -2236,6 +2236,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>MUI_SGT</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Mui_SV_Aziende</fullName>
             <default>false</default>
         </values>
