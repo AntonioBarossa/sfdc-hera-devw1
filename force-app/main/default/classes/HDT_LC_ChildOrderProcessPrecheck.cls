@@ -137,7 +137,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                  */
                 when 'HDT_RT_ScontiBonus'
                 {
-                    newOrder.EffectiveDate__c =  (System.today().addMonths(1)).toStartOfMonth();
+                    Order currentOrder = orderQr.getRecordById(orderId);
+                    if(((String)currentOrder.get('NumeratorGroup__c')).equalsIgnoreCase('ELPVEDM'))
+                    {
+                        newOrder.EffectiveDate__c =  (System.today().addMonths(1)).toStartOfMonth();
+                    }
+                    else
+                    {
+                        newOrder.EffectiveDate__c = System.today();    
+                    }
                 }
 
             }
