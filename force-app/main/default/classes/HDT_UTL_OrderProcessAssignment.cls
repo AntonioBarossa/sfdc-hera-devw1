@@ -203,7 +203,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 && (process.isOwnAccount == isOwnAccount || process.isOwnAccount == null || (process.processType == 'Voltura Ele' && ord.ServicePoint__r.Account__c == null))
                 && process.isChangeUse == (isChangeUse && process.processType.containsIgnoreCase('Cambio Uso'))
                 && process.isSwitchInRipristinatorio == isSwitchInRipristinatorio(ord)
-                && process.isAttivazioneConModifica == isAttivazioneConModifica(ord)
+                && process.isAttivazioneConModifica == (isAttivazioneConModifica(ord) && process.processType.containsIgnoreCase('Attivazione con modifica'))
                 && (process.commodity == ord.ServicePoint__r.RecordType.DeveloperName || process.commodity == null)
                 && process.isAmendmentAllowed == isAmendmentAllowed
                 && process.isSwitchOut == (ord.IsWinback__c && process.processType.containsIgnoreCase('Switch In'))
@@ -323,6 +323,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         system.debug('isAttivazioneConModifica ord.ServicePoint__r.RecordType.DeveloperName ' + ord.ServicePoint__r.RecordType.DeveloperName);
         system.debug('isAttivazioneConModifica ord.PowerRequested__c ' + ord.PowerRequested__c);
         system.debug('isAttivazioneConModifica ord.PowerCommitted__c ' + ord.PowerCommitted__c);
+        System.debug('isAttivazioneConModifica ord.RecordType.DeveloperName' + ord.RecordType.DeveloperName);
 
         if (ord.ServicePoint__c != null 
             && ord.ServicePoint__r.RecordType.DeveloperName == 'HDT_RT_Ele' 

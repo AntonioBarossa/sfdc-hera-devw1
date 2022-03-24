@@ -57,7 +57,7 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                         if(transcodeConfig.Precision__c == 0){
                             try{
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
-                                Integer.valueOf(position.valore));
+                                Integer.valueOf(Decimal.valueOf(position.valore)));
                             }catch(Exception e){
                                 System.debug(LoggingLevel.DEBUG, e.getMessage());
                             }
