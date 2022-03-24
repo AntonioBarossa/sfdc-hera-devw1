@@ -273,6 +273,7 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.isDatoDiscordante__c = true;
         orderToUpdate.Contact__c = oldOrder.Contact__c;
         orderToUpdate.OrderReference__c = oldOrder.Id;
+        orderToUpdate.AggregateBilling__c = oldOrder.AggregateBilling__c;
         HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
     }
 

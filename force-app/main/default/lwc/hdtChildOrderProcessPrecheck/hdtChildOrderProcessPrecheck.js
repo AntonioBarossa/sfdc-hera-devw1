@@ -742,7 +742,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         if(this.selectedProcessObject.processType=="VAS"){
             sRequest["isBillableVas"]=this.order.IsBillableVas__c;
         }
-        checkCompatibility({servReq: sRequest, isPostSales: false}).then(data =>{
+        checkCompatibility({servReq: sRequest}).then(data =>{
             if(data.compatibility == '' || data.compatibility == this.order.OrderNumber){
                 this.applySelectionLogic(this.selectedProcessObject);
                 this.serviceRequest= data.ServiceRequest;
