@@ -176,7 +176,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         Set<Id> actsToCheck = new Set<Id>();
 
         for(wrts_prcgvr__Activity__c act : newActsMap.values()){
-            if(act.recordTypeId == rtKoOldClient && act.wrts_prcgvr__Status__c=='KO Risolto' && String.isNotBlank(act.Reason__c)){
+            if(act.recordTypeId == rtKoOldClient && act.wrts_prcgvr__Status__c=='KO Risolto' && String.isNotBlank(act.Reason__c) && 'Dimostrata Estraneità'.equalsIgnoreCase(act.Reason__c)){
                 actsToCheck.add(act.Id);
             }
         }
