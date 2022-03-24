@@ -87,6 +87,20 @@
                 <elementReference>$User.UserCompany__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>activity.ClosingCreatorGroup__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.CreatorGroup__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>activity.ClosingUserChannel__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.LoginChannel__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Get_Activity</targetReference>
         </connector>
