@@ -5,25 +5,31 @@
             <lightning-spinner alternative-text="Loading"></lightning-spinner>
         </template>
     
-        <lightning-datatable
-            key-field="Id"
-            data={ordersList}
-            columns={columnsTable}
-            hide-checkbox-column="true"
-            onrowaction={handleRowAction}>
-        </lightning-datatable>
+        <template if:true={showTable}>
+            <lightning-datatable
+                key-field="Id"
+                data={ordersList}
+                columns={columnsTable}
+                hide-checkbox-column="true"
+                onrowaction={handleRowAction}>
+            </lightning-datatable>
 
-        <c-hdt-confirmation-dialog-dropdown-manual
-            options={cancellationOptions}
-            title="Annulla Contratto"
-            message="Scegli una causale per procedere: "
-            confirm-label='Si'
-            cancel-label='No'
-            visible={isDialogVisible}
-            name="cancelContractDialog"
-            onclick={handleDialogResponse}>
-        </c-hdt-confirmation-dialog-dropdown-manual>
-
-    </lightning-card>
+            <c-hdt-confirmation-dialog-dropdown-manual
+                options={cancellationOptions}
+                title="Annulla Contratto"
+                message="Scegli una causale per procedere: "
+                confirm-label='Si'
+                cancel-label='No'
+                visible={isDialogVisible}
+                name="cancelContractDialog"
+                onclick={handleDialogResponse}>
+            </c-hdt-confirmation-dialog-dropdown-manual>
+        </template>
+        <template if:true={isNotOwner}>
+            <c-hdt-appointment-alert variant="error" is-dismissible="true">
+                <h2>L'attività può essere gestita solo dall'assegnatario.</h2>
+            </c-hdt-appointment-alert>
+        </template>
+    </lightning-card> 
 
 </template>

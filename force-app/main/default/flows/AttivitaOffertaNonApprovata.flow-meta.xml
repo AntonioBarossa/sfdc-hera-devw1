@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Set_Fields</name>
         <label>Set_Fields</label>
@@ -23,6 +24,31 @@
             <targetReference>Update_Activity</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Check_Owner</name>
+        <label>Check Owner</label>
+        <locationX>169</locationX>
+        <locationY>308</locationY>
+        <defaultConnector>
+            <targetReference>Set_Fields</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>User is Owner</defaultConnectorLabel>
+        <rules>
+            <name>User_is_not_owner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Activity.isUserActivity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>NotOwnerScreen</targetReference>
+            </connector>
+            <label>User is not owner</label>
+        </rules>
+    </decisions>
     <interviewLabel>Attività - Offerta Non Approvata {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Attività - Offerta Non Approvata</label>
     <processMetadataValues>
@@ -47,12 +73,13 @@
     <recordLookups>
         <name>Get_Activity</name>
         <label>Get Activity</label>
-        <locationX>226</locationX>
-        <locationY>297</locationY>
+        <locationX>176</locationX>
+        <locationY>176</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_Fields</targetReference>
+            <targetReference>Check_Owner</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -108,6 +135,22 @@
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>NotOwnerScreen</name>
+        <label>NotOwnerScreen</label>
+        <locationX>176</locationX>
+        <locationY>469</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>NotOwnerMessage</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(255, 0, 0);&quot;&gt;Attenzione!&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;L&apos;attività può essere gestita solo dall&apos;assegnatario.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>50</locationX>

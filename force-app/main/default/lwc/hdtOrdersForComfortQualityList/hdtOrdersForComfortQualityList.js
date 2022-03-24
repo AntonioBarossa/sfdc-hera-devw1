@@ -1,5 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import isUserOwner from '@salesforce/apex/HDT_LC_OrdersForComfortQualityList.checkOwner';
 import getTableData from '@salesforce/apex/HDT_LC_OrdersForComfortQualityList.getTableData';
 import confirmContract from '@salesforce/apex/HDT_LC_OrdersForComfortQualityList.confirmContract';
 import cancelContract from '@salesforce/apex/HDT_LC_OrdersForComfortQualityList.cancelContract';
@@ -13,6 +14,8 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
     action;
     loading = false;
     isDialogVisible = false;
+    isNotOwner = false;
+    showTable = false;
 
     get columnsTable(){
         return [
@@ -71,7 +74,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
             this.loading = false;
             
             this.ordersList = data;
-
+            this.showTable = true;
             if (data[0].Order__c != undefined) {
                 this.ordersList.forEach(el => {
                     el.Id = el.Order__c;
@@ -247,6 +250,15 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
 
     connectedCallback(){
         console.log('acticityId: ' + this.activityId);
-        this.setTableData();
+        this.loading = true;
+        isUserOwner({activityId: this.activityId}).then(data =>{
+            console.log('@@@@Data ' + JSON.stringify(data));
+            if (data === 'OK'){
+                this.setTableData();
+            }else if (data === 'KO'){
+                this.loading = false;
+                this.isNotOwner = true;
+            }
+        });
     }
 }
