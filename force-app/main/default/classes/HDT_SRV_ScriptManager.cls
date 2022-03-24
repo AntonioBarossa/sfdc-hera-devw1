@@ -167,7 +167,7 @@ public inherited sharing class HDT_SRV_ScriptManager {
             }
 
             if(!String.isBlank(flowName)){
-                return flowUrl = '/flow/' + flowName +'?idCampaignMemberInput='+ campaignMemberId;
+                return flowUrl = '/HC/s/flow/' + flowName +'?idCampaignMemberInput='+ campaignMemberId;
             }else{
                 return 'flow not found';
             }
