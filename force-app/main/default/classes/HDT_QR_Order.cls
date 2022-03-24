@@ -175,6 +175,7 @@ public inherited sharing class HDT_QR_Order {
             PreviousTrader__c,
             VolturaThirdTrader__c,
             SBQQ__Quote__r.IsVAS__c,
+            SBQQ__Quote__r.IsBillableVas__c,
             SBQQ__Quote__r.AmendmentAllowed__c,
             SBQQ__Quote__r.ContractReference__c,
             SBQQ__Quote__r.OrderReference__c,
