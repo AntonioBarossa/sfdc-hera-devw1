@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>MOD_INVIO_DOC</label>
+    <label>Modalità Invio Documentazione</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

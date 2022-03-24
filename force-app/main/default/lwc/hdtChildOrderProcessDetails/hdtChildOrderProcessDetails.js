@@ -1645,7 +1645,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Civico', 'BillingStreetNumber__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('CAP', 'BillingPostalCode__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('Codice ISTAT', 'BillingCityCode__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('AggregateBilling__c', 'AggregateBilling__c',this.typeVisibility('both'),true,true,'Si','')
+                    new fieldData('AggregateBilling__c', 'AggregateBilling__c',this.typeVisibility('both'),true,false,'','')
                 ]
             },
             {
