@@ -176,7 +176,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String nextPhase = '';
         String quotationType = '';
         String codServizio = reqWrp.requestMap.get('COD_SERVIZIO');
-        String codPrestazione = reqWrp.requestMap.get('COD_PRESTAZIONE');
+        // String codPrestazione = reqWrp.requestMap.get('COD_PRESTAZIONE');
         String codPresa = reqWrp.requestMap.get('COD_PRESA');
         String codPraticaDl = reqWrp.requestMap.get('COD_PRAT_DISTR');
         String numPrev = reqWrp.requestMap.get('NUMPREV');
@@ -222,6 +222,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             storno = reqWrp.requestMap.get('STORNO');
             activity = reqWrp.requestMap.get('ATTIVITA');
             String errDescr = reqWrp.requestMap.get('NOTE_ERR')!=null ? reqWrp.requestMap.get('NOTE_ERR') : '';
+            String testoErr = reqWrp.requestMap.get('TESTO_ERRR')!=null ? reqWrp.requestMap.get('TESTO_ERRR') : '';
             String utenza = reqWrp.requestMap.get('UTENZA')!=null ? reqWrp.requestMap.get('UTENZA') : '';
             String cmp = reqWrp.requestMap.get('CMP')!=null ? reqWrp.requestMap.get('CMP') : '';
             String dataElab = reqWrp.requestMap.get('DATA_ELABORAZIONE')!=null ? reqWrp.requestMap.get('DATA_ELABORAZIONE') : '';
@@ -246,12 +247,16 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             //Gestione Esito Appuntamento;
             HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
-            appService.updateExtraSystemAppointment(nextPhase, recordCase.Id);
+            appService.updateExtraSystemAppointment(nextPhase, recordCase.Id, testoErr);
             //fine Gestione Esito Appuntamento;
         }
         if(method.equalsIgnoreCase('aggiornaRCU')){
-            if(String.isBlank(codServizio) || String.isBlank(codPrestazione)){
-                throw new HDT_UTL_RichPassException('Required Field Missing: Codice Servizio or Codice Prestazione');
+            // if(String.isBlank(codServizio) || String.isBlank(codPrestazione)){
+            //     throw new HDT_UTL_RichPassException('Required Field Missing: Codice Servizio or Codice Prestazione');
+            // }
+
+            if(String.isBlank(codServizio)){
+                throw new HDT_UTL_RichPassException('Required Field Missing: Codice Servizio');
             }
             
             if(String.isBlank(codPresa) && String.isBlank(codPraticaDl)) {
@@ -840,7 +845,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         return currentCase;
     }
 
-    private static Case dataEnrichment(String pod, String contractCOde, Case currentCase){
+    public static Case dataEnrichment(String pod, String contractCOde, Case currentCase){
         String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(pod, contractCode);
         return HDT_UTL_DataEnrichmentPostSales.handleResponse(serializedResponse, currentCase);
     }
