@@ -25,7 +25,6 @@ import SignedDate from '@salesforce/schema/Order.SignedDate__c';
 import ContractSigned from '@salesforce/schema/Order.ContractSigned__c';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import updateContactForScartoDocumentale from '@salesforce/apex/HDT_UTL_Scarti.updateContactForScartoDocumentale'; //costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
-
 const signModeFirmato = 'Contratto già firmato';
 const signModeCartacea = 'Cartacea';
 
@@ -68,7 +67,8 @@ const FIELDS = [
 	'Order.Account.BillingAddressFormula__c',
 	'Order.Account.BillingCityCode__c',
 	'Order.Account.BillingStreetNumberExtension__c',
-	'Order.Account.BillingStreetCode__c'
+	'Order.Account.BillingStreetCode__c',
+    'Order.Contact__c'
 ];
 
 export default class hdtOrderDossierWizardSignature extends LightningElement {
@@ -273,7 +273,8 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                     signMode:this.orderRecord.fields.SignatureMethod__c.value,
                     enableEdit:this.disabledInput,
                     setDefault:!this.disabledInput,
-                    checkAgencies:'Y'
+                    checkAgencies:'Y',
+                    contactId:this.orderRecord.fields.Contact__c.value
                 }
                 this.inputParams = JSON.stringify(inputParams);
                 /* if(contractSigned){
@@ -409,13 +410,15 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
            
             updateRecord(recordInput)
                 .then(() => {
+
+                    
                     //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
 
-                    updateContactForScartoDocumentale({accountId: this.orderParentRecord.AccountId,
+                    /*updateContactForScartoDocumentale({accountId: this.orderParentRecord.AccountId,
                                                        oldPhone: this.oldPhoneValue,
                                                        oldEmail: this.oldEmailValue,
                                                        newPhone: resultWrapper.phone,
-                                                       newMail: resultWrapper.email}).then(data=>{
+                                                       newMail: resultWrapper.email}).then(data=>{*/
 
                     //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
                     // Display fresh data in the form
@@ -438,7 +441,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                           this.dispatchEvent(toastErrorMessage);
                           this.loading = false;
                       });
-                   });
+                   //});
                 })
                 .catch(error => {
                     console.log('Errore in aggiornamento');
