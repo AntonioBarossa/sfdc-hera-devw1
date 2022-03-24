@@ -178,7 +178,7 @@
         <actionName>HDT_LC_EditScartiComplessi</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Prestazione_Distrubutore</targetReference>
+            <targetReference>Init_Case_For_Sottomissione</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -821,6 +821,29 @@
         </assignmentItems>
         <connector>
             <targetReference>AumentoDiminuzionePotenza</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Init_Case_For_Sottomissione</name>
+        <label>Init Case For Sottomissione</label>
+        <locationX>1195</locationX>
+        <locationY>4341</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.HerokuPracticeCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.DistributorPracticeCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Prestazione_Distrubutore</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -2348,13 +2371,13 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <description>Check if the current service is managed by the local dispatcher</description>
         <name>Prestazione_Distrubutore</name>
         <label>Prestazione Distrubutore</label>
-        <locationX>886</locationX>
+        <locationX>887</locationX>
         <locationY>4350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Prestazione_Gestita</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 8) AND 3 AND 4 AND 5 AND (6 OR  7)</filterLogic>
+        <filterLogic>(1 OR 9) AND (2 OR 8) AND 3 AND 4 AND 5 AND (6 OR  7)</filterLogic>
         <filters>
             <field>Type__c</field>
             <operator>EqualTo</operator>
@@ -2409,6 +2432,13 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Get_Input_Case_0.Commodity__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
