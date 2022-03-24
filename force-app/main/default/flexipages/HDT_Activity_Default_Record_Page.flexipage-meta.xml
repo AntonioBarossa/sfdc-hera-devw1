@@ -2007,6 +2007,11 @@
                 <fieldItem>Record.wrts_prcgvr__IsRequired__c</fieldItem>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.CreatedById</fieldItem>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-06eb8a61-048a-48c2-b2c6-ed0249776397</name>
         <type>Facet</type>
     </flexiPageRegions>
