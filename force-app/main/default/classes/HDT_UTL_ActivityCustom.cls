@@ -285,5 +285,11 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     public static boolean isMandatoryComplete( String recordid ){
         return recordId == null ? true : HDT_QR_ActivityCustom.isActivityNotClosed(recordid);
     }
-    
+
+    public static void inheritUserFields(List<wrts_prcgvr__Activity__c> activites) {
+        User user = [SELECT Id, CreatorGroup__c FROM User WHERE Id =: UserInfo.getUserId()];
+        for(wrts_prcgvr__Activity__c activity : activites) {
+            activity.CreatorGroup__c = user.CreatorGroup__c;
+        }
+    }
 }
