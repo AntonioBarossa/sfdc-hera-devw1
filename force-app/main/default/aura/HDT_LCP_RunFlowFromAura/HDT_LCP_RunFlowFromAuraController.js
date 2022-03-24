@@ -163,12 +163,12 @@
 
             if(processType === 'Annullamento da activity'){
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : 'Annullamento prestazione' });
-                inputVariables.push({ name : 'isCheckOwnerOk', type : 'String', value : isUserActivity });
+                inputVariables.push({ name : 'isCheckOwnerOk', type : 'Boolean', value : isUserActivity });
             }
 
             if(processType === 'Ripristina fase da activity'){
                 inputVariables.push({ name : 'ProcessType', type : 'String', value : 'Ripristina fase' });
-                inputVariables.push({ name : 'isCheckOwnerOk', type : 'String', value : isUserActivity });
+                inputVariables.push({ name : 'isCheckOwnerOk', type : 'Boolean', value : isUserActivity });
                 inputVariables.push({ name : 'discardRework', type : 'Boolean', value : discardRework });
             }
 

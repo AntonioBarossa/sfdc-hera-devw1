@@ -56,7 +56,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             System.debug(srRequest);
             wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = checkCompatibility(sReq);
             System.debug(result);
-            if(isPostSales== null){
+            if(isPostSales== null && !((String)servReq.get('processType')).equalsIgnoreCase('Switch in Fittizio')){
                 HDT_SRV_ServiceRequest.deleteRecord(sReq);
             }
             //list of incompatible records

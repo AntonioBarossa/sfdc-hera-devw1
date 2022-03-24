@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Tipo cliente / Cod ultima fattura letta</label>
+    <label>Tipo clt(Ambiente)/Cod UltimaFattLetta</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>
