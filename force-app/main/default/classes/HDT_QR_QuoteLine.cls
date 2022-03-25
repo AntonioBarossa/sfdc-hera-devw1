@@ -138,8 +138,14 @@ public inherited sharing class HDT_QR_QuoteLine {
     * @param saleId 
     * @return List<SBQQ__QuoteLine__c> 
     **/
+    /**@frpanico 2022-03-25
+     * La quoteLine di "sconti e bonus"
+     * Deve staccare un ordine solo
+     * nel caso di VAS Fatturabili
+     */
     public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredFamilyBonus(String saleId){
-        Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
+        Set<String> famils = new Set<String>(); /*HDT_UTL_OrderProcessAssignment.getFamilySconto();*/
+        famils.add('VAS Fatturabili');
         return [
             SELECT
             Id,

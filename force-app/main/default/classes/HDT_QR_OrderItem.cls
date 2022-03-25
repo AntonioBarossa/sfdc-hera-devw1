@@ -13,8 +13,11 @@ public inherited sharing class HDT_QR_OrderItem {
     * @param listOrderId
     * @return List<OrderItem>
     */
+    /**@frpanico
+     * A valle della nuova modifica non vanno presi tutti i bonus ma soltanto quelli di analisi consumi
+     */
     public List<OrderItem> getRecordsByOrderIdListFilteredPdrPod(List<Id> listOrderId){
-        Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
+        Set<String> famils = new Set<String>();/*HDT_UTL_OrderProcessAssignment.getFamilySconto();*/
         famils.add('VAS Prodotto');
         famils.add('VAS Servizio');
         /**@frpanico 21/01/2022
