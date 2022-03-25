@@ -286,7 +286,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         if (!activityList.isEmpty() 
             && !ord.SBQQ__Quote__r.AmendmentAllowed__c 
             && !ord.SBQQ__Quote__r.AllowChangeUse__c 
-            && !isCambioOfferta(ord)) {
+            /*&& !isCambioOfferta(ord)*/) {
                 result = true;
         }
 

@@ -56,7 +56,7 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
         Order ord = orderQr.getRecordById(orderId);
 		System.debug(ord);
         System.debug(ord.RecordType.DeveloperName);
-        if (ord.RecordType.DeveloperName == 'HDT_RT_Default') {
+        if (ord.RecordType.DeveloperName == 'HDT_RT_Default' || ord.ProcessType__c == 'Switch in Fittizio') {
             HDT_UTL_OrderFieldsAlignment.alignFields(ord);
             ord = orderQr.getRecordById(orderId);
         }
