@@ -563,6 +563,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>ATTRIB_36__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>ATTRIB_01__c</field>
             </layoutItems>
             <layoutItems>
@@ -1568,6 +1572,7 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
+        <fields>HIDDEN_FLG__c</fields>
         <fields>DISPLAY_NAME__c</fields>
         <fields>CREATED__c</fields>
         <fields>CFG_STATE_CD__c</fields>
@@ -1576,8 +1581,8 @@
         <fields>NUM_VAL__c</fields>
         <fields>REQUIRED_FLG__c</fields>
         <relatedList>SiebelRdoAttribute__x.ORDER_ITEM_ID__c</relatedList>
-        <sortField>CREATED__c</sortField>
-        <sortOrder>Desc</sortOrder>
+        <sortField>HIDDEN_FLG__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
@@ -1595,7 +1600,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000002gKk0</masterLabel>
+        <masterLabel>00h1X000002lHvU</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

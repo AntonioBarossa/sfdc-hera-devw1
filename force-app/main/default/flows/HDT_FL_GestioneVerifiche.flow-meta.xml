@@ -8,7 +8,7 @@
         <actionName>HDT_LC_EditScartiComplessi</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Aggiorna_Case</targetReference>
+            <targetReference>Init_Case_Per_Risottomissione</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -222,6 +222,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Screen_Inserimento_Dati</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Init_Case_Per_Risottomissione</name>
+        <label>Init Case Per Risottomissione</label>
+        <locationX>1464</locationX>
+        <locationY>1275</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.HerokuPracticeCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.DistributorPracticeCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case</targetReference>
         </connector>
     </assignments>
     <assignments>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_HER_DATA_CONSENSO_PEC</label>
+    <label>Data Consenso Pec</label>
     <required>false</required>
     <type>Date</type>
 </CustomField>

@@ -480,7 +480,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                 (oldOrder.ConfirmCustomerContract__c != null 
                                 && oldOrder.ConfirmCustomerContract__c != newOrder.ConfirmCustomerContract__c)
                             ) 
-                            && (newOrder.ConfirmCustomerContract__c == 'Comfort call' || newOrder.ConfirmCustomerContract__c == 'Web')
+                            && (newOrder.ConfirmCustomerContract__c == 'Comfort call' || newOrder.ConfirmCustomerContract__c == 'Web' ||newOrder.ConfirmCustomerContract__c == 'IVR')
                         ){
                         newOrdersListComfort.add(newOrder);
                     }
@@ -850,13 +850,15 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }   
         
         if (!orderParentList.isEmpty()){
-            List<Order> orderParents = new List<Order>();
+            List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> platformEventToPublish = new List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>();
             for (Order o : [SELECT id FROM Order WHERE Id IN :orderParentList AND Phase__c = 'Documentazione Gestita' WITH SECURITY_ENFORCED]){
                 o.Description = 'Aggiornato Post Credit Check';
-                orderParents.add(o);
+                HDT_PEV_VoltureChangeManagerUpdateSObj__e item = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
+                item.SerializedSobj__c = JSON.serialize(o);
+                platformEventToPublish.add(item);
             }
-            if (!orderParents.isEmpty()){
-                updateFutureList(JSON.serialize(orderParents));
+            if (!platformEventToPublish.isEmpty()){
+                Eventbus.publish(platformEventToPublish);
             }
         }
     }        

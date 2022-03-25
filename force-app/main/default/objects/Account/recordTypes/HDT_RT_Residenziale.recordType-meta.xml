@@ -2834,6 +2834,10 @@
             <fullName>Salvaguardia</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Tutele Graduali</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SBQQ__CoTerminationEvent__c</picklist>
@@ -2990,6 +2994,10 @@
         </values>
         <values>
             <fullName>Mui_No SV_Enti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mui_STG</fullName>
             <default>false</default>
         </values>
         <values>
