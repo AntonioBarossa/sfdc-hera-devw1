@@ -1255,59 +1255,91 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Id bonusScontiRtId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId();
         Set<Id> orderIds = new Set<Id>();
         Set<Id> parentOrderIds = new Set<Id>();
-
+        Map<Id,String> mapVasPhase = new Map<Id,String>();
+        Map<Id,String> mapVasStatus = new Map<Id,String>();
 
         for(Order newOrder : (List<Order>) newOrderList)
         {
-            String newPhase = 'Completata';
             String oldPhase = newOrder.Phase__c;
             Order oldOrder = (Order) oldOrderMap.get(newOrder.Id);
             DateTime nowDateTime = DateTime.now();
-            if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c')) && String.isNotEmpty((String)oldOrder.get('SiebelStatus__c'))
-                && !(((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase((String)oldOrder.get('SiebelStatus__c')))
-                && ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Pratica Gestita'))
+            if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))
+                && (oldOrder.SiebelStatus__c == null || !(((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase((String)oldOrder.get('SiebelStatus__c')))))
             {
+                String newPhase = ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Pratica Gestita') 
+                    ? 'Completata'
+                    : ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Annullato')
+                        ? 'Annullato'
+                        : '';
+                String status = ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Pratica Gestita') 
+                ? 'Activated'
+                : ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Annullato')
+                    ? 'Annullato'
+                    : '';
+                String vasPhase = ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Pratica Gestita') 
+                ? 'Esportazione VS Siebel'
+                : ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Annullato')
+                    ? 'Annullato'
+                    : '';
+                String vasStatus = ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Pratica Gestita') 
+                ? 'In Lavorazione'
+                : ((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase('Annullato')
+                    ? 'Annullato'
+                    : '';
+                mapVasPhase.put(newOrder.ParentOrder__c, vasPhase);
+                mapVasStatus.put(newOrder.ParentOrder__c, vasStatus);
                 /* Update Fase e Status */
-                newOrder.Phase__c = newPhase;
-                newOrder.Status = 'Activated';
-                newOrder.PhaseStory__c = !String.isBlank(newOrder.PhaseStory__c) 
-                ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+newOrder.PhaseStory__c
-                : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
-                /* Contracted */
-                if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& newOrder.Status.equalsIgnoreCase('Activated') && !newOrder.SBQQ__Contracted__c && !oldOrder.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) 
-                { 
-                    newOrder.SBQQ__Contracted__c=true; 
-                }      
-                if(!orderIds.contains(newOrder.Id))
+                if(!String.isEmpty(newPhase))
                 {
-                    orderIds.add(newOrder.Id);
-                    parentOrderIds.add(newOrder.ParentOrder__c);
+                    newOrder.Phase__c = newPhase;
+                    newOrder.Status = status;
+                    newOrder.PhaseStory__c = !String.isBlank(newOrder.PhaseStory__c) 
+                    ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+newOrder.PhaseStory__c
+                    : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
+                    /* Contracted */
+                    if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& newOrder.Status.equalsIgnoreCase('Activated') && !newOrder.SBQQ__Contracted__c && !oldOrder.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) 
+                    { 
+                        newOrder.SBQQ__Contracted__c=true; 
+                    }      
+                    if(!orderIds.contains(newOrder.Id))
+                    {
+                        orderIds.add(newOrder.Id);
+                        parentOrderIds.add(newOrder.ParentOrder__c);
+                    }
                 }
             }
         }
         if(!orderIds.isEmpty())
         {
-            List<ServiceRequest__c> serviceRequestToDelete = [SELECT Id FROM ServiceRequest__c WHERE Order__c IN :orderIds WITH SECURITY_ENFORCED];
-            List<Order> vasScontiOrders = [SELECT Phase__c, Status FROM Order
-            WHERE ParentOrder__c IN :parentOrderIds
-            AND Id NOT IN :orderIds
-            AND Phase__c = 'Sequenzializzato'
-            AND IsTransition__c = true
-            WITH SECURITY_ENFORCED];
-            for(Order vasScontiOrder : vasScontiOrders)
+
+            if(!mapVasPhase.isEmpty())
             {
-                vasScontiOrder.Phase__c = 'Esportazione VS Siebel';
-                vasScontiOrder.Status = 'In Lavorazione';
-            }
-            /* Delete Service Request */
-            if(!serviceRequestToDelete.isEmpty())
-            {
-                HDT_SRV_ServiceRequest.deleteRecord(serviceRequestToDelete);
-            }
-            /* Update related ScontiBonus/VAS */
-            if(!vasScontiOrders.isEmpty())
-            {
-                updateFutureList(JSON.serialize(vasScontiOrders));
+                List<Order> vasScontiOrders = [SELECT Phase__c, Status,ParentOrder__c FROM Order
+                WHERE ParentOrder__c IN :parentOrderIds
+                AND Id NOT IN :orderIds
+                AND Phase__c = 'Sequenzializzato'
+                AND IsTransition__c = true
+                WITH SECURITY_ENFORCED];
+                for(Order vasScontiOrder : vasScontiOrders)
+                {
+                    vasScontiOrder.Phase__c = mapVasPhase.get(vasScontiOrder.ParentOrder__c);
+                    vasScontiOrder.Status = mapVasStatus.get(vasScontiOrder.ParentOrder__c);
+                    if(vasScontiOrder.Phase__c.equalsIgnoreCase('Annullato'))
+                    {
+                        orderIds.add(vasScontiOrder.Id);
+                    }
+                }
+                /* Delete Service Request */
+                List<ServiceRequest__c> serviceRequestToDelete = [SELECT Id FROM ServiceRequest__c WHERE Order__c IN :orderIds WITH SECURITY_ENFORCED];
+                if(!serviceRequestToDelete.isEmpty())
+                {
+                    HDT_SRV_ServiceRequest.deleteRecord(serviceRequestToDelete);
+                }
+                /* Update related ScontiBonus/VAS */
+                if(!vasScontiOrders.isEmpty())
+                {
+                    updateFutureList(JSON.serialize(vasScontiOrders));
+                }
             }
         }
     }
