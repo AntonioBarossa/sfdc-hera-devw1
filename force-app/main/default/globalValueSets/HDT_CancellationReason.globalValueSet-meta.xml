@@ -195,6 +195,11 @@
         <default>false</default>
         <label>Annullamento per dati discordanti</label>
     </customValue>
+    <customValue>
+        <fullName>Annullamento Ordine di Riferimento</fullName>
+        <default>false</default>
+        <label>Annullamento Ordine di Riferimento</label>
+    </customValue>
     <masterLabel>Motivazione Annullamento</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

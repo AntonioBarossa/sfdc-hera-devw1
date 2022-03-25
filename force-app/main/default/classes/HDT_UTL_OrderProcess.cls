@@ -480,7 +480,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                 (oldOrder.ConfirmCustomerContract__c != null 
                                 && oldOrder.ConfirmCustomerContract__c != newOrder.ConfirmCustomerContract__c)
                             ) 
-                            && (newOrder.ConfirmCustomerContract__c == 'Comfort call' || newOrder.ConfirmCustomerContract__c == 'Web')
+                            && (newOrder.ConfirmCustomerContract__c == 'Comfort call' || newOrder.ConfirmCustomerContract__c == 'Web' ||newOrder.ConfirmCustomerContract__c == 'IVR')
                         ){
                         newOrdersListComfort.add(newOrder);
                     }
