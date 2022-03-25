@@ -146,6 +146,16 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         }
     }
 
+    @AuraEnabled
+    public static String checkOwner(String activityId){
+        try {
+            List<wrts_prcgvr__Activity__c> activities = HDT_QR_GenericQuery.getGenericRecords('Id, isUserActivity__c', 'wrts_prcgvr__Activity__c', 'Id =\''+String.escapeSingleQuotes(activityId)+'\'');
+            return (activities[0].isUserActivity__c) ? 'OK' : 'KO';
+        } catch (Exception e) {
+            return 'NO CHECK';
+        }
+    }
+
     private static String transcodeProcessForActivity(String orderRecordType){
 
         Map<String,String> processActivityMap = new Map<String,String>{

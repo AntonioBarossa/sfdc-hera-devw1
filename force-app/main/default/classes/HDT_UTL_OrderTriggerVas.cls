@@ -49,42 +49,46 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
     }
 
     public static void cancelLinkedOrders(Set<Id> canceledOrderIds, Set<Id> canceledOrderQuotesIds){
-        List<Order> ordersToWork = [SELECT Id, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE  Id IN :canceledOrderIds OR OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
+        //List<Order> ordersToWork = [SELECT Id, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE  Id IN :canceledOrderIds OR OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
+        List<Order> ordersToWork = [SELECT Id, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
         if(ordersToWork.isEmpty()){
             return;
         }
         List<Order> vasOrdersToCancel = new List<Order>();
-        Map<Id,Order> commodityOrderMap = new Map<Id,Order>();
+        //Map<Id,Order> commodityOrderMap = new Map<Id,Order>();
         for (Order orderToWork:ordersToWork) {
             switch on orderToWork.RecordType.DeveloperName {
                 when 'HDT_RT_VAS','HDT_RT_ScontiBonus' {
                     vasOrdersToCancel.add(orderToWork);
                 }
-                when else {
-                    setCommodityOrderMap(orderToWork, commodityOrderMap);
-                }
+                /* when else {
+                    setCommodityOrderMap(orderToWork, commodityOrderMap,canceledOrderIds);
+                } */
             }
         }
         for (Order vasOrder:vasOrdersToCancel) {
             vasOrder.Phase__c = PHASE_CANCELLED;
             vasOrder.Status = STATUS_CANCELLED;
-            String cancellationReason;
+            /* String cancellationReason;
             if (vasOrder.OrderReference__c != null && commodityOrderMap.containsKey(vasOrder.OrderReference__c)){
                 cancellationReason = commodityOrderMap.get(vasOrder.OrderReference__c).CancellationReason__c;
 
             }else if (commodityOrderMap.containsKey(vasOrder.SBQQ__Quote__c)){
                 cancellationReason = commodityOrderMap.get(vasOrder.SBQQ__Quote__c).CancellationReason__c;
             }
-            vasOrder.CancellationReason__c = cancellationReason;
+            vasOrder.CancellationReason__c = cancellationReason; */
+            vasOrder.CancellationReason__c = 'Annullamento Ordine di Riferimento';
         }
 
         orderSrv.updateRecords(vasOrdersToCancel);
     }
 
-    private static void setCommodityOrderMap(Order ord, Map<Id,Order> commodityOrderMap){
-        commodityOrderMap.put(ord.Id,ord);
-        if (ord.SBQQ__Quote__c != null){
-            commodityOrderMap.put(ord.SBQQ__Quote__c,ord);
+    /* private static void setCommodityOrderMap(Order ord, Map<Id,Order> commodityOrderMap, Set<Id> canceledOrderIds){
+        if (canceledOrderIds.contains(ord.Id)){
+            commodityOrderMap.put(ord.Id,ord);
+            if (ord.SBQQ__Quote__c != null){
+                commodityOrderMap.put(ord.SBQQ__Quote__c,ord);
+            }
         }
-    }
+    } */
 }

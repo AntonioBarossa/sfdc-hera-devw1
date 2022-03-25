@@ -18,6 +18,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
         //End>>> modifica marco.arci@webresults.it 11/10/21
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
         HDT_UTL_Scarti.setLookupFields(trigger.new);
+        HDT_UTL_ActivityCustom.inheritUserFields((List<wrts_prcgvr__Activity__c>) trigger.new);
     }
 
  	//public override void beforeDelete(){}

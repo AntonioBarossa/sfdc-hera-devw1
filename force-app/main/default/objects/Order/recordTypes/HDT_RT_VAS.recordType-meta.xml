@@ -510,6 +510,10 @@
             <fullName>Il cliente rinuncia</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Annullamento Ordine di Riferimento</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>ChamberCommerceRegistration__c</picklist>

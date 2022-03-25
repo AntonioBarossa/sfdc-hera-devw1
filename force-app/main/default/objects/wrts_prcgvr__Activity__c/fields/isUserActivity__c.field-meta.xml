@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>isUserActivity__c</fullName>
     <externalId>false</externalId>
-    <formula>IF( $User.Id ==  OwnerId , true,false )</formula>
+    <formula>IF( AND($User.Id ==  OwnerId, OR(Queued__c == true,ManuallyReassigned__c == true)) , true,false )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Attività Utente</label>
     <trackHistory>false</trackHistory>

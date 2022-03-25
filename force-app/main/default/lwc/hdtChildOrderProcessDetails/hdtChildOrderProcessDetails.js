@@ -523,282 +523,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         : this.availableSteps[currentSectionIndex + 1].step;
         this.isReading = currentSectionName === 'reading';
         //EVERIS AGGIUNTA LOGICA PER SEZIONE AUTOLETTURA
-        if(currentSectionName === 'indirizzodiAttivazione'){
-            this.handleWrapAddressObjectAttivazione();
-        }
-        if(currentSectionName === 'indirizzoSpedizione'){
-            this.handleWrapAddressObjectSpedizione();
-        }
-        if(currentSectionName === 'processVariables'){
-           if(this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
-           {
-               this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
-               return;
-           }
-        }
-        if(currentSectionName === 'dettaglioImpianto'){
-            if( this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
-            {
-                this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
-                return;
-            }
-            if(this.template.querySelector("[data-id='SurfaceServed__c']") !== null 
-           
-                && 
-                this.typeVisibility('gas') 
-                && 
-                (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta')
-                && 
-                (this.template.querySelector("[data-id='SurfaceServed__c']").value === ''|| this.template.querySelector("[data-id='SurfaceServed__c']").value === null)) {
-                this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Popolare il campo Superficie Servita',
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                this.dispatchEvent(toastErrorMessage);
-                return;
-            }
-            if(this.template.querySelector("[data-id='WaiverRightAfterthought__c']") !== null 
-                && (this.template.querySelector("[data-id='WaiverRightAfterthought__c']").value === ''
-                    || this.template.querySelector("[data-id='WaiverRightAfterthought__c']").value === null)) {
-                this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Popolare il campo Rinuncia Diritto di Ripensamento',
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                this.dispatchEvent(toastErrorMessage);
-                return;
-            }
-            if(this.template.querySelector("[data-id='RecessNotice__c']") !== null 
-            && (this.template.querySelector("[data-id='RecessNotice__c']").value === ''
-                || this.template.querySelector("[data-id='RecessNotice__c']").value === null)
-            && (this.template.querySelector("[data-id='RecessNotice__c']").required === true)) {
-            this.loading = false;
-                const toastErrorMessage = new ShowToastEvent({
-                    title: 'Errore',
-                    message: 'Popolare il campo Preavviso Recesso',
-                    variant: 'error',
-                    mode: 'sticky'
-                });
-            this.dispatchEvent(toastErrorMessage);
-            return;
-            }
-            if(this.order.RecordType.DeveloperName=="HDT_RT_TemporaneaNuovaAtt" && this.template.querySelector("[data-id='RequestOption__c']") !== null 
-                && (this.template.querySelector("[data-id='RequestOption__c']").value === ''
-                    || this.template.querySelector("[data-id='RequestOption__c']").value === null)) {
-                this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Popolare il campo Opzione Distribuzione',
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                this.dispatchEvent(toastErrorMessage);
-                return;
-            }
-            if(this.template.querySelector("[data-id='ConnectionMandate__c']") !== null 
-                && (this.template.querySelector("[data-id='ConnectionMandate__c']").value === ''
-                    || this.template.querySelector("[data-id='ConnectionMandate__c']").value === null)) {
-                this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Popolare il campo Mandato di connessione',
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                this.dispatchEvent(toastErrorMessage);
-                return;
-            }
-            if(this.template.querySelector("[data-id='AtecoCode__c']") !== null 
-                && (this.template.querySelector("[data-id='AtecoCode__c']").value === ''
-                    || this.template.querySelector("[data-id='AtecoCode__c']").value === null)) {
-                this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Popolare il campo Cod ISTAT Ateco',
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                this.dispatchEvent(toastErrorMessage);
-                return;
-            }
-            if(this.template.querySelector("[data-id='InstanceSelfCertification__c']") !== null 
-                && (this.template.querySelector("[data-id='InstanceSelfCertification__c']").value === ''
-                    || this.template.querySelector("[data-id='InstanceSelfCertification__c']").value === null)) {
-                this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Popolare il campo Autocert. Istanza',
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                this.dispatchEvent(toastErrorMessage);
-                return;
-            }
-            if(this.template.querySelector("[data-id='SelfCertificationConnection__c']") !== null 
-                && (this.template.querySelector("[data-id='SelfCertificationConnection__c']").value === ''
-                    || this.template.querySelector("[data-id='SelfCertificationConnection__c']").value === null)) {
-                this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Popolare il campo Autocert. contr connessione',
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                this.dispatchEvent(toastErrorMessage);
-                return;
-            }
-            if(this.template.querySelector("[data-id='PressureLevel__c']") !== null 
-                && (this.template.querySelector("[data-id='PressureLevel__c']").value === ''
-                    || this.template.querySelector("[data-id='PressureLevel__c']").value === null)) {
-                this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Popolare il campo Livello pressione',
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                this.dispatchEvent(toastErrorMessage);
-                return;
-            }
-            if(this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.template.querySelector("[data-id='WithdrawalClass__c']") !== null 
-                && (this.template.querySelector("[data-id='WithdrawalClass__c']").value === ''
-                    || this.template.querySelector("[data-id='WithdrawalClass__c']").value === null)) {
-                this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Popolare il campo Classe Profilo Prelievo',
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                this.dispatchEvent(toastErrorMessage);
-                return;
-            }
-            if(this.template.querySelector("[data-id='CommentForDL__c']") !== null 
-                && (this.template.querySelector("[data-id='CommentForDL__c']").value === ''
-                    || this.template.querySelector("[data-id='CommentForDL__c']").value === null)) {
-                this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Popolare il campo Note per il DL',
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                this.dispatchEvent(toastErrorMessage);
-                return;
-            }
-            if(this.template.querySelector("[data-id='ConnectionType__c']") !== null 
-                && (this.template.querySelector("[data-id='ConnectionType__c']").value === ''
-                    || this.template.querySelector("[data-id='ConnectionType__c']").value === null)) {
-                this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Popolare il campo Tipo di Connessione',
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                this.dispatchEvent(toastErrorMessage);
-                return;
-            }
-            if(this.template.querySelector("[data-id='RequestPhase__c']") !== null 
-                && (this.template.querySelector("[data-id='RequestPhase__c']").value === ''
-                    || this.template.querySelector("[data-id='RequestPhase__c']").value === null)) {
-                this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Popolare il campo Fase Richiesta',
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                this.dispatchEvent(toastErrorMessage);
-                return;
-            }
-            if(this.template.querySelector("[data-id='PhoneNumber__c']") !== null 
-            && (this.template.querySelector("[data-id='PhoneNumber__c']").value === ''
-                || this.template.querySelector("[data-id='PhoneNumber__c']").value === null)
-                && this.template.querySelector("[data-id='PhoneNumber__c']").required === true
-                ) {
-                this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Popolare il campo Recapito Telefonico',
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                this.dispatchEvent(toastErrorMessage);
-                return;
-            }
-            if(this.template.querySelector("[data-id='ImplantType__c']") !== null && this.template.querySelector("[data-id='ImplantType__c']").value === '') {
-                this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Popolare il campo Tipo Impianto',
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                this.dispatchEvent(toastErrorMessage);
-                return;
-            }
-            if(this.template.querySelector("[data-id='CommoditySector__c']") !== null && this.template.querySelector("[data-id='CommoditySector__c']").value === 'Energia Elettrica' && (this.template.querySelector("[data-id='UseTypeEnergy__c']").value === null || this.template.querySelector("[data-id='UseTypeEnergy__c']").value === '')){
-                this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: 'Popolare il campo Uso Energia',
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                this.dispatchEvent(toastErrorMessage);
-                return;
-            }
-            if(this.checkFieldAvailable('TemporaryConnectionStartDate__c', true) === ''
-                || this.checkFieldAvailable('TemporaryConnectionEndDate__c', true) === ''
-                || this.checkFieldAvailable('HoursOfUse__c', true) === '')
-            {
-                this.showMessage('Errore', 'Popolare i campi obbligatori: Data inizio/fine connessione temporanea e Ore di utilizzo', 'error');
-                return;
-            }
-            isPreventivo({ord:this.order}).then(result=>{
-                this.loading=false;
-            }).catch(error=>{
-                this.showMessage('Errore','Preventivo non calcolato','error');
-                return;
-            });
-        }
-        if(currentSectionName === 'ivaAccise'){
-            let errorMessageIvaAccise = '';
-            let checkIsFlag = false;
-            if(this.template.querySelector("[data-id='VATfacilitationFlag__c']") === true && this.template.querySelector("[data-id='VAT__c']").value === ''){
-                errorMessageIvaAccise = 'Popolare IVA';
-            }
-            if(this.template.querySelector("[data-id='FacilitationExcise__c']") === true){
-                if(this.template.querySelector("[data-id='ExciseEle__c']") !== null && this.template.querySelector("[data-id='ExciseEle__c']").value === ''){
-                    errorMessageIvaAccise = 'Popolare Accise Agevolata Ele';
-                }
-                if(this.template.querySelector("[data-id='ExciseGAS__c']") !== null && this.template.querySelector("[data-id='ExciseGAS__c']").value === ''){
-                    errorMessageIvaAccise = 'Popolare Accise Agevolata Gas';
-                }
-            }
-            if(errorMessageIvaAccise !== ''){
-                this.loading = false;
-                const toastErrorMessageIvaAccise = new ShowToastEvent({
-                    title: 'Errore',
-                    message: errorMessageIvaAccise,
-                    variant: 'error',
-                    mode: 'sticky'
-                });
-                this.dispatchEvent(toastErrorMessageIvaAccise);
-                return;
-            }
-            else{
-            }
-        }
-        if(currentSectionName === 'fatturazione') {
-           this.sectionDataToSubmit['AggregateBilling__c'] = this.template.querySelector("[data-id='AggregateBilling__c']").value;
-        }
         if(currentSectionName === 'reading'){
             let readingComponent = this.template.querySelector('c-hdt-self-reading');
             getReadingId({objectName:'Order',objectId:this.order.Id, commodity:this.order.CommodityFormula__c})
@@ -813,19 +537,301 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.isSavedReading = false;
                     readingComponent.isSaved = false;
                     console.log('# Child Resume From Draft After>>> ' + this.resumeFromDraftReading);
+                    this.updateProcess(currentSectionIndex, nextSectionStep);
                 })
             .catch(error => 
                 {
-                    this.showMessage('Errore', JSON.stringify(error), 'error');
+                    console.log('selfreading entering error message');
+                    this.loading = false;
+                    return;
                 })
             
         }
-        if((this.order.RecordType.DeveloperName=="HDT_RT_ConnessioneConAttivazione" || this.order.RecordType.DeveloperName=="HDT_RT_TemporaneaNuovaAtt") && currentSectionName === "dettaglioImpianto"){
-            this.getQuoteType(currentSectionIndex, nextSectionStep);
-            return;
-        }
+        else
+        {
+            if(currentSectionName === 'indirizzodiAttivazione'){
+                this.handleWrapAddressObjectAttivazione();
+            }
+            if(currentSectionName === 'indirizzoSpedizione'){
+                this.handleWrapAddressObjectSpedizione();
+            }
+            if(currentSectionName === 'processVariables'){
+            if(this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
+            {
+                this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
+                return;
+            }
+            }
+            if(currentSectionName === 'dettaglioImpianto'){
+                if( this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
+                {
+                    this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
+                    return;
+                }
+                if(this.template.querySelector("[data-id='SurfaceServed__c']") !== null 
+            
+                    && 
+                    this.typeVisibility('gas') 
+                    && 
+                    (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta')
+                    && 
+                    (this.template.querySelector("[data-id='SurfaceServed__c']").value === ''|| this.template.querySelector("[data-id='SurfaceServed__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Superficie Servita',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.template.querySelector("[data-id='WaiverRightAfterthought__c']") !== null 
+                    && (this.template.querySelector("[data-id='WaiverRightAfterthought__c']").value === ''
+                        || this.template.querySelector("[data-id='WaiverRightAfterthought__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Rinuncia Diritto di Ripensamento',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.template.querySelector("[data-id='RecessNotice__c']") !== null 
+                && (this.template.querySelector("[data-id='RecessNotice__c']").value === ''
+                    || this.template.querySelector("[data-id='RecessNotice__c']").value === null)
+                && (this.template.querySelector("[data-id='RecessNotice__c']").required === true)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Preavviso Recesso',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+                }
+                if(this.order.RecordType.DeveloperName=="HDT_RT_TemporaneaNuovaAtt" && this.template.querySelector("[data-id='RequestOption__c']") !== null 
+                    && (this.template.querySelector("[data-id='RequestOption__c']").value === ''
+                        || this.template.querySelector("[data-id='RequestOption__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Opzione Distribuzione',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.template.querySelector("[data-id='ConnectionMandate__c']") !== null 
+                    && (this.template.querySelector("[data-id='ConnectionMandate__c']").value === ''
+                        || this.template.querySelector("[data-id='ConnectionMandate__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Mandato di connessione',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.template.querySelector("[data-id='AtecoCode__c']") !== null 
+                    && (this.template.querySelector("[data-id='AtecoCode__c']").value === ''
+                        || this.template.querySelector("[data-id='AtecoCode__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Cod ISTAT Ateco',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.template.querySelector("[data-id='InstanceSelfCertification__c']") !== null 
+                    && (this.template.querySelector("[data-id='InstanceSelfCertification__c']").value === ''
+                        || this.template.querySelector("[data-id='InstanceSelfCertification__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Autocert. Istanza',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.template.querySelector("[data-id='SelfCertificationConnection__c']") !== null 
+                    && (this.template.querySelector("[data-id='SelfCertificationConnection__c']").value === ''
+                        || this.template.querySelector("[data-id='SelfCertificationConnection__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Autocert. contr connessione',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.template.querySelector("[data-id='PressureLevel__c']") !== null 
+                    && (this.template.querySelector("[data-id='PressureLevel__c']").value === ''
+                        || this.template.querySelector("[data-id='PressureLevel__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Livello pressione',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.template.querySelector("[data-id='WithdrawalClass__c']") !== null 
+                    && (this.template.querySelector("[data-id='WithdrawalClass__c']").value === ''
+                        || this.template.querySelector("[data-id='WithdrawalClass__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Classe Profilo Prelievo',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.template.querySelector("[data-id='CommentForDL__c']") !== null 
+                    && (this.template.querySelector("[data-id='CommentForDL__c']").value === ''
+                        || this.template.querySelector("[data-id='CommentForDL__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Note per il DL',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.template.querySelector("[data-id='ConnectionType__c']") !== null 
+                    && (this.template.querySelector("[data-id='ConnectionType__c']").value === ''
+                        || this.template.querySelector("[data-id='ConnectionType__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Tipo di Connessione',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.template.querySelector("[data-id='RequestPhase__c']") !== null 
+                    && (this.template.querySelector("[data-id='RequestPhase__c']").value === ''
+                        || this.template.querySelector("[data-id='RequestPhase__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Fase Richiesta',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.template.querySelector("[data-id='PhoneNumber__c']") !== null 
+                && (this.template.querySelector("[data-id='PhoneNumber__c']").value === ''
+                    || this.template.querySelector("[data-id='PhoneNumber__c']").value === null)
+                    && this.template.querySelector("[data-id='PhoneNumber__c']").required === true
+                    ) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Recapito Telefonico',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.template.querySelector("[data-id='ImplantType__c']") !== null && this.template.querySelector("[data-id='ImplantType__c']").value === '') {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Tipo Impianto',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.template.querySelector("[data-id='CommoditySector__c']") !== null && this.template.querySelector("[data-id='CommoditySector__c']").value === 'Energia Elettrica' && (this.template.querySelector("[data-id='UseTypeEnergy__c']").value === null || this.template.querySelector("[data-id='UseTypeEnergy__c']").value === '')){
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Uso Energia',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.checkFieldAvailable('TemporaryConnectionStartDate__c', true) === ''
+                    || this.checkFieldAvailable('TemporaryConnectionEndDate__c', true) === ''
+                    || this.checkFieldAvailable('HoursOfUse__c', true) === '')
+                {
+                    this.showMessage('Errore', 'Popolare i campi obbligatori: Data inizio/fine connessione temporanea e Ore di utilizzo', 'error');
+                    return;
+                }
+                isPreventivo({ord:this.order}).then(result=>{
+                    this.loading=false;
+                }).catch(error=>{
+                    this.showMessage('Errore','Preventivo non calcolato','error');
+                    return;
+                });
+            }
+            if(currentSectionName === 'ivaAccise'){
+                let errorMessageIvaAccise = '';
+                let checkIsFlag = false;
+                if(this.template.querySelector("[data-id='VATfacilitationFlag__c']") === true && this.template.querySelector("[data-id='VAT__c']").value === ''){
+                    errorMessageIvaAccise = 'Popolare IVA';
+                }
+                if(this.template.querySelector("[data-id='FacilitationExcise__c']") === true){
+                    if(this.template.querySelector("[data-id='ExciseEle__c']") !== null && this.template.querySelector("[data-id='ExciseEle__c']").value === ''){
+                        errorMessageIvaAccise = 'Popolare Accise Agevolata Ele';
+                    }
+                    if(this.template.querySelector("[data-id='ExciseGAS__c']") !== null && this.template.querySelector("[data-id='ExciseGAS__c']").value === ''){
+                        errorMessageIvaAccise = 'Popolare Accise Agevolata Gas';
+                    }
+                }
+                if(errorMessageIvaAccise !== ''){
+                    this.loading = false;
+                    const toastErrorMessageIvaAccise = new ShowToastEvent({
+                        title: 'Errore',
+                        message: errorMessageIvaAccise,
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                    this.dispatchEvent(toastErrorMessageIvaAccise);
+                    return;
+                }
+                else{
+                }
+            }
+            if(currentSectionName === 'fatturazione') {
+            this.sectionDataToSubmit['AggregateBilling__c'] = this.template.querySelector("[data-id='AggregateBilling__c']").value;
+            }
+            if((this.order.RecordType.DeveloperName=="HDT_RT_ConnessioneConAttivazione" || this.order.RecordType.DeveloperName=="HDT_RT_TemporaneaNuovaAtt") && currentSectionName === "dettaglioImpianto"){
+                this.getQuoteType(currentSectionIndex, nextSectionStep);
+                return;
+            }
 
-        this.updateProcess(currentSectionIndex, nextSectionStep);
+            this.updateProcess(currentSectionIndex, nextSectionStep);
+        }
     }
 
     async getQuoteType(currentSectionIndex, nextSectionStep){
