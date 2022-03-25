@@ -12,6 +12,14 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>INS_PRODUCT__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SR_AREA__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>X_ATTRIB_111__c</field>
             </layoutItems>
             <layoutItems>
@@ -42,16 +50,20 @@
                 <behavior>Readonly</behavior>
                 <field>SR_STAT_ID__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_TYPE_FIN_REQ__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>CREATED_BY__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>X_SERVICE_TYPE__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_ATTRIB_112__c</field>
@@ -59,6 +71,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_DATA_CAMBIO__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_ATTRIB_57__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -74,19 +90,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SR_AREA__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>INS_PRODUCT__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>X_ATTRIB_128__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>CREATED_BY__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -111,18 +115,42 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>X_ATTRIB_70__c</field>
+                <field>X_ATTRIB_58__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>X_ATTRIB_58__c</field>
+                <field>ATTRIB_04__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>COMM_DESC__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_MAIL_ADDR__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_INDIRIZZO_MAIL__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_HER_EMAIL_PEC_ATTUALE__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_HER_EMAIL_PEC__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_ATTRIB_70__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_TEL_CELL_PREAVV_PERS_PESSE__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>OU_NUM__c</field>
@@ -237,6 +265,10 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_ATTRIB_54__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ATTRIB_07__c</field>
@@ -356,6 +388,10 @@
                 <behavior>Readonly</behavior>
                 <field>X_SUPERFICIE_MQ__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_ATTRIB_104__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -431,10 +467,18 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>X_ATTRIB_73__c</field>
+                <field>ATTRIB_21__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ATTRIB_20__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_ATTRIB_73__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_MOD_FATTURA__c</field>
@@ -470,6 +514,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_ATTRIB_119__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ATTRIB_03__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -1140,6 +1188,18 @@
                 <behavior>Readonly</behavior>
                 <field>X_ATTRIB_64__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_MATERIALE2__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_MATERIALE4__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_MATERIALE6__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -1165,6 +1225,21 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_ATTRIB_63__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_MATERIALE3__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_MATERIALE5__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_MATERIALE7__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -1289,6 +1364,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_ATTRIB_59__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ATTRIB_39__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -1446,10 +1525,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ATTRIB_03__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>X_COGNOME_BP_ALTERN__c</field>
             </layoutItems>
             <layoutItems>
@@ -1477,10 +1552,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_DATA_LIST__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_MAIL_ADDR__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
