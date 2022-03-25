@@ -343,6 +343,29 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
         }
 
+
+        /**@frpanico 2022-03-25
+         * Valorizzazione campo
+         * FlagServizio26 a 'Y'
+         * Nel caso in cui vi sia un
+         * OrderItem di bonus
+         */
+        if(!order.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_VAS') && !order.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_ScontiBonus'))
+        {
+            List<OrderItem> childOrderItems = [SELECT Id 
+            FROM OrderItem 
+            WHERE OrderId = :order.Id 
+            AND SBQQ__RequiredBy__c != NULL
+            AND ProductFamily__c != 'Punto Fornitura'
+            WITH SECURITY_ENFORCED];
+
+            if(!childOrderItems.isEmpty())
+            {
+                orderToUpdate.FlagServizio26__c = 'Y';
+            }
+        }
+
+
         orderSrv.updateRecord(orderToUpdate);
         if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
             HDT_LC_ChildOrderProcessDetails.createActivityAccise(orderToUpdate.FacilitationExcise__c,orderToUpdate.VATfacilitationFlag__c,orderToUpdate.id,orderToUpdate.accountid);
@@ -366,6 +389,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
             orderSrv.updateRecord(orderParentToUpdate);
         }
+
     }
 
     /**
