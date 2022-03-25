@@ -39,7 +39,7 @@ global with sharing class HDT_SRV_VoltureChangeDispatcher implements wrts_prcgvr
             }
             when 'service26'
             {
-                
+                voltureChangeSrv.checkCallServiceTwentySix(argsMap);
             }
         }
 
