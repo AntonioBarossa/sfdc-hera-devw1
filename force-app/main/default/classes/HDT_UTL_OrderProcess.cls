@@ -649,10 +649,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 // Order orderToUpdate = new Order(Id = childOrder.Id, Phase__c = newVasPhase);
                 // childOrdersToUpdate.add(orderToUpdate);
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged ) {
-                if (childOrder.Phase__c == currentPhase
-                        && !childOrder.QualityCall__c
-                        && !isMonitoringList.contains(childOrder.AgencyCode__c)
-                        && childOrder.ProcessType__c != 'Voltura' ) {
+                if (childOrder.Phase__c == currentPhase ) {
                             Order orderToUpdate = new Order(
                                 Id = childOrder.Id,
                                     Phase__c = 'Pratica non gestita per il DL'
