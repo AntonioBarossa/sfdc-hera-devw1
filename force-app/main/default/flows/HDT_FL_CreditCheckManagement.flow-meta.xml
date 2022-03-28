@@ -33,7 +33,7 @@
             <assignToReference>getOrder.CreditCheckDescription__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Credit Check Forzato dall’operatore</stringValue>
+                <stringValue>Credit Check Forzato dall'operatore</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
