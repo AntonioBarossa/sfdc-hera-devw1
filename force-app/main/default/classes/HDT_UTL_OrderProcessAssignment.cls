@@ -127,7 +127,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             new HDT_WRP_Process('Cambio Uso', 'HDT_RT_CambioUso','CAU', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', true, true, false, false, 'HDT_RT_Ele', false, false, false),
             //new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Ele', true, false, false),//Processo Amend
             //new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Gas', 'HDT_RT_ScontiBonus','VCG', new Set<String>{'Attivo'}, new Set<String>(), null, true, false, false, false, 'HDT_RT_Gas', true, false, false),//Processo Amend
-            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Inattivo','Bozza', 'Attivo'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', true, false, false),
+            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Inattivo','Bozza', 'Attivo'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Ele', true, false, false),
             new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Gas', 'HDT_RT_ScontiBonus','VCG', new Set<String>{'Inattivo','Bozza', 'Attivo'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', true, false, false),
             new HDT_WRP_Process('Switch in Ripristinatorio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo'}, new Set<String>(), 'Si', true, false, true, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Switch in Ripristinatorio', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo'}, new Set<String>(), null, true, false, true, false, 'HDT_RT_Gas', false, false, false),
@@ -199,7 +199,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             if (
                 process.meterStatus.contains(ord.ServicePoint__r.MeterStatus__c)
                 && (process.marketOrigin.contains(ord.MarketOrigin__c) || process.marketOrigin.isEmpty())
-                && (process.plugPresence == plugPresence || process.commodity == 'HDT_RT_Gas')//aggiustamento plug presence gas
+                && (process.plugPresence == plugPresence || process.plugPresence == null || process.commodity == 'HDT_RT_Gas')//aggiustamento plug presence gas
                 && (process.isOwnAccount == isOwnAccount || process.isOwnAccount == null || (process.processType == 'Voltura Ele' && ord.ServicePoint__r.Account__c == null))
                 && process.isChangeUse == (isChangeUse && process.processType.containsIgnoreCase('Cambio Uso'))
                 && process.isSwitchInRipristinatorio == isSwitchInRipristinatorio(ord)
