@@ -917,13 +917,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
             
             for(Order ord : orderList){
-
-                wrts_prcgvr__Activity__c actToUpdate = mapIdOrderToActivity.get(ord.Id);
-                actToUpdate.CreditCheckResolutionReason__c = ord.CreditCheckDescription__c;
-                actToUpdate.CreditCheckReason__c = ord.CreditCheckDescription__c;
-                actToUpdate.CreditCheckResults__c = ord.IncomingCreditCheckResult__c;
-                actToUpdate.wrts_prcgvr__Status__c = 'KO Risolto';
-                actListToUpdate.add(actToUpdate);
+                if (!'Credit Check Forzato dall\'operatore'.equalsIgnoreCase(ord.CreditCheckDescription__c)){
+                    wrts_prcgvr__Activity__c actToUpdate = mapIdOrderToActivity.get(ord.Id);
+                    actToUpdate.CreditCheckResolutionReason__c = ord.CreditCheckDescription__c;
+                    actToUpdate.CreditCheckReason__c = ord.CreditCheckDescription__c;
+                    actToUpdate.CreditCheckResults__c = ord.IncomingCreditCheckResult__c;
+                    actToUpdate.wrts_prcgvr__Status__c = 'KO Risolto';
+                    actListToUpdate.add(actToUpdate);
+                }
                 
                 /*if(ord.CreditCheckDescription__c.contains('Saldo debito cattivo pagatore') && actToUpdate.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_CreditCheckKO')){
                     mapIdToOrderClean.put(ord.id,ord);                
@@ -932,7 +933,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     actListToRecheck.add(actToUpdate);
                 }*/
             }
-            HDT_UTL_ActivityCustomProcess.updateCreditCheckActivity(actListToUpdate);
+            if (!actListToUpdate.isEmpty()){
+                HDT_UTL_ActivityCustomProcess.updateCreditCheckActivity(actListToUpdate);
+            }
         }
         // sbiancare l'esito ( IncomingCreditCheckResult__c / CreditCheckDescription__c) su order e reinviare la chiamata 
         /*if(!mapIdToOrderClean.isEmpty()){
