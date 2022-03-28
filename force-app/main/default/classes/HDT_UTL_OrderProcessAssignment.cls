@@ -203,10 +203,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 && (process.isOwnAccount == isOwnAccount || process.isOwnAccount == null || (process.processType == 'Voltura Ele' && ord.ServicePoint__r.Account__c == null))
                 && process.isChangeUse == (isChangeUse && process.processType.containsIgnoreCase('Cambio Uso'))
                 && process.isSwitchInRipristinatorio == isSwitchInRipristinatorio(ord)
-                && process.isAttivazioneConModifica == (isAttivazioneConModifica(ord) && process.processType.containsIgnoreCase('Attivazione con modifica'))
+                && process.isAttivazioneConModifica == (isAttivazioneConModifica(ord) && !process.processType.containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))
                 && (process.commodity == ord.ServicePoint__r.RecordType.DeveloperName || process.commodity == null)
                 && process.isAmendmentAllowed == isAmendmentAllowed
-                && process.isSwitchOut == (ord.IsWinback__c && process.processType.containsIgnoreCase('Switch In'))
+                && process.isSwitchOut == (ord.IsWinback__c && !process.processType.containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))
                 && process.isReseller == isReseller
             ) {
                 availableProcesses.add(process);
@@ -286,7 +286,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         if (!activityList.isEmpty() 
             && !ord.SBQQ__Quote__r.AmendmentAllowed__c 
             && !ord.SBQQ__Quote__r.AllowChangeUse__c 
-            && !isCambioOfferta(ord)) {
+            /*&& !isCambioOfferta(ord)*/) {
                 result = true;
         }
 
