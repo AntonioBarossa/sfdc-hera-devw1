@@ -356,16 +356,6 @@ public with sharing class HDT_UTL_CampaignMember {
         return processActivityMap.get(orderRecordType);
     }
 
-    public static String transcodeProcessForActivity(String orderRecordType){
-
-        Map<String,String> processActivityMap = new Map<String,String>{
-            'HDT_RT_SwitchIn' => 'Switch In',
-            'HDT_RT_CambioOfferta' => 'Cambio offerta',
-            'HDT_RT_VAS' => 'Segnalazioni VAS'
-        };
-        return processActivityMap.get(orderRecordType);
-    }
-
     public static void handleStatusChange(List<CampaignMember> newList, Map<Id,CampaignMember> oldMap) {
         User currentUser = [SELECT Id, Name, LoginChannel__c FROM User WHERE Id =: UserInfo.getUserId() WITH SECURITY_ENFORCED];
         if(currentUser.Name.contains('Mulesoft')) {
