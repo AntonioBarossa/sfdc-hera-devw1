@@ -1725,7 +1725,12 @@ disabledverifyFieldsAddressDisabled(){
     handleAddressVerification(){
         this.showSpinner = true;
         console.log('*** spinner '  +this.showSpinner );
-        getAddressRev({modality:'S',cityCode:this.codcomunesap,streetCode:this.codstradariosap,houseNumCode:this.civico}).then(data =>
+        console.log('## this.codcomunesap: ' + this.codcomunesap + ' ##this.codstradariosap: ' +this.codstradariosap + ' ##this.civico: '+ this.civico );
+        var city = this.codcomunesap;
+        var istat = this.codstradariosap;
+        city = city.replace(/\s/g, '');
+        istat = istat.replace(/\s/g, '');
+        getAddressRev({modality:'S',cityCode:city,streetCode:istat,houseNumCode:this.civico}).then(data =>
             {
                 this.showSpinner = true;
                 console.log("******:" + JSON.stringify(data));
