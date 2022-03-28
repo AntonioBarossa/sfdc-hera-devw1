@@ -254,6 +254,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     HDT_UTL_SwtichInProcess.calculateCambioOffertaDate(order);  // Data di decorrenza
                 }
             }
+            when 'HDT_RT_VAS'
+            {
+                if(currentOrder.VASSubtype__c != null && currentOrder.VASSubtype__c.equalsIgnoreCase('Analisi Consumi'))
+                {
+                    orderToUpdate.ProcessCode__c = currentOrder.Commodity__c.equalsIgnoreCase('Energia Elettrica') ? 'VCE' : 'VCG';
+                }
+            }
             /*when 'HDT_RT_CambioOfferta' {
                 
                 String dateToCalculate = '';

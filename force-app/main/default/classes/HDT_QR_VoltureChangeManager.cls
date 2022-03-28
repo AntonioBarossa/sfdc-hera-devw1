@@ -257,7 +257,8 @@ public with sharing class HDT_QR_VoltureChangeManager {
             Account.RecordType.DeveloperName,
             ServicePoint__r.CommoditySector__c,
             RecordType.DeveloperName,
-            NumeratorGroup__c
+            NumeratorGroup__c,
+            VASSubtype__c
             FROM Order
             WHERE Id = :orderId]);
     
