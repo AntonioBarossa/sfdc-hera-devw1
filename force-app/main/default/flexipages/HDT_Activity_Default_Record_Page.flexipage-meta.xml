@@ -2045,7 +2045,6 @@
                         <value>required</value>
                     </fieldInstanceProperties>
                     <fieldItem>Record.MalfunctionDate__c</fieldItem>
-                    <identifier>RecordMalfunctionDate_cField1</identifier>
                 </fieldInstance>
             </itemInstances>
             <itemInstances>
@@ -2055,7 +2054,6 @@
                         <value>required</value>
                     </fieldInstanceProperties>
                     <fieldItem>Record.MalfunctionDescription__c</fieldItem>
-                    <identifier>RecordMalfunctionDescription_cField1</identifier>
                 </fieldInstance>
             </itemInstances>
             <itemInstances>
@@ -2065,7 +2063,6 @@
                         <value>required</value>
                     </fieldInstanceProperties>
                     <fieldItem>Record.CustomerImpact__c</fieldItem>
-                    <identifier>RecordCustomerImpact_cField1</identifier>
                 </fieldInstance>
             </itemInstances>
             <itemInstances>
@@ -2075,7 +2072,6 @@
                         <value>required</value>
                     </fieldInstanceProperties>
                     <fieldItem>Record.ExpectedBehavior__c</fieldItem>
-                    <identifier>RecordExpectedBehavior_cField1</identifier>
                 </fieldInstance>
             </itemInstances>
             <name>Facet-5187c261-921f-47bd-be09-682698895acc</name>
@@ -2089,7 +2085,6 @@
                         <value>required</value>
                     </fieldInstanceProperties>
                     <fieldItem>Record.MalfunctioningFeature__c</fieldItem>
-                    <identifier>RecordMalfunctioningFeature_cField1</identifier>
                 </fieldInstance>
             </itemInstances>
             <itemInstances>
@@ -2099,7 +2094,6 @@
                         <value>required</value>
                     </fieldInstanceProperties>
                     <fieldItem>Record.MalfunctionsCount__c</fieldItem>
-                    <identifier>RecordMalfunctionsCount_cField1</identifier>
                 </fieldInstance>
             </itemInstances>
             <itemInstances>
@@ -2109,7 +2103,6 @@
                         <value>required</value>
                     </fieldInstanceProperties>
                     <fieldItem>Record.OperationImpacts__c</fieldItem>
-                    <identifier>RecordOperationImpacts_cField1</identifier>
                 </fieldInstance>
             </itemInstances>
             <itemInstances>
@@ -2119,7 +2112,6 @@
                         <value>required</value>
                     </fieldInstanceProperties>
                     <fieldItem>Record.AnomalyExample__c</fieldItem>
-                    <identifier>RecordAnomalyExample_cField1</identifier>
                 </fieldInstance>
             </itemInstances>
             <name>Facet-24c67681-e10a-4348-b3c0-40093af964cf</name>
