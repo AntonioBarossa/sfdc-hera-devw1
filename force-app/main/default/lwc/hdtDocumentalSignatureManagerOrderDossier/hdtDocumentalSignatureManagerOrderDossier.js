@@ -68,7 +68,8 @@ const FIELDS = [
 	'Order.Account.BillingCityCode__c',
 	'Order.Account.BillingStreetNumberExtension__c',
 	'Order.Account.BillingStreetCode__c',
-    'Order.Contact__c'
+    'Order.Contact__c',
+    'Order.SalesContact__c'
 ];
 
 export default class hdtOrderDossierWizardSignature extends LightningElement {
@@ -274,7 +275,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                     enableEdit:this.disabledInput,
                     setDefault:!this.disabledInput,
                     checkAgencies:'Y',
-                    contactId:this.orderRecord.fields.Contact__c.value
+                    contactId:this.orderRecord.fields.SalesContact__c.value
                 }
                 this.inputParams = JSON.stringify(inputParams);
                 /* if(contractSigned){
