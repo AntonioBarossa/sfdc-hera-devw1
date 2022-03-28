@@ -47,7 +47,11 @@
     handleInputChange: function(component,event){        
         var value= component.get('v.value');        
         if(value){
-            component.set('v.picklistDisabled',false); 
+            component.set('v.picklistDisabled',false);
+            //START>>> MODIFICA 25/03/2022 marco.arci@webresult.it - per controllare i valori già inseriti al cambiamento della chiave 
+            var checkValues = component.get('c.handleKeyChange');
+            $A.enqueueAction(checkValues);
+            //END>>> MODIFICA 25/03/2022 marco.arci@webresult.it - per controllare i valori già inseriti al cambiamento della chiave
         }else{
             component.set('v.picklistDisabled',true);
         }
@@ -55,7 +59,7 @@
     handleKeyChange: function(cmp,event,helper) {
         var searchKey= cmp.get('v.searchKey');    
         var value =  cmp.get('v.value');
-        if(searchKey!=""){
+        if(searchKey!="" && searchKey!=undefined){  // MODIFICA 25/03/2022 marco.arci@webresult.it - Aggiunta filtro undefined per evitare errori
             if(value=="Codice Fiscale"){
                 if(searchKey.length>=11 && searchKey.length<=16){cmp.set('v.searchDisabled',false); }
                 else{cmp.set('v.searchDisabled',true);}
@@ -70,10 +74,11 @@
             cmp.set('v.searchDisabled',true); 
         }
     },
+    /*      MODIFICA 25/03/2022 marco.arci@webresult.it - Commentata logica onBlur perchè motivo di errore con logiche superflue"
     handleKeyBlur: function(cmp,event,helper) {
         var searchKey= cmp.get('v.searchKey');    
         var value =  cmp.get('v.value');
-        if(searchKey!=""){
+        if(searchKey!=""){   
             if(value=="Codice Fiscale"){
                 helper.controlfiscalcode(cmp,event);      
             }else if(value=="Partita Iva"){
@@ -85,7 +90,7 @@
             cmp.set('v.searchDisabled',true); 
         }
     },
-
+    */
     handleSearch: function(cmp,event,helper){        
         helper.retrieveData(cmp,event,helper)  ;  
     },
