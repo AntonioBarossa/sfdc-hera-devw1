@@ -73,7 +73,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         
         if(order.getSObjectType().getDescribe().getName() == 'Order')
         {
-            Order order = (Order) order;
+            Order orderToUpdate = (Order) order;
 
             Order currentOrder = new Order();
 
@@ -81,7 +81,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             currentOrder = voltureChangeQr.getOrderInfosById(order.Id)[0];
                     
             Map<string,Object> inputs = new Map<string,Object>();
-            inputs.put('orderNew',order);
+            inputs.put('orderNew',orderToUpdate);
             inputs.put('currentOrder',currentOrder);
             inputs.put('isVolture',isVolture);
             inputs.put('isRetroactive',isRetroactive);
@@ -96,32 +96,42 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                 if(checks.result != 'OK'){
                     throw new AuraHandledException(checks.message);
                 }else{
-                    order = (Order)checks.sobj;
+                    orderToUpdate = (Order)checks.sobj;
                 }
 
             }
-            if(order.TemporaryConnectionStartDate__c != null 
-            && order.TemporaryConnectionEndDate__c != null
-            && order.TemporaryConnectionEndDate__c <= order.TemporaryConnectionStartDate__c)
+            if(orderToUpdate.TemporaryConnectionStartDate__c != null 
+            && orderToUpdate.TemporaryConnectionEndDate__c != null
+            && orderToUpdate.TemporaryConnectionEndDate__c <= orderToUpdate.TemporaryConnectionStartDate__c)
             {
                 throw new AuraHandledException('La data fine connessione temporanea non puo essere precedente alla data inizio!');
             }
 
-            if((currentOrder.RecordType.DeveloperName == 'HDT_RT_ScontiBonus' || currentOrder.VasSubtype__c.equalsIgnoreCase('Analisi Consumi'))&& order.EffectiveDate__c != null )
+            if((currentOrder.RecordType.DeveloperName == 'HDT_RT_ScontiBonus' || currentOrder.VasSubtype__c.equalsIgnoreCase('Analisi Consumi'))&& orderToUpdate.EffectiveDate__c != null )
             {
-                if(((String)currentOrder.get('NumeratorGroup__c')).equalsIgnoreCase('ELPVEDM') && order.EffectiveDate__c.day() != 1)
+                if(((String)currentOrder.get('NumeratorGroup__c')).equalsIgnoreCase('ELPVEDM') && orderToUpdate.EffectiveDate__c.day() != 1)
                 {
                     throw new AuraHandledException('La data decorrenza deve essere popolata con il primo giorno del mese');
                 }
             }
-            exeChecks(order);
+            exeChecks(orderToUpdate);
 
-            orderSrv.updateRecord(order);
+            orderSrv.updateRecord(orderToUpdate);
         }
         if(order.getSObjectType().getDescribe().getName() == 'OrderItem')
         {
-            OrderItem ordItem = (OrderItem) ordItem;
+            OrderItem ordItem = (OrderItem) order;
+            List<SObject> sobjListToUpdate = new List<SObject>();
             System.debug('OrderItem: ' + JSON.serialize(ordItem));
+            List<OrderItem> currentOrderItem = [SELECT OwnerAC__c, DwellingType__c, OccupantsNumber__c, Surface__c,SBQQ__QuoteLine__c FROM OrderItem WHERE Id = :ordItem.Id WITH SECURITY_ENFORCED];
+            SBQQ__QuoteLine__c quoteLine = new SBQQ__QuoteLine__c();
+            quoteLine.OwnerAC__c = ordItem.OwnerAC__c != null ? ordItem.OwnerAC__c : currentOrderItem[0].OwnerAC__c;
+            quoteLine.DwellingType__c = ordItem.DwellingType__c != null ? ordItem.DwellingType__c : currentOrderItem[0].DwellingType__c;
+            quoteLine.OccupantsNumber__c = ordItem.OccupantsNumber__c != null ? ordItem.OccupantsNumber__c : currentOrderItem[0].OccupantsNumber__c;
+            quoteLine.Surface__c = ordItem.Surface__c != null ? ordItem.Surface__c : currentOrderItem[0].Surface__c;
+            sobjListToUpdate.add(ordItem);
+            sobjListToUpdate.add(quoteLine);
+            HDT_UTL_DatabaseService.updateSObject(sobjListToUpdate);
         }
         
     }
