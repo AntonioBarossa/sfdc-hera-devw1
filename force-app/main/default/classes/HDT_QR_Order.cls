@@ -343,7 +343,8 @@ public inherited sharing class HDT_QR_Order {
             CreditCheckInProgress__c,
             Contact__r.FiscalCode__c,
             AggregateBilling__c,
-            NumeratorGroup__c
+            NumeratorGroup__c,
+            VASSubtype__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED

@@ -456,7 +456,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 }
     
                 if (this.options.length === 0) {
-                    if(this.order.IsVAS__c){
+                    console.log('# Vas Subtype >>> ' + this.order.VASSubtype__c );
+                    if(this.order.IsVAS__c || this.order.VASSubtype__c === 'Analisi Consumi'){
                         this.options.push({label: 'VAS', value: 'VAS'});
                         this.selectedProcessObject = {processType: 'VAS', recordType: 'HDT_RT_VAS'}
                         this.value = this.selectedProcessObject.processType;

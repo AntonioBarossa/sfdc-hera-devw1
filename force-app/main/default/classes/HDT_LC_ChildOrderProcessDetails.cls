@@ -59,7 +59,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
     @AuraEnabled
     @SuppressWarnings('PMD.AvoidDeeplyNestedIfStmts')
-    public static void updateProcessStep(Order order,
+    public static void updateProcessStep(SObject order,
         //INIZIO SVILUPPI EVERIS 
         Boolean isVolture,
         Boolean isRetroactive,
@@ -67,146 +67,63 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         Boolean isUpdateStep,
         Date readingDate){
         //FINE SVILUPPI EVERIS
-
+        
         System.debug('updateProcessStep: ' + order);
         System.debug('isVolture: '+isVolture);
-
-        Order currentOrder = new Order();
-
-        /* Query the currentOrder */
-        currentOrder = voltureChangeQr.getOrderInfosById(order.Id)[0];
-                
-        Map<string,Object> inputs = new Map<string,Object>();
-        inputs.put('orderNew',order);
-        inputs.put('currentOrder',currentOrder);
-        inputs.put('isVolture',isVolture);
-        inputs.put('isRetroactive',isRetroactive);
-        inputs.put('isReading',isReading);
-        inputs.put('isUpdateStep',isUpdateStep);
-        inputs.put('readingDate',readingDate);
-
-        //INIZIO SVILUPPI EVERIS CHECK VOLTURA
-        if(isVolture != null && isVolture == true){
-            HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck checks = HDT_UTL_VoltureChangeManager.processCheck(inputs);
-            if(checks.result != 'OK'){
-                throw new AuraHandledException(checks.message);
-            }else{
-                order = (Order)checks.sobj;
-            }
-
-            // Order oldOrder = orderQr.getRecordById(order.Id);
-            //@frpanico check "Cambio contatore non registrato"
-            
-            /**
-            if(order.NotRegisteredMeterCase__c != null && order.NotRegisteredMeterCase__c == true)
-            {
-                if(caseQr.getChageNonRegMeterByOrder(order.Id).size() == 0)
-                {                
-                    throw new AuraHandledException('Necessario completare un Case di \'Cambio Contatore Non Registrato\'');
-                }
-            }
-            //@frpanico check "Tipo Voltura"
-            if(order.VoltureType__c != null && String.isBlank(order.VoltureType__c))
-            {
-                throw new AuraHandledException('Valorizzare campi obbligatori');
-            }
-            //**@frpanico 31/01/2022
-            // * Aggiunto controllo
-            // * Su Voltura in Recupero
-            // 
-            if(order.VoltureType__c != null && order.VoltureType__c.equalsIgnoreCase('In continuità_no_addebito') 
-            && !currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Gas'))
-            {
-            throw new AuraHandledException('Per poter selezionare \"' + order.VoltureType__c + '\" è necessario un punto di fornitura Gas');   
-            }
-            //**@frpanico 31/01/2022
-            // * Aggiunto controllo se
-            // * In continuita_no_addebito
-            // * La voltura deve essere gas
-            // 
-            if(order.VoltureType__c != null && order.EffectiveDate__c != null 
-            && order.VoltureType__c.equalsIgnoreCase('Recupero') && order.EffectiveDate__c >= orderSrv.addBusinessDay(System.today(),3))
-            {
-                throw new AuraHandledException('Per poter selezionare \"' + order.VoltureType__c + '\" è necessario inserire una data decorrenza antecedente al 31/08/2015');   
-            }
-            // Check Tipo Voltura "In Continuita"/"Recupero" ammesso solo se marcatura entrante/uscente e' "Persona Fisica"/"Persona Giuridica"
-            if(order.VoltureType__c != null && order.VoltureType__c.containsIgnoreCase('In Continuità'))
-            {
-                if(currentOrder.PreviousCustomer__r.Account.CustomerMarking__c != currentOrder.Account.CustomerMarking__c || !currentOrder.Account.CustomerMarking__c.containsIgnoreCase('Persona Fisica'))
-                {
-                    throw new AuraHandledException('Per Voltura \"' + order.VoltureType__c + '\", entrambi i clienti (uscente ed entrante) devono essere \"Persone Fisiche\"');
-                }
-            }
-            else if(order.VoltureType__c != null && order.VoltureType__c.equalsIgnoreCase('Incorporazione societaria'))
-            {
-                if(currentOrder.PreviousCustomer__r.Account.RecordType.DeveloperName != currentOrder.Account.RecordType.DeveloperName
-                    || !currentOrder.Account.RecordType.DeveloperName.containsIgnoreCase('HDT_RT_Business'))
-                {
-                    throw new AuraHandledException('Per Voltura \"' + order.VoltureType__c + '\", entrambi i clienti (uscente ed entrante) devono essere \"Persone Giuridiche\"');
-                }
-            }
-            //@frpanico check "Data Decorrenza"
-            //**@frpanico 12/11/2021
-            // * Update check VoltureType "Recupero" the date has been changed to 2015/08/31
-            //
-            if(order.EffectiveDate__c != null)
-            {
-                if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
-                {
-                    if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva')))
-                    {
-                        throw new AuraHandledException('Impossibile inserire una data inferiore a 3 gg lavorativi');
-                    }
-                    else if(order.VoltureType__c != null && order.VoltureType__c == 'Recupero' && order.EffectiveDate__c > Date.newInstance(2015, 08, 31))
-                    {
-                        throw new AuraHandledException('Per Voltura di tipo \"Recupero\" è necessario inserire una data antecedente al 31/08/2015');
-                    }
-                    else
-                    {    
-                        order.RetroactiveDate__c = order.EffectiveDate__c;
-                        order.Subprocess__c = 'Retroattiva';
-                    }
-                } 
-                else 
-                {
-                    order.RetroactiveDate__c = null;
-                    order.Subprocess__c = 'Standard';
-                }    
-            }
-            //@frpanico check "Voltura con Autolettura"
-            if(isReading != null && isReading == true && isRetroactive != null && isRetroactive == false)
-            {
-                order.Subprocess__c = 'Con Autolettura';
-            }
-            //@frpanico valorizzazione "Data Lettura"
-            if(readingDate != null && (isReading != null && isReading == true))
-            {
-                order.ReadingCustomerDate__c = readingDate;
-            } */
-        }
-        //FINE SVILUPPI EVERIS CHECK VOLTURA 
-
-        // Date tempStart = order.TemporaryConnectionStartDate__c;
-        // Date tempEnd = order.TemporaryConnectionEndDate__c;
-        // Boolean tempDate = tempEnd < tempStart;
-
-        if(order.TemporaryConnectionStartDate__c != null 
-        && order.TemporaryConnectionEndDate__c != null
-        && order.TemporaryConnectionEndDate__c <= order.TemporaryConnectionStartDate__c){
-            throw new AuraHandledException('La data fine connessione temporanea non puo essere precedente alla data inizio!');
-        }
-
-        if(currentOrder.RecordType.DeveloperName == 'HDT_RT_ScontiBonus' && order.EffectiveDate__c != null )
+        
+        if(order.getSObjectType().getDescribe().getName() == 'Order')
         {
-            if(((String)currentOrder.get('NumeratorGroup__c')).equalsIgnoreCase('ELPVEDM') && order.EffectiveDate__c.day() != 1)
+            Order order = (Order) order;
+
+            Order currentOrder = new Order();
+
+            /* Query the currentOrder */
+            currentOrder = voltureChangeQr.getOrderInfosById(order.Id)[0];
+                    
+            Map<string,Object> inputs = new Map<string,Object>();
+            inputs.put('orderNew',order);
+            inputs.put('currentOrder',currentOrder);
+            inputs.put('isVolture',isVolture);
+            inputs.put('isRetroactive',isRetroactive);
+            inputs.put('isReading',isReading);
+            inputs.put('isUpdateStep',isUpdateStep);
+            inputs.put('readingDate',readingDate);
+
+            //INIZIO SVILUPPI EVERIS CHECK VOLTURA
+            if(isVolture != null && isVolture == true)
             {
-                throw new AuraHandledException('La data decorrenza deve essere popolata con il primo giorno del mese');
+                HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck checks = HDT_UTL_VoltureChangeManager.processCheck(inputs);
+                if(checks.result != 'OK'){
+                    throw new AuraHandledException(checks.message);
+                }else{
+                    order = (Order)checks.sobj;
+                }
+
             }
+            if(order.TemporaryConnectionStartDate__c != null 
+            && order.TemporaryConnectionEndDate__c != null
+            && order.TemporaryConnectionEndDate__c <= order.TemporaryConnectionStartDate__c)
+            {
+                throw new AuraHandledException('La data fine connessione temporanea non puo essere precedente alla data inizio!');
+            }
+
+            if((currentOrder.RecordType.DeveloperName == 'HDT_RT_ScontiBonus' || currentOrder.VasSubtype__c.equalsIgnoreCase('Analisi Consumi'))&& order.EffectiveDate__c != null )
+            {
+                if(((String)currentOrder.get('NumeratorGroup__c')).equalsIgnoreCase('ELPVEDM') && order.EffectiveDate__c.day() != 1)
+                {
+                    throw new AuraHandledException('La data decorrenza deve essere popolata con il primo giorno del mese');
+                }
+            }
+            exeChecks(order);
+
+            orderSrv.updateRecord(order);
         }
-
-        exeChecks(order);
-
-        orderSrv.updateRecord(order);
+        if(order.getSObjectType().getDescribe().getName() == 'OrderItem')
+        {
+            OrderItem ordItem = (OrderItem) ordItem;
+            System.debug('OrderItem: ' + JSON.serialize(ordItem));
+        }
+        
     }
 
     /* Wrapper Method */

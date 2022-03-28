@@ -324,7 +324,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         && section.name !== 'indirizzoSpedizione' 
         && section.name !== 'ivaAccise'
         && section.name !== 'riepilogoDatiAmend'
-        && section.name !== 'dateOrdine'));
+        && section.name !== 'dateOrdine'
+        && section.name !== 'analisiConsumi'));
     }
 
     getPendingSteps(){
@@ -339,7 +340,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         || section.name === 'indirizzoSpedizione' 
         || section.name === 'ivaAccise'
         || section.name === 'riepilogoDatiAmend'
-        || section.name === 'dateOrdine'));
+        || section.name === 'dateOrdine'
+        || section.name === 'analisiConsumi'));
         this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
         console.log('PENDING HOLA:' + JSON.stringify(this.pendingSteps));
     }
@@ -1381,13 +1383,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'riepilogoDatiAmend',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus' || this.order.VASSubtype__c === 'Analisi Consumi',
                 data: [
+                    new fieldData('Azione commerciale','CommercialAction__c',this.typeVisibility('both'),false, false, '',''),
+                    new fieldData('Data Decorrenza','EffectiveDate__c',this.typeVisibility('both'),false, false, '',''),  
                     new fieldData('Numero Contratto','ContractReference__c',true,false, true, '',''), 
                     new fieldData('Uso energia','UseTypeEnergy__c',this.order.ServicePoint__c,false, true, '',''),                  
                     new fieldData('POD/PDR','ServicePointCode__c',this.order.ServicePoint__c,false, true, '',''),  
-                    new fieldData('Azione commerciale','CommercialAction__c',this.typeVisibility('both'),false, false, '',''),
-                    new fieldData('Data Decorrenza','EffectiveDate__c',this.typeVisibility('both'),false, false, '',''),  
                     new fieldData('Tipo VAS','VASType__c', true, false, true, ''),
                     new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
                     new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, true, ''),
@@ -1395,17 +1397,17 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: '',
+                step: 6,
                 label: 'Analisi Consumi',
                 name: 'analisiConsumi',
                 objectApiName: 'OrderItem',
                 recordId: this.analisiConsumi.Id !== undefined ? this.analisiConsumi.Id : '',//this.analisiConsumi.Id
-                processVisibility: ( this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus' ) && this.analisiConsumi.Id !== undefined,
+                processVisibility: this.order.VASSubtype__c === 'Analisi Consumi',
                 data: [
-                    new fieldData('Proprietario','OwnerAC__c',this.typeVisibility('both'),false, true, '',''), 
-                    new fieldData('Tipo Casa','DwellingType__c',this.typeVisibility('both'),false, true, '',''),                  
-                    new fieldData('N. Abitanti','OccupantsNumber__c',this.typeVisibility('both'),false, true, '',''),
-                    new fieldData('Mq. Casa','Surface__c',this.typeVisibility('both'),false, true, '','')
+                    new fieldData('Proprietario','OwnerAC__c',this.typeVisibility('both'),false, false, '',''), 
+                    new fieldData('Tipo Casa','DwellingType__c',this.typeVisibility('both'),false, false, '',''),                  
+                    new fieldData('N. Abitanti','OccupantsNumber__c',this.typeVisibility('both'),false, false, '',''),
+                    new fieldData('Mq. Casa','Surface__c',this.typeVisibility('both'),false, false, '','')
                 ]
             },            
             {
@@ -1588,18 +1590,19 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'dettaglioImpianto',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.VASSubtype__c !== 'Analisi Consumi',
                 data: [
+                    new fieldData('Azione Commerciale',     'CommercialAction__c',  true, false, false, ''),
+                    new fieldData('Attivazione Anticipata', 'IsEarlyActivation__c', true, false, this.order.VASType__c == 'VAS Servizio', ''),
                     new fieldData('Ordine di riferimento',  'OrderReference__c',    true, false, true, ''),
                     new fieldData('Società di vendita',     'SalesCompany__c',      true, false, true, ''),
                     new fieldData('Campagna',               'Campaign__c',          true, false, true, ''),
                     new fieldData('Categoria Cliente',      'CustomerCategory__c',  true, false, true, ''),
                     new fieldData('POD/PDR',                'ServicePointCode__c',  true, false, true, ''),
                     new fieldData('Tipo VAS',               'VASType__c',           true, false, true, ''),
-                    new fieldData('Attivazione Anticipata', 'IsEarlyActivation__c', true, false, this.order.VASType__c == 'VAS Servizio', ''),
                     new fieldData('Sottotipo VAS',          'VASSubtype__c',        true, false, true, ''),
-                    new fieldData('Recapito Telefonico',    'PhoneNumber__c',       true, false, true, ''),
-                    new fieldData('Azione Commerciale',     'CommercialAction__c',  true, false, false, '')
+                    new fieldData('Recapito Telefonico',    'PhoneNumber__c',       true, false, true, '')
+
                 ]
             },
             {
@@ -1609,7 +1612,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 hasAddrComp: true,
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.VASSubtype__c !== 'Analisi Consumi',
                 data: [
                 ]
             },
@@ -1620,7 +1623,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 hasAddrComp: true,
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.VASSubtype__c !== 'Analisi Consumi',
                 data: [
                     
                 ]

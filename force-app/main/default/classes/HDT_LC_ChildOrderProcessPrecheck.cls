@@ -19,7 +19,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     public static List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> init(Order order){
         List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> processesList = new List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process>();
 
-        if (order.ServicePoint__c != null && order.IsVAS__c == false) {//returns processes that are different from VAS
+        if (order.ServicePoint__c != null && order.IsVAS__c == false 
+            && (order.VasSubtype__c == null || (order.VasSubtype__c != null && !order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi')))) {//returns processes that are different from VAS
             processesList = HDT_UTL_OrderProcessAssignment.getAvailableProcesses(order);
         }
 
@@ -137,14 +138,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                  */
                 when 'HDT_RT_ScontiBonus'
                 {
-                    Order currentOrder = orderQr.getRecordById(orderId);
-                    if(currentOrder.NumeratorGroup__c != null && ((String)currentOrder.get('NumeratorGroup__c')).equalsIgnoreCase('ELPVEDM'))
+                    newOrder.EffectiveDate__c = getEffectiveDateBonus(orderId);
+                }
+                when 'HDT_RT_VAS'
+                {
+                    if(order.VASSubtype__c.equalsIgnoreCase('Analisi Consumi'))
                     {
-                        newOrder.EffectiveDate__c =  (System.today().addMonths(1)).toStartOfMonth();
-                    }
-                    else
-                    {
-                        newOrder.EffectiveDate__c = System.today();    
+                        newOrder.EffectiveDate__c = getEffectiveDateBonus(orderId);
                     }
                 }
 
@@ -250,5 +250,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
+    }
+
+    private static Date getEffectiveDateBonus(String orderId)
+    {
+        Order currentOrder = orderQr.getRecordById(orderId);
+        Date effectiveDate = System.today();
+        if(currentOrder.NumeratorGroup__c != null && ((String)currentOrder.get('NumeratorGroup__c')).equalsIgnoreCase('ELPVEDM'))
+        {
+            effectiveDate =  (System.today().addMonths(1)).toStartOfMonth();
+        }
+
+        return effectiveDate;
     }
 }

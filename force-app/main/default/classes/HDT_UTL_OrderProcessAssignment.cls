@@ -181,7 +181,12 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         Boolean isAmendmentAllowed = ord.SBQQ__Quote__r.AmendmentAllowed__c;
         Boolean isReseller = ord.ServicePoint__r.isReseller__c;//ord.Account.CompanyOwner__c.equalsIgnoreCase('reseller') || ord.ServicePoint__r.isReseller__c;
         //isReseller=false;
-        isAmendmentAllowed=isAmendmentAllowed||isScontiBonus(ord);
+        /**@frpanico 2022-03-28
+         * Il processo di Sconti e Bonus
+         * Deve essere calcolato solo nel caso
+         * Di amendment
+         */
+        isAmendmentAllowed=isAmendmentAllowed;
 
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isOwnAccount: ' + isOwnAccount);
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - plugPresence: ' + plugPresence);
