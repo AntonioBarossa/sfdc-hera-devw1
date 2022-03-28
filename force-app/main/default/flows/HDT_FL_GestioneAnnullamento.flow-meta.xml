@@ -772,6 +772,36 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assignment_Voltura_Tecnica_Dati_Discordanti</name>
+        <label>Assignment Voltura Tecnica (Dati Discordanti)</label>
+        <locationX>4990</locationX>
+        <locationY>3445</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Voltura_Tecnica_Dati_Discordanti.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullato</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Voltura_Tecnica_Dati_Discordanti.CancellationReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Annullamento per dati discordanti</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Voltura_Tecnica_Dati_Discordanti.CancellationRequestDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Voltura_Tecnica_Dati_Discordanti</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Bozza_Annullata</name>
         <label>Bozza Annullata</label>
         <locationX>1229</locationX>
@@ -852,7 +882,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Annullato_0</targetReference>
+            <targetReference>Decision_Voltura_Tecnica_Dati_Discordanti</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -964,6 +994,31 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Can_Proceed</name>
+        <label>Can Proceed?</label>
+        <locationX>3197</locationX>
+        <locationY>355</locationY>
+        <defaultConnector>
+            <targetReference>Wrong_Owner_Scrren</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isCheckOwnerOk</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Quale_Oggetto</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Discard_Rework_Ripristina_Fase_Case</name>
         <label>Check Discard Rework Ripristina Fase Case</label>
         <locationX>3179</locationX>
@@ -1011,6 +1066,63 @@
                 <targetReference>Chiusuraa_Activity_Ripristino_Fase_Order</targetReference>
             </connector>
             <label>Gestione Scarti Order</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Decision_2_Voltura_Tecnica_Dati_Discordanti</name>
+        <label>Decision 2 Voltura Tecnica (Dati Discordanti)</label>
+        <locationX>4775</locationX>
+        <locationY>3356</locationY>
+        <defaultConnector>
+            <targetReference>Annullato_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Case Non Trovato</defaultConnectorLabel>
+        <rules>
+            <name>Case_Trovati</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Voltura_Tecnica_Dati_Discordanti</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assignment_Voltura_Tecnica_Dati_Discordanti</targetReference>
+            </connector>
+            <label>Case Trovato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Decision_Voltura_Tecnica_Dati_Discordanti</name>
+        <label>Decision Voltura Tecnica (Dati Discordanti)</label>
+        <locationX>4737</locationX>
+        <locationY>3208</locationY>
+        <defaultConnector>
+            <targetReference>Annullato_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Switch In</defaultConnectorLabel>
+        <rules>
+            <name>Switch_In</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.ProcessType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Switch in Ele</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.ProcessType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Switch in Gas</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Voltura_Tecnica_Dati_Discordanti</targetReference>
+            </connector>
+            <label>Switch In</label>
         </rules>
     </decisions>
     <decisions>
@@ -1591,48 +1703,11 @@
             <label>Discordant Management</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Wrong_Owner</name>
-        <label>Wrong Owner</label>
-        <locationX>3197</locationX>
-        <locationY>355</locationY>
-        <defaultConnector>
-            <targetReference>Quale_Oggetto</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>ownerId</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>isNotOwner</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Wrong_Owner_Scrren</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
     <description>Flow che si occupa della gestione dei processi di Post Sales Cluster Annullamento.</description>
     <formulas>
         <name>EffectiveDateFormula</name>
         <dataType>Date</dataType>
         <expression>DATE( Year(ADDMONTHS({!GetRecord.Contract__r.EndDate},2)),MONTH( ADDMONTHS({!GetRecord.Contract__r.EndDate},2)),1 ) -1</expression>
-    </formulas>
-    <formulas>
-        <name>isNotOwner</name>
-        <dataType>Boolean</dataType>
-        <expression>IF(BEGINS({!ownerId},{!$User.Id}),false,true)</expression>
     </formulas>
     <formulas>
         <name>NoteAnnullamentoFormula</name>
@@ -1819,6 +1894,27 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Voltura_Tecnica_Dati_Discordanti</name>
+        <label>Get Voltura Tecnica (Dati Discordanti)</label>
+        <locationX>4925</locationX>
+        <locationY>3246</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Decision_2_Voltura_Tecnica_Dati_Discordanti</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Order__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetOrderAggiornato_0.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -2167,6 +2263,16 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
             <targetReference>Fase_0</targetReference>
         </connector>
         <inputReference>ActivityCollection</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Voltura_Tecnica_Dati_Discordanti</name>
+        <label>Update Voltura Tecnica (Dati Discordanti)</label>
+        <locationX>4796</locationX>
+        <locationY>3511</locationY>
+        <connector>
+            <targetReference>Annullato_0</targetReference>
+        </connector>
+        <inputReference>Get_Voltura_Tecnica_Dati_Discordanti</inputReference>
     </recordUpdates>
     <screens>
         <name>Loading_Spinner_Screen</name>
@@ -2813,7 +2919,7 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <locationX>3079</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Wrong_Owner</targetReference>
+            <targetReference>Can_Proceed</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -2931,13 +3037,13 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>ownerId</name>
-        <dataType>String</dataType>
+        <name>isCheckOwnerOk</name>
+        <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue></stringValue>
+            <booleanValue>true</booleanValue>
         </value>
     </variables>
     <variables>

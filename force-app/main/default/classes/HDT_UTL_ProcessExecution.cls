@@ -1,16 +1,16 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing virtual class HDT_UTL_ProcessExecution {
 
-    public static HDT_QR_StaticResource         staticResourceQr        = new HDT_QR_StaticResource()           ;
-    public HDT_QR_Account                       qrAcc                   = new HDT_QR_Account()                  ;
-    public HDT_QR_ServicePoint                  qrSerPoint              = new HDT_QR_ServicePoint()             ;
-    public static HDT_QR_AccountContactRelation accoContRelQr           = new HDT_QR_AccountContactRelation()   ;
-    public static HDT_QR_Contact                qrCont                  = new HDT_QR_Contact()                  ;
-    public static HDT_QR_Order                  qrOrder                 = new HDT_QR_Order()                    ;
-    public static HDT_QR_Case                   qrCase                  = new HDT_QR_Case()                     ;
-    public HDT_UTL_Constants                    constant                = new HDT_UTL_Constants()               ;
-    private static HDT_QR_MassiveLoaderProcess massiveLoaderProcessQr   = new HDT_QR_MassiveLoaderProcess()     ;
-    public HDT_WRP_ProcessEntities              currentProcess                                                  ;
+    public static HDT_QR_StaticResource staticResourceQr = new HDT_QR_StaticResource();
+    //public HDT_QR_Account qrAcc = new HDT_QR_Account();
+    //public HDT_QR_ServicePoint qrSerPoint = new HDT_QR_ServicePoint();
+    public static HDT_QR_AccountContactRelation accoContRelQr = new HDT_QR_AccountContactRelation();
+    public static HDT_QR_Contact qrCont = new HDT_QR_Contact();
+    public static HDT_QR_Order qrOrder = new HDT_QR_Order();
+    public static HDT_QR_Case qrCase = new HDT_QR_Case();
+    public HDT_UTL_Constants constant = new HDT_UTL_Constants();
+    private static HDT_QR_MassiveLoaderProcess massiveLoaderProcessQr = new HDT_QR_MassiveLoaderProcess();
+    //public HDT_WRP_ProcessEntities currentProcess;
     public List<MassiveLoaderRequestItem__c> requestItemList;
 
 
@@ -18,9 +18,9 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     //public String splitCharacter = ',';
     //public  MassiveLoaderRequestItem__c varRequestItem;
     public  String processName;
-    public  Map<Integer, String> mapHeaderByPosition    = new  Map<Integer, String>();
-    public  Map<String, Integer> mapHeaderForWrapper    = new  Map<String, Integer>(); 
-    public  Map<Integer, String> mapRequiredByPosition  = new  Map<Integer, String>(); 
+    public  Map<Integer, String> mapHeaderByPosition = new  Map<Integer, String>();
+    public  Map<String, Integer> mapHeaderForWrapper = new  Map<String, Integer>(); 
+    public  Map<Integer, String> mapRequiredByPosition = new  Map<Integer, String>(); 
     public  Id recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
     public  Id recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
 
@@ -39,10 +39,10 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
         List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName);
  
         mapHeaderByPosition = new Map<Integer, String>();
-        Integer count=0;
+        Integer count = 0;
         for (String temp : staticResources.get(0).Body.toString().remove('\r').remove('\n').split(splitCharacter)) {
            if (temp.containsIgnoreCase('*')) {
-                temp=temp.remove('*');
+                temp = temp.remove('*');
                 mapRequiredByPosition.put(count,temp);
             }
             mapHeaderByPosition.put(count,temp);
@@ -126,7 +126,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     public String mapTypeField(SObject sObj, Map<String, String> mapSobjField, Integer position, String value){
 
         try {
-            String typeField=getTypeField(String.valueOf(sObj.getSObjectType()),mapSobjField.get(mapHeaderByPosition.get(position)));
+            String typeField = getTypeField(String.valueOf(sObj.getSObjectType()),mapSobjField.get(mapHeaderByPosition.get(position)));
             switch on typeField.toUpperCase() {
                 when 'BOOLEAN'  {
                     sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Boolean.valueOf(value));
@@ -181,7 +181,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     /**
    * @description mapping Contact by Account
    **/
-   public void makeContact(){
+   /*public void makeContact(){
         currentProcess.currentPrimaryContact.DegreeOfStudies__c                 = currentProcess.currentAccount.DegreeOfStudies__c                   ;
         currentProcess.currentPrimaryContact.CompanyOwner__c                    = currentProcess.currentAccount.CompanyOwner__c                      ;
         currentProcess.currentPrimaryContact.LastName                           = currentProcess.currentAccount.LastName__c                          ;
@@ -299,7 +299,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     * @param myNumber 
     * @param postalCode 
     **/
-    public  HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj analizeRespVerifyAddress(List <HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj> rs,String city,String street,String myNumber,String postalCode){
+    /*public  HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj analizeRespVerifyAddress(List <HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj> rs,String city,String street,String myNumber,String postalCode){
         HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj addressWinner=rs.get(0);
         Integer matchingPoints = 0;
         for (HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj tempRes : rs) {
@@ -375,15 +375,15 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
             currentAccountContactRelation   =   new  AccountContactRelation      ();
             currentSale                     =   new  Sale__c                     ();
         }
-   }
+   }*/
    //---------- Gestione Errore -------------
    public class HDT_WRP_ProcessEntitiesException extends Exception{
         public String Type;
         public String Message;
 
-        public HDT_WRP_ProcessEntitiesException(String varType,String varMessage){
-            this.Type      = varType;
-            this.message   = varMessage;
+        public HDT_WRP_ProcessEntitiesException(String varType, String varMessage){
+            this.Type = varType;
+            this.message = varMessage;
         }
     }
 
@@ -555,17 +555,19 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     }
 
     public static void getLimitDetails(String stageName){
-        List<String> limitList = new List<String>();
-        limitList.add('>>> CpuTime: ' + String.valueOf(Limits.getCpuTime()) + ' of ' + String.valueOf(Limits.getLimitCpuTime()));
-        limitList.add('>>> DML: ' + String.valueOf(Limits.getDMLStatements()) + ' of ' + String.valueOf(Limits.getLimitDMLStatements()));
-        limitList.add('>>> HeapSize: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
-        limitList.add('>>> Queries: ' + String.valueOf(Limits.getQueries()) + ' of ' + String.valueOf(Limits.getLimitQueries()));
-        limitList.add('>>> Callouts: ' + String.valueOf(Limits.getCallouts()) + ' of ' + String.valueOf(Limits.getLimitCallouts()));
 
-        System.debug(LoggingLevel.DEBUG, '---------------- ' + stageName + ' ----------------');
-        for(String s : limitList){
-            System.debug(s);
-        }
+        JSONGenerator gen = JSON.createGenerator(true);
+        gen.writeStartObject();
+        gen.writeStringField('CpuTime: ', String.valueOf(Limits.getCpuTime()) + ' of ' + String.valueOf(Limits.getLimitCpuTime()));
+        gen.writeStringField('DML: ', String.valueOf(Limits.getDMLStatements()) + ' of ' + String.valueOf(Limits.getLimitDMLStatements()));
+        gen.writeStringField('HeapSize: ', String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
+        gen.writeStringField('Queries: ', String.valueOf(Limits.getQueries()) + ' of ' + String.valueOf(Limits.getLimitQueries()));
+        gen.writeStringField('Callouts: ', String.valueOf(Limits.getCallouts()) + ' of ' + String.valueOf(Limits.getLimitCallouts()));
+        gen.writeEndObject();
+
+        String pretty = gen.getAsString();
+        System.debug(stageName);
+        System.debug(pretty);
 
     }
 

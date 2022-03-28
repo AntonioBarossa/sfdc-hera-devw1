@@ -81,9 +81,17 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         // COD_SERVIZIO e COD_PRESTAZIONE sono obbligatori insieme
         String codiceServizio = herokuWrapper.requestMap.get('COD_SERVIZIO');
         String codicePrestazione = herokuWrapper.requestMap.get('COD_PRESTAZIONE');
-        if (codicePrestazione == null || codiceServizio == null) {
-            System.debug(LoggingLevel.DEBUG, 'codicePrestazione o codiceServizio non valorizzato');
+        // if (codicePrestazione == null || codiceServizio == null) {
+        //     System.debug(LoggingLevel.DEBUG, 'codicePrestazione o codiceServizio non valorizzato');
+        //     return anagAlignCase;
+        // }
+        if (codiceServizio == null) {
+            System.debug(LoggingLevel.DEBUG, 'codiceServizio non valorizzato');
             return anagAlignCase;
+        }
+
+        if(codiceServizio != null && codicePrestazione == null && codiceServizio == 'A02'){
+            codicePrestazione = codiceServizio;
         }
 
         System.debug(LoggingLevel.DEBUG, 'Gestione Allineamento Anagrafica da richiesta passiva Heroku');
@@ -96,7 +104,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         HDT_QR_AnagAlignment queryHandlerOrder = new HDT_QR_AnagAlignment();
         switch on codicePrestazione {
-            when 'A01', 'A40','A02', 'A03', 'S01', 'S02' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
+            when 'A01', 'A40', 'A03', 'S01', 'S02' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
                 Order triggerOrder = null;
                 /*if (!String.isBlank(codicePraticaDistributore)) {
                     triggerOrder = queryHandlerOrder.findOrderByDistributorPracticeCode(codicePraticaDistributore);
@@ -178,6 +186,49 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     ricostruzioneConsumiCase.put(field, tempCase.get(field));
                 }
                 HDT_UTL_DatabaseService.updateSObject(ricostruzioneConsumiCase);
+            }
+            when 'A02'{
+                System.debug(LoggingLevel.DEBUG, 'ENTRATO IN A02');
+                Case reqCase = new Case();
+                HDT_SRV_Case caseSrv = new HDT_SRV_Case();
+                String codiceFlusso = herokuWrapper.requestMap.get('COD_FLUSSO');
+                Id sospensioneRiattivazione = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_SospensioneRiattivazione').getRecordTypeId();
+                ServicePoint__c servicePoint = [SELECT Id, Name, Account__c FROM ServicePoint__c WHERE Name =: codicePresa WITH SECURITY_ENFORCED LIMIT 1];
+                Account account = [SELECT Id, CompanyOwner__c FROM Account WHERE Id =: servicePoint.Account__c WITH SECURITY_ENFORCED LIMIT 1];
+                AccountContactRelation accContRel = [SELECT Id, AccountId, ContactId FROM AccountContactRelation WHERE AccountId =: account.Id AND Roles = 'Titolare' WITH SECURITY_ENFORCED LIMIT 1];
+                Contact contact = [SELECT Id, MobilePhone, Email FROM Contact WHERE Id =: accContRel.ContactId WITH SECURITY_ENFORCED LIMIT 1];
+                Contract contract = [SELECT Id, SAPContractCode__c FROM Contract WHERE ServicePoint__c =: servicePoint.Id AND AccountId =: accContRel.AccountId AND Status = 'Attivo' WITH SECURITY_ENFORCED LIMIT 1];
+                try{
+                    reqCase = HDT_UTL_HerokuPostSalesManager.dataEnrichment(codicePresa, contract.SAPContractCode__c, reqCase);
+                }
+                catch(Exception ex){
+                    System.debug(LoggingLevel.DEBUG, 'Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
+                }
+                reqCase.RecordTypeId = sospensioneRiattivazione;
+                reqCase.AccountId = account.Id;
+                reqCase.ServicePoint__c = servicePoint.Id;
+                reqCase.Contract__c = contract.Id;
+                reqCase.ContactId = contact.Id;
+                reqCase.PhoneNumber__c = contact.MobilePhone;
+                reqCase.Email__c = contact.Email;
+                reqCase.CompanyOwner__c = account.CompanyOwner__c;
+                reqCase.Cluster__c = 'Notifiche';
+                reqCase.Origin = 'Da PGM';
+                reqCase.Phase__c = 'Bozza';
+                if(codiceFlusso == '0150'){
+                    reqCase.Type = 'Sospensione a seguito di potenziale pericolo';
+                }
+                else if(codiceFlusso == '0151'){
+                    reqCase.Type = 'Riattivazione a seguito di cessato pericolo';
+                }
+                caseSrv.createRecord(reqCase);//Da chiedere a Francesco se va bene
+                Case caseToUpdate = new Case();
+                caseToUpdate.Id = reqCase.Id;
+                caseToUpdate.Phase__c = 'In Lavorazione SAP';
+                caseSrv.updateRecord(caseToUpdate);//Da chiedere a Francesco se va bene
+
+                anagAlignCase = caseToUpdate;
+
             }
         }
 

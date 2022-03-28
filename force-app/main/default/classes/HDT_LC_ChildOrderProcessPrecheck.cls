@@ -137,7 +137,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                  */
                 when 'HDT_RT_ScontiBonus'
                 {
-                    newOrder.EffectiveDate__c =  (System.today().addMonths(1)).toStartOfMonth();
+                    Order currentOrder = orderQr.getRecordById(orderId);
+                    if(currentOrder.NumeratorGroup__c != null && ((String)currentOrder.get('NumeratorGroup__c')).equalsIgnoreCase('ELPVEDM'))
+                    {
+                        newOrder.EffectiveDate__c =  (System.today().addMonths(1)).toStartOfMonth();
+                    }
+                    else
+                    {
+                        newOrder.EffectiveDate__c = System.today();    
+                    }
                 }
 
             }
@@ -161,6 +169,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             newOrder.Deliberation__c = deliberate;
             newOrder.ProcessType__c = processType;
             newOrder.ProcessCode__c = processCode;
+            newOrder.AggregateBilling__c = 'Si';
             newOrder.Phase__c = 'Bozza';
             
             //Logica Superficie Servita Start

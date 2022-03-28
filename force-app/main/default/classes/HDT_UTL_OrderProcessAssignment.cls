@@ -191,7 +191,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAttivazioneConModifica: ' + isAttivazioneConModifica(ord));
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - commodity: ' + ord.ServicePoint__r.RecordType.DeveloperName);
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - meterStatus: ' + ord.ServicePoint__r.MeterStatus__c);
-        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAmendmentAllowed: ' + ord.SBQQ__Quote__r.AmendmentAllowed__c);
+        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAmendmentAllowed: ' + isAmendmentAllowed);
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isWinBack: ' + ord.IsWinback__c);
         system.debug(LoggingLevel.DEBUG, 'getAvailableProcesses - isReseller: ' +isReseller);
 
@@ -201,12 +201,12 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 && (process.marketOrigin.contains(ord.MarketOrigin__c) || process.marketOrigin.isEmpty())
                 && (process.plugPresence == plugPresence || process.commodity == 'HDT_RT_Gas')//aggiustamento plug presence gas
                 && (process.isOwnAccount == isOwnAccount || process.isOwnAccount == null || (process.processType == 'Voltura Ele' && ord.ServicePoint__r.Account__c == null))
-                && process.isChangeUse == isChangeUse
+                && process.isChangeUse == (isChangeUse && process.processType.containsIgnoreCase('Cambio Uso'))
                 && process.isSwitchInRipristinatorio == isSwitchInRipristinatorio(ord)
-                && process.isAttivazioneConModifica == isAttivazioneConModifica(ord)
+                && process.isAttivazioneConModifica == (isAttivazioneConModifica(ord) && !process.processType.containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))
                 && (process.commodity == ord.ServicePoint__r.RecordType.DeveloperName || process.commodity == null)
                 && process.isAmendmentAllowed == isAmendmentAllowed
-                && process.isSwitchOut == ord.IsWinback__c
+                && process.isSwitchOut == (ord.IsWinback__c && !process.processType.containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))
                 && process.isReseller == isReseller
             ) {
                 availableProcesses.add(process);
@@ -286,7 +286,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         if (!activityList.isEmpty() 
             && !ord.SBQQ__Quote__r.AmendmentAllowed__c 
             && !ord.SBQQ__Quote__r.AllowChangeUse__c 
-            && !isCambioOfferta(ord)) {
+            /*&& !isCambioOfferta(ord)*/) {
                 result = true;
         }
 
@@ -323,6 +323,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         system.debug('isAttivazioneConModifica ord.ServicePoint__r.RecordType.DeveloperName ' + ord.ServicePoint__r.RecordType.DeveloperName);
         system.debug('isAttivazioneConModifica ord.PowerRequested__c ' + ord.PowerRequested__c);
         system.debug('isAttivazioneConModifica ord.PowerCommitted__c ' + ord.PowerCommitted__c);
+        System.debug('isAttivazioneConModifica ord.RecordType.DeveloperName' + ord.RecordType.DeveloperName);
 
         if (ord.ServicePoint__c != null 
             && ord.ServicePoint__r.RecordType.DeveloperName == 'HDT_RT_Ele' 

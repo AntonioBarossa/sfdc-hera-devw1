@@ -29,6 +29,7 @@ public inherited sharing class HDT_LC_SaleVas {
      */
     @AuraEnabled
     public static void confirmAction(String selectedOption, Order order, Contract contract, String supplyCity, String accountId, Sale__c sale){
+        sale = saleQr.getRecordById(sale.id, 'AgencyCode__c,CommercialId__c ,Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Account__r.CompanyOwner__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
         switch on selectedOption {
             when  'Ordini in corso'{
                 handleActiveOrderConfirm(order, supplyCity, sale);
@@ -376,7 +377,9 @@ public inherited sharing class HDT_LC_SaleVas {
             IsVAS__c = true,
             IsBillableVas__c = false,
             IsTransition__c = currentSale[0].IsTransition__c,
-            SBQQ__PricebookId__c = checkCommodityOrder(order.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
+            SBQQ__PricebookId__c = checkCommodityOrder(order.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS'),
+            AgencyCode__c = sale.AgencyCode__c,
+            CommercialId__c = sale.CommercialId__c
         );
 
         if(order.ContractReference__c != null)
@@ -410,6 +413,9 @@ public inherited sharing class HDT_LC_SaleVas {
         String pdrCode = contract.ServicePoint__r.ServicePointCode__c;
         pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
 
+        System.debug('Sale: AgencyCode__c :' + sale.AgencyCode__c);
+        System.debug('Sale: CommercialId__c :' + sale.CommercialId__c);
+
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
             Sale__c = sale.Id,
             Name = opportunitySrv.generateName(sale) + ' VAS'+pdrCode,
@@ -435,7 +441,9 @@ public inherited sharing class HDT_LC_SaleVas {
             SupplyCity__c = null, //to do (other logic to get supplyCity)
             IsVAS__c = true,
             IsBillableVas__c = false,
-            SBQQ__PricebookId__c = checkCommodityContract(contract.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
+            SBQQ__PricebookId__c = checkCommodityContract(contract.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS'),
+            AgencyCode__c = sale.AgencyCode__c,
+            CommercialId__c = sale.CommercialId__c
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -479,7 +487,9 @@ public inherited sharing class HDT_LC_SaleVas {
             SalesCompany__c = 'Hera Comm S.p.A.',
             IsVAS__c = true,
             IsBillableVas__c = false,
-            SBQQ__PricebookId__c = getPricebookId('VAS Standalone')
+            SBQQ__PricebookId__c = getPricebookId('VAS Standalone'),
+            AgencyCode__c = sale.AgencyCode__c,
+            CommercialId__c = sale.CommercialId__c
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;

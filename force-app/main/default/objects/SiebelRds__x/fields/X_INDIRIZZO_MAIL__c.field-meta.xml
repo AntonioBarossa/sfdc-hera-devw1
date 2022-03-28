@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Indirizzo e-mail</label>
+    <label>E-mail Reitek</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

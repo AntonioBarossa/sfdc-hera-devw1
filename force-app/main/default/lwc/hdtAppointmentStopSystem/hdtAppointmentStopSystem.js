@@ -1,5 +1,7 @@
 import { LightningElement,api,wire,track } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
+//import getRecord  from '@salesforce/apex/HDT_LC_AppointmentExtraSist.getActivity';
+import getActivityOwner  from '@salesforce/apex/HDT_LC_AppointmentExtraSist.getActivityOwner';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { CloseActionScreenEvent } from 'lightning/actions';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -12,7 +14,11 @@ const OBJECT_FIELDS =[
     FERMO_SYS_FIELD,
     ATOA_FIELD
 ];
-
+/* const OBJECT_FIELDS =[
+    'Id',
+    'isManualAppoitment__c',
+    'isAtoA__c'
+] */
 export default class HdtAppointmentStopSystem extends LightningElement {
   
     @api recordId;
@@ -31,13 +37,14 @@ export default class HdtAppointmentStopSystem extends LightningElement {
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Error loading contact',
-                    message,
+                    message: message,
                     variant: 'error',
                 }),
             );
         } else if (data) {
+            console.log('@@@@data wired method ');
             this.activity = data;
-            console.log('@@@@data wired method ' + JSON.stringify(data));
+            
 
             let atoa = this.activity.fields.isAtoA__c.value;
             let fermo = this.activity.fields.isManualAppoitment__c.value;
@@ -61,36 +68,49 @@ export default class HdtAppointmentStopSystem extends LightningElement {
                 this.submitRecord(recordInput);
             }
             console.log('@@@@fine data wired method');
+            
         }
     }
 
     submitRecord(recordInput){
-        console.log('@@@@@recordInput' + JSON.stringify(recordInput));
-        updateRecord(recordInput).then(() => {
-            console.log('@@@@@SUCCESS');
-            window.location.reload();
-        }).catch(error => {
-            console.log('@@@@@ERROR' + JSON.stringify(error.body));
-            let message = '';
-            if (error.body.output && error.body.output.errors){
-                error.body.output.errors.forEach(item =>{
-                    if (item.message){
-                        message += item.message+' ';
+        getActivityOwner({activityId: this.recordId}).then(data => {
+            if (data === true || data === 'true'){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'L\'attività può essere gestita solo dall\'assegnatario.',
+                        variant: 'error',
+                    }),
+                );
+                this.closeQuickAction();    
+            }else {
+                updateRecord(recordInput).then(() => {
+                    console.log('@@@@@SUCCESS');
+                    window.location.reload();
+                }).catch(error => {
+                    console.log('@@@@@ERROR' + JSON.stringify(error.body));
+                    let message = '';
+                    if (error.body.output && error.body.output.errors){
+                        error.body.output.errors.forEach(item =>{
+                            if (item.message){
+                                message += item.message+' ';
+                            }
+                        });
                     }
+                    if (message.localeCompare('') === 0){
+                        message = error.body.message;
+                    }
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Errore',
+                            message: message,
+                            variant: 'error'
+                        })
+                    );
+                    this.closeQuickAction();
                 });
             }
-            if (message.localeCompare('') === 0){
-                message = error.body.message;
-            }
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Errore',
-                    message: message,
-                    variant: 'error'
-                })
-            );
-            this.closeQuickAction();
-        });
+        }); 
     }
 
     closeQuickAction() {

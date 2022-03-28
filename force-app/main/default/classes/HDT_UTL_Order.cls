@@ -154,9 +154,10 @@ public inherited sharing class HDT_UTL_Order {
     public static boolean checkToDiscordanti(String OrderId){
         try{
             Order newOrder = orderQr.getRecordById(OrderId);
+            List<OrderItem> mainOrderItem = orderItemQr.getMainItem(OrderId);
             HDT_SRV_ActivityCustom actSrv = new HDT_SRV_ActivityCustom();
             List<wrts_prcgvr__Activity__c> listActivity = HDT_QR_ActivityCustom.getRecordScartoDiscordante(newOrder.ServicePoint__c,newOrder.AccountId);
-            if(listActivity != null && !listActivity.isEmpty()){
+            if(listActivity != null && !listActivity.isEmpty() && !mainOrderItem.isEmpty() && mainOrderItem[0].Product2.Family.equalsIgnoreCase('Offerta commerciale')){
                 system.debug('DENTRO TRAVASO DATO DISCORDANTE 2');
                 wrts_prcgvr__Activity__c wr = listActivity[0];
                 wr.wrts_prcgvr__Status__c = 'Chiusa';
@@ -272,6 +273,7 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.isDatoDiscordante__c = true;
         orderToUpdate.Contact__c = oldOrder.Contact__c;
         orderToUpdate.OrderReference__c = oldOrder.Id;
+        orderToUpdate.AggregateBilling__c = oldOrder.AggregateBilling__c;
         HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
     }
 

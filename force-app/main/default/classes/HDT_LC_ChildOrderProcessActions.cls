@@ -42,19 +42,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         orderToUpdate.WizardCompletedDate__c = Date.today();
         
 
-        /**@frpanico 2022-03-18
-         * Gestione Dati Discordanti
-         * Necessario chiudere Activity
-         * Prima di poter chiudere il wizard
-         */
-        if(((String)currentOrder.get('ProcessType__c')).equalsIgnoreCase('Switch in Fittizio'))
-        {
-            List<wrts_prcgvr__Activity__c> activityDiscordante = HDT_QR_ActivityCustom.getRecordScartoDiscordante((String)currentOrder.get('OrderReference__c'));
-            if(!activityDiscordante.isEmpty())
-            {
-                throw new AuraHandledException('Prima di poter procedere alla conferma dell\'order risulta necessario chiudere l\'attivita di Gestione Dati Discordanti');
-            }
-        }
         /**@frpanico 25/10/2021
          * Spostato in alto la sezione di codice in cui vengono inseriti i dati dell'ultimo step
          */
@@ -102,9 +89,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
                 }*/
                 
-                if (order.ProcessType__c == 'Switch in Fittizio') {
+                /*if (order.ProcessType__c == 'Switch in Fittizio') {
                     orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
-                }
+                }*/
                 if (order.ProcessType__c == 'Switch in Ripristinatorio') {
                     orderToUpdate.DateSentToSII__c = Date.today();
                     orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
@@ -379,6 +366,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
             orderSrv.updateRecord(orderParentToUpdate);
         }
+
+        /**@frpanico 2022-03-25
+         * Valorizzazione Flag Servizio 26
+         * Nel caso di ordine sconti e bonus
+         */
     }
 
     /**
