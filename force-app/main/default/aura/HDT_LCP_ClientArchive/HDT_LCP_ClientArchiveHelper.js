@@ -1,9 +1,10 @@
 ({
+    /*  MODIFICA 25/03/2022 marco.arci@webresult.it - Commentate logiche onBlur perchè motivo di errore con logiche superflue"
     controlCodiceCliente : function(cmp,event,helper){          
         var searchKey=  cmp.get('v.searchKey');
         if(searchKey=="" || searchKey==undefined){
             this.message="Il valore inserito non è corretto";
-            cmp.set('v.searchDisabled',true); 
+            cmp.set('v.searchDisabled',true);
         }else if(searchKey.length>7){
             cmp.set('v.searchDisabled',false);
         }else{
@@ -32,14 +33,15 @@
         }else{
             cmp.set('v.searchDisabled',false);
         }
-    },    
+    },
+    */
     startSpinner: function(component){       
         if(component.find("spinner"))
         component.find("spinner").start();
     },
     stopSpinner: function(component){        
         component.find("spinner").stop();
-        component.set('v.disableAssistiveSpinner',false);
+        //component.set('v.disableAssistiveSpinner',false);     //MODIFICA 18/03/2022 marco.arci@webresult.it collaudi UAT - riga commentata - variabile non presente
     },
     retrieveData : function(cmp, event,helper){
         this.startSpinner(cmp);

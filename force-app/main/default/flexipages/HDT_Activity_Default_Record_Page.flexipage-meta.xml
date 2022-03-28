@@ -2708,6 +2708,18 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>hdtVoltureAcceptance</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Accettazione Voltura</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>hdtAppointmentHandler</componentName>
                 <visibilityRule>
                     <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
