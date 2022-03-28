@@ -682,6 +682,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.FlagServizio26__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.IsExportSIE__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -31699,7 +31704,7 @@
         <layout>Knowledge__kav-Knowledge Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Lead-Acquisizione Lead Layout</layout>
+        <layout>Lead-Lead Layout</layout>
         <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
     </layoutAssignments>
     <layoutAssignments>
