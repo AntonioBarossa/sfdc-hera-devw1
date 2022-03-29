@@ -31,9 +31,9 @@
                 <label>HCM</label>
             </value>
             <value>
-                <fullName>HCNE</fullName>
+                <fullName>EENE</fullName>
                 <default>false</default>
-                <label>HCNE</label>
+                <label>EENE</label>
             </value>
             <value>
                 <fullName>HSPA</fullName>
