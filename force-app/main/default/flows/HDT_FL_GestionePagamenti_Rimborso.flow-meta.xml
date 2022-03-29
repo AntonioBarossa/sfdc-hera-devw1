@@ -424,7 +424,7 @@
             <assignToReference>Get_Case_Aggiornato.DeliveryAddress__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Case_Aggiornato.BeneficiaryAccount__r.ShippingAddressFormula__c</elementReference>
+                <elementReference>Get_Case_Aggiornato.BeneficiaryAccount__r.BillingAddressFormula__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
