@@ -23,6 +23,7 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 		HDT_UTL_DataFactoryTst.newPhaseTransition('In Attesa Approvazione', 'Bozza', rtId, 'HDT_RT_DocCopiaContratto');
 		HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione', 'Bozza', rtId, 'HDT_RT_DocCopiaContratto');
 		HDT_UTL_DataFactoryTst.newPhaseTransition('Registrazione validata  Firmato/Inviato', 'Bozza', ordRtId, 'HDT_RT_Default');
+		HDT_UTL_DataFactoryTst.newPhaseTransition('Registrazione validata', 'Bozza', ordRtId, 'HDT_RT_Default');
 		HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita', 'Bozza', ordRtDoss, 'HDT_RT_OrderDossier');
 
 		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
@@ -44,7 +45,10 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 			List<Order> orderWithPricebook=HDT_UTL_DataFactoryTst.createOrderWithPricebook(2, false, accounts[0].Id, sales, pricebookId);
 			orderWithPricebook[1].RecordTypeId=ordRtDoss;
 			orderWithPricebook[1].CommercialProduct__c=prods[0].Id;
+			orderWithPricebook[0].Contact__c = contacts[0].Id;
 			insert orderWithPricebook;
+			orderWithPricebook[1].ParentOrder__c = orderWithPricebook[0].Id;
+			update orderWithPricebook;
 			List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, accounts[0].Id, 'Bozza');
 			List<PricebookEntry> pricebokEntry=HDT_UTL_DataFactoryTst.createPricebookEntry(prods, true, pricebookId);
 			List<OrderItem> orderItem=HDT_UTL_DataFactoryTst.createOrderItem(2, false, orderWithPricebook[0].Id, servPoints[0].Id, prods[0].Id, pricebokEntry[0].Id);
