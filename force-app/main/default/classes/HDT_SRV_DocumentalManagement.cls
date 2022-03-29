@@ -1499,4 +1499,64 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			this.sendMode = new List<Map<String,String>>();
 		}
 	}
+
+	public static String queryContactPoint(String email,String phone,String contactId){
+		List<SObject> cpEmailList = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointEmail', 'EmailAddress =\''+String.escapeSingleQuotes(email)+'\' AND Contact__c=\''+contactId+'\'');
+		List<SObject> cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND Contact__c=\''+contactId+'\'');
+		Map<String,String> result = new Map<String,String>();
+		if(!cpEmailList.isEmpty() && !cpPhone.isEmpty()){
+			result.put('email', 'OK');
+			result.put('phone', 'OK');
+			result.put('result', 'OK');
+		}else if(cpEmailList.isEmpty() && cpPhone.isEmpty()){
+			result.put('email', 'KO');
+			result.put('phone', 'KO');
+			result.put('result', 'KO');
+			result.put('message', 'Attenzione! Scegliendo di procedere verrano creati i contact point: ' + email + ' e ' + phone);
+		}else if(cpEmailList.isEmpty()){
+			result.put('email', 'KO');
+			result.put('phone', 'OK');
+			result.put('result', 'KO');
+			result.put('message', 'Attenzione! Scegliendo di procedere verrà creato il contact point: ' + email); 
+		}else {
+			result.put('email', 'OK');
+			result.put('phone', 'KO');
+			result.put('result', 'KO');
+			result.put('message', 'Attenzione! Scegliendo di procedere verrà creato il contact point: ' + phone);
+		}
+		return JSON.serialize(result);
+	}
+
+	public static String createContactPoint(String email,String phone,String contactId){
+		String result = 'OK';
+		try{
+			HDT_QR_Contact qrContact = new HDT_QR_Contact();
+			Contact cont = qrContact.getRecordById(contactId);
+			List<SObject> objectList = new List<SObject>();
+			if(String.isNotBlank(email)){
+				ContactPointEmail cpEmail = new ContactPointEmail();
+				cpEmail.ParentId = cont.IndividualId;
+				cpEmail.EmailAddress = email;
+				cpEmail.Type__c = 'E-mail Anagrafica';
+				cpEmail.Contact__c = contactId;
+				objectList.add(cpEmail);
+			}
+	
+			if(String.isNotBlank(phone)){
+				ContactPointPhone cpPhone = new ContactPointPhone();
+				cpPhone.ParentId = cont.IndividualId;
+				cpPhone.TelephoneNumber = phone;
+				cpPhone.Type__c = 'Mobile';
+				cpPhone.Contact__c = contactId;
+				cpPhone.Prefix__c = '+39';
+				objectList.add(cpPhone);
+			}
+			if(!objectList.isEmpty()){
+				HDT_UTL_DatabaseService.insertSObject(objectList);
+			}
+		}catch(Exception ex){
+			result = 'KO';
+		}
+		return result;
+	}
 }

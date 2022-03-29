@@ -119,7 +119,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
 
         Case c = new Case();
         Reading__c r = new Reading__c();
-        Boolean isGas = request.commodity.equals('Gas');
+        Boolean isGas = request.commodity.equals('Gas') || request.commodity.equals('G');
 
         if (String.isNotBlank(request.id)) {
             c.Id = request.id;

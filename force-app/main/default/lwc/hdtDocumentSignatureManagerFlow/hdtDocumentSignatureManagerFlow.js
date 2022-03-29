@@ -58,7 +58,8 @@ const FIELDS = ['Case.ContactMobile',
 				'Case.InvoicingStreetName__c',
 				'Case.InvoicingCountry__c',
                 'Case.InvoicingProvince__c',
-                'Case.Origin'];
+                'Case.Origin',
+                'Case.ContactId'];
 
 export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(LightningElement) {
     
@@ -260,7 +261,8 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                         FlagVerificato  : flagVerificato
                     },
                     sendMode:this.caseRecord.fields.SendMode__c.value,
-                    signMode:this.caseRecord.fields.SignMode__c.value 
+                    signMode:this.caseRecord.fields.SignMode__c.value,
+                    contactId:this.caseRecord.fields.ContactId.value 
                 }
                 canale = this.caseRecord.fields.Origin.value;
                 if( canale === 'Telefono Inbound' || canale === 'Telefono Outbound'){
@@ -373,7 +375,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
             updateRecord(recordInput)
                 .then(() => {
                     //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
-                    try {
+                    /*try {
                         updateContactForScartoDocumentale({accountId:this.accountId, 
                                                             oldPhone: this.oldPhoneValue,
                                                             oldEmail: this.oldEmailValue,
@@ -381,7 +383,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                                                             newMail: resultWrapper.email});
                     } catch (error) {
                       console.error('updateContactForScartoDocumentale exception: ',JSON.stringify(error));
-                    }
+                    }*/
                     //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
                     // Display fresh data in the form
                     console.log('Record aggiornato');
