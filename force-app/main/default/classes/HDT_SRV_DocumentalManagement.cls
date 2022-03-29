@@ -1501,24 +1501,30 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 	}
 
 	public static String queryContactPoint(String email,String phone,String contactId){
-		List<SObject> cpEmailList = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointEmail', 'EmailAddress =\''+String.escapeSingleQuotes(email)+'\' AND Contact__c=\''+contactId+'\'');
-		List<SObject> cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND Contact__c=\''+contactId+'\'');
+		List<SObject> cpEmailList = new List<Sobject>();
+		if(String.isNotBlank(email)){
+			cpEmailList =HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointEmail', 'EmailAddress =\''+String.escapeSingleQuotes(email)+'\' AND Contact__c=\''+contactId+'\'');
+		}
+		List<SObject> cpPhone = new List<Sobject>();
+		if(String.isNotBlank(phone)){
+			cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND Contact__c=\''+contactId+'\'');
+		}	
 		Map<String,String> result = new Map<String,String>();
 		if(!cpEmailList.isEmpty() && !cpPhone.isEmpty()){
 			result.put('email', 'OK');
 			result.put('phone', 'OK');
 			result.put('result', 'OK');
-		}else if(cpEmailList.isEmpty() && cpPhone.isEmpty()){
+		}else if(cpEmailList.isEmpty() && cpPhone.isEmpty() && String.isNotBlank(email) && String.isNotBlank(phone)){
 			result.put('email', 'KO');
 			result.put('phone', 'KO');
 			result.put('result', 'KO');
 			result.put('message', 'Attenzione! Scegliendo di procedere verrano creati i contact point: ' + email + ' e ' + phone);
-		}else if(cpEmailList.isEmpty()){
+		}else if(cpEmailList.isEmpty() && String.isNotBlank(email)){
 			result.put('email', 'KO');
 			result.put('phone', 'OK');
 			result.put('result', 'KO');
 			result.put('message', 'Attenzione! Scegliendo di procedere verrà creato il contact point: ' + email); 
-		}else {
+		}else if(cpPhone.isEmpty() && String.isNotBlank(phone)) {
 			result.put('email', 'OK');
 			result.put('phone', 'KO');
 			result.put('result', 'KO');
