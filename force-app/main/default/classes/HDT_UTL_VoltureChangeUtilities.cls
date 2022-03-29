@@ -190,16 +190,18 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
      */
     public Map<String,Object> checkRates(Map<String,Object> currentRates, Map<String,Object> toUpdateRates)
     {   
+
+        String fieldAliquotaAccise =  String.valueOf(currentRates.get('Commodity__c')).equalsIgnoreCase('Gas') ? 'ExciseGAS__c' : 'ExciseEle__c';
         Map<String, Object> resultMap = new Map<String,Object>();
         /* Rate Declarations */
         String aliquotaIva = String.isNotEmpty((String)toUpdateRates.get('VAT__c')) ? (String)toUpdateRates.get('VAT__c') : (String)currentRates.get('VAT__c');
-        String aliquotaAccise = String.isNotEmpty((String)toUpdateRates.get('ExciseEle__c')) ? (String)toUpdateRates.get('ExciseEle__c') : (String)currentRates.get('ExciseEle__c');
+        String aliquotaAccise = String.isNotEmpty((String)toUpdateRates.get(fieldAliquotaAccise)) ? (String)toUpdateRates.get(fieldAliquotaAccise) : (String)currentRates.get(fieldAliquotaAccise);
         String addizionaleRegionale = String.valueOf(currentRates.get('RegionalAdditional__c'));
         /* If one of the fields are empty, empty all fields */
         if(String.isEmpty(aliquotaIva) || String.isEmpty(aliquotaAccise) || String.isEmpty(addizionaleRegionale))
         {
             resultMap.put('VAT__c', '');
-            resultMap.put('ExciseEle__c', '');
+            resultMap.put(fieldAliquotaAccise, '');
             resultMap.put('ExciseRate__c', 0);
             resultMap.put('RegionalAdditional__c', 0);
         }
@@ -207,7 +209,7 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
         else
         {
             resultMap.put('VAT__c', aliquotaIva);
-            resultMap.put('ExciseEle__c', aliquotaAccise);
+            resultMap.put(fieldAliquotaAccise, aliquotaAccise);
             resultMap.put('ExciseRate__c', voltureChangeQr.getExciseTranscode(aliquotaAccise)[0].Excise__c);
             resultMap.put('RegionalAdditional__c', Decimal.valueOf(addizionaleRegionale));
         }
