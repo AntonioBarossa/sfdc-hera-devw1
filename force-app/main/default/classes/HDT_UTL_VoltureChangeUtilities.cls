@@ -201,7 +201,7 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
         if(String.isEmpty(aliquotaIva) || String.isEmpty(aliquotaAccise) || String.isEmpty(addizionaleRegionale))
         {
             resultMap.put('VAT__c', '');
-            resultMap.put('ExciseEle__c', '');
+            resultMap.put(fieldAliquotaAccise, '');
             resultMap.put('ExciseRate__c', 0);
             resultMap.put('RegionalAdditional__c', 0);
         }
@@ -209,7 +209,7 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
         else
         {
             resultMap.put('VAT__c', aliquotaIva);
-            resultMap.put('ExciseEle__c', aliquotaAccise);
+            resultMap.put(fieldAliquotaAccise, aliquotaAccise);
             resultMap.put('ExciseRate__c', voltureChangeQr.getExciseTranscode(aliquotaAccise)[0].Excise__c);
             resultMap.put('RegionalAdditional__c', Decimal.valueOf(addizionaleRegionale));
         }
