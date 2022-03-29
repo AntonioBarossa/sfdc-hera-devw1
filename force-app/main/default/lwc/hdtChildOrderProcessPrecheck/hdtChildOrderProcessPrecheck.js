@@ -742,6 +742,11 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         };
         if(this.selectedProcessObject.processType=="VAS"){
             sRequest["isBillableVas"]=this.order.IsBillableVas__c;
+            if(this.order.VASSubtype === 'Analisi Consumi')
+            {
+                sRequest["processType"] = srRequest["commoditySector"] === 'Energia Elettrica' ? 'Aggiunta Sconti o Bonus VAS Ele' : 'Aggiunta Sconti o Bonus VAS Gas';
+            }
+            console.log('#ServiceRequest >>> ' + JSON.stringify(srRequest));
         }
         checkCompatibility({servReq: sRequest}).then(data =>{
             if(data.compatibility == '' || data.compatibility == this.order.OrderNumber){
