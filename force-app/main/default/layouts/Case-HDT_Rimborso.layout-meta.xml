@@ -104,10 +104,6 @@
                 <behavior>Readonly</behavior>
                 <field>AlternativeAddress__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>DeliveryAddress__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
