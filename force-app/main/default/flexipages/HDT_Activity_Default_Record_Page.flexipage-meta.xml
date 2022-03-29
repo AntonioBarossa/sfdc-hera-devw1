@@ -2710,10 +2710,16 @@
             <componentInstance>
                 <componentName>hdtVoltureAcceptance</componentName>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Accettazione Voltura</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__IsClosed__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
