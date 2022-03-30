@@ -97,28 +97,20 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
 
     public wrts_prcgvr__AsyncJob__c getAsyncJobByJobItem(String recordId){
 
-        wrts_prcgvr__AsyncJob__c asyncJobRec = new wrts_prcgvr__AsyncJob__c();
+        List<wrts_prcgvr__AsyncJob__c> asyncJobRec = new List<wrts_prcgvr__AsyncJob__c>();
 
         try{
-            
-            asyncJobRec = [SELECT Id, 
-        wrts_prcgvr__Details__c,
-        wrts_prcgvr__Status__c
-        FROM wrts_prcgvr__AsyncJob__c
-        WHERE wrts_prcgvr__JobItem__c = :recordId
-        AND (wrts_prcgvr__Status__c = 'Chiusa'
-        
-            OR wrts_prcgvr__Status__c = 'Queued')
-        WITH SECURITY_ENFORCED
-        LIMIT 1];
-
+            asyncJobRec = [ SELECT Id, wrts_prcgvr__Details__c, wrts_prcgvr__Status__c
+                            FROM wrts_prcgvr__AsyncJob__c
+                            WHERE wrts_prcgvr__JobItem__c = :recordId
+                            AND (wrts_prcgvr__Status__c = 'Chiusa'
+                            OR wrts_prcgvr__Status__c = 'Queued')
+                            WITH SECURITY_ENFORCED];
         }catch(Exception e){
-
             asyncJobRec = null;
-
         }
 
-        return asyncJobRec;
+        return asyncJobRec[0];
 
     }
 
