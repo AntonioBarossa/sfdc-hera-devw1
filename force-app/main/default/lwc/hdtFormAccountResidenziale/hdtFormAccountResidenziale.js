@@ -402,7 +402,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         let mobilePhonePrefix= this.template.querySelector('[data-id="mobilePhonePrefix"]');
         let role= this.template.querySelector('[data-id="role"]');
         let companyOwner= this.template.querySelector('[data-id="companyOwner"]');
-        let companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
+        // let companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
         // let settlDistrict= this.template.querySelector('[data-id="settlementDistrict"]');
         // let settlMunicipality= this.template.querySelector('[data-id="settlementMunicipality"]');
         // let settlAddress= this.template.querySelector('[data-id="settlementAddress"]');
@@ -598,7 +598,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                             "companyOwner" : companyOwner.value ,
                             "phonePrefix" : phonePrefix.value ,
                             "mobilePhonePrefix" : mobilePhonePrefix.value, 
-                            "company":companyValue.value,
+                            // "company":companyValue.value,
                             "customerType":this.customerType,
                         };
                         insertAccount({
@@ -664,7 +664,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         "companyOwner" : companyOwner.value ,
                         "phonePrefix" : phonePrefix.value ,
                         "mobilePhonePrefix" : mobilePhonePrefix.value,
-                        "company":companyValue.value,
+                        // "company":companyValue.value,
                         "customerType":this.customerType,
                         
                     };
