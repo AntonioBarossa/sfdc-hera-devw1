@@ -57,63 +57,95 @@ export default class HdtCommercialRiassignButton extends LightningElement {
     }
 
     handleSave(){
+        this.loading = true;
         riassegna({
             recordId : this.recordId,
             causale : this.causale
         }).then(result => {
+            this.loading = false;
             console.log('prerefresh');
             if(result == true){
                 console.log('prerefreshPOST');
-               // this.isRiassignButton = false;
-               // this.isApproveFase = true;
-                /*const event = new ShowToastEvent({
+                const event = new ShowToastEvent({
                     title: 'Successo',
-                    message: 'Approvazione Inviata',
+                    message: 'Attivita inviata ad approvazione',
                     variant: 'success',
                 });
-                this.dispatchEvent(event);*/
-                //this.dispatchEvent(new CustomEvent('refreshpage'));
+                window.location.reload(true);
             }
+        })
+        .catch(error => {
+            this.loading = false;
+            console.log('#Error >>> ' + JSON.stringify(error));
+            const event = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Errore nella sottomissione ad approvazione',
+                variant: 'error',
+            });
+            this.dispatchEvent(event);
         });
-        window.location.reload();
+
     }
 
     approve(){
+        this.loading = true;
         cambia({
             recordId : this.recordId,
-            causale : 'Si'
+            causale : 'Approvata'
         }).then(result => {
             console.log('prerefresh');
             if(result == true){
-               /* const event = new ShowToastEvent({
+                this.loading = false;
+                const event = new ShowToastEvent({
                     title: 'Successo',
-                    message: 'Approvato',
+                    message: 'Operazioni completate con successo',
                     variant: 'success',
                 });
-                this.dispatchEvent(event);*/
-                //window.location.reload();
+                this.dispatchEvent(event);
+                window.location.reload(true);
             }
+        })
+        .catch(error => {
+            this.loading = false;
+            console.log('#Error >>> ' + JSON.stringify(error));
+            const event = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Errore nel completamento delle operazioni',
+                variant: 'error',
+            });
+            this.dispatchEvent(event);
         });
-        window.location.reload();
     }
 
     reject(){
+        this.loading = true;
         console.log('rigettata');
         cambia({
             recordId : this.recordId,
-            causale : 'No'
+            causale : 'Rigettata'
         }).then(result => {
             if(result == true){
-               /* const event = new ShowToastEvent({
+                this.loading = false;
+                window.location.reload(true);
+                const event = new ShowToastEvent({
                     title: 'Successo',
-                    message: 'Rifiutato',
+                    message: 'Operazioni completate con successo',
                     variant: 'success',
                 });
-                this.dispatchEvent(event);*/
-                //window.location.reload();
+                this.dispatchEvent(event);
+                window.location.reload(true);
             }
+        })
+        .catch(error => {
+            this.loading = false;
+            console.log('#Error >>> ' + JSON.stringify(error));
+            const event = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Errore nel completamento delle operazioni',
+                variant: 'error',
+            });
+            this.dispatchEvent(event);
         });
-        window.location.reload();
     }
 
 
