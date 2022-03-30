@@ -129,6 +129,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 }
                 when 'HDT_RT_SwitchIn' {
                     newOrder.PowerRequested__c  = order.PowerCommitted__c;
+                    newOrder.WaiverRightAfterthought__c	= 'No';
                 }
                 /**@frpanico 2022-03-16
                  * Aggiunta Sconti Bonus
