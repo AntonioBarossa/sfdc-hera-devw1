@@ -23,11 +23,11 @@ public with sharing class HDT_UTL_AppointmentSettingTest {
     
     @IsTest
     public static void executeGetQuickLink(){
-        List<HDT_AppointmentSetting__mdt> qlList = [SELECT Value1__c,Value2__c FROM HDT_AppointmentSetting__mdt WHERE IsActive__c = true AND Type__c = 'Quick Link'];
+        List<HDT_AppointmentSetting__mdt> qlList = [SELECT Value1__c,Value2__c,Value3__c,Value4__c FROM HDT_AppointmentSetting__mdt WHERE IsActive__c = true AND Type__c = 'Quick Link'];
         Test.startTest();
-        System.assertEquals(HDT_UTL_AppointmentSetting.getQuickLink('Nome Errato').get('errorMessage'), 'Nessun Link valido per il presente distributore.', 'Gestione link non presente non funzionante');
+        System.assertEquals(HDT_UTL_AppointmentSetting.getQuickLink('Nome Errato', '','').get('errorMessage'), 'Nessun Link valido per il presente distributore.', 'Gestione link non presente non funzionante');
         if (!qlList.isEmpty()){
-            System.assertEquals(HDT_UTL_AppointmentSetting.getQuickLink(qlList[0].Value1__c).get('link'), qlList[0].Value2__c, 'Gestione link presente non funzionante');
+            System.assertEquals(HDT_UTL_AppointmentSetting.getQuickLink(qlList[0].Value1__c, qlList[0].Value2__c, qlList[0].Value3__c).get('link'), qlList[0].Value4__c, 'Gestione link presente non funzionante');
         }
         Test.stopTest();
     }
