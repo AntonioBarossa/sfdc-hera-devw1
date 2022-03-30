@@ -117,7 +117,7 @@ public with sharing class HDT_LC_FormAccountResidenziale {
                                      CustomerMarking__c=    dataAccount.get('customerMarking'),     Gender__c=                  dataAccount.get('gender'), 
                                      OtherPhone__c=         dataAccount.get('otherPhoneNumber'),    DegreeOfStudies__c=         dataAccount.get('education'),                        CompanyOwner__c=dataAccount.get('companyOwner')
                                      );
-        account.FiscalCode__c = account.FiscalCode__c.toUpperCase();
+        //account.FiscalCode__c = account.FiscalCode__c.toUpperCase();
         
         return account;
     }
