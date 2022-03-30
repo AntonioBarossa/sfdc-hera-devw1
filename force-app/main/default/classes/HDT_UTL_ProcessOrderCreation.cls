@@ -25,13 +25,12 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private List<SaleServiceItem__c> saleServiceToInsert = new List<SaleServiceItem__c>();
     private Map<Id, PricebookEntry> priceBookEntryMap = new Map<Id, PricebookEntry>();
     private Map<String, Product2> commOfferMap;
-    private Map<String, Map<String, String>> additionalOrderItemMap;
+    private Map<String, Map<String, SBQQ__ProductOption__c>> additionalOrderItemMap;
     private List<PricebookEntry> pbeOptionalSkuList = new List<PricebookEntry>();
     private Map<String, String> mapAllFields;
     private List<Opportunity> opportunityToinsert = new List<Opportunity>();
     private Map<String, String> productForActivationMap;
     private Map<String, HDT_MassiveFieldsObjectMap__mdt> productForAdditionalMap ;
-    //private Map<String, HDT_MassiveFieldsObjectMap__mdt> wrpForStructureMap;
     private Map<Id, Map<Id, PriceBookEntry>> pricebookEntryForOptionalMap;
     private List<Id> accountIdToRetrieve;
     private List<Id> billProfToRetrieve;
@@ -78,6 +77,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             servPointToRetrieve.add(nextDataObj.servPointId);
 
             processObj = buildWrapperOrderStructure(processObj, tempSplitedFields, nextDataObj);
+
+            System.debug('>>> ' + JSON.serializePretty(processObj));
 
             String csvHeader;
             String convertionError;
@@ -138,7 +139,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         List<PriceBookEntry> pbeList = new List<PriceBookEntry>();
         List<SBQQ__ProductOption__c> productOptionList = new List<SBQQ__ProductOption__c>();
         commOfferMap = new Map<String, Product2>();
-        additionalOrderItemMap = new Map<String, Map<String, String>>();
+        additionalOrderItemMap = new Map<String, Map<String, SBQQ__ProductOption__c>>();
         pricebookEntryForOptionalMap = new Map<Id, Map<Id, PriceBookEntry>>();
 
         for(Product2 commOffer : commOfferForRetrieve){
@@ -162,7 +163,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         for(Product2 p : productRetrievedFromDb){
             productIdList.add(p.Id);
             commOfferMap.put(p.ProductCode + '-' + p.Version__c, p);
-            additionalOrderItemMap.put(p.Id, new Map<String, String>());
+            additionalOrderItemMap.put(p.Id, new Map<String, SBQQ__ProductOption__c>());
         }
 
         pbeList = [
@@ -183,7 +184,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         }
 
         productOptionList = [
-            SELECT SBQQ__ConfiguredSKU__c, SBQQ__OptionalSKU__c, SBQQ__OptionalSKU__r.ProductCode
+            SELECT SBQQ__ConfiguredSKU__c, SBQQ__OptionalSKU__c, SBQQ__OptionalSKU__r.ProductCode, SBQQ__OptionalSKU__r.Name
             FROM SBQQ__ProductOption__c
             WHERE SBQQ__ConfiguredSKU__c IN :productIdList
             WITH SECURITY_ENFORCED
@@ -193,8 +194,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         
         for(SBQQ__ProductOption__c prodOpt : productOptionList){
             if(additionalOrderItemMap.containsKey(prodOpt.SBQQ__ConfiguredSKU__c)){
-                Map<String, String> tempMap = additionalOrderItemMap.get(prodOpt.SBQQ__ConfiguredSKU__c);
-                tempMap.put(prodOpt.SBQQ__OptionalSKU__r.ProductCode, prodOpt.SBQQ__OptionalSKU__c);
+                Map<String, SBQQ__ProductOption__c> tempMap = additionalOrderItemMap.get(prodOpt.SBQQ__ConfiguredSKU__c);
+                //tempMap.put(prodOpt.SBQQ__OptionalSKU__r.ProductCode, prodOpt.SBQQ__OptionalSKU__c);
+                tempMap.put(prodOpt.SBQQ__OptionalSKU__r.ProductCode, prodOpt);
                 additionalOrderItemMap.put(prodOpt.SBQQ__ConfiguredSKU__c, tempMap);
                 optnionalSkuIdList.add(prodOpt.SBQQ__OptionalSKU__c);
             }
@@ -325,10 +327,12 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
                     for(HDT_WRP_OrderItem wrpOrderItem : wrpChildOrder.orderItemList){
 
-                        if(wrpOrderItem.itemType.equalsIgnoreCase('POD') || wrpOrderItem.itemType.equalsIgnoreCase('PDR')){
-                            Map<String, String> tempMap = additionalOrderItemMap.get(commOffId);
+                        if(wrpOrderItem.itemType.equalsIgnoreCase('POD') || wrpOrderItem.itemType.equalsIgnoreCase('PDR') ||
+                           wrpOrderItem.itemType.equalsIgnoreCase('bonus') || wrpOrderItem.itemType.equalsIgnoreCase('promo')
+                        ){
+                            Map<String, SBQQ__ProductOption__c> tempMap = additionalOrderItemMap.get(commOffId);
                             if(tempMap.containsKey(wrpOrderItem.product.ProductCode)){
-                                wrpOrderItem.product.Id = tempMap.get(wrpOrderItem.product.ProductCode);
+                                wrpOrderItem.product.Id = tempMap.get(wrpOrderItem.product.ProductCode).SBQQ__OptionalSKU__c;
                                 wrpOrderItem.orderItem.Product2Id = wrpOrderItem.product.Id;
                                 wrpOrderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(wrpOrderItem.product.Id).Id;
                                 wrpOrderItem.orderItem.UnitPrice = pbeOptionalMap.get(wrpOrderItem.product.Id).UnitPrice;
@@ -346,24 +350,38 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                     parentOrderToInsert.add(processObj.parentOrder);
                 }
 
-                if(wrpChildOrder.orderType.equalsIgnoreCase('Aggiuntivo')){
+                if(wrpChildOrder.orderType.equalsIgnoreCase('vas')){
 
                     wrpChildOrder.childOrder.Pricebook2Id = priceBookId;
                     wrpChildOrder.childOrder.EffectiveDate = Date.today();
                     wrpChildOrder.childOrder.Status = 'Draft';
 
                     for(HDT_WRP_OrderItem wrpOrderItem : wrpChildOrder.orderItemList){
-                        Map<String, String> tempMap = additionalOrderItemMap.get(commOffId);
-                        if(tempMap.containsKey(wrpOrderItem.product.ProductCode)){
-                            wrpOrderItem.product.Id = tempMap.get(wrpOrderItem.product.ProductCode);
-                            wrpOrderItem.orderItem.Product2Id = wrpOrderItem.product.Id;
-                            wrpOrderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(wrpOrderItem.product.Id).Id;
-                            wrpOrderItem.orderItem.UnitPrice = pbeOptionalMap.get(wrpOrderItem.product.Id).UnitPrice;
-                            wrpOrderItem.orderItem.Quantity = 1;
-                            System.debug(LoggingLevel.DEBUG, '>>> pbeId aggint ' + wrpOrderItem.orderItem.PriceBookEntryId);
-                        } else {
-                            wrpOrderItem = null;
+                        Map<String, SBQQ__ProductOption__c> tempMap = additionalOrderItemMap.get(commOffId);
+
+                        SBQQ__ProductOption__c tempProdOpt;
+                        for(String key : tempMap.keySet()){
+                            tempProdOpt = tempMap.get(key);
+                            if(tempProdOpt.SBQQ__OptionalSKU__r.Name.equalsIgnoreCase('Analisi Consumi')){
+                                wrpOrderItem.product.Id = tempProdOpt.SBQQ__OptionalSKU__c;
+                                wrpOrderItem.orderItem.Product2Id = wrpOrderItem.product.Id;
+                                wrpOrderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(wrpOrderItem.product.Id).Id;
+                                wrpOrderItem.orderItem.UnitPrice = pbeOptionalMap.get(wrpOrderItem.product.Id).UnitPrice;
+                                wrpOrderItem.orderItem.Quantity = 1;
+                                System.debug(LoggingLevel.DEBUG, '>>> pbeId aggint ' + wrpOrderItem.orderItem.PriceBookEntryId);
+                            }
+                            
                         }
+                        //if(tempMap.containsKey(wrpOrderItem.product.ProductCode)){
+                        //    wrpOrderItem.product.Id = tempMap.get(wrpOrderItem.product.ProductCode);
+                        //    wrpOrderItem.orderItem.Product2Id = wrpOrderItem.product.Id;
+                        //    wrpOrderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(wrpOrderItem.product.Id).Id;
+                        //    wrpOrderItem.orderItem.UnitPrice = pbeOptionalMap.get(wrpOrderItem.product.Id).UnitPrice;
+                        //    wrpOrderItem.orderItem.Quantity = 1;
+                        //    System.debug(LoggingLevel.DEBUG, '>>> pbeId aggint ' + wrpOrderItem.orderItem.PriceBookEntryId);
+                        //} else {
+                        //    wrpOrderItem = null;
+                        //}
                         
                     }
                 }
@@ -431,6 +449,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         requestItemForUpsert.clear();
 
+        List<OrderItem> orderItemToUpdate = new List<OrderItem>();
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
             itemsToUpdate.add(processObj.requestItem);
@@ -446,15 +465,23 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 continue;
             }
 
-            for(HDT_WRP_ChildOrder childOrder : processObj.childOrderList){
-                if( childOrder.orderType == 'Attivazione' ){
-                    childOrder.orderItemList = setRequiredByLookup(childOrder.orderItemList);
+            for(HDT_WRP_ChildOrder wrpChildOrder : processObj.childOrderList){
+                if( wrpChildOrder.orderType == 'Attivazione' ){
+                    wrpChildOrder.orderItemList = setRequiredByLookup(wrpChildOrder.orderItemList);
+                    for(HDT_WRP_OrderItem wrpOrderItem : wrpChildOrder.orderItemList){
+                        orderItemToUpdate.add(wrpOrderItem.orderItem);
+                        requestItemForUpsert.add(processObj.requestItem);
+                    }
                 }
             }
 
         }
 
-        HDT_UTL_DatabaseService.updateSObject(orderItemToInsert);
+        HDT_WRP_SaveResponse updateOrderItemResponse;
+        updateOrderItemResponse = databaseUpsert(orderItemToUpdate, requestItemForUpsert, 'OrderItem');
+        requestItemForUpsert.clear();
+
+        //HDT_UTL_DatabaseService.updateSObject(orderItemToInsert);
 
         getLimitDetails('---processEnd---');
 
@@ -496,19 +523,12 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         productForAdditionalMap  = new Map<String, HDT_MassiveFieldsObjectMap__mdt>();
         productForActivationMap = new Map<String, String>();
         mapAllFields = new Map<String, String>();
-        //wrpForStructureMap = new Map<String, HDT_MassiveFieldsObjectMap__mdt>();
         List<HDT_MassiveFieldsObjectMap__mdt> allFieldForThisProcess;
 
         sobjectMap = new Map<String, HDT_MassiveFieldsObjectMap__mdt>();
         allFieldForThisProcess = HDT_QR_ProcessPostSales.getMapFieldsObjectByDeveloperName('Sales_%');
 
         for(HDT_MassiveFieldsObjectMap__mdt temp : allFieldForThisProcess){
-
-            //if(temp.objectType__c.equalsIgnoreCase('OrderWrapper')){
-            //
-            //} else {
-            //    mapAllFields.put(temp.MasterLabel, temp.nameField__c);
-            //}
             mapAllFields.put(temp.MasterLabel, temp.nameField__c);
             sobjectMap.put(temp.MasterLabel, temp);
         }
@@ -531,18 +551,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             }
             
         }
-
-        //List<HDT_MassiveFieldsObjectMap__mdt> structureMdtList = [
-        //    SELECT MasterLabel, labelField__c, nameField__c, objectType__c, processType__c
-        //    FROM HDT_MassiveFieldsObjectMap__mdt 
-        //    WHERE DeveloperName LIKE 'Sales_%'
-        //    AND objectType__c = 'OrderWrapper'
-        //    WITH SECURITY_ENFORCED
-        //];
-
-        //for(HDT_MassiveFieldsObjectMap__mdt mdt : structureMdtList){
-        //    wrpForStructureMap.put(mdt.MasterLabel, mdt);
-        //}
 
     }
 
@@ -643,40 +651,11 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             wrpChildOrder.orderItemList.add(wrpOrderItem);
             additionalProduct2.add(wrpOrderItem.product);
 
-            processObject.childOrderList.add(wrpChildOrder);
-        }
-
-        String codiceAnalisiConsumi = csvValues[mapHeaderForWrapper.get('CodiceAnalisiConsumi')];
-        String codiceBonus = csvValues[mapHeaderForWrapper.get('CodiceBonus')];
-        String codicePromo = csvValues[mapHeaderForWrapper.get('CodicePromo')];
-        
-        Boolean enableCodiceAnalisiConsumi = (String.isNotEmpty(codiceAnalisiConsumi));
-        Boolean enableCodiceBonus = (String.isNotEmpty(codiceBonus));
-        Boolean enableCodicePromo = (String.isNotEmpty(codicePromo));
-
-        if(enableCodiceAnalisiConsumi || enableCodiceBonus || enableCodicePromo){
-
-            HDT_WRP_ChildOrder wrpChildOrder = new HDT_WRP_ChildOrder();
-            wrpChildOrder.orderType = 'Aggiuntivo';
-            wrpChildOrder.childOrder = new Order();
-            wrpChildOrder.childOrder.RecordTypeId = childOrderRecordTypeId;
-            wrpChildOrder.childOrder.AccountId = nextDataObj.accountId;
-            wrpChildOrder.childOrder.ServicePoint__c = nextDataObj.servPointId;
-            wrpChildOrder.childOrder.BillingProfile__c = nextDataObj.billProfId;
-            wrpChildOrder.orderItemList = new List<HDT_WRP_OrderItem>();
-
-            HDT_WRP_OrderItem wrpOrderItem;
-
-            if(enableCodiceAnalisiConsumi){
-                // set wrapper for "Analisi consumi"
-                wrpOrderItem = new HDT_WRP_OrderItem();
-                wrpOrderItem.itemType = 'analisiConsumi';
-                wrpOrderItem.product = new Product2();
-                wrpOrderItem.product.Name = 'Analisi Consumi';
-                wrpOrderItem.product.ProductCode = codiceAnalisiConsumi;
-                wrpOrderItem.orderItem = new OrderItem();
-                wrpChildOrder.orderItemList.add(wrpOrderItem);
-            }
+            String codiceBonus = csvValues[mapHeaderForWrapper.get('CodiceBonus')];
+            String codicePromo = csvValues[mapHeaderForWrapper.get('CodicePromo')];
+            
+            Boolean enableCodiceBonus = (String.isNotEmpty(codiceBonus));
+            Boolean enableCodicePromo = (String.isNotEmpty(codicePromo));
 
             if(enableCodiceBonus){
                 // set wrapper for "bonus"
@@ -686,6 +665,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 wrpOrderItem.product.ProductCode = codiceBonus;
                 wrpOrderItem.orderItem = new OrderItem();
                 wrpChildOrder.orderItemList.add(wrpOrderItem);
+                additionalProduct2.add(wrpOrderItem.product);
             }
 
             if(enableCodicePromo){
@@ -696,7 +676,35 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 wrpOrderItem.product.ProductCode = codicePromo;
                 wrpOrderItem.orderItem = new OrderItem();
                 wrpChildOrder.orderItemList.add(wrpOrderItem);
+                additionalProduct2.add(wrpOrderItem.product);
             }
+
+            processObject.childOrderList.add(wrpChildOrder);
+        }
+
+        String codiceAnalisiConsumi = csvValues[mapHeaderForWrapper.get('CodiceAnalisiConsumi')];
+        Boolean enableCodiceAnalisiConsumi = (String.isNotEmpty(codiceAnalisiConsumi) && codiceAnalisiConsumi=='true') ? true : false;
+
+        if(enableCodiceAnalisiConsumi){
+
+            HDT_WRP_ChildOrder wrpChildOrder = new HDT_WRP_ChildOrder();
+            wrpChildOrder.orderType = 'vas';
+            wrpChildOrder.childOrder = new Order();
+            wrpChildOrder.childOrder.RecordTypeId = childOrderRecordTypeId;
+            wrpChildOrder.childOrder.AccountId = nextDataObj.accountId;
+            wrpChildOrder.childOrder.ServicePoint__c = nextDataObj.servPointId;
+            wrpChildOrder.childOrder.BillingProfile__c = nextDataObj.billProfId;
+            wrpChildOrder.orderItemList = new List<HDT_WRP_OrderItem>();
+
+            HDT_WRP_OrderItem wrpOrderItem;
+            // set wrapper for "Analisi consumi"
+            wrpOrderItem = new HDT_WRP_OrderItem();
+            wrpOrderItem.itemType = 'analisiConsumi';
+            wrpOrderItem.product = new Product2();
+            wrpOrderItem.product.Name = 'Analisi Consumi';
+            wrpOrderItem.product.ProductCode = codiceAnalisiConsumi;
+            wrpOrderItem.orderItem = new OrderItem();
+            wrpChildOrder.orderItemList.add(wrpOrderItem);
 
             processObject.childOrderList.add(wrpChildOrder);
 
