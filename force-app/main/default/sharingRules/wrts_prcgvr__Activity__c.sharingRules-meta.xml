@@ -86,7 +86,7 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>HDT_SR_ActivityHERACOMM</fullName>
+        <fullName>HDT_SR_ActivityHERACOMM_2</fullName>
         <accessLevel>Edit</accessLevel>
         <label>HDT_SR_ActivityHERACOMM</label>
         <sharedTo>
@@ -97,6 +97,7 @@
             <operation>equals</operation>
             <value>HERA COMM</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_ActivityMMS</fullName>

@@ -29,11 +29,23 @@ export default class hdtDocumentActivityValidation extends LightningElement {
     }
 
     approve(){
+        console.log('APPROVE');
         valida({
             recordid : this.recordId,
             validazione : 'Si'
         }).then(result => {
+            console.log('ENTRATO NEL THEN');
+            if(result == 'Not User'){
+                console.log('Not User');
+                const event = new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'L\'attività può essere gestita solo dall\'assegnatario.',
+                    variant: 'error',
+                });
+                this.dispatchEvent(event);
+            }
             if(result == ''){
+                console.log('User');
                 const event = new ShowToastEvent({
                     title: 'Successo',
                     message: 'Attività Validata, Procedi con l\'order',
@@ -82,24 +94,37 @@ export default class hdtDocumentActivityValidation extends LightningElement {
     }
 
     rejectAct(){
+        console.log('REJECTACT');
         console.log('@@@Note: '+this.note);
         this.showModalSpinner=true;
         rejectActivity({
             recordId : this.recordId,
             noteChiusura : this.note
         }).then(result => {
-            if(result == 'Creata'){
+            if(result == 'Not User'){
                 const event = new ShowToastEvent({
-                    title: 'Successo',
-                    message: 'Attività Non Validata, è stata generata l\'attivita di Documento non Validato',
-                    variant: 'success',
+                    title: 'Attenzione',
+                    message: 'L\'attività può essere gestita solo dall\'assegnatario.',
+                    variant: 'error',
                 });
                 this.dispatchEvent(event);
                 this.showModal=false;
-            }
-            updateRecord({ fields: { Id: this.recordId } });
-            this.showModalSpinner=false;
+                this.showModalSpinner=false;
 
+            }
+            else{
+                if(result == 'Creata'){
+                    const event = new ShowToastEvent({
+                        title: 'Successo',
+                        message: 'Attività Non Validata, è stata generata l\'attivita di Documento non Validato',
+                        variant: 'success',
+                    });
+                    this.dispatchEvent(event);
+                    this.showModal=false;
+                }
+                updateRecord({ fields: { Id: this.recordId } });
+                this.showModalSpinner=false;
+            }
         }).catch(error =>{
             const event = new ShowToastEvent({
                 title: 'Errore',
