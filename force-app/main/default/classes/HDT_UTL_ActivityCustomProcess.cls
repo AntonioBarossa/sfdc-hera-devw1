@@ -112,6 +112,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 }
 
                 activity.CreditCheckReason__c = order.CreditCheckDescription__c;
+                activity.wrts_prcgvr__Description__c = order.CreditCheckDescription__c;
                 activity.Order__c = order.Id;                
                 activity.Contact__c = order.Contact__c;                                
                 activity.wrts_prcgvr__Status__c = 'Aperta';                
