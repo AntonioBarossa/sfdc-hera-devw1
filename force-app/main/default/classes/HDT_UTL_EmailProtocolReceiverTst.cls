@@ -80,7 +80,7 @@ public with sharing class HDT_UTL_EmailProtocolReceiverTst {
       Interaction__c testFields = [SELECT id,BodyEmail__c FROM Interaction__c  LIMIT 1];
 
       Interaction__c newInt = new Interaction__c();
-      newInt.Status__c = 'Bozza';
+      //newInt.Status__c = 'Bozza';
       newInt.Type__c = 'Digital';
       insert newInt;
 
