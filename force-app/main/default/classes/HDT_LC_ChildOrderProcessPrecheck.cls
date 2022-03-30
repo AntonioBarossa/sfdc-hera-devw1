@@ -159,6 +159,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 when 'Prima Attivazione'{
                     processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
                     processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
+                    newOrder.PressureLevel__c  = 'BP';
                 }
             }
 

@@ -205,7 +205,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 }
                 else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
-                    orderToUpdate.DocumentLow80__c = 'Richiesto';
                 }
                 if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(), 3) || order.EffectiveDate__c == null){
                     orderToUpdate.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
