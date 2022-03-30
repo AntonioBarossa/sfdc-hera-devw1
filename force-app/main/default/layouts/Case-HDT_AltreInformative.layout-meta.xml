@@ -222,9 +222,9 @@
         <excludeButtons>New</excludeButtons>
         <fields>Name</fields>
         <fields>Content</fields>
-        <fields>CreatedDate</fields>
+        <fields>Posted</fields>
         <relatedList>SocialPosts</relatedList>
-        <sortField>CreatedDate</sortField>
+        <sortField>Posted</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
@@ -250,7 +250,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1j000002FKxP</masterLabel>
+        <masterLabel>00h3N000002LiYG</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
