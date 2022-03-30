@@ -26,14 +26,20 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     @AuraEnabled
     public static boolean riassegnaComCod(string recordId,String causale){
         try{
+            List<SObject> sobjToUpdate = new List<SObject>();
             // HDT_QR_Case caseQr = new HDT_QR_Case();
             wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
           //  Case c = caseQr.getRecordById(s.case__c);
             Case c = new Case();
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
             c.id = s.case__c;
             c.phase__c	='In Attesa Approvazione';
             c.ReassignmentReason__c = causale;
-            caseSrv.updateRecord(c);
+            activity.Id = s.Id;
+            activity.wrts_prcgvr__Description__c = causale;
+            sobjToUpdate.add(c);
+            sobjToUpdate.add(activity);
+            HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
             System.debug(LoggingLevel.DEBUG,'*******trueComm');
             return true;
         }catch(exception e){
@@ -46,21 +52,32 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     public static boolean cambiaphaseComm(string recordId,string causale){
         try{
             HDT_QR_Case caseQr = new HDT_QR_Case();
-            wrts_prcgvr__Activity__c sToCreate = new wrts_prcgvr__Activity__c();
+            List<SObject> sobjToUpdate = new List<SObject>();
+            //wrts_prcgvr__Activity__c sToCreate = new wrts_prcgvr__Activity__c();
             wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
-            sToCreate.account__c = s.account__c;
-            sToCreate.case__c = s.case__c;
-            sToCreate.recordtypeid = s.recordtypeid;
-            sToCreate.approved__c = causale;
-            sToCreate.type__c = 'Contratti/Bonus Commerciale';
-            s.wrts_prcgvr__status__c = 'Chiusa';
-            s.approved__c = causale;
-
-            activityCustomSrv.updateRecord(s);
+            // sToCreate.account__c = s.account__c;
+            // sToCreate.case__c = s.case__c;
+            // sToCreate.recordtypeid = s.recordtypeid;
+            // sToCreate.approved__c = causale;
+            // sToCreate.type__c = 'Contratti/Bonus Commerciale';
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+            activity.Id = s.Id;
+            activity.wrts_prcgvr__status__c = 'Chiusa';
+            activity.ClosingNote__c = causale;
+            sobjToUpdate.add(activity);
             //activityCustomSrv.createRecord(sToCreate);
-            Case c = caseQr.getRecordById(s.case__c);
+            Case c = new Case();
+            c.Id = s.Case__c;
             c.phase__c	='In Lavorazione';
-            caseSrv.updateRecord(c);
+            c.Note__c = causale;
+            sobjToUpdate.add(c);
+
+            HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
+
+            Set<String> idToNotificate = new Set<String>();
+            idToNotificate.add(s.CreatedById);
+            HDT_UTL_NewsNotificationCenter.fireNotification('Attivita Chiusa', 'L\'Attivita è stata '+causale, activity.Id, idToNotificate);
+
            // caseSrv.updateRecord(c);
             return true;
         }
