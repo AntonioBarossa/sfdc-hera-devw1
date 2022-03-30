@@ -123,8 +123,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             BillingProfile__r.Name
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
-            AND SBQQ__Quote__r.ContractReference__c = null
-            AND SBQQ__Quote__r.OrderReference__c = null
+            AND (SBQQ__Quote__r.ContractReference__c = null OR SBQQ__Quote__r.OrderReference__c = null)
             AND SBQQ__Product__r.Name != 'Analisi Consumi'
             AND (SBQQ__ProductFamily__c = 'VAS Fatturabili' OR SBQQ__ProductFamily__c = 'VAS Prodotto' OR SBQQ__ProductFamily__c = 'VAS Servizio')
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
@@ -310,7 +309,8 @@ public inherited sharing class HDT_QR_QuoteLine {
             Id,
             Name,
             BillingProfile__c,
-            SBQQ__Quote__c
+            SBQQ__Quote__c,
+            SBQQ__ProductFamily__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__c = :quoteId
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')

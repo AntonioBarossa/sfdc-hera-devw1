@@ -439,7 +439,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.VASBillingMode__c= mainItems[0].VASBillingMode__c;
             Id idToFilter = mainItems[0]?.SBQQ__QuoteLine__r?.ServicePointLinkItem__r?.ServicePoint__c;
             idToFilter= idToFilter!=null? idToFilter : mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c;
-            if(orderToUpdate.isVas__c && originalOrder.OrderReference__c==null && idToFilter!=null){
+            if(orderToUpdate.isVas__c && originalOrder.OrderReference__c==null && originalOrder.SBQQ__Quote__r.Type__c != 'Amendment' && idToFilter!=null){
                 //fai il match con l'orderItem di tipo pod che ha lo stesso quote
                 List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, idToFilter);
                 if(!orderItemsPod.isEmpty()){
