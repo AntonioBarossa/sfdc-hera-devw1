@@ -15,7 +15,7 @@ public with sharing class HDT_UTL_CampaignMemberAssigmentItemTst{
 
 		System.runAs(internalUser){
 
-			HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+			HDT_UTL_DataFactoryTst.createAccountPartner(1, true, 'Mario Verdi');
 			HDT_UTL_DataFactoryTst.createCampaignMemberAssigment(1, true, true, 'CampaignMemberAssigmentNameTest');
 		}
 	}
@@ -34,7 +34,7 @@ public with sharing class HDT_UTL_CampaignMemberAssigmentItemTst{
 
 			List<Account> tAccs=[SELECT Id, Name
 			                     FROM Account 
-			                     WHERE Name='test account0'];
+			                     WHERE Name='Mario Verdi'];
 
 			List<CampaignMemberAssigment__c> tCampMembAssig=[SELECT Id, Name
 			                                                 FROM CampaignMemberAssigment__c 
@@ -66,7 +66,7 @@ public with sharing class HDT_UTL_CampaignMemberAssigmentItemTst{
 
 			List<Account> tAccs=[SELECT Id, Name
 			                     FROM Account 
-			                     WHERE Name='test account0'];
+			                     WHERE Name='Mario Verdi'];
 
 			List<CampaignMemberAssigment__c> tCampMembAssig=[SELECT Id, Name
 			                                                 FROM CampaignMemberAssigment__c 
