@@ -480,7 +480,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         let companyOwner= this.template.querySelector('[data-id="companyOwner"]');
         let phonePrefix= this.template.querySelector('[data-id="phonePrefix"]');
         let mobilePhonePrefix= this.template.querySelector('[data-id="mobilePhonePrefix"]');
-        let companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
+        // let companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
         let customerTypeValue=this.template.querySelector('[data-id="customerType"]').value;
 
 
@@ -776,7 +776,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             "profession" : profession.value,
                             "recordTypeId" : this.RecordTypeId,
                             "companyOwner" : companyOwner.value,
-                            "company":companyValue.value,
+                            // "company":companyValue.value,
                             "phonePrefix" : phonePrefix.value ,
                             "mobilePhonePrefix" : mobilePhonePrefix.value,
                             "customerTypeValue": customerTypeValue,
@@ -873,7 +873,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         "companyOwner" : companyOwner.value ,
                         "phonePrefix" : phonePrefix.value ,
                         "mobilePhonePrefix" : mobilePhonePrefix.value,
-                        "company":companyValue.value,
+                        // "company":companyValue.value,
                         "customerTypeValue": customerTypeValue.value,
 
                     };
