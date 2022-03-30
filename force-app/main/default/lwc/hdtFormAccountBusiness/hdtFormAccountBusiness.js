@@ -510,6 +510,41 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         var messageError= "Completare tutti i campi obbligatori !";
         var mailFormat = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
         var dataAccount;
+
+        //CAMPI IN UPPERCASE
+        let businessNameToUC = '';
+        let fiscalCodeToUC = '';
+        let firstNameToUC = '';
+        let lastNameToUC = '';
+        let personFiscalCodeToUC = '';
+        let birthPlaceToUC = '';
+        let firstIndividualNameToUC = '';
+        let lastIndividualNameToUC = '';
+        if(businessName.value != null && businessName.value != undefined && businessName.value != '')
+            businessNameToUC = businessName.value.toUpperCase();
+        if(fiscalCode.value != null && fiscalCode.value != undefined && fiscalCode.value != '')
+            fiscalCodeToUC = fiscalCode.value.toUpperCase();
+        if(firstName.value != null && firstName.value != undefined && firstName.value != '')
+            firstNameToUC = firstName.value.toUpperCase();
+        if(lastName.value != null && lastName.value != undefined && lastName.value != '')
+            lastNameToUC = lastName.value.toUpperCase();
+        if(this.personFiscalCode.value != null && this.personFiscalCode.value != undefined && this.personFiscalCode.value != '')
+            personFiscalCodeToUC = this.personFiscalCode.value.toUpperCase();
+        if(this.birthPlace != null && this.birthPlace != undefined && this.birthPlace != '')
+            birthPlaceToUC = this.birthPlace.toUpperCase();
+        if(firstIndividualName.value != null && firstIndividualName.value != undefined && firstIndividualName.value != '')
+            firstIndividualNameToUC = firstIndividualName.value.toUpperCase();
+        if(lastIndividualName.value != null && lastIndividualName.value != undefined && lastIndividualName.value != '')
+            lastIndividualNameToUC = lastIndividualName.value.toUpperCase();
+        console.log('businessNameToUC --> '+businessNameToUC);
+        console.log('fiscalCodeToUC --> '+fiscalCodeToUC);
+        console.log('firstNameToUC --> '+firstNameToUC);
+        console.log('lastNameToUC --> '+lastNameToUC);
+        console.log('personFiscalCodeToUC --> '+personFiscalCodeToUC);
+        console.log('birthPlaceToUC --> '+birthPlaceToUC);
+        console.log('firstIndividualNameToUC --> '+firstIndividualNameToUC);
+        console.log('lastIndividualNameToUC --> '+lastIndividualNameToUC);
+
         if ((this.markingValue.includes("Condominio")||this.markingValue.includes('Associazione')) && (fiscalCode.value== undefined||fiscalCode.value.trim()=='')) {
           
             if(!fiscalCode.reportValidity()){
@@ -706,15 +741,18 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         }
                         console.log("LOG13:");
                         console.log("LOG13:" + businessName.value);
+
+                        
+                        
                         dataAccount={
-                            "businessName" : businessName.value,
+                            "businessName" : businessNameToUC,
                             "vatNumber" : vatNumber.value,
-                            "fiscalCode" : fiscalCode.value.replace(/ /g,""),
+                            "fiscalCode" : fiscalCodeToUC.replace(/ /g,""),
                           //  "legalForm" : legalForm.value,
                             "customerMarking" : customerMarking.value,
                             "category" : category.value,
-                            "firstIndividualName" : firstIndividualName.value,
-                            "lastIndividualName" : lastIndividualName.value,
+                            "firstIndividualName" : firstIndividualNameToUC,
+                            "lastIndividualName" : lastIndividualNameToUC,
                             "prefixPhoneNumber" : prefixPhoneNumber.value,
                             "prefixMobilePhoneNumber" : prefixMobilePhoneNumber.value,
                             "mobilephoneNumber" : mobilephoneNumber.value,
@@ -722,12 +760,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             "email" : email.value,
                             "electronicMail" : electronicMail.value,
                             "numberFax" : numberFax.value,
-                            "firstName" : firstName.value,
+                            "firstName" : firstNameToUC,
                             "gender" : this.gender,
-                            "lastName" : lastName.value,
+                            "lastName" : lastNameToUC,
                             "birthDate" : this.birthDate,
-                            "birthplace": this.birthPlace,
-                            "personFiscalCode" : this.personFiscalCode.value.replace(/ /g,""),
+                            "birthplace": birthPlaceToUC,
+                            "personFiscalCode" : personFiscalCodeToUC.replace(/ /g,""),
                             "role" : role.value,
                             "mobilePhone" : mobilePhone.value,
                             "contactEmail" : contactEmail.value,
@@ -796,19 +834,20 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 }else{
                     var prova = this.personFiscalCode.value;//.replace(/ /g,"");
                     console.log("LOG12:" + prova);
+                        
                     getFromFiscalCode2({
                         fiscalCodes : prova
                     }).then((response) => {
                     console.log("LOG16");
                     dataAccount={
-                        "businessName" : businessName.value,
+                        "businessName" : businessNameToUC,
                         "vatNumber" : vatNumber.value,
-                        "fiscalCode" : fiscalCode.value.replace(/ /g,""),
+                        "fiscalCode" : fiscalCodeToUC.replace(/ /g,""),
                       //  "legalForm" : legalForm.value,
                         "customerMarking" : customerMarking.value,
                         "category" : category.value,
-                        "firstIndividualName" : firstIndividualName.value,
-                        "lastIndividualName" : lastIndividualName.value,
+                        "firstIndividualName" : firstIndividualNameToUC,
+                        "lastIndividualName" : lastIndividualNameToUC,
                         "phoneNumber" : phoneNumber.value,
                         "email" : email.value,
                         "electronicMail" : electronicMail.value,
@@ -816,12 +855,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         "prefixPhoneNumber" : prefixPhoneNumber.value,
                         "prefixMobilePhoneNumber" : prefixMobilePhoneNumber.value,
                         "mobilephoneNumber" : mobilephoneNumber.value,
-                        "firstName" : firstName.value,
+                        "firstName" : firstNameToUC,
                         "gender" : this.gender,
-                        "lastName" : lastName.value,
+                        "lastName" : lastNameToUC,
                         "birthDate" : this.birthDate,
-                        "birthplace": this.birthPlace,
-                        "personFiscalCode" : this.personFiscalCode.value.replace(/ /g,""),
+                        "birthplace": birthPlaceToUC,
+                        "personFiscalCode" : personFiscalCodeToUC.replace(/ /g,""),
                         "role" : role.value,
                         "mobilePhone" : mobilePhone.value,
                         "contactEmail" : contactEmail.value,
