@@ -1159,7 +1159,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 o.CreditCheckInProgress__c = false;
                 if('Attesa Credit Check'.equalsIgnoreCase(o.Phase__c) || 'Credit Check KO'.equalsIgnoreCase(o.Phase__c)){
                     ordersId.add(o.Id);
-                    if(o.RecordType.DeveloperName == 'HDT_RT_Voltura' || o.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch'){
+                    if('HDT_RT_Voltura'.equalsIgnoreCase(recordTypeName) || 'HDT_RT_VolturaConSwitch'.equalsIgnoreCase(recordTypeName)){
                         enableQueryContracts = true;
                     } 
                 }                               
