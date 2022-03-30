@@ -2125,6 +2125,14 @@
             <fullName>Bozza</fullName>
             <default>true</default>
         </values>
+        <values>
+            <fullName>Registrazione validata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrazione validata  Firmato/Inviato</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PressureLevel__c</picklist>

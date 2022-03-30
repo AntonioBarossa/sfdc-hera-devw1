@@ -12,6 +12,7 @@
             <operation>equals</operation>
             <value>AAA-EBT</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_ActivityCallOutboundHERACOMM</fullName>
@@ -36,6 +37,7 @@
             <operation>equals</operation>
             <value>Sportello</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_ActivityCallOutboundAAAEBT</fullName>
@@ -60,6 +62,7 @@
             <operation>equals</operation>
             <value>Sportello</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_ActivityCallOutboundMMS</fullName>
@@ -84,9 +87,10 @@
             <operation>equals</operation>
             <value>Sportello</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>HDT_SR_ActivityHERACOMM_2</fullName>
+        <fullName>HDT_SR_ActivityHERACOMM</fullName>
         <accessLevel>Edit</accessLevel>
         <label>HDT_SR_ActivityHERACOMM</label>
         <sharedTo>
@@ -111,6 +115,7 @@
             <operation>equals</operation>
             <value>MMS</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_ActivityOutbound</fullName>
@@ -124,6 +129,7 @@
             <operation>equals</operation>
             <value>HERA COMM</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_ActivityReseller</fullName>
@@ -137,5 +143,6 @@
             <operation>equals</operation>
             <value>Reseller</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
 </SharingRules>
