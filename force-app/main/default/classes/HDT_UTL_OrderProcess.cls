@@ -649,10 +649,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 // Order orderToUpdate = new Order(Id = childOrder.Id, Phase__c = newVasPhase);
                 // childOrdersToUpdate.add(orderToUpdate);
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && isNotManaged ) {
-                if (childOrder.Phase__c == currentPhase
-                        && !childOrder.QualityCall__c
-                        && !isMonitoringList.contains(childOrder.AgencyCode__c)
-                        && childOrder.ProcessType__c != 'Voltura' ) {
+                if (childOrder.Phase__c == currentPhase ) {
                             Order orderToUpdate = new Order(
                                 Id = childOrder.Id,
                                     Phase__c = 'Pratica non gestita per il DL'
@@ -920,13 +917,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
             
             for(Order ord : orderList){
-
-                wrts_prcgvr__Activity__c actToUpdate = mapIdOrderToActivity.get(ord.Id);
-                actToUpdate.CreditCheckResolutionReason__c = ord.CreditCheckDescription__c;
-                actToUpdate.CreditCheckReason__c = ord.CreditCheckDescription__c;
-                actToUpdate.CreditCheckResults__c = ord.IncomingCreditCheckResult__c;
-                actToUpdate.wrts_prcgvr__Status__c = 'KO Risolto';
-                actListToUpdate.add(actToUpdate);
+                if (!'Credit Check Forzato dall\'operatore'.equalsIgnoreCase(ord.CreditCheckDescription__c)){
+                    wrts_prcgvr__Activity__c actToUpdate = mapIdOrderToActivity.get(ord.Id);
+                    actToUpdate.CreditCheckResolutionReason__c = ord.CreditCheckDescription__c;
+                    actToUpdate.CreditCheckReason__c = ord.CreditCheckDescription__c;
+                    actToUpdate.CreditCheckResults__c = ord.IncomingCreditCheckResult__c;
+                    actToUpdate.wrts_prcgvr__Status__c = 'KO Risolto';
+                    actListToUpdate.add(actToUpdate);
+                }
                 
                 /*if(ord.CreditCheckDescription__c.contains('Saldo debito cattivo pagatore') && actToUpdate.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_CreditCheckKO')){
                     mapIdToOrderClean.put(ord.id,ord);                
@@ -935,7 +933,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     actListToRecheck.add(actToUpdate);
                 }*/
             }
-            HDT_UTL_ActivityCustomProcess.updateCreditCheckActivity(actListToUpdate);
+            if (!actListToUpdate.isEmpty()){
+                HDT_UTL_ActivityCustomProcess.updateCreditCheckActivity(actListToUpdate);
+            }
         }
         // sbiancare l'esito ( IncomingCreditCheckResult__c / CreditCheckDescription__c) su order e reinviare la chiamata 
         /*if(!mapIdToOrderClean.isEmpty()){
@@ -1159,7 +1159,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 o.CreditCheckInProgress__c = false;
                 if('Attesa Credit Check'.equalsIgnoreCase(o.Phase__c) || 'Credit Check KO'.equalsIgnoreCase(o.Phase__c)){
                     ordersId.add(o.Id);
-                    if(o.RecordType.DeveloperName == 'HDT_RT_Voltura' || o.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch'){
+                    if('HDT_RT_Voltura'.equalsIgnoreCase(recordTypeName) || 'HDT_RT_VolturaConSwitch'.equalsIgnoreCase(recordTypeName)){
                         enableQueryContracts = true;
                     } 
                 }                               

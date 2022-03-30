@@ -3,7 +3,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import getSignSendMode from '@salesforce/apex/HDT_LC_DocumentSignatureManager.getSignSendMode';
-
+import handleContactPoint from '@salesforce/apex/HDT_LC_DocumentSignatureManager.handleContactPoint';
 const sourceWithDefault = ['Agenzie','Agenzie SME','Business Agent'];
 const signModeAgenzie = 'Contratto già firmato';
 const sendModeAgenzie = 'Posta Cartacea';
@@ -45,6 +45,8 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track showAddress = false;
     @track documents;
     @track tipoPlico='';
+    @track showModalContact=false;
+    @track contactPointInfo;
     defautlAgenciesManagement;
 
     //@frpanico 07/09 added EntryChannel__c (Canale di Ingresso) to predefault SendMode
@@ -205,7 +207,13 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     handleChangeAddress(event){
         this.isModalOpen = !this.isModalOpen;
     }
+
+    handleCloseModalContact(event){
+        this.showModalContact = false;
+        this.disableinput=false;
+    }
     handleCloseModal(event){
+        
         var addressWrapper = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         console.log(JSON.stringify(addressWrapper));
         if((addressWrapper['Flag Verificato']) && addressWrapper.Via != null && addressWrapper.Via != ""){
@@ -350,12 +358,67 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                         this.returnWrapper.email = email.value;
                         this.returnWrapper.addressWrapper.completeAddress = address.value;
                         this.returnWrapper.dataConfirmed = true;
-                        this.dispatchEvent(new CustomEvent('confirmdata', { detail: JSON.stringify(this.returnWrapper)}));
+                        //this.dispatchEvent(new CustomEvent('confirmdata', { detail: JSON.stringify(this.returnWrapper)}));
+                        this.checkContactPoint();
                     }
                 }
         }catch (error) {
             console.error(error);
         }
+    }
+
+    checkContactPoint(){
+        console.log('### ' +this.returnWrapper.email);
+        console.log('### ' +this.returnWrapper.phone);
+        console.log('### ' +this.returnWrapper.contactId);
+        if(this.returnWrapper.contactId != '' && this.returnWrapper.contactId != undefined){
+            handleContactPoint({
+                email: this.returnWrapper.email,
+                phone: this.returnWrapper.phone,
+                contactId:this.returnWrapper.contactId,
+                mode:'query'
+            }).then(result => {
+                this.contactPointInfo = JSON.parse(result);
+                if(this.contactPointInfo.result ==='OK'){
+                    this.dispatchEvent(new CustomEvent('confirmdata', { detail: JSON.stringify(this.returnWrapper)}));
+                }else{
+                    this.showModalContact = true;
+                }
+            })
+        }else{
+            this.dispatchEvent(new CustomEvent('confirmdata', { detail: JSON.stringify(this.returnWrapper)}));
+        }
+        
+    }
+    createContactPoint(){
+        var email = '';
+        var phone = '';
+        if(this.contactPointInfo.email === 'KO'){
+            email = this.returnWrapper.email;
+        }
+        if(this.contactPointInfo.phone === 'KO'){
+            phone = this.returnWrapper.phone;
+        }
+        
+        handleContactPoint({
+            email: email,
+            phone: phone,
+            contactId:this.returnWrapper.contactId,
+            mode:'insert'
+        }).then(result => {
+            console.log('result' + result);
+            if(result ==='OK'){
+                this.showModalContact = false;
+                this.dispatchEvent(new CustomEvent('confirmdata', { detail: JSON.stringify(this.returnWrapper)}));
+            }else{
+                this.showMessage('Attenzione','Errore nella creazione dei contact point','error');
+                this.showModalContact = false;
+            }
+        }).catch(error => {
+            console.log('error ' + error);
+            this.showMessage('Attenzione','Errore nella creazione dei contact point','error');
+            this.showModalContact = false;
+        });
     }
 
     showMessage(title,message,variant){
