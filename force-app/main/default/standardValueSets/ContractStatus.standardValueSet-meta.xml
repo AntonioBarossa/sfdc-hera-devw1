@@ -32,4 +32,11 @@
         <label>Cessato</label>
         <groupingString>Draft</groupingString>
     </standardValue>
+    <standardValue>
+        <fullName>Annullato</fullName>
+        <default>false</default>
+        <label>Annullato</label>
+        <groupingString>Draft</groupingString>
+    </standardValue>
+    
 </StandardValueSet>
