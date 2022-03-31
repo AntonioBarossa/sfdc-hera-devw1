@@ -178,15 +178,18 @@ public with sharing class HDT_LC_MassiveLoader {
         }
     }
 
+    private static void deleteDocument(Id contentDocumentId, Id massiveLoaderRequestId){
+        Database.delete(contentDocumentId);
+        Database.delete(massiveLoaderRequestId);
+    }
+
     @AuraEnabled
     public static Map<String, Object> convertCsvToRequestItem(String fileName, String contentVersionId, String selectedProcessName, String massiveLoaderRequestId){
 
-        //massiveLoaderRequestId = 'a3d3O000000X5WEQA0';
-
-        //System.debug(LoggingLevel.DEBUG, '>>> fileName: ' + fileName);
-        //System.debug(LoggingLevel.DEBUG, '>>> contentVersionId: ' + contentVersionId);
-        //System.debug(LoggingLevel.DEBUG, '>>> selectedProcessName: ' + selectedProcessName);
-        //System.debug(LoggingLevel.DEBUG, '>>> massiveLoaderRequestId: ' + massiveLoaderRequestId);
+        System.debug(LoggingLevel.DEBUG, '>>> fileName: ' + fileName);
+        System.debug(LoggingLevel.DEBUG, '>>> contentVersionId: ' + contentVersionId);
+        System.debug(LoggingLevel.DEBUG, '>>> selectedProcessName: ' + selectedProcessName);
+        System.debug(LoggingLevel.DEBUG, '>>> massiveLoaderRequestId: ' + massiveLoaderRequestId);
 
         HDT_QR_ContentVersion contentVersionQr = new HDT_QR_ContentVersion();
         Map<String, Object> response = new Map<String, Object>();
@@ -194,17 +197,22 @@ public with sharing class HDT_LC_MassiveLoader {
         ContentVersion uploadedFile = contentVersionQr.getRecordById(contentVersionId);
         HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(selectedProcessName);
 
+        System.debug('>>> metadata ' + selectedProcess.DeveloperName + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION);
+        System.debug('>>> lwc ' + fileName);
+
         if(!fileName.equalsIgnoreCase(selectedProcess.DeveloperName + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION) &&
            !fileName.equalsIgnoreCase(selectedProcess.MasterLabel + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION)
             ) {                
             response.put('error', true);
             response.put('errorMessage', Label.MassiveLoaderFileNameError);
+            deleteDocument(uploadedFile.ContentDocumentId, massiveLoaderRequestId);
             return response;
         }
 
         if(uploadedFile.FileType.toUpperCase() != constantsUtl.MASSIVLOADER_FILE_EXTENTION.toUpperCase()) {
             response.put('error', true);
             response.put('errorMessage', Label.MassiveLoaderExtentionError);
+            deleteDocument(uploadedFile.ContentDocumentId, massiveLoaderRequestId);
             return response;
         }
 
@@ -218,12 +226,14 @@ public with sharing class HDT_LC_MassiveLoader {
         if(totLinesCounter == 0){
             response.put('error', true);
             response.put('errorMessage', 'Il file csv non contiene nulla.');
+            deleteDocument(uploadedFile.ContentDocumentId, massiveLoaderRequestId);
             return response;
         }
 
         if(totLinesCounter > csvLinesLimit){
             response.put('error', true);
             response.put('errorMessage', 'Il file csv contiene più di 1500 righe.');
+            //deleteDocument(uploadedFile.ContentDocumentId);
             return response;
         }
 
@@ -250,6 +260,7 @@ public with sharing class HDT_LC_MassiveLoader {
         if(String.isEmpty(fileBody)){
             response.put('error', true);
             response.put('errorMessage', 'Il file csv non contiene nulla.');
+            deleteDocument(uploadedFile.ContentDocumentId, massiveLoaderRequestId);
             return response;
         }
 
