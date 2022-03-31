@@ -1510,7 +1510,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND Contact__c=\''+contactId+'\'');
 		}	
 		Map<String,String> result = new Map<String,String>();
-		if(!cpEmailList.isEmpty() && !cpPhone.isEmpty()){
+		if((!cpEmailList.isEmpty() && !cpPhone.isEmpty()) || (String.isBlank(email) && String.isBlank(phone))){
 			result.put('email', 'OK');
 			result.put('phone', 'OK');
 			result.put('result', 'OK');
