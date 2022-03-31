@@ -375,7 +375,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     if(previousPhase.indexOf('KO') > -1)
                                     {
                                         ord.Phase__c = previousPhase;
-                                        ord.Status = 'Completed';
+                                        //ord.Status = 'Completed';
                                     }
                                     /*@frpanico 02/02/2022
                                      * Aggiunta gestione 
