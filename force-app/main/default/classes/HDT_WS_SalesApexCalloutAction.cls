@@ -195,7 +195,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                         when 'Amm. Precheck OK SII' {
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
                                             ord.RemiCode__c = fieldValueResponse.get('EXT_CABINA_REMI');
-                                            ord.VATNumberUdb__c = fieldValueResponse.get('EXT_PIVA_DISTR');
+                                            //ord.VATNumberUdb__c = fieldValueResponse.get('EXT_PIVA_DISTR');
                                             if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                                 ord.PrecheckResultSII__c = 'OK';
                                             }

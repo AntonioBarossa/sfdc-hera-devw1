@@ -37676,6 +37676,10 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
+        <tab>AdminPriceQuote__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>CampaignMemberLeadAssigment__c</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>

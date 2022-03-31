@@ -205,7 +205,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 }
                 else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
-                    orderToUpdate.DocumentLow80__c = 'Richiesto';
                 }
                 if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(), 3) || order.EffectiveDate__c == null){
                     orderToUpdate.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
@@ -217,16 +216,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     if(!String.isEmpty(contractReference.Id) && !contractReference.Account.CompanyOwner__c.equalsIgnoreCase('HERA COMM')){
                         orderToUpdate.Phase__c = 'Esportazione VS Siebel';
                     }
-                    Map<String,Object> rates = voltureChangeUtils.checkRates(
-                        (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(currentOrder)), 
-                        (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(orderToUpdate))
-                    );
-                    for(String field : rates.keySet()){
-                        orderToUpdate.put(field, rates.get(field));
-                    }
                     if(currentOrder.Email__c != null && String.isEmpty(currentOrder.Email__c)){
                         orderToUpdate.Email__c = emptyEmailDefault;
                     }    
+                }
+                Map<String,Object> rates = voltureChangeUtils.checkRates(
+                    (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(currentOrder)), 
+                    (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(orderToUpdate))
+                );
+                for(String field : rates.keySet()){
+                    orderToUpdate.put(field, rates.get(field));
                 }                
             }
             when 'HDT_RT_ConnessioneConAttivazione' {
