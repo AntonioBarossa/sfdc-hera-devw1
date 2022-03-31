@@ -304,7 +304,7 @@
         <relatedList>RelatedAttachmentList</relatedList>
     </relatedLists>
     <relatedLists>
-        <customButtons>CreaAttivitaManuale</customButtons>
+        <customButtons>CreaattivitamanualeActivity</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Type__c</fields>
