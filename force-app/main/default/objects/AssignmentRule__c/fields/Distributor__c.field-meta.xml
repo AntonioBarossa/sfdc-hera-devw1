@@ -4,6 +4,15 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
     <label>Distributore</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Account.Code__c</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Regole di Assegnazione</relationshipLabel>
     <relationshipName>Regole_di_Assegnazione</relationshipName>
