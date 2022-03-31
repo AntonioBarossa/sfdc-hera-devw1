@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>BatchSize__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:double">1.0</value>
     </values>
     <values>
         <field>IsActive__c</field>
@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>Priority__c</field>
-        <value xsi:type="xsd:double">50.0</value>
+        <value xsi:type="xsd:double">160.0</value>
     </values>
 </CustomMetadata>

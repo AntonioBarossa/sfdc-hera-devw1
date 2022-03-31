@@ -26,14 +26,20 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     @AuraEnabled
     public static boolean riassegnaComCod(string recordId,String causale){
         try{
+            List<SObject> sobjToUpdate = new List<SObject>();
             // HDT_QR_Case caseQr = new HDT_QR_Case();
             wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
           //  Case c = caseQr.getRecordById(s.case__c);
             Case c = new Case();
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
             c.id = s.case__c;
             c.phase__c	='In Attesa Approvazione';
             c.ReassignmentReason__c = causale;
-            caseSrv.updateRecord(c);
+            activity.Id = s.Id;
+            activity.wrts_prcgvr__Description__c = causale;
+            sobjToUpdate.add(c);
+            sobjToUpdate.add(activity);
+            HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
             System.debug(LoggingLevel.DEBUG,'*******trueComm');
             return true;
         }catch(exception e){
@@ -46,21 +52,32 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     public static boolean cambiaphaseComm(string recordId,string causale){
         try{
             HDT_QR_Case caseQr = new HDT_QR_Case();
-            wrts_prcgvr__Activity__c sToCreate = new wrts_prcgvr__Activity__c();
+            List<SObject> sobjToUpdate = new List<SObject>();
+            //wrts_prcgvr__Activity__c sToCreate = new wrts_prcgvr__Activity__c();
             wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
-            sToCreate.account__c = s.account__c;
-            sToCreate.case__c = s.case__c;
-            sToCreate.recordtypeid = s.recordtypeid;
-            sToCreate.approved__c = causale;
-            sToCreate.type__c = 'Contratti/Bonus Commerciale';
-            s.wrts_prcgvr__status__c = 'Chiusa';
-            s.approved__c = causale;
-
-            activityCustomSrv.updateRecord(s);
+            // sToCreate.account__c = s.account__c;
+            // sToCreate.case__c = s.case__c;
+            // sToCreate.recordtypeid = s.recordtypeid;
+            // sToCreate.approved__c = causale;
+            // sToCreate.type__c = 'Contratti/Bonus Commerciale';
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+            activity.Id = s.Id;
+            activity.wrts_prcgvr__status__c = 'Chiusa';
+            activity.ClosingNote__c = causale;
+            sobjToUpdate.add(activity);
             //activityCustomSrv.createRecord(sToCreate);
-            Case c = caseQr.getRecordById(s.case__c);
+            Case c = new Case();
+            c.Id = s.Case__c;
             c.phase__c	='In Lavorazione';
-            caseSrv.updateRecord(c);
+            c.Note__c = causale;
+            sobjToUpdate.add(c);
+
+            HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
+
+            Set<String> idToNotificate = new Set<String>();
+            idToNotificate.add(s.CreatedById);
+            HDT_UTL_NewsNotificationCenter.fireNotification('Attivita Chiusa', 'L\'Attivita è stata '+causale, activity.Id, idToNotificate);
+
            // caseSrv.updateRecord(c);
             return true;
         }
@@ -129,12 +146,13 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     @AuraEnabled
     public static boolean validaActivityVocal(String recordid, String validazione){
         wrts_prcgvr__Activity__c act = HDT_QR_ActivityCustom.getRecordByIdValidation(recordid);
-        act.validation__c = validazione;
+        wrts_prcgvr__Activity__c actToUpdate = new wrts_prcgvr__Activity__c(Id = recordid);
+        actToUpdate.validation__c = validazione;
         boolean res = false;
         Order ord = new Order();
         ord.id = act.order__c;
         if(validazione == 'Si'){
-            act.wrts_prcgvr__status__c = 'Chiusa';
+            actToUpdate.wrts_prcgvr__status__c = 'Chiusa';
             res = true;
             ord.DocumentPackage__c = 'Validato';
             ord.phase__c = 'Registrazione validata';
@@ -143,7 +161,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         else{
             ord.CancellationReason__c = 'Registrazione non conforme';
         }
-        activityCustomSrv.updateRecord(act);
+        activityCustomSrv.updateRecord(actToUpdate);
         orderSrv.updateRecord(ord);
 
         return res;
@@ -176,7 +194,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         Set<Id> actsToCheck = new Set<Id>();
 
         for(wrts_prcgvr__Activity__c act : newActsMap.values()){
-            if(act.recordTypeId == rtKoOldClient && act.wrts_prcgvr__Status__c=='KO Risolto' && String.isNotBlank(act.Reason__c)){
+            if(act.recordTypeId == rtKoOldClient && act.wrts_prcgvr__Status__c=='KO Risolto' && String.isNotBlank(act.Reason__c) && 'Dimostrata Estraneità'.equalsIgnoreCase(act.Reason__c)){
                 actsToCheck.add(act.Id);
             }
         }
@@ -193,30 +211,38 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     @AuraEnabled
     public static string rejectActivityDocument(String recordId, String noteChiusura){
         try {
+        
             wrts_prcgvr__Activity__c oldActivity = HDT_QR_ActivityCustom.getRecordByIdValidation(recordId);
-            oldActivity.validation__c = 'No';
-            oldActivity.wrts_prcgvr__status__c = 'Chiusa';
-            oldActivity.ClosingNote__c = noteChiusura;
-            Date d = System.today();
-            Date dataAnnullRich = d.addDays(30);
-            string activityType = ( oldActivity.type__c== 'Validazione Documentale'|| oldActivity.type__c== 'Documenti non validati' )? 
-                                        'Documenti non validati':
-                                        'Vocal Order non validato';
-            wrts_prcgvr__Activity__c newActivity = new wrts_prcgvr__Activity__c(account__c = oldActivity.account__c,
-                                                                                wrts_prcgvr__Status__c= 'Aperta',
-                                                                                order__c = oldActivity.order__c,
-                                                                                type__c = activityType,
-                                                                                recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c'),
-                                                                                RequestedCancellationDate__c=dataAnnullRich, 
-                                                                                OpeningNote__c=noteChiusura);
-            if( ( oldActivity.type__c== 'Validazione Vocal Order' || oldActivity.type__c== 'Vocal Order non validato') && oldActivity.DiscardCount__c == null ){
-                newActivity.DiscardCount__c = 1;
-            }else if ( ( oldActivity.type__c== 'Validazione Vocal Order' || oldActivity.type__c== 'Vocal Order non validato') && oldActivity.DiscardCount__c == 1){
-                newActivity.DiscardCount__c = 2;
+            String res = '';
+            if(!oldActivity.isUserActivity__c){
+                res = 'Not User';
             }
-            activityCustomSrv.createRecord(newActivity);
-            String res = 'Creata';  
-            activityCustomSrv.updateRecord(oldActivity);
+            else{
+                wrts_prcgvr__Activity__c oldActivityToUpdate = HDT_UTL_Scarti.closeDiscardActivity(recordId);
+                oldActivityToUpdate.validation__c = 'No';
+                oldActivityToUpdate.ClosingNote__c = noteChiusura;
+                Date d = System.today();
+                Date dataAnnullRich = d.addDays(30);
+                string activityType = ( oldActivity.type__c== 'Validazione Documentale'|| oldActivity.type__c== 'Documenti non validati' )? 
+                                            'Documenti non validati':
+                                            'Vocal Order non validato';
+                wrts_prcgvr__Activity__c newActivity = new wrts_prcgvr__Activity__c(account__c = oldActivity.account__c,
+                                                                                    wrts_prcgvr__Status__c= 'Aperta',
+                                                                                    order__c = oldActivity.order__c,
+                                                                                    type__c = activityType,
+                                                                                    recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c'),
+                                                                                    RequestedCancellationDate__c=dataAnnullRich, 
+                                                                                    OpeningNote__c=noteChiusura);
+                if( ( oldActivity.type__c== 'Validazione Vocal Order' || oldActivity.type__c== 'Vocal Order non validato') && oldActivity.DiscardCount__c == null ){
+                    newActivity.DiscardCount__c = 1;
+                }else if ( ( oldActivity.type__c== 'Validazione Vocal Order' || oldActivity.type__c== 'Vocal Order non validato') && oldActivity.DiscardCount__c == 1){
+                    newActivity.DiscardCount__c = 2;
+                }
+                activityCustomSrv.createRecord(newActivity);
+                res = 'Creata';  
+                activityCustomSrv.updateRecord(oldActivityToUpdate);
+            }
+            
             return res;
 
         } catch (Exception e) {
@@ -227,57 +253,61 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     @AuraEnabled
     public static String validaActivityDocument(String recordid, String validazione){
         wrts_prcgvr__Activity__c oldActivity = HDT_QR_ActivityCustom.getRecordByIdValidation(recordid);
-        
-        oldActivity.validation__c = validazione;
         String res = '';
-        //Modifica del 28/01/2022 in ogni caso questa activity viene chiusa
-        oldActivity.wrts_prcgvr__status__c = 'Chiusa';
-        activityCustomSrv.updateRecord(oldActivity);
-        if(validazione == 'Si'){
-           // res = true;
-            Order ord = new Order();
-            ord.id = oldActivity.order__c;
-            ord.DocumentPackage__c = 'Validato';
-            if(oldActivity.Type__c.containsIgnoreCase('Vocal Order'))
-            {
-                ord.Phase__c = 'Registrazione validata';
-            }
-            else
-            {
-                ord.phase__c = 'Documentazione Gestita';
-                ord.status = 'Completed';
-            
-            }
-            orderSrv.updateRecord(ord);
+        if(!oldActivity.isUserActivity__c){
+            res = 'Not User';
         }
         else{
-            // Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
-            /* 
-            List<wrts_prcgvr__Activity__c> actCusList =  HDT_QR_ActivityCustom.getRecordByOrderIdAndType(act.order__c,'Documenti non validati');
-            Modifica del 28/01/2022 --> l'apertura di un activity di provochera la chiusura dell'attuale ed il componentino sarà presente
-            per creare una nuova o gestire la documentazione. 
-            if(actCusList != null && !actCusList.isEmpty()){
-                if(actCusList[0].wrts_prcgvr__status__c == 'Chiusa'){
-                    act.wrts_prcgvr__status__c = 'Chiusa';
-                    res = 'NoApprovata';
-                }
-                else{
-                    res = 'NonChiusa';
-                }
-            }
-            else {
-                Date d = System.today();
-                Date dataAnnullRich = d.addDays(30); 
-                wrts_prcgvr__Activity__c act2 = new wrts_prcgvr__Activity__c(account__c = act.account__c,wrts_prcgvr__Status__c= 'Aperta',order__c = act.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali'),RequestedCancellationDate__c=dataAnnullRich);
-                activityCustomSrv.createRecord(act2);
-                res = 'Creata';
-            }  */ 
-            Date d = System.today();
-            Date dataAnnullRich = d.addDays(30); 
-            wrts_prcgvr__Activity__c newActivity = new wrts_prcgvr__Activity__c(account__c = oldActivity.account__c,wrts_prcgvr__Status__c= 'Aperta',order__c = oldActivity.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c'),RequestedCancellationDate__c=dataAnnullRich);
-            activityCustomSrv.createRecord(newActivity);
-            res = 'Creata';  
-         }
+            wrts_prcgvr__Activity__c oldActivityToUpdate = HDT_UTL_Scarti.closeDiscardActivity(recordid);
+            oldActivityToUpdate.validation__c = validazione;
+            activityCustomSrv.updateRecord(oldActivityToUpdate);
+            if(validazione == 'Si'){
+                // res = true;
+                 Order ord = new Order();
+                 ord.id = oldActivity.order__c;
+                 ord.DocumentPackage__c = 'Validato';
+                 if(oldActivity.Type__c.containsIgnoreCase('Vocal Order'))
+                 {
+                     ord.Phase__c = 'Registrazione validata';
+                 }
+                 else
+                 {
+                     ord.phase__c = 'Documentazione Gestita';
+                     ord.status = 'Completed';
+                 
+                 }
+                 orderSrv.updateRecord(ord);
+             }
+             else{
+                 // Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
+                 /* 
+                 List<wrts_prcgvr__Activity__c> actCusList =  HDT_QR_ActivityCustom.getRecordByOrderIdAndType(act.order__c,'Documenti non validati');
+                 Modifica del 28/01/2022 --> l'apertura di un activity di provochera la chiusura dell'attuale ed il componentino sarà presente
+                 per creare una nuova o gestire la documentazione. 
+                 if(actCusList != null && !actCusList.isEmpty()){
+                     if(actCusList[0].wrts_prcgvr__status__c == 'Chiusa'){
+                         act.wrts_prcgvr__status__c = 'Chiusa';
+                         res = 'NoApprovata';
+                     }
+                     else{
+                         res = 'NonChiusa';
+                     }
+                 }
+                 else {
+                     Date d = System.today();
+                     Date dataAnnullRich = d.addDays(30); 
+                     wrts_prcgvr__Activity__c act2 = new wrts_prcgvr__Activity__c(account__c = act.account__c,wrts_prcgvr__Status__c= 'Aperta',order__c = act.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali'),RequestedCancellationDate__c=dataAnnullRich);
+                     activityCustomSrv.createRecord(act2);
+                     res = 'Creata';
+                 }  */ 
+                 Date d = System.today();
+                 Date dataAnnullRich = d.addDays(30); 
+                 wrts_prcgvr__Activity__c newActivity = new wrts_prcgvr__Activity__c(account__c = oldActivity.account__c,wrts_prcgvr__Status__c= 'Aperta',order__c = oldActivity.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c'),RequestedCancellationDate__c=dataAnnullRich);
+                 activityCustomSrv.createRecord(newActivity);
+                 res = 'Creata';  
+              }
+        }
+        
         return res;
     }
 
@@ -285,5 +315,11 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     public static boolean isMandatoryComplete( String recordid ){
         return recordId == null ? true : HDT_QR_ActivityCustom.isActivityNotClosed(recordid);
     }
-    
+
+    public static void inheritUserFields(List<wrts_prcgvr__Activity__c> activites) {
+        User user = [SELECT Id, CreatorGroup__c FROM User WHERE Id =: UserInfo.getUserId()];
+        for(wrts_prcgvr__Activity__c activity : activites) {
+            activity.CreatorGroup__c = user.CreatorGroup__c;
+        }
+    }
 }

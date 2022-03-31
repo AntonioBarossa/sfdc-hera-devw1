@@ -41,6 +41,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return handleFlagResident(inputs,formParams);
                 }when 'handlePromotion'{
                     return handlePromotion(inputs,formParams);
+                }when 'handleAnalisiConsumi'{
+                    return handleAnalisiConsumi(inputs,formParams);
                 }
                 when else {
                     return '';
@@ -50,6 +52,32 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             System.debug(LoggingLevel.DEBUG, 'Si è verificato un errore nel richiamo del metodo ' + method + ': ' + ex.getMessage() + ' alla riga ' + ex.getLineNumber());
         }
         return result;
+    }
+
+    private String handleAnalisiConsumi(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String toReturn = '|||';
+        HDT_QR_OrderItem qrItem = new HDT_QR_OrderItem();
+        try{
+            String orderId = HDT_UTL_DocumentalManagement.getValue('ParentOrder', 'Id', 0, inputs, formParams);
+            String servicePointId =  HDT_UTL_DocumentalManagement.getValue('Order', 'ServicePoint__c', 0, inputs, formParams);
+            String surface;
+            String occupantNumber;
+            String buildingType;
+            String owner;
+            if(String.isNotBlank(servicePointId) && String.isNotBlank(orderId)){
+                List<OrderItem> orderItemList = qrItem.getAnalisiConsumi(orderId,servicePointId);
+                if (!orderItemList.isEmpty()) {
+                    occupantNumber = orderItemList[0].OccupantsNumber__c!= null?String.valueOf((Integer)orderItemList[0].OccupantsNumber__c):'';
+                    surface = orderItemList[0].Surface__c != null?String.valueOf((Integer)orderItemList[0].Surface__c):'';
+                    buildingType = String.isNotBlank(orderItemList[0].DwellingType__c)?orderItemList[0].DwellingType__c.substring(0,1):'';
+                    owner = String.isNotBlank(orderItemList[0].OwnerAC__c)?orderItemList[0].OwnerAC__c.substring(0,1):'';
+                    toReturn = occupantNumber +'|'+surface+'|'+buildingType+'|'+owner;
+                }
+            }
+            return toReturn;
+        }catch(Exception ex){
+            return toReturn;
+        }
     }
     
     private String handlePromotion(Map<String,List<sObject>> inputs, Map<String,Object> formParams){

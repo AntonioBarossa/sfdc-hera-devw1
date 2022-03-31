@@ -279,15 +279,14 @@ public with sharing class HDT_LC_MassiveLoader {
                 // having problem with limit...do something...
             }
 
-            if(String.isNotEmpty(fileBody)){
-            //if(fileBody != null || rowNewLineCharIndex == -1){
+            if(String.isNotEmpty(fileBody) && rowNewLineCharIndex == -1){
                 MassiveLoaderRequestItem__c lastRequestItem = new MassiveLoaderRequestItem__c();
                 lastRequestItem.Data__c = fileBody;
                 lastRequestItem.MassiveLoaderRequest__c = massiveLoaderRequestId;
                 requestItemList.add(lastRequestItem);
                 hasNewRow = false;
             }
-    
+
         }
     
         try{

@@ -119,7 +119,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     String city = order.SupplyCity__c;
                     String region = '';
                     newOrder.RegionalAdditional__c = regionalAdditionalQr.findRegionalAdditional(tax, city, region);
-                    newOrder.ExciseRate__c = order.CommodityFormula__c == 'Energia Elettrica' ? voltureChangeQr.getExciseTranscode(tax)[0].Excise__c : null;
+                    newOrder.ExciseRate__c = voltureChangeQr.getExciseTranscode(tax)[0].Excise__c;
                 }
                 when 'HDT_RT_AttivazioneConModifica' {
                     newOrder.RequestOption__c = HDT_UTL_OrderFieldsAlignment.calculateRequestedOption(order.ImplantType__c, order.PowerRequested__c);
@@ -129,6 +129,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 }
                 when 'HDT_RT_SwitchIn' {
                     newOrder.PowerRequested__c  = order.PowerCommitted__c;
+                    newOrder.WaiverRightAfterthought__c	= 'No';
                 }
                 /**@frpanico 2022-03-16
                  * Aggiunta Sconti Bonus
@@ -159,6 +160,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 when 'Prima Attivazione'{
                     processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
                     processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
+                    newOrder.PressureLevel__c  = 'BP';
                 }
             }
 

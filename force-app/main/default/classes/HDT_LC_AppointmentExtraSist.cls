@@ -3,11 +3,12 @@ public with sharing class HDT_LC_AppointmentExtraSist {
     @AuraEnabled(cacheable = true)
     public static String getLink(String recordId){
         List <wrts_prcgvr__Activity__c> listAct=new list <wrts_prcgvr__Activity__c>();
-        listAct=HDT_QR_GenericQuery.getGenericRecords('Distributor__r.Name', 'wrts_prcgvr__Activity__c', 'Id = \''+String.escapeSingleQuotes(recordId)+'\'');
-        system.debug(LoggingLevel.DEBUG,'@@@lista  ' + listAct[0].Distributor__r.Name);
+        listAct=HDT_QR_GenericQuery.getGenericRecords('Distributor__r.Name, Distributor__r.Code__c, Distributor__r.Commodity__c', 'wrts_prcgvr__Activity__c', 'Id = \''+String.escapeSingleQuotes(recordId)+'\'');
+        String distributor = format(listAct[0].Distributor__r.Name);
+        system.debug(LoggingLevel.DEBUG,'@@@lista  ' + distributor);
         Map<String,String> response = new Map<String,String>();
-        if(listAct!=null && listAct.size()!=0 && string.isNotBlank(listAct[0].Distributor__r.Name)){
-            response=HDT_UTL_AppointmentSetting.getQuickLink(listAct[0].Distributor__r.Name);
+        if(listAct!=null && listAct.size()!=0 && string.isNotBlank(distributor)){
+            response=HDT_UTL_AppointmentSetting.getQuickLink(distributor, listAct[0].Distributor__r.Code__c, listAct[0].Distributor__r.Commodity__c);
             if(response.containsKey('link')){
                 System.debug(LoggingLevel.DEBUG,'@@@Link '+response.get('link'));
             }
@@ -51,5 +52,9 @@ public with sharing class HDT_LC_AppointmentExtraSist {
         catch(Exception e){
             throw new AuraException(e.getMessage());
         }
+    }
+
+    private static String format(String value){
+        return value.replaceFirst('[ ]?[-][ ]?[1]([0]|[3])([Dd]|[Rr])[0-9]{4,9}','');
     }
 }

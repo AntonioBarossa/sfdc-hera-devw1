@@ -19,7 +19,10 @@
 		RecordType.DeveloperName = &apos;HDT_RT_Sportello&apos;, 
 		Contains( RecordType.DeveloperName ,&apos;Escalation&apos;), 	
 		RecordType.DeveloperName = &apos;HDT_RT_RegisterActivity&apos;, 
-		ISPICKVAL( DiscardCategory__c,&apos;Gestionale&apos;),
+		AND(
+			ISPICKVAL( DiscardCategory__c,&apos;Gestionale&apos;),
+			NOT(ISPICKVAL(Type__c,&apos;Accettazione Voltura&apos;))
+		),
 		RecordType.DeveloperName = &apos;HDT_RT_DistributorCommunication&apos;
 	)
 )</formula>

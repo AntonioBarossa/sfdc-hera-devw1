@@ -14,10 +14,11 @@ public with sharing class HDT_UTL_CaseValidationsTst {
     
     //Added Setup
     @TestSetup
-    static void setup(){
+    static void setup(){ 
         Case myCase = new Case();
         myCase.Type = 'Proroga Conn Temp';
         myCase.Cluster__c = 'Disattivazioni';
+        myCase.TemporaryConnectionEndDate__c = Date.newInstance(2022, 08, 16);
         insert myCase;      
     }
     
@@ -1087,8 +1088,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
        String myRecordId = myCase[0].Id;
 
        Map<String, Object> dateCase = new Map<String, Object>();
-       dateCase.put( 'TemporaryConnectionStartDate__c', '2021-11-03 0:00:00' );
-       dateCase.put( 'TemporaryConnectionEndDate__c',  '2021-11-02 00:00:00' );
+       dateCase.put( 'TemporaryConnectionEndDate__c',  '2022-05-02 00:00:00' );
 
        String fields = JSON.serialize(dateCase);
 

@@ -80,6 +80,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             orderList[0].BillingProfile__c = bpList[0].Id;
             orderList[0].SapContractCode__c = '123456';
             orderList[0].TecnicalPhase__c = 'Bozza';
+            orderList[0].DateSentToSII__c = Date.today();
             insert orderList;
 
             List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, false, accList[0].Id, 'Bozza');

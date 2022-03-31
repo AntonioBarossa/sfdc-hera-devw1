@@ -35,7 +35,7 @@ public with sharing class HDT_UTL_CampaignMemberTst {
             update cp;
 
             List<Lead> lead = HDT_UTL_DataFactoryTst.createLead(2, true);
-            List<Account> acc = HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
+            List<Account> acc = HDT_UTL_DataFactoryTst.createAccountPartner(1, true, 'Mario Verdi');
             List<Contact> ctt = HDT_UTL_DataFactoryTst.createContact(2, true, acc[0].Id);
             HDT_UTL_DataFactoryTst.createCampaignMemberAssigmentItem(1, true, acc.get(0).Id, cma.Id, 'Preview', 50.0);
 
