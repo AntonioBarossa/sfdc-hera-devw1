@@ -2,7 +2,7 @@
 <DuplicateRule xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionOnInsert>Block</actionOnInsert>
     <actionOnUpdate>Allow</actionOnUpdate>
-    <alertText xsi:nil="true"/>
+    <alertText>Attenzione! Esiste già un Account con gli stessi dati fiscali e Silos.</alertText>
     <description xsi:nil="true"/>
     <duplicateRuleFilter xsi:nil="true"/>
     <duplicateRuleMatchRules>
