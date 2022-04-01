@@ -1,6 +1,6 @@
 public with sharing class HDT_WS_PaperProcessingFlowPost {
-    public class PaperProcessingRequest extends HDT_WS_Request {
-        public PaperProcessingRequest(String paperProcessingId) {
+    public class HDT_WS_PaperProcessingRequest extends HDT_WS_Request {
+        public HDT_WS_PaperProcessingRequest(String paperProcessingId) {
             this.paperProcessingId = paperProcessingId;
         }
 
@@ -13,7 +13,7 @@ public with sharing class HDT_WS_PaperProcessingFlowPost {
             'MulesoftBasePath',
             '/paper-communications/files',
             'POST',
-            new PaperProcessingRequest(paperProcessingId.get(0)),
+            new HDT_WS_PaperProcessingRequest(paperProcessingId.get(0)),
             HDT_WS_Response.class 
         );
 
