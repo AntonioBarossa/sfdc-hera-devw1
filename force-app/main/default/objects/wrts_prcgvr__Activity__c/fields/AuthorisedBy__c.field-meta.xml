@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AuthorisedBy__c</fullName>
+    <externalId>false</externalId>
+    <label>Autorizzato da</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Autorizzato da DAFC</fullName>
+                <default>false</default>
+                <label>Autorizzato da DAFC</label>
+            </value>
+            <value>
+                <fullName>Autorizzato da Vendita</fullName>
+                <default>false</default>
+                <label>Autorizzato da Vendita</label>
+            </value>
+            <value>
+                <fullName>Autorizzato Direzione</fullName>
+                <default>false</default>
+                <label>Autorizzato Direzione</label>
+            </value>
+            <value>
+                <fullName>Forzata per errore</fullName>
+                <default>false</default>
+                <label>Forzata per errore</label>
+            </value>
+            <value>
+                <fullName>Forzatura necessaria per gestione errore</fullName>
+                <default>false</default>
+                <label>Forzatura necessaria per gestione errore</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
