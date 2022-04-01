@@ -43,6 +43,13 @@
                 <stringValue>OK</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivity.AuthorisedBy__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Autorizzato_da</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Azione_0</targetReference>
         </connector>
@@ -270,6 +277,14 @@
             <label>Not My Activity</label>
         </rules>
     </decisions>
+    <dynamicChoiceSets>
+        <name>AuthorisedBy</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>AuthorisedBy__c</picklistField>
+        <picklistObject>wrts_prcgvr__Activity__c</picklistObject>
+    </dynamicChoiceSets>
     <interviewLabel>HDT_FL_CreditCheckManagement {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Credit Check</label>
     <processMetadataValues>
@@ -422,6 +437,14 @@
             <fieldType>ObjectProvided</fieldType>
             <isRequired>false</isRequired>
             <objectFieldReference>getActivity.Note__c</objectFieldReference>
+        </fields>
+        <fields>
+            <name>Autorizzato_da</name>
+            <choiceReferences>AuthorisedBy</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Autorizzato da</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
