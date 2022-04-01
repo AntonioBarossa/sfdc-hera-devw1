@@ -388,7 +388,8 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getRecordsByIds(List<String> orderIds){
-        return [
+        SObjectAccessDecision decision = Security.stripInaccessible(AccessType.READABLE,
+        [
             SELECT 
             AccountId,
             Account.Name,
@@ -525,7 +526,10 @@ public inherited sharing class HDT_QR_Order {
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
-        ];
+        ]);
+
+        System.debug(LoggingLevel.DEBUG,'Removed Fields: ' + decision.getRemovedFields());
+        return decision.getRecords();
     }
 
     /**
