@@ -112,8 +112,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
                     continue;
                 }
 
-                
-
                 if(sobjectMap.containsKey(csvHeader)){
                     System.debug('>>> objField: ' + objField + ' - tempValue: ' + tempValue + ' - objectType: ' + sobjectMap.get(csvHeader).objectType__c);
                     switch on sobjectMap.get(csvHeader).objectType__c {
@@ -171,7 +169,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
     }
 
     public override void getRecords(){
-
         
         List<String> versionList = new List<String>();
         List<Product2> productRetrievedFromDb = new List<Product2>();

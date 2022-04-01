@@ -196,6 +196,8 @@ public with sharing class HDT_LC_MassiveLoader {
         Integer csvLinesLimit = 4500;
         ContentVersion uploadedFile = contentVersionQr.getRecordById(contentVersionId);
         HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(selectedProcessName);
+        Boolean parsingError = false;
+        Id contentDocumentId = uploadedFile.ContentDocumentId;
 
         System.debug('>>> metadata ' + selectedProcess.DeveloperName + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION);
         System.debug('>>> lwc ' + fileName);
@@ -205,14 +207,14 @@ public with sharing class HDT_LC_MassiveLoader {
             ) {                
             response.put('error', true);
             response.put('errorMessage', Label.MassiveLoaderFileNameError);
-            deleteDocument(uploadedFile.ContentDocumentId, massiveLoaderRequestId);
+            deleteDocument(contentDocumentId, massiveLoaderRequestId);
             return response;
         }
 
         if(uploadedFile.FileType.toUpperCase() != constantsUtl.MASSIVLOADER_FILE_EXTENTION.toUpperCase()) {
             response.put('error', true);
             response.put('errorMessage', Label.MassiveLoaderExtentionError);
-            deleteDocument(uploadedFile.ContentDocumentId, massiveLoaderRequestId);
+            deleteDocument(contentDocumentId, massiveLoaderRequestId);
             return response;
         }
 
@@ -226,19 +228,22 @@ public with sharing class HDT_LC_MassiveLoader {
         if(totLinesCounter == 0){
             response.put('error', true);
             response.put('errorMessage', 'Il file csv non contiene nulla.');
-            deleteDocument(uploadedFile.ContentDocumentId, massiveLoaderRequestId);
+            deleteDocument(contentDocumentId, massiveLoaderRequestId);
             return response;
         }
 
         if(totLinesCounter > csvLinesLimit){
             response.put('error', true);
             response.put('errorMessage', 'Il file csv contiene più di 1500 righe.');
-            //deleteDocument(uploadedFile.ContentDocumentId);
+            //deleteDocument(contentDocumentId);
             return response;
         }
 
         uploadedFile = null;
     
+        List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName);
+        Integer expectedNumberOfFields = staticResources.get(0).Body.toString().split('\\|').size();
+
         System.debug(LoggingLevel.DEBUG, '>>> HeapSize after body to string: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
     
         List<MassiveLoaderRequestItem__c> requestItemList = new List<MassiveLoaderRequestItem__c>();
@@ -260,7 +265,7 @@ public with sharing class HDT_LC_MassiveLoader {
         if(String.isEmpty(fileBody)){
             response.put('error', true);
             response.put('errorMessage', 'Il file csv non contiene nulla.');
-            deleteDocument(uploadedFile.ContentDocumentId, massiveLoaderRequestId);
+            deleteDocument(contentDocumentId, massiveLoaderRequestId);
             return response;
         }
 
@@ -268,6 +273,12 @@ public with sharing class HDT_LC_MassiveLoader {
 
             if(rowNewLineCharIndex == -1){
                 if(String.isNotEmpty(fileBody)){
+
+                    if(checkSingleRow(fileBody, expectedNumberOfFields)){
+                        parsingError = true;
+                        break;
+                    }
+
                     newRequestItem = new MassiveLoaderRequestItem__c();
                     newRequestItem.Data__c = fileBody;
                     newRequestItem.MassiveLoaderRequest__c = massiveLoaderRequestId;
@@ -278,6 +289,12 @@ public with sharing class HDT_LC_MassiveLoader {
 
             newRequestItem = new MassiveLoaderRequestItem__c();
             newRequestItem.Data__c = fileBody.substring(0, rowNewLineCharIndex);
+
+            if(checkSingleRow(newRequestItem.Data__c, expectedNumberOfFields)){
+                parsingError = true;
+                break;
+            }
+
             newRequestItem.MassiveLoaderRequest__c = massiveLoaderRequestId;
             requestItemList.add(newRequestItem);
 
@@ -291,6 +308,10 @@ public with sharing class HDT_LC_MassiveLoader {
             }
 
             if(String.isNotEmpty(fileBody) && rowNewLineCharIndex == -1){
+                if(checkSingleRow(fileBody, expectedNumberOfFields)){
+                    parsingError = true;
+                    break;
+                }
                 MassiveLoaderRequestItem__c lastRequestItem = new MassiveLoaderRequestItem__c();
                 lastRequestItem.Data__c = fileBody;
                 lastRequestItem.MassiveLoaderRequest__c = massiveLoaderRequestId;
@@ -300,6 +321,13 @@ public with sharing class HDT_LC_MassiveLoader {
 
         }
     
+        if(parsingError){
+            response.put('error', true);
+            response.put('errorMessage', Label.MassiveLoaderParsingError);
+            deleteDocument(contentDocumentId, massiveLoaderRequestId);
+            return response;
+        } 
+
         try{
 
             SObjectType objtype = Schema.getGlobalDescribe().get('MassiveLoaderRequestItem__c');
@@ -349,6 +377,12 @@ public with sharing class HDT_LC_MassiveLoader {
 
         return response;
             
+    }
+
+    private static Boolean checkSingleRow(String fileRow, Integer expectedNumberOfFields){
+        fileRow = fileRow.replaceAll('\\|\\|', '\\|null\\|');
+        List<String> rowFields = fileRow.split('\\|', -1);
+        return rowFields.size() != expectedNumberOfFields;
     }
 
     /**​
