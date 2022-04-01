@@ -254,6 +254,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         }else if(caseType == 'Richiesta Domiciliazione' || caseType == 'Attivazione Click&Pay' || caseType == 'Variazione Domiciliazione')
         {
             String fiscalCode =  getFieldValue(fields, 'BankAccountSignatoryFiscalCode__c');
+            String lastName = getFieldValue(fields, 'BankAccountSignatoryLastName__c');
+            String firstName = getFieldValue(fields, 'BankAccountSignatoryFirstName__c');
             String beneficiaryType = getFieldValue(fields, 'AccountholderTypeBeneficiary__c');
             BillingProfile__c billingProfile = caseValidationQr.getBillingProfileInfo(currentCase.BillingProfile__c);
             String reason = getFieldValue(fields, 'Reason__c');
@@ -265,6 +267,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 if(!String.isEmpty(outcome))
                 {
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', outcome));
+                }
+                if(!HDT_UTL_CalculateFiscalCode.checkFirstLastNameFromFiscalCode(fiscalCode, firstName, lastName))
+                {
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Codice Fiscale non coerente con i dati inseriti'));
                 }
                 else
                 {

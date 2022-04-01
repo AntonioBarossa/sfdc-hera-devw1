@@ -478,6 +478,91 @@
     </customSettingAccesses>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ProcessMatrix__c.CasualCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.Commodity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.ContractStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.ExistActivityDatiDiscordanti__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.ExistActivitySwitchRipristinatorio__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.IsAmendment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.IsChangeUse__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.isOwnAccount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.IsReseller__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.IsSameAccount__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.isSTG__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.MarketOrigin__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.OngoingSwitchOut__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.PlugPresence__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.PowerChange__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.ProcessName__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProcessMatrix__c.RecordTypeName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>false</editable>
         <field>OrderItem.VatPercentageFormula__c</field>
         <readable>true</readable>
     </fieldPermissions> 
@@ -554,6 +639,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>MatriceRemiCode__c.VATNumberUdb__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.isSTG__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -684,6 +774,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SiebelCommTracking__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.isSTG__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -32390,6 +32485,15 @@
         <uiLoginFlowType>VisualWorkflow</uiLoginFlowType>
         <useLightningRuntime>true</useLightningRuntime>
     </loginFlows>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>ProcessMatrix__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
