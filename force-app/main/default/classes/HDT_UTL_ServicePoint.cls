@@ -26,7 +26,10 @@ public with sharing class HDT_UTL_ServicePoint {
                 mapRes.put(r.campo.toUpperCase(),r.valore);
             }            
         }
-        
+
+        if(mapRes.get('DEFINIZIONEOFFERTA')!=null && mapRes.get('DEFINIZIONEOFFERTA').containsIgnoreCase('STG_') ){
+            sp.isSTG__c = true;
+        }
         /**@frpanico 2022-03-15
          * Aggiunto campo
          * GRUPPONUMERATORE
