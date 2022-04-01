@@ -114,13 +114,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
      */
     public static List<ProcessMatrix__c> initProcesses(){
 
-        // Queries all the fields of ProcessMatrix__c
-        // This is the object for which we required data.
-        Map<String, Schema.SObjectField> fieldMap = ProcessMatrix__c.sObjectType.getDescribe().fields.getMap();
-        // Gets all of the fields on the object
-        Set<String> fieldNames = fieldMap.keySet();
-        // Builds and returns a Dynamic Query String.
-        return Database.query('SELECT ' + String.join((Iterable<String>)fieldNames, ',') + ' FROM ProcessMatrix__c WITH SECURITY_ENFORCED');
+        return [SELECT CasualCode__c,Commodity__c,ContractStatus__c,CreatedById,ExistActivityDatiDiscordanti__c,ExistActivitySwitchRipristinatorio__c,IsAmendment__c,IsChangeUse__c,isOwnAccount__c,IsReseller__c,IsSameAccount__c,isSTG__c,MarketOrigin__c,Name,OngoingSwitchOut__c,OwnerId,PlugPresence__c,PowerChange__c,ProcessName__c,RecordTypeName__c FROM ProcessMatrix__c WITH SECURITY_ENFORCED];
 
         /*          return new List<HDT_WRP_Process>{
             new HDT_WRP_Process('Subentro Gas', 'HDT_RT_Subentro','A01', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, false, false),
