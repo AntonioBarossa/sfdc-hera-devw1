@@ -25,8 +25,13 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
     private Integer parentOrderIndex;
 
     private List<String> productCodeList = new List<String>();
+    private List<String> productNameList = new List<String>();
+    private List<String> productDescrList = new List<String>();
+
     private Map<String, Product2> product2Map;
-    private Map<Id, PriceBookEntry> pricebookEntryForVasMap;
+    private Map<Id, Map<Id, PriceBookEntry>> pricebookEntryForVasMap;
+    private List<String> contractSapCodeList = new List<String>();
+    Map<String, Contract> contractToPbookIdMap = new Map<String, Contract>();
 
 
     public override void checks(){
@@ -77,14 +82,14 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
                 wrpOrder.orderUniqueKey = tempSplitedFields[orderCodeIndex];
 
-                wrpOrder.accountId = nextDataObj.accountId;
-                wrpOrder.contactId = nextDataObj.contactId;
-                wrpOrder.billProfId = nextDataObj.billProfId;
-                wrpOrder.servPointId = nextDataObj.servPointId;
+                //wrpOrder.accountId = nextDataObj.accountId;
+                //wrpOrder.contactId = nextDataObj.contactId;
+                //wrpOrder.billProfId = nextDataObj.billProfId;
+                //wrpOrder.servPointId = nextDataObj.servPointId;
 
-                accountIdToRetrieve.add(nextDataObj.accountId);
-                billProfToRetrieve.add(nextDataObj.billProfId);
-                servPointToRetrieve.add(nextDataObj.servPointId);
+                //accountIdToRetrieve.add(nextDataObj.accountId);
+                //billProfToRetrieve.add(nextDataObj.billProfId);
+                //servPointToRetrieve.add(nextDataObj.servPointId);
                 
                 orderCode = tempSplitedFields[parentOrderIndex];
                 //processObj = buildWrapperOrderStructure(processObj, tempSplitedFields, nextDataObj);
@@ -130,6 +135,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
                         when 'Contract' {
                             convertionError = mapTypeField(wrpOrder.contract, mapAllFields, count, tempValue);
                         }
+                        when 'OrderItem' {
+                            convertionError = mapTypeField(wrpOrderItem.OrderItem, mapAllFields, count, tempValue);
+                        }
                     }
                 }
 
@@ -148,7 +156,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
                     itemsToUpdate.add(wrpOrder.requestItem);
                     continue;
                 }
-                wrpOrder.order.AccountId = wrpOrder.accountId;
+                //wrpOrder.order.AccountId = contractToPbookIdMap.get(contractCode).AccountId;
+                contractSapCodeList.add(wrpOrder.contract.SAPContractCode__c);
                 wrapperOrderList.add(wrpOrder);
             }
 
@@ -159,7 +168,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
                     itemsToUpdate.add(wrpOrderItem.requestItem);
                     continue;
                 }
-                productCodeList.add(wrpOrderItem.product.ProductCode);
+                productNameList.add(wrpOrderItem.product.Name);
+                productDescrList.add(wrpOrderItem.product.DescriptionSAP__c);
                 wrapperOrderItemList.add(wrpOrderItem);
             }
 
@@ -178,31 +188,53 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         commOfferMap = new Map<String, Product2>();
         additionalOrderItemMap = new Map<String, Map<String, String>>();
         pricebookEntryForOptionalMap = new Map<Id, Map<Id, PriceBookEntry>>();
-        pricebookEntryForVasMap = new Map<Id, PriceBookEntry>();
+        pricebookEntryForVasMap = new Map<Id, Map<Id, PriceBookEntry>>();
+        
 
         List<Product2> retrieveVasList = [
-            SELECT Id, ProductCode, Version__c
+            SELECT Id, Name, ProductCode, DescriptionSAP__c, Version__c
             FROM Product2
-            WHERE ProductCode IN :productCodeList
+            WHERE Name IN :productNameList 
+            OR DescriptionSAP__c IN :productDescrList
             WITH SECURITY_ENFORCED
         ];
 
         for(Product2 p : retrieveVasList){
-            product2Map.put(p.ProductCode, P);
+            product2Map.put(p.Name + '-' + p.DescriptionSAP__c + '-' + p.Version__c, P);
+            productIdList.add(p.Id);
+        }
+        
+        List<Contract> contractList = [
+            SELECT Id, SAPContractCode__c, SBQQ__AmendmentPricebookId__c, AccountId
+            FROM Contract
+            WHERE SAPContractCode__c IN :contractSapCodeList
+        ];
+        
+        List<String> priceBookIdList = new List<String>();
+        for(Contract c : contractList){
+            priceBookIdList.add(c.SBQQ__AmendmentPricebookId__c);
+            contractToPbookIdMap.put(c.SAPContractCode__c, c);
+            if(!pricebookEntryForVasMap.containsKey(c.SBQQ__AmendmentPricebookId__c)){
+                pricebookEntryForVasMap.put(c.SBQQ__AmendmentPricebookId__c, new Map<Id, PriceBookEntry>());
+            }
         }
 
         List<PriceBookEntry> pbeForVasList = [
             SELECT Id, Pricebook2Id, Product2Id, UnitPrice
             FROM PricebookEntry
-            WHERE Product2.ProductCode IN :productCodeList
-            AND Pricebook2.IsStandard = true
+            WHERE Product2Id IN :productIdList
+            AND Pricebook2Id IN :priceBookIdList
             WITH SECURITY_ENFORCED
         ];
 
         for(PriceBookEntry pbe : pbeForVasList){
-            pricebookEntryForVasMap.put(pbe.Product2Id, pbe);
+            if(pricebookEntryForVasMap.containsKey(pbe.Pricebook2Id)){
+                Map<Id, PriceBookEntry> tempMap = pricebookEntryForVasMap.get(pbe.Pricebook2Id);
+                tempMap.put(pbe.Product2Id, pbe);
+                pricebookEntryForVasMap.put(pbe.Pricebook2Id, tempMap);
+            }
         }
-        
+
         /*for(Product2 commOffer : commOfferForRetrieve){
             productCodeList.add(commOffer.ProductCode);
             versionList.add(commOffer.Version__c);
@@ -278,13 +310,13 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
             }
         }*/
 
-        List<Account> accList = HDT_UTL_MassiveOrderFieldsAlignment.getAccountByIds(accountIdToRetrieve);
-        List<BillingProfile__c> billProfList = HDT_UTL_MassiveOrderFieldsAlignment.getBillingProfileByIds(billProfToRetrieve);
-        List<ServicePoint__c> servPointList = HDT_UTL_MassiveOrderFieldsAlignment.getServicePointByIds(servPointToRetrieve);
+        //List<Account> accList = HDT_UTL_MassiveOrderFieldsAlignment.getAccountByIds(accountIdToRetrieve);
+        //List<BillingProfile__c> billProfList = HDT_UTL_MassiveOrderFieldsAlignment.getBillingProfileByIds(billProfToRetrieve);
+        //List<ServicePoint__c> servPointList = HDT_UTL_MassiveOrderFieldsAlignment.getServicePointByIds(servPointToRetrieve);
 
-        accountMap = new Map<Id, Account>(accList);
-        billingProfileMap = new Map<Id, BillingProfile__c>(billProfList);
-        servicePointMap = new Map<Id, ServicePoint__c>(servPointList);
+        //accountMap = new Map<Id, Account>(accList);
+        //billingProfileMap = new Map<Id, BillingProfile__c>(billProfList);
+        //servicePointMap = new Map<Id, ServicePoint__c>(servPointList);
         
     }
 
@@ -295,10 +327,11 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         List<OrderItem> orderItemToInsert = new List<OrderItem>();
         List<Sale__c> saleToInsert = new List<Sale__c>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
-        Map<String, Id> orderUniqueKeyMap = new Map<String, Id>();
+        Map<String, HDT_WRP_Order> orderUniqueKeyMap = new Map<String, HDT_WRP_Order>();
 
         for(HDT_WRP_Order wrpOrder : wrapperOrderList){
-            wrpOrder.Order.PriceBook2Id = '01s2o00000142oqAAA';
+            wrpOrder.Order.PriceBook2Id = contractToPbookIdMap.get(wrpOrder.contract.SAPContractCode__c).SBQQ__AmendmentPricebookId__c;
+            wrpOrder.order.AccountId = contractToPbookIdMap.get(wrpOrder.contract.SAPContractCode__c).AccountId;
             wrpOrder.Order.EffectiveDate = Date.today();
             wrpOrder.Order.Status = 'Draft';
             childOrderToInsert.add(wrpOrder.Order);
@@ -310,21 +343,32 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         requestItemForUpsert.clear();
 
         for(HDT_WRP_Order wrpOrder : wrapperOrderList){
-            orderUniqueKeyMap.put(wrpOrder.orderUniqueKey, wrpOrder.Order.Id);
+            orderUniqueKeyMap.put(wrpOrder.orderUniqueKey, wrpOrder);
         }
 
+        String prodKey;
         for(HDT_WRP_OrderItem wrpOrderItem : wrapperOrderItemList){
 
-            wrpOrderItem.orderItem.Quantity = 1;
+            prodKey = wrpOrderItem.product.Name + '-' + wrpOrderItem.product.DescriptionSAP__c + '-' + wrpOrderItem.product.Version__c;
+            //wrpOrderItem.orderItem.Quantity = 1;
 
-            if(product2Map.containsKey(wrpOrderItem.product.ProductCode)){
-                wrpOrderItem.orderItem.Product2Id = product2Map.get(wrpOrderItem.product.ProductCode).Id;
-                wrpOrderItem.orderItem.PricebookEntryId = pricebookEntryForVasMap.get(wrpOrderItem.orderItem.Product2Id).Id;
-                wrpOrderItem.orderItem.UnitPrice = pricebookEntryForVasMap.get(wrpOrderItem.orderItem.Product2Id).UnitPrice;
-            }
-
+            String contractCode = '';
             if(orderUniqueKeyMap.containsKey(wrpOrderItem.orderUniqueKey)){
-                wrpOrderItem.orderItem.OrderId = orderUniqueKeyMap.get(wrpOrderItem.orderUniqueKey);
+                wrpOrderItem.orderItem.OrderId = orderUniqueKeyMap.get(wrpOrderItem.orderUniqueKey).order.Id;
+                contractCode = orderUniqueKeyMap.get(wrpOrderItem.orderUniqueKey).contract.SAPContractCode__c;
+            }
+            System.debug('>>> contractCode ' + contractCode);
+            if(product2Map.containsKey(prodKey)){
+                wrpOrderItem.orderItem.Product2Id = product2Map.get(prodKey).Id;
+
+                String priceBook2Id = contractToPbookIdMap.get(contractCode).SBQQ__AmendmentPricebookId__c;
+
+                System.debug('>>> priceBook2Id ' + priceBook2Id);
+
+                Map<Id, PriceBookEntry> tempMap = pricebookEntryForVasMap.get(Pricebook2Id);
+
+                wrpOrderItem.orderItem.PricebookEntryId = tempMap.get(wrpOrderItem.orderItem.Product2Id).Id;
+                wrpOrderItem.orderItem.UnitPrice = tempMap.get(wrpOrderItem.orderItem.Product2Id).UnitPrice;
             }
 
             requestItemForUpsert.add(wrpOrderItem.requestItem);
@@ -704,6 +748,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
     private class HDT_WRP_OrderItem {
         private MassiveLoaderRequestItem__c requestItem;
         private String orderUniqueKey;
+        private String contractCode;
         private String itemType;
         private OrderItem orderItem;
         private Product2 product;

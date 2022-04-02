@@ -191,6 +191,7 @@ public with sharing class HDT_LC_MassiveLoader {
         System.debug(LoggingLevel.DEBUG, '>>> selectedProcessName: ' + selectedProcessName);
         System.debug(LoggingLevel.DEBUG, '>>> massiveLoaderRequestId: ' + massiveLoaderRequestId);
 
+        String splitCharacter = '\\|';
         HDT_QR_ContentVersion contentVersionQr = new HDT_QR_ContentVersion();
         Map<String, Object> response = new Map<String, Object>();
         Integer csvLinesLimit = 4500;
@@ -242,7 +243,7 @@ public with sharing class HDT_LC_MassiveLoader {
         uploadedFile = null;
     
         List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName);
-        Integer expectedNumberOfFields = staticResources.get(0).Body.toString().split('\\|').size();
+        Integer expectedNumberOfFields = staticResources.get(0).Body.toString().split(splitCharacter).size();
 
         System.debug(LoggingLevel.DEBUG, '>>> HeapSize after body to string: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
     
@@ -274,7 +275,7 @@ public with sharing class HDT_LC_MassiveLoader {
             if(rowNewLineCharIndex == -1){
                 if(String.isNotEmpty(fileBody)){
 
-                    if(checkSingleRow(fileBody, expectedNumberOfFields)){
+                    if(checkSingleRow(fileBody, expectedNumberOfFields, splitCharacter)){
                         parsingError = true;
                         break;
                     }
@@ -290,7 +291,7 @@ public with sharing class HDT_LC_MassiveLoader {
             newRequestItem = new MassiveLoaderRequestItem__c();
             newRequestItem.Data__c = fileBody.substring(0, rowNewLineCharIndex);
 
-            if(checkSingleRow(newRequestItem.Data__c, expectedNumberOfFields)){
+            if(checkSingleRow(newRequestItem.Data__c, expectedNumberOfFields, splitCharacter)){
                 parsingError = true;
                 break;
             }
@@ -308,7 +309,7 @@ public with sharing class HDT_LC_MassiveLoader {
             }
 
             if(String.isNotEmpty(fileBody) && rowNewLineCharIndex == -1){
-                if(checkSingleRow(fileBody, expectedNumberOfFields)){
+                if(checkSingleRow(fileBody, expectedNumberOfFields, splitCharacter)){
                     parsingError = true;
                     break;
                 }
@@ -379,9 +380,9 @@ public with sharing class HDT_LC_MassiveLoader {
             
     }
 
-    private static Boolean checkSingleRow(String fileRow, Integer expectedNumberOfFields){
-        fileRow = fileRow.replaceAll('\\|\\|', '\\|null\\|');
-        List<String> rowFields = fileRow.split('\\|', -1);
+    private static Boolean checkSingleRow(String fileRow, Integer expectedNumberOfFields, String splitCharacter){
+        fileRow = fileRow.replaceAll(splitCharacter + splitCharacter, splitCharacter + 'null' + splitCharacter);
+        List<String> rowFields = fileRow.split(splitCharacter, -1);
         return rowFields.size() != expectedNumberOfFields;
     }
 
