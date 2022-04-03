@@ -10,9 +10,9 @@ public with sharing class HDT_BA_ActivityDispatcherTst {
     private static void executeBatch() {
         Group gr = [SELECT Id FROM Group LIMIT 1];
         Queue__c queue = new Queue__c(
-            Agency__c = 'ag1',
+            Agency2__c = 'ag1',
             Name = 'coda1',
-            Group__c = 'gr1',
+            WorkGroup__c = 'gr1',
             QueueId__c = gr.Id,
             Priority__c = '1',
             Type__c = 'PUSH'
