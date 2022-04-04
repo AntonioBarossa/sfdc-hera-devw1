@@ -61,9 +61,9 @@
                                 </div>
                             </div>
                             <template iterator:it={fieldsList}>
-                                <div key={it.value} class="slds-col slds-size_1-of-5">
+                                <div key={it.value.fieldName} class="slds-col slds-size_1-of-5">
                                     <div class="slds-m-around_x-small">
-                                        <lightning-input-field key={it.value} field-name={it.value} ></lightning-input-field>
+                                        <lightning-input-field key={it.value.fieldName} field-name={it.value.fieldName} value={it.value.default}></lightning-input-field>
                                     </div>
                                 </div>
                             </template>
