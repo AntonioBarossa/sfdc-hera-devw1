@@ -530,7 +530,6 @@ public inherited sharing class HDT_QR_Order {
             WITH SECURITY_ENFORCED
         ]);
 
-        System.debug(LoggingLevel.DEBUG,'Removed Fields: ' + decision.getRemovedFields());
         return decision.getRecords();
     }
 
