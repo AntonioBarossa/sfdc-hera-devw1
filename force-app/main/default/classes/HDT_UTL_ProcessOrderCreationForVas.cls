@@ -5,59 +5,39 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
     private List<MassiveLoaderRequestItem__c> itemsToUpdate;
     private List<HDT_WRP_Order> wrapperOrderList;
     private List<HDT_WRP_OrderItem> wrapperOrderItemList;
-    private List<Product2> commOfferForRetrieve;
-    private List<Product2> additionalProduct2;
-    private List<SaleServiceItem__c> saleServiceToInsert = new List<SaleServiceItem__c>();
-    private Map<Id, PricebookEntry> priceBookEntryMap = new Map<Id, PricebookEntry>();
-    private Map<String, Product2> commOfferMap;
-    private Map<String, Map<String, String>> additionalOrderItemMap;
-    private List<PricebookEntry> pbeOptionalSkuList = new List<PricebookEntry>();
     private Map<String, String> mapAllFields;
-    private List<Opportunity> opportunityToinsert = new List<Opportunity>();
-    private Map<Id, Map<Id, PriceBookEntry>> pricebookEntryForOptionalMap;
-    private List<Id> accountIdToRetrieve;
-    private List<Id> billProfToRetrieve;
-    private List<Id> servPointToRetrieve;
     private Map<Id, Account> accountMap;
-    private Map<Id, BillingProfile__c> billingProfileMap;
-    private Map<Id, ServicePoint__c> servicePointMap;
     private Id childOrderRecordTypeId;
-    private Integer parentOrderIndex;
-
-    private List<String> productCodeList = new List<String>();
     private List<String> productNameList = new List<String>();
     private List<String> productDescrList = new List<String>();
-
     private Map<String, Product2> productMap;
     private Map<Id, Map<Id, PriceBookEntry>> pricebookEntryForVasMap;
     private List<String> contractSapCodeList = new List<String>();
-    Map<String, Contract> contractToPbookIdMap = new Map<String, Contract>();
-
+    private Map<String, Contract> contractToPbookIdMap = new Map<String, Contract>();
 
     public override void checks(){
 
         mapFieldsObject();
 
+        Map<String, Id> failedMap = new Map<String, Id>();
         itemsToUpdate = new List<MassiveLoaderRequestItem__c>();
-        commOfferForRetrieve = new List<Product2>();
-        additionalProduct2 = new List<Product2>();
-        accountIdToRetrieve = new List<Id>();
-        billProfToRetrieve = new List<Id>();
-        servPointToRetrieve = new List<Id>();
         productMap = new Map<String, Product2>();
 
         childOrderRecordTypeId = getOrderRecordTypeMap(processName);
-        parentOrderIndex = 10;
 
         HDT_WRP_Order wrpOrder;
         HDT_WRP_OrderItem wrpOrderItem;
-
         List<String> tempSplitedFields;
-        HDT_UTL_ProcessSales.HDT_WRP_NextDataObj nextDataObj;
-        String orderCode = '';
-        Integer rowTypeIndex = mapHeaderForWrapper.get('RowType');
-        Integer orderCodeIndex = mapHeaderForWrapper.get('OrderCode');
+
         String rowType = '';
+        String orderUniqueKey;
+        //Integer rowTypeIndex = mapHeaderForWrapper.get('RowType');
+        //Integer orderCodeIndex = mapHeaderForWrapper.get('OrderCode');
+        Integer orderCodeIndex = mapHeaderForWrapper.get('Contratto');
+        Integer nomeVasIndex = mapHeaderForWrapper.get('NomeVAS');
+
+        List<HDT_WRP_Order> wrapperOrderTempList = new List<HDT_WRP_Order>();
+        List<HDT_WRP_OrderItem> wrapperOrderItemTempList = new List<HDT_WRP_OrderItem>();
 
         wrapperOrderList = new List<HDT_WRP_Order>();
         wrapperOrderItemList = new List<HDT_WRP_OrderItem>();
@@ -66,38 +46,22 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
             tempSplitedFields = item.Data__c.split(splitCharacter, -1);
 
-            rowType = tempSplitedFields[rowTypeIndex];
+            orderUniqueKey = tempSplitedFields[orderCodeIndex];
+            //rowType = tempSplitedFields[rowTypeIndex];
+            rowType = (String.isEmpty(tempSplitedFields[nomeVasIndex])) ? 'Order' : 'OrderItem';
 
             if(rowType.equalsIgnoreCase('Order')){
-
-                if(!String.isEmpty(item.NextStepData__c)){
-                    nextDataObj = (HDT_UTL_ProcessSales.HDT_WRP_NextDataObj)JSON.deserialize(item.NextStepData__c, HDT_UTL_ProcessSales.HDT_WRP_NextDataObj.class);
-                }
-
                 wrpOrder = new HDT_WRP_Order();
                 wrpOrder.parentOrder = new Order();
                 wrpOrder.order = new Order();
                 wrpOrder.contract = new Contract();
                 wrpOrder.requestItem = item;
-
-                wrpOrder.orderUniqueKey = tempSplitedFields[orderCodeIndex];
-
-                //wrpOrder.accountId = nextDataObj.accountId;
-                //wrpOrder.contactId = nextDataObj.contactId;
-                //wrpOrder.billProfId = nextDataObj.billProfId;
-                //wrpOrder.servPointId = nextDataObj.servPointId;
-
-                //accountIdToRetrieve.add(nextDataObj.accountId);
-                //billProfToRetrieve.add(nextDataObj.billProfId);
-                //servPointToRetrieve.add(nextDataObj.servPointId);
-                
-                orderCode = tempSplitedFields[parentOrderIndex];
-                //processObj = buildWrapperOrderStructure(processObj, tempSplitedFields, nextDataObj);
+                wrpOrder.orderUniqueKey = orderUniqueKey;
             }
 
             if(rowType.equalsIgnoreCase('OrderItem')){
                 wrpOrderItem = new HDT_WRP_OrderItem();
-                wrpOrderItem.orderUniqueKey = tempSplitedFields[orderCodeIndex];
+                wrpOrderItem.orderUniqueKey = orderUniqueKey;
                 wrpOrderItem.itemType = 'OrderItem';
                 wrpOrderItem.orderItem = new OrderItem();
                 wrpOrderItem.product = new Product2();
@@ -150,31 +114,65 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
             }
 
             if(rowType.equalsIgnoreCase('Order')){
+                
+                wrapperOrderTempList.add(wrpOrder);
+
                 if(String.isNotEmpty(convertionError)){
                     wrpOrder.requestItem.Status__c = 'Errore';
                     wrpOrder.requestItem.StatusDescription__c = convertionError;
-                    itemsToUpdate.add(wrpOrder.requestItem);
+                    failedMap.put(wrpOrder.orderUniqueKey, wrpOrder.requestItem.Id);
                     continue;
                 }
-                //wrpOrder.order.AccountId = contractToPbookIdMap.get(contractCode).AccountId;
-                contractSapCodeList.add(wrpOrder.contract.SAPContractCode__c);
-                wrapperOrderList.add(wrpOrder);
+
             }
 
             if(rowType.equalsIgnoreCase('OrderItem')){
+                
+                wrapperOrderItemTempList.add(wrpOrderItem);
+
                 if(String.isNotEmpty(convertionError)){
                     wrpOrderItem.requestItem.Status__c = 'Errore';
                     wrpOrderItem.requestItem.StatusDescription__c = convertionError;
-                    itemsToUpdate.add(wrpOrderItem.requestItem);
+                    failedMap.put(wrpOrderItem.orderUniqueKey, wrpOrderItem.requestItem.Id);
                     continue;
                 }
-                productNameList.add(wrpOrderItem.product.Name);
-                productDescrList.add(wrpOrderItem.product.DescriptionSAP__c);
-                wrapperOrderItemList.add(wrpOrderItem);
+
             }
 
 
         }
+
+        for(HDT_WRP_Order wrp_order : wrapperOrderTempList){
+            if(failedMap.containsKey(wrp_order.orderUniqueKey)){
+                wrp_order.requestItem.Status__c = 'Errore';
+
+                if(failedMap.get(wrp_order.orderUniqueKey) != wrp_order.requestItem.Id){
+                    wrp_order.requestItem.StatusDescription__c = 'Errore nel formato dati';
+                }
+
+                itemsToUpdate.add(wrp_order.requestItem);
+            } else {
+                contractSapCodeList.add(wrp_order.contract.SAPContractCode__c);
+                wrapperOrderList.add(wrp_order);
+            }
+        }
+
+        for(HDT_WRP_OrderItem wrp_ordetItem : wrapperOrderItemTempList){
+            if(failedMap.containsKey(wrp_ordetItem.orderUniqueKey)){
+                wrp_ordetItem.requestItem.Status__c = 'Errore';
+
+                if(failedMap.get(wrp_ordetItem.orderUniqueKey) != wrp_ordetItem.requestItem.Id){
+                    wrp_ordetItem.requestItem.StatusDescription__c = 'Errore nel formato dati';
+                }
+
+                itemsToUpdate.add(wrp_ordetItem.requestItem);
+            } else {
+                productNameList.add(wrp_ordetItem.product.Name);
+                productDescrList.add(wrp_ordetItem.product.DescriptionSAP__c);
+                wrapperOrderItemList.add(wrp_ordetItem);
+            }
+        }
+
 
     }
 
@@ -185,9 +183,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         List<Id> productIdList = new List<Id>();
         List<PriceBookEntry> pbeList = new List<PriceBookEntry>();
         List<SBQQ__ProductOption__c> productOptionList = new List<SBQQ__ProductOption__c>();
-        commOfferMap = new Map<String, Product2>();
-        additionalOrderItemMap = new Map<String, Map<String, String>>();
-        pricebookEntryForOptionalMap = new Map<Id, Map<Id, PriceBookEntry>>();
         pricebookEntryForVasMap = new Map<Id, Map<Id, PriceBookEntry>>();
         
 
@@ -234,94 +229,12 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
                 pricebookEntryForVasMap.put(pbe.Pricebook2Id, tempMap);
             }
         }
-
-        /*for(Product2 commOffer : commOfferForRetrieve){
-            productCodeList.add(commOffer.ProductCode);
-            versionList.add(commOffer.Version__c);
-        }
-
-        for(Product2 orderItemSupplyPoint : additionalProduct2){
-            productCodeList.add(orderItemSupplyPoint.ProductCode);
-        }
-
-        productRetrievedFromDb = [
-            SELECT Id, ProductCode, Version__c
-            FROM Product2
-            WHERE ProductCode IN :productCodeList AND ProductCode != null
-            AND Version__c IN :versionList AND Version__c != null
-            AND Family = 'Offerta commerciale'
-            WITH SECURITY_ENFORCED
-        ];
-
-        for(Product2 p : productRetrievedFromDb){
-            productIdList.add(p.Id);
-            commOfferMap.put(p.ProductCode + '-' + p.Version__c, p);
-            additionalOrderItemMap.put(p.Id, new Map<String, String>());
-        }
-
-        pbeList = [
-            SELECT Id, Pricebook2Id, Product2Id, UnitPrice
-            FROM PricebookEntry
-            WHERE Product2Id IN :productIdList
-            AND Pricebook2.IsStandard = false
-            WITH SECURITY_ENFORCED
-        ];
-        
-        for(PriceBookEntry pbe : pbeList){
-            priceBookEntryMap.put(pbe.Product2Id, pbe);
-
-            if(!pricebookEntryForOptionalMap.containsKey(pbe.Pricebook2Id)){
-                pricebookEntryForOptionalMap.put(pbe.Pricebook2Id, new Map<Id, PriceBookEntry>());
-            }
-
-        }
-
-        productOptionList = [
-            SELECT SBQQ__ConfiguredSKU__c, SBQQ__OptionalSKU__c, SBQQ__OptionalSKU__r.ProductCode
-            FROM SBQQ__ProductOption__c
-            WHERE SBQQ__ConfiguredSKU__c IN :productIdList
-            WITH SECURITY_ENFORCED
-        ];
-
-        List<Id> optnionalSkuIdList = new List<Id>();
-        
-        for(SBQQ__ProductOption__c prodOpt : productOptionList){
-            if(additionalOrderItemMap.containsKey(prodOpt.SBQQ__ConfiguredSKU__c)){
-                Map<String, String> tempMap = additionalOrderItemMap.get(prodOpt.SBQQ__ConfiguredSKU__c);
-                tempMap.put(prodOpt.SBQQ__OptionalSKU__r.ProductCode, prodOpt.SBQQ__OptionalSKU__c);
-                additionalOrderItemMap.put(prodOpt.SBQQ__ConfiguredSKU__c, tempMap);
-                optnionalSkuIdList.add(prodOpt.SBQQ__OptionalSKU__c);
-            }
-        }
-        
-        pbeOptionalSkuList = [
-            SELECT Id, Pricebook2Id, Product2Id, UnitPrice
-            FROM PricebookEntry
-            WHERE Product2Id IN :optnionalSkuIdList
-            AND Pricebook2.IsStandard = false
-            WITH SECURITY_ENFORCED
-        ];
-
-        for(PricebookEntry pbe : pbeOptionalSkuList){
-            if(pricebookEntryForOptionalMap.containsKey(pbe.Pricebook2Id)){
-                Map<Id, PriceBookEntry> tempMap = pricebookEntryForOptionalMap.get(pbe.Pricebook2Id);
-                tempMap.put(pbe.Product2Id, pbe);
-                pricebookEntryForOptionalMap.put(pbe.Pricebook2Id, tempMap);
-            }
-        }*/
-
-        //List<Account> accList = HDT_UTL_MassiveOrderFieldsAlignment.getAccountByIds(accountIdToRetrieve);
-        //List<BillingProfile__c> billProfList = HDT_UTL_MassiveOrderFieldsAlignment.getBillingProfileByIds(billProfToRetrieve);
-        //List<ServicePoint__c> servPointList = HDT_UTL_MassiveOrderFieldsAlignment.getServicePointByIds(servPointToRetrieve);
-
-        //accountMap = new Map<Id, Account>(accList);
-        //billingProfileMap = new Map<Id, BillingProfile__c>(billProfList);
-        //servicePointMap = new Map<Id, ServicePoint__c>(servPointList);
         
     }
 
     public override void registryCreation(){
 
+        List<sObject> recordToDelete = new List<sObject>();
         List<Order> parentOrderToInsert = new List<Order>();
         List<Order> childOrderToInsert = new List<Order>();
         List<OrderItem> orderItemToInsert = new List<OrderItem>();
@@ -343,32 +256,45 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         requestItemForUpsert.clear();
 
         for(HDT_WRP_Order wrpOrder : wrapperOrderList){
+
+            if(saveChildOrderResponse.errorItemMap.containsKey(wrpOrder.requestItem.Id)){
+                wrpOrder.requestItem.Status__c = 'Errore';
+                wrpOrder.requestItem.StatusDescription__c = saveChildOrderResponse.errorItemMap.get(wrpOrder.requestItem.Id);
+                continue;
+            }
             orderUniqueKeyMap.put(wrpOrder.orderUniqueKey, wrpOrder);
         }
 
         String prodKey;
+        String contractCode = '';
         for(HDT_WRP_OrderItem wrpOrderItem : wrapperOrderItemList){
 
-            prodKey = wrpOrderItem.product.Name + '-' + wrpOrderItem.product.DescriptionSAP__c + '-' + wrpOrderItem.product.Version__c;
-            //wrpOrderItem.orderItem.Quantity = 1;
-
-            String contractCode = '';
             if(orderUniqueKeyMap.containsKey(wrpOrderItem.orderUniqueKey)){
                 wrpOrderItem.orderItem.OrderId = orderUniqueKeyMap.get(wrpOrderItem.orderUniqueKey).order.Id;
                 contractCode = orderUniqueKeyMap.get(wrpOrderItem.orderUniqueKey).contract.SAPContractCode__c;
+            } else {
+                wrpOrderItem.requestItem.Status__c = 'Errore';
+                wrpOrderItem.requestItem.StatusDescription__c = 'Controllare parametri Order';
+                continue;
             }
+
             System.debug('>>> contractCode ' + contractCode);
+
+            prodKey = wrpOrderItem.product.Name + '-' + wrpOrderItem.product.DescriptionSAP__c + '-' + wrpOrderItem.product.Version__c;
+
             if(productMap.containsKey(prodKey)){
                 wrpOrderItem.orderItem.Product2Id = productMap.get(prodKey).Id;
 
-                String priceBook2Id = contractToPbookIdMap.get(contractCode).SBQQ__AmendmentPricebookId__c;
+                String pricebook2Id = contractToPbookIdMap.get(contractCode).SBQQ__AmendmentPricebookId__c;
 
                 System.debug('>>> priceBook2Id ' + priceBook2Id);
 
-                Map<Id, PriceBookEntry> tempMap = pricebookEntryForVasMap.get(Pricebook2Id);
+                if(pricebookEntryForVasMap.containsKey(pricebook2Id)){
+                    Map<Id, PriceBookEntry> tempMap = pricebookEntryForVasMap.get(pricebook2Id);
+                    wrpOrderItem.orderItem.PricebookEntryId = tempMap.get(wrpOrderItem.orderItem.Product2Id).Id;
+                    wrpOrderItem.orderItem.UnitPrice = tempMap.get(wrpOrderItem.orderItem.Product2Id).UnitPrice;
+                }
 
-                wrpOrderItem.orderItem.PricebookEntryId = tempMap.get(wrpOrderItem.orderItem.Product2Id).Id;
-                wrpOrderItem.orderItem.UnitPrice = tempMap.get(wrpOrderItem.orderItem.Product2Id).UnitPrice;
             }
 
             requestItemForUpsert.add(wrpOrderItem.requestItem);
@@ -383,227 +309,62 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         saveOrderItemResponse = databaseUpsert(orderItemToInsert, requestItemForUpsert, 'OrderItem');
         requestItemForUpsert.clear();
 
-        /*
-        Id commOffId;
-        Id priceBookId;
+        Set<String> uniqueKeyErrorList = new Set<String>();
+        for(HDT_WRP_OrderItem wrpOrderItem : wrapperOrderItemList){
 
-        for(HDT_WRP_ProcessObjects processObj : processObjList){
-
-            if(processObj.requestItem.Status__c == 'Errore'){
+            if(!orderUniqueKeyMap.containsKey(wrpOrderItem.orderUniqueKey)){
                 continue;
             }
 
-            processObj.sale = setSaleObject(processObj.sale, processObj.accountId, processObj.contactId);
-            requestItemForUpsert.add(processObj.requestItem);
-            saleToInsert.add(processObj.sale);
-        }
-
-        HDT_WRP_SaveResponse saveSaleResponse;
-        saveSaleResponse = databaseUpsert(saleToInsert, requestItemForUpsert, 'Sale__C');
-
-        requestItemForUpsert.clear();
-
-        for(HDT_WRP_ProcessObjects processObj : processObjList){
-
-            if(processObj.requestItem.Status__c == 'Errore'){
-                continue;
-            }
-
-            if(saveSaleResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
-                System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c after save');
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = saveSaleResponse.errorItemMap.get(processObj.requestItem.Id);
-                continue;
-            }
-
-            processObj.opportunity = setOpportunityObj(processObj.opportunity, processObj.sale, processObj.accountId);
-            requestItemForUpsert.add(processObj.requestItem);
-            opportunityToinsert.add(processObj.opportunity);
-        }
-
-        HDT_WRP_SaveResponse saveOpportunityResponse;
-        saveOpportunityResponse = databaseUpsert(opportunityToinsert, requestItemForUpsert, 'Opportunity');
-
-        requestItemForUpsert.clear();
-
-        for(HDT_WRP_ProcessObjects processObj : processObjList){
-
-            if(processObj.requestItem.Status__c == 'Errore'){
-                continue;
-            }
-
-            if(saveOpportunityResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
-                System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c after save');
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = saveOpportunityResponse.errorItemMap.get(processObj.requestItem.Id);
-                continue;
-            }
-
-            for(HDT_WRP_ChildOrder childOrder : processObj.childOrderList){
-                if(childOrder.orderType.equalsIgnoreCase('Attivazione')){
-                    System.debug(LoggingLevel.DEBUG, '>>> activation');
-                    for(HDT_WRP_OrderItem wrpOrderItem : childOrder.orderItemList){
-                        if(wrpOrderItem.itemType.equalsIgnoreCase('offertaComm')){
-                            System.debug(LoggingLevel.DEBUG, '>>> offertaComm');
-                            wrpOrderItem.product = commOfferMap.get(wrpOrderItem.product.ProductCode + '-' + wrpOrderItem.product.Version__c);
-                            commOffId = wrpOrderItem.product.Id;
-                            wrpOrderItem.orderItem.PriceBookEntryId = priceBookEntryMap.get(commOffId).Id;
-                            wrpOrderItem.orderItem.UnitPrice = priceBookEntryMap.get(commOffId).UnitPrice;
-                            wrpOrderItem.orderItem.Quantity = 1;
-                            wrpOrderItem.orderItem.Product2Id = commOffId;
-                            priceBookId = priceBookEntryMap.get(commOffId).Pricebook2Id;
-                            System.debug(LoggingLevel.DEBUG, '>>> pbeId offComm ' + wrpOrderItem.orderItem.PriceBookEntryId);
-                        }
-
-                    }
-                }
-
-            }
-
-            for(HDT_WRP_ChildOrder wrpChildOrder : processObj.childOrderList){
-
-                Map<Id, PriceBookEntry> pbeOptionalMap = pricebookEntryForOptionalMap.get(priceBookId);
-
-                if(wrpChildOrder.orderType.equalsIgnoreCase('Attivazione')){
-                    System.debug(LoggingLevel.DEBUG, '>>> activation');
-
-                    wrpChildOrder.childOrder.Pricebook2Id = priceBookId;
-                    wrpChildOrder.childOrder.EffectiveDate = Date.today();
-                    wrpChildOrder.childOrder.Status = 'Draft';
-
-                    for(HDT_WRP_OrderItem wrpOrderItem : wrpChildOrder.orderItemList){
-
-                        if(wrpOrderItem.itemType.equalsIgnoreCase('POD') || wrpOrderItem.itemType.equalsIgnoreCase('PDR')){
-                            Map<String, String> tempMap = additionalOrderItemMap.get(commOffId);
-                            if(tempMap.containsKey(wrpOrderItem.product.ProductCode)){
-                                wrpOrderItem.product.Id = tempMap.get(wrpOrderItem.product.ProductCode);
-                                wrpOrderItem.orderItem.Product2Id = wrpOrderItem.product.Id;
-                                wrpOrderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(wrpOrderItem.product.Id).Id;
-                                wrpOrderItem.orderItem.UnitPrice = pbeOptionalMap.get(wrpOrderItem.product.Id).UnitPrice;
-                                wrpOrderItem.orderItem.Quantity = 1;
-                                System.debug(LoggingLevel.DEBUG, '>>> pbeId pod-pdr ' + wrpOrderItem.orderItem.PriceBookEntryId);
-                            } else {
-                                wrpOrderItem = null;
-                            }
-                            
-                        }
-
-                    }
-
-                    processObj.parentOrder = setParentOrder(wrpChildOrder.childOrder, processObj.parentOrder, processObj.sale);
-                    parentOrderToInsert.add(processObj.parentOrder);
-                }
-
-                if(wrpChildOrder.orderType.equalsIgnoreCase('Aggiuntivo')){
-
-                    wrpChildOrder.childOrder.Pricebook2Id = priceBookId;
-                    wrpChildOrder.childOrder.EffectiveDate = Date.today();
-                    wrpChildOrder.childOrder.Status = 'Draft';
-
-                    for(HDT_WRP_OrderItem wrpOrderItem : wrpChildOrder.orderItemList){
-                        Map<String, String> tempMap = additionalOrderItemMap.get(commOffId);
-                        if(tempMap.containsKey(wrpOrderItem.product.ProductCode)){
-                            wrpOrderItem.product.Id = tempMap.get(wrpOrderItem.product.ProductCode);
-                            wrpOrderItem.orderItem.Product2Id = wrpOrderItem.product.Id;
-                            wrpOrderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(wrpOrderItem.product.Id).Id;
-                            wrpOrderItem.orderItem.UnitPrice = pbeOptionalMap.get(wrpOrderItem.product.Id).UnitPrice;
-                            wrpOrderItem.orderItem.Quantity = 1;
-                            System.debug(LoggingLevel.DEBUG, '>>> pbeId aggint ' + wrpOrderItem.orderItem.PriceBookEntryId);
-                        } else {
-                            wrpOrderItem = null;
-                        }
-                        
-                    }
-                }
-
-                requestItemForUpsert.add(processObj.requestItem);
-                childOrderToInsert.add(wrpChildOrder.childOrder);
-
-            }
-            processObj = setSaleServiceItem(processObj);
-            saleServiceToInsert.add(processObj.saleServiceItem);
-            //System.debug(LoggingLevel.DEBUG, JSON.serializePretty(processObj));
-
-        }
-
-        HDT_UTL_DatabaseService.insertSObject(parentOrderToInsert);
-        HDT_UTL_DatabaseService.insertSObject(saleServiceToInsert);
-
-        for(HDT_WRP_ProcessObjects processObj : processObjList){
-            for(HDT_WRP_ChildOrder wrpChildOrder : processObj.childOrderList){
-
-                wrpChildOrder.childOrder.ParentOrder__c = processObj.parentOrder.Id;
-                wrpChildOrder.childOrder.Contact__c = processObj.contactId;
-                wrpChildOrder.childOrder.SalesContact__c = processObj.contactId;
-                wrpChildOrder.childOrder.Sale__c = processObj.sale.Id;
-                wrpChildOrder.childOrder = HDT_UTL_MassiveOrderFieldsAlignment.alignAccountFields(wrpChildOrder.childOrder, accountMap.get(processObj.accountId));
-                wrpChildOrder.childOrder = HDT_UTL_MassiveOrderFieldsAlignment.alignSaleFields(wrpChildOrder.childOrder, processObj.sale);
-                wrpChildOrder.childOrder = HDT_UTL_MassiveOrderFieldsAlignment.alignBillingProfileFields(wrpChildOrder.childOrder, billingProfileMap.get(processObj.billProfId));
-                wrpChildOrder.childOrder = HDT_UTL_MassiveOrderFieldsAlignment.alignServicePointFields(wrpChildOrder.childOrder, servicePointMap.get(processObj.servPointId));
-            }
-        }
-
-        //HDT_UTL_DatabaseService.insertSObject(childOrderToInsert);
-        HDT_WRP_SaveResponse saveChildOrderResponse;
-        saveChildOrderResponse = databaseUpsert(childOrderToInsert, requestItemForUpsert, 'Order');
-
-        requestItemForUpsert.clear();
-
-        for(HDT_WRP_ProcessObjects processObj : processObjList){
-
-            if(processObj.requestItem.Status__c == 'Errore'){
-                continue;
-            }
-            
-            if(saveChildOrderResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
-                System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c after save');
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = saveChildOrderResponse.errorItemMap.get(processObj.requestItem.Id);
-                continue;
-            }
-
-            for(HDT_WRP_ChildOrder wrpChildOrder : processObj.childOrderList){
-                for(HDT_WRP_OrderItem wrpOrderItem : wrpChildOrder.orderItemList){
-                    wrpOrderItem.orderItem.OrderId = wrpChildOrder.childOrder.Id;
-                    requestItemForUpsert.add(processObj.requestItem);                    
-                    orderItemToInsert.add(wrpOrderItem.orderItem);
-                }
-            
-            }
-            
-        }
-
-        //HDT_UTL_DatabaseService.insertSObject(orderItemToInsert);
-        HDT_WRP_SaveResponse saveOrderItemResponse;
-        saveOrderItemResponse = databaseUpsert(orderItemToInsert, requestItemForUpsert, 'OrderItem');
-
-        requestItemForUpsert.clear();
-
-        for(HDT_WRP_ProcessObjects processObj : processObjList){
-
-            itemsToUpdate.add(processObj.requestItem);
-
-            if(processObj.requestItem.Status__c == 'Errore'){
-                continue;
-            }
-            
-            if(saveOrderItemResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
-                System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c after save');
-                processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = saveOrderItemResponse.errorItemMap.get(processObj.requestItem.Id);
-                continue;
-            }
-
-            for(HDT_WRP_ChildOrder childOrder : processObj.childOrderList){
-                if( childOrder.orderType == 'Attivazione' ){
-                    childOrder.orderItemList = setRequiredByLookup(childOrder.orderItemList);
-                }
+            if(saveOrderItemResponse.errorItemMap.containsKey(wrpOrderItem.requestItem.Id)){
+                wrpOrderItem.requestItem.Status__c = 'Errore';
+                wrpOrderItem.requestItem.StatusDescription__c = saveOrderItemResponse.errorItemMap.get(wrpOrderItem.requestItem.Id);
+                uniqueKeyErrorList.add(wrpOrderItem.orderUniqueKey);
+            } else {
+                wrpOrderItem.requestItem.Status__c = 'Chiuso';
             }
 
         }
 
-        HDT_UTL_DatabaseService.updateSObject(orderItemToInsert);
-*/
+        for(HDT_WRP_OrderItem wrpOrderItem : wrapperOrderItemList){
+
+            if(!orderUniqueKeyMap.containsKey(wrpOrderItem.orderUniqueKey)){
+                continue;
+            }
+
+            if(uniqueKeyErrorList.contains(wrpOrderItem.orderUniqueKey) && wrpOrderItem.requestItem.Status__c != 'Errore'){
+                wrpOrderItem.requestItem.Status__c = 'Errore';
+                wrpOrderItem.requestItem.StatusDescription__c = 'Controllare struttura order';
+            }
+
+        }
+
+        for(HDT_WRP_Order wrpOrder : wrapperOrderList){
+
+            if(!orderUniqueKeyMap.containsKey(wrpOrder.orderUniqueKey)){
+                continue;
+            }
+
+            if(uniqueKeyErrorList.contains(wrpOrder.orderUniqueKey)){
+                wrpOrder.requestItem.Status__c = 'Errore';
+                wrpOrder.requestItem.StatusDescription__c = 'Controllare struttura orderItem';
+                recordToDelete.add(wrpOrder.order);
+            } else {
+                wrpOrder.requestItem.Status__c = 'Chiuso';
+            }
+
+        }
+
+        delete recordToDelete;
+
+        for(HDT_WRP_Order wrpOrder : wrapperOrderList){
+            itemsToUpdate.add(wrpOrder.requestItem);
+        }
+
+        for(HDT_WRP_OrderItem wrpOrderItem : wrapperOrderItemList){
+            itemsToUpdate.add(wrpOrderItem.requestItem);
+        }
+
         getLimitDetails('---processEnd---');
 
     }
@@ -739,10 +500,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         private Order order;
         private Contract contract;
         private String orderUniqueKey;
-        private Id accountId;
-        private Id contactId;
-        private Id billProfId;
-        private Id servPointId;
     }
     
     private class HDT_WRP_OrderItem {
