@@ -19,11 +19,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Group__c</field>
+                <field>Agency2__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Agency__c</field>
+                <behavior>Required</behavior>
+                <field>WorkGroup__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

@@ -651,6 +651,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.BrandFlag__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.IsExportSIE__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -31046,6 +31051,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.AnomalyExample__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.AuthorisedBy__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
