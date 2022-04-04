@@ -316,7 +316,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         //     this.disabledDeliberation = true;
         // }
 
-        this.selectedProcessObject = this.processesReference.filter(el =>  el.processType === event.target.value)[0];
+        this.selectedProcessObject = this.processesReference.filter(el =>  el.ProcessName__c === event.target.value)[0];
 
         this.pickValue = event.target.value;
         this.startCheckContendibilita();
@@ -382,7 +382,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          console.log('# ProcessType Conditio >>> ' + this.selectedProcessObject.processType !== 'Switch in Ripristinatorio');
          console.log('# Full Condition >>> ' + (this.selectedProcessObject.recordType === 'HDT_RT_VAS' && this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c ) || (['HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType !== 'Switch in Ripristinatorio'));
         //if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
-        if( (['HDT_RT_VAS','HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
+        if( (['HDT_RT_VAS','HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.ProcessName__c != 'Switch in Ripristinatorio')){
             this.callCreditCheckSAP();
         }
         console.log('****13');
@@ -443,12 +443,12 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 this.options = [];
 
                 data.forEach(el => {
-                    this.options.push({label: el.processType, value: el.processType});
+                    this.options.push({label: el.ProcessName__c, value: el.ProcessName__c});
                 });
     
                 if (this.options.length === 1) {
                     this.selectedProcessObject = this.processesReference[0];
-                    this.value = this.selectedProcessObject.processType;
+                    this.value = this.selectedProcessObject.ProcessName__c;
                     this.disabledSelectProcess = true;
                     this.pickValue = this.value;
                     this.startCheckContendibilita();
@@ -492,8 +492,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             // fix LG 2009 richiesta da CZ da Room
             let label = new RegExp("^Prima Attivazione").test(this.order.ProcessType__c) ? this.order.ProcessType__c == 'Prima Attivazione con modifica' ? this.order.ProcessType__c : "Prima Attivazione" : this.order.ProcessType__c;
             this.options.push({label: label, value: this.order.ProcessType__c});
-            this.selectedProcessObject = {processType: this.order.ProcessType__c, recordType: this.order.RecordType.DeveloperName}
-            this.value = this.selectedProcessObject.processType;
+            this.selectedProcessObject = {ProcessName__c: this.order.ProcessType__c, recordType: this.order.RecordType.DeveloperName}
+            this.value = this.selectedProcessObject.ProcessName__c;
             // this.checkCompatibilityProcess();
             this.pickValue = this.value;
             this.startCheckContendibilita();
@@ -644,8 +644,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         if(this.order.Account.CustomerType__c !== undefined){
             bpType = this.order.Account.CustomerType__c;
         }
-        if( this.selectedProcessObject.processType !== undefined){
-            operation = this.selectedProcessObject.processType;
+        if( this.selectedProcessObject.ProcessName__c !== undefined){
+            operation = this.selectedProcessObject.ProcessName__c;
         }
         if(this.order.Market__c !== undefined){
             market = this.order.Market__c;
@@ -726,7 +726,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     checkCompatibilityProcess(){
         this.loaded = false;
         console.log('**********:12' + this.order.AccountId);
-        let processType = this.selectedProcessObject.processType;
+        let processType = this.selectedProcessObject.ProcessName__c;
         if (processType === undefined) {
             processType = this.order.ProcessType__c;
         }

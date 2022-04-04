@@ -496,6 +496,7 @@ public inherited sharing class HDT_QR_Order {
             AnnualConsumption__c,                            
             Catalog__c,                                     
             ServicePoint__r.AnnualConsumptionStandardM3__c, 
+            ServicePoint__r.isSTG__c, 
             BillingProfile__r.AccountClass__c,                           
             OwnerId,                                        
             OrderReferenceNumber,
@@ -522,7 +523,8 @@ public inherited sharing class HDT_QR_Order {
             ComfortCallDaysDue__c,
             IsEarlyActivation__c,
             Contact__r.FiscalCode__c,
-            Contact__c
+            Contact__c,
+            isSTG__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -1204,6 +1206,7 @@ public inherited sharing class HDT_QR_Order {
         FROM Order
         WHERE ParentOrder__c = :parentOrderId
         AND QualityCall__c = true
+        AND Phase__c NOT IN ('Completata','Annullato')
         WITH SECURITY_ENFORCED
         ];
     }

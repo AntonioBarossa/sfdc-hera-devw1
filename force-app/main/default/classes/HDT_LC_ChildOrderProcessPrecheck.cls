@@ -16,8 +16,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     private static HDT_QR_AnagAlignment regionalAdditionalQr = new HDT_QR_AnagAlignment();
 
     @AuraEnabled
-    public static List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> init(Order order){
-        List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> processesList = new List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process>();
+    public static List<ProcessMatrix__c> init(Order order){
+        List<ProcessMatrix__c> processesList = new List<ProcessMatrix__c>();
 
         if (order.ServicePoint__c != null && order.IsVAS__c == false 
             && (order.VasSubtype__c == null || (order.VasSubtype__c != null && !order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi')))) {//returns processes that are different from VAS
@@ -81,16 +81,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         if(compatibility == '' || compatibility == order.OrderNumber){
             system.debug('extraParams: ' + extraParams);
 
-            String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(selectedProcessObject.get('recordType'));
+            String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(selectedProcessObject.get('RecordTypeName__c'));
 
             //INIZIO SVILUPPI EVERIS
             Order newOrder = new Order();    
             //FINE SVILUPPI EVERIS
 
-            String processType = selectedProcessObject.get('processType');
-            String processCode = selectedProcessObject.get('processCode');
+            String processType = selectedProcessObject.get('ProcessName__c');
+            String processCode = selectedProcessObject.get('CasualCode__c');
 
-            switch on selectedProcessObject.get('recordType') {
+            switch on selectedProcessObject.get('RecordTypeName__c') {
                 //INIZIO SVILUPPI EVERIS
                 when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'
                 {
@@ -105,7 +105,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         newOrder.ContractReference__c = contracts[0]?.Id;
 						sapCode = contracts[0].SAPContractCode__c;
                     }
-                    processType = selectedProcessObject.get('recordType').equalsIgnoreCase('HDT_RT_Voltura') ? 'Voltura' : 'Voltura con Switch';
+                    processType = selectedProcessObject.get('RecordTypeName__c').equalsIgnoreCase('HDT_RT_Voltura') ? 'Voltura' : 'Voltura con Switch';
                     newOrder.Subprocess__c = 'Standard';
                     newOrder.VoltureType__c = 'Ordinaria';
                     processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
