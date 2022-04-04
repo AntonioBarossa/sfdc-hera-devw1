@@ -6,6 +6,10 @@ public inherited sharing class HDT_UTL_ProductAssociation {
         return (groupMembers.size()==0) ? false : true;
     }
 
+    public static String getTypeField(String objName, String fieldApiName){
+        return Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(fieldApiName).getDescribe().getType().name().toupperCase(); 
+    }
+
     public static String generateQueryString(String filterString, String operator, String optionalSkuId, String findMethod){
         
         String op = ' ' + operator + ' ';
@@ -20,51 +24,40 @@ public inherited sharing class HDT_UTL_ProductAssociation {
         
         String currentValue = '';
         for (String fieldName : fieldsToValue.keySet()){
+
+            String typeField = getTypeField('Product2', fieldName);
             currentValue = String.valueOf(fieldsToValue.get(fieldName));
+
             if(!String.isEmpty(currentValue)){
-                whereConditionList.add(fieldName + ' = \'' + String.escapeSingleQuotes(currentValue) + '\'');
+                currentValue = String.escapeSingleQuotes(currentValue);
+
+                switch on typeField.toUpperCase() {
+                    when 'BOOLEAN'  {
+                        whereConditionList.add(fieldName + ' = ' + Boolean.valueOf(currentValue));
+                    }
+                    when 'DOUBLE'  {
+                        whereConditionList.add(fieldName + ' = ' + Decimal.valueOf(currentValue));
+                    }
+                    when 'INTEGER'  {
+                        whereConditionList.add(fieldName + ' = ' + Integer.valueOf(currentValue));
+                    }
+                    when 'DATETIME'  {
+                        whereConditionList.add(fieldName + ' = ' + Datetime.valueOf(currentValue));
+                    }
+                    when 'DATE'  {
+                        whereConditionList.add(fieldName + ' = ' + Date.valueOf(currentValue));
+                    }
+                    when else {
+                        whereConditionList.add(fieldName + ' = \'' + currentValue + '\'');
+                    }
+                }
             }
+            //currentValue = String.valueOf(fieldsToValue.get(fieldName));
+            //if(!String.isEmpty(currentValue)){
+            //    whereConditionList.add(fieldName + ' = \'' + String.escapeSingleQuotes(currentValue) + '\'');
+            //}
+
         }
-
-        /*if(!String.isEmpty(filterProduct.Name)){
-            //whereConditionList.add('Name LIKE \'%' + String.escapeSingleQuotes(filterProduct.Name) + '%\'');
-            whereConditionList.add('Name = \'' + String.escapeSingleQuotes(filterProduct.Name) + '\'');
-        }
-
-        if(!String.isEmpty(filterProduct.TypeOffer__c)){
-            whereConditionList.add('TypeOffer__c = \'' + String.escapeSingleQuotes(filterProduct.TypeOffer__c) + '\'');
-        }
-
-        if(!String.isEmpty(filterProduct.ProductCode)){
-            //whereConditionList.add('ProductCode LIKE \'%' + String.escapeSingleQuotes(filterProduct.ProductCode) + '%\'');
-            whereConditionList.add('ProductCode = \'' + String.escapeSingleQuotes(filterProduct.ProductCode) + '\'');
-        }
-
-        //if(!String.isEmpty(filterProduct.Family)){
-        //    whereConditionList.add('Family = \'' + filterProduct.Family + '\'');
-        //}
-
-        if(!String.isEmpty(filterProduct.Version__c)){
-            //whereConditionList.add('Version__c LIKE \'%' + String.escapeSingleQuotes(filterProduct.Version__c) + '%\'');
-            whereConditionList.add('Version__c = \'' + String.escapeSingleQuotes(filterProduct.Version__c) + '\'');
-        }
-
-        if(!String.isEmpty(filterProduct.Status__c)){
-            whereConditionList.add('Status__c=\'' + String.escapeSingleQuotes(filterProduct.Status__c) + '\'');
-        }
-
-        if(!String.isEmpty(filterProduct.DescriptionSAP__c)){
-            //whereConditionList.add('DescriptionSAP__c LIKE \'%' + String.escapeSingleQuotes(filterProduct.DescriptionSAP__c) + '%\'');
-            whereConditionList.add('DescriptionSAP__c = \'' + String.escapeSingleQuotes(filterProduct.DescriptionSAP__c) + '\'');
-        }
-
-        if(!String.isEmpty(filterProduct.CategoryFamily__c)){
-            whereConditionList.add('CategoryFamily__c=\'' + String.escapeSingleQuotes(filterProduct.CategoryFamily__c) + '\'');
-        }
-
-        if(!String.isEmpty(filterProduct.Service__c)){
-            whereConditionList.add('Service__c=\'' + String.escapeSingleQuotes(filterProduct.Service__c) + '\'');
-        }*/
 
         queryString += 'FROM Product2 ';
         queryString += 'WHERE ' + String.join(whereConditionList, op) + ' ';
@@ -83,12 +76,6 @@ public inherited sharing class HDT_UTL_ProductAssociation {
         queryString += 'AND Family IN (\'' + String.join(familyList, '\',\'') + '\') ';
         queryString += 'AND (NOT Name LIKE \'template%\')';
         
-        //if(!String.isEmpty(filterProduct.Family)){
-        //    queryString += ',\'' + filterProduct.Family + '\'';
-        //}
-
-        //queryString += ;
-
         return queryString;
     }
     

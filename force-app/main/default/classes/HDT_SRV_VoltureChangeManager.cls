@@ -263,4 +263,15 @@ public with sharing class HDT_SRV_VoltureChangeManager{
     }
     // data: tipoaAttivita - ntoe
 
+
+    public void checkCallServiceTwentySix(Map<String, Object> argsMap)
+    {
+        Order orderToCallout = (Order) argsMap.get('sender');
+        if(orderToCallout.FlagServizio26__c != null && orderToCallout.FlagServizio26__c.equalsIgnoreCase('Y'))
+        {
+            HDT_SRV_SalesManager salesManager = new HDT_SRV_SalesManager();
+            salesManager.execute(argsMap);
+        }
+    }
+
 }

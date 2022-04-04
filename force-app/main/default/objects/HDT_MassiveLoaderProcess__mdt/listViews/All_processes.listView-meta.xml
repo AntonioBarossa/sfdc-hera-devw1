@@ -4,7 +4,6 @@
     <columns>Priority__c</columns>
     <columns>MasterLabel</columns>
     <columns>DeveloperName</columns>
-    <columns>IsActive__c</columns>
     <columns>BatchSize__c</columns>
     <columns>ApexClass__c</columns>
     <filterScope>Everything</filterScope>
