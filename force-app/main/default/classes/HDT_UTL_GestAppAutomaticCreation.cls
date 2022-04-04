@@ -59,11 +59,11 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_
          */
         if(ord.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_Attivazione'))
         {
-            Map<String,Object> argsMap = new Map<String,Object>();
-            argsMap.put('sender',obj);
-            argsMap.put('method','service26');
+            Map<String,Object> argsMapService = new Map<String,Object>();
+            argsMapService.put('sender',obj);
+            argsMapService.put('method','service26');
             HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
-            voltureChangeSrv.checkCallServiceTwentySix(argsMap);
+            voltureChangeSrv.checkCallServiceTwentySix(argsMapService);
         }
         return true;
     }
