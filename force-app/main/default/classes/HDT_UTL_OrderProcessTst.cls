@@ -37,12 +37,16 @@ public with sharing class HDT_UTL_OrderProcessTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('Quality Call OK', 'Bozza', constants.ORDER_RECORDTYPEID_CAMBIO_OFFERTA, 'HDT_RT_CambioOfferta');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Esportazione VS Siebel', 'Documentazione Validata', constants.ORDER_RECORDTYPEID_CAMBIO_OFFERTA, 'HDT_RT_CambioOfferta');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Esportazione VS Siebel', 'Documentazione Validata', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa tempi di ripensamento', 'Documentazione Validata', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Esportazione VS Siebel', 'Documentazione Validata', constants.ORDER_RECORDTYPEID_VOLTURA, 'HDT_RT_Voltura');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita', 'Bozza', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa tempi di ripensamento', 'Documentazione Gestita', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Validata', 'In attesa validazione', constants.ORDER_RECORDTYPEID_VOLTURA, 'HDT_RT_Voltura');
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione', 'Da Inviare', constants.ORDER_RECORDTYPEID_VOLTURA, 'HDT_RT_Voltura');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'Bozza', constants.ORDER_RECORDTYPEID_CAMBIO_OFFERTA, 'HDT_RT_OrderDossier');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'Bozza', constants.ORDER_RECORDTYPEID_VAS, 'HDT_RT_VAS');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa tempi di ripensamento', 'Documentazione Validata', constants.ORDER_RECORDTYPEID_VAS, 'HDT_RT_VAS');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa tempi di ripensamento', 'Documentazione Validata', constants.ORDER_RECORDTYPEID_VOLTURA, 'HDT_RT_Voltura');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita', 'Bozza', constants.ORDER_RECORDTYPEID_CAMBIO_OFFERTA, 'HDT_RT_CambioOfferta');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione Motore VAS', 'Documentazione Validata', constants.ORDER_RECORDTYPEID_VAS, 'HDT_RT_Voltura');
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa tempi di ripensamento', 'Comunicazione Motore VAS', constants.ORDER_RECORDTYPEID_VAS, 'HDT_RT_Voltura');
@@ -65,11 +69,11 @@ public with sharing class HDT_UTL_OrderProcessTst {
             spList[0].Account__c = accList[0].Id;
             insert spList;
 
-            List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].Id, 'Bozza');
+            List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(3, false, accList[0].Id, 'Bozza');
             orderList[0].PraxidiaOverrallSatisfaction__c = 2.0;
             orderList[0].PraxidiaDateOutcome__c = Date.newInstance(2020, 08, 10);
             orderList[0].isTransition__c = true;
-            orderList[0].RecordTypeId = constants.ORDER_RECORDTYPEID_CAMBIO_OFFERTA;
+            orderList[0].RecordTypeId = constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
             orderList[0].AgencyCode__c = 'AgencyCode';
             orderList[0].WizardCompletedDate__c = Date.today();
             orderList[0].Contact__c = cttList[0].Id;
@@ -80,6 +84,26 @@ public with sharing class HDT_UTL_OrderProcessTst {
             orderList[0].BillingProfile__c = bpList[0].Id;
             orderList[0].SapContractCode__c = '123456';
             orderList[0].TecnicalPhase__c = 'Bozza';
+            orderList[0].DateSentToSII__c = Date.today();
+            orderList[0].Name = 'testOrderName0';
+            orderList[0].Phase__c = 'Documentazione Gestita';
+            orderList[1].PraxidiaOverrallSatisfaction__c = 2.0;
+            orderList[1].PraxidiaDateOutcome__c = Date.newInstance(2020, 08, 10);
+            orderList[1].isTransition__c = true;
+            orderList[1].RecordTypeId = constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+            orderList[1].AgencyCode__c = 'AgencyCode';
+            orderList[1].WizardCompletedDate__c = Date.today();
+            orderList[1].Contact__c = cttList[0].Id;
+            orderList[1].DocumentPackage__c = 'Validato';
+            orderList[1].QualityCall__c = true;
+            orderList[1].SignedDate__c = Date.today().addDays(-7);
+            orderList[1].ServicePoint__c = spList[0].Id;
+            orderList[1].BillingProfile__c = bpList[0].Id;
+            orderList[1].SapContractCode__c = '123456';
+            orderList[1].TecnicalPhase__c = 'Bozza';
+            orderList[1].DateSentToSII__c = Date.today();
+            orderList[1].Name = 'name1';
+            orderList[1].Phase__c = 'Completata';
             insert orderList;
 
             List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, false, accList[0].Id, 'Bozza');
@@ -91,16 +115,20 @@ public with sharing class HDT_UTL_OrderProcessTst {
             childOrders[0].Phase__c = 'Documentazione Validata';
             childOrders[0].CreditCheckDescription__c = 'Saldo debito cattivo pagatore A';
             childOrders[0].IncomingCreditCheckResult__c = 'OK';
+            childOrders[0].ParentOrder__c = orderList[0].Id;
             childOrders[1].Name = 'childOrder1';
             childOrders[1].Phase__c = 'In attesa validazione';
             childOrders[1].CreditCheckDescription__c = '';
+            childOrders[1].ParentOrder__c = orderList[0].Id;
             childOrders[2].Name = 'childOrder2';
             childOrders[2].Phase__c = 'Da Inviare';
+            childOrders[2].ParentOrder__c = orderList[0].Id;
             childOrders[3].Name = 'childOrder3';
             childOrders[3].RecordTypeId = constants.ORDER_RECORDTYPEID_VAS;
             childOrders[3].ProcessType__c = 'VAS';
             childOrders[3].VASType__c = 'VAS Servizio';
             childOrders[3].CreditCheckDescription__c = 'Cattivo pagatore C';
+            childOrders[3].ParentOrder__c = orderList[0].Id;
             insert childOrders;
 
             List<AgentMatrix__c> agMatrixList = HDT_UTL_DataFactoryTst.createAgentMatrix(1, false, 'Telefono');
@@ -117,10 +145,10 @@ public with sharing class HDT_UTL_OrderProcessTst {
             actList[1].RecordTypeId = constants.ACTIVITYCUSTOM_RECORDTYPEID_CREDITCHECKKO;
             actList[2].RecordTypeId = constants.ACTIVITYCUSTOM_RECORDTYPEID_CREDITCHECKKO;
             actList[3].RecordTypeId = constants.ACTIVITYCUSTOM_RECORDTYPEID_CREDITCHECKKO;
-            actList[0].wrts_prcgvr__Status__c = 'Creata';
-            actList[1].wrts_prcgvr__Status__c = 'Creata';
-            actList[2].wrts_prcgvr__Status__c = 'Creata';
-            actList[3].wrts_prcgvr__Status__c = 'Creata';
+            actList[0].wrts_prcgvr__Status__c = 'Aperta';
+            actList[1].wrts_prcgvr__Status__c = 'Aperta';
+            actList[2].wrts_prcgvr__Status__c = 'Aperta';
+            actList[3].wrts_prcgvr__Status__c = 'Aperta';
             insert actList;
         }
     }
@@ -351,9 +379,9 @@ public with sharing class HDT_UTL_OrderProcessTst {
                                         Contact__c, ParentOrder__c
                                 FROM Order WHERE Name='testOrderName0'];
                                 
-            parentOrder.Phase__c = 'Documentazione Gestita';
+            /*parentOrder.Phase__c = 'Documentazione Gestita';
             parentOrder.RecordTypeId = constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
-            update parentOrder;
+            update parentOrder;*/
 
             List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId, DocumentPackage__c,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
@@ -421,11 +449,11 @@ public with sharing class HDT_UTL_OrderProcessTst {
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
                                             Contact__c, ParentOrder__c, PhaseStory__c, SignedDate__c, IncomingCreditCheckResult__c,
                                             IsSequanzialized__c, TecnicalPhase__c
-                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
+                                     FROM Order WHERE Name = 'name1'];
             
             List<Order> ordersNew = ordersOld;
-            ordersNew[0].Phase__c = 'Completata';
-            update ordersNew;
+            /*ordersNew[0].Phase__c = 'Completata';
+            update ordersNew;*/
 
             HDT_UTL_OrderProcess.overturningFields(ordersOld, ordersNew);
 
@@ -556,17 +584,17 @@ public with sharing class HDT_UTL_OrderProcessTst {
             Test.startTest();
 
             List<Order> orderParent = [SELECT Id, ProcessType__c, Phase__c, CreditCheckDescription__c, RecordTypeId FROM Order WHERE AgencyCode__c = 'AgencyCode'];
-            orderParent[0].Phase__c = 'Documentazione Gestita';
+            /*orderParent[0].Phase__c = 'Documentazione Gestita';
             orderParent[0].RecordTypeId = constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
-            update orderParent;
+            update orderParent;*/
 
-            List<Order> childOrder0 = [SELECT Id, IncomingCreditCheckResult__c, OutgoingCreditCheckResult__c, ProcessType__c, Phase__c, 
+            List<Order> myChildOrder = [SELECT Id, IncomingCreditCheckResult__c, OutgoingCreditCheckResult__c, ProcessType__c, Phase__c, 
                                              CreditCheckDescription__c, RecordTypeId, ParentOrder__c, ParentOrder__r.Phase__c,
                                              OrderReferenceNumber, RecordType.Developername, QualityCall__c, AgencyCode__c, Name
                                       FROM Order 
-                                      WHERE Name LIKE 'childOrder0'];
+                                      WHERE Name = 'childOrder0'];
 
-            HDT_UTL_OrderProcess.creditCheckPhaseManager(childOrder0);
+            HDT_UTL_OrderProcess.creditCheckPhaseManager(myChildOrder);
 
             List<wrts_prcgvr__Activity__c> assertList = [SELECT Id FROM wrts_prcgvr__Activity__c];
  
@@ -653,13 +681,13 @@ public with sharing class HDT_UTL_OrderProcessTst {
             Test.startTest();
 
             List<Order> orderParent = [SELECT Id, ProcessType__c, Phase__c, CreditCheckDescription__c, RecordTypeId FROM Order WHERE AgencyCode__c = 'AgencyCode'];
-            orderParent[0].Phase__c = 'Documentazione Gestita';
+            /*orderParent[0].Phase__c = 'Documentazione Gestita';
             orderParent[0].RecordTypeId = constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
-            update orderParent;
+            update orderParent;*/
 
             List<Order> childOrder3 = [SELECT Id, IncomingCreditCheckResult__c, OutgoingCreditCheckResult__c, ProcessType__c, Phase__c, 
                                             CreditCheckDescription__c, RecordTypeId, ParentOrder__c, ParentOrder__r.Phase__c,
-                                            OrderReferenceNumber, RecordType.Developername, QualityCall__c, AgencyCode__c, Name
+                                            OrderReferenceNumber, RecordType.Developername, QualityCall__c, AgencyCode__c, Name, ContractReference__c
                                     FROM Order 
                                     WHERE Name LIKE 'childOrder3'];
 

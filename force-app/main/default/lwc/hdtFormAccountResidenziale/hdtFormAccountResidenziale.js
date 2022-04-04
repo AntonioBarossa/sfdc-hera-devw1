@@ -402,7 +402,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         let mobilePhonePrefix= this.template.querySelector('[data-id="mobilePhonePrefix"]');
         let role= this.template.querySelector('[data-id="role"]');
         let companyOwner= this.template.querySelector('[data-id="companyOwner"]');
-        let companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
+        // let companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
         // let settlDistrict= this.template.querySelector('[data-id="settlementDistrict"]');
         // let settlMunicipality= this.template.querySelector('[data-id="settlementMunicipality"]');
         // let settlAddress= this.template.querySelector('[data-id="settlementAddress"]');
@@ -425,6 +425,26 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         let messageError= "Completare tutti i campi obbligatori !";
         var mailFormat = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
         
+        //CAMPI IN UPPERCASE
+        let firstNameToUC = '';
+        let lastNameToUC = '';
+        let fiscalCodeToUC = '';
+        let birthPlaceToUC = '';
+        if(firstName.value != null && firstName.value != undefined && firstName.value != '')
+            firstNameToUC = firstName.value.toUpperCase();
+        if(lastName.value != null && lastName.value != undefined && lastName.value != '')
+            lastNameToUC = lastName.value.toUpperCase();
+        if(this.fiscalCode.value != null && this.fiscalCode.value != undefined && this.fiscalCode.value != '')
+            fiscalCodeToUC = this.fiscalCode.value.toUpperCase();
+        if(this.birthPlace != null && this.birthPlace != undefined && this.birthPlace != '')
+            birthPlaceToUC = this.birthPlace.toUpperCase();
+
+        console.log('firstNameToUC --> '+firstNameToUC);
+        console.log('lastNameToUC --> '+lastNameToUC);
+        console.log('fiscalCodeToUC --> '+fiscalCodeToUC);
+        console.log('birthPlaceToUC --> '+birthPlaceToUC);
+
+
         if(!firstName.reportValidity()){
             isValidated=false;
         } 
@@ -579,14 +599,14 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         }
                         
                         let acc= {
-                            "firstName": firstName.value,
-                            "lastName": lastName.value,
-                            "fiscalCode": this.fiscalCode.value.replace(/ /g,""),
+                            "firstName": firstNameToUC,
+                            "lastName": lastNameToUC,
+                            "fiscalCode": fiscalCodeToUC.replace(/ /g,""),
                             "phoneNumber": phoneNumber.value,
                             "mobilePhone" : mobilePhone.value,
                             "name": firstName.value+' '+lastName.value,
                             "email": email.value,
-                            "birthplace": this.birthPlace,
+                            "birthplace": birthPlaceToUC,
                             "recordTypeId" : this.RecordTypeId,
                             "category" : category.value,
                             "customerMarking" : customerMarking.value,
@@ -598,7 +618,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                             "companyOwner" : companyOwner.value ,
                             "phonePrefix" : phonePrefix.value ,
                             "mobilePhonePrefix" : mobilePhonePrefix.value, 
-                            "company":companyValue.value,
+                            // "company":companyValue.value,
                             "customerType":this.customerType,
                         };
                         insertAccount({
@@ -645,14 +665,14 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         fiscalCodes : this.fiscalCode.value.replace(/ /g,"")
                     }).then((response) => {
                     let acc= {
-                        "firstName": firstName.value,
-                        "lastName": lastName.value,
-                        "fiscalCode": this.fiscalCode.value.replace(/ /g,""),
+                        "firstName": firstNameToUC,
+                        "lastName": lastNameToUC,
+                        "fiscalCode": fiscalCodeToUC.replace(/ /g,""),
                         "phoneNumber": phoneNumber.value,
                         "mobilePhone" : mobilePhone.value,
                         "name": firstName.value+' '+lastName.value,
                         "email": email.value,
-                        "birthplace": this.birthPlace,
+                        "birthplace": birthPlaceToUC,
                         "recordTypeId" : this.RecordTypeId,
                         "category" : category.value,
                         "customerMarking" : customerMarking.value,
@@ -664,7 +684,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         "companyOwner" : companyOwner.value ,
                         "phonePrefix" : phonePrefix.value ,
                         "mobilePhonePrefix" : mobilePhonePrefix.value,
-                        "company":companyValue.value,
+                        // "company":companyValue.value,
                         "customerType":this.customerType,
                         
                     };
