@@ -997,6 +997,22 @@
                 <fieldItem>Record.SuspensionReason__c</fieldItem>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ParentActivity__c</fieldItem>
+                <identifier>RecordParentActivity_cField1</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.ParentActivity__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-52a62b0f-0db8-4db8-a0eb-dde5537c7162</name>
         <type>Facet</type>
     </flexiPageRegions>
