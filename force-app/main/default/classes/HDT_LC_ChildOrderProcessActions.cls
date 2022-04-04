@@ -187,7 +187,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     }
                 }
                 else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
-                    orderToUpdate.ChamberCommerceRegistration__c = 'Richiesto';
+                    //orderToUpdate.ChamberCommerceRegistration__c = 'Richiesto'; @frpanico 2022-04-01 rimosso a seguito di richiesta BSN durante UAT
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
                     if('Rapido'.equalsIgnoreCase(order.QuotationType__c)){
                         orderToUpdate.QuickQuote__c = 'Richiesto';
