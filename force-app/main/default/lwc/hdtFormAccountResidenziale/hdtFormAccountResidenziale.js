@@ -604,7 +604,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                             "fiscalCode": fiscalCodeToUC.replace(/ /g,""),
                             "phoneNumber": phoneNumber.value,
                             "mobilePhone" : mobilePhone.value,
-                            "name": firstName.value+' '+lastName.value,
+                            "name": firstNameToUC+' '+lastNameToUC,
                             "email": email.value,
                             "birthplace": birthPlaceToUC,
                             "recordTypeId" : this.RecordTypeId,
