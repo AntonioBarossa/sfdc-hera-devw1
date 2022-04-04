@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Agency2__c</fullName>
+    <externalId>false</externalId>
+    <label>Agenzia</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Conservice</fullName>
+                <default>false</default>
+                <label>Conservice</label>
+            </value>
+            <value>
+                <fullName>Covisian</fullName>
+                <default>false</default>
+                <label>Covisian</label>
+            </value>
+            <value>
+                <fullName>Data Company</fullName>
+                <default>false</default>
+                <label>Data Company</label>
+            </value>
+            <value>
+                <fullName>HC</fullName>
+                <default>false</default>
+                <label>HC</label>
+            </value>
+            <value>
+                <fullName>Hera Comm</fullName>
+                <default>false</default>
+                <label>Hera Comm</label>
+            </value>
+            <value>
+                <fullName>Hera Comm Marche</fullName>
+                <default>false</default>
+                <label>Hera Comm Marche</label>
+            </value>
+            <value>
+                <fullName>Koinè</fullName>
+                <default>false</default>
+                <label>Koinè</label>
+            </value>
+            <value>
+                <fullName>Linetech</fullName>
+                <default>false</default>
+                <label>Linetech</label>
+            </value>
+            <value>
+                <fullName>Service A</fullName>
+                <default>false</default>
+                <label>Service A</label>
+            </value>
+            <value>
+                <fullName>Service B</fullName>
+                <default>false</default>
+                <label>Service B</label>
+            </value>
+            <value>
+                <fullName>Service CV</fullName>
+                <default>false</default>
+                <label>Service CV</label>
+            </value>
+            <value>
+                <fullName>Service KN</fullName>
+                <default>false</default>
+                <label>Service KN</label>
+            </value>
+            <value>
+                <fullName>Service LT</fullName>
+                <default>false</default>
+                <label>Service LT</label>
+            </value>
+            <value>
+                <fullName>Service VK</fullName>
+                <default>false</default>
+                <label>Service VK</label>
+            </value>
+            <value>
+                <fullName>Sosel</fullName>
+                <default>false</default>
+                <label>Sosel</label>
+            </value>
+            <value>
+                <fullName>Target</fullName>
+                <default>false</default>
+                <label>Target</label>
+            </value>
+            <value>
+                <fullName>Target Service</fullName>
+                <default>false</default>
+                <label>Target Service</label>
+            </value>
+            <value>
+                <fullName>Target Sinergie</fullName>
+                <default>false</default>
+                <label>Target Sinergie</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

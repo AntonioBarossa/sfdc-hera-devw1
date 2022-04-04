@@ -3,7 +3,7 @@
     <fullName>Agency__c</fullName>
     <description>Agenzia assegnata alla coda</description>
     <externalId>false</externalId>
-    <label>Agenzia</label>
+    <label>Agenzia OLD</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
