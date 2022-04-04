@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>QL_AGSM</label>
+    <protected>false</protected>
+    <values>
+        <field>Flag__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Type__c</field>
+        <value xsi:type="xsd:string">Quick Link</value>
+    </values>
+    <values>
+        <field>Value1__c</field>
+        <value xsi:type="xsd:string">AGSM AIM SPA</value>
+    </values>
+    <values>
+        <field>Value2__c</field>
+        <value xsi:type="xsd:string">10D0000299</value>
+    </values>
+    <values>
+        <field>Value3__c</field>
+        <value xsi:type="xsd:string">Gas</value>
+    </values>
+    <values>
+        <field>Value4__c</field>
+        <value xsi:type="xsd:string">http://retigas.aimvicenza.it/portal/index.aspx?idn=0021&amp;area=B2B</value>
+    </values>
+</CustomMetadata>

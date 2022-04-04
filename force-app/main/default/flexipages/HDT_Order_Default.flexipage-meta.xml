@@ -472,17 +472,7 @@
                         <valueListItems>
                             <value>CustomButton.Order.HDT_Ripensamento</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.ProcessType__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Switch in Gas</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.ProcessType__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Switch in Ele</rightValue>
-                                </criteria>
+                                <booleanFilter> 1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.NotRethinkable__c}</leftValue>
                                     <operator>EQUAL</operator>

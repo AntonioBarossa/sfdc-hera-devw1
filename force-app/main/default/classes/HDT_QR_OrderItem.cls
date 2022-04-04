@@ -13,8 +13,11 @@ public inherited sharing class HDT_QR_OrderItem {
     * @param listOrderId
     * @return List<OrderItem>
     */
+    /**@frpanico
+     * A valle della nuova modifica non vanno presi tutti i bonus ma soltanto quelli di analisi consumi
+     */
     public List<OrderItem> getRecordsByOrderIdListFilteredPdrPod(List<Id> listOrderId){
-        Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
+        Set<String> famils = new Set<String>();/*HDT_UTL_OrderProcessAssignment.getFamilySconto();*/
         famils.add('VAS Prodotto');
         famils.add('VAS Servizio');
         /**@frpanico 21/01/2022
@@ -54,7 +57,6 @@ public inherited sharing class HDT_QR_OrderItem {
             OrderItem 
             WHERE
             OrderId IN :listOrderId 
-            AND Order.SBQQ__Quote__r.SBQQ__Type__c != 'Amendment'
             AND Product2.Family IN :famils
             WITH SECURITY_ENFORCED
             Order by BillingProfile__c NULLS LAST
@@ -202,6 +204,19 @@ public inherited sharing class HDT_QR_OrderItem {
             FROM 
             OrderItem 
             WHERE OrderId = :orderId
+            AND Product2.Family = 'VAS Fatturabili'
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<OrderItem> getAnalisiConsumi(String parentOrderId, String servicePointId){
+        return [
+            SELECT 
+            OccupantsNumber__c, Surface__c, DwellingType__c,OwnerAC__c 
+            FROM 
+            OrderItem 
+            WHERE Order.ParentOrder__c = :parentOrderId
+            AND Order.ServicePoint__c  =:servicePointId
             AND Product2.Family = 'VAS Fatturabili'
             WITH SECURITY_ENFORCED
         ];

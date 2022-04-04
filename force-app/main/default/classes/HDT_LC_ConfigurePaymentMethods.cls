@@ -34,6 +34,7 @@ public inherited sharing class HDT_LC_ConfigurePaymentMethods {
                     toBeDisabled = true;
                 }else{
                     toBeDisabled = false;
+                    break;
                 }
             }
         }

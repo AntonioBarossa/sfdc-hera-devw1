@@ -33,18 +33,20 @@ public with sharing class HDT_SRV_SolContractVas {
             Product2  singleProduct = (Product2 )subscriptionList[0].SBQQ__Product__r;
             String offerCode = singleProduct.ProductCode;
             SBQQ__ProductOption__c vasProduct = (SBQQ__ProductOption__c)offerWithVasMap.get(offerCode);
-            singleVas.ownerAccountId = accountId;
-            singleVas.herVincoloVas = '0';
-            singleVas.herVersioneVas = vasProduct.Version__c;
-            singleVas.herProfile = vasProduct.SBQQ__ConfiguredSKU__r.Version__c;
-            singleVas.herNomeVas = vasProduct.SBQQ__ProductName__c;
-            singleVas.herDurataVas = '999999';
-            singleVas.herCodOfferta = offerCode;
-            singleVas.herCanone = '0';
-            singleVas.assetNumber = singleContract.SAPContractCode__c;
-            singleVas.idVAS = vasProduct.Id;
-            singleVas.herNameVersioneVas = vasProduct.SBQQ__ProductName__c+'_'+vasProduct.Version__c;
-            response.listOfVas.add(singleVas);
+            if(vasProduct != null){
+                singleVas.ownerAccountId = accountId;
+                singleVas.herVincoloVas = '0';
+                singleVas.herVersioneVas = vasProduct.Version__c;
+                singleVas.herProfile = vasProduct.SBQQ__ConfiguredSKU__r.Version__c;
+                singleVas.herNomeVas = vasProduct.SBQQ__ProductName__c;
+                singleVas.herDurataVas = '999999';
+                singleVas.herCodOfferta = offerCode;
+                singleVas.herCanone = '0';
+                singleVas.assetNumber = singleContract.SAPContractCode__c;
+                singleVas.idVAS = vasProduct.Id;
+                singleVas.herNameVersioneVas = vasProduct.SBQQ__ProductName__c+'_'+vasProduct.Version__c;
+                response.listOfVas.add(singleVas);
+            }
         }
         return response;
     }

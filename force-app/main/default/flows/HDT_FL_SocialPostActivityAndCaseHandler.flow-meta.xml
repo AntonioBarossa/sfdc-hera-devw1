@@ -35,6 +35,13 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case_SocialPost.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>HERA COMM</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Case_SocialPost</targetReference>
         </connector>
@@ -78,6 +85,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>In Lavorazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Case_SocialPost.CompanyOwner__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -194,6 +208,7 @@
         <queriedFields>Channel__c</queriedFields>
         <queriedFields>RecordTypeId</queriedFields>
         <queriedFields>Status</queriedFields>
+        <queriedFields>CompanyOwner__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>

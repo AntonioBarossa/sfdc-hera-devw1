@@ -128,7 +128,8 @@ public inherited sharing class HDT_QR_ActivityCustom {
             order__c,
             Account__c,
             Type__c,
-            DiscardCount__c
+            DiscardCount__c,
+            isUserActivity__c
             FROM wrts_prcgvr__Activity__c
             WHERE Id= :activityId
             WITH SECURITY_ENFORCED
@@ -150,7 +151,8 @@ public inherited sharing class HDT_QR_ActivityCustom {
             recordtypeid,
             Contact__c,
             Distributor__c,
-            AppointmentDate__c
+            AppointmentDate__c,
+            CreatedById
             FROM wrts_prcgvr__Activity__c
             WHERE Id= :activityId
             WITH SECURITY_ENFORCED

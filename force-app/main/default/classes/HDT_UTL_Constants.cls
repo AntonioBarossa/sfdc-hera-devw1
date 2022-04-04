@@ -46,6 +46,13 @@ public with sharing class HDT_UTL_Constants {
      public final String ACCOUNT_RECORDTYPEID_PARTNER =
      Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(ACCOUNT_RECORDTYPE_DEVELOPERNAME_PARTNER).getRecordTypeId();
 
+     //Account RecordType Distributore
+     @AuraEnabled
+     public final String ACCOUNT_RECORDTYPE_DEVELOPERNAME_DISTRIBUTORE = 'HDT_RT_Distributore';
+     @AuraEnabled
+     public final String ACCOUNT_RECORDTYPEID_DISTRIBUTORE =
+     Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(ACCOUNT_RECORDTYPE_DEVELOPERNAME_DISTRIBUTORE).getRecordTypeId();
+
     //Activity Custom RecordType Credit Check KO
     @AuraEnabled
     public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_CREDITCHECKKO = 'HDT_RT_CreditCheckKO';

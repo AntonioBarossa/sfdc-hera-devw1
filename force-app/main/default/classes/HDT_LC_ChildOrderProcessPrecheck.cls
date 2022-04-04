@@ -16,10 +16,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     private static HDT_QR_AnagAlignment regionalAdditionalQr = new HDT_QR_AnagAlignment();
 
     @AuraEnabled
-    public static List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> init(Order order){
-        List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> processesList = new List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process>();
+    public static List<ProcessMatrix__c> init(Order order){
+        List<ProcessMatrix__c> processesList = new List<ProcessMatrix__c>();
 
-        if (order.ServicePoint__c != null && order.IsVAS__c == false) {//returns processes that are different from VAS
+        if (order.ServicePoint__c != null && order.IsVAS__c == false 
+            && (order.VasSubtype__c == null || (order.VasSubtype__c != null && !order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi')))) {//returns processes that are different from VAS
             processesList = HDT_UTL_OrderProcessAssignment.getAvailableProcesses(order);
         }
 
@@ -80,16 +81,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         if(compatibility == '' || compatibility == order.OrderNumber){
             system.debug('extraParams: ' + extraParams);
 
-            String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(selectedProcessObject.get('recordType'));
+            String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(selectedProcessObject.get('RecordTypeName__c'));
 
             //INIZIO SVILUPPI EVERIS
             Order newOrder = new Order();    
             //FINE SVILUPPI EVERIS
 
-            String processType = selectedProcessObject.get('processType');
-            String processCode = selectedProcessObject.get('processCode');
+            String processType = selectedProcessObject.get('ProcessName__c');
+            String processCode = selectedProcessObject.get('CasualCode__c');
 
-            switch on selectedProcessObject.get('recordType') {
+            switch on selectedProcessObject.get('RecordTypeName__c') {
                 //INIZIO SVILUPPI EVERIS
                 when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'
                 {
@@ -104,7 +105,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         newOrder.ContractReference__c = contracts[0]?.Id;
 						sapCode = contracts[0].SAPContractCode__c;
                     }
-                    processType = selectedProcessObject.get('recordType').equalsIgnoreCase('HDT_RT_Voltura') ? 'Voltura' : 'Voltura con Switch';
+                    processType = selectedProcessObject.get('RecordTypeName__c').equalsIgnoreCase('HDT_RT_Voltura') ? 'Voltura' : 'Voltura con Switch';
                     newOrder.Subprocess__c = 'Standard';
                     newOrder.VoltureType__c = 'Ordinaria';
                     processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
@@ -119,7 +120,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     String city = order.SupplyCity__c;
                     String region = '';
                     newOrder.RegionalAdditional__c = regionalAdditionalQr.findRegionalAdditional(tax, city, region);
-                    newOrder.ExciseRate__c = order.CommodityFormula__c == 'Energia Elettrica' ? voltureChangeQr.getExciseTranscode(tax)[0].Excise__c : null;
+                    newOrder.ExciseRate__c = voltureChangeQr.getExciseTranscode(tax)[0].Excise__c;
                 }
                 when 'HDT_RT_AttivazioneConModifica' {
                     newOrder.RequestOption__c = HDT_UTL_OrderFieldsAlignment.calculateRequestedOption(order.ImplantType__c, order.PowerRequested__c);
@@ -129,6 +130,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 }
                 when 'HDT_RT_SwitchIn' {
                     newOrder.PowerRequested__c  = order.PowerCommitted__c;
+                    newOrder.WaiverRightAfterthought__c	= 'No';
                 }
                 /**@frpanico 2022-03-16
                  * Aggiunta Sconti Bonus
@@ -137,14 +139,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                  */
                 when 'HDT_RT_ScontiBonus'
                 {
-                    Order currentOrder = orderQr.getRecordById(orderId);
-                    if(currentOrder.NumeratorGroup__c != null && ((String)currentOrder.get('NumeratorGroup__c')).equalsIgnoreCase('ELPVEDM'))
+                    newOrder.EffectiveDate__c = getEffectiveDateBonus(orderId);
+                }
+                when 'HDT_RT_VAS'
+                {
+                    if(order.VASSubtype__c.equalsIgnoreCase('Analisi Consumi'))
                     {
-                        newOrder.EffectiveDate__c =  (System.today().addMonths(1)).toStartOfMonth();
-                    }
-                    else
-                    {
-                        newOrder.EffectiveDate__c = System.today();    
+                        newOrder.EffectiveDate__c = getEffectiveDateBonus(orderId);
                     }
                 }
 
@@ -159,6 +160,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 when 'Prima Attivazione'{
                     processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
                     processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
+                    newOrder.PressureLevel__c  = 'BP';
                 }
             }
 
@@ -250,5 +252,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
+    }
+
+    private static Date getEffectiveDateBonus(String orderId)
+    {
+        Order currentOrder = orderQr.getRecordById(orderId);
+        Date effectiveDate = System.today();
+        if(currentOrder.NumeratorGroup__c != null && ((String)currentOrder.get('NumeratorGroup__c')).equalsIgnoreCase('ELPVEDM'))
+        {
+            effectiveDate =  (System.today().addMonths(1)).toStartOfMonth();
+        }
+
+        return effectiveDate;
     }
 }
