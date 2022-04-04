@@ -54,13 +54,21 @@ export default class hdtEditQuote extends LightningElement {
     handleCloseModal(){
 
         execModalExitActions({saleId: this.sale.Id, quoteId: this.quoteId}).then(data =>{
-            this.dispatchEvent(new CustomEvent('closeeditquote'));
-
-            if(data){
+            if(data === true){
+                this.dispatchEvent(new CustomEvent('closeeditquote'));
                 const toastSuccessMessage = new ShowToastEvent({
                     title: 'Successo',
                     message: 'QuoteLine configurato con successo',
                     variant: 'success'
+                });
+                this.dispatchEvent(toastSuccessMessage);
+            }
+            else
+            {
+                const toastSuccessMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Necessario premere il tasto \"Salva\" prima di poter procedere',
+                    variant: 'error'
                 });
                 this.dispatchEvent(toastSuccessMessage);
             }
