@@ -28,7 +28,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
     private List<String> productNameList = new List<String>();
     private List<String> productDescrList = new List<String>();
 
-    private Map<String, Product2> product2Map;
+    private Map<String, Product2> productMap;
     private Map<Id, Map<Id, PriceBookEntry>> pricebookEntryForVasMap;
     private List<String> contractSapCodeList = new List<String>();
     Map<String, Contract> contractToPbookIdMap = new Map<String, Contract>();
@@ -44,7 +44,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         accountIdToRetrieve = new List<Id>();
         billProfToRetrieve = new List<Id>();
         servPointToRetrieve = new List<Id>();
-        product2Map = new Map<String, Product2>();
+        productMap = new Map<String, Product2>();
 
         childOrderRecordTypeId = getOrderRecordTypeMap(processName);
         parentOrderIndex = 10;
@@ -200,7 +200,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         ];
 
         for(Product2 p : retrieveVasList){
-            product2Map.put(p.Name + '-' + p.DescriptionSAP__c + '-' + p.Version__c, P);
+            productMap.put(p.Name + '-' + p.DescriptionSAP__c + '-' + p.Version__c, P);
             productIdList.add(p.Id);
         }
         
@@ -358,8 +358,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
                 contractCode = orderUniqueKeyMap.get(wrpOrderItem.orderUniqueKey).contract.SAPContractCode__c;
             }
             System.debug('>>> contractCode ' + contractCode);
-            if(product2Map.containsKey(prodKey)){
-                wrpOrderItem.orderItem.Product2Id = product2Map.get(prodKey).Id;
+            if(productMap.containsKey(prodKey)){
+                wrpOrderItem.orderItem.Product2Id = productMap.get(prodKey).Id;
 
                 String priceBook2Id = contractToPbookIdMap.get(contractCode).SBQQ__AmendmentPricebookId__c;
 

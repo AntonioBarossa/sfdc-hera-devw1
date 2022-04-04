@@ -186,10 +186,10 @@ public with sharing class HDT_LC_MassiveLoader {
     @AuraEnabled
     public static Map<String, Object> convertCsvToRequestItem(String fileName, String contentVersionId, String selectedProcessName, String massiveLoaderRequestId){
 
-        System.debug(LoggingLevel.DEBUG, '>>> fileName: ' + fileName);
-        System.debug(LoggingLevel.DEBUG, '>>> contentVersionId: ' + contentVersionId);
-        System.debug(LoggingLevel.DEBUG, '>>> selectedProcessName: ' + selectedProcessName);
-        System.debug(LoggingLevel.DEBUG, '>>> massiveLoaderRequestId: ' + massiveLoaderRequestId);
+        //System.debug(LoggingLevel.DEBUG, '>>> fileName: ' + fileName);
+        //System.debug(LoggingLevel.DEBUG, '>>> contentVersionId: ' + contentVersionId);
+        //System.debug(LoggingLevel.DEBUG, '>>> selectedProcessName: ' + selectedProcessName);
+        //System.debug(LoggingLevel.DEBUG, '>>> massiveLoaderRequestId: ' + massiveLoaderRequestId);
 
         String splitCharacter = '\\|';
         HDT_QR_ContentVersion contentVersionQr = new HDT_QR_ContentVersion();
@@ -200,8 +200,8 @@ public with sharing class HDT_LC_MassiveLoader {
         Boolean parsingError = false;
         Id contentDocumentId = uploadedFile.ContentDocumentId;
 
-        System.debug('>>> metadata ' + selectedProcess.DeveloperName + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION);
-        System.debug('>>> lwc ' + fileName);
+        //System.debug('>>> metadata ' + selectedProcess.DeveloperName + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION);
+        //System.debug('>>> lwc ' + fileName);
 
         if(!fileName.equalsIgnoreCase(selectedProcess.DeveloperName + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION) &&
            !fileName.equalsIgnoreCase(selectedProcess.MasterLabel + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION)
