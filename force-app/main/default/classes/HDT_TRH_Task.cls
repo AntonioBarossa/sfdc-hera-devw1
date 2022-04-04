@@ -21,7 +21,6 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
 
         Set<Id> contactIds = new Set<Id>();
         Set<Id> leadIds = new Set<Id>();
-        HDT_SmsSettings__c smsSettings = HDT_SmsSettings__c.getInstance();
 
         for (Task t : (List<Task>) Trigger.new) {
 
@@ -31,7 +30,7 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
             }
 
             if (t.IsSms__c == True) {
-                if (t.Description != null && t.Description.length() > smsSettings.MaxLength__c) {
+                if (t.Description != null && t.Description.length() > 319) {
                     t.addError('È necessario inserire un testo inferiore a 320 caratteri.');
                 }
                 
