@@ -118,7 +118,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 		List<Contract> contracts = new List<Contract>();
 
 		if(additionalFilter.contains('status')){
-			contracts = Database.query('SELECT Id, Name, ServicePoint__c,ContractNumber,SAPContractCode__c  FROM Contract WHERE SAPContractCode__c =:code '+String.escapeSingleQuotes(additionalFilter)+'LIMIT 1');
+			contracts = Database.query('SELECT Id, Name, ServicePoint__c,ContractNumber,SAPContractCode__c  FROM Contract WHERE SAPContractCode__c =:code '+String.escapeSingleQuotes(additionalFilter).replace('\\', '')+'LIMIT 1');
 		}
 		else{
 			String addFilterReplaced = additionalFilter.replaceAll('CommoditySector__c', 'ServicePoint__r.CommoditySector__c');
@@ -131,7 +131,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
 		if(spCode != null){
 			if(additionalFilter.contains('Commodity')){
-				servicePoints = Database.query('SELECT '+ String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE Id = :spCode '+String.escapeSingleQuotes(additionalFilter)+' LIMIT 1');
+				servicePoints = Database.query('SELECT '+ String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE Id = :spCode '+String.escapeSingleQuotes(additionalFilter).replace('\\', '')+' LIMIT 1');
 			}
 			else{
 				servicePoints = Database.query('SELECT '+ String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE Id = :spCode LIMIT 1');
@@ -163,17 +163,17 @@ public inherited sharing class HDT_QR_ServicePoint {
 	 * @return List<ServicePoint__c>
 	 */
 	@SuppressWarnings('PMD.UnusedLocalVariable')
-	public List<ServicePoint__c> getServicePointsByMeterSerialNumberWithFilter(String serialNumber, String fields,String additionalFilter){
+	public List<ServicePoint__c> getServicePointsByMeterSerialNumberWithFilter(String serialNumber, String fields, String additionalFilter){
 
 		contractSrv.checkReadAccess(fields);
 		String stringSerialNumber = '%' + serialNumber + '%';
 		
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
 		if(!additionalFilter.contains('status')){
-			servicePoints =	Database.query('SELECT ' + String.escapeSingleQuotes(fields) +' FROM ServicePoint__c WHERE MeterSN__c LIKE :stringSerialNumber '+ String.escapeSingleQuotes(additionalFilter));
+			servicePoints =	Database.query(' SELECT ' + String.escapeSingleQuotes(fields) +' FROM ServicePoint__c WHERE MeterSN__c LIKE :stringSerialNumber '+ String.escapeSingleQuotes(additionalFilter).replace('\\', ''));
 		}
 		else{
-			servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) +' FROM ServicePoint__c WHERE MeterSN__c LIKE :stringSerialNumber ');
+			servicePoints = Database.query(' SELECT ' + String.escapeSingleQuotes(fields) +' FROM ServicePoint__c WHERE MeterSN__c LIKE :stringSerialNumber ');
 		}		
 		return servicePoints;
 	}
