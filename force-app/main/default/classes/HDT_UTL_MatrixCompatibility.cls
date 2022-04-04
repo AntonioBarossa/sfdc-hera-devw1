@@ -31,7 +31,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                 srRequest.Account__c = String.valueOf(servReq.get('account'));
                 srRequest.BillingProfile__c = String.valueOf(servReq.get('billingProfile'));
             }
-            if(servReq.get('isBillableVas')!=null){
+            if(servReq.get('isBillableVas')!=null && !(String.valueOf(servReq.get('processType')).containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))){
                 Boolean isBillableVas=Boolean.valueOf(servReq.get('isBillableVas'));
                 String searchVas = isBillableVas? 'Vas Billabile' : 'Vas Non Billabile';
                 servReq.put('processType', searchVas);

@@ -253,6 +253,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     HDT_UTL_SwtichInProcess.calculateCambioOffertaDate(order);  // Data di decorrenza
                 }
             }
+            when 'HDT_RT_VAS'
+            {
+                if(currentOrder.VASSubtype__c != null && currentOrder.VASSubtype__c.equalsIgnoreCase('Analisi Consumi'))
+                {
+                    orderToUpdate.ProcessCode__c = currentOrder.Commodity__c.equalsIgnoreCase('Energia Elettrica') ? 'VCE' : 'VCG';
+                }
+            }
             /*when 'HDT_RT_CambioOfferta' {
                 
                 String dateToCalculate = '';
@@ -342,6 +349,29 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
         }
 
+
+        /**@frpanico 2022-03-25
+         * Valorizzazione campo
+         * FlagServizio26 a 'Y'
+         * Nel caso in cui vi sia un
+         * OrderItem di bonus
+         */
+        if(!order.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_VAS') && !order.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_ScontiBonus'))
+        {
+            List<OrderItem> childOrderItems = [SELECT Id 
+            FROM OrderItem 
+            WHERE OrderId = :order.Id 
+            AND SBQQ__RequiredBy__c != NULL
+            AND ProductFamily__c != 'Punto Fornitura'
+            WITH SECURITY_ENFORCED];
+
+            if(!childOrderItems.isEmpty())
+            {
+                orderToUpdate.FlagServizio26__c = 'Y';
+            }
+        }
+
+
         orderSrv.updateRecord(orderToUpdate);
         if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
             HDT_LC_ChildOrderProcessDetails.createActivityAccise(orderToUpdate.FacilitationExcise__c,orderToUpdate.VATfacilitationFlag__c,orderToUpdate.id,orderToUpdate.accountid);
@@ -365,11 +395,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
             orderSrv.updateRecord(orderParentToUpdate);
         }
-
-        /**@frpanico 2022-03-25
-         * Valorizzazione Flag Servizio 26
-         * Nel caso di ordine sconti e bonus
-         */
     }
 
     /**

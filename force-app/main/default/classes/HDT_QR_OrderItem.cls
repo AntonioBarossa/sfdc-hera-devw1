@@ -57,7 +57,6 @@ public inherited sharing class HDT_QR_OrderItem {
             OrderItem 
             WHERE
             OrderId IN :listOrderId 
-            AND Order.SBQQ__Quote__r.SBQQ__Type__c != 'Amendment'
             AND Product2.Family IN :famils
             WITH SECURITY_ENFORCED
             Order by BillingProfile__c NULLS LAST
