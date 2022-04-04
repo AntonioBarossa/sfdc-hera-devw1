@@ -382,7 +382,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
     'VerificaDatialDL' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
-                {'Reclami', 'Preventivi', 'Morosità', 'Variazioni', 'Annullamento', 'Verifiche'},
+                {'Reclami', 'Preventivi', 'Morosità', 'Variazioni', 'Annullamento', 'Verifiche','Autolettura'},
             'Type' => new List<String>
                 {'Ricostruzione Consumi', 'Gestione Calamità', 'Rettifica Consumi', 'Prescrizione Fatture', 'Inversione del Contatore'}
         },

@@ -173,7 +173,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             newOrder.ProcessCode__c = processCode;
             newOrder.AggregateBilling__c = 'Si';
             newOrder.Phase__c = 'Bozza';
-            
+            newOrder.PressureLevel__c =  (extraParams.get('servicePointType') == 'HDT_RT_Gas') ? 'BP' : null;
             //Logica Superficie Servita Start
             newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas') ? 75 : null;
             //Logica Superficie Servita End
