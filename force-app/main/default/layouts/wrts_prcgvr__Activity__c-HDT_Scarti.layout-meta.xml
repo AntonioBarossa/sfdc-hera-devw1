@@ -183,9 +183,6 @@
         <actionListContext>Record</actionListContext>
     </platformActionList>
     <relatedLists>
-        <relatedList>RelatedNoteList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>
     <relatedLists>

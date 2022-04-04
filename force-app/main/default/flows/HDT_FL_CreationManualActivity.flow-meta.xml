@@ -62,7 +62,7 @@
     <assignments>
         <name>SetFields</name>
         <label>SetFields</label>
-        <locationX>747</locationX>
+        <locationX>746</locationX>
         <locationY>142</locationY>
         <assignmentItems>
             <assignToReference>Activity.Account__c</assignToReference>
@@ -124,16 +124,76 @@
                 <elementReference>Note_di_apertura_text</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Activity.ContactResult__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>esitoContatto</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Activity.ClosingNote__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>noteChiusuraDefault</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Activity.AttemptCount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>numeroTentativi</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Activity.ActivityOutcome__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>esitoAttivita</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_activity</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>Clienteirreperibile</name>
+        <choiceText>&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Cliente irreperibile&lt;/span&gt;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Cliente irreperibile</stringValue>
+        </value>
+    </choices>
     <choices>
         <name>Contattareilcliente</name>
         <choiceText>Contattare il cliente</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>CBS_CRP001__CONTATTARE_IL_CLIENTE</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Negativo</name>
+        <choiceText>Negativo</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Negativo</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Okcontattato</name>
+        <choiceText>&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;OK contattato&lt;/span&gt;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>OK contattato</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Positivo</name>
+        <choiceText>&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Positivo&lt;/span&gt;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Positivo</stringValue>
         </value>
     </choices>
     <decisions>
@@ -216,73 +276,132 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Account</name>
-            <extensionName>flowruntime:lookup</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>fieldApiName</name>
-                <value>
-                    <stringValue>Account__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Cliente</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectApiName</name>
-                <value>
-                    <stringValue>wrts_prcgvr__Activity__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>AccountId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-            <visibilityRule>
-                <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>recordId</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue></stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>recordId</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Tipologia</name>
-            <choiceReferences>Contattareilcliente</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Tipologia</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>Note_di_apertura_text</name>
-            <fieldText>Note di apertura</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <isRequired>true</isRequired>
+            <name>Nuova_Attivita_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Nuova_Attivita_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Account</name>
+                    <extensionName>flowruntime:lookup</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>fieldApiName</name>
+                        <value>
+                            <stringValue>Account__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>label</name>
+                        <value>
+                            <stringValue>Cliente</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value>
+                            <stringValue>wrts_prcgvr__Activity__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>recordId</name>
+                        <value>
+                            <elementReference>AccountId</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>required</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <visibilityRule>
+                        <conditionLogic>or</conditionLogic>
+                        <conditions>
+                            <leftValueReference>recordId</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue></stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>recordId</leftValueReference>
+                            <operator>IsNull</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Tipologia</name>
+                    <choiceReferences>Contattareilcliente</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Tipologia</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>numeroTentativi</name>
+                    <dataType>Number</dataType>
+                    <fieldText>Numero tentativi</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <scale>0</scale>
+                </fields>
+                <fields>
+                    <name>Note_di_apertura_text</name>
+                    <fieldText>Note di apertura</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Nuova_Attivita_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>esitoContatto</name>
+                    <choiceReferences>Okcontattato</choiceReferences>
+                    <choiceReferences>Clienteirreperibile</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Esito contatto</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>esitoAttivita</name>
+                    <choiceReferences>Positivo</choiceReferences>
+                    <choiceReferences>Negativo</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Esito attività</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>noteChiusuraDefault</name>
+                    <fieldText>Note di chiusura</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>

@@ -384,7 +384,7 @@
         <relatedList>RelatedChildCaseList</relatedList>
     </relatedLists>
     <relatedLists>
-        <customButtons>CreaattivitamanualeActivity</customButtons>
+        <customButtons>CreaAttivitaManuale</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Type__c</fields>

@@ -176,6 +176,9 @@
         </fields>
         <fields>
             <name>SuspensionNote</name>
+            <defaultValue>
+                <stringValue>{!Get_Activity.SuspensionNote__c}</stringValue>
+            </defaultValue>
             <fieldText>Note Sospensione</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <isRequired>false</isRequired>
@@ -263,7 +266,7 @@
             <targetReference>Get_Activity</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
