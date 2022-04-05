@@ -38,7 +38,15 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
                 Group__c = 'gruppo1',
                 Agency__c = 'agenzia1'
             );
+
             insert queue;
+
+            Queue__c queueSecond = new Queue__c(
+                Name = 'FirstName 1',
+                Group__c = 'gruppo1',
+                Agency__c = 'agenzia1'
+            );
+            insert queueSecond;
 
         }
 
