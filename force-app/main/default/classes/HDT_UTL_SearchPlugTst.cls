@@ -28,13 +28,16 @@ public class HDT_UTL_SearchPlugTst {
 		List<PricebookEntry> pricebookEntry=HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, pricebookId);
         List<Order> orderList = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1, true, accList[0].Id, saleList, pricebookId);
     
+        LoginGroup__c loginGroup = new LoginGroup__c(NameGroup__c = 'Sportello Imola');
+        insert loginGroup;
+
         List<EligibilityCriteria__c> criteriaList = new List<EligibilityCriteria__c>();
         EligibilityCriteria__c criteria = new EligibilityCriteria__c();
         criteria.Product__c = productList[0].Id;
         criteria.EligibleForAllCities__c = false;
         criteria.ClientAgeMin__c = null;
         criteria.ClientAgeMax__c = null;
-        criteria.LoginGroup__c = null;
+        criteria.LoginGroup__c = loginGroup.Id;
         criteria.ConsumptionRangeEEmin__c = null;
         criteria.ConsumptionRangeEEmax__c = null;
         criteria.ConsumptionRangeGASmin__c = null;
@@ -69,6 +72,7 @@ public class HDT_UTL_SearchPlugTst {
         SBQQ__Quote__c quote = new SBQQ__Quote__c();
         quote.SBQQ__PricebookId__c = pbList[0].Id;
         quote.SupplyCity__c = 'Roma';
+        quote.LoginGroup__c = loginGroup.Id;
         insert quote;
 
         List<OperandTemplate__c> operandTemplateList = new List<OperandTemplate__c>();
@@ -120,10 +124,7 @@ public class HDT_UTL_SearchPlugTst {
         update productList;
 
         HDT_BA_ProductStObjStatusUpdate batch = new HDT_BA_ProductStObjStatusUpdate();
-        Id batchId = Database.executeBatch(batch); 
-
-        LoginGroup__c loginGroup = new LoginGroup__c(NameGroup__c = 'Sportello Imola');
-        insert loginGroup;
+        Id batchId = Database.executeBatch(batch);
 
     }
 
