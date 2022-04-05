@@ -409,10 +409,10 @@ public with sharing class HDT_UTL_CampaignMember {
     }
 
     public static void setAgency (List<CampaignMember> members) {
-        List <CampaignMemberLeadAssigment__c> cmlaList=[SELECT Id, Active__c FROM CampaignMemberLeadAssigment__c where Active__c=true WITH SECURITY_ENFORCED limit 1];
+        List <CampaignMemberLeadAssigment__c> cmlaList=[SELECT Id, Active__c FROM CampaignMemberLeadAssigment__c WHERE Active__c=true WITH SECURITY_ENFORCED limit 1];
         List <CampaignMemberLeadAssigmentItem__c> cmlaItemList=new List <CampaignMemberLeadAssigmentItem__c>();
         if (cmlaList!=null && cmlaList.size()>0) {
-            cmlaItemList=[SELECT Id, SourceAgency__c, Agency__c, InterestProduct__c, CampaignMemberLeadAssigment__c, ProcessingType__c  FROM CampaignMemberLeadAssigmentItem__c where CampaignMemberLeadAssigment__c=:cmlaList[0].Id  WITH SECURITY_ENFORCED];
+            cmlaItemList=[SELECT Id, SourceAgency__c, Agency__c, InterestProduct__c, CampaignMemberLeadAssigment__c, ProcessingType__c FROM CampaignMemberLeadAssigmentItem__c WHERE CampaignMemberLeadAssigment__c=:cmlaList[0].Id WITH SECURITY_ENFORCED];
         }
 
         Map <String, CampaignMemberLeadAssigmentItem__c> sourceInterestMap=new Map<String, CampaignMemberLeadAssigmentItem__c>();
