@@ -118,8 +118,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
                 wrapperOrderTempList.add(wrpOrder);
 
                 if(String.isNotEmpty(convertionError)){
-                    wrpOrder.requestItem.Status__c = 'Errore';
-                    wrpOrder.requestItem.StatusDescription__c = convertionError;
+                    //wrpOrder.requestItem.Status__c = 'Errore';
+                    //wrpOrder.requestItem.StatusDescription__c = convertionError;
+                    wrpOrder.requestItem = setErrorItem(wrpOrder.requestItem, convertionError);
                     failedMap.put(wrpOrder.orderUniqueKey, wrpOrder.requestItem.Id);
                     continue;
                 }
@@ -131,8 +132,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
                 wrapperOrderItemTempList.add(wrpOrderItem);
 
                 if(String.isNotEmpty(convertionError)){
-                    wrpOrderItem.requestItem.Status__c = 'Errore';
-                    wrpOrderItem.requestItem.StatusDescription__c = convertionError;
+                    //wrpOrderItem.requestItem.Status__c = 'Errore';
+                    //wrpOrderItem.requestItem.StatusDescription__c = convertionError;
+                    wrpOrderItem.requestItem = setErrorItem(wrpOrderItem.requestItem, convertionError);
                     failedMap.put(wrpOrderItem.orderUniqueKey, wrpOrderItem.requestItem.Id);
                     continue;
                 }
@@ -302,8 +304,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
         }
 
-        System.debug(JSON.serializePretty(wrapperOrderList));
-        System.debug(JSON.serializePretty(wrapperOrderItemList));
+        //System.debug(JSON.serializePretty(wrapperOrderList));
+        //System.debug(JSON.serializePretty(wrapperOrderItemList));
 
         HDT_WRP_SaveResponse saveOrderItemResponse;
         saveOrderItemResponse = databaseUpsert(orderItemToInsert, requestItemForUpsert, 'OrderItem');
@@ -355,7 +357,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
         }
 
-        delete recordToDelete;
+        HDT_UTL_DatabaseService.deleteSObject(recordToDelete);
 
         for(HDT_WRP_Order wrpOrder : wrapperOrderList){
             itemsToUpdate.add(wrpOrder.requestItem);
