@@ -35,8 +35,8 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
 
             Queue__c queue = new Queue__c(
                 Name = 'coda1',
-                WorkGroup__c = 'gruppo1',
-                Agency2__c = 'agenzia1'
+                WorkGroup__c = Schema.getGlobalDescribe().get('Queue__c').getDescribe().fields.getMap().get('WorkGroup__c').getDescribe().getPicklistValues()[0].getValue(),
+                Agency2__c = Schema.getGlobalDescribe().get('Queue__c').getDescribe().fields.getMap().get('Agency2__c').getDescribe().getPicklistValues()[0].getValue()
             );
             insert queue;
 
@@ -76,9 +76,10 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
     private static void getWorkGroups() {
         Test.startTest();
 
-        List<Map<String,String>> returnedValue = HDT_LC_ActivityReassignmentTool.getWorkGroups('gruppo');
-        System.assertEquals('gruppo1', returnedValue[0].get('name'), 'NOME GRUPPO DI LAVORO ERRATO');
-        System.assertEquals('agenzia1', returnedValue[0].get('agency'), 'AGENZIA GRUPPO DI LAVORO ERRATA');
+        Queue__c queue = [SELECT Id, Agency2__c, WorkGroup__c FROM Queue__c LIMIT 1];
+        List<Map<String,String>> returnedValue = HDT_LC_ActivityReassignmentTool.getWorkGroups(queue.WorkGroup__c);
+        System.assertEquals(queue.WorkGroup__c, returnedValue[0].get('name'), 'NOME GRUPPO DI LAVORO ERRATO');
+        System.assertEquals(queue.Agency2__c, returnedValue[0].get('agency'), 'AGENZIA GRUPPO DI LAVORO ERRATA');
 
         Test.stopTest();
     }
