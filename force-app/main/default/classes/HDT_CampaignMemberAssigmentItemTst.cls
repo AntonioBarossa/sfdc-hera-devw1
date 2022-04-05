@@ -14,11 +14,12 @@ public class HDT_CampaignMemberAssigmentItemTst {
     @isTest static void test(){
         
         List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
-        
+        accs[0].RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Partner').getRecordTypeId();
+
+        update accs;
         List<CampaignMemberAssigment__c> assignements = HDT_UTL_DataFactoryTst.createCampaignMemberAssigment(1, true, true, 'CampaignMemberAssigmentNameTest');
         
         Test.startTest();
-        
         List<CampaignMemberAssigmentItem__c> items =  HDT_UTL_DataFactoryTst.createCampaignMemberAssigmentItem(1, true, accs[0].id, assignements[0].id, 'Preview', 1);
 
         System.assertEquals(1, [Select id From CampaignMemberAssigmentItem__c].size(), 'CampaignMemberAssigmentItem not inserted correctly');

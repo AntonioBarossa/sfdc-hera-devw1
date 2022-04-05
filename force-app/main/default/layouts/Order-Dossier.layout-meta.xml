@@ -324,6 +324,11 @@
             <actionType>StandardButton</actionType>
             <sortOrder>19</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Order.Conferma_finale</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>20</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <relatedLists>
         <fields>ORDERS.CREATED_DATE</fields>
