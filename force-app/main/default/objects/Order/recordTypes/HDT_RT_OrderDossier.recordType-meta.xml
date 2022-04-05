@@ -1952,6 +1952,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Comunicazione verso Heroku</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Documentazione Gestita</fullName>
             <default>false</default>
         </values>
@@ -1965,6 +1969,18 @@
         </values>
         <values>
             <fullName>Documentazione da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esportazione VS Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa di quality call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1997,6 +2013,10 @@
         </values>
         <values>
             <fullName>Plico validato Firmato</fullName>
+            <default>false</default>
+        </values>        
+        <values>
+            <fullName>Quality Call OK</fullName>
             <default>false</default>
         </values>
         <values>
