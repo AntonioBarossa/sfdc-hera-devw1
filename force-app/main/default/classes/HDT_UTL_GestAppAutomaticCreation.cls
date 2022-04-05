@@ -48,7 +48,23 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_
             actSrv.createRecord(w);
 
         }
-
+        /**@frpanico 2022-04-04
+         * All'ammOk per la prima attivazione
+         * e' necessario richiamare il servizio26
+         * Non essendo possibile inserire due action apex
+         * nella stessa configurazione di transizione viene inserito
+         * Un blocco di codiche che nel solo caso
+         * del record type HDT_RT_Attivazione
+         * Viene richiamato il metodo per chiamare il Servizio26
+         */
+        if(ord.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_Attivazione'))
+        {
+            Map<String,Object> argsMapService = new Map<String,Object>();
+            argsMapService.put('sender',obj);
+            argsMapService.put('method','service26');
+            HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
+            voltureChangeSrv.checkCallServiceTwentySix(argsMapService);
+        }
         return true;
     }
 }
