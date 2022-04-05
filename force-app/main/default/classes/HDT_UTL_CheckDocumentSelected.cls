@@ -58,7 +58,7 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
             when 'Bonifico' {
                 if(documents.size() >= 1 && creditDocument == documents.size()){
                     if(!isForeign){
-                        causalCode = 'FAD';
+                        causalCode = 'BON';
                         phase = beneficiary == 'Erede' ? 'Attesa Modulo Firmato' : 'Da Inviare';
                     }else{
                         phase = 'Elaborazione Manuale';

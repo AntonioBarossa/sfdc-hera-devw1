@@ -91,7 +91,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
 
         console.log('lastStepNumber disabledSave: ', this.lastStepNumber);
         console.log('this.order.Step__c disabledSave: ', this.order.Step__c);
-        return (this.order.Step__c !== this.lastStepNumber && ( this.order.RecordType.DeveloperName !== 'HDT_RT_ScontiBonus' && this.notBillableVas ));
+        return (this.order.Step__c !== this.lastStepNumber /*&& ( this.order.RecordType.DeveloperName !== 'HDT_RT_ScontiBonus' && this.notBillableVas )*/);
     }
 
     dateWithMonthsDelay (months) {

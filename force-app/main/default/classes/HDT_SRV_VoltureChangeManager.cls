@@ -209,13 +209,20 @@ public with sharing class HDT_SRV_VoltureChangeManager{
     public void createCaseFromOrder(Order myOrder){
 
         System.enqueueJob(new HDT_QBL_VoltureChangeManager(myOrder));
+        Map<String,Object> argsMap = new Map<String,Object>();
+        argsMap.put('sender',myOrder);
+        argsMap.put('method','service26');
+        checkCallServiceTwentySix(argsMap);
 
     }
 
     public void bloccoVoltura(Order myOrder, string codiceCausale){
 
         System.enqueueJob(new HDT_QBL_VoltureChangeManager(myOrder, codiceCausale));
-
+        Map<String,Object> argsMap = new Map<String,Object>();
+        argsMap.put('sender',myOrder);
+        argsMap.put('method','service26');
+        checkCallServiceTwentySix(argsMap);
     }
 
     public static String calloutVolture(Order order, string codiceCausale){
@@ -262,5 +269,16 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         return note!=null? descr+note: descr ;
     }
     // data: tipoaAttivita - ntoe
+
+
+    public void checkCallServiceTwentySix(Map<String, Object> argsMap)
+    {
+        Order orderToCallout = (Order) argsMap.get('sender');
+        if(orderToCallout.FlagServizio26__c != null && orderToCallout.FlagServizio26__c.equalsIgnoreCase('Y'))
+        {
+            HDT_SRV_SalesManager salesManager = new HDT_SRV_SalesManager();
+            salesManager.execute(argsMap);
+        }
+    }
 
 }
