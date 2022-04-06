@@ -36,7 +36,7 @@ public with sharing class HDT_UTL_OrderTriggerVasTst {
             }
             oldOrders.put(o.Id,o);
         }
-        List<Order> newOrds= [SELECT Id,AccountId, RecordTypeId, Status, Phase__c FROM Order];
+        List<Order> newOrds= [SELECT Id,AccountId, RecordTypeId, Status, Phase__c, SBQQ__Quote__c FROM Order];
         Map<Id,Order> newOrders= new Map<Id,Order>();
         for(Order o: newOrds){
             if(o.RecordTypeId == rt){

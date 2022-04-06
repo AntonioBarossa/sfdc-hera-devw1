@@ -16,17 +16,17 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         String debugString = TEST_NAME + ' - mySetup';
         
         //ACCOUNT - BUSINESS
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountDistributore(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         
         //ACCOUNT - PARTNER
         List<Account> partnerList = HDT_UTL_DataFactoryTst.createAccountPartner(1, false, 'DIRETTO EDISON-10R0000051');
         partnerList[0].CompanyOwner__c = 'HERA COMM';
         insert partnerList;
-        
+
         //SERVICE POINT
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
         ServicePoint__c servPoint = servPointList[0];
-        servPoint.Distributor__c = partnerList[0].Id;
+        servPoint.Distributor__c = accList[0].Id;
         servPoint.CommoditySector__c = 'Gas';
         insert servPoint;
         
@@ -278,7 +278,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         String result = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);//'Hera Comm S.p.A.'
         
         //RETRIEVING DATA
-        HDT_HeraCompany__mdt myData = [SELECT CompanyCode__c from HDT_HeraCompany__mdt WHERE Label=:'Hera Comm S.p.A.'];
+        HDT_HeraCompany__mdt myData = [SELECT CompanyCode__c from HDT_HeraCompany__mdt WHERE Label=:'Hera Comm Marche'];
         
         //ASSERTS
         System.debug('result: ' + result);
@@ -324,7 +324,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //SETUP
         mySetup();
         
-        Account myItem = [SELECT Id, CompanyOwner__c FROM Account WHERE RecordTypeId = :constants.ACCOUNT_RECORDTYPEID_BUSINESS];
+        Account myItem = [SELECT Id, CompanyOwner__c FROM Account WHERE RecordTypeId = :constants.ACCOUNT_RECORDTYPEID_DISTRIBUTORE];
         
         List<SObject> itemVasList = new List<SObject>();
         itemVasList.add(myItem);
@@ -701,7 +701,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         isSubscriptionSetup = true;
         mySetup();
         
-        Account myItem = [SELECT Id FROM Account WHERE RecordTypeId = :constants.ACCOUNT_RECORDTYPEID_BUSINESS];
+        Account myItem = [SELECT Id FROM Account WHERE RecordTypeId = :constants.ACCOUNT_RECORDTYPEID_DISTRIBUTORE];
         
         List<SObject> itemVasList = new List<SObject>();
         itemVasList.add(myItem);
@@ -795,7 +795,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         mySetup();
         
         //NB: ACCOUNT NOT BUSINESS TYPE PER ACR
-        Account myItem = [SELECT Id FROM Account WHERE RecordTypeId != :constants.ACCOUNT_RECORDTYPEID_BUSINESS];
+        Account myItem = [SELECT Id FROM Account WHERE RecordTypeId != :constants.ACCOUNT_RECORDTYPEID_BUSINESS AND Name = 'DIRETTO EDISON-10R0000051'];
         
         List<SObject> itemVasList = new List<SObject>();
         itemVasList.add(myItem);
@@ -816,7 +816,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         
         //TESTING - CASO senza ACR
-        myItem = [SELECT Id FROM Account WHERE RecordTypeId = :constants.ACCOUNT_RECORDTYPEID_BUSINESS];
+        myItem = [SELECT Id FROM Account WHERE RecordTypeId = :constants.ACCOUNT_RECORDTYPEID_DISTRIBUTORE];
         itemVasList = new List<SObject>();
         itemVasList.add(myItem);
         inputs = new Map<String,List<SObject>>();

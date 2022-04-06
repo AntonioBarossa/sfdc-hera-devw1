@@ -247,7 +247,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             //Gestione Esito Appuntamento;
             HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
-            appService.updateExtraSystemAppointment(nextPhase, recordCase.Id, testoErr);
+            appService.updateExtraSystemAppointment(nextPhase, recordCase.Id, testoErr,mapActivityField);
             //fine Gestione Esito Appuntamento;
         }
         if(method.equalsIgnoreCase('aggiornaRCU')){
@@ -424,7 +424,19 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Phase__c = 'Inviare preventivo';
             }else if(recordCase.Type.equalsIgnoreCase('Fiscale') && nextPhase.equalsIgnoreCase('Completata') && recordCase.CalculationBlock__c){
                 currentCase.Phase__c = 'Elaborazione Manuale';
-            }else if(recordCase.Type.equalsIgnoreCase('Rimborso') && nextPhase.equalsIgnoreCase('Completata') && recordCase.IbanIsForeign__c){
+            /**@frpanico 2022-04-06
+             * Nel caso del processo Rimborso
+             * Vi e' uno step di gestione manuale alla ricezione del completata da Heroku
+             * nelle casistiche
+             * - Iban Estero
+             * - Modalita' di rimborso "Assegno"
+             * - Modalita' di rimboso "Compensazione" e residuo delle partite selezionate diverso da 0
+             * In queste casistiche la fase viene impostata a "Elaborazione Manuale"
+             */
+            }else if(recordCase.Type.equalsIgnoreCase('Rimborso') && nextPhase.equalsIgnoreCase('Completata') 
+                && (recordCase.IbanIsForeign__c 
+                || recordCase.RefundMethod__c.equalsIgnoreCase('Assegno')
+                || (recordCase.RefundMethod__c.equalsIgnoreCase('Compensazione') && recordCase.TotalResidue__c != 0))){
                 currentCase.Phase__c = 'Elaborazione Manuale';
             }else if(recordCase.Type.equalsIgnoreCase('Allineamento Anagrafica') && nextPhase.equalsIgnoreCase('Completata') && (!recordCase.Phase__c.equalsIgnoreCase('Esito OK da SII') && !recordCase.Phase__c.equalsIgnoreCase('Errore Lavorazione SAP'))){
                 noActionNeeded = true;//no action needed
@@ -880,7 +892,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     @AuraEnabled
     public static String getAsyncJobByJobItem(String recordId){
-
+        /*
         wrts_prcgvr__AsyncJob__c asyncJobRec = new wrts_prcgvr__AsyncJob__c();
         String result;
 
@@ -904,6 +916,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
             result = 'KO';
 
+        }
+        */
+
+        String result = 'KO';
+        List<Case> caseList = [SELECT Id,Phase__c FROM Case WHERE Id = :recordId WITH SECURITY_ENFORCED];
+        if(!caseList.isEmpty() && (!caseList[0].Phase__c.equalsIgnoreCase('Da Inviare') && !caseList[0].Phase__c.equalsIgnoreCase('In Lavorazione')))
+        {
+            result = 'OK';
         }
 
         return result;

@@ -21,8 +21,10 @@ public with sharing class HDT_LC_CampaignMemberAssigmentItemTst {
         System.runAs(internalUser) {
 
             List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+            accList[0].RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Partner').getRecordTypeId();
+            update accList;
             List<CampaignMemberAssigment__c> cmaList = HDT_UTL_DataFactoryTst.createCampaignMemberAssigment(1, true, true, 'YMCA');
-            HDT_UTL_DataFactoryTst.createCampaignMemberAssigmentItem(1, true, accList[0].Id, cmaList[0].Id, 'Preview', 10);
+            HDT_UTL_DataFactoryTst.createCampaignMemberAssigmentItem(1, true, accList[0].Id, cmaList[0].Id, 'PREVIEW', 10);
         }
     }
 
@@ -35,7 +37,7 @@ public with sharing class HDT_LC_CampaignMemberAssigmentItemTst {
 
         List<CampaignMemberAssigmentItem__c> cmaiList = HDT_LC_CampaignMemberAssigmentItem.getItemsByMemberAssignment(cma.Id);
 
-        System.assertEquals('Preview', cmaiList[0].ProcessingType__c, 'CampaignMemberAssigmentItem ProcessingType__c is correct');
+        System.assertEquals('PREVIEW', cmaiList[0].ProcessingType__c, 'CampaignMemberAssigmentItem ProcessingType__c is correct');
 
         System.assertNotEquals(null, cmaiList[0].ProcessingType__c, 'CampaignMemberAssigmentItem ProcessingType__c is not correct');
 
