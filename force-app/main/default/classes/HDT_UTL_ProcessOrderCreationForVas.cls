@@ -287,12 +287,12 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
             if(productMap.containsKey(prodKey)){
                 wrpOrderItem.orderItem.Product2Id = productMap.get(prodKey).Id;
 
-                String pricebook2Id = contractToPbookIdMap.get(contractCode).SBQQ__AmendmentPricebookId__c;
+                String pricebookId = contractToPbookIdMap.get(contractCode).SBQQ__AmendmentPricebookId__c;
 
-                System.debug('>>> priceBook2Id ' + priceBook2Id);
+                System.debug('>>> priceBook2Id ' + priceBookId);
 
-                if(pricebookEntryForVasMap.containsKey(pricebook2Id)){
-                    Map<Id, PriceBookEntry> tempMap = pricebookEntryForVasMap.get(pricebook2Id);
+                if(pricebookEntryForVasMap.containsKey(pricebookId)){
+                    Map<Id, PriceBookEntry> tempMap = pricebookEntryForVasMap.get(pricebookId);
                     wrpOrderItem.orderItem.PricebookEntryId = tempMap.get(wrpOrderItem.orderItem.Product2Id).Id;
                     wrpOrderItem.orderItem.UnitPrice = tempMap.get(wrpOrderItem.orderItem.Product2Id).UnitPrice;
                 }
