@@ -424,7 +424,19 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Phase__c = 'Inviare preventivo';
             }else if(recordCase.Type.equalsIgnoreCase('Fiscale') && nextPhase.equalsIgnoreCase('Completata') && recordCase.CalculationBlock__c){
                 currentCase.Phase__c = 'Elaborazione Manuale';
-            }else if(recordCase.Type.equalsIgnoreCase('Rimborso') && nextPhase.equalsIgnoreCase('Completata') && (recordCase.IbanIsForeign__c || recordCase.RefundMethod__c.equalsIgnoreCase('Assegno'))){
+            /**@frpanico 2022-04-06
+             * Nel caso del processo Rimborso
+             * Vi e' uno step di gestione manuale alla ricezione del completata da Heroku
+             * nelle casistiche
+             * - Iban Estero
+             * - Modalita' di rimborso "Assegno"
+             * - Modalita' di rimboso "Compensazione" e residuo delle partite selezionate diverso da 0
+             * In queste casistiche la fase viene impostata a "Elaborazione Manuale"
+             */
+            }else if(recordCase.Type.equalsIgnoreCase('Rimborso') && nextPhase.equalsIgnoreCase('Completata') 
+                && (recordCase.IbanIsForeign__c 
+                || recordCase.RefundMethod__c.equalsIgnoreCase('Assegno')
+                || (recordCase.RefundMethod__c.equalsIgnoreCase('Compensazione') && recordCase.TotalResidue__c != 0))){
                 currentCase.Phase__c = 'Elaborazione Manuale';
             }else if(recordCase.Type.equalsIgnoreCase('Allineamento Anagrafica') && nextPhase.equalsIgnoreCase('Completata') && (!recordCase.Phase__c.equalsIgnoreCase('Esito OK da SII') && !recordCase.Phase__c.equalsIgnoreCase('Errore Lavorazione SAP'))){
                 noActionNeeded = true;//no action needed
