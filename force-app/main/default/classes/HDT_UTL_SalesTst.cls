@@ -16,7 +16,7 @@ public class HDT_UTL_SalesTst {
 
         City__c city=HDT_UTL_DataFactoryTst.createCity()[0];
 
-        List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountBusiness(2, false, 'AAA-EBT', 'AAS Azienda', 'Enti');
+        List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountDistributore(2, false, 'AAA-EBT', 'AAS Azienda', 'Enti');
         accounts[0].Code__c = '00';
         accounts[1].Code__c = null;
         accounts[1].Category__C = 'Aziende Soho';
@@ -109,8 +109,6 @@ public class HDT_UTL_SalesTst {
         System.assertEquals(true, !HDT_UTL_Sales.isTransitionNoUp(new ServicePoint__c(SupplyProvince__c='AQ'),sale1), 'The return was empty');
         System.assertEquals(true, HDT_UTL_Sales.isTransitionNoUp(sale0), 'The return was empty');
         System.assertEquals(true, !HDT_UTL_Sales.isTransitionNoUp(sale1), 'The return was empty');
-        System.assertEquals(true, HDT_UTL_Sales.isTransition(new ServicePoint__c(SupplyProvince__c='PEP'),sale0), 'The return was empty');
-        System.assertEquals(true, !HDT_UTL_Sales.isTransition(new ServicePoint__c(SupplyProvince__c='AQ'),sale1), 'The return was empty');
         
         Test.stopTest();
     }
