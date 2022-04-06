@@ -226,7 +226,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 when 'Esito KO da DL' {
                                     //Gestione Esito Appuntamento;
                                     HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
-                                    appService.updateExtraSystemAppointment('Esito KO da DL', ord.Id, discardReasonString);
+                                    appService.updateExtraSystemAppointment('Esito KO da DL', ord.Id, discardReasonString,mapActivityField);
                                     //fine Gestione Esito Appuntamento;
                                     ord.DiscardReason__c = discardReasonString;
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
@@ -238,7 +238,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 when 'Esito OK da DL' {
                                     //Gestione Esito Appuntamento;
                                     HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
-                                    appService.updateExtraSystemAppointment('Esito OK da DL', ord.Id, discardReasonString);
+                                    appService.updateExtraSystemAppointment('Esito OK da DL', ord.Id, discardReasonString,mapActivityField);
                                     //fine Gestione Esito Appuntamento;
                                     HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
                                     utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
@@ -285,7 +285,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                     ord.RemiCode__c = mapRequestFields.get('EXT_CABINA_REMI');
-                                    ord.VATNumberUdb__c = mapRequestFields.get('EXT_PIVA_DISTR');
+                                    //ord.VATNumberUdb__c = mapRequestFields.get('EXT_PIVA_DISTR');
                                     if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                         ord.PrecheckResultSII__c = 'OK';
                                     }
@@ -375,7 +375,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     if(previousPhase.indexOf('KO') > -1)
                                     {
                                         ord.Phase__c = previousPhase;
-                                        ord.Status = 'Completed';
+                                        //ord.Status = 'Completed';
                                     }
                                     /*@frpanico 02/02/2022
                                      * Aggiunta gestione 

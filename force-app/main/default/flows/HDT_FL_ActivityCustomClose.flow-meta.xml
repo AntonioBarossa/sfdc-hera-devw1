@@ -50,6 +50,34 @@
                 <elementReference>$User.Username</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Activities_To_Close_Loop.ClosingCreatorGroup__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.CreatorGroup__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Activities_To_Close_Loop.ClosingUserChannel__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.LoginChannel__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Activities_To_Close_Loop.Place__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Station__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Activities_To_Close_Loop.ActivityEndTime__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Add_Activity_To_List</targetReference>
         </connector>

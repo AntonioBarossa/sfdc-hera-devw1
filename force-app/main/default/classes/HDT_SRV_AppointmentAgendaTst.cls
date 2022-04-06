@@ -351,7 +351,7 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
         activity.isAtoA__c = false;
         update activity;
         Test.startTest();
-            agenda.updateExtraSystemAppointment('Esito KO da DL', activity.Case__c);
+            agenda.updateExtraSystemAppointment('Esito KO da DL', activity.Case__c, 'TEST', new Map<String, String>{'DATA_ELABORAZIONE'=>'2022-04-05 16:58:21'});
             activity = [SELECT Id, Case__c,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         Test.stopTest();
         //System.assertEquals('Appuntamento non eseguito', activity.wrts_prcgvr__Status__c, methodName + 'Lo stato dell\'activity non è stato correttamente aggiornato.');
@@ -366,7 +366,7 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
         activity.isAtoA__c = false;
         update activity;
         Test.startTest();
-            agenda.updateExtraSystemAppointment('Esito OK da DL', activity.Case__c);
+            agenda.updateExtraSystemAppointment('Esito OK da DL', activity.Case__c, 'TEST', new Map<String, String>());
             activity = [SELECT Id, Case__c,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         Test.stopTest();
         //System.assertEquals('Appuntamento eseguito', activity.wrts_prcgvr__Status__c, methodName + 'Lo stato dell\'activity non è stato correttamente aggiornato.');
@@ -379,7 +379,7 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
         String methodName = 'executeUpdateExtraSystemAppointmentNoState: ';
         wrts_prcgvr__Activity__c activity = [SELECT Id, Case__c FROM wrts_prcgvr__Activity__c];
         Test.startTest();
-            agenda.updateExtraSystemAppointment('Ammissibilità OK', activity.Case__c);
+            agenda.updateExtraSystemAppointment('Ammissibilità OK', activity.Case__c, 'TEST', new Map<String, String>());
             activity = [SELECT Id, Case__c,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         Test.stopTest();
         System.assertEquals('Creata', activity.wrts_prcgvr__Status__c, methodName + 'Lo stato è stato aggiornato, mentre doveva restare invariato.');

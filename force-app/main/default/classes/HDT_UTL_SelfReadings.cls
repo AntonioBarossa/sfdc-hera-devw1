@@ -119,7 +119,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
 
         Case c = new Case();
         Reading__c r = new Reading__c();
-        Boolean isGas = request.commodity.equals('Gas');
+        Boolean isGas = request.commodity.equals('Gas') || request.commodity.equals('G');
 
         if (String.isNotBlank(request.id)) {
             c.Id = request.id;
@@ -312,7 +312,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
                 isAutomaticDiscardMap.put(conf.DiscardCode__c, conf);
             }
             if(String.isNotBlank(conf.ControllingValue__c)){
-                isAutomaticDiscardMap.put(conf.ControllingValue__c, conf);
+                isAutomaticDiscardMap.put(conf.ControllingValue__c.toLowerCase(), conf);
             }
         }
 

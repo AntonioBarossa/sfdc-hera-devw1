@@ -38,23 +38,7 @@
             <sortOrder>6</sortOrder>
         </platformActionListItems>
     </platformActionList>
-    <quickActionList>
-        <quickActionListItems>
-            <quickActionName>HDT_InformativeCallNotification</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>SendEmail</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>HDT_SendSms</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>HDT_SendCertifiedEmail</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>Crea_Distributore2</quickActionName>
-        </quickActionListItems>
-    </quickActionList>
+    <quickActionList/>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>

@@ -30,7 +30,7 @@
             <div class="slds-col slds-size_4-of-12">
                 <lightning:input label="Codice fiscale/Partita Iva/Codice Cliente" aura:id="inputTxtId" type="text"
                     value="{!v.searchKey}" disabled="{!v.picklistDisabled}" onchange="{!c.handleKeyChange}"
-                    onblur="{!c.handleKeyBlur}" messageWhenBadInput="{!v.message}" />
+                    messageWhenBadInput="{!v.message}" />  <!--MODIFICA 25/03/2022 marco.arci@webresult.it eliminato onblur="{!c.handleKeyBlur}" - fix -->
             </div>
             <div class="slds-col slds-size_4-of-12">
                 <button class="slds-button slds-button_brand" disabled="{!v.searchDisabled}" onclick="{!c.handleSearch}"

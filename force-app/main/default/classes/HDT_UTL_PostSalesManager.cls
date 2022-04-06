@@ -463,6 +463,16 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
     }
 
+    public void setContractAccountCode(SObject inputCase)
+    {
+        Case currentCase = (Case) inputCase;
+        List<BillingProfile__c> billingProfiles = [SELECT Id,ContractAccountCode__c FROM BillingProfile__c WHERE Id = :currentCase.BillingProfile__c WITH SECURITY_ENFORCED];
+        if(!billingProfiles.isEmpty())
+        {
+            currentCase.ContractAccountCode__c = billingProfiles[0].ContractAccountCode__c;
+        }
+    }
+
     @Future
     private static void updateFuture(String serializedCase)
     {

@@ -182,6 +182,7 @@ public inherited sharing class HDT_QR_Order {
             SBQQ__Quote__r.ContractReference__r.ContractNumber,
             SBQQ__Quote__r.OrderReference__r.OrderNumber,
             SBQQ__Quote__r.AllowChangeUse__c,
+            SBQQ__Quote__r.SBQQ__Type__c,
             ProcessType__c,
             SalesCompany__c,
             Campaign__c,
@@ -343,7 +344,8 @@ public inherited sharing class HDT_QR_Order {
             CreditCheckInProgress__c,
             Contact__r.FiscalCode__c,
             AggregateBilling__c,
-            NumeratorGroup__c
+            NumeratorGroup__c,
+            VASSubtype__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -386,7 +388,8 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getRecordsByIds(List<String> orderIds){
-        return [
+        SObjectAccessDecision decision = Security.stripInaccessible(AccessType.READABLE,
+        [
             SELECT 
             AccountId,
             Account.Name,
@@ -493,6 +496,7 @@ public inherited sharing class HDT_QR_Order {
             AnnualConsumption__c,                            
             Catalog__c,                                     
             ServicePoint__r.AnnualConsumptionStandardM3__c, 
+            ServicePoint__r.isSTG__c, 
             BillingProfile__r.AccountClass__c,                           
             OwnerId,                                        
             OrderReferenceNumber,
@@ -519,11 +523,14 @@ public inherited sharing class HDT_QR_Order {
             ComfortCallDaysDue__c,
             IsEarlyActivation__c,
             Contact__r.FiscalCode__c,
-            Contact__c
+            Contact__c,
+            isSTG__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
-        ];
+        ]);
+
+        return decision.getRecords();
     }
 
     /**
@@ -1198,6 +1205,7 @@ public inherited sharing class HDT_QR_Order {
         FROM Order
         WHERE ParentOrder__c = :parentOrderId
         AND QualityCall__c = true
+        AND Phase__c NOT IN ('Completata','Annullato')
         WITH SECURITY_ENFORCED
         ];
     }
@@ -1285,7 +1293,7 @@ public inherited sharing class HDT_QR_Order {
     //@frpanico getOpenActivities
     public List<wrts_prcgvr__Activity__c> getOpenActivitiesByOrderId(String orderId)
     {
-        return [SELECT Id, wrts_prcgvr__Status__c,Type__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Chiusa' AND Order__c = :orderId WITH SECURITY_ENFORCED];
+        return [SELECT Id, wrts_prcgvr__Status__c,Type__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Chiusa' AND wrts_prcgvr__IsClosed__c = false AND Order__c = :orderId WITH SECURITY_ENFORCED];
     }
 
     public static List<Order> getOrderQuality(Set<String> ordIdSet) {

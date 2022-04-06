@@ -187,7 +187,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     }
                 }
                 else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
-                    orderToUpdate.ChamberCommerceRegistration__c = 'Richiesto';
+                    //orderToUpdate.ChamberCommerceRegistration__c = 'Richiesto'; @frpanico 2022-04-01 rimosso a seguito di richiesta BSN durante UAT
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
                     if('Rapido'.equalsIgnoreCase(order.QuotationType__c)){
                         orderToUpdate.QuickQuote__c = 'Richiesto';
@@ -205,7 +205,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 }
                 else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
-                    orderToUpdate.DocumentLow80__c = 'Richiesto';
                 }
                 if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(), 3) || order.EffectiveDate__c == null){
                     orderToUpdate.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
@@ -217,16 +216,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     if(!String.isEmpty(contractReference.Id) && !contractReference.Account.CompanyOwner__c.equalsIgnoreCase('HERA COMM')){
                         orderToUpdate.Phase__c = 'Esportazione VS Siebel';
                     }
-                    Map<String,Object> rates = voltureChangeUtils.checkRates(
-                        (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(currentOrder)), 
-                        (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(orderToUpdate))
-                    );
-                    for(String field : rates.keySet()){
-                        orderToUpdate.put(field, rates.get(field));
-                    }
                     if(currentOrder.Email__c != null && String.isEmpty(currentOrder.Email__c)){
                         orderToUpdate.Email__c = emptyEmailDefault;
                     }    
+                }
+                Map<String,Object> rates = voltureChangeUtils.checkRates(
+                    (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(currentOrder)), 
+                    (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(orderToUpdate))
+                );
+                for(String field : rates.keySet()){
+                    orderToUpdate.put(field, rates.get(field));
                 }                
             }
             when 'HDT_RT_ConnessioneConAttivazione' {
@@ -252,6 +251,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             when 'HDT_RT_CambioOfferta'{
                 if(order.SignedDate__c != null){                    
                     HDT_UTL_SwtichInProcess.calculateCambioOffertaDate(order);  // Data di decorrenza
+                }
+            }
+            when 'HDT_RT_VAS'
+            {
+                if(currentOrder.VASSubtype__c != null && currentOrder.VASSubtype__c.equalsIgnoreCase('Analisi Consumi'))
+                {
+                    orderToUpdate.ProcessCode__c = currentOrder.Commodity__c.equalsIgnoreCase('Energia Elettrica') ? 'VCE' : 'VCG';
                 }
             }
             /*when 'HDT_RT_CambioOfferta' {
@@ -343,6 +349,29 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
         }
 
+
+        /**@frpanico 2022-03-25
+         * Valorizzazione campo
+         * FlagServizio26 a 'Y'
+         * Nel caso in cui vi sia un
+         * OrderItem di bonus
+         */
+        if(!order.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_VAS') && !order.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_ScontiBonus'))
+        {
+            List<OrderItem> childOrderItems = [SELECT Id 
+            FROM OrderItem 
+            WHERE OrderId = :order.Id 
+            AND SBQQ__RequiredBy__c != NULL
+            AND ProductFamily__c != 'Punto Fornitura'
+            WITH SECURITY_ENFORCED];
+
+            if(!childOrderItems.isEmpty())
+            {
+                orderToUpdate.FlagServizio26__c = 'Y';
+            }
+        }
+
+
         orderSrv.updateRecord(orderToUpdate);
         if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
             HDT_LC_ChildOrderProcessDetails.createActivityAccise(orderToUpdate.FacilitationExcise__c,orderToUpdate.VATfacilitationFlag__c,orderToUpdate.id,orderToUpdate.accountid);
@@ -366,11 +395,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
             orderSrv.updateRecord(orderParentToUpdate);
         }
-
-        /**@frpanico 2022-03-25
-         * Valorizzazione Flag Servizio 26
-         * Nel caso di ordine sconti e bonus
-         */
     }
 
     /**

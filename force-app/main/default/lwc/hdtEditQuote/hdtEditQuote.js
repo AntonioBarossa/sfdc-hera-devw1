@@ -55,7 +55,6 @@ export default class hdtEditQuote extends LightningElement {
 
         execModalExitActions({saleId: this.sale.Id, quoteId: this.quoteId}).then(data =>{
             this.dispatchEvent(new CustomEvent('closeeditquote'));
-
             if(data){
                 const toastSuccessMessage = new ShowToastEvent({
                     title: 'Successo',
@@ -64,6 +63,15 @@ export default class hdtEditQuote extends LightningElement {
                 });
                 this.dispatchEvent(toastSuccessMessage);
             }
+            /*else
+            {
+                const toastSuccessMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Necessario premere il tasto \"Salva\" prima di poter procedere',
+                    variant: 'error'
+                });
+                this.dispatchEvent(toastSuccessMessage);
+            }*/
         }).catch(error => {
             this.dispatchEvent(new CustomEvent('closeeditquote'));
             const toastErrorMessage = new ShowToastEvent({

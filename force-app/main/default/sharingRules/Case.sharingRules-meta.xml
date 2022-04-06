@@ -12,6 +12,7 @@
             <operation>equals</operation>
             <value>AAA-EBT</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_CaseHERACOMM</fullName>
@@ -25,6 +26,7 @@
             <operation>equals</operation>
             <value>HERA COMM</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_CaseMMS</fullName>
@@ -38,6 +40,7 @@
             <operation>equals</operation>
             <value>MMS</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_CaseOutbound</fullName>
@@ -51,6 +54,7 @@
             <operation>equals</operation>
             <value>HERA COMM</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>HDT_SR_CaseReseller</fullName>
@@ -64,5 +68,6 @@
             <operation>equals</operation>
             <value>Reseller</value>
         </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
 </SharingRules>

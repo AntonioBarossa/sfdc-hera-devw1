@@ -1,7 +1,11 @@
-public with sharing class HDT_BA_RiconciliazioneSubscriptions implements Database.Batchable<sObject>, Database.Stateful{
+public with sharing class HDT_BA_RiconciliazioneSubscriptions implements Database.Batchable<sObject>, Database.Stateful,Database.AllowsCallouts{
 
     public Map<String, SBQQ__Subscription__c> oldContToNew = new Map<String, SBQQ__Subscription__c>();
+    private String runId;
 
+    public HDT_BA_RiconciliazioneSubscriptions(String runId){
+        this.runId = runId;
+    }
     public Database.QueryLocator start(Database.BatchableContext bc) {
         String query = 'select Id,SBQQ__Contract__c,SBQQ__Contract__r.SAPContractCode__c, SBQQ__Contract__r.OldContractMoMi__c from SBQQ__Subscription__c where  SBQQ__Contract__r.OldContractMoMi__c != null and SBQQ__Product__r.Family = \'Offerta commerciale\' and CreatedDate >= TODAY';
         List<SBQQ__Subscription__c> toBeCloned = Database.query(query);
@@ -28,7 +32,26 @@ public with sharing class HDT_BA_RiconciliazioneSubscriptions implements Databas
         
     }
     public void finish(Database.BatchableContext bc){
-        System.debug(LoggingLevel.DEBUG,'End Batch');
+        if(String.isNotBlank(runId)){
+            JSONGenerator gen = JSON.createGenerator(true);
+            gen.writeStartObject();
+            gen.writeStringField('runId', runId);
+            gen.writeStringField('status', 'success');
+            gen.writeStringField('resultDescription', 'success');
+            gen.writeEndObject();
+            String pretty = gen.getAsString();
+    
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint('Callout:MulesoftBasePath'+'/jobs/outcomes');
+            req.setMethod('POST');
+            req.setBody(pretty);
+            req.setTimeout(120000);
+            req.setHeader('Accept', 'application/json');
+            req.setHeader('Content-Type', 'application/json');
+            Http http = new Http();
+            HTTPResponse res = http.send(req);
+        }
+        
 
     }
     

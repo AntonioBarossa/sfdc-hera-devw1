@@ -44,7 +44,7 @@ public inherited sharing class HDT_UTL_Dependencies {
             }
             if(orders.size()>0){
                 try{
-                    List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Order__c, Order__r.isTransition__c, Order__r.RecordTypeId, Order__r.OrderReference__c, Order__r.ContractReference__c, Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c, Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
+                    List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Order__c, Order__r.isTransition__c,Order__r.VASSubtype__c, Order__r.RecordTypeId, Order__r.OrderReference__c, Order__r.ContractReference__c, Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c, Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
                                     FROM ServiceRequest__c 
                                     WHERE Order__r.ID IN: orders.keySet()
                                     WITH SECURITY_ENFORCED];
@@ -273,11 +273,11 @@ public inherited sharing class HDT_UTL_Dependencies {
                                     casesToBeUpdated.add(caseToUpdate);
                                 }
                             }else if(sr.Type__c.equalsIgnoreCase(TIPOLOGY_SALES)){
-                                Order orderToUpdate = new Order(ID=sr.Order__c,RecordTypeId=sr.Order__r.RecordTypeId,isTransition__c=sr.Order__r.isTransition__c,OrderReference__c=sr.Order__r.OrderReference__c,ContractReference__c=sr.Order__r.ContractReference__c);
+                                Order orderToUpdate = new Order(ID=sr.Order__c,RecordTypeId=sr.Order__r.RecordTypeId,isTransition__c=sr.Order__r.isTransition__c,OrderReference__c=sr.Order__r.OrderReference__c,ContractReference__c=sr.Order__r.ContractReference__c,VASSubtype__c = sr.Order__r.VASSubtype__c);
                                 orderToUpdate.Status = STATUS_SEQUENZIALIZZATO;
                                 orderToUpdate.Phase__c = PHASE_SEQUENZIALIZZATO;
                                 String orderRecordType = orderToUpdate.RecordTypeId;
-                                if(orderRecordType.equalsIgnoreCase(rtVas) && (orderToUpdate.OrderReference__c == null) /*&& orderToUpdate.ContractReference__c == null)*/ && !(orderToUpdate.isTransition__c && srBlocking.Order__r.isTransition__c)){
+                                if(orderRecordType.equalsIgnoreCase(rtVas) && (orderToUpdate.OrderReference__c == null) && (orderToUpdate.VASSubtype__c == null || (orderToUpdate.VASSubtype__c != null && !orderToUpdate.VASSubtype__c.equalsIgnoreCase('Analisi Consumi'))) /*&& orderToUpdate.ContractReference__c == null)*/ && !(orderToUpdate.isTransition__c && srBlocking.Order__r.isTransition__c)){
                                     valueToUpdate = false;
                                 }
                                 

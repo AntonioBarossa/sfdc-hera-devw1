@@ -18,9 +18,12 @@ public with sharing class HDT_UTL_ContractProcessTst {
         List<BillingProfile__c> bpList = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
         List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
 
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
+
         List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].Id, 'Bozza');
         orderList[0].BillingProfile__c = bpList[0].Id;
         orderList[0].ServicePoint__c = spList[0].Id;
+        orderList[0].ContractReference__c = contractList[0].Id;
         insert orderList;
 
         List<Contract> cttList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].Id);

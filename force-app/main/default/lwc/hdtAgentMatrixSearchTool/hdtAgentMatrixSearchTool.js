@@ -1,10 +1,11 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import getCurrentAgent from '@salesforce/apex/HDT_LC_AgentMatrixSearchToolController.getCurrentAgent';
 import updateRule from '@salesforce/apex/HDT_LC_AgentMatrixSearchToolController.updateRule';
 import getAgents from '@salesforce/apex/HDT_LC_AgentMatrixSearchToolController.getAgents';
 
-
+// INIZIALMENTE QUESTO CMP DOVEVA USARE IL CODICE AGENTE. E' STATO ROZZAMENTE CONVERTITO PER USARE IL CODICE AGENZIA
 export default class HdtAgentMatrixSearchTool extends LightningElement {
     @api recordId;
 
@@ -42,6 +43,7 @@ export default class HdtAgentMatrixSearchTool extends LightningElement {
             console.error(res);
             this.showToast('Errore','Si è verificato un errore. Contattare il supporto tecnico.','error');
         } else {
+            getRecordNotifyChange([{recordId: this.recordId}]);
             this.agents = null;
             this.template.querySelector(".searchBar").value = null;
             this.connectedCallback();

@@ -19,6 +19,11 @@ public inherited sharing class HDT_LC_CampaignsController {
     public static List <CampaignMember> getCampaigns(String id, String objectName, String category, String channel) {
         campaignMemberSrv.checkReadAccess('Campaign.Name,Campaign.Status,Campaign.Channel__c,Campaign.EndDate');
 
+        if(String.isBlank(objectName)){
+            Id objId = id;
+            objectName = objId.getSObjectType().getDescribe().getName();
+        }
+        
         if (objectName == 'Contact') {
             //return all active campaigns related to this Contact
             return  campaignMemberQr.getActiveCampaignsByContact(id);

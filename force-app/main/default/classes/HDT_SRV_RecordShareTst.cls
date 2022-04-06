@@ -22,7 +22,7 @@ public with sharing class HDT_SRV_RecordShareTst {
  
         internalUser.UserPermissionsMarketingUser=true;
         internalUser.FirstName = 'test Admin User';
-        insert internalUser;
+        //insert internalUser;
 
         System.runAs(internalUser) {
         

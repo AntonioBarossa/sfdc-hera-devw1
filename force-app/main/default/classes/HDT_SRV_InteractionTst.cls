@@ -11,7 +11,7 @@ public class HDT_SRV_InteractionTst{
 
 		Interaction__c interactionTst=new Interaction__c();
 		interactionTst.Comment__c='test';
-		interactionTst.Status__c='Bozza';
+		interactionTst.Status__c='Aperta';
 
 		insert interactionTst;
 	}
@@ -143,7 +143,7 @@ public class HDT_SRV_InteractionTst{
 
 		Interaction__c interactionTst=new Interaction__c();
 		interactionTst.Comment__c='test create';
-		interactionTst.Status__c='Bozza';
+		interactionTst.Status__c='Aperta';
 
 		HDT_SRV_Interaction tstInteractionSrv=new HDT_SRV_Interaction();
 

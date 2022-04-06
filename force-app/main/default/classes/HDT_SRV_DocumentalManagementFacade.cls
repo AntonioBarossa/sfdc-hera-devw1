@@ -278,4 +278,18 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             System.debug(LoggingLevel.DEBUG, 'Error in method handleDocusignNotify ' + ex.getMessage());
         }
     }
+
+    public static String handleContactPoint(String email,String phone, String contactId,String mode){
+        if(String.isBlank(mode) || String.isBlank(contactId))return'KO';
+        String result;
+        switch on mode {
+            when 'query' {
+                result = HDT_SRV_DocumentalManagement.queryContactPoint(email,phone,contactId);
+            }
+            when else {
+                result = HDT_SRV_DocumentalManagement.createContactPoint(email,phone,contactId);
+            }
+        }
+        return result;
+    }
 }
