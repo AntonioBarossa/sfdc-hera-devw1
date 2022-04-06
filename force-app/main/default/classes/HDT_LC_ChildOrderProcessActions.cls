@@ -349,6 +349,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
         }
 
+        /**@frpanico 2022-04-06
+         * Valorizzazione IVA Documentale
+         * A partire dall'iva presente
+         * Sull'order
+         */
+
+        String vat = String.isBlank(orderToUpdate.VAT__c) ? currentOrder.VAT__c : currentOrder.VAT__c;
 
         /**@frpanico 2022-03-25
          * Valorizzazione campo
