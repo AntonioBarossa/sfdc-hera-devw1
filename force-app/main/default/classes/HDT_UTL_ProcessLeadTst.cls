@@ -6,7 +6,7 @@ public with sharing class HDT_UTL_ProcessLeadTst {
         String dataLead='HERA COMM,HCM,null,347852147,null,,Mario,Rossi,Laurea,Studente,Benedetto Brin,1,80100,80100,Napoli,NA,null,,null,,25,null,Maschio,null,SI,1,2020-10-1,Webform callback,AAA,sito standard,NO,1,2020-10-1,Webform callback,HCM,sito standard,null,,null,,2020-10-1,null,,null,,null,,null,,null,test';
         MassiveLoaderRequest__c req= HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{dataLead});
         test.startTest();
-            HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id); 
+            HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id, 1, processName); 
             Database.executeBatch(processReq,1);
                 
         test.stopTest();
@@ -27,7 +27,7 @@ public with sharing class HDT_UTL_ProcessLeadTst {
         
         MassiveLoaderRequest__c req= HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{dataLead});
         test.startTest();
-        HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id); 
+        HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id, 1, processName); 
         Database.executeBatch(processReq,1);
         test.stopTest();
         MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
@@ -42,7 +42,7 @@ public with sharing class HDT_UTL_ProcessLeadTst {
         String dataLead='HERA COMM,HCM,084588559,3485555555,test@mail.com,null,null,null,Laurea,Studente,Benedetto Brin,1,80100,80100,Napoli,NA,null,,null,,25,null,Maschio,null,SI,null,,null,,null,NO,null,,null,,null,sito standard,null,,null,,2020-10-11,null,,null,,null,,null,,null,test';
         MassiveLoaderRequest__c req= HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{dataLead});
         test.startTest()                                                                                                      ;
-        HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id)                                          ; 
+        HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id, 1, processName)                          ; 
         Database.executeBatch(processReq,1)                                                                                   ;
         test.stopTest()                                                                                                       ;
         MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];

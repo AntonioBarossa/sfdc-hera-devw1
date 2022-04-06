@@ -94,8 +94,8 @@ public with sharing class HDT_SRV_AppointmentAgenda {
         HDT_UTL_AppointmentAgenda.setContactData(activity, cont);
     }
 
-    public void updateExtraSystemAppointment(String nextPhase,Id recordId, String note){
-        HDT_UTL_AppointmentAgenda.updateExtraSystemAppointment(nextPhase,recordId,note);
+    public void updateExtraSystemAppointment(String nextPhase,Id recordId, String note, Map<String,String> mapActivityField){
+        HDT_UTL_AppointmentAgenda.updateExtraSystemAppointment(nextPhase,recordId,note,mapActivityField);
     }
 
     public String getCommunityLink(){

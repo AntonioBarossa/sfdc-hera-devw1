@@ -76,7 +76,7 @@
         <inputParameters>
             <name>objectId</name>
             <value>
-                <elementReference>discardActivityId</elementReference>
+                <elementReference>GetDiscardActivity.Case__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>

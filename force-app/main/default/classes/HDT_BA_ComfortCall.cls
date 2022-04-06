@@ -4,7 +4,7 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,ParentOrder__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivatedDate,LoginChannel__c FROM Order Where Phase__c = \'In attesa conferma cliente\' AND QualityCall__c = true';
+        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,ParentOrder__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivatedDate,LoginChannel__c FROM Order Where Phase__c = \'In attesa conferma cliente\' AND QualityCall__c = true AND CompanyOwner__c = Account.CompanyOwner__c';
         return Database.getQueryLocator(query);
     }
 
@@ -129,7 +129,11 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
                             ContactId = orderMap.get(ordId).Contact__c,
                             CampaignId = comfortCampaign[0].Id,
                             PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
-                            RelatedActivity__c = mapActivities.get(ordId).Id
+                            RelatedActivity__c = mapActivities.get(ordId).Id,
+                            NumberingValidityStartDate__c = System.today(),
+                            NumberingValidityEndDate__c = System.today().addDays(30),
+                            ExcludeFub__c = 'Si',
+                            GenericField1__c = orderMap.get(ordId).AccountId
                         ));
                     }
                 }
