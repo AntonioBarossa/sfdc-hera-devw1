@@ -134,19 +134,19 @@ public with sharing class HDT_QR_VariationsTst {
 
         System.runAs(u){
  
-            List<Case> csList = [SELECT Id, ServicePoint__c FROM Case];
+            List<Case> csList = [SELECT Id, ServicePoint__c, Resident__c FROM Case];
 
             List<Id> idList = new List<Id>();
-
+            idList.add(csList[0].ServicePoint__c);
+            
             for (Integer i=0; i<csList.size(); i++) {
-                Id id = csList[i].Id;
+                Id id = csList[i].ServicePoint__c;
                 idList.add(id);
             }
 
-            List<Case> cs = HDT_QR_Variations.queryOtherCases(idList, '');
+            List<Case> cs = HDT_QR_Variations.queryOtherCases(idList, ' ');
 
             System.assertEquals(false, cs.isEmpty(), 'Populated list retrieved');
-
             System.assertNotEquals(true, cs.isEmpty(), 'Empty list retrieved');
         }
 
@@ -157,16 +157,14 @@ public with sharing class HDT_QR_VariationsTst {
             List<Id> idList = new List<Id>();
 
             for (Integer i=0; i<csList.size(); i++) {
-                Id id = csList[i].Id;
+                Id id = csList[i].ServicePoint__c;
                 idList.add(id);
             }
-
-            List<Case> cs = HDT_QR_Variations.queryOtherCases(idList, '');
+            
+            List<Case> cs = HDT_QR_Variations.queryOtherCases(idList, ' ');
 
             System.assertEquals(true, cs.isEmpty(), 'Populated list retrieved');
-
             System.assertNotEquals(false, cs.isEmpty(), 'Empty list retrieved');
-
         }
 
         Test.stopTest();

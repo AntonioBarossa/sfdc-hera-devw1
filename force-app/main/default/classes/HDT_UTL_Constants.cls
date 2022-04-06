@@ -317,6 +317,10 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final string CUSTOMPERMISSION_NAME_SALESFORCECPQADMIN = 'HDT_CP_SalesforceCPQAdmin';
 
+    //Custom Permissions
+    @AuraEnabled
+    public final string CUSTOMPERMISSION_NAME_HideGlobalHeader = 'HideGlobalHeader';
+
     //User Roles
     @AuraEnabled
     public final string USERROLE_DEVELOPERNAME_BACKOFFICE = 'HDT_BackOffice';
