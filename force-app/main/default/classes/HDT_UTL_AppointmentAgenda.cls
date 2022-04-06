@@ -297,7 +297,7 @@ public with sharing class HDT_UTL_AppointmentAgenda {
         return Crypto.encryptWithManagedIV('AES128', key, data);
     }
 
-    public static void updateExtraSystemAppointment(String nextPhase,Id recordId, String note){
+    public static void updateExtraSystemAppointment(String nextPhase,Id recordId, String note, Map<String,String> mapActivityField){
         String objectName = 'wrts_prcgvr__Activity__c';
         String stato;
         if (nextPhase != null){
@@ -319,9 +319,19 @@ public with sharing class HDT_UTL_AppointmentAgenda {
             Id rtId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_DistributorAppointment').getRecordTypeId();
             List<SObject> activities = HDT_QR_GenericQuery.getGenericRecords('Id', objectName, '(Case__c = \''+recordId+'\' OR Order__c = \''+recordId+'\') AND RecordTypeId = \''+rtId+'\' '+queryString+'AND wrts_prcgvr__Status__c NOT IN (\'Chiusa\',\'Annullata\',\'Appuntamento eseguito\',\'Appuntamento non eseguito\')');
             if (!activities.isEmpty()){
+                String endDate = mapActivityField.get('DATA_ELABORAZIONE');
+                String cmp = mapActivityField.get('CMP');
+                String utenza = mapActivityField.get('UTENZA');
+                Date endDateVal = null;
+                if(String.isNotBlank(endDate)){
+                    endDateVal = date.valueOf(endDate);
+                }
                 for (Sobject activity : activities){
                     activity.put('wrts_prcgvr__Status__c',stato);
                     activity.put('IsAppointmentToEdit__c',false);
+                    activity.put('EndDate__c',endDateVal);
+                    activity.put('ClosedByUsername__c',utenza);
+                    activity.put('UserCompany__c',cmp);
                 }
                 System.enqueueJob(new HDT_QBL_AppointmentActivityUpdate(activities));
             }
