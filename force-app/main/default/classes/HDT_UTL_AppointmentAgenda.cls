@@ -324,12 +324,17 @@ public with sharing class HDT_UTL_AppointmentAgenda {
                 String utenza = mapActivityField.get('UTENZA');
                 Date endDateVal = null;
                 if(String.isNotBlank(endDate)){
-                    endDateVal = date.valueOf(endDate);
+                    endDateVal = Date.valueOf(endDate);
+                }
+                Datetime endDatetimeVal = null;
+                if(String.isNotBlank(endDate)){
+                    endDatetimeVal = Datetime.valueOf(endDate);
                 }
                 for (Sobject activity : activities){
                     activity.put('wrts_prcgvr__Status__c',stato);
                     activity.put('IsAppointmentToEdit__c',false);
                     activity.put('EndDate__c',endDateVal);
+                    activity.put('ActivityEndTime__c',endDatetimeVal);
                     activity.put('ClosedByUsername__c',utenza);
                     activity.put('UserCompany__c',cmp);
                 }
