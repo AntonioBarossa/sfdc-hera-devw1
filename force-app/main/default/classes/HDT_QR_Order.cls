@@ -182,6 +182,7 @@ public inherited sharing class HDT_QR_Order {
             SBQQ__Quote__r.ContractReference__r.ContractNumber,
             SBQQ__Quote__r.OrderReference__r.OrderNumber,
             SBQQ__Quote__r.AllowChangeUse__c,
+            SBQQ__Quote__r.SBQQ__Type__c,
             ProcessType__c,
             SalesCompany__c,
             Campaign__c,
@@ -343,7 +344,8 @@ public inherited sharing class HDT_QR_Order {
             CreditCheckInProgress__c,
             Contact__r.FiscalCode__c,
             AggregateBilling__c,
-            NumeratorGroup__c
+            NumeratorGroup__c,
+            VASSubtype__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -386,7 +388,8 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getRecordsByIds(List<String> orderIds){
-        return [
+        SObjectAccessDecision decision = Security.stripInaccessible(AccessType.READABLE,
+        [
             SELECT 
             AccountId,
             Account.Name,
@@ -525,7 +528,9 @@ public inherited sharing class HDT_QR_Order {
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
-        ];
+        ]);
+
+        return decision.getRecords();
     }
 
     /**

@@ -543,6 +543,11 @@
             <actionType>QuickAction</actionType>
             <sortOrder>20</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Order.Conferma_finale</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>21</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
@@ -561,7 +566,7 @@
         <relatedList>RelatedOrderItemList</relatedList>
     </relatedLists>
     <relatedLists>
-        <customButtons>CreaattivitamanualeActivity</customButtons>
+        <customButtons>CreaAttivitaManuale</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Type__c</fields>

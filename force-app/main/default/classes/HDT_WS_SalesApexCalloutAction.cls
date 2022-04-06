@@ -108,7 +108,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchIn').getRecordTypeId(),
                     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchInVolturaTecnica').getRecordTypeId(),
                     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_TemporaneaNuovaAtt').getRecordTypeId(),
-                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId()
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId()
                 };
 
                 if (responseService.responses[0].objects == null) {

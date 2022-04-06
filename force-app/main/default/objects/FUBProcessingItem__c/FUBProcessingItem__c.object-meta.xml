@@ -156,11 +156,12 @@
     <gender>Feminine</gender>
     <label>Lavorazione FUB item</label>
     <nameField>
+        <displayFormat>LFI-{0000}</displayFormat>
         <label>Lavorazione FUB item Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Lavorazione FUB items</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts></searchLayouts>
     <sharingModel>Read</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

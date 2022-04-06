@@ -538,6 +538,11 @@
             <sortOrder>20</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>Order.Conferma_finale</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>21</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>NewContact</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
@@ -585,7 +590,7 @@
         <relatedList>RelatedOrderItemList</relatedList>
     </relatedLists>
     <relatedLists>
-        <customButtons>CreaattivitamanualeActivity</customButtons>
+        <customButtons>CreaAttivitaManuale</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>CREATED_DATE</fields>

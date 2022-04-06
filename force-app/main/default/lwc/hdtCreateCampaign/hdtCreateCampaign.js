@@ -225,17 +225,18 @@ export default class HdtCreateCampaign extends LightningElement {
     }
     // HRAWRM-686 Start 27/09/2021      
     checkRequiredProcessType(category,status, channel){
-           // this.channelValues = this.template.querySelector('.channelField > lightning-input-field') != null ? this.template.querySelector('.channelField > lightning-input-field').value : '';
+        //this.channelValues = this.template.querySelector('.channelField > lightning-input-field') != null ? this.template.querySelector('.channelField > lightning-input-field').value : '';
         this.tipology = this.template.querySelector('.tipologyField > lightning-input-field').value;
         console.log('category: '+category);
         console.log('status: '+status);
         console.log('tipology: '+this.tipology);
         console.log('channel: '+channel);
 
-        if ((('Campagna Outbound'==category || 'Campagna CRM'==category) && status!='Bozza')) {
+       /* if ((('Campagna Outbound'==category || 'Campagna CRM'==category) && status!='Bozza')) {
             this.processTypeFieldRequired=true;
         }
-        else if(channel){
+        else*/ 
+        if(channel){
             if(this.tipology!="Quality Call" && this.tipology!="Comfort Call" && (channel.includes('Sportello') || channel.includes('Telefonico Inbound') || channel.includes('Telefonico Outbound'))){
                 this.processTypeFieldRequired=true;
             }
@@ -382,7 +383,8 @@ export default class HdtCreateCampaign extends LightningElement {
     handleType(event) {
         this.tipology = event.detail.value;
         let categoryField=this.template.querySelector('.categoryField > lightning-input-field').value;
-        this.checkRequiredProcessType(categoryField,this.statusField, this.channelValues); 
+        let channelField = this.template.querySelector('.channelField > lightning-input-field') != null ? this.template.querySelector('.channelField > lightning-input-field').value : '';
+        this.checkRequiredProcessType(categoryField,this.statusField, channelField); 
     }
     handleSubmit(event) {
         event.preventDefault();

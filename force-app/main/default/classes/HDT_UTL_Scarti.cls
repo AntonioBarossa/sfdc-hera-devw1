@@ -986,7 +986,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                             ClosedByUsername__c=u[0].Username,
                                             ClosingCreatorGroup__c = u[0].CreatorGroup__c,
                                             ClosingUserChannel__c = u[0].LoginChannel__c,
-                                            Place__c = u[0].Station__c);
+                                            Place__c = u[0].Station__c,
+                                            ActivityEndTime__c = DateTime.now());
     }
 
     public static Boolean manageSapDiscard(List<SObject> newObjectList, Map<Id,SObject> oldObjectMap){

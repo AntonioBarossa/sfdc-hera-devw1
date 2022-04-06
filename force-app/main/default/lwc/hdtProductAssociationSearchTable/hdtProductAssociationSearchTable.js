@@ -16,14 +16,15 @@ const columns = [
 ];
 
 const fieldsList = [
-    'ProductCode',
-    'Version__c',
-    'DescriptionSAP__c',
-    'CategoryFamily__c',
-    'Status__c',
-    'TypeOffer__c',
-    'Service__c',
-    'SupplyType__c'
+    {fieldName: 'ProductCode'},
+    {fieldName: 'Version__c'},
+    {fieldName: 'DescriptionSAP__c'},
+    {fieldName: 'CategoryFamily__c'},
+    {fieldName: 'Status__c'},
+    {fieldName: 'TypeOffer__c'},
+    {fieldName: 'Service__c'},
+    {fieldName: 'SupplyType__c'},
+    {fieldName: 'NoSellable__c'}
 ];
 
 export default class HdtProductAssociationSearchTable extends LightningElement {
