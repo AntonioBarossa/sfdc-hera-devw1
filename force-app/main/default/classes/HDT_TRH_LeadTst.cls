@@ -31,10 +31,11 @@ public with sharing class HDT_TRH_LeadTst{
 
 			List<User> ownerUser = new List<User>();
 			ownerUser.add(internalUser);
-        	
+
+			List<Lead> myLeadList = [Select id from Lead WHERE FirstName='FirstNameTest0' LIMIT 1];
 
 			Database.LeadConvert convLead=new Database.LeadConvert();
-			convLead.setLeadId(leads[0].Id);
+			convLead.setLeadId(myLeadList[0].Id);
 
 			leadStatus convertStatus=[SELECT Id, MasterLabel
 			                          FROM LeadStatus
