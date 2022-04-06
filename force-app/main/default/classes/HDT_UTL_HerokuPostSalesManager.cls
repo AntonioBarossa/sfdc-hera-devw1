@@ -247,7 +247,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             //Gestione Esito Appuntamento;
             HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
-            appService.updateExtraSystemAppointment(nextPhase, recordCase.Id, testoErr);
+            appService.updateExtraSystemAppointment(nextPhase, recordCase.Id, testoErr,mapActivityField);
             //fine Gestione Esito Appuntamento;
         }
         if(method.equalsIgnoreCase('aggiornaRCU')){
