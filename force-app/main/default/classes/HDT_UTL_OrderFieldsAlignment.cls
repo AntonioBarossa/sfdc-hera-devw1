@@ -275,6 +275,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                     // 26/08/2021 - gabriele.rota@webresults.it - Calcolo IVA
                     orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
                 }
+                /**@frpanico 2022-04-05
+                 * Valorizzazione codice Ateco
+                 * Valido solo per W1
+                 */
+                orderToUpdate.AtecoCode__c = 'K74878';
+                orderToUpdate.HerAteco__c = 'K74878';
 
             } else if(account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                 orderToUpdate.CustomerName__c = account.FirstName__c;
