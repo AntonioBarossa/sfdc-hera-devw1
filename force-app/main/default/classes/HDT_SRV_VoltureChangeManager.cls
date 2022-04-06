@@ -209,13 +209,20 @@ public with sharing class HDT_SRV_VoltureChangeManager{
     public void createCaseFromOrder(Order myOrder){
 
         System.enqueueJob(new HDT_QBL_VoltureChangeManager(myOrder));
+        Map<String,Object> argsMap = new Map<String,Object>();
+        argsMap.put('sender',myOrder);
+        argsMap.put('method','service26');
+        checkCallServiceTwentySix(argsMap);
 
     }
 
     public void bloccoVoltura(Order myOrder, string codiceCausale){
 
         System.enqueueJob(new HDT_QBL_VoltureChangeManager(myOrder, codiceCausale));
-
+        Map<String,Object> argsMap = new Map<String,Object>();
+        argsMap.put('sender',myOrder);
+        argsMap.put('method','service26');
+        checkCallServiceTwentySix(argsMap);
     }
 
     public static String calloutVolture(Order order, string codiceCausale){
