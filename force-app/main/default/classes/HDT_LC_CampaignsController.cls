@@ -18,7 +18,7 @@ public inherited sharing class HDT_LC_CampaignsController {
     @AuraEnabled(cacheable=true)
     public static List <CampaignMember> getCampaigns(String id, String objectName, String category, String channel) {
         campaignMemberSrv.checkReadAccess('Campaign.Name,Campaign.Status,Campaign.Channel__c,Campaign.EndDate');
-        
+
         if (objectName == 'Contact') {
             //return all active campaigns related to this Contact
             return  campaignMemberQr.getActiveCampaignsByContact(id);
@@ -449,5 +449,24 @@ public inherited sharing class HDT_LC_CampaignsController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
+    }
+
+    @AuraEnabled
+    public static  String getAccountId(String campaignMemberId){
+        if (String.isBlank(campaignMemberId)) {
+            return null;
+        }
+
+        list <CampaignMember> cm = [SELECT Id, GenericField1__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED limit 1];
+
+        if(cm!=null && cm.size()>0 && String.isNotBlank(cm[0].GenericField1__c)){
+           // if (((Id)cm[0].GenericField1__c).getSobjectType()==Schema.Account.SObjectType){
+                List <Account> acc=[SELECT Id FROM Account WHERE Id=:cm[0].GenericField1__c WITH SECURITY_ENFORCED limit 1];
+                if (acc!=null && acc.size()>0) {
+                    return acc[0].Id;
+                }
+           // }
+        }
+        return null;
     }
 }
