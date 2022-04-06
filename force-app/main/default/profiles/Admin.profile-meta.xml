@@ -403,7 +403,92 @@
         <name>wrts_prcgvr__ServiceCatalogReportSetting__c</name>
     </customSettingAccesses>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.CasualCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.Commodity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.ContractStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.ExistActivityDatiDiscordanti__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.ExistActivitySwitchRipristinatorio__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.IsAmendment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.IsChangeUse__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.isOwnAccount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.IsReseller__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.IsSameAccount__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.isSTG__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.MarketOrigin__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.OngoingSwitchOut__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.PlugPresence__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.PowerChange__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.ProcessName__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ProcessMatrix__c.RecordTypeName__c</field>
+        <readable>true</readable>
+    </fieldPermissions> 
+    <fieldPermissions>
+        <editable>true</editable>
         <field>OrderItem.VatPercentageFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>  
@@ -615,6 +700,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SiebelCommTracking__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.isSTG__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -27746,6 +27836,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.isSTG__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -33098,6 +33193,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.AuthorisedBy__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.wrts_prcgvr__ActivityTemplate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -34471,6 +34571,15 @@
     <layoutAssignments>
         <layout>SiebelRdsAttribute__x-SiebelRdsAttribute Layout</layout>
     </layoutAssignments>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>ProcessMatrix__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
@@ -37680,6 +37789,10 @@
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_VisitaD2D</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabVisibilities>
+        <tab>AdminPriceQuote__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
     <tabVisibilities>
         <tab>CampaignMemberLeadAssigment__c</tab>
         <visibility>DefaultOff</visibility>

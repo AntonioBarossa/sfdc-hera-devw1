@@ -397,7 +397,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
 
             //Creare attività solo se esito successivo ad annullato
-            if(('Validazione OK DL simulata'.equalsIgnoreCase(currentCase.Phase__c) || 'Validazione OK DL'.equalsIgnoreCase(currentCase.Phase__c)) && 'Annullato'.equalsIgnoreCase(currentPhase)){
+            if(('Validazione OK DL simulata'.equalsIgnoreCase(currentCase.Phase__c) || 'Validazione OK da DL'.equalsIgnoreCase(currentCase.Phase__c)) && 'Annullato'.equalsIgnoreCase(currentPhase)){
                 createActivity(currentCase.Id,null, 'Gestione M01/M02', 'Gestione M01/M02', 'Gestione M01/M02');
                 //Se la fase è in Annullato allora non viene cambiata.
                 if ('Annullato'.equalsIgnoreCase(currentPhase)){
@@ -424,7 +424,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Phase__c = 'Inviare preventivo';
             }else if(recordCase.Type.equalsIgnoreCase('Fiscale') && nextPhase.equalsIgnoreCase('Completata') && recordCase.CalculationBlock__c){
                 currentCase.Phase__c = 'Elaborazione Manuale';
-            }else if(recordCase.Type.equalsIgnoreCase('Rimborso') && nextPhase.equalsIgnoreCase('Completata') && recordCase.IbanIsForeign__c){
+            }else if(recordCase.Type.equalsIgnoreCase('Rimborso') && nextPhase.equalsIgnoreCase('Completata') && (recordCase.IbanIsForeign__c || recordCase.RefundMethod__c.equalsIgnoreCase('Assegno'))){
                 currentCase.Phase__c = 'Elaborazione Manuale';
             }else if(recordCase.Type.equalsIgnoreCase('Allineamento Anagrafica') && nextPhase.equalsIgnoreCase('Completata') && (!recordCase.Phase__c.equalsIgnoreCase('Esito OK da SII') && !recordCase.Phase__c.equalsIgnoreCase('Errore Lavorazione SAP'))){
                 noActionNeeded = true;//no action needed

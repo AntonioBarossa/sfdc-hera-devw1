@@ -1,19 +1,17 @@
 public with sharing class HDT_LC_AgentMatrixSearchToolController {
+    // INIZIALMENTE QUESTO CMP DOVEVA USARE IL CODICE AGENTE. E' STATO ROZZAMENTE CONVERTITO PER USARE IL CODICE AGENZIA
     @AuraEnabled
     public static AgentMatrix__c getCurrentAgent(String ruleId){
         try {
             AssignmentRule__c rule = [SELECT Id, SalesAgency__c FROM AssignmentRule__c WHERE Id =: ruleId WITH SECURITY_ENFORCED];
             if(String.isNotBlank(rule.SalesAgency__c)) {
-                List<AgentMatrix__c> matrix = [SELECT Id, AgentFirstName__c, AgentLastName__c, AgentCode__c, AgencyName__c, AgencyCode__c FROM AgentMatrix__c WHERE AgentCode__c =: rule.SalesAgency__c WITH SECURITY_ENFORCED LIMIT 1];
+                List<AgentMatrix__c> matrix = [SELECT Id, AgentFirstName__c, AgentLastName__c, AgentCode__c, AgencyName__c, AgencyCode__c FROM AgentMatrix__c WHERE AgencyCode__c =: rule.SalesAgency__c WITH SECURITY_ENFORCED LIMIT 1];
                 if(matrix.size() > 0) {
                     return matrix[0];
                 } else {
                     return new AgentMatrix__c(
-                        AgentFirstName__c = '',
-                        AgentLastName__c = 'NON CENSITO',
-                        AgentCode__c = rule.SalesAgency__c,
                         AgencyName__c = 'NON CENSITO',
-                        AgencyCode__c = 'NON CENSITO'
+                        AgencyCode__c = rule.SalesAgency__c + ' (NON CENSITO)'
                     );
                 }
             }

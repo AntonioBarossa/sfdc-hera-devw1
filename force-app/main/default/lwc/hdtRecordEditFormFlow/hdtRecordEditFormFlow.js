@@ -269,18 +269,6 @@ export default class HdtRecordEditFormFlow extends LightningElement {
 
     showMessage(title,message,variant){
 
-        /*this.notificationDescription = title + ': ' + message;
-
-        this.notificationType = variant;
-
-        this.showNotificationMessage = true;
-
-        setTimeout(() => {
-
-            this.showNotificationMessage = false;
-        
-        }, this.delay);*/
-
         this.dispatchEvent(
             new ShowToastEvent({
                 title: title,
@@ -288,13 +276,6 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                 variant: variant
             }),
         );
-        /*console.log('errore ' + message);
-        const event = new ShowToastEvent({
-            title: title,
-            message: message,
-            variant: variant 
-        });
-        this.dispatchEvent(event);*/
     }
 
     handleSubmit(event){
@@ -377,6 +358,8 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         this.complaintsLogic();
         //PianoRata customizations
         this.installmentsLogic();
+        //RimborsoCustomization
+        this.reimbursmentLogic();
     }
 
     complaintsLogic(){
@@ -501,5 +484,33 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                 }
             }
         }*/
+    }
+
+    reimbursmentLogic()
+    {
+        let reimbursMethodObj = this.objSelector('RefundMethod__c');
+        console.log('#Reimburs --> ' + JSON.stringify(reimbursMethodObj));
+        if(!(Object.keys(reimbursMethodObj).length === 0))
+        {
+            let reimbursMethod = this.selector('RefundMethod__c');
+            console.log('#Reimburs -> ' + reimbursMethod.value);
+            if(reimbursMethod.value !== null && reimbursMethod.value !== undefined )
+            {
+                let beneficiaryAccountObj = this.objSelector('AccountholderTypeBeneficiary__c');
+                console.log('#ReimbursAccount --> ' + JSON.stringify(reimbursMethodObj));
+                if(!(Object.keys(beneficiaryAccountObj).length === 0))
+                {
+                    let beneficiaryAccount = this.selector('AccountholderTypeBeneficiary__c');
+                    if(reimbursMethod.value === 'Compensazione')
+                    {
+                        beneficiaryAccount.required = false;
+                    }
+                    else
+                    {
+                        beneficiaryAccount.required = true;
+                    }
+                }
+            }
+        }
     }
 }

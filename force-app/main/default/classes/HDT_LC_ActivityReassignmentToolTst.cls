@@ -35,8 +35,8 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
 
             Queue__c queue = new Queue__c(
                 Name = 'coda1',
-                Group__c = 'gruppo1',
-                Agency__c = 'agenzia1'
+                WorkGroup__c = 'gruppo1',
+                Agency2__c = 'agenzia1'
             );
 
             insert queue;

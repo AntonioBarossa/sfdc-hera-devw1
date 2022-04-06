@@ -24,7 +24,7 @@ public with sharing class HDT_QR_ServicePointTst {
 
         System.runAs(internalUser) {
 
-            List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+            List<Account> accList = HDT_UTL_DataFactoryTst.createAccountDistributore(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
             
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
             spList[0].Account__c = accList[0].Id;
@@ -76,14 +76,14 @@ public with sharing class HDT_QR_ServicePointTst {
 
             Test.startTest();
 
-            ServicePoint__c sp = [SELECT Id FROM ServicePoint__c WHERE MeterStatus__c = 'Bozza'];
-            Account acc = [SELECT Id FROM Account WHERE Category__c = 'Aziende SME'];
+            List<ServicePoint__c> sp = [SELECT Id FROM ServicePoint__c WHERE MeterStatus__c = 'Bozza'];
+            List<Account> acc = [SELECT Id FROM Account WHERE Category__c = 'Aziende SME'];
 
-            List<ServicePoint__c> spList = qrServPoint.getAccountServicePoints(acc.Id);
+            List<ServicePoint__c> spList = qrServPoint.getAccountServicePoints(acc[0].Id);
 
             Test.stopTest();
 
-            System.assertEquals(sp.Id, spList[0].Id, 'ServicePoint successfully queried');
+            System.assertEquals(sp[0].Id, spList[0].Id, 'ServicePoint successfully queried');
             System.assertNotEquals(null, spList[0].Id, 'ServicePoint query failed');
         }
     }
@@ -273,9 +273,9 @@ public with sharing class HDT_QR_ServicePointTst {
 
             ServicePoint__c sp = [SELECT Id, MeterSN__c FROM ServicePoint__c WHERE MeterStatus__c = 'Bozza'];
 
-            List<ServicePoint__c> spList = qrServPoint.getServicePointsByMeterSerialNumberWithFilter(sp.MeterSN__c, 'Id', 'AND SupplyCity__c = \'Firenze\'');
+            List<ServicePoint__c> spList = qrServPoint.getServicePointsByMeterSerialNumberWithFilter(sp.MeterSN__c, ' Id ', ' AND SupplyCity__c = \'Firenze\'');
 
-            List<ServicePoint__c> spList2 = qrServPoint.getServicePointsByMeterSerialNumberWithFilter(sp.MeterSN__c, 'Id', 'AND Status__c = \'Impianto compl. in funzione\'');
+            List<ServicePoint__c> spList2 = qrServPoint.getServicePointsByMeterSerialNumberWithFilter(sp.MeterSN__c, ' Id ', ' AND Status__c = \'Impianto compl. in funzione\'');
 
             Test.stopTest();
          

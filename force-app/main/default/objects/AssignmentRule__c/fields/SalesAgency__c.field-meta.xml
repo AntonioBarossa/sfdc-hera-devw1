@@ -10,9 +10,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>ATTESA VALORI DA BSN</fullName>
+                <fullName>-</fullName>
                 <default>false</default>
-                <label>ATTESA VALORI DA BSN</label>
+                <label>-</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -12,12 +12,12 @@
     <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" class="slds-modal slds-fade-in-open">
       <div class="slds-modal__container">
         <div class="slds-modal__header">
-          <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Modal header</h1>
+          <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate"></h1>
         </div>
         <div class="slds-modal__content" id="modal-content-id-1">
           <lightning-spinner variant="brand" if:true={showModalSpinner} alternative-text="Saving..." size="large"></lightning-spinner>            
           <div class="slds-m-around_medium">
-              <lightning-input onchange={handleInputChange} label="Notes" type="text" id="text-input-id-47" placeholder="Closing Notes..." maxlength="255"></lightning-input>
+              <lightning-input onchange={handleInputChange} label="Note" type="text" id="text-input-id-47" placeholder="Closing Notes..." maxlength="255"></lightning-input>
           </div>
         </div>
         <div class="slds-modal__footer">

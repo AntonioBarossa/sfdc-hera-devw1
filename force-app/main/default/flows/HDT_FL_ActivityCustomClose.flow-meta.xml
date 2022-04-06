@@ -71,6 +71,13 @@
                 <elementReference>$User.Station__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Activities_To_Close_Loop.ActivityEndTime__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Add_Activity_To_List</targetReference>
         </connector>

@@ -149,6 +149,11 @@
     </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
+        <platformActionListItems>
+            <actionName>Order.Conferma_finale</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <quickActionList>
         <quickActionListItems>
@@ -192,7 +197,7 @@
         <relatedList>Reading__c.OrderGas__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <customButtons>CreaattivitamanualeActivity</customButtons>
+        <customButtons>CreaAttivitaManuale</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Type__c</fields>

@@ -558,6 +558,11 @@
             <actionType>StandardButton</actionType>
             <sortOrder>12</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Order.Conferma_finale</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>22</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
@@ -583,7 +588,7 @@
         <relatedList>RelatedOrderItemList</relatedList>
     </relatedLists>
     <relatedLists>
-        <customButtons>CreaattivitamanualeActivity</customButtons>
+        <customButtons>CreaAttivitaManuale</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Type__c</fields>

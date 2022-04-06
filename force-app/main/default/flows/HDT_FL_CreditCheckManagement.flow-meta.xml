@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>54.0</apiVersion>
     <assignments>
         <name>Assegnazioni</name>
@@ -43,6 +43,13 @@
                 <stringValue>OK</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivity.AuthorisedBy__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Autorizzato_da</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Azione_0</targetReference>
         </connector>
@@ -80,14 +87,6 @@
                 <elementReference>Motivo</elementReference>
             </value>
         </assignmentItems>
-        <!-- Commentato perchè tolta la Fase Attesa Credit Check
-        <assignmentItems>
-            <assignToReference>getOrder.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Attesa Credit Check</stringValue>
-            </value>
-        </assignmentItems-->
         <assignmentItems>
             <assignToReference>getActivity.CreditCheckResults__c</assignToReference>
             <operator>Assign</operator>
@@ -270,6 +269,14 @@
             <label>Not My Activity</label>
         </rules>
     </decisions>
+    <dynamicChoiceSets>
+        <name>AuthorisedBy</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>AuthorisedBy__c</picklistField>
+        <picklistObject>wrts_prcgvr__Activity__c</picklistObject>
+    </dynamicChoiceSets>
     <interviewLabel>HDT_FL_CreditCheckManagement {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Credit Check</label>
     <processMetadataValues>
@@ -422,6 +429,14 @@
             <fieldType>ObjectProvided</fieldType>
             <isRequired>false</isRequired>
             <objectFieldReference>getActivity.Note__c</objectFieldReference>
+        </fields>
+        <fields>
+            <name>Autorizzato_da</name>
+            <choiceReferences>AuthorisedBy</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Autorizzato da</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>

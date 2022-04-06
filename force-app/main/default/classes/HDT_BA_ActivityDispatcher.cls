@@ -23,7 +23,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         'Distributor__c' => '(Case__r.DistributorName__c IN (###) OR Order__r.DistributorFormula__c IN (###))',
         'Market__c' => '(Case__r.Market__c IN (###) OR Order__r.Market__c IN (###))',
         'Vendor__c' => '(Case__r.SalesCompany__c IN (###) OR Order__r.SalesCompany__c IN (###))',
-        'SalesAgency__c' => 'Order__r.Agency__c IN (###)',
+        'SalesAgency__c' => 'Order__r.AgencyCode__c IN (###)',
         'CaseOrderCreatorGroup__c' => '(Case__r.CreatorGroup__c IN (###) OR Order__r.CreatorGroup__c IN (###))',
         'MacroProcess__c' => '(Case__r.Cluster__c IN (###) OR Order__r.Cluster__c IN (###))',
         'Process__c' => '(Case__r.Type IN (###) OR Order__r.ProcessType__c IN (###))',
@@ -120,8 +120,8 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                         Id = activity.Id,
                         Queued__c = true,
                         AssignmentRule__c = rule.Id,
-                        Agency__c = queue.Agency__c,
-                        WorkGroup__c = queue.Group__c,
+                        Agency__c = queue.Agency2__c,
+                        WorkGroup__c = queue.WorkGroup__c,
                         AssigneeType__c = 'Coda',
                         Queue__c = queue.Id,
                         AssignedToQueueDate__c = Date.today(),
@@ -165,7 +165,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     }
 
     private Map<String,Queue__c> getQueuesMap() {
-        return new Map<String,Queue__c>([SELECT Id, DailyCapacity__c, Agency__c, Group__c, QueueId__c FROM Queue__c]);
+        return new Map<String,Queue__c>([SELECT Id, DailyCapacity__c, Agency2__c, WorkGroup__c, QueueId__c FROM Queue__c]);
     }
     
     private Map<String,Decimal> getQueueUsageMap() {

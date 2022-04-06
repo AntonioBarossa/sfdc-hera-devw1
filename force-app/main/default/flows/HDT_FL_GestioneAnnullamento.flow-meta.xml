@@ -578,70 +578,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Stato</name>
-        <label>Assegna Stato</label>
-        <locationX>1677</locationX>
-        <locationY>2440</locationY>
-        <assignmentItems>
-            <assignToReference>Annulla_Attivita.wrts_prcgvr__Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Chiusa</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>AssegnaACollection</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assegna_Stato_0</name>
-        <label>Assegna Stato</label>
-        <locationX>4606</locationX>
-        <locationY>2846</locationY>
-        <assignmentItems>
-            <assignToReference>Annulla_Attivita_0.wrts_prcgvr__Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Chiusa</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>AssegnaACollection_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssegnaACollection</name>
-        <label>AssegnaACollection</label>
-        <locationX>1636</locationX>
-        <locationY>2296</locationY>
-        <assignmentItems>
-            <assignToReference>ActivityCollection</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Annulla_Attivita</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Annulla_Attivita</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssegnaACollection_0</name>
-        <label>AssegnaACollection</label>
-        <locationX>4557</locationX>
-        <locationY>2663</locationY>
-        <assignmentItems>
-            <assignToReference>ActivityCollection</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Annulla_Attivita_0</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Annulla_Attivita_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>AssegnaFaseRipristinata</name>
         <label>AssegnaFaseRipristinata</label>
         <locationX>4271</locationX>
@@ -1248,7 +1184,7 @@
         <locationX>1172</locationX>
         <locationY>2080</locationY>
         <defaultConnector>
-            <targetReference>Get_Activities</targetReference>
+            <targetReference>Close_Activity_Case</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non inviata</defaultConnectorLabel>
         <rules>
@@ -1323,7 +1259,7 @@
         <locationX>3669</locationX>
         <locationY>2375</locationY>
         <defaultConnector>
-            <targetReference>Get_Activities_0</targetReference>
+            <targetReference>Chiusura_activity_Order</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non inviata</defaultConnectorLabel>
         <rules>
@@ -1737,34 +1673,6 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
     </formulas>
     <interviewLabel>HDT_FL_GestioneAnnullamenti {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Annullamento</label>
-    <loops>
-        <name>Annulla_Attivita</name>
-        <label>Annulla Attivita</label>
-        <locationX>1361</locationX>
-        <locationY>2320</locationY>
-        <collectionReference>Get_Activities</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Assegna_Stato</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Update_Attivita</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
-        <name>Annulla_Attivita_0</name>
-        <label>Annulla Attivita</label>
-        <locationX>3974</locationX>
-        <locationY>2674</locationY>
-        <collectionReference>Get_Activities_0</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Assegna_Stato_0</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Update_Attivita_0</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -1824,76 +1732,6 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>HDT_CausalCodeCalculation__mdt</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Activities</name>
-        <label>Get Activities</label>
-        <locationX>1361</locationX>
-        <locationY>2200</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Annulla_Attivita</targetReference>
-        </connector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
-        <filters>
-            <field>Case__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>InputCase</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>wrts_prcgvr__Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Aperta</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>wrts_prcgvr__Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Sospesa</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>wrts_prcgvr__Activity__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Activities_0</name>
-        <label>Get Activities</label>
-        <locationX>4395</locationX>
-        <locationY>2561</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Annulla_Attivita_0</targetReference>
-        </connector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
-        <filters>
-            <field>Order__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetOrderAggiornato.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>wrts_prcgvr__Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Aperta</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>wrts_prcgvr__Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Sospesa</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>wrts_prcgvr__Activity__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -2243,26 +2081,6 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
             <targetReference>Screen_Input_Dati</targetReference>
         </connector>
         <inputReference>GetOrder</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Attivita</name>
-        <label>Update Attivita</label>
-        <locationX>1361</locationX>
-        <locationY>2656</locationY>
-        <connector>
-            <targetReference>Fase</targetReference>
-        </connector>
-        <inputReference>ActivityCollection</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Attivita_0</name>
-        <label>Update Attivita</label>
-        <locationX>4198</locationX>
-        <locationY>2905</locationY>
-        <connector>
-            <targetReference>Fase_0</targetReference>
-        </connector>
-        <inputReference>ActivityCollection</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Voltura_Tecnica_Dati_Discordanti</name>
@@ -2972,6 +2790,22 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         </inputAssignments>
     </subflows>
     <subflows>
+        <name>Chiusura_activity_Order</name>
+        <label>Chiusura activity Order</label>
+        <locationX>4160</locationX>
+        <locationY>2660</locationY>
+        <connector>
+            <targetReference>Fase_0</targetReference>
+        </connector>
+        <flowName>HDT_FL_ActivityCustomClose</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>GetOrderAggiornato.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Chiusuraa_Activity_Ripristino_Fase_Order</name>
         <label>Chiusuraa Activity Ripristino Fase Order</label>
         <locationX>4565</locationX>
@@ -2984,6 +2818,22 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
             <name>recordId</name>
             <value>
                 <elementReference>GetOrder.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Close_Activity_Case</name>
+        <label>Close Activity Case</label>
+        <locationX>1510</locationX>
+        <locationY>2333</locationY>
+        <connector>
+            <targetReference>Fase</targetReference>
+        </connector>
+        <flowName>HDT_FL_ActivityCustomClose</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>InputCase</elementReference>
             </value>
         </inputAssignments>
     </subflows>
