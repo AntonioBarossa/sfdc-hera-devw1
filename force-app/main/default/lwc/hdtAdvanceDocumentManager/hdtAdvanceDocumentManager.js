@@ -322,6 +322,9 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
 
         const blob = new Blob(byteArrays, { type: 'application/pdf' });
         const blobURL = URL.createObjectURL(blob);
+        console.log('URL >>> ' + blobURL);
+        console.log('Condition >>> ' + this.isLawEighty);
+        {
         this[NavigationMixin.Navigate](
             {
                 type: 'standard__webPage',
@@ -330,6 +333,7 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
                 }
             }
         );
+        }
     }
     
 }
