@@ -9,7 +9,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
     public Database.QueryLocator start(Database.BatchableContext bc) {
 
         String query = 'SELECT Id,IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c FROM Order '+
-        'Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
+        'Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND CompanyOwner__c = Account.CompanyOwner__c';
         return Database.getQueryLocator(query);
     }
 
@@ -229,7 +229,11 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                             ContactId = orderMap.get(ordId).Contact__c,
                             CampaignId = qualityCampaign[0].Id,
                             PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
-                            RelatedActivity__c = orderActivityMap.get(ordId).Id
+                            RelatedActivity__c = orderActivityMap.get(ordId).Id,
+                            NumberingValidityStartDate__c = System.today(),
+                            NumberingValidityEndDate__c = System.today().addDays(30),
+                            ExcludeFub__c = 'Si',
+                            GenericField1__c = orderMap.get(ordId).AccountId
                         ));
                     }
                 }

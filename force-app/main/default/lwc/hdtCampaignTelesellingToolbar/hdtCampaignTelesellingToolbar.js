@@ -2,6 +2,8 @@ import { LightningElement, track, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import cttoolbar from '@salesforce/resourceUrl/toolbar_sdk';
 import { loadScript } from 'lightning/platformResourceLoader';
+import { getRecordNotifyChange } from 'lightning/uiRecordApi';
+
 import id from '@salesforce/user/Id';
 export default class HdtCampaignTelesellingToolbar extends NavigationMixin(LightningElement) {
     showPanel = false;
@@ -201,6 +203,7 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
             status = event.detail.status;
             console.log('submitHandlerNegativeOutcome - ' + status);
             this.template.querySelector("c-hdt-ct-toolbar-container").saveScript(status, true);
+            getRecordNotifyChange([{recordId: this.recordId}]);
         }
     }
 }
