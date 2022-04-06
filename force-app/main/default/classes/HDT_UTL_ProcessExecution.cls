@@ -71,7 +71,15 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     }
    
     public virtual void manageCatchException(Integer batchSize, List<MassiveLoaderRequestItem__c> itemList, String message){
-        System.debug(LoggingLevel.DEBUG, 'manageCatchException');
+        System.debug(LoggingLevel.DEBUG, '>>> manageCatchException: ' + message);
+
+        for(MassiveLoaderRequestItem__c mlr : itemList){
+            mlr.Status__c = 'Errore';
+            mlr.StatusDescription__c = message.abbreviate(250);
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(itemList);
+
     }
 
     /**
@@ -302,6 +310,10 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     public static Boolean errorForPicklistValue(String objType, String fieldType, String valueToCheck){
 
         Schema.DescribeFieldResult fieldResult = Schema.getGlobalDescribe().get(objType).getDescribe().fields.getMap().get(fieldType).getDescribe();
+
+        if(fieldResult.getPicklistValues().size() == 0){
+            return false;
+        }
 
         for(Schema.PicklistEntry pickListVal : fieldResult.getPicklistValues()){
             if(valueToCheck.equalsIgnoreCase(pickListVal.getLabel()) && pickListVal.isActive()){

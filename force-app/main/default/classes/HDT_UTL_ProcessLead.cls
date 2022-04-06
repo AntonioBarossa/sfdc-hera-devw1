@@ -62,6 +62,11 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
                         break;
                     }
 
+                    if(errorForPicklistValue('Individual', mapIndividualFields.get(mapHeaderByPosition.get(count)), tempField)){
+                        convertionError = 'Valore: ' + tempField + ' non valido per ' + mapIndividualFields.get(mapHeaderByPosition.get(count));
+                        break;
+                    }
+
                 }
 
                 count++;
@@ -98,7 +103,9 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
         System.debug(LoggingLevel.DEBUG, '>>> requestItemList: ' + requestItemList.size());
 
         List<Lead> leadtoUpsert = new List<Lead>();
+        List<Individual> individualtoUpdate = new List<Individual>();
         List<MassiveLoaderRequestItem__c> itemList = new List<MassiveLoaderRequestItem__c>();
+        Id recordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('HDT_RT_Main').getRecordTypeId();
 
         Lead existingLead;
         for(HDT_WRP_ProcessObjects processObj : processObjList){
@@ -121,7 +128,8 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
                 // in this case insert lead
                 System.debug(LoggingLevel.DEBUG, '>>> no lead in db');
             }
-            
+
+            processObj.newLead.RecordTypeId = recordTypeId;
             leadtoUpsert.add(processObj.newLead);
             itemList.add(processObj.requestItem);
 
@@ -131,18 +139,57 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
         leadUpsertResponse = databaseUpsert(leadtoUpsert, itemList, 'Lead');
 
         //System.debug(LoggingLevel.DEBUG, '>>> reponseItemList: ' + leadUpsertResponse.reponseItemList);
-        //System.debug(LoggingLevel.DEBUG, '>>> savedObject: ' + leadUpsertResponse.savedObject);
+        System.debug(LoggingLevel.DEBUG, '>>> savedObject: ' + leadUpsertResponse.savedObject);
         System.debug(LoggingLevel.DEBUG, '>>> itemIdToObjId: ' + leadUpsertResponse.itemIdToObjId);
         System.debug(LoggingLevel.DEBUG, '>>> errorItemMap: ' + leadUpsertResponse.errorItemMap);
 
-        if(leadUpsertResponse.reponseItemList.size() > 0){
-            itemsToSave.addAll(leadUpsertResponse.reponseItemList);
+        itemList.clear();
+
+        //if(leadUpsertResponse.reponseItemList.size() > 0){
+        //    itemsToSave.addAll(leadUpsertResponse.reponseItemList);
+        //}
+
+        List<Lead> leadList = new List<Lead>();
+        leadList = [
+            SELECT Id, IndividualId
+            FROM Lead
+            WHERE Id IN :leadUpsertResponse.itemIdToObjId.values()
+        ];
+
+        Map<Id, Lead> leadMap = new Map<Id, Lead>();
+        for(Lead lead : leadList){
+            leadMap.put(lead.Id, lead);
         }
 
-        //List<Lead> listAfterInsert = HDT_QR_Lead.getCurrentRecords(currentProcess.currentLead);
-        //currentProcess.currentLead = listAfterInsert.get(0);
-        //currentProcess.currentIndividual.id = currentProcess.currentLead.IndividualId;
-        //update currentProcess.currentIndividual;
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+            System.debug(LoggingLevel.DEBUG, '>>> saved lead: ' + processObj.newLead.Id);
+            System.debug(LoggingLevel.DEBUG, '>>> saved Individual: ' + processObj.newLead.Individual.Id);
+
+            if(leadUpsertResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
+                // errore
+                itemsToSave.add(setErrorItem(processObj.requestItem, leadUpsertResponse.errorItemMap.get(processObj.requestItem.Id)));
+                continue;
+            }
+
+            processObj.newIndividual.Id = leadMap.get(processObj.newLead.Id).IndividualId;
+            individualtoUpdate.add(processObj.newIndividual);
+            itemList.add(processObj.requestItem);
+
+        }
+
+        HDT_WRP_SaveResponse individualUpsertResponse;
+        individualUpsertResponse = databaseUpsert(individualtoUpdate, itemList, 'Individual');
+
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+            if(individualUpsertResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
+                // errore
+                itemsToSave.add(setErrorItem(processObj.requestItem, individualUpsertResponse.errorItemMap.get(processObj.requestItem.Id)));
+                continue;
+            } else {
+                processObj.requestItem.Status__c = 'Chiuso';
+                itemsToSave.add(processObj.requestItem);
+            }
+        }
 
     }
 
