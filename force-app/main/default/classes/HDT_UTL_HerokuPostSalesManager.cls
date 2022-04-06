@@ -892,7 +892,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     @AuraEnabled
     public static String getAsyncJobByJobItem(String recordId){
-
+        /*
         wrts_prcgvr__AsyncJob__c asyncJobRec = new wrts_prcgvr__AsyncJob__c();
         String result;
 
@@ -916,6 +916,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
             result = 'KO';
 
+        }
+        */
+
+        String result = 'KO';
+        List<Case> caseList = [SELECT Id,Phase__c FROM Case WHERE Id = :recordId WITH SECURITY_ENFORCED];
+        if(!caseList.isEmpty() && (!caseList[0].Phase__c.equalsIgnoreCase('Da Inviare') && !caseList[0].Phase__c.equalsIgnoreCase('In Lavorazione')))
+        {
+            result = 'OK';
         }
 
         return result;
