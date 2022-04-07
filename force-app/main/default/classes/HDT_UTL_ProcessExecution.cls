@@ -119,7 +119,9 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
             }
             return null;
         } catch (Exception e){
-            return e.getMessage() + ' - on filed [' + mapSobjField.get(mapHeaderByPosition.get(position)) + ']';
+            System.debug('>>>>>>>>>>>>> ' + mapHeaderByPosition.get(position));
+            //return e.getMessage() + ' - campo [' + mapSobjField.get(mapHeaderByPosition.get(position)) + ']';
+            return e.getMessage() + ' - campo [' + mapHeaderByPosition.get(position) + ']';
         }
     }
 

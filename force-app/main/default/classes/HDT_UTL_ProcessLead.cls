@@ -61,7 +61,8 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
                     }
 
                     if(errorForPicklistValue('Individual', mapIndividualFields.get(mapHeaderByPosition.get(count)), tempField)){
-                        convertionError = 'Valore: ' + tempField + ' non valido per ' + mapIndividualFields.get(mapHeaderByPosition.get(count));
+                        //convertionError = 'Valore: ' + tempField + ' non valido per ' + mapIndividualFields.get(mapHeaderByPosition.get(count));
+                        convertionError = 'Valore: ' + tempField + ' non valido per ' + mapHeaderByPosition.get(count);
                         break;
                     }
 
