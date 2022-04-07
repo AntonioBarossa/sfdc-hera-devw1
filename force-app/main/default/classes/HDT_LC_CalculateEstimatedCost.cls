@@ -13,10 +13,10 @@ public inherited sharing class HDT_LC_CalculateEstimatedCost {
             Id = order.Id,
             EstimateAmount__c = order.EstimateAmount__c,
             PowerQuote__c = order.PowerQuote__c,
-            AdministrativeBurden__c = order.AdministrativeBurden__c,
+            AdministrativeBurden__c = order.AdministrativeBurden__c.setScale(2),
             EstimatedVAT__c = order.EstimatedVAT__c,
             ValidityDateEstimate__c = order.ValidityDateEstimate__c,
-            VariableAmount__c = order.EstimateAmount__c - order.AdministrativeBurden__c,
+            VariableAmount__c = (order.EstimateAmount__c - order.AdministrativeBurden__c).setScale(2),
             OperationCode__c = Order.OperationCode__c,
             QuotationType__c = order.QuotationType__c
         ));
