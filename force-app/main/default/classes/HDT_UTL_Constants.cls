@@ -319,7 +319,7 @@ public with sharing class HDT_UTL_Constants {
 
     //Custom Permissions
     @AuraEnabled
-    public final string CUSTOMPERMISSION_NAME_HideGlobalHeader = 'HideGlobalHeader';
+    public final string CUSTOMPERMISSION_NAME_HIDEGLOBALHEADER = 'HideGlobalHeader';
 
     //User Roles
     @AuraEnabled
