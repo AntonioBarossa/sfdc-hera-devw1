@@ -8,7 +8,7 @@ public with sharing class HDT_UTL_ReworkingScrapsTst {
         String dataLead = [SELECT Id ,orderNumber FROM Order WHERE Id=:ord.Id].get(0).orderNumber                                     ;
         MassiveLoaderRequest__c req= HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{dataLead})        ;
         test.startTest()                                                                                                              ;
-        HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id)                                                  ; 
+        HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id, 1, processName)                                  ; 
         Database.executeBatch(processReq,1)                                                                                           ;
         test.stopTest()                                                                                                               ;
         MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
@@ -22,7 +22,7 @@ public with sharing class HDT_UTL_ReworkingScrapsTst {
         String dataLead = 'null'                                                                                                      ;
         MassiveLoaderRequest__c req= HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{dataLead})        ;
         test.startTest()                                                                                                              ;
-        HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id)                                                  ; 
+        HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id, 1, processName)                                  ; 
         Database.executeBatch(processReq,1)                                                                                           ;
         test.stopTest()                                                                                                               ;
         MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
@@ -36,7 +36,7 @@ public with sharing class HDT_UTL_ReworkingScrapsTst {
         String dataLead = 'C-'                                                                                                        ;
         MassiveLoaderRequest__c req= HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{dataLead})        ;
         test.startTest()                                                                                                              ;
-        HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id)                                                  ; 
+        HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id, 1, processName)                                  ; 
         Database.executeBatch(processReq,1)                                                                                           ;
         test.stopTest()                                                                                                               ;
         MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
@@ -50,7 +50,7 @@ public with sharing class HDT_UTL_ReworkingScrapsTst {
         String dataLead = 'O-'                                                                                                        ;
         MassiveLoaderRequest__c req= HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{dataLead})        ;
         test.startTest()                                                                                                              ;
-        HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id)                                                  ; 
+        HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id, 1, processName)                                  ; 
         Database.executeBatch(processReq,1)                                                                                           ;
         test.stopTest()                                                                                                               ;
         MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
