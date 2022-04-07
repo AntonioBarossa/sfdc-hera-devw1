@@ -47,11 +47,16 @@ public with sharing class HDT_QBL_GestioneScartiSap implements Queueable{
         if(String.isNotBlank(endDate)){
             endDateVal = date.valueOf(endDate);
         }
+        Datetime endDatetimeVal = null;
+        if(String.isNotBlank(endDate)){
+            endDatetimeVal = Datetime.valueOf(endDate);
+        }
         for (wrts_prcgvr__Activity__c act : [SELECT Id From wrts_prcgvr__Activity__c WHERE (Order__c = :this.objectId OR Case__c = :this.objectId) AND wrts_prcgvr__Status__c != 'Chiusa' AND Type__c IN :this.activitiesToClose]){
             wrts_prcgvr__Activity__c actToAdd = new wrts_prcgvr__Activity__c();
             actToAdd.Id =  act.Id;
             actToAdd.wrts_prcgvr__Status__c ='Chiusa';
             actToAdd.EndDate__c = endDateVal!=null ? endDateVal : null;
+            actToAdd.ActivityEndTime__c = endDatetimeVal;
             actToAdd.UserCompany__c = String.isNotBlank(cmp) ? cmp : null;
             actToAdd.ClosedByUsername__c = String.isNotBlank(utenza) ? utenza : null;
             activitiesToUpdate.add(actToAdd);
