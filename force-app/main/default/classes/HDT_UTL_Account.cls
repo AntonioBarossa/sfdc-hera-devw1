@@ -166,7 +166,7 @@ public with sharing class HDT_UTL_Account {
                                                  WITH SECURITY_ENFORCED];
         if(!siebelAccList.isEmpty()){
             acc.CustomerCode__c = siebelAccList[0].OU_NUM__c;
-            update acc;
+            HDT_UTL_DatabaseService.updateSObject( acc ); 
             if(acc.Category__c == 'Grandi Condomini'){
                 List<SiebelCustomer__x> siebelContList = [SELECT Id, INTEGRATION_ID__c 
                                                           FROM SiebelContact__x 
@@ -186,7 +186,7 @@ public with sharing class HDT_UTL_Account {
                 else{
                     //update Contact
                     cont.ContactCode__c = siebelContList[0].INTEGRATION_ID__c;
-                    update cont;
+                    HDT_UTL_DatabaseService.updateSObject( cont ); 
                 }
             }
 
@@ -198,7 +198,7 @@ public with sharing class HDT_UTL_Account {
             analizeResponse(res,acc,cont);
             if('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)){
                 acc.CustomerCode__c = res.data.codiceBP;
-                update acc;
+                HDT_UTL_DatabaseService.updateSObject( acc ); 
             }
             if(acc.Category__c = 'Grandi Condomini'){
 
@@ -209,7 +209,7 @@ public with sharing class HDT_UTL_Account {
                 //update Contact
                 if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
                     cont.ContactCode__c = res.data.codiceBP;
-                    update cont;
+                    HDT_UTL_DatabaseService.updateSObject( cont ); 
                 }
             }
         }
