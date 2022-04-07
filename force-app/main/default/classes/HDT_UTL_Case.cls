@@ -82,7 +82,7 @@ public inherited sharing class HDT_UTL_Case {
             
         }
         else if(process.equalsIgnoreCase('CreaBpCa')){
-            System.enqueueJob(new HDT_QBL_BpCaRequest( accountContactRelationQr.getCreateBpCa( currentCase.AccountId ), currentCase.SupplyProvince__c ) );
+            System.enqueueJob(new HDT_QBL_BpCaRequest( accountContactRelationQr.getCreateBpCa( currentCase.AccountId ), currentCase.SupplyProvince__c, true ) );
         }
         else if(process.equalsIgnoreCase('CheckIsCommunity')){
             output.isCommunity = HDT_LC_SellingWizardController.checkCommunityLogin();

@@ -245,7 +245,7 @@ public inherited sharing class HDT_LC_SaleActions {
          * viene chiamato il servizio di Crea BP/CA
          */
 
-        System.enqueueJob(new HDT_QBL_BpCaRequest( accountContactRelationQr.getCreateBpCa( accountIds[0] ), sale.Id ) );
+        System.enqueueJob(new HDT_QBL_BpCaRequest( accountContactRelationQr.getCreateBpCa( accountIds[0] ), sale.Id, true ) );
 
     }
 
