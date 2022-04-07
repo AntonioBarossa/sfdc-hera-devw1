@@ -25793,11 +25793,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.Status__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.SupplyData__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -25864,6 +25859,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Asset</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>CampaignEligibilityGroup__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -27016,6 +27020,10 @@
         <apexPage>SBQQ__sb</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
+    <tabSettings>
+        <tab>CampaignEligibilityGroup__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
     <tabSettings>
         <tab>LoginGroup__c</tab>
         <visibility>Visible</visibility>

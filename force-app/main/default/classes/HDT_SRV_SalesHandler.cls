@@ -227,7 +227,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 when 'Esito KO da DL' {
                                     //Gestione Esito Appuntamento;
                                     HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
-                                    appService.updateExtraSystemAppointment('Esito KO da DL', ord.Id, discardReasonString);
+                                    appService.updateExtraSystemAppointment('Esito KO da DL', ord.Id, discardReasonString,mapActivityField);
                                     //fine Gestione Esito Appuntamento;
                                     ord.DiscardReason__c = discardReasonString;
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
@@ -239,7 +239,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 when 'Esito OK da DL' {
                                     //Gestione Esito Appuntamento;
                                     HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
-                                    appService.updateExtraSystemAppointment('Esito OK da DL', ord.Id, discardReasonString);
+                                    appService.updateExtraSystemAppointment('Esito OK da DL', ord.Id, discardReasonString,mapActivityField);
                                     //fine Gestione Esito Appuntamento;
                                     HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
                                     utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);

@@ -27,7 +27,6 @@ export default class HdtGeneralInfo extends LightningElement {
     saleContactRoles = '';
     @track isCampaignTableVisible = false;
     @track isServiceCommissioning = false;
-   // @api isDisableCampaignSelection = false;
     @api categoriacampagna = 'Campagna Outbound';
     @api canalecampagna ='Telefonico Outbound';
     @track isCampaignTableCommissioningVisible = false;
@@ -127,7 +126,6 @@ export default class HdtGeneralInfo extends LightningElement {
             this.template.querySelector("[data-id='VendorFirstName__c']").value = '';
             this.template.querySelector("[data-id='VendorLastName__c']").value = '';
             
-            //this.template.querySelector("[data-id='Agency__c']").value = '';
             this.currentPage = 0;
             this.currentPage2 = 0; // reset page
             let Channel = this.template.querySelector('[data-name="Channel__c"]').value;
@@ -150,7 +148,6 @@ export default class HdtGeneralInfo extends LightningElement {
                 this.isServiceCommissioning = false;
             }
             if (this.userRole !== 'HDT_BackOffice' && (Channel == 'Telefono' || Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound' || Channel == 'Sportello' )) {
-                //this.hiddenFilterAgent = true;
                 this.hiddenAgency = true;
                 handleAutomaticAgentAssign ({Channel:Channel,saleId:this.saleRecord.Id }).then(data =>{
                     console.log("************* "+JSON.stringify(data))
@@ -334,14 +331,12 @@ export default class HdtGeneralInfo extends LightningElement {
         this.updateSaleRecord(this.dataToSubmit);
         this.toggle();
         this.disabledAgency = true;
-       // this.isDisableCampaignSelection = true;
     }
 
     handleEdit() {
         this.updateSaleRecord({ Id: this.saleRecord.Id, CurrentStep__c: this.currentStep });
         this.toggle();
         this.disabledAgency = false;
-        //this.isDisableCampaignSelection = false;
     }
 
     connectedCallback() {
@@ -359,7 +354,6 @@ export default class HdtGeneralInfo extends LightningElement {
 
         this.initCompAction();
 
-        //Set CreatedBy of Sale on component mount
         if (this.saleRecord.CreatedBy__c === '' || this.saleRecord.CreatedBy__c === null || this.saleRecord.CreatedBy__c === undefined) {
             this.setUserName();
         } else {
@@ -370,9 +364,6 @@ export default class HdtGeneralInfo extends LightningElement {
         if (this.saleRecord.CurrentStep__c != this.currentStep) {
             this.toggle();
         }
-
-      // let Channel = this.template.querySelector('[data-id=="Channel__c"]').value;
-
     }
 
 
@@ -392,9 +383,6 @@ export default class HdtGeneralInfo extends LightningElement {
 
             ];
 
-        
-
-
         getChannelAgency({ Channel: this.ChannelSelection }).then(data => {
 
             this.completeList = [...data];
@@ -407,11 +395,8 @@ export default class HdtGeneralInfo extends LightningElement {
 
                 this.createTable(this.completeList);
             } else {
-                this.showEmptyMessage = false;
-                
+                this.showEmptyMessage = false;                
             }
-
-
         }).catch(error => {
             console.log('Error: ', JSON.stringify(error));
             const toastErrorMessage = new ShowToastEvent({
@@ -421,7 +406,6 @@ export default class HdtGeneralInfo extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
         });
-
     }
 
     //Pagination start
@@ -442,7 +426,6 @@ export default class HdtGeneralInfo extends LightningElement {
 
     }
 
-
     createTable2(data) {
         let i, j, temporary, chunk = 6;
         this.pages = [];
@@ -457,7 +440,6 @@ export default class HdtGeneralInfo extends LightningElement {
     reLoadTable2() {
         console.log('tableData='+JSON.stringify(this.tableDataAgent));
         this.tableDataAgent = this.pages[this.currentPage2];
-
     }
 
     get showPaginationButtons() {
@@ -491,8 +473,6 @@ export default class HdtGeneralInfo extends LightningElement {
         this.showpage2 = false;        
         this.openModal = false;
         this.disabledNextAgency = true;
-
-
     }
 
     /**
@@ -543,8 +523,6 @@ export default class HdtGeneralInfo extends LightningElement {
         this.disabledNextAgency = false;
 
         console.log('getSelectedFromCompleteList: ', this.selectedFromCompleteList);
-
-
     }
 
     getSelectedFromCompleteListAgent(event) {
@@ -553,8 +531,6 @@ export default class HdtGeneralInfo extends LightningElement {
 
         console.log('getSelectedFromCompleteListAgent: '+ JSON.stringify(this.selectedFromCompleteListAgent));
         this.disabledSave = false;
-
-
     }
 
     handleSave() {
@@ -579,16 +555,13 @@ export default class HdtGeneralInfo extends LightningElement {
             this.updateSaleRecord(saleUpdateAgent);
             this.currentPage = 0;
             this.currentPage2 = 0; // reset page
-            //this.toggle();
             this.openModal = false;
-            //this.template.querySelector('[data-name="Agency__c"]').setAttribute('value', this.selectedFromCompleteList.AgencyName__c);
             this.template.querySelector("[data-id='Agency__c']").value = this.selectedFromCompleteList.AgencyName__c;
             this.template.querySelector("[data-id='CommercialId']").value = this.selectedFromCompleteListAgent.AgentCode__c;
             this.template.querySelector("[data-id='VendorFirstName__c']").value = this.selectedFromCompleteListAgent.AgentFirstName__c;
             this.template.querySelector("[data-id='VendorLastName__c']").value = this.selectedFromCompleteListAgent.AgentLastName__c;
 
         }
-
     }
 
     handleAdditionalFilter() {
@@ -611,7 +584,6 @@ export default class HdtGeneralInfo extends LightningElement {
             this.completeListAgent = [...data];
 
             console.log('getAgents completeListcompleteList: ', (this.completeListAgent));
-            //this.additionalData = this.completeListAgent;
 
             this.completeListAgent.forEach(item => {
                 this.agentListForFilter.push({
@@ -719,7 +691,6 @@ export default class HdtGeneralInfo extends LightningElement {
         }
 
         if (this.saleRecord.Agency__c != null && Channel != 'Telefono' && Channel != 'Teleselling Inbound' && Channel != 'Teleselling Outbound') {
-            //this.hiddenFilterAgent = false;
             this.hiddenAgency = false;
         }
 
@@ -742,7 +713,6 @@ export default class HdtGeneralInfo extends LightningElement {
         this.disabledNextAgency = true;
         this.disabledBack = false;
     }
-
     
     searchAgentTable(event) {
         let val = event.target.value;
@@ -831,5 +801,4 @@ export default class HdtGeneralInfo extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
         });
     }
-
 }
