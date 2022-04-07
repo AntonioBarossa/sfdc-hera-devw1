@@ -87,8 +87,12 @@ public with sharing class HDT_UTL_ProcessDateManager {
                         }
                         else{
                             Date dataRipensamento = order.MaxAfterthoughtDate__c;
-                            if(dataRipensamento != null && order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
-                                dateSentToSii = dataRipensamento.addDays(1);
+                            if(dataRipensamento != null && order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale' ){
+								if(dataRipensamento > Date.Today()){
+									dateSentToSii = dataRipensamento.addDays(1);
+								}else {
+									dateSentToSii = dataRipensamento;
+								}
                             }else {
 								dateSentToSii = Date.today();
 							}

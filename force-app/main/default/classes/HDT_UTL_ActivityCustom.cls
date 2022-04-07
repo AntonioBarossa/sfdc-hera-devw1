@@ -60,9 +60,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             // sToCreate.recordtypeid = s.recordtypeid;
             // sToCreate.approved__c = causale;
             // sToCreate.type__c = 'Contratti/Bonus Commerciale';
-            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-            activity.Id = s.Id;
-            activity.wrts_prcgvr__status__c = 'Chiusa';
+            wrts_prcgvr__Activity__c activity = HDT_UTL_Scarti.closeDiscardActivity(s.Id);
             activity.ClosingNote__c = causale;
             sobjToUpdate.add(activity);
             //activityCustomSrv.createRecord(sToCreate);

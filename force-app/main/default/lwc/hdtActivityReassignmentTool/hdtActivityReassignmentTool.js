@@ -8,4 +8,8 @@ export default class HdtActivityReassignmentTool extends LightningElement {
     closeModal() {
         this.dispatchEvent(new CustomEvent('close'));
     }
+
+    assignerUpdated(){
+        this.dispatchEvent(new CustomEvent('assignerupdated'));
+    }
 }
