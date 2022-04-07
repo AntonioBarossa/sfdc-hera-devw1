@@ -455,8 +455,8 @@ public class HDT_SRV_PostSalesManagerTst {
     @IsTest
     static void updateServicePoint(){
 
-        Case currentCase = [SELECT Id, ServicePoint__c, UseCategory__c, SupplyType__c, ServicePointType__c, Type FROM Case WHERE Type  = 'Marcatura/Uso PdR' LIMIT 1];
-
+        Case currentCase = [SELECT Id, ServicePoint__c, UseCategory__c, SupplyType__c, ServicePointType__c, Type FROM Case WHERE Type  = 'Variazione indirizzo di fornitura' LIMIT 1];
+        currentCase.Type = 'Marcatura/Uso PdR';
         currentCase.UseCategory__c = '004-Uso tecnologico';
         update currentCase;
 
