@@ -164,6 +164,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 }
             }
 
+            if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale')
+            {
+                newOrder.VAT__c = 
+                    order.CommodityFormula__c == 'Energia Elettrica' ?
+                        order.SupplyType__c == 'Domestico' ? 'Iva 10% (Cod. 01)' : 'Iva 22% (Cod. 02)'
+                    : 'Iva 22% (Cod. 02)';
+            }
+
             //EVERIS: MODIFICATA LOGICA DI UPDATE PER GESTIRE I PREDEFAULT
             newOrder.Id = orderId;
             newOrder.RecordTypeId = recordTypeId;
