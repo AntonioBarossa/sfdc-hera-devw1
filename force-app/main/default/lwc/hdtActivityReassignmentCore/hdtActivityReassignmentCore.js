@@ -145,6 +145,7 @@ export default class hdtActivityReassignmentCore extends LightningElement {
                 this.refreshPage();
                 this.showToast("success", "Operazione completata", "Activity riassegnata con successo.");
                 this.closeModal();
+                this.dispatchEvent(new CustomEvent('assignerupdated'));
             } else {
                 this.goBack();
             }
