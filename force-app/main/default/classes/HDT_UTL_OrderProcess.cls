@@ -138,7 +138,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             || order.Phase__c == 'Comunicazione Motore VAS'
             )
             &&order.isTransition__c==true){
-                order.Phase__c='Esportazione VS Siebel';
+                String newPhase = 'Esportazione VS Siebel';
+                String newPhaseStory = String.isBlank(order.PhaseStory__c) ?  '' : order.PhaseStory__c;
+                DateTime nowDateTime = DateTime.now();
+                order.PhaseStory__c =  order.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+ newPhaseStory;
+                order.Phase__c = newPhase;
             }
 
             //19/08/2021 gabriele.rota@webresults.it - Calcolo Data Decorrenza Cambio Offerta

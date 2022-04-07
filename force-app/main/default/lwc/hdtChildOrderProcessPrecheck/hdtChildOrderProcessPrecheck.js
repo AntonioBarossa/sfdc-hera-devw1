@@ -456,11 +456,12 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 }
     
                 if (this.options.length === 0) {
-                    console.log('# Vas Subtype >>> ' + this.order.VASSubtype__c );
-                    if(this.order.IsVAS__c || this.order.VASSubtype__c === 'Analisi Consumi'){
+                    console.log('# Vas Subtype >>> ' + this.order.VasSubtype__c );
+                    if(this.order.IsVAS__c || this.order.VasSubtype__c === 'Analisi Consumi'){
                         this.options.push({label: 'VAS', value: 'VAS'});
-                        this.selectedProcessObject = {processType: 'VAS', recordType: 'HDT_RT_VAS'}
-                        this.value = this.selectedProcessObject.processType;
+                        this.selectedProcessObject = {ProcessName__c: 'VAS', RecordTypeName__c: 'HDT_RT_VAS'}
+                        console.log('ProcessObj >>> ' + JSON.stringify(this.selectedProcessObject));
+                        this.value = this.selectedProcessObject.ProcessName__c;
                         this.disabledSelectProcess = true;
                         this.pickValue = this.value;
                         this.startCheckContendibilita();
@@ -740,10 +741,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             'type': 'Order',
             'processType' : processType
         };
-        if(this.selectedProcessObject.processType=="VAS"){
+        if(this.selectedProcessObject.ProcessName__c=="VAS"){
             sRequest["isBillableVas"]=this.order.IsBillableVas__c;
-            console.log('#VasSubType Precheck >>> ' + this.order.VASSubtype__c);
-            if(this.order.VASSubtype__c === 'Analisi Consumi')
+            console.log('#VasSubType Precheck >>> ' + this.order.VasSubtype__c);
+            if(this.order.VasSubtype__c === 'Analisi Consumi')
             {
                 console.log('#CommoditySector >>> ' + sRequest["commoditySector"]);
                 let processType = sRequest["commoditySector"] === 'Energia Elettrica' ? 'Aggiunta Sconti o Bonus VAS Ele' : 'Aggiunta Sconti o Bonus VAS Gas'

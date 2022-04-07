@@ -2,6 +2,7 @@ import { LightningElement, api } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { getRecordNotifyChange } from "lightning/uiRecordApi";
 import getAssignees from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.getAssignees";
+import getRefreshPage from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.refreshPage";
 import reassignActivity from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.reassignActivity";
 import assignToMe from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.assignToMe";
 import isDynamicWorkGroup from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.isDynamicWorkGroup";
@@ -19,6 +20,7 @@ export default class hdtActivityReassignmentCore extends LightningElement {
     status = {
         error: false
     };
+    refreshPageInTheEnd = false;
     get searchingWorkGroup() {
         return (this.assigneeId != undefined);
     }
@@ -34,6 +36,7 @@ export default class hdtActivityReassignmentCore extends LightningElement {
     }
 
     connectedCallback() {
+        this.getRefresPageByType();
         if(this.recordId) {
             this.idList = [this.recordId];
         }
@@ -43,6 +46,10 @@ export default class hdtActivityReassignmentCore extends LightningElement {
         if(this.assignToMeMode) {
             this.doAssignToMe();
         }
+    }
+
+    async getRefresPageByType(){
+        this.refreshPageInTheEnd = await getRefreshPage({recordId : this.recordId});
     }
 
     async handleAssigneeSearch(event) {
@@ -145,6 +152,9 @@ export default class hdtActivityReassignmentCore extends LightningElement {
                 this.refreshPage();
                 this.showToast("success", "Operazione completata", "Activity riassegnata con successo.");
                 this.closeModal();
+                if (this.refreshPageInTheEnd === true || this.refreshPageInTheEnd ==='true'){
+                    this.dispatchEvent(new CustomEvent('assignerupdated'));
+                }
             } else {
                 this.goBack();
             }

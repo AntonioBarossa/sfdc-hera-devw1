@@ -65,41 +65,80 @@ public with sharing class HDT_UTL_CalculateTransition {
 
     public Boolean calculateTransition(){
 
-       Map<String,Object> companyInfosMap = this.calculateCompanyInfos();
+       //Map<String,Object> companyInfosMap = this.calculateCompanyInfos();
        Map<String,Object> calculateTransitionMap = new Map<String,Object>();
-
-       City__c city = (City__c)companyInfosMap.get('cityObj');
+       Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};
+       //City__c city = (City__c)companyInfosMap.get('cityObj');
        ServicePoint__c servicePoint = new ServicePoint__c();
+       ServicePoint__c servicePointRetrieved = new ServicePoint__c();
        Sale__c sale = new Sale__c();
-       calculateTransitionMap = this.inputMap;      
+       calculateTransitionMap = this.inputMap;
+       string[] markerConverted;
 
-       if(city.IsNotTransition__c){
+       City__c city = [SELECT Name, Province__c 
+                       FROM City__c 
+                       WHERE Name =: (String)calculateTransitionMap.get('city') WITH SECURITY_ENFORCED LIMIT 1];
+
+       //if(city.IsNotTransition__c){
             if(calculateTransitionMap.get('servicePoint') != null){
-                servicePoint = [SELECT Id, IsReseller__c FROM ServicePoint__c WHERE Id =: ((ServicePoint__c)calculateTransitionMap.get('servicePoint')).Id WITH SECURITY_ENFORCED LIMIT 1];
-                if(servicePoint == null){
-                    servicePoint = (ServicePoint__c)calculateTransitionMap.get('servicePoint');
+                servicePointRetrieved = ((ServicePoint__c)calculateTransitionMap.get('servicePoint'));
+                String servicePointRetrievedId = ((ServicePoint__c)calculateTransitionMap.get('servicePoint')).Id;
+                if(servicePointRetrieved != null && servicePointRetrievedId != null && servicePointRetrievedId != '')
+                    servicePoint = [SELECT Id, IsReseller__c FROM ServicePoint__c WHERE Id =: servicePointRetrievedId WITH SECURITY_ENFORCED LIMIT 1];
+                // if(servicePoint == null){
+                else{
+                    servicePoint = servicePointRetrieved;
                 }
             }
             if(calculateTransitionMap.get('sale') != null){
-                sale = [SELECT Id, Account__r.CompanyOwner__c, Account__r.Category__c FROM Sale__c WHERE Id =: ((Sale__c)calculateTransitionMap.get('sale')).Id WITH SECURITY_ENFORCED LIMIT 1];
+                sale = [SELECT Id, Account__r.CompanyOwner__c, Account__r.Category__c, Account__r.CustomerMarking__c FROM Sale__c WHERE Id =: ((Sale__c)calculateTransitionMap.get('sale')).Id WITH SECURITY_ENFORCED LIMIT 1];
+                if(sale.Account__r.CustomerMarking__c != null && sale.Account__r.CustomerMarking__c != ''){
+                    markerConverted = sale.Account__r.CustomerMarking__c.split('');
+                }
+                if(markerConverted[0] == ''){
+                    markerConverted.remove(0);
+                }
             }
            
-            if(servicePoint.IsReseller__c == true || 
-               sale.Account__r.CompanyOwner__c == 'Reseller' || 
-               (sale.Account__r.Category__c != 'Famiglie' && 
-               sale.Account__r.Category__c != 'Aziende Soho' && 
-               sale.Account__r.Category__c != 'Piccoli Condomini') || 
-               (city.SDV__c == 'HC' && 
-               (String)calculateTransitionMap.get('commodity') == 'Gas')){
-                return true;
+            // if(servicePoint.IsReseller__c == true || 
+            //    sale.Account__r.CompanyOwner__c == 'Reseller' || 
+            //    (sale.Account__r.Category__c != 'Famiglie' && 
+            //    sale.Account__r.Category__c != 'Aziende Soho' && 
+            //    sale.Account__r.Category__c != 'Piccoli Condomini') || 
+            //    (city.SDV__c == 'HC' && 
+            //    (String)calculateTransitionMap.get('commodity') == 'Gas')){
+
+            if(stabbedData.contains(city.Province__c) &&
+               (servicePoint == null || (servicePoint != null && !servicePoint.IsReseller__c)) && 
+               sale.Account__r.CompanyOwner__c != 'Reseller' && 
+               (sale.Account__r.Category__c == 'Famiglie' || 
+               sale.Account__r.Category__c == 'Aziende Soho' || 
+               sale.Account__r.Category__c == 'Piccoli Condomini')){
+                   if((String)calculateTransitionMap.get('commodity') == 'Gas' && !markerConverted.isEmpty() && markerConverted != null && !(markerConverted[0] == 'D' && markerConverted[1].isNumeric())){
+                        List<City__c> cityList = [SELECT Name, BelfioreCode__c, ProvinceName__c, Province__c, SDV__c, ServiceEle__c, ServiceGas__c 
+                        FROM City__c WHERE Name =: (String)calculateTransitionMap.get('city') AND ServiceGas__c = true WITH SECURITY_ENFORCED];
+                        if(cityList.isEmpty()){
+                            system.debug('SONO ENTRATO IN CITYLIST EMPTY');
+                            return true;
+                        }
+                        else{
+                            system.debug('NON SONO ENTRATO IN CITYLIST EMPTY');
+                            return false;
+                        }
+                   }
+                   else{
+                       system.debug('NON SONO ENTRATO IN SECONDA IF.');
+                       return false;
+                   }
             }
             else{
-                return false;
+                system.debug('NON SONO ENTRATO IN PRIMA IF.');
+                return true;
             }
-       }
-       else{
-            return true;
-       }
+    //    }
+    //    else{
+    //         return true;
+    //    }
 
 
     }
