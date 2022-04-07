@@ -462,11 +462,11 @@ public inherited sharing class HDT_LC_CampaignsController {
             return null;
         }
 
-        list <CampaignMember> cm = [SELECT Id, GenericField1__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED limit 1];
+        list <CampaignMember> cm = [SELECT Id, GenericField1__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED];
 
         if(cm!=null && cm.size()>0 && String.isNotBlank(cm[0].GenericField1__c)){
            // if (((Id)cm[0].GenericField1__c).getSobjectType()==Schema.Account.SObjectType){
-                List <Account> acc=[SELECT Id FROM Account WHERE Id=:cm[0].GenericField1__c WITH SECURITY_ENFORCED limit 1];
+                List <Account> acc=[SELECT Id FROM Account WHERE Id=:cm[0].GenericField1__c WITH SECURITY_ENFORCED];
                 if (acc!=null && acc.size()>0) {
                     return acc[0].Id;
                 }
