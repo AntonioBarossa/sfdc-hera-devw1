@@ -161,8 +161,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 {
                     List<AccountContactRelation> listAccCon= accoContRelQr.getContactsByAccountWithRoles(accounts[0].Id);
                     listAccCon[0].Roles = 'Titolare';
-                    listToUpdate.add(listAccCon[0]);
-
+                    update(listAccCon[0]);
                 }
                 if (conList.size()>0) {
                     //contactSrv.createRecords(conList);
