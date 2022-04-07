@@ -61,7 +61,7 @@ public with sharing class HDT_TRH_LeadTst{
 
 			test.startTest();
 
-			Lead lead = [SELECT Id, FirstName,LastName,MobilePhone,Company, CompanyOwner__c,MobilePhonePrefix__c,ConvertedContactId,Phone,Email,IndividualId, PhonePrefix__c FROM Lead WHERE FirstName='FirstNameTest0' AND IsConverted = true LIMIT 1];
+			Lead lead = [SELECT Id, FirstName,LastName,MobilePhone,Company, CompanyOwner__c,MobilePhonePrefix__c/*,ConvertedContactId*/,Phone,Email,IndividualId, PhonePrefix__c FROM Lead WHERE FirstName='FirstNameTest0' AND IsConverted = true LIMIT 1];
 			Lead newLead= lead.clone();
 			newLead.Country = 'Italy';
             newLead.CompanyOwner__c= 'MMS';
@@ -95,7 +95,7 @@ public with sharing class HDT_TRH_LeadTst{
 
 			test.startTest();
 
-			Lead lead = [SELECT Id, FirstName,LastName,MobilePhone,Company, CompanyOwner__c,MobilePhonePrefix__c,ConvertedContactId,Phone,Email,IndividualId, PhonePrefix__c FROM Lead WHERE FirstName='FirstNameTest0' AND IsConverted = true LIMIT 1];
+			Lead lead = [SELECT Id, FirstName,LastName,MobilePhone,Company, CompanyOwner__c,MobilePhonePrefix__c/*,ConvertedContactId*/,Phone,Email,IndividualId, PhonePrefix__c FROM Lead WHERE FirstName='FirstNameTest0' AND IsConverted = true LIMIT 1];
 			
             lead.LastName='Smith';
             lead.FirstName='George';
