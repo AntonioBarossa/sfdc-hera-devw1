@@ -441,13 +441,8 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                                 FROM Order WHERE Id=:recordId WITH SECURITY_ENFORCED ];
         
         if(!orderList.isEmpty()){
-            List<AmministrazioneFrodi__c> ammFrodiList = [SELECT BpNumber__c FROM AmministrazioneFrodi__c 
-                                                            WHERE (Processo__c=: orderList[0].ProcessType__c 
-                                                            AND CanaleVendita__c=: orderList[0].LoginChannel__c 
-                                                            AND CategoriaCliente__c=: orderList[0].CustomerCategory__c)
-                                                            WITH SECURITY_ENFORCED ];
-            system.debug( 'ammFrodiList>>>>'+ammFrodiList );                                                
-                                                            
+            List<AmministrazioneFrodi__c> ammFrodiList = [SELECT BpNumber__c FROM AmministrazioneFrodi__c WHERE (Processo__c=: orderList[0].ProcessType__c AND CanaleVendita__c=: orderList[0].LoginChannel__c AND CategoriaCliente__c=: orderList[0].CustomerCategory__c) WITH SECURITY_ENFORCED ];
+            
             if( ammFrodiList != null && !ammFrodiList.isEmpty() ){
                 integer maxCount = maxInFraud(orderList[0]);
                 if( /* mmFrodiList[0].BpNumber__c != null && */ maxCount > ammFrodiList[0].BpNumber__c ){
