@@ -33,6 +33,14 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			accounts[0].ActiveMonitoring__c=false;
 			accounts[0].Name='INRETE DIST. ENER.-13R0000000';
 			accounts[0].LastName__c='INRETE DIST. ENER.-13R0000000';
+			accounts[0].FiscalCode__c='SXSRLA45H28H6';
+			accounts[0].VATNumber__c='12345689';
+			accounts[0].CustomerCode__c='1003616211';
+
+
+			List<Account> accDist = HDT_UTL_DataFactoryTst.createAccountDistributore(1, true, 'HERA COMM', 'Azienda', 'Aziende SME'); 
+
+			System.debug('*** '+accounts);
 			insert accounts;
 
 			List<Opportunity> opps=HDT_UTL_DataFactoryTst.createOpportunity(1, true);
@@ -62,6 +70,8 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			orders[1].NotRegisteredMeterCase__c=false;
 			orders[1].EffectiveDate__c=date.today().addDays(-4);
 			orders[1].RequestOption__c='Domestici-TD';
+			orders[1].VoltureType__c='Ordinaria';
+			orders[1].Subprocess__c='Standard';
 
 			orders[2].PowerCommitted__c=2;
 			orders[2].CreditCheckDescription__c = 'test3';
@@ -97,7 +107,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			insert childOrders;
 
 			List<ServicePoint__c> servPoints=HDT_UTL_DataFactoryTst.createServicePoint(1, false);
-			servPoints[0].Distributor__c=accounts[0].Id;
+			servPoints[0].Distributor__c=accDist[0].Id;
 			servPoints[0].CommoditySector__c='Energia Elettrica';
 
 			insert servPoints;
@@ -111,6 +121,11 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			orders[0].SBQQ__Quote__c=quotes[0].id;
 			orders[3].ServicePoint__c=servPoints[0].Id;
 			orders[3].SBQQ__Quote__c=quotes[0].id;
+			orders[0].ProcessType__c = 'Voltura';
+			orders[0].NotRegisteredMeterCase__c = true;
+			HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
+			Id rt=utlConstants.ORDER_RECORDTYPEID_VOLTURA;
+			orders[0].RecordTypeId = rt;
 
 			update orders;
 
@@ -119,6 +134,8 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			cases[0].Type='Cambio Contatore Non Registrato';
 			cases[0].Phase__c='Completata';
 			cases[0].VulturePracticeReference__c=orders[0].Id;
+			cases[0].ServicePoint__c = servPoints[0].Id;
+			
 
 			insert cases;
 		}
@@ -170,7 +187,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			                    FROM Order
 			                    WHERE CreditCheckDescription__c='test1'];
 
-			List<Order> tOrder2=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
+			List<Order> tOrder2=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c, RetroactiveDate__c, Subprocess__c
 			                    FROM Order
 			                    WHERE CreditCheckDescription__c='test2Voltura'];
 
