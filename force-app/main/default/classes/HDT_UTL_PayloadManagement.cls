@@ -414,9 +414,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             when 'Order'
             {
                 amount = HDT_UTL_DocumentalManagement.getValue('Order', 'EstimateAmount__c', 0, inputs, formParams);
-                fixedAmount = HDT_UTL_DocumentalManagement.getValue('Order', 'PowerQuote__c', 0, inputs, formParams);
-                variableAmount = HDT_UTL_DocumentalManagement.getValue('Order', 'PowerQuote__c', 0, inputs, formParams);
-                iva = HDT_UTL_DocumentalManagement.getValue('Order', 'VAT__c', 0, inputs, formParams);
+                fixedAmount = HDT_UTL_DocumentalManagement.getValue('Order', 'AdministrativeBurden__c', 0, inputs, formParams);
+                variableAmount = HDT_UTL_DocumentalManagement.getValue('Order', 'VariableAmount__c', 0, inputs, formParams);
+                iva = HDT_UTL_DocumentalManagement.getValue('Order', 'DocumentalVat__c', 0, inputs, formParams);
                 caseType = HDT_UTL_DocumentalManagement.getValue('Case', 'ProcessType__c', 0, inputs, formParams);
                 supplyType = HDT_UTL_DocumentalManagement.getValue('Case', 'SupplyType__c', 0, inputs, formParams);
                 cluster = HDT_UTL_DocumentalManagement.getValue('Case', 'Cluster__c', 0, inputs, formParams);
