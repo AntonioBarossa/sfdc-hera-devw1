@@ -430,4 +430,85 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         public Boolean isCommunity {get; set;}
     }
 
+    @AuraEnabled
+    public static String seekFraud(String recordId, Order orderParent){
+        //initialization the result for no fraud, then search for fraud condition
+        Map<String,Object> result = new Map<String,Object>();
+        Boolean isFraud = false;
+        String message = 'Nessuna frode trovata.';
+
+        List<Order> orderList =[SELECT PhoneNumber__c, ShippingMail__c, Contact__r.HomePhone, Contact__r.Phone, Contact__r.Email, ProcessType__c, LoginChannel__c, CustomerCategory__c
+                                FROM Order WHERE Id=:recordId WITH SECURITY_ENFORCED ];
+        
+        if(!orderList.isEmpty()){
+            List<AmministrazioneFrodi__c> ammFrodiList = [SELECT BpNumber__c FROM AmministrazioneFrodi__c 
+                                                            WHERE (Processo__c=: orderList[0].ProcessType__c 
+                                                            AND CanaleVendita__c=: orderList[0].LoginChannel__c 
+                                                            AND CategoriaCliente__c=: orderList[0].CustomerCategory__c)
+                                                            WITH SECURITY_ENFORCED ];
+            system.debug( 'ammFrodiList>>>>'+ammFrodiList );                                                
+                                                            
+            if( ammFrodiList != null && !ammFrodiList.isEmpty() ){
+                integer maxCount = maxInFraud(orderList[0]);
+                if( /* mmFrodiList[0].BpNumber__c != null && */ maxCount > ammFrodiList[0].BpNumber__c ){
+                    //Annullamento con causale: phase annullato + causale .txt + update
+                    if(orderParent != null){
+                        List<Order> ordiniDaAnnullare = orderQr.getChildOrdersByParentId(orderParent.Id);
+                        ordiniDaAnnullare.add(orderParent);
+                        for (Order ord : ordiniDaAnnullare) {
+                            ord.phase__c = 'Annullato';
+                            ord.CancellationReason__c = 'Annullato per possibile frode';
+                        }
+                        HDT_UTL_DatabaseService.updateSObject(ordiniDaAnnullare);
+                    }else{
+                        Order ord = new Order();
+                        ord.Id = orderList[0].Id;
+                        ord.phase__c = 'Annullato';
+                        ord.CancellationReason__c = 'Annullato per possibile frode';
+                        HDT_UTL_DatabaseService.updateSObject(ord);
+                    }
+                    system.debug( 'Ordini interessati annullati' );
+                    isFraud = true;
+                    message = 'Possibile frode in corso, tutti gli ordini correlati verranno annullati.';
+                }
+            }
+        }
+        result.put('isFraud', (Object)isFraud);
+        result.put('message', (Object)message);
+        return JSON.serialize(result);
+    }
+
+    public static integer maxInFraud(Order order){
+        integer maxCount = 0;
+        //telefono fisso
+        if( order.Contact__r.HomePhone != null ){
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointPhone WHERE TelephoneNumber=:order.Contact__r.HomePhone WITH SECURITY_ENFORCED GROUP BY TelephoneNumber ];
+            maxCount = swapMax(maxCount, count );
+        }
+        //cell
+        if( order.PhoneNumber__c != null ){
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointPhone WHERE TelephoneNumber=:order.PhoneNumber__c WITH SECURITY_ENFORCED GROUP BY TelephoneNumber ];
+            maxCount = swapMax(maxCount, count );
+        }else if( order.Contact__r.Phone != null ){
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointPhone WHERE TelephoneNumber=:order.Contact__r.Phone WITH SECURITY_ENFORCED GROUP BY TelephoneNumber ];
+            maxCount = swapMax(maxCount, count );
+        }
+        //email
+        if( order.ShippingMail__c != null ){
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.ShippingMail__c WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
+            maxCount = swapMax(maxCount, count );
+        }else if( order.Contact__r.Email != null ){
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.Contact__r.Email WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
+            maxCount = swapMax(maxCount, count );
+        }
+        return maxCount;
+    }
+    
+    public static integer swapMax(integer maxCount, AggregateResult[] count ){
+        if(count.size()> 0 && count[0].get('expr0') != null){
+            maxCount = maxCount < (integer)count[0].get('expr0')? (integer)count[0].get('expr0') : maxCount;
+        }
+        return maxCount;
+    }
+
 }
