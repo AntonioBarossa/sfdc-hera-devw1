@@ -1,7 +1,10 @@
 ({
     doInit : function(component, event, helper) {
-        console.log(component.get("v.recordId"));
-        console.log(component.get("v.sObjectName"));
+        var objName = component.get("v.sObjectName");
+        if(objName === undefined){
+            objName = '';
+        }
+        component.set("v.sObjectName", objName);
     },
 
     onTabClosed : function(component, event, helper) {

@@ -5,7 +5,7 @@
         <name>VasPresentiAssign</name>
         <label>VasPresentiAssign</label>
         <locationX>886</locationX>
-        <locationY>3206</locationY>
+        <locationY>3326</locationY>
         <assignmentItems>
             <assignToReference>VasPresentiBool</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>Bonus_Decision</name>
         <label>Bonus Decision</label>
         <locationX>1106</locationX>
-        <locationY>1550</locationY>
+        <locationY>1670</locationY>
         <defaultConnector>
             <targetReference>Bonus_Loop</targetReference>
         </defaultConnector>
@@ -186,7 +186,7 @@
         <name>CanaleVenditaDecision_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>490</locationX>
-        <locationY>2102</locationY>
+        <locationY>2222</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_EE</targetReference>
         </defaultConnector>
@@ -211,7 +211,7 @@
         <name>CanaleVenditaDecision_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1018</locationX>
-        <locationY>2102</locationY>
+        <locationY>2222</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_GAS</targetReference>
         </defaultConnector>
@@ -311,7 +311,7 @@
         <name>Categoria_Cliente_Decision_0</name>
         <label>Categoria Cliente Decision</label>
         <locationX>622</locationX>
-        <locationY>3518</locationY>
+        <locationY>3638</locationY>
         <defaultConnector>
             <targetReference>Durata_Contratto_0</targetReference>
         </defaultConnector>
@@ -336,7 +336,7 @@
         <name>Categoria_Cliente_Decision_0_0</name>
         <label>Categoria Cliente Decision</label>
         <locationX>820</locationX>
-        <locationY>3974</locationY>
+        <locationY>4094</locationY>
         <defaultConnector>
             <targetReference>Conferma_Adesione_Screen_0</targetReference>
         </defaultConnector>
@@ -361,7 +361,7 @@
         <name>isVASDecisional</name>
         <label>isVASDecisional</label>
         <locationX>622</locationX>
-        <locationY>3854</locationY>
+        <locationY>3974</locationY>
         <defaultConnector>
             <targetReference>Categoria_Cliente_Decision_0_0</targetReference>
         </defaultConnector>
@@ -415,7 +415,7 @@
         <name>Servizio_Decision_0</name>
         <label>Servizio Decision</label>
         <locationX>754</locationX>
-        <locationY>1982</locationY>
+        <locationY>2102</locationY>
         <defaultConnector>
             <targetReference>CanaleVenditaDecision_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -490,7 +490,7 @@
         <name>Vas_Presenti_Decision</name>
         <label>Vas Presenti Decision</label>
         <locationX>798</locationX>
-        <locationY>3086</locationY>
+        <locationY>3206</locationY>
         <defaultConnector>
             <targetReference>VasPresentiAssign</targetReference>
         </defaultConnector>
@@ -512,6 +512,30 @@
         </rules>
     </decisions>
     <formulas>
+        <name>AzPrezzoLordoF1Formula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF1__c}*1.102</expression>
+        <scale>4</scale>
+    </formulas>
+    <formulas>
+        <name>AzPrezzoLordoF2Formula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF2__c}*1.102</expression>
+        <scale>4</scale>
+    </formulas>
+    <formulas>
+        <name>AzPrezzoLordoF3Formula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF3__c}*1.102</expression>
+        <scale>4</scale>
+    </formulas>
+    <formulas>
+        <name>AzPrezzoLordoFormula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF0__c}*1.102</expression>
+        <scale>4</scale>
+    </formulas>
+    <formulas>
         <name>NomeOffertaCalcolato_Introduzione</name>
         <dataType>String</dataType>
         <expression>IF(CONTAINS({!HDT_FL_Script_Gestione_Ordini.NomeOffertaOutput} , &quot;Linear&quot;), &quot;Nuova Impronta Zero Casa Linear&quot;,IF(CONTAINS({!HDT_FL_Script_Gestione_Ordini.NomeOffertaOutput} , &quot;Imola&quot;), &quot;Nuova Impronta Zero Casa Linear&quot;,&quot;Nuova Impronta Zero Casa&quot;))</expression>
@@ -529,6 +553,24 @@
         <expression>IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;Linear&quot;), &quot;Nuova Impronta Zero Casa Linear&quot;, 
  IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;Imola&quot;), &quot;Nuova Impronta Zero Casa Imola&quot;, 
   IF(CONTAINS({!LoopOrdiniFigliOfferta.CommercialProduct__c} , &quot;Casa&quot;), &quot;Nuova Impronta Zero Casa&quot;, &quot;Nuova Impronta Zero Casa&quot;)))</expression>
+    </formulas>
+    <formulas>
+        <name>PrezzoLordoFormula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}*1.102</expression>
+        <scale>4</scale>
+    </formulas>
+    <formulas>
+        <name>PrezzoLordoOrePieneFormula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePick__c}*1.102</expression>
+        <scale>4</scale>
+    </formulas>
+    <formulas>
+        <name>PrezzoLordoOreVuoteFormula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePickOut__c}*1.102</expression>
+        <scale>4</scale>
     </formulas>
     <formulas>
         <name>ProfiloCalcolato_Aziende</name>
@@ -550,7 +592,7 @@
         <name>Bonus_Loop</name>
         <label>Bonus Loop</label>
         <locationX>754</locationX>
-        <locationY>1430</locationY>
+        <locationY>1550</locationY>
         <collectionReference>GetOrderItems</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -606,7 +648,7 @@
         <name>Order_Items_Vas_Loop</name>
         <label>Order Items Vas Loop</label>
         <locationX>622</locationX>
-        <locationY>2846</locationY>
+        <locationY>2966</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVASBonusOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -639,7 +681,7 @@
         <name>GetOrderItems</name>
         <label>GetOrderItems</label>
         <locationX>754</locationX>
-        <locationY>1310</locationY>
+        <locationY>1430</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Bonus_Loop</targetReference>
@@ -678,6 +720,82 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
+        <name>Bonus_Fisso</name>
+        <label>Bonus Fisso</label>
+        <locationX>622</locationX>
+        <locationY>1118</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>GetOrderItems</targetReference>
+        </connector>
+        <fields>
+            <name>BonusFisso_Text1</name>
+            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta, le sarà riconosciuto un bonus incrementale&amp;nbsp;legato alla durata della fornitura. A partire dal settimo fino al dodicesimo mese di fornitura, il bonus comprensivo delle perdite di rete, sotto forma di sconto sulla componente energia, sarà pari a 0,00550 €/kWh. In bolletta invece sarà esposto al netto delle perdite e pari a: 0,0050 €/kWh; dal tredicesimo al ventiquattresimo mese il bonus sulla componente energia, comprensivo delle perdite di rete, aumenterà a 0,0551 €/kWh. In bolletta invece sarà esposto al netto delle perdite e pari a: 0,0500 €/kWh.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Bonus_Fisso_0</name>
+        <label>Bonus Fisso</label>
+        <locationX>358</locationX>
+        <locationY>1118</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>GetOrderItems</targetReference>
+        </connector>
+        <fields>
+            <name>BonusFisso_Text1_0</name>
+            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta, le sarà riconosciuto un bonus incrementale&amp;nbsp;legato alla durata della fornitura. A partire dal settimo fino al dodicesimo mese di fornitura, il bonus comprensivo delle perdite di rete, sotto forma di sconto sulla componente energia, sarà pari a 0,00550 €/kWh. In bolletta invece sarà esposto al netto delle perdite e pari a: 0,0050 €/kWh; dal tredicesimo al ventiquattresimo mese il bonus sulla componente energia, comprensivo delle perdite di rete, aumenterà a 0,0551 €/kWh. In bolletta invece sarà esposto al netto delle perdite e pari a: 0,0500 €/kWh.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Bonus_Fisso_0_0_0_Gas</name>
+        <label>Bonus Fisso Gas</label>
+        <locationX>1150</locationX>
+        <locationY>1118</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>GetOrderItems</targetReference>
+        </connector>
+        <fields>
+            <name>BonusFisso_Text1_0_0_0</name>
+            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta, le sarà riconosciuto un bonus incrementale legato alla durata della fornitura. A partire dal settimo fino al dodicesimo mese di fornitura, il bonus, sotto forma di sconto sulla componente energia, sarà pari a 0,05 €/smc; dal tredicesimo mese il bonus sulla componente energia aumenterà a 0,15 c€/smc fino alla durata del prezzo fisso.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Bonus_Fisso_0_0_Gas</name>
+        <label>Bonus Fisso Gas</label>
+        <locationX>886</locationX>
+        <locationY>1118</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>GetOrderItems</targetReference>
+        </connector>
+        <fields>
+            <name>BonusFisso_Text1_0_0</name>
+            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta, le sarà riconosciuto un bonus incrementale legato alla durata della fornitura. A partire dal settimo fino al dodicesimo mese di fornitura, il bonus, sotto forma di sconto sulla componente energia, sarà pari a 0,05 €/smc; dal tredicesimo mese il bonus sulla componente energia aumenterà a 0,15 c€/smc fino alla durata del prezzo fisso.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Condizioni_Economiche_Aziende_EE</name>
         <label>Condizioni Economiche Aziende EE</label>
         <locationX>1282</locationX>
@@ -700,7 +818,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_0</name>
-            <fieldText>&lt;p&gt;&amp;nbsp;Il profilo 123 prevede un prezzo applicato alla componente energia differenziato secondo le tre fasce orarie F1, F2 ed F3 definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo della componente energia, per il periodo da lei scelto, assumerà il valore di 0,1708 €/kWh in F1, 0,1598 €/kWh in F2 e 0,1488 €/kWh in F3. Qualora il misuratore non sia idoneo alla rilevazione dell’energia elettrica per fascia oraria, sarà applicato invece un prezzo uguale in tutte le ore della giornata e pari a 0,1598 €/kWh.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: F1: 0,1550 €/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;F2: 0,1450 €/ kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;F3: 0,1350 €/ kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;F24 ore: 0,1450 €/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione, 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&amp;nbsp;Il profilo 123 prevede un prezzo applicato alla componente energia differenziato secondo le tre fasce orarie F1, F2 ed F3 definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo della componente energia, per il periodo da lei scelto, assumerà il valore di {!AzPrezzoLordoF1Formula} €/kWh in F1, {!AzPrezzoLordoF2Formula}€/kWh in F2 e {!AzPrezzoLordoF3Formula}€/kWh in F3. Qualora il misuratore non sia idoneo alla rilevazione dell’energia elettrica per fascia oraria, sarà applicato invece un prezzo uguale in tutte le ore della giornata e pari a {!AzPrezzoLordoFormula} €/kWh.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: F1: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF1__c}€/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;F2: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF2__c}€/ kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;F3: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF3__c}€/ kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;F24 ore: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF0__c}€/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione, 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -715,7 +833,7 @@
         </fields>
         <fields>
             <name>text24</name>
-            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di 0,1598 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a 0,145 €/kWh&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione e 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di {!AzPrezzoLordoFormula}€/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF0__c}€/kWh&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione e 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -760,7 +878,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/Estenergy pari ad € 23,00.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/ESTEnergy pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -772,10 +890,10 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -816,7 +934,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Il profilo 123 prevede un prezzo applicato alla componente energia differenziato secondo le tre fasce orarie F1, F2 ed F3 definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo della componente energia, per il periodo da lei scelto, assumerà il valore di 0,1708 €/kWh in F1, 0,1598 €/kWh in F2 e 0,1488 €/kWh in F3. Qualora il misuratore non sia idoneo alla rilevazione dell’energia elettrica per fascia oraria, sarà applicato invece un prezzo uguale in tutte le ore della giornata e pari a 0,1598 €/kWh.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: F1: 0,1550 €/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;F2: 0,1450 €/ kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;F3: 0,1350 €/ kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;F24 ore: 0,1450 €/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione, 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo 123 prevede un prezzo applicato alla componente energia differenziato secondo le tre fasce orarie F1, F2 ed F3 definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo della componente energia, per il periodo da lei scelto, assumerà il valore di {!AzPrezzoLordoF1Formula}€/kWh in F1, {!AzPrezzoLordoF2Formula}€/kWh in F2 e {!AzPrezzoLordoF3Formula}€/kWh in F3. Qualora il misuratore non sia idoneo alla rilevazione dell’energia elettrica per fascia oraria, sarà applicato invece un prezzo uguale in tutte le ore della giornata e pari a {!AzPrezzoLordoFormula}€/kWh.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: F1: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF1__c}€/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;F2: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF2__c}€/ kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;F3: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF3__c}€/ kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;F24 ore: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF0__c}€/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione, 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -831,7 +949,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_1_0</name>
-            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di 0,1598 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a 0,145 €/kWh&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione e 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di {!AzPrezzoLordoFormula}€/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF0__c}€/kWh&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente in bassa tensione e 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -876,7 +994,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/Estenergy pari ad € 23,00.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/ESTEnergy pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -888,10 +1006,10 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -927,7 +1045,7 @@
         </fields>
         <fields>
             <name>text_0_0_0_0_1</name>
-            <fieldText>&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 24 mesi di {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} per la sua attività economica.&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo da lei scelto, è pari a 0,70 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 24 mesi di {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} per la sua attività economica.&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo da lei scelto, è pari a {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF0__c}€/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -947,7 +1065,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti&amp;nbsp;da Hera Comm/ Hera Comm Marche/ EstEnergy pari ad € 25,00&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/ESTEnergy pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -959,10 +1077,10 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -993,7 +1111,7 @@
         </fields>
         <fields>
             <name>text_0_0_0_0_1_0</name>
-            <fieldText>&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 24 mesi di {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} per la sua attività economica.&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo da lei scelto, è pari a 0,70 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 24 mesi di {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} per la sua attività economica.&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo da lei scelto, è pari a {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF0__c}€/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1013,7 +1131,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti&amp;nbsp;da Hera Comm/ Hera Comm Marche/ EstEnergy pari ad € 25,00&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/ESTEnergy pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1025,10 +1143,10 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1050,7 +1168,7 @@
         <name>Condizioni_Economiche_Bonus</name>
         <label>Condizioni Economiche Bonus</label>
         <locationX>842</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1088,7 +1206,7 @@
         <name>Condizioni_Economiche_Bonus_0_0</name>
         <label>Condizioni Economiche Bonus</label>
         <locationX>1106</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1112,7 +1230,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>GetOrderItems</targetReference>
+            <targetReference>Bonus_Fisso_0</targetReference>
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text7</name>
@@ -1121,7 +1239,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text8</name>
-            <fieldText>&lt;p&gt;Il profilo Sole- Luna prevede un prezzo applicato alla componente energia biorario, differenziato cioè tra ore piene ed ore vuote.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Le ore piene, sono quelle dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali. Le ore vuote sono invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Il prezzo della componente energia per il periodo da lei scelto assumerà il valore di 0,1708 €/kWh nelle ore piene e 0,1448 €/kWh nelle ore vuote.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: Ore Piene: 0,155 €/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Ore Vuote: 0,135 €/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo Sole- Luna prevede un prezzo applicato alla componente energia biorario, differenziato cioè tra ore piene ed ore vuote.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Le ore piene, sono quelle dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali. Le ore vuote sono invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Il prezzo della componente energia per il periodo da lei scelto assumerà il valore di {!PrezzoLordoOrePieneFormula}€/kWh nelle ore piene e {!PrezzoLordoOreVuoteFormula}€/kWh nelle ore vuote.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: Ore Piene: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePick__c}€/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Ore Vuote: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePickOut__c} €/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -1143,7 +1261,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text9</name>
-            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di 0,1543 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a: 0,1400 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di {!PrezzoLordoFormula} €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c} €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1195,7 +1313,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/Estenergy pari ad € 23,00.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/ESTEnergy pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1207,10 +1325,10 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1232,7 +1350,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>GetOrderItems</targetReference>
+            <targetReference>Bonus_Fisso</targetReference>
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text7_0</name>
@@ -1241,7 +1359,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text8_0</name>
-            <fieldText>&lt;p&gt;Il profilo Sole- Luna prevede un prezzo applicato alla componente energia biorario, differenziato cioè tra ore piene ed ore vuote.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Le ore piene, sono quelle dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali. Le ore vuote sono invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Il prezzo della componente energia per il periodo da lei scelto assumerà il valore di 0,1708 €/kWh nelle ore piene e 0,1448 €/kWh nelle ore vuote.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: Ore Piene: 0,155 €/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Ore Vuote: 0,135 €/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo Sole- Luna prevede un prezzo applicato alla componente energia biorario, differenziato cioè tra ore piene ed ore vuote.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Le ore piene, sono quelle dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali. Le ore vuote sono invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Il prezzo della componente energia per il periodo da lei scelto assumerà il valore di {!PrezzoLordoOrePieneFormula}€/kWh nelle ore piene e {!PrezzoLordoOreVuoteFormula}€/kWh nelle ore vuote.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: Ore Piene: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePick__c} €/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Ore Vuote: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePickOut__c}€/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -1263,7 +1381,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text9_0</name>
-            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di 0,1543 €/kWh.&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a: 0,1410 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di {!PrezzoLordoFormula}€/kWh.&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}€/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1315,7 +1433,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/Estenergy pari ad € 23,00.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/ESTEnergy pari ad € 23,00.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1327,10 +1445,10 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1352,7 +1470,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>GetOrderItems</targetReference>
+            <targetReference>Bonus_Fisso_0_0_0_Gas</targetReference>
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text1</name>
@@ -1361,7 +1479,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text7</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo di fornitura da lei scelto, è pari a 0,690 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;{!LoopOrdiniFigliOfferta.Volture__c}&lt;/p&gt;&lt;p&gt;{!LoopOrdiniFigliOfferta.VoltureType__c}&lt;/p&gt;&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo di fornitura da lei scelto, è pari a {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}€/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1371,22 +1489,22 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text4</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura previsti da Hera Comm/EstEnergy/Hera Comm Marche pari ad € 25,00 e quelli applicabili a discrezione del Distributore Locale.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/ESTEnergy pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue></stringValue>
-                    </rightValue>
-                </conditions>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue>Mortis Causa</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1408,7 +1526,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>GetOrderItems</targetReference>
+            <targetReference>Bonus_Fisso_0_0_Gas</targetReference>
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text1_0</name>
@@ -1417,7 +1535,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text7_0</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo di fornitura da lei scelto, è pari a 0,690 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo di fornitura da lei scelto, è pari a  {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}€/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1427,15 +1545,15 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text4_0</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura previsti da Hera Comm/EstEnergy/Hera Comm Marche pari ad € 25,00 e quelli applicabili a discrezione del Distributore Locale.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/ESTEnergy pari ad € 23,00.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -1459,13 +1577,13 @@
         <name>Conferma_Adesione_Screen_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>952</locationX>
-        <locationY>4094</locationY>
+        <locationY>4214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>textCA2_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[9. Conferma adesione]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma quindi che aderisce all’offerta Luce e all’offerta Gas?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Se deve inviare un reclamo o richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	La informo che, qualora lei abbia i requisiti previsti per legge e voglia l’applicazione dell’aliquota IVA ridotta al 10%, ci dovrà restituire, debitamente compilata, la modulistica predisposta a tale scopo che troverà all’interno del plico contrattuale che riceverà per posta.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento della nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;•	Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Contact__r.LastName} abbiamo terminato la registrazione, benvenuto/a in HERA COMM/ HERA COMM MARCHE/ESTENERGY&lt;/p&gt;&lt;p&gt;&amp;nbsp;[***FINE REGISTRAZIONE***]&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma quindi che aderisce all’offerta Luce e all’offerta Gas?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Se deve inviare un reclamo o richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	La informo che, qualora lei abbia i requisiti previsti per legge e voglia l’applicazione dell’aliquota IVA ridotta al 10%, ci dovrà restituire, debitamente compilata, la modulistica predisposta a tale scopo che troverà all’interno del plico contrattuale che riceverà per posta.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento della nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;•	Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Contact__r.LastName} abbiamo terminato la registrazione, benvenuto/a in HERA COMM/ HERA COMM MARCHE/ESTENERGY&lt;/p&gt;&lt;p&gt;&amp;nbsp;[***FINE REGISTRAZIONE***]&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1475,13 +1593,13 @@
         <name>Conferma_Adesione_Screen_0_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>688</locationX>
-        <locationY>4094</locationY>
+        <locationY>4214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>newtext1_0_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[9. Conferma adesione]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi Luce e Gas che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;•	Le ricordo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le invieremo tramite posta il plico contrattuale con le specifiche che le ho elencato per la sua fornitura, e comprensivo della scheda di confrontabilità dell’offerta, rispetto al regime di tutela.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Per il contratto di fornitura, entro 14 giorni dal ricevimento, potrà esercitare il diritto di ripensamento, inviando un fax al numero verde 800.999.600, oppure una e-mail all’indirizzo contratti@gruppohera.it oppure una raccomandata con ricevuta di ritorno presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente, può ricorrere al Servizio di Conciliazione ARERA oppure alla Conciliazione Paritetica attraverso le modalità indicate sul sito www.gruppohera.it&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento per:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	la fornitura di gas in regime di tutela.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;•	CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.LastName__c} abbiamo terminato la registrazione, benvenuto in Hera Comm/Hera Comm Marche/ESTEnergy.&lt;/p&gt;&lt;p&gt;&lt;b&gt;[***FINE REGISTRAZIONE**]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi Luce e Gas che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le invieremo tramite posta il plico contrattuale con le specifiche che le ho elencato per la sua fornitura, e comprensivo della scheda di confrontabilità dell’offerta, rispetto al regime di tutela.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Per il contratto di fornitura, entro 14 giorni dal ricevimento, potrà esercitare il diritto di ripensamento, inviando un fax al numero verde 800.999.600, oppure una e-mail all’indirizzo contratti@gruppohera.it oppure una raccomandata con ricevuta di ritorno presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente, può ricorrere al Servizio di Conciliazione ARERA oppure alla Conciliazione Paritetica attraverso le modalità indicate sul sito www.gruppohera.it&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento per:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	la fornitura di gas in regime di tutela.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	&lt;/span&gt;la nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;•	CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.LastName__c} abbiamo terminato la registrazione, benvenuto in &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.CompanyOwner__c}.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;[***FINE REGISTRAZIONE**]&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1510,10 +1628,10 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1549,10 +1667,10 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1588,10 +1706,10 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1642,10 +1760,10 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1677,7 +1795,7 @@
         <name>Dati_Tecnici_Famiglie_EE</name>
         <label>Dati Tecnici Famiglie EE</label>
         <locationX>622</locationX>
-        <locationY>2222</locationY>
+        <locationY>2342</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1696,17 +1814,17 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text3</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la potenza impegnata è  {!LoopOrdiniFigliOfferta.PowerCommitted__c}kW?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il profilo scelto è il {!ProfiloCalcolato_Famiglie} e la durata del prezzo fisso è 12 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la potenza impegnata è  {!LoopOrdiniFigliOfferta.PowerCommitted__c}kW?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il profilo scelto è il {!ProfiloCalcolato_Famiglie} e la durata del prezzo fisso è 24 mesi?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1859,7 +1977,7 @@
         <name>Dati_Tecnici_Famiglie_EE_0</name>
         <label>Dati Tecnici Famiglie EE</label>
         <locationX>358</locationX>
-        <locationY>2222</locationY>
+        <locationY>2342</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1878,17 +1996,17 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text3_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la potenza impegnata è {!LoopOrdiniFigliOfferta.PowerCommitted__c} kW?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il profilo scelto è il {!ProfiloCalcolato_Famiglie} e la durata del prezzo fisso è 12 mesi?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la potenza impegnata è {!LoopOrdiniFigliOfferta.PowerCommitted__c} kW?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il profilo scelto è il {!ProfiloCalcolato_Famiglie} e la durata del prezzo fisso è 24 mesi?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1898,7 +2016,7 @@
         <name>Dati_Tecnici_Famiglie_GAS</name>
         <label>Dati Tecnici Famiglie GAS</label>
         <locationX>1150</locationX>
-        <locationY>2222</locationY>
+        <locationY>2342</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1917,17 +2035,17 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text3</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che usa il gas per il riscaldamento?&lt;/p&gt;&lt;p&gt;CONFERMO [cottura e acqua calda].&lt;/p&gt;&lt;p&gt;NO [solo cottura e/o acqua calda].&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la durata del prezzo fisso scelta è 12 mesi?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che usa il gas per il riscaldamento? [Tipologia: {!LoopOrdiniFigliOfferta.UseCategory__c}]&lt;/p&gt;&lt;p&gt;CONFERMO [cottura e acqua calda].&lt;/p&gt;&lt;p&gt;NO [solo cottura e/o acqua calda].&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la durata del prezzo fisso scelta è 24 mesi?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2025,7 +2143,7 @@
         <name>Dati_Tecnici_Famiglie_GAS_0</name>
         <label>Dati Tecnici Famiglie GAS</label>
         <locationX>886</locationX>
-        <locationY>2222</locationY>
+        <locationY>2342</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2044,17 +2162,17 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text3_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che usa il gas per il riscaldamento?&lt;/p&gt;&lt;p&gt;CONFERMO [cottura e acqua calda].&lt;/p&gt;&lt;p&gt;NO [solo cottura e/o acqua calda].&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che usa il gas per il riscaldamento? [Tipologia: {!LoopOrdiniFigliOfferta.UseCategory__c}]&lt;/p&gt;&lt;p&gt;CONFERMO [cottura e acqua calda].&lt;/p&gt;&lt;p&gt;NO [solo cottura e/o acqua calda].&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c}, {!LoopOrdiniFigliOfferta.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -2064,7 +2182,7 @@
         <name>Durata_Contratto</name>
         <label>Durata Contratto</label>
         <locationX>490</locationX>
-        <locationY>3638</locationY>
+        <locationY>3758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2073,7 +2191,7 @@
         </connector>
         <fields>
             <name>Durata_Contratto_Text1</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt;&quot;&gt;[8. Durata contratto]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;In riferimento all’offerta Luce e/o Gas {!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 30 giorni presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta bimestrale per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 3000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 3000 smc/anno.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste le può essere sospesa la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Qualora la fornitura si interrompa prima del periodo scelto, ci riserviamo la possibilità di conguagliare tutti i consumi, utilizzando il prezzo del profilo con durata più prossima a quella effettiva della fornitura&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;In riferimento all’offerta Luce e/o Gas {!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 30 giorni presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta bimestrale per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 3000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 3000 smc/anno.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste le può essere sospesa la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Qualora la fornitura si interrompa prima del periodo scelto, ci riserviamo la possibilità di conguagliare tutti i consumi, utilizzando il prezzo del profilo con durata più prossima a quella effettiva della fornitura&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -2083,7 +2201,7 @@
         <name>Durata_Contratto_0</name>
         <label>Durata Contratto</label>
         <locationX>754</locationX>
-        <locationY>3638</locationY>
+        <locationY>3758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2092,7 +2210,7 @@
         </connector>
         <fields>
             <name>textDC1_0</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 12pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;[8. Durata contratto]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;•	La informo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 9 mesi presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Qualora il punto di fornitura di energia elettrica sia connesso in bassa tensione e/o&amp;nbsp;i consumi di gas non siano superiori a 200.000 Smc/anno può recedere in qualsiasi momento entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La informo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 9 mesi presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Qualora il punto di fornitura di energia elettrica sia connesso in bassa tensione e/o&amp;nbsp;i consumi di gas non siano superiori a 200.000 Smc/anno può recedere in qualsiasi momento entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -2102,7 +2220,7 @@
         <name>Servizi_Bundle</name>
         <label>Servizi Bundle</label>
         <locationX>50</locationX>
-        <locationY>2630</locationY>
+        <locationY>2750</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2271,7 +2389,7 @@
         <inputAssignments>
             <name>isAxa</name>
             <value>
-                <stringValue>Y</stringValue>
+                <stringValue>N</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2291,7 +2409,7 @@
         <name>HDT_Script_VAS</name>
         <label>HDT Script - VAS</label>
         <locationX>798</locationX>
-        <locationY>2966</locationY>
+        <locationY>3086</locationY>
         <connector>
             <targetReference>Vas_Presenti_Decision</targetReference>
         </connector>
