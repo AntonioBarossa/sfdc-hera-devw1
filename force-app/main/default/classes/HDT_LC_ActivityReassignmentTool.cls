@@ -139,4 +139,18 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
 
         return reassignActivity(idList, UserInfo.getUserId(), null, currentUser.CreatorGroup__c, currentUser.UserCompany__c);
     }
+
+    @AuraEnabled(cacheable = true)
+    public static Boolean refreshPage(String recordId) {
+        Boolean response = false;
+        if (String.isNotBlank(recordId)){
+            List<String> typeToRefresh = new List<String>{'APPROVAZIONE BONUS COMMERCIALE'};
+            for (wrts_prcgvr__Activity__c act : [SELECT Type__c FROM wrts_prcgvr__Activity__c WHERE Id = :recordId WITH SECURITY_ENFORCED]){
+                if (String.isNotEmpty(act.Type__c) && typeToRefresh.contains(act.Type__c.toUpperCase())){
+                    response = true;
+                }
+            }
+        }
+        return response;
+    }
 }

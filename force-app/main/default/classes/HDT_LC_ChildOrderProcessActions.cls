@@ -349,7 +349,30 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
         }
 
+        /**@frpanico 2022-04-06
+         * Valorizzazione IVA Documentale
+         * A partire dall'iva presente
+         * Sull'order
+         */
 
+        String vat = String.isBlank(orderToUpdate.VAT__c) ? currentOrder.VAT__c : currentOrder.VAT__c;
+        if(!String.isEmpty(vat))
+        {
+            String vatCode = vat.subStringBetween('Cod. ',')');
+            List<PicklistEntry> entryList = 
+                ((SObject) (Type.forName('Schema.Order').newInstance())).getSobjectType().getDescribe().fields.getMap().get('DocumentalVat__c').getDescribe().getPicklistValues();
+            for(PicklistEntry entry : entryList)
+            {
+                if(entry.getValue().containsIgnoreCase(vatCode + '%')){
+                    continue;
+                }
+                if(entry.getValue().containsIgnoreCase(vatCode)){
+                    orderToUpdate.DocumentalVat__c = entry.getValue();
+                    break;
+                }
+            }
+
+        }
         /**@frpanico 2022-03-25
          * Valorizzazione campo
          * FlagServizio26 a 'Y'
