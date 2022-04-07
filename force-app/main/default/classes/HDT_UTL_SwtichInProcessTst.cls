@@ -37,10 +37,13 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 			Id orderRtSwitchin=constants.ORDER_RECORDTYPEID_SWITCHIN;
 			orders[0].RecordTypeId=orderRtSwitchin;
 			orders[0].ServicePoint__c=servPoints[0].Id;
+			orders[0].ProcessType__c='Cambio Uso';
 
 			orders[1].AccountId=accountRes[0].Id;
 			orders[1].RecordTypeId=orderRtSwitchin;
 			orders[1].ServicePoint__c=servPoints[0].Id;
+			orders[1].ProcessType__c='Cambio Uso';
+
 			insert orders;
 
 			List<FulfillmentDateMatrix__c> fullfillDateMtx=HDT_UTL_DataFactoryTst.createFullfillmentDateMatrix(1, false);
@@ -140,6 +143,7 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 			tOrderRes[0].SignedDate__c=Date.today();
 			tOrderRes[0].SignatureMethod__c='Cartacea';
 			tOrderRes[0].DocSendingMethod__c='Cartacea';
+			tOrderRes[0].ProcessType__c='Cambio Uso';
 
 			Date getDateSentToSii=HDT_UTL_SwtichInProcess.getDateSentToSii(tOrder[0]);
 			HDT_UTL_SwtichInProcess.getDateSentToSii(tOrderRes[0]);
@@ -197,7 +201,6 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 			tOrderRes[0].MarketOrigin__c='Libero';
 			tOrderRes[0].SupplyType__c='Non Domestico';
 			tOrderRes[0].VoltageLevel__c='BT';
-
 			update tOrderRes;
 
 			Date getEffectiveDate=HDT_UTL_SwtichInProcess.getEffectiveDate(tOrder[0]);
