@@ -2,29 +2,22 @@
 public inherited sharing virtual class HDT_UTL_ProcessExecution {
 
     public static HDT_QR_StaticResource staticResourceQr = new HDT_QR_StaticResource();
-    //public HDT_QR_Account qrAcc = new HDT_QR_Account();
-    //public HDT_QR_ServicePoint qrSerPoint = new HDT_QR_ServicePoint();
     public static HDT_QR_AccountContactRelation accoContRelQr = new HDT_QR_AccountContactRelation();
     public static HDT_QR_Contact qrCont = new HDT_QR_Contact();
     public static HDT_QR_Order qrOrder = new HDT_QR_Order();
     public static HDT_QR_Case qrCase = new HDT_QR_Case();
     public HDT_UTL_Constants constant = new HDT_UTL_Constants();
     private static HDT_QR_MassiveLoaderProcess massiveLoaderProcessQr = new HDT_QR_MassiveLoaderProcess();
-    //public HDT_WRP_ProcessEntities currentProcess;
     public List<MassiveLoaderRequestItem__c> requestItemList;
-
+    public String processName;
+    public Map<Integer, String> mapHeaderByPosition = new  Map<Integer, String>();
+    public Map<String, Integer> mapHeaderForWrapper = new  Map<String, Integer>(); 
+    public Map<Integer, String> mapRequiredByPosition = new  Map<Integer, String>(); 
+    public Id recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
+    public Id recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
 
     public String splitCharacter = '\\|';
     //public String splitCharacter = ',';
-    //public  MassiveLoaderRequestItem__c varRequestItem;
-    public  String processName;
-    public  Map<Integer, String> mapHeaderByPosition = new  Map<Integer, String>();
-    public  Map<String, Integer> mapHeaderForWrapper = new  Map<String, Integer>(); 
-    public  Map<Integer, String> mapRequiredByPosition = new  Map<Integer, String>(); 
-    public  Id recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
-    public  Id recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
-
-    // --------- montors fix for bulk develop  ---------
 
     public void setProcess(String processName){
         this.processName = processName;
@@ -51,7 +44,6 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
         }
 
     }
-    // --------- montors fix for bulk develop  ---------
 
     public virtual void checks(){
         System.debug(LoggingLevel.DEBUG, 'checks');
@@ -78,11 +70,9 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
 
     }
    
-    // --------- montors fix for bulk develop  ---------
     public virtual void manageCatchException(Integer batchSize, List<MassiveLoaderRequestItem__c> itemList, String message){
         System.debug(LoggingLevel.DEBUG, 'manageCatchException');
     }
-    // --------- montors fix for bulk develop  ---------
 
     /**
     * @description :
@@ -91,7 +81,6 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     * @return String 
     **/
     public String getTypeField(String objName,String fieldApiName){
-
         String fieldTypeName = Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(fieldApiName).getDescribe().getType().name().toupperCase(); 
         return fieldTypeName;
     }

@@ -1,5 +1,7 @@
 <aura:component implements="force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,force:hasRecordId,flexipage:availableForAllPageTypes"
 access="global">
+<aura:handler event="c:HDT_LCE_AssignerUpdated" action="{!c.assignerUpdated}"/>
+  
 <aura:attribute name="recordId" type="String" />
     <c:hdtCommercialRiassignButton recordId="{!v.recordId}" onrefreshpage="{c.refreshpagecontroller}"/>
 </aura:component>	

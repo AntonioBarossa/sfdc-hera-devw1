@@ -20,9 +20,9 @@ public class HDT_UTL_PclickBulkActionVasTst {
         orderList[0].ProcessType__c    = 'Cambio Offerta Ele';
         orderList[0].OrderReference__c = orderList[1].Id;
         update orderList;      
-        List<Contract> contrList    = HDT_UTL_DataFactoryTst.createContract(1,true,accList[0].Id);
+        List<Contract> contrList    = HDT_UTL_DataFactoryTst.createContract(1,false,accList[0].Id);
         contrList[0].SBQQ__Order__c =  orderList[1].Id;
-        update contrList;
+        insert contrList;
         }
     @isTest
     public static void testPclickBulkActionVas(){
