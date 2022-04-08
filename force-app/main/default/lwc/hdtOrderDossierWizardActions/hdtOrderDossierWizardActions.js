@@ -41,6 +41,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     enableDocumental = true;
     isAmend = false;
     @track isFraud = false;
+    isCommunity=false;
 
     get disablePrintButtonFunction() {
         return this.isPrintButtonDisabled  || (this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare'));
@@ -130,14 +131,15 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             console.log('Nessuna Frode in corso');
         }
 
-        isCommunity().then(result =>{
-            if(result == true){
-                this.isModalOpen = true;
-            }
-            else{
-                this.handlePreview();
-            }
-
+        isCommunity().then(result => {
+            this.isCommunity = result;
+            getCachedUuid().then(uuid => {
+                if(this.isCommunity && uuid) {
+                    this.isModalOpen = true
+                } else {
+                    this.handlePreview();
+                }
+            })
         }).catch(error => {
             this.loading = false;
             console.error(error);
