@@ -4,7 +4,7 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,ParentOrder__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivatedDate,LoginChannel__c FROM Order Where Phase__c = \'In attesa conferma cliente\' AND QualityCall__c = true AND CompanyOwner__c = Account.CompanyOwner__c';
+        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,ParentOrder__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivatedDate,LoginChannel__c, Account.CompanyOwner__c FROM Order Where Phase__c = \'In attesa conferma cliente\' AND QualityCall__c = true';
         return Database.getQueryLocator(query);
     }
 
@@ -21,11 +21,13 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
         String comfortQualityQueId = [Select id,name from group where developername = 'HDT_QUE_ComfortQuality' limit 1].id;
 
         Set<String> orderIdsSet = new Set<String>();
+        Set<String> orderAccountCompanyOwnersSet = new Set<String>();
         for (Order order : orders){
             orderIdsSet.add(order.Id);
             if(order.ParentOrder__c != null){
                 orderIdsSet.add(order.ParentOrder__c);
             }
+            orderAccountCompanyOwnersSet.add(order.Account.CompanyOwner__c);
         }
 
         List<String> ordersIdsList = new List<String>();
@@ -88,24 +90,32 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
             }
         }
 
-        List<Campaign> comfortCampaign = HDT_QR_Campaign.getCampaingByTipology('Comfort Call');
+        //List<Campaign> comfortCampaign = HDT_QR_Campaign.getCampaingByTipology('Comfort Call');
+        Map<String, Campaign> compOwnerToCampMap = new Map<String, Campaign>();
+        compOwnerToCampMap = HDT_QR_Campaign.getCampaignByCompOwner('Comfort Call', orderAccountCompanyOwnersSet);
+
         List<CampaignMember> campaignMembersBulk = new List<CampaignMember>();
         
-        if (!comfortCampaign.isEmpty() && !contactList.isEmpty()) {
-            campaignMembersBulk = campaignMemberQr.getCampaignMemberByCampaingAndContactInBulk(new List<String>{comfortCampaign[0].Id}, contactList);
+        if (compOwnerToCampMap != null && !contactList.isEmpty()) {
+            List<String> campaignIdList = new List<String>();
+            for(Campaign c : compOwnerToCampMap.values()){
+                campaignIdList.add(c.Id);
+            }
+            campaignMembersBulk = campaignMemberQr.getCampaignMemberByCampaingAndContactInBulk(campaignIdList, contactList);
         }
 
         Map<Id,CampaignMember> notDuplicatedCampToIns = new Map<Id,CampaignMember>();
 
         for (String ordId : mapActivities.keySet()) {
-            if ( orderMap.get(ordId).Contact__c != null && !comfortCampaign.isEmpty()) {
+            String compOwner = orderMap.get(ordId).Account.CompanyOwner__c;
+            if ( orderMap.get(ordId).Contact__c != null && compOwnerToCampMap.get(compOwner) != null) {
 
                 Boolean isCmAlready = false;
                 String cmAlreadyId = null;
 
                 if (!campaignMembersBulk.isEmpty()) {
                     for (CampaignMember cmAlready : campaignMembersBulk) {
-                        if (cmAlready.CampaignId == comfortCampaign[0].Id && cmAlready.ContactId == orderMap.get(ordId).Contact__c) {
+                        if (cmAlready.CampaignId == compOwnerToCampMap.get(compOwner).Id && cmAlready.ContactId == orderMap.get(ordId).Contact__c) {
                             isCmAlready = true;
                             cmAlreadyId = cmAlready.Id;
                             break;
@@ -127,7 +137,7 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
 
                         notDuplicatedCampToIns.put(orderMap.get(ordId).Contact__c, new CampaignMember(
                             ContactId = orderMap.get(ordId).Contact__c,
-                            CampaignId = comfortCampaign[0].Id,
+                            CampaignId = compOwnerToCampMap.get(compOwner).Id,
                             PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
                             RelatedActivity__c = mapActivities.get(ordId).Id,
                             NumberingValidityStartDate__c = System.today(),

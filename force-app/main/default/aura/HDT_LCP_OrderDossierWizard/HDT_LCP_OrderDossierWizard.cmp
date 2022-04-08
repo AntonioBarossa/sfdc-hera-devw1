@@ -8,6 +8,8 @@
     <aura:attribute name='accountId' type="String"/>
     <aura:attribute name="orderId" type="String"/>
     <aura:attribute name="isCommunity" type="Boolean" />
+    <aura:attribute name="discardRework" type="Boolean" />
+    <aura:attribute name="discardActivityId" type="String" />
     
     <aura:attribute name='accountName' type="String"/>
     <aura:attribute name="fiscalCode" type="String"/>
@@ -53,7 +55,7 @@
 
     <!-- Actions buttons -->
     <aura:renderIf isTrue="{!v.orderParentRecord}">
-        <c:hdtOrderDossierWizardActions recordId="{!v.orderParentId}" orderParentRecord="{!v.orderParentRecord}" onredirecttoorderrecordpage="{!c.redirectToOrderRecordPage}"></c:hdtOrderDossierWizardActions>
+        <c:hdtOrderDossierWizardActions recordId="{!v.orderParentId}" orderParentRecord="{!v.orderParentRecord}" onredirecttoorderrecordpage="{!c.redirectToOrderRecordPage}" discardRework="{!v.discardRework}" discardActivityId="{!v.discardActivityId}"></c:hdtOrderDossierWizardActions>
     </aura:renderIf>
 
 </aura:component>

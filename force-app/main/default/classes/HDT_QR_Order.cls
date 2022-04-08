@@ -158,6 +158,7 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.Vat__c,
             ServicePoint__r.ExciseEle__c,
             ServicePoint__r.ExciseGas__c,
+            ServicePoint__r.SapContractStatus__c,
             PowerAvailable__c,
             UseTypeEnergy__c,
             BillingProfile__c,

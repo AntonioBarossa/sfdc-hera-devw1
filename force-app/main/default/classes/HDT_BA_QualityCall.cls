@@ -8,8 +8,8 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
 
-        String query = 'SELECT Id,IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c FROM Order '+
-        'Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND CompanyOwner__c = Account.CompanyOwner__c';
+        String query = 'SELECT Id,IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c FROM Order '+
+        'Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
         return Database.getQueryLocator(query);
     }
 
@@ -38,11 +38,14 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         Date dueDate = Date.today();
 
         Set<String> orderIdsSet = new Set<String>();
+        Set<String> orderAccountCompanyOwnersSet = new Set<String>();
         for (Order order : orders) {
             orderIdsSet.add(order.Id);
             if (order.ParentOrder__c != null) {
                 orderIdsSet.add(order.ParentOrder__c);
             }
+            
+            orderAccountCompanyOwnersSet.add(order.Account.CompanyOwner__c);
         }        
 
         List<String> ordersIdsList = new List<String>();
@@ -188,24 +191,34 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
             }
         }
 
-        List<Campaign> qualityCampaign = HDT_QR_Campaign.getCampaingByTipology('Quality Call');
+        Map<String, Campaign> compOwnerToCampMap = new Map<String, Campaign>();
+        compOwnerToCampMap = HDT_QR_Campaign.getCampaignByCompOwner('Quality Call', orderAccountCompanyOwnersSet);
+
+
+        //List<Campaign> qualityCampaign = HDT_QR_Campaign.getCampaingByTipology('Quality Call', orderAccountCompanyOwnersSet);
 
         List<CampaignMember> campaignMembersBulk = new List<CampaignMember>();
-        if (!qualityCampaign.isEmpty() && !contactList.isEmpty()) {
-            campaignMembersBulk = campaignMemberQr.getCampaignMemberByCampaingAndContactInBulk(new List<String>{qualityCampaign[0].Id}, contactList);
+        if (compOwnerToCampMap != null && !contactList.isEmpty()) {
+            List<String> campaignIdList = new List<String>();
+            for(Campaign c : compOwnerToCampMap.values()){
+                campaignIdList.add(c.Id);
+            }
+            campaignMembersBulk = campaignMemberQr.getCampaignMemberByCampaingAndContactInBulk(campaignIdList, contactList);
+
         }
 
         Map<Id,CampaignMember> notDuplicatedCampToIns = new Map<Id,CampaignMember>();
 
         for (String ordId : orderActivityMap.keySet()) {
-            if (orderMap.get(ordId).Contact__c != null && !qualityCampaign.isEmpty()) {
+            String compOwner = orderMap.get(ordId).Account.CompanyOwner__c;
+            if (orderMap.get(ordId).Contact__c != null && compOwnerToCampMap.get(compOwner) != null) {
 
                 Boolean isCmAlready = false;
                 String cmAlreadyId = null;
 
                 if (!campaignMembersBulk.isEmpty()) {
                     for (CampaignMember cmAlready : campaignMembersBulk) {
-                        if (cmAlready.CampaignId == qualityCampaign[0].Id 
+                        if (cmAlready.CampaignId == compOwnerToCampMap.get(compOwner).Id 
                             && cmAlready.ContactId == orderMap.get(ordId).Contact__c) {
                             isCmAlready = true;
                             cmAlreadyId = cmAlready.Id;
@@ -227,7 +240,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
                         notDuplicatedCampToIns.put(orderMap.get(ordId).Contact__c, new CampaignMember(
                             ContactId = orderMap.get(ordId).Contact__c,
-                            CampaignId = qualityCampaign[0].Id,
+                            CampaignId = compOwnerToCampMap.get(compOwner).Id ,
                             PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
                             RelatedActivity__c = orderActivityMap.get(ordId).Id,
                             NumberingValidityStartDate__c = System.today(),

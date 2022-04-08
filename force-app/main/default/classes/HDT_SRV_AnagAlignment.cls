@@ -600,8 +600,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             anagAlignCase.VATNumber__c = caseAccount.VATNumber__c;
             anagAlignCase.FiscalCode__c = caseAccount.FiscalCode__c;
             Contact caseContact = contactsMap.get(anagAlignCase.ContactId);
-            anagAlignCase.Mobile__c = caseContact.MobilePhone != null ? caseContact.MobilePhone : caseContact.Phone;
-
+            if(caseContact!=null){
+                anagAlignCase.Mobile__c = caseContact.MobilePhone != null ? caseContact.MobilePhone : caseContact.Phone;
+            }
             anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
             anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
 
