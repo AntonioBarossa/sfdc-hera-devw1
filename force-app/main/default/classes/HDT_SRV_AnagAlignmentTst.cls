@@ -229,6 +229,35 @@ public class HDT_SRV_AnagAlignmentTst {
         
     }
 
+        @IsTest
+    static void testHandleAnagAlignmentHerokuA02(){
+
+        ServicePoint__c servPoint = [SELECT Id, ServicePointCode__c FROM ServicePoint__c LIMIT 1];
+
+        List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList = new List<HDT_WRP_MrrRequest.HDT_WRP_Field>();
+        fieldList = createFieldsList(fieldList, '0200', 'VS2', 'A02', servPoint.ServicePointCode__c, 'A00000000288_DL', '');
+        
+        HDT_WRP_HerokuPostSalesManager herokuWrapper = new HDT_WRP_HerokuPostSalesManager(fieldList);
+        
+        Test.startTest();
+
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"testata":{"esito":"OK"},"posizioni":[{"campo":"PRESSIONE","valore":"200008867681"}]}}');
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AnagAlignmentTstMock(response));
+
+        Case cs = HDT_SRV_AnagAlignment.handleAnagAlignmentHeroku(herokuWrapper);
+
+        System.assert(cs != null, 'cs == null');
+        System.assert(cs.Id != null, 'cs.Id == null');
+
+        Test.stopTest();
+        
+    }
+    
     @IsTest
     static void testHandleAnagAlignmentHerokuF01(){
 
@@ -348,6 +377,20 @@ public class HDT_SRV_AnagAlignmentTst {
 
         HDT_QR_AnagAlignment a = new HDT_QR_AnagAlignment();
         ServicePoint__c srvPoint = a.findServicePointByCode('');
+
+        System.assertEquals(null, srvPoint, 'srvPoint != null');
+
+        Test.stopTest();
+        
+    }
+    
+        @IsTest
+    static void testFindOrderByDistributorPracticeCode(){
+        
+        Test.startTest();
+
+        HDT_QR_AnagAlignment a = new HDT_QR_AnagAlignment();
+        Order srvPoint = a.findOrderByDistributorPracticeCode('');
 
         System.assertEquals(null, srvPoint, 'srvPoint != null');
 

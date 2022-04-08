@@ -4,7 +4,7 @@ public class HDT_UTL_SwtichInProcessTest {
         @testSetup
         static void setup() {
 
-            Id rtId = [SELECT Id FROM recordType WHERE developerName = 'HDT_RT_Business' and sObjectType = 'Account'].Id;
+            Id rtId = [SELECT Id FROM recordType WHERE developerName = 'HDT_RT_Distributore' and sObjectType = 'Account'].Id;
 
             Account acc = new Account();
 
@@ -14,8 +14,8 @@ public class HDT_UTL_SwtichInProcessTest {
                 acc.FiscalCode__c = 'PCCLSN78C24B354F';
                 acc.RecordTypeId = rtId;            
                 acc.VatNumber__c = '99999999999';
-                acc.CustomerMarking__c = 'ACEL-Persona fisica';
-                acc.Category__c = 'Aziende';
+                acc.CustomerMarking__c = 'Azienda';
+                acc.Category__c = 'Enti';
                 acc.CompanyOwner__c = 'HERA COMM';
                 // acc.BillingCity = currentCase.BillingCity__c;
                 // acc.BillingCityCode__c = currentCase.BillingCityCode__c;

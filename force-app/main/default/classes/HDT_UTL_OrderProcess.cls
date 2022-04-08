@@ -52,6 +52,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 ord.id = child.id;
                 ord.SignedDate__c = newMap.get(child.ParentOrder__c).SignedDate__c;
                 ord.MethodSignedAccepted__c = 'IVR';
+                ord.ProcessType__c=child.ProcessType__c;
                 if (ord.ProcessType__c == 'Subentro Ele' || ord.ProcessType__c == 'Cambio Offerta Gas' || ord.ProcessType__c == 'Cambio Offerta Ele' || ord.ProcessType__c == 'Aggiunta Sconti o Bonus VAS Ele' || ord.ProcessType__c == 'Aggiunta Sconti o Bonus VAS Gas') {
                     ord.Phase__c = 'Comunicazione verso Heroku';
                     childrenToUpdate.add(ord);

@@ -208,11 +208,11 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
 
         System.runAs(u){
 
-            DistributorPointCode__c dpc = [SELECT Id, PointCode__c, Commodity__c FROM DistributorPointCode__c WHERE Commodity__c = 'Gold'];
+            DistributorPointCode__c dpc = [SELECT Id, PointCode__c, Commodity__c, City__c FROM DistributorPointCode__c WHERE Commodity__c = 'Gold'];
 
             Test.startTest();
 
-            List<DistributorPointCode__c> targetTest = HDT_LC_TargetObjectCreateForm.getDistributorPointCode(dpc.PointCode__c, dpc.Commodity__c);
+            List<DistributorPointCode__c> targetTest = HDT_LC_TargetObjectCreateForm.getDistributorPointCode(dpc.PointCode__c, dpc.Commodity__c, dpc.City__c);
 
             System.assertEquals(dpc.PointCode__c, targetTest[0].PointCode__c, 'ServicePoint matches');
             System.assertNotEquals(null, targetTest[0].PointCode__c, 'ServicePoint does not match');
@@ -265,7 +265,7 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
         
             ServicePoint__c sp = [SELECT Id, ServicePointCode__c,  MeterStatus__c, CommoditySector__c,
                                     PlugPresence__c, PowerRequested__c, PowerContractual__c, RecordTypeId,
-                                    SupplyCity__c, MarketOrigin__c, ImplantType__c, SupplyType__c
+                                    SupplyCity__c, MarketOrigin__c, ImplantType__c, SupplyType__c, isReseller__c
                                   FROM ServicePoint__c
                                   WHERE Name = 'servicepointTest'];
 
