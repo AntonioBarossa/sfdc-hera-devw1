@@ -921,7 +921,14 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     }
 
     validFieldsCreateServicePoint() {
-
+        if (this.allSubmitedFields['ServicePointCode__c'] !== undefined 
+            && this.allSubmitedFields['ServicePointCode__c'] !== ''
+            && this.allSubmitedFields['ServicePointCode__c'].length < 14) {
+            this.isValid = false;
+            this.isValidFields = false;
+            this.loading = false;
+            this.alert('Dati tabella', 'Il POD/PDR non può avere meno di 14 caratteri');
+        }
         let concatPointErrorFields = '';
         if (this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica') {
 
@@ -1058,8 +1065,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     this.alert('Dati tabella', 'Per poter salvare popolare i seguenti campi di indirizzo: ' + concatAddressErrorFields.slice(0, -2), 'error')
                 }
             }
-        
-            if (!this.selectedDistributor['SkipDimensione__c'] && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '').length != 14) {
+            console.log('### Error Skip Dimensione' + JSON.stringify(this.selectedDistributor));
+            if (this.selectedDistributor!== undefined && !this.selectedDistributor['SkipDimensione__c'] && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '').length != 14) {
                 this.isValidFields = false;
                 this.loading = false;
                 this.alert('Errore', 'Codice POD/PDR non valido', 'error');
