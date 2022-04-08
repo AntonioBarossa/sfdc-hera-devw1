@@ -32,14 +32,14 @@ public class HDT_UTL_GestionePrivacyTst {
         cpe[0].Status__c='Verificato';
         cpe[0].EmailAddress='test@gmail.com';
         insert cpe;
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(2,false,accList[0].Id);
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'Reseller', 'ETRURIA-Altro', 'Reseller - Gruppo');
+        List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(1,false,accList[0].Id);
         conList[0].MobilePhone ='069565852';
         conList[0].MobilePhonePrefix__c ='+39';
         conList[0].PhonePrefix__c='+39';
         conList[0].Email='test@gmail.com';
         conList[0].Phone ='0695655852';
-
+		conList[0].Company__c = 'Reseller';
         insert conList;
         
         HDT_UTL_DataFactoryTst.createWebServiceConfiguration('BP_CA', 'test.com', 'post', 'testUser');
@@ -84,7 +84,7 @@ public class HDT_UTL_GestionePrivacyTst {
     @isTest
     public static void testUpdateContactPointFromObjectLeadUpdateEmail(){
         Test.startTest();
-        List<Lead> oldLead = [SELECT Id,MobilePhone,MobilePhonePrefix__c,ConvertedContactId,Phone,Email,IndividualId, PhonePrefix__c FROM Lead];
+        List<Lead> oldLead = [SELECT Id,MobilePhone,MobilePhonePrefix__c,ConvertedContactId,Phone,Email,IndividualId, PhonePrefix__c FROM Lead WHERE FirstName='FirstNameTest0'];
         oldLead[0].Email='';
         update oldLead;
         
@@ -280,7 +280,7 @@ public class HDT_UTL_GestionePrivacyTst {
         
         Contact con = [SELECT Id,IndividualId FROM Contact limit 1];
 
-        HDT_UTL_GestionePrivacy.updatePrivacyConsentSol(con.Id,'test','prodotti HVAC',Date.today(),'HCM','test20@gmail.com');
+        HDT_UTL_GestionePrivacy.updatePrivacyConsentSol(con.Id,'test','prodotti HVAC',Date.today(),'Reseller','test20@gmail.com');
         
         Test.stopTest();
         ContactPointEmail cpe= [Select Id,Type__c From ContactPointEmail Where ParentId=:con.IndividualId And EmailAddress='test20@gmail.com'];
@@ -293,7 +293,7 @@ public class HDT_UTL_GestionePrivacyTst {
         
         Contact con = [SELECT Id FROM Contact limit 1];
 
-        HDT_UTL_GestionePrivacy.updatePrivacyConsentSol(con.Id,'test','prodotti HVAC',Date.today(),'HCM','test@gmail.com');
+        HDT_UTL_GestionePrivacy.updatePrivacyConsentSol(con.Id,'test','prodotti HVAC',Date.today(),'Reseller','test@gmail.com');
         
         Test.stopTest();
         ContactPointEmail cpe= [Select Id,Type__c From ContactPointEmail Where EmailAddress='test@gmail.com' And Type__c='E-mail SOL' limit 1];
@@ -369,7 +369,7 @@ public class HDT_UTL_GestionePrivacyTst {
     public static void testConvertLeadPrivacy(){
         Test.startTest();
 
-        Lead l = [SELECT Id FROM Lead WHERE CompanyOwner__c = 'HERA COMM' limit 1];
+        Lead l = [SELECT Id FROM Lead WHERE CompanyOwner__c = 'HERA COMM' LIMIT 1];
         Contact con = [SELECT Id, AccountId FROM Contact limit 1];
         Database.LeadConvert convLead=new Database.LeadConvert();
 			convLead.setLeadId(l.Id);
@@ -378,7 +378,7 @@ public class HDT_UTL_GestionePrivacyTst {
 			                          WHERE IsConverted=true
 			                          LIMIT 1];
 			convLead.setConvertedStatus(convertStatus.MasterLabel);
-
+			System.debug(convLead);
 			Database.convertLead(convLead);
 
         HDT_UTL_GestionePrivacy.convertLeadPrivacy(con.Id,l.Id);
@@ -395,14 +395,14 @@ public class HDT_UTL_GestionePrivacyTst {
         List<Contact> conts= new List<Contact>();
         Contact con = [SELECT Id,MobilePhone,MobilePhonePrefix__c,Phone,Email,IndividualId,PhonePrefix__c,LastName, FirstName,Company__c,CompanyOwner__c FROM Contact limit 1];
         Contact c= con.clone(false,true,false,true);
-        c.Company__c='HCM';
+      //  c.Company__c='Reseller';
         c.LastName = con.LastName + 'clone';
         insert c;
         conts.add(c);
         HDT_UTL_GestionePrivacy.checkCloneCompany(conts);
         
         Test.stopTest();
-        Contact cont = [SELECT Id,Phone,Email,IndividualId,LastName,Company__c FROM Contact Where Company__c='HCM' limit 1];
+        Contact cont = [SELECT Id,Phone,Email,IndividualId,LastName,Company__c FROM Contact limit 1];
         System.assertEquals(con.Phone, cont.Phone, 'The Contact has not been cloned');
         System.assertNotEquals(true, String.isBlank(cont.Company__c), 'The Contact has not been cloned');
     }

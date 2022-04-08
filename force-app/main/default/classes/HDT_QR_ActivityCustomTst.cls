@@ -57,10 +57,11 @@ public with sharing class HDT_QR_ActivityCustomTst{
 			actCustoms[0].Case__c=cases[0].Id;
 			actCustoms[0].QuoteLine__c=quoteLines[0].Id;
 			actCustoms[0].OwnerId=internalUser.Id;
+			actCustoms[0].wrts_prcgvr__IsClosed__c = true;
 
 			actCustoms[1].Account__c=accounts[0].Id;
 			actCustoms[1].ServicePoint__c=servpoints[0].Id;
-			actCustoms[1].wrts_prcgvr__Status__c='Creata';
+			actCustoms[1].wrts_prcgvr__Status__c='Aperta';
 			actCustoms[1].Type__c='Approvazione Quote';
 			actCustoms[1].ServicePointCode__c='test 2';
 			actCustoms[1].Order__c=orders[0].Id;
@@ -69,6 +70,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 			actCustoms[1].QuoteLine__c=quoteLines[0].Id;
 			actCustoms[1].OwnerId=internalUser.Id;
 			actCustoms[1].ParentActivity__c=actCustoms[0].Id;
+			actCustoms[1].wrts_prcgvr__IsClosed__c = true;
 
 			insert actCustoms;
 		}
@@ -221,10 +223,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 
 		System.runAs(tUser){
 
-			List<Order> tOrder=[SELECT Id, Phase__c
-			                    FROM Order
-			                    WHERE Phase__c='Bozza'
-			                    LIMIT 1];
+			List<Order> tOrder=[SELECT Id, Phase__c FROM Order WHERE Phase__c='Bozza' LIMIT 1];
 
 			Set<Id> orderIds=new Set<Id>();
 			orderIds.add(tOrder[0].Id);
@@ -233,8 +232,9 @@ public with sharing class HDT_QR_ActivityCustomTst{
 
 			List<wrts_prcgvr__Activity__c> tActCust=[SELECT Id, Type__c
 			                                         FROM wrts_prcgvr__Activity__c
-			                                         WHERE Type__c='Approvazione Quote'
+			                                         WHERE Type__c='Approvazione Quote' AND wrts_prcgvr__Status__c='Aperta'
 			                                         LIMIT 1];
+			
 			tActCust[0].RecordTypeId=rt;
 
 			update tActCust;
@@ -242,7 +242,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 			List<wrts_prcgvr__Activity__c> tActivity=HDT_QR_ActivityCustom.getActivityListCrediCheck(orderIds);
 			System.debug('tActivity = '+tActivity);
 
-			System.assertEquals('Creata', tActivity[0].wrts_prcgvr__Status__c, 'query return is wrong');
+			System.assertEquals('Aperta', tActivity[0].wrts_prcgvr__Status__c, 'query return is wrong');
 			System.assertNotEquals(null, tActivity[0].wrts_prcgvr__Status__c, 'getActivityListCreditCheck did not work correctly');
 
 		}
