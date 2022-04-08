@@ -316,7 +316,7 @@ public with sharing class HDT_UTL_Account {
      * Creato metodo per la creazione del BP/CA
      */
     
-    public static void createBpCa(List<AccountContactRelation> accountContactRelList, string saleId)
+    public static void createBpCa(List<AccountContactRelation> accountContactRelList, string saleId, Boolean searchToUse)
     {
         /**@frpanico 17/01/2022
          * Se presente accountContactRel Amm. Condominio/Legale Rappresentante
@@ -356,7 +356,14 @@ public with sharing class HDT_UTL_Account {
             List<SObject> listToUpdate = new List<SObject>();
             HDT_WS_RicCreBpCaRequest   req;
             HDT_WS_RichCreBpCaResponse resCreate;
-            req = callBpCaCreate(acc,cont);
+            //HRADTR_GV Modifiche 31/03/2022 - Inizio
+            if(searchToUse){
+                req = callBpCaSearch(acc,cont);
+            }
+            else{
+                req = callBpCaCreate(acc,cont);
+            }
+            //HRADTR_GV Modifiche 31/03/2022 - Fine
             resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
             if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
                 acc.CustomerCode__c = resCreate.data.codiceBP;

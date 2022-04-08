@@ -336,47 +336,47 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
         
     }
     handleSelectedValue(event) {
-    console.log('handleSelectedValue - event ' +JSON.stringify(event.detail));
-    console.log('handleSelectedValue - rowtosend****' + JSON.stringify(this.rowToSend));
-    this.template.querySelector('c-hdt-selection-address-response').closeForm();
-    if(event.detail['city1'] != null){
-        this.comune=event.detail['city1'];
-        this.theRecord['Comune']= event.detail['city1'];
-    }
-    if(event.detail['cityCode'] != null){
-        this.codcomunesap=event.detail['cityCode'];
-        this.theRecord['Codice Comune SAP']= event.detail['cityCode'];
-    }
-    if(event.detail['region'] != null){
-        this.provincia=event.detail['region'];
-        this.theRecord['Provincia']= event.detail['region'];
-    }
-    if(event.detail['street'] != null){
-        this.via=event.detail['street'];
-        this.theRecord['Via']= event.detail['Via'];
-    }
-    if(event.detail['streetCode'] != null){
-        console.log('entra in streetCode ' + JSON.stringify(event.detail['streetCode']));
-        this.codstradariosap=event.detail['streetCode'];
-        this.theRecord['codStradarioSAP']= event.detail['streetCode'];
-    }
-    if(event.detail['cityPName'] != null){
-        console.log('entra in Localita ' + JSON.stringify(event.detail['cityPName']));
-        this.localita=event.detail['cityPName'];
-        this.theRecord['Localita']= event.detail['cityPName'];
-    }
-    if(event.detail['cityPCode'] != null){
-        console.log('entra in Localita ' + JSON.stringify(event.detail['cityPCode']));
-        this.codicelocalita=event.detail['cityPCode'];
-        this.theRecord['Codice Localita']= event.detail['cityPCode'];
-    }
-    if(this.codcomunesap != null && this.codstradariosap != null && this.civico != null){
-        this.disableVerifIndiButton = false;
-    }
-    else{
-        this.disableVerifIndiButton = true;
-    }
-    console.log('handleSelectedValue theRecord : ' + JSON.stringify(this.theRecord));
+        console.log('handleSelectedValue - event ' +JSON.stringify(event.detail));
+        console.log('handleSelectedValue - rowtosend****' + JSON.stringify(this.rowToSend));
+        this.template.querySelector('c-hdt-selection-address-response').closeForm();
+        if(event.detail['city1'] != null){
+            this.comune=event.detail['city1'];
+            this.theRecord['Comune']= event.detail['city1'];
+        }
+        if(event.detail['cityCode'] != null){
+            this.codcomunesap=event.detail['cityCode'];
+            this.theRecord['Codice Comune SAP']= event.detail['cityCode'];
+        }
+        if(event.detail['region'] != null){
+            this.provincia=event.detail['region'];
+            this.theRecord['Provincia']= event.detail['region'];
+        }
+        if(event.detail['street'] != null){
+            this.via=event.detail['street'];
+            this.theRecord['Via']= event.detail['Via'];
+        }
+        if(event.detail['streetCode'] != null){
+            console.log('entra in streetCode ' + JSON.stringify(event.detail['streetCode']));
+            this.codstradariosap=event.detail['streetCode'];
+            this.theRecord['codStradarioSAP']= event.detail['streetCode'];
+        }
+        if(event.detail['cityPName'] != null){
+            console.log('entra in Localita ' + JSON.stringify(event.detail['cityPName']));
+            this.localita=event.detail['cityPName'];
+            this.theRecord['Localita']= event.detail['cityPName'];
+        }
+        if(event.detail['cityPCode'] != null){
+            console.log('entra in Localita ' + JSON.stringify(event.detail['cityPCode']));
+            this.codicelocalita=event.detail['cityPCode'];
+            this.theRecord['Codice Localita']= event.detail['cityPCode'];
+        }
+        if(this.codcomunesap != null && this.codstradariosap != null && this.civico != null){
+            this.disableVerifIndiButton = false;
+        }
+        else{
+            this.disableVerifIndiButton = true;
+        }
+        console.log('handleSelectedValue theRecord : ' + JSON.stringify(this.theRecord));
 
     }
 
