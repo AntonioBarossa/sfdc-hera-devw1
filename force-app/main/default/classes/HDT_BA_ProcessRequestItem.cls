@@ -52,7 +52,8 @@ public inherited sharing class HDT_BA_ProcessRequestItem implements Database.Bat
             //update massiveItem;
         } catch (Exception e) {
             System.debug(LoggingLevel.DEBUG, 'Standard Exception: ' + e.getMessage());
-            cls.manageCatchException(batchSize, scope, e.getMessage() + ': at line [' + String.valueOf(e.getLineNumber()) + ']');
+            String errorMessage = e.getMessage() + ': at line [' + String.valueOf(e.getLineNumber()) + '] ' + selectedProcess.ApexClass__c;
+            cls.manageCatchException(batchSize, scope, errorMessage);
         }
     }
 

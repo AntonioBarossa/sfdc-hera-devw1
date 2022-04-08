@@ -68,7 +68,7 @@ public  inherited sharing class HDT_QR_Lead {
         WITH SECURITY_ENFORCED];
     }
 
-    public static List<Lead> getCurrentRecords(HDT_UTL_ProcessLead.HDT_WRP_LeadDataForRetrieve sets){
+    /*public static List<Lead> getCurrentRecords(HDT_UTL_ProcessLead.HDT_WRP_LeadDataForRetrieve sets){
         return [
             SELECT Id, IsDeleted, MasterRecordId, LastName, FirstName, Salutation, Name, RecordTypeId, Title, Company, 
                    Street, City, State, PostalCode, Country, Latitude, Longitude, GeocodeAccuracy, Address, Phone, MobilePhone, Fax, 
@@ -106,7 +106,7 @@ public  inherited sharing class HDT_QR_Lead {
             )
         //WITH SECURITY_ENFORCED
         ];
-    }
+    }*/
 
 }
 
