@@ -9,6 +9,7 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 	public static HDT_UTL_Constants constants=new HDT_UTL_Constants();
 	private static Map<String, String> tDataAccount=new Map<String, String>();
 	private static Map<String, String> tAccountAddress=new Map<String, String>();
+	private static Map<String, String> tContactAddress=new Map<String, String>();
 	private static HDT_WS_HTTPServiceCallMock mock=new HDT_WS_HTTPServiceCallMock();
 	@testSetup
 	static void setup(){
@@ -47,6 +48,9 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 			tAccountAddress.put('billingCountry', 'IT');
 			tAccountAddress.put('BillingIsAddressVerified__c', 'true');
 
+			//ContactAddress Map
+			tContactAddress.put('MailingIsAddressVerified__c','true');
+
 			//AAcoountData Map
 			tDataAccount.put('companyOwner', 'HERA COMM');
 			tDataAccount.put('customerMarking', 'Azienda');
@@ -78,7 +82,7 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 			String fiscalCode=HDT_UTL_CalculateFiscalCode.calculateFiscalCode(tDataAccount);
 			tDataAccount.put('personFiscalCode', fiscalCode);
 
-			Account tReturn=HDT_LC_FormAccountBusiness.insertAccount(tDataAccount, tAccountAddress);
+			Account tReturn=HDT_LC_FormAccountBusiness.insertAccount(tDataAccount, tAccountAddress, tContactAddress);
 
 			System.assertEquals(false, tReturn.Id==null, 'Account not created');
 			System.assertNotEquals(true, tReturn.Id==null, 'Account not created');
@@ -106,6 +110,9 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 			// AccountAddress Map
 			tAccountAddress.put('billingCountry', 'IT');
 			tAccountAddress.put('BillingIsAddressVerified__c', 'true');
+
+			//ContactAddress Map
+			tContactAddress.put('MailingIsAddressVerified__c','true');
 
 			//AcoountData Map
 			tDataAccount.put('companyOwner', 'HERA COMM');
@@ -137,7 +144,7 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 			String fiscalCode=HDT_UTL_CalculateFiscalCode.calculateFiscalCode(tDataAccount);
 			tDataAccount.put('personFiscalCode', fiscalCode);
 
-			Account tReturn=HDT_LC_FormAccountBusiness.insertAccount(tDataAccount, tAccountAddress);
+			Account tReturn=HDT_LC_FormAccountBusiness.insertAccount(tDataAccount, tAccountAddress, tContactAddress);
 
 			System.assertEquals(false, tReturn.Id==null, 'Account not created');
 			System.assertNotEquals(true, tReturn.Id==null, 'Account not created');
@@ -164,6 +171,9 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 			// AccountAddress Map
 			tAccountAddress.put('billingCountry', 'IT');
 			tAccountAddress.put('BillingIsAddressVerified__c', 'true');
+
+			//ContactAddress Map
+			tContactAddress.put('MailingIsAddressVerified__c','true');
 
 			//AAcoountData Map
 			tDataAccount.put('companyOwner', 'HERA COMM');
@@ -194,7 +204,7 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 			String fiscalCode=HDT_UTL_CalculateFiscalCode.calculateFiscalCode(tDataAccount);
 			tDataAccount.put('personFiscalCode', fiscalCode);
 
-			Account tReturn=HDT_LC_FormAccountBusiness.insertAccount(tDataAccount, tAccountAddress);
+			Account tReturn=HDT_LC_FormAccountBusiness.insertAccount(tDataAccount, tAccountAddress, tContactAddress);
 
 			System.assertEquals(false, tReturn.Id==null, 'Account not created');
 			System.assertNotEquals(true, tReturn.Id==null, 'Account not created');
