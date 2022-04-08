@@ -125,18 +125,21 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
                         System.debug(LoggingLevel.DEBUG, 'WS_Payments successResponse--> ' + successResponse);
 
                         phase = handleSuccessResponse(successResponse, recordId, process, depositMode);
-
+                        String note = '';
                         if(successResponse.data != null){
                             if(successResponse.data.numeroBollettino != null){
 
                                 caseToUpdate.PaperlessCode__c = successResponse.data.numeroBollettino;
-
                             }
+                            note = successResponse.data.note;
                         }
                         if(phase != null){
 
                             caseToUpdate.TecnicalPhase__c = phase;
 
+                        }
+                        if (String.isNotBlank(note) && ('Esito KO da SAP'.equalsIgnoreCase(phase)||'Paperless Non Generato'.equalsIgnoreCase(phase))){
+                            caseToUpdate.DiscardDescription__c = note;
                         }
 
                         // if(process == 'Comunicazione Pagamento'
