@@ -2514,6 +2514,10 @@
             <fullName>Busta Docusign non consegnata</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Venditore Non Definito</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Validation__c</picklist>
