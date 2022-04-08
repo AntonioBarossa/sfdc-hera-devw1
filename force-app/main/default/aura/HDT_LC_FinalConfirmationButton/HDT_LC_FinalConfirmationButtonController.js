@@ -15,6 +15,7 @@
                 });
                 resultsToast.fire();
 
+                component.set("v.callLwc", 'true');
             }
             else {
                 console.log('error');
@@ -26,9 +27,13 @@
                 });
                 resultsToast.fire();
             }
-            var dismissActionPanel = $A.get("e.force:closeQuickAction");
-            dismissActionPanel.fire();
         });
         $A.enqueueAction(action);
+    },  
+
+    handleclose: function(component, event, helper) {
+        console.log('dentro handleclose');
+        var dismissActionPanel = $A.get("e.force:closeQuickAction");
+            dismissActionPanel.fire();
     }
 })
