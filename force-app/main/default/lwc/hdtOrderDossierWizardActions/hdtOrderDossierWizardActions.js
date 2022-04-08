@@ -130,7 +130,6 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         }else{
             console.log('Nessuna Frode in corso');
         }
-
         isCommunity().then(result => {
             this.isCommunity = result;
             getCachedUuid().then(uuid => {
