@@ -85,8 +85,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             return;
         }
 
-        Boolean enableCreateBillingProfile;
-        Boolean enableCreateServicePoint;
         List<sObject> accountToInsert;
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
         List<Contact> saveContactList;
@@ -113,13 +111,10 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             System.debug(LoggingLevel.DEBUG, '>>> tempSplitted ' + processObj.csvSplitted.size());
 
-            //enableCreateBillingProfile = String.isEmpty(processObj.csvSplitted[contoContrattualeIndex]);
-            //enableCreateServicePoint = !codicePuntoMap.containsKey(processObj.csvSplitted[codicePuntoIndex]);
-
             processObj.createServicePoint = String.isEmpty(processObj.csvSplitted[codicePuntoIndex]);
             processObj.createBillingProfile = !codicePuntoMap.containsKey(processObj.csvSplitted[contoContrattualeIndex]);
 
-            System.debug(LoggingLevel.DEBUG, '>>> enableCreate: billProf [' + enableCreateBillingProfile + ']; servPoint [' + enableCreateServicePoint + ']');
+            System.debug(LoggingLevel.DEBUG, '>>> enableCreate: billProf [' + processObj.createBillingProfile + ']; servPoint [' + processObj.createServicePoint + ']');
 
             processObj.account.RecordTypeId = recordTypeMap.get(processObj.csvSplitted[recTypeIndex]);
             
@@ -176,8 +171,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             processObj.account.Name = String.isBlank(processObj.account.FirstName__c) ? processObj.account.LastName__c : processObj.account.FirstName__c + ' ' + processObj.account.LastName__c;
 
             // only for test
-            processObj.account.IsWrongFiscalData__c = false;
-            processObj.account.BillingCityCode__c = 'Roma';
+            //processObj.account.IsWrongFiscalData__c = false;
+            //processObj.account.BillingCityCode__c = 'Roma';
 
             System.debug(LoggingLevel.DEBUG, '>>> currentAccount: ' + processObj.account);
             System.debug(LoggingLevel.DEBUG, '>>> currentBillingProfile: ' + processObj.billingProfile);
