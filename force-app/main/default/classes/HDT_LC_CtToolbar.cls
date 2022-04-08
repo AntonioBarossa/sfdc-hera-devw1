@@ -170,4 +170,11 @@ public with sharing class HDT_LC_CtToolbar {
     public static String getCachedUuid() {
         return (String) Cache.Session.get('local.ReitekAgentsSessionCache.uuid');
     }
+
+    @InvocableMethod
+    public static List<String> getCachedUuidInvocable() {
+        List<String> listreturn=new List<String>();
+        listreturn.add((String)Cache.Session.get('local.ReitekAgentsSessionCache.uuid'));
+        return listreturn;
+    }
 }

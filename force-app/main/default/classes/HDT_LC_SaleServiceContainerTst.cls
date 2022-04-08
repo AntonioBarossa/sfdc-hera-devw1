@@ -80,7 +80,7 @@ public with sharing class HDT_LC_SaleServiceContainerTst{
 			                             FROM ServicePoint__c
 			                             WHERE ServicePointCode__c='testServicePointCode2'];
 
-			Map<String, Boolean> tcreateSale=HDT_LC_SaleServiceContainer.createSaleServiceItemTile(tServPoint2, tSale, tServPoint);
+			Map<String, Boolean> tcreateSale=HDT_LC_SaleServiceContainer.createSaleServiceItemTile(tServPoint2, tSale, tServPoint.SupplyType__c);
 
 			System.debug('tcreateSale = '+tcreateSale);
 

@@ -187,7 +187,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         Boolean isReseller = ord.ServicePoint__r.isReseller__c;//ord.Account.CompanyOwner__c.equalsIgnoreCase('reseller') || ord.ServicePoint__r.isReseller__c;
         //isReseller=false;
 
-        List<Contract> contrList = [SELECT Status FROM Contract WHERE ServicePoint__c =:ord.ServicePoint__c WITH SECURITY_ENFORCED ORDER BY CreatedDate DESC ];
+        List<Contract> contrList = [SELECT Status FROM Contract WHERE ServicePoint__c =:ord.ServicePoint__c WITH SECURITY_ENFORCED ORDER BY Status ASC ];
         String status = !contrList.isEmpty() ? contrList[0].Status : 'null' ;
         Boolean isSwitchInRipr = isSwitchInRipristinatorio(ord);
         Boolean isPowerChange = isAttivazioneConModifica(ord);
@@ -335,7 +335,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         system.debug('isAttivazioneConModifica ord.ServicePoint__r.RecordType.DeveloperName ' + ord.ServicePoint__r.RecordType.DeveloperName);
         system.debug('isAttivazioneConModifica ord.PowerRequested__c ' + ord.PowerRequested__c);
         system.debug('isAttivazioneConModifica ord.PowerCommitted__c ' + ord.PowerCommitted__c);
-        System.debug('isAttivazioneConModifica ord.RecordType.DeveloperName' + ord.RecordType.DeveloperName);
+      //  System.debug('isAttivazioneConModifica ord.RecordType.DeveloperName' + ord.RecordType.DeveloperName);
 
         if (ord.ServicePoint__c != null 
             && ord.ServicePoint__r.RecordType.DeveloperName == 'HDT_RT_Ele' 
