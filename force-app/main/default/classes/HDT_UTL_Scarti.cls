@@ -1159,4 +1159,18 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         HDT_UTL_DatabaseService.insertSObject(activitiesToCreate);
     }
     //EVERIS fine Gestione Scarto Transitorio
+
+    public static void closeDocumentalManagementActivity(String formParams){
+        Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
+        if (formParamsMap.containsKey('discardRework') && (Boolean)formParamsMap.get('discardRework')){
+            List<wrts_prcgvr__Activity__c> actsToClose = HDT_QR_GenericQuery.getGenericRecords('Id','wrts_prcgvr__Activity__c','wrts_prcgvr__IsClosed__c = false AND Type__c = \'Busta Docusign non consegnata\' AND Id =\''+(String)formParamsMap.get('discardActivityId')+'\'');
+            List<wrts_prcgvr__Activity__c> actsToUpdate = new List<wrts_prcgvr__Activity__c>();
+            for (wrts_prcgvr__Activity__c act : actsToClose){
+                actsToUpdate.add(closeDiscardActivity(act.Id));
+            }
+            if (!actsToUpdate.isEmpty()){
+                HDT_UTL_DatabaseService.updateSObject(actsToUpdate);
+            }
+        }
+    }
 }

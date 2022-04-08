@@ -304,6 +304,18 @@
                 <elementReference>Get_Case.Id</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>DiscardActivityId</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>DiscardRework</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Gestione_Morosit</name>
