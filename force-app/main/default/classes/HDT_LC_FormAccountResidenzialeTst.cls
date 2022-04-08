@@ -23,8 +23,7 @@ public class HDT_LC_FormAccountResidenzialeTst{
 		System.debug('SETUPconList = '+conList);
         
         List<City__c> cities = HDT_UTL_DataFactoryTst.createCity();
-        cities[0].Name = 'hello';
-        insert cities;
+        
 	}
 
 	@isTest
@@ -43,6 +42,7 @@ public class HDT_LC_FormAccountResidenzialeTst{
 
 
 		Map<String, String> dataAccount=new Map<String, String>{
+                    'Id'=>tacc[0].Id,
                     'firstName'=>'test', 
                     'recordTypeId'=>tacc[0].RecordTypeId, 
                     'fiscalCode'=>tacc[0].FiscalCode__c, 
@@ -85,19 +85,29 @@ public class HDT_LC_FormAccountResidenzialeTst{
 		                    WHERE Name='test account0'
 		                    LIMIT 1];
 
+        List<City__c> cities = HDT_UTL_DataFactoryTst.createCity();
+        System.debug('city: '+ cities[0].Name);
 		Map<String, String> dataAccount=new Map<String, String>{
                     'firstName'=>'test', 
-                    'recordTypeId'=>tacc[0].RecordTypeId, 
-                    'fiscalCode'=>'CCNTST21R60Bt0V', 
+                    'recordTypeId'=>tacc[0].RecordTypeId,
                     'customerMarking'=>tacc[0].CustomerMarking__c, 
                     'category'=>tacc[0].Category__c, 
                     'companyOwner'=>tacc[0].CompanyOwner__c, 
                     'name'=>tacc[0].Name,
                     'lastName'=>tacc[0].LastName__c, 
                     'role' => 'admin',
-                    'birthplace'=>'hello',
+                    'birthplace'=>cities[0].Name,
                     'birthDate'=>String.valueof(system.today())
                     };
+
+        Map<String, String> infoData = new Map<String, String>();
+        infoData.put('lastName'     , dataAccount.get('lastName')   );
+        infoData.put('firstName'    , dataAccount.get('firstName')  );
+        infoData.put('birthDate'    , dataAccount.get('birthDate')  );
+        infoData.put('birthPlace'   , dataAccount.get('birthplace') );
+        infoData.put('gender'       , dataAccount.get('gender')     );
+
+        dataAccount.put('fiscalCode',HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoData));
 
 		Map<String, String> accountAddress=new Map<String, String>{
             	'billingCity'=>'Roma',
@@ -114,7 +124,7 @@ public class HDT_LC_FormAccountResidenzialeTst{
                     
 		Test.startTest();
             
-		Account accTest=HDT_LC_FormAccountResidenziale.insertAccount(dataAccount, accountAddress, accountAddresRes);
+		    Account accTest=HDT_LC_FormAccountResidenziale.insertAccount(dataAccount, accountAddress, accountAddresRes);
         
         Test.stopTest();
 
