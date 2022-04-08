@@ -287,7 +287,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
 
                         utilityMap.put('NOTE_ERR', errdesc);
                         utilityMap.put('DISCARD_MESSAGE', errdesc);
-                        utilityMap.put('DATA_ELABORAZIONE', String.isNotBlank(fieldValueResponse.get('DATA_ELABORAZIONE')) ? fieldValueResponse.get('DATA_ELABORAZIONE') : '');
+                        utilityMap.put('DATA_ELABORAZIONE', String.isNotBlank(fieldValueResponse.get('DATA_ELABORAZIONE')) ? fieldValueResponse.get('DATA_ELABORAZIONE') :  
+                            String.isNotBlank(fieldValueResponse.get('DATA_EVENTO')) ? fieldValueResponse.get('DATA_EVENTO') : '');
                         utilityMap.put('CMP', String.isNotBlank(fieldValueResponse.get('CMP')) ? fieldValueResponse.get('CMP') : '');
                         utilityMap.put('UTENZA', String.isNotBlank(fieldValueResponse.get('UTENZA')) ? fieldValueResponse.get('UTENZA') : '');
                         utilityMap.put('FASE', String.isNotBlank(fieldValueResponse.get('FASE')) ? fieldValueResponse.get('FASE') : '');

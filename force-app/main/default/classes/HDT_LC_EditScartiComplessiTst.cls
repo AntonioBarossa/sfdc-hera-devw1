@@ -79,6 +79,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         Account acc = [SELECT Id FROM Account];
         List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acc.Id);
         actList[0].Case__c = c.Id;
+        actList[0].ManuallyReassigned__c = true;
         insert actList;
         String response;
         Test.startTest();
@@ -94,18 +95,27 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         String debugString = 'Method - executeGetInitDataForOrder ';
         Order o = [SELECT Id FROM Order LIMIT 1];
         Account acc = [SELECT Id FROM Account];
-        List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acc.Id);
+        List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acc.Id);      
         actList[0].Order__c = o.Id;
+        actList[0].ManuallyReassigned__c = true;
         insert actList;
         String response;
         Test.startTest();
-            response = HDT_LC_EditScartiComplessi.getInitData(actList[0].Id);
+            try
+            {
+                response = HDT_LC_EditScartiComplessi.getInitData(actList[0].Id);
+            }
+            catch(exception e){
+                System.debug('exception: '+ e);
+            }
         Test.stopTest();
+
         Map<String,Object> responseMap = (Map<String,Object>)JSON.deserializeUntyped(response);
-        System.assertEquals('Order', responseMap.get('objectType'), debugString +'ObjectType Errato');
         Order retrivedOrder = (Order)JSON.deserialize(JSON.serialize(responseMap.get('object')),Order.class);
-        System.assertEquals(o.Id, retrivedOrder.Id, debugString+'Ordine non corretto');
         o = [SELECT Id,Step__c FROM Order WHERE Id =:o.Id];
+
+        System.assertEquals('Order', responseMap.get('objectType'), debugString +'ObjectType Errato');
+        System.assertEquals(o.Id, retrivedOrder.Id, debugString+'Ordine non corretto');
         System.assertEquals(5, o.Step__c, debugString +'Step non aggiornato');
     }
 
@@ -140,6 +150,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acc.Id);
         actList[0].Order__c = o.Id;
         actList[0].Type__c = 'Busta Docusign non consegnata';
+        actList[0].ManuallyReassigned__c = true;
         insert actList;
         String response;
         Test.startTest();
@@ -181,6 +192,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         Account acc = [SELECT Id FROM Account];
         List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acc.Id);
         actList[0].Order__c = o.Id;
+        actList[0].ManuallyReassigned__c = true;
         insert actList;
         String response;
         Test.startTest();
@@ -201,6 +213,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         Account acc = [SELECT Id FROM Account];
         List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acc.Id);
         actList[0].Order__c = o.Id;
+        actList[0].ManuallyReassigned__c = true;
         insert actList;
         String response;
         Test.startTest();
@@ -221,6 +234,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         Account acc = [SELECT Id FROM Account];
         List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acc.Id);
         actList[0].Order__c = o.Id;
+        actList[0].ManuallyReassigned__c = true;
         insert actList;
         String response;
         Test.startTest();
@@ -242,6 +256,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         Account acc = [SELECT Id FROM Account];
         List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acc.Id);
         actList[0].Order__c = o.Id;
+        actList[0].ManuallyReassigned__c = true;
         insert actList;
         String response;
         Test.startTest();
@@ -263,6 +278,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         Account acc = [SELECT Id FROM Account];
         List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acc.Id);
         actList[0].Order__c = o.Id;
+        actList[0].ManuallyReassigned__c = true;
         insert actList;
         String response;
         Test.startTest();
@@ -421,6 +437,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         update o;
         List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acc.Id);
         actList[0].Order__c = o.Id;
+        actList[0].ManuallyReassigned__c = true;
         insert actList;
         String response;
         Test.startTest();
