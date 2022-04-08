@@ -687,6 +687,31 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>CampaignMemberLeadAssigmentItem__c.Agency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+            <editable>true</editable>
+            <field>CampaignMemberLeadAssigmentItem__c.SourceAgency__c</field>
+            <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+            <editable>true</editable>
+            <field>CampaignMemberLeadAssigmentItem__c.Active__c</field>
+            <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+            <editable>true</editable>
+            <field>CampaignMemberLeadAssigmentItem__c.InterestProduct__c</field>
+            <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+            <editable>true</editable>
+            <field>CampaignMemberLeadAssigmentItem__c.ProcessingType__c</field>
+            <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SiebelCommTracking__c.Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
