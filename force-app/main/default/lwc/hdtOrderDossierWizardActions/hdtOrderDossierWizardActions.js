@@ -4,6 +4,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import getCachedUuid from '@salesforce/apex/HDT_LC_CtToolbar.getCachedUuid';    // params: n/a
 import getActivity from '@salesforce/apex/HDT_QR_ActivityCustom.getRecordByOrderIdAndType';
 import saveActivityVO from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.createActivityVocalOrder'
+import seekFraud from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.seekFraud';
 import save from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.save';
 import save2 from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.save2';
 import cancel from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.cancel';
@@ -27,6 +28,8 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     @track isModalOpen = false;
     @api orderParentRecord;
     @api recordId
+    @api discardRework;
+    @api discardActivityId;
     currentStep = 2;
     loading = false;
     signatureMethod = '';
@@ -39,6 +42,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     isVocalAndActivityNotClose = true;
     enableDocumental = true;
     isAmend = false;
+    @track isFraud = false;
     isCommunity=false;
 
     get disablePrintButtonFunction() {
@@ -117,6 +121,17 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     }
 
     handleModalPreview(){
+
+        if( this.isFraud ){
+            const toastSuccessMessage = new ShowToastEvent({
+                title: 'Successo',
+                message: 'Possibile frode in corso, tutti gli ordini correlati verranno annullati.',
+                variant: 'success'
+            });
+            this.dispatchEvent(toastSuccessMessage);
+        }else{
+            console.log('Nessuna Frode in corso');
+        }
         isCommunity().then(result => {
             this.isCommunity = result;
             getCachedUuid().then(uuid => {
@@ -130,6 +145,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             this.loading = false;
             console.error(error);
         });
+        
     }
 
     handlePreview(){
@@ -276,13 +292,18 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             if (signMode.localeCompare('OTP Remoto') === 0 && oldSignMode && oldSignMode.localeCompare('OTP Coopresenza') === 0){
                 discardOldEnvelope = true;
             }
+            console.log('discardRework --> '+this.discardRework);
+            console.log('discardActivityId --> '+this.discardActivityId);
             var formParams = {
                 sendMode : sendMode,
                 signMode : signMode,      
                 mode : 'Print',
                 Archiviato : 'Y',
-                DiscardOldEnvelope : discardOldEnvelope
+                DiscardOldEnvelope : discardOldEnvelope,
+                discardRework : this.discardRework,
+                discardActivityId : this.discardActivityId
             }
+            console.log('formParams --> '+JSON.stringify(formParams));
             sendDocument({
                 recordId: this.recordId,
                 context: 'Order',
@@ -439,6 +460,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         this.getIsOnlyAmend();
         this.getCancelButtonStatus();
         this.getActivityVocalOrder();
+        this.getFraud();
     }
 
     getActivityVocalOrder(){
@@ -472,4 +494,43 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         })
         .catch(error => console.error(error));
     }
+
+    getFraud(){
+        this.loading = true;
+        
+        seekFraud({recordId: this.recordId, orderParent: this.orderParentRecord}).then(result =>{
+            this.loading = false;
+
+            var resultParsed = JSON.parse(result);
+            this.isFraud = resultParsed.isFraud;
+
+            const toastSuccessMessage = new ShowToastEvent({
+                title: 'Successo',
+                message: result.get('message'),
+                variant: 'success'
+            });
+            this.dispatchEvent(toastSuccessMessage);
+
+        }).catch(error => {
+            this.loading = false;
+
+            let errorMessage = '';
+            if (error.body.message !== undefined) {
+                errorMessage = error.body.message;
+            } else if(error.message !== undefined){
+                errorMessage = error.message;
+            } else if(error.body.pageErrors !== undefined){
+                errorMessage = error.body.pageErrors[0].message;
+            }
+            console.log('Error: ', errorMessage);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: errorMessage,
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+    }
+
 }

@@ -136,6 +136,11 @@
         <label>Annullato per no conferma cliente</label>
     </customValue>
     <customValue>
+        <fullName>Annullato per possibile frode</fullName>
+        <default>false</default>
+        <label>Annullato per possibile frode</label>
+    </customValue>
+    <customValue>
         <fullName>Il cliente rinuncia</fullName>
         <default>false</default>
         <label>Il cliente rinuncia</label>

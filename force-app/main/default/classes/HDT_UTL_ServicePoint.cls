@@ -161,6 +161,21 @@ public with sharing class HDT_UTL_ServicePoint {
         else{
             spNew.isReseller__c = false;
         }
+        /**@frpanico 2022-04-08
+         * Aggiunta gestione Stato Contratto SAP
+         * Da DATACESSAZIONE
+         */
+        if(mapRes.get('DATACESSAZIONE') !=null && !String.isBlank(mapRes.get('DATACESSAZIONE')))
+        {
+            if(mapRes.get('DATACESSAZIONE') == '99991231' || Date.valueOf(mapRes.get('DATACESSAZIONE').substring(0,4)+'-'+mapRes.get('DATACESSAZIONE').substring(4,6)+'-'+mapRes.get('DATACESSAZIONE').substring(6,8)) > System.today())
+            {
+                spNew.SapContractStatus__c = 'Attivo';
+            }
+            else
+            {
+                spNew.SapContractStatus__c = 'Cessato';
+            }
+        }
         if(mapRes.get('DATACESSAZIONE')!=null && !String.isBlank(mapRes.get('DATACESSAZIONE'))){
             if(mapRes.get('DATACESSAZIONE') != '99991231' && mapRes.get('DATACESSAZIONE').length()== 8 ){
                 Date d = Date.valueOf(mapRes.get('DATACESSAZIONE').substring(0,4)+'-'+mapRes.get('DATACESSAZIONE').substring(4,6)+'-'+mapRes.get('DATACESSAZIONE').substring(6,8));
