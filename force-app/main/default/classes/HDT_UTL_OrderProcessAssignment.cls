@@ -187,8 +187,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         Boolean isReseller = ord.ServicePoint__r.isReseller__c;//ord.Account.CompanyOwner__c.equalsIgnoreCase('reseller') || ord.ServicePoint__r.isReseller__c;
         //isReseller=false;
 
-        List<Contract> contrList = [SELECT Status FROM Contract WHERE ServicePoint__c =:ord.ServicePoint__c WITH SECURITY_ENFORCED ORDER BY Status ASC ];
-        String status = !contrList.isEmpty() ? contrList[0].Status : 'null' ;
+        String status = ord.ServicePoint__r.SapContractStatus__c != null ? ord.ServicePoint__r.SapContractStatus__c : 'null';
         Boolean isSwitchInRipr = isSwitchInRipristinatorio(ord);
         Boolean isPowerChange = isAttivazioneConModifica(ord);
 
@@ -196,10 +195,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - plugPresence: ' + plugPresence);
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isChangeUse: ' + isChangeUse);
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - marketOrigin: ' + ord.MarketOrigin__c);
-        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isSwitchInRipristinatorio: ' + isSwitchInRipristinatorio(ord));
-        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAttivazioneConModifica: ' + isAttivazioneConModifica(ord));
+        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isSwitchInRipristinatorio: ' + isSwitchInRipr);
+        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAttivazioneConModifica: ' + isPowerChange);
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - commodity: ' + ord.ServicePoint__r.RecordType.DeveloperName);
-        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - meterStatus: ' + ord.ServicePoint__r.MeterStatus__c);
+        system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - contractStatus: ' + status);
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isAmendmentAllowed: ' + isAmendmentAllowed);
         system.debug(LoggingLevel.DEBUG,'getAvailableProcesses - isWinBack: ' + ord.IsWinback__c);
         system.debug(LoggingLevel.DEBUG, 'getAvailableProcesses - isReseller: ' +isReseller);
@@ -210,7 +209,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 process.marketOrigin__c.contains(ord.MarketOrigin__c) // || process.marketOrigin__c.isEmpty())
                 && (process.plugPresence__c == plugPresence || process.commodity__c.containsIgnoreCase('Gas') )//aggiustamento plug presence gas
                 && (process.isOwnAccount__c == isOwnAccount || process.isOwnAccount__c == null || (process.processName__c.containsIgnoreCase('Voltura Ele') && ord.ServicePoint__r.Account__c == null))
-                && process.isChangeUse__c == (isChangeUse || process.processName__c.containsIgnoreCase('Cambio Uso'))
+                && process.isChangeUse__c == (isChangeUse && process.processName__c.containsIgnoreCase('Cambio Uso'))
                 && process.ExistActivitySwitchRipristinatorio__c == isSwitchInRipr
                 && process.PowerChange__c == (isPowerChange && !process.processName__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))
                 && process.isSTG__c == ord.isSTG__c
