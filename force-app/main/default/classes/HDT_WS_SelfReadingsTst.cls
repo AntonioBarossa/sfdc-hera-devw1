@@ -507,23 +507,20 @@ public with sharing class HDT_WS_SelfReadingsTst {
         System.debug('utl_isProcessReadingTest Order: ' + myOrder);
         
         
-        Date myDate = Date.newInstance(2021, 10, 1);
+        Date myDate = Date.Today();
         Time myTime = Time.newInstance(3, 3, 3, 0);
         DateTime dt = DateTime.newInstance(myDate, myTime);
         
-        HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs flin;
-        flin = new HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs();
-        flin.servicePointId = servPoint.Id;
-        flin.accountId = myOrder.AccountId;
-        flin.caseCreatedDateTime = dt;
-        flin.metadataRecordName = 'Autolettura_da_processo';//TODO: ALTERNATIVE TEST
-        
-        List<HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs> inputs;
-        inputs = new List<HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs>{flin};
+        List<HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs> inputs = new List<HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs>();
+        HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs myInput = new HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs();
+        myInput.servicePointId = servPoint.Id;
+        myInput.accountId = myOrder.AccountId;
+        myInput.caseCreatedDateTime = dt;
+        myInput.metadataRecordName = 'Autolettura_da_processo';//TODO: ALTERNATIVE TEST
+        inputs.add(myInput);
         
         //TESTING
-        List<HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowOutputs> resultList;
-        resultList = HDT_UTL_SelfReadings.isProcessReading(inputs);
+        List<HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowOutputs> resultList = HDT_UTL_SelfReadings.isProcessReading(inputs);
         
         HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowOutputs result = resultList[0];
         

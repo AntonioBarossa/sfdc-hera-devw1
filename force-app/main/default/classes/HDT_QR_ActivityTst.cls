@@ -57,4 +57,38 @@ public class HDT_QR_ActivityTst{
 			System.assertNotEquals(false, tActivity.Id!=null, 'Activity not found');
 		}
 	}
+
+@isTest
+	public static void testGetActivityFromIdList(){
+
+		User tUser=[SELECT Id
+		            FROM User
+		            WHERE Alias='crmuser'
+		            LIMIT 1];
+
+		System.runAs(tUser){
+
+			test.startTest();
+
+			List<Account> tAccs=[SELECT Id, Name
+			                     FROM Account
+			                     WHERE Name='test account0'];
+
+			List<Sale__c> tSale=[SELECT Id, Name
+			                     FROM Sale__c
+			                     WHERE Name='Vendita Fabiana Federici 313'];
+
+			wrts_prcgvr__Activity__c tActivity=activQr.getLastActivity(tAccs[0].id, tSale[0]);
+			Set<String> sAct = new Set<String>();
+            sAct.add(String.valueOf(tActivity.Id));
+            List<wrts_prcgvr__Activity__c> tActivityL = new List<wrts_prcgvr__Activity__c>();
+            tActivityL = HDT_QR_Activity.getActivityFromIdList(sAct);
+			test.stopTest();
+
+			System.assertEquals(true, tActivityL[0].Id!=null, 'Activity not found');
+			System.assertNotEquals(false, tActivityL[0].Id!=null, 'Activity not found');
+		}
+	}
+
+
 }

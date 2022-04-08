@@ -1,19 +1,28 @@
 @isTest
 public with sharing class HDT_BA_OldDraftSalesTest {
 
-    public static String CRON_EXP = '0 0 0 15 3 ? 2022';
-   
+    public static string forCronExp(){
+
+        Date dToday = Date.today().addDays(1);
+        String dayC = String.valueOf(dToday.day());
+        String monthC = String.valueOf(dToday.month());
+        String yearC = String.valueOf(dToday.year());
+        String cronReturn = '0 0 0 ' + dayC + ' ' + monthC + ' ? ' + yearC;
+        return cronReturn;
+    }
+
+    public static String CRON_EXP = forCronExp();
+    
     @testSetup
 
     static void setup(){
 
         DateTime thirtyDays = System.now().addDays(-30);
 
-        CS_DaysToExpiration__c testCS = new CS_DaysToExpiration__c(Name='Vendita',Type__c='Vendita', NumberOfDays__c='60');
-        insert testCS;
+        CS_DaysToExpiration__c testCs = new CS_DaysToExpiration__c(Name='Vendita',Type__c='Vendita', NumberOfDays__c='-60');
+        insert testCs;
         
-        Account acc = new Account(name='testAccount');
-        insert acc;
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende Soho');
 
         List<Sale__c> sales = new List<Sale__c>();
         List<Id> saleIds = new List<Id>();
@@ -21,7 +30,7 @@ public with sharing class HDT_BA_OldDraftSalesTest {
         List<Opportunity> opps = new List<Opportunity>();
 
         for (Integer i=0; i<10; i++) {
-            sales.add(new Sale__c(name='TestVendita' + i, Status__c='Bozza', Account__c=acc.Id));
+            sales.add(new Sale__c(name='TestVendita' + i, Status__c='Bozza', Account__c=accList[0].Id, CompanyOwner__c='MMS'));
         }
 
         insert sales;
@@ -32,8 +41,8 @@ public with sharing class HDT_BA_OldDraftSalesTest {
         }
 
         for(Sale__c sale : [SELECT Id from Sale__c WHERE Id IN :saleIds]) {
-            quotes.add(new SBQQ__Quote__c(SBQQ__Status__c='Test', Sale__c=sale.Id));
-            opps.add(new Opportunity(name='TestOpp', StageName='Proposal', Sale__c=sale.Id, CloseDate=Date.today()));
+            quotes.add(new SBQQ__Quote__c(SBQQ__Status__c='Annullata', Sale__c=sale.Id));
+            opps.add(new Opportunity(name='TestOpp', StageName='Chiusa/Annullata', Sale__c=sale.Id, CloseDate=Date.today()));
         }
         insert quotes;
         insert opps;

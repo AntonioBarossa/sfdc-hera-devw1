@@ -354,7 +354,7 @@ public with sharing class HDT_UTL_VasManagement {
             telefono = currentOrder.PhoneNumber__c;
             mail = currentOrder.ShippingMail__c;
             modalitaFatturazione = parentOrderItem?.VASBillingMode__c?.substring(0,1);
-            dataDecorrenza = parentOrderItem.VasActivationDate__c != null ? parentOrderItem?.VasActivationDate__c : parentOrderItem?.DelayEffectiveDate__c;
+            dataDecorrenza = parentOrderItem?.VasActivationDate__c != null ? parentOrderItem?.VasActivationDate__c : parentOrderItem?.DelayEffectiveDate__c;
             dataFirma = currentOrder.SignedDate__c;
             durataServizioGg = parentOrderItem?.DurationDay__c;
             if(currentOrder.CommercialProductLink__r.DurationDay__c > 0){

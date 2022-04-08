@@ -155,11 +155,19 @@ public with sharing class HDT_WS_MrrRequestTst {
     @isTest
     private static Void postException() {
 
+        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'HERA COMM','Azienda','Aziende SME');
+        
+        HDT_UTL_DataFactoryTst.createOrder(1, true, accs[0].id, 'Bozza');
+        
+        Id myOrder = [Select id From Order][0].id;
+
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
 
         req.requestURI = 'services/apexrest/MRRInboundService';
-        req.httpMethod = 'POST';        
+        req.httpMethod = 'POST';  
+        req.requestBody = Blob.valueOf('{"header":null,"requests":[{"header":{"requestId":"A00000001222","requestTimestamp":null,"requestType":"NOTIF_ES","fields":[{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":"sales"}]},"objects":[{"fields":[{"fieldType":"TEXT","name":"COD_PRAT_UTENTE","value":"A00000001222"},{"fieldType":"TEXT","name":"RECORD_ID","value":"'+myOrder+'"},{"fieldType":"TEXT","name":"FASE","value":"Completata"},{"fieldType":"TEXT","name":"ATTIVITA","value":"WRONG"},{"fieldType":"TEXT","name":"METHOD","value":"esito_intermedio"},{"fieldType":"TEXT","name":"UTENZA","value":"utente_hera"},{"fieldType":"TEXT","name":"DATA_EVENTO","value":"2021-06-22 12:44:31"}],"id":null,"name":null,"objectType":null,"objects":[{"fields":[{"fieldType":"TEXT","name":"DATA_EVENTO","value":"2021-06-22 12:44:31"}]}]}]}]}');
+      
 
         RestContext.request = req;
         RestContext.response = res;

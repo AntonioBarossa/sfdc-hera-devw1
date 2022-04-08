@@ -160,51 +160,90 @@ public with sharing class HDT_UTL_Sales {
      */
     public static Boolean isTransitionVas(String city, Sale__c sale)
     {
-        Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
-        List<City__c> listCity = HDT_QR_City.getRecordByComune(city);
-        if(listCity != null && !listCity.isEmpty() && listCity[0].Province__c != null)
-        {
-            String province = listCity[0].Province__c;
-            if(((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' 
-            || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) 
-            ||(!stabbedData.contains(province)))){
-                Sale__c s = new Sale__c(Id=sale.Id);
-                s.isTransition__c=true;
-                saleSrv.updateRecord(s);
-                return true;
-            }else{
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
-    }
+        //Nuova Versione - HRADTR_GV 01/04/2022
 
-    public static Boolean isTransition(ServicePoint__c sp, Sale__c sale){
-        List<ServicePoint__c> reseller = [SELECT isReseller__c, SupplyProvince__c FROM ServicePoint__c WHERE Id=:sp.Id WITH SECURITY_ENFORCED ];
-        Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
-        if(reseller[0].isReseller__c || ((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(reseller[0].SupplyProvince__c)))){
+        HDT_UTL_CalculateTransition calcTransition = new HDT_UTL_CalculateTransition(city, sale);
+        Boolean result = calcTransition.calculateTransition();
+        if(result){
             Sale__c s = new Sale__c(Id=sale.Id);
             s.isTransition__c=true;
             saleSrv.updateRecord(s);
-            return true;
-        }else{
-            return false;
         }
+
+        return result;
+
+        //Vecchia Versione
+        // Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+        // List<City__c> listCity = HDT_QR_City.getRecordByComune(city);
+        // if(listCity != null && !listCity.isEmpty() && listCity[0].Province__c != null)
+        // {
+        //     String province = listCity[0].Province__c;
+        //     if(((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' 
+        //     || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) 
+        //     ||(!stabbedData.contains(province)))){
+        //         Sale__c s = new Sale__c(Id=sale.Id);
+        //         s.isTransition__c=true;
+        //         saleSrv.updateRecord(s);
+        //         return true;
+        //     }else{
+        //         return false;
+        //     }
+        // }
+        // else
+        // {
+        //     return false;
+        // }
+    }
+
+    public static Boolean isTransition(ServicePoint__c sp, Sale__c sale){
+        
+        // Nuova Versione - HRADTR_GV 01/04/2022
+
+         HDT_UTL_CalculateTransition calcTransition = new HDT_UTL_CalculateTransition(sp, sale);
+         Boolean result = calcTransition.calculateTransition();
+         if(result){
+             Sale__c s = new Sale__c(Id=sale.Id);
+             s.isTransition__c=true;
+             saleSrv.updateRecord(s);
+         }
+ 
+         return result;
+
+        // Vecchia Versione
+        // List<ServicePoint__c> reseller = [SELECT isReseller__c, SupplyProvince__c FROM ServicePoint__c WHERE Id=:sp.Id WITH SECURITY_ENFORCED ];
+        // Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+        // if(reseller[0].isReseller__c || ((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(reseller[0].SupplyProvince__c)))){
+        //     Sale__c s = new Sale__c(Id=sale.Id);
+        //     s.isTransition__c=true;
+        //     saleSrv.updateRecord(s);
+        //     return true;
+        // }else{
+        //     return false;
+        // }
     }
     public static Boolean isTransitionNoUp(ServicePoint__c sp, Sale__c sale){
-        //List<ServicePoint__c> reseller = [SELECT isReseller__c, SupplyProvince__c FROM ServicePoint__c WHERE Id=:sp.Id WITH SECURITY_ENFORCED ];
-        Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
-        if(sp.isReseller__c || ((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(sp.SupplyProvince__c)))){
+
+        // Nuova Versione - HRADTR_GV 01/04/2022
+
+        HDT_UTL_CalculateTransition calcTransition = new HDT_UTL_CalculateTransition(sp, sale);
+        Boolean result = calcTransition.calculateTransition();
+        if(result){
             Sale__c s = new Sale__c(Id=sale.Id);
             s.isTransition__c=true;
-           // saleSrv.updateRecord(s);
-            return true;
-        }else{
-            return false;
         }
+
+        return result;
+
+        // //List<ServicePoint__c> reseller = [SELECT isReseller__c, SupplyProvince__c FROM ServicePoint__c WHERE Id=:sp.Id WITH SECURITY_ENFORCED ];
+        // Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+        // if(sp.isReseller__c || ((sale.Account__c != null && (sale.Account__r.CompanyOwner__c == 'Reseller' || (sale.Account__r.Category__c != null && sale.Account__r.Category__c != 'Famiglie' && sale.Account__r.Category__c != 'Aziende Soho' && sale.Account__r.Category__c != 'Piccoli Condomini'))) ||(!stabbedData.contains(sp.SupplyProvince__c)))){
+        //     Sale__c s = new Sale__c(Id=sale.Id);
+        //     s.isTransition__c=true;
+        //    // saleSrv.updateRecord(s);
+        //     return true;
+        // }else{
+        //     return false;
+        // }
     }
     public static Boolean isTransitionNoUp(Sale__c sale){
 
