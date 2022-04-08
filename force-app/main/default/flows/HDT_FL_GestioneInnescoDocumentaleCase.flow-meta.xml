@@ -226,6 +226,18 @@
                     <elementReference>ProcessTypeCalculated</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>discardRework</name>
+                <value>
+                    <elementReference>DiscardRework</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>discardActivityId</name>
+                <value>
+                    <elementReference>DiscardActivityId</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -241,6 +253,26 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>DiscardActivityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>DiscardRework</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
     <variables>
         <name>InputCase</name>
         <dataType>String</dataType>

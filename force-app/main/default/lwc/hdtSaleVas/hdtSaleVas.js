@@ -179,7 +179,7 @@ export default class hdtSaleVas extends LightningElement {
 
             this.completeList.forEach(item => {
                 item.Type = item.ContractNumber !== undefined ? 'Contratto' : 'Ordine';
-                item.Number = item.ContractNumber !== undefined ? item.ContractNumber : item.OrderNumber;
+                item.Number = item.ContractNumber !== undefined ? item.SAPContractCode__c : item.OrderNumber;
                 item.PodPdr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.ServicePointCode__c : '';
                 item.ServicePointAddr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
                 item.city = item.ServicePoint__c !== undefined ? item.ServicePoint__r.SupplyCity__c : '';

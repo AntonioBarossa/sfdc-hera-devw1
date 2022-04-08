@@ -194,7 +194,7 @@
     <textTemplates>
         <name>Introduzione_Inbound_1</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;[*** Inizio registrazione ***]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Per conto di &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!SalesCompanyFormula}&lt;/span&gt; le propongo le nostre offerte a mercato libero.&lt;/p&gt;</text>
+        <text>&lt;p&gt;[*** Inizio registrazione ***]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Per conto di &lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!SalesCompanyFormula}&lt;/span&gt; le propongo le nostre offerte a mercato libero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!offerNameInput}&lt;/span&gt;.&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>Introduzione_Inbound_2</name>
@@ -219,12 +219,12 @@
     <textTemplates>
         <name>Introduzione_isLinear</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;[*** Inizio registrazione ***]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Per conto di &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!SalesCompanyFormula}&lt;/span&gt; le propongo le nostre offerte a mercato libero libero.&lt;/p&gt;</text>
+        <text>&lt;p&gt;[*** Inizio registrazione ***]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Per conto di &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!SalesCompanyFormula}&lt;/span&gt; le propongo le nostre offerte a mercato libero libero {!offerNameInput}.&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>Introduzione_Outbound_1</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;Chiamo per conto di &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!SalesCompanyFormula}&lt;/span&gt;, per proporle le nostre offerte a mercato libero.&lt;/p&gt;</text>
+        <text>&lt;p&gt;Chiamo per conto di &lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!SalesCompanyFormula}&lt;/span&gt;, per proporle le nostre offerte a mercato libero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!offerNameInput}&lt;/span&gt;.&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>Introduzione_Outbound_2</name>
@@ -239,7 +239,7 @@
     <textTemplates>
         <name>isLinear_Outbound</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Chiamo per conto di {!SalesCompanyFormula}, per proporle le nostre offerte a mercato libero &lt;/span&gt;libero.&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Chiamo per conto di {!SalesCompanyFormula}, per proporle le nostre offerte a mercato libero &lt;/span&gt;libero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!offerNameInput}&lt;/span&gt;.&lt;/p&gt;</text>
     </textTemplates>
     <variables>
         <name>callType</name>

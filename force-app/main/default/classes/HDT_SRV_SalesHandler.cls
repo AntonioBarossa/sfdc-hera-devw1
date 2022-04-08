@@ -12,6 +12,7 @@ public with sharing class HDT_SRV_SalesHandler {
      * Added class instance
      */
     private static HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
+    private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
     private static Set<String> moveOutProcesses = new Set<String>{'Cambio Uso','Voltura','Cambio Offerta Ele','Cambio Offerta Gas'};
     private static String erroreLavorazioneSapPhase = 'Errore lavorazione SAP';
     private static String annullatoPhase = 'Annullato';
@@ -431,6 +432,8 @@ public with sharing class HDT_SRV_SalesHandler {
                                             ord.OrderODV__c = mapRequestFields.get('VBELN');
                                             ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
                                             ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                            if(mapRequestFields.get('PARTNER') != null)
+                                                ord.CustomerCode__c = mapRequestFields.get('PARTNER');
                                             ord.Status='Activated';
                                             
                                             if(mapRequestFields.get('VKONT') != null) {
@@ -447,6 +450,14 @@ public with sharing class HDT_SRV_SalesHandler {
                                                 catch(Exception e){
                                                     throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating Billing Profile, VKONT Already not Unique - '+e.getMessage());
                                                 }
+
+                                                //Gestione CodiceCliente/Update Account - HRADTR_GV 31/03/2022
+                                                Account accToUpdate = new Account();
+                                                accToUpdate.Id = ord.AccountId;
+                                                if(ord.CustomerCode__c != null)
+                                                    accToUpdate.CustomerCode__c = ord.CustomerCode__c;
+                                                
+                                                    accountSrv.updateRecord(accToUpdate);
                                             }
                                             if(ordRetrieved.ProcessType__c.containsIgnoreCase('Subentro') || (ordRetrieved.ProcessType__c.containsIgnoreCase('Voltura') && !ordRetrieved.PhaseStory__c.containsIgnoreCase('Voltura Rifiutata'))){
                                                 mapRequestFields.put('NuovoAccount',ordRetrieved.AccountId);

@@ -170,7 +170,9 @@
                         state: {
                             "c__venditaId": saleId,
                             "c__accountId" : accountid,
-                            "c__ordineVendita": orderParentId
+                            "c__ordineVendita": orderParentId,
+                            "c__discardRework": true,
+                            "c__discardActivityId": activity.Id
                         }
                     },
                     focus: true
@@ -199,7 +201,9 @@
                         state: {
                             "c__venditaId": saleId,
                             "c__accountId" : accountid,
-                            "c__ordineVendita": orderParentId
+                            "c__ordineVendita": orderParentId,
+                            "c__discardRework": true,
+                            "c__discardActivityId": activity.Id
                         }
                     },
                     focus: true
