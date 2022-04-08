@@ -255,6 +255,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato per possibile frode</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento da cliente</fullName>
             <default>false</default>
         </values>
