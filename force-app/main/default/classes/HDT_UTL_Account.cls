@@ -156,64 +156,10 @@ public with sharing class HDT_UTL_Account {
     
   
     public static void makeRequest( Account acc,Contact cont){
-
-        List<SiebelCustomer__x> siebelAccList = [SELECT Id,OU_NUM__c 
-                                                 FROM SiebelCustomer__x 
-                                                 WHERE X_MARCATURA_CLIENTE__c =: acc.CustomerMarking__c 
-                                                 AND X_ACCT_PH_TYPE__c =: acc.CustomerType__c 
-                                                 AND OU_TYPE_CD__c =: acc.Category__c 
-                                                 AND VAT_REGN_NUM__c =: acc.VATNumber__c
-                                                 WITH SECURITY_ENFORCED];
-        if(!siebelAccList.isEmpty()){
-            acc.CustomerCode__c = siebelAccList[0].OU_NUM__c;
-            HDT_UTL_DatabaseService.updateSObject( acc ); 
-            if(acc.Category__c == 'Grandi Condomini'){
-                List<SiebelCustomer__x> siebelContList = [SELECT Id, INTEGRATION_ID__c 
-                                                          FROM SiebelContact__x 
-                                                          WHERE REFERENCE_TYPE_CD__c = 'Amministr. di condominio' 
-                                                          AND SOC_SECURITY_NUM__c =: cont.FiscalCode__c 
-                                                          WITH SECURITY_ENFORCED LIMIT 1];
-
-                if(siebelContList.isEmpty()){
-
-                    HDT_WS_RicCreBpCaRequest req;
-
-                    //creo condominio su SAP - Inizio
-                    req = callAmCaCreate(acc,cont);
-                    HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
-                    //creo condominio su SAP - Fine
-                }
-                else{
-                    //update Contact
-                    cont.ContactCode__c = siebelContList[0].INTEGRATION_ID__c;
-                    HDT_UTL_DatabaseService.updateSObject( cont ); 
-                }
-            }
-
-        }
-        else{
-            HDT_WS_RicCreBpCaRequest   req = callBpCaSearch(acc,cont);
-            HDT_WS_RichCreBpCaResponse res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
-           // System.debug('Response SRC : ' + res);
-            analizeResponse(res,acc,cont);
-            if('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)){
-                acc.CustomerCode__c = res.data.codiceBP;
-                HDT_UTL_DatabaseService.updateSObject( acc ); 
-            }
-            if(acc.Category__c = 'Grandi Condomini'){
-
-                //creo condominio su SAP - Inizio
-                req = callAmCaCreate(acc,cont);
-                res = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
-                //creo condominio su SAP - Fine
-                //update Contact
-                if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
-                    cont.ContactCode__c = res.data.codiceBP;
-                    HDT_UTL_DatabaseService.updateSObject( cont ); 
-                }
-            }
-        }
-
+        HDT_WS_RicCreBpCaRequest   req = callBpCaSearch(acc,cont);
+        HDT_WS_RichCreBpCaResponse res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
+       // System.debug('Response SRC : ' + res);
+        analizeResponse(res,acc,cont);
     }
     
     public static Account massiveRequest( Account acc,Contact cont){
