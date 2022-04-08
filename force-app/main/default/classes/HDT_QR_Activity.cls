@@ -22,7 +22,7 @@ public inherited sharing class HDT_QR_Activity {
         String type = 'Approvazione Offerte';
         String status ='Aperta';
         String query = 'SELECT '+ fields +
-                ' FROM wrts_prcgvr__Activity__c WHERE Type__c=: type AND Account__c =: idAcc AND Status__c=:status AND Sale__c=: saleId WITH SECURITY_ENFORCED';
+                ' FROM wrts_prcgvr__Activity__c WHERE Type__c=: type AND Account__c =: idAcc AND wrts_prcgvr__Status__c =: status AND Sale__c=: saleId WITH SECURITY_ENFORCED';
 
         List<wrts_prcgvr__Activity__c> activityList = Database.query(query);
         

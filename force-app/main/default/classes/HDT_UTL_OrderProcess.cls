@@ -52,6 +52,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 ord.id = child.id;
                 ord.SignedDate__c = newMap.get(child.ParentOrder__c).SignedDate__c;
                 ord.MethodSignedAccepted__c = 'IVR';
+                ord.ProcessType__c=child.ProcessType__c;
                 if (ord.ProcessType__c == 'Subentro Ele' || ord.ProcessType__c == 'Cambio Offerta Gas' || ord.ProcessType__c == 'Cambio Offerta Ele' || ord.ProcessType__c == 'Aggiunta Sconti o Bonus VAS Ele' || ord.ProcessType__c == 'Aggiunta Sconti o Bonus VAS Gas') {
                     ord.Phase__c = 'Comunicazione verso Heroku';
                     childrenToUpdate.add(ord);
@@ -138,7 +139,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             || order.Phase__c == 'Comunicazione Motore VAS'
             )
             &&order.isTransition__c==true){
-                order.Phase__c='Esportazione VS Siebel';
+                String newPhase = 'Esportazione VS Siebel';
+                String newPhaseStory = String.isBlank(order.PhaseStory__c) ?  '' : order.PhaseStory__c;
+                DateTime nowDateTime = DateTime.now();
+                order.PhaseStory__c =  order.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+ newPhaseStory;
+                order.Phase__c = newPhase;
             }
 
             //19/08/2021 gabriele.rota@webresults.it - Calcolo Data Decorrenza Cambio Offerta

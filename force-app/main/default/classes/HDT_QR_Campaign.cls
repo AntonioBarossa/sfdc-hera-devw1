@@ -129,7 +129,7 @@ public with sharing class HDT_QR_Campaign {
      * in corso
      * e la piu recente
      */
-    public static List<Campaign> getCampaingByTipology(String tipology)
+    public static List<Campaign> getCampaingByTipology(String tipology, Set<String> orderAccountCompanyOwnersSet)
     {
         return [
             SELECT 
@@ -137,14 +137,26 @@ public with sharing class HDT_QR_Campaign {
             Name,
             MacroActivityEasyCIM__c,
             MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c,
-            AssignmentType__c
+            AssignmentType__c,
+            CompanyOwner__c
             FROM Campaign
             where Tipology__c = :tipology
             AND Status = 'In Corso'
+            AND CompanyOwner__c IN: orderAccountCompanyOwnersSet
             WITH SECURITY_ENFORCED
             ORDER BY StartDate DESC
-            LIMIT 1
         ];
     }
 
+    public static Map<String, Campaign> getCampaignByCompOwner(String tipology, Set<String> orderAccountCompanyOwnersSet){
+        
+        Map<String, Campaign> compOwnerToCampMap = new Map<String, Campaign>();
+        
+        for(Campaign camp : getCampaingByTipology(tipology, orderAccountCompanyOwnersSet)){
+            if(compOwnerToCampMap.get(camp.CompanyOwner__c) == null){
+                compOwnerToCampMap.put(camp.CompanyOwner__c, camp);
+            }
+        }
+        return compOwnerToCampMap;
+    }
 }

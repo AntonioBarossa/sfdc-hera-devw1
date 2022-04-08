@@ -96,6 +96,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                 
                 Order ord = new Order();
                 ord.id = (id)obj.get('Id');
+                ord.AccountId = (id)obj.get('AccountId'); 
+                ord.ServicePoint__c = (id)obj.get('ServicePoint__c'); 
 
                 Set<Id> recordTypeIdsNoPhase = new Set<Id>{
                     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId(),
@@ -252,6 +254,17 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                 ord.TecnicalPhase__c = 'Comunicazione verso Heroku KO';
                             }
                             ord.description = fieldValueResponse.get('errorMessage');
+                            if(fieldValueResponse.get('errorMessage').contains('Venditore')){
+                                wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c();
+                                act.Type__c = 'Venditore Non Definito';
+                                act.RecordTypeId = Schema.getGlobalDescribe().get('wrts_prcgvr__Activity__c').getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
+                                act.Order__c = ord.Id;
+                                act.Account__c = ord.AccountId;
+                                act.ServicePoint__c = ord.ServicePoint__c;
+                                act.wrts_prcgvr__Status__c = 'Aperta';
+                                HDT_UTL_DatabaseService.insertSObject(act);
+
+                            }
                         }
                         HDT_SRV_Order ordSrv = new HDT_SRV_Order();
                         ordSrv.updateRecord(ord);
@@ -274,7 +287,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
 
                         utilityMap.put('NOTE_ERR', errdesc);
                         utilityMap.put('DISCARD_MESSAGE', errdesc);
-                        utilityMap.put('DATA_ELABORAZIONE', String.isNotBlank(fieldValueResponse.get('DATA_ELABORAZIONE')) ? fieldValueResponse.get('DATA_ELABORAZIONE') : '');
+                        utilityMap.put('DATA_ELABORAZIONE', String.isNotBlank(fieldValueResponse.get('DATA_ELABORAZIONE')) ? fieldValueResponse.get('DATA_ELABORAZIONE') :  
+                            String.isNotBlank(fieldValueResponse.get('DATA_EVENTO')) ? fieldValueResponse.get('DATA_EVENTO') : '');
                         utilityMap.put('CMP', String.isNotBlank(fieldValueResponse.get('CMP')) ? fieldValueResponse.get('CMP') : '');
                         utilityMap.put('UTENZA', String.isNotBlank(fieldValueResponse.get('UTENZA')) ? fieldValueResponse.get('UTENZA') : '');
                         utilityMap.put('FASE', String.isNotBlank(fieldValueResponse.get('FASE')) ? fieldValueResponse.get('FASE') : '');

@@ -89,7 +89,7 @@ public class HDT_UTL_VasManagementTst {
         CommercialProduct__c,CommercialProductVersion__c,OrderNumber,ContractReference__r.SAPContractCode__c,ContractAccountCode__c,VasServiceActivationDate__c,
         SBQQ__Quote__r.SBQQ__ListAmount__c,SBQQ__Quote__r.ListAmountVAT__c,SBQQ__Quote__r.TotalDiscountAmountVAT__c,ShippingStreetToponym__c,
         ShippingStreetName__c,ShippingStreetNumber__c,ShippingCity__c,ShippingPlace__c,ShippingPostalCode__c,ShippingProvince__c,PhoneNumber__c,
-        ShippingMail__c,SignedDate__c from order];
+        ShippingMail__c,SignedDate__c, VasPracticeCode__c , TotalAmount, CommercialProductLink__r.DurationDay__c, CommercialProductLink__r.DurationDayGas__c from order];
         List<Case> caseList =[select id, Order__c,CaseNumber,VasStatus__c,Asset.SBQQ__OrderProduct__r.OrderId,Subscription__r.SBQQ__Contract__r.SBQQ__Order__c from case ];        
 
         System.debug('caseList[0]:'+ caseList[0]);

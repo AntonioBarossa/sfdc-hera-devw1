@@ -66,6 +66,14 @@ public class HDT_ProductAssociationTst {
             featureList.add(feature);
         }
 
+        for(Product2 p : productList){
+            SBQQ__ProductFeature__c feature = new SBQQ__ProductFeature__c();
+            feature.Name = 'Offerta commerciale';
+            feature.SBQQ__ConfiguredSKU__c = p.Id;
+            feature.SBQQ__Number__c = 1;
+            featureList.add(feature);
+        }
+
         insert featureList;
 
         SBQQ__ProductRule__c rule = new SBQQ__ProductRule__c();
@@ -114,16 +122,16 @@ public class HDT_ProductAssociationTst {
         HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj obj1 = (HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj)respObj1;
         HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj obj2 = (HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj)respObj2;
         HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj obj3 = (HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj)respObj3;
-        System.assertEquals(false, obj1.success,'');
+        System.assertEquals(true, obj1.success,'');
         System.assertEquals(false, obj2.success,'');
-        System.assertEquals(false, obj2.success,'');
+        System.assertEquals(true, obj3.success,'');
 
     }
 
     @isTest
     public static void runProductOptionAssociation_create(){
 
-        String optionalSkuId = [SELECT Id FROM Product2 WHERE Family = 'Punto Fornitura' LIMIT 1].Id;
+        String optionalSkuId = [SELECT Id FROM Product2 WHERE Family = 'Offerta commerciale' LIMIT 1].Id;
         
         SBQQ__ProductOption__c prodOptionWrp = new SBQQ__ProductOption__c();
         prodOptionWrp.SBQQ__OptionalSKU__c = optionalSkuId;
@@ -474,7 +482,8 @@ public class HDT_ProductAssociationTst {
 
         GroupMember grpMem1 = new GroupMember();
         grpMem1.UserOrGroupId = internalUser.Id;
-        grpMem1.GroupId = [SELECT Id FROM Group WHERE DeveloperName = 'CpqAssociationTool' LIMIT 1].Id;
+        grpMem1.GroupId = [SELECT Id FROM Group WHERE DeveloperName = 'HDT_PG_CpqAssociationTool' LIMIT 1].Id;
+        //grpMem1.GroupId = [SELECT Id FROM Group LIMIT 1].Id;
         insert grpMem1;
         Boolean result;
 

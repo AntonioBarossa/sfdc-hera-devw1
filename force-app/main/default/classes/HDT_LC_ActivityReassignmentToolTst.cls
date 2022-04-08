@@ -133,4 +133,15 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
 
         Test.stopTest();
     }
+
+    @isTest
+    private static void refreshPage() {
+        Test.startTest();
+
+        wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c LIMIT 1];
+        Boolean returnedValue = HDT_LC_ActivityReassignmentTool.refreshPage(activity.Id);
+        System.assertEquals(false, returnedValue, 'ERRORE: ' + returnedValue);
+
+        Test.stopTest();
+    }
 }

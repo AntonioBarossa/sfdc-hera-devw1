@@ -79,11 +79,11 @@ public with sharing class HDT_UTL_CompanyOwnerTst {
  
             Test.startTest();
 
-            List<Lead> leadList = [SELECT Id, CompanyOwner__c FROM Lead WHERE CompanyOwner__c='HERA COMM' LIMIT 1];
+            List<Lead> leadList = [SELECT Id, CompanyOwner__c, LeadSource FROM Lead WHERE CompanyOwner__c='HERA COMM' LIMIT 1];
             leadList[0].CompanyOwner__c = null;
             update leadList;
 
-            leadList = [SELECT Id, CompanyOwner__c FROM Lead WHERE Status='New' LIMIT 1];
+            leadList = [SELECT Id, CompanyOwner__c, LeadSource FROM Lead WHERE Status='New' LIMIT 1];
 
             HDT_UTL_CompanyOwner.feedCompanyOwner(leadList);
 

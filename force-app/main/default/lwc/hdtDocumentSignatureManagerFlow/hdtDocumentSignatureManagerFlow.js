@@ -83,6 +83,9 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
     @api cancelButton;
     //@frpanico 07/09 added EntryChannel
     @api entryChannel;
+    //HRADTR_GV_Main
+    @api discardRework;
+    @api discardActivityId;
     caseRecord;
     @track inputParams;
     @track enableNext = false;
@@ -477,7 +480,9 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 TipoPlico : tipoPlico,
                 mode : 'Print',
                 Archiviato : 'Y',
-                DiscardOldEnvelope : discardOldEnvelope
+                DiscardOldEnvelope : discardOldEnvelope,
+                discardRework : this.discardRework,
+                discardActivityId : this.discardActivityId
             }
             if(sendMode.localeCompare('Sportello') ===0){
                 this.sendAndViewDocument(formParams);
