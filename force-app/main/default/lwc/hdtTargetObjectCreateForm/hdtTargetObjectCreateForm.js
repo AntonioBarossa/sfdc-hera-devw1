@@ -86,6 +86,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     isValidFields = false;
     @api isricercainsap;
     @api recordDistributorPointCode;
+    @api selectedDistributor;
     isDistributor = false;
     booleanFormDistributor = false;
     @api retrievedDistributor = {};
@@ -1015,6 +1016,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.isValidFields = true;
             let concatAddressErrorFields = '';
 
+            //@DV: Controllo sull'obbligatorietà dei campi. Se non valorizzati, lancio l'errore!
             if (this.recordtype.label === 'Punto Elettrico' || this.recordtype.label == 'Punto Gas') {
                 this.validFieldsCreateServicePoint();
             }
@@ -1056,15 +1058,15 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     this.alert('Dati tabella', 'Per poter salvare popolare i seguenti campi di indirizzo: ' + concatAddressErrorFields.slice(0, -2), 'error')
                 }
             }
-
-            if ((this.allSubmitedFields['ServicePointCode__c'] != undefined && (JSON.stringify(this.allSubmitedFields['ServicePointCode__c'].trim()).length < 14 || JSON.stringify(this.allSubmitedFields['ServicePointCode__c'].trim()).length > 16))) {
+        
+            if (!this.selectedDistributor['SkipDimensione__c'] && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '').length != 14) {
                 this.isValidFields = false;
                 this.loading = false;
                 this.alert('Errore', 'Codice POD/PDR non valido', 'error');
             }
 
             if (this.allSubmitedFields['ServicePointCode__c'] != undefined) {
-                this.allSubmitedFields['ServicePointCode__c'] = this.allSubmitedFields['ServicePointCode__c'].trim();
+                this.allSubmitedFields['ServicePointCode__c'] = this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '');
                 if (this.allSubmitedFields['ServicePointCode__c'].substring(0, 2) != 'IT' && this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica') {
                     this.isValidFields = false;
                     this.loading = false;
@@ -1077,7 +1079,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
             } 
             else {
-                this.servicePointRetrievedData['ServicePointCode__c'] = this.servicePointRetrievedData['ServicePointCode__c'].trim();
+                this.servicePointRetrievedData['ServicePointCode__c'] = this.servicePointRetrievedData['ServicePointCode__c'].replace(/\s/g, '');
 
                 if (this.servicePointRetrievedData['ServicePointCode__c'].substring(0, 2) != 'IT' && this.servicePointRetrievedData['CommoditySector__c'] == 'Energia Elettrica') {
                     this.isValidFields = false;
@@ -1174,17 +1176,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
         if(this.spCodeChanged || this.allSubmitedFields['Distributor__c'] == undefined || this.allSubmitedFields['Distributor__c'].trim() == ''){
 
-            if(this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].trim() != ''){
+            if(this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != ''){
                 if(addressRecord['Comune'] != undefined && addressRecord['Comune'].trim() != ''){
-                    let codicePunto = this.allSubmitedFields['ServicePointCode__c'].trim();
+                    let codicePunto = this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '');
                     let servizio = this.allSubmitedFields['CommoditySector__c'];
                     let radicePunto = servizio == 'Gas' ? codicePunto.substring(0, 4) : codicePunto.substring(0, 6);
                     let comune = servizio == 'Gas' ? addressRecord['Comune'] : '';
-                    getDistributorPointCode({
-                        code : radicePunto,
-                        commodity: servizio,
-                        comune : comune
-                    }).then(data => {
+                    getDistributorPointCode({code : radicePunto, commodity: servizio, comune : comune}).then(data => {
                         this.retrievedDistributor = data;
                         if (data.length > 1) {
                             this.booleanFormDistributor = true;
@@ -1193,6 +1191,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         else {
                             data.forEach(element => {
                                 this.recordDistributorPointCode = element.Account__r.Id;
+                                this.selectedDistributor = element;
                             });
                             this.isDistributor = true;
                             this.allSubmitedFields['Distributor__c'] = this.recordDistributorPointCode;
@@ -1379,6 +1378,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.retrievedDistributor.forEach(element => {
             if (event.detail.Distributor === element.Account__r.Name) {
                 this.recordDistributorPointCode = element.Account__r.Id;
+                this.selectedDistributor = element;
             }
         });
         this.isDistributor = true;

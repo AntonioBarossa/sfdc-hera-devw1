@@ -70,6 +70,14 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
 
             wrts_prcgvr.MRR_1_0.MultiRequest mrrList = (wrts_prcgvr.MRR_1_0.MultiRequest) argsMap.get('multirequest');
             
+            /**@frpanico per allineamento anagrafica
+             * e' necessaria una customizzazione per inviare
+             * soltanto la subscription di offerta commerciale
+             */
+            if(currentCase.Type.equalsIgnoreCase('Allineamento Anagrafica'))
+            {
+                mrrList = removeNonCommoditySubscriptions(mrrList);
+            }
 
             arg.put('endpoint', endpoint);
             arg.put('timeout', 12000);
@@ -265,6 +273,47 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         herokuCode.value =caseUpdate.HerokuPracticeCode__c;
         responseFieldList = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{rifRich, recordId,herokuCode};
         return responseFieldList;
+    }
+    /**@frpanico 2022-04-07
+     * Aggiunta rimozione delle subrsciptions
+     * Non di offerta commerciale
+     * Si recuperano tutte le subscritpions dalla request
+     * Si controlla quale sia la subscription di offerta commerciale
+     * Si rimuovono dunque tutte quelle subscriptions non di offerta commerciale
+     */
+    @TestVisible
+    private static wrts_prcgvr.MRR_1_0.MultiRequest removeNonCommoditySubscriptions(wrts_prcgvr.MRR_1_0.MultiRequest mrrList)
+    {
+        Set<Id> subscriptionsId = new Set<Id>();
+        String commoditySubscription;
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
+        {
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('SBQQ__Subscription__c'))
+            {
+                subscriptionsId.add(obj.id);
+            }
+        }
+        List<SBQQ__Subscription__c> subscriptionList = [SELECT Id, SBQQ__Product__r.Family FROM SBQQ__Subscription__c WHERE Id IN :subscriptionsId  AND SBQQ__Product__r.Family = 'Offerta commerciale' WITH SECURITY_ENFORCED];
+        if(!subscriptionList.isEmpty())
+        {
+            commoditySubscription = subscriptionList[0].Id;
+        }
+        for(Integer i = mrrList.requests[0].objects.size() - 1; i >= 0; --i)
+        {
+            wrts_prcgvr.MRR_1_0.WObject obj = mrrList.requests[0].objects[i];
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('SBQQ__Subscription__c'))
+            {
+                if(obj.id.equalsIgnoreCase(commoditySubscription))
+                {
+                    continue;
+                }
+                else
+                {
+                    mrrList.requests[0].objects.remove(i); 
+                }
+            }
+        }
+        return mrrList;
     }
     
 }
