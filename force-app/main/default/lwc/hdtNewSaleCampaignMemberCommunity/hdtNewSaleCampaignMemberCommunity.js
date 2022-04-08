@@ -2,10 +2,13 @@ import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getAccountAndCampaign from '@salesforce/apex/HDT_LC_CampaignsController.getAccountAndCampaign';
+import getAlternativeAccount from '@salesforce/apex/HDT_LC_CampaignsController.getAccountId';
 
 export default class hdtNewSaleCampaignMemberCommunity extends NavigationMixin(LightningElement) {
     @api recordId;
     CampaignProcessType = '';
+    accountId='';
+
     connectedCallback() {
         getAccountAndCampaign({ campaignMemberId: this.recordId }).then(data => {
             console.log(JSON.stringify(data));
@@ -35,19 +38,54 @@ export default class hdtNewSaleCampaignMemberCommunity extends NavigationMixin(L
                 );
             } else {
                 //navigate to new sale
-                this[NavigationMixin.GenerateUrl]({
+                getAlternativeAccount({ campaignMemberId: this.recordId }).then(res => {
+                    console.log('krist: '+res);
+                    if(res){
+                        this.accountId=res;
+                    }
+                    else {
+                        this.accountId=data.Contact.AccountId;
+
+                    }
+                    console.log('KKKKKKK: '+this.accountId);
+
+                    this[NavigationMixin.GenerateUrl]({
+                        type: "comm__namedPage",
+                        attributes: {
+                            name: "WizardVendita__c"
+                        },
+                        state: {
+                            c__accountId: this.accountId,
+                            c__campaignCommissioningId: data.CampaignId,
+                            c__campaignMemberId: this.recordId
+                        }
+                    }).then(url => {
+                        window.open(url, "_self");
+                    });
+
+                }).catch(error => {
+                    console.log(error);
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: `${error.status}`,
+                            message: `${error.body.message}`,
+                            variant: "error"
+                        })
+                    );
+                });
+               /* this[NavigationMixin.GenerateUrl]({
                     type: "comm__namedPage",
                     attributes: {
                         name: "WizardVendita__c"
                     },
                     state: {
-                        c__accountId: data.Contact.AccountId,
+                        c__accountId: this.accountId,
                         c__campaignCommissioningId: data.CampaignId,
                         c__campaignMemberId: this.recordId
                     }
                 }).then(url => {
                     window.open(url, "_self");
-                });
+                });*/
             }
         }).catch(error => {
             console.log(error);

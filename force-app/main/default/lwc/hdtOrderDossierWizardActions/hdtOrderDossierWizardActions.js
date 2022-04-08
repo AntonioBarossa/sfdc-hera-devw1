@@ -39,6 +39,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     isVocalAndActivityNotClose = true;
     enableDocumental = true;
     isAmend = false;
+    isCommunity=false;
 
     get disablePrintButtonFunction() {
         return this.isPrintButtonDisabled  || (this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare'));
@@ -116,14 +117,15 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     }
 
     handleModalPreview(){
-        isCommunity().then(result =>{
-            if(result == true){
-                this.isModalOpen = true;
-            }
-            else{
-                this.handlePreview();
-            }
-
+        isCommunity().then(result => {
+            this.isCommunity = result;
+            getCachedUuid().then(uuid => {
+                if(this.isCommunity && uuid) {
+                    this.isModalOpen = true
+                } else {
+                    this.handlePreview();
+                }
+            })
         }).catch(error => {
             this.loading = false;
             console.error(error);
