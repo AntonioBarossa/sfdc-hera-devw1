@@ -9,6 +9,8 @@
         let accountId;
         let saleId;
         let orderParentId;
+        let discardRework;
+        let discardActivityId;
 
         /** HRAWRM-451 - Modified community check 
          *  Andrei Necsulescu - andrei.necsulescu@webresults.it
@@ -60,6 +62,12 @@
                         let pageRef = component.get("v.pageReference");
                         saleId = pageRef.state.c__venditaId;
                         accountId = pageRef.state.c__accountId;
+                        if(pageRef.state.c__discardRework == true || pageRef.state.c__discardRework == 'true')
+                            discardRework = true;
+                        else
+                            discardRework = false;
+                        
+                        discardActivityId = pageRef.state.c__discardActivityId;
 
                         if (pageRef.state.c__orderParent !== undefined) {
                             orderParentId = pageRef.state.c__orderParent;
@@ -79,9 +87,13 @@
                 console.log('saleId: ', saleId);
                 console.log('accountId: ', accountId);
                 console.log('c__orderParent: ', orderParentId);
+                console.log('c__discardRework: ', discardRework);
+                console.log('c__discardActivityId: ', discardActivityId);
 
                 component.set("v.saleId", saleId);
                 component.set("v.accountId",accountId);
+                component.set("v.discardRework",discardRework);
+                component.set("v.discardActivityId",discardActivityId);
                 helper.helperInit(component, event, helper, saleId, accountId);
                 
             }

@@ -27,6 +27,8 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     @track isModalOpen = false;
     @api orderParentRecord;
     @api recordId
+    @api discardRework;
+    @api discardActivityId;
     currentStep = 2;
     loading = false;
     signatureMethod = '';
@@ -274,13 +276,18 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             if (signMode.localeCompare('OTP Remoto') === 0 && oldSignMode && oldSignMode.localeCompare('OTP Coopresenza') === 0){
                 discardOldEnvelope = true;
             }
+            console.log('discardRework --> '+this.discardRework);
+            console.log('discardActivityId --> '+this.discardActivityId);
             var formParams = {
                 sendMode : sendMode,
                 signMode : signMode,      
                 mode : 'Print',
                 Archiviato : 'Y',
-                DiscardOldEnvelope : discardOldEnvelope
+                DiscardOldEnvelope : discardOldEnvelope,
+                discardRework : this.discardRework,
+                discardActivityId : this.discardActivityId
             }
+            console.log('formParams --> '+JSON.stringify(formParams));
             sendDocument({
                 recordId: this.recordId,
                 context: 'Order',
