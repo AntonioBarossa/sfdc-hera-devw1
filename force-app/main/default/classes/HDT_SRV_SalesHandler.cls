@@ -49,7 +49,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 HDT_UTL_ActivityCustom.createActivityWithParams(new Map<String,String>{
                                     'RecordTypeDeveloperName' => 'HDT_RT_AttivitaGestionali',
                                     'Type__c'                 => 'Gestione Switch in Ripristinatorio',
-                                    'wrts_prcgvr__Status__c'               => 'Creata',
+                                    'wrts_prcgvr__Status__c'               => 'Aperta',
                                     'ServicePointCode__c'     => mapRequestFields.get('COD_PDR'),
                                     'FiscalCode__c'           => mapRequestFields.get('CODICE_FISCALE'),
                                     'VATNumber__c'            => mapRequestFields.get('PIVA'),
