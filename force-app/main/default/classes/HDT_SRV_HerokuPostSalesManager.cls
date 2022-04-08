@@ -135,7 +135,8 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
 
             utilityMap.put('NOTE_ERR', errdesc);
             utilityMap.put('DISCARD_MESSAGE', errdesc);
-            utilityMap.put('DATA_ELABORAZIONE', String.isNotBlank(wrpResponses[0].responseMap.get('DATA_ELABORAZIONE')) ? wrpResponses[0].responseMap.get('DATA_ELABORAZIONE') : '');
+            utilityMap.put('DATA_ELABORAZIONE', String.isNotBlank(wrpResponses[0].responseMap.get('DATA_ELABORAZIONE')) ? wrpResponses[0].responseMap.get('DATA_ELABORAZIONE') : 
+                            String.isNotBlank(wrpResponses[0].responseMap.get('DATA_EVENTO')) ? wrpResponses[0].responseMap.get('DATA_EVENTO') : '');
             utilityMap.put('CMP', String.isNotBlank(wrpResponses[0].responseMap.get('CMP')) ? wrpResponses[0].responseMap.get('CMP') : '');
             utilityMap.put('UTENZA', String.isNotBlank(wrpResponses[0].responseMap.get('UTENZA')) ? wrpResponses[0].responseMap.get('UTENZA') : '');
             utilityMap.put('FASE', String.isNotBlank(wrpResponses[0].responseMap.get('FASE')) ? wrpResponses[0].responseMap.get('FASE') : '');
