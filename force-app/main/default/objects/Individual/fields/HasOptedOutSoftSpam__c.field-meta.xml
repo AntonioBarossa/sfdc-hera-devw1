@@ -5,6 +5,6 @@
     <description>Diniego Soft-Spam/Legittimo interesse</description>
     <externalId>false</externalId>
     <label>Diniego Soft-Spam/Legittimo interesse</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Checkbox</type>
 </CustomField>

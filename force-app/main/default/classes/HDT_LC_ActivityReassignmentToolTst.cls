@@ -35,8 +35,8 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
 
             Queue__c queue = new Queue__c(
                 Name = 'coda1',
-                WorkGroup__c = 'gruppo1',
-                Agency2__c = 'agenzia1'
+                WorkGroup__c = 'HC_CDO_OM',
+                Agency2__c = 'Hera Comm'
             );
 
             insert queue;
@@ -44,7 +44,9 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
             Queue__c queueSecond = new Queue__c(
                 Name = 'FirstName 1',
                 Group__c = 'gruppo1',
-                Agency__c = 'agenzia1'
+                Agency__c = 'agenzia1',
+                WorkGroup__c = 'HC_CDO_OM',
+                Agency2__c = 'Hera Comm'
             );
             insert queueSecond;
 
@@ -84,9 +86,9 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
     private static void getWorkGroups() {
         Test.startTest();
 
-        List<Map<String,String>> returnedValue = HDT_LC_ActivityReassignmentTool.getWorkGroups('gruppo');
-        System.assertEquals('gruppo1', returnedValue[0].get('name'), 'NOME GRUPPO DI LAVORO ERRATO');
-        System.assertEquals('agenzia1', returnedValue[0].get('agency'), 'AGENZIA GRUPPO DI LAVORO ERRATA');
+        List<Map<String,String>> returnedValue = HDT_LC_ActivityReassignmentTool.getWorkGroups('HC_CDO_OM');
+        System.assertEquals('HC_CDO_OM', returnedValue[0].get('name'), 'NOME GRUPPO DI LAVORO ERRATO');
+        System.assertEquals('Hera Comm', returnedValue[0].get('agency'), 'AGENZIA GRUPPO DI LAVORO ERRATA');
 
         Test.stopTest();
     }
@@ -117,7 +119,7 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
     private static void reassignActivity() {
         Test.startTest();
 
-        Queue__c queue = [SELECT Id FROM Queue__c];
+        Queue__c queue = [SELECT Id FROM Queue__c LIMIT 1];
         User user = [SELECT Id FROM User WHERE Name = 'FirstName 1'];
         wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE ParentActivity__c != null LIMIT 1];
         

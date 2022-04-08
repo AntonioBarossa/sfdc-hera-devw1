@@ -620,6 +620,11 @@
                 <default>false</default>
                 <label>Vocal Order non validato</label>
             </value>
+            <value>
+                <fullName>Venditore Non Definito</fullName>
+                <default>false</default>
+                <label>Venditore Non Definito</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
