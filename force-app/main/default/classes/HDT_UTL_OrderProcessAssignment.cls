@@ -209,7 +209,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 process.marketOrigin__c.contains(ord.MarketOrigin__c) // || process.marketOrigin__c.isEmpty())
                 && (process.plugPresence__c == plugPresence || process.commodity__c.containsIgnoreCase('Gas') )//aggiustamento plug presence gas
                 && (process.isOwnAccount__c == isOwnAccount || process.isOwnAccount__c == null || (process.processName__c.containsIgnoreCase('Voltura Ele') && ord.ServicePoint__r.Account__c == null))
-                && process.isChangeUse__c == (isChangeUse || process.processName__c.containsIgnoreCase('Cambio Uso'))
+                && process.isChangeUse__c == (isChangeUse && process.processName__c.containsIgnoreCase('Cambio Uso'))
                 && process.ExistActivitySwitchRipristinatorio__c == isSwitchInRipr
                 && process.PowerChange__c == (isPowerChange && !process.processName__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))
                 && process.isSTG__c == ord.isSTG__c
