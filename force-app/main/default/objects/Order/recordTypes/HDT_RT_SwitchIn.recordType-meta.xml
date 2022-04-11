@@ -384,6 +384,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato per possibile frode</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento dal SII</fullName>
             <default>false</default>
         </values>

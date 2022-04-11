@@ -288,7 +288,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			try{
 				String sObjName = requestId.getSObjectType().getDescribe().getName();
 				wrts_prcgvr__Activity__c activityBusta = new wrts_prcgvr__Activity__c ();
-				Id actRecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByName().get('HDT_RT_Scarto').getRecordTypeId();
+				Id actRecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
 				switch on sObjName {
 					when 'Case' {
 						activityBusta.Case__c = (Id) requestId;

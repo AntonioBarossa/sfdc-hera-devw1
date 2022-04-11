@@ -10,7 +10,7 @@ public inherited sharing class HDT_QR_DistributorPointCode {
 
 	    List<DistributorPointCode__c> listDistributorPoint = new List<DistributorPointCode__c>();
 
-	    listDistributorPoint = [SELECT Name, PointCode__c, Commodity__c, Account__r.Name, OwnerId FROM DistributorPointCode__c WHERE (PointCode__c =: code OR PointCode__c = null) AND Commodity__c =: commodity AND IsActive__c = true AND City__c =: comune WITH SECURITY_ENFORCED];
+	    listDistributorPoint = [SELECT Name, PointCode__c, Commodity__c, Account__r.Name, SkipDimensione__c, OwnerId FROM DistributorPointCode__c WHERE (PointCode__c =: code OR PointCode__c = null) AND Commodity__c =: commodity AND IsActive__c = true AND City__c =: comune WITH SECURITY_ENFORCED];
 	    return listDistributorPoint;
     }
 }

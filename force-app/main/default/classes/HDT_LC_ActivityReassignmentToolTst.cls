@@ -38,7 +38,17 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
                 WorkGroup__c = Schema.getGlobalDescribe().get('Queue__c').getDescribe().fields.getMap().get('WorkGroup__c').getDescribe().getPicklistValues()[0].getValue(),
                 Agency2__c = Schema.getGlobalDescribe().get('Queue__c').getDescribe().fields.getMap().get('Agency2__c').getDescribe().getPicklistValues()[0].getValue()
             );
+
             insert queue;
+
+            Queue__c queueSecond = new Queue__c(
+                Name = 'FirstName 1',
+                Group__c = 'gruppo1',
+                Agency__c = 'agenzia1',
+                WorkGroup__c = 'HC_CDO_OM',
+                Agency2__c = 'Hera Comm'
+            );
+            insert queueSecond;
 
         }
 
@@ -110,7 +120,7 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
     private static void reassignActivity() {
         Test.startTest();
 
-        Queue__c queue = [SELECT Id FROM Queue__c];
+        Queue__c queue = [SELECT Id FROM Queue__c LIMIT 1];
         User user = [SELECT Id FROM User WHERE Name = 'FirstName 1'];
         wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE ParentActivity__c != null LIMIT 1];
         
@@ -121,6 +131,17 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
         String result2 = HDT_LC_ActivityReassignmentTool.reassignActivity(new List<String>{activity.Id}, user.Id, queue.Id, 'workGroup', 'MATCH SRL');
 
         System.assertEquals(true, String.isBlank(result2), 'String was supposed to be empty');
+
+        Test.stopTest();
+    }
+
+    @isTest
+    private static void refreshPage() {
+        Test.startTest();
+
+        wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c LIMIT 1];
+        Boolean returnedValue = HDT_LC_ActivityReassignmentTool.refreshPage(activity.Id);
+        System.assertEquals(false, returnedValue, 'ERRORE: ' + returnedValue);
 
         Test.stopTest();
     }

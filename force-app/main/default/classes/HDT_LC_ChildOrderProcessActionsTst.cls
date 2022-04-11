@@ -93,13 +93,18 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
             
             accounts[1].ActiveMonitoring__c=false;
-			accounts[1].Name='test account residenziale';
-			accounts[1].LastName__c='INRETE DIST. ENER.-13R0100000';
+			accounts[1].Name='MARCO ROSSI';
+			accounts[1].FirstName__c='MARCO';
+			accounts[1].LastName__c='ROSSI';
             accounts[1].BillingIsAddressVerified__c = true;
             accounts[1].RecordTypeId=rt;
             accounts[1].CustomerMarking__c='Persona Fisica';
 			accounts[1].Category__C='Famiglie';
 			insert accounts;
+
+            accounts[0].RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Distributore').getRecordTypeId();
+
+            update accounts;
             
             HDT_UTL_DataFactoryTst.createComfortQualityCall(2,true);
             List<BillingProfile__c> billing =HDT_UTL_DataFactoryTst.createBillingProfile(1,true,accounts[0].Id);
@@ -210,6 +215,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             orders[5].Contact__c = contactId;
             orders[5].IsActivationDeferred__c=true;
             orders[5].VATfacilitationFlag__c=false;
+            orders[5].Commodity__c='Energia Elettrica';
             
 
 			upsert orders;
@@ -232,6 +238,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
 			orders[0].ServicePoint__c=servPoints[0].Id;
 			orders[0].SBQQ__Quote__c=quotes[0].id;
+			orders[1].ProcessType__c='Voltura';//HRADTR_GV 
+			orders[1].NotRegisteredMeterCase__c=true;//HRADTR_GV 
 			orders[1].ServicePoint__c=servPoints[0].Id;
 			orders[3].ServicePoint__c=servPoints[0].Id;
 			orders[3].SBQQ__Quote__c=quotes[0].id;
@@ -242,7 +250,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 			List<Case> cases=HDT_UTL_DataFactoryTst.createCase(1, false, accounts[0].Id, contacts[0].Id, servPoints[0].Id, contracts[0].Id, orders[0].Id);
 			cases[0].Type='Cambio Contatore Non Registrato';
 			cases[0].Phase__c='Completata';
-			cases[0].VulturePracticeReference__c=orders[0].Id;
+            cases[0].ServicePoint__c = servPoints[0].Id;//HRADTR_GV
+			cases[0].VulturePracticeReference__c=orders[1].Id;//HRADTR_GV
 
 			insert cases;
 

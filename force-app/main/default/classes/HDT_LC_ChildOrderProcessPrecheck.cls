@@ -164,6 +164,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 }
             }
 
+            if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale')
+            {
+                newOrder.VAT__c = 
+                    order.CommodityFormula__c == 'Energia Elettrica' ?
+                        order.SupplyType__c == 'Domestico' ? 'Iva 10% (Cod. 01)' : 'Iva 22% (Cod. 02)'
+                    : 'Iva 22% (Cod. 02)';
+            }
+
             //EVERIS: MODIFICATA LOGICA DI UPDATE PER GESTIRE I PREDEFAULT
             newOrder.Id = orderId;
             newOrder.RecordTypeId = recordTypeId;
@@ -173,7 +181,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             newOrder.ProcessCode__c = processCode;
             newOrder.AggregateBilling__c = 'Si';
             newOrder.Phase__c = 'Bozza';
-            
+            newOrder.PressureLevel__c =  (extraParams.get('servicePointType') == 'HDT_RT_Gas') ? 'BP' : null;
             //Logica Superficie Servita Start
             newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas') ? 75 : null;
             //Logica Superficie Servita End

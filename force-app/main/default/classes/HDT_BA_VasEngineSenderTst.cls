@@ -34,6 +34,7 @@ public class HDT_BA_VasEngineSenderTst {
         //orderList[0].ProcessType__c = 'Comunicazione Motore VAS';
         orderList[0].Phase__c = 'In attesa tempi di ripensamento';
         orderList[0].SignedDate__c = d;
+        orderList[0].VASType__c = 'VAS Prodotto';
         orderList[0].RecordTypeId=rt;
         
         insert orderList;

@@ -116,6 +116,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         System.debug(LoggingLevel.DEBUG,'Gestione dati VariazioneAnagraficaCliente da case:' + currentCase.Id);
         SObject objToUpdate = null;
 
+        System.debug(LoggingLevel.DEBUG,'currentCase.SubProcess__c:' + currentCase.SubProcess__c);
         switch on currentCase.SubProcess__c {
             when 'Modifica Dati Fiscali' {
                 Account acc = new Account();
@@ -326,11 +327,13 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
         Case currentCase = (Case) inputCase;
 
+        wrts_prcgvr__Activity__c activity = createActivity('Sblocco Voltura');
         if(currentCase.VulturePracticeReference__c != null){
-            wrts_prcgvr__Activity__c activity = createActivity('Sblocco Voltura');
+            //wrts_prcgvr__Activity__c activity = createActivity('Sblocco Voltura');
             activity.Order__c = currentCase.VulturePracticeReference__c;
-            HDT_UTL_DatabaseService.insertSObject(activity);
+            //HDT_UTL_DatabaseService.insertSObject(activity);
         }
+        HDT_UTL_DatabaseService.insertSObject(activity);
 
     }
 
@@ -365,22 +368,22 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     public void updateServicePoint(SObject inputCase){
 
         Case currentCase = (Case) inputCase;
-        ServicePoint__c servicePoint = new ServicePoint__c();
-        servicePoint.Id             = currentCase.ServicePoint__c;
+        ServicePoint__c servPoint = new ServicePoint__c();
+        servPoint.Id             = currentCase.ServicePoint__c;
 
         if(currentCase.Type.equalsIgnoreCase('Marcatura/Uso PdR')){
-            servicePoint.UseCategory__c = currentCase.UseCategory__c;
-            servicePoint.SupplyType__c  = currentCase.SupplyType__c;
-            servicePoint.ImplantType__c	= currentCase.ServicePointType__c;
+            servPoint.UseCategory__c = currentCase.UseCategory__c;
+            servPoint.SupplyType__c  = currentCase.SupplyType__c;
+            servPoint.ImplantType__c	= currentCase.ServicePointType__c;
         }
 
         switch on currentCase.Type {
             when  'Sospensione Fornitura'{
-                servicePoint.MeterStatus__c = 'Inattivo';
+                servPoint.MeterStatus__c = 'Inattivo';
             }
         }
 
-        HDT_UTL_DatabaseService.updateSObject(servicePoint);
+        HDT_UTL_DatabaseService.updateSObject(servPoint);
     }
 
     //returns activity and has to be created inside the caller methdo because it has to be linked to an entity first
@@ -460,6 +463,16 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             solAcr.IsManagerSOL__c = True;
             solAcr.Roles = 'Referente SOL-APP';
             HDT_UTL_DatabaseService.insertSObject(solAcr);
+        }
+    }
+
+    public void setContractAccountCode(SObject inputCase)
+    {
+        Case currentCase = (Case) inputCase;
+        List<BillingProfile__c> billingProfiles = [SELECT Id,ContractAccountCode__c FROM BillingProfile__c WHERE Id = :currentCase.BillingProfile__c WITH SECURITY_ENFORCED];
+        if(!billingProfiles.isEmpty())
+        {
+            currentCase.ContractAccountCode__c = billingProfiles[0].ContractAccountCode__c;
         }
     }
 

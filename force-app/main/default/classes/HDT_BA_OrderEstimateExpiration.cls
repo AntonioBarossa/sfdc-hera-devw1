@@ -12,21 +12,17 @@ public class HDT_BA_OrderEstimateExpiration implements Database.Batchable<SObjec
 
     public void execute(Database.BatchableContext bc, List<Order> scope) {
 
-        List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> orderToSendList = new List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>();
-
         for(Order ord : scope){
             ord.Phase__c = 'Preventivo scaduto';
             ord.Status = 'Annullato';
-            HDT_PEV_VoltureChangeManagerUpdateSObj__e orderToSend = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
-            orderToSend.SerializedSobj__c = JSON.serialize(ord);
-            orderToSendList.add(orderToSend);
         }
-        Eventbus.publish(orderToSendList);
+        HDT_UTL_DatabaseService.updateSObject(scope);
         
     }
 
     public void finish(Database.BatchableContext bc){
-		return;
+        Schedulable instance = (Schedulable) wrts_prcgvr.VersionManager.newClassInstance('AsyncJobBatchSchedule');
+        instance.execute(null);
 	}
 
     public void execute(SchedulableContext ctx){

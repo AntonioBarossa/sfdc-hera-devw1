@@ -158,6 +158,7 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.Vat__c,
             ServicePoint__r.ExciseEle__c,
             ServicePoint__r.ExciseGas__c,
+            ServicePoint__r.SapContractStatus__c,
             PowerAvailable__c,
             UseTypeEnergy__c,
             BillingProfile__c,
@@ -1293,7 +1294,7 @@ public inherited sharing class HDT_QR_Order {
     //@frpanico getOpenActivities
     public List<wrts_prcgvr__Activity__c> getOpenActivitiesByOrderId(String orderId)
     {
-        return [SELECT Id, wrts_prcgvr__Status__c,Type__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Chiusa' AND Order__c = :orderId WITH SECURITY_ENFORCED];
+        return [SELECT Id, wrts_prcgvr__Status__c,Type__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Chiusa' AND wrts_prcgvr__IsClosed__c = false AND Order__c = :orderId WITH SECURITY_ENFORCED];
     }
 
     public static List<Order> getOrderQuality(Set<String> ordIdSet) {

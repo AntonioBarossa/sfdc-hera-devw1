@@ -149,6 +149,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
             'DATA_DECORRENZA_VT_TIT_IV' => '2021-10-15',
             'POTCONTRIMP' => '3.97',
             'POTDISP' => '4.00',
+			'result' => 'OK',
             'TENSIONE' => '13'
         };
         Test.startTest();
@@ -176,13 +177,14 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
             'NAZIONE' => 'IT',
             'DES_ERR_AEEG' => 'No Error',
             'COD_PRAT_UTENTE' => '10922312839',
+			'result' => 'ko',
             'COD_PRAT_DISTR' => '123812938123_DL'
         };
         Test.startTest();
         currentOrder[0] = voltureChangeUtl.handleResponse(fieldsMap, currentOrder[0]);
         Test.stopTest();
-        System.assertEquals('Amm. Precheck OK SII', currentOrder[0].TecnicalPhase__c,'Fase non calcolata correttamente');
-        System.assertEquals('ERR', currentOrder[0].CausalCode__c,'Codice causale calcolato correttamente');
+        System.assertEquals('Comunicazione verso Heroku KO', currentOrder[0].TecnicalPhase__c,'Fase non calcolata correttamente');
+        System.assertEquals(null, currentOrder[0].CausalCode__c,'Codice causale calcolato correttamente');
     }
 
     @IsTest
@@ -466,7 +468,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         Object result = voltureChangeUtl.handleDataEnrichmentConfig(config, posizione);
         Test.stopTest();
 
-        System.assertEquals('Imposta usi domestici', String.valueOf(result),'Arricchimento fallito');
+        System.assertEquals('Imposta Usi Domestici (Cod. G_ICD)', String.valueOf(result),'Arricchimento fallito');
     }
 
     
@@ -542,7 +544,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         String result = voltureChangeUtl.methodDispatcher(config, posizione);
         Test.stopTest();
 
-        System.assertEquals('Imposta usi domestici', result,'Arricchimento fallito');
+        System.assertEquals('Imposta Usi Domestici (Cod. G_ICD)', result,'Arricchimento fallito');
     }
 
     @IsTest

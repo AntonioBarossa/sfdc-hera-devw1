@@ -89,7 +89,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     applySelectionLogic(selectedProcess){
         console.log('applySelectionLogic: ', JSON.stringify(selectedProcess));
 
-        if(selectedProcess.recordType === 'HDT_RT_Attivazione')
+        if(selectedProcess.RecordTypeName__c === 'HDT_RT_Attivazione')
         {
             // this.precheck = false;
             // this.compatibilita = true;
@@ -102,18 +102,18 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
             this.disabledDeliberation = this.order.Step__c !== undefined;
         }
-        else if(selectedProcess.recordType === 'HDT_RT_RiattivazioniNonMorose'){
+        else if(selectedProcess.RecordTypeName__c === 'HDT_RT_RiattivazioniNonMorose'){
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
             this.disabledDeliberation = this.order.Step__c !== undefined;
         }
-        // else if(selectedProcess.recordType === 'HDT_RT_Subentro')
+        // else if(selectedProcess.RecordTypeName__c === 'HDT_RT_Subentro')
         // {
         //     this.precheck = true;
         //     this.compatibilita = true;
         //     this.causale = '';
         //     this.showDeliberation = false;
         // }
-        else if(selectedProcess.recordType === 'HDT_RT_SwitchIn')
+        else if(selectedProcess.RecordTypeName__c === 'HDT_RT_SwitchIn')
         {
             // this.precheck = false;
             this.precheck = true;
@@ -125,50 +125,50 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.showEsitoCheck = false;
 
         }
-        // else if(selectedProcess.recordType === 'HDT_RT_AttivazioneConModifica')
+        // else if(selectedProcess.RecordTypeName__c === 'HDT_RT_AttivazioneConModifica')
         // {
         //     this.precheck = true;
         //     this.compatibilita = true;
         //     this.causale = '';
         //     this.showDeliberation = false;
         // }
-        else if(selectedProcess.recordType === 'HDT_RT_VAS')
+        else if(selectedProcess.RecordTypeName__c === 'HDT_RT_VAS')
         {
-            this.selectedProcessObject.recordType = 'HDT_RT_VAS';
+            this.selectedProcessObject.RecordTypeName__c = 'HDT_RT_VAS';
             this.precheck = true;
             this.compatibilita = true;
             this.causale = '';
             this.showDeliberation = false;
         }
-        // else if(selectedProcess.recordType === 'HDT_RT_CambioOfferta')
+        // else if(selectedProcess.RecordTypeName__c === 'HDT_RT_CambioOfferta')
         // {
         //     this.precheck = true;
         //     this.compatibilita = true;
         //     this.causale = '';
         //     this.showDeliberation = false;
         // }
-        // else if(selectedProcess.recordType === 'HDT_RT_ScontiBonus')
+        // else if(selectedProcess.RecordTypeName__c === 'HDT_RT_ScontiBonus')
         // {
         //     this.precheck = true;
         //     this.compatibilita = true;
         //     this.causale = '';
         //     this.showDeliberation = false;
         // }
-        // else if(selectedProcess.recordType === 'HDT_RT_ConnessioneConAttivazione')
+        // else if(selectedProcess.RecordTypeName__c === 'HDT_RT_ConnessioneConAttivazione')
         // {
         //     this.precheck = true;
         //     this.compatibilita = true;
         //     this.causale = '';
         //     this.showDeliberation = false;
         // }
-        // else if(selectedProcess.recordType === 'HDT_RT_TemporaneaNuovaAtt')
+        // else if(selectedProcess.RecordTypeName__c === 'HDT_RT_TemporaneaNuovaAtt')
         // {
         //     this.precheck = true;
         //     this.compatibilita = true;
         //     this.causale = '';
         //     this.showDeliberation = false;
         // }
-        // else if(selectedProcess.recordType === 'HDT_RT_CambioUso')
+        // else if(selectedProcess.RecordTypeName__c === 'HDT_RT_CambioUso')
         // {
         //     this.precheck = true;
         //     this.compatibilita = true;
@@ -176,8 +176,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         //     this.showDeliberation = false;
         // }
         //INIZIO SVILUPPI EVERIS
-        else if(selectedProcess.recordType === 'HDT_RT_Voltura'){
-            this.selectedProcessObject.recordType = 'HDT_RT_Voltura';
+        else if(selectedProcess.RecordTypeName__c === 'HDT_RT_Voltura'){
+            this.selectedProcessObject.RecordTypeName__c = 'HDT_RT_Voltura';
             this.precheck = true;
             this.compatibilita = true;
             this.causale = '';
@@ -196,7 +196,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     incompatibilityfound(selectedProcess, compatibility){
         console.log('incompatibilityfound: ', JSON.stringify(selectedProcess));
 
-        if(selectedProcess.recordType === 'HDT_RT_Attivazione')
+        if(selectedProcess.RecordTypeName__c === 'HDT_RT_Attivazione')
         {
             // this.precheck = false;
             // this.compatibilita = true;
@@ -209,18 +209,18 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
             this.disabledDeliberation = this.order.Step__c !== undefined;
         }
-        else if(selectedProcess.recordType === 'HDT_RT_RiattivazioniNonMorose'){
+        else if(selectedProcess.RecordTypeName__c === 'HDT_RT_RiattivazioniNonMorose'){
             this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
             this.disabledDeliberation = this.order.Step__c !== undefined;
         }
-        // else if(selectedProcess.recordType === 'HDT_RT_Subentro')
+        // else if(selectedProcess.RecordTypeName__c === 'HDT_RT_Subentro')
         // {
         //     this.precheck = true;
         //     this.compatibilita = false;
         //     this.causaleCompatibilita = compatibility;
         //     this.showDeliberation = false;
         // }
-        else if(selectedProcess.recordType === 'HDT_RT_SwitchIn')
+        else if(selectedProcess.RecordTypeName__c === 'HDT_RT_SwitchIn')
         {
             // this.precheck = false;
             this.precheck = true;
@@ -232,50 +232,50 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.showEsitoCheck = false;
 
         }
-        // else if(selectedProcess.recordType === 'HDT_RT_AttivazioneConModifica')
+        // else if(selectedProcess.RecordTypeName__c === 'HDT_RT_AttivazioneConModifica')
         // {
         //     this.precheck = true;
         //     this.compatibilita = false;
         //     this.causaleCompatibilita = compatibility;
         //     this.showDeliberation = false;
         // }
-        else if(selectedProcess.recordType === 'HDT_RT_VAS')
+        else if(selectedProcess.RecordTypeName__c === 'HDT_RT_VAS')
         {
-            this.selectedProcessObject.recordType = 'HDT_RT_VAS';
+            this.selectedProcessObject.RecordTypeName__c = 'HDT_RT_VAS';
             this.precheck = true;
             this.compatibilita = false;
             this.causaleCompatibilita = compatibility;
             this.showDeliberation = false;
         }
-        // else if(selectedProcess.recordType === 'HDT_RT_CambioOfferta')
+        // else if(selectedProcess.RecordTypeName__c === 'HDT_RT_CambioOfferta')
         // {
         //     this.precheck = true;
         //     this.compatibilita = false;
         //     this.causaleCompatibilita = compatibility;
         //     this.showDeliberation = false;
         // }
-        // else if(selectedProcess.recordType === 'HDT_RT_ScontiBonus')
+        // else if(selectedProcess.RecordTypeName__c === 'HDT_RT_ScontiBonus')
         // {
         //     this.precheck = true;
         //     this.compatibilita = false;
         //     this.causaleCompatibilita = compatibility;
         //     this.showDeliberation = false;
         // }
-        // else if(selectedProcess.recordType === 'HDT_RT_ConnessioneConAttivazione')
+        // else if(selectedProcess.RecordTypeName__c === 'HDT_RT_ConnessioneConAttivazione')
         // {
         //     this.precheck = true;
         //     this.compatibilita = false;
         //     this.causaleCompatibilita = compatibility;
         //     this.showDeliberation = false;
         // }
-        // else if(selectedProcess.recordType === 'HDT_RT_TemporaneaNuovaAtt')
+        // else if(selectedProcess.RecordTypeName__c === 'HDT_RT_TemporaneaNuovaAtt')
         // {
         //     this.precheck = true;
         //     this.compatibilita = false;
         //     this.causaleCompatibilita = compatibility;
         //     this.showDeliberation = false;
         // }
-        // else if(selectedProcess.recordType === 'HDT_RT_CambioUso')
+        // else if(selectedProcess.RecordTypeName__c === 'HDT_RT_CambioUso')
         // {
         //     this.precheck = true;
         //     this.compatibilita = false;
@@ -283,8 +283,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         //     this.showDeliberation = false;
         // }
         //INIZIO SVILUPPI EVERIS
-        else if(selectedProcess.recordType === 'HDT_RT_Voltura'){
-            this.selectedProcessObject.recordType = 'HDT_RT_Voltura';
+        else if(selectedProcess.RecordTypeName__c === 'HDT_RT_Voltura'){
+            this.selectedProcessObject.RecordTypeName__c = 'HDT_RT_Voltura';
             this.precheck = true;
             this.compatibilita = false;
             this.causaleCompatibilita = compatibility;
@@ -376,13 +376,14 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          * HDT_RT_VAS (Solo Se: OrderReference__c <> null & ContractReference <> null)
          */
          console.log('****12');
-         console.log('# SelectedProcess.RecordType >>> ' + this.selectedProcessObject.recordType === 'HDT_RT_VAS');
+         console.log('# SelectedProcess.RecordType >>> ' + this.selectedProcessObject.RecordTypeName__c === 'HDT_RT_VAS');
          console.log('# Quote Condition >>> ' + this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c);
-         console.log('# RecordType condition >>> ' + ['HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType));
+         console.log('# RecordType condition >>> ' + ['HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.RecordTypeName__c));
          console.log('# ProcessType Conditio >>> ' + this.selectedProcessObject.processType !== 'Switch in Ripristinatorio');
-         console.log('# Full Condition >>> ' + (this.selectedProcessObject.recordType === 'HDT_RT_VAS' && this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c ) || (['HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType !== 'Switch in Ripristinatorio'));
-        //if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
-        if( (['HDT_RT_VAS','HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.ProcessName__c != 'Switch in Ripristinatorio')){
+         console.log('# Full Condition >>> ' + (this.selectedProcessObject.RecordTypeName__c === 'HDT_RT_VAS' && this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c ) || (['HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.RecordTypeName__c) && this.selectedProcessObject.processType !== 'Switch in Ripristinatorio'));
+        //if((this.selectedProcessObject.RecordTypeName__c === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.RecordTypeName__c) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
+        console.log('# ProcessType >>> ' + this.selectedProcessObject.processType);
+        if( (['HDT_RT_VAS','HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.RecordTypeName__c) && this.selectedProcessObject.ProcessName__c != 'Switch in Ripristinatorio')){
             this.callCreditCheckSAP();
         }
         console.log('****13');
@@ -456,11 +457,12 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 }
     
                 if (this.options.length === 0) {
-                    console.log('# Vas Subtype >>> ' + this.order.VASSubtype__c );
-                    if(this.order.IsVAS__c || this.order.VASSubtype__c === 'Analisi Consumi'){
+                    console.log('# Vas Subtype >>> ' + this.order.VasSubtype__c );
+                    if(this.order.IsVAS__c || this.order.VasSubtype__c === 'Analisi Consumi'){
                         this.options.push({label: 'VAS', value: 'VAS'});
-                        this.selectedProcessObject = {processType: 'VAS', recordType: 'HDT_RT_VAS'}
-                        this.value = this.selectedProcessObject.processType;
+                        this.selectedProcessObject = {ProcessName__c: 'VAS', RecordTypeName__c: 'HDT_RT_VAS'}
+                        console.log('ProcessObj >>> ' + JSON.stringify(this.selectedProcessObject));
+                        this.value = this.selectedProcessObject.ProcessName__c;
                         this.disabledSelectProcess = true;
                         this.pickValue = this.value;
                         this.startCheckContendibilita();
@@ -560,7 +562,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         let isVasAndCommodity = false;
 
         try {
-            isVasAndCommodity = await checkVasAndCommodity({ ord: this.order, recordTypeName: this.selectedProcessObject.recordType });
+            isVasAndCommodity = await checkVasAndCommodity({ ord: this.order, recordTypeName: this.selectedProcessObject.RecordTypeName__c });
             console.log('isVasAndCommodity: ' + isVasAndCommodity);
         } catch (error) {
             console.log(JSON.parse(JSON.stringify(error)));
@@ -630,7 +632,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         console.log("typeOfCommodity: " + typeOfCommodity);
         var fiscalData = null;
 
-        if(this.selectedProcessObject.recordType !== 'HDT_RT_VAS'){
+        if(this.selectedProcessObject.RecordTypeName__c !== 'HDT_RT_VAS'){
             if(this.order.ServicePoint__r.CommoditySector__c == 'Gas'){
                 typeOfCommodity = 'GAS';
             }
@@ -688,7 +690,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         }
         console.log("this.2"); 
 
-        if(this.selectedProcessObject.recordType !== 'HDT_RT_VAS'){
+        if(this.selectedProcessObject.RecordTypeName__c !== 'HDT_RT_VAS'){
             data["address"] = this.order.ServicePoint__r.SupplyStreetName__c;
             data["municipality"] = this.order.ServicePoint__r.SupplyCity__c;
             data["district"] = this.order.ServicePoint__r.SupplyProvince__c;
@@ -703,7 +705,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         }
         console.log("this.3"); 
 
-        if((this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_Voltura' || this.checkOutcomingVolturaWithSwitch(this.selectedProcessObject.recordType, this.order) ) && (this.order.Account.Id != this.order.ServicePoint__r?.Account__r?.Id) ){
+        if((this.selectedProcessObject.RecordTypeName__c === 'HDT_RT_Subentro' || this.selectedProcessObject.RecordTypeName__c === 'HDT_RT_Voltura' || this.checkOutcomingVolturaWithSwitch(this.selectedProcessObject.RecordTypeName__c, this.order) ) && (this.order.Account.Id != this.order.ServicePoint__r?.Account__r?.Id) ){
             console.log("this.31:" + JSON.stringify(this.order.Account.RecordType.DeveloperName)); 
             console.log("this.310:" + JSON.stringify(this.order.ServicePoint__r)); 
             if(this.order.ServicePoint__r?.Account__r?.RecordType?.DeveloperName === 'HDT_RT_Residenziale'){
@@ -740,10 +742,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             'type': 'Order',
             'processType' : processType
         };
-        if(this.selectedProcessObject.processType=="VAS"){
+        if(this.selectedProcessObject.ProcessName__c=="VAS"){
             sRequest["isBillableVas"]=this.order.IsBillableVas__c;
-            console.log('#VasSubType Precheck >>> ' + this.order.VASSubtype__c);
-            if(this.order.VASSubtype__c === 'Analisi Consumi')
+            console.log('#VasSubType Precheck >>> ' + this.order.VasSubtype__c);
+            if(this.order.VasSubtype__c === 'Analisi Consumi')
             {
                 console.log('#CommoditySector >>> ' + sRequest["commoditySector"]);
                 let processType = sRequest["commoditySector"] === 'Energia Elettrica' ? 'Aggiunta Sconti o Bonus VAS Ele' : 'Aggiunta Sconti o Bonus VAS Gas'

@@ -6,7 +6,6 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
     private List<Lead> existingLeadList;
     private List<HDT_WRP_ProcessObjects> processObjList;
     private List<MassiveLoaderRequestItem__c> itemsToSave;
-    private HDT_WRP_LeadDataForRetrieve leadDataForRetrieve;
 
     public override void checks(){
 
@@ -15,7 +14,6 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
         mapFieldsObject();
 
         HDT_WRP_ProcessObjects processObj;
-        leadDataForRetrieve = new HDT_WRP_LeadDataForRetrieve();
         processObjList = new List<HDT_WRP_ProcessObjects>();
         List<String> tempSplitedFields;
         for(MassiveLoaderRequestItem__c item : requestItemList){
@@ -62,6 +60,12 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
                         break;
                     }
 
+                    if(errorForPicklistValue('Individual', mapIndividualFields.get(mapHeaderByPosition.get(count)), tempField)){
+                        //convertionError = 'Valore: ' + tempField + ' non valido per ' + mapIndividualFields.get(mapHeaderByPosition.get(count));
+                        convertionError = 'Valore: ' + tempField + ' non valido per ' + mapHeaderByPosition.get(count);
+                        break;
+                    }
+
                 }
 
                 count++;
@@ -78,7 +82,6 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
     
             processObj.newLead.LeadSource = 'Lead freddo';
             processObjList.add(processObj);
-            setValueToSets(processObj.newLead);
 
             System.debug(LoggingLevel.DEBUG, '>>> current lead: ' + processObj.newLead);
             System.debug(LoggingLevel.DEBUG, '>>> current individual: ' + processObj.newIndividual);
@@ -87,41 +90,40 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
 
     }
 
-    public override void getRecords(){
-        existingLeadList = new List<Lead>();
-        existingLeadList = HDT_QR_Lead.getCurrentRecords(leadDataForRetrieve);
-    }
-
     public override void registryCreation(){
 
-        System.debug(LoggingLevel.DEBUG, '>>> existingLeadList: ' + existingLeadList.size());
-        System.debug(LoggingLevel.DEBUG, '>>> requestItemList: ' + requestItemList.size());
-
         List<Lead> leadtoUpsert = new List<Lead>();
+        List<Lead> leadtoDelete = new List<Lead>();
+        List<Lead> savedLeadList = new List<Lead>();
+        Map<Id, Lead> savedLeadMap;
+        List<Individual> individualtoUpdate = new List<Individual>();
         List<MassiveLoaderRequestItem__c> itemList = new List<MassiveLoaderRequestItem__c>();
+        Id recordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('HDT_RT_Main').getRecordTypeId();
 
+        List<Lead> duplicateLeadList;
+        String errorMessage = '';
         Lead existingLead;
         for(HDT_WRP_ProcessObjects processObj : processObjList){
-            existingLead = searchLead(processObj.newLead);
 
-            if(existingLead != null){
-                // in this case upsert existing lead
-                System.debug(LoggingLevel.DEBUG, '>>> existingLead: ' + existingLead.Id);
+            duplicateLeadList = new List<Lead>();
 
-                for(String tempField : mapLeadFields.values()) {
-                    if(String.isBlank(String.valueOf(existingLead.get(tempField))) || 'LeadValidityEndDate__c'.equalsIgnoreCase(tempField)) {
-                        existingLead.put(tempField, processObj.newLead.get(tempField));
-                    }
-                }
-               
-                existingLead.LeadReceptionDate__c = processObj.newLead.LeadReceptionDate__c;
-                processObj.newLead = existingLead;
-
-            } else {
-                // in this case insert lead
-                System.debug(LoggingLevel.DEBUG, '>>> no lead in db');
+            try {
+                duplicateLeadList = findDuplicateLead(new List<Lead>{processObj.newLead});
+            } catch (Exception ex) {
+                processObj.requestItem = setErrorItem(processObj.requestItem,  ex.getMessage());
+                continue;
             }
             
+            System.debug(LoggingLevel.DEBUG, '>>> existingLead: ' + duplicateLeadList);
+
+            if(duplicateLeadList[0] != null){
+                // errore duplicato
+                errorMessage = 'Duplicato - ' +  duplicateLeadList[0].Name + ' [' + duplicateLeadList[0].email + ']';
+                processObj.requestItem = setErrorItem(processObj.requestItem,  errorMessage);
+                processObj.newLead.Id = duplicateLeadList[0].Id;
+            }
+
+            processObj.newLead.RecordTypeId = recordTypeId;
             leadtoUpsert.add(processObj.newLead);
             itemList.add(processObj.requestItem);
 
@@ -132,17 +134,66 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
 
         //System.debug(LoggingLevel.DEBUG, '>>> reponseItemList: ' + leadUpsertResponse.reponseItemList);
         //System.debug(LoggingLevel.DEBUG, '>>> savedObject: ' + leadUpsertResponse.savedObject);
-        System.debug(LoggingLevel.DEBUG, '>>> itemIdToObjId: ' + leadUpsertResponse.itemIdToObjId);
-        System.debug(LoggingLevel.DEBUG, '>>> errorItemMap: ' + leadUpsertResponse.errorItemMap);
+        //System.debug(LoggingLevel.DEBUG, '>>> itemIdToObjId: ' + leadUpsertResponse.itemIdToObjId);
+        //System.debug(LoggingLevel.DEBUG, '>>> errorItemMap: ' + leadUpsertResponse.errorItemMap);
 
-        if(leadUpsertResponse.reponseItemList.size() > 0){
-            itemsToSave.addAll(leadUpsertResponse.reponseItemList);
+        itemList.clear();
+        
+        savedLeadList = [
+            SELECT Id, IndividualId
+            FROM Lead
+            WHERE Id IN :leadUpsertResponse.itemIdToObjId.values()
+        ];
+
+        savedLeadMap = new Map<Id, Lead>(savedLeadList);
+
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+
+            if(processObj.requestItem.Status__c.equalsIgnoreCase('Errore')){
+                continue;
+            }
+
+            System.debug(LoggingLevel.DEBUG, '>>> saved lead: ' + processObj.newLead.Id);
+            System.debug(LoggingLevel.DEBUG, '>>> saved Individual: ' + processObj.newLead.Individual.Id);
+
+            if(leadUpsertResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
+                // errore
+                processObj.requestItem = setErrorItem(processObj.requestItem, leadUpsertResponse.errorItemMap.get(processObj.requestItem.Id));
+                continue;
+            }
+
+            processObj.newIndividual.Id = savedLeadMap.get(processObj.newLead.Id).IndividualId;
+            individualtoUpdate.add(processObj.newIndividual);
+            itemList.add(processObj.requestItem);
+
         }
 
-        //List<Lead> listAfterInsert = HDT_QR_Lead.getCurrentRecords(currentProcess.currentLead);
-        //currentProcess.currentLead = listAfterInsert.get(0);
-        //currentProcess.currentIndividual.id = currentProcess.currentLead.IndividualId;
-        //update currentProcess.currentIndividual;
+        HDT_WRP_SaveResponse individualUpsertResponse;
+        individualUpsertResponse = databaseUpsert(individualtoUpdate, itemList, 'Individual');
+
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+
+            if(processObj.requestItem.Status__c.equalsIgnoreCase('Errore')){
+                continue;
+            }
+
+            if(individualUpsertResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
+                // errore
+                processObj.requestItem = setErrorItem(processObj.requestItem, individualUpsertResponse.errorItemMap.get(processObj.requestItem.Id));
+                leadtoDelete.add(processObj.newLead);
+            }
+        }
+
+        if(leadtoDelete.size() > 0){
+            HDT_UTL_DatabaseService.deleteSObject(leadtoDelete);
+        }
+
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+            if(!processObj.requestItem.Status__c.equalsIgnoreCase('Errore')){
+                processObj.requestItem.Status__c = 'Chiuso';
+            }
+            itemsToSave.add(processObj.requestItem);
+        }
 
     }
 
@@ -173,62 +224,24 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
 
     }
 
-    private void setValueToSets(Lead currentLead){
+    private static List<Lead> findDuplicateLead(List<Lead> leadToSearch) {
+        List<Lead> leadDuplicated = new List<Lead>();
+        List<Datacloud.FindDuplicatesResult> results;
 
-        if(String.isNotBlank(currentLead.FirstName)){
-            leadDataForRetrieve.firstNameSet.add(currentLead.FirstName);
-        }
+        results = Datacloud.FindDuplicates.findDuplicates(leadToSearch);
 
-        if(String.isNotBlank(currentLead.LastName)){
-            leadDataForRetrieve.lastNameSet.add(currentLead.LastName);
-        }
-
-        if(String.isNotBlank(currentLead.CompanyOwner__c)){
-            leadDataForRetrieve.companyOwnerSet.add(currentLead.CompanyOwner__c);
-        }
-
-        if(String.isNotBlank(currentLead.MobilePhone)){
-            leadDataForRetrieve.mobilePhoneSet.add(currentLead.MobilePhone);
-        }
-
-        if(String.isNotBlank(currentLead.Phone)){
-            leadDataForRetrieve.phoneSet.add(currentLead.Phone);
-        }
-
-        if(String.isNotBlank(currentLead.Email)){
-            leadDataForRetrieve.emailSet.add(currentLead.Email);
-        }
-
-    }
-
-    private Lead searchLead(Lead newLead){
-
-        Boolean firstName;
-        Boolean lastName;
-        Boolean companyOwner;
-        Boolean mobilePhone;
-        Boolean phone;
-        Boolean email;
-
-        Lead leadFound;
-
-        for(Lead l : existingLeadList){
-
-            firstName = l.FirstName == newLead.FirstName;
-            lastName = l.LastName == newLead.LastName;
-            companyOwner = l.CompanyOwner__c == newLead.CompanyOwner__c;
-            mobilePhone = l.MobilePhone == newLead.MobilePhone;
-            phone = l.Phone == newLead.Phone;
-            email = l.Email == newLead.Email;
-
-            if( firstName && lastName && companyOwner && (mobilePhone || phone || email) ) {
-                leadFound = l;
-                break;
+        for (Integer i = 0; i < leadToSearch.size(); i++) {
+            Lead leadDup = null;
+            for (Datacloud.DuplicateResult dr : results[i].getDuplicateResults()) {
+                if (dr.matchResults.size() > 0 && dr.getMatchResults()[0].matchRecords.size() > 0) {
+                    leadDup = (Lead)dr.getMatchResults()[0].getMatchRecords()[0].getRecord();
+                    break;
+                }
             }
+            leadDuplicated.add(leadDup);
         }
-
-        return leadFound;
-
+    
+        return leadDuplicated;
     }
 
     private class HDT_WRP_ProcessObjects {
@@ -236,25 +249,6 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
         private Individual newIndividual;
         private MassiveLoaderRequestItem__c requestItem;
         private List<String> csvSplitted;
-    }
-
-    public class HDT_WRP_LeadDataForRetrieve {
-        public Set<String> firstNameSet;
-        public Set<String> lastNameSet;
-        public Set<String> companyOwnerSet;
-        public Set<String> mobilePhoneSet;
-        public Set<String> phoneSet;
-        public Set<String> emailSet;
-
-        public HDT_WRP_LeadDataForRetrieve(){
-            firstNameSet = new Set<String>();
-            lastNameSet = new Set<String>();
-            companyOwnerSet = new Set<String>();
-            mobilePhoneSet = new Set<String>();
-            phoneSet = new Set<String>();
-            emailSet = new Set<String>();
-        }
-
     }
 
 }

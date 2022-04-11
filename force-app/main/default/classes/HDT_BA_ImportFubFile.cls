@@ -78,7 +78,7 @@ public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SOb
 
     public void finish(Database.BatchableContext bc){
         //update FUBProcessing Status
-        Database.QueryLocator queryFub = Database.getQueryLocator('SELECT Status__c FROM FUBProcessing__c WHERE Id = :FUBProcessingId');
+        Database.QueryLocator queryFub = Database.getQueryLocator('SELECT Status__c, Owner.Email FROM FUBProcessing__c WHERE Id = :FUBProcessingId');
         Database.QueryLocatorIterator itFub =  queryFub.iterator();
         FUBProcessing__c fubProcessing = new FUBProcessing__c();
         fubProcessing.Id = FUBProcessingId;
@@ -87,5 +87,23 @@ public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SOb
             fubProcessing.Status__c = 'Archivio FUB importato';
         }
         update fubProcessing;
+        if(String.isNotBlank(fubProcessing.Owner.Email)){
+            system.debug('Krist: '  +fubProcessing.Owner.Email);
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            list <EmailSetting__mdt> email=[SELECT DeveloperName, Email__c FROM EmailSetting__mdt WHERE DeveloperName='Elaborazione_Archivio_FUB' limit 1];
+            if(email!=null && email.size()>0){
+                OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address =:email[0].Email__c];
+                if ( owea.size() > 0 ) {
+                    mail.setOrgWideEmailAddressId(owea.get(0).Id);
+                }
+                String url=URL.getSalesforceBaseUrl().toExternalForm();
+                url=url+'/'+fubProcessing.Id;
+                mail.setToAddresses(new String[]{fubProcessing.Owner.Email});
+                mail.setSubject('Esito elaborazione archivio FUB');
+                String body='Archivio FUB '+url+' importato con successo.' ;
+                mail.setPlainTextBody (body);
+                Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+            }
+        }
     }
 }

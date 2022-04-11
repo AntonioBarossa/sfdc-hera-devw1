@@ -40,7 +40,13 @@ public with sharing class HDT_UTL_OrderProcessTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa tempi di ripensamento', 'Documentazione Validata', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Esportazione VS Siebel', 'Documentazione Validata', constants.ORDER_RECORDTYPEID_VOLTURA, 'HDT_RT_Voltura');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita', 'Bozza', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza', 'Documentazione Gestita', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku', 'Bozza', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa tempi di ripensamento', 'Documentazione Gestita', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'Documentazione Gestita', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa di quality call', 'Documentazione Gestita', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Quality Call OK', 'Documentazione Gestita', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Quality Call OK', 'In attesa di quality call', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Validata', 'In attesa validazione', constants.ORDER_RECORDTYPEID_VOLTURA, 'HDT_RT_Voltura');
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione', 'Da Inviare', constants.ORDER_RECORDTYPEID_VOLTURA, 'HDT_RT_Voltura');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'Bozza', constants.ORDER_RECORDTYPEID_CAMBIO_OFFERTA, 'HDT_RT_OrderDossier');
@@ -87,23 +93,6 @@ public with sharing class HDT_UTL_OrderProcessTst {
             orderList[0].DateSentToSII__c = Date.today();
             orderList[0].Name = 'testOrderName0';
             orderList[0].Phase__c = 'Documentazione Gestita';
-            orderList[1].PraxidiaOverrallSatisfaction__c = 2.0;
-            orderList[1].PraxidiaDateOutcome__c = Date.newInstance(2020, 08, 10);
-            orderList[1].isTransition__c = true;
-            orderList[1].RecordTypeId = constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
-            orderList[1].AgencyCode__c = 'AgencyCode';
-            orderList[1].WizardCompletedDate__c = Date.today();
-            orderList[1].Contact__c = cttList[0].Id;
-            orderList[1].DocumentPackage__c = 'Validato';
-            orderList[1].QualityCall__c = true;
-            orderList[1].SignedDate__c = Date.today().addDays(-7);
-            orderList[1].ServicePoint__c = spList[0].Id;
-            orderList[1].BillingProfile__c = bpList[0].Id;
-            orderList[1].SapContractCode__c = '123456';
-            orderList[1].TecnicalPhase__c = 'Bozza';
-            orderList[1].DateSentToSII__c = Date.today();
-            orderList[1].Name = 'name1';
-            orderList[1].Phase__c = 'Completata';
             insert orderList;
 
             List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, false, accList[0].Id, 'Bozza');
@@ -449,11 +438,11 @@ public with sharing class HDT_UTL_OrderProcessTst {
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
                                             Contact__c, ParentOrder__c, PhaseStory__c, SignedDate__c, IncomingCreditCheckResult__c,
                                             IsSequanzialized__c, TecnicalPhase__c
-                                     FROM Order WHERE Name = 'name1'];
+                                     FROM Order WHERE Name = 'testOrderName0'];
             
             List<Order> ordersNew = ordersOld;
-            /*ordersNew[0].Phase__c = 'Completata';
-            update ordersNew;*/
+            ordersNew[0].Phase__c = 'Completata';
+            update ordersNew;
 
             HDT_UTL_OrderProcess.overturningFields(ordersOld, ordersNew);
 
