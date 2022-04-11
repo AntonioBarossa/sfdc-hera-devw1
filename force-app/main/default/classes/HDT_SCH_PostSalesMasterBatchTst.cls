@@ -80,7 +80,6 @@ public class HDT_SCH_PostSalesMasterBatchTst {
         System.assertEquals(year+'-02-13 08:00:00', String.valueOf(ct.NextFireTime));
 
         Test.stopTest();
-        
     }
 
 }
