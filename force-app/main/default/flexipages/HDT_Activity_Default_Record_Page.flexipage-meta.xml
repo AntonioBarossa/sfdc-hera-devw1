@@ -1445,6 +1445,16 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Distributor__c</fieldItem>
+                <identifier>RecordDistributor_cField1</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-92caf3f0-d634-4041-a98b-0e0f117d3553</name>
         <type>Facet</type>
     </flexiPageRegions>
