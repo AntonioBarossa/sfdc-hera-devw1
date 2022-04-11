@@ -14,6 +14,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
     private Map<Id, Map<Id, PriceBookEntry>> pricebookEntryForVasMap;
     private List<String> contractSapCodeList = new List<String>();
     private Map<String, Contract> contractToPbookIdMap = new Map<String, Contract>();
+    private Set<String> orderUniqueKeySet = new Set<String>();
+    private List<Id> productIdList = new List<Id>();
 
     public override void checks(){
 
@@ -31,9 +33,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
         String rowType = '';
         String orderUniqueKey;
-        //Integer rowTypeIndex = mapHeaderForWrapper.get('RowType');
-        //Integer orderCodeIndex = mapHeaderForWrapper.get('OrderCode');
-        Integer orderCodeIndex = mapHeaderForWrapper.get('Contratto');
+        Integer orderUniqueKeyIndex = mapHeaderForWrapper.get('Progressivo_rds');
         Integer nomeVasIndex = mapHeaderForWrapper.get('NomeVAS');
 
         List<HDT_WRP_Order> wrapperOrderTempList = new List<HDT_WRP_Order>();
@@ -46,8 +46,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
             tempSplitedFields = item.Data__c.split(splitCharacter, -1);
 
-            orderUniqueKey = tempSplitedFields[orderCodeIndex];
-            //rowType = tempSplitedFields[rowTypeIndex];
+            orderUniqueKey = tempSplitedFields[orderUniqueKeyIndex];
+            orderUniqueKeySet.add(orderUniqueKey);
             rowType = (String.isEmpty(tempSplitedFields[nomeVasIndex])) ? 'Order' : 'OrderItem';
 
             if(rowType.equalsIgnoreCase('Order')){
@@ -83,26 +83,33 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
                 if(sobjectMap.containsKey(csvHeader)){
                     System.debug('>>> objField: ' + objField + ' - tempValue: ' + tempValue + ' - objectType: ' + sobjectMap.get(csvHeader).objectType__c);
-                    switch on sobjectMap.get(csvHeader).objectType__c {
-                        when 'Sale__c' {
-                            convertionError = mapTypeField(wrpOrder.sale, mapAllFields, count, tempValue);
+                    
+                    if(rowType.equalsIgnoreCase('Order')){
+                        switch on sobjectMap.get(csvHeader).objectType__c {
+                            when 'Sale__c' {
+                                convertionError = mapTypeField(wrpOrder.sale, mapAllFields, count, tempValue);
+                            }
+                            when 'Order' {
+                                convertionError = mapTypeField(wrpOrder.order, mapAllFields, count, tempValue);
+                            }
+                            when 'ParentOrder' {
+                                convertionError = mapTypeField(wrpOrder.parentOrder, mapAllFields, count, tempValue);
+                            }
+                            when 'Contract' {
+                                convertionError = mapTypeField(wrpOrder.contract, mapAllFields, count, tempValue);
+                            }
                         }
-                        when 'Order' {
-                            convertionError = mapTypeField(wrpOrder.order, mapAllFields, count, tempValue);
-                        }
-                        when 'ParentOrder' {
-                            convertionError = mapTypeField(wrpOrder.parentOrder, mapAllFields, count, tempValue);
-                        }
-                        when 'Product2' {
-                            convertionError = mapTypeField(wrpOrderItem.product, mapAllFields, count, tempValue);
-                        }
-                        when 'Contract' {
-                            convertionError = mapTypeField(wrpOrder.contract, mapAllFields, count, tempValue);
-                        }
-                        when 'OrderItem' {
-                            convertionError = mapTypeField(wrpOrderItem.OrderItem, mapAllFields, count, tempValue);
+                    } else if(rowType.equalsIgnoreCase('OrderItem')){
+                        switch on sobjectMap.get(csvHeader).objectType__c {
+                            when 'Product2' {
+                                convertionError = mapTypeField(wrpOrderItem.product, mapAllFields, count, tempValue);
+                            }
+                            when 'OrderItem' {
+                                convertionError = mapTypeField(wrpOrderItem.OrderItem, mapAllFields, count, tempValue);
+                            }
                         }
                     }
+                    
                 }
 
                 if(String.isNotEmpty(convertionError)){
@@ -118,8 +125,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
                 wrapperOrderTempList.add(wrpOrder);
 
                 if(String.isNotEmpty(convertionError)){
-                    //wrpOrder.requestItem.Status__c = 'Errore';
-                    //wrpOrder.requestItem.StatusDescription__c = convertionError;
                     wrpOrder.requestItem = setErrorItem(wrpOrder.requestItem, convertionError);
                     failedMap.put(wrpOrder.orderUniqueKey, wrpOrder.requestItem.Id);
                     continue;
@@ -132,8 +137,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
                 wrapperOrderItemTempList.add(wrpOrderItem);
 
                 if(String.isNotEmpty(convertionError)){
-                    //wrpOrderItem.requestItem.Status__c = 'Errore';
-                    //wrpOrderItem.requestItem.StatusDescription__c = convertionError;
                     wrpOrderItem.requestItem = setErrorItem(wrpOrderItem.requestItem, convertionError);
                     failedMap.put(wrpOrderItem.orderUniqueKey, wrpOrderItem.requestItem.Id);
                     continue;
@@ -182,7 +185,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         
         List<String> versionList = new List<String>();
         List<Product2> productRetrievedFromDb = new List<Product2>();
-        List<Id> productIdList = new List<Id>();
+        //List<Id> productIdList = new List<Id>();
         List<PriceBookEntry> pbeList = new List<PriceBookEntry>();
         List<SBQQ__ProductOption__c> productOptionList = new List<SBQQ__ProductOption__c>();
         pricebookEntryForVasMap = new Map<Id, Map<Id, PriceBookEntry>>();
@@ -207,16 +210,16 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
             WHERE SAPContractCode__c IN :contractSapCodeList
         ];
         
-        List<String> priceBookIdList = new List<String>();
+        //List<String> priceBookIdList = new List<String>();
         for(Contract c : contractList){
-            priceBookIdList.add(c.SBQQ__AmendmentPricebookId__c);
+            //priceBookIdList.add(c.SBQQ__AmendmentPricebookId__c);
             contractToPbookIdMap.put(c.SAPContractCode__c, c);
-            if(!pricebookEntryForVasMap.containsKey(c.SBQQ__AmendmentPricebookId__c)){
-                pricebookEntryForVasMap.put(c.SBQQ__AmendmentPricebookId__c, new Map<Id, PriceBookEntry>());
-            }
+            //if(!pricebookEntryForVasMap.containsKey(c.SBQQ__AmendmentPricebookId__c)){
+            //    pricebookEntryForVasMap.put(c.SBQQ__AmendmentPricebookId__c, new Map<Id, PriceBookEntry>());
+            //}
         }
 
-        List<PriceBookEntry> pbeForVasList = [
+        /*List<PriceBookEntry> pbeForVasList = [
             SELECT Id, Pricebook2Id, Product2Id, UnitPrice
             FROM PricebookEntry
             WHERE Product2Id IN :productIdList
@@ -230,19 +233,20 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
                 tempMap.put(pbe.Product2Id, pbe);
                 pricebookEntryForVasMap.put(pbe.Pricebook2Id, tempMap);
             }
-        }
+        }*/
         
     }
 
     public override void registryCreation(){
 
+        List<String> priceBookIdList = new List<String>();
         List<sObject> recordToDelete = new List<sObject>();
         List<Order> parentOrderToInsert = new List<Order>();
         List<Order> childOrderToInsert = new List<Order>();
         List<OrderItem> orderItemToInsert = new List<OrderItem>();
         List<Sale__c> saleToInsert = new List<Sale__c>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
-        Map<String, HDT_WRP_Order> orderUniqueKeyMap = new Map<String, HDT_WRP_Order>();
+        //Map<String, HDT_WRP_Order> orderUniqueKeyMap = new Map<String, HDT_WRP_Order>();
 
         for(HDT_WRP_Order wrpOrder : wrapperOrderList){
             wrpOrder.Order.PriceBook2Id = contractToPbookIdMap.get(wrpOrder.contract.SAPContractCode__c).SBQQ__AmendmentPricebookId__c;
@@ -264,30 +268,63 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
                 wrpOrder.requestItem.StatusDescription__c = saveChildOrderResponse.errorItemMap.get(wrpOrder.requestItem.Id);
                 continue;
             }
-            orderUniqueKeyMap.put(wrpOrder.orderUniqueKey, wrpOrder);
+            //orderUniqueKeyMap.put(wrpOrder.orderUniqueKey, wrpOrder);
         }
 
+        List<Order> orderList = new List<Order>();
+        Map<String, Order> uniqueKeyToOrder = new Map<String, Order>();
+        orderList = [
+            SELECT Id, GlobalMigrationKey__c, PriceBook2Id
+            FROM Order
+            WHERE GlobalMigrationKey__c IN :orderUniqueKeySet
+        ];
+
+        for(Order o : orderList){
+            uniqueKeyToOrder.put(o.GlobalMigrationKey__c, o);
+            priceBookIdList.add(o.PriceBook2Id);
+            if(!pricebookEntryForVasMap.containsKey(o.PriceBook2Id)){
+                pricebookEntryForVasMap.put(o.PriceBook2Id, new Map<Id, PriceBookEntry>());
+            }
+        }
+
+        List<PriceBookEntry> pbeForVasList = [
+            SELECT Id, Pricebook2Id, Product2Id, UnitPrice
+            FROM PricebookEntry
+            WHERE Product2Id IN :productIdList
+            AND Pricebook2Id IN :priceBookIdList
+            WITH SECURITY_ENFORCED
+        ];
+
+        for(PriceBookEntry pbe : pbeForVasList){
+            if(pricebookEntryForVasMap.containsKey(pbe.Pricebook2Id)){
+                Map<Id, PriceBookEntry> tempMap = pricebookEntryForVasMap.get(pbe.Pricebook2Id);
+                tempMap.put(pbe.Product2Id, pbe);
+                pricebookEntryForVasMap.put(pbe.Pricebook2Id, tempMap);
+            }
+        }
+
+
         String prodKey;
-        String contractCode = '';
+        String pricebookId = '';
         for(HDT_WRP_OrderItem wrpOrderItem : wrapperOrderItemList){
 
-            if(orderUniqueKeyMap.containsKey(wrpOrderItem.orderUniqueKey)){
-                wrpOrderItem.orderItem.OrderId = orderUniqueKeyMap.get(wrpOrderItem.orderUniqueKey).order.Id;
-                contractCode = orderUniqueKeyMap.get(wrpOrderItem.orderUniqueKey).contract.SAPContractCode__c;
+            if(uniqueKeyToOrder.containsKey(wrpOrderItem.orderUniqueKey)){
+                wrpOrderItem.orderItem.OrderId = uniqueKeyToOrder.get(wrpOrderItem.orderUniqueKey).Id;
+                pricebookId = uniqueKeyToOrder.get(wrpOrderItem.orderUniqueKey).PriceBook2Id;
             } else {
                 wrpOrderItem.requestItem.Status__c = 'Errore';
                 wrpOrderItem.requestItem.StatusDescription__c = 'Controllare parametri Order';
                 continue;
             }
 
-            System.debug('>>> contractCode ' + contractCode);
+            System.debug('>>> pricebookId ' + pricebookId);
 
             prodKey = wrpOrderItem.product.Name + '-' + wrpOrderItem.product.DescriptionSAP__c + '-' + wrpOrderItem.product.Version__c;
 
             if(productMap.containsKey(prodKey)){
                 wrpOrderItem.orderItem.Product2Id = productMap.get(prodKey).Id;
 
-                String pricebookId = contractToPbookIdMap.get(contractCode).SBQQ__AmendmentPricebookId__c;
+                //String pricebookId = contractToPbookIdMap.get(contractCode).SBQQ__AmendmentPricebookId__c;
 
                 System.debug('>>> priceBook2Id ' + priceBookId);
 
@@ -314,7 +351,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         Set<String> uniqueKeyErrorList = new Set<String>();
         for(HDT_WRP_OrderItem wrpOrderItem : wrapperOrderItemList){
 
-            if(!orderUniqueKeyMap.containsKey(wrpOrderItem.orderUniqueKey)){
+            if(!uniqueKeyToOrder.containsKey(wrpOrderItem.orderUniqueKey)){
                 continue;
             }
 
@@ -330,7 +367,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
         for(HDT_WRP_OrderItem wrpOrderItem : wrapperOrderItemList){
 
-            if(!orderUniqueKeyMap.containsKey(wrpOrderItem.orderUniqueKey)){
+            if(!uniqueKeyToOrder.containsKey(wrpOrderItem.orderUniqueKey)){
                 continue;
             }
 
@@ -343,7 +380,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
         for(HDT_WRP_Order wrpOrder : wrapperOrderList){
 
-            if(!orderUniqueKeyMap.containsKey(wrpOrder.orderUniqueKey)){
+            if(!uniqueKeyToOrder.containsKey(wrpOrder.orderUniqueKey)){
                 continue;
             }
 
