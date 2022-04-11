@@ -1068,7 +1068,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'riepilogoDatiAmend',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus' || this.order.VASSubtype__c === 'Analisi Consumi',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus' || this.order.VasSubtype__c === 'Analisi Consumi',
                 data: [
                     new fieldData('Azione commerciale','CommercialAction__c',this.typeVisibility('both'),false, false, '',''),
                     new fieldData('Data Decorrenza','EffectiveDate__c',this.typeVisibility('both'),false, false, '',''),  
@@ -1087,7 +1087,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'analisiConsumi',
                 objectApiName: 'OrderItem',
                 recordId: this.analisiConsumi.Id !== undefined ? this.analisiConsumi.Id : '',//this.analisiConsumi.Id
-                processVisibility: this.order.VASSubtype__c === 'Analisi Consumi',
+                processVisibility: this.order.VasSubtype__c === 'Analisi Consumi',
                 data: [
                     new fieldData('Proprietario','OwnerAC__c',this.typeVisibility('both'),false, false, '',''), 
                     new fieldData('Tipo Casa','DwellingType__c',this.typeVisibility('both'),false, false, '',''),                  
@@ -1275,7 +1275,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'dettaglioImpianto',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.VASSubtype__c !== 'Analisi Consumi',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.VasSubtype__c !== 'Analisi Consumi',
                 data: [
                     new fieldData('Azione Commerciale',     'CommercialAction__c',  true, false, false, ''),
                     new fieldData('Attivazione Anticipata', 'IsEarlyActivation__c', true, false, this.order.VASType__c == 'VAS Servizio', ''),
@@ -1285,7 +1285,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Categoria Cliente',      'CustomerCategory__c',  true, false, true, ''),
                     new fieldData('POD/PDR',                'ServicePointCode__c',  true, false, true, ''),
                     new fieldData('Tipo VAS',               'VASType__c',           true, false, true, ''),
-                    new fieldData('Sottotipo VAS',          'VASSubtype__c',        true, false, true, ''),
+                    new fieldData('Sottotipo VAS',          'VasSubtype__c',        true, false, true, ''),
                     new fieldData('Recapito Telefonico',    'PhoneNumber__c',       true, false, true, '')
 
                 ]
@@ -1297,7 +1297,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 hasAddrComp: true,
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.VASSubtype__c !== 'Analisi Consumi',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.VasSubtype__c !== 'Analisi Consumi',
                 data: [
                 ]
             },
@@ -1308,7 +1308,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 hasAddrComp: true,
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.VASSubtype__c !== 'Analisi Consumi',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.VasSubtype__c !== 'Analisi Consumi',
                 data: [
                     
                 ]
@@ -1575,6 +1575,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     
     async connectedCallback(){
         console.log('Details Callback Start');
+
+        console.log('### VasSubtype__c >>> ' + this.order.VasSubtype__c);
 
         let initData = await init();
         console.log('initData: ' + JSON.stringify(initData));
