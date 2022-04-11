@@ -212,7 +212,7 @@ public class HDT_SRV_SalesManagerTst {
     * @description Testing phase update
     * @author gabriele.rota@webresults.it | 2021-11-10 
     **/
-    @isTest
+    /*@isTest
     public static void updatePhaseTest(){
 
         Order originalOrder = [SELECT VASType__c FROM Order LIMIT 1];
@@ -228,7 +228,7 @@ public class HDT_SRV_SalesManagerTst {
         Order updatedOrder = [SELECT Phase__c FROM Order LIMIT 1];
         System.assertEquals('Comunicazione Motore VAS', updatedOrder.Phase__c, 'Order Phase is not correct');
         System.assertNotEquals('In attesa tempi di ripensamento', updatedOrder.Phase__c, 'Order Phase is not correct');
-    }
+    }*/
 
     /**
     * @description Testing contracted switch

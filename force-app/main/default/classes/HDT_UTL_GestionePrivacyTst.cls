@@ -32,14 +32,13 @@ public class HDT_UTL_GestionePrivacyTst {
         cpe[0].Status__c='Verificato';
         cpe[0].EmailAddress='test@gmail.com';
         insert cpe;
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'Reseller', 'ETRURIA-Altro', 'Reseller - Gruppo');
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountPartner(1, true, 'myAccPartnerName');
         List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(1,false,accList[0].Id);
         conList[0].MobilePhone ='069565852';
         conList[0].MobilePhonePrefix__c ='+39';
         conList[0].PhonePrefix__c='+39';
         conList[0].Email='test@gmail.com';
         conList[0].Phone ='0695655852';
-		conList[0].Company__c = 'Reseller';
         insert conList;
         
         HDT_UTL_DataFactoryTst.createWebServiceConfiguration('BP_CA', 'test.com', 'post', 'testUser');
@@ -395,7 +394,7 @@ public class HDT_UTL_GestionePrivacyTst {
         List<Contact> conts= new List<Contact>();
         Contact con = [SELECT Id,MobilePhone,MobilePhonePrefix__c,Phone,Email,IndividualId,PhonePrefix__c,LastName, FirstName,Company__c,CompanyOwner__c FROM Contact limit 1];
         Contact c= con.clone(false,true,false,true);
-      //  c.Company__c='Reseller';
+        c.Company__c='HCM';
         c.LastName = con.LastName + 'clone';
         insert c;
         conts.add(c);

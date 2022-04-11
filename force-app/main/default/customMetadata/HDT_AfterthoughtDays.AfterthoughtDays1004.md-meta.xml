@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>DocumentSendingMode__c</field>
-        <value xsi:type="xsd:string">E-mail</value>
+        <value xsi:type="xsd:string">Posta Cartacea</value>
     </values>
     <values>
         <field>Market__c</field>
