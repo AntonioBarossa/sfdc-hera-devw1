@@ -320,7 +320,7 @@ public with sharing class HDT_UTL_LeadProcess {
                         campaignId = campaign[0].Id;
                         macroactivity= campaign[0].MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                     }
-                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id);
+                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     cmSrv.createRecord(cm);
                     if(macroactivity != null && macroactivity != '' && newLead.ContactDate__c != null){
                         HDT_WS_InvioNumerazioni.callService(macroactivity, l.MobilePhone);
@@ -497,7 +497,7 @@ public with sharing class HDT_UTL_LeadProcess {
                         macroactivity= campaign[0].MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                         
                     }
-                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id);
+                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     cmSrv.createRecord(cm);
                     if(macroactivity != null && macroactivity != '' && newLead.ContactDate__c != null ){
                         HDT_WS_InvioNumerazioni.callService(macroactivity, l.MobilePhone);
@@ -691,7 +691,7 @@ public with sharing class HDT_UTL_LeadProcess {
                         campaignId = campaign[0].Id;
                         macroactivity= campaign[0].MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                     }
-                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id);
+                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     cmSrv.createRecord(cm);
                     if(macroactivity != null && macroactivity != '' && newLead.ContactDate__c != null){
                         HDT_WS_InvioNumerazioni.callService(macroactivity, l.MobilePhone);
@@ -888,7 +888,7 @@ public with sharing class HDT_UTL_LeadProcess {
                         campaignId = campaign[0].Id;
                         macroactivity= campaign[0].MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                     }
-                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id);
+                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     cmSrv.createRecord(cm);
                     if(macroactivity != null && macroactivity != ''){
                         HDT_WS_InvioNumerazioni.callService(macroactivity, l.MobilePhone);
