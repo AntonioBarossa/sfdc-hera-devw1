@@ -1,7 +1,7 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecution {
 
-    private Map<String, HDT_MassiveFieldsObjectMap__mdt> sobjectMap;
+    private Map<String, MassiveFieldsObjectMap__c> sobjectMap;
     private Map<String, String> mapAllFields;
     private Map<String, String> mapWrapperAccountFields;
     private List<Account> accountList;
@@ -19,14 +19,18 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     private Integer codicePuntoIndex;
     private Integer recTypeIndex;
     private Map<Id, Id> accountContactMap = new Map<Id, Id>();
+    private Map<String, Id> billProfMap;
 
     public override void checks(){
         System.debug(LoggingLevel.DEBUG, 'checks');
         mapFieldsObject();
 
-        contoContrattualeIndex = mapHeaderForWrapper.get('ContoContrattuale');
-        codicePuntoIndex = mapHeaderForWrapper.get('CodicePunto');
-        recTypeIndex = mapHeaderForWrapper.get('Tipo');
+
+        System.debug('AccountTipo - > ' + mapHeaderByPosition.get(0));
+
+        contoContrattualeIndex = mapHeaderForWrapper.get('BillingProfileContoContrattuale');
+        codicePuntoIndex = mapHeaderForWrapper.get('ServicePointCodicePunto');
+        recTypeIndex = mapHeaderForWrapper.get('AccountTipo');
 
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
@@ -61,12 +65,19 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         recordTypeMap = new Map<String, Id>();
         codicePuntoMap = new Map<String, Id>();
+        billProfMap = new Map<String, Id>();
 
         recordTypeMap.put('Business', Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId());
         recordTypeMap.put('Residenziale', Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId());
+        recordTypeMap.put('Gas', Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Gas').getRecordTypeId());
+        recordTypeMap.put('Ele', Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Ele').getRecordTypeId());
 
         for(ServicePoint__c sp : [SELECT Id, ServicePointCode__c FROM ServicePoint__c WHERE ServicePointCode__c IN :codicePuntoSet]){
             codicePuntoMap.put(sp.ServicePointCode__c, sp.Id);
+        }
+
+        for(BillingProfile__c bp : [SELECT Id, ContractAccountCode__c FROM BillingProfile__c WHERE ContractAccountCode__c IN :contoContrattualeSet]){
+            billProfMap.put(bp.ContractAccountCode__c, bp.Id);
         }
 
     }
@@ -79,8 +90,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             return;
         }
 
-        Boolean enableCreateBillingProfile;
-        Boolean enableCreateServicePoint;
         List<sObject> accountToInsert;
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
         List<Contact> saveContactList;
@@ -107,10 +116,22 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             System.debug(LoggingLevel.DEBUG, '>>> tempSplitted ' + processObj.csvSplitted.size());
 
-            enableCreateBillingProfile = String.isEmpty(processObj.csvSplitted[contoContrattualeIndex]);
-            enableCreateServicePoint = !codicePuntoMap.containsKey(processObj.csvSplitted[codicePuntoIndex]);
+            if(String.isNotEmpty(processObj.csvSplitted[codicePuntoIndex]) && codicePuntoMap.containsKey(processObj.csvSplitted[codicePuntoIndex])){
+                processObj.createServicePoint = false;
+            } else {
+                //processObj.createServicePoint = String.isEmpty(processObj.csvSplitted[codicePuntoIndex]);
+                processObj.createServicePoint = true;
+            }
+           
+            if(String.isNotEmpty(processObj.csvSplitted[contoContrattualeIndex]) && billProfMap.containsKey(processObj.csvSplitted[contoContrattualeIndex])){
+                processObj.createBillingProfile = false;
+            } else {
+                processObj.createBillingProfile = true;
+            }
 
-            System.debug(LoggingLevel.DEBUG, '>>> enableCreate: billProf [' + enableCreateBillingProfile + ']; servPoint [' + enableCreateServicePoint + ']');
+            //processObj.createBillingProfile = !codicePuntoMap.containsKey(processObj.csvSplitted[contoContrattualeIndex]);
+
+            System.debug(LoggingLevel.DEBUG, '>>> enableCreate: billProf [' + processObj.createBillingProfile + ']; servPoint [' + processObj.createServicePoint + ']');
 
             processObj.account.RecordTypeId = recordTypeMap.get(processObj.csvSplitted[recTypeIndex]);
             
@@ -133,12 +154,12 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                                 convertionError = mapTypeField(processObj.account, mapAllFields, count, tempField);
                             }
                             when 'BillingProfile__c' {
-                                if(enableCreateBillingProfile){
+                                if(processObj.createBillingProfile){
                                     convertionError = mapTypeField(processObj.billingProfile, mapAllFields, count, tempField);
                                 }
                             }
                             when 'ServicePoint__c' {
-                                if(enableCreateServicePoint){
+                                if(processObj.createServicePoint){
                                     convertionError = mapTypeField(processObj.servicePoint, mapAllFields, count, tempField);
                                 }
                             }
@@ -156,7 +177,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 count++;
             }
 
-            processObj.csvSplitted.clear();
+            //processObj.csvSplitted.clear();
 
             if(String.isNotEmpty(convertionError)){
                 processObj.requestItem.Status__c = 'Errore';
@@ -167,12 +188,19 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             processObj.account.Name = String.isBlank(processObj.account.FirstName__c) ? processObj.account.LastName__c : processObj.account.FirstName__c + ' ' + processObj.account.LastName__c;
 
             // only for test
-            processObj.account.IsWrongFiscalData__c = false;
-            processObj.account.BillingCityCode__c = 'Roma';
+            //processObj.account.IsWrongFiscalData__c = false;
+            //processObj.account.BillingCityCode__c = 'Roma';
+            processObj.account.BillingIsAddressVerified__c = true;
+
+            if(String.isNotEmpty(processObj.servicePoint.ServicePointCode__c)){
+                processObj.servicePoint.Name = processObj.servicePoint.ServicePointCode__c;
+            }
 
             System.debug(LoggingLevel.DEBUG, '>>> currentAccount: ' + processObj.account);
             System.debug(LoggingLevel.DEBUG, '>>> currentBillingProfile: ' + processObj.billingProfile);
             System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + processObj.servicePoint);
+
+            processObj.servicePoint.RecordTypeId = recordTypeMap.get(processObj.servicePoint.CommoditySector__c);
 
             addInformationToSet(processObj.account);
 
@@ -259,17 +287,22 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             }
             
             if(accountId != null){
-                processObj.billingProfile.Account__c = accountId;
-                processObj.servicePoint.Account__c = accountId;
-
-                System.debug(LoggingLevel.DEBUG, '>>> currentBillingProfile: ' + processObj.billingProfile);
-                System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + processObj.servicePoint);
-                
-                saveBillProfList.add(processObj.billingProfile);
-                saveServPointList.add(processObj.servicePoint);
                 requestItemForUpsert.add(processObj.requestItem);
                 accountIdsList.add(accountId);
             }
+
+            if(processObj.createBillingProfile){
+                processObj.billingProfile.Account__c = accountId;
+                System.debug(LoggingLevel.DEBUG, '>>> currentBillingProfile: ' + processObj.billingProfile);
+                saveBillProfList.add(processObj.billingProfile);
+            }
+
+            if(processObj.createServicePoint){
+                processObj.servicePoint.Account__c = accountId;
+                System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + processObj.servicePoint);
+                saveServPointList.add(processObj.servicePoint);
+            }
+            
 
         }
 
@@ -344,12 +377,20 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             nextDataObj.accountId = processObj.account.Id;
             nextDataObj.contactId = (accountContactMap.containsKey(nextDataObj.accountId)) ? accountContactMap.get(nextDataObj.accountId) : null;
 
-            if(saveBillProfResponse.itemIdToObjId.containsKey(processObj.requestItem.Id)){
-                nextDataObj.billProfId = saveBillProfResponse.itemIdToObjId.get(processObj.requestItem.Id);
+            if(processObj.createBillingProfile){
+                if(saveBillProfResponse.itemIdToObjId.containsKey(processObj.requestItem.Id)){
+                    nextDataObj.billProfId = saveBillProfResponse.itemIdToObjId.get(processObj.requestItem.Id);
+                }
+            } else {
+                nextDataObj.billProfId = billProfMap.get(processObj.csvSplitted[contoContrattualeIndex]);
             }
 
-            if(saveServPointResponse.itemIdToObjId.containsKey(processObj.requestItem.Id)){
-                nextDataObj.servPointId = saveServPointResponse.itemIdToObjId.get(processObj.requestItem.Id);
+            if(processObj.createServicePoint){
+                if(saveServPointResponse.itemIdToObjId.containsKey(processObj.requestItem.Id)){
+                    nextDataObj.servPointId = saveServPointResponse.itemIdToObjId.get(processObj.requestItem.Id);
+                }
+            } else {
+                nextDataObj.servPointId = codicePuntoMap.get(processObj.csvSplitted[codicePuntoIndex]);
             }
 
             processObj.requestItem.NextStepData__c = JSON.serialize(nextDataObj);
@@ -420,22 +461,28 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     }
 
     private void mapFieldsObject(){
-        List<HDT_MassiveFieldsObjectMap__mdt> allFieldForThisProcess;
+        List<MassiveFieldsObjectMap__c> allFieldForThisProcess;
 
         mapAllFields = new Map<String, String>();
         mapWrapperAccountFields = new Map<String, String>();
 
-        sobjectMap = new Map<String, HDT_MassiveFieldsObjectMap__mdt>();
-        allFieldForThisProcess = HDT_QR_ProcessPostSales.getMapFieldsObjectByDeveloperName('Sales%');
+        sobjectMap = new Map<String, MassiveFieldsObjectMap__c>();
+        //allFieldForThisProcess = HDT_QR_ProcessPostSales.getMapFieldsObjectByDeveloperName('Sales%');
+        allFieldForThisProcess = [
+            SELECT objectType__c, labelField__c, nameField__c
+            FROM MassiveFieldsObjectMap__c 
+            WHERE Name LIKE 'Sales%'
+            WITH SECURITY_ENFORCED
+        ];
 
-        for(HDT_MassiveFieldsObjectMap__mdt temp : allFieldForThisProcess){
+        for(MassiveFieldsObjectMap__c temp : allFieldForThisProcess){
 
             if(temp.objectType__c.equalsIgnoreCase('WrapperAccount')){
                 mapWrapperAccountFields.put(temp.labelField__c, temp.nameField__c);
             } else {
-                mapAllFields.put(temp.MasterLabel, temp.nameField__c);
+                mapAllFields.put(temp.labelField__c, temp.nameField__c);
             }
-            sobjectMap.put(temp.MasterLabel, temp);
+            sobjectMap.put(temp.labelField__c, temp);
         }
     }
 
@@ -485,6 +532,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         private Contact contact;
         private BillingProfile__c billingProfile;
         private ServicePoint__c servicePoint;
+        private Boolean createServicePoint;
+        private Boolean createBillingProfile;
         private MassiveLoaderRequestItem__c requestItem;
         private List<String> csvSplitted;
     }
