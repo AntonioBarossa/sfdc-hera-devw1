@@ -878,18 +878,23 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                                       WITH SECURITY_ENFORCED];
 
         system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi relatedActs' + JSON.serializePretty(relatedActs));
-        String endDate = activityValues.get('DATA_ELABORAZIONE');
+        String endDate = activityValues.containsKey('DATA_ELABORAZIONE')? activityValues.get('DATA_ELABORAZIONE') :
+                        activityValues.containsKey('DATA_EVENTO')? activityValues.get('DATA_EVENTO') : '';
         String cmp = activityValues.get('CMP');
         String utenza = activityValues.get('UTENZA');
         Date endDateVal = null;
         if(String.isNotBlank(endDate)){
             endDateVal = date.valueOf(endDate);
         }
-
+        Datetime endDatetimeVal = null;
+        if(String.isNotBlank(endDate)){
+            endDatetimeVal = Datetime.valueOf(endDate);
+        }
         for(wrts_prcgvr__Activity__c relatedAct: relatedActs){
             system.debug(LoggingLevel.DEBUG, relatedAct);
             relatedAct.wrts_prcgvr__Status__c='Chiusa';
-            relatedAct.EndDate__c = endDateVal!=null ? endDateVal : null;
+            relatedAct.EndDate__c = endDateVal;
+            relatedAct.ActivityEndTime__c = endDatetimeVal;
             relatedAct.UserCompany__c = String.isNotBlank(cmp) ? cmp : null;
             relatedAct.ClosedByUsername__c = String.isNotBlank(utenza) ? utenza : null;
             toUpdate.add(relatedAct);
