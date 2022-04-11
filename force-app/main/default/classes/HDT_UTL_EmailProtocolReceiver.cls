@@ -16,29 +16,32 @@ public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
                 emailBody = email.plainTextBody;
             }
 
-            // MAIL SEMPRE INOLTRATE DA ACCOUNT HERA - NECESSARIO ESTRARRE MITENTE ORIGINALE
-            String senderAddress = emailBody.left(300).substringBetween('Da: ', ' ');
             Interaction__c interaction = new Interaction__c(
                 Type__c = 'Digital',
                 ReceptionDate__c = Date.today(),
                 BodyEmail__c = emailBody,
                 SubjectEmail__c = email.subject,
-                SenderEmailAddress__c = senderAddress /*email.fromAddress*/,
                 CompanyOwner__c = TEMPORARY_COMPANYOWNER_DEFAULT
             );
 
-            List<ContentVersion> listContent = new List<ContentVersion>();
-            List<Contact> contacts = new HDT_QR_Contact().getContactByEmailAddress(senderAddress /*email.fromAddress*/);
-            if(contacts.size() == 1) {
-                interaction.Contact__c = contacts[0].Id;
-                interaction.Account__c = contacts[0].AccountId;
+            // MAIL SEMPRE INOLTRATE DA ACCOUNT HERA - NECESSARIO ESTRARRE MITENTE ORIGINALE
+            String senderAddress = emailBody.left(300).substringBetween(' <', '>');
+            if(String.isNotBlank(senderAddress)) {
+                interaction.SenderEmailAddress__c = senderAddress;
+                List<Contact> contacts = [SELECT Id, AccountId FROM Contact WHERE Email =: senderAddress WITH SECURITY_ENFORCED ORDER BY CreatedDate desc LIMIT 1];
+                if(contacts.size() == 1) {
+                    interaction.Contact__c = contacts[0].Id;
+                    interaction.Account__c = contacts[0].AccountId;
+                }
             }
+
             interaction = new HDT_SRV_Interaction().createRecord(interaction);
 
             if(bodyTruncated) {
                 HDT_UTL_Note.createNoteAndAssign(interaction.id, 'Testo Troncato per Superamento Limite Caratteri', '');
             }
 
+            List<ContentVersion> listContent = new List<ContentVersion>();
             if(email.textAttachments != null) {
                 for (Messaging.Inboundemail.TextAttachment tAttachment : email.textAttachments) {
                     ContentVersion content = contentSrv.createRecordNoInsert(tAttachment.fileName,tAttachment.fileName,tAttachment.body);
