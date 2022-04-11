@@ -161,6 +161,7 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         wrts_prcgvr.MRR_1_0.Field headerField = new wrts_prcgvr.MRR_1_0.Field();
         List<wrts_prcgvr.MRR_1_0.Field> bodyFields = new List<wrts_prcgvr.MRR_1_0.Field>();
         wrts_prcgvr.MRR_1_0.Field bodyField = new wrts_prcgvr.MRR_1_0.Field();    
+        wrts_prcgvr.MRR_1_0.Field resField = new wrts_prcgvr.MRR_1_0.Field(); 
         
         headerField.fieldType = 'TEXT';
         headerField.name = 'requestType';
@@ -175,27 +176,36 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         bodyField.fieldType = 'TEXT';
         bodyField.name = 'FASE';
         bodyField.value = 'Comunicazione verso Heroku';
-
+        
+        resField.fieldType = 'TEXT';
+        resField.name = 'result';
+        resField.value = 'ok';
+        
         bodyFields.add(bodyField);
-
+		bodyFields.add(resField);
         singleObject.fields = bodyFields;
         singleObject.id = 'ajsidj';
         singleObject.name = 'objName';
         singleObject.objects = otherObjects;
         singleObject.objectType = 'objType';
+		
 
+        
+        
         objects.add(singleObject);
 
         singleResponse.code = 'code';
+        
         singleResponse.description = 'description';
         singleResponse.header = header;
         singleResponse.objects = objects;
 
         responses.add(singleResponse);
-
+		
         responseMrr.responses = responses;
 
         Test.startTest();
+        System.debug(orderList);
         voltureManager.handleResponse(responseMrr, orderList[0]);
         Test.stopTest();
 
@@ -430,7 +440,13 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
     @IsTest
     static void testcreateCaseFromOrder()
     {
-        List<Order> orderList = [SELECT Id, Phase__c, AccountId, CompanyOwner__c, Contact__c, BillingProfile__c, ContractReference__c, CreatorGroup__c, PhoneNumber__c, Channel__c, ServicePoint__c, LoginWorkstation__c, Email__c, ServicePointCode__c, SapContractCode__c, Commodity__c, EffectiveDate__c 
+        List<Order> orderList = [SELECT Id, Phase__c, AccountId, CompanyOwner__c, Contact__c, BillingProfile__c, ContractReference__c,
+                                 CreatorGroup__c, PhoneNumber__c, Channel__c, ServicePoint__c, LoginWorkstation__c, Email__c, ServicePointCode__c, 
+                                 SapContractCode__c, Commodity__c, EffectiveDate__c, FlagServizio26__c, SupplyCity__c, SupplyCityCode__c,SupplyState__c, SupplyCountry__c, SupplyPostalCode__c,
+                                 SupplyStreetName__c,SupplyStreetNumber__c, BillingCity__c,BillingCityCode__c,BillingCountry__c, BillingPostalCode__c, BillingProvince__c,
+                                 BillingStreetName__c, ResidentialCity__c, ResidentialCityCode__c, ResidentialCountry__c, ResidentialPostalCode__c,ResidentialState__c,
+                                 ResidentialStreet__c, ResidentialStreetName__c, SalesCompany__c, SalesCompanyCode__c, DistributorCode__c, ExciseGAS__c, VAT__c,
+                                 Resident__c, Market__c, SupplyType__c, AnnualConsumption__c, Caliber__c
         FROM Order 
         WHERE ParentOrder__c != null
         AND ProcessType__c = 'Switch in Ele'];
