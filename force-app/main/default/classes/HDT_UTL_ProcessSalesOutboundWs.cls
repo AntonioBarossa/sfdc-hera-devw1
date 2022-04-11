@@ -98,27 +98,29 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
                     serResp = HDT_WS_ArrichmentDataEntityInvoker.callService('', servPointFromWs.Name);
                     System.debug(serResp);
 
-                    if(serResp.exceptionMessage != null){
-                        singleItem.Status__c = 'Errore';
-                        singleItem.StatusDescription__c = '[ServicePoint__c] ' + serResp.exceptionMessage;
-                        System.debug(LoggingLevel.DEBUG, '[ServicePoint__c] no reponse from ws...');
-                        continue;
+                    //if(serResp.exceptionMessage != null){
+                    //    singleItem.Status__c = 'Errore';
+                    //    singleItem.StatusDescription__c = '[ServicePoint__c] ' + serResp.exceptionMessage;
+                    //    System.debug(LoggingLevel.DEBUG, '[ServicePoint__c] no reponse from ws...');
+                    //    continue;
+                    //}
+
+                    //if(serResp.statusCode != 200){
+                    //    System.debug('>>> != 200');
+                    //    singleItem.Status__c = 'Errore';
+                    //    singleItem.StatusDescription__c = '[ServicePoint__c] errore arrichimento dati';
+                    //    continue;
+                    //}
+
+                    if(serResp.statusCode == 200){
+                        servPointFromWs = HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(servPointFromWs, serResp)[0];
+                        System.debug(LoggingLevel.DEBUG, '>>> update sp ' + servPointFromWs);
+                        servicePointToUpdate.add(servPointFromWs);
+                        requestItemForUpsert.add(singleItem);
+                    } else {
+                        System.debug(LoggingLevel.DEBUG, '>>> [ServicePoint__c] errore arrichimento dati');
                     }
-                    
-                    if(serResp.statusCode != 200){
-                        singleItem.Status__c = 'Errore';
-                        singleItem.StatusDescription__c = '[ServicePoint__c] ' + serResp.errorDetails[0].code + '; ' + serResp.errorDetails[0].message;
-                        System.debug(LoggingLevel.DEBUG, '>>> Additional info: ' + serResp.errorDetails[0].additionalInfo);
-                        continue;
-                    }
 
-                    servPointFromWs = HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(servPointFromWs, serResp)[0];
-                    System.debug(LoggingLevel.DEBUG, '>>> update sp ' + servPointFromWs);
-
-                    servicePointToUpdate.add(servPointFromWs);
-
-                    //singleItem.Status__c = 'Chiuso';
-                    requestItemForUpsert.add(singleItem);
                 }
 
                 //accountId = idsMap.get(singleItem.Id).accountId;
@@ -164,7 +166,7 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
                 //}
 
             } catch (Exception e){
-                System.debug(LoggingLevel.DEBUG, 'Exception > ' + e.getMessage());
+                System.debug(LoggingLevel.DEBUG, 'Exception > HDT_UTL_ProcessSalesOutboundWs: ' + e.getMessage());
                 singleItem.Status__c = 'Errore';
                 singleItem.StatusDescription__c = e.getMessage().abbreviate(250);
             }

@@ -1,7 +1,7 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecution {
 
-    private Map<String, HDT_MassiveFieldsObjectMap__mdt> sobjectMap;
+    private Map<String, MassiveFieldsObjectMap__c> sobjectMap;
     private Map<String, String> mapAllFields;
     private Map<String, String> mapWrapperAccountFields;
     private List<Account> accountList;
@@ -25,9 +25,12 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         System.debug(LoggingLevel.DEBUG, 'checks');
         mapFieldsObject();
 
-        contoContrattualeIndex = mapHeaderForWrapper.get('ContoContrattuale');
-        codicePuntoIndex = mapHeaderForWrapper.get('CodicePunto');
-        recTypeIndex = mapHeaderForWrapper.get('Tipo');
+
+        System.debug('AccountTipo - > ' + mapHeaderByPosition.get(0));
+
+        contoContrattualeIndex = mapHeaderForWrapper.get('BillingProfileContoContrattuale');
+        codicePuntoIndex = mapHeaderForWrapper.get('ServicePointCodicePunto');
+        recTypeIndex = mapHeaderForWrapper.get('AccountTipo');
 
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
@@ -66,6 +69,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         recordTypeMap.put('Business', Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId());
         recordTypeMap.put('Residenziale', Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId());
+        recordTypeMap.put('Gas', Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Gas').getRecordTypeId());
+        recordTypeMap.put('Ele', Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Ele').getRecordTypeId());
 
         for(ServicePoint__c sp : [SELECT Id, ServicePointCode__c FROM ServicePoint__c WHERE ServicePointCode__c IN :codicePuntoSet]){
             codicePuntoMap.put(sp.ServicePointCode__c, sp.Id);
@@ -111,8 +116,20 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             System.debug(LoggingLevel.DEBUG, '>>> tempSplitted ' + processObj.csvSplitted.size());
 
-            processObj.createServicePoint = String.isEmpty(processObj.csvSplitted[codicePuntoIndex]);
-            processObj.createBillingProfile = !codicePuntoMap.containsKey(processObj.csvSplitted[contoContrattualeIndex]);
+            if(String.isNotEmpty(processObj.csvSplitted[codicePuntoIndex]) && codicePuntoMap.containsKey(processObj.csvSplitted[codicePuntoIndex])){
+                processObj.createServicePoint = false;
+            } else {
+                //processObj.createServicePoint = String.isEmpty(processObj.csvSplitted[codicePuntoIndex]);
+                processObj.createServicePoint = true;
+            }
+           
+            if(String.isNotEmpty(processObj.csvSplitted[contoContrattualeIndex]) && billProfMap.containsKey(processObj.csvSplitted[contoContrattualeIndex])){
+                processObj.createBillingProfile = false;
+            } else {
+                processObj.createBillingProfile = true;
+            }
+
+            //processObj.createBillingProfile = !codicePuntoMap.containsKey(processObj.csvSplitted[contoContrattualeIndex]);
 
             System.debug(LoggingLevel.DEBUG, '>>> enableCreate: billProf [' + processObj.createBillingProfile + ']; servPoint [' + processObj.createServicePoint + ']');
 
@@ -173,10 +190,17 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             // only for test
             //processObj.account.IsWrongFiscalData__c = false;
             //processObj.account.BillingCityCode__c = 'Roma';
+            processObj.account.BillingIsAddressVerified__c = true;
+
+            if(String.isNotEmpty(processObj.servicePoint.ServicePointCode__c)){
+                processObj.servicePoint.Name = processObj.servicePoint.ServicePointCode__c;
+            }
 
             System.debug(LoggingLevel.DEBUG, '>>> currentAccount: ' + processObj.account);
             System.debug(LoggingLevel.DEBUG, '>>> currentBillingProfile: ' + processObj.billingProfile);
             System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + processObj.servicePoint);
+
+            processObj.servicePoint.RecordTypeId = recordTypeMap.get(processObj.servicePoint.CommoditySector__c);
 
             addInformationToSet(processObj.account);
 
@@ -437,22 +461,28 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     }
 
     private void mapFieldsObject(){
-        List<HDT_MassiveFieldsObjectMap__mdt> allFieldForThisProcess;
+        List<MassiveFieldsObjectMap__c> allFieldForThisProcess;
 
         mapAllFields = new Map<String, String>();
         mapWrapperAccountFields = new Map<String, String>();
 
-        sobjectMap = new Map<String, HDT_MassiveFieldsObjectMap__mdt>();
-        allFieldForThisProcess = HDT_QR_ProcessPostSales.getMapFieldsObjectByDeveloperName('Sales%');
+        sobjectMap = new Map<String, MassiveFieldsObjectMap__c>();
+        //allFieldForThisProcess = HDT_QR_ProcessPostSales.getMapFieldsObjectByDeveloperName('Sales%');
+        allFieldForThisProcess = [
+            SELECT objectType__c, labelField__c, nameField__c
+            FROM MassiveFieldsObjectMap__c 
+            WHERE Name LIKE 'Sales%'
+            WITH SECURITY_ENFORCED
+        ];
 
-        for(HDT_MassiveFieldsObjectMap__mdt temp : allFieldForThisProcess){
+        for(MassiveFieldsObjectMap__c temp : allFieldForThisProcess){
 
             if(temp.objectType__c.equalsIgnoreCase('WrapperAccount')){
                 mapWrapperAccountFields.put(temp.labelField__c, temp.nameField__c);
             } else {
-                mapAllFields.put(temp.MasterLabel, temp.nameField__c);
+                mapAllFields.put(temp.labelField__c, temp.nameField__c);
             }
-            sobjectMap.put(temp.MasterLabel, temp);
+            sobjectMap.put(temp.labelField__c, temp);
         }
     }
 
