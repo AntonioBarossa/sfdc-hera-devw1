@@ -56,7 +56,7 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
                         Order__c = ord.ParentOrder__c,
                         IsClientInResolution153__c = true,
                         Type__c = 'Comfort Call',
-                        wrts_prcgvr__Status__c = 'Creata',
+                        wrts_prcgvr__Status__c = 'Aperta',
                         OwnerId = comfortQualityQueId,
                         ActivatedDate__c = ord.ActivatedDate,
                         LoginChannel__c = ord.LoginChannel__c
