@@ -10,9 +10,9 @@ public with sharing class HDT_BA_ActivityDispatcherTst {
     private static void executeBatch() {
         Group gr = [SELECT Id FROM Group LIMIT 1];
         Queue__c queue = new Queue__c(
-            Agency2__c = 'ag1',
             Name = 'coda1',
-            WorkGroup__c = 'gr1',
+            WorkGroup__c = Schema.getGlobalDescribe().get('Queue__c').getDescribe().fields.getMap().get('WorkGroup__c').getDescribe().getPicklistValues()[0].getValue(),
+            Agency2__c = Schema.getGlobalDescribe().get('Queue__c').getDescribe().fields.getMap().get('Agency2__c').getDescribe().getPicklistValues()[0].getValue(),
             QueueId__c = gr.Id,
             Priority__c = '1',
             Type__c = 'PUSH'
