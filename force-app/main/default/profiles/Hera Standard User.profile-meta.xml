@@ -478,22 +478,22 @@
     </customSettingAccesses>    
     <fieldPermissions>
         <editable>true</editable>
-        <field>Amministrazione_Frodi__c.BpNumber__c</field>
+        <field>AmministrazioneFrodi__c.BpNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Amministrazione_Frodi__c.CanaleVendita__c</field>
+        <field>AmministrazioneFrodi__c.CanaleVendita__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Amministrazione_Frodi__c.CategoriaCliente__c</field>
+        <field>AmministrazioneFrodi__c.CategoriaCliente__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Amministrazione_Frodi__c.Processo__c</field>
+        <field>AmministrazioneFrodi__c.Processo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -32556,7 +32556,7 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>Amministrazione_Frodi__c</object>
+        <object>AmministrazioneFrodi__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
