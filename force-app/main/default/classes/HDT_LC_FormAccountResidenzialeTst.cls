@@ -31,46 +31,45 @@ public class HDT_LC_FormAccountResidenzialeTst{
 
 		Test.startTest();
 
-		List<Account> tacc=[SELECT Id, Name, LastName__c, RecordTypeId, FiscalCode__c, CustomerMarking__c, Category__c, 
-                            CompanyOwner__c, BillingStreetName__c, BillingCityCode__c, BillingStreetNumber__c
-		                    FROM Account
-		                    WHERE Name='test account0'
-		                    LIMIT 1];
+		List<Account> accList=HDT_UTL_DataFactoryTst.createAccountResidenziale(1, false, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
+		accList[0].FirstName__c='testInsertAccount';
 
+        List<City__c> cities = HDT_UTL_DataFactoryTst.createCity();
 
-		System.debug('tacc = '+tacc);
-
-
-		Map<String, String> dataAccount=new Map<String, String>{
-                    'Id'=>tacc[0].Id,
-                    'firstName'=>'test', 
-                    'recordTypeId'=>tacc[0].RecordTypeId, 
-                    'fiscalCode'=>tacc[0].FiscalCode__c, 
-                    'customerMarking'=>tacc[0].CustomerMarking__c, 
-                    'category'=>tacc[0].Category__c, 
-                    'companyOwner'=>tacc[0].CompanyOwner__c, 
-                    'name'=>tacc[0].Name,
-                    'lastName'=>tacc[0].LastName__c, 
-                    'role' => 'admin'
+        Map<String, String> dataAccount=new Map<String, String>{
+                    'firstName'=>accList[0].FirstName__c, 
+                    'recordTypeId'=>accList[0].RecordTypeId,
+                    'customerMarking'=>accList[0].CustomerMarking__c, 
+                    'category'=>accList[0].Category__c, 
+                    'companyOwner'=>accList[0].CompanyOwner__c, 
+                    'name'=>accList[0].Name,
+                    'lastName'=>accList[0].LastName__c, 
+                    'role' => 'admin',
+                    'birthplace'=>cities[0].Name,
+                    'birthDate'=>String.valueof(system.today())
                     };
 
-		Map<String, String> accountAddress=new Map<String, String>{
-            	'billingCity'=>'Roma',
-                'billingStreetName__c'=>tacc[0].BillingStreetName__c,
-                'billingCityCode__c'=>tacc[0].BillingCityCode__c,
+        Map<String, String> infoData = new Map<String, String>();
+        infoData.put('lastName'     , dataAccount.get('lastName')   );
+        infoData.put('firstName'    , dataAccount.get('firstName')  );
+        infoData.put('birthDate'    , dataAccount.get('birthDate')  );
+        infoData.put('birthPlace'   , dataAccount.get('birthplace') );
+        infoData.put('gender'       , dataAccount.get('gender')     );
+
+        dataAccount.put('fiscalCode',HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoData));
+        System.debug('fiscalCode>>> ' + dataAccount.get('fiscalCode') );
+
+        Map<String, String> accountAddress=new Map<String, String>{
+                'billingCity'=>'Roma',
+                'billingStreetName__c'=>accList[0].BillingStreetName__c,
+                'billingCityCode__c'=>accList[0].BillingCityCode__c,
                 'billingStreetNumber__c'=>'21',
                 'BillingIsAddressVerified__c'=>'true'
                 };
+
 		Account accTest=HDT_LC_FormAccountResidenziale.insertAccount(dataAccount, accountAddress);
 
-
-		System.debug('dataAccount = '+dataAccount);
-
-		System.debug('accTest = '+accTest);
-
-
-		System.assertEquals(tacc[0].FiscalCode__c, accTest.FiscalCode__c, 'Account Fiscal Code is wrong');
-
+		System.assertEquals(HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoData), accTest.FiscalCode__c, 'Account Fiscal Code is wrong');
 		System.assertNotEquals(null, accTest.FiscalCode__c, 'insertAccount did not work correctly');
 
 		Test.stopTest();
