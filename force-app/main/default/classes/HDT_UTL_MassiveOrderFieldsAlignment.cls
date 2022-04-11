@@ -91,8 +91,10 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
         if (account.RecordType.DeveloperName == 'HDT_RT_Business') {
 
             orderToUpdate.CustomerCompanyName__c = account.LastName__c;
-            if (orderToUpdate.ServicePoint__c != null && (String.isBlank(orderToUpdate.ServicePoint__r.Vat__c))) {
-                orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
+            if(orderToUpdate.ServicePoint__c != null && (String.isBlank(orderToUpdate.ServicePoint__r.Vat__c))){
+                if(String.isEmpty(orderToUpdate.VAT__c)){
+                    orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
+                }
             }
 
         } else if(account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
@@ -100,8 +102,10 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
             orderToUpdate.CustomerName__c = account.FirstName__c;
             orderToUpdate.CustomerLastName__c = account.LastName__c;
 
-            if (orderToUpdate.ServicePoint__c != null && (String.isBlank(orderToUpdate.ServicePoint__r.Vat__c))) {
-                orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
+            if(orderToUpdate.ServicePoint__c != null && (String.isBlank(orderToUpdate.ServicePoint__r.Vat__c))){
+                if(String.isEmpty(orderToUpdate.VAT__c)){
+                    orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
+                }
             }
 
             orderToUpdate.AtecoCode__c = '999999';
@@ -210,13 +214,19 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
 
         if(servicePoint.CommoditySector__c == 'Energia Elettrica'){
 
-            orderToUpdate.exciseEle__c =  mapAcciseEle.get(servicePoint.exciseEle__c) != null ? mapAcciseEle.get(servicePoint.exciseEle__c) : mapAcciseEle.get('ALTRO');
+            if(String.isEmpty(orderToUpdate.ExciseEle__c)){
+                orderToUpdate.exciseEle__c =  mapAcciseEle.get(servicePoint.exciseEle__c) != null ? mapAcciseEle.get(servicePoint.exciseEle__c) : mapAcciseEle.get('ALTRO');
+            }
 
             if ((servicePoint.exciseEle__c == null || servicePoint.exciseEle__c == '') //HRAWRM-498
                 && servicePoint.SupplyTypeTemp__c == 'Non Domestico') {
-                orderToUpdate.ExciseEle__c = 'Imposta ordinaria Altri Usi (Cod. E_IE_M04)';
+                if(String.isEmpty(orderToUpdate.ExciseEle__c)){
+                    orderToUpdate.ExciseEle__c = 'Imposta ordinaria Altri Usi (Cod. E_IE_M04)';
+                }
             } else if ((servicePoint.exciseEle__c == null || servicePoint.exciseEle__c == '') && servicePoint.SupplyTypeTemp__c == 'Domestico') {
-                orderToUpdate.ExciseEle__c = 'Imposta usi domestici';
+                if(String.isEmpty(orderToUpdate.ExciseEle__c)){
+                    orderToUpdate.ExciseEle__c = 'Imposta usi domestici';
+                }
             }
 
         } else if(servicePoint.CommoditySector__c == 'Gas'){
@@ -226,18 +236,26 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
             if ((servicePoint.ExciseGas__c == null || servicePoint.ExciseGas__c == '') && servicePoint.SupplyTypeTemp__c != 'A-Domestico') {
 
                 if(orderToUpdate.VAT__c == 'Iva 22% (Cod. 02)'){
-                    orderToUpdate.ExciseGas__c = 'Imposta usi non domestici iva 22% (Cod. G_ICC)';
+                    if(String.isEmpty(orderToUpdate.ExciseGas__c)){
+                        orderToUpdate.ExciseGas__c = 'Imposta usi non domestici iva 22% (Cod. G_ICC)';
+                    }
                 } else if(orderToUpdate.VAT__c == 'Iva 10% (Cod. 01)'){
-                    orderToUpdate.ExciseGas__c = 'Imposta usi non domestici iva 10% (Cod. G_ICC10)';
+                    if(String.isEmpty(orderToUpdate.ExciseGas__c)){
+                        orderToUpdate.ExciseGas__c = 'Imposta usi non domestici iva 10% (Cod. G_ICC10)';
+                    }
                 }
 
             } else if ((servicePoint.ExciseGas__c == null || servicePoint.ExciseGas__c == '') && servicePoint.SupplyTypeTemp__c == 'A-Domestico') {
-                orderToUpdate.ExciseGas__c = 'Imposta Usi Domestici (Cod. G_ICD)';
+                if(String.isEmpty(orderToUpdate.ExciseGas__c)){
+                    orderToUpdate.ExciseGas__c = 'Imposta Usi Domestici (Cod. G_ICD)';
+                }
             }
         } 
 
         if (servicePoint.Vat__c != null && servicePoint.Vat__c != '') {
-            orderToUpdate.vat__c = mapIvaIdToValue2.get(ServicePoint.Vat__c);
+            if(String.isEmpty(orderToUpdate.vat__c)){
+                orderToUpdate.vat__c = mapIvaIdToValue2.get(ServicePoint.Vat__c);
+            }
         }
 
         orderToUpdate.AnnualConsumption__c = servicePoint.AnnualConsumption__c;
