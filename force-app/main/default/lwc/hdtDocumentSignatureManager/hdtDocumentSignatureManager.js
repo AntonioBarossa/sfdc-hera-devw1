@@ -20,6 +20,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     //Address: Required. This variable is a complex type Name - Value. Pass all the fields that compose an Address and the Complete Address.
     @track address;
     //AccountId: Required. Pass the Id of the Account. Used to retreive all the Account Address.
+    @track loginSource;
     @track accountId;
     @track documents;
     @api params;
@@ -89,6 +90,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.recordId = inputWrapper.recordId;
                 this.processType = inputWrapper.processType;
                 this.source = inputWrapper.source;
+                this.loginSource = inputWrapper.loginSource;
                 this.phone = inputWrapper.phone;
                 this.email = inputWrapper.email;
                 this.accountId = inputWrapper.accountId;
@@ -151,6 +153,19 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                         signSendModeList.push(signSendMode);
                         sendMode = [];
                     });
+                    if(this.loginSource != null && this.loginSource.localeCompare('Back office') === 0 && this.context.localeCompare('Order') === 0){
+                        console.log('##inside backoffice');
+                        sendMode = [];
+                        const obj = {value: 'Stampa Cartacea', label: 'Stampa Cartacea'};
+                        sendMode.push(obj);
+                        signSendMode = {
+                            signMode : 'Cartacea',
+                            sendMode : sendMode
+                        };
+                        const obj2 = {value: 'Cartacea', label: 'Cartacea'};
+                        signMode.push(obj2);
+                        signSendModeList.push(signSendMode);
+                    }
                     this.signSendMap = signSendModeList; 
                     this.modalitaFirma = signMode;
                     console.log('this.signSendMap ' + JSON.stringify( this.signSendMap));

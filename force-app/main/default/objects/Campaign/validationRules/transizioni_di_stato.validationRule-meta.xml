@@ -2,13 +2,25 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>transizioni_di_stato</fullName>
     <active>true</active>
-    <description>Lo Stato, da “Bozza” può andare solo in “Pianificata”, da Pianificata può andare in “In Corso” oppure in “Cancellata”</description>
+    <description>Non é possibile fare questa variazione di Stato</description>
     <errorConditionFormula>OR(
     AND(
-        ISPICKVAL(PRIORVALUE(Status),&quot;Bozza&quot;), ISCHANGED(Status), NOT(ISPICKVAL(Status,&quot;Pianificata&quot;))
+        ISPICKVAL(PRIORVALUE(Status),&quot;Bozza&quot;), ISCHANGED(Status), NOT(ISPICKVAL(Status,&quot;Pianificata&quot;)), NOT(ISPICKVAL(Status,&quot;Cancellata&quot;))
     ),
     AND(
         ISPICKVAL(PRIORVALUE(Status),&quot;Pianificata&quot;), ISCHANGED(Status), NOT(ISPICKVAL(Status,&quot;Cancellata&quot;)), NOT(ISPICKVAL(Status,&quot;In Corso&quot;))
+    ),
+    AND(
+        ISPICKVAL(PRIORVALUE(Status),&quot;In Corso&quot;), ISCHANGED(Status), NOT(ISPICKVAL(Status,&quot;Completata&quot;)), NOT(ISPICKVAL(Status,&quot;Bloccata&quot;))
+    ),
+	AND(
+        ISPICKVAL(PRIORVALUE(Status),&quot;Cancellata&quot;), ISCHANGED(Status)
+    ),
+	AND(
+        ISPICKVAL(PRIORVALUE(Status),&quot;Bloccata&quot;), ISCHANGED(Status)
+    ),
+	AND(
+        ISPICKVAL(PRIORVALUE(Status),&quot;Completata&quot;), ISCHANGED(Status)
     )
 )</errorConditionFormula>
     <errorDisplayField>Status</errorDisplayField>

@@ -543,7 +543,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         
         Test.startTest();
 
-        String result = HDT_UTL_HerokuPostSalesManager.getAsyncJobByJobItem('test');
+        /*String result = HDT_UTL_HerokuPostSalesManager.getAsyncJobByJobItem('test');
         System.assertEquals('OK', result, 'result != OK');
 
         wrts_prcgvr__AsyncJob__c asyncJob = [SELECT wrts_prcgvr__Status__c, wrts_prcgvr__Details__c FROM wrts_prcgvr__AsyncJob__c LIMIT 1];
@@ -559,7 +559,13 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         update asyncJob2;
 
         String result3 = HDT_UTL_HerokuPostSalesManager.getAsyncJobByJobItem('test');
-        System.assertEquals('KO', result3, 'result != KO');
+        System.assertEquals('KO', result3, 'result != KO');*/
+
+        List<Case> myCaseList = [Select Id, Phase__c from Case LIMIT 1];
+        myCaseList[0].Phase__c = 'Bozza';
+        String result1 = HDT_UTL_HerokuPostSalesManager.getAsyncJobByJobItem(myCaseList[0].Id);
+        System.assertEquals('OK', result1, 'result != OK');
+
 
         Test.stopTest();
         
