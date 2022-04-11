@@ -76,7 +76,8 @@ public class HDT_SCH_PostSalesMasterBatchTst {
         System.assertEquals(0, ct.TimesTriggered);
 
         // Verify the next time the job will run
-        System.assertEquals('2022-02-13 08:00:00', String.valueOf(ct.NextFireTime));
+		String year = String.valueOf(ct.NextFireTime).substring(0, 4);
+        System.assertEquals(year+'-02-13 08:00:00', String.valueOf(ct.NextFireTime));
 
         Test.stopTest();
         
