@@ -12,9 +12,11 @@ public with sharing class HDT_TRH_CampaignMemberAssigmentItemTst{
 
 		Test.startTest();
 
-		List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+		HDT_UTL_DataFactoryTst.createAccountPartner(1, true, 'Mario Verdi');
+        Account acc = [SELECT Id FROM ACCOUNT];
+        System.debug('@@' + acc);
 		List<CampaignMemberAssigment__c> campMemAssig=HDT_UTL_DataFactoryTst.createCampaignMemberAssigment(1, true, true, 'CampaignMemberAssigmentNameTest');
-		List<CampaignMemberAssigmentItem__c> campMemAssigItens=HDT_UTL_DataFactoryTst.createCampaignMemberAssigmentItem(1, true, accounts[0].Id, campMemAssig[0].Id, 'Preview', 1);
+		List<CampaignMemberAssigmentItem__c> campMemAssigItens=HDT_UTL_DataFactoryTst.createCampaignMemberAssigmentItem(1, true, acc.Id, campMemAssig[0].Id, 'Preview', 1);
 
 		System.assertEquals(true, String.isNotEmpty(campMemAssigItens[0].Id), 'Campaign Member Assigment Item not Inserted');
 		System.assertNotEquals(false, String.isNotEmpty(campMemAssigItens[0].Id), 'Campaign Member Assigment Item not Inserted');
