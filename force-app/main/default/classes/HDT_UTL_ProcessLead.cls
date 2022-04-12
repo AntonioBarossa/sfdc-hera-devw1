@@ -95,6 +95,7 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
         List<Lead> leadtoUpsert = new List<Lead>();
         List<Lead> leadtoDelete = new List<Lead>();
         List<Lead> savedLeadList = new List<Lead>();
+        Map<Id, String> duplicatedLeadMap = new Map<Id, String>();
         Map<Id, Lead> savedLeadMap;
         List<Individual> individualtoUpdate = new List<Individual>();
         List<MassiveLoaderRequestItem__c> itemList = new List<MassiveLoaderRequestItem__c>();
@@ -119,8 +120,9 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
             if(duplicateLeadList[0] != null){
                 // errore duplicato
                 errorMessage = 'Duplicato - ' +  duplicateLeadList[0].Name + ' [' + duplicateLeadList[0].email + ']';
-                processObj.requestItem = setErrorItem(processObj.requestItem,  errorMessage);
+                //processObj.requestItem = setErrorItem(processObj.requestItem,  errorMessage);
                 processObj.newLead.Id = duplicateLeadList[0].Id;
+                duplicatedLeadMap.put(processObj.requestItem.Id, errorMessage);
             }
 
             processObj.newLead.RecordTypeId = recordTypeId;
@@ -153,8 +155,8 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
                 continue;
             }
 
-            System.debug(LoggingLevel.DEBUG, '>>> saved lead: ' + processObj.newLead.Id);
-            System.debug(LoggingLevel.DEBUG, '>>> saved Individual: ' + processObj.newLead.Individual.Id);
+            //System.debug(LoggingLevel.DEBUG, '>>> saved lead: ' + processObj.newLead.Id);
+            //System.debug(LoggingLevel.DEBUG, '>>> saved Individual: ' + processObj.newLead.Individual.Id);
 
             if(leadUpsertResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 // errore
@@ -180,8 +182,13 @@ public inherited sharing class HDT_UTL_ProcessLead extends HDT_UTL_ProcessExecut
             if(individualUpsertResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 // errore
                 processObj.requestItem = setErrorItem(processObj.requestItem, individualUpsertResponse.errorItemMap.get(processObj.requestItem.Id));
-                leadtoDelete.add(processObj.newLead);
+                if(!duplicatedLeadMap.containsKey(processObj.requestItem.Id)){
+                    leadtoDelete.add(processObj.newLead);
+                }
+            } else if(duplicatedLeadMap.containsKey(processObj.requestItem.Id)){
+                processObj.requestItem = setErrorItem(processObj.requestItem, duplicatedLeadMap.get(processObj.requestItem.Id));
             }
+
         }
 
         if(leadtoDelete.size() > 0){
