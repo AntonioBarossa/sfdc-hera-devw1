@@ -296,13 +296,13 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         Test.startTest();
             String encryptedId = agenda.criptId(activity.Id);
+            activity.CustomRecordId__c = encryptedId;
+            update activity;
             try{
                 agenda.getCryptoActivity(encryptedId,new List<String>{'Id'});
             }catch(Exception e){
                 System.assertEquals('Index Outbound', e.getMessage(), methodName + 'Non è stato generato l\'errore atteso');
             }
-            activity.CustomRecordId__c = encryptedId;
-            update activity;
             String activityJson = agenda.getCryptoActivity(encryptedId,new List<String>{'Id'});
             wrts_prcgvr__Activity__c retrievedActivity = (wrts_prcgvr__Activity__c) JSON.deserialize(activityJson,wrts_prcgvr__Activity__c.class);
             System.assertEquals(activity.Id, retrievedActivity.Id, methodName+'La decodifica non ha funzionato');
