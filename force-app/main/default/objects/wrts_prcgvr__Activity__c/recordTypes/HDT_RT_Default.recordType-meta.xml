@@ -1369,11 +1369,6 @@
             <default>false</default>
         </values>
     </picklistValues>
-        <values>
-            <fullName>5</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
     <picklistValues>
         <picklist>Process__c</picklist>
         <values>
