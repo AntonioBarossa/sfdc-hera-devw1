@@ -82,6 +82,18 @@ public inherited sharing class HDT_QR_Account {
         return ac;
     }
 
+    public Account getAccountByName(String accName){
+        Account ac = new Account();
+        List<Account> listAcc = new List<Account>();
+        listAcc = [SELECT Id FROM Account WHERE Name =:accName WITH SECURITY_ENFORCED];
+        //String query = 'SELECT Id,BillingAddress FROM Account WHERE Id ='+accountId;
+        if(!listAcc.isEmpty()){
+            ac= listAcc[0];
+        }
+        system.debug('Account retrieved******'+ ac);
+        return ac;
+    }
+
     /**
      * @description getAccountByFiscalCode
      * @param fiscalCode

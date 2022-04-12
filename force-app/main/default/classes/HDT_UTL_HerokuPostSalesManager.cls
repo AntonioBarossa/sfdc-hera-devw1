@@ -623,6 +623,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String herokuCode = '';
         String containerId = '';
         String priorita = '';
+        String pivaDistr = '';
+        String codFisDistr = '';
         Contract contract;
         ServicePoint__c sp;
         Account account;
@@ -645,6 +647,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             containerCaseNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
             herokuCode = reqWrp.requestMap.get('COD_PRAT_UTENTE');
             priorita = String.valueOf(reqWrp.requestMap.get('PRIORITA'));
+            codFisDistr = String.valueOf(reqWrp.requestMap.get('PARTITA_IVA'));
+            pivaDistr = String.valueOf(reqWrp.requestMap.get('CODICE_FISCALE'));
             if(String.isNotBlank(tipoProcesso)){
                 processType = tipoProcesso;
             }
@@ -719,6 +723,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         }when 'Morosita'{
                             currentCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Morosita').getRecordTypeId();
                             currentCase.Cluster__c = 'Morosità';
+                            currentCase.DistributorFiscalCode__c = codFisDistr;
+                            currentCase.DistributorVatNumber__c = pivaDistr;
                             if(dataDecorrenza != null){
                                 try{
                                     HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();

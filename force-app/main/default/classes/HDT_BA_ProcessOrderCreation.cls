@@ -51,6 +51,7 @@ public inherited sharing class HDT_BA_ProcessOrderCreation implements Database.B
         MassiveLoaderRequest__c oldReq = new MassiveLoaderRequest__c();
         oldReq.Id = idLoaderRequest;
         oldReq.Status__c = constantsUtl.MASSIVLOADER_STATUS_CHIUSO;
+        oldReq.Phase__c = 'File processato';
         update oldReq;
 
         // Creazione file RequestItem in Errore 
