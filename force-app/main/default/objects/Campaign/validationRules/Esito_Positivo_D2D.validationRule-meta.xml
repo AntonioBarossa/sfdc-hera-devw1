@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Esito_Positivo_D2D</fullName>
+    <active>true</active>
+    <description>Per campagne d2d solo Contratto Accettato è un valore valido</description>
+    <errorConditionFormula>AND(INCLUDES(Channel__c, &apos;Door To Door&apos;),
+				NOT(ISPICKVAL(PositiveOutcomeDefaultStatus__c, &apos;Contratto Accettato&apos;)),
+			NOT(ISPICKVAL(PositiveOutcomeDefaultStatus__c,&apos;&apos;)))</errorConditionFormula>
+    <errorDisplayField>PositiveOutcomeDefaultStatus__c</errorDisplayField>
+    <errorMessage>Per campagne Door to Door, è possibile selezionare solo &apos;Contratto Accettato&apos;</errorMessage>
+</ValidationRule>

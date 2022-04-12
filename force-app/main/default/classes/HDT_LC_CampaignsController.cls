@@ -474,4 +474,18 @@ public inherited sharing class HDT_LC_CampaignsController {
         }
         return null;
     }
+
+    @AuraEnabled
+    public static  String getCampaignChannel(String campaignMemberId){
+        if (String.isBlank(campaignMemberId)) {
+            return null;
+        }
+
+        list <CampaignMember> cm = [SELECT Id, Campaign.Channel__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED];
+
+        if(cm!=null && cm.size()>0 && String.isNotBlank(cm[0].Campaign.Channel__c)){
+                    return cm[0].Campaign.Channel__c;
+        }
+        return null;
+    }
 }
