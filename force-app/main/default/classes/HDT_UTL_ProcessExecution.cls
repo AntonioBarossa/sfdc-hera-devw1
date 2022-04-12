@@ -336,6 +336,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
 
         JSONGenerator gen = JSON.createGenerator(true);
         gen.writeStartObject();
+        gen.writeStringField('StageName: ', stageName);
         gen.writeStringField('CpuTime: ', String.valueOf(Limits.getCpuTime()) + ' of ' + String.valueOf(Limits.getLimitCpuTime()));
         gen.writeStringField('DML: ', String.valueOf(Limits.getDMLStatements()) + ' of ' + String.valueOf(Limits.getLimitDMLStatements()));
         gen.writeStringField('HeapSize: ', String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
@@ -343,9 +344,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
         gen.writeStringField('Callouts: ', String.valueOf(Limits.getCallouts()) + ' of ' + String.valueOf(Limits.getLimitCallouts()));
         gen.writeEndObject();
 
-        String pretty = gen.getAsString();
-        System.debug(stageName);
-        System.debug(pretty);
+        System.debug(gen.getAsString());
 
     }
 
