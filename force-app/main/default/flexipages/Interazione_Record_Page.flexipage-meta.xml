@@ -24,7 +24,7 @@
                         <valueListItems>
                             <value>Interaction__c.CreateActivity</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND (3 OR 4 OR 5 OR 6)</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 7 AND (3 OR 4 OR 5 OR 6)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -54,6 +54,11 @@
                                     <leftValue>{!Record.CompanyOwner__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Reseller</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Cartacea</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -211,7 +216,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Account__c</fieldItem>
             </fieldInstance>
@@ -220,7 +225,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Contact__c</fieldItem>
             </fieldInstance>
@@ -304,7 +309,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Lead__c</fieldItem>
             </fieldInstance>

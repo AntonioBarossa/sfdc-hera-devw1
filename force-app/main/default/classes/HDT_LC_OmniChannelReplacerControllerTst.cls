@@ -3,6 +3,8 @@ public class HDT_LC_OmniChannelReplacerControllerTst {
     
     @testSetup
     static void setup() {
+
+        HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
     
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         
