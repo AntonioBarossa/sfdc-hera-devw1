@@ -25,9 +25,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         System.debug(LoggingLevel.DEBUG, 'checks');
         mapFieldsObject();
 
-
-        System.debug('AccountTipo - > ' + mapHeaderByPosition.get(0));
-
         contoContrattualeIndex = mapHeaderForWrapper.get('BillingProfileContoContrattuale');
         codicePuntoIndex = mapHeaderForWrapper.get('ServicePointCodicePunto');
         recTypeIndex = mapHeaderForWrapper.get('AccountTipo');
@@ -103,6 +100,11 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         saveBillProfList = new List<BillingProfile__c>();
         saveServPointList = new List<ServicePoint__c>();
 
+        Integer count = 0;
+        String convertionError;
+        String csvHeader;
+        String objField;
+
         for(HDT_WRP_ProcessObjects processObj : processObjList){
  
             processObj.account = new Account();
@@ -110,31 +112,31 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             processObj.servicePoint = new ServicePoint__c();
             processObj.servicePointWrapper = new Map<String, String>();
             
-            Integer count = 0;
-            String convertionError;
-            String csvHeader;
-            String objField;
+            count = 0;
+            convertionError = '';
+            csvHeader = '';
+            objField = '';
 
             System.debug(LoggingLevel.DEBUG, '>>> tempSplitted ' + processObj.csvSplitted.size());
 
-            if(String.isNotEmpty(processObj.csvSplitted[codicePuntoIndex]) && codicePuntoMap.containsKey(processObj.csvSplitted[codicePuntoIndex])){
-                processObj.createServicePoint = false;
-            } else {
-                //processObj.createServicePoint = String.isEmpty(processObj.csvSplitted[codicePuntoIndex]);
-                processObj.createServicePoint = true;
-            }
-           
-            if(String.isNotEmpty(processObj.csvSplitted[contoContrattualeIndex]) && billProfMap.containsKey(processObj.csvSplitted[contoContrattualeIndex])){
-                processObj.createBillingProfile = false;
-            } else {
-                processObj.createBillingProfile = true;
-            }
-
-            //processObj.createBillingProfile = !codicePuntoMap.containsKey(processObj.csvSplitted[contoContrattualeIndex]);
+            processObj.createServicePoint = (String.isNotEmpty(processObj.csvSplitted[codicePuntoIndex]) && codicePuntoMap.containsKey(processObj.csvSplitted[codicePuntoIndex])) ? false : true;
+            processObj.createBillingProfile = (String.isNotEmpty(processObj.csvSplitted[contoContrattualeIndex]) && billProfMap.containsKey(processObj.csvSplitted[contoContrattualeIndex])) ? false : true;
+            
+            //if(String.isNotEmpty(processObj.csvSplitted[codicePuntoIndex]) && codicePuntoMap.containsKey(processObj.csvSplitted[codicePuntoIndex])){
+            //    processObj.createServicePoint = false;
+            //} else {
+            //    processObj.createServicePoint = true;
+            //}
+            
+            //if(String.isNotEmpty(processObj.csvSplitted[contoContrattualeIndex]) && billProfMap.containsKey(processObj.csvSplitted[contoContrattualeIndex])){
+            //    processObj.createBillingProfile = false;
+            //} else {
+            //    processObj.createBillingProfile = true;
+            //}
 
             System.debug(LoggingLevel.DEBUG, '>>> enableCreate: billProf [' + processObj.createBillingProfile + ']; servPoint [' + processObj.createServicePoint + ']');
 
-            processObj.account.RecordTypeId = recordTypeMap.get(processObj.csvSplitted[recTypeIndex]);
+            //processObj.account.RecordTypeId = recordTypeMap.get(processObj.csvSplitted[recTypeIndex]);
             
             for (String tempField : processObj.csvSplitted) {
 
@@ -191,22 +193,12 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 continue;
             }
 
-            processObj.account.Name = String.isBlank(processObj.account.FirstName__c) ? processObj.account.LastName__c : processObj.account.FirstName__c + ' ' + processObj.account.LastName__c;
+            //processObj.account.Name = String.isBlank(processObj.account.FirstName__c) ? processObj.account.LastName__c : processObj.account.FirstName__c + ' ' + processObj.account.LastName__c;
+            //processObj.account.BillingIsAddressVerified__c = true;
 
-            // only for test
-            //processObj.account.IsWrongFiscalData__c = false;
-            //processObj.account.BillingCityCode__c = 'Roma';
-            processObj.account.BillingIsAddressVerified__c = true;
-
-            if(String.isNotEmpty(processObj.servicePoint.ServicePointCode__c)){
-                processObj.servicePoint.Name = processObj.servicePoint.ServicePointCode__c;
-            }
-
-            System.debug(LoggingLevel.DEBUG, '>>> currentAccount: ' + processObj.account);
-            System.debug(LoggingLevel.DEBUG, '>>> currentBillingProfile: ' + processObj.billingProfile);
-            System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + processObj.servicePoint);
-
-            processObj.servicePoint.RecordTypeId = recordTypeMap.get(processObj.servicePoint.CommoditySector__c);
+            //System.debug(LoggingLevel.DEBUG, '>>> currentAccount: ' + processObj.account);
+            //System.debug(LoggingLevel.DEBUG, '>>> currentBillingProfile: ' + processObj.billingProfile);
+            //System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + processObj.servicePoint);
 
             addInformationToSet(processObj.account);
 
@@ -223,6 +215,9 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 continue;
             }
 
+            processObj.account.RecordTypeId = recordTypeMap.get(processObj.csvSplitted[recTypeIndex]);
+            processObj.account.Name = String.isBlank(processObj.account.FirstName__c) ? processObj.account.LastName__c : processObj.account.FirstName__c + ' ' + processObj.account.LastName__c;
+            processObj.account.BillingIsAddressVerified__c = true;
             processObj.account.Id = setAccountIdFromDb(processObj.account);
 
             if(processObj.account.Id == null){
@@ -312,6 +307,11 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                     }
                 }
 
+                if(String.isNotEmpty(processObj.servicePoint.ServicePointCode__c)){
+                    processObj.servicePoint.Name = processObj.servicePoint.ServicePointCode__c;
+                }
+                processObj.servicePoint.RecordTypeId = recordTypeMap.get(processObj.servicePoint.CommoditySector__c);
+
                 System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + processObj.servicePoint);
                 saveServPointList.add(processObj.servicePoint);
             }
@@ -383,9 +383,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             }
 
             nextDataObj = new HDT_WRP_NextDataObj();
-            //if(saveAccountResponse.itemIdToObjId.containsKey(processObj.requestItem.Id)){
-            //    nextDataObj.accountId = saveAccountResponse.itemIdToObjId.get(processObj.requestItem.Id);
-            //}
 
             nextDataObj.accountId = processObj.account.Id;
             nextDataObj.contactId = (accountContactMap.containsKey(nextDataObj.accountId)) ? accountContactMap.get(nextDataObj.accountId) : null;
