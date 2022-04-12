@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>SelectedProcessCancellationReason__c</field>
-        <value xsi:type="xsd:string">Pratica errata</value>
+        <value xsi:type="xsd:string">Registrazione Non Conforme</value>
     </values>
     <values>
         <field>Technical_Causal_Cancellation_Reason__c</field>

@@ -30,7 +30,7 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         System.debug('query result pod/pdr: ' + listPodPdr);
         
         
-        List<SBQQ__QuoteLine__c> listVas = quoteLineQr.getRecordsBySaleFilteredPaymentMethodforVas(saleId);
+        List<SBQQ__QuoteLine__c> listVas = quoteLineQr.getRecordsBySaleFilteredPaymentMethodforVas(saleId,true);
         System.debug('query result vas: ' + listVas);
         
         //***2809 LG disattivato per problemi visibilita */
@@ -78,12 +78,12 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         quoteLineIdsList.addAll(quoteLineIdsSet);
 
         //get only ids from analisiConsumi quotelines
-        List<SBQQ__QuoteLine__c> analisiConsumiList = quoteLineQr.getQuoteLineAnalisiConsumi(quoteLineIdsList);
+        // List<SBQQ__QuoteLine__c> analisiConsumiList = quoteLineQr.getQuoteLineAnalisiConsumi(quoteLineIdsList);
 
-        if (!analisiConsumiList.isEmpty()) {
-            Set<String> quoteLineAnalisiConsumiIdsSet = (new Map<String,SObject>(analisiConsumiList)).keySet().clone();
-            quoteLineIdsList.addAll(quoteLineAnalisiConsumiIdsSet);
-        }
+        // if (!analisiConsumiList.isEmpty()) {
+        //     Set<String> quoteLineAnalisiConsumiIdsSet = (new Map<String,SObject>(analisiConsumiList)).keySet().clone();
+        //     quoteLineIdsList.addAll(quoteLineAnalisiConsumiIdsSet);
+        // }
         
         //update billing profile on all retrieved quoteLines
         List<SBQQ__QuoteLine__c> quoteLineListUpdate = new List<SBQQ__QuoteLine__c>();

@@ -453,10 +453,11 @@ public with sharing class HDT_SRV_SalesHandler {
 
                                                 //Gestione CodiceCliente/Update Account - HRADTR_GV 31/03/2022
                                                 Account accToUpdate = new Account();
-                                                accToUpdate.Id = ord.AccountId;
+                                                accToUpdate.Id = ordRetrieved.AccountId;
                                                 if(ord.CustomerCode__c != null)
-                                                    accToUpdate.CustomerCode__c = ord.CustomerCode__c;
-                                                
+                                                {
+                                                   accToUpdate.CustomerCode__c = ord.CustomerCode__c;
+                                                }
                                                     accountSrv.updateRecord(accToUpdate);
                                             }
                                             if(ordRetrieved.ProcessType__c.containsIgnoreCase('Subentro') || (ordRetrieved.ProcessType__c.containsIgnoreCase('Voltura') && !ordRetrieved.PhaseStory__c.containsIgnoreCase('Voltura Rifiutata'))){
