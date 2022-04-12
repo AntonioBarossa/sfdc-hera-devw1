@@ -108,6 +108,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             processObj.account = new Account();
             processObj.billingProfile = new BillingProfile__c();
             processObj.servicePoint = new ServicePoint__c();
+            processObj.servicePointWrapper = new Map<String, String>();
             
             Integer count = 0;
             String convertionError;
@@ -161,6 +162,11 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                             when 'ServicePoint__c' {
                                 if(processObj.createServicePoint){
                                     convertionError = mapTypeField(processObj.servicePoint, mapAllFields, count, tempField);
+                                }
+                            }
+                            when 'WrapperSerPoint' {
+                                if(processObj.createServicePoint){
+                                    processObj.servicePointWrapper.put(mapAllFields.get(mapHeaderByPosition.get(count)), tempField);
                                 }
                             }
                         }
@@ -299,6 +305,13 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             if(processObj.createServicePoint){
                 processObj.servicePoint.Account__c = accountId;
+
+                if(processObj.servicePointWrapper.size() > 0){
+                    if(processObj.servicePointWrapper.containsKey('Distributor__r')){
+                        processObj.servicePoint.Distributor__r = new Account(GlobalMigrationKey__c = processObj.servicePointWrapper.get('Distributor__r'));
+                    }
+                }
+
                 System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + processObj.servicePoint);
                 saveServPointList.add(processObj.servicePoint);
             }
@@ -532,6 +545,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         private Contact contact;
         private BillingProfile__c billingProfile;
         private ServicePoint__c servicePoint;
+        private Map<String, String> servicePointWrapper;
         private Boolean createServicePoint;
         private Boolean createBillingProfile;
         private MassiveLoaderRequestItem__c requestItem;
