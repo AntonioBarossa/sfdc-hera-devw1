@@ -103,6 +103,14 @@
             <fullName>Sempre ap%2E - Pubblica utilita</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>01- App. medico terapeutiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>02- Pubblica utilità</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>ImplantType__c</picklist>
