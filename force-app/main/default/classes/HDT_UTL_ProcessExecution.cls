@@ -71,7 +71,15 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     }
    
     public virtual void manageCatchException(Integer batchSize, List<MassiveLoaderRequestItem__c> itemList, String message){
-        System.debug(LoggingLevel.DEBUG, 'manageCatchException');
+        System.debug(LoggingLevel.DEBUG, '>>> manageCatchException: ' + message);
+
+        for(MassiveLoaderRequestItem__c mlr : itemList){
+            mlr.Status__c = 'Errore';
+            mlr.StatusDescription__c = message.abbreviate(250);
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(itemList);
+
     }
 
     /**
@@ -111,7 +119,9 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
             }
             return null;
         } catch (Exception e){
-            return e.getMessage() + ' - on filed [' + mapSobjField.get(mapHeaderByPosition.get(position)) + ']';
+            System.debug('>>>>>>>>>>>>> ' + mapHeaderByPosition.get(position));
+            //return e.getMessage() + ' - campo [' + mapSobjField.get(mapHeaderByPosition.get(position)) + ']';
+            return e.getMessage() + ' - campo [' + mapHeaderByPosition.get(position) + ']';
         }
     }
 
@@ -303,6 +313,10 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
 
         Schema.DescribeFieldResult fieldResult = Schema.getGlobalDescribe().get(objType).getDescribe().fields.getMap().get(fieldType).getDescribe();
 
+        if(fieldResult.getPicklistValues().size() == 0){
+            return false;
+        }
+
         for(Schema.PicklistEntry pickListVal : fieldResult.getPicklistValues()){
             if(valueToCheck.equalsIgnoreCase(pickListVal.getLabel()) && pickListVal.isActive()){
                 return false;
@@ -322,6 +336,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
 
         JSONGenerator gen = JSON.createGenerator(true);
         gen.writeStartObject();
+        gen.writeStringField('StageName: ', stageName);
         gen.writeStringField('CpuTime: ', String.valueOf(Limits.getCpuTime()) + ' of ' + String.valueOf(Limits.getLimitCpuTime()));
         gen.writeStringField('DML: ', String.valueOf(Limits.getDMLStatements()) + ' of ' + String.valueOf(Limits.getLimitDMLStatements()));
         gen.writeStringField('HeapSize: ', String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
@@ -329,9 +344,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
         gen.writeStringField('Callouts: ', String.valueOf(Limits.getCallouts()) + ' of ' + String.valueOf(Limits.getLimitCallouts()));
         gen.writeEndObject();
 
-        String pretty = gen.getAsString();
-        System.debug(stageName);
-        System.debug(pretty);
+        System.debug(gen.getAsString());
 
     }
 

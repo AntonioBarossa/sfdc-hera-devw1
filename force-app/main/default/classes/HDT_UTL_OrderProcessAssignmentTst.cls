@@ -100,7 +100,7 @@ private class HDT_UTL_OrderProcessAssignmentTst {
       FROM Order 
       WHERE PowerRequested__c=10];
 
-        List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> processes = HDT_UTL_OrderProcessAssignment.getAvailableProcesses(oneOrder);
+        List<ProcessMatrix__c> processes = HDT_UTL_OrderProcessAssignment.getAvailableProcesses(oneOrder);
         System.assertEquals(0, processes.size(),'there is no process available because there is no order that does not have a Ripristinatorio');
         System.assertNotEquals(2, processes.size(),'there is no process available because there is no order that does not have a Ripristinatorio');
 

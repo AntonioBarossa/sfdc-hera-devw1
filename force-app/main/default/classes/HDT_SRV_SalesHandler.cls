@@ -49,7 +49,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 HDT_UTL_ActivityCustom.createActivityWithParams(new Map<String,String>{
                                     'RecordTypeDeveloperName' => 'HDT_RT_AttivitaGestionali',
                                     'Type__c'                 => 'Gestione Switch in Ripristinatorio',
-                                    'wrts_prcgvr__Status__c'               => 'Creata',
+                                    'wrts_prcgvr__Status__c'               => 'Aperta',
                                     'ServicePointCode__c'     => mapRequestFields.get('COD_PDR'),
                                     'FiscalCode__c'           => mapRequestFields.get('CODICE_FISCALE'),
                                     'VATNumber__c'            => mapRequestFields.get('PIVA'),
@@ -97,7 +97,8 @@ public with sharing class HDT_SRV_SalesHandler {
                         String errDescr = mapRequestFields.get('NOTE_ERR')!=null ? mapRequestFields.get('NOTE_ERR') : '';
                         String utenza = mapRequestFields.get('UTENZA')!=null ? mapRequestFields.get('UTENZA') : '';
                         String cmp = mapRequestFields.get('CMP')!=null ? mapRequestFields.get('CMP') : '';
-                        String dataElab = mapRequestFields.get('DATA_ELABORAZIONE')!=null ? mapRequestFields.get('DATA_ELABORAZIONE') : '';
+                        String dataElab = mapRequestFields.get('DATA_ELABORAZIONE')!=null ? mapRequestFields.get('DATA_ELABORAZIONE') : 
+                            String.isNotBlank(mapRequestFields.get('DATA_EVENTO')) ? mapRequestFields.get('DATA_EVENTO') : '';
                         String oldDescription = ordRetrieved.Description != null ? ordRetrieved.Description : '';
                         Map<String, String> mapActivityField = new Map<String, String>();
                         mapActivityField.put('NOTE_ERR',errDescr);
@@ -452,10 +453,11 @@ public with sharing class HDT_SRV_SalesHandler {
 
                                                 //Gestione CodiceCliente/Update Account - HRADTR_GV 31/03/2022
                                                 Account accToUpdate = new Account();
-                                                accToUpdate.Id = ord.AccountId;
+                                                accToUpdate.Id = ordRetrieved.AccountId;
                                                 if(ord.CustomerCode__c != null)
-                                                    accToUpdate.CustomerCode__c = ord.CustomerCode__c;
-                                                
+                                                {
+                                                   accToUpdate.CustomerCode__c = ord.CustomerCode__c;
+                                                }
                                                     accountSrv.updateRecord(accToUpdate);
                                             }
                                             if(ordRetrieved.ProcessType__c.containsIgnoreCase('Subentro') || (ordRetrieved.ProcessType__c.containsIgnoreCase('Voltura') && !ordRetrieved.PhaseStory__c.containsIgnoreCase('Voltura Rifiutata'))){
@@ -534,7 +536,8 @@ public with sharing class HDT_SRV_SalesHandler {
                         String errDescr = mapRequestFields.get('NOTE_ERR')!=null ? mapRequestFields.get('NOTE_ERR') : '';
                         String utenza = mapRequestFields.get('UTENZA')!=null ? mapRequestFields.get('UTENZA') : '';
                         String cmp = mapRequestFields.get('CMP')!=null ? mapRequestFields.get('CMP') : '';
-                        String dataElab = mapRequestFields.get('DATA_ELABORAZIONE')!=null ? mapRequestFields.get('DATA_ELABORAZIONE') : '';
+                        String dataElab = mapRequestFields.get('DATA_ELABORAZIONE')!=null ? mapRequestFields.get('DATA_ELABORAZIONE') : 
+                            String.isNotBlank(mapRequestFields.get('DATA_EVENTO')) ? mapRequestFields.get('DATA_EVENTO') : '';
                         Map<String, String> mapActivityField = new Map<String, String>();
                         mapActivityField.put('NOTE_ERR',errDescr);
                         mapActivityField.put('UTENZA',utenza);

@@ -145,7 +145,9 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
                         errorDescription = res.exceptionMessage;
                     }
                     else {
-                        errorDescription = res.errorDetails[0].message;
+                        if(!res.errorDetails.isEmpty() && res.errorDetails[0] != null){
+                            errorDescription = res.errorDetails[0].message;
+                        }
                     }
                 }
             }

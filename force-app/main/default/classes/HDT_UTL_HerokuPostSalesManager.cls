@@ -225,7 +225,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String testoErr = reqWrp.requestMap.get('TESTO_ERRR')!=null ? reqWrp.requestMap.get('TESTO_ERRR') : '';
             String utenza = reqWrp.requestMap.get('UTENZA')!=null ? reqWrp.requestMap.get('UTENZA') : '';
             String cmp = reqWrp.requestMap.get('CMP')!=null ? reqWrp.requestMap.get('CMP') : '';
-            String dataElab = reqWrp.requestMap.get('DATA_ELABORAZIONE')!=null ? reqWrp.requestMap.get('DATA_ELABORAZIONE') : '';
+            String dataElab = reqWrp.requestMap.get('DATA_ELABORAZIONE')!=null ? reqWrp.requestMap.get('DATA_ELABORAZIONE') :  
+                String.isNotBlank(reqWrp.requestMap.get('DATA_EVENTO')) ? reqWrp.requestMap.get('DATA_EVENTO') : '';
             Map<String, String> mapActivityField = new Map<String, String>();
             mapActivityField.put('NOTE_ERR',errDescr);
             mapActivityField.put('UTENZA',utenza);
@@ -306,15 +307,15 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(reqWrp.requestMap.get('COD_CAUSALE') != null && reqWrp.requestMap.get('COD_CAUSALE') != ''){
                 currentCase.CancellationReasonCode__c = reqWrp.requestMap.get('COD_CAUSALE');
             }
+            String noteAnn = recordCase.CancellationNote__c != null?recordCase.CancellationNote__c:'';
             if(reqWrp.requestMap.get('ANNOTAZIONI_ANN') != null && reqWrp.requestMap.get('ANNOTAZIONI_ANN') != ''){
-                String noteAnn = recordCase.CancellationNote__c != null?recordCase.CancellationNote__c:'';
-                currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('ANNOTAZIONI_ANN') + '\n' + noteAnn;
+                noteAnn = nowDateFormat + ': ' + reqWrp.requestMap.get('ANNOTAZIONI_ANN') + '\n' + noteAnn;
             }
             if(reqWrp.requestMap.get('NOTE_ANN') != null && reqWrp.requestMap.get('NOTE_ANN') != ''){
-                String noteAnn = recordCase.CancellationNote__c != null?recordCase.CancellationNote__c:'';
-                System.debug(LoggingLevel.DEBUG, 'NoteAnn: '  + noteAnn);
-                currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE_ANN') + '\n' + noteAnn;
+                noteAnn = nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE_ANN') + '\n' + noteAnn;
             }
+            System.debug(LoggingLevel.DEBUG, 'NoteAnn: '  + noteAnn);
+            currentCase.CancellationNote__c = noteAnn;
             if(STRING.isNotBlank(reqWrp.requestMap.get('NOTE_ERR'))){
                 currentCase.DiscardDescription__c=HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('NOTE_ERR')) + '\n';
             }
@@ -579,6 +580,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         
         if(String.isNotBlank(storno) && storno.equalsIgnoreCase('N')) {
             recordObj.put('Phase__c', 'Annullato SII');
+            recordObj.put('Status','Closed');
             updateFutureSobject(JSON.serialize(recordObj));
         }else if(String.isNotBlank(activity) && activity.equalsIgnoreCase('Eseguire Gestione Manuale SAP')){
             /* switch on objectType {

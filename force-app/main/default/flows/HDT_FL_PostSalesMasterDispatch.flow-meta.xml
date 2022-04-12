@@ -46,7 +46,7 @@
     <actionCalls>
         <name>getIsCommunityValue</name>
         <label>Valorizzazione variabile isCommunity</label>
-        <locationX>7260</locationX>
+        <locationX>7417</locationX>
         <locationY>4478</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
@@ -61,6 +61,22 @@
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>getuuid</name>
+        <label>getuuid</label>
+        <locationX>7208</locationX>
+        <locationY>4718</locationY>
+        <actionName>HDT_LC_CtToolbar</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Sono_in_chiamata</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <outputParameters>
+            <assignToReference>UUID</assignToReference>
+            <name>output</name>
+        </outputParameters>
     </actionCalls>
     <actionCalls>
         <name>ManageDocument</name>
@@ -941,8 +957,8 @@
     <assignments>
         <name>Valorizzazione_Status_Campaign_Member</name>
         <label>Valorizzazione Status Campaign Member</label>
-        <locationX>7260</locationX>
-        <locationY>5510</locationY>
+        <locationX>7417</locationX>
+        <locationY>5846</locationY>
         <assignmentItems>
             <assignToReference>CampaignMember_Record.Status</assignToReference>
             <operator>Assign</operator>
@@ -1097,7 +1113,7 @@
     <decisions>
         <name>Case_Annullato</name>
         <label>Case Annullato?</label>
-        <locationX>6897</locationX>
+        <locationX>6949</locationX>
         <locationY>4358</locationY>
         <defaultConnector>
             <targetReference>getIsCommunityValue</targetReference>
@@ -1500,8 +1516,8 @@
     <decisions>
         <name>Confermato</name>
         <label>Confermato?</label>
-        <locationX>7018</locationX>
-        <locationY>4838</locationY>
+        <locationX>6966</locationX>
+        <locationY>5078</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
             <name>Annulla</name>
@@ -2520,9 +2536,34 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Sono_in_chiamata</name>
+        <label>Sono in chiamata?</label>
+        <locationX>7208</locationX>
+        <locationY>4838</locationY>
+        <defaultConnector>
+            <targetReference>CampaignMember_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>in_chiamata_si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UUID</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ScreenEsitoCampaignMember</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Sono_in_Community</name>
         <label>Sono in Community?</label>
-        <locationX>7260</locationX>
+        <locationX>7417</locationX>
         <locationY>4598</locationY>
         <defaultConnector>
             <targetReference>CampaignMember_Record</targetReference>
@@ -2539,7 +2580,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>ScreenEsitoCampaignMember</targetReference>
+                <targetReference>getuuid</targetReference>
             </connector>
             <label>SI</label>
         </rules>
@@ -2969,9 +3010,9 @@
      &quot;Reclami&quot;,
       IF(CONTAINS({!ProcessType}, &quot;Spostamento Votive Modena&quot;),&quot;Preventivi&quot;,
       IF(CONTAINS({!ProcessType}, &quot;Votive Modena Pagamenti Morosità&quot;),&quot;Morosità&quot;,
-	  IF(CONTAINS({!ProcessType}, &quot;VOTIVE Modena/Subentro&quot;),&quot;Generiche Attivazioni&quot;,
-	  IF(CONTAINS({!ProcessType}, &quot;VOTIVE Modena/Nuovo contratto&quot;),&quot;Generiche Attivazioni&quot;,
-	  IF(CONTAINS({!ProcessType}, &quot;VOTIVE Modena/Intervento Riattivazione luce&quot;),&quot;Generiche Attivazioni&quot;,
+	  IF(CONTAINS({!ProcessType}, &quot;VOTIVE Modena/Subentro&quot;),&quot;Attivazioni&quot;,
+	  IF(CONTAINS({!ProcessType}, &quot;VOTIVE Modena/Nuovo contratto&quot;),&quot;Attivazioni&quot;,
+	  IF(CONTAINS({!ProcessType}, &quot;VOTIVE Modena/Intervento Riattivazione luce&quot;),&quot;Attivazioni&quot;,
       IF(CONTAINS({!ProcessType}, &quot;Votive Modena Cessazione&quot;),&quot;Disattivazioni&quot;,&quot;&quot;
 )
 )
@@ -3031,7 +3072,7 @@
         <inputAssignments>
             <field>Cluster__c</field>
             <value>
-                <stringValue>Generiche Attivazioni</stringValue>
+                <stringValue>Attivazioni</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3150,7 +3191,7 @@
         <inputAssignments>
             <field>Cluster__c</field>
             <value>
-                <stringValue>Generiche Attivazioni</stringValue>
+                <stringValue>Attivazioni</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -7397,8 +7438,8 @@
     <recordLookups>
         <name>CampaignMember_Record</name>
         <label>Record Campaign Member</label>
-        <locationX>7260</locationX>
-        <locationY>5390</locationY>
+        <locationX>7417</locationX>
+        <locationY>5726</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Valorizzazione_Status_Campaign_Member</targetReference>
@@ -8205,7 +8246,7 @@
     <recordLookups>
         <name>Record_Case</name>
         <label>Record Case</label>
-        <locationX>6897</locationX>
+        <locationX>6949</locationX>
         <locationY>4238</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8236,8 +8277,8 @@
     <recordUpdates>
         <name>Aggiornamento_record_Campaign_Member</name>
         <label>Aggiornamento record Campaign Member</label>
-        <locationX>7260</locationX>
-        <locationY>5630</locationY>
+        <locationX>7417</locationX>
+        <locationY>5966</locationY>
         <inputReference>CampaignMember_Record</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -8289,8 +8330,8 @@
     <screens>
         <name>ScreenEsitoCampaignMember</name>
         <label>ScreenEsitoCampaignMember</label>
-        <locationX>7018</locationX>
-        <locationY>4718</locationY>
+        <locationX>6966</locationX>
+        <locationY>4958</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -10013,8 +10054,8 @@
     <subflows>
         <name>SubFlow_Annullamento</name>
         <label>SubFlow Annullamento</label>
-        <locationX>6798</locationX>
-        <locationY>4958</locationY>
+        <locationX>6746</locationX>
+        <locationY>5198</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -10350,5 +10391,15 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>UUID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <elementReference>getuuid</elementReference>
+        </value>
     </variables>
 </Flow>
