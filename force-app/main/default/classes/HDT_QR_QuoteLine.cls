@@ -131,6 +131,29 @@ public inherited sharing class HDT_QR_QuoteLine {
         ];
     }
 
+    public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredPaymentMethodforVas(String saleId,Boolean isModal){
+
+        return [
+            SELECT
+            Id,
+            SBQQ__RequiredBy__c,
+            Name,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            SBQQ__Product__r.Name,
+            SBQQ__Quote__r.Name,
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            BillingProfile__c,
+            BillingProfile__r.Name
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__r.Sale__c = :saleId
+            AND (SBQQ__Quote__r.ContractReference__c = null OR SBQQ__Quote__r.OrderReference__c = null)
+            AND (SBQQ__ProductFamily__c = 'VAS Fatturabili' OR SBQQ__ProductFamily__c = 'VAS Prodotto' OR SBQQ__ProductFamily__c = 'VAS Servizio')
+            AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     /**
     * @description 
     * @author federico.defelice@webresults.it | 23-09-2021 

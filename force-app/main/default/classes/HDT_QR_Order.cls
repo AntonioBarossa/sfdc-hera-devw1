@@ -346,7 +346,8 @@ public inherited sharing class HDT_QR_Order {
             Contact__r.FiscalCode__c,
             AggregateBilling__c,
             NumeratorGroup__c,
-            VASSubtype__c
+            VASSubtype__c,
+            isSTG__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
