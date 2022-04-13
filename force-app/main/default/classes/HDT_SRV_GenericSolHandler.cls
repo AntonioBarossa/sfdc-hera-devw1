@@ -65,14 +65,14 @@ public with sharing class HDT_SRV_GenericSolHandler {
             recordToInsert.Type__c = (String) posizioniMap.get('tipoDocDesc');
             recordToInsert.IssueDate__c = formatDateForInsert((String) posizioniMap.get('bmItemDt'));
             recordToInsert.ExpirationDate__c = formatDateForInsert((String) posizioniMap.get('bmEndDt'));
-            recordToInsert.Amount__c= (Double) posizioniMap.get('totFattura');
-            recordToInsert.DocumentResidue__c= (Double) posizioniMap.get('residuo');
+            recordToInsert.Amount__c= (Double) Double.valueOf(posizioniMap.get('totFattura'));
+            recordToInsert.DocumentResidue__c= (Double) Double.valueOf(posizioniMap.get('residuo'));
             recordToInsert.Extension__c= (String) posizioniMap.get('sollecitato');
             recordToInsert.PaymentMode__c= (String) posizioniMap.get('payment');
-            recordToInsert.TvFeeResidual__c= (Double) posizioniMap.get('restituzioneCanoneRai');
+            recordToInsert.TvFeeResidual__c= (Double) Double.valueOf(posizioniMap.get('restituzioneCanoneRai'));
             recordToInsert.IssuingCompany__c= (String) posizioniMap.get('socEmittenteDesc');
             recordToInsert.ContractualAccount__c= (String) posizioniMap.get('contoContrattuale');
-            recordToInsert.TotalCommunicationPayment__c= (Double) posizioniMap.get('totPagare');
+            recordToInsert.TotalCommunicationPayment__c= (Double) Double.valueOf(posizioniMap.get('totPagare'));
             recordToInsert.Case__c = caseId;
             HDT_UTL_DatabaseService.insertSObject(recordToInsert);
         }
