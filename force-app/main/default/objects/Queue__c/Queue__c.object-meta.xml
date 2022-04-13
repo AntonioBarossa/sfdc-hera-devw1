@@ -146,7 +146,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>false</enableSearch>
@@ -157,10 +157,11 @@
     <label>Coda</label>
     <nameField>
         <label>Coda Name</label>
+        <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>Code</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
