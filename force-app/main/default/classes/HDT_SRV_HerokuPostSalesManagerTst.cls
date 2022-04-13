@@ -39,6 +39,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         wrts_prcgvr__ActivityTemplate__c actTemplate2 = new wrts_prcgvr__ActivityTemplate__c();
         actTemplate2.Name = 'Eseguire Gestione Manuale SAP';
         actTemplate2.wrts_prcgvr__Subject__c = 'Eseguire Gestione Manuale SAP';
+        actTemplate2.wrts_prcgvr__ObjectType__c = 'Case';
 
         actTempList.add(actTemplate1);
         actTempList.add(actTemplate2);
@@ -439,7 +440,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         //Assertions
         Case testCaseUpd = [SELECT Id, CaseNumber, Phase__c, Type FROM Case WHERE Type = 'Allineamento Anagrafica' LIMIT 1];
         System.assertEquals('Da Inviare', testCaseUpd.Phase__c, 'Phase__c != Da Inviare');
-    }  
+    }
 
     @isTest
     static void handleInboundFullRequest()
@@ -594,7 +595,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
     static void handlePassiveCancellationSecondCase(){
 
         Case currentCase = [SELECT Id, Phase__c, Cluster__c FROM Case WITH SECURITY_ENFORCED LIMIT 1];
-        
+
         Test.startTest();
 
         HDT_UTL_HerokuPostSalesManager hpsm = new HDT_UTL_HerokuPostSalesManager();
