@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldOverrides>
+        <field>Account__c</field>
+        <formula>Interaction__c.Account__c</formula>
+    </fieldOverrides>
+    <fieldOverrides>
         <field>CompanyOwner__c</field>
         <formula>TEXT(Interaction__c.CompanyOwner__c)</formula>
     </fieldOverrides>
     <fieldOverrides>
+        <field>Contact__c</field>
+        <formula>Interaction__c.Contact__c</formula>
+    </fieldOverrides>
+    <fieldOverrides>
         <field>Interaction__c</field>
         <formula>Interaction__c.Id</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>Lead__c</field>
+        <formula>Interaction__c.Lead__c</formula>
     </fieldOverrides>
     <label>Crea Attività</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
@@ -18,37 +30,12 @@
                 <field>Type__c</field>
                 <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>Cluster__c</field>
-                <uiBehavior>Required</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>Account__c</field>
-                <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>Note__c</field>
-                <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>
         </quickActionLayoutColumns>
         <quickActionLayoutColumns>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>OpeningNote__c</field>
                 <uiBehavior>Required</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>Process__c</field>
-                <uiBehavior>Required</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>Lead__c</field>
-                <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
     </quickActionLayout>
