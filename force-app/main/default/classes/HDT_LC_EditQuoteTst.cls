@@ -20,6 +20,7 @@ public with sharing class HDT_LC_EditQuoteTst{
 		List<SBQQ__Quote__c> quotes=HDT_UTL_DataFactoryTst.createQuote(1, false, orders[0].Id, opps[0].Id, sales[0].Id, 'Quote');
 		quotes[0].ContractReference__c=contracts[0].Id;
 		quotes[0].AmendmentAllowed__c=true;
+        
 		insert quotes;
 
 		opps[0].SBQQ__PrimaryQuote__c=quotes[0].Id;
@@ -27,6 +28,7 @@ public with sharing class HDT_LC_EditQuoteTst{
 
 		List<Product2> products=HDT_UTL_DataFactoryTst.createProduct2(1, false);
 		products[0].Name='POD';
+        products[0].Family=Label.HDT_ProductFamilyTrigger;
 		insert products;
 
 		List<ServicePoint__c> servPoint=HDT_UTL_DataFactoryTst.createServicePoint(1, true);
@@ -34,6 +36,7 @@ public with sharing class HDT_LC_EditQuoteTst{
 		List<SBQQ__QuoteLine__c> quoteLines=HDT_UTL_DataFactoryTst.createQuoteLines(products[0].Id, quotes[0].Id, 1, false);
 		quotelines[0].ServicePoint__c=servPoint[0].Id;
 		quotelines[0].ServicePointLinkItem__c=saleServItens[0].Id;
+        quotelines[0].SBQQ__Product__c = products[0].Id;
 		insert quoteLines;
 	}
 
@@ -42,7 +45,7 @@ public with sharing class HDT_LC_EditQuoteTst{
 
 		Test.startTest();
 
-		List<SBQQ__Quote__c> tquotes=[SELECT Id, SBQQ__Type__c
+		List<SBQQ__Quote__c> tquotes=[SELECT Id, SBQQ__Type__c, ContractReference__c
 		                              FROM SBQQ__Quote__c
 		                              WHERE SBQQ__Type__c='Quote'];
 

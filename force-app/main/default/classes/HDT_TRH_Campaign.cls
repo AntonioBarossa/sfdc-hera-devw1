@@ -27,7 +27,7 @@ public Inherited Sharing class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
         public static void deactivateCampaign(List<Campaign> newCampaigns, Map<Id,Campaign> oldCampaignsMap) {
             List<Id> deactivateCampaignsId = new List<Id>();
             for (Campaign cmp : newCampaigns) {
-                if ((oldCampaignsMap.get(cmp.Id).Status == 'In Corso' || oldCampaignsMap.get(cmp.Id).Status == 'Pianificata') && (cmp.Status == 'Bloccata' || cmp.Status == 'Cancellata')) {
+                if ((oldCampaignsMap.get(cmp.Id).Status == 'In Corso') && (cmp.Status != 'In Corso')) {
                     deactivateCampaignsId.add(cmp.Id);
                     cmp.IsActive = false;                    
                 }
