@@ -58,6 +58,16 @@ public inherited sharing class HDT_LC_CalculateEstimatedCost {
         return;
     }
 
+    public Map<String,Decimal> getAmounts(String supplyType, Decimal estimatedAmount)
+    {
+        Map<String,Decimal> resultMap = new Map<String,Decimal>();
+        String searchKey = (new Set<String>{'Domestico', 'A-Domestico'}.contains(supplyType)) ? 'Domestico' : 'Non Domestico';
+        HDT_CalcoloPreventivi__mdt fixedQuotes = [SELECT VAT__c, DistributorFixedQuote__c, PowerQuote__c, SellerFixedQuote__c FROM HDT_CalcoloPreventivi__mdt WHERE Type__c=:searchKey WITH SECURITY_ENFORCED];
+        resultMap.put('fixedAmount',(fixedQuotes.DistributorFixedQuote__c + fixedQuotes.SellerFixedQuote__c).setScale(2));
+        resultMap.put('variableAmount',(estimatedAmount - (resultMap.get('fixedAmount'))).setScale(2));
+        return resultMap;
+    }
+
     public class HDT_WRP_ExtimatedCost{
         @AuraEnabled public String quoteType {get;set;}
         @AuraEnabled public String quoteCode {get;set;}
