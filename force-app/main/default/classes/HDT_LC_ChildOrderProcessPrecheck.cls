@@ -101,7 +101,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     if(!contracts.isEmpty())
                     {
                         List<AccountContactRelation> exitingContacts = voltureChangeQr.getContactInfosByAccountId(contracts[0].AccountId);
-                        newOrder.PreviousCustomer__c = exitingContacts[0]?.ContactId;
+                        if(!exitingContacts.isEmpty())
+                        {
+                            newOrder.PreviousCustomer__c = exitingContacts[0]?.ContactId;
+                        }
                         newOrder.ContractReference__c = contracts[0]?.Id;
 						sapCode = contracts[0].SAPContractCode__c;
                     }

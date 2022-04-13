@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>platformLimits</label>
+    <protected>false</protected>
+    <values>
+        <field>DatasetApiName__c</field>
+        <value xsi:type="xsd:string">platformLimits</value>
+    </values>
+    <values>
+        <field>EventType__c</field>
+        <value xsi:type="xsd:string">platformLimits</value>
+    </values>
+    <values>
+        <field>JSONDatasetBase64__c</field>
+        <value xsi:type="xsd:string">eyJmaWxlRm9ybWF0Ijp7ImNoYXJzZXROYW1lIjoiVVRGLTgiLCJmaWVsZHNEZWxpbWl0ZWRCeSI6IiwiLCJmaWVsZHNFbmNsb3NlZEJ5IjoiXCIiLCJsaW5lc1Rlcm1pbmF0ZWRCeSI6IlxyXG4ifSwib2JqZWN0cyI6W3siY29ubmVjdG9yIjoiQ1NWIiwiZnVsbHlRdWFsaWZpZWROYW1lIjoicGxhdGZvcm1MaW1pdHNfY3N2IiwibGFiZWwiOiJwbGF0Zm9ybUxpbWl0cy5jc3YiLCJuYW1lIjoicGxhdGZvcm1MaW1pdHNfY3N2IiwiZmllbGRzIjpbeyJmdWxseVF1YWxpZmllZE5hbWUiOiJOYW1lIiwibmFtZSI6Ik5hbWUiLCJ0eXBlIjoiVGV4dCIsImxhYmVsIjoiTmFtZSJ9LHsiZnVsbHlRdWFsaWZpZWROYW1lIjoiTWF4IiwibmFtZSI6Ik1heCIsInR5cGUiOiJOdW1lcmljIiwibGFiZWwiOiJNYXgiLCJwcmVjaXNpb24iOjE4LCJkZWZhdWx0VmFsdWUiOiIwIiwic2NhbGUiOjAsImZvcm1hdCI6IjAifSx7ImZ1bGx5UXVhbGlmaWVkTmFtZSI6IlJlbSIsIm5hbWUiOiJSZW0iLCJ0eXBlIjoiTnVtZXJpYyIsImxhYmVsIjoiUmVtIiwicHJlY2lzaW9uIjoxOCwiZGVmYXVsdFZhbHVlIjoiMCIsInNjYWxlIjowLCJmb3JtYXQiOiIwIn0seyJmdWxseVF1YWxpZmllZE5hbWUiOiJUSU1FU1RBTVBfREVSSVZFRCIsIm5hbWUiOiJUSU1FU1RBTVBfREVSSVZFRCIsInR5cGUiOiJEYXRlIiwibGFiZWwiOiJUSU1FU1RBTVBfREVSSVZFRCIsImZvcm1hdCI6Inl5eXktTU0tZGQgSEg6bW06c3MifV19XX0=</value>
+    </values>
+    <values>
+        <field>JSONDataset__c</field>
+        <value xsi:type="xsd:string">{&quot;fileFormat&quot;:{&quot;charsetName&quot;:&quot;UTF-8&quot;,&quot;fieldsDelimitedBy&quot;:&quot;,&quot;,&quot;fieldsEnclosedBy&quot;:&quot;\&quot;&quot;,&quot;linesTerminatedBy&quot;:&quot;\r\n&quot;},&quot;objects&quot;:[{&quot;connector&quot;:&quot;CSV&quot;,&quot;fullyQualifiedName&quot;:&quot;platformLimits_csv&quot;,&quot;label&quot;:&quot;platformLimits.csv&quot;,&quot;name&quot;:&quot;platformLimits_csv&quot;,&quot;fields&quot;:[{&quot;fullyQualifiedName&quot;:&quot;Name&quot;,&quot;name&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;Text&quot;,&quot;label&quot;:&quot;Name&quot;},{&quot;fullyQualifiedName&quot;:&quot;Max&quot;,&quot;name&quot;:&quot;Max&quot;,&quot;type&quot;:&quot;Numeric&quot;,&quot;label&quot;:&quot;Max&quot;,&quot;precision&quot;:18,&quot;defaultValue&quot;:&quot;0&quot;,&quot;scale&quot;:0,&quot;format&quot;:&quot;0&quot;},{&quot;fullyQualifiedName&quot;:&quot;Rem&quot;,&quot;name&quot;:&quot;Rem&quot;,&quot;type&quot;:&quot;Numeric&quot;,&quot;label&quot;:&quot;Rem&quot;,&quot;precision&quot;:18,&quot;defaultValue&quot;:&quot;0&quot;,&quot;scale&quot;:0,&quot;format&quot;:&quot;0&quot;},{&quot;fullyQualifiedName&quot;:&quot;TIMESTAMP_DERIVED&quot;,&quot;name&quot;:&quot;TIMESTAMP_DERIVED&quot;,&quot;type&quot;:&quot;Date&quot;,&quot;label&quot;:&quot;TIMESTAMP_DERIVED&quot;,&quot;format&quot;:&quot;yyyy-MM-dd HH:mm:ss&quot;}]}]}</value>
+    </values>
+</CustomMetadata>

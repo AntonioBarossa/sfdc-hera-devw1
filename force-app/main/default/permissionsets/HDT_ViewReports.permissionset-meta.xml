@@ -3,6 +3,10 @@
     <description>Permission set that gives access to view reports</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>HDT_ViewReports</label>
+    <tabSettings>
+        <tab>standard-report</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
     <userPermissions>
         <enabled>true</enabled>
         <name>ExportReport</name>
@@ -11,11 +15,8 @@
         <enabled>true</enabled>
         <name>RunReports</name>
     </userPermissions>
-    <!--Start  HRAWRM-674 22/092021 EC-->
     <userPermissions>
         <enabled>true</enabled>
         <name>SubscribeToLightningReports</name>
     </userPermissions>
-    <!--Start  HRAWRM-674 22/092021 EC-->
-
 </PermissionSet>

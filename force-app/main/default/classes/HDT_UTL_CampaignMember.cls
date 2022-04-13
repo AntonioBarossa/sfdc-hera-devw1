@@ -38,7 +38,8 @@ public with sharing class HDT_UTL_CampaignMember {
                             (c.Channel__c == 'Cartaceo' && cmdt.Channel__c == 'Cartaceo')
                         )
                     ) ||
-                    (c.Category__c == 'Campagna Marketing Cloud' && cmdt.Category__c == 'Marketing Cloud')
+                    (c.Category__c == 'Campagna Marketing Cloud' && cmdt.Category__c == 'Marketing Cloud') || 
+                    (cmdt.Category__c == 'Outbound' && cmdt.Channel__c == 'Door to Door' && c.Channel__c=='Door to Door')
                 ) {
                     campaignMemberStatuses.add(new CampaignMemberStatus(
                         CampaignId = c.Id,
@@ -237,7 +238,7 @@ public with sharing class HDT_UTL_CampaignMember {
         }
 
         for(CampaignMember member : newCampMembList){
-            if(member.ResultType__c == 'Macchina' && member.ResultType__c != campMembOldMap.get(member.Id).ResultType__c && member.RelatedActivity__c != null){
+            if(member.ResultType__c == 'Macchina' && member.HasResponded==true && member.RelatedActivity__c != null){ //&& member.ResultType__c != campMembOldMap.get(member.Id).ResultType__c 
                 if(actToOrderIdMap.get(member.RelatedActivity__c) != null && isMonitoringList.contains(actToOrderIdMap.get(member.RelatedActivity__c).AgencyCode__c)){
                     if(!actToOrderIdMap.get(member.RelatedActivity__c).RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_OrderDossier')){
                         actToOrdersToCancelMap.put(member.RelatedActivity__c, new List<String>());

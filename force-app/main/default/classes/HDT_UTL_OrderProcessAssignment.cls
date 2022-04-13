@@ -219,6 +219,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 && process.OngoingSwitchOut__c == (ord.IsWinback__c && !process.processName__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))
                 && process.isReseller__c == isReseller
             ) {
+                if(process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_TemporaneaNuovaAtt'))
+                {
+                    process.CasualCode__c = getTempNewActivationCode();
+                }
                 availableProcesses.add(process);
             }
         }

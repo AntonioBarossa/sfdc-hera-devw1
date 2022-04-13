@@ -105,6 +105,13 @@
                 <stringValue>New</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>PostSales VAS</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Quale_Processo</targetReference>
         </connector>
@@ -982,7 +989,7 @@
         <inputAssignments>
             <field>Cluster__c</field>
             <value>
-                <stringValue>Generiche Attivazioni</stringValue>
+                <stringValue>Attivazioni</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1060,7 +1067,7 @@
         <inputAssignments>
             <field>Cluster__c</field>
             <value>
-                <stringValue>Generiche Attivazioni</stringValue>
+                <stringValue>Attivazioni</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1370,7 +1377,7 @@
         <inputAssignments>
             <field>Cluster__c</field>
             <value>
-                <stringValue>Generiche Attivazioni</stringValue>
+                <stringValue>Attivazioni</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

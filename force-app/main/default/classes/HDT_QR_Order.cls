@@ -346,7 +346,8 @@ public inherited sharing class HDT_QR_Order {
             Contact__r.FiscalCode__c,
             AggregateBilling__c,
             NumeratorGroup__c,
-            VASSubtype__c
+            VASSubtype__c,
+            isSTG__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -992,6 +993,7 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getRecordByOrderNumber(String orderNumber){
         return [SELECT id,
         phase__c,
+        SupplyType__c,
         Description,
         PhaseStory__c,
         Status,
@@ -1083,6 +1085,7 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getRecordByOrderId(String recordId){
         return [SELECT id,
         Description,
+        SupplyType__c,
         PhaseStory__c,
         IsTechnicalTransfer__c,
         phase__c,
