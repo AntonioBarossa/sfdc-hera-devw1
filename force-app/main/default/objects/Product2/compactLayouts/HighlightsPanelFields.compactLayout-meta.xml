@@ -4,6 +4,9 @@
     <fields>Name</fields>
     <fields>ProductCode</fields>
     <fields>Version__c</fields>
+    <fields>SupplyType__c</fields>
+    <fields>StartDate__c</fields>
+    <fields>EndDate__c</fields>
     <fields>Status__c</fields>
     <label>Highlights Panel Fields</label>
 </CompactLayout>
