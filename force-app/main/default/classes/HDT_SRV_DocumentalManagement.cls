@@ -372,7 +372,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 			String cluster = (String)record.get('Cluster__c');
 			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio>();
 			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData>();
-			if(requestBody.listOfRadioGroup != null && requestBody.listOfRadioGroup.size()>0){
+            if(requestBody.listOfRadioGroup != null && requestBody.listOfRadioGroup.size()>0){
 				listOfRadio.addAll(requestBody.listOfRadioGroup);
 				System.debug(LoggingLevel.DEBUG, requestBody.listOfRadioGroup);
 			}
@@ -441,7 +441,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 	}
 
 	private static void handleRadioGroup(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio, String envelopeId){
-		if(listOfRadio != null && listOfRadio.size()>0){
+        if(listOfRadio != null && listOfRadio.size()>0){
 			String individualId;
 			if(record.getSobjectType() == Case.getSobjectType()){
 				Case caseRecord = (Case) record;
@@ -581,7 +581,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
 				}
 			}
-		}else{
+		}else if(record.getSobjectType() == Order.getSobjectType()){
 			record.put('DocumentalPhase__c','Plico firmato');
 			record.put('Phase__c','Documentazione Gestita');
 			HDT_UTL_DatabaseService.updateSObject(record);
@@ -1510,7 +1510,6 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND Contact__c=\''+contactId+'\'');
 		}	
 		Map<String,String> result = new Map<String,String>();
-		result.put('result','OK');
 		if((!cpEmailList.isEmpty() && !cpPhone.isEmpty()) || (String.isBlank(email) && String.isBlank(phone))){
 			result.put('email', 'OK');
 			result.put('phone', 'OK');
