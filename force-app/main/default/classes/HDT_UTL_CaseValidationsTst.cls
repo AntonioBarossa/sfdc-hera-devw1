@@ -154,7 +154,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
 
         String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
         // This code runs as the system user
-        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
+        Profile p = [SELECT Id FROM Profile WHERE Name='Hera Standard User'];
         User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
         EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
         LocaleSidKey='en_US', ProfileId = p.Id,
@@ -449,6 +449,8 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         myCase6.BillingProfile__c = myBillingProfile.Id;
         myCase6.Reason__c = 'Cambio Banca';
         myCase6.BankAccountSignatoryFiscalCode__c = 'RSSMRA80A01D548N';
+        myCase6.BankAccountSignatoryFirstName__c = 'Mario';
+        myCase6.BankAccountSignatoryLastName__c = 'Rossi';
         String fields20 = JSON.serialize(myCase6);
         update myCase6;
 
