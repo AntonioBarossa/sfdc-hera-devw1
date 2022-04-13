@@ -12,7 +12,12 @@ public with sharing class HDT_LC_MassiveLoader {
     private static HDT_QR_StaticResource staticResourceQr = new HDT_QR_StaticResource();
     private static HDT_SRV_MassiveLoaderRequest massiveLoaderRequestSrv = new HDT_SRV_MassiveLoaderRequest();
     private static HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
+    private static String splitCharacter = '\\|';
     
+    public static String getSplitCharacter(){
+        return splitCharacter;
+    }
+
     /**​
     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
     * @date 23/03/2021
@@ -191,7 +196,7 @@ public with sharing class HDT_LC_MassiveLoader {
         //System.debug(LoggingLevel.DEBUG, '>>> selectedProcessName: ' + selectedProcessName);
         //System.debug(LoggingLevel.DEBUG, '>>> massiveLoaderRequestId: ' + massiveLoaderRequestId);
 
-        String splitCharacter = '\\|';
+        String splitCharacter = getSplitCharacter();//'\\|';
         HDT_QR_ContentVersion contentVersionQr = new HDT_QR_ContentVersion();
         Map<String, Object> response = new Map<String, Object>();
         Integer csvLinesLimit = 4500;
