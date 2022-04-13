@@ -82,7 +82,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
             processObj = buildWrapperOrderStructure(processObj, tempSplitedFields, nextDataObj);
 
-            System.debug('>>> ' + JSON.serializePretty(processObj));
+            //System.debug('>>> ' + JSON.serializePretty(processObj));
 
             String csvHeader;
             String convertionError;
@@ -617,7 +617,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         return opp;
     }
 
-    private Order setParentOrder(Order childOrder, Order parentOrder, Sale__c sale){
+    public Order setParentOrder(Order childOrder, Order parentOrder, Sale__c sale){
 
         parentOrder.RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_OrderDossier').getRecordTypeId();
         parentOrder.Name = 'Ordine ' + sale.Name;
