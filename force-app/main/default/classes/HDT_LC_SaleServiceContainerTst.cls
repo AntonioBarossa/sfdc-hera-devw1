@@ -12,18 +12,26 @@ public with sharing class HDT_LC_SaleServiceContainerTst{
 
 		Id rtServPoint=constants.SERVICEPOINT_RECORDTYPEID_PELETRICCO;
 
+		City__c city=HDT_UTL_DataFactoryTst.createCity()[0];
+        city.Name = 'PESARO';
+        city.Province__c = 'PU';
+        city.ServiceGas__c = true;
+        update city;
+
 		List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 		List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].id, 'Attiva');
 		List<ServicePoint__c> servpoints=HDT_UTL_DataFactoryTst.createServicePoint(2, false);
 		servpoints[0].SupplyProvince__c='AQ';
 		servpoints[0].CommoditySector__c='Energia Elettrica';
 		servpoints[0].SupplyType__c='Domestico';
+		servpoints[0].SupplyCity__c='PESARO';
 
 		servpoints[1].SupplyProvince__c='AQ';
 		servpoints[1].ServicePointCode__c='testServicePointCode2';
 		servpoints[1].RecordTypeId=rtServPoint;
 		servpoints[1].CommoditySector__c='Energia Elettrica';
 		servpoints[1].SupplyType__c='Non Domestico';
+		servpoints[1].SupplyCity__c='PESARO';
 		insert servpoints;
 
 		List<Contract> contracts=HDT_UTL_DataFactoryTst.createContract(1, false, accounts[0].id);
@@ -76,7 +84,7 @@ public with sharing class HDT_LC_SaleServiceContainerTst{
 			                            WHERE ServicePointCode__c='testServicePointCode'];
 
 
-			ServicePoint__c tServPoint2=[SELECT Id, ServicePointCode__c, RecordType.DeveloperName, SupplyType__c, Account__c, SupplyProvince__c, SupplyTypeTemp__c
+			ServicePoint__c tServPoint2=[SELECT Id, ServicePointCode__c, SupplyCity__c, CommoditySector__c, RecordType.DeveloperName, SupplyType__c, Account__c, SupplyProvince__c, SupplyTypeTemp__c
 			                             FROM ServicePoint__c
 			                             WHERE ServicePointCode__c='testServicePointCode2'];
 

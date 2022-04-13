@@ -43,6 +43,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
 			Order order = orderList[0];
 			Date signedDate = order.SignedDate__c;   
 			Date maxAfterthoughtDate = null;
+			Set<String> processToCalculate = new Set<String>{'Switch In', 'Cambio Offerta'};
 			
 			// Giorni di ripensamento
 			List<HDT_AfterthoughtDays__mdt> afterthoughtDays = [SELECT AfterthoughtDays__c FROM HDT_AfterthoughtDays__mdt WHERE 
@@ -61,6 +62,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
 			}
 			if(maxAfterthoughtDate != null){
 				for(Order singleOrder : orderList){
+					if(processToCalculate.contains(singleOrder.DocumentalProcessType__c))
 					singleOrder.MaxAfterthoughtDate__c = maxAfterthoughtDate;
 				}
 			}

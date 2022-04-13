@@ -38,7 +38,12 @@ static void makeData(){
     spList[0].MeterStatus__c = 'Bozza';
     spList[0].AnnualConsumptionStandardM3__c = 10;
     spList[0].CommoditySector__c = 'Energia Elettrica';
+    spList[0].SupplyCity__c = 'Torino';
     insert spList;
+    
+    City__c city = new City__c(SDV__C = 'HCM', Name = 'Torino', IsNotTransition__c = false);
+    insert city;
+    
     List<Order> orders =  HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
     orders[0].ServicePoint__c = spList[0].id;
     orders[0].VoltageLevel__c ='MT';
@@ -52,9 +57,6 @@ static void makeData(){
     insert orders;
     HDT_UTL_DataFactoryTst.createLead(1, true);
     
-
-
-
     List<wrts_prcgvr__Activity__c> actCust = HDT_UTL_DataFactoryTst.createActivityCustom(1, false, accList[0].Id);
     actCust[0].Order__c = orders[0].id;
     actCust[0].wrts_prcgvr__Status__c = 'Creata';
@@ -204,8 +206,6 @@ static void makeData(){
         
     }
 
-
-    
     @IsTest
     static void testGroupRecordsByOpportunityNull(){
         User tUser=[SELECT Id, FirstName
@@ -236,4 +236,5 @@ static void makeData(){
         Test.stopTest();
         
     }
+
 }
