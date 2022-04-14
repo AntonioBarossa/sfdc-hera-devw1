@@ -2132,7 +2132,7 @@
             <fullName>02- Pubblica utilità</fullName>
             <default>false</default>
         </values>
-        <!-- <values>
+        <values>
             <fullName>Rilevanza continuità serv%2E GAS</fullName>
             <default>false</default>
         </values>
@@ -2151,7 +2151,7 @@
         <values>
             <fullName>Sempre ap%2E - Pubblica utilita</fullName>
             <default>false</default>
-        </values> -->
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>DisplacementDistance__c</picklist>
