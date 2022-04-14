@@ -138,14 +138,16 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     @isTest 
     private static void search() {
         mySetup();
-        HDT_LC_AccountSelectorController.search('queryString');
-        
+        wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c];
+       String res = HDT_LC_AccountSelectorController.search('queryString', activity.Id);
+        System.debug('£££ res: ' + res);
         Account acc = [SELECT Id, CustomerCode__c FROM Account];
-        HDT_LC_AccountSelectorController.search(acc.CustomerCode__c);
-        
+       String res1 = HDT_LC_AccountSelectorController.search(acc.CustomerCode__c, acc.Id);
+        System.debug('£££ res1: ' + res1);
         Boolean caught = false;
         try{
-            HDT_LC_AccountSelectorController.search('1000000000000000');         
+            String res2 = HDT_LC_AccountSelectorController.search('1000000000000000', activity.Id);
+            System.debug('£££ res2: ' + res2);
         } catch (Exception e) {
             caught = true;
             System.debug('seach - exception message: ' + e.getMessage());
@@ -221,7 +223,7 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
         //UPDATE ACTIVITY FAIL
         Boolean caughtUpd = false;
         try {
-			HDT_LC_AccountSelectorController.updateActivity('MalformedActivityId', null, null, 'MalformedLeadId');
+			HDT_LC_AccountSelectorController.updaterecord('MalformedActivityId', null, null, 'MalformedLeadId');
 		} catch (Exception e) {
             caughtUpd = true;
             System.debug('seach - exception message: ' + e.getMessage());
