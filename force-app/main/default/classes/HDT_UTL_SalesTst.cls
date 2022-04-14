@@ -15,6 +15,10 @@ public class HDT_UTL_SalesTst {
     static void makeData(){
 
         City__c city=HDT_UTL_DataFactoryTst.createCity()[0];
+        city.Name = 'PESARO';
+        city.Province__c = 'PU';
+        city.ServiceGas__c = true;
+        update city;
 
         List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountDistributore(2, false, 'AAA-EBT', 'AAS Azienda', 'Enti');
         accounts[0].Code__c = '00';
@@ -103,10 +107,11 @@ public class HDT_UTL_SalesTst {
     static void isTransitionNoUpTest(){
         Sale__c sale0=[SELECT Account__r.CompanyOwner__c,Account__r.Category__c FROM Sale__c WHERE  Account__r.code__c!=null LIMIT 1];
         Sale__c sale1=[SELECT Account__r.CompanyOwner__c,Account__r.Category__c FROM Sale__c WHERE  Account__r.code__c=null LIMIT 1];
+        ServicePoint__c servPoint = [SELECT Id, SupplyCity__c FROM ServicePoint__c LIMIT 1];
         Test.startTest();
 
-        System.assertEquals(true, HDT_UTL_Sales.isTransitionNoUp(new ServicePoint__c(SupplyProvince__c='PEP'),sale0), 'The return was empty');
-        System.assertEquals(true, !HDT_UTL_Sales.isTransitionNoUp(new ServicePoint__c(SupplyProvince__c='AQ'),sale1), 'The return was empty');
+        System.assertEquals(true, HDT_UTL_Sales.isTransitionNoUp(new ServicePoint__c(SupplyProvince__c='PEP', SupplyCity__c = servPoint.SupplyCity__c),sale0), 'The return was empty 1');
+        System.assertEquals(true, !HDT_UTL_Sales.isTransitionNoUp(new ServicePoint__c(SupplyProvince__c='AQ', SupplyCity__c = servPoint.SupplyCity__c, CommoditySector__c = 'Gas'),sale1), 'The return was empty 2');
         System.assertEquals(true, HDT_UTL_Sales.isTransitionNoUp(sale0), 'The return was empty');
         System.assertEquals(true, !HDT_UTL_Sales.isTransitionNoUp(sale1), 'The return was empty');
         

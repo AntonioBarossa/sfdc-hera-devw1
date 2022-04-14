@@ -60,6 +60,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			orders[0].ImplantType__c='13A0-Usi di Abitazione BT';
 			orders[0].RequestOption__c='Domestici-TD';
 			orders[0].CreditCheckDescription__c='test1';
+			orders[0].ProcessCode__c='PN1';
 
 			orders[1].RecordTypeId=orderVoltura;
 			orders[1].CreditCheckDescription__c='test2Voltura';
@@ -135,9 +136,18 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			cases[0].Phase__c='Completata';
 			cases[0].VulturePracticeReference__c=orders[0].Id;
 			cases[0].ServicePoint__c = servPoints[0].Id;
-			
+	
 
 			insert cases;
+
+			List<QuoteManagement__c> menageQuoteList=HDT_UTL_DataFactoryTst.createQuoteManagement(2, false, 'Gas');
+			menageQuoteList[0].Operation_type__c = 'HDT_RT_ConnessioneConAttivazione';
+			menageQuoteList[0].CausalCode__c = orders[0].ProcessCode__c;
+            menageQuoteList[0].QuoteType__c = 'Analitico';
+            menageQuoteList[0].OperationCode__c = '02';
+
+			insert menageQuoteList;
+ 
 		}
 	}
     
@@ -250,17 +260,17 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			Test.startTest();
 
-			List<Order> tOrderConnessione=[SELECT Id, Name, AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c
+			List<Order> tOrderConnessione=[SELECT Id, Name, AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c, DistributorFormula__c
 			                               FROM Order
 			                               WHERE CreditCheckDescription__c='test5Conessione1'
 			                               LIMIT 1];
 
-			List<Order> tOrderAttivConMod=[SELECT Id, Name, AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c
+			List<Order> tOrderAttivConMod=[SELECT Id, Name, AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c, DistributorFormula__c
 			                               FROM Order
 			                               WHERE CreditCheckDescription__c='test4AttivConMod'
 			                               LIMIT 1];
 
-			List<Order> tOrderTemporanea=[SELECT Id, Name, AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c
+			List<Order> tOrderTemporanea=[SELECT Id, Name, AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c, DistributorFormula__c
 			                              FROM Order
 			                              WHERE CreditCheckDescription__c='test6Temporanea'
 			                              LIMIT 1];
