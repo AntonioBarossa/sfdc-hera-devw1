@@ -28,14 +28,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     }
 
     @AuraEnabled
-    public static Integer getConsumptionAnnualForVas(String orderId){
+    public static String getConsumptionAnnualForVas(String orderId){
         
         try{
-            Integer consumptionAnnual = null;
+            String consumptionAnnual = null;
             if(orderId != null && orderId != ''){
                 List<OrderItem> orderItemList = [SELECT Id,ConsumptionAnnual__c FROM OrderItem WHERE OrderId = :orderId AND Order.IsVAS__c = true AND ConsumptionAnnual__c != null WITH SECURITY_ENFORCED];
-                if(!orderItemList.isEmpty()){
-                    consumptionAnnual = (Integer)orderItemList[0].ConsumptionAnnual__c;
+                if(!orderItemList.isEmpty() && orderItemList[0] != null){
+                    consumptionAnnual = String.valueOf(orderItemList[0].ConsumptionAnnual__c);
                 }
             }
             return consumptionAnnual;

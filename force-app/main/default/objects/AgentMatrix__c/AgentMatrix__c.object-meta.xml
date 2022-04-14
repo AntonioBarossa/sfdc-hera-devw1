@@ -147,7 +147,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
@@ -159,6 +159,7 @@
     <nameField>
         <displayFormat>AM-{00000000}</displayFormat>
         <label>Campo &quot;Name&quot;</label>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Matrici Agenti</pluralLabel>

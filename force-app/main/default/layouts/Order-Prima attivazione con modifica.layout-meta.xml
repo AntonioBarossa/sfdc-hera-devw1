@@ -127,7 +127,7 @@
                 <field>QuotationType__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>OperationCode__c</field>
             </layoutItems>
         </layoutColumns>
@@ -149,7 +149,7 @@
                 <field>WorkExecutionTime__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>QuotationNumber__c</field>
             </layoutItems>
         </layoutColumns>
@@ -189,21 +189,25 @@
                 <field>ImplantType__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>RequestOption__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>UseTypeEnergy__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>VoltageLevel__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>PowerAvailable__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>PowerCommitted__c</field>
             </layoutItems>
         </layoutColumns>
@@ -428,6 +432,11 @@
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>FeedItem.TextPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>PrintableView</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>8</sortOrder>
@@ -491,11 +500,6 @@
             <actionName>Order.HDT_SendCertifiedEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>20</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FeedItem.TextPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Order.Conferma_finale</actionName>
@@ -594,7 +598,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1j000002TFna</masterLabel>
+        <masterLabel>00h3N000002SmK9</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
