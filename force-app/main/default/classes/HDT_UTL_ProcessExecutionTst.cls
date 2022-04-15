@@ -5,7 +5,7 @@
 public with sharing class HDT_UTL_ProcessExecutionTst {
      
 
-    /*@isTest
+    @isTest
     public static void test1(){
         String processName='Subentro';
         HDT_UTL_DataFactoryTst.createWebServiceConfiguration('VerifIndirizzo','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
@@ -90,6 +90,6 @@ public with sharing class HDT_UTL_ProcessExecutionTst {
         MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
   
         System.assertEquals('Chiuso', ms.Status__c,  ms.Status__c);
-    }*/
+    }
     
 }

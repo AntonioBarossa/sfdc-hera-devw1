@@ -1,5 +1,7 @@
 @isTest
 public class HDT_LC_OmniChannelReplacerControllerTst {
+
+    private static HDT_UTL_Constants utlConstants=new HDT_UTL_Constants();
     
     @testSetup
     static void setup() {
@@ -34,14 +36,23 @@ public class HDT_LC_OmniChannelReplacerControllerTst {
 
     @isTest
     static void testGetUserChannel(){
+        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(utlConstants.HERA_SYSTEM_ADMINISTRATOR_NAME);
 
-        Test.startTest();
+		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
 
-        String userChannel = HDT_LC_OmniChannelReplacerController.getUserChannel();
+		internalUser.LoginChannel__c='Back office';
 
-        System.assert(!String.isBlank(userChannel), 'Si è verificato un errore in fase di get dell\' UserChannel');
+		insert internalUser;
 
-        Test.stopTest();
+        System.runAs(internalUser){
+            Test.startTest();
+
+            String userChannel = HDT_LC_OmniChannelReplacerController.getUserChannel();
+
+            System.assert(!String.isBlank(userChannel), 'Si è verificato un errore in fase di get dell\' UserChannel');
+
+            Test.stopTest();
+        }
 
     }
 

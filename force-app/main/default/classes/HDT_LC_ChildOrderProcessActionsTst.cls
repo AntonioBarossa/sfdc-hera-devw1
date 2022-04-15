@@ -38,8 +38,9 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','In Lavorazione',utlConstants.ORDER_RECORDTYPEID_SUBENTRO,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SUBENTRO);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','In Lavorazione',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONECONMODIFICA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','In Lavorazione',utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
-            HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Bozza',utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT);
-            HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','In Lavorazione',utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Bozza',utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','In Lavorazione',utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER);
+            
             HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','Accettazione Voltura',utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Accettazione Voltura','Bozza',utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE);
 
@@ -48,29 +49,30 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_SUBENTRO,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SUBENTRO);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONECONMODIFICA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
-            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER);
 
-            HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','Documentazione Gestita',utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE);
-            HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','Documentazione Gestita',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
-            HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','Documentazione Gestita',utlConstants.ORDER_RECORDTYPEID_SUBENTRO,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SUBENTRO);
-            HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','Documentazione Gestita',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONECONMODIFICA);
-            HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','Documentazione Gestita',utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
-            HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','Documentazione Gestita',utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT);
-            HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','Documentazione Gestita',utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT);
-
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita','Bozza',utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita','Bozza',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita','Bozza',utlConstants.ORDER_RECORDTYPEID_SUBENTRO,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SUBENTRO);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONECONMODIFICA);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita','Bozza',utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita','Bozza',utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita','Bozza',utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER);
+            
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_SUBENTRO,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SUBENTRO);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONECONMODIFICA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
-            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT);
-            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER);
             
 
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','Da Inviare',utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Accettazione Voltura','Bozza',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Bozza',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_SUBENTRO,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SUBENTRO);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
@@ -78,7 +80,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONECONMODIFICA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONECONMODIFICA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE);
-            HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
 
@@ -121,7 +123,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             id orderAttivazione=utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONE;
             id orderAttivazioneConModifica=utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA;
 			id orderConnessioneConAttiv=utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
-			id orderTemporaneaNuovaAtt=utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT;
+			id orderDossier=utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+
             
             
             Id accId = accounts[0].id;
@@ -131,7 +134,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             insert contacts;
 			Id contactId = contacts[0].id;
             
-            orders[6].RecordTypeId=orderTemporaneaNuovaAtt;
+            orders[6].RecordTypeId=orderDossier;
 			orders[6].VoltageLevel__c='BT';
 			orders[6].ProcessCode__c='E02';
 			orders[6].UseTypeEnergy__c='Manifest (Temp Straord 16h)';
@@ -194,6 +197,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             orders[3].IsActivationDeferred__c=true;
             orders[3].ParentOrder__c = orders[6].Id;
 			orders[3].VATfacilitationFlag__c=true;
+            orders[3].Commodity__c = 'Energia Elettrica';
 
 			orders[4].EffectiveDate__c=date.today().addDays(10);
 			orders[4].PowerCommitted__c=2;
@@ -444,6 +448,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         m3.put('EffectiveDate__c', Date.today().addDays(11));
         tOrder2[1].VATfacilitationFlag__c=true;
         tOrder2[1].QuotationType__c='Rapido';
+        tOrder2[1].Commodity__c = 'Gas';
 
         update tOrder2;
         HDT_LC_ChildOrderProcessActions.save(tOrder2[1],m3);
@@ -508,7 +513,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
         Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
-        FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc limit 1];
+        FROM Order WHERE CreditCheckDescription__c = 'test4AttivConMod' ORDER BY Name asc limit 1];
         List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,false,'HERA COMM','Persona fisica','Famiglie');
         List<Order> listToDelete =[SELECT ID FROM ORDER where id NOT IN:tOrder2];
         delete listToDelete;
