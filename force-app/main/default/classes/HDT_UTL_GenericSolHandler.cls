@@ -111,10 +111,10 @@ public with sharing class HDT_UTL_GenericSolHandler {
         HDT_QR_Contract qrContract = new HDT_QR_Contract();
         if(contractList != null && !contractList.isEmpty()){
             childOrder.RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
-            childOrder.AccountId = accountId;
+            //childOrder.AccountId = accountId;
             childOrder.ServicePoint__c = contractList[0].ServicePoint__c;
             childOrder.ContractReference__c = contractList[0].Id;
-            childOrder.Contact__c = (String) params.get('contactId');
+            //childOrder.Contact__c = (String) params.get('contactId');
             childOrder.SalesCompany__c = contractList[0].ContractSalesCompany__c;
             childOrder.SalesCompanyCode__c = getSalesCompanyCode(contractList[0].ContractSalesCompany__c, contractList[0].ServicePoint__r.CommoditySector__c);
             childOrder.DistributorCode__c  = contractList[0].ServicePoint__r.Distributor__r.Code__c;
@@ -141,6 +141,10 @@ public with sharing class HDT_UTL_GenericSolHandler {
             oi.UnitPrice = 0;
             oi.Quantity = 1;
             oi.OrderId = childOrder.Id;
+            oi.OccupantsNumber__c = (String)params.get('numeroOccupanti');
+            oi.Surface__c = (String)params.get('superficie');
+            oi.DwellingType__c = (String)params.get('tipologiaAbitazione') == 'Appartamento'?'Appartamento':'Casa Indipendente';
+            oi.OwnerAC__c = (String)params.get('proprietario');
             HDT_UTL_DatabaseService.insertSObject(oi);
         }
         return childOrder;
