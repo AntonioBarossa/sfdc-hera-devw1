@@ -1,0 +1,29 @@
+<template>
+    <div if:true={isLawEighty}>
+        <div if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+        <lightning-card title={cardTitle} icon-name="custom:custom12"> 
+            <div class="slds-grid slds-wrap slds-m-top_small">
+                <template for:each={fieldsObj} for:item="field">                
+                    <lightning-input
+                        class="slds-size_1-of-2 slds-p-around_xx-small"
+                        variant="label-stacked" 
+                        key={field.dataId} 
+                        data-id={field.dataId} 
+                        type={field.type}
+                        disabled={field.disabled}
+                        value={field.value}
+                        label={field.label}
+                    ></lightning-input>
+                </template>
+            </div>
+        </lightning-card>
+        <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_brand" onclick={handlePreview} title="OK">Preview</button>
+            <template if:true={showSendButton}>
+                <button class="slds-button slds-button_brand" onclick={sendDocumentFile} title="OK">Invia e Archivia</button>
+            </template>
+        </footer>
+    </div>
+</template>

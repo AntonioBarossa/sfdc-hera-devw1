@@ -30,6 +30,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     @api recordId
     @api discardRework;
     @api discardActivityId;
+    isPreviewForbidden = false;
     currentStep = 2;
     loading = false;
     signatureMethod = '';
@@ -47,6 +48,10 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
 
     get disablePrintButtonFunction() {
         return this.isPrintButtonDisabled  || (this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare'));
+    }
+
+    get disablePreviewButton(){
+        return this.isPreviewForbidden || this.isSaveButtonDisabled;
     }
 
     @wire(getPicklistValue,{objectApiName: 'Order', fieldApiName: 'SignMode__c'})
@@ -121,7 +126,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     }
 
     handleModalPreview(){
-
+        this.isPreviewForbidden = true;
         if( this.isFraud ){
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
@@ -136,14 +141,19 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             this.isCommunity = result;
             getCachedUuid().then(uuid => {
                 if(this.isCommunity && uuid) {
-                    this.isModalOpen = true
+                    this.isPreviewForbidden = false;
+                    this.isModalOpen = true;
                 } else {
                     this.handlePreview();
                 }
-            })
+            }).catch(error =>{
+                console.error(error);
+                this.isPreviewForbidden = false;
+            });
         }).catch(error => {
             this.loading = false;
             console.error(error);
+            this.isPreviewForbidden = false;
         });
         
     }
@@ -228,6 +238,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                         });
                         this.dispatchEvent(toastSuccessMessage);
                     }
+                    this.isPreviewForbidden = false;
                 })
                 .catch(error => {
                     console.log('ERROR 1');
@@ -240,6 +251,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                     });
                     this.dispatchEvent(toastSuccessMessage);
                     console.error(error);
+                    this.isPreviewForbidden = false;
                 });
             }).catch(error => {
                 console.log('ERROR 2');
@@ -252,9 +264,11 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                 });
                 this.dispatchEvent(toastSuccessMessage);
                 console.error(error);
+                this.isPreviewForbidden = false;
             });
         }catch(error){
             this.loading = false;
+            this.isPreviewForbidden = false;
             console.error();
         }
     }
@@ -264,6 +278,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     }
 
     confirmPreview() {
+        this.isPreviewForbidden = true;
         this.closeModal();
         this.handlePreview();
         
