@@ -407,4 +407,24 @@ public with sharing class HDT_UTL_CampaignMember {
             }
         }
     }
+
+    public static void doCallMeBack(List<CampaignMember> members) {
+        List<Id> idsToProcess = new List<Id>();
+        for(CampaignMember cm : members) {
+            idsToProcess.add(cm.Id);
+        }
+
+        List<CampaignMember> processedMembers = new List<CampaignMember>();
+        for(CampaignMember member : [SELECT Id, LeadId, Lead.ContactDate__c, Campaign.ReitekIntegrationTechnology__c, Campaign.MacroActivityEasyCIM__r.Name FROM CampaignMember WHERE Id IN: idsToProcess WITH SECURITY_ENFORCED]) {
+            if(member.LeadId != null && member.Campaign.ReitekIntegrationTechnology__c == 'Web Service') {
+                System.enqueueJob(new HDT_QBL_InvioNumerazioni(member.Campaign.MacroActivityEasyCIM__r.Name, member.PhoneNumber__c, member.Lead.ContactDate__c));
+                processedMembers.add(new CampaignMember(
+                    Id = member.Id,
+                    ReitekSendDate__c = Date.today()
+                ));
+            }
+        }
+
+        new HDT_SRV_CampaignMember().updateRecords(processedMembers);
+    }
 }
