@@ -23,7 +23,8 @@ public with sharing class HDT_BA_QualityCallTst {
             
             HDT_UTL_DataFactoryTst.pClickInstance();
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
-            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa conferma cliente','Bozza',utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa conferma cliente','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
+
             List<AgentMatrix__c> agentMatrix = HDT_UTL_DataFactoryTst.createAgentMatrix(1,true,'Sportello') ; 
             agentMatrix[0].IsMonitoring__c=true;
             agentMatrix[0].AgencyCode__c='001';
@@ -42,7 +43,7 @@ public with sharing class HDT_BA_QualityCallTst {
             Id parentOrderId = parentOrders[0].id;
             parentOrders[0].Contact__c = contactId;
             parentOrders[0].phase__c = 'In attesa conferma cliente';
-            parentOrders[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
+            parentOrders[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
             update parentOrders;
             
             List<Order> orderss = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
@@ -75,7 +76,7 @@ public with sharing class HDT_BA_QualityCallTst {
             moreOrders[0].ComfortCallDaysDue__c = 6.2;
             moreOrders[0].ParentOrder__c = parentOrderId;
             moreOrders[0].Contact__c = anotherContactId;
-            moreOrders[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
+            moreOrders[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
             moreOrders[0].Phase__c = 'In attesa conferma cliente';
             insert moreOrders;
         
