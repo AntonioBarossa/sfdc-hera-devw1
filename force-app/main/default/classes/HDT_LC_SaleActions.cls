@@ -244,8 +244,15 @@ public inherited sharing class HDT_LC_SaleActions {
          * In ogni caso, se l'account non ha il Codice Cliente
          * viene chiamato il servizio di Crea BP/CA
          */
+        Boolean searchToUse = false;
+        for(Quote q : quoteList){
+            if(!q.SBQQ__Pricebook__r.Name.equalsIgnoreCase('Vas Standalone')){
+                searchToUse = true;
+                break;
+            }
+        }
 
-        System.enqueueJob(new HDT_QBL_BpCaRequest( accountContactRelationQr.getCreateBpCa( accountIds[0] ), sale.Id, true ) );
+        System.enqueueJob(new HDT_QBL_BpCaRequest( accountContactRelationQr.getCreateBpCa( accountIds[0] ), sale.Id, searchToUse ) );
 
     }
 
