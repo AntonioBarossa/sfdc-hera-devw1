@@ -35,6 +35,11 @@
                 <default>false</default>
                 <label>Contratto già firmato</label>
             </value>
+            <value>
+                <fullName>Accettato Digitalmente</fullName>
+                <default>false</default>
+                <label>Accettato Digitalmente</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

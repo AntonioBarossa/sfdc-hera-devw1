@@ -910,7 +910,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		1-26371887987/1-C45530S;4003560309;1;;20201006;99991231;;RAVENNA;RAVENNA;H199;RA;F;;46;632;.;E;24;3;;
 		1-27373306691/1-CKPCYMQ;4003141636;1;;20201111;99991231;;FAENZA;FAENZA;D458;RA;F;.;192;13;.;E;6;1;A/3;151
 	 */
-	public static LandRegistry__c createLandRegistryRecord(Map<String, String> docusignData, Map<String, String> docusignRadioGroups, Order childOrder) {
+	public static LandRegistry__c createLandRegistryRecord(Map<String, String> docusignData, Map<String, String> docusignRadioGroups, Order childOrder,Integer i) {
 		LandRegistry__c r = new LandRegistry__c();
 
 		if (docusignData == null || childOrder == null) {
@@ -926,31 +926,31 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		// dt_ini_contratto;
 		r.StartDate__c = childOrder.EffectiveDate__c;
 		// codice_assenza_dati_catastali; 
-		r.CodeMissingRegistryData__c = transcodeCodiceAssenzaDatiCatastali(docusignRadioGroups.get('DTC_radiocat'));
+		r.CodeMissingRegistryData__c = transcodeCodiceAssenzaDatiCatastali(docusignRadioGroups.get('DTC_radiocat_'+i));
 		// comune_amministrativo;
-		r.LegalCity__c = docusignData.get('DTC_comune_amm');
+		r.LegalCity__c = docusignData.get('DTC_comune_amm_'+i);
 		// comune_catastale;
-		r.RegistryCity__c = docusignData.get('DTC_comune_cat');
+		r.RegistryCity__c = docusignData.get('DTC_comune_cat_'+i);
 		// codice_comune_catastale;
-		r.RegistryCityCode__c = docusignData.get('DTC_cod_comune');
+		r.RegistryCityCode__c = docusignData.get('DTC_cod_comune_'+i);
 		// provincia_ubicazione;
 		r.Province__c = childOrder.SupplyState__c;
 		// tipo_unita;
-		r.UnitType__c = docusignData.get('DTC_tipo_uni'); // Il modulo richiede l'inserimento di F o T, quindi non servono transcodifiche.
+		r.UnitType__c = docusignData.get('DTC_tipo_uni_'+i); // Il modulo richiede l'inserimento di F o T, quindi non servono transcodifiche.
 		// sezione_urbana;
-		r.UrbanSection__c = docusignData.get('DTC_sezione');
+		r.UrbanSection__c = docusignData.get('DTC_sezione_'+i);
 		// foglio;
-		r.Sheet__c = docusignData.get('DTC_foglio');
+		r.Sheet__c = docusignData.get('DTC_foglio_'+i);
 		// particella;
-		r.ParticleSheet__c = docusignData.get('DTC_partic');
+		r.ParticleSheet__c = docusignData.get('DTC_partic_'+i);
 		// particella_tavolare;
-		r.ParticleTable__c = docusignData.get('DTC_estens_partic');
+		r.ParticleTable__c = docusignData.get('DTC_estens_partic_'+i);
 		// tipo_particella;
-		r.ParticleType__c = docusignData.get('DTC_tipo_partic');
+		r.ParticleType__c = docusignData.get('DTC_tipo_partic_'+i);
 		// subalterno;
-		r.Subaltern__c = docusignData.get('DTC_sub');
+		r.Subaltern__c = docusignData.get('DTC_sub_'+i);
 		// qualifica_titolare;
-		r.Title__c = transcodeQualificaTitolare(docusignRadioGroups.get('DTC_qualitadi'));
+		r.Title__c = transcodeQualificaTitolare(docusignRadioGroups.get('DTC_qualitadi_'+i));
 		// Categoria_Catastale;
 		// r.RegistryCategory__c = ???? TODO: da dove prendere la categoria catastale? non sembra esserci nel modulo, nè sull'order nè sul service point.
 		// Superficie_Catastale
