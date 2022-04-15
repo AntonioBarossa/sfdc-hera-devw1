@@ -323,16 +323,14 @@ export default class HdtAdvanceDocumentManager extends NavigationMixin(Lightning
         let blob = new Blob(byteArrays, { type: 'application/pdf' });
         const blobURL = URL.createObjectURL(blob);
         console.log('URL >>> ' + blobURL);
-        {
-        this[NavigationMixin.GenerateUrl](
+        this[NavigationMixin.Navigate](
             {
                 type: 'standard__webPage',
                 attributes: {
                     url: blobURL
                 }
             }
-        ).then(url => {window.open(url, "_blank")});
-        }
+        );
     }
     
 }

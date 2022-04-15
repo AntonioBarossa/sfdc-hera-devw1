@@ -202,7 +202,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                         }
                                     }
                                 }
-                                when 'Dati Tecnici Ricevuti'{
+                                when 'Dati tecnici ricevuti'{
                                     HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
                                     utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
                                     /**@frpanico 2022-04-13
@@ -267,10 +267,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                     Id rtConnectionwithActivation      = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConnessioneConAttivazione').getRecordTypeId();
                                     listRecType.add(rtTemporaryNewActivation);
                                     listRecType.add(rtConnectionwithActivation);
-                                    if (listRecType.contains(ord.recordtypeId )   ) {
+                                    if (listRecType.contains(ordRetrieved.recordtypeId )   ) {
                                         ord.ServicePointCode__c = mapRequestFields.get('POD');
-                                        ord.ServicePoint__r.Name= mapRequestFields.get('POD');
-                                        ord.ServicePoint__r.ServicePointCode__c = mapRequestFields.get('POD');
+                                        ServicePoint__c sp = new ServicePoint__c();
+                                        sp.Id = ordRetrieved.ServicePoint__c;
+                                        sp.Name= mapRequestFields.get('POD');
+                                        sp.ServicePointCode__c = mapRequestFields.get('POD');
+                                        HDT_UTL_DatabaseService.updateSObject(sp);
                                     }
                                     //End HRAWRM-657 21/09/2021
                                     switch on mapRequestFields.get('COD_FLUSSO'){
@@ -421,7 +424,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                         listRecordType.add(rtChangeOffer);
                                         listRecordType.add(rtVultureWithSwitch);
 
-                                        if (!listRecordType.contains(ord.recordtypeId ) && String.isNotBlank(mapRequestFields.get('DT_CREA'))  ) {
+                                        if (!listRecordType.contains(ordRetrieved.recordtypeId ) && String.isNotBlank(mapRequestFields.get('DT_CREA'))  ) {
                                             ord.EffectiveDate__c = date.valueOf( mapRequestFields.get('DT_CREA'));
                                         }
                                         //End HRAWRM-657 21/09/2021

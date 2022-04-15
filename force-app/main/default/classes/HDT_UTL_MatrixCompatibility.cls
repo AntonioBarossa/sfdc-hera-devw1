@@ -56,7 +56,8 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             System.debug(srRequest);
             wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = checkCompatibility(sReq);
             System.debug(result);
-            if(isPostSales== null && !((String)servReq.get('processType')).equalsIgnoreCase('Switch in Fittizio')){
+            Boolean skipDelete = (String)servReq.get('isMassive') != null? true:false;
+            if(isPostSales== null && !((String)servReq.get('processType')).equalsIgnoreCase('Switch in Fittizio') && !skipDelete){
                 HDT_SRV_ServiceRequest.deleteRecord(sReq);
             }
             //list of incompatible records
@@ -75,6 +76,8 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                     sReq.Status__c = 'Annullato';
                     srList.add(sReq);
                     HDT_SRV_ServiceRequest.updateRecord(srList);
+                }else if(isPostSales!= null && !isPostSales && skipDelete){
+                    HDT_SRV_ServiceRequest.deleteRecord(sReq);
                 }
             }else{
                 resMap.put('compatibility', '');
