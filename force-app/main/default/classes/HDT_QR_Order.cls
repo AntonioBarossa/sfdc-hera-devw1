@@ -1002,7 +1002,9 @@ public inherited sharing class HDT_QR_Order {
         BillingProfile__c, 
         Vat__c, 
         ServicePoint__c,
-        ServicePoint__r.Distributor__r.Name, 
+        ServicePoint__r.Distributor__r.Name,
+        ServicePoint__r.Name,
+        ServicePoint__r.ServicePointCode__c,
         CancellationNote__c,
         SupplyStreetName__c,
         SupplyStreetNumber__c,
@@ -1015,7 +1017,8 @@ public inherited sharing class HDT_QR_Order {
         PowerAvailable__c,
         VoltageLevel__c,
         AccountId,
-        IsTechnicalTransfer__c
+        IsTechnicalTransfer__c,
+        RecordTypeId
         FROM Order 
         WHERE ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
@@ -1084,20 +1087,33 @@ public inherited sharing class HDT_QR_Order {
     */
     public List<Order> getRecordByOrderId(String recordId){
         return [SELECT id,
-        Description,
-        SupplyType__c,
-        PhaseStory__c,
-        IsTechnicalTransfer__c,
         phase__c,
+        SupplyType__c,
+        Description,
+        PhaseStory__c,
         Status,
         PrecheckResultSII__c,
         ProcessType__c,
         BillingProfile__c, 
         Vat__c, 
         ServicePoint__c,
-        ServicePoint__r.Distributor__r.Name, 
-        CancellationNote__c, 
-        AccountId 
+        ServicePoint__r.Distributor__r.Name,
+        ServicePoint__r.Name,
+        ServicePoint__r.ServicePointCode__c,
+        CancellationNote__c,
+        SupplyStreetName__c,
+        SupplyStreetNumber__c,
+        SupplyPostalCode__c,
+        SupplyCityCode__c,
+        SupplyCity__c,
+        SupplyState__c,
+        SupplyCountry__c,
+        PowerCommitted__c,
+        PowerAvailable__c,
+        VoltageLevel__c,
+        AccountId,
+        IsTechnicalTransfer__c,
+        RecordTypeId
         FROM Order 
         WHERE Id = :recordId WITH SECURITY_ENFORCED];
     }
