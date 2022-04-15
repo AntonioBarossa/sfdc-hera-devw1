@@ -2,7 +2,14 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_ServicePointName</fullName>
     <active>true</active>
-    <errorConditionFormula>ISCHANGED(Name)</errorConditionFormula>
+    <errorConditionFormula>AND(
+ISCHANGED(Name),
+				AND(
+				$Profile.Name &lt;&gt; &quot;System Administrator&quot;,
+				$Profile.Name &lt;&gt; &quot;Hera System Administrator&quot;,
+				$Profile.Name &lt;&gt; &quot;Hera M2M Integration User&quot;
+				) 
+)</errorConditionFormula>
     <errorDisplayField>Name</errorDisplayField>
     <errorMessage>Service Point Name non è editabile</errorMessage>
 </ValidationRule>

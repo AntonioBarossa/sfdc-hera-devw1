@@ -18,5 +18,11 @@ public inherited sharing class HDT_UTL_PostSalesCriteriaManager {
         return !(phaseStory.containsIgnoreCase('Dati Tecnici Ricevuti'));
 
     }
+    public Boolean isRapidoToAnalitico(String orderId)
+    {
+        List<wrts_prcgvr__Activity__c> activities = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE Type__c = 'Dati tecnici ricevuti_ Extra-sistema' AND Order__c = :orderId WITH SECURITY_ENFORCED];
+
+        return !activities.isEmpty();
+    }
 
 }
