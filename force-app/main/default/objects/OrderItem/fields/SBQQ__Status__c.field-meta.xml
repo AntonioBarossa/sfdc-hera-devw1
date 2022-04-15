@@ -7,7 +7,7 @@
     <inlineHelpText>Indicates the current state of the order product. It is defaulted to Draft when an order is created.</inlineHelpText>
     <label>Activation Status</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

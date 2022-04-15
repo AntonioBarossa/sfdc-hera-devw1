@@ -99,7 +99,8 @@ public with sharing class HDT_LC_MassiveLoaderTst {
         insert cv;
         
         Map<String, Object> response =HDT_LC_MassiveLoader.convertCsvToRequestItem('VolturaTecnica.csv', cv.id, processName, req.id);
-                
+        System.debug('response: ' + response);
+        System.assertEquals(false, (Boolean)response.get('error'), 'Some error occurred');
     }
 
 }

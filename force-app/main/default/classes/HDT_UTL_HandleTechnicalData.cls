@@ -62,7 +62,11 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
     public void handleE154Flow(Map<String, String> mapRequestFields, Order ord){
         System.debug(LoggingLevel.DEBUG, 'flusso E154');
         if (!String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
+            HDT_LC_CalculateEstimatedCost calculateAmount = new HDT_LC_CalculateEstimatedCost();
             ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
+            Map<String,Decimal> amounts = calculateAmount.getAmounts(ord.SupplyType__c, ord.EstimateAmount__c);
+            ord.AdministrativeBurden__c = amounts.get('fixedAmount');
+            ord.VariableAmount__c = amounts.get('variableAmount');
             ord.QuotationType__c = 'Analitico';
         }
         if(!String.isBlank(mapRequestFields.get('DT_MAX_PREV'))){

@@ -125,6 +125,16 @@
                 <default>false</default>
                 <label>Sollecito</label>
             </value>
+            <value>
+                <fullName>Gestione Scarto</fullName>
+                <default>false</default>
+                <label>Gestione Scarto</label>
+            </value>
+            <value>
+                <fullName>Registrazione Non Conforme</fullName>
+                <default>false</default>
+                <label>Registrazione Non Conforme</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

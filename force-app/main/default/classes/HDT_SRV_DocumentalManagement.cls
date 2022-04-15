@@ -496,6 +496,8 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 				}
 			}else{
 				List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Order__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
+				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
+				List<SObject> orderToUpdate = new List<SObject>();
 				Set<String> moduliOpzionaliMancanti = new Set<String>();
 				List<DocumentalActivity__c> activitiesToCreate = new List<DocumentalActivity__c>();
 				DocumentalActivity__c actOtpSign  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
@@ -526,26 +528,40 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						}
 						// Verifica radiobutton nei moduli opzionali (dati catastali, legge 80, istanza 326)
 						// I nomi dei radiobutton sono presenti nel JSON che manda Docusign
-						if (singleRadio.groupName.equalsIgnoreCase('DTC_radio1')){
+						if (singleRadio.groupName.contains('DTC_radio1')){
+							String actDescription = 'Ritornato correttamente';
 							if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+								if(singleRadio.groupName.contains('_1')){
+									actDescription  = actDescription + ' su ordine '+ orderList[0].get('OrderNumber');
+								}else {
+									actDescription  = actDescription + ' su ordine '+ orderList[1].get('OrderNumber');
+								}
 								DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
 								if (documentalActivity != null){
 									documentalActivity.AttachmentCode__c = 'DATI_CATASTALI'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
 									documentalActivity.ActivityType__c = 'Allegati ricevuti';
-									documentalActivity.AttachmentDescription__c = 'Ritornato correttamente';
+									documentalActivity.AttachmentDescription__c = actDescription;
 									activitiesToCreate.add(documentalActivity);
 								}
 							} else {
 								moduliOpzionaliMancanti.add(singleRadio.groupName);
 							}
 						}
-						if (singleRadio.groupName.equalsIgnoreCase('L80_radio')){
+						if (singleRadio.groupName.contains('L80_radio')){
 							if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+								String actDescriptionLeggeOtt = 'Ritornato correttamente';
+								if(singleRadio.groupName.contains('_1')){
+									actDescriptionLeggeOtt  = actDescriptionLeggeOtt + ' su ordine '+ orderList[0].get('OrderNumber');
+									orderList[0].put('DocumentLow80__c','Validato');
+								}else {
+									actDescriptionLeggeOtt  = actDescriptionLeggeOtt + ' su ordine '+ orderList[1].get('OrderNumber');
+									orderList[1].put('DocumentLow80__c','Validato');
+								}
 								DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
 								if (documentalActivity != null){
 									documentalActivity.AttachmentCode__c = 'LEGGE_80'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
 									documentalActivity.ActivityType__c = 'Allegati ricevuti';
-									documentalActivity.AttachmentDescription__c = 'Ritornato correttamente';
+									documentalActivity.AttachmentDescription__c = actDescriptionLeggeOtt;
 									activitiesToCreate.add(documentalActivity);
 								}
 							} else {
@@ -553,6 +569,15 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 							}
 						}
 						// TODO: gestire radio button per istanza 326
+						for(Sobject childOrder : orderList){
+							childOrder.put('CIAccoutn__c','Validato');
+							String leggeOtt = (String)childOrder.get('DocumentLow80__c');
+							String istanza = (String)childOrder.get('Instance326__c');
+							if((String.isBlank(leggeOtt) || (String.isNotBlank(leggeOtt) && leggeOtt.equalsIgnoreCase('Validato'))) && 
+							(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))){
+								childOrder.put('Phase__c','Documentazione Validata');
+							}
+						}
 					}
 				}
 				try {
@@ -568,6 +593,10 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					if (!activitiesToCreate.isEmpty()){
 						HDT_UTL_DatabaseService.insertSObject(activitiesToCreate);
 					}
+					if(!orderList.isEmpty()){
+						HDT_UTL_DatabaseService.updateSObject(orderList);
+					}
+					
 				}catch(Exception ex){
 					System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
 				}
@@ -587,10 +616,11 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 			HDT_UTL_DatabaseService.updateSObject(record);
 		}
 	}
-	private static void handleLandRegistry(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio){
+	private static void handleLandRegistry( Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio){
 		if(record != null && record.getSobjectType() == Case.getSobjectType()){
 			return;
 		}
+		List<Order> orderList = (List<Order>)HDT_QR_GenericQuery.getGenericRecords('SELECT Id,OrderNumber,ServicePoint__c,EffectiveDate__c,SupplyState__c,SurfaceServed__c FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
 		List<LandRegistry__c> registries = new List<LandRegistry__c>();
 		Map<String, String> docusignData = new Map<String, String>();
 		for (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData singleData : listOfData) {
@@ -604,12 +634,13 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 				docusignRadioGroups.put(singleRadio.groupName, singleRadio.value);
 			}
 		}
-
-		Order childOrder = new Order();
-		// TODO: ricavare childOrder a partire dall'id order presente in listOfData
-		LandRegistry__c reg = HDT_UTL_DocumentalManagement.createLandRegistryRecord(docusignData, docusignRadioGroups, childOrder);
-		// TODO: gestire scenario in cui due o più order figli hanno dati catastali (necessario creare più record su LandRegistry__c)
-		registries.add(reg);
+		Integer i = 1;
+		for(Order childOrder : orderList){
+			LandRegistry__c reg = HDT_UTL_DocumentalManagement.createLandRegistryRecord(docusignData, docusignRadioGroups, childOrder,i);
+			registries.add(reg);
+			i++;
+		}
+		
 
 		if (!registries.isEmpty()){
 			try {
@@ -1510,6 +1541,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND Contact__c=\''+contactId+'\'');
 		}	
 		Map<String,String> result = new Map<String,String>();
+		result.put('result','OK');
 		if((!cpEmailList.isEmpty() && !cpPhone.isEmpty()) || (String.isBlank(email) && String.isBlank(phone))){
 			result.put('email', 'OK');
 			result.put('phone', 'OK');

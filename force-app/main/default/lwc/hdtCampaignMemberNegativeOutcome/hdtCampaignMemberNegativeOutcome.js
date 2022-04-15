@@ -1,6 +1,7 @@
 import { LightningElement, track, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateCampaignMemberStatusValue from '@salesforce/apex/HDT_LC_CampaignsController.updateCampaignMemberStatus';
+import getchannel from '@salesforce/apex/HDT_LC_CampaignsController.getCampaignChannel';
 
 export default class HdtCampaignMemberNegativeOutcome extends LightningElement {
     @track isModalOpen = false;
@@ -22,7 +23,16 @@ export default class HdtCampaignMemberNegativeOutcome extends LightningElement {
     ];
 
     negativeResultClick() {
-        this.isModalOpen = true;
+        getchannel({'campaignMemberId': this.campaignMemberId}).then(channel=>{
+            if(channel=='Door to Door'){
+                this.options=[
+                    { value: 'Cliente rifiuta la vendita', label: 'Cliente rifiuta la vendita' }
+                ];
+            }
+            this.isModalOpen = true;
+        }).catch(err => {
+            console.log(err);
+        });
     }
     closeModal() {
         this.isModalOpen = false;

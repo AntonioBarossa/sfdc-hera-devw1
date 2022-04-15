@@ -330,6 +330,10 @@
         <enabled>true</enabled>
         <name>HDT_QServicesTranscode__mdt</name>
     </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_TableauIntegrationSettings__mdt</name>
+    </customMetadataTypeAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
         <name>HDT_Process_Sale_Partner_Community__c</name>
@@ -758,6 +762,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.isSTG__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.IsMassive__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11516,6 +11525,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>HDT_TabConfiguration__mdt.UseMockService__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_TableauIntegrationSettings__mdt.DatasetApiName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_TableauIntegrationSettings__mdt.EventType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_TableauIntegrationSettings__mdt.JSONDatasetBase64__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_TableauIntegrationSettings__mdt.JSONDataset__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -34284,6 +34313,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>HDT_MassiveLoaderProcess__mdt-HDT Massive Loader Process Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_TableauIntegrationSettings__mdt-Tableau integration setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Idea-Idea Layout</layout>

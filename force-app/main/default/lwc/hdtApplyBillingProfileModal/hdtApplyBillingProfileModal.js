@@ -56,7 +56,7 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
                     });
                 });
 
-                if (data.listPodPdr.length == 0) {
+                if (data.listVas.length !== 0) {
                     data.listVas.forEach(el => {
                         quoteBundleArray.push({
                             "Id"                   :el.Id,

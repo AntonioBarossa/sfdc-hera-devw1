@@ -28,14 +28,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     }
 
     @AuraEnabled
-    public static Integer getConsumptionAnnualForVas(String orderId){
+    public static String getConsumptionAnnualForVas(String orderId){
         
         try{
-            Integer consumptionAnnual = null;
+            String consumptionAnnual = null;
             if(orderId != null && orderId != ''){
                 List<OrderItem> orderItemList = [SELECT Id,ConsumptionAnnual__c FROM OrderItem WHERE OrderId = :orderId AND Order.IsVAS__c = true AND ConsumptionAnnual__c != null WITH SECURITY_ENFORCED];
-                if(!orderItemList.isEmpty()){
-                    consumptionAnnual = (Integer)orderItemList[0].ConsumptionAnnual__c;
+                if(!orderItemList.isEmpty() && orderItemList[0] != null){
+                    consumptionAnnual = String.valueOf(orderItemList[0].ConsumptionAnnual__c);
                 }
             }
             return consumptionAnnual;
@@ -101,7 +101,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     if(!contracts.isEmpty())
                     {
                         List<AccountContactRelation> exitingContacts = voltureChangeQr.getContactInfosByAccountId(contracts[0].AccountId);
-                        newOrder.PreviousCustomer__c = exitingContacts[0]?.ContactId;
+                        if(!exitingContacts.isEmpty())
+                        {
+                            newOrder.PreviousCustomer__c = exitingContacts[0]?.ContactId;
+                        }
                         newOrder.ContractReference__c = contracts[0]?.Id;
 						sapCode = contracts[0].SAPContractCode__c;
                     }

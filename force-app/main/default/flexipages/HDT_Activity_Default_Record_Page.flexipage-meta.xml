@@ -1015,6 +1015,22 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Interaction__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_RegisterActivity</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.wrts_prcgvr__Description__c</fieldItem>
             </fieldInstance>
         </itemInstances>
@@ -1443,6 +1459,15 @@
                         <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Distributor__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <name>Facet-92caf3f0-d634-4041-a98b-0e0f117d3553</name>

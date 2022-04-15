@@ -394,6 +394,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 mode:'query'
             }).then(result => {
                 this.contactPointInfo = JSON.parse(result);
+                console.log('#RESULT >>> ' + JSON.stringify(this.contactPointInfo));
                 if(this.contactPointInfo.result ==='OK'){
                     this.dispatchEvent(new CustomEvent('confirmdata', { detail: JSON.stringify(this.returnWrapper)}));
                 }else{

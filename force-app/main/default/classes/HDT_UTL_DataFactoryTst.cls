@@ -3369,4 +3369,20 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return sdList;
 	}
 
+	public static List<QuoteManagement__c> createQuoteManagement(Integer amount, Boolean doInsert, String commodity){
+
+		List<QuoteManagement__c> menageQuoteList = new List<QuoteManagement__c>();
+
+		for(Integer i=0; i<amount; i++){
+
+			QuoteManagement__c menageQuote = new QuoteManagement__c();
+			menageQuote.Commodity__c = commodity;
+			menageQuoteList.add(menageQuote);
+		}
+
+		if(doInsert){
+			insert menageQuoteList;
+		}
+		return menageQuoteList;
+	}
 }

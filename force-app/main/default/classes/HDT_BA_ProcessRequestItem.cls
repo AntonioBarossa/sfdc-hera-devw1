@@ -20,6 +20,7 @@ public inherited sharing class HDT_BA_ProcessRequestItem implements Database.Bat
         MassiveLoaderRequest__c processRequest = new MassiveLoaderRequest__c();
         processRequest.Id = varIdLoaderRequest;
         processRequest.Status__c = 'In Lavorazione';
+        processRequest.Phase__c = 'File in elaborazione';
         HDT_UTL_DatabaseService.updateSObject(processRequest);
 
     }
@@ -72,6 +73,7 @@ public inherited sharing class HDT_BA_ProcessRequestItem implements Database.Bat
             MassiveLoaderRequest__c oldReq = new MassiveLoaderRequest__c();
             oldReq.Id = idLoaderRequest;
             oldReq.Status__c = constantsUtl.MASSIVLOADER_STATUS_CHIUSO;
+            oldReq.Phase__c = 'File processato';
             update oldReq;
 
             // Creazione file RequestItem in Errore 
