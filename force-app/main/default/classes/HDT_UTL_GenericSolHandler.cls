@@ -142,8 +142,8 @@ public with sharing class HDT_UTL_GenericSolHandler {
             oi.UnitPrice = 0;
             oi.Quantity = 1;
             oi.OrderId = childOrder.Id;
-            oi.OccupantsNumber__c = (String)params.get('numeroOccupanti');
-            oi.Surface__c = (String)params.get('superficie');
+            oi.OccupantsNumber__c = (Integer)params.get('numeroOccupanti');
+            oi.Surface__c = (Integer)params.get('superficie');
             oi.DwellingType__c = (String)params.get('tipologiaAbitazione') == 'Appartamento'?'Appartamento':'Casa Indipendente';
             oi.OwnerAC__c = (String)params.get('proprietario');
             HDT_UTL_DatabaseService.insertSObject(oi);
