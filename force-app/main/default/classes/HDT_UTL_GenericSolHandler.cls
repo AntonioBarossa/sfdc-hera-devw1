@@ -121,7 +121,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
             childOrder.ProcessType__c = 'VAS';
             childOrder.SignatureMethod__c = 'Accettato digitalmente';
             childOrder.DocSendingMethod__c = 'Posta Cartacea';
-            childOrder.IntegrationId__c = (String) params.get('integrationId');
+            //childOrder.IntegrationId__c = (String) params.get('integrationId') != null?;
             childOrder.Commodity__c = contractList[0].ServicePoint__r.CommoditySector__c;
             SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractList[0].Id);
             if(subscription != null){
