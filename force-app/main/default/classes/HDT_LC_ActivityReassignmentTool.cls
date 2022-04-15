@@ -26,10 +26,10 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         queryString = '%' + queryString + '%';
         List<Map<String,String>> results = new List<Map<String,String>>();
 
-        for(AggregateResult result : [SELECT Group__c, Agency__c FROM Queue__c WHERE Group__c LIKE :queryString WITH SECURITY_ENFORCED GROUP BY Group__c, Agency__c]) {
+        for(AggregateResult result : [SELECT WorkGroup__c, Agency2__c FROM Queue__c WHERE WorkGroup__c LIKE :queryString WITH SECURITY_ENFORCED GROUP BY WorkGroup__c, Agency2__c]) {
             results.add(new Map<String,String>{
-                'name' => (String) result.get('Group__c'),
-                'agency' => (String) result.get('Agency__c')
+                'name' => (String) result.get('WorkGroup__c'),
+                'agency' => (String) result.get('Agency2__c')
             });
         }
 
@@ -66,13 +66,13 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
             }
         }
 
-        for(Queue__c queue : [SELECT Id, Name, QueueId__c, Group__c, Agency__c FROM Queue__c WHERE Name LIKE :queryString WITH SECURITY_ENFORCED]) {
+        for(Queue__c queue : [SELECT Id, Name, QueueId__c, WorkGroup__c, Agency2__c FROM Queue__c WHERE Name LIKE :queryString WITH SECURITY_ENFORCED]) {
             results.add(new Map<String,String>{
                 'id' => queue.QueueId__c,
                 'wrapperId' => queue.Id,
                 'name' => queue.Name,
-                'workGroup' => queue.Group__c,
-                'agency' => queue.Agency__c,
+                'workGroup' => queue.WorkGroup__c,
+                'agency' => queue.Agency2__c,
                 'icon' => 'standard:queue'
             });
         }
@@ -138,5 +138,19 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         User currentUser = getCurrentUser();
 
         return reassignActivity(idList, UserInfo.getUserId(), null, currentUser.CreatorGroup__c, currentUser.UserCompany__c);
+    }
+
+    @AuraEnabled(cacheable = true)
+    public static Boolean refreshPage(String recordId) {
+        Boolean response = false;
+        if (String.isNotBlank(recordId)){
+            List<String> typeToRefresh = new List<String>{'APPROVAZIONE BONUS COMMERCIALE'};
+            for (wrts_prcgvr__Activity__c act : [SELECT Type__c FROM wrts_prcgvr__Activity__c WHERE Id = :recordId WITH SECURITY_ENFORCED]){
+                if (String.isNotEmpty(act.Type__c) && typeToRefresh.contains(act.Type__c.toUpperCase())){
+                    response = true;
+                }
+            }
+        }
+        return response;
     }
 }

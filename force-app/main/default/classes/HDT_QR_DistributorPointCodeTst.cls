@@ -20,7 +20,7 @@ public with sharing class HDT_QR_DistributorPointCodeTst{
 			List<DistributorPointCode__c> distPointCodes=HDT_UTL_DataFactoryTst.createDistributorPointCode(1, false, accList[0].Id);
 			distPointCodes[0].PointCode__c='testPointCode';
 			distPointCodes[0].Commodity__c='testCommodity';
-
+			distPointCodes[0].City__c='testComune';
 			insert distPointCodes;
 		}
 	}
@@ -37,7 +37,7 @@ public with sharing class HDT_QR_DistributorPointCodeTst{
 
 			test.startTest();
 
-			List<DistributorPointCode__c> getDistPointCode=distPointCodeQr.getDistributorPointCode('testPointCode', 'testCommodity');
+			List<DistributorPointCode__c> getDistPointCode=distPointCodeQr.getDistributorPointCode('testPointCode', 'testCommodity', 'testComune');
 
 			test.stopTest();
 

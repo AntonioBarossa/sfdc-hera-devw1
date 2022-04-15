@@ -16,6 +16,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         String caseType = currentCase.Type;
         String subprocess = currentCase.Subprocess__c;
+        String cluster = currentCase.Cluster__c;
 
         String result;
 
@@ -101,7 +102,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         {
             Date currentEndDate = currentCase.TemporaryConnectionEndDate__c;
             result = validateEndDate(fields, currentEndDate);
-        
+        }else if(cluster.equalsIgnoreCase('Attivazioni'))
+        {
+            result = validateAttivazioniPostSales(fields);
         }else {
 
         result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
@@ -1228,6 +1231,30 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario che la data fine connessione temporanea sia successiva a quella già esistente sul contratto.'));
         }
 
+        return result;
+    }
+
+    public String validateAttivazioniPostSales(String fields)
+    {
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        String fiscalCode = getFieldValue(fields, 'DeceasedFiscalCode__c');
+        String firstName = getFieldValue(fields, 'DeceasedName__c');
+        String lastName = getFieldValue(fields, 'DeceasedSurname__c');
+        Date deceasedDate = getFieldValue(fields, 'DeceasedDate__c') != null ? Date.valueOf(getFieldValue(fields, 'DeceasedDate__c')) : null;
+        String outcome = validateFiscalCode(fiscalCode);
+        if(deceasedDate != null && deceasedDate > System.today())
+        {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile inserire una data decesso nel futuro'));
+        }
+        if(!String.isBlank(outcome))
+        {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', outcome));
+        }
+        if(!HDT_UTL_CalculateFiscalCode.checkFirstLastNameFromFiscalCode(fiscalCode, firstName, lastName))
+        {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Codice Fiscale non coerente con i dati inseriti'));
+        }
+        
         return result;
     }
 

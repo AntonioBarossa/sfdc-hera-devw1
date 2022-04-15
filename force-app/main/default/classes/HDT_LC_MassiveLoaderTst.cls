@@ -1,6 +1,6 @@
 @isTest
 public with sharing class HDT_LC_MassiveLoaderTst {
-    @isTest
+    /*@isTest
     public static void testOk(){
         HDT_LC_MassiveLoader.initialize();
         String processName='Lead';
@@ -71,6 +71,36 @@ public with sharing class HDT_LC_MassiveLoaderTst {
         HDT_LC_MassiveLoader.createMassiveLoaderRequest('test');
         Map<String, Object> response = HDT_LC_MassiveLoader.checkCsv('Subentro','test','selectedProcessName','massiveLoaderRequestId');
         System.assertEquals(true, response.get('error'), true);
-    }
+    }*/
     
+    @isTest
+    public static void testOk(){
+        HDT_LC_MassiveLoader.initialize();
+        String processName = 'VolturaTecnica';
+        
+        HDT_LC_MassiveLoader.createMassiveLoaderRequest(processName);
+        String data = '1|2|3|4|5|6';
+        data += '\n';
+        data += '1|2|3|4|5|6';
+        data += '\n';
+        data += '1|2|3|4|5|6';
+        data += '\n';
+        data += '1|2|3|4|5|6';
+        data += '\n';
+        data += '1|2|3|4|5|6';
+        MassiveLoaderRequest__c req= HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{data})        ;
+        
+        Blob generateFileBlob   = Blob.valueof(data+'\n'+data);
+        ContentVersion cv       = new ContentVersion();
+        cv.ContentLocation      = 'S';
+        cv.VersionData          = generateFileBlob;
+        cv.Title                = 'VolturaTecnica.csv';
+        cv.PathOnClient         = 'VolturaTecnica.csv';
+        insert cv;
+        
+        Map<String, Object> response =HDT_LC_MassiveLoader.convertCsvToRequestItem('VolturaTecnica.csv', cv.id, processName, req.id);
+        System.debug('response: ' + response);
+        System.assertEquals(false, (Boolean)response.get('error'), 'Some error occurred');
+    }
+
 }

@@ -17,13 +17,19 @@ public inherited sharing class HDT_BA_ProcessRequestItem implements Database.Bat
         selectedProcess = massiveLoaderProcessQr.getRecordByName(this.process);
         System.debug(LoggingLevel.DEBUG, '>>> Apex Class: ' + selectedProcess.ApexClass__c);
 
+        MassiveLoaderRequest__c processRequest = new MassiveLoaderRequest__c();
+        processRequest.Id = varIdLoaderRequest;
+        processRequest.Status__c = 'In Lavorazione';
+        processRequest.Phase__c = 'File in elaborazione';
+        HDT_UTL_DatabaseService.updateSObject(processRequest);
+
     }
 
    	public Database.QueryLocator start(Database.BatchableContext bc) {
             HDT_QR_Helper qrObj = new HDT_QR_Helper();
             qrObj.setObj('MassiveLoaderRequestItem__c');
             qrObj.setNestedFields(new list<String>{'MassiveLoaderRequest__r.ProcessType__c'});
-            qrObj.setFilter('MassiveLoaderRequest__c =\'' + this.idLoaderRequest+'\' Order by CreatedDate DESC');
+            qrObj.setFilter('MassiveLoaderRequest__c =\'' + this.idLoaderRequest + '\' Order by CreatedDate DESC');
 			String query =  qrObj.getQeryString();
             //System.debug(LoggingLevel.DEBUG, 'query:  '+query);
 			return Database.getQueryLocator(query);
@@ -47,7 +53,8 @@ public inherited sharing class HDT_BA_ProcessRequestItem implements Database.Bat
             //update massiveItem;
         } catch (Exception e) {
             System.debug(LoggingLevel.DEBUG, 'Standard Exception: ' + e.getMessage());
-            cls.manageCatchException(batchSize, scope, e.getMessage() + ': at line [' + String.valueOf(e.getLineNumber()) + ']');
+            String errorMessage = e.getMessage() + ': at line [' + String.valueOf(e.getLineNumber()) + '] ' + selectedProcess.ApexClass__c;
+            cls.manageCatchException(batchSize, scope, errorMessage);
         }
     }
 
@@ -66,6 +73,7 @@ public inherited sharing class HDT_BA_ProcessRequestItem implements Database.Bat
             MassiveLoaderRequest__c oldReq = new MassiveLoaderRequest__c();
             oldReq.Id = idLoaderRequest;
             oldReq.Status__c = constantsUtl.MASSIVLOADER_STATUS_CHIUSO;
+            oldReq.Phase__c = 'File processato';
             update oldReq;
 
             // Creazione file RequestItem in Errore 

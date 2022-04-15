@@ -312,7 +312,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
                 isAutomaticDiscardMap.put(conf.DiscardCode__c, conf);
             }
             if(String.isNotBlank(conf.ControllingValue__c)){
-                isAutomaticDiscardMap.put(conf.ControllingValue__c, conf);
+                isAutomaticDiscardMap.put(conf.ControllingValue__c.toLowerCase(), conf);
             }
         }
 

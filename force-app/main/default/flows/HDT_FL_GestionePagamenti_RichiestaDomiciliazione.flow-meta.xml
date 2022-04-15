@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Close_Activity</name>
+        <label>Close Activity</label>
+        <locationX>479</locationX>
+        <locationY>3542</locationY>
+        <actionName>HDT_LC_EditScartiComplessi</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AvanzamentoDocumentale</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>input</name>
+            <value>
+                <elementReference>discardActivityId</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>Validazione_Iban</name>
         <label>Validazione Iban</label>
-        <locationX>1543</locationX>
+        <locationX>2050</locationX>
         <locationY>1310</locationY>
         <actionName>HDT_UTL_ValidateIban</actionName>
         <actionType>apex</actionType>
@@ -24,19 +43,19 @@
         <name>AggiornaFasi</name>
         <label>AggiornaFasi</label>
         <locationX>50</locationX>
-        <locationY>4022</locationY>
+        <locationY>6038</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Da Inviare</stringValue>
+                <elementReference>NextPhaseSequenzializzato</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Status</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>In Lavorazione</stringValue>
+                <elementReference>NextStatusSequenzializzato</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -60,20 +79,20 @@
     <assignments>
         <name>AggiornaFasi_0</name>
         <label>AggiornaFasi</label>
-        <locationX>314</locationX>
-        <locationY>3902</locationY>
+        <locationX>446</locationX>
+        <locationY>5918</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Elaborazione Manuale</stringValue>
+                <elementReference>NextPhaseSequenzializzato</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Status</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>In Lavorazione</stringValue>
+                <elementReference>NextStatusSequenzializzato</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -83,7 +102,7 @@
     <assignments>
         <name>Assegna_Iban_Estero</name>
         <label>Assegna Iban Estero</label>
-        <locationX>1477</locationX>
+        <locationX>1984</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>IbanIsForeign</assignToReference>
@@ -106,7 +125,7 @@
     <assignments>
         <name>Assegna_Intestatario</name>
         <label>Assegna Intestatario</label>
-        <locationX>875</locationX>
+        <locationX>1188</locationX>
         <locationY>2726</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryFiscalCode__c</assignToReference>
@@ -136,7 +155,7 @@
     <assignments>
         <name>Assegna_Intestatario_0</name>
         <label>Assegna Intestatario</label>
-        <locationX>611</locationX>
+        <locationX>924</locationX>
         <locationY>2966</locationY>
         <assignmentItems>
             <assignToReference>GetCaseSottoscrittore.BankAccountSignatoryFiscalCode__c</assignToReference>
@@ -166,7 +185,7 @@
     <assignments>
         <name>AssegnaFase</name>
         <label>AssegnaFase</label>
-        <locationX>2690</locationX>
+        <locationX>3350</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>GetCaseNonBozza.Phase__c</assignToReference>
@@ -189,7 +208,7 @@
     <assignments>
         <name>AssegnaFlagObsoleto</name>
         <label>AssegnaFlagObsoleto</label>
-        <locationX>1411</locationX>
+        <locationX>1918</locationX>
         <locationY>1670</locationY>
         <assignmentItems>
             <assignToReference>FlagObsoleto</assignToReference>
@@ -205,7 +224,7 @@
     <assignments>
         <name>AssegnaFlagObsoleto_0</name>
         <label>AssegnaFlagObsoleto</label>
-        <locationX>1675</locationX>
+        <locationX>2182</locationX>
         <locationY>1670</locationY>
         <assignmentItems>
             <assignToReference>FlagObsoleto</assignToReference>
@@ -222,7 +241,7 @@
         <description>IT{!Numeri_Controllo}{!CIN}{!ABI}{!CAB}{!Numero_Conto_Corrente}</description>
         <name>AssegnaIban</name>
         <label>AssegnaIban</label>
-        <locationX>1213</locationX>
+        <locationX>1720</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
@@ -245,7 +264,7 @@
     <assignments>
         <name>AssegnaValoriAggiornamento</name>
         <label>AssegnaValoriAggiornamento</label>
-        <locationX>1188</locationX>
+        <locationX>1543</locationX>
         <locationY>2006</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Iban__c</assignToReference>
@@ -273,9 +292,25 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Case_Service_Request</name>
+        <label>Assign Case Service Request</label>
+        <locationX>534</locationX>
+        <locationY>4718</locationY>
+        <assignmentItems>
+            <assignToReference>ServiceRequestCase</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ServiceRequestLoop</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ServiceRequestLoop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Iban_Selezionato</name>
         <label>Assign Iban Selezionato</label>
-        <locationX>1741</locationX>
+        <locationX>2248</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
@@ -323,6 +358,75 @@
             <targetReference>Validazione_Iban</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assign_Valori_ServiceRequestCase</name>
+        <label>Assign Valori ServiceRequestCase</label>
+        <locationX>446</locationX>
+        <locationY>5030</locationY>
+        <assignmentItems>
+            <assignToReference>ServiceRequestCase.NextPhase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NextPhase</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ServiceRequestCase.DependOn__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ServiceRequestOrder.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Sequenzializzato</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Service_Request</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>OrderServiceRequest</name>
+        <label>OrderServiceRequest</label>
+        <locationX>798</locationX>
+        <locationY>4718</locationY>
+        <assignmentItems>
+            <assignToReference>ServiceRequestOrder</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ServiceRequestLoop</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ServiceRequestLoop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Reset_Practice_Code</name>
+        <label>Reset Practice Code</label>
+        <locationX>116</locationX>
+        <locationY>5582</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato2.HerokuPracticeCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato2.DistributorPracticeCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iban_Italiano_0</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>BlanckChoice</name>
         <choiceText>Selezionare un Iban o &quot;Inserimento Manuale&quot;</choiceText>
@@ -355,7 +459,7 @@
     <decisions>
         <name>Abi_Obsoleto</name>
         <label>Abi Obsoleto?</label>
-        <locationX>1543</locationX>
+        <locationX>2050</locationX>
         <locationY>1550</locationY>
         <defaultConnector>
             <targetReference>AssegnaFlagObsoleto_0</targetReference>
@@ -380,7 +484,7 @@
     <decisions>
         <name>Avanzamento</name>
         <label>Avanzamento</label>
-        <locationX>1984</locationX>
+        <locationX>2568</locationX>
         <locationY>518</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -487,8 +591,8 @@
     <decisions>
         <name>AvanzamentoDocumentale</name>
         <label>AvanzamentoDocumentale</label>
-        <locationX>380</locationX>
-        <locationY>3542</locationY>
+        <locationX>611</locationX>
+        <locationY>3758</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0_0_0_0</targetReference>
         </defaultConnector>
@@ -497,10 +601,10 @@
             <name>ConfermaDocumentale</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>DocumentSignature.cancelCase</leftValueReference>
+                <leftValueReference>DiscardRework</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -510,6 +614,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>DocumentSignature.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>GetCaseAggiornato2</targetReference>
             </connector>
@@ -517,9 +628,113 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Billing_Profile_Registrato_su_SAP</name>
+        <label>Billing Profile Registrato su SAP?</label>
+        <locationX>248</locationX>
+        <locationY>3998</locationY>
+        <defaultConnector>
+            <targetReference>Get_Ordini_In_Corso</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Registrato</defaultConnectorLabel>
+        <rules>
+            <name>Registrato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato2.BillingProfile__r.ContractAccountCode__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato2.BillingProfile__r.ContractAccountCode__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Discard_Rework</targetReference>
+            </connector>
+            <label>Registrato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Caricamento</name>
+        <label>Caricamento?</label>
+        <locationX>50</locationX>
+        <locationY>6278</locationY>
+        <defaultConnector>
+            <targetReference>Loading_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Da Inviare</defaultConnectorLabel>
+        <rules>
+            <name>Sequenzializzato_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Sequenzializzato</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Sequenzializzato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Case_Service_Request</name>
+        <label>Assign Service Request</label>
+        <locationX>666</locationX>
+        <locationY>4598</locationY>
+        <defaultConnector>
+            <targetReference>OrderServiceRequest</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Order</defaultConnectorLabel>
+        <rules>
+            <name>Case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ServiceRequestLoop.Case__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>GetCaseAggiornato2.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Case_Service_Request</targetReference>
+            </connector>
+            <label>Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Discard_Rework</name>
+        <label>Check Discard Rework</label>
+        <locationX>248</locationX>
+        <locationY>5462</locationY>
+        <defaultConnector>
+            <targetReference>Iban_Italiano_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Discard_Rework_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DiscardRework</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Reset_Practice_Code</targetReference>
+            </connector>
+            <label>DiscardRework</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Iban_Italiano</name>
         <label>Iban Italiano?</label>
-        <locationX>1345</locationX>
+        <locationX>1852</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Assegna_Iban_Estero</targetReference>
@@ -544,8 +759,8 @@
     <decisions>
         <name>Iban_Italiano_0</name>
         <label>Iban Italiano?</label>
-        <locationX>182</locationX>
-        <locationY>3782</locationY>
+        <locationX>248</locationX>
+        <locationY>5798</locationY>
         <defaultConnector>
             <targetReference>AggiornaFasi_0</targetReference>
         </defaultConnector>
@@ -569,7 +784,7 @@
     <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
-        <locationX>2469</locationX>
+        <locationX>3091</locationX>
         <locationY>158</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -587,6 +802,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Da Inviare</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>DiscardRework</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -613,7 +835,7 @@
     <decisions>
         <name>Inserimento_Dati_Manualmente</name>
         <label>Inserimento Dati Manualmente?</label>
-        <locationX>743</locationX>
+        <locationX>1056</locationX>
         <locationY>2606</locationY>
         <defaultConnector>
             <targetReference>Assegna_Intestatario</targetReference>
@@ -666,7 +888,7 @@
     <decisions>
         <name>Inserimento_Manuale</name>
         <label>Inserimento Manuale?</label>
-        <locationX>1543</locationX>
+        <locationX>2050</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Assign_Iban_Selezionato</targetReference>
@@ -689,9 +911,34 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Ordine_trovato</name>
+        <label>Ordine trovato?</label>
+        <locationX>578</locationX>
+        <locationY>4238</locationY>
+        <defaultConnector>
+            <targetReference>Errore_Processo_Non_Proseguibile</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Trovato</defaultConnectorLabel>
+        <rules>
+            <name>Trovato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Ordini_In_Corso</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Service_Request</targetReference>
+            </connector>
+            <label>Trovato</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Salva_in_Bozza_o_Conferma</name>
         <label>Salva in Bozza o Conferma?</label>
-        <locationX>743</locationX>
+        <locationX>1056</locationX>
         <locationY>3302</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -726,7 +973,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Document_Signature_Screen</targetReference>
+                <targetReference>Verify_Discard_Rework</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -770,7 +1017,7 @@
     <decisions>
         <name>Salva_In_Bozza_o_Conferma_0</name>
         <label>Salva In Bozza o Conferma?</label>
-        <locationX>1188</locationX>
+        <locationX>1543</locationX>
         <locationY>2366</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -821,7 +1068,7 @@
     <decisions>
         <name>Validate_Iban_OK</name>
         <label>Validate Iban OK?</label>
-        <locationX>1543</locationX>
+        <locationX>2050</locationX>
         <locationY>1886</locationY>
         <defaultConnector>
             <targetReference>Screen_IBAN_non_validato</targetReference>
@@ -848,6 +1095,46 @@
                 <targetReference>AssegnaValoriAggiornamento</targetReference>
             </connector>
             <label>OK</label>
+        </rules>
+        <rules>
+            <name>KO_for_DiscardRework</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DiscardRework</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_IBAN_non_validato_0</targetReference>
+            </connector>
+            <label>KO for DiscardRework</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Verify_Discard_Rework</name>
+        <label>Verify Discard Rework</label>
+        <locationX>611</locationX>
+        <locationY>3422</locationY>
+        <defaultConnector>
+            <targetReference>Document_Signature_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
+        <rules>
+            <name>Discard_Rework</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DiscardRework</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Close_Activity</targetReference>
+            </connector>
+            <label>Discard Rework</label>
         </rules>
     </decisions>
     <description>Flow per la gestione del processo di Richiesta Domiciliazione (o Attivazione Click&amp;Pay) del cluster Pagamenti</description>
@@ -907,9 +1194,29 @@
         <expression>&quot;IT&quot;&amp;{!GetCaseAggiornato.IbanCIN_IBAN__c}&amp;UPPER({!GetCaseAggiornato.IbanCIN__c})&amp;{!GetCaseAggiornato.IbanABI__c}&amp;{!GetCaseAggiornato.IbanCAB__c}&amp;{!GetCaseAggiornato.IbanCodeNumber__c}</expression>
     </formulas>
     <formulas>
+        <name>NextPhase</name>
+        <dataType>String</dataType>
+        <expression>IF({!GetCaseAggiornato2.IbanIsForeign__c}, &quot;Elaborazione Manuale&quot;, &quot;Da Inviare&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>NextPhaseSequenzializzato</name>
+        <dataType>String</dataType>
+        <expression>IF({!Sequenzializzato}, &quot;Sequenzializzato&quot;,IF({!GetCaseAggiornato2.IbanIsForeign__c},&quot;Elaborazione Manuale&quot;,&quot;Da Inviare&quot;))</expression>
+    </formulas>
+    <formulas>
+        <name>NextStatusSequenzializzato</name>
+        <dataType>String</dataType>
+        <expression>IF({!Sequenzializzato},&quot;Sequenzializzato&quot;,&quot;In Lavorazione&quot;)</expression>
+    </formulas>
+    <formulas>
         <name>ProcessTypeFormula</name>
         <dataType>String</dataType>
         <expression>IF({!IbanIsForeign} = false, &quot;Richiesta Domiciliazione - Italiano&quot;,&quot;Richiesta Domiciliazione - Estero&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>ShowButton</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT({!DiscardRework})</expression>
     </formulas>
     <formulas>
         <name>UpperCaseCFSott</name>
@@ -938,6 +1245,20 @@
     </formulas>
     <interviewLabel>HDT_FL_GestionePagamenti_RichiestaDomiciliazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Richiesta Domiciliazione/Attivazione Click&amp;Pay</label>
+    <loops>
+        <name>ServiceRequestLoop</name>
+        <label>ServiceRequestLoop</label>
+        <locationX>446</locationX>
+        <locationY>4478</locationY>
+        <collectionReference>Get_Service_Request</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Case_Service_Request</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Assign_Valori_ServiceRequestCase</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -961,7 +1282,7 @@
         <name>CalcolaCodiceCausale</name>
         <label>CalcolaCodiceCausale</label>
         <locationX>50</locationX>
-        <locationY>3902</locationY>
+        <locationY>5918</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AggiornaFasi</targetReference>
@@ -1002,7 +1323,7 @@
     <recordLookups>
         <name>Get_Case_Aggiornato</name>
         <label>Get Case Aggiornato</label>
-        <locationX>743</locationX>
+        <locationX>1056</locationX>
         <locationY>2486</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1023,7 +1344,7 @@
     <recordLookups>
         <name>Get_Ibans</name>
         <label>Get Ibans</label>
-        <locationX>1984</locationX>
+        <locationX>2568</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1042,9 +1363,73 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <description>Ordini in corso di offerta commerciale</description>
+        <name>Get_Ordini_In_Corso</name>
+        <label>Get Ordini In Corso</label>
+        <locationX>578</locationX>
+        <locationY>4118</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Ordine_trovato</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>BillingProfile__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornato2.BillingProfile__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ProcessType__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>VAS</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Service_Request</name>
+        <label>Get Service Request</label>
+        <locationX>446</locationX>
+        <locationY>4358</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>ServiceRequestLoop</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Order__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Ordini_In_Corso.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornato2.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>ServiceRequest__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetAbiObsolete</name>
         <label>GetAbiObsolete</label>
-        <locationX>1543</locationX>
+        <locationX>2050</locationX>
         <locationY>1430</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1079,7 +1464,7 @@
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>1543</locationX>
+        <locationX>2050</locationX>
         <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1100,11 +1485,11 @@
     <recordLookups>
         <name>GetCaseAggiornato2</name>
         <label>GetCaseAggiornato2</label>
-        <locationX>182</locationX>
-        <locationY>3662</locationY>
+        <locationX>248</locationX>
+        <locationY>3878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Iban_Italiano_0</targetReference>
+            <targetReference>Billing_Profile_Registrato_su_SAP</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1121,7 +1506,7 @@
     <recordLookups>
         <name>GetCaseNonBozza</name>
         <label>GetCaseNonBozza</label>
-        <locationX>2690</locationX>
+        <locationX>3350</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1142,7 +1527,7 @@
     <recordLookups>
         <name>GetCaseSottoscrittore</name>
         <label>GetCaseSottoscrittore</label>
-        <locationX>611</locationX>
+        <locationX>924</locationX>
         <locationY>2846</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1163,7 +1548,7 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>875</locationX>
+        <locationX>1188</locationX>
         <locationY>2846</locationY>
         <connector>
             <targetReference>Salva_in_Bozza_o_Conferma</targetReference>
@@ -1173,7 +1558,7 @@
     <recordUpdates>
         <name>Aggiorna_Case_Bozza</name>
         <label>Aggiorna Iban Case Bozza</label>
-        <locationX>1188</locationX>
+        <locationX>1543</locationX>
         <locationY>2126</locationY>
         <connector>
             <targetReference>Screen_Mostra_Dati</targetReference>
@@ -1181,9 +1566,19 @@
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>Aggiorna_Service_Request</name>
+        <label>Aggiorna Service Request</label>
+        <locationX>446</locationX>
+        <locationY>5150</locationY>
+        <connector>
+            <targetReference>Check_Discard_Rework</targetReference>
+        </connector>
+        <inputReference>ServiceRequestCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>AggiornaCaseNonBozza</name>
         <label>AggiornaCaseNonBozza</label>
-        <locationX>2690</locationX>
+        <locationX>3350</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Loading_Screen_0</targetReference>
@@ -1193,7 +1588,7 @@
     <recordUpdates>
         <name>AggiornaCaseSottoscrittore</name>
         <label>AggiornaCaseSottoscrittore</label>
-        <locationX>611</locationX>
+        <locationX>924</locationX>
         <locationY>3086</locationY>
         <connector>
             <targetReference>Salva_in_Bozza_o_Conferma</targetReference>
@@ -1204,24 +1599,24 @@
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>50</locationX>
-        <locationY>4142</locationY>
+        <locationY>6158</locationY>
         <connector>
-            <targetReference>Loading_Screen</targetReference>
+            <targetReference>Caricamento</targetReference>
         </connector>
         <inputReference>GetCaseAggiornato2</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Passa_a_Elaborazione_Manuale</name>
         <label>Passa a &quot;Elaborazione Manuale&quot;</label>
-        <locationX>314</locationX>
-        <locationY>4022</locationY>
+        <locationX>446</locationX>
+        <locationY>6038</locationY>
         <inputReference>GetCaseAggiornato2</inputReference>
     </recordUpdates>
     <screens>
         <name>Document_Signature_Screen</name>
         <label>Document Signature Screen</label>
-        <locationX>380</locationX>
-        <locationY>3422</locationY>
+        <locationX>743</locationX>
+        <locationY>3542</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1275,9 +1670,75 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Errore_Processo_Non_Proseguibile</name>
+        <label>Errore - Processo Non Proseguibile</label>
+        <locationX>710</locationX>
+        <locationY>4358</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>DisplayHeader_2</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetCaseAggiornato2.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Non sono presenti ordini in corso per il Billing Profile selezionato alla pressione del tasto &quot;Conferma Pratica&quot; il Case verrà posto in Bozza e potrà proseguire una volta avviato l&apos;ordine sul Billing Profile selezionato.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NavigationButtons</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Inserimento_Dati_Manuale_0_0</name>
         <label>Inserimento Dati Manuale</label>
-        <locationX>611</locationX>
+        <locationX>924</locationX>
         <locationY>2726</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1315,7 +1776,7 @@
             <inputParameters>
                 <name>draftButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>ShowButton</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1376,8 +1837,8 @@
     <screens>
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
-        <locationX>50</locationX>
-        <locationY>4262</locationY>
+        <locationX>182</locationX>
+        <locationY>6398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1407,7 +1868,7 @@
     <screens>
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
-        <locationX>2690</locationX>
+        <locationX>3350</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1438,7 +1899,7 @@
     <screens>
         <name>Screen_IBAN_non_validato</name>
         <label>Screen IBAN non validato</label>
-        <locationX>1898</locationX>
+        <locationX>2558</locationX>
         <locationY>2006</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1540,9 +2001,110 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Screen_IBAN_non_validato_0</name>
+        <label>Screen IBAN non validato</label>
+        <locationX>2294</locationX>
+        <locationY>2006</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>DisplayHeader_Type_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>DisplayHeader_IbanKO_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;﻿&lt;/span&gt;&lt;b style=&quot;font-size: 16px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Iban Non valida﻿to&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>FlagObsoleto</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>DisplayHeader_AbiObsolete_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 16px;&quot;&gt;Il Codice ABI risulta obsoleto&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>FlagObsoleto</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>DisplayIbanNonValidato_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Premere il tasto Indietro per modificare i dati; premere&quot;Fine&quot; chiudere il wizard.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtFlowNav_0</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Fine</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>2690</locationX>
+        <locationX>3350</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1623,7 +2185,7 @@
     <screens>
         <name>Screen_Mostra_Dati</name>
         <label>Screen Mostra Dati</label>
-        <locationX>1188</locationX>
+        <locationX>1543</locationX>
         <locationY>2246</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1649,7 +2211,7 @@
             <inputParameters>
                 <name>draftButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>ShowButton</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1728,7 +2290,7 @@
     <screens>
         <name>Show_Ibans</name>
         <label>Show Ibans</label>
-        <locationX>1984</locationX>
+        <locationX>2568</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1776,7 +2338,7 @@
             <inputParameters>
                 <name>cancelButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>ShowButton</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1788,7 +2350,7 @@
             <inputParameters>
                 <name>draftButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>ShowButton</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1866,7 +2428,7 @@
             <inputParameters>
                 <name>cancelButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>ShowButton</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1878,7 +2440,7 @@
             <inputParameters>
                 <name>draftButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>ShowButton</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1950,13 +2512,13 @@
             <inputParameters>
                 <name>isCancel</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>ShowButton</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>isDraft</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>ShowButton</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2007,7 +2569,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>2343</locationX>
+        <locationX>2965</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Il_Case_in_Bozza</targetReference>
@@ -2017,7 +2579,7 @@
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>2162</locationX>
+        <locationX>2822</locationX>
         <locationY>638</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -2042,7 +2604,7 @@
     <subflows>
         <name>Annulla_Prestazione_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>842</locationX>
+        <locationX>1238</locationX>
         <locationY>3422</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -2067,7 +2629,7 @@
     <subflows>
         <name>Annulla_Prestazione_0_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>1370</locationX>
+        <locationX>1766</locationX>
         <locationY>2486</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -2092,7 +2654,7 @@
     <subflows>
         <name>Annulla_Prestazione_0_0_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>1898</locationX>
+        <locationX>2558</locationX>
         <locationY>2126</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -2117,8 +2679,8 @@
     <subflows>
         <name>Annulla_Prestazione_0_0_0_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>578</locationX>
-        <locationY>3662</locationY>
+        <locationX>974</locationX>
+        <locationY>3878</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2160,6 +2722,26 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>discardActivityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>DiscardRework</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>FlagObsoleto</name>
@@ -2240,5 +2822,31 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Sequenzializzato</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>ServiceRequestCase</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ServiceRequest__c</objectType>
+    </variables>
+    <variables>
+        <name>ServiceRequestOrder</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ServiceRequest__c</objectType>
     </variables>
 </Flow>

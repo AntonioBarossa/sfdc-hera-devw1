@@ -324,7 +324,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         && section.name !== 'indirizzoSpedizione' 
         && section.name !== 'ivaAccise'
         && section.name !== 'riepilogoDatiAmend'
-        && section.name !== 'dateOrdine'));
+        && section.name !== 'dateOrdine'
+        && section.name !== 'analisiConsumi'));
     }
 
     getPendingSteps(){
@@ -339,7 +340,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         || section.name === 'indirizzoSpedizione' 
         || section.name === 'ivaAccise'
         || section.name === 'riepilogoDatiAmend'
-        || section.name === 'dateOrdine'));
+        || section.name === 'dateOrdine'
+        || section.name === 'analisiConsumi'));
         this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
         console.log('PENDING HOLA:' + JSON.stringify(this.pendingSteps));
     }
@@ -386,6 +388,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('CurrentSectionName: '+this.currentSectionName);
         console.log('isUpdateStep: '+ this.isVolture === true && this.currentSectionName === 'processVariables');
         let orderId = this.order.Id;
+        if(this.sectionDataToSubmit["Id"] !== undefined && this.sectionDataToSubmit["Id"] === this.analisiConsumi.Id)
+        {
+            this.sectionDataToSubmit["OrderId"] = orderId;
+            this.sectionDataToSubmit["Description"] = nextSectionStep;
+            console.log('#Section ANalisi Consumi >>> ' + JSON.stringify(this.sectionDataToSubmit));
+        }
         //INSERITE NUOVE VARIABILI, IsRetroactive e IsReading solo in avanzamento di sezione.  
         updateProcessStep(
             {order: {Id: orderId, Step__c: nextSectionStep, 
@@ -986,8 +994,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Cognome precedente intestatario','PreviousHolderLastName__c', true, false, false, '',''),   
                     new fieldData('C.F. Precdente intestatario','PreviousHolderFiscalCode__c', true, false, false, '',''),   
                     new fieldData('Ragione sociale precedente intestatario','PreviousHoldeCompanyName__c', true, false, false, '',''),   
-                    new fieldData('P.Iva precedente intestatario','PreviousHolderVatNumber__c', true, false, false, '',''),   
-                    new fieldData('Voltura c/o VT','VolturaThirdTrader__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '','')
+                    new fieldData('P.Iva precedente intestatario','PreviousHolderVatNumber__c', true, false, false, '','')
+                    //new fieldData('Voltura c/o VT','VolturaThirdTrader__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '','')
                 ]
             },
             {
@@ -1003,375 +1011,54 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt',
                data: [
-                {
-                    'label': 'POD/PdR',
-                    'apiname': 'ServicePointCodeFormula__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': false,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Tipo Mercato',
-                    'apiname': 'Market__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Setore merceologico',
-                    'apiname': 'CommodityFormula__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Distributore',
-                    'apiname': 'DistributorFormula__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': false,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Mercato di provenienza',
-                    'apiname': 'MarketOrigin__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), this.order.ProcessType__c!=='Prima Attivazione Ele' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica', this.order.ProcessType__c!=='Prima Attivazione Ele' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica','',''),
-                {
-                    'label': 'Consumi Anno',
-                    'apiname': 'AnnualConsumption__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': false,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Potenza impegnata',
-                    'apiname': 'PowerCommitted__c',
-                    'typeVisibility': this.typeVisibility('ele'),
-                    'required': false,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Potenza disponibile',
-                    'apiname': 'PowerAvailable__c',
-                    'typeVisibility': this.typeVisibility('ele'),
-                    'required': false,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Potenza richiesta',
-                    'apiname': 'PowerRequested__c',
-                    'typeVisibility': this.typeVisibility('ele'),
-                    'required': false,
-                    'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn',
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Tensione',
-                    'apiname': 'VoltageLevel__c',
-                    'typeVisibility': this.typeVisibility('ele'),
-                    'required': true,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Disalimentabilità', //1
-                    'apiname': 'Disconnectable__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': false,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Categoria disalimentabilità', //2
-                    'apiname': 'DisconnectibilityType__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': false,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Recapito telefonico',
-                    'apiname': 'DisconnectibilityPhone__c', //3
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': false,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-
-                {
-                    'label': 'Data Inizio Connessione Temporanea',
-                    'apiname': 'TemporaryConnectionStartDate__c', //3
-                    'typeVisibility': this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt',
-                    'required': true,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Data fine connessione temporanea',
-                    'apiname': 'TemporaryConnectionEndDate__c', //3
-                    'typeVisibility': this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt',
-                    'required': true,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-
-                {
-                    'label': 'Ore di utilizzo',
-                    'apiname': 'HoursOfUse__c', //3
-                    'typeVisibility': this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt',
-                    'required': true,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Conferma contratto cliente',
-                    'apiname': 'ConfirmCustomerContract__c', //3
-                    'typeVisibility': this.typeVisibility('ele') && (this.order.Account.RecordType.DeveloperName !== 'HDT_RT_Business' && this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'),
-                    'required': false,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Residente all\'indirizzo di Fornitura',
-                    'apiname': 'Resident__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': false,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Misuratore',
-                    'apiname': 'MeterSN__c',
-                    'typeVisibility': this.typeVisibility('ele'),
-                    'required': false,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Potenzialità massima richiesta',
-                    'apiname': 'MaxRequiredPotential__c',
-                    'typeVisibility': this.typeVisibility('gas'),
-                    'required': this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' && this.order.RecordType.DeveloperName === 'HDT_RT_Subentro',
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Uso energia',
-                    'apiname': 'UseTypeEnergy__c',
-                    'typeVisibility': this.typeVisibility('ele'),
-                    'required': true,
-                    'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica',
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Categoria uso',
-                    'apiname': 'UseCategory__c',
-                    'typeVisibility': this.typeVisibility('gas'),
-                    'required': true,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Classe prelievo',
-                    'apiname': 'WithdrawalClass__c',
-                    'typeVisibility': this.typeVisibility('gas'),
-                    'required': this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta',
-                    'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Classe Contatore',
-                    'apiname': 'Caliber__c',
-                    'typeVisibility': this.typeVisibility('gas'),
-                    'required': false,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Località/Codice REMI',
-                    'apiname': 'RemiCode__c',
-                    'typeVisibility': this.typeVisibility('gas'),
-                    'required': true,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'ConnectionMandate__c',
-                    'apiname': 'ConnectionMandate__c',
-                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'),
-                    'required': true,
-                    'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica',
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Autocert. contr connessione',
-                    'apiname': 'SelfCertificationConnection__c',
-                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ),
-                    'required': true,
-                    'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica',
-                    'value': (this.order.ProcessType__c=='Prima Attivazione Ele')?'02':'',
-                    'processVisibility': ''
-                },
+                new fieldData('Disalimentabilità','Disconnectable__c', this.typeVisibility('both'), false, false, '',''),
+                new fieldData('Categoria disalimentabilità','DisconnectibilityType__c', this.typeVisibility('both'), false, false, '',''),
+                new fieldData('Uso energia','UseTypeEnergy__c', this.typeVisibility('both'), !(this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica'), !(this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica'), '',''),
+                new fieldData('Rinuncia Diritto di Ripensamento','WaiverRightAfterthought__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', true, (this.order.ProcessType__c == 'Switch in Ripristinatorio' || this.loginChannel == 'SPORTELLO') && !this.isNoDayAfterthought, this.isNoDayAfterthought , '',''),
+                new fieldData('Azione commerciale','CommercialAction__c', this.typeVisibility('both'), false, false, '',''),
+                new fieldData('Note per il DL','CommentForDL__c', this.typeVisibility('both'), true, false, '',''),
+                new fieldData('Esclusione dal deposito cauzionale','SecurityDepositExcluded__c', this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'), false, false, '','N'),
+                new fieldData('Data Inizio Connessione Temporanea','TemporaryConnectionStartDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
+                new fieldData('Data fine connessione temporanea','TemporaryConnectionEndDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
+                new fieldData('Ore di utilizzo','HoursOfUse__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
+                new fieldData('Potenzialità massima richiesta','MaxRequiredPotential__c', this.typeVisibility('both'), this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' && this.order.RecordType.DeveloperName === 'HDT_RT_Subentro', false, '',''),
+                new fieldData('Classe prelievo','WithdrawalClass__c',  this.typeVisibility('gas'), this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta', '',''),
+                new fieldData('ConnectionMandate__c','ConnectionMandate__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica', '',''),
+                new fieldData('Fase richiesta','RequestPhase__c', this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', true, false, '',''),
+                new fieldData('Codice Ateco','AtecoCode__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('SurfaceServed__c','SurfaceServed__c', this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'), true, false, '',''),
+                new fieldData('Convenzione/Associazione','ConventionAssociation__c', this.typeVisibility('both') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt') && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '',''),
+                new fieldData('Livello pressione','PressureLevel__c', this.typeVisibility('gas'), true, false, '',''),
+                new fieldData('Servizio Energetico','EnergyService__c', this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'), false, false, '',''),
+                new fieldData('Tipo Voltura','VoltureType__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch', true, false, '',''),
+                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), this.order.ProcessType__c!=='Prima Attivazione Ele' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica', !(this.order.ProcessType__c!=='Prima Attivazione Ele' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica'),'',''),
+                new fieldData('POD/PdR','ServicePointCodeFormula__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('Tipo Mercato','Market__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('Settore merceologico','CommodityFormula__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('Distributore','DistributorFormula__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('Mercato di provenienza','MarketOrigin__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('Consumi Anno','AnnualConsumption__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('Potenza impegnata','PowerCommitted__c', this.typeVisibility('ele'), false, true, '',''),
+                new fieldData('Potenza disponibile','PowerAvailable__c', this.typeVisibility('ele'), false, true, '',''),
+                new fieldData('Potenza richiesta','PowerRequested__c', this.typeVisibility('ele'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', '',''),
+                new fieldData('Tensione','VoltageLevel__c', this.typeVisibility('ele'), false, true, '',''),
+                new fieldData('Recapito telefonico','DisconnectibilityPhone__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('Conferma contratto cliente','ConfirmCustomerContract__c', this.typeVisibility('ele') && (this.order.Account.RecordType.DeveloperName !== 'HDT_RT_Business' && this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'), false, false, '',''),
+                new fieldData('Residente all\'indirizzo di Fornitura','Resident__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('Misuratore','MeterSN__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('Categoria uso','UseCategory__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('Classe Contatore','Caliber__c', this.typeVisibility('gas'), false, true, '',''),
+                new fieldData('Località/Codice REMI','RemiCode__c', this.typeVisibility('gas'), false, true, '',''),
+                new fieldData('Autocert. contr connessione','SelfCertificationConnection__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica', '',''),
+                new fieldData('Recapito telefonico','PhoneNumber__c', this.typeVisibility('both'), false, true, '',''),
+                new fieldData('Autocert Instanza','InstanceSelfCertification__c', this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', false, true, '',''),
+                new fieldData('SAPImplantCode__c','SAPImplantCode__c', this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'), false, true, '',''),
+                new fieldData('Categoria uso','UseCategory__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('ConnectionType__c','ConnectionType__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), true, this.order.ProcessType__c==='Prima Attivazione Ele' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica', '',''),
                 new fieldData('Preavviso di recesso (numerico)','RecessNotice__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', true, false, '',''),
-                new fieldData('Rinuncia Diritto di Ripensamento','WaiverRightAfterthought__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', true, (this.order.ProcessType__c == 'Switch in Ripristinatorio' || this.loginChannel == 'SPORTELLO') && !this.isNoDayAfterthought, this.isNoDayAfterthought , '',''),
                 new fieldData('Società di vendita','SalesCompany__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Opzione richiesta','RequestOption__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta'), true, this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt', '',''),
-                {
-                    'label': 'Recapito telefonico',
-                    'apiname': 'PhoneNumber__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': false,// 20/09/2021 richiesto true
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Fase richiesta',
-                    'apiname': 'RequestPhase__c',
-                    'typeVisibility': this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta',
-                    'required': true,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Azione commerciale',
-                    'apiname': 'CommercialAction__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': false,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Codice Ateco',
-                    'apiname': 'AtecoCode__c',
-                    'typeVisibility': this.typeVisibility('gas'),
-                    'required': false,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Autocert Instanza',
-                    'apiname': 'InstanceSelfCertification__c',
-                    'typeVisibility': this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta',
-                    'required': true,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'SAPImplantCode__c',
-                    'apiname': 'SAPImplantCode__c',
-                    'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'),
-                    'required': false,
-                    'disabled': true, //UAT 25/08/2021 JIRA 336
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'SurfaceServed__c',
-                    'apiname': 'SurfaceServed__c',
-                    'typeVisibility': this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'),
-                    'required':true, // 24/08/2021 Richiesta durante i test
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Note per il DL',
-                    'apiname': 'CommentForDL__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Convenzione/Associazione',
-                    'apiname': 'ConventionAssociation__c',
-                    'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt') && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
-                    'required': false,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Esclusione dal deposito cauzionale',
-                    'apiname': 'SecurityDepositExcluded__c',
-                    'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'),
-                    'required': false,
-                    'disabled': false,
-                    'value': 'N',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Livello pressione',
-                    'apiname': 'PressureLevel__c',
-                    'typeVisibility': this.typeVisibility('gas'),
-                    'required': true,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Servizio Energetico',
-                    'apiname': 'EnergyService__c',
-                    'typeVisibility': this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'),
-                    'required': false,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                new fieldData('Tipo Apparechiatura','MeterType__c',this.typeVisibility('ele') && (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'),true, true, '',''),
-                {
-                    'label': 'Tipo Voltura',
-                    'apiname': 'VoltureType__c',
-                    'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
-                    'required': true,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                }
+                new fieldData('Tipo Apparechiatura','MeterType__c',this.typeVisibility('ele') && (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'),false, true, '','')
                ]
             },
 
@@ -1381,13 +1068,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'riepilogoDatiAmend',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus' || this.order.VasSubtype__c === 'Analisi Consumi',
                 data: [
+                    new fieldData('Azione commerciale','CommercialAction__c',this.typeVisibility('both'),false, false, '',''),
+                    new fieldData('Data Decorrenza','EffectiveDate__c',this.typeVisibility('both'),false, false, '',''),  
                     new fieldData('Numero Contratto','ContractReference__c',true,false, true, '',''), 
                     new fieldData('Uso energia','UseTypeEnergy__c',this.order.ServicePoint__c,false, true, '',''),                  
                     new fieldData('POD/PDR','ServicePointCode__c',this.order.ServicePoint__c,false, true, '',''),  
-                    new fieldData('Azione commerciale','CommercialAction__c',this.typeVisibility('both'),false, false, '',''),
-                    new fieldData('Data Decorrenza','EffectiveDate__c',this.typeVisibility('both'),false, false, '',''),  
                     new fieldData('Tipo VAS','VASType__c', true, false, true, ''),
                     new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
                     new fieldData('Recapito Telefonico','PhoneNumber__c', true, false, true, ''),
@@ -1395,17 +1082,17 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: '',
+                step: 6,
                 label: 'Analisi Consumi',
                 name: 'analisiConsumi',
                 objectApiName: 'OrderItem',
                 recordId: this.analisiConsumi.Id !== undefined ? this.analisiConsumi.Id : '',//this.analisiConsumi.Id
-                processVisibility: ( this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus' ) && this.analisiConsumi.Id !== undefined,
+                processVisibility: this.order.VasSubtype__c === 'Analisi Consumi',
                 data: [
-                    new fieldData('Proprietario','OwnerAC__c',this.typeVisibility('both'),false, true, '',''), 
-                    new fieldData('Tipo Casa','DwellingType__c',this.typeVisibility('both'),false, true, '',''),                  
-                    new fieldData('N. Abitanti','OccupantsNumber__c',this.typeVisibility('both'),false, true, '',''),
-                    new fieldData('Mq. Casa','Surface__c',this.typeVisibility('both'),false, true, '','')
+                    new fieldData('Proprietario','OwnerAC__c',this.typeVisibility('both'),false, false, '',''), 
+                    new fieldData('Tipo Casa','DwellingType__c',this.typeVisibility('both'),false, false, '',''),                  
+                    new fieldData('N. Abitanti','OccupantsNumber__c',this.typeVisibility('both'),false, false, '',''),
+                    new fieldData('Mq. Casa','Surface__c',this.typeVisibility('both'),false, false, '','')
                 ]
             },            
             {
@@ -1588,18 +1275,19 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'dettaglioImpianto',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.VasSubtype__c !== 'Analisi Consumi',
                 data: [
+                    new fieldData('Azione Commerciale',     'CommercialAction__c',  true, false, false, ''),
+                    new fieldData('Attivazione Anticipata', 'IsEarlyActivation__c', true, false, this.order.VASType__c == 'VAS Servizio', ''),
                     new fieldData('Ordine di riferimento',  'OrderReference__c',    true, false, true, ''),
                     new fieldData('Società di vendita',     'SalesCompany__c',      true, false, true, ''),
                     new fieldData('Campagna',               'Campaign__c',          true, false, true, ''),
                     new fieldData('Categoria Cliente',      'CustomerCategory__c',  true, false, true, ''),
                     new fieldData('POD/PDR',                'ServicePointCode__c',  true, false, true, ''),
                     new fieldData('Tipo VAS',               'VASType__c',           true, false, true, ''),
-                    new fieldData('Attivazione Anticipata', 'IsEarlyActivation__c', true, false, this.order.VASType__c == 'VAS Servizio', ''),
-                    new fieldData('Sottotipo VAS',          'VASSubtype__c',        true, false, true, ''),
-                    new fieldData('Recapito Telefonico',    'PhoneNumber__c',       true, false, true, ''),
-                    new fieldData('Azione Commerciale',     'CommercialAction__c',  true, false, false, '')
+                    new fieldData('Sottotipo VAS',          'VasSubtype__c',        true, false, true, ''),
+                    new fieldData('Recapito Telefonico',    'PhoneNumber__c',       true, false, true, '')
+
                 ]
             },
             {
@@ -1609,7 +1297,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 hasAddrComp: true,
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.VasSubtype__c !== 'Analisi Consumi',
                 data: [
                 ]
             },
@@ -1620,7 +1308,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 hasAddrComp: true,
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.VasSubtype__c !== 'Analisi Consumi',
                 data: [
                     
                 ]
@@ -1638,6 +1326,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data: [
+                    new fieldData('AggregateBilling__c', 'AggregateBilling__c',this.typeVisibility('both'),true,false,'',''),
                     new fieldData('Modalità Invio Bolletta', 'BillSendMode__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('Email Invio Bolletta', 'InvoiceEmailAddress__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('Email PEC invio Bolletta', 'InvoiceCertifiedEmailAddress__c',this.typeVisibility('both'),false,true,'',''),
@@ -1650,8 +1339,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Nome Via', 'BillingStreetName__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('Civico', 'BillingStreetNumber__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('CAP', 'BillingPostalCode__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('Codice ISTAT', 'BillingCityCode__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('AggregateBilling__c', 'AggregateBilling__c',this.typeVisibility('both'),true,false,'','')
+                    new fieldData('Codice ISTAT', 'BillingCityCode__c',this.typeVisibility('both'),false,true,'','')
                 ]
             },
             {
@@ -1701,10 +1389,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data: [
                     new fieldData('Flag Agevolazione IVA','VATfacilitationFlag__c',this.typeVisibility('both'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || ((this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound') && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta')  ,''),
-                    new fieldData('Flag Accise Agevolata','FacilitationExcise__c',this.typeVisibility('ele'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || ((this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound') && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta') ,''),
-                    new fieldData('IVA','VAT__c',this.typeVisibility('both'),false, false,''),
-                    new fieldData('Accise Agevolata Ele','ExciseEle__c',this.typeVisibility('ele'),false,false,''),
-                    new fieldData('Accise Agevolata Gas','ExciseGAS__c',this.typeVisibility('gas'),false,false,''),
+                    new fieldData('Flag Accise Agevolata','FacilitationExcise__c',this.typeVisibility('both'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || ((this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound') && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta') ,''),
+                    new fieldData('IVA','VAT__c',this.typeVisibility('both'),false, (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioUso'),''),
+                    new fieldData('Accise Agevolata Ele','ExciseEle__c',this.typeVisibility('ele'),false,(this.order.RecordType.DeveloperName !== 'HDT_RT_CambioUso'),''),
+                    new fieldData('Accise Agevolata Gas','ExciseGAS__c',this.typeVisibility('gas'),false,(this.order.RecordType.DeveloperName !== 'HDT_RT_CambioUso'),''),
                     new fieldData('Aliquota Accise','ExciseRate__c',this.typeVisibility('ele'),false,true,this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn',''),
                     new fieldData('Addizionale Regionale', 'RegionalAdditional__c',this.typeVisibility('ele'),false,true,this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn','')
                 ]
@@ -1888,6 +1576,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     async connectedCallback(){
         console.log('Details Callback Start');
 
+        console.log('### VasSubtype__c >>> ' + this.order.VasSubtype__c);
+
         let initData = await init();
         console.log('initData: ' + JSON.stringify(initData));
 
@@ -1990,6 +1680,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     handleUpdateCodAtecoEvent(event){
+        console.log('###Ateco Event >>> ' + JSON.stringify(event.detail));
         this.template.querySelector("[data-id='AtecoCode__c']").value = event.detail;
     }
 }

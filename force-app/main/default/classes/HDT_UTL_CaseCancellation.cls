@@ -40,8 +40,8 @@ public inherited sharing class HDT_UTL_CaseCancellation {
         try{
             //List<String> listDescription = new List<String>();
             List<HDT_TechnicalCancellationReason__mdt> technicalCancellationReasonList = Database.query('SELECT Technical_Causal_Cancellation_Reason__c, CancellationReasonDescription__c FROM HDT_TechnicalCancellationReason__mdt WHERE (Causal_Process_to_Cancell__c = \''
-            + String.escapeSingleQuotes(input.causalCode) +'\' OR Causal_Process_to_Cancell__c = null) AND SelectedProcessCancellationReason__c = \''
-            + String.escapeSingleQuotes(input.processCancellationReason) +'\' AND (SelectedProcessCancellationReason__c = null) WITH SECURITY_ENFORCED');
+            + String.escapeSingleQuotes(input.causalCode) +'\' OR Causal_Process_to_Cancell__c = null) AND (SelectedProcessCancellationReason__c = \''
+            + String.escapeSingleQuotes(input.processCancellationReason) +'\' OR SelectedProcessCancellationReason__c = null) WITH SECURITY_ENFORCED');
             // List<HDT_TechnicalCancellationReason__mdt> technicalCancellationReasonList = Database.query(queryCmd);
             if(technicalCancellationReasonList != null && technicalCancellationReasonList.size()>0){
                 toReturn = new HDT_UTL_ResponseCancellationReason(technicalCancellationReasonList[0].Technical_Causal_Cancellation_Reason__c, technicalCancellationReasonList[0].CancellationReasonDescription__c,'OK','Causale ricavata con successo',null);

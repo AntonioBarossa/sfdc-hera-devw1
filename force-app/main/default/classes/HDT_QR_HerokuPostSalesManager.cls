@@ -32,12 +32,12 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         Case recordCase = new Case();
         try {
             if(recordId instanceOf Id){
-                recordCase = [SELECT Id,Type,Cluster__c, AccountCode__c,ContractAccountCode__c,CausalCode__c,ContractCode__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c,CancellationHerokuPracticeCode__c,CalculationBlock__c,CancellationNote__c, CommodityFormula__c, PODPDRFormula__c, Status,DistributorNote__c,Note__c,DocumentNumber__c,BillNumber__c,IbanIsForeign__c, BillingProfile__c, Subprocess__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+                recordCase = [SELECT Id,TotalResidue__c,RefundMethod__c,Type,Cluster__c, AccountCode__c,ContractAccountCode__c,CausalCode__c,ContractCode__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c,CancellationHerokuPracticeCode__c,CalculationBlock__c,CancellationNote__c, CommodityFormula__c, PODPDRFormula__c, Status,DistributorNote__c,Note__c,DocumentNumber__c,BillNumber__c,IbanIsForeign__c, BillingProfile__c, Subprocess__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
             }else if(recordId.containsIgnoreCase('1-')){
                 String likeSiebelNumber = '%' + recordId + '%';
-                recordCase = [SELECT Id,Type,Cluster__c, AccountCode__c,CausalCode__c,ContractAccountCode__c,ContractCode__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c,CancellationHerokuPracticeCode__c, CalculationBlock__c,CancellationNote__c, CommodityFormula__c, PODPDRFormula__c, Status,DistributorNote__c,Note__c,DocumentNumber__c,BillNumber__c,IbanIsForeign__c, BillingProfile__c, Subprocess__c FROM Case WHERE GlobalMigrationKey__c LIKE :likeSiebelNumber WITH SECURITY_ENFORCED LIMIT 1];
+                recordCase = [SELECT Id,TotalResidue__c,RefundMethod__c,Type,Cluster__c, AccountCode__c,CausalCode__c,ContractAccountCode__c,ContractCode__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c,CancellationHerokuPracticeCode__c, CalculationBlock__c,CancellationNote__c, CommodityFormula__c, PODPDRFormula__c, Status,DistributorNote__c,Note__c,DocumentNumber__c,BillNumber__c,IbanIsForeign__c, BillingProfile__c, Subprocess__c FROM Case WHERE GlobalMigrationKey__c LIKE :likeSiebelNumber WITH SECURITY_ENFORCED LIMIT 1];
             }else {
-                recordCase = [SELECT Id,Type,Cluster__c, AccountCode__c,CausalCode__c,ContractAccountCode__c,ContractCode__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c,CancellationHerokuPracticeCode__c, CalculationBlock__c,CancellationNote__c, CommodityFormula__c, PODPDRFormula__c, Status,DistributorNote__c,Note__c,DocumentNumber__c,BillNumber__c,IbanIsForeign__c, Subprocess__c FROM Case WHERE CaseNumber =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+                recordCase = [SELECT Id,TotalResidue__c,RefundMethod__c,Type,Cluster__c, AccountCode__c,CausalCode__c,ContractAccountCode__c,ContractCode__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c,CancellationHerokuPracticeCode__c, CalculationBlock__c,CancellationNote__c, CommodityFormula__c, PODPDRFormula__c, Status,DistributorNote__c,Note__c,DocumentNumber__c,BillNumber__c,IbanIsForeign__c, Subprocess__c FROM Case WHERE CaseNumber =:recordId WITH SECURITY_ENFORCED LIMIT 1];
             }
             
         } catch (DmlException ex) {
@@ -97,28 +97,20 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
 
     public wrts_prcgvr__AsyncJob__c getAsyncJobByJobItem(String recordId){
 
-        wrts_prcgvr__AsyncJob__c asyncJobRec = new wrts_prcgvr__AsyncJob__c();
+        List<wrts_prcgvr__AsyncJob__c> asyncJobRec = new List<wrts_prcgvr__AsyncJob__c>();
 
         try{
-            
-            asyncJobRec = [SELECT Id, 
-        wrts_prcgvr__Details__c,
-        wrts_prcgvr__Status__c
-        FROM wrts_prcgvr__AsyncJob__c
-        WHERE wrts_prcgvr__JobItem__c = :recordId
-        AND (wrts_prcgvr__Status__c = 'Chiusa'
-        
-            OR wrts_prcgvr__Status__c = 'Queued')
-        WITH SECURITY_ENFORCED
-        LIMIT 1];
-
+            asyncJobRec = [ SELECT Id, wrts_prcgvr__Details__c, wrts_prcgvr__Status__c
+                            FROM wrts_prcgvr__AsyncJob__c
+                            WHERE wrts_prcgvr__JobItem__c = :recordId
+                            AND (wrts_prcgvr__Status__c = 'Chiusa'
+                            OR wrts_prcgvr__Status__c = 'Queued')
+                            WITH SECURITY_ENFORCED];
         }catch(Exception e){
-
             asyncJobRec = null;
-
         }
 
-        return asyncJobRec;
+        return asyncJobRec[0];
 
     }
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CanaleVendita__c</fullName>
+    <externalId>false</externalId>
+    <label>Canale di Vendita</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Teleselling Inbound</fullName>
+                <default>false</default>
+                <label>Teleselling Inbound</label>
+            </value>
+            <value>
+                <fullName>Teleselling Outbound</fullName>
+                <default>false</default>
+                <label>Teleselling Outbound</label>
+            </value>
+            <value>
+                <fullName>HC Point</fullName>
+                <default>false</default>
+                <label>HC Point</label>
+            </value>
+            <value>
+                <fullName>Agenzie</fullName>
+                <default>false</default>
+                <label>Agenzie</label>
+            </value>
+            <value>
+                <fullName>Telefono</fullName>
+                <default>false</default>
+                <label>Telefono</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -37,6 +37,15 @@ public class HDT_SRV_PostSalesManagerTst {
     
         insert caseList2;
 
+        List<Case> caseList3 = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        caseList3[0].ParentId  = parentCase.Id;
+        caseList3[0].BillingProfile__c  = billingProfileList[0].Id;
+        caseList3[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AllineamentoAnagrafica').getRecordTypeId();
+        caseList3[0].Type  = 'Marcatura/Uso PdR';
+        caseList3[0].ServicePoint__c = servPointList[0].Id;
+    
+        insert caseList3;
+        
         List<wrts_prcgvr__ActivityTemplate__c> actTempList = new List<wrts_prcgvr__ActivityTemplate__c>();
 
         wrts_prcgvr__ActivityTemplate__c actTemplate1 = new wrts_prcgvr__ActivityTemplate__c();
@@ -308,15 +317,11 @@ public class HDT_SRV_PostSalesManagerTst {
     @IsTest
     static void sbloccoVoltura(){
 
-        Order currentOrder = [SELECT Id, ProcessCode__c FROM Order LIMIT 1];
-
         Case currentCase = [SELECT Id, AccountId, VulturePracticeReference__c FROM Case WHERE Type  = 'Variazione indirizzo di fornitura' LIMIT 1];
-
+        Order currentOrder = [SELECT Id, ProcessCode__c FROM Order LIMIT 1];
         currentOrder.ProcessCode__c = 'NV1';
-        update currentOrder;
 
         currentCase.VulturePracticeReference__c = currentOrder.Id;
-        update currentCase;
 
         Test.startTest();
 
@@ -450,8 +455,8 @@ public class HDT_SRV_PostSalesManagerTst {
     @IsTest
     static void updateServicePoint(){
 
-        Case currentCase = [SELECT Id, ServicePoint__c, UseCategory__c, SupplyType__c, ServicePointType__c FROM Case WHERE Type  = 'Variazione indirizzo di fornitura' LIMIT 1];
-
+        Case currentCase = [SELECT Id, ServicePoint__c, UseCategory__c, SupplyType__c, ServicePointType__c, Type FROM Case WHERE Type  = 'Variazione indirizzo di fornitura' LIMIT 1];
+        currentCase.Type = 'Marcatura/Uso PdR';
         currentCase.UseCategory__c = '004-Uso tecnologico';
         update currentCase;
 
@@ -460,7 +465,7 @@ public class HDT_SRV_PostSalesManagerTst {
         HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
         psm.execute(setArgs('updateServicePoint', currentCase));
 
-        ServicePoint__c updatedServPoint = [SELECT Id, UseCategory__c  FROM ServicePoint__c LIMIT 1];
+        ServicePoint__c updatedServPoint = [SELECT Id, UseCategory__c  FROM ServicePoint__c WHERE Id =:currentCase.ServicePoint__c LIMIT 1];
 
         System.assertEquals('004-Uso tecnologico', updatedServPoint.UseCategory__c, 'UseCategory__c != 004-Uso tecnologico');
         
@@ -471,7 +476,7 @@ public class HDT_SRV_PostSalesManagerTst {
     @IsTest
     static void advanceParentCasePhaseVarIndFornitura(){
         
-        Case currentCase = [SELECT Id, ParentId, Type, Phase__c  FROM Case WHERE Type  = 'Variazione indirizzo di fornitura' LIMIT 1];
+        Case currentCase = [SELECT Id, ParentId, Type, Phase__c  FROM Case WHERE Type  = 'Marcatura/Uso PdR' LIMIT 1];
         Case parentCase = [SELECT Id, Type FROM Case WHERE Id =: currentCase.ParentId LIMIT 1];
 
         Test.startTest();
@@ -575,7 +580,7 @@ public class HDT_SRV_PostSalesManagerTst {
         
     }
 
-    @IsTest
+/*     @IsTest
     static void updateDataFineConnessioneTst(){
         
         List<Order> myOrderList = [ SELECT Id FROM Order ];
@@ -610,7 +615,7 @@ public class HDT_SRV_PostSalesManagerTst {
         System.assertEquals( myCaseListUpdated[0].TemporaryConnectionEndDate__c, myCaseListUpdated[0].Order__r.TemporaryConnectionEndDate__c ,
         'L\'update di TemporaryConnectionEndDate__c nel Order non è andato a buon fine');
         
-    }
+    } */
 
     //occorre mockare la chiamata al WS
     // @IsTest

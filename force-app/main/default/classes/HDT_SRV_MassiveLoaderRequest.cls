@@ -19,7 +19,7 @@ public with sharing class HDT_SRV_MassiveLoaderRequest {
     public MassiveLoaderRequest__c createNewRequestRecord(String processType, Integer priority) {
 
         MassiveLoaderRequest__c newMassiveLoaderRequest = new MassiveLoaderRequest__c(ProcessType__c = processType, Priority__c = priority);
-
+        newMassiveLoaderRequest.Phase__c = 'File non processato';
         Database.insert(newMassiveLoaderRequest);
 
         return newMassiveLoaderRequest;

@@ -10,8 +10,8 @@ public with sharing class HDT_WS_RecallMeTst {
  	@TestSetup
     static void makedata(){
 
-       HDT_UTL_DataFactoryTst.createWebServiceConfiguration('postSlotRequest', 'end', 'method', 'testUser');
-       HDT_UTL_DataFactoryTst.createWebServiceConfiguration('postAppointment', 'end', 'method', 'testUser');
+       HDT_UTL_DataFactoryTst.createWebServiceConfiguration('postSlotRequest', 'Callout:MulesoftBasePath/campaigns/slots/search', 'method', 'testUser');
+       HDT_UTL_DataFactoryTst.createWebServiceConfiguration('postAppointment', 'Callout:MulesoftBasePath/campaigns/appointments', 'method', 'testUser');
        HDT_UTL_DataFactoryTst.createWebServiceCredential('FirstName LastName', 'pass12345', 'usernameTest');
 
     }
@@ -26,11 +26,10 @@ public with sharing class HDT_WS_RecallMeTst {
        req.startRange = System.now().getTime();
        req.endRange= System.now().addDays(1).getTime();
        req.appointmentType= 'PERSONAL_PHONECALL';
-       
+
        Test.startTest();
        HDT_WS_RecallMeResponse res = HDT_WS_RecallMe.postRecallMe('postSlotRequest', req);
        Test.stopTest();
-
        System.assertNotEquals(true, res.result.isEmpty(), 'The result is not empty');
        System.assertEquals(200, res.statusCode, 'The call has been successful');
     }
@@ -48,7 +47,6 @@ public with sharing class HDT_WS_RecallMeTst {
                 
         Test.startTest();
         HDT_WS_Response res = HDT_WS_RecallMe.postRecallMeAppointment('postAppointment', req);
-        System.debug(res);
         Test.stopTest();
         
         System.assertNotEquals(null, res, 'A response was successfully created');

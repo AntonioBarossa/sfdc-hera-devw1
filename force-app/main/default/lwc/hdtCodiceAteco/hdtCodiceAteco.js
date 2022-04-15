@@ -19,7 +19,6 @@ export default class HdtCodiceAteco extends LightningElement {
     currentPage = 0;
     @track tableData = [];
     columns = [
-        {label: 'Matrice Ateco Name', fieldName: 'Name', type: 'text'},
         {label: 'Codice Ateco', fieldName: 'AtecoCode__c', type: 'text'},
         {label: 'Comune', fieldName: 'City__c', type: 'text'},
         {label: 'Codice Istat', fieldName: 'IstatCode__c', type: 'text'},
@@ -32,11 +31,6 @@ export default class HdtCodiceAteco extends LightningElement {
     //handle modal open event
     handleOpenModal(){
         this.visible = true;
-    }
-
-    //handle modal close event
-    handleCloseModal() {
-        this.visible = false;
         this.filterType = '';
         this.disabledInput = true;
         this.submitButtonStatus = true;
@@ -46,6 +40,12 @@ export default class HdtCodiceAteco extends LightningElement {
         this.selectedCode = '';
         this.selectedIstatCode = '';
         this.disabledSave = true;
+    }
+
+    //handle modal close event
+    handleCloseModal() {
+        this.visible = false;
+
     }
 
     get options() {
@@ -190,6 +190,8 @@ export default class HdtCodiceAteco extends LightningElement {
                 message: 'Codice Ateco salvato con successo',
                 variant: 'success',
             }));
+
+            console.log('###Selected Code >>> ' + this.selectedCode)
 
             this.dispatchEvent(new CustomEvent('update_cod_ateco_details',{
                 detail: this.selectedCode

@@ -25,15 +25,33 @@ public inherited sharing class HDT_LC_EditQuote {
         contractSrv.checkReadAccess('Name,AccountId,ContractNumber,BillingProfile__c,Status');
         List<Contract> contract = contractQr.getRecordById(contractId);
         List<SBQQ__QuoteLine__c> quoteLine = quoteLineQr.getRecordsForContractOrderRefVas(quoteId);
-
+        List<SBQQ__QuoteLine__c> quoteLineToUpdate = new List<SBQQ__QuoteLine__c>();
         system.debug('HDT_LC_EditQuote - contract: ' + contract);
         system.debug('HDT_LC_EditQuote - quoteLine: ' + quoteLine);
 
         if (!contract.isEmpty() && !quoteLine.isEmpty()) {
-            quoteLineSrv.updateRecord(new SBQQ__QuoteLine__c(
+            for(SBQQ__QuoteLine__c ql : quoteLine)
+            {
+                if(ql.SBQQ__ProductFamily__c.equalsIgnoreCase('Offerta Commericale') 
+                || ql.SBQQ__ProductFamily__c.equalsIgnoreCase('VAS Prodotto')
+                || ql.SBQQ__ProductFamily__c.equalsIgnoreCase('VAS Servizio')
+                || ql.SBQQ__ProductFamily__c.equalsIgnoreCase('VAS Fatturabili'))
+                {
+                    SBQQ__QuoteLine__c qline = new SBQQ__QuoteLine__c();
+                    qline.Id = ql.Id;
+                    qline.BillingProfile__c = contract[0].BillingProfile__c;
+                    quoteLineToUpdate.add(qline);
+                }
+            }
+            
+            if(!quoteLineToUpdate.isEmpty())
+            {
+                HDT_UTL_DatabaseService.updateSObject(quoteLineToUpdate);
+            }
+            /*quoteLineSrv.updateRecord(new SBQQ__QuoteLine__c(
                 Id = quoteLine[0].Id,
                 BillingProfile__c = contract[0].BillingProfile__c
-            ));
+            ));*/
         } else {
             system.debug('HDT_LC_EditQuote - assocBillingProfileContract - nessun contract o quoteLine trovato');
         }

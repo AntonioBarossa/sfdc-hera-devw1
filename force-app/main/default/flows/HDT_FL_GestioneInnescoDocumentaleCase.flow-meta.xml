@@ -5,7 +5,7 @@
         <name>processType_reclamo</name>
         <label>processType = reclamo</label>
         <locationX>578</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessTypeCalculated</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>set_processType_case_type</name>
         <label>processType = case type</label>
         <locationX>842</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessTypeCalculated</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +37,7 @@
         <name>set_processType_domiciliazione</name>
         <label>processType = domiciliazione</label>
         <locationX>314</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessTypeCalculated</assignToReference>
             <operator>Assign</operator>
@@ -53,7 +53,7 @@
         <name>set_processType_preventivo</name>
         <label>processType = preventivo</label>
         <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessTypeCalculated</assignToReference>
             <operator>Assign</operator>
@@ -70,7 +70,7 @@
         <name>Check_Tipo_Plico</name>
         <label>Tipo Plico?</label>
         <locationX>446</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>set_processType_case_type</targetReference>
         </defaultConnector>
@@ -142,6 +142,31 @@
             <label>Reclamo</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Order_o_Case</name>
+        <label>Order o Case?</label>
+        <locationX>776</locationX>
+        <locationY>158</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Documentale_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Order</defaultConnectorLabel>
+        <rules>
+            <name>Case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sObjectRecordToCancell</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Case</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Case</targetReference>
+            </connector>
+            <label>Case</label>
+        </rules>
+    </decisions>
     <interviewLabel>Gestione Innesco Documentale - Case {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Innesco Documentale - Case</label>
     <processMetadataValues>
@@ -167,7 +192,7 @@
         <name>Get_Case</name>
         <label>Get Case</label>
         <locationX>446</locationX>
-        <locationY>158</locationY>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Tipo_Plico</targetReference>
@@ -188,7 +213,7 @@
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
         <locationX>446</locationX>
-        <locationY>614</locationY>
+        <locationY>734</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -226,6 +251,18 @@
                     <elementReference>ProcessTypeCalculated</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>discardRework</name>
+                <value>
+                    <elementReference>DiscardRework</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>discardActivityId</name>
+                <value>
+                    <elementReference>DiscardActivityId</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -233,14 +270,65 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Screen_Documentale_0</name>
+        <label>Screen Documentale</label>
+        <locationX>1106</locationX>
+        <locationY>278</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>hdtAdvanceDocumentManager</name>
+            <extensionName>c:hdtAdvanceDocumentManagerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isLawEighty</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
-        <locationX>320</locationX>
+        <locationX>650</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Case</targetReference>
+            <targetReference>Order_o_Case</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>DiscardActivityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>DiscardRework</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
     <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
@@ -261,5 +349,15 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>sObjectRecordToCancell</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Case</stringValue>
+        </value>
     </variables>
 </Flow>

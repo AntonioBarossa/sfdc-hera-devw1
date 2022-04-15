@@ -878,18 +878,23 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                                       WITH SECURITY_ENFORCED];
 
         system.debug(LoggingLevel.DEBUG, 'checkForEsitiIntermedi relatedActs' + JSON.serializePretty(relatedActs));
-        String endDate = activityValues.get('DATA_ELABORAZIONE');
+        String endDate = activityValues.containsKey('DATA_ELABORAZIONE')? activityValues.get('DATA_ELABORAZIONE') :
+                        activityValues.containsKey('DATA_EVENTO')? activityValues.get('DATA_EVENTO') : '';
         String cmp = activityValues.get('CMP');
         String utenza = activityValues.get('UTENZA');
         Date endDateVal = null;
         if(String.isNotBlank(endDate)){
             endDateVal = date.valueOf(endDate);
         }
-
+        Datetime endDatetimeVal = null;
+        if(String.isNotBlank(endDate)){
+            endDatetimeVal = Datetime.valueOf(endDate);
+        }
         for(wrts_prcgvr__Activity__c relatedAct: relatedActs){
             system.debug(LoggingLevel.DEBUG, relatedAct);
             relatedAct.wrts_prcgvr__Status__c='Chiusa';
-            relatedAct.EndDate__c = endDateVal!=null ? endDateVal : null;
+            relatedAct.EndDate__c = endDateVal;
+            relatedAct.ActivityEndTime__c = endDatetimeVal;
             relatedAct.UserCompany__c = String.isNotBlank(cmp) ? cmp : null;
             relatedAct.ClosedByUsername__c = String.isNotBlank(utenza) ? utenza : null;
             toUpdate.add(relatedAct);
@@ -986,7 +991,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                             ClosedByUsername__c=u[0].Username,
                                             ClosingCreatorGroup__c = u[0].CreatorGroup__c,
                                             ClosingUserChannel__c = u[0].LoginChannel__c,
-                                            Place__c = u[0].Station__c);
+                                            Place__c = u[0].Station__c,
+                                            ActivityEndTime__c = DateTime.now());
     }
 
     public static Boolean manageSapDiscard(List<SObject> newObjectList, Map<Id,SObject> oldObjectMap){
@@ -1158,4 +1164,18 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         HDT_UTL_DatabaseService.insertSObject(activitiesToCreate);
     }
     //EVERIS fine Gestione Scarto Transitorio
+
+    public static void closeDocumentalManagementActivity(String formParams){
+        Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
+        if (formParamsMap.containsKey('discardRework') && (Boolean)formParamsMap.get('discardRework')){
+            List<wrts_prcgvr__Activity__c> actsToClose = HDT_QR_GenericQuery.getGenericRecords('Id','wrts_prcgvr__Activity__c','wrts_prcgvr__IsClosed__c = false AND Type__c = \'Busta Docusign non consegnata\' AND Id =\''+(String)formParamsMap.get('discardActivityId')+'\'');
+            List<wrts_prcgvr__Activity__c> actsToUpdate = new List<wrts_prcgvr__Activity__c>();
+            for (wrts_prcgvr__Activity__c act : actsToClose){
+                actsToUpdate.add(closeDiscardActivity(act.Id));
+            }
+            if (!actsToUpdate.isEmpty()){
+                HDT_UTL_DatabaseService.updateSObject(actsToUpdate);
+            }
+        }
+    }
 }

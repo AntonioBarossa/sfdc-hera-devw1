@@ -148,7 +148,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                 }
             }else if(String.isNotBlank(outcomeData.errorDescription)){
                 try {
-                    dar = isAutomaticDiscardMap.get(HDT_UTL_Accents.removeDiacritics(outcomeData.errorDescription));
+                    dar = isAutomaticDiscardMap.get(HDT_UTL_Accents.removeDiacritics(outcomeData.errorDescription).toLowerCase());
                 } catch (Exception e) {
                     System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage());
                     System.debug(LoggingLevel.DEBUG, 'Stacktrace: ' + e.getStackTraceString());
@@ -185,7 +185,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
                         activity.wrts_prcgvr__ActivityTemplate__c = templateKoSap.Id;
                         activity.Case__c = caseToUpdate.Id;
-                        activity.wrts_prcgvr__Description__c = outcomeData.errorDescription + ' ' + outcomeData.errorCode;
+                        activity.wrts_prcgvr__Description__c = errorDescriptionAct;
                         activity.Type__c = 'Esito KO da SAP';
                         activity.DiscardCategory__c = 'Scarto complesso';
                         if(String.isnotblank(actRecordTypeId)){
@@ -197,7 +197,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
                         activity.wrts_prcgvr__ActivityTemplate__c = templateKoMdm.Id;
                         activity.Case__c = caseToUpdate.Id;
-                        activity.wrts_prcgvr__Description__c = outcomeData.errorDescription + ' ' + outcomeData.errorCode;
+                        activity.wrts_prcgvr__Description__c = errorDescriptionAct;
                         activity.Type__c = 'Esito KO pre-MDM';
                         activity.DiscardCategory__c = 'Scarto complesso';
                         if(String.isnotblank(actRecordTypeId)){

@@ -4,7 +4,7 @@
     <decisions>
         <name>Check_Cluster</name>
         <label>Check Cluster</label>
-        <locationX>1238</locationX>
+        <locationX>1370</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Schermata_di_errore</targetReference>
@@ -115,11 +115,26 @@
             </connector>
             <label>Autolettura</label>
         </rules>
+        <rules>
+            <name>Pagamenti</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Cluster__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pagamenti</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Pagamenti</targetReference>
+            </connector>
+            <label>Pagamenti</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Check_Type_Activity</name>
         <label>Check Type Activity</label>
-        <locationX>644</locationX>
+        <locationX>710</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Check_Cluster</targetReference>
@@ -165,7 +180,7 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>644</locationX>
+        <locationX>710</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -186,7 +201,7 @@
     <recordLookups>
         <name>Get_Case_Id_From_Activity</name>
         <label>Get Case Id From Activity</label>
-        <locationX>644</locationX>
+        <locationX>710</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -213,7 +228,7 @@
     <screens>
         <name>Schermata_di_errore</name>
         <label>Schermata di errore</label>
-        <locationX>2162</locationX>
+        <locationX>2426</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -227,7 +242,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>518</locationX>
+        <locationX>584</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case_Id_From_Activity</targetReference>
@@ -304,6 +319,18 @@
                 <elementReference>Get_Case.Id</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>DiscardActivityId</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>DiscardRework</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Gestione_Morosit</name>
@@ -315,6 +342,25 @@
             <name>caseId</name>
             <value>
                 <elementReference>caseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>discardActivityId</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Pagamenti</name>
+        <label>Gestione Pagamenti</label>
+        <locationX>2162</locationX>
+        <locationY>638</locationY>
+        <flowName>HDT_FL_DiscardPaymentManagement</flowName>
+        <inputAssignments>
+            <name>CaseToWork</name>
+            <value>
+                <elementReference>Get_Case</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

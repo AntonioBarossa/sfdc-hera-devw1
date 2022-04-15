@@ -38,7 +38,8 @@ public with sharing class HDT_UTL_CampaignMember {
                             (c.Channel__c == 'Cartaceo' && cmdt.Channel__c == 'Cartaceo')
                         )
                     ) ||
-                    (c.Category__c == 'Campagna Marketing Cloud' && cmdt.Category__c == 'Marketing Cloud')
+                    (c.Category__c == 'Campagna Marketing Cloud' && cmdt.Category__c == 'Marketing Cloud') || 
+                    (cmdt.Category__c == 'Outbound' && cmdt.Channel__c == 'Door to Door' && c.Channel__c=='Door to Door')
                 ) {
                     campaignMemberStatuses.add(new CampaignMemberStatus(
                         CampaignId = c.Id,
@@ -237,7 +238,7 @@ public with sharing class HDT_UTL_CampaignMember {
         }
 
         for(CampaignMember member : newCampMembList){
-            if(member.ResultType__c == 'Macchina' && member.ResultType__c != campMembOldMap.get(member.Id).ResultType__c && member.RelatedActivity__c != null){
+            if(member.ResultType__c == 'Macchina' && member.HasResponded==true && member.RelatedActivity__c != null){ //&& member.ResultType__c != campMembOldMap.get(member.Id).ResultType__c 
                 if(actToOrderIdMap.get(member.RelatedActivity__c) != null && isMonitoringList.contains(actToOrderIdMap.get(member.RelatedActivity__c).AgencyCode__c)){
                     if(!actToOrderIdMap.get(member.RelatedActivity__c).RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_OrderDossier')){
                         actToOrdersToCancelMap.put(member.RelatedActivity__c, new List<String>());
@@ -426,5 +427,64 @@ public with sharing class HDT_UTL_CampaignMember {
         }
 
         new HDT_SRV_CampaignMember().updateRecords(processedMembers);
+    }
+
+    public static void setAgency (List<CampaignMember> members) {
+        List <CampaignMemberLeadAssigment__c> cmlaList=[SELECT Id, Active__c FROM CampaignMemberLeadAssigment__c WHERE Active__c=true WITH SECURITY_ENFORCED limit 1];
+        List <CampaignMemberLeadAssigmentItem__c> cmlaItemList=new List <CampaignMemberLeadAssigmentItem__c>();
+        if (cmlaList!=null && cmlaList.size()>0) {
+            cmlaItemList=[SELECT Id, SourceAgency__c, Agency__c, InterestProduct__c, CampaignMemberLeadAssigment__c, ProcessingType__c FROM CampaignMemberLeadAssigmentItem__c WHERE CampaignMemberLeadAssigment__c=:cmlaList[0].Id WITH SECURITY_ENFORCED];
+        }
+
+        Map <String, CampaignMemberLeadAssigmentItem__c> sourceInterestMap=new Map<String, CampaignMemberLeadAssigmentItem__c>();
+
+        for (CampaignMemberLeadAssigmentItem__c cmla : cmlaItemList) {
+            String key='';
+            key=cmla.SourceAgency__c+cmla.InterestProduct__c;
+            sourceInterestMap.put(key, cmla);
+            System.debug('mappa: ' +sourceInterestMap);
+        }
+        set <String> leadOrContIds=new set <String>();
+        set <String> campIds=new set <String>();
+
+        for(CampaignMember cm : members){
+            if (String.isNotBlank(cm.LeadId)) {
+                leadOrContIds.add(cm.LeadId);
+            }
+            if (String.isNotBlank(cm.ContactId)) {
+                leadOrContIds.add(cm.ContactId);
+            }
+            if (String.isNotBlank(cm.CampaignId)) {
+                campIds.add(cm.CampaignId);
+            }
+        }
+
+        if(campIds!=null && campIds.size()>0){
+            Map <Id, Campaign> campMap=new Map <Id, Campaign> ([SELECT id, AssignmentType__c FROM Campaign WHERE Id IN:campIds]);
+            if (leadOrContIds!=null && leadOrContIds.size()>0) {
+                Map <Id, Lead>ldMap= new Map <Id, Lead> ([SELECT Id, SourceAgency__c, InterestProduct__c FROM Lead WHERE Id IN:leadOrContIds]);
+                Map <Id, Contact>ctMap= new Map <Id, Contact> ([SELECT Id, SourceAgency__c, InterestProduct__c FROM Contact WHERE Id IN:leadOrContIds]);
+
+                for(CampaignMember cm : members){
+                    if(String.isNotBlank(cm.CampaignId)){
+                        if(campMap.containsKey(cm.CampaignId)){
+                            if(campMap.get(cm.CampaignId).AssignmentType__c == 'Su Base Lead'){
+                                String key='';
+                                if(String.isNotBlank(cm.LeadId) && ldMap!=null && ldMap.size()>0 && ldMap.containsKey(cm.LeadId)){
+                                    key=ldMap.get(cm.LeadId).SourceAgency__c+ldMap.get(cm.LeadId).InterestProduct__c;
+                                }
+                                else if(String.isNotBlank(cm.ContactId) && ctMap!=null && ctMap.size()>0 && ctMap.containsKey(cm.ContactId)){
+                                    key=ctMap.get(cm.ContactId).SourceAgency__c+ctMap.get(cm.ContactId).InterestProduct__c;
+                                }
+                                if(String.isNotBlank(key) && sourceInterestMap.containsKey(key)){
+                                    cm.Agency__c=sourceInterestMap.get(key).Agency__c;
+                                    cm.ProcessingType__c=sourceInterestMap.get(key).ProcessingType__c;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

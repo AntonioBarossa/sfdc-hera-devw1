@@ -72,7 +72,7 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
     public static void testGetExtimatedCost(){
         Test.startTest();
         
-        Order updateOrder = [SELECT id, Status, EstimateAmount__c, PowerQuote__c, AdministrativeBurden__c, EstimatedVAT__c, ValidityDateEstimate__c, 
+        Order updateOrder = [SELECT id, Status, EstimateAmount__c, DistributorFormula__c, PowerQuote__c, AdministrativeBurden__c, EstimatedVAT__c, ValidityDateEstimate__c, 
                              Phase__c, RecordTypeId, recordType.DeveloperName, PowerRequested__c, PowerAvailable__c, VoltageLevel__c, PowerCommitted__c,
                              UseTypeEnergy__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ConnectionType__c, ProcessCode__c
                             FROM Order
@@ -92,7 +92,7 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
     @isTest 
     public static void testGetFixedQuotes(){
         
-        Order updateOrder = [SELECT id, Status, EstimateAmount__c, PowerQuote__c, AdministrativeBurden__c, EstimatedVAT__c, ValidityDateEstimate__c, 
+        Order updateOrder = [SELECT id, Status, EstimateAmount__c, DistributorFormula__c, PowerQuote__c, AdministrativeBurden__c, EstimatedVAT__c, ValidityDateEstimate__c, 
                              Phase__c, RecordTypeId, recordType.DeveloperName, PowerRequested__c, PowerAvailable__c, VoltageLevel__c, PowerCommitted__c,
                              UseTypeEnergy__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ConnectionType__c, ProcessCode__c, SupplyType__c
                              FROM Order

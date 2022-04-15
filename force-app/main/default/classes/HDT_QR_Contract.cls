@@ -256,6 +256,7 @@ public inherited sharing class HDT_QR_Contract {
 
     public SBQQ__Subscription__c  getSubscriptionFromContract(String contractId){
         return [SELECT Id,
+        SBQQ__Product__c,
         ProductCode__c,
         SBQQ__ProductName__c,
         CategoryFamily__c,

@@ -3,9 +3,10 @@
     <fullName>Agency__c</fullName>
     <description>Agenzia assegnata alla coda</description>
     <externalId>false</externalId>
-    <label>Agenzia</label>
+    <label>@deprecated</label>
     <length>255</length>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

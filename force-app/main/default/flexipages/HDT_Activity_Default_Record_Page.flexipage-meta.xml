@@ -629,49 +629,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>hdtCopiaContrattoInvioRegConfirm</componentName>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Invio registrazione</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Chiusa</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-4c66df7c-04fd-4bf0-832c-c6844764462d</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>active</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-4c66df7c-04fd-4bf0-832c-c6844764462d</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Invio Registrazione</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-502cc4d7-0832-4885-ae6a-ff97e12beb8b</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
                 <componentName>hdtCopiaContrattoInvioRecPostel</componentName>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
@@ -997,6 +954,21 @@
                 <fieldItem>Record.SuspensionReason__c</fieldItem>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ParentActivity__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.ParentActivity__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-52a62b0f-0db8-4db8-a0eb-dde5537c7162</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1033,6 +1005,22 @@
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Gestione dati discordanti</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Interaction__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_RegisterActivity</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1163,6 +1151,18 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.SuspensionDueDate__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.AttemptCount__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Contattare il cliente</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-89e09c30-566d-4833-be03-3b926e0c4b28</name>
@@ -1461,6 +1461,15 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Distributor__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-92caf3f0-d634-4041-a98b-0e0f117d3553</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1680,6 +1689,28 @@
                         <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>HDT_RT_KoPrecedeteCliente</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AuthorisedBy__c</fieldItem>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>KO forzato</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_CreditCheckKO</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -2562,28 +2593,6 @@
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Approvazione Bonus Commerciale</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Chiusa</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>tabs</name>
-                    <value>Facet-502cc4d7-0832-4885-ae6a-ff97e12beb8b</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tabset</componentName>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Invio registrazione</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>

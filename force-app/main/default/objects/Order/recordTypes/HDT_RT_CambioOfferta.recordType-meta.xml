@@ -383,6 +383,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato per possibile frode</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullo cambio offerta</fullName>
             <default>false</default>
         </values>
@@ -2417,10 +2421,10 @@
             <fullName>Sequenzializzato</fullName>
             <default>false</default>
         </values>
-<!--         <values>
+        <values>
             <fullName>Annullamento per Switch-out</fullName>
             <default>false</default>
-        </values> -->
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PressureLevel__c</picklist>

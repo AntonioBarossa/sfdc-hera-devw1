@@ -12,6 +12,7 @@ public with sharing class HDT_SRV_SalesHandler {
      * Added class instance
      */
     private static HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
+    private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
     private static Set<String> moveOutProcesses = new Set<String>{'Cambio Uso','Voltura','Cambio Offerta Ele','Cambio Offerta Gas'};
     private static String erroreLavorazioneSapPhase = 'Errore lavorazione SAP';
     private static String annullatoPhase = 'Annullato';
@@ -48,7 +49,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 HDT_UTL_ActivityCustom.createActivityWithParams(new Map<String,String>{
                                     'RecordTypeDeveloperName' => 'HDT_RT_AttivitaGestionali',
                                     'Type__c'                 => 'Gestione Switch in Ripristinatorio',
-                                    'wrts_prcgvr__Status__c'               => 'Creata',
+                                    'wrts_prcgvr__Status__c'               => 'Aperta',
                                     'ServicePointCode__c'     => mapRequestFields.get('COD_PDR'),
                                     'FiscalCode__c'           => mapRequestFields.get('CODICE_FISCALE'),
                                     'VATNumber__c'            => mapRequestFields.get('PIVA'),
@@ -96,7 +97,8 @@ public with sharing class HDT_SRV_SalesHandler {
                         String errDescr = mapRequestFields.get('NOTE_ERR')!=null ? mapRequestFields.get('NOTE_ERR') : '';
                         String utenza = mapRequestFields.get('UTENZA')!=null ? mapRequestFields.get('UTENZA') : '';
                         String cmp = mapRequestFields.get('CMP')!=null ? mapRequestFields.get('CMP') : '';
-                        String dataElab = mapRequestFields.get('DATA_ELABORAZIONE')!=null ? mapRequestFields.get('DATA_ELABORAZIONE') : '';
+                        String dataElab = mapRequestFields.get('DATA_ELABORAZIONE')!=null ? mapRequestFields.get('DATA_ELABORAZIONE') : 
+                            String.isNotBlank(mapRequestFields.get('DATA_EVENTO')) ? mapRequestFields.get('DATA_EVENTO') : '';
                         String oldDescription = ordRetrieved.Description != null ? ordRetrieved.Description : '';
                         Map<String, String> mapActivityField = new Map<String, String>();
                         mapActivityField.put('NOTE_ERR',errDescr);
@@ -175,7 +177,11 @@ public with sharing class HDT_SRV_SalesHandler {
                                     }
 
                                     if (String.isNotBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
+                                        HDT_LC_CalculateEstimatedCost calculateAmount = new HDT_LC_CalculateEstimatedCost();
                                         ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
+                                        Map<String,Decimal> amounts = calculateAmount.getAmounts(ordRetrieved.SupplyType__c, ord.EstimateAmount__c);
+                                        ord.AdministrativeBurden__c = amounts.get('fixedAmount');
+                                        ord.VariableAmount__c = amounts.get('variableAmount');
                                         Boolean isDispatcherInMtd= HDT_UTL_QuoteManagement.checkLocalDispatcher(ord.ServicePoint__r.Distributor__r.Name);
                                         Integer validityDateDelay=isDispatcherInMtd ? 90 : 30; //ExtraRete? 30 : InRete? 90 : AAA? 180 : null; Manca caso AAA
                                         ord.QuotationType__c='Predeterminabile';
@@ -196,9 +202,14 @@ public with sharing class HDT_SRV_SalesHandler {
                                         }
                                     }
                                 }
-                                when 'Dati Tecnici Ricevuti'{
+                                when 'Dati tecnici ricevuti'{
                                     HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
                                     utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
+                                    /**@frpanico 2022-04-13
+                                     * Aggiunto supplytype alla variabile ord
+                                     * per il calcolo degli importi fissi e variabili
+                                     */
+                                    ord.SupplyType__c = ordRetrieved.SupplyType__c;
                                     switch on mapRequestFields.get('COD_FLUSSO'){
                                         when 'E154'{
                                             utlTechData.handleE154Flow(mapRequestFields, ord);
@@ -226,7 +237,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 when 'Esito KO da DL' {
                                     //Gestione Esito Appuntamento;
                                     HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
-                                    appService.updateExtraSystemAppointment('Esito KO da DL', ord.Id, discardReasonString);
+                                    appService.updateExtraSystemAppointment('Esito KO da DL', ord.Id, discardReasonString,mapActivityField);
                                     //fine Gestione Esito Appuntamento;
                                     ord.DiscardReason__c = discardReasonString;
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
@@ -238,7 +249,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 when 'Esito OK da DL' {
                                     //Gestione Esito Appuntamento;
                                     HDT_SRV_AppointmentAgenda appService = new HDT_SRV_AppointmentAgenda();
-                                    appService.updateExtraSystemAppointment('Esito OK da DL', ord.Id, discardReasonString);
+                                    appService.updateExtraSystemAppointment('Esito OK da DL', ord.Id, discardReasonString,mapActivityField);
                                     //fine Gestione Esito Appuntamento;
                                     HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
                                     utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
@@ -256,10 +267,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                     Id rtConnectionwithActivation      = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConnessioneConAttivazione').getRecordTypeId();
                                     listRecType.add(rtTemporaryNewActivation);
                                     listRecType.add(rtConnectionwithActivation);
-                                    if (listRecType.contains(ord.recordtypeId )   ) {
+                                    if (listRecType.contains(ordRetrieved.recordtypeId )   ) {
                                         ord.ServicePointCode__c = mapRequestFields.get('POD');
-                                        ord.ServicePoint__r.Name= mapRequestFields.get('POD');
-                                        ord.ServicePoint__r.ServicePointCode__c = mapRequestFields.get('POD');
+                                        ServicePoint__c sp = new ServicePoint__c();
+                                        sp.Id = ordRetrieved.ServicePoint__c;
+                                        sp.Name= mapRequestFields.get('POD');
+                                        sp.ServicePointCode__c = mapRequestFields.get('POD');
+                                        HDT_UTL_DatabaseService.updateSObject(sp);
                                     }
                                     //End HRAWRM-657 21/09/2021
                                     switch on mapRequestFields.get('COD_FLUSSO'){
@@ -410,7 +424,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                         listRecordType.add(rtChangeOffer);
                                         listRecordType.add(rtVultureWithSwitch);
 
-                                        if (!listRecordType.contains(ord.recordtypeId ) && String.isNotBlank(mapRequestFields.get('DT_CREA'))  ) {
+                                        if (!listRecordType.contains(ordRetrieved.recordtypeId ) && String.isNotBlank(mapRequestFields.get('DT_CREA'))  ) {
                                             ord.EffectiveDate__c = date.valueOf( mapRequestFields.get('DT_CREA'));
                                         }
                                         //End HRAWRM-657 21/09/2021
@@ -430,6 +444,8 @@ public with sharing class HDT_SRV_SalesHandler {
                                             ord.OrderODV__c = mapRequestFields.get('VBELN');
                                             ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
                                             ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                            if(mapRequestFields.get('PARTNER') != null)
+                                                ord.CustomerCode__c = mapRequestFields.get('PARTNER');
                                             ord.Status='Activated';
                                             
                                             if(mapRequestFields.get('VKONT') != null) {
@@ -446,6 +462,15 @@ public with sharing class HDT_SRV_SalesHandler {
                                                 catch(Exception e){
                                                     throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating Billing Profile, VKONT Already not Unique - '+e.getMessage());
                                                 }
+
+                                                //Gestione CodiceCliente/Update Account - HRADTR_GV 31/03/2022
+                                                Account accToUpdate = new Account();
+                                                accToUpdate.Id = ordRetrieved.AccountId;
+                                                if(ord.CustomerCode__c != null)
+                                                {
+                                                   accToUpdate.CustomerCode__c = ord.CustomerCode__c;
+                                                }
+                                                    accountSrv.updateRecord(accToUpdate);
                                             }
                                             if(ordRetrieved.ProcessType__c.containsIgnoreCase('Subentro') || (ordRetrieved.ProcessType__c.containsIgnoreCase('Voltura') && !ordRetrieved.PhaseStory__c.containsIgnoreCase('Voltura Rifiutata'))){
                                                 mapRequestFields.put('NuovoAccount',ordRetrieved.AccountId);
@@ -523,7 +548,8 @@ public with sharing class HDT_SRV_SalesHandler {
                         String errDescr = mapRequestFields.get('NOTE_ERR')!=null ? mapRequestFields.get('NOTE_ERR') : '';
                         String utenza = mapRequestFields.get('UTENZA')!=null ? mapRequestFields.get('UTENZA') : '';
                         String cmp = mapRequestFields.get('CMP')!=null ? mapRequestFields.get('CMP') : '';
-                        String dataElab = mapRequestFields.get('DATA_ELABORAZIONE')!=null ? mapRequestFields.get('DATA_ELABORAZIONE') : '';
+                        String dataElab = mapRequestFields.get('DATA_ELABORAZIONE')!=null ? mapRequestFields.get('DATA_ELABORAZIONE') : 
+                            String.isNotBlank(mapRequestFields.get('DATA_EVENTO')) ? mapRequestFields.get('DATA_EVENTO') : '';
                         Map<String, String> mapActivityField = new Map<String, String>();
                         mapActivityField.put('NOTE_ERR',errDescr);
                         mapActivityField.put('UTENZA',utenza);

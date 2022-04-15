@@ -126,7 +126,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                    // System.debug('PROVA WSFORM7');
-                    Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
+                    Account ac= acQr.getAccountByName(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
                     String macroactivity= null;
@@ -143,7 +143,7 @@ public with sharing class HDT_UTL_LeadProcess {
                         macroactivity= campaign[0].MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                     }
                     
-                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id,phonenumber__c = mapRequestFields.get('CELLULARE'));
+                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     
                     cmSrv.createRecord(cm);
 
@@ -301,7 +301,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                     
-                    Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
+                    Account ac= acQr.getAccountByName(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
                     String macroactivity= null;
@@ -318,7 +318,7 @@ public with sharing class HDT_UTL_LeadProcess {
                         campaignId = campaign[0].Id;
                         macroactivity= campaign[0].MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                     }
-                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id);
+                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     cmSrv.createRecord(cm);
 
                     responseField.fieldType = 'TEXT';
@@ -475,7 +475,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                     
-                    Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
+                    Account ac= acQr.getAccountByName(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
                     String macroactivity= null;
@@ -493,7 +493,7 @@ public with sharing class HDT_UTL_LeadProcess {
                         macroactivity= campaign[0].MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                         
                     }
-                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id);
+                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     cmSrv.createRecord(cm);
 
                     if(mapRequestFields.get('FILE') != null && mapRequestFields.get('FILE') != ''){
@@ -668,7 +668,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                     
-                    Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
+                    Account ac= acQr.getAccountByName(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
                     String macroactivity= null;
@@ -685,7 +685,7 @@ public with sharing class HDT_UTL_LeadProcess {
                         campaignId = campaign[0].Id;
                         macroactivity= campaign[0].MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                     }
-                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id);
+                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     cmSrv.createRecord(cm);
 
                     responseField.fieldType = 'TEXT';
@@ -862,7 +862,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                     
-                    Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
+                    Account ac= acQr.getAccountByName(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
                     String macroactivity= null;
@@ -879,7 +879,7 @@ public with sharing class HDT_UTL_LeadProcess {
                         campaignId = campaign[0].Id;
                         macroactivity= campaign[0].MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                     }
-                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id);
+                    CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     cmSrv.createRecord(cm);
 
                     responseField.fieldType = 'TEXT';

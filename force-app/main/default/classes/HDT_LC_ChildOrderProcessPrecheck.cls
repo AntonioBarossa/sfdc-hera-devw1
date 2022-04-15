@@ -16,10 +16,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     private static HDT_QR_AnagAlignment regionalAdditionalQr = new HDT_QR_AnagAlignment();
 
     @AuraEnabled
-    public static List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> init(Order order){
-        List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> processesList = new List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process>();
+    public static List<ProcessMatrix__c> init(Order order){
+        List<ProcessMatrix__c> processesList = new List<ProcessMatrix__c>();
 
-        if (order.ServicePoint__c != null && order.IsVAS__c == false) {//returns processes that are different from VAS
+        if (order.ServicePoint__c != null && order.IsVAS__c == false 
+            && (order.VasSubtype__c == null || (order.VasSubtype__c != null && !order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi')))) {//returns processes that are different from VAS
             processesList = HDT_UTL_OrderProcessAssignment.getAvailableProcesses(order);
         }
 
@@ -27,14 +28,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     }
 
     @AuraEnabled
-    public static Integer getConsumptionAnnualForVas(String orderId){
+    public static String getConsumptionAnnualForVas(String orderId){
         
         try{
-            Integer consumptionAnnual = null;
+            String consumptionAnnual = null;
             if(orderId != null && orderId != ''){
                 List<OrderItem> orderItemList = [SELECT Id,ConsumptionAnnual__c FROM OrderItem WHERE OrderId = :orderId AND Order.IsVAS__c = true AND ConsumptionAnnual__c != null WITH SECURITY_ENFORCED];
-                if(!orderItemList.isEmpty()){
-                    consumptionAnnual = (Integer)orderItemList[0].ConsumptionAnnual__c;
+                if(!orderItemList.isEmpty() && orderItemList[0] != null){
+                    consumptionAnnual = String.valueOf(orderItemList[0].ConsumptionAnnual__c);
                 }
             }
             return consumptionAnnual;
@@ -80,16 +81,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         if(compatibility == '' || compatibility == order.OrderNumber){
             system.debug('extraParams: ' + extraParams);
 
-            String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(selectedProcessObject.get('recordType'));
+            String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(selectedProcessObject.get('RecordTypeName__c'));
 
             //INIZIO SVILUPPI EVERIS
             Order newOrder = new Order();    
             //FINE SVILUPPI EVERIS
 
-            String processType = selectedProcessObject.get('processType');
-            String processCode = selectedProcessObject.get('processCode');
+            String processType = selectedProcessObject.get('ProcessName__c');
+            String processCode = selectedProcessObject.get('CasualCode__c');
 
-            switch on selectedProcessObject.get('recordType') {
+            switch on selectedProcessObject.get('RecordTypeName__c') {
                 //INIZIO SVILUPPI EVERIS
                 when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'
                 {
@@ -100,11 +101,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     if(!contracts.isEmpty())
                     {
                         List<AccountContactRelation> exitingContacts = voltureChangeQr.getContactInfosByAccountId(contracts[0].AccountId);
-                        newOrder.PreviousCustomer__c = exitingContacts[0]?.ContactId;
+                        if(!exitingContacts.isEmpty())
+                        {
+                            newOrder.PreviousCustomer__c = exitingContacts[0]?.ContactId;
+                        }
                         newOrder.ContractReference__c = contracts[0]?.Id;
 						sapCode = contracts[0].SAPContractCode__c;
                     }
-                    processType = selectedProcessObject.get('recordType').equalsIgnoreCase('HDT_RT_Voltura') ? 'Voltura' : 'Voltura con Switch';
+                    processType = selectedProcessObject.get('RecordTypeName__c').equalsIgnoreCase('HDT_RT_Voltura') ? 'Voltura' : 'Voltura con Switch';
                     newOrder.Subprocess__c = 'Standard';
                     newOrder.VoltureType__c = 'Ordinaria';
                     processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
@@ -138,14 +142,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                  */
                 when 'HDT_RT_ScontiBonus'
                 {
-                    Order currentOrder = orderQr.getRecordById(orderId);
-                    if(currentOrder.NumeratorGroup__c != null && ((String)currentOrder.get('NumeratorGroup__c')).equalsIgnoreCase('ELPVEDM'))
+                    newOrder.EffectiveDate__c = getEffectiveDateBonus(orderId);
+                }
+                when 'HDT_RT_VAS'
+                {
+                    if(order.VASSubtype__c.equalsIgnoreCase('Analisi Consumi'))
                     {
-                        newOrder.EffectiveDate__c =  (System.today().addMonths(1)).toStartOfMonth();
-                    }
-                    else
-                    {
-                        newOrder.EffectiveDate__c = System.today();    
+                        newOrder.EffectiveDate__c = getEffectiveDateBonus(orderId);
                     }
                 }
 
@@ -164,6 +167,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 }
             }
 
+            if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale')
+            {
+                newOrder.VAT__c = 
+                    order.CommodityFormula__c == 'Energia Elettrica' ?
+                        order.SupplyType__c == 'Domestico' ? 'Iva 10% (Cod. 01)' : 'Iva 22% (Cod. 02)'
+                    : 'Iva 22% (Cod. 02)';
+            }
+
             //EVERIS: MODIFICATA LOGICA DI UPDATE PER GESTIRE I PREDEFAULT
             newOrder.Id = orderId;
             newOrder.RecordTypeId = recordTypeId;
@@ -173,7 +184,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             newOrder.ProcessCode__c = processCode;
             newOrder.AggregateBilling__c = 'Si';
             newOrder.Phase__c = 'Bozza';
-            
+            newOrder.PressureLevel__c =  (extraParams.get('servicePointType') == 'HDT_RT_Gas') ? 'BP' : null;
             //Logica Superficie Servita Start
             newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas') ? 75 : null;
             //Logica Superficie Servita End
@@ -252,5 +263,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
+    }
+
+    private static Date getEffectiveDateBonus(String orderId)
+    {
+        Order currentOrder = orderQr.getRecordById(orderId);
+        Date effectiveDate = System.today();
+        if(currentOrder.NumeratorGroup__c != null && ((String)currentOrder.get('NumeratorGroup__c')).equalsIgnoreCase('ELPVEDM'))
+        {
+            effectiveDate =  (System.today().addMonths(1)).toStartOfMonth();
+        }
+
+        return effectiveDate;
     }
 }

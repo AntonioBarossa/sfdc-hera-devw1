@@ -123,9 +123,31 @@ public inherited sharing class HDT_QR_QuoteLine {
             BillingProfile__r.Name
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
-            AND SBQQ__Quote__r.ContractReference__c = null
-            AND SBQQ__Quote__r.OrderReference__c = null
+            AND (SBQQ__Quote__r.ContractReference__c = null OR SBQQ__Quote__r.OrderReference__c = null)
             AND SBQQ__Product__r.Name != 'Analisi Consumi'
+            AND (SBQQ__ProductFamily__c = 'VAS Fatturabili' OR SBQQ__ProductFamily__c = 'VAS Prodotto' OR SBQQ__ProductFamily__c = 'VAS Servizio')
+            AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredPaymentMethodforVas(String saleId,Boolean isModal){
+
+        return [
+            SELECT
+            Id,
+            SBQQ__RequiredBy__c,
+            Name,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            SBQQ__Product__r.Name,
+            SBQQ__Quote__r.Name,
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            BillingProfile__c,
+            BillingProfile__r.Name
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__r.Sale__c = :saleId
+            AND (SBQQ__Quote__r.ContractReference__c = null OR SBQQ__Quote__r.OrderReference__c = null)
             AND (SBQQ__ProductFamily__c = 'VAS Fatturabili' OR SBQQ__ProductFamily__c = 'VAS Prodotto' OR SBQQ__ProductFamily__c = 'VAS Servizio')
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
@@ -138,8 +160,14 @@ public inherited sharing class HDT_QR_QuoteLine {
     * @param saleId 
     * @return List<SBQQ__QuoteLine__c> 
     **/
+    /**@frpanico 2022-03-25
+     * La quoteLine di "sconti e bonus"
+     * Deve staccare un ordine solo
+     * nel caso di VAS Fatturabili
+     */
     public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredFamilyBonus(String saleId){
-        Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
+        Set<String> famils = new Set<String>(); /*HDT_UTL_OrderProcessAssignment.getFamilySconto();*/
+        famils.add('VAS Fatturabili');
         return [
             SELECT
             Id,
@@ -304,7 +332,8 @@ public inherited sharing class HDT_QR_QuoteLine {
             Id,
             Name,
             BillingProfile__c,
-            SBQQ__Quote__c
+            SBQQ__Quote__c,
+            SBQQ__ProductFamily__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__c = :quoteId
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')

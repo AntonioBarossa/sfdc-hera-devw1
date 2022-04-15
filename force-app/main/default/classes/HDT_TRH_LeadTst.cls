@@ -31,10 +31,11 @@ public with sharing class HDT_TRH_LeadTst{
 
 			List<User> ownerUser = new List<User>();
 			ownerUser.add(internalUser);
-        	
+
+			List<Lead> myLeadList = [Select id from Lead WHERE FirstName='FirstNameTest0' LIMIT 1];
 
 			Database.LeadConvert convLead=new Database.LeadConvert();
-			convLead.setLeadId(leads[0].Id);
+			convLead.setLeadId(myLeadList[0].Id);
 
 			leadStatus convertStatus=[SELECT Id, MasterLabel
 			                          FROM LeadStatus
@@ -60,7 +61,7 @@ public with sharing class HDT_TRH_LeadTst{
 
 			test.startTest();
 
-			Lead lead = [SELECT Id, FirstName,LastName,MobilePhone,Company, CompanyOwner__c,MobilePhonePrefix__c,ConvertedContactId,Phone,Email,IndividualId, PhonePrefix__c FROM Lead WHERE FirstName='FirstNameTest0' AND IsConverted = true LIMIT 1];
+			Lead lead = [SELECT Id, FirstName,LastName,MobilePhone,Company, CompanyOwner__c,MobilePhonePrefix__c/*,ConvertedContactId*/,Phone,Email,IndividualId, PhonePrefix__c FROM Lead WHERE FirstName='FirstNameTest0' AND IsConverted = true LIMIT 1];
 			Lead newLead= lead.clone();
 			newLead.Country = 'Italy';
             newLead.CompanyOwner__c= 'MMS';
@@ -94,7 +95,7 @@ public with sharing class HDT_TRH_LeadTst{
 
 			test.startTest();
 
-			Lead lead = [SELECT Id, FirstName,LastName,MobilePhone,Company, CompanyOwner__c,MobilePhonePrefix__c,ConvertedContactId,Phone,Email,IndividualId, PhonePrefix__c FROM Lead WHERE FirstName='FirstNameTest0' AND IsConverted = true LIMIT 1];
+			Lead lead = [SELECT Id, FirstName,LastName,MobilePhone,Company, CompanyOwner__c,MobilePhonePrefix__c/*,ConvertedContactId*/,Phone,Email,IndividualId, PhonePrefix__c FROM Lead WHERE FirstName='FirstNameTest0' AND IsConverted = true LIMIT 1];
 			
             lead.LastName='Smith';
             lead.FirstName='George';

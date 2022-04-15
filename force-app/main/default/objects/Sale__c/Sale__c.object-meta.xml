@@ -56,7 +56,6 @@
         <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
-    <!-- HRDTR-00_HRAWRM-249 07/09/2021-->
     <actionOverrides>
         <actionName>Edit</actionName>
         <content>HDT_LCP_OverrideEditButton</content>
@@ -64,7 +63,6 @@
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>LightningComponent</type>
     </actionOverrides>
-    <!-- HRDTR-00_HRAWRM-249 07/09/2021-->
     <actionOverrides>
         <actionName>Edit</actionName>
         <type>Default</type>
@@ -151,7 +149,7 @@
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
@@ -162,6 +160,7 @@
     <label>Vendita</label>
     <nameField>
         <label>Vendita Name</label>
+        <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>Vendite</pluralLabel>

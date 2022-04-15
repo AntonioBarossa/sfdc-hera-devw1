@@ -19,13 +19,13 @@
                 </aura:if>
                 <aura:if isTrue="{! v.showMalfunctionFields }">
                     <lightning:inputField fieldName="MalfunctionDate__c" required="true"/>
-                    <lightning:inputField fieldName="MalfunctionDescription__c" required="true"/>
                     <lightning:inputField fieldName="MalfunctioningFeature__c" required="true"/>
+                    <lightning:inputField fieldName="MalfunctionDescription__c" required="true"/>
                     <lightning:inputField fieldName="MalfunctionsCount__c" required="true"/>
-                    <lightning:inputField fieldName="CustomerImpact__c" required="true"/>
-                    <lightning:inputField fieldName="OperationImpacts__c" required="true"/>
                     <lightning:inputField fieldName="ExpectedBehavior__c" required="true"/>
                     <lightning:inputField fieldName="AnomalyExample__c" required="true"/>
+                    <lightning:inputField fieldName="OperationImpacts__c" required="true"/>
+                    <lightning:inputField fieldName="CustomerImpact__c" required="true"/>
                 </aura:if>
                 <div class="slds-align_absolute-center">
                     <lightning:button class="slds-m-top_small" type="submit" label="Salva"/>
