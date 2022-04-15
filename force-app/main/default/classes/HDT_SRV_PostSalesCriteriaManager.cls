@@ -28,6 +28,10 @@ global inherited sharing class HDT_SRV_PostSalesCriteriaManager implements wrts_
             when 'notExecWorks'{
                 result = criteriaUtl.notExecWorks((String)sender.get('PhaseStory__c'));
             }
+            when 'isRapidoToAnalitico'
+            {
+                result = criteriaUtl.isRapidoToAnalitico((String)sender.get('Id'));
+            }
         }
 
         return result;

@@ -282,6 +282,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
         List<ComfortQualityCall__c> comfortQualityList = new List<ComfortQualityCall__c>();
 
+        if(order.SignatureMethod__c.containsIgnoreCase('OTP'))
+        {
+            orderToUpdate.CIAccoutn__c = '';
+        }
+
+
         if (order.RecordType.DeveloperName == 'HDT_RT_VAS') {
             comfortQualityList = HDT_QR_ComfortQualityCall.getRecordByOrderParamsVas(order);
         }
