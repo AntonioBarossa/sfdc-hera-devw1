@@ -1,4 +1,4 @@
-public with sharing class HDT_QBL_InvioNumerazioni implements Queueable {
+public with sharing class HDT_QBL_InvioNumerazioni implements Queueable, Database.AllowsCallouts {
     private String macroactivity;
     private String phonenumber;
     private Datetime callDateTime;
