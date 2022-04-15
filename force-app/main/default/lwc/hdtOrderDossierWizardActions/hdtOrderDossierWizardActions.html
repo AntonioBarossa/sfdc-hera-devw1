@@ -11,7 +11,7 @@
                 </li>
                 <template if:true={enableDocumental}>
                     <li>
-                        <lightning-button onclick={handleModalPreview} class="slds-m-left_x-small" disabled={isSaveButtonDisabled} icon-name="utility:save" variant="brand" label="Preview" title="Preview action"></lightning-button>
+                        <lightning-button onclick={handleModalPreview} class="slds-m-left_x-small" disabled={disablePreviewButton} icon-name="utility:save" variant="brand" label="Preview" title="Preview action"></lightning-button>
                     </li>
                     <li>
                         <lightning-button onclick={sendDocumentFile} class="slds-m-left_x-small" disabled={disablePrintButtonFunction} icon-name="utility:save" variant="brand" label="Stampa" title="Save action"></lightning-button>
@@ -67,7 +67,7 @@
                         <!-- Modal/Popup Box LWC footer starts here -->
                         <footer class="slds-modal__footer">
                             <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Chiudi</button>
-                            <button class="slds-button slds-button_brand" onclick={confirmPreview} title="Confirm">Procedi</button>
+                            <button class="slds-button slds-button_brand" disabled={isPreviewForbidden} onclick={confirmPreview} title="Confirm">Procedi</button>
                         </footer>
                     </div>
                 </section>
