@@ -4,6 +4,7 @@
  * @description HDT_UTL_CompanyOwner Classes
  * @history Sabina Levonja 04/06/2021 – Created class
  */
+@SuppressWarnings('PMD.CyclomaticComplexity, PMD.NcssMethodCount, PMD.AvoidDeeplyNestedIfStmts')
 public inherited sharing class HDT_UTL_CompanyOwner {
 
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
@@ -41,8 +42,12 @@ public inherited sharing class HDT_UTL_CompanyOwner {
             Map<String,Contact> contactsMap=new Map<String,Contact>();
 
             for(SObject s: objs){
+
+                String rtId = '';
                 objectApiName=String.valueOf(s.getSObjectType());
-                String rtId = (String) s.get('RecordTypeId');
+                if(objectApiName.equalsIgnoreCase('Account')){
+                    rtId = (String) s.get('RecordTypeId');
+                }
                 
                 if((objectApiName=='Account' && !accRecTypeIdMap.get(rtId).equalsIgnoreCase('HDT_RT_Distributore') && !accRecTypeIdMap.get(rtId).equalsIgnoreCase('HDT_RT_Partner')) || (objectApiName=='Lead' && s.get('LeadSource') != 'DBU')){
                     if(s.get('CompanyOwner__c') == null){
