@@ -1015,7 +1015,8 @@ public inherited sharing class HDT_QR_Order {
         PowerAvailable__c,
         VoltageLevel__c,
         AccountId,
-        IsTechnicalTransfer__c
+        IsTechnicalTransfer__c,
+        Sale__c
         FROM Order 
         WHERE ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
