@@ -970,9 +970,48 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return productList;
 	}
 
+	public static SBQQ__ProductOption__c createProductOption(Id productId, Id parentProductId, Boolean doInsert){
+
+		SBQQ__ProductOption__c productOption =new SBQQ__ProductOption__c();
+		productOption.SBQQ__ConfiguredSKU__c = parentProductId;
+		productOption.SBQQ__OptionalSKU__c = productId;
+		productOption.SBQQ__Number__c = 1;
+        productOption.SBQQ__Quantity__c = null;
+        productOption.SBQQ__QuantityEditable__c = false;
+        productOption.SBQQ__Selected__c = false;
+        productOption.SBQQ__Feature__c = null;
+        productOption.SBQQ__Type__c = 'Related Product';
+		if (doInsert){
+
+			insert productOption;
+		}
+		return productOption;
+	}
+
 	public static List<PricebookEntry> createPricebookEntry(List<Product2> productList, Boolean doInsert, Id pricebookId){
 
 		List<PricebookEntry> pricebookEntries=new List<PricebookEntry>();
+
+		for (Product2 product:productList){
+
+			pricebookEntries.add(new PricebookEntry(Product2Id=product.Id, Pricebook2Id=pricebookId, UseStandardPrice=false, UnitPrice=0, IsActive=true));
+		}
+
+		if (doInsert){
+
+			insert pricebookEntries;
+		}
+
+		return pricebookEntries;
+	}
+	public static List<PricebookEntry> createPricebookEntry(List<Product2> productList, Boolean doInsert, Id pricebookId, Id priceBookStandard){
+
+		List<PricebookEntry> pricebookEntries=new List<PricebookEntry>();
+		
+		for (Product2 product:productList){
+
+			pricebookEntries.add(new PricebookEntry(Product2Id=product.Id, Pricebook2Id=priceBookStandard, UseStandardPrice=false, UnitPrice=0, IsActive=true));
+		}
 
 		for (Product2 product:productList){
 
@@ -1256,7 +1295,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			pricebook.Name='Test Price Book'+i;
 			pricebook.IsActive=true;
-
 			pricebookList.add(pricebook);
 		}
 

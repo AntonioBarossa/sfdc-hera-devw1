@@ -399,6 +399,10 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     public void sendDocumentFile(SObject inputRecord){
         Id recordId = (Id)inputRecord.get('Id');
+        if(recordId.getSobjectType().getDescribe().getName() == 'Order')
+        {
+            recordId = (Id)inputRecord.get('ParentOrder__c');
+        }
         Map<String,String> formParams = new Map<String,String>();
         formParams.put('mode', 'Print');
         formParams.put('Archiviato', 'Y');

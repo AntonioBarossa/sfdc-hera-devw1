@@ -153,7 +153,7 @@ CampaignMember member = new CampaignMember(
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
 
     Test.startTest();
-    String returnedString = HDT_LC_CampaignsController.getServiceCatalogUrlByCaseType(caseList[0]);
+    String returnedString = HDT_LC_CampaignsController.getServiceCatalogUrlByCaseType(caseList[0], listCampaign[0].Id);
     System.assertEquals(null, returnedString, 'String returned is  null');
     Test.stopTest();
 
@@ -283,7 +283,7 @@ CampaignMember member = new CampaignMember(
     listaId.add(accList[0].Id);
 
     Test.startTest();
-    List<CampaignMember> returnedCampaingMember = HDT_LC_CampaignsController.assignCampaignMemberAgency(listCampaign[0].Id, listaId);
+    List<CampaignMember> returnedCampaingMember = HDT_LC_CampaignsController.assignCampaignMemberAgency(listCampaign[0].Id, listaId, listCampaign, null);
     System.assertEquals(testMembers[0].Id, returnedCampaingMember[0].Id, 'Campaign Members are in the ORG');
     System.assertNotEquals(null, returnedCampaingMember[0].Id, 'Campaign Members are in the ORG');
     Test.stopTest();

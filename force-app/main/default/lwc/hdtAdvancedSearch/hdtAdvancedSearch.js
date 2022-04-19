@@ -412,10 +412,13 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.preloading = true;
             this.isRicercainSAP= true;
             this.searchInputValue = event;
+            console.log('#Length Event >>> ' + this.searchInputValue.length);
+            let contractCode = this.searchInputValue.length >= 14 ? '' : this.searchInputValue;
+            let servicePointCode = this.searchInputValue.length >= 14 ? this.searchInputValue : '';
             this.dispatchEvent(new CustomEvent('ricercainsap', {
                 detail: this.isRicercainSAP
             }));
-            callService({contratto:'', pod:this.searchInputValue}).then(data =>{                
+            callService({contratto:contractCode, pod:servicePointCode}).then(data =>{                
                 if(data.statusCode=='200' || this.postSales === true){
                     if(data.statusCode != '200')
                     {

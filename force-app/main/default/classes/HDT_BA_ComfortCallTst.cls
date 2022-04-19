@@ -25,8 +25,8 @@ public class HDT_BA_ComfortCallTst {
             
             HDT_UTL_DataFactoryTst.pClickInstance();
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
-            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa conferma cliente','Bozza',constants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE,constants.ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE);
-                
+            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa conferma cliente','Bozza',constants.ORDER_RECORDTYPEID_SWITCHIN,constants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);    
+
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
             
@@ -42,8 +42,7 @@ public class HDT_BA_ComfortCallTst {
             List<Order> parentOrders = HDT_UTL_DataFactoryTst.createOrder(1,true,accId,'Bozza');
             Id parentOrderId = parentOrders[0].id;
             parentOrders[0].Contact__c = contactId;
-            parentOrders[0].phase__c = 'In attesa conferma cliente';
-            parentOrders[0].recordTypeId = constants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
+            parentOrders[0].recordTypeId = constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
             update parentOrders;
             
             List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
@@ -53,7 +52,7 @@ public class HDT_BA_ComfortCallTst {
             orders[0].ParentOrder__c = parentOrderId;
             orders[0].Contact__c = contactId;
             insert orders;
-            orders[0].recordTypeId = constants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
+            orders[0].recordTypeId = constants.ORDER_RECORDTYPEID_SWITCHIN;
             orders[0].Phase__c = 'In attesa conferma cliente';
             update orders;
             
@@ -61,6 +60,9 @@ public class HDT_BA_ComfortCallTst {
             
             List<Campaign> campaigns = HDT_UTL_DataFactoryTst.createCampaign(1,false);
             campaigns[0].Name = 'Comfort Campaign';
+            campaigns[0].Tipology__c = 'Comfort Call';
+            campaigns[0].Status = 'In Corso';
+            campaigns[0].CompanyOwner__c = 'MMS';
             insert campaigns;
             
             List<Order> ordersDuplicate = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
@@ -70,7 +72,7 @@ public class HDT_BA_ComfortCallTst {
             ordersDuplicate[0].ParentOrder__c = parentOrderId;
             ordersDuplicate[0].Contact__c = anotherContactId;
             insert ordersDuplicate;
-            ordersDuplicate[0].recordTypeId = constants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
+            ordersDuplicate[0].recordTypeId = constants.ORDER_RECORDTYPEID_SWITCHIN;
             ordersDuplicate[0].Phase__c = 'In attesa conferma cliente';
             update ordersDuplicate;
   

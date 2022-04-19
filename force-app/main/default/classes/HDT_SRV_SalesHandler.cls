@@ -245,6 +245,9 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                                     //ord.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('DES_ERR_AEEG'));
                                     ord.Description = writeDescription(mapRequestFields.get('ANNOTAZIONI'), oldDescription);
+                                    ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                    Datetime nowDate = Datetime.now();
+                                    ord.DistributorCancellationReason__c = nowDate.format('dd/MM/yyyy h:mm a') + ': ' + mapRequestFields.get('MOTIVO_ANN');
                                 }
                                 when 'Esito OK da DL' {
                                     //Gestione Esito Appuntamento;

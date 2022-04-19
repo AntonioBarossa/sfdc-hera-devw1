@@ -1113,6 +1113,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 checkFieldMap['ProfiloPrelievo'] = this.allSubmitedFields['WithdrawalClass__c'];
                 checkFieldMap['CategoriaUso'] = this.allSubmitedFields['UseCategory__c'];
                 checkFieldMap['Imposta'] = imposta;
+                checkFieldMap['searchTaxes'] = false;
 
                 checkFieldCoerenceSpGas({
                     inputFieldMap : checkFieldMap
@@ -1121,7 +1122,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     if(!hasCoerence){
                         let errMess = 'Attenzione. Deve esserci coerenza nella compilazione dei seguenti campi: Tipologia Fornitura Cliente, Categoria Cliente, Tipo Impianto';
                         errMess += (this.accRecord.fields.Category__c.value == 'Famiglie' || this.accRecord.fields.Category__c.value == 'Grandi Condomini' || this.accRecord.fields.Category__c.value == 'Piccoli Condomini') ? ', Classe Profilo Prelievo, Categoria uso' : '';
-                        errMess += (imposta != '') ? ', Imposta' : '';
+                        //errMess += (imposta != '') ? ', Imposta' : '';
                         errMess += '.';
                         this.isValidFields = false;
                         this.loading = false;
