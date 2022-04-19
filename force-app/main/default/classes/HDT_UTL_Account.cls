@@ -159,10 +159,80 @@ public with sharing class HDT_UTL_Account {
     
   
     public static void makeRequest( Account acc,Contact cont){
-        HDT_WS_RicCreBpCaRequest   req = callBpCaSearch(acc,cont);
-        HDT_WS_RichCreBpCaResponse res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
-       // System.debug('Response SRC : ' + res);
-        analizeResponse(res,acc,cont);
+
+        //Nuova Versione
+        string accountType = Schema.SObjectType.Account.getRecordTypeInfosById().get(acc.RecordTypeId).getDeveloperName();
+        List<SiebelCustomer__x> siebelCustomer = new List<SiebelCustomer__x>();
+
+        if(accountType.contains('Residenziale')){
+            system.debug('RESIDENZIALE');
+            siebelCustomer = [SELECT Id, OU_NUM__c 
+                              FROM SiebelCustomer__x 
+                              WHERE X_MARCATURA_CLIENTE__c =: acc.CustomerMarking__c 
+                              AND X_ACCT_PH_TYPE__c =: acc.CustomerType__c 
+                              AND OU_TYPE_CD__c =: acc.Category__c 
+                              AND TAX_IDEN_NUM__c =: acc.FiscalCode__c];
+        }
+        else if(accountType.contains('Business')){
+            system.debug('BUSINESS');
+            siebelCustomer = [SELECT Id, OU_NUM__c 
+            FROM SiebelCustomer__x 
+            WHERE X_MARCATURA_CLIENTE__c =: acc.CustomerMarking__c 
+            AND X_ACCT_PH_TYPE__c =: acc.CustomerType__c 
+            AND OU_TYPE_CD__c =: acc.Category__c 
+            AND VAT_REGN_NUM__c =: acc.VATNumber__c];
+        }
+
+        if(!siebelCustomer.isEmpty()){
+            system.debug('acc.CustomerCode__c PRIMA --> '+acc.CustomerCode__c);
+            acc.CustomerCode__c = siebelCustomer[0].OU_NUM__c;
+            HDT_UTL_DatabaseService.updateSObject(acc);
+            system.debug('acc.CustomerCode__c DOPO --> '+acc.CustomerCode__c);
+
+            if(acc.Category__c == 'Grandi Condomini'){
+                List<SiebelContact__x> siebelContact = new List<SiebelContact__x>();
+                siebelContact = [SELECT Id, INTEGRATION_ID__c 
+                                 FROM SiebelContact__x 
+                                 WHERE REFERENCE_TYPE_CD__c = 'Amministr. di condominio' 
+                                 AND SOC_SECURITY_NUM__c =: cont.FiscalCode__c LIMIT 1];
+                if(siebelContact.isEmpty()){
+                    //Creazione Condominio su SAP
+                    HDT_WS_RicCreBpCaRequest   req;
+                    HDT_WS_RichCreBpCaResponse resCreate;
+                    req = callAmCaCreate(acc,cont);
+                    resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
+                    //Update Contact
+                    if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP)) {
+                        cont.ContactCode__c = resCreate.data.codiceBP;
+                        HDT_UTL_DatabaseService.updateSObject(cont);
+                    }
+                }
+            }
+        }
+        else{
+            system.debug('LISTA VUOTA');
+            HDT_WS_RicCreBpCaRequest   req = callBpCaSearch(acc,cont);
+            HDT_WS_RichCreBpCaResponse res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
+            // System.debug('Response SRC : ' + res);
+            analizeResponse(res,acc,cont);
+
+            if ('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)) {
+                acc.CustomerCode__c = res.data.codiceBP;
+                HDT_UTL_DatabaseService.updateSObject(acc);
+            }
+            else{
+                if(acc.Category__c == 'Grandi Condomini'){
+                     //Creazione Condominio su SAP
+                     req = callAmCaCreate(acc,cont);
+                     res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
+                     //Update Contact
+                     if ('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)) {
+                         cont.ContactCode__c = res.data.codiceBP;
+                         HDT_UTL_DatabaseService.updateSObject(cont);
+                     }
+                }
+            }
+        }    
     }
     
     public static Account massiveRequest( Account acc,Contact cont){
