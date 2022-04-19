@@ -14,7 +14,7 @@
             <sorted>false</sorted>
             <value>
                 <fullName>Component</fullName>
-                <default>true</default>
+                <default>false</default>
                 <label>Component</label>
             </value>
             <value>
@@ -24,7 +24,7 @@
             </value>
             <value>
                 <fullName>Related Product</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Related Product</label>
             </value>
         </valueSetDefinition>
