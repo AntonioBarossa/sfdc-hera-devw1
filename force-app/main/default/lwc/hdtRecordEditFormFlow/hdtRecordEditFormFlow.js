@@ -360,6 +360,8 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         this.installmentsLogic();
         //RimborsoCustomization
         this.reimbursmentLogic();
+        //DisconnectableLogic
+        this.disconnectableLogic();
     }
 
     complaintsLogic(){
@@ -509,6 +511,36 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                     {
                         beneficiaryAccount.required = true;
                     }
+                }
+            }
+        }
+    }
+    disconnectableLogic()
+    {
+        let disconnectableCategoryObj = this.objSelector('DisconnectibilityType__c');
+        console.log('#DisconnectObject ---> ' + JSON.stringify(disconnectableCategoryObj));
+        if(!(Object.keys(disconnectableCategoryObj).length === 0))
+        {
+            let disconnectableCategory = this.selector('DisconnectibilityType__c');
+            console.log('#Disconnect -> ' + disconnectableCategory.value);
+            let autocertAslObj = this.objSelector('SelfCertificationAcquisitionAsl__c');
+            console.log('#AutocertObject ---> ' + JSON.stringify(autocertAslObj));
+            if(disconnectableCategory.value !== null && disconnectableCategory.value !== undefined && disconnectableCategory.value === '01- App. medico terapeutiche')
+            {
+                if(!(Object.keys(autocertAslObj).length === 0))
+                {
+                    let autocertAsl = this.selector('SelfCertificationAcquisitionAsl__c');
+                    console.log('#Autocert -> ' + autocertAsl.value);
+                    autocertAsl.value = 'SI';
+                }
+            }
+            else
+            {
+                if(!(Object.keys(autocertAslObj).length === 0))
+                {
+                    let autocertAsl = this.selector('SelfCertificationAcquisitionAsl__c');
+                    console.log('#Autocert -> ' + autocertAsl.value);
+                    autocertAsl.value = '';
                 }
             }
         }

@@ -763,6 +763,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.IsMassive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.FlagServizio26__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7683,6 +7688,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.VoltureType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.YearManufactureMeter__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13245,6 +13255,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.DistributorCancellationReason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.CreditCheckInProgress__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -14811,6 +14826,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.ProcessType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.Process__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

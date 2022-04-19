@@ -20,6 +20,7 @@ export default class HdtDocumentValidation extends LightningElement {
 
     @track completeButton = 'Completa';
     @track closeButton = 'Chiudi';
+    @track disableButton = false;
 
     columnsAccise = [
         {id:1, name:'PersonalData' ,label:'Dati Anagrafici'},
@@ -77,6 +78,8 @@ export default class HdtDocumentValidation extends LightningElement {
     }
 
     handleClick(event){
+
+        this.disableButton = true;
 
         if(event.target.name === 'complete'){
 

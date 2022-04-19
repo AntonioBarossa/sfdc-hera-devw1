@@ -19,6 +19,7 @@ public class HDT_SRV_AnagAlignmentTst {
         ordList[0].ServicePoint__c = servPointList[0].Id;
         ordList[0].SupplyState__c = 'AQ';
         ordList[0].Type = 'New';
+        ordList[0].ProcessType__c='Prima Attivazione Ele';
         insert ordList;
 
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
@@ -30,6 +31,10 @@ public class HDT_SRV_AnagAlignmentTst {
         insert contractList;
 
         List<Contract> contractListTwo = HDT_UTL_DataFactoryTst.createContract(1, true, accList[1].id);
+        contractListTwo[0].ServicePoint__c = servPointList[0].Id;
+        contractListTwo[0].Status = 'Attivo';
+
+        update contractListTwo;
 
         ServicePoint__c svPoint = [SELECT Id FROM ServicePoint__c LIMIT 1];
 
@@ -44,9 +49,11 @@ public class HDT_SRV_AnagAlignmentTst {
         HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
         String rtName = 'HDT_RT_AllineamentoAnagrafica';
         String rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AllineamentoAnagrafica').getRecordTypeId();
-        
+        String rtIdsosp = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_SospensioneRiattivazione').getRecordTypeId();
+
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', rtId, rtName,'A','','','');
-        
+		HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'In Lavorazione SAP', 'Bozza', rtIdsosp, 'HDT_RT_SospensioneRiattivazione','A','','','');
+
     }
 
     @IsTest
@@ -232,13 +239,13 @@ public class HDT_SRV_AnagAlignmentTst {
         @IsTest
     static void testHandleAnagAlignmentHerokuA02(){
 
-        ServicePoint__c servPoint = [SELECT Id, ServicePointCode__c FROM ServicePoint__c LIMIT 1];
-
+        ServicePoint__c servPoint = [SELECT Id, Name, ServicePointCode__c FROM ServicePoint__c LIMIT 1];
+        system.debug('servPoint --> '+servPoint);
         List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList = new List<HDT_WRP_MrrRequest.HDT_WRP_Field>();
-        fieldList = createFieldsList(fieldList, '0200', 'VS2', 'A02', servPoint.ServicePointCode__c, 'A00000000288_DL', '');
+        fieldList = createFieldsList(fieldList, '0200', 'VS2', 'A02', servPoint.Name, 'A00000000288_DL', '');
         
         HDT_WRP_HerokuPostSalesManager herokuWrapper = new HDT_WRP_HerokuPostSalesManager(fieldList);
-        
+        system.debug('herokuWrapper --> '+herokuWrapper);
         Test.startTest();
 
         HttpResponse response = new HttpResponse();
