@@ -214,8 +214,9 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
        // cv.body = generateFileBlob;
         cv.ContentLocation = 'S';
         cv.VersionData = generateFileBlob;
-        cv.Title = 'PraxidiaFrontOffice';
-        cv.PathOnClient = 'PraxidiaFrontOffice.csv';
+        String dateTimeString = String.valueOf(Datetime.now()).replaceAll('-', '').replaceAll(':', '').replaceAll(' ', '_');
+        cv.Title = 'PraxidiaFrontOffice_' + dateTimeString;
+        cv.PathOnClient = 'PraxidiaFrontOffice' + dateTimeString + '.csv';
         contentSRV.insertRecords(new List<ContentVersion>{cv});
        /* ContentVersion cv2 = [Select id,contentDocumentId from ContentVersion Where id = :cv.id][0];
         ContentDocumentLink cnt = new ContentDocumentLink();
