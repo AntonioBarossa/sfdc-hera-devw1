@@ -41,7 +41,10 @@ public with sharing class HDT_UTL_Account {
         req.account.telefono         = c.MobilePhone;
         req.account.emailCont        = c.email;
         req.account.marcaturaCliente = a.customerMarking__c;
-        req.account.codiceFiscale    = recordType == 'Organizzazione' ? a.vatnumber__c : c.fiscalCode__c;
+        req.account.codiceFiscale    = recordType == 'Organizzazione' 
+                                        ? a.vatnumber__c != null
+                                            ? a.vatnumber__c : a.FiscalCode__c
+                                        : a.FiscalCode__c;
         req.account.partitaIva       = '';
         return req;
     }
