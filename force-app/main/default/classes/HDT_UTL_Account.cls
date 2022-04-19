@@ -165,29 +165,24 @@ public with sharing class HDT_UTL_Account {
         List<SiebelCustomer__x> siebelCustomer = new List<SiebelCustomer__x>();
 
         if(accountType.contains('Residenziale')){
-            system.debug('RESIDENZIALE');
-            siebelCustomer = [SELECT Id, OU_NUM__c 
+            siebelCustomer = [SELECT Id, OU_NUM__c, X_MARCATURA_CLIENTE__c 
                               FROM SiebelCustomer__x 
-                              WHERE X_MARCATURA_CLIENTE__c =: acc.CustomerMarking__c 
-                              AND X_ACCT_PH_TYPE__c =: acc.CustomerType__c 
+                              WHERE X_ACCT_PH_TYPE__c =: acc.CustomerType__c 
                               AND OU_TYPE_CD__c =: acc.Category__c 
-                              AND TAX_IDEN_NUM__c =: acc.FiscalCode__c];
+                              AND TAX_IDEN_NUM__c =: acc.FiscalCode__c WITH SECURITY_ENFORCED];
         }
         else if(accountType.contains('Business')){
-            system.debug('BUSINESS');
-            siebelCustomer = [SELECT Id, OU_NUM__c 
-            FROM SiebelCustomer__x 
-            WHERE X_MARCATURA_CLIENTE__c =: acc.CustomerMarking__c 
-            AND X_ACCT_PH_TYPE__c =: acc.CustomerType__c 
-            AND OU_TYPE_CD__c =: acc.Category__c 
-            AND VAT_REGN_NUM__c =: acc.VATNumber__c];
+            siebelCustomer = [SELECT Id, OU_NUM__c, X_MARCATURA_CLIENTE__c 
+                              FROM SiebelCustomer__x 
+                              WHERE X_ACCT_PH_TYPE__c =: acc.CustomerType__c 
+                              AND OU_TYPE_CD__c =: acc.Category__c 
+                              AND VAT_REGN_NUM__c =: acc.VATNumber__c WITH SECURITY_ENFORCED];
         }
 
         if(!siebelCustomer.isEmpty()){
-            system.debug('acc.CustomerCode__c PRIMA --> '+acc.CustomerCode__c);
             acc.CustomerCode__c = siebelCustomer[0].OU_NUM__c;
+            acc.CustomerMarking__c = siebelCustomer[0].X_MARCATURA_CLIENTE__c;
             HDT_UTL_DatabaseService.updateSObject(acc);
-            system.debug('acc.CustomerCode__c DOPO --> '+acc.CustomerCode__c);
 
             if(acc.Category__c == 'Grandi Condomini'){
                 List<SiebelContact__x> siebelContact = new List<SiebelContact__x>();
