@@ -70,6 +70,12 @@ public with sharing class HDT_LC_SaleActionsTst{
 			List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
 			HDT_UTL_DataFactoryTst.createCampaignMember(true, campaigns[0].Id, leads, contacts);
 
+			//Gestione AccountContactRelation
+			AccountContactRelation acr = [SELECT Id, Roles, IsManagerSOL__c, IsActive FROM AccountContactRelation Where AccountId =: accounts[0].Id AND ContactId =: contacts[0].Id];
+			acr.Roles = 'Titolare';
+
+			update acr;
+
 			//QuoteProcess__c not yet on DataFactory
 			List<SBQQ__QuoteProcess__c> quoteProcs=new List<SBQQ__QuoteProcess__c>();
 			SBQQ__QuoteProcess__c quoteProc=new SBQQ__QuoteProcess__c();

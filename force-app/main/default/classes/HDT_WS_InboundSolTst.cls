@@ -92,12 +92,12 @@ public with sharing class HDT_WS_InboundSolTst {
     }
 
     @IsTest
-    static void testGETCallWithoutPermission(){
+    static void testGetCallWithoutPermission(){
         
         //setup user without permissions
         String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
         // This code runs as the system user
-        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
+        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User' or Name='Utente standard'];
         User u = new User(
             Alias = 'standt', Email='standarduser@testorg.com', EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
             LocaleSidKey='en_US', ProfileId = p.Id,
@@ -165,10 +165,6 @@ public with sharing class HDT_WS_InboundSolTst {
     static void testDoPostInstallment(){
         
         Case cs = [SELECT Id, ContractAccountCode__c, DocumentNumber__c, BillNumber__c, AccountCode__c  FROM Case WITH SECURITY_ENFORCED LIMIT 1];
-
-        //debug
-        System.debug('CASE: ' + cs);
-        
         //mock
         HttpResponse httpRes = new HttpResponse();
         httpRes.setHeader('Content-Type', 'application/json');

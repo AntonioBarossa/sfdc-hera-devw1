@@ -8,10 +8,14 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         String rtId = constantsUtl.CASE_RECORDTYPEID_MOROSITA;
         HDT_UTL_DataFactoryTst.pClickCasePhase();
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
+        servPointList[0].ServicePointCode__c = 'IT001E46371811';
+        insert servPointList;
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
         ordList[0].DistributorPracticeCode__c = 'A00000000288_DL';
+        ordList[0].ProcessType__c = 'Subentro Ele';
         ordList[0].ServicePoint__c = servPointList[0].Id;
+        
         insert ordList;
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         AccountContactRelation accountContactRel = HDT_UTL_DataFactoryTst.createAccountContactRelation(true, accList[1].Id,contactList[0].Id);
@@ -429,7 +433,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         testContract.Status = 'Attivo';
         update testContract;
         //Create Requests
-        String notifEsString = HDT_UTL_DataFactoryTst.notifEsFullReq('postsales', testCase.CaseNumber, '3010147771', 'A01', testSp.Id, 'A00000000288_DL', '23423424', '23423424', '', '', testCase.Id, 'Comunicazione verso Heroku OK', 'aggiornaRCU');
+        String notifEsString = HDT_UTL_DataFactoryTst.notifEsFullReq('postsales', testCase.CaseNumber, '3010147771', 'A01', 'IT001E46371811', 'A00000000288_DL', '23423424', '23423424', '', '', testCase.Id, 'Comunicazione verso Heroku OK', 'aggiornaRCU');
         notifEs = (HDT_WRP_MrrRequest) JSON.deserialize(notifEsString, HDT_WRP_MrrRequest.class);
         //SetMock
         Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
