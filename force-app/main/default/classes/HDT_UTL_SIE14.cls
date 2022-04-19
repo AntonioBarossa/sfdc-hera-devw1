@@ -23,10 +23,9 @@ public with sharing class HDT_UTL_SIE14 {
         String salesCompany = '';
         return new List<HDT_WRP_SIE14Rule>{
             new HDT_WRP_SIE14Rule('CORPORATE_IC', new List<String>{'Account.CategoryCode__c == Z006'},'', new List<String>{''}),
-            new HDT_WRP_SIE14Rule('HCNE_Coporate_GDA', new List<String>{'CommercialId__c inizia per "AGSMECON"'},'1 AND 2', new List<String>{'Hera Comm NordEst'}),
+            new HDT_WRP_SIE14Rule('HCNE_Coporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c START "AGSMECON"'},'1 AND 2', new List<String>{'Hera Comm NordEst'}),
                                     
-            new HDT_WRP_SIE14Rule('Corporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS "AGSMECON"',
-                                    'SalesCompany__c = Hera Comm S.p.A e Hera Comm Marche (prevalenza contratti attivi)'},'1 AND 2', new List<String>{'Hera Comm S.p.A' })
+            new HDT_WRP_SIE14Rule('Corporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c START "AGSMECON"'},'1 AND 2', new List<String>{'Hera Comm S.p.A', 'Hera Comm Marche' })
         };
 
     }
