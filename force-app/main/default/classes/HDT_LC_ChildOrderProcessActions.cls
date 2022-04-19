@@ -352,7 +352,23 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 throw new AuraHandledException('Dati incompleti o non coerenti.');
             }
         }
-
+        if(currentOrder.CommodityFormula__c.equalsIgnoreCase('Gas'))
+        {
+            String exciseGas = String.isBlank(orderToUpdate.ExciseGAS__c) ? currentOrder.ExciseGAS__c : orderToUpdate.ExciseGAS__c;
+            exciseGas = exciseGas.substringBetween('Cod. ', ')');
+            Map<String,Object> inputFieldMap = new Map<String,Object>();
+            inputFieldMap.put('CategoriaCliente',currentOrder.CustomerCategory__c);
+            inputFieldMap.put('TipoFornitura',currentOrder.SupplyType__c);
+            inputFieldMap.put('TipoImpianto',currentOrder.ImplantType__c);
+            inputFieldMap.put('Servizio',currentOrder.CommodityFormula__c);
+            inputFieldMap.put('ProfiloPrelievo',currentOrder.WithdrawalClass__c);
+            inputFieldMap.put('CategoriaUso',currentOrder.UseCategory__c);
+            inputFieldMap.put('Imposta',exciseGas);
+            if(!HDT_SRV_FieldCoerenceServicePoint.checkCoerence(inputFieldMap))
+            {
+                throw new AuraHandledException('Attenzione. Deve esserci coerenza nella compilazione dei seguenti campi: Tipologia Fornitura Cliente, Categoria Cliente, Tipo Impianto,Classe Profilo Prelievo, Categoria uso,Imposte');
+            }
+        }
         /**@frpanico 2022-04-06
          * Valorizzazione IVA Documentale
          * A partire dall'iva presente
