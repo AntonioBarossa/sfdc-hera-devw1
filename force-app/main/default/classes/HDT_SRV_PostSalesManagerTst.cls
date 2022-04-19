@@ -308,10 +308,26 @@ public class HDT_SRV_PostSalesManagerTst {
         HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
         psm.execute(setArgs('evaluateEffectiveDate', currentOrder));
 
-        System.assertEquals(System.today()+3, currentOrder.EffectiveDate__c, 'EffectiveDate__c != System.today()+3');
-
         Test.stopTest();
+
+        Date expectedDate = System.today();
+        Integer businessDayToAdd = 3;
+
+        while(businessDayToAdd != 0){
+            expectedDate = expectedDate.addDays(1);
+            if(!isWeekend(expectedDate)){
+                businessDayToAdd--;
+            }
+        }
+
+        System.assertEquals(expectedDate, currentOrder.EffectiveDate__c, 'EffectiveDate__c != System.today()+3');
+
         
+    }
+
+    static public Boolean isWeekend(Date myDate){
+        String myDateString = Datetime.newInstance(myDate.year(), myDate.month(),myDate.day()).format('EEE');
+        return 'Sat'.equals(myDateString) || 'Sun'.equals(myDateString);
     }
 
     @IsTest
