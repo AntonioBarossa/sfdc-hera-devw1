@@ -121,8 +121,9 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
         ContentVersion cv = new ContentVersion();
         cv.ContentLocation = 'S';
         cv.VersionData = generateFileBlob;
-        cv.Title = 'PraxidiaReclami';
-        cv.PathOnClient = 'PraxidiaReclami.csv';
+        String dateTimeString = String.valueOf(Datetime.now()).replaceAll('-', '').replaceAll(':', '').replaceAll(' ', '_');
+        cv.Title = 'PraxidiaReclami_' + dateTimeString;
+        cv.PathOnClient = 'PraxidiaReclami' + dateTimeString + '.csv';
         contentSRV.insertRecords(new List<ContentVersion>{cv});
        /* ContentVersion cv2 = [Select id,contentDocumentId from ContentVersion Where id = :cv.id][0];
         ContentDocumentLink cnt = new ContentDocumentLink();
