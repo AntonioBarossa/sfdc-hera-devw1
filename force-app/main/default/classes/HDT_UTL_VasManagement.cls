@@ -181,7 +181,7 @@ public with sharing class HDT_UTL_VasManagement {
         public HDT_WRP_VASReq(Order currentOrder) {
             societa = getCompanyCode(currentOrder.SalesCompany__c, currentOrder.ServicePointCode__c);
             //societa = currentOrder.SalesCompanyCode__c;
-            partner = currentOrder.CustomerCode__c;
+            partner = currentOrder.Account.CustomerCode__c;
             codFiscale = currentOrder.CustomerFiscalCode__c;
             partitaIva = currentOrder.CustomerVATNumber__c;
             if(String.isNotBlank(currentOrder.ServicePointCode__c)){

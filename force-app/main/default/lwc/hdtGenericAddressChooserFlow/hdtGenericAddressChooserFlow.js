@@ -43,6 +43,7 @@ import BillingStreetName__c from '@salesforce/schema/Case.BillingStreetName__c';
 import BillingStreetNumber__c from '@salesforce/schema/Case.BillingStreetNumber__c';
 import BillingStreetNumberExtension__c from '@salesforce/schema/Case.BillingStreetNumberExtension__c';
 import AlternativeAddress__c from '@salesforce/schema/Case.AlternativeAddress__c';
+import AccountId from '@salesforce/schema/Case.AccountId';
 
 const FIELDS = ['Case.InvoicingPostalCode__c',
 				'Case.InvoicingStreetNumber__c',
@@ -82,7 +83,8 @@ const FIELDS = ['Case.InvoicingPostalCode__c',
                 'Case.BillingStreetName__c',
                 'Case.BillingStreetNumber__c',
                 'Case.BillingStreetNumberExtension__c',
-                'Case.AlternativeAddress__c'
+                'Case.AlternativeAddress__c',
+                'Case.AccountId'
             ];
 
 const FIELDS2 = ['Case.InvoicingPostalCode__c',
@@ -176,6 +178,10 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                 this.caseRecord = data;
                 console.log(JSON.stringify(this.caseRecord.fields));
                 var inputParams;
+                if(this.accountId.startsWith('5')){
+                    this.accountId = this.caseRecord.fields.AccountId.value;
+                }
+                console.log('this.AccountId --> '+this.accountId);
                 console.log(this.addressType + ' ' + this.accountId );
                 
                 if(this.addressType.localeCompare('ServicePoint') == 0){  // Indirizzo di fornitura
