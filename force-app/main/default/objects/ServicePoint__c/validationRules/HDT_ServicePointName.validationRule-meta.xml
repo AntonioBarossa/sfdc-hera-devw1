@@ -5,9 +5,10 @@
     <errorConditionFormula>AND(
 ISCHANGED(Name),
 				AND(
-				$Profile.Name &lt;&gt; &quot;System Administrator&quot;,
-				$Profile.Name &lt;&gt; &quot;Hera System Administrator&quot;,
-				$Profile.Name &lt;&gt; &quot;Hera M2M Integration User&quot;
+				$Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+                                $Profile.Name &lt;&gt; &apos;Amministratore del sistema&apos;,
+				$Profile.Name &lt;&gt; &apos;Hera System Administrator&apos;,
+				$Profile.Name &lt;&gt; &apos;Hera M2M Integration User&apos;
 				) 
 )</errorConditionFormula>
     <errorDisplayField>Name</errorDisplayField>
