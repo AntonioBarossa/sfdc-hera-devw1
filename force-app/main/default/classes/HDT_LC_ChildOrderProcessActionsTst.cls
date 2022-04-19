@@ -81,6 +81,10 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Sospeso','Bozza',utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita','Bozza',utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE);
+            //HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Bozza',utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE);
 
             
 			Id rt=utlConstants.ACCOUNT_RECORDTYPEID_RESINDEZIALE;
@@ -437,15 +441,18 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         Test.startTest();
 
         //Test AttivazioneConModifica
-      // system.debug('Test AttivazioneConModifica');
+        // system.debug('Test AttivazioneConModifica');
         Map<String,Object> m3 = new Map<String,Object>();
         accountList.get(0).Id=tOrder2.get(1).AccountId;
         update accountList;
         m3.put('EffectiveDate__c', Date.today().addDays(11));
         tOrder2[1].VATfacilitationFlag__c=true;
         tOrder2[1].QuotationType__c='Rapido';
-
+        tOrder2[1].Commodity__c = 'Gas';
+        tOrder2[1].recordTypeId = utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE;
+        tOrder2[1].ProcessType__c = 'Switch in Ripristinatorio';
         update tOrder2;
+
         HDT_LC_ChildOrderProcessActions.save(tOrder2[1],m3);
         m3.put('VATfacilitationFlag__c',true);
         try{
@@ -533,6 +540,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc limit 1];
+        system.debug('@@@ tOrder2 SaveM3 '+ tOrder2);
+        system.debug('@@@ m3 SaveM3'+ m3);
         HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
         recordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE).getRecordTypeId();
 
@@ -1083,19 +1092,23 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             List<Order> tOrder=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
                 ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
                 Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
-                ParentOrder__c,DocSendingMethod__c,RecordType.Name,NotRegisteredMeterCase__c,EffectiveDate__c
+                ParentOrder__c,DocSendingMethod__c,RecordType.Name,NotRegisteredMeterCase__c,EffectiveDate__c,Commodity__c
                 FROM Order
                 WHERE Name='testOrderName1'
                 LIMIT 1];
             List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
                 ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
                 Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
-                ParentOrder__c,DocSendingMethod__c,RecordType.Name,NotRegisteredMeterCase__c,EffectiveDate__c
+                ParentOrder__c,DocSendingMethod__c,RecordType.Name,NotRegisteredMeterCase__c,EffectiveDate__c,Commodity__c
                 FROM Order
                 WHERE Name='testOrderName0'
                 LIMIT 1];
 
             tOrder[0].MarketOrigin__c='Libero';
+            tOrder[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE;
+            tOrder2[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE;
+            update tOrder;
+            update tOrder2;
 		
             HDT_LC_ChildOrderProcessActions.saveDraft('Order',tOrder[0],'Order',tOrder2[0]);
 
