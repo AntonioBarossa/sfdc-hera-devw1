@@ -37,7 +37,7 @@ public with sharing class HDT_UTL_SIE14Tst {
         system.debug('allContracts -> ' + contracts);
 
         Test.startTest();
-        HDT_UTL_SIE14 testSie14 = new HDT_UTL_SIE14();
+        HDT_SRV_SIE14 testSie14 = new HDT_SRV_SIE14();
         testSie14.initSIE(new Set<Contract>(contracts));
          
         Test.stopTest();

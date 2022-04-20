@@ -1,91 +1,103 @@
-public with sharing class HDT_UTL_SIE14 {
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ClassNamingConventions, PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces')
+public inherited sharing  class HDT_UTL_SIE14 {
 
-    private class HDT_WRP_SIE14Rule{
-        String segmento;
-        List<String> conditions;
+    private static final List<String> OPERATORS = new List<String>{'==','!=', 'STARTS', 'NOT STARTS'};
+    private static final Pattern PATTERN_OPERATORS = Pattern.compile('([A-Za-z0-9_.]+)[\\xa0\\s]*('+STRING.join(OPERATORS, '|')+')(.+)');
+    private static HDT_UTL_Sobject utlSbj = new HDT_UTL_Sobject();
+
+    public class HDT_WRP_SIE14Rule{
+        public String segmento;
         String logic;
-        List<String> salesCompany;
+        Set<String> salesCompany;
+        List<HDT_WRP_SIECondition> conditions;
 
-        HDT_WRP_SIE14Rule(String segmento, List<String> conditions, String logic, List<String> salesCompany){
+        public HDT_WRP_SIE14Rule(String segmento, List<String> conditions, String logic, String salesCompany){
             this.segmento = segmento;
-            this.conditions = conditions;
+            //this.conditions = conditions;
+            this.conditions= new List<HDT_WRP_SIECondition>();
+            if(conditions?.size()>0){
+                for(String condition : conditions){
+                    this.conditions.add(new HDT_WRP_SIECondition(condition));
+                }
+            }
             this.logic = logic;
-            this.salesCompany = salesCompany;
+            this.salesCompany = String.isNotBlank(salesCompany)? new Set<String>(salesCompany.toLowerCase().split(';')) : null;
         }
  
-        boolean checkLogic(SObject obj, String company){
+        public boolean checkLogic(SObject obj, String company){//Tutte le condizioni sono valutate in "AND"
+            if(this.salesCompany?.size() > 0 && !this.salesCompany.contains(company.toLowerCase()))   return false;
+
+            if(this.conditions?.size() > 0){
+                for(HDT_WRP_SIECondition condition : this.conditions){
+                    String actualValue=utlSbj.dinamicFieldValue(condition.fieldName, obj);
+                    if(!condition.checkCondition(actualValue))   return false;
+                }
+            }
+            
             return true;
         }
     }
 
-    List<HDT_WRP_SIE14Rule> getRules(){
+    class HDT_WRP_SIECondition {
 
-        String salesCompany = '';
-        return new List<HDT_WRP_SIE14Rule>{
-            new HDT_WRP_SIE14Rule('CORPORATE_IC', new List<String>{'Account.CategoryCode__c == Z006'},'', new List<String>{''}),
-            new HDT_WRP_SIE14Rule('HCNE_Coporate_GDA', new List<String>{'CommercialId__c inizia per "AGSMECON"'},'1 AND 2', new List<String>{'Hera Comm NordEst'}),
-                                    
-            new HDT_WRP_SIE14Rule('Corporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS "AGSMECON"',
-                                    'SalesCompany__c = Hera Comm S.p.A e Hera Comm Marche (prevalenza contratti attivi)'},'1 AND 2', new List<String>{'Hera Comm S.p.A' })
-        };
+        String fieldName;
+        String operator;
+        String valueToCheck;
 
-    }
+        
 
-    Map<Id,Contract> getContractData(Set<Contract> contractIds){
-
-        List<Contract> contracts = [SELECT Id, AccountId, ContractSalesCompany__c , Account.CategoryCode__c, SBQQ__Order__r.Sale__r.CommercialId__c 
-                                    FROM Contract
-                                    WHERE Id IN :contractIds
-                                    Order By LastModifiedDate ASC];
-
-        Map<Id,Contract> result = new Map<Id,Contract>();
-        for(Contract c : contracts){
-            result.put(c.AccountId, c);
-        }
-        system.debug('getContractDataResults -> ' + result);
-        return result;
-
-    }
-
-    public Map<Id,String> getMostFrequentCompany(Set<Id> accountId){
-
-        Map<Id, String> result = new Map<Id,String>();
-        List<AggregateResult> results = [Select AccountId , ContractSalesCompany__c , Count(Id) counter From Contract WHERE AccountId IN :accountId
-                                            AND ContractSalesCompany__c != NULL GROUP BY AccountId, ContractSalesCompany__c ORDER BY Count(Id) ASC];
-
-        for(AggregateResult actualResult : results){
-            result.put((Id)actualResult.get('accountId'), (String)actualResult.get('ContractSalesCompany__c') );
+        HDT_WRP_SieCondition(String conditionString){
+            Matcher matcher=PATTERN_OPERATORS.matcher(conditionString);
+            while(matcher.find()){
+                this.fieldName=matcher.group(1).toLowerCase().trim();
+                this.operator=matcher.group(2).trim();
+                this.valueToCheck=matcher.group(3).toLowerCase().trim();
+            }
         }
 
-        return result;
-    }
-
-    List<Account> findRule(Map<Id, Contract> contracts){
-        List<HDT_WRP_SIE14Rule> rules = getRules();
-        Map<Id,String> accountAndFrequentCompanies = getMostFrequentCompany(contracts.keySet());
-        system.debug('accountAndFrequentCompanies -> ' + accountAndFrequentCompanies);
-        List<Account> accountToUpdate = new List<Account>();
-
-        for(Contract c : contracts.values()){
-            for(HDT_WRP_SIE14Rule rule : rules){
-                if(rule.checkLogic(c, accountAndFrequentCompanies.get(c.accountId))){
-                    Account a = new Account(Id = c.accountId, Segment__c = rule.segmento);
-                    accountToUpdate.add(a);
-                    break;
+        Boolean checkCondition(String actualValue){
+            switch on this.operator {
+                when '==' {
+                    return checkEqual(actualValue);
+                }
+                when '!=' {
+                    return !checkEqual(actualValue);
+                }
+                when 'STARTS' {
+                    return startsWith(actualValue);
+                }
+                when 'NOT STARTS' {
+                    return !startsWith(actualValue);
+                }
+                when else {
+                    return false;
                 }
             }
         }
 
-        return accountToUpdate;
+        Boolean checkEqual(String actualFieldValue) {
+            Boolean areStringsEqual=false;
+            if ('null'.equalsIgnoreCase(this.valueToCheck)) {//null means "empty string"
+                areStringsEqual = String.isBlank(actualFieldValue);
+            }
+            else if(String.isNotBlank(actualFieldValue)){
+                areStringsEqual = actualFieldValue.equalsIgnoreCase( this.valueToCheck );
+            }
+            return areStringsEqual;
+        }
+
+        Boolean startsWith(String actualFieldValue){
+            if(STRING.isBlank(this.valueToCheck) && STRING.isBlank(actualFieldValue))    return true;
+            if(STRING.isBlank(this.valueToCheck) || STRING.isBlank(actualFieldValue))    return false;
+            return actualFieldValue.startsWithIgnoreCase(this.valueToCheck);
+        }
+
     }
 
-    public void initSIE(Set<Contract> data){
-        Map<Id,Contract> contracts = getContractData(data);
-        system.debug('contracts -> ' + contracts);
-        List<Account> accountToUpdate = findRule(contracts);
-        system.debug('accountToUpdate -> ' + accountToUpdate);
-        if(!accountToUpdate.isEmpty()){
-            update accountToUpdate;
+    private inherited sharing class HDT_UTL_Sobject extends HDT_UTL_FormatTextScript{
+        private String dinamicFieldValue(String fieldPath, SObject relation){
+            String retValue = getFieldValue(fieldPath, relation);
+            return retValue=='null'? '' : retValue;
         }
     }
 }
