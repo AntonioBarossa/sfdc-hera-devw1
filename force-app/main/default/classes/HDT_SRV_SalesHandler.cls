@@ -507,7 +507,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     HDT_UTL_HerokuPostSalesManager utlClass = new HDT_UTL_HerokuPostSalesManager();
                                     Order cancellationOrder = new Order();
                                     cancellationOrder.Id = ord.Id;
-                                    utlClass.handlePassiveCancellation(cancellationOrder, 'Order', mapRequestFields.get('STORNO'), mapRequestFields.get('ATTIVITA'));
+                                    utlClass.handlePassiveCancellation(cancellationOrder, 'Order', mapRequestFields.get('STORNO'), mapRequestFields.get('ATTIVITA'),mapRequestFields.get('ANNOTAZIONI_ANN'));
                                 }
                                 when 'Annullato'{
                                     if(mapRequestFields.get('NOTE_ANN') != null){
