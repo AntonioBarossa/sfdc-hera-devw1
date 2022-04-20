@@ -35,6 +35,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardTable {
         List<OrderItem> orderItemList = orderItemQr.getRecordsByOrderIdListFilteredPdrPod(listChildOrderId); // List<OrderItem> orderItemList = [SELECT Id, Codice_POD__r.name,Codice_PDR__r.name, OrderId, Product2.name FROM OrderItem where Product2.name IN ('PDR','POD') AND OrderId IN :listaOrderId];
         List<OrderItem> orderProducts = [Select OrderId, Product2.Family, Product2.Name, Order.RecordType.DeveloperName, SBQQ__QuoteLine__r.SBQQ__RequiredBy__r.SBQQ__Product__r.Name from OrderItem Where SBQQ__RequiredBy__c =null AND OrderId IN :childOrders WITH Security_Enforced];
         Set<String> familySconto = HDT_UTL_OrderProcessAssignment.getFamilySconto();
+        familySconto.remove('VAS Fatturabili');
         Map<String,String> orderToQuoteLinePrime = new Map<String,String>();
 
         for(OrderItem itm : orderProducts){

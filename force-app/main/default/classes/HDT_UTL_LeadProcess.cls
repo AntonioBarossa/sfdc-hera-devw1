@@ -146,9 +146,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     
                     cmSrv.createRecord(cm);
-                    if(macroactivity != null && macroactivity != '' && newLead.ContactDate__c != null ){
-                        HDT_WS_InvioNumerazioni.callService(macroactivity, l.MobilePhone);
-                    }
+
                     responseField.fieldType = 'TEXT';
                     responseField.name = 'ESITO';
                     responseField.value = 'OK';
@@ -322,9 +320,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     }
                     CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     cmSrv.createRecord(cm);
-                    if(macroactivity != null && macroactivity != '' && newLead.ContactDate__c != null){
-                        HDT_WS_InvioNumerazioni.callService(macroactivity, l.MobilePhone);
-                    }                    
+
                     responseField.fieldType = 'TEXT';
                     responseField.name = 'ESITO';
                     responseField.value = 'OK';
@@ -499,9 +495,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     }
                     CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     cmSrv.createRecord(cm);
-                    if(macroactivity != null && macroactivity != '' && newLead.ContactDate__c != null ){
-                        HDT_WS_InvioNumerazioni.callService(macroactivity, l.MobilePhone);
-                    }      
+
                     if(mapRequestFields.get('FILE') != null && mapRequestFields.get('FILE') != ''){
                         //ContentDocumentLink cdl = new ContentDocumentLink();
                         HDT_QR_ContentVersion conDocQr = new HDT_QR_ContentVersion();
@@ -693,10 +687,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     }
                     CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     cmSrv.createRecord(cm);
-                    if(macroactivity != null && macroactivity != '' && newLead.ContactDate__c != null){
-                        HDT_WS_InvioNumerazioni.callService(macroactivity, l.MobilePhone);
-                    }
-                    
+
                     responseField.fieldType = 'TEXT';
                     responseField.name = 'ESITO';
                     responseField.value = 'OK';
@@ -890,9 +881,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     }
                     CampaignMember cm = new CampaignMember(CampaignId= campaignId, Agency__c= ac.Id, LeadId= l.Id, phonenumber__c = mapRequestFields.get('CELLULARE'));
                     cmSrv.createRecord(cm);
-                    if(macroactivity != null && macroactivity != ''){
-                        HDT_WS_InvioNumerazioni.callService(macroactivity, l.MobilePhone);
-                    }                    
+
                     responseField.fieldType = 'TEXT';
                     responseField.name = 'ESITO';
                     responseField.value = 'OK';
