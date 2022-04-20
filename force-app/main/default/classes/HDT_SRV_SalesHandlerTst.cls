@@ -171,6 +171,7 @@ static void setup() {
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Dati Tecnici Ricevuti',
       'BillingProfile__c'=>billingProfileList[0].Id,
+      'SupplyType__c'=>'Domestico',
       'ServicePoint__c'=>servicePointList[0].Id
     } )); 
     orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_ConnessioneConAttivazione',new Map<String,Object>{
@@ -185,24 +186,24 @@ static void setup() {
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
     } )); 
-    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
+/*     orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Amm. Precheck OK SII',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } )); 
-    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
+    } ));  */
+/*     orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Esito KO da SII',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } ));
-    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
+    } )); */
+/*     orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Esito OK da SII',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } )); 
+    } ));  */
     orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Annullamento - Inviato al DL/SII',
@@ -231,6 +232,7 @@ static void setup() {
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Dati discordanti',     
       'BillingProfile__c'=>billingProfileList[0].Id,
+      'ProcessType__c' =>'Prima Attivazione Fuori delibera',
       'ServicePoint__c'=>servicePointList[0].Id
     } )); 
     orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_SwitchIn',new Map<String,Object>{
@@ -244,6 +246,8 @@ static void setup() {
       'Phase__c'=>'Completata',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id,
+      'ContractReference__c' => contractList[0].Id,
+      'ProcessType__c' =>'Cambio Uso',
       'Pricebook2Id'=>pricebook.Id
     } );
     orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
@@ -267,7 +271,7 @@ static void setup() {
       'BillingProfile__c' => billingProfileList[0].Id,
       'ServicePoint__c' => servicePointList[0].Id,
       'ContractReference__c' => contractList[0].Id,
-      'ProcessType__c' => 'Voltura',
+      'ProcessType__c' =>'Cambio Uso',
       'Pricebook2Id' => pricebook.Id
     });
     insert orders;
@@ -314,10 +318,10 @@ static void testHandleSalesProcessCategoryErrorCases() {
     new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoRicezione,'Annullamento SII - Ricezione','SIE34_7',null);
     System.assertEquals(400, RestContext.response.statusCode,'the process return an error due to lack of runId');
     new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoRicezione,'RICH_PASS','RICH_PASS',null);
-    System.assertEquals(400, RestContext.response.statusCode,'the processe is not well completed due to lack of fields');
+    System.assertEquals(200, RestContext.response.statusCode,'the processe is not well completed due to lack of fields');
     //test requestType=NOTIF_ES else 
-    new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoRicezione,'NOTIF_ES','NOTIF_ES',null);
-    System.assertEquals(400, RestContext.response.statusCode,'the processe is not well completed due to lack of fields');
+    new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoRicezione,'Annullamento SII - Ricezione','NOTIF_ES',null);
+    System.assertEquals(200, RestContext.response.statusCode,'the processe is not well completed due to lack of fields');
     //test requestType=CMPDMP_PRV
     new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoRicezione,'Annullamento SII - Ricezione','CMPDMP_PRV',null);
     System.assertNotEquals(200, RestContext.response.statusCode,'error code returned due to absence of runId');
@@ -329,7 +333,7 @@ static void testHandleSalesProcessCategoryErrorCases() {
 @isTest
 static void testHandleSalesProcessCategory3() {
 
-  Order orderDatiTecnici=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Dati Tecnici Ricevuti' LIMIT 1];
+  Order orderDatiTecnici=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c,SupplyType__c  FROM Order  WHERE Phase__c='Dati Tecnici Ricevuti' LIMIT 1];
   Test.startTest();
     new TestBuilderCallManageSalesProcessCategory(orderDatiTecnici,'Dati Tecnici Ricevuti','NOTIF_ES',null);
     //to cover the case without orderId and phase
@@ -347,18 +351,18 @@ static void testHandleSalesProcessCategory4() {
 
   Order orderEsitoKoDaDl=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Esito KO da DL' LIMIT 1];
   Order orderEsitoOkDaDl=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Esito OK da DL' LIMIT 1];
-  Order orderAmmPrecheckOkS=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Amm. Precheck OK SII' LIMIT 1];
+  //Order orderAmmPrecheckOkS=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Amm. Precheck OK SII' LIMIT 1];
   Test.startTest();
     new TestBuilderCallManageSalesProcessCategory(orderEsitoKoDaDl,'Esito KO da DL','NOTIF_ES',null);
     new TestBuilderCallManageSalesProcessCategory(orderEsitoOkDaDl,'Esito OK da DL','NOTIF_ES',null);
-    new TestBuilderCallManageSalesProcessCategory(orderAmmPrecheckOkS,'Amm. Precheck OK SII','NOTIF_ES',null);
+    //new TestBuilderCallManageSalesProcessCategory(orderAmmPrecheckOkS,'Amm. Precheck OK SII','NOTIF_ES',null);
     System.assertNotEquals(400, RestContext.response.statusCode,'No errors triggered during the processes execution');
     System.assertEquals(200, RestContext.response.statusCode,'the processes are well completed');
   Test.stopTest();
 }
 
 
-@isTest
+/* @isTest
 static void testHandleSalesProcessCategory6() {
   Order orderEsitoKoDaS=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Esito KO da SII' LIMIT 1];
   Order orderEsitoOkDaS=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Esito OK da SII' LIMIT 1];
@@ -371,30 +375,30 @@ static void testHandleSalesProcessCategory6() {
     new TestBuilderCallManageSalesProcessCategory(orderEsitoOkDaS,'Esito OK da SII','NOTIF_ES',null);
     System.assertEquals(200, RestContext.response.statusCode,'the process is well completed');
   Test.stopTest();
-}
+} */
 
 
-@isTest
+/* @isTest
 static void testHandleSalesProcessCategory5() {
   Order orderEsitoKoDaSii=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Esito KO da SII' LIMIT 1];
   Order orderEsitoOkDaSii=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Esito OK da SII' LIMIT 1]; 
   // Order orderCompletata=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c,ServicePoint__c  FROM Order  WHERE Phase__c='Completata' LIMIT 1]; 
   Test.startTest(); 
-    new TestBuilderCallManageSalesProcessCategory(orderEsitoKoDaSii,'Esito KO da SII','NOTIF_ES',null);
-    new TestBuilderCallManageSalesProcessCategory(orderEsitoOkDaSii,'Esito OK da SII','NOTIF_ES',null); 
+    //new TestBuilderCallManageSalesProcessCategory(orderEsitoKoDaSii,'Esito KO da SII','NOTIF_ES',null);
+    //new TestBuilderCallManageSalesProcessCategory(orderEsitoOkDaSii,'Esito OK da SII','NOTIF_ES',null); 
     System.assertNotEquals(400, RestContext.response.statusCode,'No errors triggered during the processes execution');
     System.assertEquals(200, RestContext.response.statusCode,'the processes are well completed');
   Test.stopTest();
-}
+} */
 
 
 @isTest
 static void testHandleSalesProcessCategory8() {
-  Order orderAmmPrecheckOkSii=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Amm. Precheck OK SII' LIMIT 1]; 
+  //Order orderAmmPrecheckOkSii=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Amm. Precheck OK SII' LIMIT 1]; 
   Order orderDatiTecniciRicevuti=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Dati Tecnici Ricevuti' LIMIT 1]; 
   Order orderErrorelavorazione=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Errore lavorazione SAP' LIMIT 1]; 
   Test.startTest(); 
-    new TestBuilderCallManageSalesProcessCategory(orderAmmPrecheckOkSii,'Amm. Precheck OK SII','NOTIF_ES',null);
+    //new TestBuilderCallManageSalesProcessCategory(orderAmmPrecheckOkSii,'Amm. Precheck OK SII','NOTIF_ES',null);
     new TestBuilderCallManageSalesProcessCategory(orderDatiTecniciRicevuti,'Dati Tecnici Ricevuti','NOTIF_ES',null); 
     new TestBuilderCallManageSalesProcessCategory(orderErrorelavorazione,'Errore lavorazione SAP','NOTIF_ES',null); 
     System.assertNotEquals(400, RestContext.response.statusCode,'No errors triggered during the processes execution');
@@ -406,13 +410,12 @@ static void testHandleSalesProcessCategory8() {
 
 @isTest
 static void testHandleSalesProcessCategory7() {
-    Order orderAmmPrecheckKoSii=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Amm. Precheck KO SII' LIMIT 1]; 
+    // Order orderAmmPrecheckKoSii=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Amm. Precheck KO SII' LIMIT 1]; 
   	Order orderDatidiscordanti=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Dati discordanti' LIMIT 1]; 
   	// Order orderErrorelavorazione=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Errore lavorazione SAP' LIMIT 1];
-    Order orderCompletata=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Completata' LIMIT 1];
-   
+    Order orderCompletata=[ SELECT id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c FROM Order WHERE Phase__c='Completata' LIMIT 1];
     Test.startTest(); 
-    new TestBuilderCallManageSalesProcessCategory(orderAmmPrecheckKoSii,'Amm. Precheck KO SII','NOTIF_ES',null);
+    //new TestBuilderCallManageSalesProcessCategory(orderAmmPrecheckKoSii,'Amm. Precheck KO SII','NOTIF_ES',null);
     new TestBuilderCallManageSalesProcessCategory(orderDatidiscordanti,'Dati discordanti','NOTIF_ES',null); 
     new TestBuilderCallManageSalesProcessCategory(orderCompletata,'Completata','NOTIF_ES',null); 
     System.assertNotEquals(400, RestContext.response.statusCode,'No errors triggered during the processes execution');
@@ -528,7 +531,7 @@ static void updateServicePointTest() {
 @IsTest
 static void moveOutTest()
 {
-    Order orderCompletata=[ SELECT  id,AccountId,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  
+    Order orderCompletata=[ SELECT  id,AccountId,ContractReference__c,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  
       FROM Order  WHERE Phase__c='Completata' AND RecordType.DeveloperName = 'HDT_RT_Voltura' LIMIT 1];
     
     Test.startTest();

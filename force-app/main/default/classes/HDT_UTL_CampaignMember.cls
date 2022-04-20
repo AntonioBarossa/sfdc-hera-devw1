@@ -31,7 +31,7 @@ public with sharing class HDT_UTL_CampaignMember {
         for(Campaign c: campaigns){
             for(HDT_CampaignMemberStatus__mdt cmdt : campaignStatusMdt){
                 if (
-                    (cmdt.Category__c == 'Tutte' && cmdt.Channel__c == 'Tutti') ||
+                    (cmdt.Category__c == 'Entrambi' && cmdt.Channel__c == 'Tutti' && c.Channel__c!='Door to Door') ||
                     (c.Category__c == 'Campagna CRM' && (cmdt.Category__c == 'Inbound' || cmdt.Category__c == 'Entrambi') && cmdt.Channel__c == 'Tutti') || (
                         (c.Category__c == 'Campagna Outbound' && cmdt.Category__c == 'Outbound') && (
                             (c.Channel__c == 'Telefonico Outbound' && cmdt.Channel__c == 'Telefonico Outbound') ||

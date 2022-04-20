@@ -122,21 +122,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             processObj.createServicePoint = (String.isNotEmpty(processObj.csvSplitted[codicePuntoIndex]) && codicePuntoMap.containsKey(processObj.csvSplitted[codicePuntoIndex])) ? false : true;
             processObj.createBillingProfile = (String.isNotEmpty(processObj.csvSplitted[contoContrattualeIndex]) && billProfMap.containsKey(processObj.csvSplitted[contoContrattualeIndex])) ? false : true;
             
-            //if(String.isNotEmpty(processObj.csvSplitted[codicePuntoIndex]) && codicePuntoMap.containsKey(processObj.csvSplitted[codicePuntoIndex])){
-            //    processObj.createServicePoint = false;
-            //} else {
-            //    processObj.createServicePoint = true;
-            //}
-            
-            //if(String.isNotEmpty(processObj.csvSplitted[contoContrattualeIndex]) && billProfMap.containsKey(processObj.csvSplitted[contoContrattualeIndex])){
-            //    processObj.createBillingProfile = false;
-            //} else {
-            //    processObj.createBillingProfile = true;
-            //}
-
             System.debug(LoggingLevel.DEBUG, '>>> enableCreate: billProf [' + processObj.createBillingProfile + ']; servPoint [' + processObj.createServicePoint + ']');
-
-            //processObj.account.RecordTypeId = recordTypeMap.get(processObj.csvSplitted[recTypeIndex]);
             
             for (String tempField : processObj.csvSplitted) {
 
@@ -192,13 +178,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 processObj.requestItem.StatusDescription__c = convertionError;
                 continue;
             }
-
-            //processObj.account.Name = String.isBlank(processObj.account.FirstName__c) ? processObj.account.LastName__c : processObj.account.FirstName__c + ' ' + processObj.account.LastName__c;
-            //processObj.account.BillingIsAddressVerified__c = true;
-
-            //System.debug(LoggingLevel.DEBUG, '>>> currentAccount: ' + processObj.account);
-            //System.debug(LoggingLevel.DEBUG, '>>> currentBillingProfile: ' + processObj.billingProfile);
-            //System.debug(LoggingLevel.DEBUG, '>>> currentServicePoint: ' + processObj.servicePoint);
 
             addInformationToSet(processObj.account);
 
@@ -510,22 +489,22 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         contact.MobilePhone = account.MobilePhone__c;
         contact.Email = account.PrimaryEmail__c;
         contact.PhonePrefix__c = account.PhonePrefix__c;
-        contact.Fax = account.FAX__c;                       
-        contact.Profession__c = account.Profession__c;             
-        contact.MailingCity = account.BillingCity;           
-        contact.MailingCityCode__c = account.BillingCityCode__c;                  
-        contact.MailingCountry = account.BillingCountry;              
-        contact.MailingPostalCode = account.BillingPostalCode;                 
-        contact.MailingState = account.BillingState;            
-        contact.MailingStreet = account.BillingStreet;             
-        contact.MailingStreetName__c = account.BillingStreetName__c;                    
-        contact.MailingStreetCode__c = account.BillingStreetCode__c;                    
-        contact.MailingStreetNumber__c = account.BillingStreetNumber__c;                      
-        contact.MailingStreetNumberExtension__c = account.BillingStreetNumberExtension__c;                               
-        contact.MailingStreetToponym__c = account.BillingStreetToponym__c;                       
-        contact.MailingRegion__c = account.BillingRegion__c;                
-        contact.MailingPlace__c = account.BillingPlace__c;                
-        contact.MailingPlaceCode__c = account.BillingPlaceCode__c;                    
+        contact.Fax = account.FAX__c;
+        contact.Profession__c = account.Profession__c;
+        contact.MailingCity = account.BillingCity;
+        contact.MailingCityCode__c = account.BillingCityCode__c;
+        contact.MailingCountry = account.BillingCountry;
+        contact.MailingPostalCode = account.BillingPostalCode;
+        contact.MailingState = account.BillingState;
+        contact.MailingStreet = account.BillingStreet;
+        contact.MailingStreetName__c = account.BillingStreetName__c;
+        contact.MailingStreetCode__c = account.BillingStreetCode__c;
+        contact.MailingStreetNumber__c = account.BillingStreetNumber__c;
+        contact.MailingStreetNumberExtension__c = account.BillingStreetNumberExtension__c;
+        contact.MailingStreetToponym__c = account.BillingStreetToponym__c;
+        contact.MailingRegion__c = account.BillingRegion__c;
+        contact.MailingPlace__c = account.BillingPlace__c;
+        contact.MailingPlaceCode__c = account.BillingPlaceCode__c;
         contact.MailingIsAddressVerified__c = account.BillingIsAddressVerified__c;
         return contact;
     }
@@ -554,6 +533,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         public String contactId;
         public String billProfId;
         public String servPointId;
+        public String parentOrderId;
+        public Boolean orderCompatible;
     }
 
 }

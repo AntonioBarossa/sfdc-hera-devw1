@@ -154,7 +154,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
 
         String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
         // This code runs as the system user
-        Profile p = [SELECT Id FROM Profile WHERE Name='Hera Standard User'];
+        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User' or Name='Utente standard'];
         User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
         EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
         LocaleSidKey='en_US', ProfileId = p.Id,

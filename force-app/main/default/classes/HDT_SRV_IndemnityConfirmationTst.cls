@@ -41,10 +41,14 @@ public with sharing class HDT_SRV_IndemnityConfirmationTst {
         myCase_1.FirstLevelComplaintClassification__c = 'Reclamo Scritto';
         myCase_1.SecondLevelComplaintClassification__c = 'Misura';
         myCase_1.IndemnityConfirmed__c = true;
+        myCase_1.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Indennizzo').getRecordTypeId();
         insert myCase_1;
         
         //MY CASE 2
         Case myCase_2 = HDT_UTL_DataFactoryTst.createCaseDocumentale(1, false, acc.id, con.Id, srv.id, contract.id, ord.id)[0];
+        myCase_2.ParentId = myCase_1.Id;
+        myCase_2.Cluster__c = 'Indennizzi';
+        myCase_2.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Indennizzo').getRecordTypeId();
         insert myCase_2;
         
         //HDT_UTL_FlowInputs

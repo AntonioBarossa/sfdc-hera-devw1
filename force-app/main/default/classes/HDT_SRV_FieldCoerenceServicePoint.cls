@@ -15,13 +15,16 @@ public class HDT_SRV_FieldCoerenceServicePoint {
         String profPrelievo = (String) inputFieldMap.get('ProfiloPrelievo');
         String catUso = (String) inputFieldMap.get('CategoriaUso');
         String imposta = (String) inputFieldMap.get('Imposta');
+        Boolean searchTaxes = inputFieldMap.get('searchTaxes') != null ? (Boolean) inputFieldMap.get('searchTaxes') : true; 
         String fields = 'Id';
         String conditions = 'AccountCategory__c = \'' +catCliente +'\' AND SupplyType__c = \'' +tipoFornitura +'\' AND ImplantType__c = \'' +tipoImpianto +'\' AND Commodity__c = \'' +servizio +'\' AND IsActive__c = true';
         List<FieldCoerenceServicePoint__c> fieldCoerenceList = new List<FieldCoerenceServicePoint__c>();
 
         conditions += (catCliente.equalsIgnoreCase('Famiglie') || catCliente.equalsIgnoreCase('Grandi Condomini') || catCliente.equalsIgnoreCase('Piccoli Condomini')) ? ' AND (WithdrawalClass__c = \'' +profPrelievo +'\' OR WithdrawalClass__c = \'\') AND (UseCategory__c = \'' +catUso +'\' OR UseCategory__c = \'\')' : '';
-        conditions += (!String.isBlank(imposta)) ? ' AND Taxes__c = \'' +imposta +'\'' : '';
-
+        if(searchTaxes)
+        {
+            conditions += (!String.isBlank(imposta)) ? ' AND Taxes__c = \'' +imposta +'\'' : '';
+        }   
         fieldCoerenceList = HDT_QR_GenericQuery.getGenericRecords(fields, 'FieldCoerenceServicePoint__c' , conditions);
         retVal = fieldCoerenceList.size() > 0 ? true : false;
         return retVal;
