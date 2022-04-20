@@ -36,6 +36,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>MethodSignedAccepted__c</picklist>
+        <values>
+            <fullName>IVR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comfort call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>firma digitale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>web assistito</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>AggregateBilling__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -71,10 +90,10 @@
             <fullName>Bolletta per e-mail</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>Bolletta per e-mail %2B Carta</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>Cartaceo</fullName>
             <default>false</default>

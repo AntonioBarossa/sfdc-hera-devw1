@@ -26,7 +26,8 @@ public with sharing class HDT_UTL_GenericSolHandler {
         HDT_QR_Sale qrSale = new HDT_QR_Sale();
         String orderNumber = (String)params.get('serviceRequest');
         List<Order> childOrderList = qrOrder.getRecordByOrderNumber(orderNumber);
-        Sale__c sale = qrSale.getRecordById(childOrderList[0].Sale__c,'Account__c,Id,SalesContact__c,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c,Name');
+        Id saleId = childOrderList[0].Sale__c;
+        Sale__c sale = qrSale.getRecordById(saleId,'Account__c,Id,SalesContact__c,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c,Name');
         Order childOrder = new Order();
         childOrder.Id = childOrderList[0].Id;
         childOrder = createChildOrderWithItem(childOrder,params);
@@ -91,6 +92,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
         BillingProfile__c bp = qrBilling.getRecordByContractAccount(contractAccount);
         Order childOrder = new Order();
         String accountId = (String)params.get('accountId');
+        String contactId = (String)params.get('contactId');
         childOrder.RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
         childOrder.AccountId = accountId;
         childOrder.ProcessType__c = 'VAS';
@@ -102,6 +104,8 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.BillingProfile__c = bp.Id;
         childOrder.Sale__c = saleId;
         childOrder.VasSubtype__c = 'Analisi Consumi';
+        childOrder.Contact__c = contactId;
+        childOrder.SalesContact__c = contactId;
         HDT_UTL_DatabaseService.insertSObject(childOrder);
     }
 
@@ -110,6 +114,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
         String contractNumber = (String)params.get('contractNumber');
         List<Contract> contractList = getContractByNumber(contractNumber);
         HDT_QR_Contract qrContract = new HDT_QR_Contract();
+
         if(contractList != null && !contractList.isEmpty()){
             childOrder.RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
             //childOrder.AccountId = accountId;
@@ -142,8 +147,8 @@ public with sharing class HDT_UTL_GenericSolHandler {
             oi.UnitPrice = 0;
             oi.Quantity = 1;
             oi.OrderId = childOrder.Id;
-            oi.OccupantsNumber__c = (Integer)params.get('numeroOccupanti');
-            oi.Surface__c = (Integer)params.get('superficie');
+            oi.OccupantsNumber__c = Integer.valueOf(params.get('numeroOccupanti'));
+            oi.Surface__c = Integer.valueOf(params.get('superficie'));
             oi.DwellingType__c = (String)params.get('tipologiaAbitazione') == 'Appartamento'?'Appartamento':'Casa Indipendente';
             oi.OwnerAC__c = (String)params.get('proprietario');
             HDT_UTL_DatabaseService.insertSObject(oi);

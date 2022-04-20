@@ -202,7 +202,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                         }
                                     }
                                 }
-                                when 'Dati tecnici ricevuti'{
+                                when 'Dati tecnici ricevuti','Dati Tecnici Ricevuti'{
                                     HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
                                     utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
                                     /**@frpanico 2022-04-13
