@@ -316,6 +316,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             System.debug(LoggingLevel.DEBUG, 'NoteAnn: '  + noteAnn);
             currentCase.CancellationNote__c = noteAnn;
+            currentCase.DiscardDescription__c = '';
             if(STRING.isNotBlank(reqWrp.requestMap.get('NOTE_ERR'))){
                 currentCase.DiscardDescription__c=HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('NOTE_ERR')) + '\n';
             }
