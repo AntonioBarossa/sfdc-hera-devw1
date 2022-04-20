@@ -174,7 +174,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         if(isOnlyAmend){
             orderToUpdate.Phase__c = 'Documentazione Gestita';
             orderToUpdate.Status = 'Completed';
-        }else if(orderParent.Phase__c == 'In Lavorazione'){
+        }else if(orderParent.Phase__c == 'In Lavorazione' || orderParent.Phase__c.equalsIgnoreCase('Comunicazione EngageOne KO')){
             if (orderParent.ContractSigned__c == false) {
                 orderToUpdate.Phase__c = 'Documentazione da inviare';
             } else{
