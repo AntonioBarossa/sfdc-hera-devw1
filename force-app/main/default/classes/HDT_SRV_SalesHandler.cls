@@ -497,11 +497,10 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.CancellationReason__c = 'Annullamento dal SII';
                                     String annotazioni = ord.CancellationNote__c != null? ord.CancellationNote__c:'';
                                     ord.CancellationNote__c = mapRequestFields.get('NOTE_ANN') +'\n' + annotazioni;
-                                    ord.DiscardReason__c = discardReasonString;
                                     HDT_UTL_HerokuPostSalesManager utlClass = new HDT_UTL_HerokuPostSalesManager();
                                     Order cancellationOrder = new Order();
                                     cancellationOrder.Id = ord.Id;
-                                    utlClass.handlePassiveCancellation(cancellationOrder, 'Order', mapRequestFields.get('STORNO'), mapRequestFields.get('ATTIVITA'));
+                                    utlClass.handlePassiveCancellation(cancellationOrder, 'Order', mapRequestFields.get('STORNO'), mapRequestFields.get('ATTIVITA'),mapRequestFields.get('ANNOTAZIONI_ANN'));
                                 }
                                 when 'Annullato'{
                                     if(mapRequestFields.get('NOTE_ANN') != null){
