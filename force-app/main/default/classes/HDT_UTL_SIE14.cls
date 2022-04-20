@@ -55,7 +55,7 @@ public inherited sharing  class HDT_UTL_SIE14 {
             }
         }
 
-        HDT_WRP_SieCondition(String logicString, Boolean test){
+        /*HDT_WRP_SieCondition(String logicString, Boolean test){
 
             String STRING_INDENTED_PATTERN = '\\(([^()]*?)\\)';
             String STRING_LOGIC_PATTERN = '((\\d|true|false)([\\s]+(AND)[\\s]+(\\d|true|false))+)|((\\d|true|false)([\\s]+(OR)[\\s]+(\\d|true|false))+)';
@@ -73,7 +73,7 @@ public inherited sharing  class HDT_UTL_SIE14 {
                 //match=indentedPattern.matcher(logicString);
             }
             //match = logicPattern.matcher(logicString);
-        }
+        }*/
 
         Boolean checkCondition(String actualValue){
             switch on this.operator {

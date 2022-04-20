@@ -1,6 +1,12 @@
 @SuppressWarnings('PMD.AvoidDebugStatements, PMD.ClassNamingConventions, PMD.ExcessiveParameterList')
-public inherited sharing class HDT_SRV_SIE14 {
+public inherited sharing class HDT_SRV_SIE14 implements Queueable {
 
+    Set<Id> data;
+
+    public HDT_SRV_SIE14(Set<Id> data){
+        this.data = data;
+    }
+    
     private HDT_SRV_Account srvAcc = new HDT_SRV_Account();
 
 
@@ -14,9 +20,13 @@ public inherited sharing class HDT_SRV_SIE14 {
 
     }
 
-    Map<Id,Contract> getContractData(Set<Contract> contractIds){
+    public void execute(QueueableContext context) {
+        initSie(this.data);
+    }
 
-        List<Contract> contracts = [SELECT Id, AccountId, ContractSalesCompany__c , Account.CategoryCode__c, SBQQ__Order__r.Sale__r.CommercialId__c 
+    Map<Id,Contract> getContractData(Set<Id> contractIds){
+
+        List<Contract> contracts = [SELECT Id, AccountId, ContractSalesCompany__c , SBQQ__Order__r.SalesCompany__c, Account.CategoryCode__c, SBQQ__Order__r.Sale__r.CommercialId__c 
                                     FROM Contract
                                     WHERE Id IN :contractIds
                                     WITH SECURITY_ENFORCED
@@ -34,12 +44,16 @@ public inherited sharing class HDT_SRV_SIE14 {
 
     public Map<Id,String> getMostFrequentCompany(Set<Id> accountId){
 
+
         Map<Id, String> result = new Map<Id,String>();
-        List<AggregateResult> results = [Select AccountId , ContractSalesCompany__c , Count(Id) counter From Contract WHERE AccountId IN :accountId
-                                            AND ContractSalesCompany__c != NULL GROUP BY AccountId, ContractSalesCompany__c ORDER BY Count(Id) ASC];// NO SECURITY ENFORCED
+        List<AggregateResult> results = [Select AccountId , SBQQ__Order__r.SalesCompany__c salesCompany, Count(Id) counter From Contract WHERE AccountId IN :accountId
+                                            //AND SBQQ__Order__r.SalesCompany__c != '' 
+                                            GROUP BY AccountId, SBQQ__Order__r.SalesCompany__c ORDER BY Count(Id) ASC];// NO SECURITY ENFORCED
 
         for(AggregateResult actualResult : results){
-            result.put((Id)actualResult.get('accountId'), (String)actualResult.get('ContractSalesCompany__c') );
+            String company = (String) actualResult.get('salesCompany');
+            company = String.isNotBlank(company)? company : '';
+            result.put((Id)actualResult.get('accountId'), company );
         }
 
         return result;
@@ -64,7 +78,7 @@ public inherited sharing class HDT_SRV_SIE14 {
         return accountToUpdate;
     }
 
-    public void initSie(Set<Contract> data){
+    public void initSie(Set<Id> data){
         Map<Id,Contract> contracts = getContractData(data);
         system.debug('contracts -> ' + contracts);
         List<Account> accountToUpdate = findRule(contracts);
