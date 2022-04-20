@@ -580,7 +580,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         
         if(String.isNotBlank(storno) && storno.equalsIgnoreCase('N')) {
             recordObj.put('Phase__c', 'Annullato SII');
-            recordObj.put('Status','Closed');
+            String status = recordObj.getSObjectType().getDescribe().getName() == 'Order' ? 'Annullato' : 'Closed';
+            recordObj.put('Status',status);
             updateFutureSobject(JSON.serialize(recordObj));
         }else if(String.isNotBlank(activity) && activity.equalsIgnoreCase('Eseguire Gestione Manuale SAP')){
             /* switch on objectType {
