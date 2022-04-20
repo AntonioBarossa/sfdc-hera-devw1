@@ -86,6 +86,7 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
 
         List<Order> orderToUpdate = new List<Order>();
         List<ServiceRequest__c> serviceRequestToInsert = new List<ServiceRequest__c>();
+        List<MassiveLoaderRequestItem__c> requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
 
         Order orderToCheck;
         Order analisiConsumiOrder;
@@ -114,11 +115,11 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
 
             checkResponse = HDT_UTL_MatrixCompatibility.checkCompatibilitySales(servReq, false);
 
-            Object o = checkResponse.get('compatibility');
+            Object compatibility = checkResponse.get('compatibility');
 
-            System.debug('>>> checkResponse ' + o);
+            System.debug('>>> checkResponse ' + compatibility);
 
-            if(o == null){
+            if(compatibility == null){
                 // Se il risultato del metodo mappa.get('compatibility') è blank allora è necessario chiamare
                 processObj.nextDataObj.orderCompatible = true;
 
@@ -130,17 +131,18 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
                 processObj.nextDataObj.orderCompatible = false;
                 orderToCheck.Phase__c = 'Annullato';
                 orderToCheck.Status = 'Annullato';
-                //orderToCheck.CancellationReasonDescription__c = 'Processi incompatibili: ' ;//+ mappa
+                orderToCheck.CancellationNote__c = 'Motivazione: ' + String.valueOf(compatibility).abbreviate(250);
 
                 //annullare ordine analisi consumi
                 analisiConsumiOrder.Phase__c = 'Annullato';
                 analisiConsumiOrder.Status = 'Annullato';
-                //analisiConsumiOrder.CancellationReasonDescription__c = 'Processi incompatibili: ' ;//+ mappa
+                analisiConsumiOrder.CancellationNote__c = 'Motivazione: ' + String.valueOf(compatibility).abbreviate(250);
                 analisiConsumiOrder.Phase__c = 'Comunicazione verso Heroku'; //// ??? 
                 orderToUpdate.add(orderToCheck);
             }
 
             orderToUpdate.add(analisiConsumiOrder);
+            requestItemForUpsert.add(processObj.requestItem);
 
             // per analisi consumi creare solo ServiceRequest
             ServiceRequest__c srRequest;
