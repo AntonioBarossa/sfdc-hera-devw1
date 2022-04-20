@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ClassNamingConventions, PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces')
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ClassNamingConventions, PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.LocalVariableNamingConventions')
 public inherited sharing  class HDT_UTL_SIE14 {
 
     private static final List<String> OPERATORS = new List<String>{'==','!=', 'STARTS', 'NOT STARTS'};
@@ -53,6 +53,26 @@ public inherited sharing  class HDT_UTL_SIE14 {
                 this.operator=matcher.group(2).trim();
                 this.valueToCheck=matcher.group(3).toLowerCase().trim();
             }
+        }
+
+        HDT_WRP_SieCondition(String logicString, Boolean test){
+
+            String STRING_INDENTED_PATTERN = '\\(([^()]*?)\\)';
+            String STRING_LOGIC_PATTERN = '((\\d|true|false)([\\s]+(AND)[\\s]+(\\d|true|false))+)|((\\d|true|false)([\\s]+(OR)[\\s]+(\\d|true|false))+)';
+            //group 4 contiene il logic gate, 
+            Pattern indentedPattern = Pattern.compile(STRING_INDENTED_PATTERN);
+            Pattern logicPattern = Pattern.compile(STRING_LOGIC_PATTERN);
+            Matcher match = indentedPattern.matcher(logicString);
+            while(match.find()){
+                //match.usePattern(logicPattern);
+                Matcher logicMatch = logicPattern.matcher(match.group(0));
+                while(logicMatch.find()){
+                    system.debug(match.group(0)+' '+match.group(4))
+                    //logicString=doLogicAndSimplifyExpr(match.group(0), match.group(4));
+                }
+                //match=indentedPattern.matcher(logicString);
+            }
+            //match = logicPattern.matcher(logicString);
         }
 
         Boolean checkCondition(String actualValue){
