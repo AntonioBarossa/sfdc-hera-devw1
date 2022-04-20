@@ -94,6 +94,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 }*/
                 if (order.ProcessType__c == 'Switch in Ripristinatorio') {
                     orderToUpdate.DateSentToSII__c = Date.today();
+                    orderToUpdate.EffectiveDate__c = Date.today();
                     orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
                 }
                 else {
@@ -352,7 +353,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 throw new AuraHandledException('Dati incompleti o non coerenti.');
             }
         }
-        if(currentOrder.CommodityFormula__c.equalsIgnoreCase('Gas'))
+        if(order.RecordType.DeveloperName!= 'HDT_RT_VAS' && order.RecordType.DeveloperName!= 'HDT_RT_ScontiBonus' && currentOrder.CommodityFormula__c.equalsIgnoreCase('Gas'))
         {
             String exciseGas = String.isBlank(orderToUpdate.ExciseGAS__c) ? currentOrder.ExciseGAS__c : orderToUpdate.ExciseGAS__c;
             exciseGas = exciseGas.substringBetween('Cod. ', ')');
