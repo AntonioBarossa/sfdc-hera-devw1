@@ -137,7 +137,7 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
                 analisiConsumiOrder.Phase__c = 'Annullato';
                 analisiConsumiOrder.Status = 'Annullato';
                 analisiConsumiOrder.CancellationNote__c = 'Motivazione: ' + String.valueOf(compatibility).abbreviate(250);
-                analisiConsumiOrder.Phase__c = 'Comunicazione verso Heroku'; //// ??? 
+                //analisiConsumiOrder.Phase__c = 'Comunicazione verso Heroku'; //// ??? 
                 orderToUpdate.add(orderToCheck);
             }
 
@@ -167,7 +167,6 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
         srRequest.CommoditySector__c = analisiConsumiOrder.ServicePoint__r.CommoditySector__c;
         srRequest.Type__c = 'Order';
         srRequest.ServicePoint__c = analisiConsumiOrder.ServicePoint__c;
-        //srRequest.ProcessType__c = (srRequest.CommoditySector__c == 'Energia Elettrica') ? 'Aggiunta Sconti o Bonus VAS Ele' : 'Aggiunta Sconti o Bonus VAS Gas';
         srRequest.ProcessType__c = (srRequest.CommoditySector__c == 'Energia Elettrica') ? 'Sconti e bonus - EE' : 'Sconti e bonus - GAS';
         //srRequest.Phase__c = 'Comunicazione verso Heroku';
         System.debug('>>> srRequest ' + srRequest);
