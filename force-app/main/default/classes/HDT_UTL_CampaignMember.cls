@@ -31,7 +31,7 @@ public with sharing class HDT_UTL_CampaignMember {
         for(Campaign c: campaigns){
             for(HDT_CampaignMemberStatus__mdt cmdt : campaignStatusMdt){
                 if (
-                    (cmdt.Category__c == 'Tutte' && cmdt.Channel__c == 'Tutti') ||
+                    (cmdt.Category__c == 'Entrambi' && cmdt.Channel__c == 'Tutti' && c.Channel__c!='Door to Door') ||
                     (c.Category__c == 'Campagna CRM' && (cmdt.Category__c == 'Inbound' || cmdt.Category__c == 'Entrambi') && cmdt.Channel__c == 'Tutti') || (
                         (c.Category__c == 'Campagna Outbound' && cmdt.Category__c == 'Outbound') && (
                             (c.Channel__c == 'Telefonico Outbound' && cmdt.Channel__c == 'Telefonico Outbound') ||
@@ -407,6 +407,26 @@ public with sharing class HDT_UTL_CampaignMember {
                 member.NumberingValidityStartDate__c = todaysDate;
             }
         }
+    }
+
+    public static void doCallMeBack(List<CampaignMember> members) {
+        List<Id> idsToProcess = new List<Id>();
+        for(CampaignMember cm : members) {
+            idsToProcess.add(cm.Id);
+        }
+
+        List<CampaignMember> processedMembers = new List<CampaignMember>();
+        for(CampaignMember member : [SELECT Id, PhoneNumber__c, LeadId, Lead.ContactDate__c, Campaign.ReitekIntegrationTechnology__c, Campaign.MacroActivityEasyCIM__r.Name FROM CampaignMember WHERE Id IN: idsToProcess WITH SECURITY_ENFORCED]) {
+            if(member.LeadId != null && member.Campaign.ReitekIntegrationTechnology__c == 'Web Service') {
+                System.enqueueJob(new HDT_QBL_InvioNumerazioni(member.Campaign.MacroActivityEasyCIM__r.Name, member.PhoneNumber__c, member.Lead.ContactDate__c));
+                processedMembers.add(new CampaignMember(
+                    Id = member.Id,
+                    ReitekSendDate__c = Date.today()
+                ));
+            }
+        }
+
+        new HDT_SRV_CampaignMember().updateRecords(processedMembers);
     }
 
     public static void setAgency (List<CampaignMember> members) {

@@ -225,7 +225,7 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 
 		Boolean isClose = HDT_UTL_ActivityCustom.isMandatoryComplete( activities[0].Case__r.id );
 
-		System.assertEquals( isClose, true, 'isActivityNotClosed work correctly' );
+		System.assertEquals( isClose, false, 'isActivityNotClosed work correctly' );
 
 		test.stopTest();
 	
