@@ -3,11 +3,21 @@ public with sharing class HDT_BA_ErrorRequestItem implements Database.Batchable<
     public static HDT_QR_StaticResource staticResourceQr = new HDT_QR_StaticResource();
     private id idLoaderRequest;
 	public Integer fileNumber;
-    public String splitCharacter = '|';
+    public String splitCharacter;// = '|';
 
     public HDT_BA_ErrorRequestItem(Id varIdLoaderRequest) {
         this.idLoaderRequest = varIdLoaderRequest;
         this.fileNumber = 0;
+        splitCharacter = setSplitCharacter();
+    }
+
+    public static String setSplitCharacter(){
+        String splitCharacter = HDT_LC_MassiveLoader.getSplitCharacter();
+        if(splitCharacter.equalsIgnoreCase('\\|')){
+            return '|';
+        } else {
+            return splitCharacter;
+        }
     }
 
     public Database.QueryLocator start(Database.BatchableContext bc) {

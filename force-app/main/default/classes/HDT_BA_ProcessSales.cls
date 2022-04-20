@@ -55,8 +55,8 @@ public inherited sharing class HDT_BA_ProcessSales implements Database.Batchable
         //    Database.executebatch(batch, 1000);
         //}
 
-        HDT_BA_ProcessOrderCreation orderCreation = new HDT_BA_ProcessOrderCreation(idLoaderRequest, 200, process);
-        Database.executebatch(orderCreation, 200);
+        HDT_BA_ProcessOrderCreation orderCreation = new HDT_BA_ProcessOrderCreation(idLoaderRequest, 10, process);
+        Database.executebatch(orderCreation, 10);
 
     }
 
