@@ -14,7 +14,7 @@ public class HDT_LC_FinalConfirmationButtonTest {
         List<Contact> cttList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].Id, 'Bozza');
         List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(2, true, accList[0].Id, 'Attiva');
-        orderList[0].RecordTypeId = constants.ORDER_RECORDTYPEID_ATTIVAZIONE;
+        orderList[0].RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId();
         orderList[0].Contact__c = cttList[0].Id;
         insert orderList;
         
@@ -24,7 +24,7 @@ public class HDT_LC_FinalConfirmationButtonTest {
         if(childOrders!=null && childOrders.size()>0){
             List<Order> childOrdersToUpdate=new List<Order>();
             for (order o : childOrders){
-                o.RecordTypeId=constants.ORDER_RECORDTYPEID_ATTIVAZIONE;
+                o.RecordTypeId=Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId();
                 childOrdersToUpdate.add(o);
             }
             if(childOrdersToUpdate!=null && childOrdersToUpdate.size()>0){
