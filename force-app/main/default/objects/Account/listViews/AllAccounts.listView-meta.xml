@@ -8,5 +8,10 @@
     <columns>CORE.USERS.FIRST_NAME</columns>
     <columns>CORE.USERS.LAST_NAME</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>ACCOUNT.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Account.HDT_RT_Business,Account.HDT_RT_Residenziale</value>
+    </filters>
     <label>All Accounts</label>
 </ListView>

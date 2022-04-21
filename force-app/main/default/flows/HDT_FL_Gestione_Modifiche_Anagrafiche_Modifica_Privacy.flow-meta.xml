@@ -445,15 +445,15 @@
     <decisions>
         <name>Next_Step_Processo</name>
         <label>Next Step Processo</label>
-        <locationX>1900</locationX>
-        <locationY>455</locationY>
+        <locationX>1903</locationX>
+        <locationY>454</locationY>
         <defaultConnector>
             <targetReference>Inserimento_Dati</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Inserimento Consensi</defaultConnectorLabel>
         <rules>
             <name>Stampa</name>
-            <conditionLogic>4 AND (1 OR 2 OR 3 OR 5 OR 6)</conditionLogic>
+            <conditionLogic>4 AND (1 OR 2 OR 3 OR 5 OR 6 OR 7)</conditionLogic>
             <conditions>
                 <leftValueReference>FlowCase.Origin</leftValueReference>
                 <operator>EqualTo</operator>
@@ -494,6 +494,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Telefono Inbound</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>FlowCase.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Teleselling</stringValue>
                 </rightValue>
             </conditions>
             <connector>

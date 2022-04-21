@@ -398,6 +398,7 @@
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <actionName>NewContact</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
@@ -413,6 +414,8 @@
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+=======
+>>>>>>> 57a284f66ccf7b11d7cf10dadfd32ee2346d6a07
 =======
 >>>>>>> 57a284f66ccf7b11d7cf10dadfd32ee2346d6a07
             <actionName>PrintableView</actionName>
