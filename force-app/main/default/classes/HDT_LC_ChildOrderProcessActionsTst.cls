@@ -111,6 +111,23 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             accounts[0].RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Distributore').getRecordTypeId();
 
             update accounts;
+
+            List<Account> myAccountResidenzialeList = new List<Account>();
+            Account myAccountResidenziale = new Account();
+            id accountResidenziale=utlConstants.ACCOUNT_RECORDTYPEID_RESINDEZIALE;
+            myAccountResidenziale.RecordTypeId = accountResidenziale;
+            myAccountResidenziale.Name = 'Test Residenziale';
+            myAccountResidenziale.CompanyOwner__c = 'MMS';
+            myAccountResidenziale.CustomerMarking__c = 'MMS Persona fisica';
+            myAccountResidenziale.Category__c = 'Famiglie';
+            myAccountResidenziale.BillingCityCode__c='Roma';
+			myAccountResidenziale.BillingStreetName__c='via roma';
+			myAccountResidenziale.BillingStreetNumber__c='55';
+            myAccountResidenziale.FiscalCode__c = 'PMOPPP21M18E507H';
+            myAccountResidenziale.IsWrongFiscalData__c = false;
+        	myAccountResidenziale.BillingIsAddressVerified__c = true;
+            myAccountResidenzialeList.add(myAccountResidenziale);
+            insert myAccountResidenzialeList;
             
             HDT_UTL_DataFactoryTst.createComfortQualityCall(2,true);
             List<BillingProfile__c> billing =HDT_UTL_DataFactoryTst.createBillingProfile(1,true,accounts[0].Id);
@@ -118,17 +135,15 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(7, true, accounts[0].Id, 'Attiva');
 			List<Pricebook2> pricebook=HDT_UTL_DataFactoryTst.createPricebook(1, true);
 			List<Order> orders=HDT_UTL_DataFactoryTst.createOrderWithPricebook(7, false, accounts[0].Id, sales, pricebook[0].Id);
-			/*List<Order> ordersParent=HDT_UTL_DataFactoryTst.createOrder(1, false, accounts[0].Id,'Bozza');
-            ordersParent[0].Name='parentOrder0';
-            insert ordersParent[0];*/
-			id orderVoltura=utlConstants.ORDER_RECORDTYPEID_VOLTURA;
+            
+            
+            id orderVoltura=utlConstants.ORDER_RECORDTYPEID_VOLTURA;
             id orderSubentro=utlConstants.ORDER_RECORDTYPEID_SUBENTRO;
             id orderSwitchIn=utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
             id orderAttivazione=utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONE;
             id orderAttivazioneConModifica=utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA;
 			id orderConnessioneConAttiv=utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
 			id orderDossier=utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER;
-
             
             
             Id accId = accounts[0].id;
@@ -149,6 +164,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             orders[6].Contact__c = contactId;
             orders[6].IsActivationDeferred__c=true;
             orders[6].Status='Draft';
+            orders[6].Channel__c  = 'Sportello';
+            orders[6].SignedDate__c = Date.today();
 			
             insert orders[6];
             
@@ -266,6 +283,15 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
 			insert servPoints;
 
+            
+            List<Order> ordersResidenziale=HDT_UTL_DataFactoryTst.createOrder(1, false, myAccountResidenzialeList[0].Id,'Bozza');
+			ordersResidenziale[0].Name = 'orderResidenziale';
+            ordersResidenziale[0].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_VOLTURA;
+            ordersResidenziale[0].ServicePoint__c = servPoints[0].Id;
+            ordersResidenziale[0].Contact__c = contactId;
+            ordersResidenziale[0].ParentOrder__c = orders[6].Id;
+            insert ordersResidenziale;
+
 			List<SBQQ__Quote__c> quotes=HDT_UTL_DataFactoryTst.createQuote(1, false, orders[0].Id, opps[0].Id, sales[0].Id, 'Amendment');
 			quotes[0].IsVAS__c=false;
 			quotes[0].AmendmentAllowed__c=false;
@@ -280,6 +306,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 			orders[3].ServicePoint__c=servPoints[0].Id;
 			orders[3].SBQQ__Quote__c=quotes[0].id;
             orders[5].ServicePoint__c=servPoints[1].Id;
+
 
 
 			update orders;
@@ -469,32 +496,32 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         
         //Start Test
         
-        List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
-        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
-        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
-        FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc];
-        List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,false,'HERA COMM','Persona fisica','Famiglie');
- 
+        List<Order> tOrder2=[SELECT Id, Name, Contact__c, Contact__r.Id, Account.Id, Account.RecordType.Id, Account.RecordType.DeveloperName, RecordType.Id, RecordType.DeveloperName, Commodity__c,
+        VATfacilitationFlag__c, SignatureMethod__c, ProcessType__c, EffectiveDate__c, QuotationType__c, ParentOrder__c, ParentOrder__r.Id, ParentOrder__r.Status,
+        Channel__c, CustomerCategory__c, MarketOrigin__c FROM Order WHERE Name = 'orderResidenziale'];
+        
+
         Test.startTest();
 
         //Test AttivazioneConModifica
         // system.debug('Test AttivazioneConModifica');
         Map<String,Object> m3 = new Map<String,Object>();
-        accountList.get(0).Id=tOrder2.get(1).AccountId;
-        update accountList;
+
         m3.put('EffectiveDate__c', Date.today().addDays(11));
-        tOrder2[1].VATfacilitationFlag__c=true;
-        tOrder2[1].QuotationType__c='Rapido';
-        tOrder2[1].Commodity__c = 'Gas';
-        tOrder2[1].recordTypeId = utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE;
-        tOrder2[1].ProcessType__c = 'Switch in Ripristinatorio';
+        tOrder2[0].VATfacilitationFlag__c=true;
+        tOrder2[0].QuotationType__c='Rapido';
+        tOrder2[0].Commodity__c = 'Energia Elettrica';
+        //tOrder2[0].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE;
+        tOrder2[0].ProcessType__c = 'Switch in Ripristinatorio';
+        Order myOrder = [Select Id from Order where RecordType.Name = 'Order Dossier'];
+        tOrder2[0].ParentOrder__c = myOrder.Id;
         update tOrder2;
 
-        HDT_LC_ChildOrderProcessActions.save(tOrder2[1],m3);
+        HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
+
         m3.put('VATfacilitationFlag__c',true);
         try{
-        HDT_LC_ChildOrderProcessActions.save(tOrder2[1],m3);
+        HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
         }
  
         catch(Exception e){ 
