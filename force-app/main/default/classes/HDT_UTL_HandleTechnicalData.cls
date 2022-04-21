@@ -70,7 +70,15 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
             ord.QuotationType__c = 'Analitico';
         }
         if(!String.isBlank(mapRequestFields.get('DT_MAX_PREV'))){
-            if(mapRequestFields.get('DT_MAX_PREV').getChars().size()==8){
+            try
+            {
+                ord.ValidityDateEstimate__c = Date.valueOf(mapRequestFields.get('DT_MAX_PREV'));
+            }
+            catch(Exception e)
+            {
+                System.debug(LoggingLevel.DEBUG, 'DT_MAX_PREV Exception -> ' + e.getMessage());
+            }
+            if(ord.ValidityDateEstimate__c == null && mapRequestFields.get('DT_MAX_PREV').getChars().size()==8){
                 ord.ValidityDateEstimate__c=getExpireDate(mapRequestFields.get('DT_MAX_PREV'));
             }
         }

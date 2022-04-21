@@ -4,12 +4,11 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
     private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
     public List<Order> ordersToUpdate = new List<Order>();
-    public List<wrts_prcgvr__Activity__c> callActivities = new List<wrts_prcgvr__Activity__c>();
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
 
         String query = 'SELECT Id,IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c FROM Order '+
-        'Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
+        'Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND VasSubtype__c != \'Analisi Consumi\'';
         return Database.getQueryLocator(query);
     }
 
@@ -30,6 +29,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
         RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
         List<wrts_prcgvr__Activity__c> activityVas = new List<wrts_prcgvr__Activity__c>();
+        List<wrts_prcgvr__Activity__c> callActivities = new List<wrts_prcgvr__Activity__c>();
         Map<String,wrts_prcgvr__Activity__c> mapActivitiesParent = new Map<String,wrts_prcgvr__Activity__c>();
         Map<Id,CampaignMember> campaignMembersUpdate = new Map<Id,CampaignMember>();
         Map<String,Order> orderMap = new Map<String,Order>();
@@ -113,20 +113,6 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                             }
                         }
                     }
-
-                    //wrts_prcgvr__Activity__c activityToClose = new wrts_prcgvr__Activity__c();
-                    
-                    //DV 28/02/2022 --> SEMBRA CHE ALL'ANNULLAMENTO DELL'ORDINE L'ACTIVITY VENGA CHIUSA IN AUTOMATICO!
-                   /*if(orderToActivityMap.get(ord.Id) != null && orderToActivityMap.get(ord.Id).wrts_prcgvr__Status__c != 'Non Esitata' && orderToActivityMap.get(ord.Id).wrts_prcgvr__Status__c != 'Chiusa'){
-                        activityToClose = orderToActivityMap.get(ord.Id);
-                        activityToClose.wrts_prcgvr__Status__c = 'Non Esitata';
-                        activitiesToClose.add(activityToClose);
-                    }
-                    else if(orderToActivityMap.get(ord.ParentOrder__c) != null && orderToActivityMap.get(ord.ParentOrder__c).wrts_prcgvr__Status__c != 'Non Esitata' && orderToActivityMap.get(ord.ParentOrder__c).wrts_prcgvr__Status__c != 'Chiusa'){
-                        activityToClose = orderToActivityMap.get(ord.ParentOrder__c);
-                        activityToClose.wrts_prcgvr__Status__c = 'Non Esitata';
-                        activitiesToClose.add(activityToClose);
-                    }*/
                 }
 
                 if ((ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))) {
@@ -194,9 +180,6 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         Map<String, Campaign> compOwnerToCampMap = new Map<String, Campaign>();
         compOwnerToCampMap = HDT_QR_Campaign.getCampaignByCompOwner('Quality Call', orderAccountCompanyOwnersSet);
 
-
-        //List<Campaign> qualityCampaign = HDT_QR_Campaign.getCampaingByTipology('Quality Call', orderAccountCompanyOwnersSet);
-
         List<CampaignMember> campaignMembersBulk = new List<CampaignMember>();
         if (compOwnerToCampMap != null && !contactList.isEmpty()) {
             List<String> campaignIdList = new List<String>();
@@ -204,7 +187,6 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 campaignIdList.add(c.Id);
             }
             campaignMembersBulk = campaignMemberQr.getCampaignMemberByCampaingAndContactInBulk(campaignIdList, contactList);
-
         }
 
         Map<Id,CampaignMember> notDuplicatedCampToIns = new Map<Id,CampaignMember>();
