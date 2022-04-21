@@ -416,6 +416,26 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         }
     }
 
+    /*private static List<Account> setAccountIdFromDb(Account iterationAccount) {
+        List<Account> accountDuplicated = new List<Account>();
+        List<Datacloud.FindDuplicatesResult> results;
+        List<Account> accountToSearch = new List<Account>{iterationAccount}
+        results = Datacloud.FindDuplicates.findDuplicates(accountToSearch);
+
+        for (Integer i = 0; i < accountToSearch.size(); i++) {
+            Account acctDup = null;
+            for (Datacloud.DuplicateResult dr : results[i].getDuplicateResults()) {
+                if (dr.matchResults.size() > 0 && dr.getMatchResults()[0].matchRecords.size() > 0) {
+                    acctDup = (Account)dr.getMatchResults()[0].getMatchRecords()[0].getRecord();
+                    break;
+                }
+            }
+            accountDuplicated.add(acctDup);
+        }
+    
+        if(duplicateLeadList[0] != null){
+    }*/
+
     public Id setAccountIdFromDb(Account iterationAccount){
 
         //search by CustomerCode__c --> CSN (csv header)

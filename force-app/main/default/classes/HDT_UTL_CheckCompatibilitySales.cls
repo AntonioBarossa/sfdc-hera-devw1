@@ -119,7 +119,8 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
 
             System.debug('>>> checkResponse ' + compatibility);
 
-            if(compatibility == null){
+            if(compatibility == null || compatibility == ''){
+                System.debug('>>> compatibility  ok');
                 // Se il risultato del metodo mappa.get('compatibility') è blank allora è necessario chiamare
                 processObj.nextDataObj.orderCompatible = true;
 
@@ -127,6 +128,7 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
                 analisiConsumiOrder.Phase__c = 'Comunicazione verso Heroku';
 
             } else {
+                System.debug('>>> compatibility  KO');
                 // Se il risultato del metodo mappa.get('compatibility') != null allora è necessario annullare l'ordine e gli altri order figli
                 processObj.nextDataObj.orderCompatible = false;
                 orderToCheck.Phase__c = 'Annullato';
