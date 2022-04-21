@@ -6,6 +6,10 @@ public inherited sharing class HDT_SRV_SIE14 implements Queueable {
     public HDT_SRV_SIE14(Set<Id> data){
         this.data = data;
     }
+
+    public HDT_SRV_SIE14(){
+        this.data= new Set<id>();
+    }
     
     private HDT_SRV_Account srvAcc = new HDT_SRV_Account();
 
@@ -14,7 +18,7 @@ public inherited sharing class HDT_SRV_SIE14 implements Queueable {
         return new List<HDT_UTL_SIE14.HDT_WRP_SIE14Rule>{
             new HDT_UTL_SIE14.HDT_WRP_SIE14Rule('CORPORATE_IC', new List<String>{'Account.CategoryCode__c == Z006'},'', ''),
             new HDT_UTL_SIE14.HDT_WRP_SIE14Rule('HCNE_Coporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS AGSMECON'},'1 AND 2', 'Hera Comm NordEst'),                        
-            new HDT_UTL_SIE14.HDT_WRP_SIE14Rule('Corporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS AGSMECON'},'1 AND 2', 'Hera Comm S.p.A;Hera Comm Marche' ),
+            new HDT_UTL_SIE14.HDT_WRP_SIE14Rule('Corporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS AGSMECON'},'1 AND 2', 'Hera Comm S.p.A.;Hera Comm Marche' ),
             new HDT_UTL_SIE14.HDT_WRP_SIE14Rule('ZCOD-DA CODIFICARE', null,'1 AND 2', null )
         };
 

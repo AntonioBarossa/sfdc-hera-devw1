@@ -38,6 +38,7 @@ public inherited sharing  class HDT_UTL_SIE14 {
         }
     }
 
+    @TestVisible
     class HDT_WRP_SIECondition {
 
         String fieldName;
