@@ -12,10 +12,10 @@ import isSaveDisabled from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.is
 import isCommunity from '@salesforce/apex/HDT_LC_SellingWizardController.checkCommunityLogin';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
-import getPicklistValue from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.getActivePicklistValue';
 import { getRecord } from 'lightning/uiRecordApi';
 import SIGN_FIELD from '@salesforce/schema/Order.SignatureMethod__c';
-import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';
+import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';import getPicklistValue from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.getActivePicklistValue';
+
 import SIGNED_FIELD from '@salesforce/schema/Order.ContractSigned__c';
 //Il seguente campo è stato utilizzato per tracciare l'ultimo SignatureMethod inviato a docusign.
 import OLDSIGN_FIELD from '@salesforce/schema/Order.SignMode__c';
@@ -23,7 +23,6 @@ import isOnlyAmend from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.isOnl
 // TOOLBAR STUFF
 import { loadScript } from 'lightning/platformResourceLoader';
 import cttoolbar from '@salesforce/resourceUrl/toolbar_sdk';
-
 export default class hdtOrderDossierWizardActions extends NavigationMixin(LightningElement) {
     @track isModalOpen = false;
     @api orderParentRecord;
