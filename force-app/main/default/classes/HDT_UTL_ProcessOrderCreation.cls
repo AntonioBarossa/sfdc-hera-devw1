@@ -372,6 +372,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                     wrpChildOrder.childOrder.Pricebook2Id = priceBookId;
                     wrpChildOrder.childOrder.EffectiveDate = Date.today();
                     wrpChildOrder.childOrder.Status = 'Draft';
+                    wrpChildOrder.childOrder.processType__c = 'VAS';
 
                     for(HDT_WRP_OrderItem wrpOrderItem : wrpChildOrder.orderItemList){
                         Map<String, SBQQ__ProductOption__c> tempMap = additionalOrderItemMap.get(commOffId);
@@ -741,7 +742,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             HDT_WRP_ChildOrder wrpChildOrder = new HDT_WRP_ChildOrder();
             wrpChildOrder.orderType = 'analisiConsumi';
             wrpChildOrder.childOrder = new Order();
-            wrpChildOrder.childOrder.RecordTypeId = childOrderRecordTypeId;
+            //wrpChildOrder.childOrder.RecordTypeId = childOrderRecordTypeId;
+            wrpChildOrder.childOrder.RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
+            wrpChildOrder.childOrder.processType__c = 'VAS';
             wrpChildOrder.childOrder.IsMassive__c = true;
             wrpChildOrder.childOrder.Status = 'In Lavorazione';
             wrpChildOrder.childOrder.VasSubtype__c = 'Analisi Consumi';
