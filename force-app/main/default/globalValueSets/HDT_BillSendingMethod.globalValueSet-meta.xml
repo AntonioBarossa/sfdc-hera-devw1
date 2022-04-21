@@ -6,11 +6,6 @@
         <label>Bolletta per e-mail</label>
     </customValue>
     <customValue>
-        <fullName>Bolletta per e-mail + Carta</fullName>
-        <default>false</default>
-        <label>Bolletta per e-mail + Carta</label>
-    </customValue>
-    <customValue>
         <fullName>Cartaceo</fullName>
         <default>false</default>
         <label>Cartaceo</label>
@@ -24,6 +19,12 @@
         <fullName>Invio tramite PEC</fullName>
         <default>false</default>
         <label>Invio tramite PEC</label>
+    </customValue>
+    <customValue>
+        <fullName>Bolletta per e-mail + Carta</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Bolletta per e-mail + Carta</label>
     </customValue>
     <masterLabel>Modalità Invio Bolletta</masterLabel>
     <sorted>false</sorted>
