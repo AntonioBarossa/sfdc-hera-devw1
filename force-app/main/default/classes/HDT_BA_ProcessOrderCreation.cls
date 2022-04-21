@@ -48,6 +48,7 @@ public inherited sharing class HDT_BA_ProcessOrderCreation implements Database.B
 
     public void finish(Database.BatchableContext bc){
         //System.debug('HDT_BA_ProcessRequestItem finish ');
+        /*
         MassiveLoaderRequest__c oldReq = new MassiveLoaderRequest__c();
         oldReq.Id = idLoaderRequest;
         oldReq.Status__c = constantsUtl.MASSIVLOADER_STATUS_CHIUSO;
@@ -65,6 +66,9 @@ public inherited sharing class HDT_BA_ProcessOrderCreation implements Database.B
             HDT_BA_ErrorRequestItem batch = new HDT_BA_ErrorRequestItem(idLoaderRequest);
             Database.executebatch(batch, 1000);
         }
+        */
+        HDT_BA_CheckCompatibilitySales checkCompatibilitySales = new HDT_BA_CheckCompatibilitySales(idLoaderRequest, 1, process);
+        Database.executebatch(checkCompatibilitySales, 1);
     }
 
 }
