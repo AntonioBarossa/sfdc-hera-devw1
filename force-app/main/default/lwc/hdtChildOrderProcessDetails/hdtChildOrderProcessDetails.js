@@ -712,19 +712,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.dispatchEvent(toastErrorMessage);
                     return;
                 }
-                if(this.template.querySelector("[data-id='CommentForDL__c']") !== null 
-                    && (this.template.querySelector("[data-id='CommentForDL__c']").value === ''
-                        || this.template.querySelector("[data-id='CommentForDL__c']").value === null)) {
-                    this.loading = false;
-                        const toastErrorMessage = new ShowToastEvent({
-                            title: 'Errore',
-                            message: 'Popolare il campo Note per il DL',
-                            variant: 'error',
-                            mode: 'sticky'
-                        });
-                    this.dispatchEvent(toastErrorMessage);
-                    return;
-                }
                 if(this.template.querySelector("[data-id='ConnectionType__c']") !== null 
                     && (this.template.querySelector("[data-id='ConnectionType__c']").value === ''
                         || this.template.querySelector("[data-id='ConnectionType__c']").value === null)) {
