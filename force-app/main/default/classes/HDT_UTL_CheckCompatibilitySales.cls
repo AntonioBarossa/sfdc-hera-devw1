@@ -125,7 +125,7 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
                 processObj.nextDataObj.orderCompatible = true;
 
                 //ordine analisi consumi -->
-                analisiConsumiOrder.Phase__c = 'Comunicazione verso Heroku';
+                //analisiConsumiOrder.Phase__c = 'Comunicazione verso Heroku';
 
             } else {
                 System.debug('>>> compatibility  KO');
@@ -151,7 +151,7 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
             srRequest = setServiceRequest(srRequest, analisiConsumiOrder);
             serviceRequestToInsert.add(srRequest);
 
-            processObj.nextDataObj.orderCompatible = false;
+            //processObj.nextDataObj.orderCompatible = false;
             processObj.requestItem.NextStepData__c = JSON.serialize(processObj.nextDataObj);
             itemsToUpdate.add(processObj.requestItem);
         }
