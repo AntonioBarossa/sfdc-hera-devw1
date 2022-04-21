@@ -20,7 +20,7 @@ public with sharing class HDT_QBL_CreateQueuesAndGroups implements Queueable {
 
         Map<String,Group> groupsByName = new Map<String,Group>();
         for(Group gr : [SELECT Id, DeveloperName FROM Group WHERE Type = 'Regular' WITH SECURITY_ENFORCED]) {
-            groupsByName.put(gr.DeveloperName, gr);
+            groupsByName.put(getLowerCaseCopy(gr.DeveloperName), gr);
         }
         Map<String,Id> routingConfigsByPriority = new Map<String,Id>();
         for(QueueRoutingConfig config : [SELECT Id, DeveloperName FROM QueueRoutingConfig WITH SECURITY_ENFORCED]) {
@@ -34,23 +34,23 @@ public with sharing class HDT_QBL_CreateQueuesAndGroups implements Queueable {
         for(Queue__c wrapper : wrappers) {
             // IF ASSIGNED WORKGROUP DOES NOT EXIST, CREATE IT
             normalizedGroupName = normalize(wrapper.WorkGroup__c);
-            if(!groupsByName.containsKey(normalizedGroupName)) {
-                groupsToCreate.put(normalizedGroupName, new Group(
-                    Name = wrapper.WorkGroup__c,
+            if(!groupsByName.containsKey(getLowerCaseCopy(normalizedGroupName))) {
+                groupsToCreate.put(getLowerCaseCopy(normalizedGroupName), new Group(
+                    Name = wrapper.WorkGroup__c.left(40),
                     DeveloperName = normalizedGroupName,
                     Type = 'Regular',
                     DoesIncludeBosses = false
                 ));
             }
             // CREATE ACTUAL QUEUE
-            queuesToCreate.put(wrapper.Name, new Group(
-                Name = wrapper.Name,
+            queuesToCreate.put(getLowerCaseCopy(wrapper.Name), new Group(
+                Name = wrapper.Name.left(40),
                 DeveloperName = normalize(wrapper.Name),
                 Type = 'Queue'
             ));
                 
             if(wrapper.Type__c == 'PUSH') {
-                queuesToCreate.get(wrapper.Name).QueueRoutingConfigId = routingConfigsByPriority.get(wrapper.Priority__c.left(1));
+                queuesToCreate.get(getLowerCaseCopy(wrapper.Name)).QueueRoutingConfigId = wrapper.Priority__c == null ? routingConfigsByPriority.get('3') : routingConfigsByPriority.get(wrapper.Priority__c.left(1));
             }
         }
 
@@ -64,7 +64,7 @@ public with sharing class HDT_QBL_CreateQueuesAndGroups implements Queueable {
         List<QueueSobject> queueSobjList = new List<QueueSobject>();
         String queueId;
         for(Queue__c wrapper : wrappers) {
-            queueId = queuesToCreate.get(wrapper.Name).Id;
+            queueId = queuesToCreate.get(getLowerCaseCopy(wrapper.Name)).Id;
             // SET QUEUES TO ACCEPT wrts_prcgvr__Activity__c RECORDS
             queueSobjList.add(new QueueSObject(
                 SobjectType = 'wrts_prcgvr__Activity__c',
@@ -74,14 +74,14 @@ public with sharing class HDT_QBL_CreateQueuesAndGroups implements Queueable {
             // ASSIGN CREATED WORKGROUPS TO QUEUES
             memberships.add(new GroupMember(
                 GroupId = queueId,
-                UserOrGroupId = groupsByName.get(normalize(wrapper.WorkGroup__c)).Id
+                UserOrGroupId = groupsByName.get(getLowerCaseCopy(normalize(wrapper.WorkGroup__c))).Id
             ));
 
             // ASSIGN WRAPPER TO ACTUAL QUEUE
             wrappersToUpdate.add(new Queue__c(
                 Id = wrapper.Id,
-                QueueId__c = queueId)
-            );
+                QueueId__c = queueId
+            ));
         }
 
         HDT_UTL_DatabaseService.insertSObject(memberships);
@@ -107,5 +107,9 @@ public with sharing class HDT_QBL_CreateQueuesAndGroups implements Queueable {
             // DELETE TRAILING _
             .replaceAll('_$','')
         ;
+    }
+
+    private static String getLowerCaseCopy(String text) {
+        return text.trim().toLowerCase();
     }
 }
