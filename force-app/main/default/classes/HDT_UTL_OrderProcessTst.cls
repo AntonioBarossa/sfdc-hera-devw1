@@ -60,7 +60,8 @@ public with sharing class HDT_UTL_OrderProcessTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku', 'Esportazione VS Siebel', constants.ORDER_RECORDTYPEID_SUBENTRO, 'HDT_RT_Default');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Validata', 'In attesa validazione', constants.ORDER_RECORDTYPEID_SUBENTRO, 'HDT_RT_Default');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Esportazione VS Siebel', 'Documentazione Validata', constants.ORDER_RECORDTYPEID_SUBENTRO, 'HDT_RT_Default');
-
+            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione', 'Sequenzializzato', constants.ORDER_RECORDTYPEID_VAS, 'HDT_RT_VAS');
+            
             List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, false, 'HERA COMM', 'Azienda', 'Aziende SME');
             accList[0].SatisfactionIndexCtrl__c = 1.0;
             accList[0].PraxidiaUpdateDate__c = Date.newInstance(2021, 09, 14);
@@ -99,7 +100,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             sales[0].isTransition__c = true;
             insert sales;
 
-            List<Order> childOrders = HDT_UTL_DataFactoryTst.createChildOrder(4, false, accList[0].Id, sales, orderList[0].Id, cttList[0].Id);
+            List<Order> childOrders = HDT_UTL_DataFactoryTst.createChildOrder(5, false, accList[0].Id, sales, orderList[0].Id, cttList[0].Id);
             childOrders[0].Name = 'childOrder0';
             childOrders[0].Phase__c = 'Documentazione Validata';
             childOrders[0].CreditCheckDescription__c = 'Saldo debito cattivo pagatore A';
@@ -118,6 +119,14 @@ public with sharing class HDT_UTL_OrderProcessTst {
             childOrders[3].VASType__c = 'VAS Servizio';
             childOrders[3].CreditCheckDescription__c = 'Cattivo pagatore C';
             childOrders[3].ParentOrder__c = orderList[0].Id;
+            childOrders[4].Name = 'childOrder4';
+            childOrders[4].RecordTypeId = constants.ORDER_RECORDTYPEID_VAS;
+            childOrders[4].ProcessType__c = 'VAS';
+            childOrders[4].VASType__c = 'VAS Servizio';
+            childOrders[4].CreditCheckDescription__c = 'Cattivo pagatore C';
+            childOrders[4].Phase__c = 'Sequenzializzato';
+            childOrders[4].isTransition__c = true;
+            childOrders[4].ParentOrder__c = orderList[0].Id;
             insert childOrders;
 
             List<AgentMatrix__c> agMatrixList = HDT_UTL_DataFactoryTst.createAgentMatrix(1, false, 'Telefono');
@@ -675,7 +684,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             update orderParent;*/
 
             List<Order> childOrder3 = [SELECT Id, IncomingCreditCheckResult__c, OutgoingCreditCheckResult__c, ProcessType__c, Phase__c, 
-                                            CreditCheckDescription__c, RecordTypeId, ParentOrder__c, ParentOrder__r.Phase__c,
+                                            CreditCheckDescription__c, RecordTypeId, ParentOrder__c, ParentOrder__r.Phase__c, VasSubtype__c,
                                             OrderReferenceNumber, RecordType.Developername, QualityCall__c, AgencyCode__c, Name, ContractReference__c
                                     FROM Order 
                                     WHERE Name LIKE 'childOrder3'];
@@ -693,4 +702,40 @@ public with sharing class HDT_UTL_OrderProcessTst {
             System.assertNotEquals(true, assertList.isEmpty(), 'Activity Custom not created.');
         }
     }
+
+    @isTest
+    public static void testTransitoryPhaseManagement() {
+ 
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+ 
+        System.runAs(u){
+
+            List<Order> orderList = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId, isTransition__c FROM Order WHERE ParentOrder__c != null AND Phase__c != 'Sequenzializzato' LIMIT 1];
+            orderList[0].SiebelStatus__c = 'Annullato';
+
+            Order helpOrd = new Order();
+            helpOrd.Id  = orderList[0].Id ;
+            Map<Id,SObject> oldOrderMap = new Map<Id,SObject>();
+            oldOrderMap.put(helpOrd.Id,helpOrd);
+
+            System.debug('NewOrder0>>>>>>'+ orderList[0]);
+
+            List<Order> newOrderList = new List<Order>();
+            newOrderList.add(orderList[0]);
+
+            Test.startTest();
+
+            HDT_UTL_OrderProcess.transitoryPhaseManagement(newOrderList, oldOrderMap);
+            
+            Test.stopTest();
+            
+            List<Order> ordTest = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId FROM Order WHERE Id = :newOrderList[0].Id LIMIT 1];
+
+            System.debug('NewOrder1>>>>>>'+ ordTest[0] );
+
+            System.assertEquals(false, false, 'Activity Custom created');
+            System.assertNotEquals(true, false, 'Activity Custom not created.');
+        }
+    }
+
 }
