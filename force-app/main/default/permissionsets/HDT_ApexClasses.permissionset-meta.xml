@@ -288,14 +288,14 @@
         <apexClass>HDT_BA_LeadExpiredTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <classAccesses>
+    <!-- <classAccesses>
         <apexClass>HDT_BA_LeadWebServiceReitekSend</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_BA_LeadWebServiceReitekSendTst</apexClass>
         <enabled>true</enabled>
-    </classAccesses>
+    </classAccesses> -->
     <classAccesses>
         <apexClass>HDT_BA_OldDraftSales</apexClass>
         <enabled>true</enabled>
@@ -2356,14 +2356,14 @@
         <apexClass>HDT_SCH_LeadExpiredSchedulerTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <classAccesses>
+    <!-- <classAccesses>
         <apexClass>HDT_SCH_LeadWebServiceReitekSend</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SCH_LeadWebServiceReitekSendTst</apexClass>
         <enabled>true</enabled>
-    </classAccesses>
+    </classAccesses> -->
     <classAccesses>
         <apexClass>HDT_SCH_OldDraftSalesSchedule</apexClass>
         <enabled>true</enabled>
