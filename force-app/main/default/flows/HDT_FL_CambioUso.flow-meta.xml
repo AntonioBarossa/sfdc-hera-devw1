@@ -5,7 +5,7 @@
         <name>Assegna_Variabili</name>
         <label>Assegna Variabili</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -41,8 +41,8 @@
     <assignments>
         <name>AssignMissingFields</name>
         <label>AssignMissingFields</label>
-        <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationX>402</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.SalesCompanyCode__c</assignToReference>
             <operator>Assign</operator>
@@ -181,10 +181,35 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Order_selezionato</name>
+        <label>Order selezionato?</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>GetRelatedOrder</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Selezionato</defaultConnectorLabel>
+        <rules>
+            <name>Non_Selezionato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Aggiornato.Order__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Quale_Azione</targetReference>
+            </connector>
+            <label>Non Selezionato</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Quale_Azione</name>
         <label>Quale Azione?</label>
         <locationX>314</locationX>
-        <locationY>758</locationY>
+        <locationY>974</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -256,7 +281,7 @@
         <name>CalcolaCodiceCausale</name>
         <label>CalcolaCodiceCausale</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>1094</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Variabili</targetReference>
@@ -294,7 +319,7 @@
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>GetRelatedOrder</targetReference>
+            <targetReference>Order_selezionato</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -332,15 +357,12 @@
     <recordLookups>
         <name>GetRelatedOrder</name>
         <label>GetRelatedOrder</label>
-        <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationX>402</locationX>
+        <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssignMissingFields</targetReference>
         </connector>
-        <faultConnector>
-            <targetReference>Quale_Azione</targetReference>
-        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -357,7 +379,7 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>50</locationX>
-        <locationY>1118</locationY>
+        <locationY>1334</locationY>
         <inputReference>Get_Case_Aggiornato</inputReference>
     </recordUpdates>
     <screens>
@@ -477,7 +499,7 @@
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
         <locationX>314</locationX>
-        <locationY>878</locationY>
+        <locationY>1094</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
