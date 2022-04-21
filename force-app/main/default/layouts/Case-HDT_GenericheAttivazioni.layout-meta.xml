@@ -238,6 +238,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>ParentId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>UseChangeCharge__c</field>
             </layoutItems>
             <layoutItems>
