@@ -322,7 +322,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>inputCaseId</elementReference>
+                <elementReference>InputCase</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -338,6 +338,9 @@
         <connector>
             <targetReference>AssignMissingFields</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Quale_Azione</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -479,7 +482,7 @@
         <inputAssignments>
             <name>InputCase</name>
             <value>
-                <elementReference>inputCaseId</elementReference>
+                <elementReference>InputCase</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -517,7 +520,7 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>inputCaseId</name>
+        <name>InputCase</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
