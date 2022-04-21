@@ -19,8 +19,8 @@ public with sharing class HDT_QBL_CreateQueuesAndGroups implements Queueable {
         }
 
         Map<String,Group> groupsByName = new Map<String,Group>();
-        for(Group gr : [SELECT Id, Name FROM Group WHERE Type = 'Regular' WITH SECURITY_ENFORCED]) {
-            groupsByName.put(gr.Name, gr);
+        for(Group gr : [SELECT Id, DeveloperName FROM Group WHERE Type = 'Regular' WITH SECURITY_ENFORCED]) {
+            groupsByName.put(gr.DeveloperName, gr);
         }
         Map<String,Id> routingConfigsByPriority = new Map<String,Id>();
         for(QueueRoutingConfig config : [SELECT Id, DeveloperName FROM QueueRoutingConfig WITH SECURITY_ENFORCED]) {
@@ -30,12 +30,14 @@ public with sharing class HDT_QBL_CreateQueuesAndGroups implements Queueable {
 
         Map<String,Group> queuesToCreate = new Map<String,Group>();
         Map<String,Group> groupsToCreate = new Map<String,Group>();
+        String normalizedGroupName;
         for(Queue__c wrapper : wrappers) {
             // IF ASSIGNED WORKGROUP DOES NOT EXIST, CREATE IT
-            if(!groupsByName.containsKey(wrapper.WorkGroup__c)) {
-                groupsToCreate.put(wrapper.WorkGroup__c, new Group(
+            normalizedGroupName = normalize(wrapper.WorkGroup__c);
+            if(!groupsByName.containsKey(normalizedGroupName)) {
+                groupsToCreate.put(normalizedGroupName, new Group(
                     Name = wrapper.WorkGroup__c,
-                    DeveloperName = normalize(wrapper.WorkGroup__c),
+                    DeveloperName = normalizedGroupName,
                     Type = 'Regular',
                     DoesIncludeBosses = false
                 ));
@@ -72,7 +74,7 @@ public with sharing class HDT_QBL_CreateQueuesAndGroups implements Queueable {
             // ASSIGN CREATED WORKGROUPS TO QUEUES
             memberships.add(new GroupMember(
                 GroupId = queueId,
-                UserOrGroupId = groupsByName.get(wrapper.WorkGroup__c).Id
+                UserOrGroupId = groupsByName.get(normalize(wrapper.WorkGroup__c)).Id
             ));
 
             // ASSIGN WRAPPER TO ACTUAL QUEUE
