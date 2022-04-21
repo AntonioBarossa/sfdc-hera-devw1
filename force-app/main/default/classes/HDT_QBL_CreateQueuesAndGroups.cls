@@ -2,7 +2,12 @@ public with sharing class HDT_QBL_CreateQueuesAndGroups implements Queueable {
     private List<Queue__c> wrappers;
     private Boolean finalize;
 
-    public HDT_QBL_CreateQueuesAndGroups(List<Queue__c> wrappers, Boolean finalize) {
+    public HDT_QBL_CreateQueuesAndGroups(List<Queue__c> wrappers) {
+        this.wrappers = wrappers;
+        this.finalize = false;
+    }
+
+    private HDT_QBL_CreateQueuesAndGroups(List<Queue__c> wrappers, Boolean finalize) {
         this.wrappers = wrappers;
         this.finalize = finalize;
     }
@@ -31,7 +36,8 @@ public with sharing class HDT_QBL_CreateQueuesAndGroups implements Queueable {
                 groupsToCreate.put(wrapper.WorkGroup__c, new Group(
                     Name = wrapper.WorkGroup__c,
                     DeveloperName = normalize(wrapper.WorkGroup__c),
-                    Type = 'Regular'
+                    Type = 'Regular',
+                    DoesIncludeBosses = false
                 ));
             }
             // CREATE ACTUAL QUEUE
