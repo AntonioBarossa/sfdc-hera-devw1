@@ -1,70 +1,47 @@
 @isTest
 public with sharing class HDT_UTL_SIE14Tst {
     
-    @TestSetup
-    static void makeData(){
-        List<Account> accounts= HDT_UTL_DataFactoryTst.createAccountResidenziale(3, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
-        Account acc1 = accounts.get(0);
+    static void createOrder(Contract c){
+        Order o = HDT_UTL_DataFactoryTst.createOrder(1, false, c.AccountId, 'Bozza')[0];
+        o.SalesCompany__c=c.contractSalesCompany__c;
+        insert o;
+        c.SBQQ__Order__c=o.Id;
+        insert c;
+    }
 
-        List<Contract> lc = new List<Contract>();
-        Contract testContract1=new Contract(AccountId=acc1.Id, ContractSalesCompany__c='Hera Comm Marche');
-        lc.add(testContract1);
-        Contract testContract2=new Contract(AccountId=acc1.Id, ContractSalesCompany__c='Hera Comm Marche');
-        lc.add(testContract2);
-        Contract testContract3=new Contract(AccountId=acc1.Id, ContractSalesCompany__c='Hera Comm S.p.A.');
-        lc.add(testContract3);
-
-        for(Contract c : lc){
-            Order o = HDT_UTL_DataFactoryTst.createOrder(1, false, c.AccountId, 'Bozza')[0];
-            o.SalesCompany__c=c.contractSalesCompany__c;
-            insert o;
-            c.SBQQ__Order__c=o.Id;
-        }
-        
-        insert lc;
-        lc.clear();
-
-        Account acc2 = accounts.get(1);
-        acc2.CategoryCode__c = 'Z006';
-        update acc2;
-        Contract testContract4=new Contract(AccountId=acc2.Id, ContractSalesCompany__c='Hera Comm S.p.A.');
-        lc.add(testContract4);
-        Contract testContract5=new Contract(AccountId=acc2.Id, ContractSalesCompany__c='Hera Comm S.p.A.');
-        lc.add(testContract5);
-        Contract testContract6=new Contract(AccountId=acc2.Id, ContractSalesCompany__c='EstEnergy S.p.A.');
-        lc.add(testContract6);
-
-        for(Contract c : lc){
+    static void createOrderAndSale(Contract c){
             Order o = HDT_UTL_DataFactoryTst.createOrder(1, false, c.AccountId, 'Bozza')[0];
             o.SalesCompany__c=c.contractSalesCompany__c;
             Sale__c s =HDT_UTL_DataFactoryTst.createSale(1, false, c.AccountId, 'Bozza')[0];
             s.CommercialId__c='AGSMECON1234';
             insert s;
-			o.Sale__c=s.Id;
+            o.Sale__c=s.Id;
             insert o;
             c.SBQQ__Order__c=o.Id;
-        }
-        
-        insert lc;
-        lc.clear();
+            insert c;
+    }
 
+    @TestSetup
+    static void makeData(){
+        List<Account> accounts= HDT_UTL_DataFactoryTst.createAccountResidenziale(3, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
+
+        Account acc1 = accounts.get(0);
+        createOrder(new Contract(AccountId=acc1.Id, ContractSalesCompany__c='Hera Comm Marche'));
+        createOrder(new Contract(AccountId=acc1.Id, ContractSalesCompany__c='Hera Comm Marche'));
+        createOrder(new Contract(AccountId=acc1.Id, ContractSalesCompany__c='Hera Comm S.p.A.'));
+
+        Account acc2 = accounts.get(1);
+        acc2.CategoryCode__c = 'Z006';
+        update acc2;
+
+        createOrderAndSale(new Contract(AccountId=acc2.Id, ContractSalesCompany__c='Hera Comm S.p.A.'));
+        createOrderAndSale(new Contract(AccountId=acc2.Id, ContractSalesCompany__c='Hera Comm S.p.A.'));
+        createOrderAndSale(new Contract(AccountId=acc2.Id, ContractSalesCompany__c='EstEnergy S.p.A.'));
+        
         Account acc3 = accounts.get(2);
-        Contract testContract7=new Contract(AccountId=acc3.Id, ContractSalesCompany__c='Acegas Aps Service');
-        lc.add(testContract7);
-        Contract testContract8=new Contract(AccountId=acc3.Id, ContractSalesCompany__c='Acegas Aps Service');
-        lc.add(testContract8);
-        Contract testContract9=new Contract(AccountId=acc3.Id, ContractSalesCompany__c='Hera Comm Marche');
-        lc.add(testContract9);
-
-        for(Contract c : lc){
-            Order o = HDT_UTL_DataFactoryTst.createOrder(1, false, c.AccountId, 'Bozza')[0];
-            o.SalesCompany__c=c.contractSalesCompany__c;
-            insert o;
-            c.SBQQ__Order__c=o.Id;
-        }
-        
-        insert lc;
-        lc.clear();
+        createOrder(new Contract(AccountId=acc3.Id, ContractSalesCompany__c='Acegas Aps Service'));
+        createOrder(new Contract(AccountId=acc3.Id, ContractSalesCompany__c='Acegas Aps Service'));
+        createOrder(new Contract(AccountId=acc3.Id, ContractSalesCompany__c='Hera Comm Marche'));
     }
 
     @isTest
@@ -72,9 +49,7 @@ public with sharing class HDT_UTL_SIE14Tst {
         
         List<Contract> contracts =  [SELECT Id, AccountId, SBQQ__Order__c, SBQQ__Order__r.CommercialId__c FROM Contract where ContractSalesCompany__c='EstEnergy S.p.A.'];
         update new Account(Id=contracts[0].AccountId, CategoryCode__c='');
-        //system.debug('commId '+contracts[0].SBQQ__Order__r.CommercialId__c+' '+contracts.size());
         Test.startTest();
-        //System.enqueueJob(new HDT_SRV_SIE14(new Map<Id,Contract>(contracts).keySet()));
         HDT_SRV_SIE14 testSie14 = new HDT_SRV_SIE14();
         testSie14.initSIE(new Map<Id,Contract>(contracts).keySet());
         Test.stopTest();
@@ -89,7 +64,6 @@ public with sharing class HDT_UTL_SIE14Tst {
         system.debug('allContracts -> ' + contracts);
 
         Test.startTest();
-        //System.enqueueJob(new HDT_SRV_SIE14(new Map<Id,Contract>(contracts).keySet()));
         HDT_SRV_SIE14 testSie14 = new HDT_SRV_SIE14();
         testSie14.initSIE(new Map<Id,Contract>(contracts).keySet());
         Test.stopTest();
