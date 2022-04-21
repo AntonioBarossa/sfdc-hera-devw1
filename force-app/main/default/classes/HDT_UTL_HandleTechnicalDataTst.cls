@@ -25,7 +25,7 @@ private class HDT_UTL_HandleTechnicalDataTst {
   @isTest
   static void testhandleE154Flow() {
 
-    Order order=[SELECT id,EstimateAmount__c,QuotationType__c, ValidityDateEstimate__c,QuotationNumber__c,WorkExecutionTime__c FROM Order];  
+    Order order=[SELECT id,EstimateAmount__c,QuotationType__c, SupplyType__c, ValidityDateEstimate__c,QuotationNumber__c,WorkExecutionTime__c FROM Order];  
 
     HDT_UTL_HandleTechnicalData handleTechnicalData = new HDT_UTL_HandleTechnicalData();
     handleTechnicalData.handleE154Flow(new Map<String,String>{

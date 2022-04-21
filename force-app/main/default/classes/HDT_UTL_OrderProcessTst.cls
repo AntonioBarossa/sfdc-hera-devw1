@@ -675,7 +675,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             update orderParent;*/
 
             List<Order> childOrder3 = [SELECT Id, IncomingCreditCheckResult__c, OutgoingCreditCheckResult__c, ProcessType__c, Phase__c, 
-                                            CreditCheckDescription__c, RecordTypeId, ParentOrder__c, ParentOrder__r.Phase__c,
+                                            CreditCheckDescription__c, RecordTypeId, ParentOrder__c, ParentOrder__r.Phase__c, VasSubtype__c,
                                             OrderReferenceNumber, RecordType.Developername, QualityCall__c, AgencyCode__c, Name, ContractReference__c
                                     FROM Order 
                                     WHERE Name LIKE 'childOrder3'];
