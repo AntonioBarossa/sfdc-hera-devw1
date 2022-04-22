@@ -30,11 +30,13 @@ private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
         insert campaignListMember;
 
         HDT_UTL_DataFactoryTst.createWebServiceCredential('MulesoftSalesforceUser', 'a74b50dbaac04215bfbf89a2ee315a80','48fe5165a40c49aa9bf4b3d9bca2552f');
-        HDT_UTL_DataFactoryTst.createWebServiceConfiguration ('postSlotRequest', 'https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/campaigns/slots/search', 'POST' , 'MulesoftSalesforceUser');
+        //HDT_UTL_DataFactoryTst.createWebServiceConfiguration ('postSlotRequest', 'https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/campaigns/slots/search', 'POST' , 'MulesoftSalesforceUser');
+        HDT_UTL_DataFactoryTst.createWebServiceConfiguration ('postSlotRequest', 'Callout:MulesoftBasePath/campaigns/slots/search', 'POST' , 'MulesoftSalesforceUser');
     	HDT_WebServiceConfiguration__c wsc = [SELECT Id, Mock__c FROM HDT_WebServiceConfiguration__c WHERE Name = 'postSlotRequest' LIMIT 1];
         wsc.Mock__c = true;
         update wsc;
-        HDT_UTL_DataFactoryTst.createWebServiceConfiguration ('postAppointment', 'https://test-ts.gruppohera.it/dev/salesforce-api-exp/api/campaigns/slots/search', 'POST' , 'MulesoftSalesforceUser');     
+        //HDT_UTL_DataFactoryTst.createWebServiceConfiguration ('postAppointment', 'https://test-ts.gruppohera.it/dev/salesforce-api-exp/api/campaigns/slots/search', 'POST' , 'MulesoftSalesforceUser');     
+        HDT_UTL_DataFactoryTst.createWebServiceConfiguration ('postAppointment', 'Callout:MulesoftBasePath/campaigns/appointments', 'POST' , 'MulesoftSalesforceUser');     
     }
     //the inner class in HDT_LC_RecallMe should have get and set in order to be covered by this method
     @isTest
@@ -105,7 +107,7 @@ private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
         Test.startTest();
         String response = HDT_LC_RecallMe.postAppointmentEcid(dt, 'test as always', 1243576, '48fe5165a40c49aa9bf4b3d9bca2552f', cmpList[0].Ecid__c, cmpList[0].Id);
         Test.stopTest();
-        System.assertEquals(false, response!=null, 'The response should be null!');
-        System.assertNotEquals(true, response!=null, 'The response should be null!');
+        System.assertEquals(true, response!=null, 'The response should not be null!');
+        System.assertNotEquals(false, response!=null, 'The response should not be null!');
 }   
 }

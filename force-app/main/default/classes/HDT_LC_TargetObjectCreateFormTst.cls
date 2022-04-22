@@ -224,7 +224,7 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
 
             Test.startTest();
 
-            List<DistributorPointCode__c> targetTest = HDT_LC_TargetObjectCreateForm.getDistributorPointCode(dpc.PointCode__c, dpc.Commodity__c, dpc.City__c);
+            List<DistributorPointCode__c> targetTest = HDT_LC_TargetObjectCreateForm.getDistributorPointCode(dpc.PointCode__c, dpc.Commodity__c, dpc.City__c, 'Si');
 
             System.assertEquals(dpc.PointCode__c, targetTest[0].PointCode__c, 'ServicePoint matches');
             System.assertNotEquals(null, targetTest[0].PointCode__c, 'ServicePoint does not match');
