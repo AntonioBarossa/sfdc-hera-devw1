@@ -23,6 +23,19 @@ public with sharing class HDT_UTL_CaseProcess {
         //update accountsToUpdate; 
     }
 
+    public static void caseBpcaSieManagement(Map<Id, Sobject> newCasesMap, Map<Id, Sobject> oldCasesMap) {
+        Set<Id> accountIdsBpca = new Set<Id>();
+        for(Case caseNew : (List<Case>) newCasesMap.values()){
+            if(caseNew.Type.equals('BP/CA - errata categoria') && caseNew.Phase__c.equals('Completata') && caseNew.Phase__c != oldCasesMap.get(caseNew.Id).get('Phase__c')){
+                accountIdsBpca.add(caseNew.AccountId);
+            }
+        }
+        if(!accountIdsBpca.isEmpty()){
+            system.debug('accountIdsBpca' + accountIdsBpca);
+            new HDT_SRV_SIE14().checkBpcaChanges(accountIdsBpca);
+        }
+    }
+
     public static void casePhaseManagementAfterUpdate(List<Case> newCasesList, List<Case> oldCasesList) {
 
         

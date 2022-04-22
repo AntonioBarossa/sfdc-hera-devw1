@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.ClassNamingConventions')
 @isTest
 public with sharing class HDT_UTL_SIE14Tst {
     
@@ -25,23 +26,23 @@ public with sharing class HDT_UTL_SIE14Tst {
     static void makeData(){
         List<Account> accounts= HDT_UTL_DataFactoryTst.createAccountResidenziale(4, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
 
-        Account acc1 = accounts.get(0);
-        createOrder(new Contract(AccountId=acc1.Id, ContractSalesCompany__c='Hera Comm Marche'));
-        createOrder(new Contract(AccountId=acc1.Id, ContractSalesCompany__c='Hera Comm Marche'));
-        createOrder(new Contract(AccountId=acc1.Id, ContractSalesCompany__c='Hera Comm S.p.A.'));
+        Account accountOne = accounts.get(0);
+        createOrder(new Contract(AccountId=accountOne.Id, ContractSalesCompany__c='Hera Comm Marche'));
+        createOrder(new Contract(AccountId=accountOne.Id, ContractSalesCompany__c='Hera Comm Marche'));
+        createOrder(new Contract(AccountId=accountOne.Id, ContractSalesCompany__c='Hera Comm S.p.A.'));
 
-        Account acc2 = accounts.get(1);
-        acc2.CategoryCode__c = 'Z006';
-        update acc2;
+        Account accountTwo = accounts.get(1);
+        accountTwo.CategoryCode__c = 'Z006';
+        update accountTwo;
 
-        createOrderAndSale(new Contract(AccountId=acc2.Id, ContractSalesCompany__c='Hera Comm S.p.A.'));
-        createOrderAndSale(new Contract(AccountId=acc2.Id, ContractSalesCompany__c='Hera Comm S.p.A.'));
-        createOrderAndSale(new Contract(AccountId=acc2.Id, ContractSalesCompany__c='EstEnergy S.p.A.'));
+        createOrderAndSale(new Contract(AccountId=accountTwo.Id, ContractSalesCompany__c='Hera Comm S.p.A.'));
+        createOrderAndSale(new Contract(AccountId=accountTwo.Id, ContractSalesCompany__c='Hera Comm S.p.A.'));
+        createOrderAndSale(new Contract(AccountId=accountTwo.Id, ContractSalesCompany__c='EstEnergy S.p.A.'));
         
-        Account acc3 = accounts.get(2);
-        createOrder(new Contract(AccountId=acc3.Id, ContractSalesCompany__c='Acegas Aps Service'));
-        createOrder(new Contract(AccountId=acc3.Id, ContractSalesCompany__c='Acegas Aps Service'));
-        createOrder(new Contract(AccountId=acc3.Id, ContractSalesCompany__c='Hera Comm Marche'));
+        Account accountThree = accounts.get(2);
+        createOrder(new Contract(AccountId=accountThree.Id, ContractSalesCompany__c='Acegas Aps Service'));
+        createOrder(new Contract(AccountId=accountThree.Id, ContractSalesCompany__c='Acegas Aps Service'));
+        createOrder(new Contract(AccountId=accountThree.Id, ContractSalesCompany__c='Hera Comm Marche'));
 
 
     }
@@ -55,20 +56,22 @@ public with sharing class HDT_UTL_SIE14Tst {
         HDT_SRV_SIE14 testSie14 = new HDT_SRV_SIE14();
         testSie14.initSIE(new Map<Id,Contract>(contracts).keySet());
         Test.stopTest();
+        String result = [Select Segment__c from account where id=:contracts[0].AccountId].Segment__c;
+        system.assertEquals('Corporate_GDA', result, 'Unexpected Behaviour');
     }
 
 
     @isTest
     static void testSie14() {
         
-        List<Contract> contracts =  [SELECT Id, AccountId FROM Contract];
-        
-        system.debug('allContracts -> ' + contracts);
-
+        List<Contract> contracts =  [SELECT Id, AccountId FROM Contract]; 
+        //system.debug('allContracts -> ' + contracts);
         Test.startTest();
         HDT_SRV_SIE14 testSie14 = new HDT_SRV_SIE14();
         testSie14.initSIE(new Map<Id,Contract>(contracts).keySet());
         Test.stopTest();
+        Integer accountsToCode = [Select Count() from Account Where Segment__c='ZCOD-DA CODIFICARE'];
+        system.assertEquals(2, accountsToCode, 'Unexpected Behaviour');
     }
 
     @isTest
@@ -77,6 +80,7 @@ public with sharing class HDT_UTL_SIE14Tst {
         wrts_prcgvr.InstallIntegration.install();
         HDT_UTL_DataFactoryTst.installPhaseManagerSObjectSetting('Case');
         Id accountId = [SELECT Id FROM Account LIMIT 1].Id;
+        update new Account(id=AccountId, CategoryCode__c='Z006');
 
         Contract c = new Contract(AccountId=accountId, ContractSalesCompany__c='Hera Comm Marche');
         insert c;
@@ -88,10 +92,14 @@ public with sharing class HDT_UTL_SIE14Tst {
         testCase.Phase__c='Completata';
         insert testCase;
 
+        Map<Id, Sobject> newMap = new Map<Id, Sobject>{testCase.Id => testCase};
+        Map<Id, Sobject> oldMap = new Map<Id, Sobject>{testCase.Id => new Case(Id=testCase.Id, Phase__c='Test')};
+
         Test.startTest();
-        testCase.Subject='test';
-        update testCase; 
+        HDT_UTL_CaseProcess.caseBpcaSieManagement(newMap, oldMap);
         Test.stopTest();
+        String result = [Select Segment__c from account where id=:accountId].Segment__c;
+        system.assertEquals('CORPORATE_IC', result.toUpperCase(), 'Unexpected Behaviour');
     }
 
     /*
