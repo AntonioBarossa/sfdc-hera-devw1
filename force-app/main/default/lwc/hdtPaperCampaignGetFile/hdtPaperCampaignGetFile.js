@@ -4,10 +4,12 @@ import getIdByName from '@salesforce/apex/HDT_LC_PaperCampaignGetFile.getIdByNam
 import getFileById from '@salesforce/apex/HDT_LC_PaperCampaignGetFile.getFileById';
 import getPaperCommunicationRecord from '@salesforce/apex/HDT_LC_PaperCampaignGetFile.getPaperCommunicationRecord';
 import createPaperFile from '@salesforce/apex/HDT_LC_PaperCampaignGetFile.createPaperFile';
+import { NavigationMixin } from 'lightning/navigation';
 
-export default class HdtPaperCampaignGetFile extends LightningElement {
+export default class HdtPaperCampaignGetFile extends NavigationMixin(LightningElement){
     @api recordId;
     @api objectApiName;
+    @api showSpinner = false;
     @track PdfUniqueId;
 
     connectedCallback(event) {
@@ -19,37 +21,59 @@ export default class HdtPaperCampaignGetFile extends LightningElement {
                 this.PdfUniqueId = paper.PdfUniqueId__c;
                 //1st ws call - get file id by name
                 getIdByName({ filename: paper.PdfUniqueId__c }).then(data => {
-                    console.log(JSON.stringify(data));
+                    console.log('risultato: '+JSON.stringify(data));
                     if (data != null) {
                         let dataObj = JSON.parse(data);
                         if (dataObj.data.id != null) {
                             //2nd ws call - get file base64
                             getFileById({ documentId: dataObj.data.id }).then(doc => {
-                                console.log(JSON.stringify(doc));
+                                console.log('risultato: '+JSON.stringify(doc));
                                 if (doc != null) {
                                     let docObj = JSON.parse(doc);
                                     if (docObj.data.fileBase64 != null) {
                                         //create file
-                                        createPaperFile({ fileBase64: docObj.data.fileBase64, paperId: this.recordId, filename: this.PdfUniqueId }).then(response => {
-                                            console.log(JSON.stringify(response));
-                                            if (response != null && response) {
-                                                this.dispatchEvent(new ShowToastEvent({
-                                                    title: '',
-                                                    message: 'File creato con successo',
-                                                    variant: 'success'
-                                                }));
-                                            } else {
-                                                this.dispatchEvent(new ShowToastEvent({
-                                                    title: '',
-                                                    message: 'Errore in creazione del file',
-                                                    variant: 'error'
-                                                }));
-                                            }
-                                            this.dispatchEvent(new CustomEvent('afterSave'));
-                                        }).catch(err => {
-                                            console.log('createPaperFile - ' + JSON.stringify(err));
-                                            this.dispatchEvent(new CustomEvent('afterSave'));
-                                        });
+
+                                        this.showSpinner = true;
+                                        new Promise(
+                                          (resolve,reject) => {
+                                            setTimeout(()=> {
+                                                createPaperFile({ fileBase64: docObj.data.fileBase64, paperId: this.recordId, filename: this.PdfUniqueId }).then(response => {
+                                                    console.log(JSON.stringify(response));
+                                                    if (response != null ) {//&& response
+                                                        this[NavigationMixin.Navigate]({
+                                                            type: 'standard__namedPage',
+                                                            attributes: {
+                                                                pageName: 'filePreview'
+                                                            },
+                                                            state : {
+                                                                recordIds: response
+                                                            }
+                                                          });
+                                                        this.dispatchEvent(new ShowToastEvent({
+                                                            title: '',
+                                                            message: 'File creato con successo',
+                                                            variant: 'success'
+                                                        }));
+                                                    } else {
+                                                        this.dispatchEvent(new ShowToastEvent({
+                                                            title: '',
+                                                            message: 'Errore in creazione del file',
+                                                            variant: 'error'
+                                                        }));
+                                                    }
+                                                    this.dispatchEvent(new CustomEvent('afterSave'));
+                                                }).catch(err => {
+                                                    console.log('createPaperFile - ' + JSON.stringify(err));
+                                                    this.dispatchEvent(new CustomEvent('afterSave'));
+                                                });
+                                                resolve();
+                                            }, 0);
+                                        }).then(
+                                            () => this.showSpinner = false
+                                        );
+
+
+
                                     }
                                 }
                             }).catch(err => {
