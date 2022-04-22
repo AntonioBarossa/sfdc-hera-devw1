@@ -603,6 +603,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         sale.Name = 'Vendita ' + accountMap.get(accountId).Name;
         sale.SalesContactRole__c = 'Titolare';
         sale.Status__c = 'Attiva';
+        sale.Channel__c = sale.LowerChannelAgency__c;
         return sale;
     }
 
