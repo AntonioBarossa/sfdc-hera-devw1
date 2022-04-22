@@ -9,15 +9,15 @@ public inherited sharing  class  HDT_UTL_SieXiv {
         public String segmento;
         String logic;
         Set<String> salesCompany;
-        List<HDT_WRP_SIECondition> conditions;
+        List<HDT_WRP_SieCondition> conditions;
 
         public HDT_WRP_SieXivRule(String segmento, List<String> conditions, String logic, String salesCompany){
             this.segmento = segmento;
             //this.conditions = conditions;
-            this.conditions= new List<HDT_WRP_SIECondition>();
+            this.conditions= new List<HDT_WRP_SieCondition>();
             if(conditions?.size()>0){
                 for(String condition : conditions){
-                    this.conditions.add(new HDT_WRP_SIECondition(condition));
+                    this.conditions.add(new HDT_WRP_SieCondition(condition));
                 }
             }
             this.logic = logic;
@@ -28,7 +28,7 @@ public inherited sharing  class  HDT_UTL_SieXiv {
             if(this.salesCompany?.size() > 0 && !this.salesCompany.contains(company.toLowerCase()))   return false;
 
             if(this.conditions?.size() > 0){
-                for(HDT_WRP_SIECondition condition : this.conditions){
+                for(HDT_WRP_SieCondition condition : this.conditions){
                     String actualValue=utlSbj.dinamicFieldValue(condition.fieldName, obj);
                     if(!condition.checkCondition(actualValue))   return false;
                 }
@@ -39,7 +39,7 @@ public inherited sharing  class  HDT_UTL_SieXiv {
     }
 
     @TestVisible
-    class HDT_WRP_SIECondition {
+    class HDT_WRP_SieCondition {
 
         String fieldName;
         String operator;

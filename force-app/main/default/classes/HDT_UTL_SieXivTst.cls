@@ -126,7 +126,7 @@ public with sharing class HDT_UTL_SieXivTst {
                 if(booleanIndex=='false') return false;
                 Integer index = Integer.valueOf(booleanIndex);
                 if(!this.conditions?.size()>booleanIndex) return false;
-                HDT_WRP_SIECondition condition = this.conditions.get(booleanIndex);
+                HDT_WRP_SieCondition condition = this.conditions.get(booleanIndex);
                 String actualValue=utlSbj.dinamicFieldValue(condition.fieldName, obj);
                 if(!condition.checkCondition(actualValue))   return false;//Alla prima espressione falsa, il processo si blocca negativamente.
             }
@@ -143,7 +143,7 @@ public with sharing class HDT_UTL_SieXivTst {
                 if(booleanIndex=='false') return false;
                 Integer index = Integer.valueOf(booleanIndex);
                 if(!this.conditions?.size()>booleanIndex) return false;
-                HDT_WRP_SIECondition condition = this.conditions.get(booleanIndex);
+                HDT_WRP_SieCondition condition = this.conditions.get(booleanIndex);
                 String actualValue=utlSbj.dinamicFieldValue(condition.fieldName, obj);
                 if(!condition.checkCondition(actualValue))   return false;//Alla prima espressione falsa, il processo si blocca negativamente.
             }
