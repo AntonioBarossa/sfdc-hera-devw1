@@ -534,17 +534,17 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }
         caseUpdate.add(currentCase);
         HDT_UTL_DatabaseService.updateSObject(caseUpdate);
-        handleAfterNotify(currentCase,storno,activity);
+        handleAfterNotify(currentCase,storno,activity,reqWrp.requestMap.get('ANNOTAZIONI_ANN'));
         return caseUpdate;
     }
-    private void handleAfterNotify(Case currentCase, String storno, String activity){
+    private void handleAfterNotify(Case currentCase, String storno, String activity,String discardReason){
         currentCase = hpsmQr.getCaseRecord(currentCase.Id);
         if(currentCase.Phase__c == 'Annullamento - Esito OK da DL/SII' || (currentCase.Phase__c == 'Annullato' && !'Closed'.equalsIgnoreCase(currentCase.Status))){
             currentCase.Phase__c = 'Annullato';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
         }else if(currentCase.Phase__c == 'Annullamento SII - Ricezione') {
-            handlePassiveCancellation(currentCase, 'Case', storno, activity);
+            handlePassiveCancellation(currentCase, 'Case', storno, activity,discardReason);
         }else if(currentCase.Type == 'Allineamento Anagrafica' && currentCase.Phase__c == 'Esito OK da SII'){
             currentCase.Phase__c = 'Completata';
             currentCase.Status = 'Closed';
@@ -577,10 +577,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     //se Annullamento SII - Ricezione e Attivita Eseguire Gestione Manuale SAP --> Creazione Activity
     //se Annullamento SII - Ricezione e Storno null --> No action
     public void handlePassiveCancellation(SObject recordObj, String objectType, String storno, String activity){
+        this.handlePassiveCancellation(recordObj, objectType, storno, activity,'');
+    }
+    public void handlePassiveCancellation(SObject recordObj, String objectType, String storno, String activity , String discardReason){
         
         if(String.isNotBlank(storno) && storno.equalsIgnoreCase('N')) {
             recordObj.put('Phase__c', 'Annullato SII');
-            recordObj.put('Status','Closed');
+            String status = recordObj.getSObjectType().getDescribe().getName() == 'Order' ? 'Annullato' : 'Closed';
+            recordObj.put('Status',status);
             updateFutureSobject(JSON.serialize(recordObj));
         }else if(String.isNotBlank(activity) && activity.equalsIgnoreCase('Eseguire Gestione Manuale SAP')){
             /* switch on objectType {
@@ -593,6 +597,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             } */
             wrts_prcgvr__Activity__c act  = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName((String)recordObj.get('Id'),activity,objectType);
             if (act != null){
+                act.wrts_prcgvr__Description__c = discardReason;
                 HDT_UTL_DatabaseService.insertSObject(act);
             }
         }

@@ -12,7 +12,7 @@
 },
 {
 &quot;FieldName&quot;: &quot;Order__c&quot;,
-&quot;Required&quot;: true,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 1
 },
 {
