@@ -114,7 +114,7 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
                 this.administrativeBurden=wrapper.fixedQuotes.DistributorFixedQuote__c+wrapper.fixedQuotes.SellerFixedQuote__c;
                 this.powerQuote=wrapper.fixedQuotes.PowerQuote__c;
                 this.estimateAmount=wrapper.estimatedAmount;
-                this.variableAmount=this.estimateAmount - this.administrativeBurden;
+                this.variableAmount=(this.estimateAmount - this.administrativeBurden).toFixed(2);
             }else{
                 this.sendToast('Errore Calcolo Preventivo',  'Non è possibile calcolare il preventivo in questa fase, sarà calcolata nelle fasi successive', 'warning');
             }

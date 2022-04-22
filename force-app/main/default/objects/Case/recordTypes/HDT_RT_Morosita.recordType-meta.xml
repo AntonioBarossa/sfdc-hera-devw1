@@ -7771,6 +7771,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Ricezione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Attesa Modulo Firmato</fullName>
             <default>false</default>
         </values>
