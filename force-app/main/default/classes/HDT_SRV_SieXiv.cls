@@ -1,25 +1,25 @@
 @SuppressWarnings('PMD.AvoidDebugStatements, PMD.ClassNamingConventions, PMD.ExcessiveParameterList')
-public inherited sharing class HDT_SRV_SIE14 implements Queueable {
+public inherited sharing class HDT_SRV_SieXiv implements Queueable {
 
     Set<Id> data;
 
-    public HDT_SRV_SIE14(Set<Id> data){
+    public HDT_SRV_SieXiv(Set<Id> data){
         this.data = data;
     }
 
-    public HDT_SRV_SIE14(){
+    public HDT_SRV_SieXiv(){
         this.data= new Set<id>();
     }
     
     private HDT_SRV_Account srvAcc = new HDT_SRV_Account();
 
 
-    List<HDT_UTL_SIE14.HDT_WRP_SIE14Rule> getRules(){
-        return new List<HDT_UTL_SIE14.HDT_WRP_SIE14Rule>{
-            new HDT_UTL_SIE14.HDT_WRP_SIE14Rule('CORPORATE_IC', new List<String>{'Account.CategoryCode__c == Z006'},'', ''),
-            new HDT_UTL_SIE14.HDT_WRP_SIE14Rule('HCNE_Coporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS AGSMECON'},'1 AND 2', 'Hera Comm NordEst'),                        
-            new HDT_UTL_SIE14.HDT_WRP_SIE14Rule('Corporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS AGSMECON'},'1 AND 2', 'Hera Comm S.p.A.;Hera Comm Marche' ),
-            new HDT_UTL_SIE14.HDT_WRP_SIE14Rule('ZCOD-DA CODIFICARE', null,'1 AND 2', null )
+    List< HDT_UTL_SieXiv.HDT_WRP_SIE14Rule> getRules(){
+        return new List< HDT_UTL_SieXiv.HDT_WRP_SIE14Rule>{
+            new  HDT_UTL_SieXiv.HDT_WRP_SIE14Rule('CORPORATE_IC', new List<String>{'Account.CategoryCode__c == Z006'},'', ''),
+            new  HDT_UTL_SieXiv.HDT_WRP_SIE14Rule('HCNE_Coporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS AGSMECON'},'1 AND 2', 'Hera Comm NordEst'),                        
+            new  HDT_UTL_SieXiv.HDT_WRP_SIE14Rule('Corporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS AGSMECON'},'1 AND 2', 'Hera Comm S.p.A.;Hera Comm Marche' ),
+            new  HDT_UTL_SieXiv.HDT_WRP_SIE14Rule('ZCOD-DA CODIFICARE', null,'1 AND 2', null )
         };
 
     }
@@ -64,13 +64,13 @@ public inherited sharing class HDT_SRV_SIE14 implements Queueable {
     }
 
     List<Account> findRule(Map<Id, Contract> contracts){
-        List<HDT_UTL_SIE14.HDT_WRP_SIE14Rule> rules = getRules();
+        List< HDT_UTL_SieXiv.HDT_WRP_SIE14Rule> rules = getRules();
         Map<Id,String> accountAndFrequentCompanies = getMostFrequentCompany(contracts.keySet());
         system.debug('accountAndFrequentCompanies -> ' + accountAndFrequentCompanies);
         List<Account> accountToUpdate = new List<Account>();
 
         for(Contract c : contracts.values()){
-            for(HDT_UTL_SIE14.HDT_WRP_SIE14Rule rule : rules){
+            for( HDT_UTL_SieXiv.HDT_WRP_SIE14Rule rule : rules){
                 if(rule.checkLogic(c, accountAndFrequentCompanies.get(c.accountId))){
                     Account a = new Account(Id = c.accountId, Segment__c = rule.segmento);
                     accountToUpdate.add(a);

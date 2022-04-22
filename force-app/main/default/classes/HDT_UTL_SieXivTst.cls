@@ -1,6 +1,6 @@
 @SuppressWarnings('PMD.ClassNamingConventions')
 @isTest
-public with sharing class HDT_UTL_SIE14Tst {
+public with sharing class HDT_UTL_SieXivTst {
     
     static void createOrder(Contract c){
         Order o = HDT_UTL_DataFactoryTst.createOrder(1, false, c.AccountId, 'Bozza')[0];
@@ -53,7 +53,7 @@ public with sharing class HDT_UTL_SIE14Tst {
         List<Contract> contracts =  [SELECT Id, AccountId, SBQQ__Order__c, SBQQ__Order__r.CommercialId__c FROM Contract where ContractSalesCompany__c='EstEnergy S.p.A.'];
         update new Account(Id=contracts[0].AccountId, CategoryCode__c='');
         Test.startTest();
-        HDT_SRV_SIE14 testSie14 = new HDT_SRV_SIE14();
+        HDT_SRV_SieXiv testSie14 = new HDT_SRV_SieXiv();
         testSie14.initSIE(new Map<Id,Contract>(contracts).keySet());
         Test.stopTest();
         String result = [Select Segment__c from account where id=:contracts[0].AccountId].Segment__c;
@@ -67,7 +67,7 @@ public with sharing class HDT_UTL_SIE14Tst {
         List<Contract> contracts =  [SELECT Id, AccountId FROM Contract]; 
         //system.debug('allContracts -> ' + contracts);
         Test.startTest();
-        HDT_SRV_SIE14 testSie14 = new HDT_SRV_SIE14();
+        HDT_SRV_SieXiv testSie14 = new HDT_SRV_SieXiv();
         testSie14.initSIE(new Map<Id,Contract>(contracts).keySet());
         Test.stopTest();
         Integer accountsToCode = [Select Count() from Account Where Segment__c='ZCOD-DA CODIFICARE'];
