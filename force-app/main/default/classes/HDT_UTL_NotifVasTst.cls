@@ -183,7 +183,7 @@ public with sharing class HDT_UTL_NotifVasTst {
                 mrrHeader.fields = fieldList;
                 HDT_WRP_MrrRequest.HDT_WRP_Object mrrObjects = new HDT_WRP_MrrRequest.HDT_WRP_Object();
                 mrrObjects.fields = fieldList;
-                mrrObjects.objectType = 'Account';
+                mrrObjects.objectType = 'Case';
                 
                 List<HDT_WRP_MrrRequest.HDT_WRP_Object> objectList = new List<HDT_WRP_MrrRequest.HDT_WRP_Object>();
                 objectList.add(mrrObjects);           
