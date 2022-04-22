@@ -8843,7 +8843,7 @@
         </connector>
         <flowName>HDT_FL_CambioUso</flowName>
         <inputAssignments>
-            <name>inputCaseId</name>
+            <name>InputCase</name>
             <value>
                 <elementReference>CaseId</elementReference>
             </value>

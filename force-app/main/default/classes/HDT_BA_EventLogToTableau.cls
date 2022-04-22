@@ -41,7 +41,8 @@ public with sharing class HDT_BA_EventLogToTableau implements Database.Batchable
     }
 
     public void execute(Database.BatchableContext info, List<SObject> scope){
-        //logica
+        //logica che gestisce un solo record alla volta quindi la chiamata deve essere effettuata nel seguente
+        //modo: database.executebatch(b,1);
         system.debug(scope[0]);
         //controllo per eseguire la logica dei 4 KPI
         if('EventLog'.equalsIgnoreCase(whichEvent)){
