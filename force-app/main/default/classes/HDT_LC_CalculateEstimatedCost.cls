@@ -49,7 +49,8 @@ public inherited sharing class HDT_LC_CalculateEstimatedCost {
     }
 	@TestVisible
     private static void getFixedQuotes(Order ord, HDT_WRP_ExtimatedCost wrp){
-        String searchKey = (new Set<String>{'Domestico', 'A-Domestico'}.contains(ord.SupplyType__c)) ? 'Domestico' : 'Non Domestico';
+        String supplyType = [SELECT SupplyType__c FROM Order WHERE Id = :ord.Id WITH SECURITY_ENFORCED LIMIT 1].SupplyType__c;
+        String searchKey = (new Set<String>{'Domestico', 'A-Domestico'}.contains(supplyType)) ? 'Domestico' : 'Non Domestico';
         HDT_CalcoloPreventivi__mdt fixedQuotes = [SELECT VAT__c, DistributorFixedQuote__c, PowerQuote__c, SellerFixedQuote__c FROM HDT_CalcoloPreventivi__mdt WHERE Type__c=:searchKey WITH SECURITY_ENFORCED];
         wrp.fixedQuotes=fixedQuotes;
         Decimal variableAmount =  fixedQuotes.PowerQuote__c*((ord.PowerRequested__c*(ord.PowerAvailable__c>30?1.0:1.1))-ord.PowerAvailable__c);
