@@ -75,6 +75,16 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
         HDT_UTL_PrClickEndSubscriptionBulk.updateCorrelatedObjects();
 
+        Set<Id> accountIdsBpca = new Set<Id>();
+        for(Case caseNew : (List<Case>) Trigger.new){
+            if(caseNew.Type.equals('BP/CA - errata categoria') && caseNew.Phase__c.equals('Completata')){
+                accountIdsBpca.add(caseNew.AccountId);
+            }
+        }
+        if(!accountIdsBpca.isEmpty()){
+            system.debug('accountIdsBpca' + accountIdsBpca);
+            new HDT_SRV_SIE14().checkBpcaChanges(accountIdsBpca);
+        }
     }
 
     public override void afterInsert(){

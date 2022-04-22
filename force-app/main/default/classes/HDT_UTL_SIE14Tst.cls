@@ -43,18 +43,7 @@ public with sharing class HDT_UTL_SIE14Tst {
         createOrder(new Contract(AccountId=acc3.Id, ContractSalesCompany__c='Acegas Aps Service'));
         createOrder(new Contract(AccountId=acc3.Id, ContractSalesCompany__c='Hera Comm Marche'));
 
-        Account acc4 = accounts.get(3);
-        acc4.Type='BP/CA - errata categoria';
-        update acc4;
 
-        Contract c = new Contract(AccountId=acc4.Id, ContractSalesCompany__c='Hera Comm Marche');
-        insert c;
-        ServicePoint__c servicePoints = HDT_UTL_DataFactoryTst.createServicePoint(1,true)[0];
-        Contact testContact = HDT_UTL_DataFactoryTst.createContact(1, true, acc4.Id)[0];
-        Case testCase = HDT_UTL_DataFactoryTst.createCase(1, false, acc4.Id, testContact.Id, servicePoints.Id, c.Id, c.Id)[0];
-        testCase.Type='BP/CA - errata categoria';
-        testCase.Phase__c='Completata';
-        insert testCase;
     }
 
     @isTest
@@ -83,13 +72,25 @@ public with sharing class HDT_UTL_SIE14Tst {
     }
 
     @isTest
-    static void testSie14CheckForCases() { 
+    static void testSie14checkBpcaChanges() {
         
-        List<Case> cases =  [SELECT Id FROM Case];
+        wrts_prcgvr.InstallIntegration.install();
+        HDT_UTL_DataFactoryTst.installPhaseManagerSObjectSetting('Case');
+        Id accountId = [SELECT Id FROM Account LIMIT 1].Id;
+
+        Contract c = new Contract(AccountId=accountId, ContractSalesCompany__c='Hera Comm Marche');
+        insert c;
+        ServicePoint__c servicePoints = HDT_UTL_DataFactoryTst.createServicePoint(1,true)[0];
+        Contact testContact = HDT_UTL_DataFactoryTst.createContact(1, true, accountId)[0];
+        
+        Case testCase = HDT_UTL_DataFactoryTst.createCase(1, false, accountId, testContact.Id, servicePoints.Id, c.Id, c.Id)[0];
+        testCase.Type='BP/CA - errata categoria';
+        testCase.Phase__c='Completata';
+        insert testCase;
 
         Test.startTest();
-        HDT_SRV_SIE14 testSie14 = new HDT_SRV_SIE14();
-        testSie14.checkForCases(new Map<Id,Case>(cases).keySet());
+        testCase.Subject='test';
+        update testCase; 
         Test.stopTest();
     }
 

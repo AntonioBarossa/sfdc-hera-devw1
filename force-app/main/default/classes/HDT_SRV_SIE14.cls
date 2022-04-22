@@ -92,11 +92,10 @@ public inherited sharing class HDT_SRV_SIE14 implements Queueable {
         }
     }
 
-    public void checkForCases(Set<Id> CaseIds){
-    system.debug('Cases CaseIds -> ' + CaseIds);
+    public void checkBpcaChanges(Set<Id> accountIds){
+    system.debug('accountIds -> ' + accountIds);
    
-        List<Account> results =[Select Id, (select Id FROM Contracts ORDER BY CreatedDate DESC LIMIT 1) FROM Account WHERE Id IN 
-                                (Select AccountId FROM Case WHERE Type='BP/CA - errata categoria' AND Phase__c='Completata' AND Id IN :CaseIds)];
+        List<Account> results =[Select Id, (select Id FROM Contracts ORDER BY CreatedDate DESC LIMIT 1) FROM Account WHERE Id IN : accountIds];
 
         system.debug('results -> ' + results);
 
