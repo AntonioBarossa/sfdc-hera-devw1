@@ -174,6 +174,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         order.SupplyType__c == 'Domestico' ? 'Iva 10% (Cod. 01)' : 'Iva 22% (Cod. 02)'
                     : 'Iva 22% (Cod. 02)';
             }
+            if(order.CommodityFormula__c == 'Gas')
+            {
+                newOrder.ExciseGAS__c = (order.SupplyType__c == 'A-Domestico' || order.SupplyType__c == 'B-Condominio') ? 'Imposta Usi Domestici (Cod. G_ICD)' : 'Imposta usi non domestici iva 22% (Cod. G_ICC)';
+            }
 
             //EVERIS: MODIFICATA LOGICA DI UPDATE PER GESTIRE I PREDEFAULT
             newOrder.Id = orderId;
