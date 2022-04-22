@@ -1,4 +1,4 @@
-<apex:page standardController="Case" lightningStylesheets="true" apiVersion="">
+<apex:page standardController="DocumentSelected__c" lightningStylesheets="true" apiVersion="">
     <script type="text/javascript">
     window.onload = showToast();
         function showToast() {
