@@ -31,7 +31,7 @@ public with sharing class HDT_UTL_CaseProcess {
             }
         }
         if(!accountIdsBpca.isEmpty()){
-            system.debug('accountIdsBpca' + accountIdsBpca);
+            system.debug('accountIdsBpca: ' + accountIdsBpca);
             new HDT_SRV_SIE14().checkBpcaChanges(accountIdsBpca);
         }
     }
