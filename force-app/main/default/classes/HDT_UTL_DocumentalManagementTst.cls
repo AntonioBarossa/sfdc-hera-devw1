@@ -51,7 +51,7 @@ public with sharing class HDT_UTL_DocumentalManagementTst {
         String st1 = HDT_UTL_DocumentalManagement.createContentDistribution(String.valueof(cv1.Id), 'filetest');
         HDT_WRP_DocumentalResponse resp = createResponse();
         HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(resp,'Order');
-        //SObject sobj = HDT_UTL_DocumentalManagement.getProcessRecord(String.valueof(ca.Id), 'Case');
+       
         
         
         Test.stopTest();
