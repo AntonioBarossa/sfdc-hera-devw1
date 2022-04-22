@@ -37,7 +37,7 @@ public with sharing class HDT_QR_DistributorPointCodeTst{
 
 			test.startTest();
 
-			List<DistributorPointCode__c> getDistPointCode=distPointCodeQr.getDistributorPointCode('testPointCode', 'testCommodity', 'testComune');
+			List<DistributorPointCode__c> getDistPointCode=distPointCodeQr.getDistributorPointCode('testPointCode', 'testCommodity', 'testComune', 'Si');
 
 			test.stopTest();
 

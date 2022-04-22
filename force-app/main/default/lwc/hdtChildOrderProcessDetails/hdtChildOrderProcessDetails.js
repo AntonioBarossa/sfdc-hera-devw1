@@ -712,19 +712,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.dispatchEvent(toastErrorMessage);
                     return;
                 }
-                if(this.template.querySelector("[data-id='CommentForDL__c']") !== null 
-                    && (this.template.querySelector("[data-id='CommentForDL__c']").value === ''
-                        || this.template.querySelector("[data-id='CommentForDL__c']").value === null)) {
-                    this.loading = false;
-                        const toastErrorMessage = new ShowToastEvent({
-                            title: 'Errore',
-                            message: 'Popolare il campo Note per il DL',
-                            variant: 'error',
-                            mode: 'sticky'
-                        });
-                    this.dispatchEvent(toastErrorMessage);
-                    return;
-                }
                 if(this.template.querySelector("[data-id='ConnectionType__c']") !== null 
                     && (this.template.querySelector("[data-id='ConnectionType__c']").value === ''
                         || this.template.querySelector("[data-id='ConnectionType__c']").value === null)) {
@@ -1016,7 +1003,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 new fieldData('Uso energia','UseTypeEnergy__c', this.typeVisibility('both'), !(this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica'), !(this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica'), '',''),
                 new fieldData('Rinuncia Diritto di Ripensamento','WaiverRightAfterthought__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', true, (this.order.ProcessType__c == 'Switch in Ripristinatorio' || this.loginChannel == 'SPORTELLO') && !this.isNoDayAfterthought, this.isNoDayAfterthought , '',''),
                 new fieldData('Azione commerciale','CommercialAction__c', this.typeVisibility('both'), false, false, '',''),
-                new fieldData('Note per il DL','CommentForDL__c', this.typeVisibility('both'), true, false, '',''),
+                new fieldData('Note per il DL','CommentForDL__c', this.typeVisibility('both'), false, false, '',''),
                 new fieldData('Esclusione dal deposito cauzionale','SecurityDepositExcluded__c', this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'), false, false, '','N'),
                 new fieldData('Data Inizio Connessione Temporanea','TemporaryConnectionStartDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
                 new fieldData('Data fine connessione temporanea','TemporaryConnectionEndDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
