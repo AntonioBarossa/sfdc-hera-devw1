@@ -19,29 +19,46 @@ public inherited sharing class HDT_LC_CampaignsController {
     public static List <CampaignMember> getCampaigns(String id, String objectName, String category, String channel) {
         campaignMemberSrv.checkReadAccess('Campaign.Name,Campaign.Status,Campaign.Channel__c,Campaign.EndDate');
 
+        String userId = UserInfo.getUserId();
+        User currentUser = HDT_QR_UserQueries.getRoleAndProfile(userId)[0];
+
         if(String.isBlank(objectName)){
             Id objId = id;
             objectName = objId.getSObjectType().getDescribe().getName();
         }
         
-        if (objectName == 'Contact') {
-            //return all active campaigns related to this Contact
-            return  campaignMemberQr.getActiveCampaignsByContact(id);
-        } else if(objectName == 'Lead') {
-            //return all active campaigns related to this Lead
-            return campaignMemberQr.getActiveCampaignsByLead(id);
-        } else if(objectName == 'Account') {
-            //return all active campaigns related to all contacts related to this Account
-            List<String> contacts = contactQr.getContactsIdByAccountId(id);
-            if (String.isNotBlank(category)) {
-                if (String.isNotBlank(channel)) {
-                    return campaignMemberQr.filterCampaignsByCategoryAndChannel(contacts, category, channel);
+        if(!currentUser.IsPortalEnabled){
+            if (objectName == 'Contact') {
+                //return all active campaigns related to this Contact
+                return  campaignMemberQr.getActiveCampaignsByContact(id);
+            } else if(objectName == 'Lead') {
+                //return all active campaigns related to this Lead
+                return campaignMemberQr.getActiveCampaignsByLead(id);
+            } else if(objectName == 'Account') {
+                //return all active campaigns related to all contacts related to this Account
+                List<String> contacts = contactQr.getContactsIdByAccountId(id);
+                if (String.isNotBlank(category)) {
+                    if (String.isNotBlank(channel)) {
+                        return campaignMemberQr.filterCampaignsByCategoryAndChannel(contacts, category, channel);
+                    }
+                    return campaignMemberQr.filterCampaignsByCategory(contacts, category);
                 }
-                return campaignMemberQr.filterCampaignsByCategory(contacts, category);
+                return campaignMemberQr.getCampaignsFilteredByContacts(contacts);
             }
-            return campaignMemberQr.getCampaignsFilteredByContacts(contacts);
-        } else {
-            return null;
+            else {
+                return null;
+            }
+        }
+        else {
+            if(objectName.equalsIgnoreCase('Contact')){
+                return  campaignMemberQr.getCampaignsByContactPartner(id, currentUser);
+            }
+            else if(objectName.equalsIgnoreCase('Lead')) {
+                return  campaignMemberQr.getCampaignsByContactPartner(id, currentUser);
+            }
+            else {
+                return null;
+            }
         }
     }
     @AuraEnabled(cacheable=true)

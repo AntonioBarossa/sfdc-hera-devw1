@@ -12,19 +12,18 @@ public inherited sharing class HDT_QR_CampaignMember {
     * @return List<CampaignMember>
     */
     public List<CampaignMember> getActiveCampaignsByContact(String contactId){
-        return [
-            SELECT 
-            id,
-            CampaignId,
-            Campaign.Name,
-            Campaign.Status,
-            Campaign.Channel__c,
-            Campaign.EndDate,
-            Status
-            FROM CampaignMember
-            where ContactId = :contactId
-            AND Campaign.isActive = true
-            WITH SECURITY_ENFORCED];
+
+        return [SELECT id, CampaignId, Campaign.Name, Campaign.Status, Campaign.Channel__c, Campaign.EndDate, Status FROM CampaignMember 
+                WHERE ContactId = :contactId AND Campaign.isActive = true WITH SECURITY_ENFORCED];
+    }
+    
+    public List<CampaignMember> getCampaignsByContactPartner(String contactId, User currentUser){
+
+        Date tday = System.Date.today();
+        String channel = currentUser.Profile.Name.equalsIgnoreCase('Hera Teleseller Partner User') ? 'Telefonico Outbound' : 'Door to Door';
+
+        return [SELECT Id, CampaignId, Campaign.Name, Campaign.Status, Campaign.Channel__c, Campaign.EndDate, Status FROM CampaignMember 
+                WHERE ContactId = :contactId AND Campaign.isActive = true AND Campaign.Status = 'In Corso' AND HasResponded = false AND Campaign.StartDate <= :tday AND Campaign.Channel__c includes (:channel) WITH SECURITY_ENFORCED];
     }
 
     /**
@@ -33,17 +32,17 @@ public inherited sharing class HDT_QR_CampaignMember {
     * @return List<CampaignMember>
     */
     public List<CampaignMember> getActiveCampaignsByLead(String leadId){
-        return [
-            SELECT 
-            CampaignId,
-            Campaign.Name,
-            Campaign.Status,
-            Campaign.Channel__c,
-            Campaign.EndDate
-            FROM CampaignMember
-            where LeadId = :leadId
-            AND Campaign.isActive = true
-            WITH SECURITY_ENFORCED];
+        return [SELECT CampaignId, Campaign.Name, Campaign.Status, Campaign.Channel__c, Campaign.EndDate FROM CampaignMember 
+                WHERE LeadId = :leadId AND Campaign.isActive = true WITH SECURITY_ENFORCED];
+    }
+
+    public List<CampaignMember> getCampaignsByLeadPartner(String leadId, User currentUser){
+        
+        Date tday = System.Date.today();
+        String channel = currentUser.Profile.Name.equalsIgnoreCase('Hera Teleseller Partner User') ? 'Telefonico Outbound' : 'Door to Door';
+
+        return [SELECT CampaignId, Campaign.Name, Campaign.Status, Campaign.Channel__c, Campaign.EndDate FROM CampaignMember 
+                WHERE LeadId = :leadId AND Campaign.isActive = true AND Campaign.Status = 'In Corso' AND HasResponded = false AND Campaign.StartDate <= :tday AND Campaign.Channel__c includes (:channel) WITH SECURITY_ENFORCED];
     }
 
     /**
