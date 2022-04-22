@@ -104,7 +104,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         HDT_QR_AnagAlignment queryHandlerOrder = new HDT_QR_AnagAlignment();
         switch on codicePrestazione {
-            when 'A01', 'A40', 'A03', 'S01', 'S02' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
+            when 'A01', 'A40', 'A03', 'S01', 'S02','A10' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
                 Order triggerOrder = null;
                 /*if (!String.isBlank(codicePraticaDistributore)) {
                     triggerOrder = queryHandlerOrder.findOrderByDistributorPracticeCode(codicePraticaDistributore);
@@ -625,7 +625,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         Set<String> processTypeString = new Set<String>();
 
         switch on codicePrestazione {
-            when 'A01','A40' {
+            when 'A01','A40','A10' {
                 processTypeString.add('Subentro su GdM chiuso');
                 processTypeString.add('Prima Attivazione');
             }
