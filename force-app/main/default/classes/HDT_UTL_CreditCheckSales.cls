@@ -112,9 +112,10 @@ public inherited sharing class HDT_UTL_CreditCheckSales {
                 creditCheckResponse = HDT_WS_CreditCheck.callService(creditCheckRequest);
 
                 if(creditCheckResponse.statusCode != 200 && creditCheckResponse.statusCode != 201){
-                    processObject.requestItem.Status__c = 'Errore';
-                    processObject.requestItem.StatusDescription__c = 'Errore nella chiamata al servizio di Credit Check';
-                    orderToCheck.Phase__c = 'Credit Check KO';
+                    //processObject.requestItem.Status__c = 'Errore';
+                    //processObject.requestItem.StatusDescription__c = 'Errore nella chiamata al servizio di Credit Check';
+                    //orderToCheck.Phase__c = 'Credit Check KO';
+                    processObject.requestItem.Status__c = 'Chiuso';
                     orderToUpdate.add(orderToCheck);
                 } else {
                     processObject.requestItem.Status__c = 'Chiuso';
