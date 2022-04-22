@@ -121,15 +121,15 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
 
             if(compatibility == null || compatibility == ''){
                 System.debug('>>> compatibility  ok');
-                // Se il risultato del metodo mappa.get('compatibility') è blank allora è necessario chiamare
                 processObj.nextDataObj.orderCompatible = true;
 
-                //ordine analisi consumi -->
-                //analisiConsumiOrder.Phase__c = 'Comunicazione verso Heroku';
+                // per analisi consumi creare solo ServiceRequest
+                ServiceRequest__c srRequest;
+                srRequest = setServiceRequest(srRequest, analisiConsumiOrder);
+                serviceRequestToInsert.add(srRequest);
 
             } else {
                 System.debug('>>> compatibility  KO');
-                // Se il risultato del metodo mappa.get('compatibility') != null allora è necessario annullare l'ordine e gli altri order figli
                 processObj.nextDataObj.orderCompatible = false;
                 orderToCheck.Phase__c = 'Annullato';
                 orderToCheck.Status = 'Annullato';
@@ -141,23 +141,25 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
                 analisiConsumiOrder.CancellationNote__c = 'Motivazione: ' + String.valueOf(compatibility).abbreviate(250);
                 //analisiConsumiOrder.Phase__c = 'Comunicazione verso Heroku'; //// ??? 
                 orderToUpdate.add(orderToCheck);
+
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = analisiConsumiOrder.CancellationNote__c;
+
             }
 
             orderToUpdate.add(analisiConsumiOrder);
             requestItemForUpsert.add(processObj.requestItem);
 
-            // per analisi consumi creare solo ServiceRequest
-            ServiceRequest__c srRequest;
-            srRequest = setServiceRequest(srRequest, analisiConsumiOrder);
-            serviceRequestToInsert.add(srRequest);
-
-            //processObj.nextDataObj.orderCompatible = false;
             processObj.requestItem.NextStepData__c = JSON.serialize(processObj.nextDataObj);
             itemsToUpdate.add(processObj.requestItem);
+            
         }
         
         update orderToUpdate;
-        insert serviceRequestToInsert;
+
+        if(serviceRequestToInsert.size() > 0){
+            insert serviceRequestToInsert;
+        }
 
     }
 
