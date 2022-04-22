@@ -955,6 +955,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		// r.RegistryCategory__c = ???? TODO: da dove prendere la categoria catastale? non sembra esserci nel modulo, nè sull'order nè sul service point.
 		// Superficie_Catastale
 		r.RegistrySurface__c = childOrder.SurfaceServed__c;
+		r.Order__c = childOrder.Id;
 
 		return r;
 	}
