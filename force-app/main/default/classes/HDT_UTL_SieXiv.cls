@@ -5,13 +5,13 @@ public inherited sharing  class  HDT_UTL_SieXiv {
     private static final Pattern PATTERN_OPERATORS = Pattern.compile('([A-Za-z0-9_.]+)[\\xa0\\s]*('+STRING.join(OPERATORS, '|')+')(.+)');
     private static HDT_UTL_Sobject utlSbj = new HDT_UTL_Sobject();
 
-    public class HDT_WRP_SIE14Rule{
+    public class HDT_WRP_SieXivRule{
         public String segmento;
         String logic;
         Set<String> salesCompany;
         List<HDT_WRP_SIECondition> conditions;
 
-        public HDT_WRP_SIE14Rule(String segmento, List<String> conditions, String logic, String salesCompany){
+        public HDT_WRP_SieXivRule(String segmento, List<String> conditions, String logic, String salesCompany){
             this.segmento = segmento;
             //this.conditions = conditions;
             this.conditions= new List<HDT_WRP_SIECondition>();

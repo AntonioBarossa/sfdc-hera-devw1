@@ -1,4 +1,3 @@
-@SuppressWarnings('PMD.ClassNamingConventions')
 @isTest
 public with sharing class HDT_UTL_SieXivTst {
     
@@ -48,13 +47,13 @@ public with sharing class HDT_UTL_SieXivTst {
     }
 
     @isTest
-    static void testSie14WithSale() {
+    static void testSieXivWithSale() {
         
         List<Contract> contracts =  [SELECT Id, AccountId, SBQQ__Order__c, SBQQ__Order__r.CommercialId__c FROM Contract where ContractSalesCompany__c='EstEnergy S.p.A.'];
         update new Account(Id=contracts[0].AccountId, CategoryCode__c='');
         Test.startTest();
-        HDT_SRV_SieXiv testSie14 = new HDT_SRV_SieXiv();
-        testSie14.initSIE(new Map<Id,Contract>(contracts).keySet());
+        HDT_SRV_SieXiv testSieXiv = new HDT_SRV_SieXiv();
+        testSieXiv.initSIE(new Map<Id,Contract>(contracts).keySet());
         Test.stopTest();
         String result = [Select Segment__c from account where id=:contracts[0].AccountId].Segment__c;
         system.assertEquals('Corporate_GDA', result, 'Unexpected Behaviour');
@@ -62,20 +61,20 @@ public with sharing class HDT_UTL_SieXivTst {
 
 
     @isTest
-    static void testSie14() {
+    static void testSieXiv() {
         
         List<Contract> contracts =  [SELECT Id, AccountId FROM Contract]; 
         //system.debug('allContracts -> ' + contracts);
         Test.startTest();
-        HDT_SRV_SieXiv testSie14 = new HDT_SRV_SieXiv();
-        testSie14.initSIE(new Map<Id,Contract>(contracts).keySet());
+        HDT_SRV_SieXiv testSieXiv = new HDT_SRV_SieXiv();
+        testSieXiv.initSIE(new Map<Id,Contract>(contracts).keySet());
         Test.stopTest();
         Integer accountsToCode = [Select Count() from Account Where Segment__c='ZCOD-DA CODIFICARE'];
         system.assertEquals(2, accountsToCode, 'Unexpected Behaviour');
     }
 
     @isTest
-    static void testSie14checkBpcaChanges() {
+    static void testSieXivcheckBpcaChanges() {
         
         wrts_prcgvr.InstallIntegration.install();
         HDT_UTL_DataFactoryTst.installPhaseManagerSObjectSetting('Case');
