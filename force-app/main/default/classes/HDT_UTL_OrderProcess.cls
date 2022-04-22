@@ -1213,6 +1213,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                     }
                                 }
                             }
+                            if(o.IsMassive__c){
+                                if('HDT_RT_Voltura'.equalsIgnoreCase(currentOrder.RecordType.DeveloperName)){
+                                    o.Phase__c = 'Documentazione Validata';
+                                }else {
+                                    o.Phase__c = 'Comunicazione verso Heroku';
+                                }
+                            }
                         }
                     }
                 }

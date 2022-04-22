@@ -2364,14 +2364,14 @@
         <apexClass>HDT_SCH_LeadExpiredSchedulerTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <classAccesses>
+    <!-- <classAccesses>
         <apexClass>HDT_SCH_LeadWebServiceReitekSend</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SCH_LeadWebServiceReitekSendTst</apexClass>
         <enabled>true</enabled>
-    </classAccesses>
+    </classAccesses> -->
     <classAccesses>
         <apexClass>HDT_SCH_OldDraftSalesSchedule</apexClass>
         <enabled>true</enabled>

@@ -83,12 +83,19 @@ public with sharing class HDT_SRV_SalesHandler {
                         //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                         String recordId = mapRequestFields.get('RECORD_ID');
                         Order ordRetrieved;
-                        if(recordId instanceOf Id){
-                            ordRetrieved = orderQr.getRecordByOrderId(recordId)[0];
+                        if(String.isNotBlank(recordId)){
+                            if(recordId instanceOf Id){
+                                ordRetrieved = orderQr.getRecordByOrderId(recordId)[0];
+                            }
+                            else if(recordId.containsIgnoreCase('O-')) {
+                                ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
+                            }else {
+                                return mrrResponseItem;
+                            }
+                        }else {
+                            return mrrResponseItem;
                         }
-                        else {
-                            ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
-                        }
+                        
 
                         String previousPhase = ordRetrieved.Phase__c;
                         String nextPhase = mapRequestFields.get('FASE');
@@ -500,7 +507,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     HDT_UTL_HerokuPostSalesManager utlClass = new HDT_UTL_HerokuPostSalesManager();
                                     Order cancellationOrder = new Order();
                                     cancellationOrder.Id = ord.Id;
-                                    utlClass.handlePassiveCancellation(cancellationOrder, 'Order', mapRequestFields.get('STORNO'), mapRequestFields.get('ATTIVITA'));
+                                    utlClass.handlePassiveCancellation(cancellationOrder, 'Order', mapRequestFields.get('STORNO'), mapRequestFields.get('ATTIVITA'),mapRequestFields.get('ANNOTAZIONI_ANN'));
                                 }
                                 when 'Annullato'{
                                     if(mapRequestFields.get('NOTE_ANN') != null){

@@ -36,6 +36,9 @@
                         <valueListItems>
                             <value>Global.EscalationCmp</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>ChangeOwnerOne</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -82,6 +85,9 @@
                                     <rightValue>HDT_RT_Distributore</rightValue>
                                 </criteria>
                             </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>ChangeOwnerOne</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

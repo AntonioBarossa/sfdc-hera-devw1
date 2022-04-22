@@ -54,12 +54,12 @@ global with sharing class HDT_WS_MrrRequest {
                 HDT_WRP_MrrRequest.HDT_WRP_Header header = request.header;
                 mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
                 mrrResponseItem.objects.clear();
-                if (header.fields.get(0).value == 'sales') {
+                if (header.fields != null && header.fields.get(0).value == 'sales') {
                     mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(request, mrrResponseItem);
                 }
             }
 
-            if(requestBody.requests[0].header.fields.get(0).value == 'postsales'){
+            if(requestBody.requests[0].header.fields != null && requestBody.requests[0].header.fields.get(0).value == 'postsales'){
                 HDT_SRV_BillableVasDeactivation.handlerAsyncronousNotify(requestBody.requests[0]);
                 //HDT_SRV_BillableVasDeactivation billableVasHndlr = new HDT_SRV_BillableVasDeactivation(requestBody.requests[0]);
                 if (requestBody.requests[0].header.requestType=='NOTIF_VAS') {
