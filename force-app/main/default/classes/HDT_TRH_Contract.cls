@@ -108,6 +108,9 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
             HDT_UTL_DatabaseService.updateSObject(spToActivate.values());
         }
 
+        HDT_SRV_SieXiv sie = new HDT_SRV_SieXiv();
+        sie.initSIE(Trigger.newMap.keySet());
+
        /*list<Contract> newContracts = (List<Contract>) Trigger.New;
        Set<Id> orderToContract = new Set<Id>();
        for(Contract c : newContracts){

@@ -17,6 +17,7 @@ public inherited sharing class HDT_LC_SaleActions {
     private static HDT_SRV_QuoteProcess quoteProcessSrv = new HDT_SRV_QuoteProcess();
     private static HDT_QR_QuoteProcess quoteProcessQr = new HDT_QR_QuoteProcess();
     private static HDT_QR_AccountContactRelation accountContactRelationQr = new HDT_QR_AccountContactRelation();
+    private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -134,7 +135,7 @@ public inherited sharing class HDT_LC_SaleActions {
         system.debug('quoteList: ' + quoteList);
 
         //4 - Update Sale
-        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Attiva', CampaignEleggibilityGroup__c = campaignElegibilityGroup);
+        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Attiva', CampaignEleggibilityGroup__c = campaignElegibilityGroup, isTransition__c = sale.isTransition__c);
 
         //5 - SBQQ__QuoteLineGroup__c
         //Creazione di un QuoteLineGroup per ogni QuoteLine principale.
@@ -206,6 +207,12 @@ public inherited sharing class HDT_LC_SaleActions {
             cm.Id = campaignMemberId;
             saleToUpdate.CampaignMemberId__c = campaignMemberId;
             saleToUpdate.Campaign__c = [SELECT Id, CampaignId FROM CampaignMember WHERE Id =: campaignMemberId WITH SECURITY_ENFORCED LIMIT 1].CampaignId;
+        }
+
+        system.debug('***salesTransition ->: ' + saleToUpdate.isTransition__c);
+        if(saleToUpdate.isTransition__c!= null && saleToUpdate.isTransition__c){
+            Account account = new Account(Id = sale.Account__c, Segment__c = 'ZCOD-DA CODIFICARE');
+            accountSrv.updateRecord(account);
         }
 
         //7 - Execute actions
