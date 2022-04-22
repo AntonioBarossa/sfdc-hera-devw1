@@ -94,11 +94,6 @@ public with sharing class HDT_UTL_CaseProcess {
              * si entra nell'if per tutte le gestioni ad hoc dei processi
              */
 			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
-                //Variazione Indirizzzo di Fornitura
-                if(caseNew.Type.containsIgnoreCase('Variazione indirizzo di fornitura') || caseNew.Type.containsIgnoreCase('Marcatura/Uso PdR')){
-                    System.debug(LoggingLevel.DEBUG, 'Inside Condition');
-                    HDT_UTL_Case.createActivity(caseNew.Id, 'Annullare Case di Allineamento Anagrafica o crearne uno opposto', 'Annullamento Allineamento', 'Annullamento Allineamento');
-                }
                 //Annullamento Case di Richiesta Parere legati al case di Reclamo
                 //Annullamento activities legate al case di Richiesta Parere
                 if(caseNew.Type.equalsIgnoreCase('Reclamo Scritto/Rich. Info')){    
@@ -183,7 +178,11 @@ public with sharing class HDT_UTL_CaseProcess {
                     {
                         HDT_UTL_DatabaseService.updateSObject(activitiesToCancel);
                     }
-
+                }
+                //Variazione Indirizzzo di Fornitura
+                if(caseNew.Type.containsIgnoreCase('Variazione indirizzo di fornitura') || caseNew.Type.containsIgnoreCase('Marcatura/Uso PdR')){
+                    System.debug(LoggingLevel.DEBUG, 'Inside Condition');
+                    HDT_UTL_Case.createActivity(caseNew.Id, 'Annullare Case di Allineamento Anagrafica o crearne uno opposto', 'Annullamento Allineamento', 'Annullamento Allineamento');
                 }
                 /*if(caseNew.Cluster__c == 'Autolettura'){
                     // Annullamento dopo l'invio al DL
