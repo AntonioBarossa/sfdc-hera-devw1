@@ -67,7 +67,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         HDT_UTL_CaseProcess.checkSatisfationIndex(trigger.newMap, trigger.oldMap);
 
         HDT_UTL_CaseProcess.casePhaseManagementAfterUpdate(trigger.new,trigger.old);  
-
+        HDT_UTL_CaseProcess.caseBpcaSieManagement(Trigger.newMap, Trigger.oldMap);
         //***INIZIO SVILUPPO CAMPAGNE */
         HDT_UTL_CaseProcess.updateMemberStatusforClosedCases(trigger.new, trigger.old); 
         //**FINE SVILUPPO */
@@ -75,6 +75,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
         HDT_UTL_PrClickEndSubscriptionBulk.updateCorrelatedObjects();
 
+        
     }
 
     public override void afterInsert(){

@@ -3,7 +3,7 @@
     <fullName>ContractsMergeNumber__c</fullName>
     <description>Numero contratti da unificare</description>
     <externalId>false</externalId>
-    <label>Numero contratti da unificare</label>
+    <label>Numero contratti da unificare/separare</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

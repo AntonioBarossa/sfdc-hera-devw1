@@ -2973,6 +2973,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Corporate_GDA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Corporate_IC</fullName>
             <default>false</default>
         </values>
@@ -3010,6 +3014,10 @@
         </values>
         <values>
             <fullName>GOLD Top Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCNE_Coporate_GDA</fullName>
             <default>false</default>
         </values>
         <values>
