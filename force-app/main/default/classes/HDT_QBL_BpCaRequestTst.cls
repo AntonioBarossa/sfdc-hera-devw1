@@ -9,7 +9,7 @@ public class HDT_QBL_BpCaRequestTst {
    private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
    @IsTest
     public static void testMeth(){
-		Id adminUserProfileId = HDT_UTL_DataFactoryTst.getProfileId(utlConstants.HERA_SYSTEM_ADMINISTRATOR_NAME);
+		Id adminUserProfileId = HDT_UTL_DataFactoryTst.getProfileId(utlConstants.SYSTEM_ADMINISTRATOR_NAME);
 		User internalUser = HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
 		internalUser.UserPermissionsMarketingUser = true;
 		insert internalUser;
