@@ -3,12 +3,10 @@ public with sharing class HDT_LC_CloneArticleTst {
     
     //DEBUG
     public static final String TEST_NAME = 'HDT_LC_CaseDocumentValidationTstTst';
-    
-    
+       
     //TEST SETUP
-    
-    
-    
+    private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
+       
     //TESTS
     
     //getRecordTypeOptions
@@ -45,14 +43,20 @@ public with sharing class HDT_LC_CloneArticleTst {
         String urlName = 'clone';
         String recordtypeId = utConst.KNOWLEDGEARTICLE_RECORDTYPEID_FAQ;
         
+        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
+ 
+        User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+        internalUser.UserPermissionsKnowledgeUser = true;
         //HDT_RT_FAQ
         
         //TESTING
-        Knowledge__kav result = HDT_LC_CloneArticle.cloneArticle(kArt.Id, title, urlName, recordtypeId);
+        System.runAs(internalUser) {
+            
+        	Knowledge__kav result = HDT_LC_CloneArticle.cloneArticle(kArt.Id, title, urlName, recordtypeId);
         
-        //ASSERTS
-        System.assertNotEquals(kArt.Id, result.Id,'value of parameter is not matching');
-        
+        	//ASSERTS
+        	System.assertNotEquals(kArt.Id, result.Id,'value of parameter is not matching');
+        }
     }
     
     

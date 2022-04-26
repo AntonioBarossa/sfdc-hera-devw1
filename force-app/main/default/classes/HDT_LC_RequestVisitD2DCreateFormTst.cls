@@ -58,16 +58,16 @@ public class HDT_LC_RequestVisitD2DCreateFormTst {
             g.Type = 'Queue';
             insert g;
             
+            QueueSobject mappingObject = new QueueSobject(QueueId = g.Id, SobjectType = 'wrts_prcgvr__Activity__c');
+            insert mappingObject;
+            
             List<wrts_prcgvr__Activity__c> activity = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,accId);
             for(wrts_prcgvr__Activity__c ac : activity){
                 ac.Approved__c = 'Si';
                 ac.OwnerId = g.id;
             }
             insert activity;
-            
-            QueueSobject mappingObject = new QueueSobject(QueueId = g.Id, SobjectType = 'wrts_prcgvr__Activity__c');
-            insert mappingObject;
-            
+                     
             List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1,false,accId);
             for(Contact c : contacts)
                 c.Company__c='MMS';

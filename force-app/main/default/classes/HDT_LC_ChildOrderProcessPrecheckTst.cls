@@ -61,6 +61,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             childOrders[0].IncomingCreditCheckResult__c = 'test';
             childOrders[0].OutgoingCreditCheckResult__c = 'test';
             childOrders[0].CreditCheckDescription__c = 'test description';
+            childOrders[0].VasSubtype__c = 'Analisi consumi';
             insert childOrders;
             
             List<SBQQ__Quote__c> quotes = HDT_UTL_DataFactoryTst.createQuote(1, false, orders[0].id, null, null, 'Quote');
@@ -91,7 +92,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         }
      }
     
-    @isTest static void init(){
+    @isTest 
+    static void init(){
         
         Order record = [Select id,
                         ServicePoint__c,
@@ -108,22 +110,29 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                         ServicePoint__r.RecordType.DeveloperName,
                         SBQQ__Quote__r.AllowChangeUse__c,
                         SBQQ__Quote__r.AmendmentAllowed__c, 
-                        ServicePoint__r.isReseller__c
+                        ServicePoint__r.isReseller__c,
+                        IsVas__c,
+                        VasSubtype__c,
+                        ServicePoint__r.SapContractStatus__c
                         From Order
                         WHERE Name = 'testOrderName0'];
         
         Test.startTest();
         
-        List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> processesList = HDT_LC_ChildOrderProcessPrecheck.init(record);
+        //List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> processesList = HDT_LC_ChildOrderProcessPrecheck.init(record);
+        List<ProcessMatrix__c> processesList = HDT_LC_ChildOrderProcessPrecheck.init(record);
         
         Test.stopTest();
+
+        System.debug('@@@ processList processName__c '+processesList[0].processName__c);
         
-        System.assertEquals('Prima Attivazione con modifica', processesList[0].processType, 'init did not work correctly');
+        System.assertEquals('Prima Attivazione con modifica', processesList[0].processName__c, 'init did not work correctly');
         System.assertNotEquals(null, processesList, 'init did not work correctly');
         
     }
     
-    @isTest static void next(){
+    @isTest 
+    static void next(){
         
         Order ord = [Select id,
                         ServicePoint__c,
@@ -177,7 +186,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         
     }
     
-    @isTest static void next2(){
+    @isTest 
+    static void next2(){
         
             Order ord = [Select id,
                          ServicePoint__c,
@@ -196,8 +206,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                          SBQQ__Quote__r.AllowChangeUse__c,
                          SBQQ__Quote__r.AmendmentAllowed__c, 
                          ServicePoint__r.isReseller__c,
-                         CommodityFormula__c,
-                         SupplyCity__c
+                         CommodityFormula__c
                          From Order
                          WHERE Name = 'testOrderName0'];
             
@@ -234,7 +243,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             
         }
     
-    @isTest static void next3(){
+    @isTest 
+    static void next3(){
         
         Order ord = [Select id,
                      ServicePoint__c,
@@ -288,7 +298,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         System.assertNotEquals(null, result, 'next did not work correctly');
     }
     
-    @isTest static void next4(){
+    @isTest 
+    static void next4(){
         
         Order ord = [Select id,
                      ServicePoint__c,
@@ -344,7 +355,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         System.assertNotEquals(null, result, 'next did not work correctly');
     }
     
-    @isTest static void next5(){
+    @isTest 
+    static void next5(){
         
         Order ord = [Select id,
                      ServicePoint__c,
@@ -398,7 +410,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         System.assertNotEquals(null, result, 'next did not work correctly');
     }
     
-    @isTest static void next6(){
+    @isTest 
+    static void next6(){
         
         Id accId = [Select id from Account LIMIT 1].id;
         
@@ -461,7 +474,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         System.assertNotEquals(null, result, 'next did not work correctly');
     }
     
-    @isTest static void getServicePointTypeFromOrder(){
+    @isTest 
+    static void getServicePointTypeFromOrder(){
         
         Order record = [Select id From Order WHERE Name = 'testOrderName0'];
         
@@ -476,11 +490,12 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         
     }
     
-    @isTest static void callDataEnrichmentException(){
+    @isTest 
+    static void callDataEnrichmentException(){
         
         Order newOrder = [Select id From Order WHERE Name = 'testOrderName0'];
         
-        String result = '';
+        String result;
 
         Test.setMock(HttpCalloutMock.class, new HDT_WS_ArricchimentoDatiTempMock());
         Test.startTest();
@@ -494,11 +509,12 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         
     }
     
-    @isTest static void checkVasAndCommodity(){
+    @isTest 
+    static void checkVasAndCommodity(){
         
-        Id orderdId = [Select id From Order WHERE Name = 'testOrderName0'][0].id;
-        
-        Boolean result = HDT_LC_ChildOrderProcessPrecheck.checkVasAndCommodity(orderdId);
+        Order myOrder = [SELECT id, OrderReferenceNumber, ContractReference__c, VasSubtype__c, RecordType.DeveloperName FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_VAS' LIMIT 1][0];
+
+        Boolean result = HDT_LC_ChildOrderProcessPrecheck.checkVasAndCommodity(myOrder, myOrder.RecordType.DeveloperName); 
         
         System.assertEquals(true, result, 'checkVasAndCommodity did not work correctly');
         System.assertNotEquals(null, result, 'checkVasAndCommodity did not work correctly');

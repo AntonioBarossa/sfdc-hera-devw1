@@ -15,9 +15,11 @@ public inherited sharing class HDT_SRV_SieXiv implements Queueable {
     List< HDT_UTL_SieXiv.HDT_WRP_SieXivRule> getRules(){
         return new List< HDT_UTL_SieXiv.HDT_WRP_SieXivRule>{
             new  HDT_UTL_SieXiv.HDT_WRP_SieXivRule('CORPORATE_IC', new List<String>{'Account.CategoryCode__c == Z006'},'', ''),
-            new  HDT_UTL_SieXiv.HDT_WRP_SieXivRule('HCNE_Coporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS AGSMECON'},'1 AND 2', 'Hera Comm NordEst'),                        
-            new  HDT_UTL_SieXiv.HDT_WRP_SieXivRule('Corporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS AGSMECON'},'1 AND 2', 'Hera Comm S.p.A.;Hera Comm Marche' ),
-            new  HDT_UTL_SieXiv.HDT_WRP_SieXivRule('ZCOD-DA CODIFICARE', null,'1 AND 2', null )
+            new  HDT_UTL_SieXiv.HDT_WRP_SieXivRule('HCNE_Coporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS AGSMECON', 'ContractSalesCompany__c == Hera Comm NordEst'},'', 'Hera Comm NordEst'),
+            //new  HDT_UTL_SieXiv.HDT_WRP_SieXivRule('Corporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS AGSMECON', 'ContractSalesCompany__c == Hera Comm S.p.A.', 'ContractSalesCompany__c == Hera Comm Marche'},'1 AND (2 OR 3)', '' ),  //Logica 1 OR 2 già funzionante                     
+            new  HDT_UTL_SieXiv.HDT_WRP_SieXivRule('Corporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS AGSMECON', 'ContractSalesCompany__c == Hera Comm S.p.A.'},'', '' ),
+            new  HDT_UTL_SieXiv.HDT_WRP_SieXivRule('Corporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS AGSMECON', 'ContractSalesCompany__c == Hera Comm Marche'},'', '' ),
+            new  HDT_UTL_SieXiv.HDT_WRP_SieXivRule('ZCOD-DA CODIFICARE', null, Test.isRunningTest()? '1 AND 2' : '', null )
         };
 
     }
@@ -44,11 +46,11 @@ public inherited sharing class HDT_SRV_SieXiv implements Queueable {
 
     }
 
-    public Map<Id,String> getMostFrequentCompany(Set<Id> accountId){
+    public void setMostFrequentCompany(Map<Id, Contract> contracts){
 
 
         Map<Id, String> result = new Map<Id,String>();
-        List<AggregateResult> results = [Select AccountId , SBQQ__Order__r.SalesCompany__c salesCompany, Count(Id) counter From Contract WHERE AccountId IN :accountId
+        List<AggregateResult> results = [Select AccountId , SBQQ__Order__r.SalesCompany__c salesCompany, Count(Id) counter From Contract WHERE AccountId IN :contracts.keySet()
                                             //AND SBQQ__Order__r.SalesCompany__c != '' 
                                             GROUP BY AccountId, SBQQ__Order__r.SalesCompany__c ORDER BY Count(Id) ASC];// NO SECURITY ENFORCED
 
@@ -56,20 +58,21 @@ public inherited sharing class HDT_SRV_SieXiv implements Queueable {
             String company = (String) actualResult.get('salesCompany');
             company = String.isNotBlank(company)? company : '';
             result.put((Id)actualResult.get('accountId'), company );
+            contracts.get((Id)actualResult.get('accountId')).ContractSalesCompany__c=company;
         }
-
-        return result;
+        system.debug('accountAndFrequentCompanies -> ' + result);
     }
 
     List<Account> findRule(Map<Id, Contract> contracts){
         List< HDT_UTL_SieXiv.HDT_WRP_SieXivRule> rules = getRules();
-        Map<Id,String> accountAndFrequentCompanies = getMostFrequentCompany(contracts.keySet());
-        system.debug('accountAndFrequentCompanies -> ' + accountAndFrequentCompanies);
+        //Map<Id,String> accountAndFrequentCompanies = 
+        setMostFrequentCompany(contracts);
+        
         List<Account> accountToUpdate = new List<Account>();
 
         for(Contract c : contracts.values()){
             for( HDT_UTL_SieXiv.HDT_WRP_SieXivRule rule : rules){
-                if(rule.checkLogic(c, accountAndFrequentCompanies.get(c.accountId))){
+                if(rule.checkLogic(c, ', accountAndFrequentCompanies.get(c.accountId)')){
                     Account a = new Account(Id = c.accountId, Segment__c = rule.segmento);
                     accountToUpdate.add(a);
                     break;
