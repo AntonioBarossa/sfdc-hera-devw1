@@ -34,7 +34,6 @@ public inherited sharing class HDT_UTL_CreditCheckSales {
                 processObject.nextDataObj = (HDT_UTL_ProcessSales.HDT_WRP_NextDataObj)JSON.deserialize(singleItem.NextStepData__c, HDT_UTL_ProcessSales.HDT_WRP_NextDataObj.class);
                 
                 if(processObject.nextDataObj.orderCompatible){
-                    singleItem.Result__c = processObject.nextDataObj.parentOrderId;
                     parentOrderIdList.add(processObject.nextDataObj.parentOrderId);
                 }
                 System.debug(LoggingLevel.DEBUG, '>>> parentOrderIdList ' + parentOrderIdList);
@@ -54,7 +53,7 @@ public inherited sharing class HDT_UTL_CreditCheckSales {
         orderAnalisiConsMap = new Map<Id, Order>();
 
         List<Order> orderOffCommList = [
-            SELECT Id, ParentOrder__c, processType__c, Phase__c, CancellationReasonDescription__c,
+            SELECT Id, OrderNumber, ParentOrder__c, processType__c, Phase__c, CancellationReasonDescription__c,
                    ServicePoint__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c
             FROM Order
             WHERE ParentOrder__c IN :parentOrderIdList
@@ -107,6 +106,7 @@ public inherited sharing class HDT_UTL_CreditCheckSales {
                 }
 
                 orderToCheck = orderOffCommMap.get(processObject.nextDataObj.parentOrderId);
+                processObject.requestItem.Result__c = orderToCheck.OrderNumber;
 
                 System.debug(LoggingLevel.DEBUG, '>>> createRequestFromOrderId');
                 creditCheckRequest = HDT_UTL_CreditCheck.createRequestFromOrderId(orderToCheck.Id);
