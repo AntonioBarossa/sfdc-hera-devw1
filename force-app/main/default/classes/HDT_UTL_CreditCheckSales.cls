@@ -90,6 +90,7 @@ public inherited sharing class HDT_UTL_CreditCheckSales {
 
         HDT_WS_CreditCheckRequest creditCheckRequest;
         HDT_WS_CreditCheckResponse creditCheckResponse;
+        List<Order> orderToUpdate = new List<Order>();
         Order orderToCheck;
         for(HDT_WRP_ProcessObject processObject : processObjectList){
             try{
@@ -108,16 +109,14 @@ public inherited sharing class HDT_UTL_CreditCheckSales {
 
                 System.debug(LoggingLevel.DEBUG, '>>> createRequestFromOrderId');
                 creditCheckRequest = HDT_UTL_CreditCheck.createRequestFromOrderId(orderToCheck.Id);
-
-                System.debug(LoggingLevel.DEBUG, '>>> callService');
                 creditCheckResponse = HDT_WS_CreditCheck.callService(creditCheckRequest);
 
-                System.debug(LoggingLevel.DEBUG, '>>> creditCheckResponse: ' + creditCheckResponse.statusCode);
-                //System.debug(LoggingLevel.DEBUG, '>>> creditCheckResponse: ' + creditCheckResponse.status);
-
-                if(creditCheckResponse.statusCode != 200){
-                    processObject.requestItem.Status__c = 'Errore';
-                    processObject.requestItem.StatusDescription__c = 'Errore nel web service';
+                if(creditCheckResponse.statusCode != 200 && creditCheckResponse.statusCode != 201){
+                    //processObject.requestItem.Status__c = 'Errore';
+                    //processObject.requestItem.StatusDescription__c = 'Errore nella chiamata al servizio di Credit Check';
+                    //orderToCheck.Phase__c = 'Credit Check KO';
+                    processObject.requestItem.Status__c = 'Chiuso';
+                    orderToUpdate.add(orderToCheck);
                 } else {
                     processObject.requestItem.Status__c = 'Chiuso';
                 }
@@ -131,10 +130,35 @@ public inherited sharing class HDT_UTL_CreditCheckSales {
 
         }
 
+        if(orderToUpdate.size() > 0){
+            update orderToUpdate;
+        }
+
     }
         
     public void updateItems(){
         update itemsToUpdate;
+    }
+
+    public static HDT_WS_Response sendRequest(String namedCredential, String path, String method, HDT_WS_Request request){
+               
+        HTTP http = new Http();
+        HTTPRequest req = new HTTPRequest();
+        HDT_WS_Response resp = new HDT_WS_Response();
+        req.setTimeout(120000); 
+        req.setHeader('Content-type', 'application/json');
+        req.setEndpoint('Callout:' + namedCredential + path);
+        req.setMethod(method);        
+        req.setBody(JSON.serialize(request));
+
+        try{
+            HTTPResponse res = http.send(req);
+            resp.body = res.getBody();
+            resp.statusCode = res.getStatusCode();
+        } catch(Exception e){
+            resp.exceptionMessage = e.getMessage();
+        }
+        return resp;
     }
 
     private class HDT_WRP_ProcessObject {
