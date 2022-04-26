@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AnnulmentManagement__c</fullName>
+    <externalId>false</externalId>
+    <formula>AND (
+				 RecordType.DeveloperName == &quot;HDT_RT_Scarto&quot;,   
+				ISPICKVAL(DiscardCategory__c, &quot;Scarto complesso&quot;), 
+				 NOT(wrts_prcgvr__IsClosed__c),
+					OR(
+				     ISPICKVAL(Case__r.Phase__c , &quot;Ripensamento - Esito KO da SII&quot;) ,
+								ISPICKVAL(Case__r.Phase__c , &quot;Ripensamento - Ammissibilità KO&quot;),
+								ISPICKVAL(Case__r.Phase__c , &quot;Annullamento - Ammissibilità KO&quot;),
+								ISPICKVAL(Case__r.Phase__c , &quot;Annullamento - Esito KO da DL/SII&quot;),
+								ISPICKVAL(Order__r.Phase__c , &quot;Ripensamento - Esito KO da SII&quot;),
+								ISPICKVAL(Order__r.Phase__c , &quot;Ripensamento - Ammissibilità KO&quot;),
+								ISPICKVAL(Order__r.Phase__c , &quot;Annullamento - Ammissibilità KO&quot;),
+								ISPICKVAL(Order__r.Phase__c , &quot;Annullamento - Esito KO da DL/SII&quot;)
+				)	
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Gestione Annullamento Ripensamento</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
