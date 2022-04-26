@@ -435,7 +435,6 @@ public with sharing class HDT_UTL_Account {
             resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
             if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
                 acc.CustomerCode__c = resCreate.data.codiceBP;
-                listToUpdate.add(acc); 
             } // TODO gestire l'errore 
 
             if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) && isAmministratore ){
@@ -443,9 +442,10 @@ public with sharing class HDT_UTL_Account {
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
                 if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
                     cont.ContactCode__c = resCreate.data.codiceBP;
-                    listToUpdate.add(cont); 
                 } // TODO gestire l'errore 
             }
+            listToUpdate.add(acc);
+            listToUpdate.add(cont); 
             HDT_UTL_DatabaseService.updateSObject( listToUpdate ); 
         }
         else

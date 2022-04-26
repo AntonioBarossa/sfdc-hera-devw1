@@ -62,7 +62,7 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
  
              String expectedNewName = String.isBlank(acc.FirstName__c) ? acc.LastName__c : acc.FirstName__c + ' ' + acc.LastName__c;
  
-             if (!acc.Name.equals(expectedNewName)) {
+             if (!acc.Name.equalsIgnoreCase(expectedNewName)) {
                  acc.addError('Il Nome del Cliente deve essere equivalente a \'Nome Cognome\' per clienti Residenziali o \'Cognome/Ragione sociale\' per clienti Aziende.');
              }
          }
