@@ -99,17 +99,19 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
     public override void afterUpdate() {
         HDT_UTL_ActiveServicesKpi.run(Trigger.newMap, Trigger.oldMap);
         Map<Id, ServicePoint__c> spToActivate = new Map<Id, ServicePoint__c>();
+        Set<Id> contractsForSieXiv = new Set<Id>();
         for(Contract c : (List<Contract>)Trigger.new){
             if(c.status=='Attivo' && c.ServicePoint__c!=null && Trigger.oldMap.get(c.id).get('ServicePoint__c')==null){
                 spToActivate.put(c.ServicePoint__c, new ServicePoint__c(Id=c.ServicePoint__c, MeterStatus__c='Attivo'));
+                contractsForSieXiv.add(c.Id);
             }
         }
         if(!spToActivate.isEmpty()){
             HDT_UTL_DatabaseService.updateSObject(spToActivate.values());
+            HDT_SRV_SieXiv sie = new HDT_SRV_SieXiv();
+            sie.initSIE(contractsForSieXiv);
         }
 
-        HDT_SRV_SieXiv sie = new HDT_SRV_SieXiv();
-        sie.initSIE(Trigger.newMap.keySet());
 
        /*list<Contract> newContracts = (List<Contract>) Trigger.New;
        Set<Id> orderToContract = new Set<Id>();
