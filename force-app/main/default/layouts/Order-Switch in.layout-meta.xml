@@ -167,10 +167,6 @@
                 <behavior>Readonly</behavior>
                 <field>PreviousHolderVatNumber__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>VolturaThirdTrader__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

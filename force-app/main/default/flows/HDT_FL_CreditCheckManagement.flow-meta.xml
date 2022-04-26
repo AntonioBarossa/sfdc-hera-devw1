@@ -269,6 +269,31 @@
             <label>Not My Activity</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Errore_Allegare_Documentazione_Obbligatoria</name>
+        <label>Errore &quot;Allegare Documentazione Obbligatoria&quot;?</label>
+        <locationX>1326</locationX>
+        <locationY>1814</locationY>
+        <defaultConnector>
+            <targetReference>Error_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NO</defaultConnectorLabel>
+        <rules>
+            <name>SI</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Flow.FaultMessage</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Allegare Documentazione Obbligatoria</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_0_0_0_0</targetReference>
+            </connector>
+            <label>SI</label>
+        </rules>
+    </decisions>
     <dynamicChoiceSets>
         <name>AuthorisedBy</name>
         <dataType>Picklist</dataType>
@@ -346,7 +371,7 @@
         <locationX>578</locationX>
         <locationY>1694</locationY>
         <faultConnector>
-            <targetReference>Error_0</targetReference>
+            <targetReference>Errore_Allegare_Documentazione_Obbligatoria</targetReference>
         </faultConnector>
         <inputReference>getActivity</inputReference>
     </recordUpdates>
@@ -380,16 +405,32 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Error_0</name>
+        <name>Error_0_0_0</name>
         <label>Error</label>
-        <locationX>1194</locationX>
-        <locationY>1814</locationY>
+        <locationX>1458</locationX>
+        <locationY>1934</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
-            <name>Error_Message_0</name>
+            <name>Error_Message_0_0_0</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(255, 0, 0);&quot;&gt;Durante l&apos;aggiornamento dell&apos;attività si è verificato il seguente problema:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(255, 0, 0);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Error_0_0_0_0</name>
+        <label>Error</label>
+        <locationX>1194</locationX>
+        <locationY>1934</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error_Message_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); font-size: 14px;&quot;&gt;Allegare Documentazione Obbligatoria&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
