@@ -515,6 +515,11 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         tOrder2[0].ProcessType__c = 'Switch in Ripristinatorio';
         Order myOrder = [Select Id from Order where RecordType.Name = 'Order Dossier'];
         tOrder2[0].ParentOrder__c = myOrder.Id;
+        tOrder2[1].VATfacilitationFlag__c=true;
+        tOrder2[1].QuotationType__c='Rapido';
+        tOrder2[1].Commodity__c = 'Gas';
+        tOrder2[1].recordTypeId = utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE;
+        tOrder2[1].ProcessType__c = 'Switch in Ripristinatorio';
         update tOrder2;
 
         HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);

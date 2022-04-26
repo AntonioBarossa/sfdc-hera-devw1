@@ -28,7 +28,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
             
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(3,true,'MMS','MMS Azienda','Aziende SME');
-            
+
             List<ServicePoint__c> points = HDT_UTL_DataFactoryTst.createServicePoint(1,false);
             points[0].RecordTypeId = constants.SERVICEPOINT_RECORDTYPEID_PELETRICCO;
             points[0].Account__c = accs[1].id;
@@ -36,6 +36,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             points[0].isReseller__c = false;
             points[0].ServicePointCode__c = 'codicepunto';
             points[0].MeterStatus__c = 'Bozza';
+            points[0].SapContractStatus__c = 'Attivo';
+            points[0].CommoditySector__c = 'Energia Elettrica';
             insert points;
             
             List<Contract> contracts = HDT_UTL_DataFactoryTst.createContract(1,false,accs[0].id);
@@ -53,6 +55,9 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             orders[0].IsWinback__c = false;
             orders[0].ContractReference__c = contracts[0].id;
             orders[0].SAPImplantCode__c = '';
+            orders[0].isSTG__c=false;
+            orders[0].IsVas__c = false;
+            orders[0].VasSubtype__c = '	HERA LED 1 KIT V2';
             insert orders;
             
             List<Order> childOrders =  HDT_UTL_DataFactoryTst.createChildOrder(2, false, accs[0].id, sales, orders[0].id, null);
@@ -62,6 +67,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             childOrders[0].OutgoingCreditCheckResult__c = 'test';
             childOrders[0].CreditCheckDescription__c = 'test description';
             childOrders[0].VasSubtype__c = 'Analisi consumi';
+            childOrders[0].isSTG__c=false;
             insert childOrders;
             
             List<SBQQ__Quote__c> quotes = HDT_UTL_DataFactoryTst.createQuote(1, false, orders[0].id, null, null, 'Quote');
@@ -89,6 +95,32 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             
             HDT_UTL_DataFactoryTst.createAccountContactRelation(true, accs[0].id, contacts[0].id);
 
+            ProcessMatrix__c processObj = new ProcessMatrix__c();
+            processObj.Name = 'test1';
+            processObj.Commodity__c = '	Energia Elettrica';
+            processObj.ContractStatus__c = 'Attivo';
+            processObj.CasualCode__c = '';
+            //processObj.CreatedById = '';
+            processObj.ExistActivityDatiDiscordanti__c = false;
+            processObj.ExistActivitySwitchRipristinatorio__c = false;
+            processObj.IsAmendment__c = false;
+            processObj.IsChangeUse__c = false;
+            processObj.isOwnAccount__c = 'No';
+            processObj.IsReseller__c = false;
+            processObj.IsSameAccount__c = false;
+            processObj.isSTG__c = false;
+            processObj.OngoingSwitchOut__c = false;
+            //processObj.OwnerId = '';
+            processObj.PlugPresence__c = true;
+            processObj.PowerChange__c = true;
+            processObj.ProcessName__c = 'Prima Attivazione con modifica';
+            processObj.RecordTypeName__c = 'HDT_RT_TemporaneaNuovaAtt';
+            processObj.marketOrigin__c='Libero';
+
+            List<ProcessMatrix__c> allProcess = new List<ProcessMatrix__c>();
+            allProcess.add(processObj);
+            insert allProcess;
+           
         }
      }
     
@@ -113,7 +145,9 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                         ServicePoint__r.isReseller__c,
                         IsVas__c,
                         VasSubtype__c,
-                        ServicePoint__r.SapContractStatus__c
+                        ServicePoint__r.SapContractStatus__c,
+                        ServicePoint__r.CommoditySector__c,
+                        isSTG__c
                         From Order
                         WHERE Name = 'testOrderName0'];
         
@@ -124,8 +158,6 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         
         Test.stopTest();
 
-        System.debug('@@@ processList processName__c '+processesList[0].processName__c);
-        
         System.assertEquals('Prima Attivazione con modifica', processesList[0].processName__c, 'init did not work correctly');
         System.assertNotEquals(null, processesList, 'init did not work correctly');
         
@@ -137,7 +169,6 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         Order ord = [Select id,
                         ServicePoint__c,
                         VoltageLevel__c,
-                        AccountId,
                         MarketOrigin__c,
                         PowerRequested__c,
                         PowerCommitted__c,
@@ -152,7 +183,9 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                         SBQQ__Quote__r.AmendmentAllowed__c, 
                         ServicePoint__r.isReseller__c,
                         CommodityFormula__c,
-                        SupplyCity__c
+                        SupplyCity__c,
+                     	AccountId,
+                     	Account.RecordType.DeveloperName
                         From Order
                         WHERE Name = 'testOrderName0'];
         
@@ -167,7 +200,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                                        From ServiceRequest__c];
         
         Map<String,String> selectedProcessObject = new Map<String,String>();
-        selectedProcessObject.put('recordType','HDT_RT_Voltura');
+        selectedProcessObject.put('RecordTypeName__c','HDT_RT_Voltura');
         selectedProcessObject.put('processType','Prima Attivazione');
         selectedProcessObject.put('processCode','somecode');
         Map<String,String> extraParams = new Map<String,String>();
@@ -206,7 +239,9 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                          SBQQ__Quote__r.AllowChangeUse__c,
                          SBQQ__Quote__r.AmendmentAllowed__c, 
                          ServicePoint__r.isReseller__c,
-                         CommodityFormula__c
+                         CommodityFormula__c,
+                     	 Account.RecordType.DeveloperName,
+                         SupplyCity__c                          
                          From Order
                          WHERE Name = 'testOrderName0'];
             
@@ -224,7 +259,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             srRequest.ServicePoint__c = null;
             
             Map<String,String> selectedProcessObject = new Map<String,String>();
-            selectedProcessObject.put('recordType','HDT_RT_Voltura');
+            selectedProcessObject.put('RecordTypeName__c','HDT_RT_Voltura');
             selectedProcessObject.put('processType','Prima Attivazione');
             selectedProcessObject.put('processCode','somecode');
             Map<String,String> extraParams = new Map<String,String>();
@@ -262,7 +297,9 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      ServicePoint__r.RecordType.DeveloperName,
                      SBQQ__Quote__r.AllowChangeUse__c,
                      SBQQ__Quote__r.AmendmentAllowed__c, 
-                     ServicePoint__r.isReseller__c
+                     ServicePoint__r.isReseller__c,
+                     Account.RecordType.DeveloperName,
+                     CommodityFormula__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -280,7 +317,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         srRequest.ServicePoint__c = null;
         
         Map<String,String> selectedProcessObject = new Map<String,String>();
-        selectedProcessObject.put('recordType','HDT_RT_Default');
+        selectedProcessObject.put('RecordTypeName__c','HDT_RT_Default');
         selectedProcessObject.put('processType','Prima Attivazione');
         selectedProcessObject.put('processCode','somecode');
         Map<String,String> extraParams = new Map<String,String>();
@@ -319,7 +356,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      SBQQ__Quote__r.AmendmentAllowed__c, 
                      ServicePoint__r.isReseller__c,
                      CommodityFormula__c,
-                     SupplyCity__c
+                     SupplyCity__c,
+                     Account.RecordType.DeveloperName
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -337,7 +375,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         srRequest.ServicePoint__c = null;
         
         Map<String,String> selectedProcessObject = new Map<String,String>();
-        selectedProcessObject.put('recordType','HDT_RT_VolturaConSwitch');
+        selectedProcessObject.put('RecordTypeName__c','HDT_RT_VolturaConSwitch');
         selectedProcessObject.put('processType','Prima Attivazione');
         selectedProcessObject.put('processCode','somecode');
         Map<String,String> extraParams = new Map<String,String>();
@@ -374,7 +412,9 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      ServicePoint__r.RecordType.DeveloperName,
                      SBQQ__Quote__r.AllowChangeUse__c,
                      SBQQ__Quote__r.AmendmentAllowed__c, 
-                     ServicePoint__r.isReseller__c
+                     ServicePoint__r.isReseller__c,
+                     Account.RecordType.DeveloperName,
+                     CommodityFormula__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -392,7 +432,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         srRequest.ServicePoint__c = null;
        
         Map<String,String> selectedProcessObject = new Map<String,String>();
-        selectedProcessObject.put('recordType','HDT_RT_TemporaneaNuovaAtt');
+        selectedProcessObject.put('RecordTypeName__c','HDT_RT_TemporaneaNuovaAtt');
         selectedProcessObject.put('processType','Prima Attivazione');
         selectedProcessObject.put('processCode','somecode');
         Map<String,String> extraParams = new Map<String,String>();
@@ -438,7 +478,9 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      ServicePoint__r.RecordType.DeveloperName,
                      SBQQ__Quote__r.AllowChangeUse__c,
                      SBQQ__Quote__r.AmendmentAllowed__c, 
-                     ServicePoint__r.isReseller__c
+                     ServicePoint__r.isReseller__c,
+                     Account.RecordType.DeveloperName,
+                     CommodityFormula__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -456,7 +498,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         srRequest.ServicePoint__c = null;
        
         Map<String,String> selectedProcessObject = new Map<String,String>();
-        selectedProcessObject.put('recordType','HDT_RT_Default');
+        selectedProcessObject.put('RecordTypeName__c','HDT_RT_Default');
         selectedProcessObject.put('processType','Switch in Ripristinatorio');
         selectedProcessObject.put('processCode','somecode');
         Map<String,String> extraParams = new Map<String,String>();
@@ -524,7 +566,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
     static void testCheckContendibilita(){
 
         //setup
-        Order ord = [SELECT SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c, SalesCompanyCode__c, DistributorCode__c, CommodityFormula__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
+        Order ord = [SELECT SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c, SalesCompanyCode__c, DistributorCode__c, CommodityFormula__c,DistributorFormula__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
+
 
         //mock webservice call
         HttpResponse res = new HttpResponse();
@@ -537,6 +580,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         Test.startTest();
 
         Map<String, Object> resultMap = HDT_LC_ChildOrderProcessPrecheck.checkContendibilita(ord);
+        System.debug('@@@ resultMap.get: ' + resultMap);
 
         //assertions
         System.assertEquals(true , resultMap.get('ESITO'), 'Esito != true');
@@ -550,7 +594,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
     static void testCheckContendibilitaErrorFromHeroku(){
 
         //setup
-        Order ord = [SELECT SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c, SalesCompanyCode__c, DistributorCode__c, CommodityFormula__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
+        Order ord = [SELECT DistributorFormula__c,SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c, SalesCompanyCode__c, DistributorCode__c, CommodityFormula__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
 
         //mock webservice call
         HttpResponse res = new HttpResponse();
@@ -575,7 +619,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
     static void testCheckContendibilitaErrorBypassFromHeroku(){
 
         //setup
-        Order ord = [SELECT SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c, SalesCompanyCode__c, DistributorCode__c, CommodityFormula__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
+        Order ord = [SELECT DistributorFormula__c,SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c, SalesCompanyCode__c, DistributorCode__c, CommodityFormula__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
 
         //mock webservice call
         HttpResponse res = new HttpResponse();
