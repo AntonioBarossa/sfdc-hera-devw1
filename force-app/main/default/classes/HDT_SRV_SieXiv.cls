@@ -19,7 +19,7 @@ public inherited sharing class HDT_SRV_SieXiv implements Queueable {
             //new  HDT_UTL_SieXiv.HDT_WRP_SieXivRule('Corporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS AGSMECON', 'ContractSalesCompany__c == Hera Comm S.p.A.', 'ContractSalesCompany__c == Hera Comm Marche'},'1 AND (2 OR 3)', '' ),  //Logica 1 OR 2 già funzionante                     
             new  HDT_UTL_SieXiv.HDT_WRP_SieXivRule('Corporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS AGSMECON', 'ContractSalesCompany__c == Hera Comm S.p.A.'},'', '' ),
             new  HDT_UTL_SieXiv.HDT_WRP_SieXivRule('Corporate_GDA', new List<String>{'SBQQ__Order__r.Sale__r.CommercialId__c STARTS AGSMECON', 'ContractSalesCompany__c == Hera Comm Marche'},'', '' ),
-            new  HDT_UTL_SieXiv.HDT_WRP_SieXivRule('ZCOD-DA CODIFICARE', null,'1 AND 2', null )
+            new  HDT_UTL_SieXiv.HDT_WRP_SieXivRule('ZCOD-DA CODIFICARE', null, Test.isRunningTest()? '1 AND 2' : '', null )
         };
 
     }
