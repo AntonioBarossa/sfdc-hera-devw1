@@ -25,6 +25,7 @@ public inherited sharing class HDT_UTL_Case {
         String salesCompany = inputs[0].salesCompany;
         Case currentCase = inputs[0].currentCase;
         String cancellationNote = inputs[0].cancellationNote;
+        String inputString = inputs[0].genericInputString;
         
         
 
@@ -87,6 +88,21 @@ public inherited sharing class HDT_UTL_Case {
         else if(process.equalsIgnoreCase('CheckIsCommunity')){
             output.isCommunity = HDT_LC_SellingWizardController.checkCommunityLogin();
         }
+        else if(process.equalsIgnoreCase('getServicePointFromContract'))
+        {
+            List<String> contractCodes = inputString.split(';');
+            System.debug(loggingLevel.DEBUG, contractCodes);
+            List<Contract> contractList = [SELECT ServicePoint__c FROM Contract WHERE SAPContractCode__c IN :contractCodes WITH SECURITY_ENFORCED];
+            output.servicePointId = new List<String>();
+            for(Contract contr : contractList)
+            {
+                if(!output.servicePointId.contains(contr.ServicePoint__c))
+                {
+                    output.servicePointId.add(contr.ServicePoint__c);
+                }
+            }
+            output.count = output.servicePointId.size();
+        }
 
 
         outputs.add(output);
@@ -114,6 +130,8 @@ public inherited sharing class HDT_UTL_Case {
         public Case currentCase;
         @InvocableVariable
         public String cancellationNote;
+        @InvocableVariable
+        public String genericInputString;
 
 
     }
@@ -138,6 +156,10 @@ public inherited sharing class HDT_UTL_Case {
         public Boolean isCommunity;
         @InvocableVariable
         public String atecoCode;
+        @InvocableVariable
+        public List<String> servicePointId;
+        @InvocableVariable
+        public Integer count;
 
     }
 
