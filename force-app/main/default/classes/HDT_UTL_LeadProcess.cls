@@ -18,8 +18,7 @@ public with sharing class HDT_UTL_LeadProcess {
         Map<String,String> mapRequestFields = new Map<String,String>();
         Id leadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('HDT_RT_Main').getRecordTypeId();
        // System.debug('PROVA WSFORM');
-        if (request.objects.get(0).fields.get(0) != null) {
-            
+       if (request != null && request.objects != null && request.objects.get(0) != null && request.objects.get(0).fields.get(0) != null) {            
             for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
                 if(mapRequestFields.get(field.name) == null){
                     mapRequestFields.put(field.name,field.value);
@@ -202,8 +201,7 @@ public with sharing class HDT_UTL_LeadProcess {
         Id leadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('HDT_RT_Main').getRecordTypeId();
 
         Map<String,String> mapRequestFields = new Map<String,String>();
-        if (request.objects.get(0).fields.get(0) != null) {
-            
+        if (request != null && request.objects != null && request.objects.get(0) != null && request.objects.get(0).fields.get(0) != null) {            
             for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
                 if(mapRequestFields.get(field.name) == null){
                     mapRequestFields.put(field.name,field.value);
@@ -376,8 +374,7 @@ public with sharing class HDT_UTL_LeadProcess {
 
         Map<String,String> mapRequestFields = new Map<String,String>();
         
-        if (request.objects.get(0).fields.get(0) != null) {
-            
+        if (request != null && request.objects != null && request.objects.get(0) != null && request.objects.get(0).fields.get(0) != null) {            
             for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
                 if(mapRequestFields.get(field.name) == null){
                     mapRequestFields.put(field.name,field.value);
@@ -556,8 +553,7 @@ public with sharing class HDT_UTL_LeadProcess {
 
         Map<String,String> mapRequestFields = new Map<String,String>();
         
-        if (request.objects.get(0).fields.get(0) != null) {
-            
+        if (request != null && request.objects != null && request.objects.get(0) != null && request.objects.get(0).fields.get(0) != null) {            
             for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
                 if(mapRequestFields.get(field.name) == null){
                     mapRequestFields.put(field.name,field.value);
@@ -744,8 +740,7 @@ public with sharing class HDT_UTL_LeadProcess {
 
         Map<String,String> mapRequestFields = new Map<String,String>();
         
-        if (request.objects.get(0).fields.get(0) != null) {
-            
+        if (request != null && request.objects != null && request.objects.get(0) != null && request.objects.get(0).fields.get(0) != null) {            
             for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
                 if(mapRequestFields.get(field.name) == null){
                     mapRequestFields.put(field.name,field.value);

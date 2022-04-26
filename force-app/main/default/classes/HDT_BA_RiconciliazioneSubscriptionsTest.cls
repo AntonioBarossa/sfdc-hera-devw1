@@ -84,22 +84,24 @@ public with sharing class HDT_BA_RiconciliazioneSubscriptionsTest {
             
             insert subs;
             insert subs2;
-            
+  
         }
     }
 
     @IsTest
     public static void rincociliaSubscription(){
         List<SBQQ__Subscription__c> subs = [select Id,SBQQ__Contract__c,SBQQ__Contract__r.SAPContractCode__c, SBQQ__Contract__r.OldContractMoMi__c from SBQQ__Subscription__c where  SBQQ__Contract__r.OldContractMoMi__c != null and SBQQ__Product__r.Family = 'Offerta commerciale' and CreatedDate >= TODAY];
-        List<SBQQ__Subscription__c> subs2=[SELECT Id,SBQQ__Contract__r.OldContractMoMi__c,SBQQ__Contract__r.SAPContractCode__c, CompanyOwner__c ,PaymentMode__c ,DurationVas__c ,DwellingType__c ,EmailRecipientVAS__c ,KeepConsumptionsAnalysis__c ,OccupantsNumber__c ,OwnerAC__c ,RecordTypeId ,SBQQ__Account__c ,SBQQ__BundledQuantity__c ,SBQQ__Contract__c ,SBQQ__CustomerPrice__c ,SBQQ__ListPrice__c ,SBQQ__NetPrice__c ,SBQQ__Number__c ,SBQQ__OptionLevel__c ,SBQQ__OptionType__c ,SBQQ__PricingMethod__c ,SBQQ__Product__c ,SBQQ__ProductOption__c ,SBQQ__ProductSubscriptionType__c ,SBQQ__ProrateMultiplier__c ,SBQQ__Quantity__c ,SBQQ__RenewalQuantity__c ,SBQQ__RequiredByProduct__c ,SBQQ__RootId__c ,SBQQ__SubscriptionEndDate__c ,SBQQ__SubscriptionStartDate__c ,SBQQ__SubscriptionType__c ,ServicePoint__c ,Surface__c ,VasActivationDate__c FROM SBQQ__Subscription__c where SBQQ__Product__r.Family like 'VAS%'];
+        List<SBQQ__Subscription__c> subS2=[SELECT Id,SBQQ__Contract__r.OldContractMoMi__c,SBQQ__Contract__r.SAPContractCode__c, CompanyOwner__c ,PaymentMode__c ,DurationVas__c ,DwellingType__c ,EmailRecipientVAS__c ,KeepConsumptionsAnalysis__c ,OccupantsNumber__c ,OwnerAC__c ,RecordTypeId ,SBQQ__Account__c ,SBQQ__BundledQuantity__c ,SBQQ__Contract__c ,SBQQ__CustomerPrice__c ,SBQQ__ListPrice__c ,SBQQ__NetPrice__c ,SBQQ__Number__c ,SBQQ__OptionLevel__c ,SBQQ__OptionType__c ,SBQQ__PricingMethod__c ,SBQQ__Product__c ,SBQQ__ProductOption__c ,SBQQ__ProductSubscriptionType__c ,SBQQ__ProrateMultiplier__c ,SBQQ__Quantity__c ,SBQQ__RenewalQuantity__c ,SBQQ__RequiredByProduct__c ,SBQQ__RootId__c ,SBQQ__SubscriptionEndDate__c ,SBQQ__SubscriptionStartDate__c ,SBQQ__SubscriptionType__c ,ServicePoint__c ,Surface__c ,VasActivationDate__c FROM SBQQ__Subscription__c where SBQQ__Product__r.Family like 'VAS%'];
+
         Test.startTest();
-        Database.executeBatch(new HDT_BA_RiconciliazioneSubscriptions());
+        Test.setMock(HttpCalloutMock.class, new HDT_BA_RiconciliazioneSubscriptionsMock());
+        HDT_BA_RiconciliazioneSubscriptions baRiconcSubscr = new HDT_BA_RiconciliazioneSubscriptions('prova');
+        Database.executeBatch(baRiconcSubscr);
         Test.stopTest();
 
         subs2=[SELECT Id,SBQQ__Contract__r.OldContractMoMi__c,SBQQ__Contract__r.SAPContractCode__c, CompanyOwner__c ,PaymentMode__c ,DurationVas__c ,DwellingType__c ,EmailRecipientVAS__c ,KeepConsumptionsAnalysis__c ,OccupantsNumber__c ,OwnerAC__c ,RecordTypeId ,SBQQ__Account__c ,SBQQ__BundledQuantity__c ,SBQQ__Contract__c ,SBQQ__CustomerPrice__c ,SBQQ__ListPrice__c ,SBQQ__NetPrice__c ,SBQQ__Number__c ,SBQQ__OptionLevel__c ,SBQQ__OptionType__c ,SBQQ__PricingMethod__c ,SBQQ__Product__c ,SBQQ__ProductOption__c ,SBQQ__ProductSubscriptionType__c ,SBQQ__ProrateMultiplier__c ,SBQQ__Quantity__c ,SBQQ__RenewalQuantity__c ,SBQQ__RequiredByProduct__c ,SBQQ__RootId__c ,SBQQ__SubscriptionEndDate__c ,SBQQ__SubscriptionStartDate__c ,SBQQ__SubscriptionType__c ,ServicePoint__c ,Surface__c ,VasActivationDate__c FROM SBQQ__Subscription__c where SBQQ__Product__r.Family like 'VAS%'];
 
-        System.assertEquals(subs.size()*2, subs2.size(), 'Cloned');
-
+        System.assertEquals(subs.size()*2, subS2.size(), 'Cloned');
 
     }
 
