@@ -34,6 +34,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
             cmpList[0].MacroActivityEasyCIM__c = maeC.Id;
             cmpList[0].Category__c = 'Campagna Outbound';
             cmpList[0].Channel__c = 'Bolletta';
+            cmpList[0].ReitekIntegrationTechnology__c ='Web Service';
             cmpList[1].Name = 'LEAD WINBACK';
             cmpList[1].AssignmentType__c = 'Manuale';
             cmpList[1].MacroActivityEasyCIM__c = maeC.Id;
@@ -66,7 +67,12 @@ public with sharing class HDT_UTL_LeadProcessTst {
             field.name = 'COMPANYOWNER';
             field.value = 'MMS';
             fieldList.add(field);
-
+			
+            field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
+            field.name = 'NOMEMACROACTIVITYEASYCIM';
+            field.value = 'maeTest';
+            fieldList.add(field);
+            
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
             field.name = 'CELLULARE';
             field.value = '981516381';
@@ -298,7 +304,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
             System.assertNotEquals(true, mrrResponseLeadProcess.objects.isEmpty(), 'Response empty');
         }
     }
-    /* CANNOT COVER LINES 179-189 (System.NullPointerException: Attempt to de-reference a null object)
+    
     @isTest
     public static void testFormCallbackRequestObjectsEmpty() {
  
@@ -311,7 +317,8 @@ public with sharing class HDT_UTL_LeadProcessTst {
             Test.startTest();
 
             HDT_WRP_MrrRequest.HDT_WRP_Request request = new HDT_WRP_MrrRequest.HDT_WRP_Request();
-            
+            request.objects = null;
+
             HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
             mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>();
 
@@ -332,7 +339,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
             System.assertEquals(false, mrrResponseLeadProcess.objects.isEmpty(), 'Response filled');
             System.assertNotEquals(true, mrrResponseLeadProcess.objects.isEmpty(), 'Response empty');
         }
-    } */
+    }
 
     @isTest
     public static void testFormWinback() {
@@ -350,6 +357,11 @@ public with sharing class HDT_UTL_LeadProcessTst {
             
             field.name = 'COMPANYOWNER';
             field.value = 'MMS';
+            fieldList.add(field);
+
+            field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
+            field.name = 'NOMEMACROACTIVITYEASYCIM';
+            field.value = 'maeTest';
             fieldList.add(field);
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
@@ -584,7 +596,6 @@ public with sharing class HDT_UTL_LeadProcessTst {
         }
     }
 
-    /* CANNOT COVER LINES 347-357 (System.NullPointerException: Attempt to de-reference a null object)
     @isTest
     public static void testFormWinbackRequestObjectsEmpty() {
  
@@ -597,6 +608,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
             Test.startTest();
 
             HDT_WRP_MrrRequest.HDT_WRP_Request request = new HDT_WRP_MrrRequest.HDT_WRP_Request();
+            request.objects = null;
             
             HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
             mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>();
@@ -618,7 +630,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
             System.assertEquals(false, mrrResponseLeadProcess.objects.isEmpty(), 'Response filled');
             System.assertNotEquals(true, mrrResponseLeadProcess.objects.isEmpty(), 'Response empty');
         }
-    } */
+    }
 
     @isTest
     public static void testFormCaricBoll() {
@@ -636,6 +648,11 @@ public with sharing class HDT_UTL_LeadProcessTst {
             
             field.name = 'COMPANYOWNER';
             field.value = 'MMS';
+            fieldList.add(field);
+
+            field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
+            field.name = 'NOMEMACROACTIVITYEASYCIM';
+            field.value = 'maeTest';
             fieldList.add(field);
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
@@ -875,7 +892,6 @@ public with sharing class HDT_UTL_LeadProcessTst {
         }
     }
 
-    /* CANNOT COVER LINES 523-533 (System.NullPointerException: Attempt to de-reference a null object)
     @isTest
     public static void testFormCaricBollRequestObjectsEmpty() {
  
@@ -888,6 +904,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
             Test.startTest();
 
             HDT_WRP_MrrRequest.HDT_WRP_Request request = new HDT_WRP_MrrRequest.HDT_WRP_Request();
+            request.objects = null;
             
             HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
             mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>();
@@ -909,7 +926,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
             System.assertEquals(false, mrrResponseLeadProcess.objects.isEmpty(), 'Response filled');
             System.assertNotEquals(true, mrrResponseLeadProcess.objects.isEmpty(), 'Response empty');
         }
-    } */
+    }
 
     @isTest
     public static void testFormHvac() {
@@ -927,6 +944,11 @@ public with sharing class HDT_UTL_LeadProcessTst {
             
             field.name = 'COMPANYOWNER';
             field.value = 'MMS';
+            fieldList.add(field);
+
+            field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
+            field.name = 'NOMEMACROACTIVITYEASYCIM';
+            field.value = 'maeTest';
             fieldList.add(field);
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
@@ -1191,7 +1213,6 @@ public with sharing class HDT_UTL_LeadProcessTst {
         }
     }
 
-    /* CANNOT COVER LINES 706-716 (System.NullPointerException: Attempt to de-reference a null object)
     @isTest
     public static void testFormHvacRequestObjectsEmpty() {
  
@@ -1204,6 +1225,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
             Test.startTest();
 
             HDT_WRP_MrrRequest.HDT_WRP_Request request = new HDT_WRP_MrrRequest.HDT_WRP_Request();
+            request.objects = null;
             
             HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
             mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>();
@@ -1225,7 +1247,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
             System.assertEquals(false, mrrResponseLeadProcess.objects.isEmpty(), 'Response filled');
             System.assertNotEquals(true, mrrResponseLeadProcess.objects.isEmpty(), 'Response empty');
         }
-    } */
+    }
 
     @isTest
     public static void testFormSol() {
@@ -1243,6 +1265,11 @@ public with sharing class HDT_UTL_LeadProcessTst {
             
             field.name = 'COMPANYOWNER';
             field.value = 'MMS';
+            fieldList.add(field);
+
+            field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
+            field.name = 'NOMEMACROACTIVITYEASYCIM';
+            field.value = 'maeTest';
             fieldList.add(field);
 
             field = new HDT_WRP_MrrRequest.HDT_WRP_Field();
@@ -1512,7 +1539,6 @@ public with sharing class HDT_UTL_LeadProcessTst {
         }
     }
 
-    /* CANNOT COVER LINES 893-903 (System.NullPointerException: Attempt to de-reference a null object)
     @isTest
     public static void testFormSolRequestObjectsEmpty() {
  
@@ -1525,6 +1551,7 @@ public with sharing class HDT_UTL_LeadProcessTst {
             Test.startTest();
 
             HDT_WRP_MrrRequest.HDT_WRP_Request request = new HDT_WRP_MrrRequest.HDT_WRP_Request();
+            request.objects = null;
             
             HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
             mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>();
@@ -1546,5 +1573,5 @@ public with sharing class HDT_UTL_LeadProcessTst {
             System.assertEquals(false, mrrResponseLeadProcess.objects.isEmpty(), 'Response filled');
             System.assertNotEquals(true, mrrResponseLeadProcess.objects.isEmpty(), 'Response empty');
         }
-    } */
+    }
 }

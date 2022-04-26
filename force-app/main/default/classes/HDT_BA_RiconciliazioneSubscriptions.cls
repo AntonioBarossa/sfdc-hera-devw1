@@ -32,26 +32,8 @@ public with sharing class HDT_BA_RiconciliazioneSubscriptions implements Databas
         
     }
     public void finish(Database.BatchableContext bc){
-        if(String.isNotBlank(runId)){
-            JSONGenerator gen = JSON.createGenerator(true);
-            gen.writeStartObject();
-            gen.writeStringField('runId', runId);
-            gen.writeStringField('status', 'success');
-            gen.writeStringField('resultDescription', 'success');
-            gen.writeEndObject();
-            String pretty = gen.getAsString();
-    
-            HttpRequest req = new HttpRequest();
-            req.setEndpoint('Callout:MulesoftBasePath'+'/jobs/outcomes');
-            req.setMethod('POST');
-            req.setBody(pretty);
-            req.setTimeout(120000);
-            req.setHeader('Accept', 'application/json');
-            req.setHeader('Content-Type', 'application/json');
-            Http http = new Http();
-            HTTPResponse res = http.send(req);
-        }
-        
+        HDT_QBL_RunBatch runJob = new HDT_QBL_RunBatch(runId);
+        System.enqueueJob(runJob);
 
     }
     
