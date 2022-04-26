@@ -9,8 +9,8 @@ public inherited sharing  class  HDT_UTL_SieXiv {
     private static final String STRING_INDENTED_PATTERN = '\\(([^()]*?)\\)';
     private static final String STRING_LOGIC_PATTERN = '((\\d|true|false)([\\s]+(AND)[\\s]+(\\d|true|false))+)|((\\d|true|false)([\\s]+(OR)[\\s]+(\\d|true|false))+)';
     //group 4 contiene il logic gate, 
-    private static final Pattern indentedPattern = Pattern.compile(STRING_INDENTED_PATTERN);
-    private static final Pattern logicPattern = Pattern.compile(STRING_LOGIC_PATTERN);
+    private static final Pattern INDENTED_PATTERN = Pattern.compile(STRING_INDENTED_PATTERN);
+    private static final Pattern LOGIC_PATTERN = Pattern.compile(STRING_LOGIC_PATTERN);
 
     private static final Pattern PATTERN_BOOLEAN = Pattern.compile('true|false');
 
@@ -41,11 +41,11 @@ public inherited sharing  class  HDT_UTL_SieXiv {
         private boolean checkDynamicLogic(SObject obj){
             String stringReplaceLogic=this.logic;
             Boolean result = true;
-            Matcher match = indentedPattern.matcher(this.logic);
+            Matcher match = INDENTED_PATTERN.matcher(this.logic);
             while(match.find()){
                 //system.debug('external1 '+match.group(0)+' '+match.group(1));
                 
-                Matcher logicMatch = logicPattern.matcher(match.group(0));
+                Matcher logicMatch = LOGIC_PATTERN.matcher(match.group(0));
                 while(logicMatch.find()){
                         String gate =String.isNotBlank(logicMatch.group(4))? logicMatch.group(4) : logicMatch.group(9);
                         //system.debug('internal '+logicMatch.group(0)+' '+gate);//gruppo 4 (and) o 9 (or)
@@ -58,10 +58,10 @@ public inherited sharing  class  HDT_UTL_SieXiv {
                         // gate invece contiene l'operatore (and o or) della catena
                     
                         //system.debug(logicMatch.replaceFirst(stringReplaceLogic));
-                        logicMatch=logicPattern.matcher(logicMatch.replaceFirst(stringReplaceLogic));
+                        logicMatch=LOGIC_PATTERN.matcher(logicMatch.replaceFirst(stringReplaceLogic));
                 }
                 stringReplaceLogic = match.replaceFirst(stringReplaceLogic);
-                match=indentedPattern.matcher(stringReplaceLogic);
+                match=INDENTED_PATTERN.matcher(stringReplaceLogic);
                 //system.debug(stringReplaceLogic);
                 //match=indentedPattern.matcher(logicString);
             }
@@ -70,7 +70,7 @@ public inherited sharing  class  HDT_UTL_SieXiv {
             //non mi resta che fare un ultimo match - while con il pattern logico
             //system.debug(stringReplaceLogic);
 
-            match=logicPattern.matcher(stringReplaceLogic);
+            match=LOGIC_PATTERN.matcher(stringReplaceLogic);
             while(match.find()){
                 String gate =String.isNotBlank(match.group(4))? match.group(4) : match.group(9);
                 //system.debug('internal '+match.group(0)+' '+gate);//gruppo 4 (and) o 9 (or)
@@ -82,7 +82,7 @@ public inherited sharing  class  HDT_UTL_SieXiv {
                 // operator invece contiene l'operatore (and o or) della catena
                 
                 //system.debug(match.replaceFirst(stringReplaceLogic));
-                match=logicPattern.matcher(match.replaceFirst(stringReplaceLogic));
+                match=LOGIC_PATTERN.matcher(match.replaceFirst(stringReplaceLogic));
             }
             return result;
         }
