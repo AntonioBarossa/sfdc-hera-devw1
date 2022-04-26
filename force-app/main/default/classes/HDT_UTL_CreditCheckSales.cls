@@ -34,11 +34,12 @@ public inherited sharing class HDT_UTL_CreditCheckSales {
                 processObject.nextDataObj = (HDT_UTL_ProcessSales.HDT_WRP_NextDataObj)JSON.deserialize(singleItem.NextStepData__c, HDT_UTL_ProcessSales.HDT_WRP_NextDataObj.class);
                 
                 if(processObject.nextDataObj.orderCompatible){
+                    singleItem.Result__c = processObject.nextDataObj.parentOrderId;
                     parentOrderIdList.add(processObject.nextDataObj.parentOrderId);
                 }
                 System.debug(LoggingLevel.DEBUG, '>>> parentOrderIdList ' + parentOrderIdList);
             }
-
+            
             processObject.requestItem = singleItem;
         }
         processObjectList.add(processObject);
