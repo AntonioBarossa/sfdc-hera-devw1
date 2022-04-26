@@ -569,15 +569,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 							}
 						}
 						// TODO: gestire radio button per istanza 326
-						for(Sobject childOrder : orderList){
-							childOrder.put('CIAccoutn__c','Validato');
-							String leggeOtt = (String)childOrder.get('DocumentLow80__c');
-							String istanza = (String)childOrder.get('Instance326__c');
-							if((String.isBlank(leggeOtt) || (String.isNotBlank(leggeOtt) && leggeOtt.equalsIgnoreCase('Validato'))) && 
-							(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))){
-								childOrder.put('Phase__c','Documentazione Validata');
-							}
-						}
+						
 					}
 				}
 				try {
@@ -593,8 +585,23 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					if (!activitiesToCreate.isEmpty()){
 						HDT_UTL_DatabaseService.insertSObject(activitiesToCreate);
 					}
-					if(!orderList.isEmpty()){
-						HDT_UTL_DatabaseService.updateSObject(orderList);
+					List<Order> childToUpdate = new List<Order>();
+					for(Sobject childOrder : orderList){
+						Order singleOrder = new Order();
+						singleOrder.Id = childOrder.Id;
+						singleOrder.CIAccoutn__c = 'Validato';
+						singleOrder.DocumentLow80__c = (String)childOrder.get('DocumentLow80__c');
+						singleOrder.Instance326__c = (String)childOrder.get('Instance326__c');
+						String leggeOtt = (String)childOrder.get('DocumentLow80__c');
+						String istanza = (String)childOrder.get('Instance326__c');
+						if((String.isBlank(leggeOtt) || (String.isNotBlank(leggeOtt) && leggeOtt.equalsIgnoreCase('Validato'))) && 
+						(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))){
+							singleOrder.Phase__c = 'Documentazione Validata';
+						}
+						childToUpdate.add(singleOrder);
+					}
+					if(!childToUpdate.isEmpty()){
+						HDT_UTL_DatabaseService.updateSObject(childToUpdate);
 					}
 					
 				}catch(Exception ex){
