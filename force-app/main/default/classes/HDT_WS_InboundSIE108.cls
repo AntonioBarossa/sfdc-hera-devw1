@@ -34,7 +34,7 @@ global with sharing class HDT_WS_InboundSIE108 {
             // build empty result
             reqClassResult.elements = new List<HDT_UTL_ServiceTwentySix.HDT_WRP_Position>();
         }
-        
+        reqClassResult.elements = (reqClassResult.elements == null) ? new List<HDT_UTL_ServiceTwentySix.HDT_WRP_Position>() : reqClassResult.elements;
         // Mapping Output      
         for(HDT_UTL_ServiceTwentySix.HDT_WRP_Position element : reqClassResult.elements){ 
             List<String> positionsInFile = SIE108MAPPINGFIELDS.get(element.field);

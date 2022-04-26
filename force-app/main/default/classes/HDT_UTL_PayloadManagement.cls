@@ -130,8 +130,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 i++;
             }
             if(iva > 0){
-                amountWithIva = amountNoIva + ((amountNoIva*100)/iva);
-                fixedAmountWithIva = fixedAmountNoIva + ((fixedAmountNoIva*100)/iva);
+                amountWithIva = amountNoIva + ((amountNoIva*iva)/100);
+                fixedAmountWithIva = fixedAmountNoIva + ((fixedAmountNoIva*iva)/100);
             }else {
                 amountWithIva = amountNoIva;
                 fixedAmountWithIva = fixedAmountNoIva;

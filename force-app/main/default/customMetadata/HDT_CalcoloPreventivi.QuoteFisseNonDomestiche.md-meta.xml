@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>DistributorFixedQuote__c</field>
-        <value xsi:type="xsd:double">25.51</value>
+        <value xsi:type="xsd:double">25.2</value>
     </values>
     <values>
         <field>EnergyUseCase__c</field>
@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>PowerQuote__c</field>
-        <value xsi:type="xsd:double">71.04</value>
+        <value xsi:type="xsd:double">71.32</value>
     </values>
     <values>
         <field>PowerRange__c</field>

@@ -167,13 +167,13 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     }
 
     @AuraEnabled
-    public static List<DistributorPointCode__c> getDistributorPointCode(String code, String commodity, String comune) {
+    public static List<DistributorPointCode__c> getDistributorPointCode(String code, String commodity, String comune, String presenzaAllaccio) {
 
         HDT_QR_DistributorPointCode queryClass = new HDT_QR_DistributorPointCode();
         List<DistributorPointCode__c> distrPointCodeWithCode = new List<DistributorPointCode__c>();
         List<DistributorPointCode__c> distrPointCodeWithOutCode = new List<DistributorPointCode__c>();
 
-        for(DistributorPointCode__c distPointCode : queryClass.getDistributorPointCode(code, commodity, comune)){
+        for(DistributorPointCode__c distPointCode : queryClass.getDistributorPointCode(code, commodity, comune, presenzaAllaccio)){
             if(distPointCode.PointCode__c != null && distPointCode.PointCode__c != ''){
                 distrPointCodeWithCode.add(distPointCode);
             }
