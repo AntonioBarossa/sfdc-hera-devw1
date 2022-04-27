@@ -1084,7 +1084,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
             if (this.allSubmitedFields['ServicePointCode__c'] != undefined) {
                 this.allSubmitedFields['ServicePointCode__c'] = this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '');
-                if (this.allSubmitedFields['ServicePointCode__c'].substring(0, 2) != 'IT' && this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica') {
+                if (this.allSubmitedFields['PlugPresence__c'] == 'Si' && this.allSubmitedFields['ServicePointCode__c'].substring(0, 2) != 'IT' && this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica') {
                     this.isValidFields = false;
                     this.loading = false;
                     this.alert('Errore', 'Codice POD non valido', 'error');
@@ -1194,8 +1194,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
         if(this.spCodeChanged || this.allSubmitedFields['Distributor__c'] == undefined || this.allSubmitedFields['Distributor__c'].trim() == ''){
 
-            if((this.allSubmitedFields['PlugPresence__c'] == 'Si' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '') ||
-            (this.allSubmitedFields['PlugPresence__c'] == 'No')){
+            if((this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica' && this.allSubmitedFields['PlugPresence__c'] == 'Si' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '') ||
+            (this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica' && this.allSubmitedFields['PlugPresence__c'] == 'No') ||
+            (this.allSubmitedFields['CommoditySector__c'] == 'Gas' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '')){
                 if(addressRecord['Comune'] != undefined && addressRecord['Comune'].trim() != ''){
                     let codicePunto = '';
                     let servizio = this.allSubmitedFields['CommoditySector__c'];
