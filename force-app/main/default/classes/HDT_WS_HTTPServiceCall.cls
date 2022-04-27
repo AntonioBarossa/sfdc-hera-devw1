@@ -15,7 +15,8 @@ public class HDT_WS_HTTPServiceCall {
         HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
         try{
             HTTPResponse res = h.send(req);
-            if(res.getStatusCode()/100 == 2){
+
+            /* if(res.getStatusCode()/100 == 2){
                 resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
                 resp.statusCode = res.getStatusCode();
             }
@@ -23,7 +24,14 @@ public class HDT_WS_HTTPServiceCall {
                 resp.statusCode = res.getStatusCode();
                 resp.status = 'KO';
                 resp.errorDetails = res.getBody();
+            } */
+            if (res != null){
+                resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
+                resp.statusCode = res.getStatusCode();
+            }else{
+                resp.exceptionMessage = 'Attenzione! Nessuna risposta dal server.';
             }
+            
         }
         catch(Exception e){
             resp.exceptionMessage = e.getMessage();
