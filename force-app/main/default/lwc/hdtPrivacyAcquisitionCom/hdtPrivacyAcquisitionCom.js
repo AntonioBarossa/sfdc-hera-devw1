@@ -19,7 +19,7 @@ export default class HdtPrivacyAcquisitionCom  extends NavigationMixin(Lightning
               
             }
         }).then(url => {
-           window.open(url, "_blank");
+           window.open(url, "_self");
         });
     }
 
