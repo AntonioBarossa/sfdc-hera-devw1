@@ -31,14 +31,21 @@ public with sharing class HDT_UTL_VasManagement {
     * @return HDT_WRP_VASDisactivationReq 
     **/
     public static HDT_WRP_VASDisactivationReq getDeactivationRequest(Id sobjId) {
+        Boolean queryExc = false;
+        HDT_WRP_VASDisactivationReq disactReq;
+        Order currentOrder = new Order();
+        Map<String,Object> requestMap = new Map<String,Object>();
         String objectName = ((Id) sobjId).getSobjectType().getDescribe().getName();
         Id orderId;
         Case currentCase;
         switch on objectName{
             when 'Case'{
                 Id caseId = sobjId;
-                currentCase = [SELECT CaseNumber, VasStatus__c, Order__c, Asset.SBQQ__OrderProduct__r.OrderId,
-                Subscription__r.SBQQ__Contract__r.SBQQ__Order__c, Asset.VasPracticeCode__c,Subscription__r.VasPracticeCode__c
+                currentCase = [SELECT Account.CustomerCode__c, CaseNumber, VasStatus__c, Order__c, Asset.SBQQ__OrderProduct__r.OrderId,
+                Subscription__r.SBQQ__Contract__r.SBQQ__Order__c, Asset.VasPracticeCode__c,Subscription__r.VasPracticeCode__c, 
+                Subscription__r.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c,  Subscription__r.SBQQ__Contract__r.ContractSalesCompany__c,
+                Account.FirstName__c, Account.LastNameRcuFormula__c, Account.FiscalCode__c, Account.VATNumber__c, Subscription__r.SBQQ__ProductName__c,
+                Subscription__r.Version__c,Subscription__r.SBQQ__Contract__r.SAPContractCode__c
                 FROM Case WHERE Id = :caseId WITH SECURITY_ENFORCED LIMIT 1];
             
                 orderId = currentCase.Order__c;
@@ -53,9 +60,37 @@ public with sharing class HDT_UTL_VasManagement {
                 currentCase= new Case(VasStatus__c='ANNUL PER RIPENS');
             }
         }
-
-        Order currentOrder = getOrderData(orderId);
-        HDT_WRP_VASDisactivationReq disactReq = new HDT_WRP_VASDisactivationReq(currentOrder, currentCase);
+        try
+        {
+            currentOrder = getOrderData(orderId);
+        }
+        catch(Exception e)
+        {
+            queryExc = true;
+            requestMap.put('partner',currentCase.Account.CustomerCode__c);
+            requestMap.put('codFiscale',currentCase.Account?.FiscalCode__c);
+            requestMap.put('partitaIva',currentCase.Account?.VATNumber__c);
+            requestMap.put('pod',currentCase.Subscription__r.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c);
+            requestMap.put('intestatario',joinStringValues(new List<String>{currentCase.Account.FirstName__c,currentCase.Account.LastNameRcuFormula__c}));
+            requestMap.put('servizioIp',(currentCase.Subscription__r.SBQQ__ProductName__c).abbreviate(30));
+            requestMap.put('versione',currentCase.Subscription__r.Version__c);
+            requestMap.put('nrContrattoIp',currentCase.Subscription__r.SBQQ__Contract__r.SAPContractCode__c);
+            requestMap.put('statoPratica',currentCase.VasStatus__c);
+            String keyString = (String)currentCase.getSObject('Asset')?.get('VasPracticeCode__c')!= null 
+            ? (String)currentCase.getSObject('Asset')?.get('VasPracticeCode__c')
+            : (String)currentCase.getSObject('Subscription__r')?.get('VasPracticeCode__c') != null
+                ? (String)currentCase.getSObject('Subscription__r')?.get('VasPracticeCode__c')
+                : (String)currentOrder.get('VasPracticeCode__c');
+            requestMap.put('keyServizio', keyString);
+        }
+        if(queryExc)
+        {
+            disactReq = new HDT_WRP_VASDisactivationReq(requestMap);
+        }
+        else
+        {
+            disactReq = new HDT_WRP_VASDisactivationReq(currentOrder, currentCase);
+        }
         return disactReq;
     }
 
@@ -178,6 +213,7 @@ public with sharing class HDT_UTL_VasManagement {
         * @author gabriele.rota@webresults.it | 2021-07-13 
         * @param currentOrder 
         **/
+        public HDT_WRP_VASReq(){ societa = '';}
         public HDT_WRP_VASReq(Order currentOrder) {
             societa = getCompanyCode(currentOrder.SalesCompany__c, currentOrder.ServicePointCode__c);
             //societa = currentOrder.SalesCompanyCode__c;
@@ -250,6 +286,23 @@ public with sharing class HDT_UTL_VasManagement {
 
             dataDecorrenza = Date.today();//temp 01/20/21
             
+        }
+
+        public HDT_WRP_VASDisactivationReq(Map<String,Object> requestMap)
+        {
+            societa = getCompanyCode((String) requestMap.get('societa'),(String)requestMap.get('pod'));
+            partner = (String)requestMap.get('partner');
+            codFiscale = (String)requestMap.get('codFiscale');
+            partitaIva = (String)requestMap.get('partitaIva');
+            pod = (String)requestMap.get('pod');
+            intestatario = (String)requestMap.get('intestatario');
+            servizioIp = (String)requestMap.get('servizioIp');
+            versione = (String)requestMap.get('versione');
+            dataCessazione = Date.today();
+            nrContrattoIp = (String)requestMap.get('nrContrattoIp');
+            statoPratica = (String)requestMap.get('statoPratica');
+            keyServizio = (String)requestMap.get('keyServizio');
+            dataDecorrenza = Date.today();
         }
     }
 
