@@ -1,13 +1,13 @@
 public with sharing class HDT_WS_PaperCampaignGetFile {
  
-    public class ws_req_getId extends HDT_WS_Request{
+    /*public class WS_REQ_GETID extends HDT_WS_Request{
        @AuraEnabled
         public string fileName {get;set;}
     }
-    public class ws_req_getFile extends HDT_WS_Request{
+    public class WS_REQ_GETFILE extends HDT_WS_Request{
         @AuraEnabled
          public string documentId {get;set;}
-     }
+     }*/
 
     public static wrapResponseGetId callServiceGetIdByName(String filename){
        // Map<String,String> getParams = new Map<String,String>{'fileName' => filename};
