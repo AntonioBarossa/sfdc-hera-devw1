@@ -360,7 +360,7 @@
                                 <criteria>
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>HDT_RT_KoPrecedeteCliente</rightValue>
+                                    <rightValue>HDT_RT_CreditCheckKO</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -1236,22 +1236,6 @@
                 <fieldItem>Record.AnomalyExample__c</fieldItem>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.QAdTicketNumber__c</fieldItem>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Anomalia processo/sistema</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-2a31e1b6-d56d-47e1-9f71-1aeb969f4ac9</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -2014,11 +1998,6 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.wrts_prcgvr__IsRequired__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.CreatedById</fieldItem>
             </fieldInstance>
         </itemInstances>
         <name>Facet-06eb8a61-048a-48c2-b2c6-ed0249776397</name>

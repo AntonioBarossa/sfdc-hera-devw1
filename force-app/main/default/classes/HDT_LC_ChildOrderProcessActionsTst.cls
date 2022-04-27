@@ -510,9 +510,16 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         m3.put('EffectiveDate__c', Date.today().addDays(11));
         tOrder2[0].VATfacilitationFlag__c=true;
         tOrder2[0].QuotationType__c='Rapido';
-        tOrder2[0].Commodity__c = 'Gas';
-        //tOrder2[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE;
+        tOrder2[0].Commodity__c = 'Energia Elettrica';
+        //tOrder2[0].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE;
         tOrder2[0].ProcessType__c = 'Switch in Ripristinatorio';
+        Order myOrder = [Select Id from Order where RecordType.Name = 'Order Dossier'];
+        tOrder2[0].ParentOrder__c = myOrder.Id;
+        tOrder2[1].VATfacilitationFlag__c=true;
+        tOrder2[1].QuotationType__c='Rapido';
+        tOrder2[1].Commodity__c = 'Gas';
+        tOrder2[1].recordTypeId = utlConstants.ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE;
+        tOrder2[1].ProcessType__c = 'Switch in Ripristinatorio';
         update tOrder2;
 
         HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);

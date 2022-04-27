@@ -117,24 +117,32 @@ public with sharing class HDT_UTL_SieXivTst {
         }
     }*/
     
-    /*private static boolean checkLogicAndGate(SObject obj, List<String> indexes){//Logica AND
+    /*private static boolean checkLogicAndOrGateChain(SObject obj, List<String> indexes, String Gate){//Logica AND
         //l'oggetto contiene una lista di condizioni. Se la lista è vuota O se tutte sono vere, torna true.
-        if(indexes?.size() > 0){
-            if(!this.conditions?.size()>0)   return false;
-            for(String booleanIndex : indexes){
-                if(booleanIndex=='true') return true;
-                if(booleanIndex=='false') return false;
-                Integer index = Integer.valueOf(booleanIndex);
-                if(!this.conditions?.size()>booleanIndex) return false;
-                HDT_WRP_SieCondition condition = this.conditions.get(booleanIndex);
-                String actualValue=utlSbj.dinamicFieldValue(condition.fieldName, obj);
-                if(!condition.checkCondition(actualValue))   return false;//Alla prima espressione falsa, il processo si blocca negativamente.
-            }
+        //if(!indexes?.size() > 0)     return true;
+        if(!this.conditions?.size()>0)  return true;//If no conditions, always true
+        if(!indexes?.size() > 0)    return allConditionsAndGate(obj);//if no indexes, all conditions are and evaluated
+        Boolean isAnd = Gate.equalsIgnoreCase('AND')? true : false;
+        for(String booleanIndex : indexes){
+            if(booleanIndex=='true') return true;
+            if(booleanIndex=='false') return false;
+            Integer index = Integer.valueOf(booleanIndex);
+            if(!this.conditions?.size()>booleanIndex) return false;//if the logic calls a condition not in the list, it returns false
+            HDT_WRP_SieCondition condition = this.conditions.get(booleanIndex);
+            String actualValue=utlSbj.dinamicFieldValue(condition.fieldName, obj);
+
+            if(condition.checkCondition(actualValue) != isAnd)   return !isAnd;
+            //Se siamo in AND, Alla prima espressione falsa, il processo si blocca negativamente (short evaluation).
+            //Se siamo in OR, alla prima espressione vera il processo si blocca positivamente (short evaluation).
+            //Implementato tramite XOR
         }
-        return true;//Se è tutto vero o la lista è vuota, torna true.
+
+        return isAnd;
+        //Se abbiamo finito il ciclo e siamo in AND, vuoldire che era tutto true e torniamo true.
+        //Se abbiamo finito il ciclo e siamo in OR, non c'era neanche un true e torniamo false.
     }*/
 /*
-    private static boolean checkLogicAndGate(SObject obj, List<String> indexes){//Logica AND
+    private static boolean checkLogicOrGate(SObject obj, List<String> indexes){//Logica AND
         //l'oggetto contiene una lista di condizioni. Se la lista è vuota O se tutte sono vere, torna true.
         if(indexes?.size() > 0){
             if(!this.conditions?.size()>0)   return false;
