@@ -268,7 +268,7 @@
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Annullamento - Da inviare</stringValue>
+                <elementReference>nextPhaseCase</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -1646,6 +1646,11 @@
         <expression>DATE( Year(ADDMONTHS({!GetRecord.Contract__r.EndDate},2)),MONTH( ADDMONTHS({!GetRecord.Contract__r.EndDate},2)),1 ) -1</expression>
     </formulas>
     <formulas>
+        <name>nextPhaseCase</name>
+        <dataType>String</dataType>
+        <expression>IF(AND({!discardRework}, CONTAINS(TEXT({!GetCaseAggiornato.Phase__c}),&quot;Ripensamento -&quot;)), &quot;Ripensamento - Da Inviare&quot;,&quot;Annullamento - Da Inviare&quot;)</expression>
+    </formulas>
+    <formulas>
         <name>NoteAnnullamentoFormula</name>
         <dataType>String</dataType>
         <expression>TEXT(NOW()) &amp; &quot;: &quot; &amp; {!GetCaseAggiornato.CancellationNote__c}</expression>
@@ -1653,7 +1658,7 @@
     <formulas>
         <name>OrderCancellationPhase</name>
         <dataType>String</dataType>
-        <expression>IF({!ProcessType}=&quot;Ripensamento&quot;,&quot;Ripensamento - Da Inviare&quot;,&quot;Annullamento - Da Inviare&quot;)</expression>
+        <expression>IF(NOT({!discardRework}), IF({!ProcessType}=&quot;Ripensamento&quot;,&quot;Ripensamento - Da Inviare&quot;,&quot;Annullamento - Da Inviare&quot;),IF(CONTAINS(TEXT({!GetOrderAggiornato_0.Phase__c}),&quot;Ripensamento - &quot;), &quot;Ripensamento - Da Inviare&quot;,&quot;Annullamento - Da Inviare&quot;))</expression>
     </formulas>
     <formulas>
         <name>SwitchCancellationEligibility</name>

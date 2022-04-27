@@ -1004,25 +1004,20 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return pricebookEntries;
 	}
+
 	public static List<PricebookEntry> createPricebookEntry(List<Product2> productList, Boolean doInsert, Id pricebookId, Id priceBookStandard){
-
-		List<PricebookEntry> pricebookEntries=new List<PricebookEntry>();
-		
+		List<PricebookEntry> pricebookEntries=new List<PricebookEntry>();		
 		for (Product2 product:productList){
-
 			pricebookEntries.add(new PricebookEntry(Product2Id=product.Id, Pricebook2Id=priceBookStandard, UseStandardPrice=false, UnitPrice=0, IsActive=true));
 		}
 
 		for (Product2 product:productList){
-
 			pricebookEntries.add(new PricebookEntry(Product2Id=product.Id, Pricebook2Id=pricebookId, UseStandardPrice=false, UnitPrice=0, IsActive=true));
 		}
 
 		if (doInsert){
-
 			insert pricebookEntries;
 		}
-
 		return pricebookEntries;
 	}
 
@@ -1538,8 +1533,11 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 	public static User createInternalUser(String profileId, Boolean doInsert){
-
-		User internalUser=new User(Alias='crmuser', FirstName='FirstName', LastName='LastName', Email='crmuser@test.com', EmailEncodingKey='UTF-8', LanguageLocaleKey='it', LocaleSidKey='it', ProfileId=profileId, TimeZoneSidKey='Europe/Rome', UserName='crmuser@test.com'+DateTime.now().getTime());
+        String orgId 		= UserInfo.getOrganizationId();
+		Integer randomInt 	= Integer.valueOf(math.rint(math.random()*100000));
+        String dateString 	= ''+DateTime.now().getTime();
+        String uniqueName 	= orgId + dateString + randomInt + '@test' + orgId + '.org';
+		User internalUser=new User(Alias='crmuser', FirstName='FirstName', LastName='LastName', Email='crmuser@test.com', EmailEncodingKey='UTF-8', LanguageLocaleKey='it', LocaleSidKey='it', ProfileId=profileId, TimeZoneSidKey='Europe/Rome', UserName=uniqueName);
 		if (doInsert){
 
 			insert internalUser;

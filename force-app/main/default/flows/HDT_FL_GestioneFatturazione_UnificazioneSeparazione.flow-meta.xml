@@ -1,6 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Get_Service_Point</name>
+        <label>Get Service Point</label>
+        <locationX>2420</locationX>
+        <locationY>236</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Inserimento_Letture</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>genericInputString</name>
+            <value>
+                <elementReference>ConcatenazioneCodiciSAP</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>getServicePointFromContract</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>51.0</apiVersion>
+    <assignments>
+        <name>AssignNumContrattiSelezionati</name>
+        <label>AssignNumContrattiSelezionati</label>
+        <locationX>2170</locationX>
+        <locationY>277</locationY>
+        <assignmentItems>
+            <assignToReference>NumContrattiSelezionati</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ConcatenazioneCodiciSAP</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>{!Refresh_Case.ContractCode__c};</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Num_Contratti</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Concatenazione_Codice_SAP</name>
+        <label>Concatenazione Codice SAP</label>
+        <locationX>2171</locationX>
+        <locationY>747</locationY>
+        <assignmentItems>
+            <assignToReference>ConcatenazioneCodiciSAP</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Refresh_Case.Account.CustomerCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>IncreaseCount</name>
+        <label>IncreaseCount</label>
+        <locationX>2590</locationX>
+        <locationY>203</locationY>
+        <assignmentItems>
+            <assignToReference>LoopCount</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Input_Letture</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Set_Descrizione_Account</name>
         <label>Set Descrizione Account</label>
@@ -129,10 +209,10 @@
     <decisions>
         <name>BPAdded_decision</name>
         <label>Aggiungere BP?</label>
-        <locationX>2011</locationX>
-        <locationY>751</locationY>
+        <locationX>1986</locationX>
+        <locationY>733</locationY>
         <defaultConnector>
-            <targetReference>Input_Dati</targetReference>
+            <targetReference>Concatenazione_Codice_SAP</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -226,10 +306,10 @@
     <decisions>
         <name>Mostrare_Screen_Contratti</name>
         <label>Mostrare Screen Contratti?</label>
-        <locationX>2113</locationX>
-        <locationY>242</locationY>
+        <locationX>2017</locationX>
+        <locationY>195</locationY>
         <defaultConnector>
-            <targetReference>Input_Dati_CA</targetReference>
+            <targetReference>AssignNumContrattiSelezionati</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -294,7 +374,7 @@
         <locationX>2300</locationX>
         <locationY>274</locationY>
         <defaultConnector>
-            <targetReference>Input_Letture</targetReference>
+            <targetReference>Get_Service_Point</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -326,6 +406,11 @@
         </rules>
     </decisions>
     <formulas>
+        <name>NextLabel</name>
+        <dataType>String</dataType>
+        <expression>IF({!LoopCount} = {!Get_Service_Point.count}, &quot;Conferma Pratica&quot;, &quot;Avanti&quot;)</expression>
+    </formulas>
+    <formulas>
         <name>TipoFatturaCollettivaFormula</name>
         <dataType>String</dataType>
         <expression>IF(ISBLANK({!Tipo_Fatturazione_Collettiva}), {!Get_Case_Arricchito.Note__c}, {!Get_Case_Arricchito.Note__c} &amp; &apos; - &apos; &amp; &apos;Tipo fattura collettiva selezionata: &apos; &amp; {!Tipo_Fatturazione_Collettiva})</expression>
@@ -337,6 +422,20 @@
     </formulas>
     <interviewLabel>HDT_FL_GestioneFatturazione_UnificazioneSeparazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GestioneFatturazione_UnificazioneSeparazione</label>
+    <loops>
+        <name>Inserimento_Letture</name>
+        <label>Inserimento Letture</label>
+        <locationX>2495</locationX>
+        <locationY>421</locationY>
+        <collectionReference>Get_Service_Point.servicePointId</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>IncreaseCount</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Set_Descrizione_Contratti</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -440,6 +539,30 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>AggiornaCase</name>
+        <label>AggiornaCase</label>
+        <locationX>2278</locationX>
+        <locationY>820</locationY>
+        <connector>
+            <targetReference>Selezione_Account_Master</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Refresh_Case.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ContractsMergeNumber__c</field>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <recordUpdates>
         <name>Campi_da_salvare_su_bozza</name>
         <label>Salva in Bozza</label>
@@ -548,8 +671,8 @@
         <description>Valorizzato da arricchimento dati ma necessario solo per il ramo Unificazione/Separazione bolletta.</description>
         <name>Set_Num_Contratti</name>
         <label>Set Num Contratti</label>
-        <locationX>2138</locationX>
-        <locationY>446</locationY>
+        <locationX>2159</locationX>
+        <locationY>455</locationY>
         <connector>
             <targetReference>Input_Dati_CA</targetReference>
         </connector>
@@ -770,8 +893,8 @@
     <screens>
         <name>Input_Dati_CA</name>
         <label>Input Dati (CA)</label>
-        <locationX>2222</locationX>
-        <locationY>446</locationY>
+        <locationX>2281</locationX>
+        <locationY>438</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -918,13 +1041,13 @@
     <screens>
         <name>Input_Letture</name>
         <label>Input Letture</label>
-        <locationX>2419</locationX>
-        <locationY>446</locationY>
+        <locationX>2727</locationX>
+        <locationY>315</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Set_Descrizione_Contratti</targetReference>
+            <targetReference>Inserimento_Letture</targetReference>
         </connector>
         <fields>
             <name>DT6</name>
@@ -956,7 +1079,7 @@
             <inputParameters>
                 <name>nextLabel</name>
                 <value>
-                    <stringValue>Conferma Pratica</stringValue>
+                    <elementReference>NextLabel</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -998,7 +1121,7 @@
             <inputParameters>
                 <name>servicePointId</name>
                 <value>
-                    <elementReference>Query_Case.ServicePoint__c</elementReference>
+                    <elementReference>Inserimento_Letture</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1131,7 +1254,7 @@
     <screens>
         <name>Selezione_Account_Master</name>
         <label>Selezione Account Master</label>
-        <locationX>2174</locationX>
+        <locationX>2179</locationX>
         <locationY>925</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1499,6 +1622,17 @@ Account Master:
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>LoopCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
     </variables>
     <variables>
         <name>NumContrattiSelezionati</name>

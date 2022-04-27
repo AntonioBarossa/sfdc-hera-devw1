@@ -842,6 +842,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.AnnulmentManagement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Asset__c</field>
         <readable>true</readable>
@@ -14888,6 +14893,11 @@
         <field>Order.RecessSent__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.Order_RecordType_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
         <field>Order.RegionalAdditional__c</field>
@@ -15441,11 +15451,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.TerminationDate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Order.Tipo_di_Record__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
