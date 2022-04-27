@@ -32,16 +32,33 @@ public with sharing class HDT_LC_PaperCampaignGetFile {
     }
 
     @AuraEnabled
-    public static Boolean createPaperFile(String fileBase64, String paperId, String filename){
+    public static String createPaperFile(String fileBase64, String paperId, String filename){
         try {
             //create content version
             ContentVersion cv = HDT_UTL_DocumentalManagement.createContectVersion(fileBase64, filename);
             //create content document link
             ContentDocumentLink cdl =  HDT_UTL_DocumentalManagement.createContentLink(cv.Id, paperId);
             if (cdl != null) {
+                //return true;
+                return cdl.ContentDocumentId ;
+            }
+           // return false;   
+           return null;         
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static Boolean checkPaperFile( String paperId, String filename){
+        try {
+           List<ContentDocumentLink> cdl = new List<ContentDocumentLink>();
+            cdl = [select Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title 
+                                        from ContentDocumentLink where LinkedEntityId =:paperId and ContentDocument.Title =:filename LIMIT 1 ];
+            if (cdl != null && cdl.size()>0) {
                 return true;
             }
-            return false;            
+            return false;           
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
