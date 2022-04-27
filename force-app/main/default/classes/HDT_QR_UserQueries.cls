@@ -12,7 +12,7 @@ public inherited sharing class HDT_QR_UserQueries {
 
     public static User getCurrentUser(String userId) {
 
-        List<User> users = [SELECT Id, LoginChannel__c, CreatorGroup__c, Station__c, UserRole.DeveloperName, IsPortalEnabled, Profile.Name FROM User WHERE Id = :userId WITH SECURITY_ENFORCED];
+        List<User> users = [SELECT Id, LoginChannel__c, CreatorGroup__c, Station__c, UserRole.DeveloperName, IsPortalEnabled, Profile.Name FROM User WHERE Id = :userId];
 
         if (users.size() > 0) {
             return users[0];
