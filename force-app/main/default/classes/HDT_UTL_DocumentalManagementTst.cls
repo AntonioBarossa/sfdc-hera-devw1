@@ -9,10 +9,18 @@ public with sharing class HDT_UTL_DocumentalManagementTst {
          List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
          List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
          List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
+         
          List<DocumentalPayloadAdministration__c> documList = HDT_UTL_DataFactoryTst.createDocumentalPayloadAdm();
          List<DocumentalActivity__c> docActList = HDT_UTL_DataFactoryTst.createDocumentalActivity(1,null,caseList[0].Id);
          HDT_UTL_DataFactoryTst.createJsonPayload();
          HDT_UTL_DataFactoryTst.createDriverJson();
+
+
+         HDT_UTL_DataFactoryTst.pClickOrderPhase();
+
+         DocumentSendTracking__c sendTracking = HDT_UTL_DataFactoryTst.createDocumentSendTracking(1,ordList[0].Id,null)[0];
+
     }
 
     @isTest
@@ -47,15 +55,18 @@ public with sharing class HDT_UTL_DocumentalManagementTst {
         Test.startTest();
         ContentVersion cv1 = HDT_UTL_DocumentalManagement.createContectVersion('testBase64','filetest');
         Case ca = [SELECT Id FROM Case LIMIT 1];
+        Order ord = [SELECT Id FROM Order LIMIT 1];
         ContentDocumentLink cLink = HDT_UTL_DocumentalManagement.createContentLink(String.valueof(cv1.Id), String.valueof(ca.Id));
         String st1 = HDT_UTL_DocumentalManagement.createContentDistribution(String.valueof(cv1.Id), 'filetest');
         HDT_WRP_DocumentalResponse resp = createResponse();
         HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(resp,'Order');
-        SObject sobj = HDT_UTL_DocumentalManagement.getProcessRecord(String.valueof(ca.Id), 'Case');
+        System.debug('@@@' + ca.Id);
+
         
         
         Test.stopTest();
     }
+    @isTest
     public static HDT_WRP_DocumentalResponse createResponse(){
         
         Order testOrder = [SELECT Id FROM Order LIMIT 1];
@@ -95,4 +106,5 @@ public with sharing class HDT_UTL_DocumentalManagementTst {
         docRes.deliverPackageResponse = docRoot;
         return docRes;
     }
+
 }
