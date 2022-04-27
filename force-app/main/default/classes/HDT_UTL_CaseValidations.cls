@@ -937,7 +937,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
-        }else if(caseType == 'Cambio contatore non registrato'){
+        /*}else if(caseType == 'Cambio contatore non registrato'){
 
             String reading = getFieldValue(fields, 'Reading__c');
 
@@ -949,7 +949,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
-            }
+            }*/
         }else if(caseType == 'Modifica Layout di dettaglio'){
 
             Boolean detail = Boolean.valueOf(getFieldValue(fields, 'ElementDetail__c'));
