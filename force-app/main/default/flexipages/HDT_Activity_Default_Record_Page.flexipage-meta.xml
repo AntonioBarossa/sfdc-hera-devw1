@@ -360,7 +360,7 @@
                                 <criteria>
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>HDT_RT_KoPrecedeteCliente</rightValue>
+                                    <rightValue>HDT_RT_CreditCheckKO</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
