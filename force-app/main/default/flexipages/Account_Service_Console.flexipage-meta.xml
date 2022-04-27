@@ -985,7 +985,7 @@
         <name>Facet-4aef154f-25e4-4d25-a35c-09d8dabe36c8</name>
         <type>Facet</type>
     </flexiPageRegions>
-    <flexiPageRegions>
+    <!--<flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentName>forceChatter:recordFeedContainer</componentName>
@@ -993,7 +993,7 @@
         </itemInstances>
         <name>Facet-aec3fe32-4787-4711-9fa8-3b7fc8c9b3e1</name>
         <type>Facet</type>
-    </flexiPageRegions>
+    </flexiPageRegions>-->
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
