@@ -8,12 +8,13 @@ public class HDT_WS_HTTPServiceCall {
         req.setTimeout(120000); 
         req.setHeader('Content-type', 'application/json');
         req.setEndpoint('Callout:'+namedCredential+path);
-        req.setMethod(method);        
-        req.setBody(JSON.serialize(request));
+        req.setMethod(method);
+        if(method!='GET'){
+            req.setBody(JSON.serialize(request));
+        }        
         HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
         try{
             HTTPResponse res = h.send(req);
-
             if(res.getStatusCode()/100 == 2){
                 resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
                 resp.statusCode = res.getStatusCode();
