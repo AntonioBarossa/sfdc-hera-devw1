@@ -242,4 +242,10 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
         
         return result;
     }
+
+    public Date convertDdMmYyyy(String ddmmyyyy)
+    {
+        List<String> listToConvert = ddmmyyyy.split('/');
+        return Date.newInstance(Integer.valueOf(listToConvert[2]), Integer.valueOf(listToConvert[1]), Integer.valueOf(listToConvert[0]));
+    }
 }

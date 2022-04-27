@@ -138,13 +138,13 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             orderToUpdate.DistributorPracticeCode__c = (String)fieldsMap.get('COD_PRAT_DISTR');
             /* Date Fields */
             if( ! string.isBlank((String)fieldsMap.get('DATA_DECORRENZA_SW')) ){
-                orderToUpdate.SwitchOutDate__c = Date.valueOf( (String)fieldsMap.get('DATA_DECORRENZA_SW') );
+                orderToUpdate.SwitchOutDate__c = voltureChangeUtils.convertDdMmYyyy((String)fieldsMap.get('DATA_DECORRENZA_SW'));
             }
             if( ! string.isBlank((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III')) ){
-                orderToUpdate.EffectiveDate__c = Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III'));
+                orderToUpdate.EffectiveDate__c = voltureChangeUtils.convertDdMmYyyy((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III'));
             }
             if(  ! string.isBlank((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III'))){
-                orderToUpdate.EffectiveDate__c = Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV'));
+                orderToUpdate.EffectiveDate__c = voltureChangeUtils.convertDdMmYyyy((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III'));
             }
             if( ! string.isBlank((String)fieldsMap.get('POTCONTRIMP')) ){
                 orderToUpdate.PowerCommitted__c = Decimal.valueOf((String)fieldsMap.get('POTCONTRIMP'));

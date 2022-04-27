@@ -1907,6 +1907,15 @@
                 <fieldItem>Record.wrts_prcgvr__Priority__c</fieldItem>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ManuallyReassigned__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-26fb2eaf-3b02-4253-a217-9933edf75253</name>
         <type>Facet</type>
     </flexiPageRegions>
