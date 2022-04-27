@@ -5,8 +5,14 @@ public with sharing class HDT_UTL_CreditCheckTst {
 
     @TestSetup
     static void makeData(){
+        HDT_UTL_DataFactoryTst.pClickInstance();
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Credit Check KO','Bozza',constants.ORDER_RECORDTYPEID_SUBENTRO,constants.ORDER_RECORDTYPE_DEVELOPERNAME_SUBENTRO);
+
         List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(2,false,'MMS','MMS Azienda','Aziende SME');
         insert accs;
+        List<Contact> conts = HDT_UTL_DataFactoryTst.createContact(1, false, accs[0].Id);
+        insert conts;
         List<ServicePoint__c> points = HDT_UTL_DataFactoryTst.createServicePoint(1,false);
         points[0].RecordTypeId = constants.SERVICEPOINT_RECORDTYPEID_GAS;
         points[0].Account__c = accs[1].id;
@@ -39,6 +45,7 @@ public with sharing class HDT_UTL_CreditCheckTst {
         childOrders[0].RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Subentro').getRecordTypeId();
         childOrders[0].ServicePoint__c = points[0].id;
         childOrders[0].ProcessType__c = 'Subentro Gas';
+        childOrders[0].Contact__c = conts[0].Id;
         insert childOrders;
 
     }
@@ -54,5 +61,36 @@ public with sharing class HDT_UTL_CreditCheckTst {
         System.assertEquals(true, response.containsIgnoreCase('bpAlternative'), 'Problema nella creazione della request');
         System.assertEquals(false, checkVoltura, 'Metodo per il controllo Voltura con Switch non funzionante');
 
+    }
+
+    @IsTest
+    public static void testUpdateOrderIncoming(){
+        HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate data = new HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate();
+        Order o = [SELECT Id,RecordType.DeveloperName,ServicePoint__r.Account__c FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_Subentro'];
+        data.orderId = String.valueOf(o.Id).substring(0,15);
+        data.outcome = 'KO';
+        data.outcomeDescription = 'TEST';
+        data.outcoming = null;
+        Test.startTest();
+            HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{data});
+        Test.stopTest();
+        o = [SELECT Id, Phase__c FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_Subentro'];
+        System.assertEquals('Credit Check KO', o.Phase__c, 'testUpdateOrderIncoming - Fase non Aggiornata');
+        
+    }
+
+    @IsTest
+    public static void testUpdateOrderOutcoming(){
+        HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate data = new HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate();
+        Order o = [SELECT Id,RecordType.DeveloperName,ServicePoint__r.Account__c FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_Subentro'];
+        data.orderId = String.valueOf(o.Id).substring(0,15);
+        data.outcome = 'KO';
+        data.outcomeDescription = 'TEST';
+        data.outcoming = true;
+        Test.startTest();
+            HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{data});
+        Test.stopTest();
+        o = [SELECT Id, Phase__c FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_Subentro'];
+        System.assertEquals('Credit Check KO', o.Phase__c, 'testUpdateOrderOutcoming - Fase non Aggiornata');
     }
 }
