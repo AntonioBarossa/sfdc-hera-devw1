@@ -568,6 +568,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>RateCategory__c.ExternalId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>MatriceRemiCode__c.Comune__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -18031,6 +18036,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>RateTemplate__c.Visibile__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>RateTemplate__c.ExternalId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

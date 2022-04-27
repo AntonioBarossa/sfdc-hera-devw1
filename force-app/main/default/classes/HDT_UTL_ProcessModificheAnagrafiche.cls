@@ -133,17 +133,11 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
             }
 
             if(!String.isEmpty(convertionError)){
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = convertionError;
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, convertionError));
                 continue;
             }
 
             if(errorForPicklistValue('Case', 'Type', newCase.Type)){
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = 'Valore processo non corretto: ' + newCase.Type;
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'Valore processo non corretto: ' + newCase.Type));
                 continue;
             }
@@ -156,9 +150,6 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
                 convertionError = setEmptyCsvFields(emptyCsvField, newCase, processObj.csvSplitted[accountIdIndex], processObj.csvSplitted[contractIndex], enableBillProfEdit);
 
                 if(!String.isEmpty(convertionError)){
-                    //processObj.requestItem.Status__c = 'Errore';
-                    //processObj.requestItem.StatusDescription__c = convertionError;
-                    //itemsToSave.add(processObj.requestItem);
                     itemsToSave.add(setErrorItem(processObj.requestItem, convertionError));
                     continue;
                 }
@@ -190,9 +181,19 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
             saveResponse = databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
             caseToInsert.clear();
 
+            Map<Id, String> caseNumberMap;
+            caseNumberMap = setCaseNumberMap(caseNumberMap, saveResponse.itemIdToObjId.values());
+
             getLimitDetails('AFTER CASE CREATION & Enrichment');
 
             if(saveResponse.reponseItemList.size() > 0){
+
+                for(HDT_WRP_ProcessObjects processObj : processObjList){
+                    if(caseNumberMap.containsKey(processObj.newCase.Id)){
+                        processObj.requestItem.Result__c = caseNumberMap.get(processObj.newCase.Id);
+                    }
+                }
+
                 itemsToSave.addAll(saveResponse.reponseItemList);
             }
 

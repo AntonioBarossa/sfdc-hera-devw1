@@ -39,13 +39,13 @@ public with sharing class HDT_BA_ErrorRequestItem implements Database.Batchable<
 
         HDT_UTL_MassiveLoaderResult massLoaderResult = new HDT_UTL_MassiveLoaderResult(idLoaderRequest, splitCharacter);
 
-        for (MassiveLoaderRequestItem__c tempReq : scope) {
+        for(MassiveLoaderRequestItem__c tempReq : scope) {
 
-            if (String.isBlank(processName)){
+            if(String.isBlank(processName)){
                 processName = tempReq.MassiveLoaderRequest__r.ProcessType__c;
             }
 
-            if (String.isBlank(reqName)){
+            if(String.isBlank(reqName)){
                 reqName = tempReq.MassiveLoaderRequest__r.Name;
             }
 
@@ -62,16 +62,18 @@ public with sharing class HDT_BA_ErrorRequestItem implements Database.Batchable<
 
         massLoaderResult.generateHeaders(processName, reqName);
         
-        if (String.isNotBlank(massLoaderResult.rowError)) {
+        if(String.isNotBlank(massLoaderResult.rowError)){
             massLoaderResult.setErrorFile();
             massLoaderResult.generateFile('error');
         }
         
-        if (String.isNotBlank(massLoaderResult.rowSuccess)) {
+        if(String.isNotBlank(massLoaderResult.rowSuccess)){
             massLoaderResult.setSuccessFile();
             massLoaderResult.generateFile('success');
         }
+
         massLoaderResult.getLimit();
+
     }
 
     public void finish(Database.BatchableContext bc){
