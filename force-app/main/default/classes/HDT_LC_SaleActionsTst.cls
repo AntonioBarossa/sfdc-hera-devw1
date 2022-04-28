@@ -120,7 +120,7 @@ public with sharing class HDT_LC_SaleActionsTst{
 
 			Test.startTest();
 
-			List<Sale__c> tSales=[SELECT Id, Name, Campaign__c, Account__c, Campaign__r.CampaignEligibilityGroup__c, Status__c
+			List<Sale__c> tSales=[SELECT Id, Name, Campaign__c, isTransition__c, Account__c, Campaign__r.CampaignEligibilityGroup__c, Status__c
 			                      FROM Sale__c
 			                      WHERE Name='testSaleName0'];
 
@@ -130,7 +130,7 @@ public with sharing class HDT_LC_SaleActionsTst{
 
 			String campMemId=tCampMember[0].Id;
 
-			HDT_LC_SaleActions.save(tSales[0], campMemId);
+			HDT_LC_SaleActions.save(tSales[0], '');
 
 			List<Opportunity> tOppSaved=[SELECT Id, StageName
 			                             FROM Opportunity
