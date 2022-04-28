@@ -88,8 +88,8 @@ export default class HdtPaperCampaignGetFile extends NavigationMixin(LightningEl
                 else {
                     this.dispatchEvent(new ShowToastEvent({
                         title: '',
-                        message: 'File already exists',
-                        variant: 'error'
+                        message: 'Il file è già presente!',
+                        variant: 'warning'
                     }));
                     this.showSpinner = false;
                     this.dispatchEvent(new CustomEvent('afterSave'));

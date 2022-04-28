@@ -128,6 +128,31 @@ public with sharing class HDT_UTL_CreditCheck {
         return ('HDT_RT_VolturaConSwitch'.equalsIgnoreCase(ord.RecordType.DeveloperName) && ord.ServicePoint__r?.Account__c != null);
     }
 
+    public static void updateOrder(List<HDT_WRP_DataForUpdate> ordersData){
+        List<Order> ordersToUpdate = new List<Order>();
+        for (HDT_WRP_DataForUpdate item : ordersData){
+            Order o = new Order(Id = item.orderId, CreditCheckDescription__c = item.outcomeDescription);
+            if (item.outcoming != null && item.outcoming){
+                o.OutgoingCreditCheckResult__c = item.outcome;
+            }else{
+                o.IncomingCreditCheckResult__c = item.outcome;
+            }
+            if ('KO'.equalsIgnoreCase(item.outcome)){
+                o.Phase__c = 'Credit Check KO';
+            }
+            ordersToUpdate.add(o);
+        }
+        
+        if(!ordersToUpdate.isEmpty()){
+            HDT_UTL_DatabaseService.updateSObject(ordersToUpdate);
+        }
+    }
 
+    public class HDT_WRP_DataForUpdate{
+        public String orderId;
+        public String outcome;
+        public String outcomeDescription;
+        public Boolean outcoming;
+    }
     
 }

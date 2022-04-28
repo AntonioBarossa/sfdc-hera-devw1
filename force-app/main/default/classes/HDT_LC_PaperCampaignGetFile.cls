@@ -54,11 +54,11 @@ public with sharing class HDT_LC_PaperCampaignGetFile {
         try {
            List<ContentDocumentLink> cdl = new List<ContentDocumentLink>();
             cdl = [select Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title 
-                                        from ContentDocumentLink where LinkedEntityId =:paperId and ContentDocument.Title =:filename LIMIT 1 ];
+                                        from ContentDocumentLink where LinkedEntityId =:paperId and ContentDocument.Title =:filename WITH SECURITY_ENFORCED LIMIT 1];
             if (cdl != null && cdl.size()>0) {
                 return true;
             }
-            return false;           
+            return false;                 
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
