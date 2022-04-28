@@ -1,51 +1,45 @@
 ({
 
     doInit : function(component, event, helper) {
-
-       // var myPageRef = component.get("v.pageReference");
-        console.log('******Here');
-       /* c__processType: obj['c__processType'],
-        c__recordTypeName: obj['c__recordTypeName'],
-        c__accid: obj['c__accid'],
-        c__flowName: obj['c__flowName'],
-        c__campaignId: obj['c__campaignId']
-*/
+        
         var flowName = '';
         var accId = '';
+        var leadId = '';
         var processType = '';
         var recordTypeName = '';
         var campaignId = '';
         var campaignMemberId = '';
 
-        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-                        sURLVariables = sPageURL.split('&'),
-                        testParam = '';
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)), sURLVariables = sPageURL.split('&'), testParam = '';
                     
-                    for(let i = 0; i < sURLVariables.length; i++){
-                        
-                        testParam = '';
-                        testParam = sURLVariables[i].split('=');
-                        
-                        if (testParam[0] == 'c__accid'){
-                            accId = testParam[1];
-                        }
-                        if (testParam[0] == 'c__campaignId'){
-                            campaignId = testParam[1];
-                        }
-                        if (testParam[0] == 'c__flowName'){
-                            flowName = testParam[1];
-                        }
-                        if (testParam[0] == 'c__processType'){
-                            processType = testParam[1];
-                        }
-                        if(testParam[0] == 'c__recordTypeName'){
-                            recordTypeName = testParam[1];
-                        }
-                        if(testParam[0] == 'c__campaignMemberId'){
-                            campaignMemberId = testParam[1];
-                        }
-                        
-                    }
+        for(let i = 0; i < sURLVariables.length; i++){
+            
+            testParam = '';
+            testParam = sURLVariables[i].split('=');
+            
+            if (testParam[0] == 'c__accid'){
+                accId = testParam[1];
+            }
+            if (testParam[0] == 'c__leadId'){
+                leadId = testParam[1];
+            }
+            if (testParam[0] == 'c__campaignId'){
+                campaignId = testParam[1];
+            }
+            if (testParam[0] == 'c__flowName'){
+                flowName = testParam[1];
+            }
+            if (testParam[0] == 'c__processType'){
+                processType = testParam[1];
+            }
+            if(testParam[0] == 'c__recordTypeName'){
+                recordTypeName = testParam[1];
+            }
+            if(testParam[0] == 'c__campaignMemberId'){
+                campaignMemberId = testParam[1];
+            }
+            
+        }
 
         var caseId = null;
         component.set("v.campaignId",campaignId);
@@ -195,9 +189,9 @@
         if(campaignMemberId != null){
             inputVariables.push({ name : 'CampaignMemberId', type : 'String', value : campaignMemberId});
         }
-      //  if(leadId != null){
-       //     inputVariables.push({ name : 'LeadId', type : 'String', value : leadId});
-     //   }
+        if(leadId != null){
+            inputVariables.push({ name : 'LeadId', type : 'String', value : leadId});
+        }
      //   if(servicePointId != null){
      //       inputVariables.push({ name : 'InputServicePointId', type : 'String', value : servicePointId});
      //   }

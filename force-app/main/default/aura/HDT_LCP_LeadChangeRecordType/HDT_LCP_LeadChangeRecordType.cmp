@@ -20,10 +20,12 @@
         overflow: visible !important;
     }
     </aura:html> 
-    <aura:handler name="init" action="{!c.init}" value="{!this}" /> 
+    
     <aura:attribute name="isCommunity" type="boolean" default="false"/><!--HRAWRM-616   22/09/2021 -->
     <aura:attribute name="mySpinner" type="boolean" default="false"/>
     <aura:attribute name="myrecordid" type="String" /><!--HRAWRM-616   22/09/2021 -->
+    
+    <aura:handler name="init" action="{!c.init}" value="{!this}" /> 
 
     <lightning:workspaceAPI aura:id="workspace" />
     <aura:if isTrue="{!v.isCommunity}"><!--HRAWRM-616   22/09/2021 -->

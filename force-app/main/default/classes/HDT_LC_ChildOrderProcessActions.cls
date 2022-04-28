@@ -202,7 +202,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'{
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
-                    orderToUpdate.DocumentLow80__c = 'Richiesto';
+                    /**@frpanico 2022-04-27
+                     * Il documento di legge 80 va richiesto
+                     * Solo per forniture domestiche
+                     */
+                    if(currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') || currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico'))
+                    {
+                        orderToUpdate.DocumentLow80__c = 'Richiesto';
+                    }
                 }
                 else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
