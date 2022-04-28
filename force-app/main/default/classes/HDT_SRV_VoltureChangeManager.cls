@@ -193,7 +193,10 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         List<Order> orderListUpdate = new List<Order>();
         List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> pltformEventList = new List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>();
         for(Order singleOrder : myOrderList){
-            if(singleOrder.Phase__c.equalsIgnoreCase('Amm. Precheck OK SII') && (singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') || singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch'))){
+            if(singleOrder.Phase__c.equalsIgnoreCase('Amm. Precheck OK SII') 
+            && (singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
+            || singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch'))
+            && singleOrder.TecnicalPhase__c == null){
                 Order ordToUpdate = new Order();
                 ordToUpdate.Id = singleOrder.Id;        
                 ordToUpdate.Phase__c = singleOrder.DateSentToSII__c > today ? 'In attesa tempi di ripensamento' : 'Comunicazione verso Heroku';
