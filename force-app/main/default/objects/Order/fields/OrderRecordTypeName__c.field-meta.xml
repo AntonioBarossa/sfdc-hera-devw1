@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Tipo_di_Record__c</fullName>
+    <fullName>OrderRecordTypeName__c</fullName>
+    <defaultValue>$RecordType.Name</defaultValue>
     <externalId>false</externalId>
-    <label>Tipo di Record</label>
+    <label>Nome RecordType Ordine</label>
     <length>255</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
