@@ -78,7 +78,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
 
         //Case
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(32, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(38, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         CaseList[0].Type = 'Richiesta Parere';
         CaseList[1].Type = 'Piano Rateizzazione';
         CaseList[2].Type = 'Piano Rateizzazione';
@@ -127,6 +127,27 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         caseList[29].Type = 'Unificazione/Separazione BP-CA-Bolletta';
         caseList[30].Type = 'Spostamento Votive Modena';
         caseList[31].Type = 'Votive Modena Contestazione Fattura';
+        caseList[32].Type = 'Verifica Titolarità POD/PDR';
+        caseList[33].Type = 'Voltura Tecnica';
+        caseList[34].Type = 'Proroga Conn Temp';
+        String rtName = 'HDT_RT_FlyingRequest';
+        String rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtName).getRecordTypeId();
+        caseList[35].RecordTypeId = rtId;
+        caseList[35].Type = 'Nuovo Impianto';
+        caseList[35].Cluster__c = 'Preventivi';        
+        caseList[36].RecordTypeId = rtId;
+        caseList[36].Type = 'Nuovo Impianto';
+        caseList[36].Cluster__c = 'Preventivi';
+        caseList[36].Commodity__c = 'Gas';
+        caseList[36].SupplyType__c = 'A-Domestico';
+        caseList[36].Taxes__c = 'Imposta Usi Domestici (Cod. G_ICD)';
+        caseList[36].ServicePointType__c = '1002-Cottura/Produz acq calda';
+        caseList[36].ShipmentAddressAssign__c = 'VIA DALLA VOLTA 1 , BOLOGNA BO, 40131 ITALIA';
+        String rtName1 = 'HDT_RT_GenericheAttivazioni';
+        String rtId1 = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtName1).getRecordTypeId();
+        caseList[37].Type = 'Modifica Contr Preattivazione Anagr Res';
+        caseList[37].RecordTypeId = rtId;
+        caseList[37].Cluster__c = 'Attivazioni';
 
 
 
@@ -1619,6 +1640,222 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         //ASSERTS
         System.assert(myCase23 != null, 'myCase23 non può essere null');        
     }
+
+    @isTest
+    private static void validateTestType23(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType23';
+        System.debug(debugString);
+        
+        //SETUP
+
+        mySetup();
+        
+        Case myCase24 = [Select Id, Type from Case where Type = 'Verifica Titolarità POD/PDR']; 
+
+        String recordId77 = myCase24.Id;
+        String fields77 = JSON.serialize(myCase24);
+
+
+        Test.startTest();
+
+        Try{
+            
+            HDT_UTL_CaseValidations myClass24 = new HDT_UTL_CaseValidations();
+            
+            myClass24.validate(fields77, recordId77);
+
+        }catch(DmlException e) {
+            System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+        
+        //ASSERTS
+        System.assert(myCase24 != null, 'myCase24 non può essere null');        
+    }
+
+    @isTest
+    private static void validateTestType24(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType24';
+        System.debug(debugString);
+        
+        //SETUP
+
+        mySetup();
+        
+        Case myCase25 = [Select Id, Type, EffectiveDate__c from Case where Type = 'Voltura Tecnica']; 
+
+        String recordId78 = myCase25.Id;
+        myCase25.EffectiveDate__c = Date.today();
+        String fields78 = JSON.serialize(myCase25);
+
+        String recordId79 = myCase25.Id;
+        myCase25.EffectiveDate__c = Date.today().addDays(7);
+        String fields79 = JSON.serialize(myCase25);
+
+
+        Test.startTest();
+
+        Try{
+            
+            HDT_UTL_CaseValidations myClass25 = new HDT_UTL_CaseValidations();
+            
+            myClass25.validate(fields78, recordId78);
+            myClass25.validate(fields79, recordId79);
+
+        }catch(DmlException e) {
+            System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+        
+        //ASSERTS
+        System.assert(myCase25 != null, 'myCase25 non può essere null');        
+    }
+
+    @isTest
+    private static void validateTestType25(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType25';
+        System.debug(debugString);
+        
+        //SETUP
+
+        mySetup();
+        
+        Case myCase26 = [Select Id, Type, TemporaryConnectionEndDate__c from Case where Type = 'Proroga Conn Temp' LIMIT 1]; 
+
+        String recordId80 = myCase26.Id;
+        myCase26.TemporaryConnectionEndDate__c = Date.today().addMonths(2);
+        String fields80 = JSON.serialize(myCase26);
+
+
+        Test.startTest();
+
+        Try{
+            
+            HDT_UTL_CaseValidations myClass26 = new HDT_UTL_CaseValidations();
+            
+            myClass26.validate(fields80, recordId80);
+
+        }catch(DmlException e) {
+            System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+        
+        //ASSERTS
+        System.assert(myCase26 != null, 'myCase26 non può essere null');        
+    }
+
+    @isTest
+    private static void validateTestType26(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType26';
+        System.debug(debugString);
+        
+        //SETUP
+
+        mySetup();
+        
+        Case myCase27 = [Select Id, Type, Cluster__c from Case where Type = 'Nuovo Impianto' and Cluster__c = 'Preventivi' LIMIT 1]; 
+
+        String recordId81 = myCase27.Id;
+        String fields81 = JSON.serialize(myCase27);
+
+
+        Test.startTest();
+
+        Try{
+            
+            HDT_UTL_CaseValidations myClass27 = new HDT_UTL_CaseValidations();
+            myClass27.validate(fields81, recordId81);
+
+
+        }catch(DmlException e) {
+            System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+        
+        //ASSERTS
+        System.assert(myCase27 != null, 'myCase27 non può essere null');        
+    }
+
+    @isTest
+    private static void validateTestType26b(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType26';
+        System.debug(debugString);
+        
+        //SETUP
+
+        mySetup();
+        
+        Case myCase27b = [Select Id, Type, Cluster__c, Commodity__c, ShipmentAddressAssign__c, SupplyType__c, Taxes__c, ServicePointType__c from Case where Type = 'Nuovo Impianto' and Cluster__c = 'Preventivi' and ShipmentAddressAssign__c != null]; 
+
+        String recordId82 = myCase27b.Id;
+        String fields82 = JSON.serialize(myCase27b);
+
+        Test.startTest();
+
+        Try{
+            
+            HDT_UTL_CaseValidations myClass27b = new HDT_UTL_CaseValidations();
+            myClass27b.validate(fields82, recordId82);
+
+
+        }catch(DmlException e) {
+            System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+        
+        //ASSERTS
+        System.assert(myCase27b != null, 'myCase27b non può essere null');        
+    }
+
+    @isTest
+    private static void validateTestType27(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType27';
+        System.debug(debugString);
+        
+        //SETUP
+
+        mySetup();
+        
+        Case myCase28 = [Select Id, Cluster__c, DeceasedFiscalCode__c, DeceasedName__c, DeceasedSurname__c, DeceasedDate__c from Case where Type = 'Modifica Contr Preattivazione Anagr Res' AND Cluster__c = 'Attivazioni']; 
+
+        String recordId83 = myCase28.Id;
+        myCase28.DeceasedDate__c = Date.Today().addDays(10);
+        myCase28.DeceasedFiscalCode__c = 'VFGYHA56B30H211N';
+        myCase28.DeceasedName__c = 'Mario';
+        myCase28.DeceasedSurname__c = 'Rossi';
+
+        String fields83 = JSON.serialize(myCase28);
+        
+
+
+        Test.startTest();
+
+        Try{
+            
+            HDT_UTL_CaseValidations myClass28 = new HDT_UTL_CaseValidations();
+            myClass28.validate(fields83, recordId83);
+
+        }catch(DmlException e) {
+            System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+        
+        //ASSERTS
+        System.assert(myCase28 != null, 'myCase28 non può essere null');        
+    }
+
 
 
 }
