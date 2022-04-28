@@ -1,13 +1,13 @@
 /*
- * @author Laureta Demishaj (laureta.demishaj@dunegroup.it)
- * @date 22/09/2021
- * @description HDT_QBL_BpCaRequest for Test Classes
- * @history Laureta Demishaj – 22/09/2021 – Created class
+* @author Laureta Demishaj (laureta.demishaj@dunegroup.it)
+* @date 22/09/2021
+* @description HDT_QBL_BpCaRequest for Test Classes
+* @history Laureta Demishaj – 22/09/2021 – Created class
 */
 @isTest
 public class HDT_QBL_BpCaRequestTst {
-   private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
-   @IsTest
+    private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
+    @IsTest
     public static void testMeth(){
 		Id adminUserProfileId = HDT_UTL_DataFactoryTst.getProfileId(utlConstants.SYSTEM_ADMINISTRATOR_NAME);
 		User internalUser = HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);

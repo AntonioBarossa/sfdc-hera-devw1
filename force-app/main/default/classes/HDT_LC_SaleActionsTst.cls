@@ -144,7 +144,7 @@ public with sharing class HDT_LC_SaleActionsTst{
 
 			String campMemId=tCampMember[0].Id;
 
-			HDT_LC_SaleActions.save(tSales[0], campMemId);
+			HDT_LC_SaleActions.save(tSales[0], '');
 
 			List<Opportunity> tOppSaved=[SELECT Id, StageName
 			                             FROM Opportunity
