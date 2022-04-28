@@ -3,7 +3,7 @@
     <fullName>ServicePointCode__c</fullName>
     <description>Flag per gestione attività.</description>
     <externalId>false</externalId>
-    <label>Codice Service Point</label>
+    <label>Codice Service Point AU</label>
     <length>30</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
