@@ -750,11 +750,6 @@
         <editable>true</editable>
         <field>Order.DocumentalVat__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Order.IsExportDatiCatastali__c</field>
-        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
