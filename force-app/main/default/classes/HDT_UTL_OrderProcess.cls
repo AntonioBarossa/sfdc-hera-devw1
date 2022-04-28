@@ -170,13 +170,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             /**@frpanico 07/03/2022
              * Aggiunta quality monitoraggio per voltura
              */
-            if(order.Phase__c != oldOrder.Phase__c
-            && order.ProcessType__c == 'Voltura'
-            && oldOrder.Phase__c == 'In attesa validazione' 
-            && (order.Phase__c == 'Documentazione Validata')
-            && isMonitoringList.contains(order.AgencyCode__c)
-            && !phaseStory.contains('Quality Call OK')
-            )
+            if(order.Phase__c != oldOrder.Phase__c && order.ProcessType__c == 'Voltura' && oldOrder.Phase__c == 'In attesa validazione' && (order.Phase__c == 'Documentazione Validata') && isMonitoringList.contains(order.AgencyCode__c) && !phaseStory.contains('Quality Call OK'))
             {
                 String newPhase = 'In attesa di quality call';
                 order.Phase__c = newPhase;
@@ -201,12 +195,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             /**@frpanico 07/03/2022
              * Aggiunta comfort per voltura
              */
-            if(order.Phase__c != oldOrder.Phase__c
-            && order.ProcessType__c == 'Voltura'
-            && oldOrder.Phase__c == 'In attesa validazione' 
-            && (order.Phase__c == 'Documentazione Validata')
-            && order.ComfortCallDaysDue__c != null
-            )
+            if(order.Phase__c != oldOrder.Phase__c && order.ProcessType__c == 'Voltura' && oldOrder.Phase__c == 'In attesa validazione' && (order.Phase__c == 'Documentazione Validata') && order.ComfortCallDaysDue__c != null )
             {
                 String newPhase = 'In attesa conferma cliente';
                 DateTime nowDateTime = DateTime.now();
@@ -482,10 +471,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                             newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                         }
                     }else if(
-                            (oldOrder.ConfirmCustomerContract__c == null || 
-                                (oldOrder.ConfirmCustomerContract__c != null 
-                                && oldOrder.ConfirmCustomerContract__c != newOrder.ConfirmCustomerContract__c)
-                            ) 
+                            (oldOrder.ConfirmCustomerContract__c == null || (oldOrder.ConfirmCustomerContract__c != null && oldOrder.ConfirmCustomerContract__c != newOrder.ConfirmCustomerContract__c)) 
                             && (newOrder.ConfirmCustomerContract__c == 'Comfort call' || newOrder.ConfirmCustomerContract__c == 'Web' ||newOrder.ConfirmCustomerContract__c == 'IVR')
                         ){
                         newOrdersListComfort.add(newOrder);
@@ -996,9 +982,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                  * Per non far girare al secondo passaggio il metodo
                  * Verificato che la callout viene innescata
                  */
-                if(order.DocumentalPhase__c != null && order.DocumentalPhase__c.equalsIgnoreCase('Plico firmato') 
-                    && order.Phase__c != null && order.Phase__c.equalsIgnoreCase('In Attesa Legge 80')
-                    && order.TecnicalPhase__c == null)
+                if(order.DocumentalPhase__c != null && order.DocumentalPhase__c.equalsIgnoreCase('Plico firmato') && order.Phase__c != null && order.Phase__c.equalsIgnoreCase('In Attesa Legge 80') && order.TecnicalPhase__c == null)
                 {
                     order.Phase__c = 'Comunicazione verso Heroku';
                 }

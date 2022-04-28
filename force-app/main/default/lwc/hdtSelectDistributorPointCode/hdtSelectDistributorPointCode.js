@@ -87,14 +87,16 @@ export default class HdtSelectDistributorPointCode extends LightningElement {
 
     createTableDistributor(data) {
         console.log('createTableDistributor   data --- : ' + JSON.stringify(data));
-        let i, j, temporary, chunk = 10;
-        this.pagesDistributor = [];
-        for (i = 0, j = data.length; i < j; i += chunk) {
-            temporary = data.slice(i, i + chunk);
-            this.pagesDistributor.push(temporary);
-        }
-        this.totalPageDistributor = this.pagesDistributor.length;
-        this.reLoadTableDistributor();
+        let i=0;
+        this.tableDataDistributor = data.slice(i, data.length);
+        // let i, j, temporary, chunk = 10;
+        // this.pagesDistributor = [];
+        // for (i = 0, j = data.length; i < j; i += chunk) {
+        //     temporary = data.slice(i, i + chunk);
+        //     this.pagesDistributor.push(temporary);
+        // }
+        // this.totalPageDistributor = this.pagesDistributor.length;
+        //this.reLoadTableDistributor();
     }
 
     reLoadTableDistributor() {
