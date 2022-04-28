@@ -24,8 +24,8 @@ public with sharing class HDT_UTL_NotifVasTst {
             HDT_UTL_DataFactoryTst.pClickInstance();
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
             HDT_UTL_DataFactoryTst.pClickCasePhase();
-            HDT_UTL_DataFactoryTst.newPhaseTransition('Accettato Motore Vas', 'Bozza', constants.ORDER_RECORDTYPEID_VAS, 'HDT_RT_VAS');
-			HDT_UTL_DataFactoryTst.newPhaseTransition('Accettato Motore Vas', 'Bozza', constants.CASE_RECORDTYPEID_POST_SALES_VAS, 'HDT_RT_PostSalesVAS');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Accettato Motore VAS', 'Bozza', constants.ORDER_RECORDTYPEID_VAS, 'HDT_RT_VAS');
+			HDT_UTL_DataFactoryTst.newPhaseTransition('Accettato Motore VAS', 'Bozza', constants.CASE_RECORDTYPEID_POST_SALES_VAS, 'HDT_RT_PostSalesVAS');
             
             List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
             List<Contact> cttList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
@@ -174,7 +174,8 @@ public with sharing class HDT_UTL_NotifVasTst {
 
                 HDT_WRP_MrrRequest.HDT_WRP_Field mrrFields2 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
                 mrrFields2.name = 'KEY_SERVIZIO';
-    
+
+                
                 List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList = new List<HDT_WRP_MrrRequest.HDT_WRP_Field>();
                 fieldList.add(mrrFields);
                 fieldList.add(mrrFields2);
@@ -183,7 +184,7 @@ public with sharing class HDT_UTL_NotifVasTst {
                 mrrHeader.fields = fieldList;
                 HDT_WRP_MrrRequest.HDT_WRP_Object mrrObjects = new HDT_WRP_MrrRequest.HDT_WRP_Object();
                 mrrObjects.fields = fieldList;
-                mrrObjects.objectType = 'Account';
+                mrrObjects.objectType = 'Case';
                 
                 List<HDT_WRP_MrrRequest.HDT_WRP_Object> objectList = new List<HDT_WRP_MrrRequest.HDT_WRP_Object>();
                 objectList.add(mrrObjects);           
