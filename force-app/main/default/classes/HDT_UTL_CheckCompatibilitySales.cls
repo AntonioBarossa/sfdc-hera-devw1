@@ -86,7 +86,7 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
 
         List<Order> orderToUpdate = new List<Order>();
         List<ServiceRequest__c> serviceRequestToInsert = new List<ServiceRequest__c>();
-        List<MassiveLoaderRequestItem__c> requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
+        //List<MassiveLoaderRequestItem__c> requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
 
         Order orderToCheck;
         Order analisiConsumiOrder;
@@ -103,6 +103,9 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
             if(orderAnalisiConsMap.containsKey(processObj.nextDataObj.parentOrderId)){
                 analisiConsumiOrder = orderAnalisiConsMap.get(processObj.nextDataObj.parentOrderId);
             }
+
+            System.debug('>>> order 1 ' + String.valueOf(orderToCheck));
+            System.debug('>>> order 2 ' + String.valueOf(analisiConsumiOrder));
 
             servReq = new Map<String, Object>();
             servReq.put('servicePointCode', orderToCheck.ServicePoint__r.ServicePointCode__c);
@@ -123,11 +126,18 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
                 System.debug('>>> compatibility  ok');
                 processObj.nextDataObj.orderCompatible = true;
 
+                analisiConsumiOrder.Phase__c = 'Da Inviare';
+                orderToCheck.Phase__c = 'Comunicazione verso Heroku';
+
+                orderToCheck.Status = 'In Lavorazione';
+                analisiConsumiOrder.Status = 'In Lavorazione';
+
                 // per analisi consumi creare solo ServiceRequest
                 ServiceRequest__c srRequest;
                 srRequest = setServiceRequest(srRequest, analisiConsumiOrder);
                 serviceRequestToInsert.add(srRequest);
-
+                orderToUpdate.add(orderToCheck);
+                orderToUpdate.add(analisiConsumiOrder);
             } else {
                 System.debug('>>> compatibility  KO');
                 processObj.nextDataObj.orderCompatible = false;
@@ -139,18 +149,18 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
                 analisiConsumiOrder.Phase__c = 'Annullato';
                 analisiConsumiOrder.Status = 'Annullato';
                 analisiConsumiOrder.CancellationNote__c = 'Motivazione: ' + String.valueOf(compatibility).abbreviate(250);
-                //analisiConsumiOrder.Phase__c = 'Comunicazione verso Heroku'; //// ??? 
-                orderToUpdate.add(orderToCheck);
-
+                
                 processObj.requestItem.Status__c = 'Errore';
                 processObj.requestItem.StatusDescription__c = analisiConsumiOrder.CancellationNote__c;
-
+                orderToUpdate.add(orderToCheck);
+                orderToUpdate.add(analisiConsumiOrder);
             }
 
-            orderToUpdate.add(analisiConsumiOrder);
-            requestItemForUpsert.add(processObj.requestItem);
+            System.debug('>>> order 1 ' + String.valueOf(orderToCheck));
+            System.debug('>>> order 2 ' + String.valueOf(analisiConsumiOrder));
 
             processObj.requestItem.NextStepData__c = JSON.serialize(processObj.nextDataObj);
+            //requestItemForUpsert.add(processObj.requestItem);
             itemsToUpdate.add(processObj.requestItem);
             
         }
