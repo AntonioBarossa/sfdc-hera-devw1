@@ -144,17 +144,11 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
             }
 
             if(!String.isEmpty(convertionError)){
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = convertionError;
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, convertionError));
                 continue;
             }
 
             if(errorForPicklistValue('Case', 'Type', processObj.newCase.Type)){
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = 'Valore processo non corretto: ' + processObj.newCase.Type;
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'Valore processo non corretto: ' + processObj.newCase.Type));
                 continue;
             }
@@ -168,9 +162,6 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
                 processObj.newCase.ServicePoint__c = contract.ServicePoint__c;
                 processObj.newCase.BillingProfile__c = contract.BillingProfile__c;
             } else {
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = 'pod non presente';
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'pod non presente'));
                 continue;
             }
@@ -212,9 +203,6 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
                 requestItemForUpsert.add(processObj.requestItem);
             } catch(Exception e){
                 System.debug(LoggingLevel.DEBUG, '>>> arricchimentoError ' + e.getMessage());
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = 'Errore arricchimento dati # ';
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'Errore arricchimento dati # '));
             }
 
@@ -227,9 +215,19 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
             runAlignment(saveResponse.savedObject);
             caseToInsert.clear();
 
+            Map<Id, String> caseNumberMap;
+            caseNumberMap = setCaseNumberMap(caseNumberMap, saveResponse.itemIdToObjId.values());
+
             getLimitDetails('AFTER CASE CREATION / Enrichment / Alignment');
 
             if(saveResponse.reponseItemList.size() > 0){
+
+                for(HDT_WRP_ProcessObjects processObj : processObjList){
+                    if(caseNumberMap.containsKey(processObj.newCase.Id)){
+                        processObj.requestItem.Result__c = caseNumberMap.get(processObj.newCase.Id);
+                    }
+                }
+
                 itemsToSave.addAll(saveResponse.reponseItemList);
             }
 

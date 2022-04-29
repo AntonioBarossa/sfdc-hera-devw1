@@ -99,8 +99,11 @@ public with sharing class HDT_UTL_OrderProcessTst {
             List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, false, accList[0].Id, 'Bozza');
             sales[0].isTransition__c = true;
             insert sales;
+            
+            List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].Id);
+            insert contractList;
 
-            List<Order> childOrders = HDT_UTL_DataFactoryTst.createChildOrder(5, false, accList[0].Id, sales, orderList[0].Id, cttList[0].Id);
+            List<Order> childOrders = HDT_UTL_DataFactoryTst.createChildOrder(6, false, accList[0].Id, sales, orderList[0].Id, cttList[0].Id);
             childOrders[0].Name = 'childOrder0';
             childOrders[0].Phase__c = 'Documentazione Validata';
             childOrders[0].CreditCheckDescription__c = 'Saldo debito cattivo pagatore A';
@@ -127,6 +130,17 @@ public with sharing class HDT_UTL_OrderProcessTst {
             childOrders[4].Phase__c = 'Sequenzializzato';
             childOrders[4].isTransition__c = true;
             childOrders[4].ParentOrder__c = orderList[0].Id;
+            childOrders[5].Name = 'childOrder5';
+            childOrders[5].RecordTypeId = constants.ORDER_RECORDTYPEID_VOLTURA;
+            childOrders[5].ContractReference__c = contractList[0].Id;
+            childOrders[5].CreditCheckDescription__c = 'Cattivo pagatore C';
+            childOrders[5].Phase__c = 'Credit Check KO';
+            childOrders[5].IncomingCreditCheckResult__c='OK';
+            childOrders[5].ProcessType__c = 'Switch in Fittizio';
+            childOrders[5].ServicePoint__c = spList[0].Id;
+            childOrders[5].isTransition__c = true;
+            childOrders[5].IsMassive__c = true;
+            childOrders[5].ParentOrder__c = orderList[0].Id;
             insert childOrders;
 
             List<AgentMatrix__c> agMatrixList = HDT_UTL_DataFactoryTst.createAgentMatrix(1, false, 'Telefono');
@@ -710,6 +724,9 @@ public with sharing class HDT_UTL_OrderProcessTst {
  
         System.runAs(u){
 
+            List<Order> ordTestUno = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId FROM Order WHERE Phase__c = 'Sequenzializzato' LIMIT 1];
+
+
             List<Order> orderList = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId, isTransition__c FROM Order WHERE ParentOrder__c != null AND Phase__c != 'Sequenzializzato' LIMIT 1];
             orderList[0].SiebelStatus__c = 'Annullato';
 
@@ -730,12 +747,39 @@ public with sharing class HDT_UTL_OrderProcessTst {
             Test.stopTest();
             
             List<Order> ordTest = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId FROM Order WHERE Id = :newOrderList[0].Id LIMIT 1];
+            ordTestUno = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId FROM Order WHERE Id = :ordTestUno[0].Id LIMIT 1];
 
-            System.debug('NewOrder1>>>>>>'+ ordTest[0] );
-
-            System.assertEquals(false, false, 'Activity Custom created');
-            System.assertNotEquals(true, false, 'Activity Custom not created.');
+            System.assertEquals('Annullato', ordTestUno[0].Phase__c, 'Fase non aggiornata correttamente.');
+            System.assertEquals('Annullato', ordTestUno[0].Status, 'Status non aggiornata correttamente.');
         }
     }
+
+    @isTest
+    public static void testCheckCreditProcessStatus() {
+ 
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+ 
+        System.runAs(u){
+
+            List<Order> newOrderList = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId,
+            IncomingCreditCheckResult__c,OutgoingCreditCheckResult__c, OrderReferenceNumber, IsMassive__c, ContractReference__c, VasSubtype__c, CommodityFormula__c FROM Order WHERE Name = 'childOrder5' LIMIT 1];
+        
+            Order tmpOrd = new Order();
+            tmpOrd.Id  = newOrderList[0].Id;
+            tmpOrd.IncomingCreditCheckResult__c ='KO';
+
+            Map<Id,Order> oldOrderMap = new Map<Id,Order>();
+            oldOrderMap.put(tmpOrd.Id, tmpOrd);
+
+            Test.startTest();
+
+            HDT_UTL_OrderProcess.checkCreditProcessStatus(newOrderList, oldOrderMap);
+            
+            Test.stopTest();
+
+            System.assertEquals('Documentazione Validata', newOrderList[0].Phase__c, 'Activity Custom created');
+        }
+    }
+
 
 }

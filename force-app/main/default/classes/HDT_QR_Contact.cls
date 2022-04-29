@@ -25,7 +25,8 @@ public inherited sharing class HDT_QR_Contact {
             CertifiedEmail__c,
             IndividualId,
             FiscalCode__c,
-            AccountId
+            AccountId,
+            CreatedDate
             FROM Contact
             WHERE Id = :id
             WITH SECURITY_ENFORCED
