@@ -36,23 +36,25 @@ public with sharing class HDT_LC_SaleActionsTst{
 			insert opps;
 
 			List<Contract> contracts=HDT_UTL_DataFactoryTst.createContract(1, false, accounts[0].Id);
-			contracts[0].BillingProfile__c=billProfs[0].Id;
-			insert contracts;
-
-			List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, true);
-			Id priceBookId = Test.getStandardPriceBookId();
-			List<PricebookEntry> priceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, priceBookId);
-			
-			List<SBQQ__Quote__c> quotes=HDT_UTL_DataFactoryTst.createQuote(1, false, orders[0].Id, opps[0].Id, sales[0].Id, 'Quote');
+            contracts[0].BillingProfile__c=billProfs[0].Id;
+            insert contracts;
+            
+            List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, true);
+            Id priceBookId = Test.getStandardPriceBookId();
+            List<PricebookEntry> stdpriceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, priceBookId);
+            List<Pricebook2>pbList=HDT_UTL_DataFactoryTst.createPricebook(1, true);
+            List<PricebookEntry> priceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, pbList[0].Id);
+            
+            List<SBQQ__Quote__c> quotes=HDT_UTL_DataFactoryTst.createQuote(1, false, orders[0].Id, opps[0].Id, sales[0].Id, 'Quote');
 			quotes[0].ContractReference__c=contracts[0].Id;
 			quotes[0].AmendmentAllowed__c=true;
 			quotes[0].SBQQ__Opportunity2__c=opps[0].Id;
 			quotes[0].SBQQ__Ordered__c=true;
 			quotes[0].Sale__c = sales[0].Id;
-			quotes[0].SBQQ__Pricebook__c = priceBookId;
 			insert quotes;
 
 			opps[0].SBQQ__PrimaryQuote__c=quotes[0].Id;
+            opps[0].pricebook2Id=pbList[0].Id;
 			update opps;
 
 			orders[0].SBQQ__Quote__c=quotes[0].Id;
