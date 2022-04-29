@@ -331,9 +331,9 @@
         <label>Recesso per Ripensamento</label>
     </standardValue>
     <standardValue>
-        <fullName>Recesso su Richesta Cliente</fullName>
+        <fullName>Recesso su Richiesta Cliente</fullName>
         <default>false</default>
-        <label>Recesso su Richesta Cliente</label>
+        <label>Recesso su Richiesta Cliente</label>
     </standardValue>
     <standardValue>
         <fullName>Reclamo Scritto/Rich. Info</fullName>

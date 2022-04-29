@@ -17,16 +17,17 @@ public with sharing class HDT_SRV_QservHandler {
             myFieldApiName = 'DistributorName__c';
         }
 
-        HDT_LocalDispatcherInrete__mdt myRecord = HDT_LocalDispatcherInrete__mdt.getInstance(myFieldApiName);
+        /*HDT_LocalDispatcherInrete__mdt myRecord = HDT_LocalDispatcherInrete__mdt.getInstance(myFieldApiName);
         if(myRecord != null){
             myFlag = true;
         }else{
             myFlag = false;
-        }
-        
+        }*/
+
+        myFlag = HDT_UTL_QuoteManagement.checkLocalDispatcher(String.valueOf(sobj.get(myFieldApiName)));
+
         if(myFlag){
             try {
-
                 String body = HDT_UTL_CreateGenericRequestBody.createBodyRequest(sobj);
                 HttpResponse response = makePostCallout(body);
                 HDT_WRP_MrrResponse deserializedResponse = (HDT_WRP_MrrResponse) JSON.deserialize(response.getBody(), HDT_WRP_MrrResponse.class);

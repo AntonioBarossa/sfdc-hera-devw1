@@ -633,7 +633,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             AND SBQQ__Quote__r.ContractReference__c != null
             AND (SBQQ__Quote__r.AllowChangeUse__c = null OR SBQQ__Quote__r.AllowChangeUse__c = false)
             AND (SBQQ__Quote__r.AmendmentAllowed__c = null OR SBQQ__Quote__r.AmendmentAllowed__c = false)
-            AND SBQQ__Product__r.Name NOT IN ('PDR','POD')
+            AND SBQQ__Product__r.Name NOT IN ('PDR','POD','Analisi Consumi')
             AND (SBQQ__ProductFamily__c = 'VAS Fatturabili' OR SBQQ__ProductFamily__c = 'VAS Prodotto' OR SBQQ__ProductFamily__c = 'VAS Servizio')
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED

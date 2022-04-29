@@ -77,8 +77,12 @@
                 <field>AssignmentRule__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>wrts_prcgvr__Priority__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>wrts_prcgvr__Status__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -109,9 +113,14 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>ChangeOwnerOne</actionName>
-            <actionType>StandardButton</actionType>
+            <actionName>wrts_prcgvr__Activity__c.HDT_CloseActivity</actionName>
+            <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>wrts_prcgvr__Activity__c.AssignToMe</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>1</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <showEmailCheckbox>false</showEmailCheckbox>
