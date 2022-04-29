@@ -9,7 +9,7 @@
     <values>
         <field>ProcessType__c</field>
         <value xsi:type="xsd:string">[{&quot;label&quot;:&quot;Chiusura Contatore&quot;,&quot;value&quot;:&quot;Chiusura Contatore&quot;},
-{&quot;label&quot;:&quot;Recesso su Richesta Cliente&quot;,&quot;value&quot;:&quot;Recesso su Richesta Cliente&quot;},
+{&quot;label&quot;:&quot;Recesso su Richiesta Cliente&quot;,&quot;value&quot;:&quot;Recesso su Richiesta Cliente&quot;},
 {&quot;label&quot;:&quot;Recesso per Altri Motivi&quot;,&quot;value&quot;:&quot;Recesso per Altri Motivi&quot;},
 {&quot;label&quot;:&quot;Recesso per Rifiuto Voltura&quot;,&quot;value&quot;:&quot;Recesso per Rifiuto Voltura&quot;},
 {&quot;label&quot;:&quot;Switch Out SII&quot;,&quot;value&quot;:&quot;Switch Out SII&quot;}]</value>

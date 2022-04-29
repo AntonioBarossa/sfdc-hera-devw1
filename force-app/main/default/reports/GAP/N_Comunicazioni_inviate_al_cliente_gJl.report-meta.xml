@@ -17,7 +17,7 @@
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
-            <value>Attivazione Click&amp;Pay,Blocco Sollecito/Interessi,Chiusura Contatore,Contenzioso In Corso,Copia Bolletta/Bollettino,Doppi Pagamenti/Incassi,Paperless,Recesso per Altri Motivi,Recesso per Rifiuto Voltura,Recesso su Richesta Cliente,Revoca Domiciliazione,Richiesta Domiciliazione,Rimborso,Sospensione Canone Rai,Storno Rateizzazione,Switch Out SII,Variazione Domiciliazione,Verifica Pareggio Fittizio Canone Rai,Esercizio Diritti Privacy,Modifica Alert,Variazione Anagrafica Cliente,Variazione su Amministratore,Disassociazione Utente Web,Autolettura da cliente,Autolettura da processo,Reclamo Scritto/Rich. Info,Comportamento Altri Venditori,Comportamento Venditori HC,Comunicazione di Fallimento</value>
+            <value>Attivazione Click&amp;Pay,Blocco Sollecito/Interessi,Chiusura Contatore,Contenzioso In Corso,Copia Bolletta/Bollettino,Doppi Pagamenti/Incassi,Paperless,Recesso per Altri Motivi,Recesso per Rifiuto Voltura,Recesso su Richiesta Cliente,Revoca Domiciliazione,Richiesta Domiciliazione,Rimborso,Sospensione Canone Rai,Storno Rateizzazione,Switch Out SII,Variazione Domiciliazione,Verifica Pareggio Fittizio Canone Rai,Esercizio Diritti Privacy,Modifica Alert,Variazione Anagrafica Cliente,Variazione su Amministratore,Disassociazione Utente Web,Autolettura da cliente,Autolettura da processo,Reclamo Scritto/Rich. Info,Comportamento Altri Venditori,Comportamento Venditori HC,Comunicazione di Fallimento</value>
         </criteriaItems>
     </filter>
     <format>Tabular</format>
