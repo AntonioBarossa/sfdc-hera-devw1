@@ -312,15 +312,17 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                         //wrpOrderItem.OrderItem = fakeOrderItem;
 
                         if(wrpOrderItem.itemType.equalsIgnoreCase('offertaComm')){
-                            //system.debug(LoggingLevel.DEBUG, '>>> offertaComm');
-                            wrpOrderItem.product = commOfferMap.get(wrpOrderItem.product.ProductCode + '-' + wrpOrderItem.product.Version__c);
-                            commOffId = wrpOrderItem.product.Id;
-                            wrpOrderItem.orderItem.PriceBookEntryId = priceBookEntryMap.get(commOffId).Id;
-                            wrpOrderItem.orderItem.UnitPrice = priceBookEntryMap.get(commOffId).UnitPrice;
-                            wrpOrderItem.orderItem.Quantity = 1;
-                            wrpOrderItem.orderItem.Product2Id = commOffId;
-                            priceBookId = priceBookEntryMap.get(commOffId).Pricebook2Id;
-                            //system.debug(LoggingLevel.DEBUG, '>>> pbeId offComm ' + wrpOrderItem.orderItem.PriceBookEntryId);
+                            if(commOfferMap.containsKey(wrpOrderItem.product.ProductCode + '-' + wrpOrderItem.product.Version__c)){
+                                wrpOrderItem.product = commOfferMap.get(wrpOrderItem.product.ProductCode + '-' + wrpOrderItem.product.Version__c);
+                                commOffId = wrpOrderItem.product.Id;
+                                wrpOrderItem.orderItem.PriceBookEntryId = priceBookEntryMap.get(commOffId).Id;
+                                wrpOrderItem.orderItem.UnitPrice = priceBookEntryMap.get(commOffId).UnitPrice;
+                                wrpOrderItem.orderItem.Quantity = 1;
+                                wrpOrderItem.orderItem.Product2Id = commOffId;
+                                priceBookId = priceBookEntryMap.get(commOffId).Pricebook2Id;
+                            } else {
+
+                            }
                         }
 
                     }
@@ -405,6 +407,11 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         String commodity = '';
         for(HDT_WRP_ProcessObjects processObj : processObjList){
+
+            if(processObj.requestItem.Status__c == 'Errore'){
+                continue;
+            }
+
             for(HDT_WRP_ChildOrder wrpChildOrder : processObj.childOrderList){
 
                 wrpChildOrder.childOrder.ParentOrder__c = processObj.parentOrder.Id;
@@ -684,12 +691,19 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             commOfferForRetrieve.add(wrpOrderItem.product);
 
             String itemTypeCsv = csvValues[mapHeaderForWrapper.get('ServicePointServizio')];
+            String codicePuntoCsv = csvValues[mapHeaderForWrapper.get('ServicePointCodicePunto')];
             String itemType = '';
 
             if(String.isNotEmpty(itemTypeCsv) && itemTypeCsv.equalsIgnoreCase('Energia Elettrica')){
                 itemType = 'POD';
             } else if(String.isNotEmpty(itemTypeCsv) && itemTypeCsv.equalsIgnoreCase('Gas')){
                 itemType = 'PDR';
+            } else if(String.isNotEmpty(codicePuntoCsv)){
+                if(codicePuntoCsv.isNumeric()){
+                    itemType = 'PDR';
+                } else {
+                    itemType = 'POD';
+                }
             }
 
             wrpOrderItem = new HDT_WRP_OrderItem();

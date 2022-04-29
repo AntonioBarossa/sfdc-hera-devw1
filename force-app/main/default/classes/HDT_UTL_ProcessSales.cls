@@ -464,10 +464,14 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             }
         }
         
+        //Boolean accountCfBool = 
+        //Boolean acccountPiBool = 
+        //Boolean acccountMarcaturaBool = 
+
         //search by FiscalCode__c, VATNumber__c and CustomerMarking__c
-        if( String.isNotEmpty(iterationAccount.FiscalCode__c) &&
-            String.isNotEmpty(iterationAccount.VATNumber__c) &&
-            String.isNotEmpty(iterationAccount.CustomerMarking__c)
+        if( String.isNotEmpty(iterationAccount.FiscalCode__c) &&   //  AccountCF
+            String.isNotEmpty(iterationAccount.VATNumber__c) &&    //  AcccountPI
+            String.isNotEmpty(iterationAccount.CustomerMarking__c) //  AcccountMarcatura
         ) {
             for(Account a : accountList){
                 if(
