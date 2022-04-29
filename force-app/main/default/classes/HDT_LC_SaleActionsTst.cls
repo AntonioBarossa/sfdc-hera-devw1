@@ -39,11 +39,17 @@ public with sharing class HDT_LC_SaleActionsTst{
 			contracts[0].BillingProfile__c=billProfs[0].Id;
 			insert contracts;
 
+			List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, true);
+			Id priceBookId = Test.getStandardPriceBookId();
+			List<PricebookEntry> priceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, priceBookId);
+			
 			List<SBQQ__Quote__c> quotes=HDT_UTL_DataFactoryTst.createQuote(1, false, orders[0].Id, opps[0].Id, sales[0].Id, 'Quote');
 			quotes[0].ContractReference__c=contracts[0].Id;
 			quotes[0].AmendmentAllowed__c=true;
 			quotes[0].SBQQ__Opportunity2__c=opps[0].Id;
 			quotes[0].SBQQ__Ordered__c=true;
+			quotes[0].Sale__c = sales[0].Id;
+			quotes[0].SBQQ__Pricebook__c = priceBookId;
 			insert quotes;
 
 			opps[0].SBQQ__PrimaryQuote__c=quotes[0].Id;
@@ -65,10 +71,17 @@ public with sharing class HDT_LC_SaleActionsTst{
 			quoteLines[0].SBQQ__RequiredBy__c=quoteLines[1].Id;
 			update quoteLines;
 
-			List<Campaign> campaigns=HDT_UTL_DataFactoryTst.createCampaign(1, true);
+			List<Campaign> campaigns=HDT_UTL_DataFactoryTst.createCampaign(1, false);
+			campaigns[0].Required__c = true;
+			insert campaigns;
 			List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, true);
 			List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
-			HDT_UTL_DataFactoryTst.createCampaignMember(true, campaigns[0].Id, leads, contacts);
+			List<CampaignMember> myCampaignMemberList = HDT_UTL_DataFactoryTst.createCampaignMember(false, campaigns[0].Id, leads, contacts);
+			myCampaignMemberList[0].CampaignId = campaigns[0].Id;
+			myCampaignMemberList[0].Status = 'Non Proposto Auto';
+			insert myCampaignMemberList;
+
+
 
 			//Gestione AccountContactRelation
 			AccountContactRelation acr = [SELECT Id, Roles, IsManagerSOL__c, IsActive FROM AccountContactRelation Where AccountId =: accounts[0].Id AND ContactId =: contacts[0].Id];
@@ -120,7 +133,7 @@ public with sharing class HDT_LC_SaleActionsTst{
 
 			Test.startTest();
 
-			List<Sale__c> tSales=[SELECT Id, Name, Campaign__c, Account__c, Campaign__r.CampaignEligibilityGroup__c, Status__c
+			List<Sale__c> tSales=[SELECT Id, Name, Campaign__c, isTransition__c, Account__c, Campaign__r.CampaignEligibilityGroup__c, Status__c
 			                      FROM Sale__c
 			                      WHERE Name='testSaleName0'];
 
@@ -128,9 +141,10 @@ public with sharing class HDT_LC_SaleActionsTst{
 			                                  FROM CampaignMember
 			                                  LIMIT 1];
 
+
 			String campMemId=tCampMember[0].Id;
 
-			HDT_LC_SaleActions.save(tSales[0], campMemId);
+			HDT_LC_SaleActions.save(tSales[0], '');
 
 			List<Opportunity> tOppSaved=[SELECT Id, StageName
 			                             FROM Opportunity
