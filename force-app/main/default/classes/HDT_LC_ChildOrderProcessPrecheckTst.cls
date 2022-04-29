@@ -26,6 +26,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             
             HDT_UTL_DataFactoryTst.pClickInstance();
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
+
+            List<Account> accDistr = HDT_UTL_DataFactoryTst.createSimpleAccountDistributore(1,true,'MMS','MMS Azienda','Aziende SME');
             
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(3,true,'MMS','MMS Azienda','Aziende SME');
 
@@ -38,6 +40,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             points[0].MeterStatus__c = 'Bozza';
             points[0].SapContractStatus__c = 'Attivo';
             points[0].CommoditySector__c = 'Energia Elettrica';
+            points[0].Distributor__c = accDistr[0].Id;
             insert points;
             
             List<Contract> contracts = HDT_UTL_DataFactoryTst.createContract(1,false,accs[0].id);
@@ -567,7 +570,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
 
         //setup
         Order ord = [SELECT SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c, SalesCompanyCode__c, DistributorCode__c, CommodityFormula__c,DistributorFormula__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
-
+        List<HDT_LocalDispatcherInrete__mdt> metaCont = [SELECT DeveloperName, MasterLabel, Label, QualifiedApiName, DispatcherCode__c, DispatcherDesc__c FROM HDT_LocalDispatcherInrete__mdt];
 
         //mock webservice call
         HttpResponse res = new HttpResponse();
@@ -580,8 +583,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         Test.startTest();
 
         Map<String, Object> resultMap = HDT_LC_ChildOrderProcessPrecheck.checkContendibilita(ord);
-        System.debug('@@@ resultMap.get: ' + resultMap);
-
+        
         //assertions
         System.assertEquals(true , resultMap.get('ESITO'), 'Esito != true');
         System.assertEquals('001' , resultMap.get('DES_ERR_AEEG'), 'DES_ERR_AEEG != 001');
@@ -645,7 +647,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
     static void testCheckContendibilitaKo(){
 
         //setup
-        Order ord = [SELECT SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c, SalesCompanyCode__c, DistributorCode__c, CommodityFormula__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
+        Order ord = [SELECT SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c, SalesCompanyCode__c, DistributorCode__c, CommodityFormula__c, DistributorFormula__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
 
         //mock webservice call
         HttpResponse res = new HttpResponse();

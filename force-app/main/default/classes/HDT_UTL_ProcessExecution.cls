@@ -309,6 +309,21 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
         return newCase;
     }
 
+    public static Map<Id, String> setCaseNumberMap(Map<Id, String> caseNumberMap, List<Id> caseIdList){
+        caseNumberMap = new Map<Id, String>();
+        List<Case> savedCaseList = [
+            SELECT Id, CaseNumber
+            FROM Case
+            WHERE Id IN :caseIdList
+            WITH SECURITY_ENFORCED
+        ];
+
+        for(Case cs : savedCaseList){
+            caseNumberMap.put(cs.Id, cs.CaseNumber);
+        }
+        return caseNumberMap;
+    }
+
     public static Boolean errorForPicklistValue(String objType, String fieldType, String valueToCheck){
 
         Schema.DescribeFieldResult fieldResult = Schema.getGlobalDescribe().get(objType).getDescribe().fields.getMap().get(fieldType).getDescribe();

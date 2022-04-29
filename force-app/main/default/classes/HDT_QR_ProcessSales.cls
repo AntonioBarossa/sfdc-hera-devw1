@@ -37,7 +37,7 @@ public inherited sharing class HDT_QR_ProcessSales {
     public static List<ServicePoint__c> getServicePointList(List<ServicePoint__c> servicePointList, List<Id> servPointIdsList){
         servicePointList = new List<ServicePoint__c>();
         servicePointList = [
-            SELECT Id, MeterStatus__c, Distributor__c, Account__c, ServicePointCode__c, Name
+            SELECT Id, MeterStatus__c, Distributor__c, Account__c, ServicePointCode__c, Name, ExciseGas__c
             FROM ServicePoint__c
             WHERE Id = :servPointIdsList
             WITH SECURITY_ENFORCED

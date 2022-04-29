@@ -148,7 +148,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			Test.setMock(HttpCalloutMock.class, mock);
 
-			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetToponym__c, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
+			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, CustomerType__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetToponym__c, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
 			                    FROM Account
 			                    WHERE Name='test account0'];
 
