@@ -257,6 +257,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_MassiveLoaderResult</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_BA_ExpiredCases</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -4121,14 +4125,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_UTL_ProcessTakeOver</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_ProcessTakeOverTst</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_UTL_ProcessVariazioni</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -4182,14 +4178,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_ReimbursementTst</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_ReworkingScraps</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_ReworkingScrapsTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
