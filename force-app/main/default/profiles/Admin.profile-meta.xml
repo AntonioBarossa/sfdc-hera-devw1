@@ -38945,4 +38945,8 @@
         <apexPage>HDT_VFP_LeadMessage</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
+    <pageAccesses>
+        <apexPage>HDT_VF_OverrideDeleteOperation</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
 </Profile>
