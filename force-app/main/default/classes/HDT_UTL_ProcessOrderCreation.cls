@@ -69,10 +69,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             }
 
             processObj.requestItem = item;
-            //processObj.accountId = processObj.nextDataObj.accountId;
-            //processObj.contactId = processObj.nextDataObj.contactId;
-            //processObj.billProfId = processObj.nextDataObj.billProfId;
-            //processObj.servPointId = processObj.nextDataObj.servPointId;
             accountIdToRetrieve.add(processObj.nextDataObj.accountId);
             billProfToRetrieve.add(processObj.nextDataObj.billProfId);
             servPointToRetrieve.add(processObj.nextDataObj.servPointId);
