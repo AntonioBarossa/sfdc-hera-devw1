@@ -177,7 +177,17 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
             HDT_WRP_SaveResponse saveResponse = databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
             caseToInsert.clear();
 
+            Map<Id, String> caseNumberMap;
+            caseNumberMap = setCaseNumberMap(caseNumberMap, saveResponse.itemIdToObjId.values());
+
             if(saveResponse.reponseItemList.size() > 0){
+
+                for(HDT_WRP_ProcessObjects processObj : processObjList){
+                    if(caseNumberMap.containsKey(processObj.newCase.Id)){
+                        processObj.requestItem.Result__c = caseNumberMap.get(processObj.newCase.Id);
+                    }
+                }
+
                 itemsToSave.addAll(saveResponse.reponseItemList);
             }
 

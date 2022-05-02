@@ -103,4 +103,108 @@ public with sharing class HDT_LC_MassiveLoaderTst {
         System.assertEquals(false, (Boolean)response.get('error'), 'Some error occurred');
     }
 
+    @isTest
+    public static void testGetCsvBody(){
+
+        String selectedProcessName = 'CambioOfferta';
+
+        Test.startTest(); 
+        Map<String, Object> response = HDT_LC_MassiveLoader.getCsvBody(selectedProcessName);
+        Test.stopTest();
+
+        System.assertEquals(false, (Boolean)response.get('error'), 'Some error occurred');
+    }
+
+    @isTest
+    public static void testGetCsvBodyFail(){
+
+        String selectedProcessName = '';
+
+        Test.startTest(); 
+        Map<String, Object> response = HDT_LC_MassiveLoader.getCsvBody(selectedProcessName);
+        Test.stopTest();
+
+        System.assertNotEquals(false, (Boolean)response.get('error'), 'No errors');
+    }
+
+    // @isTest
+    // public static void testGetCsvBodyException(){
+
+    //     String selectedProcessName = null;
+
+    //     Test.startTest(); 
+    //     Map<String, Object> response = HDT_LC_MassiveLoader.getCsvBody(selectedProcessName);
+    //     Test.stopTest();
+
+    //     System.assertNotEquals(false, (Boolean)response.get('error'), 'No errors');
+    // }
+
+    @isTest
+    public static void testInitialize(){
+
+        Test.startTest(); 
+        Map<String, Object> response = HDT_LC_MassiveLoader.initialize();
+        Test.stopTest();
+
+        System.assertEquals(false, (Boolean)response.get('error'), 'Some error occurred');
+    }
+
+    @isTest
+    public static void testCreateMassiveLoaderRequest(){
+
+        String selectedProcessName = 'Morosita';
+
+        Test.startTest(); 
+        Map<String, Object> response = HDT_LC_MassiveLoader.createMassiveLoaderRequest(selectedProcessName);
+        Test.stopTest();
+
+        System.assertEquals(false, (Boolean)response.get('error'), 'Some error occurred');
+        System.assertEquals(true, [SELECT Id, ProcessType__c FROM MassiveLoaderRequest__c WHERE ProcessType__c =: selectedProcessName WITH SECURITY_ENFORCED].size()>0, 'MassiveLoaderRequest record not created');
+    }
+
+    @isTest
+    public static void testCreateMassiveLoaderRequestException(){
+
+        String selectedProcessName = null;
+
+        Test.startTest(); 
+        Map<String, Object> response = HDT_LC_MassiveLoader.createMassiveLoaderRequest(selectedProcessName);
+        Test.stopTest();
+
+        System.assertEquals(true, (Boolean)response.get('error'), 'No errors');
+    }
+
+    @isTest
+    public static void testUpdateMassiveLoaderRequest(){
+
+        HDT_SRV_MassiveLoaderRequest massiveLoaderRequestSrv = new HDT_SRV_MassiveLoaderRequest();
+        MassiveLoaderRequest__c massLoadReq = massiveLoaderRequestSrv.createNewRequestRecord('Subentro', 51);
+
+        Test.startTest(); 
+        Map<String, Object> response = HDT_LC_MassiveLoader.updateMassiveLoaderRequest(massLoadReq.Id, massLoadReq.ProcessType__c);
+        Test.stopTest();
+
+        System.assertEquals(false, (Boolean)response.get('error'), 'Some error occurred');
+    }
+
+    @isTest
+    public static void testUpdateMassiveLoaderRequestException(){
+
+        Test.startTest(); 
+        Map<String, Object> response = HDT_LC_MassiveLoader.updateMassiveLoaderRequest('', '');
+        Test.stopTest();
+
+        System.assertEquals(true, (Boolean)response.get('error'), 'No errors');
+    }
+
+    // @isTest
+    // public static void testConvertCsvToRequestItem(){
+
+    //     Test.startTest(); 
+    //     //Map<String, Object> response = HDT_LC_MassiveLoader.convertCsvToRequestItem(fileName, contentVersionId, selectedProcessName, massiveLoaderRequestId);
+    //     Test.stopTest();
+
+    //     //System.assertEquals(false, (Boolean)response.get('error'), 'Some error occurred');
+    // }
+
 }
