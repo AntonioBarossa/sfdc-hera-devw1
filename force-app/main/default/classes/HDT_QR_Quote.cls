@@ -133,7 +133,8 @@ public inherited sharing class HDT_QR_Quote {
             SBQQ__Ordered__c,
             SBQQ__LineItemsGrouped__c,
             SBQQ__OrderByQuoteLineGroup__c,
-            SBQQ__Pricebook__r.Name
+            SBQQ__Pricebook__c,
+            SBQQ__Pricebook__r.Name, isTransition__c
             FROM SBQQ__Quote__c
             WHERE Sale__c = :saleId
             AND SBQQ__Status__c NOT IN ('Cancelled','Rejected')
