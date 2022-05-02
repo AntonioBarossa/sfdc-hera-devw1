@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>WaiverRightAfterthought__c</fullName>
     <externalId>false</externalId>
-    <label>Rinuncia Diritto di Ripensamento</label>
+    <label>Attivazione Anticipata</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <type>Picklist</type>
