@@ -723,6 +723,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         if(i == '0'){
             var e = event.currentTarget.dataset.id;
 
+            console.log('CurrentTarget >>> ' + JSON.stringify(event.currentTarget));
+            console.log('CurrentTarget - Dataser >>> ' + JSON.stringify(event.currentTarget.dataset));
+
             if (idlist === undefined || idlist.length == 0) {
                 //only for the first id of the list
                 idlist.push(e);
