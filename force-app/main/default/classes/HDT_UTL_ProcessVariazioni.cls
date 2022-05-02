@@ -25,6 +25,7 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
 
     public override void checks(){
         System.debug(LoggingLevel.DEBUG, 'checks');
+        itemsToSave = new List<MassiveLoaderRequestItem__c>();
         mapFieldsObject();
 
         //System.debug(LoggingLevel.DEBUG, '>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
@@ -102,8 +103,8 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
 
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
-        itemsToSave = new List<MassiveLoaderRequestItem__c>();
         requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
+        Map<Id, String> caseNumberMap = new Map<Id, String>();
 
         HDT_QR_CausalCodeCalculation causalCodeCalculation = new HDT_QR_CausalCodeCalculation();
         HDT_CausalCodeCalculation__mdt causalCode;
@@ -215,19 +216,22 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
             runAlignment(saveResponse.savedObject);
             caseToInsert.clear();
 
-            Map<Id, String> caseNumberMap;
-            caseNumberMap = setCaseNumberMap(caseNumberMap, saveResponse.itemIdToObjId.values());
+            if(saveResponse.savedObject.size() > 0){
+                caseNumberMap = setCaseNumberMap(caseNumberMap, saveResponse.itemIdToObjId.values());
+
+                Id caseId;
+                for(HDT_WRP_ProcessObjects processObj : processObjList){
+                    caseId = saveResponse.itemIdToObjId.get(processObj.requestItem.Id);
+                    if(caseNumberMap.containsKey(caseId)){
+                        processObj.requestItem.Result__c = caseNumberMap.get(caseId);
+                    }
+                }
+
+            }
 
             getLimitDetails('AFTER CASE CREATION / Enrichment / Alignment');
 
             if(saveResponse.reponseItemList.size() > 0){
-
-                for(HDT_WRP_ProcessObjects processObj : processObjList){
-                    if(caseNumberMap.containsKey(processObj.newCase.Id)){
-                        processObj.requestItem.Result__c = caseNumberMap.get(processObj.newCase.Id);
-                    }
-                }
-
                 itemsToSave.addAll(saveResponse.reponseItemList);
             }
 
@@ -273,6 +277,8 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
 
     public override void finalUpdate(){
         System.debug(LoggingLevel.DEBUG, 'finalUpdate');
+
+        System.debug(LoggingLevel.DEBUG, 'itemsToSave ' + itemsToSave);
 
         if(itemsToSave.size() > 0){
             update itemsToSave;
