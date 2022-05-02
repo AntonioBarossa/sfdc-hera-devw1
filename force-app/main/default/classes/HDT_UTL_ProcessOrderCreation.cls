@@ -42,6 +42,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private OrderItem fakeOrderItem;
     private Map<String, String> companyCodeMap;
     private Map<String, String> processMatrixMap;
+    private Map<Id, SBQQ__ProductOption__c> otherRequiredOption;
 
     public override void checks(){
 
@@ -143,6 +144,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         pricebookEntryForOptionalMap = new Map<Id, Map<Id, PriceBookEntry>>();
         processMatrixMap = new Map<String, String>();
         List<ProcessMatrix__c> processMatrixList = new List<ProcessMatrix__c>();
+        otherRequiredOption = new Map<Id, SBQQ__ProductOption__c>();
+        Set<String> defaultProdOption = new Set<String>();
+        List<Id> optnionalSkuIdList = new List<Id>();
 
         processMatrixList = [
             SELECT ProcessName__c, RecordTypeName__c, CasualCode__c
@@ -199,11 +203,14 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             SELECT SBQQ__ConfiguredSKU__c, SBQQ__OptionalSKU__c, SBQQ__OptionalSKU__r.ProductCode, SBQQ__OptionalSKU__r.Name
             FROM SBQQ__ProductOption__c
             WHERE SBQQ__ConfiguredSKU__c IN :productIdList
+            AND SBQQ__Required__c = true
             WITH SECURITY_ENFORCED
         ];
-
-        List<Id> optnionalSkuIdList = new List<Id>();
         
+        defaultProdOption.add('Analisi Consumi');
+        defaultProdOption.add('PDR');
+        defaultProdOption.add('POD');
+
         for(SBQQ__ProductOption__c prodOpt : productOptionList){
             if(additionalOrderItemMap.containsKey(prodOpt.SBQQ__ConfiguredSKU__c)){
                 Map<String, SBQQ__ProductOption__c> tempMap = additionalOrderItemMap.get(prodOpt.SBQQ__ConfiguredSKU__c);
@@ -211,6 +218,11 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 additionalOrderItemMap.put(prodOpt.SBQQ__ConfiguredSKU__c, tempMap);
                 optnionalSkuIdList.add(prodOpt.SBQQ__OptionalSKU__c);
             }
+
+            if(!defaultProdOption.contains(SBQQ__OptionalSKU__r.Name)){
+                otherRequiredOption.put(prodOpt.SBQQ__OptionalSKU__c, prodOpt);
+            }
+
         }
         
         pbeOptionalSkuList = [
