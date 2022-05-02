@@ -301,9 +301,9 @@
                 <label>Recesso per Rifiuto Voltura</label>
             </value>
             <value>
-                <fullName>Recesso su Richesta Cliente</fullName>
+                <fullName>Recesso su Richiesta Cliente</fullName>
                 <default>false</default>
-                <label>Recesso su Richesta Cliente</label>
+                <label>Recesso su Richiesta Cliente</label>
             </value>
             <value>
                 <fullName>Reclamo Scritto/Rich. Info</fullName>

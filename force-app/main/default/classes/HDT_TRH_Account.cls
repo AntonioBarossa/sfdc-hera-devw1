@@ -7,8 +7,6 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
         List<String> listDeniedRes = accRes.ValueToRemove__c.split(';');
         List<String> listDeniedBus = accBus.ValueToRemove__c.split(';');
 
-        //Map<String, HDT_ObjectRecordType__mdt> mcs = HDT_ObjectRecordType__mdt.getAll();
-
         Id accRecordTypeResId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
         Id accRecordTypeBusId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
  
@@ -34,71 +32,118 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
         }
          HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
          createKpiExtension();
-     }
+    }
  
-     protected override void beforeUpdate() {
-         checkAccountName();
-         createKpiExtension();
-     }
- 
-     public override void afterUpdate(){
-         manageAccountPartnerQueues();
-     }
+    protected override void beforeUpdate() {
+        checkAccountName();
+        createKpiExtension();
+        setIndividualsOwnerIds();
+    }
+
+    public override void afterUpdate(){
+        manageAccountPartnerQueues();
+    }
  
      /**
       * Verifica che il Name degli Account residenziali/aziende rimanga la concatenazione di FirstName + LastName.
       */
-     private void checkAccountName() {
+    private void checkAccountName() {
+
+        HDT_QR_RecordType queryHandler = new HDT_QR_RecordType();
+        Id rtResidenziale = queryHandler.getRecordTypeIdByName('HDT_RT_Residenziale');
+        Id rtBusiness = queryHandler.getRecordTypeIdByName('HDT_RT_Business');
+
+        for (Account acc : (List<Account>) Trigger.new) {
+
+            if (acc.RecordTypeId != rtResidenziale && acc.RecordTypeId != rtBusiness) {
+                continue;
+            }
+
+            String expectedNewName = String.isBlank(acc.FirstName__c) ? acc.LastName__c : acc.FirstName__c + ' ' + acc.LastName__c;
+
+            if (!acc.Name.equalsIgnoreCase(expectedNewName)) {
+                acc.addError('Il Nome del Cliente deve essere equivalente a \'Nome Cognome\' per clienti Residenziali o \'Cognome/Ragione sociale\' per clienti Aziende.');
+            }
+        }
+    }
  
-         HDT_QR_RecordType queryHandler = new HDT_QR_RecordType();
-         Id rtResidenziale = queryHandler.getRecordTypeIdByName('HDT_RT_Residenziale');
-         Id rtBusiness = queryHandler.getRecordTypeIdByName('HDT_RT_Business');
- 
-         for (Account acc : (List<Account>) Trigger.new) {
- 
-             if (acc.RecordTypeId != rtResidenziale && acc.RecordTypeId != rtBusiness) {
-                 continue;
-             }
- 
-             String expectedNewName = String.isBlank(acc.FirstName__c) ? acc.LastName__c : acc.FirstName__c + ' ' + acc.LastName__c;
- 
-             if (!acc.Name.equalsIgnoreCase(expectedNewName)) {
-                 acc.addError('Il Nome del Cliente deve essere equivalente a \'Nome Cognome\' per clienti Residenziali o \'Cognome/Ragione sociale\' per clienti Aziende.');
-             }
-         }
-     }
- 
-     private void createKpiExtension(){
-         if(Trigger.isInsert){
-             HDT_UTL_KpiTracking.createKpiTracking(Trigger.new, null);
-         }else if(Trigger.isUpdate){
-             HDT_UTL_KpiTracking.createKpiTracking(Trigger.new, Trigger.oldMap);
-         }else if(Trigger.isDelete){
-             HDT_UTL_KpiTracking.deleteKpiTracking(Trigger.old);
-         }
-     }
- 
-     private void manageAccountPartnerQueues(){
-         List<Account> newAcc= Trigger.new;
-         List<Account> oldAcc= Trigger.old;
-         Map<String,Account> mapAccount = new Map<String,Account>();
-         for(Account ac: oldAcc){
-             mapAccount.put(ac.Id, ac);
-         }
-         List<Account> accts= new List<Account>();
-         for (Account acc : newAcc) {
-             Account oldAccount= mapAccount.get(acc.Id);
-             if(acc.isPartner== true && oldAccount.Published__c== false && acc.Published__c == true){
-                 accts.add(acc);
-                 
-             }
-         }
-         if(!accts.isEmpty()){
-             Datetime dt= Datetime.now().addMinutes(2);
-             String cron = dt.second() + ' ' + dt.minute() + ' ' + dt.hour() + ' * * ?';
- 
-             HDT_SCH_QueueAssignmentScheduler s = new HDT_SCH_QueueAssignmentScheduler(accts); 
-             System.schedule('PartnerQueues ' + String.valueOf(Datetime.now()), cron, s);
-         }
-     }
- }
+    private void createKpiExtension(){
+        if(Trigger.isInsert){
+            HDT_UTL_KpiTracking.createKpiTracking(Trigger.new, null);
+        }else if(Trigger.isUpdate){
+            HDT_UTL_KpiTracking.createKpiTracking(Trigger.new, Trigger.oldMap);
+        }else if(Trigger.isDelete){
+            HDT_UTL_KpiTracking.deleteKpiTracking(Trigger.old);
+        }
+    }
+
+    private void manageAccountPartnerQueues(){
+        List<Account> newAcc= Trigger.new;
+        List<Account> oldAcc= Trigger.old;
+        Map<String,Account> mapAccount = new Map<String,Account>();
+        for(Account ac: oldAcc){
+            mapAccount.put(ac.Id, ac);
+        }
+        List<Account> accts= new List<Account>();
+        for (Account acc : newAcc) {
+            Account oldAccount= mapAccount.get(acc.Id);
+            if(acc.isPartner== true && oldAccount.Published__c== false && acc.Published__c == true){
+                accts.add(acc);                
+            }
+        }
+        if(!accts.isEmpty()){
+            Datetime dt= Datetime.now().addMinutes(2);
+            String cron = dt.second() + ' ' + dt.minute() + ' ' + dt.hour() + ' * * ?';
+
+            HDT_SCH_QueueAssignmentScheduler s = new HDT_SCH_QueueAssignmentScheduler(accts); 
+            System.schedule('PartnerQueues ' + String.valueOf(Datetime.now()), cron, s);
+        }
+    }
+
+    @SuppressWarnings('PMD.CyclomaticComplexity')
+    private void setIndividualsOwnerIds(){
+
+        Set<String> accidSet = new Set<String>();
+        List<Individual> individToUpdateList = new List<Individual>();
+        List<String> accIdList = new List<String>();
+        Map<String, List<String>> accToIndividualMap = new Map<String, List<String>>();
+        Map<String, String> accountToOwnerIdMap = new Map<String, String>();
+        HDT_QR_Contact contQr = new HDT_QR_Contact();
+
+        for(Account acc : (List<Account>) Trigger.new){
+            Account odlAcc = (Account) Trigger.oldMap.get(acc.Id);
+            if(acc.OwnerId != odlAcc.OwnerId){
+                accidSet.add(acc.Id);
+                accountToOwnerIdMap.put(acc.Id, acc.OwnerId);
+            }
+        }
+
+        if(!accidSet.isEmpty()){
+            accIdList.addAll(accidSet);
+            for(Contact cont : contQr.getContactsIdByAccountIdList(accIdList)){
+                if(accToIndividualMap.get(cont.AccountId) != null){
+                    accToIndividualMap.get(cont.AccountId).add(cont.IndividualId);
+                }
+                else {
+                    accToIndividualMap.put(cont.AccountId, new List<String>());
+                    accToIndividualMap.get(cont.AccountId).add(cont.IndividualId);
+                }
+            }
+        }
+
+        if(!accToIndividualMap.values().isEmpty()){
+            for(String accId : accToIndividualMap.keySet()){
+                for(String indivId : accToIndividualMap.get(accId)){
+                    Individual ind = new Individual(
+                        Id = indivId,
+                        OwnerId = accountToOwnerIdMap.get(accId)
+                    );
+                    individToUpdateList.add(ind);
+                }
+            }
+            if(!individToUpdateList.isEmpty()){
+                HDT_UTL_DatabaseService.updateSObject(individToUpdateList);
+            }
+        }
+    }
+}

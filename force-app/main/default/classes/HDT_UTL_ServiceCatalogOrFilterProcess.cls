@@ -365,7 +365,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
     'ComportamentoAltriVenditori' => new Map<String,List<String>>
         {
             'Type' => new List<String>
-                {'Reclamo Scritto/Rich. Info', 'Switch Out SII','Recesso su Richesta Cliente'}
+                {'Reclamo Scritto/Rich. Info', 'Switch Out SII','Recesso su Richiesta Cliente'}
         },
     'ComportamentoVenditoriHC' => new Map<String,List<String>>
         {

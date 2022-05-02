@@ -128,8 +128,9 @@ public inherited sharing class HDT_QR_Contact {
     * @return List<Contact>
     */
     public List<Contact> getContactsIdByAccountIdList(List<String> accountIds) {
-        // Start HRAWRM-450 07/09/2021 add CertifiedEmail__c
-        return [Select id,CertifiedEmail__c,accountId,firstname,lastname,FiscalCode__c,Phone,MobilePhone,Email,Individual.ProfilingCompanyConsent__c from Contact where AccountId IN : accountIds WITH SECURITY_ENFORCED];
+
+        return [SELECT Id, CertifiedEmail__c, AccountId, Firstname, Lastname, FiscalCode__c, Phone, MobilePhone, Email, IndividualId, Individual.ProfilingCompanyConsent__c
+                FROM Contact WHERE AccountId IN : accountIds WITH SECURITY_ENFORCED];
     }
 
     // INIZIO SVILUPPI EVERIS

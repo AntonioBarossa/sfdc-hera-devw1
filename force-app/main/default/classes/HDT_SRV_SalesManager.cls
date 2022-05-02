@@ -108,7 +108,7 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
     private static void customCallout(Id sobjectId, String method){
         HDT_WS_ArrichmentDataEntityResponse res;
         String newPhase;
-        String errorDescription;
+        String errorDescription = '';
 
         //gabriele.rota@webresults.it | 2021-09-27
         if (sobjectId.getSobjectType().getDescribe().getName()=='Order') {
@@ -138,16 +138,17 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
             }
             when 'deactivation'{
                 res = HDT_WS_MotoreVas.deactivationCallout(sobjectId);
+                System.debug(loggingLevel.DEBUG, res);
                 Boolean isSuccess = (res.statusCode==200 || res.statusCode==201);
                 newPhase = isSuccess?'Comunicazione verso Motore VAS OK':'Comunicazione verso Motore VAS KO';
                 if (!isSuccess) {
-                    if (String.isNotBlank(res.exceptionMessage)){
-                        errorDescription = res.exceptionMessage;
+                    if(res.errorDetails != null)
+                    {
+                        errorDescription = res.errorDetails[0].message;
                     }
-                    else {
-                        if(!res.errorDetails.isEmpty() && res.errorDetails[0] != null){
-                            errorDescription = res.errorDetails[0].message;
-                        }
+                    else 
+                    {
+                        errorDescription = 'Comunicazione Motore Vas KO';
                     }
                 }
             }
@@ -229,6 +230,7 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
             when 'Case' {
                 sender = (SObject) new Case();
                 errorField = 'DiscardDescription__c';
+                sender.put('Description',errorDescription);
             }
             when 'Order' {
                 sender = (SObject) new Order();
