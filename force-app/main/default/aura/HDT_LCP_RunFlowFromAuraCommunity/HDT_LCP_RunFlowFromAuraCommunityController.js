@@ -213,13 +213,11 @@
     },
     
     handleStatusChange : function (component, event) {
-    
-       console.log('### EVENT STATUS: ' + event.getParam("status"));
-       var workspaceAPI = component.find("workspace");
 
-       if(event.getParam("status") === "FINISHED" 
-       || event.getParam("status") === "FINISHED_SCREEN"
-       || event.getParam("status") === "ERROR") {
+        console.log('### EVENT STATUS: ' + event.getParam("status"));
+        var workspaceAPI = component.find("workspace");
+
+        if(event.getParam("status") === "FINISHED" || event.getParam("status") === "FINISHED_SCREEN" || event.getParam("status") === "ERROR") {
 
             var accountTabId = component.get("v.accountTabId");
             var leadTabId = component.get("v.leadTabId");
@@ -228,19 +226,6 @@
             var flowfinal = component.find("flowData");
                 
             if(event.getParam("status") === "ERROR"){
-                //Sembra non esserci nella struttura dell'event il messaggio di errore
-                /*event: {
-                    "_name":"",
-                    "_source":{},
-                    "_params":{
-                        "status":"ERROR",
-                        "flowTitle":"Gestione Annullamento",
-                        "showHeader":true,
-                        "guid":"5576e83980290edaf4536891f79f179e6928cf-b934"
-                    },
-                    "target":null,
-                    "currentTarget":null}
-                */
                 console.log('Inside Error condition: ' + JSON.stringify(event));
 
                 var toastEvent = $A.get("e.force:showToast");
@@ -251,7 +236,6 @@
                 });
                 toastEvent.fire();
             }
-
            
             flowfinal.destroy();
 
@@ -281,7 +265,8 @@
                         statusCampaignMember = outputVar.value;
                     }
                 }
-            }else{
+            }
+            else{
                 newCaseId=component.get("v.recordid");
             }
 
@@ -298,12 +283,13 @@
             var campaignMemberId = component.get("v.campaignMemberId");
             console.log('# campaignMemberId -> ' +campaignMemberId);
             var navService = component.find("navService");
+            var navOnRecId = (newCaseId != null && newCaseId != undefined) ? newCaseId : campaignMemberId;
             var pageReference = 
             {
                 "type":"standard__recordPage",
                 "attributes":
                 {
-                    "recordId": campaignMemberId,
+                    "recordId": navOnRecId,
                     "actionName" : "view"
                 }
             }
