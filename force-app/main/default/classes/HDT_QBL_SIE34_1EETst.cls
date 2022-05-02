@@ -7,7 +7,7 @@
 @isTest
 public with sharing class HDT_QBL_SIE34_1EETst {
     
-    private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
+   /* private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
     private static Datetime d= Datetime.now().addHours(-3);
 
     @TestSetup
@@ -44,5 +44,5 @@ public with sharing class HDT_QBL_SIE34_1EETst {
         Test.stopTest();
         System.assertEquals('Completed' , [SELECT Id , Status FROM AsyncApexJob WHERE Id=:res][0].Status, 'The job has not been completed');
         System.assertNotEquals(null , [SELECT Id , Status FROM AsyncApexJob WHERE Id=:res][0].Status, 'The job has not been completed');
-    }
+    }*/
 }
