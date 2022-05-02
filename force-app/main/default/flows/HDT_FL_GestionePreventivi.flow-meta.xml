@@ -3624,7 +3624,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <isOutput>false</isOutput>
         <scale>2</scale>
         <value>
-            <numberValue>25.81</numberValue>
+            <numberValue>25.2</numberValue>
         </value>
     </variables>
     <variables>
@@ -3635,7 +3635,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <isOutput>false</isOutput>
         <scale>2</scale>
         <value>
-            <numberValue>55.66</numberValue>
+            <numberValue>56.38</numberValue>
         </value>
     </variables>
     <variables>
@@ -3646,7 +3646,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <isOutput>false</isOutput>
         <scale>2</scale>
         <value>
-            <numberValue>70.41</numberValue>
+            <numberValue>71.32</numberValue>
         </value>
     </variables>
     <variables>

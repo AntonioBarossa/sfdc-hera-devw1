@@ -89,6 +89,15 @@
                         <valueListItems>
                             <value>ChangeOwnerOne</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Account.HDT_InfoTracking</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.Scheda_Cliente</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Account.Escalation</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
