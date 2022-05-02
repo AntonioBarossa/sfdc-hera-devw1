@@ -319,7 +319,7 @@ export default class HdtSoldBy extends LightningElement {
             this.loading = false;
             this.showSuccessMessage('Venduto Da calcolato con successo');
         }).catch(error => {
-            this.loaded = false;
+            this.loading = false;
             console.log(error);
             this.showErrorMessage('Errore aggiornamento');
         });
@@ -351,7 +351,7 @@ export default class HdtSoldBy extends LightningElement {
             this.loading = false;
             this.showSuccessMessage('Venduto Da calcolato con successo');
         }).catch(error => {
-            this.loaded = false;
+            this.loading = false;
             console.log(error);
             this.showErrorMessage('Errore di calcolo su canale ' + channel);
         });
@@ -362,7 +362,8 @@ export default class HdtSoldBy extends LightningElement {
             this.loading = true;
             this.recordInfo = await getLeadInfo({ id: this.recordId });
             console.log('hdtSoldBy mounted: ' + JSON.stringify(this.recordInfo));
-        } catch (error) {
+        }
+        catch (error) {
             console.log('Error: ', JSON.stringify(error));
             this.showErrorMessage('Errore nel recupero del record');
         }
@@ -370,7 +371,6 @@ export default class HdtSoldBy extends LightningElement {
         this.loading = false;
 
         if (this.recordInfo.CreatedBy.LoginChannel__c == 'Sportello') {
-            console.log('keltin enter here');
             this.automaticCalculation('Sportello');
         }
         else if (this.recordInfo.CreatedBy.LoginChannel__c == 'Telefono Outbound' || this.recordInfo.CreatedBy.LoginChannel__c == 'Teleselling') {

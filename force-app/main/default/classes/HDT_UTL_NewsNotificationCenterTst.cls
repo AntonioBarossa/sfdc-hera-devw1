@@ -1,5 +1,6 @@
 @isTest
 public class HDT_UTL_NewsNotificationCenterTst {
+    private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
 
     @TestSetup
     static void setup(){
@@ -43,29 +44,40 @@ public class HDT_UTL_NewsNotificationCenterTst {
     static void testSendNotificationCluster(){
 
         Knowledge__kav article = [SELECT Id, Title FROM Knowledge__kav WITH SECURITY_ENFORCED LIMIT 1];
+        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
+ 
+        User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+        internalUser.UserPermissionsKnowledgeUser = true;
         
-        Test.startTest();
+        System.runAs(internalUser) {
+            Test.startTest();
 
-        String result = HDT_UTL_NewsNotificationCenter.sendNotification(article);
-
-        System.assertEquals(null, result, 'result != null');
-
-        Test.stopTest();
-        
+            String result = HDT_UTL_NewsNotificationCenter.sendNotification(article);
+    
+            System.assertEquals(null, result, 'result != null');
+    
+            Test.stopTest();
+        }
     }
 
     @IsTest
     static void testSendNotificationCanale(){
 
         Knowledge__kav article = [SELECT Id, Title FROM Knowledge__kav WITH SECURITY_ENFORCED LIMIT 1];
+        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
+ 
+        User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+        internalUser.UserPermissionsKnowledgeUser = true;
         
-        Test.startTest();
-
-        String result = HDT_UTL_NewsNotificationCenter.sendNotification(article);
-
-        System.assertEquals(null, result, 'result != null');
-
-        Test.stopTest();
+        System.runAs(internalUser) {
+            Test.startTest();
+    
+            String result = HDT_UTL_NewsNotificationCenter.sendNotification(article);
+    
+            System.assertEquals(null, result, 'result != null');
+    
+            Test.stopTest();
+        }
         
     }
 
