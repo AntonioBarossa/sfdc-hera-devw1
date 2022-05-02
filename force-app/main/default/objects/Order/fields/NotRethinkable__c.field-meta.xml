@@ -6,6 +6,7 @@
     <formula>OR(
 				CONTAINS(TEXT(Phase__c), &quot;Ripensamento&quot;),
 				ISNULL(MaxAfterthoughtDate__c),
+				MaxAfterthoughtDate__c &lt; TODAY(),
 				CONTAINS(TEXT(Phase__c), &quot;Ripensato&quot;)
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
