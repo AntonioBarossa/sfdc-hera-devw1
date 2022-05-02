@@ -90,7 +90,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     @track context;
     @track tipoPlico;
 
-    @track residualMessage = 'Residuo Par. Selez.: € '
+    @track residualMessage = 'Residuo Par. Selez.: € ';
+    @track residualSelected = 0.0;
 
     connectedCallback() {
         console.log('# connectedCallback #');
@@ -719,29 +720,37 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     checkboxHandler(event){
         
         var i = event.target.value;
+        console.log('#Event target value >>> ' + event.target.value);
+
+
+
         
         if(i == '0'){
             var e = event.currentTarget.dataset.id;
-
-            console.log('CurrentTarget >>> ' + JSON.stringify(event.currentTarget));
-            console.log('CurrentTarget - Dataser >>> ' + JSON.stringify(event.currentTarget.dataset));
+            let selectedRow = this.accountData.find(ele  => ele[this.uniqueId] === e);
+            console.log('### Residuo documento selezionato >>> ' + selectedRow["residuo"]);
+            let residualRow = parseFloat(selectedRow["residuo"]).toFixed(2);
+            console.log('#TypeOf residualSelected >>> ' + typeof this.residualSelected);
+            console.log('#TypeOf residualRow >>> ' + typeof residualRow);
 
             if (idlist === undefined || idlist.length == 0) {
                 //only for the first id of the list
                 idlist.push(e);
+                this.residualSelected = (this.residualSelected + residualRow).toFixed(2);
             } else {
                 //if id is already included in the list
                 if(idlist.includes(e)){
                     const index = idlist.indexOf(e);
                     if (index > -1) {
                         idlist.splice(index, 1);
+                        this.residualSelected = (this.residualSelected - residualRow).toFixed(2);
                     }
                 } else {
                     idlist.push(e);
+                    this.residualSelected = (this.residualSelected + residualRow).toFixed(2);
                 }
             }
             event.target.value = '1';
-
         } else {
             event.target.value = '0';
         }
