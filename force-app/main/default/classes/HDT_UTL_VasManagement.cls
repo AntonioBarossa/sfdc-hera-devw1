@@ -45,7 +45,7 @@ public with sharing class HDT_UTL_VasManagement {
                 Subscription__r.SBQQ__Contract__r.SBQQ__Order__c, Asset.VasPracticeCode__c,Subscription__r.VasPracticeCode__c, 
                 Subscription__r.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c,  Subscription__r.SBQQ__Contract__r.ContractSalesCompany__c,
                 Account.FirstName__c, Account.LastNameRcuFormula__c, Account.FiscalCode__c, Account.VATNumber__c, Subscription__r.SBQQ__ProductName__c,
-                Subscription__r.Version__c,Subscription__r.SBQQ__Contract__r.SAPContractCode__c
+                Subscription__r.Version__c,Subscription__r.SBQQ__Contract__r.SAPContractCode__c,Subscription__r.SBQQ__Product__r.DescriptionSAP__c
                 FROM Case WHERE Id = :caseId WITH SECURITY_ENFORCED LIMIT 1];
             
                 orderId = currentCase.Order__c;
@@ -72,7 +72,7 @@ public with sharing class HDT_UTL_VasManagement {
             requestMap.put('partitaIva',currentCase.Account?.VATNumber__c);
             requestMap.put('pod',currentCase.Subscription__r.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c);
             requestMap.put('intestatario',joinStringValues(new List<String>{currentCase.Account.FirstName__c,currentCase.Account.LastNameRcuFormula__c}));
-            requestMap.put('servizioIp',(currentCase.Subscription__r.SBQQ__ProductName__c).abbreviate(30));
+            requestMap.put('servizioIp',(currentCase.Subscription__r.SBQQ__Product__r.DescriptionSAP__c).abbreviate(30));
             requestMap.put('versione',currentCase.Subscription__r.Version__c);
             requestMap.put('nrContrattoIp',currentCase.Subscription__r.SBQQ__Contract__r.SAPContractCode__c);
             requestMap.put('statoPratica',currentCase.VasStatus__c);

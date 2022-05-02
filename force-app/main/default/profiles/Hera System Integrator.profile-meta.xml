@@ -36386,4 +36386,8 @@
         <enabled>true</enabled>
         <name>ViewUserPII</name>
     </userPermissions>
+    <pageAccesses>
+        <apexPage>HDT_VF_OverrideDeleteOperation</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
 </Profile>

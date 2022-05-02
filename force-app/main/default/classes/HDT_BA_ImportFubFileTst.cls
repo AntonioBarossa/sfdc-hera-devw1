@@ -10,11 +10,13 @@ public with sharing class HDT_BA_ImportFubFileTst {
 
         id acctId =testAcc[0].id;
 
-        List<Individual>  testInd = HDT_UTL_DataFactoryTst.createIndividual(1,true);
-        id indId = testInd[0].id;
+        List<Individual>  testInd = HDT_UTL_DataFactoryTst.createIndividual(2,true);
+        id indId1 = testInd[0].id;
+        id indId2 = testInd[1].id;
 
         List<Contact> testCont =  HDT_UTL_DataFactoryTst.createContact(2, true, acctId);
-        testCont[0].IndividualId = indId;
+        testCont[0].IndividualId = indId1;
+        testCont[1].IndividualId = indId2;
         update testCont;
         
 
@@ -41,10 +43,17 @@ public with sharing class HDT_BA_ImportFubFileTst {
         listCamps[1].Agency__c = acctId;
         update listCamps;
 
-        List<ContactPointPhone> testContPointPhone = HDT_UTL_DataFactoryTst.createContactPointPhone(1,true,indId);
+        List<ContactPointPhone> testContPointPhone = HDT_UTL_DataFactoryTst.createContactPointPhone(1,true,indId1);
         testContPointPhone[0].TelephoneNumber = '1234';
         testContPointPhone[0].ParentId = testInd[0].id;
         testContPointPhone[0].LastOutcomeFUB__c = 'OK';
+        testContPointPhone[0].LastResultDateFUB__c = system.Date.today();
+        update testContPointPhone;
+        
+        testContPointPhone = HDT_UTL_DataFactoryTst.createContactPointPhone(1,true,indId2);
+        testContPointPhone[0].TelephoneNumber = '345';
+        testContPointPhone[0].ParentId = testInd[1].id;
+        testContPointPhone[0].LastOutcomeFUB__c = 'KO';
         testContPointPhone[0].LastResultDateFUB__c = system.Date.today();
         update testContPointPhone;
 
