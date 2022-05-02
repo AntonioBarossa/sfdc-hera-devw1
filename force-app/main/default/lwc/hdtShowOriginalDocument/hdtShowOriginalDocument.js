@@ -36,7 +36,6 @@ export default class HdtShowOriginalDocument extends NavigationMixin(LightningEl
                         console.log('listContact ' + resultParsed.base64List);
                         let fileList = JSON.parse(resultParsed.base64List);
                         fileList.forEach((item) => {
-                            console.log('item ' + item);
                             this.showDocumentFromBase64(item, 'application/zip');
                         });
                         this.closeAction();
