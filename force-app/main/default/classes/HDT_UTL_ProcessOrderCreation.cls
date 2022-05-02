@@ -42,7 +42,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private OrderItem fakeOrderItem;
     private Map<String, String> companyCodeMap;
     private Map<String, String> processMatrixMap;
-    private Map<Id, SBQQ__ProductOption__c> otherRequiredOption;
+    private Map<Id, List<SBQQ__ProductOption__c>> otherRequiredOption;
 
     public override void checks(){
 
@@ -144,7 +144,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         pricebookEntryForOptionalMap = new Map<Id, Map<Id, PriceBookEntry>>();
         processMatrixMap = new Map<String, String>();
         List<ProcessMatrix__c> processMatrixList = new List<ProcessMatrix__c>();
-        otherRequiredOption = new Map<Id, SBQQ__ProductOption__c>();
+        otherRequiredOption = new Map<Id, List<SBQQ__ProductOption__c>>();
         Set<String> defaultProdOption = new Set<String>();
         List<Id> optnionalSkuIdList = new List<Id>();
 
@@ -200,10 +200,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         }
 
         productOptionList = [
-            SELECT SBQQ__ConfiguredSKU__c, SBQQ__OptionalSKU__c, SBQQ__OptionalSKU__r.ProductCode, SBQQ__OptionalSKU__r.Name
+            SELECT SBQQ__ConfiguredSKU__c, SBQQ__OptionalSKU__c, SBQQ__OptionalSKU__r.ProductCode, SBQQ__OptionalSKU__r.Name, SBQQ__Required__c
             FROM SBQQ__ProductOption__c
             WHERE SBQQ__ConfiguredSKU__c IN :productIdList
-            AND SBQQ__Required__c = true
             WITH SECURITY_ENFORCED
         ];
         
@@ -219,12 +218,18 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 optnionalSkuIdList.add(prodOpt.SBQQ__OptionalSKU__c);
             }
 
-            if(!defaultProdOption.contains(SBQQ__OptionalSKU__r.Name)){
-                otherRequiredOption.put(prodOpt.SBQQ__OptionalSKU__c, prodOpt);
+            if(!defaultProdOption.contains(prodOpt.SBQQ__OptionalSKU__r.Name) && prodOpt.SBQQ__Required__c == true){
+                if(otherRequiredOption.containsKey(prodOpt.SBQQ__OptionalSKU__c)){
+                    otherRequiredOption.get(prodOpt.SBQQ__ConfiguredSKU__c).add(prodOpt);
+                } else {
+                    otherRequiredOption.put(prodOpt.SBQQ__ConfiguredSKU__c, new List<SBQQ__ProductOption__c>{prodOpt});
+                }
             }
 
         }
         
+        System.debug('>>> otherRequiredOption ' + otherRequiredOption);
+
         pbeOptionalSkuList = [
             SELECT Id, Pricebook2Id, Product2Id, UnitPrice
             FROM PricebookEntry
@@ -374,6 +379,13 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
                     }
 
+                    HDT_WRP_OrderItem requiredItem;
+                    System.debug('>>> required for ' + commOffId);
+                    for(SBQQ__ProductOption__c requiredOption : otherRequiredOption.get(commOffId)){
+                        requiredItem = setRequiredItem(requiredOption, commOffId, priceBookId);
+                        wrpChildOrder.orderItemList.add(requiredItem);
+                    }
+
                     processObj.parentOrder = setParentOrder(wrpChildOrder.childOrder, processObj.parentOrder, processObj.sale);
                     parentOrderToInsert.add(processObj.parentOrder);
                     
@@ -515,6 +527,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             itemsToUpdate.add(processObj.requestItem);
         }
 
+        System.debug('>@> ' + JSON.serialize(processObjList));
+
         HDT_WRP_SaveResponse updateOrderItemResponse;
         updateOrderItemResponse = databaseUpsert(orderItemToUpdate, requestItemForUpsert, 'OrderItem');
         requestItemForUpsert.clear();
@@ -535,6 +549,29 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         if(itemsToUpdate.size() > 0){
             update itemsToUpdate;
         }
+    }
+
+    private HDT_WRP_OrderItem setRequiredItem(SBQQ__ProductOption__c requiredOption, Id commOffId, Id priceBookId){
+        HDT_WRP_OrderItem requiredItem = new HDT_WRP_OrderItem();
+        requiredItem = new HDT_WRP_OrderItem();
+        requiredItem.itemType = requiredOption.SBQQ__OptionalSKU__r.Name;
+        requiredItem.product = new Product2();
+        requiredItem.product.ProductCode = requiredOption.SBQQ__OptionalSKU__r.ProductCode;
+        requiredItem.orderItem = new OrderItem();
+
+        Map<String, SBQQ__ProductOption__c> tempMap = additionalOrderItemMap.get(commOffId);
+        Map<Id, PriceBookEntry> pbeOptionalMap = pricebookEntryForOptionalMap.get(priceBookId);
+        if(tempMap.containsKey(requiredItem.product.ProductCode)){
+            requiredItem.product.Id = tempMap.get(requiredItem.product.ProductCode).SBQQ__OptionalSKU__c;
+            requiredItem.orderItem.Product2Id = requiredItem.product.Id;
+            requiredItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(requiredItem.product.Id).Id;
+            requiredItem.orderItem.UnitPrice = pbeOptionalMap.get(requiredItem.product.Id).UnitPrice;
+            requiredItem.orderItem.Quantity = 1;
+        } else {
+            requiredItem = null;
+        }
+
+        return requiredItem;
     }
 
     private static List<HDT_WRP_OrderItem> setRequiredByLookup(List<HDT_WRP_OrderItem> wrpOrderItemList){
