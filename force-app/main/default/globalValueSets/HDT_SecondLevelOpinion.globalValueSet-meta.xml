@@ -195,6 +195,16 @@
         <default>false</default>
         <label>Contratto Salesforce</label>
     </customValue>
+    <customValue>
+        <fullName>Contratti</fullName>
+        <default>false</default>
+        <label>Contratti</label>
+    </customValue>
+    <customValue>
+        <fullName>Post Vendita</fullName>
+        <default>false</default>
+        <label>Post Vendita</label>
+    </customValue>
     <masterLabel>Pareri 2° Livello</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
