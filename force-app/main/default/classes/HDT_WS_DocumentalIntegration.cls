@@ -99,29 +99,33 @@ public with sharing class HDT_WS_DocumentalIntegration {
             if (responseBodyMap.containsKey('data')) {
                 Map<String, Object> responseData = (Map<String, Object>) responseBodyMap.get('data');
                 String status = (String) responseData.get('status');
+                List<String> zipBaseSixtyFourList = responseData.containsKey('filesZipBase64') ? convertFilesZipBaseSixtyFour((List<Object>)responseData.get('filesZipBase64')) : new List<String>();
                 switch on status {
                     when 'ERROR' {
-                        String zipBaseSixtyFour = (String) responseData.get('zipBase64');
+                        String zipBaseSixtyFour = responseData.containsKey('zipBase64') ? (String) responseData.get('zipBase64') : !zipBaseSixtyFourList.isEmpty() ? zipBaseSixtyFourList[0] : '';
                         if (String.isBlank(zipBaseSixtyFour)) {
                             throw new HDT_UTL_HeraException('Errore Intesa nel recupero della Busta archiviata.');
                         } else {
                             responseWrap.content = zipBaseSixtyFour;
+                            responseWrap.contentList = zipBaseSixtyFourList.isEmpty() ? null : zipBaseSixtyFourList;
                         }
                     }
                     when 'PROGRESS' {
-                        String zipBaseSixtyFour = (String) responseData.get('zipBase64');
+                        String zipBaseSixtyFour = responseData.containsKey('zipBase64') ? (String) responseData.get('zipBase64') : !zipBaseSixtyFourList.isEmpty() ? zipBaseSixtyFourList[0] : '';
                         if (String.isBlank(zipBaseSixtyFour)) {
                             throw new HDT_UTL_HeraException('Impossibile visualizzare il plico (Busta Docusign non ancora completata)');
                         } else {
                             responseWrap.content = zipBaseSixtyFour;
+                            responseWrap.contentList = zipBaseSixtyFourList.isEmpty() ? null : zipBaseSixtyFourList;
                         }
                     }
                     when 'TERMINATE' {
-                        String zipBaseSixtyFour = (String) responseData.get('zipBase64');
+                        String zipBaseSixtyFour = responseData.containsKey('zipBase64') ? (String) responseData.get('zipBase64') : !zipBaseSixtyFourList.isEmpty() ? zipBaseSixtyFourList[0] : '';
                         if (String.isBlank(zipBaseSixtyFour)) {
                             throw new HDT_UTL_HeraException('Impossibile visualizzare il plico (Busta Docusign non disponibile o non completata)');
                         } else {
                             responseWrap.content = zipBaseSixtyFour;
+                            responseWrap.contentList = zipBaseSixtyFourList.isEmpty() ? null : zipBaseSixtyFourList;
                         }
                     }
                 }
@@ -132,6 +136,24 @@ public with sharing class HDT_WS_DocumentalIntegration {
             throw ex;
         }
         return responseWrap;
+    }
+
+    private static List<String> convertFilesZipBaseSixtyFour(List<Object> filesList){
+        List<String> zipBaseSixtyFourMap = new List<String>();
+        try{
+            for (Object obj : filesList){
+                if (obj != null){
+                    Map<String,Object> singleFileMap = (Map<String,Object>)JSON.deserializeUntyped(JSON.serialize(obj));
+                    if (singleFileMap.containsKey('zipBase64') && singleFileMap.get('zipBase64') != null){
+                        zipBaseSixtyFourMap.add((String)singleFileMap.get('zipBase64')); 
+                    }
+                } 
+            }
+        }catch (Exception e){
+            System.debug(LoggingLevel.DEBUG, 'convertFilesZipBaseSixtyFour error: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'convertFilesZipBaseSixtyFour line: ' + e.getLineNumber());
+        }
+        return zipBaseSixtyFourMap;
     }
 
     public static HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse submitResendDocusignEnvelopeRequest(String body){
