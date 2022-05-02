@@ -12,6 +12,7 @@ public with sharing class HDT_UTL_CreditCheckTst {
         List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(2,false,'MMS','MMS Azienda','Aziende SME');
         insert accs;
         List<Contact> conts = HDT_UTL_DataFactoryTst.createContact(1, false, accs[0].Id);
+        conts[0].Company__c='MMS';
         insert conts;
         List<ServicePoint__c> points = HDT_UTL_DataFactoryTst.createServicePoint(1,false);
         points[0].RecordTypeId = constants.SERVICEPOINT_RECORDTYPEID_GAS;
