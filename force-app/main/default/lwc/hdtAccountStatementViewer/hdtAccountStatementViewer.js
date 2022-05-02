@@ -90,6 +90,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     @track context;
     @track tipoPlico;
 
+    @track residualMessage = 'Residuo Par. Selez.: € '
+
     connectedCallback() {
         console.log('# connectedCallback #');
         console.log('# recordid -> ' + this.recordid);
