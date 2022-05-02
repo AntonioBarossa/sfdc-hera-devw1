@@ -208,6 +208,16 @@
                 <default>false</default>
                 <label>Nome Campagna</label>
             </value>
+            <value>
+                <fullName>SBQQ__ProductName__c</fullName>
+                <default>false</default>
+                <label>Nome Prodotto</label>
+            </value>
+            <value>
+                <fullName>CommercialId__c</fullName>
+                <default>false</default>
+                <label>Venduto da</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
@@ -215,32 +225,186 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
-            <valueName>SBQQ__Type__c</valueName>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>PaymentMode__c</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>GreenEnergyOption__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Agency__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Channel__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>UseCategory__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>CompanyOwner__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
             <valueName>SupplyCity__c</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>ConsumptionAnnual__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>ClientAge__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>ConsumptionRangeEE__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>ConsumptionRangeGAS__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>GreenGasOption__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Login__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>LoginGroup__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>CustomerMarking__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>SendingBillMode__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>VASBillingMode__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
             <valueName>OccupantsNumber__c</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>NewClient__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>PowerFlow__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
             <valueName>OwnerAC__c</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Origin__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>SupplyProvince__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>ResidentDeliveryAddress__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
             <valueName>Surface__c</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
             <controllingFieldValue>Quote Line</controllingFieldValue>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
             <valueName>DwellingType__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>CategoryTypeClient__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>SBQQ__Type__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Nome_Bundle__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>SuperUser__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Role__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Profile__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>MeterType__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>CampaignName__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <valueName>SBQQ__ProductName__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>CommercialId__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quote Line</controllingFieldValue>
@@ -256,114 +420,6 @@
             <controllingFieldValue>Product Option</controllingFieldValue>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
             <valueName>SBQQ__ProductFamily__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>PaymentMode__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>GreenEnergyOption__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>Agency__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>Channel__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>UseCategory__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>CompanyOwner__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>ConsumptionAnnual__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>ClientAge__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>ConsumptionRangeEE__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>ConsumptionRangeGAS__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>GreenGasOption__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>Login__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>LoginGroup__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>CustomerMarking__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>SendingBillMode__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>VASBillingMode__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>NewClient__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>PowerFlow__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>Origin__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>SupplyProvince__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>ResidentDeliveryAddress__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>CategoryTypeClient__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>Nome_Bundle__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>SuperUser__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>Role__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>Profile__c</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>MeterType__c</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
