@@ -8,11 +8,10 @@ public  inherited sharing class HDT_QR_Lead {
     
     public Lead getRecordById(String id) {
         
-        String query = 'SELECT  Firstname,LastName,IndividualId,birthdate__c,gender__c,birthcity__c,country,state,city,PostalCode,street,streetName__c,StreetNumber__c,CityCode__c,StreetNumberExtension__c,StreetCode__c,PlaceCode__c,Place__c,IsAddressVerified__c,CreatedBy.LoginChannel__c FROM Lead WHERE Id = :id WITH SECURITY_ENFORCED';
-        List<Lead> leads = Database.query(String.escapeSingleQuotes(query));
+        List<Lead> leads = [SELECT Id, FirstName, LastName, IndividualId, Birthdate__c, Gender__c, Birthcity__c, Country, State, City, PostalCode, Street, StreetName__c, StreetNumber__c, CityCode__c, 
+            VATNumber__c, StreetNumberExtension__c, StreetCode__c, PlaceCode__c, Place__c, IsAddressVerified__c, CreatedBy.LoginChannel__c FROM Lead WHERE Id = :id WITH SECURITY_ENFORCED];
 
         return leads[0];
-
     }
 
     public List<Lead> getRecordsById(List<String> ids) {

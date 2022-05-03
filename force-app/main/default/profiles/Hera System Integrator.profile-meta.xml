@@ -14839,7 +14839,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.Process__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22996,6 +22996,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Quote__c.TotalDiscountAmountVAT__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.PriceListVASStandalone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

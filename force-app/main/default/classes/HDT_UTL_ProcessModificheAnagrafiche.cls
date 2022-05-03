@@ -84,6 +84,7 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
         requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
+        Map<Id, String> caseNumberMap = new Map<Id, String>();
 
         List<String> emptyCsvField;
         for(HDT_WRP_ProcessObjects processObj : processObjList){
@@ -181,19 +182,22 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
             saveResponse = databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
             caseToInsert.clear();
 
-            Map<Id, String> caseNumberMap;
-            caseNumberMap = setCaseNumberMap(caseNumberMap, saveResponse.itemIdToObjId.values());
+            if(saveResponse.savedObject.size() > 0){
+                caseNumberMap = setCaseNumberMap(caseNumberMap, saveResponse.itemIdToObjId.values());
+
+                Id caseId;
+                for(HDT_WRP_ProcessObjects processObj : processObjList){
+                    caseId = saveResponse.itemIdToObjId.get(processObj.requestItem.Id);
+                    if(caseNumberMap.containsKey(caseId)){
+                        processObj.requestItem.Result__c = caseNumberMap.get(caseId);
+                    }
+                }
+
+            }
 
             getLimitDetails('AFTER CASE CREATION & Enrichment');
 
             if(saveResponse.reponseItemList.size() > 0){
-
-                for(HDT_WRP_ProcessObjects processObj : processObjList){
-                    if(caseNumberMap.containsKey(processObj.newCase.Id)){
-                        processObj.requestItem.Result__c = caseNumberMap.get(processObj.newCase.Id);
-                    }
-                }
-
                 itemsToSave.addAll(saveResponse.reponseItemList);
             }
 

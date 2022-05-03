@@ -310,7 +310,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     }
 
     public static Map<Id, String> setCaseNumberMap(Map<Id, String> caseNumberMap, List<Id> caseIdList){
-        caseNumberMap = new Map<Id, String>();
+        
         List<Case> savedCaseList = [
             SELECT Id, CaseNumber
             FROM Case
