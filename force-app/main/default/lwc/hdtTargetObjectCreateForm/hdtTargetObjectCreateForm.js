@@ -167,11 +167,15 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         let fieldReq = fieldReqParse.split(",");
 
         fieldsDataReq.forEach(element => {
+            console.log('this.fieldsDataReq --> '+fieldsDataReq);
             mapFieldReq.set(element, true);
 
         });
-
+        console.log('this.selectedservicepoint --> '+this.selectedservicepoint);
+        console.log('this.processtype --> '+this.processtype);
+        console.log('this.recordtype.label --> '+this.recordtype.label);
         fieldsData.forEach(element => {
+            console.log('this.element --> '+element);
 
             if (this.selectedservicepoint != undefined && this.processtype == '') {
 
@@ -361,13 +365,34 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
-                else if (this.recordtype.label === 'Punto Gas' && element === 'RemiCode__c') {
+                // else if (this.recordtype.label === 'Punto Gas' && element === 'RemiCode__c') {
+                else if (element === 'RemiCode__c') {
                     fieldsDataObject.push(
                         {
                             fieldname: element,
                             required: mapFieldReq.get(element),
                             value: this.servicePointRetrievedData[element],
                             disabled: true
+                        }
+                    )
+                }
+                else if (element === 'MeterSN__c') {
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: mapFieldReq.get(element),
+                            value: this.servicePointRetrievedData[element],
+                            disabled: true
+                        }
+                    )
+                }
+                else if (this.recordtype.label === 'Punto Gas' && element === 'ImplantType__c') {
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: true,
+                            value: this.servicePointRetrievedData[element],
+                            disabled: false
                         }
                     )
                 }
@@ -897,6 +922,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if ((this.allSubmitedFields['Distributor__c'] === undefined || this.allSubmitedFields['Distributor__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Distributore, ');
             }
+            if ((this.allSubmitedFields['ImplantType__c'] === undefined || this.allSubmitedFields['ImplantType__c'] === '')) {
+                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Impianto, ');
+            }
             if ((this.allSubmitedFields['SupplyType__c'] === undefined || this.allSubmitedFields['SupplyType__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Tipo Fornitura, ');
             }
@@ -987,6 +1015,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
             if (this.allSubmitedFields['ServicePointCode__c'] === undefined || this.allSubmitedFields['ServicePointCode__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Codice Punto, ');
+            }
+            if ((this.allSubmitedFields['ImplantType__c'] === undefined || this.allSubmitedFields['ImplantType__c'] === '')) {
+                concatPointErrorFields = concatPointErrorFields.concat('Tipologia Impianto, ');
             }
             if (this.allSubmitedFields['CommoditySector__c'] === undefined || this.allSubmitedFields['CommoditySector__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Servizio, ');
@@ -1191,12 +1222,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
         this.loading = true;
         let addressRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
-
+        
         if(this.spCodeChanged || this.allSubmitedFields['Distributor__c'] == undefined || this.allSubmitedFields['Distributor__c'].trim() == ''){
-
+            
             if((this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica' && this.allSubmitedFields['PlugPresence__c'] == 'Si' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '') ||
             (this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica' && this.allSubmitedFields['PlugPresence__c'] == 'No') ||
             (this.allSubmitedFields['CommoditySector__c'] == 'Gas' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '')){
+                
                 if(addressRecord['Comune'] != undefined && addressRecord['Comune'].trim() != ''){
                     let codicePunto = '';
                     let servizio = this.allSubmitedFields['CommoditySector__c'];
@@ -1209,7 +1241,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         this.allSubmitedFields['ServicePointCode__c'] = 'PODPROVVISORIO';//POD FITTIZIO
                     }
                     let comune = servizio == 'Gas' ? addressRecord['Comune'] : '';
-                    let presenzaAllaccio = this.allSubmitedFields['PlugPresence__c'];
+                    let presenzaAllaccio = this.allSubmitedFields['PlugPresence__c'] != undefined ? this.allSubmitedFields['PlugPresence__c'] : '';
+
                     getDistributorPointCode({code : radicePunto, commodity: servizio, comune : comune, presenzaAllaccio: presenzaAllaccio}).then(data => {
                         this.retrievedDistributor = data;
                         if (data.length > 1) {
