@@ -67,7 +67,7 @@
             <value>
                 <fullName>Cambio uso</fullName>
                 <default>false</default>
-                <label>Cambio uso</label>
+                <label>CambioUso</label>
             </value>
             <value>
                 <fullName>Cambio offerta</fullName>

@@ -209,6 +209,7 @@ public with sharing class HDT_UTL_ServicePoint {
         }
         if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
             String mercato = mapRes.get('MERCATO').substring(0,1) + mapRes.get('MERCATO').substring(1,mapRes.get('MERCATO').length()).toLowerCase();
+            mercato = mercato.equalsIgnoreCase('Tutela')?'Regolamentato':mercato;
             spNew.MarketOrigin__c = mercato;
         }
         if(mapRes.get('FLAGTELEGESTIBILE')!=null && !String.isBlank(mapRes.get('FLAGTELEGESTIBILE'))){            
