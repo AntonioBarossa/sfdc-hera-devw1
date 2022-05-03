@@ -79,6 +79,11 @@
                 <default>false</default>
                 <label>Tariffe e Sconti</label>
             </value>
+            <value>
+                <fullName>CaricamentoCGC</fullName>
+                <default>false</default>
+                <label>Caricamento CGC</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

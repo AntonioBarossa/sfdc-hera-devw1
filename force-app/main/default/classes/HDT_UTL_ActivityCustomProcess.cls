@@ -274,8 +274,8 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             }
             
             HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail iwd = new HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail();
-            if(act.Order__r.ServicePoint__c != null && act.Order__r.ServicePoint__r.AnnualConsumptionStandardM3__c != null){
-                iwd.annualConsumption = String.valueOf(act.Order__r.ServicePoint__r.AnnualConsumptionStandardM3__c.format());
+            if(act.Order__r.ServicePoint__c != null && act.Order__r.ServicePoint__r.AnnualConsumption__c != null){
+                iwd.annualConsumption = String.valueOf(act.Order__r.ServicePoint__r.AnnualConsumption__c.format());
             }            
             iwd.commodity = typeOfCommodity;
             
@@ -300,10 +300,10 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             iw.userId = act.Order__r.CreatedById;
             iw.activationUser = 'AccountCommercialePRM';
             iw.account = 'AccountCommercialePRM';
-            iw.jobTitle = act.Order__r.Channel__c;
-            iw.internalCustomerId = act.Order__r.Account.CustomerCode__c;
-            iw.companyName = act.Order__r.SalesCompany__c;
-            iw.externalCustomerId = act.Order__r.Account.FiscalCode__c;
+            iw.jobTitle = act.Order__r.ChannelTransCode__c;
+            iw.internalCustomerId = act.Order__r.Account?.CustomerCode__c;
+            iw.companyName = String.isNotBlank(act.Order__r.Account?.FirstName__c)? act.Order__r.Account.FirstName__c+' '+act.Order__r.Account.LastName__c : act.Order__r.Account?.LastName__c;
+            iw.externalCustomerId = String.isNotBlank(act.Order__r.Account?.FiscalCode__c)? act.Order__r.Account.FiscalCode__c : act.Order__r.Account?.VATNumber__c;
             iw.secondaryCustomerId = act.Order__r.Account.VATNumber__c;
             iw.bpClass =  bpClass;
             iw.bpCategory = act.Order__r.Account.Category__c; 
@@ -316,7 +316,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 iw.postCode = act.Order__r.ServicePoint__r.SupplyPostalCode__c;
             }            
             iw.operation =  act.Order__r.ProcessType__c;
-            iw.companyGroup = 'Hera S.p.A.';
+            iw.companyGroup = act.Order__r.SalesCompany__c;
             iw.market = act.Order__r.Market__c;
             iw.offerType = act.Order__r.Catalog__c;
             iw.details = l;

@@ -54,7 +54,7 @@ public inherited sharing class HDT_LC_CalculateEstimatedCost {
         HDT_CalcoloPreventivi__mdt fixedQuotes = [SELECT VAT__c, DistributorFixedQuote__c, PowerQuote__c, SellerFixedQuote__c FROM HDT_CalcoloPreventivi__mdt WHERE Type__c=:searchKey WITH SECURITY_ENFORCED];
         wrp.fixedQuotes=fixedQuotes;
         Decimal variableAmount =  fixedQuotes.PowerQuote__c*((ord.PowerRequested__c*(ord.PowerAvailable__c>30?1.0:1.1))-ord.PowerAvailable__c);
-        wrp.estimatedAmount=(variableAmount+fixedQuotes.DistributorFixedQuote__c+fixedQuotes.SellerFixedQuote__c)*(1+(fixedQuotes.VAT__c/100));
+        wrp.estimatedAmount=(variableAmount+fixedQuotes.DistributorFixedQuote__c+fixedQuotes.SellerFixedQuote__c);
         wrp.estimatedAmount=wrp.estimatedAmount.setScale(2);
         return;
     }

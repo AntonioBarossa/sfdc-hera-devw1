@@ -294,6 +294,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         {
             orderToUpdate.CIAccoutn__c = '';
         }
+        if(order.SignatureMethod__c.containsIgnoreCase('Contratto già firmato'))
+        {
+            orderToUpdate.CIAccoutn__c = '';
+            orderToUpdate.QuickQuote__c = '';
+            orderToUpdate.Instance326__c = '';
+            orderToUpdate.DocumentLow80__c = '';
+            orderToUpdate.DocumentPackage__c = '';
+        }
 
 
         if (order.RecordType.DeveloperName == 'HDT_RT_VAS') {

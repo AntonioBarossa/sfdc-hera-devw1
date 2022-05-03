@@ -164,7 +164,7 @@ public with sharing class HDT_UTL_Account {
         string accountType = Schema.SObjectType.Account.getRecordTypeInfosById().get(acc.RecordTypeId).getDeveloperName();
         List<SiebelCustomer__x> siebelCustomer = new List<SiebelCustomer__x>();
 
-        if(accountType.contains('Residenziale')){
+        /*if(accountType.contains('Residenziale')){
             siebelCustomer = [SELECT Id, OU_NUM__c, X_MARCATURA_CLIENTE__c 
                               FROM SiebelCustomer__x 
                               WHERE X_ACCT_PH_TYPE__c =: acc.CustomerType__c 
@@ -177,8 +177,25 @@ public with sharing class HDT_UTL_Account {
                               WHERE X_ACCT_PH_TYPE__c =: acc.CustomerType__c 
                               AND OU_TYPE_CD__c =: acc.Category__c 
                               AND VAT_REGN_NUM__c =: acc.VATNumber__c WITH SECURITY_ENFORCED];
-        }
+        }*/
 
+        String category = acc.Category__c;
+        String vatNumber = acc.VATNumber__c;
+        String fiscalCode = acc.FiscalCode__c;
+
+        String query = 'SELECT Id,OU_NUM__c, X_MARCATURA_CLIENTE__c FROM SiebelCustomer__x WHERE OU_TYPE_CD__c = :category';
+        if(acc.FiscalCode__c != null && acc.FiscalCode__c != '')
+        {
+            query += ' AND TAX_IDEN_NUM__c = :fiscalCode';
+        }
+        if(acc.VATNumber__c != null && acc.VATNumber__c != '')
+        {
+            query += ' AND VAT_REGN_NUM__c = :vatNumber';
+        }
+        query += ' WITH SECURITY_ENFORCED';
+
+        siebelCustomer = Database.query(query);
+        
         if(!siebelCustomer.isEmpty()){
             acc.CustomerCode__c = siebelCustomer[0].OU_NUM__c;
             acc.CustomerMarking__c = siebelCustomer[0].X_MARCATURA_CLIENTE__c;

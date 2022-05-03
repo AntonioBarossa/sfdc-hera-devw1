@@ -1,5 +1,5 @@
-public with sharing class HDT_QBL_SIE34_1Gas implements Queueable  {
-    private String runId                   ;   
+public with sharing class HDT_QBL_SIE34_1Gas   {//implements Queueable
+   /* private String runId                   ;   
     private Datetime filterDate            ;
     private String fileType                ;
     private List<String> contentVersionIds ;
@@ -244,6 +244,6 @@ public with sharing class HDT_QBL_SIE34_1Gas implements Queueable  {
           }
        }
       
-    }
+    }*/
   
  }

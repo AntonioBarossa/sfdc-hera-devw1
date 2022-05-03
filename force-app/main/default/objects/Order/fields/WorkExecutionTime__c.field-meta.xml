@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Tipo_di_Record__c</fullName>
+    <fullName>WorkExecutionTime__c</fullName>
     <externalId>false</externalId>
-    <label>Tipo di Record</label>
-    <length>255</length>
+    <label>Tempo Esecuzione Lavori</label>
+    <precision>18</precision>
     <required>false</required>
+    <scale>0</scale>
     <trackHistory>false</trackHistory>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

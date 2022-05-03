@@ -3,10 +3,10 @@ public inherited sharing class HDT_QR_MetersList {
     public static List<HDT_MetersListColumnTable__mdt> getMetersListColumnTable(List<HDT_MetersListColumnTable__mdt> metersListColumnTable){
         metersListColumnTable = new List<HDT_MetersListColumnTable__mdt>();
         metersListColumnTable = [
-            SELECT DeveloperName, MasterLabel
+            SELECT DeveloperName, MasterLabel,Order__c
             FROM HDT_MetersListColumnTable__mdt
             WITH SECURITY_ENFORCED
-            ORDER BY Order__c
+            ORDER BY Order__c ASC
         ];
 
         return metersListColumnTable;

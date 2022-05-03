@@ -3,7 +3,7 @@
     <fullName>FiscalCode__c</fullName>
     <description>Codice Fiscale del cliente inviato da Sigma al CRM.</description>
     <externalId>false</externalId>
-    <label>Codice Fiscale</label>
+    <label>Codice Fiscale AU</label>
     <length>30</length>
     <required>false</required>
     <trackHistory>false</trackHistory>

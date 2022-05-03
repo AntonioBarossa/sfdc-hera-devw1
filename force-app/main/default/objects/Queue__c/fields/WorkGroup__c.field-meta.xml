@@ -97,6 +97,406 @@
                 <label>HC_CRM_Quality_CC</label>
             </value>
             <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Annullamento_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Annullamento_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Annullamento_Koine</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Annullamento_Koine</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Appuntamenti_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Appuntamenti_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Appuntamenti_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Appuntamenti_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Attivazioni_Front_Covisian</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Attivazioni_Front_Covisian</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Attivazioni Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Attivazioni Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Attivazioni HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Attivazioni HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Attivazioni Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Attivazioni Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Autolettura_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Autolettura_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Autolettura_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Autolettura_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Cross_Front_Covisian</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Cross_Front_Covisian</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Cross_Front_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Cross_Front_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Disattivazioni_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Disattivazioni_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Disattivazioni_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Disattivazioni_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Escalation_Covisian</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Escalation_Covisian</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Escalation_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Escalation_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_HEROKU_CONSERVICE</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_HEROKU_CONSERVICE</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_HEROKU_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_HEROKU_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_ModificheAnag_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_ModificheAnag_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_ModificheAnag_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_ModificheAnag_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Preventivi_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Preventivi_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Preventivi_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Preventivi_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Verifiche_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Verifiche_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Verifiche_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Verifiche_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Voltura_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Voltura_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_CTR_Voltura_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_CTR_Voltura_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_Morosità_PV_CONSERVICE</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_Morosità_PV_CONSERVICE</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Campagne HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Campagne HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Fatturazione Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Fatturazione Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Fatturazione HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Fatturazione HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Fatturazione Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Fatturazione Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Morosità_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Morosità_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Notifiche_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Notifiche_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Pagamenti_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Pagamenti_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Pagamenti_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Pagamenti_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Pagamenti_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Pagamenti_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Reclami_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Reclami_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Reclami_LIN</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Reclami_LIN</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Variazioni_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Variazioni_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_CORP_PV_Variazioni_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_CORP_PV_Variazioni_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Annullamento_Koine</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Annullamento_Koine</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Appuntamenti_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Appuntamenti_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Appuntamenti_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Appuntamenti_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Attivazioni_Front_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Attivazioni_Front_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Attivazioni Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Attivazioni Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Attivazioni HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Attivazioni HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Attivazioni Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Attivazioni Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Autolettura_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Autolettura_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Autolettura_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Autolettura_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Cross_Front_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Cross_Front_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Cross_Front_KN</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Cross_Front_KN</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Disattivazioni_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Disattivazioni_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Disattivazioni_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Disattivazioni_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Escalation_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Escalation_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Escalation_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Escalation_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_HEROKU_CONSERVICE</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_HEROKU_CONSERVICE</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_HEROKU_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_HEROKU_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_ModificheAnag_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_ModificheAnag_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_ModificheAnag_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_ModificheAnag_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Preventivi_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Preventivi_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Preventivi_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Preventivi_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Verifiche_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Verifiche_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Verifiche_Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Verifiche_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Voltura_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Voltura_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_CTR_Voltura_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_CTR_Voltura_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Campagne HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Campagne HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Fatturazione Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Fatturazione Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Fatturazione HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Fatturazione HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Fatturazione Koinè</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Fatturazione Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Morosità_CONSERVICE</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Morosità_CONSERVICE</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Morosità_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Morosità_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Notifiche_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Notifiche_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Pagamenti_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Pagamenti_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Pagamenti_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Pagamenti_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Pagamenti_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Pagamenti_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Reclami_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Reclami_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Reclami_LIN</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Reclami_LIN</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Variazioni_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Variazioni_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_MUI_PV_Variazioni_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_MUI_PV_Variazioni_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CORPMUI_PTA_SD singola_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CORPMUI_PTA_SD singola_HC</label>
+            </value>
+            <value>
                 <fullName>HC_CVMBO_CSREG_Bonus Sociale Energy</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_CSREG_Bonus Sociale Energy</label>
@@ -335,6 +735,11 @@
                 <fullName>HC_CVMBO_MMSME_CRBO_Protocollo_Smart_HC</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CRBO_Protocollo_Smart_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CRBO_Protocollo Morosità_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRBO_Protocollo Morosità_Linetech</label>
             </value>
             <value>
                 <fullName>HC_CVMBO_MMSME_CRBO_Richiesta domiciliazione_HC</fullName>
@@ -610,6 +1015,106 @@
                 <fullName>HC_VenditaMM</fullName>
                 <default>false</default>
                 <label>HC_VenditaMM</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Contattare il cliente</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Contattare il cliente</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Disattivazioni</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Disattivazioni</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Escalation</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Escalation</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Fatturazione</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Fatturazione</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Morosità</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Morosità</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Pagamenti</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Pagamenti</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Preventivi</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Preventivi</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Protocollo</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Protocollo</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Reclami</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Reclami</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Variazioni</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Variazioni</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Verifiche</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Verifiche</label>
+            </value>
+            <value>
+                <fullName>HCM_CON_Fatturazione</fullName>
+                <default>false</default>
+                <label>HCM_CON_Fatturazione</label>
+            </value>
+            <value>
+                <fullName>HCM_DISCO_ Appuntamenti</fullName>
+                <default>false</default>
+                <label>HCM_DISCO_ Appuntamenti</label>
+            </value>
+            <value>
+                <fullName>HCM_DISCO_Escalation</fullName>
+                <default>false</default>
+                <label>HCM_DISCO_Escalation</label>
+            </value>
+            <value>
+                <fullName>HCM_DISCO_Heroku</fullName>
+                <default>false</default>
+                <label>HCM_DISCO_Heroku</label>
+            </value>
+            <value>
+                <fullName>HCM_DISCO_Notifiche</fullName>
+                <default>false</default>
+                <label>HCM_DISCO_Notifiche</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Fatturazione</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Fatturazione</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Modifiche anagrafiche</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Modifiche anagrafiche</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Pagamenti</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Pagamenti</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Variazioni</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Variazioni</label>
             </value>
         </valueSetDefinition>
     </valueSet>

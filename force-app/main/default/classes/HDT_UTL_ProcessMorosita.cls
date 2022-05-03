@@ -86,6 +86,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
         List<Case> caseToInsert = new List<Case>();
         requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
+        Map<Id, String> caseNumberMap = new Map<Id, String>();
 
         //String type = 'Sospensione Fornitura';
 
@@ -176,6 +177,19 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
 
             HDT_WRP_SaveResponse saveResponse = databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
             caseToInsert.clear();
+
+            if(saveResponse.savedObject.size() > 0){
+                caseNumberMap = setCaseNumberMap(caseNumberMap, saveResponse.itemIdToObjId.values());
+
+                Id caseId;
+                for(HDT_WRP_ProcessObjects processObj : processObjList){
+                    caseId = saveResponse.itemIdToObjId.get(processObj.requestItem.Id);
+                    if(caseNumberMap.containsKey(caseId)){
+                        processObj.requestItem.Result__c = caseNumberMap.get(caseId);
+                    }
+                }
+
+            }
 
             if(saveResponse.reponseItemList.size() > 0){
                 itemsToSave.addAll(saveResponse.reponseItemList);

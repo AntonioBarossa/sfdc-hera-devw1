@@ -116,6 +116,7 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
         requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
+        Map<Id, String> caseNumberMap = new Map<Id, String>();
 
         HDT_QR_CausalCodeCalculation causalCodeCalculation = new HDT_QR_CausalCodeCalculation();
         HDT_CausalCodeCalculation__mdt causalCode;
@@ -150,17 +151,11 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
             }
 
             if(String.isNotEmpty(convertionError)){
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = convertionError;
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, convertionError));
                 continue;
             }
 
             if(errorForPicklistValue('Case', 'Type', processObj.newCase.Type)){
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = 'Valore processo non corretto: ' + processObj.newCase.Type;
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'Valore processo non corretto: ' + processObj.newCase.Type));
                 continue;
             }
@@ -174,9 +169,6 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
                 processObj.newCase.ServicePoint__c = contract.ServicePoint__c;
                 processObj.newCase.BillingProfile__c = contract.BillingProfile__c;
             } else {
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = 'pod non presente';
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'pod non presente'));
                 continue;
             }
@@ -187,9 +179,6 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
             if(accountContactMap.containsKey(accountId)){
                 processObj.newCase.ContactId = accountContactMap.get(accountId);
             } else {
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = 'account non presente';
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'account non presente'));
                 continue;
             }
@@ -211,14 +200,14 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
                 processObj.newCase.CausalCode__c = causalCode.CausalCode__c;//'D01' for example
             }
 
-            if(processObj.newCase.Type.equalsIgnoreCase('Recesso per Rifiuto Voltura')){
+            //if(processObj.newCase.Type.equalsIgnoreCase('Recesso per Rifiuto Voltura')){
                 String currentOrderNum = processObj.csvSplitted[orderVolturaIndex];
                 if(orderIdMap.containsKey(currentOrderNum)){
                     processObj.newCase.VulturePracticeReference__c = orderIdMap.get(currentOrderNum);
                 } else {
                     System.debug(LoggingLevel.DEBUG, '>>> NO ORDER FOUND');
                 }
-            }
+            //}
 
             try{
                 String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(processObj.csvSplitted[podIndex], null);
@@ -227,9 +216,6 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
                 requestItemForUpsert.add(processObj.requestItem);
             } catch(Exception e){
                 System.debug(LoggingLevel.DEBUG, '>>> arricchimentoError ' + e.getMessage());
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = 'Errore arricchimento dati #';
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'Errore arricchimento dati #'));
             }
 
@@ -239,8 +225,20 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
 
            HDT_WRP_SaveResponse saveResponse;
            saveResponse = databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
-
            caseToInsert.clear();
+
+           if(saveResponse.savedObject.size() > 0){
+               caseNumberMap = setCaseNumberMap(caseNumberMap, saveResponse.itemIdToObjId.values());
+
+               Id caseId;
+               for(HDT_WRP_ProcessObjects processObj : processObjList){
+                   caseId = saveResponse.itemIdToObjId.get(processObj.requestItem.Id);
+                   if(caseNumberMap.containsKey(caseId)){
+                       processObj.requestItem.Result__c = caseNumberMap.get(caseId);
+                   }
+               }
+
+           }
 
            getLimitDetails('AFTER CASE CREATION & Enrichment');
 
