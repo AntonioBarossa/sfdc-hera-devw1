@@ -179,12 +179,15 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
                 currentRecordTypeId = recordTypeMap.get(contract.ServicePoint__r.CommoditySector__c);
             }
 
-            processObj.newCase.AccountId = processObj.csvSplitted[accountIdIndex];
-            processObj.newCase = setCaseField(processObj.newCase, currentRecordTypeId);
-
-            if(accountContactMap.containsKey(processObj.csvSplitted[accountIdIndex])){
-                processObj.newCase.ContactId = accountContactMap.get(processObj.csvSplitted[accountIdIndex]).ContactId;
+            if(String.isNotBlank(processObj.csvSplitted[accountIdIndex])){
+                processObj.newCase.AccountId = processObj.csvSplitted[accountIdIndex];
+                
+                if(accountContactMap.containsKey(processObj.csvSplitted[accountIdIndex])){
+                    processObj.newCase.ContactId = accountContactMap.get(processObj.csvSplitted[accountIdIndex]).ContactId;
+                }
             }
+
+            processObj.newCase = setCaseField(processObj.newCase, currentRecordTypeId);
 
             if(processObj.newCase.Type.equalsIgnoreCase('Cambio contatore non registrato') && orderVolturaIndex != null){
                 String currentOrderNum = processObj.csvSplitted[orderVolturaIndex];
@@ -195,17 +198,21 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
                 }
             }
 
-            try{
-                String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(processObj.csvSplitted[podIndex], null);
-                System.debug(LoggingLevel.DEBUG, '>>> arricchimentoResponse: ' + arricchimentoResponse);
-
-                processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, processObj.newCase);
-                caseToInsert.add(processObj.newCase); 
-                requestItemForUpsert.add(processObj.requestItem);
-            } catch(Exception e){
-                System.debug(LoggingLevel.DEBUG, '>>> arricchimentoError ' + e.getMessage());
-                itemsToSave.add(setErrorItem(processObj.requestItem, 'Errore arricchimento dati # '));
+            if(String.isNotBlank(contract.ServicePoint__r.ServicePointCode__c)){
+                try{
+                    //String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(processObj.csvSplitted[podIndex], null);
+                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(contract.ServicePoint__r.ServicePointCode__c, null);
+                    System.debug(LoggingLevel.DEBUG, '>>> arricchimentoResponse: ' + arricchimentoResponse);
+    
+                    processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, processObj.newCase);
+                    caseToInsert.add(processObj.newCase); 
+                    requestItemForUpsert.add(processObj.requestItem);
+                } catch(Exception e){
+                    System.debug(LoggingLevel.DEBUG, '>>> arricchimentoError ' + e.getMessage());
+                    itemsToSave.add(setErrorItem(processObj.requestItem, 'Errore arricchimento dati # '));
+                }
             }
+
 
         }
 
