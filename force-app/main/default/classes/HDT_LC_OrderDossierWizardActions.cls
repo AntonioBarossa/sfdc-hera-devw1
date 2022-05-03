@@ -19,6 +19,20 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     @AuraEnabled
     public static void save(Order orderParent){ 
 
+        /**@frpanico 2022-04-29
+         * Aggiunta gestione del contratto gia firmato
+         */
+        if(orderParent.SignatureMethod__c.equalsIgnoreCase('Contratto già firmato'))
+        {
+            Order parentOrderToUpdate = new Order();
+            parentOrderToUpdate.Id = orderParent.Id;
+            parentOrderToUpdate.Phase__c = 'Documentazione Gestita';
+            parentOrderToUpdate.Status = 'Completed';
+            HDT_UTL_DatabaseService.updateSObject(parentOrderToUpdate);
+            return;
+        }
+
+
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         Map<Id, Order> mapChildOrders = new Map<Id, Order>(childOrders);
         List<Order> ordersToUpdate = new List<Order>();
@@ -377,11 +391,12 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         
         for (Order childOrder : childOrders) {
-            if (childOrder.ProcessType__c != null && !childOrder.ProcessType__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS')) {
+            System.debug('PrcessType ' + childOrder.ProcessType__c);
+            if (childOrder.ProcessType__c != null && childOrder.ProcessType__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS')) {
+                result = true;
+            }else {
                 result = false;
                 break;
-            }else {
-                result = true;
             }
         }
 

@@ -1133,12 +1133,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 // ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
                 s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(orderStatuses.get(s.Order__c), 'Order');
                 if( s.Status__c.equalsIgnoreCase('Chiuso') || s.Status__c.equalsIgnoreCase('Annullato') ){
+                    s.OwnerId = UserInfo.getUserId();
                     srvRequestsToDelete.add(s);
                 } else {
                     sReqToUpdate.add(s);
                 }
             }
             if (!srvRequestsToDelete.isEmpty()){
+                HDT_SRV_ServiceRequest.updateRecord(srvRequestsToDelete);
                 HDT_SRV_ServiceRequest.deleteRecord(srvRequestsToDelete);
             }
             HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);

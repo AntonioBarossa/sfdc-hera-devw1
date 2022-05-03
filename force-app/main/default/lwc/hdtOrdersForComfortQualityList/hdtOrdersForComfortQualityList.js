@@ -26,16 +26,11 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
              typeAttributes: {
                  label: {
                      fieldName: 'OrderNumber' 
-                     // whatever field contains the actual label of the link
                  },
                  target: '_parent', 
                  tooltip: 'Open order page'
              }},
             {label: 'Prodotto', fieldName: 'CommercialProduct__c', type: 'text'},
-            // {label: 'Status', fieldName: 'Status', type: 'text'},
-            // {label: 'Status Esito', fieldName: 'StatusEsito', type: 'text'},
-            // {label: 'Phase', fieldName: 'Phase__c', type: 'text'},
-            // {label: 'Tipologia', fieldName: 'recordtypename', type: 'text'},
             {type:  'button',typeAttributes:{
                     iconName: {fieldName: 'confirmIcon'},
                     label: {fieldName: 'confirmText'}, 
