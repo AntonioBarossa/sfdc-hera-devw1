@@ -91,7 +91,7 @@ public with sharing class HDT_UTL_CalculateTransition {
                 }
             }
             if(calculateTransitionMap.get('sale') != null){
-                sale = [SELECT Id, Account__r.CompanyOwner__c, Account__r.Category__c, Account__r.CustomerMarking__c FROM Sale__c WHERE Id =: ((Sale__c)calculateTransitionMap.get('sale')).Id WITH SECURITY_ENFORCED LIMIT 1];
+                sale = [SELECT Id, Account__r.CompanyOwner__c, Account__r.Category__c, Account__r.CustomerMarking__c, Account__c FROM Sale__c WHERE Id =: ((Sale__c)calculateTransitionMap.get('sale')).Id WITH SECURITY_ENFORCED LIMIT 1];
                 if(sale.Account__r.CustomerMarking__c != null && sale.Account__r.CustomerMarking__c != ''){
                     markerConverted = sale.Account__r.CustomerMarking__c.split('');
                 }
@@ -118,21 +118,28 @@ public with sharing class HDT_UTL_CalculateTransition {
                         List<City__c> cityList = [SELECT Name, BelfioreCode__c, ProvinceName__c, Province__c, SDV__c, ServiceEle__c, ServiceGas__c 
                         FROM City__c WHERE Name =: (String)calculateTransitionMap.get('city') AND ServiceGas__c = true WITH SECURITY_ENFORCED];
                         if(cityList.isEmpty()){
-                            system.debug('SONO ENTRATO IN CITYLIST EMPTY');
+                            system.debug('TRANSITORIO 1');
                             return true;
                         }
                         else{
-                            system.debug('NON SONO ENTRATO IN CITYLIST EMPTY');
-                            return false;
+                            List<Order> ordList = [SELECT Id, isTransition__c, Status, AccountId FROM Order WHERE isTransition__c = true AND Status = 'In Lavorazione' AND AccountId =: sale.Account__c WITH SECURITY_ENFORCED];
+                            if(ordList.isEmpty()){
+                                system.debug('NON TRANSITORIO 1');
+                                return false;
+                            }
+                            else{
+                                system.debug('TRANSITORIO 2');
+                                return true;
+                            }
                         }
                    }
                    else{
-                       system.debug('NON SONO ENTRATO IN SECONDA IF.');
+                        system.debug('NON TRANSITORIO 2');
                        return false;
                    }
             }
             else{
-                system.debug('NON SONO ENTRATO IN PRIMA IF.');
+                system.debug('TRANSITORIO 3');
                 return true;
             }
     //    }
