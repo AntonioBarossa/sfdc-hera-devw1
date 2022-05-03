@@ -141,10 +141,15 @@ public with sharing class HDT_UTL_VoltureChangeManager {
                 orderToUpdate.SwitchOutDate__c = voltureChangeUtils.convertDdMmYyyy((String)fieldsMap.get('DATA_DECORRENZA_SW'));
             }
             if( ! string.isBlank((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III')) ){
+
                 orderToUpdate.EffectiveDate__c = voltureChangeUtils.convertDdMmYyyy((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III'));
+
             }
-            if(  ! string.isBlank((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III'))){
-                orderToUpdate.EffectiveDate__c = voltureChangeUtils.convertDdMmYyyy((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III'));
+
+            if(  ! string.isBlank((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV'))){
+
+                orderToUpdate.EffectiveDate__c = voltureChangeUtils.convertDdMmYyyy((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV'));
+
             }
             if( ! string.isBlank((String)fieldsMap.get('POTCONTRIMP')) ){
                 orderToUpdate.PowerCommitted__c = Decimal.valueOf((String)fieldsMap.get('POTCONTRIMP'));
