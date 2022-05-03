@@ -213,6 +213,16 @@
                 <default>false</default>
                 <label>Hera Band Discount</label>
             </value>
+            <value>
+                <fullName>Nuova Impronta Zero Dipendenti</fullName>
+                <default>false</default>
+                <label>Nuova Impronta Zero Dipendenti</label>
+            </value>
+            <value>
+                <fullName>Nuova Impronta Zero Amministratori</fullName>
+                <default>false</default>
+                <label>Nuova Impronta Zero Amministratori</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
