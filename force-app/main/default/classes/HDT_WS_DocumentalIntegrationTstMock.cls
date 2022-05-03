@@ -37,7 +37,7 @@ global class HDT_WS_DocumentalIntegrationTstMock implements HttpCalloutMock {
     public static HttpResponse responseIntesa(HTTPRequest request){
         HttpResponse response = new HttpResponse();
         response.setHeader('Content-Type', 'application/json');
-        response.setBody('{"status": "success","correlationId": "92293250-df3b-11eb-a73c-0200a41fc6da","timestamp": "2021-07-07T17:54:13","data": [{"status" : "PROGRESS", "zipBase64" : "base64" },{"status" : "TERMINATE", "zipBase64" : "base64" },{"status" : "ERROR", "zipBase64" : "base64" }]}');
+        response.setBody('{"status": "success","correlationId": "92293250-df3b-11eb-a73c-0200a41fc6da","timestamp": "2021-07-07T17:54:13","data": {"filesZipBase64" : [{"status" : "PROGRESS", "zipBase64" : "base64" },{"status" : "TERMINATE", "zipBase64" : "base64" },{"status" : "ERROR", "zipBase64" : "base64" }]}}');
         response.setStatusCode(200);
         response.setStatus('OK');
         return response; 
