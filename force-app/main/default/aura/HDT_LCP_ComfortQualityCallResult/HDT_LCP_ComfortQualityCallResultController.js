@@ -2,7 +2,9 @@
     doInit: function(component, event, helper) {
         console.log(component.get("v.recordId"));
         var action = component.get("c.init");
-        action.setParams({'activityId': component.get("v.recordId")});
+        action.setParams({
+            'activityId': component.get("v.recordId")
+        });
         action.setCallback(this,function(response){
         	var state = response.getState();
             if (state === "SUCCESS") {
@@ -23,7 +25,7 @@
             }
             component.set("v.HideSpinner",false);
         });
-        $A.enqueueAction(action);  
+        $A.enqueueAction(action);
     },
 
     handleResultEvent: function(component, event, helper) {
