@@ -38,9 +38,10 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 
 
         Boolean skipForCancellation = HDT_UTL_CaseProcess.manageCancellationProcess(trigger.new,Trigger.oldMap);
+        Boolean skipForExportSie = HDT_UTL_CaseProcess.checkSkipExportSie(trigger.new,Trigger.oldMap);
         //EVERIS: Gestione Scarti SAP
         Boolean skipForGestioneScarti = HDT_UTL_Scarti.manageSapDiscard(Trigger.new, Trigger.oldMap);
-	    if(!skipForCancellation && !skipForGestioneScarti){
+	    if(!skipForCancellation && !skipForGestioneScarti && !skipForExportSie){
         //Checks Phase Transition
             ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))
                     .beforeUpdate(new Map<String, Object> { 'oldObjects' => Trigger.old, 'newObjects' => Trigger.new });
@@ -56,14 +57,16 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
     }
 
     public override void afterUpdate() {
-        //Execute creation Activities 
-        ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
-                .bulkSaveActivityContext(null);
-        
-        //Handles callout (update only)
-        ((wrts_prcgvr.Interfaces_1_0.ICalloutUtils) wrts_prcgvr.VersionManager.newClassInstance('CalloutUtils'))
-                .bulkSend(new Map<String,Object>{'newObjects'=>Trigger.new, 'oldObjects' => Trigger.old});
-
+        Boolean skipForExportSie = HDT_UTL_CaseProcess.checkSkipExportSie(trigger.new,Trigger.oldMap);
+        if(!skipForExportSie){
+            //Execute creation Activities 
+            ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
+                    .bulkSaveActivityContext(null);
+            
+            //Handles callout (update only)
+            ((wrts_prcgvr.Interfaces_1_0.ICalloutUtils) wrts_prcgvr.VersionManager.newClassInstance('CalloutUtils'))
+                    .bulkSend(new Map<String,Object>{'newObjects'=>Trigger.new, 'oldObjects' => Trigger.old});
+        }
         HDT_UTL_CaseProcess.checkSatisfationIndex(trigger.newMap, trigger.oldMap);
 
         HDT_UTL_CaseProcess.casePhaseManagementAfterUpdate(trigger.new,trigger.old);  

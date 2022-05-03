@@ -156,9 +156,13 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             body = HDT_SRV_DocumentalManagement.generateGetEnvelopeRequest(documentalObject, documentType);
             postelResponse = HDT_SRV_DocumentalManagement.executeGetEnvelopeCalloutRequest(body, documentType);
             baseSixtyFour = postelResponse.content;
+            List<String> baseSixtyFourList = postelResponse.contentList;
             resultMap.put('outcome','OK');
             resultMap.put('base64',baseSixtyFour);
             resultMap.put('type',  documentType);
+            if ('zip'.equalsIgnoreCase(documentType) && baseSixtyFourList != null){
+                resultMap.put('base64List', JSON.serialize(baseSixtyFourList));
+            }
         }catch(Exception ex){
             resultMap.put('outcome','KO');
             resultMap.put('errorMessage', ex.getMessage());
