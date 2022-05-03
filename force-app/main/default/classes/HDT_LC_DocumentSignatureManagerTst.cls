@@ -13,6 +13,8 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         List<DocumentalActivity__c> docActList = HDT_UTL_DataFactoryTst.createDocumentalActivity(1,null,caseList[0].Id);
         HDT_UTL_DataFactoryTst.createJsonPayload();
         HDT_UTL_DataFactoryTst.createDriverJson();
+        HDT_UTL_DataFactoryTst.pClickInstance();
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
         insert new DocusignSettings__c(CustomerEnviromentId__c = 'HERA-TEST');
     }
 
@@ -31,8 +33,6 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
     @isTest
     static void showOriginalDocumentZip(){
         Test.setMock(HttpCalloutMock.class, new HDT_WS_DocumentalIntegrationTstMock());
-        HDT_UTL_DataFactoryTst.pClickInstance();
-        HDT_UTL_DataFactoryTst.pClickCasePhase();
         Case c = [SELECT Id FROM Case LIMIT 1];
         update new Case(Id = c.Id, SignMode__c = 'OTP Remoto');
         Test.startTest();
