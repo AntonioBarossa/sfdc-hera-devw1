@@ -401,7 +401,8 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     this.showModalContact = true;
                 }
             })
-        }else{
+        }
+        else{
             this.dispatchEvent(new CustomEvent('confirmdata', { detail: JSON.stringify(this.returnWrapper)}));
         }
         

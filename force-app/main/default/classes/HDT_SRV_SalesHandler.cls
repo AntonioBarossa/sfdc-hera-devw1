@@ -797,7 +797,7 @@ public with sharing class HDT_SRV_SalesHandler {
                 }
             }
 
-            when 'SIE34_1'{
+            /*when 'SIE34_1'{
               
                 if (request.objects.get(0).fields.get(0) != null ) {
                     List<String> listFieldsReq =new List<String>{'runId','updatedFrom'};
@@ -811,7 +811,7 @@ public with sharing class HDT_SRV_SalesHandler {
 
                     } 
                 }
-            }
+            }*/
             when else {
 
                 responseField.fieldType = 'TEXT';
