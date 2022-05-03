@@ -70,6 +70,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
     @track amountWoFee;
     @track amountWiFee;
     @track documentResiudal;
+    @track raiFeeAmount;
     @track itemToShow = [
         { Id: '', label: '', value: ''}
     ];
@@ -456,11 +457,13 @@ export default class HdtAccountStatementPicker extends LightningElement {
         this.amountWoFee = amount - amountFee;
         this.amountWiFee = amount;
         this.documentResiudal = documentResidue;
+        this.raiFeeAmount = amountFee;
 
         // Istanzia i campi da mostrare.
         console.log('#CalculateAmount: processType -> ' + this.processType);
         if( this.processType === 'Verifica Pareggio Fittizio Canone Rai' ){
-            this.itemToShow = [ { Id: 'totalResiudal', label: 'Totale Residuo Fatture Selezionate', value: this.documentResiudal} ];
+            this.itemToShow = [ { Id: 'totalResiudal', label: 'Totale Residuo Fatture Selezionate', value: this.documentResiudal},
+                                { Id: 'raiFeeAmount', label: 'Totale Canone Rai', value: this.raiFeeAmount} ];
         } else {
             this.itemToShow = [ { Id: 'totalAmount', label: 'Totale Importo selezionato', value: this.amountWiFee},
                                 { Id: 'totalAmountWoFee', label: 'Totale Importo senza Canone Rai', value: this.amountWoFee},
