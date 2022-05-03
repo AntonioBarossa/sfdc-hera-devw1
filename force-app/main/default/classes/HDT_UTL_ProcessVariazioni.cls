@@ -36,7 +36,7 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
 
         podIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('POD'));
         contractIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CONTRATTO'));
-        accountIdIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
+        //accountIdIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
 
         if(mapWrapperCaseFields.containsKey(rifVoltura)){
             if(mapHeaderForWrapper.containsKey(mapWrapperCaseFields.get(rifVoltura))){
@@ -59,7 +59,7 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
                 continue;
             }
 
-            accountIdSet.add(processObj.csvSplitted[accountIdIndex]);
+            //accountIdSet.add(processObj.csvSplitted[accountIdIndex]);
             contractCodeSet.add(processObj.csvSplitted[contractIndex]);
 
             processObjList.add(processObj);
@@ -74,6 +74,9 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
         System.debug(LoggingLevel.DEBUG, 'getRecords');
 
         contractList = HDT_QR_ProcessPostSales.getContracts(contractList, contractCodeSet);
+        for(Contract contr : contractList){
+            accountIdSet.add(contr.AccountId);
+        }
         orderList = HDT_QR_ProcessPostSales.getOrderByOrderNumber(orderList, orderNumberList);
         accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
 
@@ -162,6 +165,7 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
                 processObj.newCase.Contract__c = contract.Id;
                 processObj.newCase.ServicePoint__c = contract.ServicePoint__c;
                 processObj.newCase.BillingProfile__c = contract.BillingProfile__c;
+                processObj.newCase.AccountId = contract.AccountId;
             } else {
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'pod non presente'));
                 continue;
@@ -179,11 +183,11 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
                 currentRecordTypeId = recordTypeMap.get(contract.ServicePoint__r.CommoditySector__c);
             }
 
-            if(String.isNotBlank(processObj.csvSplitted[accountIdIndex])){
-                processObj.newCase.AccountId = processObj.csvSplitted[accountIdIndex];
+            if(String.isNotBlank(contract.AccountId)){
+                processObj.newCase.AccountId = contract.AccountId;
                 
-                if(accountContactMap.containsKey(processObj.csvSplitted[accountIdIndex])){
-                    processObj.newCase.ContactId = accountContactMap.get(processObj.csvSplitted[accountIdIndex]).ContactId;
+                if(accountContactMap.containsKey(contract.AccountId)){
+                    processObj.newCase.ContactId = accountContactMap.get(contract.AccountId).ContactId;
                 }
             }
 
