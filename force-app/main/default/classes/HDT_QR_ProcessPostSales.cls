@@ -38,9 +38,9 @@ public with sharing class HDT_QR_ProcessPostSales {
     public static List<AccountContactRelation> getAccountContactRelationList(List<AccountContactRelation> accContRelationList, Set<String> accountIdSet, String Roles){
         accContRelationList = new List<AccountContactRelation>();
         accContRelationList = [
-            SELECT Id, AccountId, ContactId, Contact.HomePhone, Contact.MobilePhone, Contact.Email, Contact.CertifiedEmail__c, Account.CustomerMarking__c, Contact.Fax, Account.FirstName__c, Account.LastName__c,
+            SELECT Id, AccountId, ContactId, Contact.HomePhone, Contact.MobilePhone, Contact.Phone, Contact.Email, Contact.CertifiedEmail__c, Account.CustomerMarking__c, Contact.Fax, Account.FirstName__c, Account.LastName__c,
                    Account.FiscalCode__c, Account.VATNumber__c, Account.BillingCity, Account.BillingCountry, Account.BillingPlace__c, Account.BillingPostalCode, Account.BillingState, Account.BillingStreetNumber__c,
-                   Account.BillingStreetName__c, Account.BillingAddressFormula__c, Account.VATGroup__c, Account.VATGroupEndDate__c, Account.VATGroupStartDate__c, Account.IsVATGroupJoined__c, Account.Category__c
+                   Account.BillingStreetName__c, Account.BillingAddressFormula__c, Account.BillingCityCode__c, Account.VATGroup__c, Account.VATGroupEndDate__c, Account.VATGroupStartDate__c, Account.IsVATGroupJoined__c, Account.Category__c
             FROM AccountContactRelation
             WHERE AccountId IN: accountIdSet
             AND Roles = :Roles
