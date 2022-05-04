@@ -510,6 +510,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         var messageError= "Completare tutti i campi obbligatori !";
         var mailFormat = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
         var dataAccount;
+        var vatNumberValid = this.checkVATNumberMethod(vatNumber.value);
+
+        
+
 
         //CAMPI IN UPPERCASE
         let businessNameToUC = '';
@@ -566,6 +570,15 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 isValidated=false;
                 messageError=" La Partita Iva deve essere lunga 11 cifre!";
             }
+            //Check P.IVA Valido.
+            if(vatNumberValid == false){
+                isValidated=false;
+                messageError=" La Partita Iva non è valida!";
+            }
+            else if(vatNumberValid == null){
+                isValidated=false;
+                messageError="Errore imprevisto nella Partita IVA!";
+            }
         }
         if(!this.personFiscalCode.reportValidity()){
             isValidated=false;
@@ -619,6 +632,11 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                     messageError=" Il Codice fiscale deve essere lungo 16 cifre!";
                 }
             }
+        }
+
+        if(this.birthPlace == undefined || this.birthPlace == ''){
+            isValidated = false;
+            messageError=" Inserire il comune di nascita!";
         }
 
         console.log("LOG4");
@@ -981,6 +999,40 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         this.dispatchEvent(event);
     }    
     //HRAWRM-933 End 08/11/2021
+
+    checkVATNumberMethod(vatNumberToCheck){
+
+        const numeriPari = [];
+        const numeriDispari = [];
+        let countDispari = 0;
+        let countPari = 0;
+        let countResult = 0;
+        const vatNumberList = vatNumberToCheck.split('');
+        for(let indexPari = 1; indexPari<vatNumberList.length; indexPari = indexPari+2){
+            numeriPari.push(vatNumberList[indexPari]);
+        }
+        for(let indexDispari = 0; indexDispari<vatNumberList.length; indexDispari = indexDispari+2){
+            numeriDispari.push(vatNumberList[indexDispari]);
+        }
+        numeriDispari.forEach((sDispari) => {
+            countDispari = countDispari + parseInt(sDispari);
+        });
+        numeriPari.forEach((sPari) => {
+            let tmpPari = 0;
+            tmpPari = parseInt(sPari) * 2;
+            if(tmpPari > 9){
+                tmpPari = tmpPari - 9;
+            }
+            countPari = countPari + tmpPari;
+        });
+        countResult = countDispari + countPari;
+        if(countResult % 10 == 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     
 }
