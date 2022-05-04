@@ -450,7 +450,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                                 HDT_UTL_ContractProcess.moveOut(ordRetrieved.Id, 'ContractReference__c');
                                             }
                                             ord.Description =writeDescription(mapRequestFields.get('NOTA_HK'), oldDescription);
-                                            ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
+                                            /**@frpanico 2022-05-04
+                                             * Prevenzione dello sbiancamento del codice impianto SAP
+                                             */
+                                            if(!String.isBlank(mapRequestFields.get('ANLAGE')))
+                                            {
+                                                ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
+                                            }
                                             ord.OrderODV__c = mapRequestFields.get('VBELN');
                                             ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
                                             ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
