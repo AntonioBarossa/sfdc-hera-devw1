@@ -1,7 +1,7 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UTL_ProcessExecution {
 
-    private Map<String, HDT_MassiveFieldsObjectMap__mdt> sobjectMap;
+    private Map<String, MassiveFieldsObjectMap__c> sobjectMap;
     private List<MassiveLoaderRequestItem__c> itemsToUpdate;
     private List<HDT_WRP_Order> wrapperOrderList;
     private List<HDT_WRP_OrderItem> wrapperOrderItemList;
@@ -21,6 +21,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
         mapFieldsObject();
 
+        System.debug('>>> mapHeaderForWrapper ' + mapHeaderForWrapper);
+
         Map<String, Id> failedMap = new Map<String, Id>();
         itemsToUpdate = new List<MassiveLoaderRequestItem__c>();
         productMap = new Map<String, Product2>();
@@ -35,6 +37,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         String orderUniqueKey;
         Integer orderUniqueKeyIndex = mapHeaderForWrapper.get('Progressivo_rds');
         Integer nomeVasIndex = mapHeaderForWrapper.get('NomeVAS');
+
+        System.debug('>>> orderUniqueKeyIndex ' + orderUniqueKeyIndex);
+        System.debug('>>> nomeVasIndex ' + nomeVasIndex);
 
         List<HDT_WRP_Order> wrapperOrderTempList = new List<HDT_WRP_Order>();
         List<HDT_WRP_OrderItem> wrapperOrderItemTempList = new List<HDT_WRP_OrderItem>();
@@ -249,12 +254,18 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         //Map<String, HDT_WRP_Order> orderUniqueKeyMap = new Map<String, HDT_WRP_Order>();
 
         for(HDT_WRP_Order wrpOrder : wrapperOrderList){
-            wrpOrder.Order.PriceBook2Id = contractToPbookIdMap.get(wrpOrder.contract.SAPContractCode__c).SBQQ__AmendmentPricebookId__c;
-            wrpOrder.order.AccountId = contractToPbookIdMap.get(wrpOrder.contract.SAPContractCode__c).AccountId;
-            wrpOrder.Order.EffectiveDate = Date.today();
-            wrpOrder.Order.Status = 'Draft';
-            childOrderToInsert.add(wrpOrder.Order);
-            requestItemForUpsert.add(wrpOrder.requestItem);
+            if(contractToPbookIdMap.containsKey(wrpOrder.contract.SAPContractCode__c)){
+                wrpOrder.Order.PriceBook2Id = contractToPbookIdMap.get(wrpOrder.contract.SAPContractCode__c).SBQQ__AmendmentPricebookId__c;
+                wrpOrder.order.AccountId = contractToPbookIdMap.get(wrpOrder.contract.SAPContractCode__c).AccountId;
+                wrpOrder.Order.EffectiveDate = Date.today();
+                wrpOrder.Order.Status = 'Draft';
+                childOrderToInsert.add(wrpOrder.Order);
+                requestItemForUpsert.add(wrpOrder.requestItem);
+            } else {
+                wrpOrder.requestItem.Status__c = 'Errore';
+                wrpOrder.requestItem.StatusDescription__c = 'contratto non presente';
+                continue;
+            }
         }
 
         HDT_WRP_SaveResponse saveChildOrderResponse;
@@ -320,6 +331,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
             System.debug('>>> pricebookId ' + pricebookId);
 
             prodKey = wrpOrderItem.product.Name + '-' + wrpOrderItem.product.DescriptionSAP__c + '-' + wrpOrderItem.product.Version__c;
+            System.debug('>>> prodKey ' + prodKey);
+            System.debug('>>> productMap ' + productMap);
 
             if(productMap.containsKey(prodKey)){
                 wrpOrderItem.orderItem.Product2Id = productMap.get(prodKey).Id;
@@ -341,8 +354,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
         }
 
-        //System.debug(JSON.serializePretty(wrapperOrderList));
-        //System.debug(JSON.serializePretty(wrapperOrderItemList));
+        System.debug(JSON.serializePretty(wrapperOrderList));
+        System.debug(JSON.serializePretty(wrapperOrderItemList));
 
         HDT_WRP_SaveResponse saveOrderItemResponse;
         saveOrderItemResponse = databaseUpsert(orderItemToInsert, requestItemForUpsert, 'OrderItem');
@@ -442,21 +455,27 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
     private void mapFieldsObject(){
 
         mapAllFields = new Map<String, String>();
-        List<HDT_MassiveFieldsObjectMap__mdt> allFieldForThisProcess;
+        List<MassiveFieldsObjectMap__c> allFieldForThisProcess;
 
-        sobjectMap = new Map<String, HDT_MassiveFieldsObjectMap__mdt>();
+        sobjectMap = new Map<String, MassiveFieldsObjectMap__c>();
+        //allFieldForThisProcess = [
+        //    SELECT MasterLabel, labelField__c, nameField__c, objectType__c, processType__c
+        //    FROM MassiveFieldsObjectMap__c 
+        //    WHERE DeveloperName LIKE 'VAS_%'
+        //    AND processType__c = 'VAS'
+        //    WITH SECURITY_ENFORCED
+        //];
         allFieldForThisProcess = [
-            SELECT MasterLabel, labelField__c, nameField__c, objectType__c, processType__c
-            FROM HDT_MassiveFieldsObjectMap__mdt 
-            WHERE DeveloperName LIKE 'VAS_%'
+            SELECT labelField__c, nameField__c, objectType__c, processType__c
+            FROM MassiveFieldsObjectMap__c 
+            WHERE Name LIKE 'VAS_%'
             AND processType__c = 'VAS'
-            WITH SECURITY_ENFORCED
         ];
 
-        for(HDT_MassiveFieldsObjectMap__mdt temp : allFieldForThisProcess){
+        for(MassiveFieldsObjectMap__c temp : allFieldForThisProcess){
             if(temp.objectType__c != 'RowCsv'){
-                mapAllFields.put(temp.MasterLabel, temp.nameField__c);
-                sobjectMap.put(temp.MasterLabel, temp);
+                mapAllFields.put(temp.labelField__c, temp.nameField__c);
+                sobjectMap.put(temp.labelField__c, temp);
             }
         }
 

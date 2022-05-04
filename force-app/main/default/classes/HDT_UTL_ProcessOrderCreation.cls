@@ -381,9 +381,11 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
                     HDT_WRP_OrderItem requiredItem;
                     System.debug('>>> required for ' + commOffId);
-                    for(SBQQ__ProductOption__c requiredOption : otherRequiredOption.get(commOffId)){
-                        requiredItem = setRequiredItem(requiredOption, commOffId, priceBookId);
-                        wrpChildOrder.orderItemList.add(requiredItem);
+                    if(otherRequiredOption.containsKey(commOffId)){
+                        for(SBQQ__ProductOption__c requiredOption : otherRequiredOption.get(commOffId)){
+                            requiredItem = setRequiredItem(requiredOption, commOffId, priceBookId);
+                            wrpChildOrder.orderItemList.add(requiredItem);
+                        }
                     }
 
                     processObj.parentOrder = setParentOrder(wrpChildOrder.childOrder, processObj.parentOrder, processObj.sale);
