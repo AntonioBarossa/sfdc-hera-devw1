@@ -101,15 +101,16 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
 
         HDT_LC_CalculateEstimatedCost.HDT_WRP_ExtimatedCost ext = new HDT_LC_CalculateEstimatedCost.HDT_WRP_ExtimatedCost();
         ext.fixedQuotes = new HDT_CalcoloPreventivi__mdt();
-        /*
+        /*updated 04/05/2022 by Edoardo Zanatta
+
         fixedQuotes.VAT__c >> 10.00
         fixedQuotes.DistributorFixedQuote__c >> 0.00
-        fixedQuotes.PowerQuote__c >> 56.16
+        fixedQuotes.PowerQuote__c >> 56.38
         fixedQuotes.SellerFixedQuote__c >> 23.00
         fixedQuotes.Type__c >> 'Domestico'
-        variableAmount >> -16.2864 
-        estimatedAmount >> 7.384960
-        estimatedAmount = estimatedAmount.setScale(2) >> 7.38
+        variableAmount >> -16.3502
+        estimatedAmount >> 6.6498
+        estimatedAmount = estimatedAmount.setScale(2) >> 6.65
         */
 
         Test.startTest();
@@ -119,7 +120,7 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
         
         Test.stopTest();
         
-        System.assertEquals(6.71, ext.estimatedAmount, 'EstimateAmount__c not correct!');
+        System.assertEquals(6.65, ext.estimatedAmount, 'EstimateAmount__c not correct!');
         System.assertEquals(1000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
         System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
         
