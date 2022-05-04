@@ -1222,6 +1222,7 @@ public inherited sharing class HDT_QR_Order {
             CancellationReason__c,
             CommercialProduct__c,
             IsEarlyActivation__c,
+            VasSubtype__c,
             VASType__c
         FROM Order
         WHERE ParentOrder__c = :parentOrderId

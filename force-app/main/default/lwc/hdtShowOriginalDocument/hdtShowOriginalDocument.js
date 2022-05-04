@@ -28,9 +28,16 @@ export default class HdtShowOriginalDocument extends NavigationMixin(LightningEl
                         console.log('show pdf from base64, # chars = ' + resultParsed.base64.length);
                         this.showDocumentFromBase64(resultParsed.base64, 'application/pdf');
                         this.closeAction();
-                    } else if (resultParsed.type === 'zip') {
+                    } else if (resultParsed.type === 'zip' && !resultParsed.base64List) {
                         console.log('show zip from base64, # chars = ' + resultParsed.base64.length);
                         this.showDocumentFromBase64(resultParsed.base64, 'application/zip');
+                        this.closeAction();
+                    } else if (resultParsed.type === 'zip' && resultParsed.base64List) {
+                        console.log('listContact ' + resultParsed.base64List);
+                        let fileList = JSON.parse(resultParsed.base64List);
+                        fileList.forEach((item) => {
+                            this.showDocumentFromBase64(item, 'application/zip');
+                        });
                         this.closeAction();
                     }
                 }else{

@@ -78,6 +78,8 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             this.signatureMethod = data.fields.SignatureMethod__c.value;
             // 28/12/2021: commentata logica che disabilita il component documentale, poichè deve sempre essere visibile nel wizard.
             //this.enableDocumental = !signed;
+            console.log('### Signature method >>> ' + this.signatureMethod)
+            this.enableDocumental = this.signatureMethod !== 'Contratto già firmato'
         }
     }
 

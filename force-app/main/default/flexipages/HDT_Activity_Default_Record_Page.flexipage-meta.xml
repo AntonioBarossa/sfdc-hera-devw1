@@ -938,6 +938,11 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.ActivityDurationFormula__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-52a62b0f-0db8-4db8-a0eb-dde5537c7162</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -2255,6 +2260,91 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.QAdLogin__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.QAdOfficeID__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.QAdTicketBookingTime__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.QAdTicketNumber__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.BPCode__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-4207b1e0-6cba-494c-9b7f-1b9c44bddea4</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.QAdCallID__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.QAdWorkstationID__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.QAdTicketCallTime__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.QAdCallStatus__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.FiscalCode__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.VATNumber__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-0d7894ca-9c64-4b7a-b451-443b377d153e</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-4207b1e0-6cba-494c-9b7f-1b9c44bddea4</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-0d7894ca-9c64-4b7a-b451-443b377d153e</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-40c6e09a-e894-4792-bb3d-29b399a3ca7d</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
@@ -2475,6 +2565,25 @@
                         <leftValue>{!Record.IsMigrated__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-40c6e09a-e894-4792-bb3d-29b399a3ca7d</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Integrazione QAd</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.QAdCallID__c}</leftValue>
+                        <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

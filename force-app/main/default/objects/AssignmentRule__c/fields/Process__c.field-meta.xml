@@ -775,6 +775,191 @@
                 <default>false</default>
                 <label>Cambio Offerta Gas</label>
             </value>
+            <value>
+                <fullName>Blocco al Sollecito ed Interessi</fullName>
+                <default>false</default>
+                <label>Blocco al Sollecito ed Interessi</label>
+            </value>
+            <value>
+                <fullName>Reclamo scritto</fullName>
+                <default>false</default>
+                <label>Reclamo scritto</label>
+            </value>
+            <value>
+                <fullName>Richieste info</fullName>
+                <default>false</default>
+                <label>Richieste info</label>
+            </value>
+            <value>
+                <fullName>Richiesta lettura c/cliente</fullName>
+                <default>false</default>
+                <label>Richiesta lettura c/cliente</label>
+            </value>
+            <value>
+                <fullName>Attivazione</fullName>
+                <default>false</default>
+                <label>Attivazione</label>
+            </value>
+            <value>
+                <fullName>Prima attivazione</fullName>
+                <default>false</default>
+                <label>Prima attivazione</label>
+            </value>
+            <value>
+                <fullName>Modifica contratto in pre-attivazione</fullName>
+                <default>false</default>
+                <label>Modifica contratto in pre-attivazione</label>
+            </value>
+            <value>
+                <fullName>Modifica Servizio Energia</fullName>
+                <default>false</default>
+                <label>Modifica Servizio Energia</label>
+            </value>
+            <value>
+                <fullName>Switch-out dal SII</fullName>
+                <default>false</default>
+                <label>Switch-out dal SII</label>
+            </value>
+            <value>
+                <fullName>Proroga connessione temporanea</fullName>
+                <default>false</default>
+                <label>Proroga connessione temporanea</label>
+            </value>
+            <value>
+                <fullName>Predeterminabile + EL</fullName>
+                <default>false</default>
+                <label>Predeterminabile + EL</label>
+            </value>
+            <value>
+                <fullName>Gestione disalimentabilita</fullName>
+                <default>false</default>
+                <label>Gestione disalimentabilita</label>
+            </value>
+            <value>
+                <fullName>Switch in</fullName>
+                <default>false</default>
+                <label>Switch in</label>
+            </value>
+            <value>
+                <fullName>Copia contratto firmato e non ricevuto</fullName>
+                <default>false</default>
+                <label>Copia contratto firmato e non ricevuto</label>
+            </value>
+            <value>
+                <fullName>Riattivazione fornitura non morosa</fullName>
+                <default>false</default>
+                <label>Riattivazione fornitura non morosa</label>
+            </value>
+            <value>
+                <fullName>Alert</fullName>
+                <default>false</default>
+                <label>Alert</label>
+            </value>
+            <value>
+                <fullName>Attivazione con Modifica</fullName>
+                <default>false</default>
+                <label>Attivazione con Modifica</label>
+            </value>
+            <value>
+                <fullName>Subentro</fullName>
+                <default>false</default>
+                <label>Subentro</label>
+            </value>
+            <value>
+                <fullName>Sost. Contatore c/cliente</fullName>
+                <default>false</default>
+                <label>Sost. Contatore c/cliente</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Attacco /Preventivo Analitico + EL</fullName>
+                <default>false</default>
+                <label>Aggiunta Attacco /Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Recesso su Richesta Cliente</fullName>
+                <default>false</default>
+                <label>Recesso su Richesta Cliente</label>
+            </value>
+            <value>
+                <fullName>Verifica Pressione</fullName>
+                <default>false</default>
+                <label>Verifica Pressione</label>
+            </value>
+            <value>
+                <fullName>Emissione Impulsi/Preventivo Analitico + EL</fullName>
+                <default>false</default>
+                <label>Emissione Impulsi/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Modifica Impianto/Preventivo Analitico + EL</fullName>
+                <default>false</default>
+                <label>Modifica Impianto/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Nuovo Impianto/Preventivo Analitico + EL</fullName>
+                <default>false</default>
+                <label>Nuovo Impianto/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Rimozione Impianto/Preventivo</fullName>
+                <default>false</default>
+                <label>Rimozione Impianto/Preventivo</label>
+            </value>
+            <value>
+                <fullName>Rimozione Impianto/Preventivo Analitico + EL</fullName>
+                <default>false</default>
+                <label>Rimozione Impianto/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Ripristino Fornitura Interrotta/Preventivo Analitico + EL</fullName>
+                <default>false</default>
+                <label>Ripristino Fornitura Interrotta/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Spostamento Cavi/Preventivo Analitico + EL</fullName>
+                <default>false</default>
+                <label>Spostamento Cavi/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Spostamento Contatore/Preventivo Analitico + EL</fullName>
+                <default>false</default>
+                <label>Spostamento Contatore/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Unificazione POD/Preventivo Analitico + EL</fullName>
+                <default>false</default>
+                <label>Unificazione POD/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Variazione Fase (Pari Potenza)/Preventivo Analitico + EL</fullName>
+                <default>false</default>
+                <label>Variazione Fase (Pari Potenza)/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Variazione Fase (Pari Potenza)/Preventivo Predeterminabile + EL</fullName>
+                <default>false</default>
+                <label>Variazione Fase (Pari Potenza)/Preventivo Predeterminabile + EL</label>
+            </value>
+            <value>
+                <fullName>Variazione Portata/Preventivo Analitico + EL</fullName>
+                <default>false</default>
+                <label>Variazione Portata/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Variazione Potenza/Preventivo Analitico + EL</fullName>
+                <default>false</default>
+                <label>Variazione Potenza/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Variazione Potenza/Preventivo Predeterminabile + EL</fullName>
+                <default>false</default>
+                <label>Variazione Potenza/Preventivo Predeterminabile + EL</label>
+            </value>
+            <value>
+                <fullName>Variazione Tensione/Preventivo Analitico + EL</fullName>
+                <default>false</default>
+                <label>Variazione Tensione/Preventivo Analitico + EL</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>

@@ -49,12 +49,12 @@ public class HDT_LC_OrderDossierWizardActionsTst{
 
 	@isTest static void testSave1(){
 
-		Order ord = [SELECT Id, Phase__c, ContractSigned__c FROM Order LIMIT 1];
+		Order ord = [SELECT Id, Phase__c, ContractSigned__c, SignatureMethod__c FROM Order LIMIT 1];
         Id ordId = ord.id;
         
 		HDT_LC_OrderDossierWizardActions.save(ord);
         
-        ord = [SELECT Id, Phase__c, ContractSigned__c FROM Order WHERE Id =: ordId];
+        ord = [SELECT Id, Phase__c, ContractSigned__c, SignatureMethod__c FROM Order WHERE Id =: ordId];
         
         System.assertEquals('Documentazione da validare', ord.Phase__c, 'save did not work correctly');
 		System.assertNotEquals('Bozza', ord.Phase__c, 'save did not work correctly');
@@ -62,14 +62,14 @@ public class HDT_LC_OrderDossierWizardActionsTst{
     
     @isTest static void testSave1False(){
 
-		Order ord = [SELECT Id, Phase__c, ContractSigned__c FROM Order LIMIT 1];
+		Order ord = [SELECT Id, Phase__c, ContractSigned__c, SignatureMethod__c FROM Order LIMIT 1];
         Id ordId = ord.id;
         
         ord.ContractSigned__c = false;
         
 		HDT_LC_OrderDossierWizardActions.save(ord);
         
-        ord = [SELECT Id, Phase__c, ContractSigned__c FROM Order WHERE Id =: ordId];
+        ord = [SELECT Id, Phase__c, ContractSigned__c, SignatureMethod__c FROM Order WHERE Id =: ordId];
         
         System.assertEquals('Documentazione da inviare', ord.Phase__c, 'save did not work correctly');
 		System.assertNotEquals('Bozza', ord.Phase__c, 'save did not work correctly');
