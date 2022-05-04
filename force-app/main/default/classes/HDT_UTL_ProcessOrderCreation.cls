@@ -219,7 +219,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             }
 
             if(!defaultProdOption.contains(prodOpt.SBQQ__OptionalSKU__r.Name) && prodOpt.SBQQ__Required__c == true){
-                if(otherRequiredOption.containsKey(prodOpt.SBQQ__OptionalSKU__c)){
+                if(otherRequiredOption.containsKey(prodOpt.SBQQ__ConfiguredSKU__c)){
                     otherRequiredOption.get(prodOpt.SBQQ__ConfiguredSKU__c).add(prodOpt);
                 } else {
                     otherRequiredOption.put(prodOpt.SBQQ__ConfiguredSKU__c, new List<SBQQ__ProductOption__c>{prodOpt});
