@@ -42,16 +42,18 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         accList[0].VATNumber__c = '03819031208';
         accList[0].BillingStreetName__c = 'Via Guglielmo Marconi';
         accList[0].BillingStreetNumber__c = '15';
+        accList[0].BillingStreetNumberExtension__c = 'D';
         accList[0].BillingCity = 'Ancona';
         accList[0].BillingState = 'IT';
         accList[0].BillingPostalCode = '60121';
         accList[0].BillingCountry = 'ITALIA';
+        accList[0].BillingPlace__c = 'test place';
         accList[0].IsVATGroupJoined__c = true;
         accList[0].VATGroup__c = '86334519757';
         Date myNewStartDate = Date.newInstance(2021, 09, 28);
         accList[0].VATGroupStartDate__c = myNewStartDate;
         Date myNewEndDate = Date.newInstance(2021, 09, 25);
-        accList[0].VATGroupStartDate__c = myNewEndDate;    
+        accList[0].VATGroupStartDate__c = myNewEndDate;
         update accList;
 
         //Order
@@ -71,14 +73,14 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         contactList[0].MobilePhone = '9872345123';
         contactList[0].Phone = '9879873425';
         contactList[0].CertifiedEmail__c = 'myCertifiedEmail@certifiedEmail.com';
-        contactList[0].Fax = 'myFax';
+        contactList[0].Fax = '0898352638';
         update contactList;
 
         //Contract
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
 
         //Case
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(38, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(39, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         CaseList[0].Type = 'Richiesta Parere';
         CaseList[1].Type = 'Piano Rateizzazione';
         CaseList[2].Type = 'Piano Rateizzazione';
@@ -100,7 +102,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         caseList[9].FirstName__c = 'Franco';
         caseList[9].FiscalCode__c = 'RSSMRA80A01D548N';
         caseList[9].VatNumber__c = '03819031208';
-        caseList[9].AlternativeAddress__c = 'Via Guglielmo Marconi, 15, , Ancona, IT, 60121, ITALIA';
+        caseList[9].AlternativeAddress__c = 'Via Guglielmo Marconi, 15, D, Ancona, IT, 60121, ITALIA';
         caseList[10].Type = 'Variazione Anagrafica Cliente';
         caseList[10].Subprocess__c = 'Variazione Gruppo IVA';
         caseList[11].Type = 'Storno Rateizzazione';
@@ -148,10 +150,18 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         caseList[37].Type = 'Modifica Contr Preattivazione Anagr Res';
         caseList[37].RecordTypeId = rtId;
         caseList[37].Cluster__c = 'Attivazioni';
-
-
-
-
+        String rtName2 = 'HDT_RT_AllineamentoAnagrafica';
+        String rtId2 = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtName2).getRecordTypeId();
+        caseList[38].RecordTypeId = rtId2;
+        caseList[38].Type = 'Variazione Anagrafica Cliente';
+        caseList[38].Subprocess__c = 'Modifica Dati di Contatto';
+        caseList[38].CustomerMarking__c = 'Azienda';
+        caseList[38].Category__c = 'Aziende Soho';
+        caseList[38].Email__c = 'myEmail@email.com';
+        caseList[38].Mobile__c = '9872345123';
+        caseList[38].PhoneNumber__c = '9879873425';
+        caseList[38].CertifiedEmail__c = 'myCertifiedEmail@certifiedEmail.com';
+        caseList[38].Fax__c = '0898352638';
 
         update caseList;
 
@@ -476,6 +486,60 @@ public with sharing class HDT_UTL_CaseValidationsTst {
     }
 
     @isTest
+    private static void validateTestType4b(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType4b';
+        System.debug(debugString);
+        
+        //SETUP
+
+        mySetup();
+        Case myCase5b = [Select Id, Type, Reason__c, BankAccountSignatoryFiscalCode__c, AccountholderTypeBeneficiary__c, BillingProfile__c from Case where Type = 'Variazione Domiciliazione'];
+        BillingProfile__c myBillingProfile = [Select Id from BillingProfile__c];
+
+        String recordId20 = myCase5b.Id;
+        myCase5b.BillingProfile__c = myBillingProfile.Id;
+        myCase5b.Reason__c = 'Cambio Banca';
+        myCase5b.BankAccountSignatoryFiscalCode__c = 'RSSMRA80A01D548N';
+        myCase5b.BankAccountSignatoryFirstName__c = 'Mario';
+        myCase5b.BankAccountSignatoryLastName__c = 'Rossi';
+        String fields20 = JSON.serialize(myCase5b);
+        update myCase5b;
+
+        Account myAccount = [select Id, Category__c, CustomerMarking__c from Account];
+        myAccount.Category__c = 'Famiglie';
+        myAccount.CustomerMarking__c = 'D1 - Persona fisica';
+        update myAccount;
+        List<Case> newList = new List<Case>();
+        newList.add(myCase5b);
+        List<FormulaRecalcResult> results = Formula.recalculateFormulas(newList);
+        System.assert(results[0].isSuccess(), 'results[0] deve essere success');
+
+        String recordId21 = myCase5b.Id;
+        myCase5b.BankAccountSignatoryFiscalCode__c = '';
+        myCase5b.AccountholderTypeBeneficiary__c = 'Rappresentante Legale';
+        String fields21 = JSON.serialize(myCase5b);
+
+        Test.startTest();
+
+        Try{
+            
+            HDT_UTL_CaseValidations myClass5b = new HDT_UTL_CaseValidations();
+
+            myClass5b.validate(fields20, recordId20);
+            myClass5b.validate(fields21, recordId21);
+            
+        }catch(DmlException e) {
+                System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+
+        //ASSERTS
+        System.assert(myCase5b != null, 'myCase5b non può essere null');
+    }
+
+    @isTest
     private static void validateTestType5(){
 
         //DEBUG
@@ -610,7 +674,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         mySetup();        
         
         Case myCase8 = [Select Id, Type, Subprocess__c, Category__c, CustomerMarking__c, PhoneNumber__c, 
-        Email__c, Mobile__c, CertifiedEmail__c, Fax__c from Case where Type = 'Variazione Anagrafica Cliente' and Subprocess__c = 'Modifica Dati di Contatto'];
+        Email__c, Mobile__c, CertifiedEmail__c, Fax__c from Case where Type = 'Variazione Anagrafica Cliente' and Subprocess__c = 'Modifica Dati di Contatto' LIMIT 1];
         Account myAccount = [Select Id, FirstName__c, LastName__c, FiscalCode__c, VATNumber__c from Account];
 
         String recordId26 = myCase8.Id;
@@ -646,7 +710,8 @@ public with sharing class HDT_UTL_CaseValidationsTst {
             HDT_UTL_CaseValidations myClass8 = new HDT_UTL_CaseValidations();
 
             myClass8.validate(fields26, recordId26);
-            myClass8.validate(fields27, recordId27);            
+            myClass8.validate(fields27, recordId27);
+            myClass8.validate(fields27, recordId27);
             myClass8.validate(fields55, recordId55);
             myClass8.validate(fields53, recordId53);
 
@@ -657,6 +722,94 @@ public with sharing class HDT_UTL_CaseValidationsTst {
 
         //ASSERTS
         System.assert(myCase8 != null, 'myCase8 non può essere null');
+    }
+
+    /*@isTest
+    private static void validateTestType7ab(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType7ab';
+        System.debug(debugString);
+        
+        //SETUP
+
+        mySetup();        
+        
+        Case myCase8ab = [Select Id, Type, Subprocess__c, Category__c, CustomerMarking__c, PhoneNumber__c, 
+        Email__c, Mobile__c, CertifiedEmail__c, Fax__c from Case where Type = 'Variazione Anagrafica Cliente' and Subprocess__c = 'Modifica Dati di Contatto' LIMIT 1];
+        
+        String recordId55ab = myCase8ab.Id;
+        String fields55ab = JSON.serialize(myCase8ab);
+        
+        Test.startTest();
+
+        Try{
+            
+            HDT_UTL_CaseValidations myClass8ab = new HDT_UTL_CaseValidations();
+
+            myClass8ab.validate(fields55ab, recordId55ab);
+
+            }catch(DmlException e) {
+                System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+
+        //ASSERTS
+        System.assert(myCase8ab != null, 'myCase8ab non può essere null');
+    }*/
+
+    @isTest
+    private static void validateTestType7h(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType7';
+        System.debug(debugString);
+        
+        //SETUP
+
+        mySetup();        
+        
+        Case myCase8h = [Select Id, Type, Subprocess__c, Category__c, CustomerMarking__c, PhoneNumber__c, 
+        Email__c, Mobile__c, CertifiedEmail__c, Fax__c from Case where RecordType.DeveloperName = 'HDT_RT_AllineamentoAnagrafica'];
+
+        String recordId26b = myCase8h.Id;
+        String fields26b = JSON.serialize(myCase8h);
+        
+        String recordId26c = myCase8h.Id;
+        myCase8h.PhoneNumber__c = null;
+        myCase8h.Mobile__c = null;
+        myCase8h.Email__c = null;
+        String fields26c = JSON.serialize(myCase8h);
+
+        String recordId26d = myCase8h.Id;
+        myCase8h.Mobile__c = '333209864555';
+        String fields26d = JSON.serialize(myCase8h);
+
+        String recordId26e = myCase8h.Id;
+        myCase8h.Mobile__c = null;
+        myCase8h.PhoneNumber__c = '3209864553';
+        String fields26e = JSON.serialize(myCase8h);
+
+
+        
+        Test.startTest();
+
+        Try{
+            
+            HDT_UTL_CaseValidations myClass8h = new HDT_UTL_CaseValidations();
+
+            myClass8h.validate(fields26b, recordId26b);
+            myClass8h.validate(fields26c, recordId26c);
+            myClass8h.validate(fields26d, recordId26d);
+            myClass8h.validate(fields26e, recordId26e);
+
+            }catch(DmlException e) {
+                System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+
+        //ASSERTS
+        System.assert(myCase8h != null, 'myCaseh non può essere null');
     }
 
     @isTest
@@ -671,7 +824,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         mySetup();        
         
         Case myCase8e = [Select Id, Type, Subprocess__c, Category__c, CustomerMarking__c, PhoneNumber__c, 
-        Email__c, Mobile__c, CertifiedEmail__c, Fax__c from Case where Type = 'Variazione Anagrafica Cliente' and Subprocess__c = 'Modifica Dati di Contatto'];
+        Email__c, Mobile__c, CertifiedEmail__c, Fax__c from Case where Type = 'Variazione Anagrafica Cliente' and Subprocess__c = 'Modifica Dati di Contatto' LIMIT 1];
 
         String recordId52 = myCase8e.Id;
         myCase8e.Category__c = 'Piccoli Condomini';
@@ -706,8 +859,8 @@ public with sharing class HDT_UTL_CaseValidationsTst {
 
         mySetup();        
         
-        Case myCase8f = [Select Id, Type, Subprocess__c, Category__c, CustomerMarking__c, PhoneNumber__c, 
-        Email__c, Mobile__c, CertifiedEmail__c, Fax__c from Case where Type = 'Variazione Anagrafica Cliente' and Subprocess__c = 'Modifica Dati di Contatto'];
+        Case myCase8f = [Select Id, Type, Subprocess__c, Category__c, CustomerMarking__c, PhoneNumber__c,
+        Email__c, Mobile__c, CertifiedEmail__c, Fax__c from Case where Type = 'Variazione Anagrafica Cliente' and Subprocess__c = 'Modifica Dati di Contatto' LIMIT 1];
 
         String recordId56 = myCase8f.Id;
         myCase8f.Category__c = 'Aziende Soho';
@@ -730,6 +883,45 @@ public with sharing class HDT_UTL_CaseValidationsTst {
 
         //ASSERTS
         System.assert(myCase8f != null, 'myCase8f non può essere null');
+    }
+
+    @isTest
+    private static void validateTestType7g(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType7g';
+        System.debug(debugString);
+        
+        //SETUP
+
+        mySetup();        
+        
+        Case myCase8g = [Select Id, Type, Subprocess__c, Category__c, CustomerMarking__c, PhoneNumber__c, 
+        Email__c, Mobile__c, CertifiedEmail__c, Fax__c from Case where Type = 'Variazione Anagrafica Cliente' and Subprocess__c = 'Modifica Dati di Contatto' LIMIT 1];
+        Account myAcc = [Select id, FiscalCode__c from Account];
+        myAcc.FiscalCode__c = '';
+        update myAcc;
+        String recordId56b = myCase8g.Id;
+        myCase8g.Category__c = 'Famiglie';
+        myCase8g.CustomerMarking__c = 'AAS Persona fisica';
+        String fields56b = JSON.serialize(myCase8g);
+
+        
+        Test.startTest();
+
+        Try{
+            
+            HDT_UTL_CaseValidations myClass8g = new HDT_UTL_CaseValidations();
+
+            myClass8g.validate(fields56b, recordId56b);
+
+            }catch(DmlException e) {
+                System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+
+        //ASSERTS
+        System.assert(myCase8g != null, 'myCase8g non può essere null');
     }
 
     @isTest
@@ -798,6 +990,8 @@ public with sharing class HDT_UTL_CaseValidationsTst {
 
         Case myCase8c = [Select Id, Type, Subprocess__c, Category__c, CustomerMarking__c, FirstName__c,
         LastName__c, FiscalCode__c, VatNumber__c, AlternativeAddress__c from Case where Type = 'Variazione Anagrafica Cliente' and Subprocess__c = 'Modifica Dati Fiscali'];
+        Account myAcc = [Select id, FiscalCode__c from Account];
+        
 
         String recordId31 = myCase8c.Id;
         String fields31 = JSON.serialize(myCase8c);
@@ -805,16 +999,6 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         String recordId32 = myCase8c.Id;
         myCase8c.LastName__c = 'Rossi';
         String fields32 = JSON.serialize(myCase8c);
-
-        String recordId33 = myCase8c.Id;
-        myCase8c.Category__c = 'Aziende Soho';
-        myCase8c.CustomerMarking__c = 'D3 - Azienda';
-        String fields33 = JSON.serialize(myCase8c);
-        
-        String recordId33b = myCase8c.Id;
-        myCase8c.CustomerMarking__c = 'D6 - Associazione';
-        String fields33b = JSON.serialize(myCase8c);
-
         
 
         Test.startTest();
@@ -825,9 +1009,6 @@ public with sharing class HDT_UTL_CaseValidationsTst {
            
             myClass8c.validate(fields31, recordId31);
             myClass8c.validate(fields32, recordId32);
-            myClass8c.validate(fields33, recordId33);
-            myClass8c.validate(fields33b, recordId33b);
-
             
             
         }catch(DmlException e) {
@@ -839,6 +1020,249 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         System.assert(myCase8c != null, 'myCase8c non può essere null');
     }
 
+    @isTest
+    private static void validateTestType7l(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType7l';
+        System.debug(debugString);
+        
+        //SETUP
+
+        mySetup();        
+
+        Case myCase8l = [Select Id, Type, Subprocess__c, Category__c, CustomerMarking__c, FirstName__c,
+        LastName__c, FiscalCode__c, VatNumber__c, AlternativeAddress__c from Case where Type = 'Variazione Anagrafica Cliente' and Subprocess__c = 'Modifica Dati Fiscali'];
+        Account myAcc = [Select id, FiscalCode__c from Account];
+        
+        myAcc.Category__c = 'Famiglie';
+        myAcc.CustomerMarking__c = 'D1 - Persona fisica';
+        update myAcc;
+        String recordId33l = myCase8l.Id;
+        myCase8l.LastName__c = 'Rossi';
+        myCase8l.FiscalCode__c  = 'RZZMRA80A01D548M';
+        String fields33l = JSON.serialize(myCase8l);
+        
+        Test.startTest();
+
+        Try{
+            
+            HDT_UTL_CaseValidations myClass8l = new HDT_UTL_CaseValidations();
+           
+            myClass8l.validate(fields33l, recordId33l);            
+            
+        }catch(DmlException e) {
+                System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+
+        //ASSERTS
+        System.assert(myCase8l != null, 'myCase8l non può essere null');
+    }
+
+    @isTest
+    private static void validateTestType7q(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType7q';
+        System.debug(debugString);
+        
+        //SETUP
+
+        mySetup();        
+
+        Case myCase8q = [Select Id, Type, Subprocess__c, Category__c, CustomerMarking__c, FirstName__c,
+        LastName__c, FiscalCode__c, VatNumber__c, AlternativeAddress__c from Case where Type = 'Variazione Anagrafica Cliente' and Subprocess__c = 'Modifica Dati Fiscali'];
+        Account myAcc = [Select id, FiscalCode__c from Account];
+        
+        myAcc.Category__c = 'Aziende Soho';
+        myAcc.CustomerMarking__c = 'D6 - Associazione';
+        update myAcc;
+        String recordId33q = myCase8q.Id;
+        myCase8q.LastName__c = 'Rossi';
+        myCase8q.FiscalCode__c  = 'RPPMRA80A01D548M';
+        String fields33q = JSON.serialize(myCase8q);
+        
+        Test.startTest();
+
+        Try{
+            
+            HDT_UTL_CaseValidations myClass8q = new HDT_UTL_CaseValidations();
+           
+            myClass8q.validate(fields33q, recordId33q);            
+            
+        }catch(DmlException e) {
+                System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+
+        //ASSERTS
+        System.assert(myCase8q != null, 'myCase8q non può essere null');
+    }
+    
+    @isTest
+    private static void validateTestType7p(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType7p';
+        System.debug(debugString);
+        
+        //SETUP
+
+        mySetup();        
+
+        Case myCase8p = [Select Id, Type, Subprocess__c, Category__c, CustomerMarking__c, FirstName__c,
+        LastName__c, FiscalCode__c, VatNumber__c, AlternativeAddress__c from Case where Type = 'Variazione Anagrafica Cliente' and Subprocess__c = 'Modifica Dati Fiscali'];
+        Account myAcc = [Select id, FiscalCode__c from Account];
+        
+        myAcc.Category__c = 'Aziende Soho';
+        myAcc.CustomerMarking__c = 'D2 - Ditta individuale';
+        update myAcc;
+        String recordId33p = myCase8p.Id;
+        myCase8p.LastName__c = 'Rossi';
+        myCase8p.FiscalCode__c  = 'RPPMRA80A01D548M';
+        myCase8p.VatNumber__c = '03819031208';
+        String fields33p = JSON.serialize(myCase8p);
+        
+        Test.startTest();
+
+        Try{
+            
+            HDT_UTL_CaseValidations myClass8p = new HDT_UTL_CaseValidations();
+           
+            myClass8p.validate(fields33p, recordId33p);            
+            
+        }catch(DmlException e) {
+                System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+
+        //ASSERTS
+        System.assert(myCase8p != null, 'myCase8p non può essere null');
+    }
+
+    @isTest
+    private static void validateTestType7n(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType7n';
+        System.debug(debugString);
+        
+        //SETUP
+
+        mySetup();        
+
+        Case myCase8n = [Select Id, Type, Subprocess__c, Category__c, CustomerMarking__c, FirstName__c,
+        LastName__c, FiscalCode__c, VatNumber__c, AlternativeAddress__c from Case where Type = 'Variazione Anagrafica Cliente' and Subprocess__c = 'Modifica Dati Fiscali'];
+        Account myAcc = [Select id, FiscalCode__c from Account];
+        
+        myAcc.Category__c = 'Famiglie';
+        myAcc.CustomerMarking__c = 'D1 - Persona fisica';
+        update myAcc;
+        String recordId33n = myCase8n.Id;
+        myCase8n.LastName__c = 'Rossi';
+        myCase8n.FiscalCode__c  = '';
+        String fields33n = JSON.serialize(myCase8n);
+        
+        Test.startTest();
+
+        Try{
+            
+            HDT_UTL_CaseValidations myClass8n = new HDT_UTL_CaseValidations();
+           
+            myClass8n.validate(fields33n, recordId33n);            
+            
+        }catch(DmlException e) {
+                System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+
+        //ASSERTS
+        System.assert(myCase8n != null, 'myCase8n non può essere null');
+    }
+    
+
+    @isTest
+    private static void validateTestType7i(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType7i';
+        System.debug(debugString);
+        
+        //SETUP
+
+        mySetup();        
+
+        Case myCase8i = [Select Id, Type, Subprocess__c, Category__c, CustomerMarking__c, FirstName__c,
+        LastName__c, FiscalCode__c, VatNumber__c, AlternativeAddress__c from Case where Type = 'Variazione Anagrafica Cliente' and Subprocess__c = 'Modifica Dati Fiscali'];
+        Account myAcc = [Select id, FiscalCode__c from Account];
+        
+        myAcc.Category__c = 'Aziende TOP';
+        myAcc.CustomerMarking__c = 'Azienda';
+        update myAcc;
+
+        String recordId33i = myCase8i.Id;
+        myCase8i.LastName__c = 'Rossi';
+        myCase8i.VatNumber__c  = '';
+        String fields33i = JSON.serialize(myCase8i);
+
+        Test.startTest();
+
+        Try{
+            
+            HDT_UTL_CaseValidations myClass8i = new HDT_UTL_CaseValidations();
+           
+            myClass8i.validate(fields33i, recordId33i);
+
+        }catch(DmlException e) {
+            System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+
+        //ASSERTS
+        System.assert(myCase8i != null, 'myCase8i non può essere null');
+    }
+
+    @isTest
+    private static void validateTestType7o(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateTestType7o';
+        System.debug(debugString);
+        
+        //SETUP
+
+        mySetup();        
+
+        Case myCase8o = [Select Id, Type, Subprocess__c, Category__c, CustomerMarking__c, FirstName__c,
+        LastName__c, FiscalCode__c, VatNumber__c, AlternativeAddress__c from Case where Type = 'Variazione Anagrafica Cliente' and Subprocess__c = 'Modifica Dati Fiscali'];
+        Account myAcc = [Select id, FiscalCode__c from Account];
+        
+        myAcc.Category__c = 'Aziende TOP';
+        myAcc.CustomerMarking__c = 'Azienda';
+        update myAcc;
+
+        String recordId33o = myCase8o.Id;
+        myCase8o.LastName__c = 'Rossi';
+        myCase8o.VatNumber__c  = '';
+        String fields33o = JSON.serialize(myCase8o);
+
+        Test.startTest();
+
+        Try{
+            
+            HDT_UTL_CaseValidations myClass8o = new HDT_UTL_CaseValidations();
+           
+            myClass8o.validate(fields33o, recordId33o);
+
+        }catch(DmlException e) {
+            System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
+
+        //ASSERTS
+        System.assert(myCase8o != null, 'myCase8o non può essere null');
+    }
 
     @isTest
     private static void validateTestType7d(){

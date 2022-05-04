@@ -10,7 +10,11 @@ public with sharing class HDT_QR_ProcessPostSales {
         //].Id;
         return Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(developerName).getRecordTypeId();
     }
-
+    public static List<Account> getAccountByCode(List<Account> accountList, Set<String> codeSet){ 
+        accountList = new List<Account>();
+        accountList = [SELECT Id,CustomerCode__c FROM Account WHERE CustomerCode__c IN: codeSet WITH SECURITY_ENFORCED];
+        return accountList;
+    }
     public static List<Contract> getContracts(List<Contract> contractList, Set<String> codeSet){
         contractList = new List<Contract>();
         contractList = [

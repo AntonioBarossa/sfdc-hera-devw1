@@ -45,14 +45,9 @@
                 <label>Variazioni</label>
             </value>
             <value>
-                <fullName>Subentro su Gdm Chiuso</fullName>
+                <fullName>SubentroSuGdMChiuso</fullName>
                 <default>false</default>
                 <label>Subentro su Gdm Chiuso</label>
-            </value>
-            <value>
-                <fullName>Prima Attivazione</fullName>
-                <default>false</default>
-                <label>Prima Attivazione</label>
             </value>
             <value>
                 <fullName>Voltura</fullName>
@@ -60,24 +55,49 @@
                 <label>Voltura</label>
             </value>
             <value>
-                <fullName>Nuovi Bonus e VAS</fullName>
+                <fullName>Tariffe e Sconti</fullName>
                 <default>false</default>
-                <label>Nuovi Bonus e VAS</label>
+                <label>Tariffe e Sconti</label>
             </value>
             <value>
-                <fullName>Cambio uso</fullName>
+                <fullName>CambioUso</fullName>
                 <default>false</default>
-                <label>Cambio uso</label>
+                <label>Cambio Uso</label>
             </value>
             <value>
-                <fullName>Cambio offerta</fullName>
+                <fullName>CambioOfferta</fullName>
                 <default>false</default>
                 <label>Cambio offerta</label>
             </value>
             <value>
-                <fullName>Tariffe e Sconti</fullName>
+                <fullName>MUC</fullName>
                 <default>false</default>
-                <label>Tariffe e Sconti</label>
+                <label>MUC</label>
+            </value>
+            <value>
+                <fullName>CaricamentoCGC</fullName>
+                <default>false</default>
+                <label>Caricamento CGC</label>
+            </value>
+            <value>
+                <fullName>VAS</fullName>
+                <default>false</default>
+                <label>VAS</label>
+            </value>
+            <value>
+                <fullName>RilavorazioneScarti</fullName>
+                <default>false</default>
+                <label>RilavorazioneScarti</label>
+            </value>
+            <value>
+                <fullName>Lead</fullName>
+                <default>false</default>
+                <label>Lead</label>
+            </value>
+            <value>
+                <fullName>PrimaAttivazione</fullName>
+                <default>false</default>
+                <label>Prima Attivazione</label>
             </value>
             <value>
                 <fullName>AllineamentoAnagrafica</fullName>

@@ -427,11 +427,11 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                     // Display fresh data in the form
                       console.log('Record aggiornato');
                       next({orderUpdates: this.dataToSubmit}).then(data =>{
-                          this.loading = false;
-                          this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
-                          this.dispatchEvent(new CustomEvent('tablerefresh'));
-                          this.loading = false;
-                          getRecordNotifyChange([{recordId: this.recordId}]);
+                        getRecordNotifyChange([{recordId: this.recordId}])
+                        this.loading = false;
+                        this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
+                        this.dispatchEvent(new CustomEvent('tablerefresh'));
+                        this.loading = false;
                       }).catch(error => {
                           this.loading = false;
                           console.log((error.body.message !== undefined) ? error.body.message : error.message);
@@ -461,7 +461,11 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         }
     }
     handleNext(){
-        
+        console.log('### Insied handleNext ###')
+        const fields = {};
+        fields[ID_FIELD.fieldApiName] = this.recordId;
+        fields['Step__c'] = 2;
+        const recordInput = { fields };            
         this.dataToSubmit['Id'] = this.orderParentRecord.Id;
         let returnValue = this.template.querySelector('c-hdt-document-signature-manager');
         if (this.isVisibleSignedDate && this.actualSignedDate === null){
@@ -492,22 +496,28 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             }
             
             if(validErrorMessage === 'Popolare il campo '){
-                next({orderUpdates: this.dataToSubmit}).then(data =>{
-                    this.loading = false;
-                    this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
-                    this.dispatchEvent(new CustomEvent('tablerefresh'));
-                    getRecordNotifyChange([{recordId: this.recordId}]);
-                }).catch(error => {
-                    this.loading = false;
-                    console.log((error.body.message !== undefined) ? error.body.message : error.message);
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: (error.body.message !== undefined) ? error.body.message : error.message,
-                        variant: 'error',
-                        mode: 'sticky'
+                updateRecord(recordInput)
+                .then(goNext => {
+                    next({orderUpdates: this.dataToSubmit}).then(data =>{
+                        getRecordNotifyChange([{recordId: this.recordId}])
+                        .then(data =>{
+                            console.log('### Inside Notify Then ###')
+                            this.loading = false;
+                            this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
+                            this.dispatchEvent(new CustomEvent('tablerefresh'));
+                        })
+                    }).catch(error => {
+                        this.loading = false;
+                        console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: (error.body.message !== undefined) ? error.body.message : error.message,
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                        this.dispatchEvent(toastErrorMessage);
                     });
-                    this.dispatchEvent(toastErrorMessage);
-                });
+                })
             } else {
                 this.loading = false;
                 console.log(validErrorMessage);

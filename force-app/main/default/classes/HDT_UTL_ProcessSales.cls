@@ -6,18 +6,20 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     private Map<String, String> mapWrapperAccountFields;
     private List<Account> accountList;
     private Map<String, Id> codicePuntoMap;
-    //private Set<String> csnSet = new Set<String>();
     private Set<String> codicePuntoSet = new Set<String>();
-    //private Set<String> fiscalCodeSet = new Set<String>();
-    //private Set<String> vatNumberSet = new Set<String>();
-    //private Set<String> marcaturaSet = new Set<String>();
+    private Set<String> csnSet = new Set<String>();
+    private Set<String> fiscalCodeSet = new Set<String>();
+    private Set<String> vatNumberSet = new Set<String>();
+    private Set<String> marcaturaSet = new Set<String>();
     private Set<String> contoContrattualeSet = new Set<String>();
+    private Set<String> sapContractCodeSet = new Set<String>();
     private List<MassiveLoaderRequestItem__c> itemsToUpdate;
     private List<HDT_WRP_ProcessObjects> processObjList;
     private Map<String, Id> recordTypeMap;
     private Integer contoContrattualeIndex;
     private Integer codicePuntoIndex;
     private Integer recTypeIndex;
+    private Integer contractIndex;
     private Map<Id, Id> accountContactMap = new Map<Id, Id>();
     private Map<String, Id> billProfMap;
     Map<Id, Id> duplicateAccountMap;
@@ -29,6 +31,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         contoContrattualeIndex = mapHeaderForWrapper.get('BillingProfileContoContrattuale');
         codicePuntoIndex = mapHeaderForWrapper.get('ServicePointCodicePunto');
         recTypeIndex = mapHeaderForWrapper.get('AccountTipo');
+        //contractIndex = mapHeaderForWrapper.get('Contratto');
 
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
@@ -53,9 +56,85 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             codicePuntoSet.add(processObj.csvSplitted[codicePuntoIndex]);
             contoContrattualeSet.add(processObj.csvSplitted[contoContrattualeIndex]);
+            //sapContractCodeSet.add(processObj.csvSplitted[contractIndex]);
 
             processObjList.add(processObj);
         }
+
+        //if(processName.equalsIgnoreCase('MUC')){
+        //    checkContract();
+        //}
+
+    }
+
+    public void checkContract(){
+
+        Map<String, Contract> contractMap = new Map<String, Contract>();
+        Map<Id, Order> orderMap;
+        List<Id> orderIdList = new List<Id>();
+        Date todayDay = Date.today();
+
+        List<Contract> contractList = [
+            SELECT Id, SAPContractCode__c, Status, SBQQ__Order__c
+            FROM Contract
+            WHERE SAPContractCode__c IN :sapContractCodeSet
+        ];
+
+        for(Contract contr : contractList){
+            contractMap.put(contr.SAPContractCode__c, contr);
+            orderIdList.add(contr.SBQQ__Order__c);
+        }
+
+        // Se il contratto è ancora attivo.. Se cessato va in errore la singola riga
+        // Se negli ultimi 100 giorni è presente un Cambio offerta sul contratto.. Se presente va in errore la singola riga
+
+        List<Order> orderList = [
+            SELECT Id, processType__c, CreatedDate
+            FROM Order
+            WHERE processType__c LIKE 'Cambio Offerta%'
+            AND Id IN :orderIdList
+        ];
+
+        orderMap = new Map<Id, Order>(orderList);
+
+        String sapContractCode;
+        Contract currentContract;
+        Order currentOrder;
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+            sapContractCode = processObj.csvSplitted[contractIndex];
+
+            System.debug(LoggingLevel.DEBUG, '>>> sapContractCode ' + sapContractCode);
+
+            if(String.isNotEmpty(sapContractCode) && contractMap.containsKey(sapContractCode)){
+                currentContract = contractMap.get(sapContractCode);
+
+                System.debug(LoggingLevel.DEBUG, '>>> status ' + currentContract.Status);
+
+                if(currentContract.Status.equalsIgnoreCase('Cessato')){
+                    processObj.requestItem.Status__c = 'Errore';
+                    processObj.requestItem.StatusDescription__c = 'Il contratto risulta "Cessato"';
+                    continue;
+                }
+
+                if(orderMap.containsKey(currentContract.SBQQ__Order__c)){
+                    currentOrder = orderMap.get(currentContract.SBQQ__Order__c);
+
+                    Date orderCreatedDate = currentOrder.CreatedDate.date();
+                    Integer numberDaysDue = orderCreatedDate.daysBetween(todayDay);
+
+                    System.debug(LoggingLevel.DEBUG, '>>> orderCreatedDate ' + orderCreatedDate);
+
+                    if(numberDaysDue <= 100){
+                        processObj.requestItem.Status__c = 'Errore';
+                        processObj.requestItem.StatusDescription__c = 'E\' presente un cambio offerta';
+                        continue;     
+                    }
+                }
+                
+            }
+
+        }
+
     }
 
     public override void getRecords(){
@@ -108,6 +187,11 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
  
+            if(processObj.requestItem.Status__c == 'Errore'){
+                itemsToUpdate.add(processObj.requestItem);
+                continue;
+            }
+
             processObj.account = new Account();
             processObj.billingProfile = new BillingProfile__c();
             processObj.servicePoint = new ServicePoint__c();
@@ -180,12 +264,12 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 continue;
             }
 
-            //addInformationToSet(processObj.account);
+            addInformationToSet(processObj.account);
 
         }
 
-        //accountList = HDT_QR_ProcessSales.getAccountList(fiscalCodeSet, vatNumberSet, marcaturaSet, csnSet);
-        //clearAllUselessSets();
+        accountList = HDT_QR_ProcessSales.getAccountList(fiscalCodeSet, vatNumberSet, marcaturaSet, csnSet);
+        clearAllUselessSets();
         findDuplicateForAccounts();
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
@@ -198,21 +282,21 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             processObj.account.RecordTypeId = recordTypeMap.get(processObj.csvSplitted[recTypeIndex]);
             processObj.account.Name = String.isBlank(processObj.account.FirstName__c) ? processObj.account.LastName__c : processObj.account.FirstName__c + ' ' + processObj.account.LastName__c;
             processObj.account.BillingIsAddressVerified__c = true;
-            //processObj.account.Id = setAccountIdFromDb(processObj.account);
+            processObj.account.Id = setAccountIdFromDb(processObj.account);
             
-            if(duplicateAccountMap.containsKey(processObj.requestItem.Id)){
-                processObj.account.Id = duplicateAccountMap.get(processObj.requestItem.Id);
-            } else {
+            if(processObj.account.Id == null){
                 requestItemForUpsert.add(processObj.requestItem);
-                accountToInsert.add(processObj.account); 
+                accountToInsert.add(processObj.account);
             }
 
-            System.debug(LoggingLevel.DEBUG, '>>> accountId ' +processObj.account.Id);
-
-            //if(processObj.account.Id == null){
+            //if(duplicateAccountMap.containsKey(processObj.requestItem.Id)){
+            //    processObj.account.Id = duplicateAccountMap.get(processObj.requestItem.Id);
+            //} else {
             //    requestItemForUpsert.add(processObj.requestItem);
-            //    accountToInsert.add(processObj.account);
+            //    accountToInsert.add(processObj.account); 
             //}
+
+            System.debug(LoggingLevel.DEBUG, '>>> accountId ' + processObj.account.Id);
 
         }
 
@@ -408,7 +492,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         }
     }
 
-    /*public void addInformationToSet(Account account){
+    public void addInformationToSet(Account account){
         if(String.isNotEmpty(account.CustomerCode__c)){
             csnSet.add(account.CustomerCode__c);
         }
@@ -424,7 +508,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         if(String.isNotEmpty(account.CustomerMarking__c)){
             marcaturaSet.add(account.CustomerMarking__c);
         }
-    }*/
+    }
 
     private void findDuplicateForAccounts() {
 
@@ -452,7 +536,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
     }
 
-    /*public Id setAccountIdFromDb(Account iterationAccount){
+    public Id setAccountIdFromDb(Account iterationAccount){
 
         //search by CustomerCode__c --> CSN (csv header)
         if(String.isNotEmpty(iterationAccount.CustomerCode__c)){
@@ -464,10 +548,14 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             }
         }
         
+        //Boolean accountCfBool = 
+        //Boolean acccountPiBool = 
+        //Boolean acccountMarcaturaBool = 
+
         //search by FiscalCode__c, VATNumber__c and CustomerMarking__c
-        if( String.isNotEmpty(iterationAccount.FiscalCode__c) &&
-            String.isNotEmpty(iterationAccount.VATNumber__c) &&
-            String.isNotEmpty(iterationAccount.CustomerMarking__c)
+        if( String.isNotEmpty(iterationAccount.FiscalCode__c) &&   //  AccountCF
+            String.isNotEmpty(iterationAccount.VATNumber__c) &&    //  AcccountPI
+            String.isNotEmpty(iterationAccount.CustomerMarking__c) //  AcccountMarcatura
         ) {
             for(Account a : accountList){
                 if(
@@ -483,7 +571,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         return null;
 
-    }*/
+    }
 
     private void mapFieldsObject(){
         List<MassiveFieldsObjectMap__c> allFieldForThisProcess;
@@ -545,12 +633,12 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         return contact;
     }
 
-    /*public void clearAllUselessSets(){
+    public void clearAllUselessSets(){
         fiscalCodeSet.clear();
         vatNumberSet.clear();
         marcaturaSet.clear();
         csnSet.clear();
-    }*/
+    }
 
     private class HDT_WRP_ProcessObjects {
         private Account account;

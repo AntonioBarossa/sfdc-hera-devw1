@@ -12,13 +12,17 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
     List<AccountContactRelation> accContRelList;
     Map<Id, AccountContactRelation> accRelMap;
     List<MassiveLoaderRequestItem__c> requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
+    private Set<String> servicePointFields;
+    private String process;
 
     public HDT_UTL_ProcessSalesOutboundWs() {
         System.debug(LoggingLevel.DEBUG, 'HDT_UTL_ProcessSalesOutboundWs');
     }
 
-    public void setRequestItemList(List<MassiveLoaderRequestItem__c> requestItemList){
+    public void setRequestItemList(List<MassiveLoaderRequestItem__c> requestItemList, String process){
         this.requestItemList = requestItemList;
+        this.process = process;
+        setServicePointFields('ServicePoint__c', 'CarMassEnrichmentFields');
     }
 
     public void generateWrapperMap(){
@@ -55,7 +59,7 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
 
             }
 
-        }
+        }      
 
     }
 
@@ -82,6 +86,7 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
         servicePointToUpdate = new List<ServicePoint__c>();
         List<Account> accountToUpdate = new List<Account>();
         ServicePoint__c servPointFromWs;
+        ServicePoint__c oldServPoint;
         Id servicePointId;
         Id accountId;
         Account account;
@@ -92,8 +97,12 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
                 servicePointId = idsMap.get(singleItem.Id).servPointId;
 
                 if(String.isNotEmpty(servicePointId)){
-                    
+
                     servPointFromWs = servicePointMap.get(servicePointId);
+
+                    if(process.equalsIgnoreCase('CambioUso')){
+                        oldServPoint = setOldServicePoint(servPointFromWs, oldServPoint);
+                    }
 
                     serResp = HDT_WS_ArrichmentDataEntityInvoker.callService('', servPointFromWs.Name);
                     System.debug(serResp);
@@ -115,6 +124,11 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
                     if(serResp.statusCode == 200){
                         servPointFromWs = HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(servPointFromWs, serResp)[0];
                         System.debug(LoggingLevel.DEBUG, '>>> update sp ' + servPointFromWs);
+
+                        if(process.equalsIgnoreCase('CambioUso')){
+                            servPointFromWs = setServicePointAfterWebService(servPointFromWs, oldServPoint);
+                        }
+
                         servicePointToUpdate.add(servPointFromWs);
                         requestItemForUpsert.add(singleItem);
                     } else {
@@ -239,6 +253,44 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
         c.fiscalCode__c = rel.Contact.fiscalCode__c;
         c.CertifiedEmail__c = rel.Contact.CertifiedEmail__c;
         return c;
+    }
+
+    private ServicePoint__c setOldServicePoint(ServicePoint__c servPointFromWs, ServicePoint__c oldServPoint){
+        oldServPoint = new ServicePoint__c();
+ 
+        Map<String, Object> fieldsToValue;
+        fieldsToValue = servPointFromWs.getPopulatedFieldsAsMap();
+
+        Object field;
+        for(String fieldToSet : servicePointFields){
+            field = fieldsToValue.get(fieldToSet);
+            oldServPoint.put(fieldToSet, field);
+        }
+
+        return oldServPoint;
+    }
+
+    private ServicePoint__c setServicePointAfterWebService(ServicePoint__c servPointFromWs, ServicePoint__c oldServPoint){
+
+        Map<String, Object> fieldsToValue;
+        fieldsToValue = oldServPoint.getPopulatedFieldsAsMap();
+
+        Object field;
+        for(String fieldToSet : servicePointFields){
+            field = fieldsToValue.get(fieldToSet);
+            servPointFromWs.put(fieldToSet, field);
+        }
+
+        return servPointFromWs;
+    }
+
+    public void setServicePointFields(String sObjectName, String fieldSetName){
+        List<Schema.FieldSetMember> fieldSetMembers;
+        servicePointFields = new Set<String>();  
+        fieldSetMembers = ((SObject)Type.forName(sObjectName).newInstance()).getSObjectType().getDescribe().FieldSets.getMap().get(fieldSetName).getFields();
+        for(Schema.FieldSetMember s : fieldSetMembers) {
+            servicePointFields.add(String.valueOf(s.getFieldPath()));
+        }
     }
 
 }
