@@ -33,7 +33,7 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
 
         podIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('POD'));
         contractIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CONTRATTO'));
-        accountIdIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
+        //accountIdIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
 
         if(!isVolturaProcess){
             orderVolturaIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ORDER_VOLTURA'));
@@ -61,7 +61,7 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
             processObj.requestItem = item;
             processObj.csvSplitted = tempSplitedFields;
 
-            accountIdSet.add(processObj.csvSplitted[accountIdIndex]);
+            //accountIdSet.add(processObj.csvSplitted[accountIdIndex]);
             contractCodeSet.add(processObj.csvSplitted[contractIndex]);
             processObjList.add(processObj);
 
@@ -78,6 +78,9 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
 
         String rtDeveloperName = '';
         contractList = HDT_QR_ProcessPostSales.getContracts(contractList, contractCodeSet);
+        for(Contract contr : contractList){
+            accountIdSet.add(contr.AccountId);
+        }
         accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationIdsList(accContRelationList, accountIdSet, 'Titolare');
         
         //System.debug(LoggingLevel.DEBUG, '>>> accountIdSet ' + String.valueOf(accountIdSet));
@@ -168,12 +171,13 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
                 processObj.newCase.Contract__c = contract.Id;
                 processObj.newCase.ServicePoint__c = contract.ServicePoint__c;
                 processObj.newCase.BillingProfile__c = contract.BillingProfile__c;
+                processObj.newCase.AccountId = contract.AccountId;
             } else {
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'pod non presente'));
                 continue;
             }
             
-            String accountId = processObj.csvSplitted[accountIdIndex];
+            String accountId = contract.AccountId;
             processObj.newCase.AccountId = accountId;
 
             if(accountContactMap.containsKey(accountId)){
