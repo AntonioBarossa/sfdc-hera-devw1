@@ -28,7 +28,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
                  target: '_parent', 
                  tooltip: 'Open order page'
              }},
-            {label: 'Prodotto', fieldName: 'VasSubtype__c', type: 'text'},
+            {label: 'Prodotto', fieldName: 'CommercialProduct__c', type: 'text'},
             // {label: 'Status', fieldName: 'Status', type: 'text'},
             // {label: 'Status Esito', fieldName: 'StatusEsito', type: 'text'},
             // {label: 'Phase', fieldName: 'Phase__c', type: 'text'},
@@ -86,7 +86,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
                     el.confirmIcon = el.Order__r.ConfirmCustomerContract__c !== undefined ? 'utility:edit' : 'utility:edit';
                     el.cancelIcon = el.Order__r.CancellationReason__c !== undefined ? 'utility:edit' : 'utility:edit';
                     el.StatusEsito =  (el.Order__r.ConfirmCustomerContract__c !== undefined || el.Order__r.CancellationReason__c !== undefined) ? (el.Order__r.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Annullato') : 'In attesa';
-                    el.VasSubtype__c = el.Order__r.VasSubtype__c;
+                    el.CommercialProduct__c = (el.Order__r.VasSubtype__c !== undefined && el.Order__r.VasSubtype__c === 'Analisi Consumi')  ?  el.Order__r.VasSubtype__c : el.CommercialProduct__c;
                 });
             } else {
                 this.ordersList.forEach(el => {
@@ -103,7 +103,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
                     el.confirmIcon = el.ConfirmCustomerContract__c !== undefined ? 'utility:edit' : 'utility:edit';
                     el.cancelIcon = el.CancellationReason__c !== undefined ? 'utility:edit' : 'utility:edit';
                     el.StatusEsito =  (el.ConfirmCustomerContract__c !== undefined || el.CancellationReason__c !== undefined) ? (el.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Annullato') : 'In attesa';
-                    el.VasSubtype__c = el.VasSubtype__c;
+                    el.CommercialProduct__c = (el.VasSubtype__c !== undefined && el.VasSubtype__c === 'Analisi Consumi')  ?  el.VasSubtype__c : el.CommercialProduct__c;
                 });
             }
         }).catch(error => {

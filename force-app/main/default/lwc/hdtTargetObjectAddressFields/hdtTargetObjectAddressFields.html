@@ -20,8 +20,7 @@
                 <lightning-input type="Text" key={fieldAddress.fieldname} name={fieldAddress.fieldname} value={fieldAddress.value} label={fieldAddress.fieldname} class="slds-size_1-of-3" variant="label-stacked" onchange={handleFieldsDataChange} ></lightning-input>
                 <lightning-input-field value={fieldAddress.value} required={fieldAddress.required} onchange={handleFieldsDataChange} class="slds-size_1-of-3" data-name={fieldAddress.fieldname} key={fieldAddress.fieldname} field-name={fieldAddress.fieldname} variant="label-stacked"></lightning-input-field>
             </template>*********<<<<<<-->
-            
-            <lightning-input disabled={disableAll} type="Text"   name='Comune' value={comune} label='Comune' class="slds-size_1-of-3" variant="label-stacked" onkeypress={handleKeyPress}   onchange={handleChangeComune} required='true'></lightning-input>
+            <lightning-input disabled={disableAll} type="Text"  name='Comune' value={comune} label='Comune' class="slds-size_1-of-3" variant="label-stacked" onkeypress={handleKeyPress}   onchange={handleChangeComune} required='true'></lightning-input>
             <lightning-input disabled={disableAll} type="Text"  name='Via' value={via} label='Via' class="slds-size_1-of-3" variant="label-stacked" onkeypress={handleKeyPress}  onchange={handleChangeIndirizz} required='true'></lightning-input>
             <lightning-input disabled={disableAll} type="Text"  name='Civico' value={civico} label='Civico' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required='true'></lightning-input>
             <lightning-input disabled={disableProvincia}  type="Text"  name='Provincia' value={provincia} label='Provincia' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required={boolProvincia}></lightning-input>
@@ -38,9 +37,6 @@
             <lightning-input disabled={disableLocalita} type="Text"  name='Localita' value={localita} label='Localita' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} ></lightning-input>
             <lightning-input disabled={disableAll} type="Checkbox"  name='Indirizzo Estero' checked={IndEstero} label='Indirizzo Estero' class="slds-size_1-of-3" variant="label-stacked" onchange={handleCheckBoxChange} ></lightning-input>
             <lightning-input disabled={disableFlagVerificato} type="Checkbox"  name='Flag Verificato' checked={flagverificato} label='Flag Verificato' class="slds-size_1-of-3" variant="label-stacked" onchange={handleCheckBoxChange} ></lightning-input> 
-            
-
-            
         </div>
         
         <template if:true={booleanForm}>
