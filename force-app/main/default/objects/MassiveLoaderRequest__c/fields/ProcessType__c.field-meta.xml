@@ -65,24 +65,19 @@
                 <label>Nuovi Bonus e VAS</label>
             </value>
             <value>
-                <fullName>Cambio uso</fullName>
-                <default>false</default>
-                <label>CambioUso</label>
-            </value>
-            <value>
-                <fullName>Cambio offerta</fullName>
-                <default>false</default>
-                <label>Cambio offerta</label>
-            </value>
-            <value>
                 <fullName>Tariffe e Sconti</fullName>
                 <default>false</default>
                 <label>Tariffe e Sconti</label>
             </value>
             <value>
-                <fullName>CaricamentoCGC</fullName>
+                <fullName>CambioUso</fullName>
                 <default>false</default>
-                <label>Caricamento CGC</label>
+                <label>Cambio Uso</label>
+            </value>
+            <value>
+                <fullName>Cambio Offerta</fullName>
+                <default>false</default>
+                <label>Cambio offerta</label>
             </value>
         </valueSetDefinition>
     </valueSet>
