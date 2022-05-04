@@ -26,7 +26,7 @@ public inherited sharing class HDT_BA_ProcessSales implements Database.Batchable
     public void execute(Database.BatchableContext bc, List<MassiveLoaderRequestItem__c> scope) {
 
         HDT_UTL_ProcessSalesOutboundWs outboundResult = new HDT_UTL_ProcessSalesOutboundWs();
-        outboundResult.setRequestItemList(scope);
+        outboundResult.setRequestItemList(scope, process);
         outboundResult.generateWrapperMap();
         outboundResult.getRecords();
         outboundResult.executeWebService();
