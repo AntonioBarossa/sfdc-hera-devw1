@@ -13,9 +13,7 @@ public with sharing class HDT_UTL_ProcessOrderCreationTst {
     public static void calls(){
         HDT_UTL_ProcessOrderCreation poc = new HDT_UTL_ProcessOrderCreation();
      //   poc.checks();
-        poc.getRecords();
-        poc.registryCreation();
-        poc.finalUpdate();
+
 
     }
 }
