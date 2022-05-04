@@ -119,7 +119,7 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
         
         Test.stopTest();
         
-        System.assertEquals(7.38, ext.estimatedAmount, 'EstimateAmount__c not correct!');
+        System.assertEquals(6.71, ext.estimatedAmount, 'EstimateAmount__c not correct!');
         System.assertEquals(1000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
         System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
         

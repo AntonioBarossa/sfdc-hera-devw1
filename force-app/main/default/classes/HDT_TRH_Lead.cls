@@ -98,10 +98,14 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     if (l.ConvertedAccountId != null) {
                         accountIdList.add(l.ConvertedAccountId);
                         mapAccountLead.put(l.ConvertedAccountId,l);
-                        String leadName = l.FirstName + ' ' + l.LastName;
-                        Account acc = accountQr.getRecordById(l.ConvertedAccountId, 'Name');
+                        Account acc = accountQr.getRecordById(l.ConvertedAccountId, 'Name, CreatedDate');
                         Contact con = contactQr.getRecordById(l.ConvertedContactId);
-                        if(leadName == acc.Name && leadName != con.Name){
+
+                        Datetime dateToCheck = l.LastModifiedDate?.addSeconds(-30);
+                        Boolean isAccountJustCreated = (dateToCheck == null)? false : dateToCheck < acc.CreatedDate; 
+                        Boolean isContactJustCreated = (dateToCheck == null)? false : dateToCheck < con.CreatedDate; 
+                        
+                        if(isAccountJustCreated && !isContactJustCreated){
                             l.addError('Non è possibile creare un nuovo Account e selezionare un Contact già esistente!');
                         }
                   	}  

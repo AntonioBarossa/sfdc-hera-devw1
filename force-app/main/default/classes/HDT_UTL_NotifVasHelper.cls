@@ -57,6 +57,28 @@ public inherited sharing class HDT_UTL_NotifVasHelper {
                         }
                     }
                 }
+                /**@frpanico 2022-04-29
+                 * Ricerca subscription
+                 * con codice servizio
+                 */
+                else
+                {
+                    List<Case> cases = [SELECT Asset.Id, Subscription__r.Id FROM Case
+                    WHERE RecordType.DeveloperName='HDT_RT_PostSalesVAS' AND Type='Disattivazione VAS'
+                    AND Subscription__r.VasPracticeCode__c = :sObjectKey
+                    AND Status NOT IN ('Closed', 'Bozza')
+                    WITH SECURITY_ENFORCED LIMIT 1];
+                    if (!cases.isEmpty()) {
+                        sObjMap.put('Case', cases.get(0));
+
+                        if (cases.get(0).getSobject('Asset')!=null) {
+                            sObjMap.put('Asset', cases.get(0).Asset);
+                        }
+                        if (cases.get(0).getSobject('Subscription__r')!=null) {
+                            sObjMap.put('SBQQ__Subscription__c', cases.get(0).Subscription__r);
+                        }
+                    }
+                }
             }
         }
 

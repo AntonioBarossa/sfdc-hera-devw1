@@ -38,23 +38,6 @@ public inherited sharing class HDT_BA_ProcessSales implements Database.Batchable
 
         System.debug('HDT_BA_ProcessRequestItem finish ');
 
-        //MassiveLoaderRequest__c oldReq = new MassiveLoaderRequest__c();
-        //oldReq.Id = idLoaderRequest;
-        //oldReq.Status__c = constantsUtl.MASSIVLOADER_STATUS_CHIUSO;
-        //update oldReq;
-
-        //// Creazione file RequestItem in Errore 
-        //List<MassiveLoaderRequestItem__c> listErrorReq = [
-        //    SELECT Id, Name, Data__c, Status__c, StatusDescription__c
-        //    FROM MassiveLoaderRequestItem__c
-        //    WHERE Status__c = 'Errore' AND MassiveLoaderRequest__c = :idLoaderRequest
-        //];
-
-        //if (listErrorReq!=null && listErrorReq.size()>0) {
-        //    HDT_BA_ErrorRequestItem batch = new HDT_BA_ErrorRequestItem(idLoaderRequest);
-        //    Database.executebatch(batch, 1000);
-        //}
-
         HDT_BA_ProcessOrderCreation orderCreation = new HDT_BA_ProcessOrderCreation(idLoaderRequest, 10, process);
         Database.executebatch(orderCreation, 10);
 

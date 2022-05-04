@@ -396,8 +396,9 @@ public with sharing class HDT_QR_QuoteLineTst {
 
         Test.startTest();
 
-        Product2 product = [SELECT Id, Name FROM Product2 WHERE Name = 'POD'];
-        product.Name = 'Analisi Consumi';
+        Product2 product = [SELECT Id, Name, Family FROM Product2 WHERE Name = 'POD'];
+        product.Name = 'Assicurazione';
+        product.Family = 'VAS Fatturabili';
         update product;
 
         SBQQ__Quote__c quote = [SELECT Id, Name, Sale__c, AmendmentAllowed__c FROM SBQQ__Quote__c WHERE SBQQ__Status__c = 'Accepted'];

@@ -161,7 +161,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && (order.Phase__c == 'Comunicazione Verso Heroku' || order.Phase__c == 'Comunicazione Motore VAS' || order.Phase__c == 'In attesa tempi di ripensamento' || order.Phase__c == 'Esportazione VS Siebel')
                 && order.QualityCall__c
                 && isMonitoringList.contains(order.AgencyCode__c)
-                && !phaseStory.contains('Quality Call OK')){
+                && !phaseStory.contains('Quality Call OK')
+                && order.ComfortCallDaysDue__c == null){
                 String newPhase = 'In attesa di quality call';
                 order.Phase__c = newPhase;
                 DateTime nowDateTime = DateTime.now();
@@ -170,7 +171,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             /**@frpanico 07/03/2022
              * Aggiunta quality monitoraggio per voltura
              */
-            if(order.Phase__c != oldOrder.Phase__c && order.ProcessType__c == 'Voltura' && oldOrder.Phase__c == 'In attesa validazione' && (order.Phase__c == 'Documentazione Validata') && isMonitoringList.contains(order.AgencyCode__c) && !phaseStory.contains('Quality Call OK'))
+            if(order.Phase__c != oldOrder.Phase__c 
+                && order.ProcessType__c == 'Voltura' 
+                && oldOrder.Phase__c == 'In attesa validazione' 
+                && (order.Phase__c == 'Documentazione Validata') 
+                && isMonitoringList.contains(order.AgencyCode__c) 
+                && !phaseStory.contains('Quality Call OK')
+                && order.ComfortCallDaysDue__c == null)
             {
                 String newPhase = 'In attesa di quality call';
                 order.Phase__c = newPhase;
@@ -459,6 +466,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         ||(oldOrder.Phase__c == 'Amm. Precheck KO SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         || (oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         || (oldOrder.Phase__c == 'Esito OK da SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
+                        /**@frpanico 2022-04-28 Aggiunto ricalcolo date per Switch clonato */
+                        || (oldOrder.Phase__c == 'Bozza' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         || (oldOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.IncomingCreditCheckResult__c == 'OK')
                     ){
                         if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
@@ -1124,12 +1133,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 // ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
                 s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(orderStatuses.get(s.Order__c), 'Order');
                 if( s.Status__c.equalsIgnoreCase('Chiuso') || s.Status__c.equalsIgnoreCase('Annullato') ){
+                    s.OwnerId = UserInfo.getUserId();
                     srvRequestsToDelete.add(s);
                 } else {
                     sReqToUpdate.add(s);
                 }
             }
             if (!srvRequestsToDelete.isEmpty()){
+                HDT_SRV_ServiceRequest.updateRecord(srvRequestsToDelete);
                 HDT_SRV_ServiceRequest.deleteRecord(srvRequestsToDelete);
             }
             HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);

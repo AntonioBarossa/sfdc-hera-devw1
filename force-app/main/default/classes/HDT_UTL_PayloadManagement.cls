@@ -43,6 +43,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return handlePromotion(inputs,formParams);
                 }when 'handleAnalisiConsumi'{
                     return handleAnalisiConsumi(inputs,formParams);
+                }when 'hanldeOtpSign'{
+                    return handleOtpSign(inputs,formParams);
                 }
                 when else {
                     return '';
@@ -54,6 +56,31 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         return result;
     }
 
+    private String handleOtpSign(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String context = (String) formParams.get('Contesto');
+        String signModeForm = HDT_UTL_DocumentalManagement.getValue('FormParameters', 'signMode', 0, inputs, formParams);
+        if (String.isNotBlank(signModeForm)) {
+            if(signModeForm.contains('OTP')){
+                return 'Y';
+            }else {
+                return 'N';
+            }
+        }
+        else{
+            String signMode = '';
+            if (context == 'Order') {
+                signMode = HDT_UTL_DocumentalManagement.getValue('Order', 'SignatureMethod__c', 0, inputs, formParams);
+            } else if (context == 'Case') {
+                signMode = HDT_UTL_DocumentalManagement.getValue('Case', 'SignMode__c', 0, inputs, formParams);
+            }
+            if (String.isNotBlank(signMode) && signMode.contains('OTP')) {
+                return 'Y';
+            }else{
+                return 'N';
+            }
+        }
+        
+    }
     private String handleAnalisiConsumi(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         String toReturn = '|||';
         HDT_QR_OrderItem qrItem = new HDT_QR_OrderItem();

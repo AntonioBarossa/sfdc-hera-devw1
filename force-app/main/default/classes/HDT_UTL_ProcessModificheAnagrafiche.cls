@@ -84,6 +84,7 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
         requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
+        Map<Id, String> caseNumberMap = new Map<Id, String>();
 
         List<String> emptyCsvField;
         for(HDT_WRP_ProcessObjects processObj : processObjList){
@@ -133,17 +134,11 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
             }
 
             if(!String.isEmpty(convertionError)){
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = convertionError;
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, convertionError));
                 continue;
             }
 
             if(errorForPicklistValue('Case', 'Type', newCase.Type)){
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = 'Valore processo non corretto: ' + newCase.Type;
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'Valore processo non corretto: ' + newCase.Type));
                 continue;
             }
@@ -156,9 +151,6 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
                 convertionError = setEmptyCsvFields(emptyCsvField, newCase, processObj.csvSplitted[accountIdIndex], processObj.csvSplitted[contractIndex], enableBillProfEdit);
 
                 if(!String.isEmpty(convertionError)){
-                    //processObj.requestItem.Status__c = 'Errore';
-                    //processObj.requestItem.StatusDescription__c = convertionError;
-                    //itemsToSave.add(processObj.requestItem);
                     itemsToSave.add(setErrorItem(processObj.requestItem, convertionError));
                     continue;
                 }
@@ -189,6 +181,19 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
             HDT_WRP_SaveResponse saveResponse;
             saveResponse = databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
             caseToInsert.clear();
+
+            if(saveResponse.savedObject.size() > 0){
+                caseNumberMap = setCaseNumberMap(caseNumberMap, saveResponse.itemIdToObjId.values());
+
+                Id caseId;
+                for(HDT_WRP_ProcessObjects processObj : processObjList){
+                    caseId = saveResponse.itemIdToObjId.get(processObj.requestItem.Id);
+                    if(caseNumberMap.containsKey(caseId)){
+                        processObj.requestItem.Result__c = caseNumberMap.get(caseId);
+                    }
+                }
+
+            }
 
             getLimitDetails('AFTER CASE CREATION & Enrichment');
 

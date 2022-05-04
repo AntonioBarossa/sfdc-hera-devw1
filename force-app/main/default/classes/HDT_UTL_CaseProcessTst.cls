@@ -77,6 +77,16 @@ public with sharing class HDT_UTL_CaseProcessTst {
     //TESTS
 
     @isTest
+    private static void skipForSie(){
+        Test.startTest();
+        List<Case> caseList = [SELECT Id, isExportCMOR__c,Type FROM Case];
+        caseList[0].isExportCMOR__c = true;
+        update caseList;
+        Test.stopTest();
+        System.assert(caseList[0].isExportCMOR__c, true);
+    }
+
+    @isTest
     private static void checkSatisfationIndexTest(){
         
         //DEBUG

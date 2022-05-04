@@ -25,6 +25,7 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
 
     public override void checks(){
         System.debug(LoggingLevel.DEBUG, 'checks');
+        itemsToSave = new List<MassiveLoaderRequestItem__c>();
         mapFieldsObject();
 
         //System.debug(LoggingLevel.DEBUG, '>>> mapCaseFields: ' + String.valueOf(mapCaseFields));
@@ -102,8 +103,8 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
 
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
-        itemsToSave = new List<MassiveLoaderRequestItem__c>();
         requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
+        Map<Id, String> caseNumberMap = new Map<Id, String>();
 
         HDT_QR_CausalCodeCalculation causalCodeCalculation = new HDT_QR_CausalCodeCalculation();
         HDT_CausalCodeCalculation__mdt causalCode;
@@ -144,17 +145,11 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
             }
 
             if(!String.isEmpty(convertionError)){
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = convertionError;
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, convertionError));
                 continue;
             }
 
             if(errorForPicklistValue('Case', 'Type', processObj.newCase.Type)){
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = 'Valore processo non corretto: ' + processObj.newCase.Type;
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'Valore processo non corretto: ' + processObj.newCase.Type));
                 continue;
             }
@@ -168,9 +163,6 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
                 processObj.newCase.ServicePoint__c = contract.ServicePoint__c;
                 processObj.newCase.BillingProfile__c = contract.BillingProfile__c;
             } else {
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = 'pod non presente';
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'pod non presente'));
                 continue;
             }
@@ -212,9 +204,6 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
                 requestItemForUpsert.add(processObj.requestItem);
             } catch(Exception e){
                 System.debug(LoggingLevel.DEBUG, '>>> arricchimentoError ' + e.getMessage());
-                //processObj.requestItem.Status__c = 'Errore';
-                //processObj.requestItem.StatusDescription__c = 'Errore arricchimento dati # ';
-                //itemsToSave.add(processObj.requestItem);
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'Errore arricchimento dati # '));
             }
 
@@ -226,6 +215,19 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
             saveResponse = databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
             runAlignment(saveResponse.savedObject);
             caseToInsert.clear();
+
+            if(saveResponse.savedObject.size() > 0){
+                caseNumberMap = setCaseNumberMap(caseNumberMap, saveResponse.itemIdToObjId.values());
+
+                Id caseId;
+                for(HDT_WRP_ProcessObjects processObj : processObjList){
+                    caseId = saveResponse.itemIdToObjId.get(processObj.requestItem.Id);
+                    if(caseNumberMap.containsKey(caseId)){
+                        processObj.requestItem.Result__c = caseNumberMap.get(caseId);
+                    }
+                }
+
+            }
 
             getLimitDetails('AFTER CASE CREATION / Enrichment / Alignment');
 
@@ -275,6 +277,8 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
 
     public override void finalUpdate(){
         System.debug(LoggingLevel.DEBUG, 'finalUpdate');
+
+        System.debug(LoggingLevel.DEBUG, 'itemsToSave ' + itemsToSave);
 
         if(itemsToSave.size() > 0){
             update itemsToSave;
