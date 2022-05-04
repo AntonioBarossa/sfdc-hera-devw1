@@ -27,6 +27,7 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
         update spList;
 
         orderList[0].Commodity__c = 'Energia Elettrica';
+        orderList[0].CustomerCategory__c='Famiglie';
         update orderList;
 		
         List<OrderItem> orderItemList = new List<OrderItem>();
@@ -54,7 +55,8 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
         childOrderList[0].SapContractCode__c = '3001002003';
         childOrderList[0].Commodity__c = 'Energia Elettrica';
         childOrderList[0].EffectiveDate__c = Date.newInstance(2022, 3, 1);
-        
+		childOrderList[0].CustomerCategory__c='Famiglie';
+
 
         update childOrderList;
         orderItemList = HDT_UTL_DataFactoryTst.createOrderItem(2, true, childOrderList[0].Id, spList[0].Id,productList[0].Id,pbEntry.Id);
