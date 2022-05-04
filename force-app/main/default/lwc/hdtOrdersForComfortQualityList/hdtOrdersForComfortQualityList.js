@@ -1,4 +1,4 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import isUserOwner from '@salesforce/apex/HDT_LC_OrdersForComfortQualityList.checkOwner';
 import getTableData from '@salesforce/apex/HDT_LC_OrdersForComfortQualityList.getTableData';
@@ -8,14 +8,14 @@ import cancelContract from '@salesforce/apex/HDT_LC_OrdersForComfortQualityList.
 export default class HdtOrdersForComfortQualityList extends LightningElement {
     
     @api activityId;
-    ordersList = [];
+    @track ordersList = [];
     activity;
     order;
     action;
-    loading = false;
+    @track loading = false;
     isDialogVisible = false;
     isNotOwner = false;
-    showTable = false;
+    @track showTable = false;
 
     get columnsTable(){
         return [
@@ -24,29 +24,31 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
              sortable: "false",
              label: 'Numero Ordine',
              typeAttributes: {
-                 label: {
-                     fieldName: 'OrderNumber' 
-                 },
+                 label: { fieldName: 'OrderNumber' }, // whatever field contains the actual label of the link
                  target: '_parent', 
                  tooltip: 'Open order page'
              }},
-            {label: 'Prodotto', fieldName: 'CommercialProduct__c', type: 'text'},
+            {label: 'Prodotto', fieldName: 'VasSubtype__c', type: 'text'},
+            // {label: 'Status', fieldName: 'Status', type: 'text'},
+            // {label: 'Status Esito', fieldName: 'StatusEsito', type: 'text'},
+            // {label: 'Phase', fieldName: 'Phase__c', type: 'text'},
+            // {label: 'Tipologia', fieldName: 'recordtypename', type: 'text'},
             {type:  'button',typeAttributes:{
-                    iconName: {fieldName: 'confirmIcon'},
-                    label: {fieldName: 'confirmText'}, 
-                    name: 'confirmContract', 
-                    title: 'Conferma contratto',
-                    value: 'confirmContract',
-                    disabled: {fieldName :'disabledActionButton'}
+                                    iconName: {fieldName: 'confirmIcon'},
+                                    label: {fieldName: 'confirmText'}, 
+                                    name: 'confirmContract', 
+                                    title: 'Conferma contratto',
+                                    value: 'confirmContract',
+                                    disabled: {fieldName :'disabledActionButton'}
                 }
             },
             {type:  'button',typeAttributes:{
-                iconName: {fieldName: 'cancelIcon'},
-                label: {fieldName: 'cancelText'}, 
-                name: 'cancelContract', 
-                title: 'Annulla contratto',
-                value: 'cancelContract',
-                disabled: {fieldName :'disabledActionButton'}
+                                    iconName: {fieldName: 'cancelIcon'},
+                                    label: {fieldName: 'cancelText'}, 
+                                    name: 'cancelContract', 
+                                    title: 'Annulla contratto',
+                                    value: 'cancelContract',
+                                    disabled: {fieldName :'disabledActionButton'}
              }
             }
         ];
@@ -65,7 +67,6 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
         getTableData({activityId: this.activityId}).then(data =>{
 
             console.log('getTableData: ' + JSON.stringify(data));
-
             this.loading = false;
             
             this.ordersList = data;
@@ -82,10 +83,10 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
                     el.disabledActionButton = el.Order__r.ConfirmCustomerContract__c !== undefined || el.Order__r.CancellationReason__c !== undefined;
                     el.confirmText = el.Order__r.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Conferma contratto';
                     el.cancelText = el.Order__r.CancellationReason__c !== undefined ? 'Annullato' : 'Annulla contratto';
-                    el.confirmIcon = el.Order__r.ConfirmCustomerContract__c !== undefined ? '' : 'utility:edit';
-                    el.cancelIcon = el.Order__r.CancellationReason__c !== undefined ? '' : 'utility:edit';
+                    el.confirmIcon = el.Order__r.ConfirmCustomerContract__c !== undefined ? 'utility:edit' : 'utility:edit';
+                    el.cancelIcon = el.Order__r.CancellationReason__c !== undefined ? 'utility:edit' : 'utility:edit';
                     el.StatusEsito =  (el.Order__r.ConfirmCustomerContract__c !== undefined || el.Order__r.CancellationReason__c !== undefined) ? (el.Order__r.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Annullato') : 'In attesa';
-                    el.CommercialProduct__c = el.Order__r.CommercialProduct__c;
+                    el.VasSubtype__c = el.Order__r.VasSubtype__c;
                 });
             } else {
                 this.ordersList.forEach(el => {
@@ -99,15 +100,12 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
                     el.disabledActionButton = el.ConfirmCustomerContract__c !== undefined || el.CancellationReason__c !== undefined;
                     el.confirmText = el.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Conferma contratto';
                     el.cancelText = el.CancellationReason__c !== undefined ? 'Annullato' : 'Annulla contratto';
-                    el.confirmIcon = el.ConfirmCustomerContract__c !== undefined ? '' : 'utility:edit';
-                    el.cancelIcon = el.CancellationReason__c !== undefined ? '' : 'utility:edit';
+                    el.confirmIcon = el.ConfirmCustomerContract__c !== undefined ? 'utility:edit' : 'utility:edit';
+                    el.cancelIcon = el.CancellationReason__c !== undefined ? 'utility:edit' : 'utility:edit';
                     el.StatusEsito =  (el.ConfirmCustomerContract__c !== undefined || el.CancellationReason__c !== undefined) ? (el.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Annullato') : 'In attesa';
-                    el.CommercialProduct__c = el.CommercialProduct__c;
+                    el.VasSubtype__c = el.VasSubtype__c;
                 });
             }
-
-            
-
         }).catch(error => {
             this.loaded = true;
             const toastErrorMessage = new ShowToastEvent({
@@ -134,7 +132,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
     confirmContractAction(type){
         this.loading = true;
         confirmContract({ordId: this.orderId, activityId: this.activityId, type: type}).then(data =>{
-
+            
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
                 message: 'Contratto confermato con successo',
@@ -174,7 +172,6 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
         this.loading = true;
         cancelContract({ordId: this.orderId, activityId: this.activityId, causal: cancellationReason}).then(data =>{
             this.loading = false;
-
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
                 message: 'Contratto annullato con successo',
@@ -217,6 +214,15 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
 
         let type = row.DateComfortCall__c !== undefined ? 'Comfort' : 'Quality';
 
+        //disable button
+        /* let tmp = [...this.ordersList];
+        tmp.forEach(ord =>{
+            if( ord.Id === row.Id ){
+                ord.disabledActionButton = false;
+            }
+        });
+        this.ordersList = [...tmp]; */
+
         console.log('call type: ' + type);
         console.log('comfort/quality action: ' + this.action);
 
@@ -230,14 +236,13 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
                 this.cancelContractAction('Annullato per no conferma cliente');
             }
         }
-
+        this.showTable=false;
+        this.setTableData();
     }
 
     handleDialogResponse(event){
         if(event.detail.status == true){
-
             this.cancelContractAction(event.detail.choice);
-
         } else {
             this.isDialogVisible = false;
         }
