@@ -71,6 +71,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             orders[0].isSTG__c=false;
             orders[0].IsVas__c = false;
             orders[0].VasSubtype__c = '	HERA LED 1 KIT V2';
+            orders[0].NumeratorGroup__c = 'ELPVEDM';
 
             orders[1].ServicePoint__c = points[0].id;
             orders[1].IsVas__c = true;
@@ -722,7 +723,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
 
         try{
             String getConsumAnForVas = HDT_LC_ChildOrderProcessPrecheck.getConsumptionAnnualForVas(ord.id);
-            System.assertEquals('10.00', getConsumAnForVas, 'getConsumptionAnnualForVas not works');
+            System.assertEquals('10.00', getConsumAnForVas, 'getConsumptionAnnualForVas did not work correctly');
 
         } catch (Exception e) {
 
@@ -731,6 +732,25 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
 
         Test.stopTest();
 
+    }
+
+    @IsTest
+
+    static void testEffectiveDateBonus(){
+
+        Order ord = [SELECT id, NumeratorGroup__c FROM Order WHERE Name = 'testOrderName0' LIMIT 1];
+
+        Test.startTest();
+
+        Date effectiveDate = HDT_LC_ChildOrderProcessPrecheck.getEffectiveDateBonus(ord.id);
+        Date dateToCompare = (System.today().addMonths(1)).toStartOfMonth();
+
+        Test.stopTest();
+
+        //System.debug('EDO: effectiveDate', effectiveDate);
+        //System.debug('EDO: dateToCompare', dateToCompare);
+
+        System.assertEquals(dateToCompare, effectiveDate, 'getEffectiveDateBonus did not work correctly');
     }
     
 }
