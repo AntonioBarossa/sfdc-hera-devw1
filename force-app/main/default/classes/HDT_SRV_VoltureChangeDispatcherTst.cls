@@ -20,7 +20,7 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
 		List<Sale__c> saleList=HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Attiva');
 		List<Order> orderList=HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].Id, 'Bozza');
 		List<Contract> contractList=HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].Id);//
-        List<BillingProfile__c> BillingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);//
+        List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);//
         List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList=HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);  
         spList[0].CommoditySector__c = 'Energia Elettrica';
@@ -50,7 +50,7 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
         childOrderList[0].ServicePoint__c = spList[0].Id;
         childOrderList[0].LoginWorkstation__c = 'CC_LT_Staff';
         childOrderList[0].Email__c = 'test@email.com';
-        childOrderList[0].BillingProfile__c = BillingProfileList[0].Id;
+        childOrderList[0].BillingProfile__c = billingProfileList[0].Id;
         childOrderList[0].ServicePointCode__c = 'IT001E00032928';
         childOrderList[0].SapContractCode__c = '3001002003';
         childOrderList[0].Commodity__c = 'Energia Elettrica';
