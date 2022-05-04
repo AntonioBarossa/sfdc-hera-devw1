@@ -82,6 +82,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         //Case
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(39, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         CaseList[0].Type = 'Richiesta Parere';
+        CaseList[0].OpinionRequest__c = 'Prova parere';
         CaseList[1].Type = 'Piano Rateizzazione';
         CaseList[2].Type = 'Piano Rateizzazione';
         caseList[3].Type = 'Blocco Sollecito/Interessi';
@@ -222,7 +223,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         String fields7b = JSON.serialize(myCase1);
 
         String recordId8 = myCase1.Id;
-        myCase1.SendDate__c = Date.newInstance(2025, 10, 10);
+        myCase1.SendDate__c = Date.today().addDays(5);
         String fields8 = JSON.serialize(myCase1);
 
         String recordId9 = myCase1.Id;
@@ -233,15 +234,16 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         myCase1.FithLevelComplaintClassification__c = 'Firma falsa';
         String fields9 = JSON.serialize(myCase1);
 
-        /*String recordId10 = myCase1.Id;
-        myCase1.SendDate__c = Date.newInstance(2015, 10, 10);
+        String recordId10 = myCase1.Id;
+        myCase1.SendDate__c = Date.today().addDays(-5);
         myCase1.OpinionRequest__c = 'Prova parere';
+        myCase1.ComplaintEntryChannel__c = 'Fax';
+        myCase1.CompliantOriginEmail__c = 'test@test.com';
         String fields10 = JSON.serialize(myCase1);
 
         String recordId10b = myCase1.Id;
-        myCase1.SendDate__c = Date.newInstance(2015, 10, 10);
-        myCase1.OpinionRequest__c = '';
-        String fields10b = JSON.serialize(myCase1);*/
+        myCase1.OpinionRequest__c = null;
+        String fields10b = JSON.serialize(myCase1);
 
         //TESTING
         Test.startTest();
@@ -254,8 +256,8 @@ public with sharing class HDT_UTL_CaseValidationsTst {
             myClass1.validate(fields7, recordId7);
             myClass1.validate(fields8, recordId8);
             myClass1.validate(fields9, recordId9);
-            //myClass1.validate(fields10, recordId10);
-            //myClass1.validate(fields10b, recordId10b);
+            myClass1.validate(fields10, recordId10);
+            myClass1.validate(fields10b, recordId10b);
 
         }catch(DmlException e) {
             System.debug('The following exception has occurred: ' + e.getMessage());
@@ -1350,7 +1352,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
 
         String recordId40 = myCase9.Id;
         myCase9.Type = 'Esercizio Diritti Privacy';
-        myCase9.WrittenReceiptRequestDate__c = Date.newInstance(2021, 12, 25);
+        myCase9.WrittenReceiptRequestDate__c = Date.today().addDays(5);
         update myCase9;
         String fields40 = JSON.serialize(myCase9);
 
@@ -1426,9 +1428,9 @@ public with sharing class HDT_UTL_CaseValidationsTst {
 
         mySetup();
 
-        Case myCase9c = [Select Id, Type, ServicePoint__C, RelatedCase__c from Case where Type = 'Inversione del Contatore'];
-
-        Case relatedCase = [Select Id, ServicePoint__C from Case where ServicePoint__r.CommoditySector__c = 'Gas'];
+        Case myCase9c = [Select Id, Type, ServicePoint__r.Id, RelatedCase__c from Case where Type = 'Inversione del Contatore'];
+        Case relatedCase = [Select Id, ServicePoint__r.Id, ServicePointCode__c from Case where ServicePoint__r.CommoditySector__c = 'Gas'];
+        Case relatedCase1 = [Select Id, ServicePoint__r.Id, ServicePointCode__c from Case where ServicePoint__r.CommoditySector__c = 'Energia Elettrica' LIMIT 1];
 
         String recordId42 = myCase9c.Id;
         String fields42 = JSON.serialize(myCase9c);
@@ -1436,6 +1438,12 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         String recordId43 = myCase9c.Id;
         myCase9c.RelatedCase__c = relatedCase.Id;
         String fields43 = JSON.serialize(myCase9c);
+
+        String recordId43b = myCase9c.Id;
+        myCase9c.RelatedCase__c = relatedCase1.Id;
+        myCase9c.ServicePoint__c = relatedCase1.ServicePoint__r.Id;
+        myCase9c.ServicePointCode__c = relatedCase.ServicePointCode__c;
+        String fields43b = JSON.serialize(myCase9c);
 
         Test.startTest();
 
@@ -1445,6 +1453,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
 
             myClass9c.validate(fields42, recordId42);
             myClass9c.validate(fields43, recordId43);
+            myClass9c.validate(fields43b, recordId43b);
 
         }catch(DmlException e) {
                 System.debug('The following exception has occurred: ' + e.getMessage());
