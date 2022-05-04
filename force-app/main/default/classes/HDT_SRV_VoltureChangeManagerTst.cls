@@ -58,6 +58,7 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         childOrderList[0].SapContractCode__c = '3001002003';
         childOrderList[0].Commodity__c = 'Energia Elettrica';
         childOrderList[0].EffectiveDate__c = Date.newInstance(2022, 3, 1);
+        childOrderList[0].CustomerCategory__c = 'Famiglie';
         
         update childOrderList;
         orderItemList = HDT_UTL_DataFactoryTst.createOrderItem(2, true, childOrderList[0].Id, spList[0].Id,productList[0].Id,pbEntry.Id);
@@ -127,6 +128,7 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         List<Order> orderList = [SELECT Id, 
         ParentOrder__c,
         Name,
+        TecnicalPhase__c,
         EffectiveDate,
         EffectiveDate__c,
         RecessNotice__c,
@@ -161,7 +163,7 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         wrts_prcgvr.MRR_1_0.Field headerField = new wrts_prcgvr.MRR_1_0.Field();
         List<wrts_prcgvr.MRR_1_0.Field> bodyFields = new List<wrts_prcgvr.MRR_1_0.Field>();
         wrts_prcgvr.MRR_1_0.Field bodyField = new wrts_prcgvr.MRR_1_0.Field();    
-        wrts_prcgvr.MRR_1_0.Field resField = new wrts_prcgvr.MRR_1_0.Field(); 
+        wrts_prcgvr.MRR_1_0.Field bodyField1 = new wrts_prcgvr.MRR_1_0.Field();
         
         headerField.fieldType = 'TEXT';
         headerField.name = 'requestType';
@@ -177,35 +179,32 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         bodyField.name = 'FASE';
         bodyField.value = 'Comunicazione verso Heroku';
         
-        resField.fieldType = 'TEXT';
-        resField.name = 'result';
-        resField.value = 'ok';
-        
+        bodyField1.fieldType = 'TEXT';
+        bodyField1.name = 'result';
+        bodyField1.value = 'OK';
+
         bodyFields.add(bodyField);
-		bodyFields.add(resField);
+		bodyFields.add(bodyField1);
+        
         singleObject.fields = bodyFields;
         singleObject.id = 'ajsidj';
         singleObject.name = 'objName';
         singleObject.objects = otherObjects;
         singleObject.objectType = 'objType';
-		
 
-        
-        
         objects.add(singleObject);
 
         singleResponse.code = 'code';
-        
         singleResponse.description = 'description';
         singleResponse.header = header;
         singleResponse.objects = objects;
 
         responses.add(singleResponse);
-		
+
         responseMrr.responses = responses;
 
         Test.startTest();
-        System.debug(orderList);
+        System.debug('@@@ ' + orderList + '### ' + responseMrr);
         voltureManager.handleResponse(responseMrr, orderList[0]);
         Test.stopTest();
 
@@ -361,10 +360,13 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         update orderList;
         
         Test.startTest();
+        
         voltureManager.handlePublishUpdate(orderList[0]);
+        System.debug('@@@@' + orderList);
         Test.stopTest();
 
         List<Order> orderListUpdated = [SELECT Id,Phase__c FROM Order WHERE Id = :orderList[0].Id];
+        System.debug('@@@@' + orderListUpdated);
 
         System.assertEquals(HDT_SRV_VoltureChangeManager.publishUpdatePhase, orderListUpdated[0].Phase__c,'Fase non correttamente aggiornata');
     }

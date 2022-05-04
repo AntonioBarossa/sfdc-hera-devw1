@@ -26,6 +26,10 @@ public with sharing class HDT_UTL_NotifVasTst {
             HDT_UTL_DataFactoryTst.pClickCasePhase();
             HDT_UTL_DataFactoryTst.newPhaseTransition('Accettato Motore VAS', 'Bozza', constants.ORDER_RECORDTYPEID_VAS, 'HDT_RT_VAS');
 			HDT_UTL_DataFactoryTst.newPhaseTransition('Accettato Motore VAS', 'Bozza', constants.CASE_RECORDTYPEID_POST_SALES_VAS, 'HDT_RT_PostSalesVAS');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Accettato Motore VAS', 'Bozza', constants.CASE_RECORDTYPEID_POST_SALES_VAS, 'HDT_RT_VAS');
+       
+//            HDT_UTL_DataFactoryTst.newPhaseTransition('Accettato Motore VAS', 'Bozza', constants.CASE_RECORDTYPEID_POST_SALES_VAS, 'HDT_RT_PostSalesVAS');
+
             
             List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
             List<Contact> cttList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
@@ -181,10 +185,11 @@ public with sharing class HDT_UTL_NotifVasTst {
                 fieldList.add(mrrFields2);
     
                 HDT_WRP_MrrRequest.HDT_WRP_Header mrrHeader = new HDT_WRP_MrrRequest.HDT_WRP_Header();
+                
                 mrrHeader.fields = fieldList;
                 HDT_WRP_MrrRequest.HDT_WRP_Object mrrObjects = new HDT_WRP_MrrRequest.HDT_WRP_Object();
                 mrrObjects.fields = fieldList;
-                mrrObjects.objectType = 'Case';
+                mrrObjects.objectType = 'Account';
                 
                 List<HDT_WRP_MrrRequest.HDT_WRP_Object> objectList = new List<HDT_WRP_MrrRequest.HDT_WRP_Object>();
                 objectList.add(mrrObjects);           
