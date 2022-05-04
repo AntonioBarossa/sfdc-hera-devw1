@@ -99,6 +99,11 @@
                 <default>false</default>
                 <label>Prima Attivazione</label>
             </value>
+            <value>
+                <fullName>AllineamentoAnagrafica</fullName>
+                <default>false</default>
+                <label>Allineamento Anagrafica</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
