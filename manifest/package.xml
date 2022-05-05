@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>HDT_TRH_Lead</members>
-		<members>HDT_TRH_LeadTst</members>
-		<name>ApexClass</name>
+		<members>HDT_SignModeSettings.Vendita_Agenzie_OTP</members>
+		<members>HDT_SignModeSettings.Vendita_Agenzie_SME_Cartaceo</members>
+		<members>HDT_SignModeSettings.Vendita_Agenzie_SME_OTP</members>
+		<members>HDT_SignModeSettings.Vendita_Business_Agent_Cartaceo</members>
+		<members>HDT_SignModeSettings.Vendita_Business_Agent_OTP</members>
+		<members>HDT_SignModeSettings.Vendita_WEB_Posta_Cartecea</members>
+		<members>HDT_SignModeSettings.Vendita_Web_AccDigit</members>
+		<name>CustomMetadata</name>
 	</types>
 	<version>53.0</version>
 </Package>
