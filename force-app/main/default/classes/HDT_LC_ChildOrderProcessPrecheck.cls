@@ -269,6 +269,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         }
     }
 
+    @TestVisible
     private static Date getEffectiveDateBonus(String orderId)
     {
         Order currentOrder = orderQr.getRecordById(orderId);

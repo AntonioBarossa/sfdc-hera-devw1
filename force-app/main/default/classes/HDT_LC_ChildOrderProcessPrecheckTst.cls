@@ -48,8 +48,18 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
 			insert contracts; 
             
             List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, true, accs[0].id, 'Bozza');
+
+            List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, true);
+
+            Id priceBookId = Test.getStandardPriceBookId();
+
+            List<PricebookEntry> stdpriceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, priceBookId);
+
+            List<Pricebook2>pbList=HDT_UTL_DataFactoryTst.createPricebook(1, true);
+
+            List<PricebookEntry> priceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, pbList[0].Id);
             
-            List<Order> orders =  HDT_UTL_DataFactoryTst.createOrder(1, false, accs[0].id, 'Bozza');
+            List<Order> orders =  HDT_UTL_DataFactoryTst.createOrder(2, false, accs[0].id, 'Bozza');
             orders[0].ServicePoint__c = points[0].id;
             orders[0].VoltageLevel__c ='MT';
             orders[0].MarketOrigin__c ='Libero';
@@ -61,7 +71,16 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             orders[0].isSTG__c=false;
             orders[0].IsVas__c = false;
             orders[0].VasSubtype__c = '	HERA LED 1 KIT V2';
+            orders[0].NumeratorGroup__c = 'ELPVEDM';
+
+            orders[1].ServicePoint__c = points[0].id;
+            orders[1].IsVas__c = true;
+            orders[1].Pricebook2Id = pbList[0].id;
             insert orders;
+
+            List<OrderItem> ordersItems = HDT_UTL_DataFactoryTst.createOrderItem(1, false, orders[1].id, points[0].id, productList[0].id, priceBookEntryList[0].id);
+            ordersItems[0].ConsumptionAnnual__c = 10;
+            insert ordersItems;
             
             List<Order> childOrders =  HDT_UTL_DataFactoryTst.createChildOrder(2, false, accs[0].id, sales, orders[0].id, null);
             childOrders[0].RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
@@ -693,4 +712,45 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         Test.stopTest();
         
     }
+
+    
+    @IsTest
+    static void testgetConsumptionAnnualForVas(){
+
+        Order ord = [SELECT id, IsVAS__c, Pricebook2Id FROM Order WHERE Name = 'testOrderName1' LIMIT 1];
+
+        Test.startTest();
+
+        try{
+            String getConsumAnForVas = HDT_LC_ChildOrderProcessPrecheck.getConsumptionAnnualForVas(ord.id);
+            System.assertEquals('10.00', getConsumAnForVas, 'getConsumptionAnnualForVas did not work correctly');
+
+        } catch (Exception e) {
+
+            System.assertNotEquals(null, e.getMessage(), 'Expected exception');
+        }
+
+        Test.stopTest();
+
+    }
+
+    @IsTest
+
+    static void testEffectiveDateBonus(){
+
+        Order ord = [SELECT id, NumeratorGroup__c FROM Order WHERE Name = 'testOrderName0' LIMIT 1];
+
+        Test.startTest();
+
+        Date effectiveDate = HDT_LC_ChildOrderProcessPrecheck.getEffectiveDateBonus(ord.id);
+        Date dateToCompare = (System.today().addMonths(1)).toStartOfMonth();
+
+        Test.stopTest();
+
+        //System.debug('EDO: effectiveDate', effectiveDate);
+        //System.debug('EDO: dateToCompare', dateToCompare);
+
+        System.assertEquals(dateToCompare, effectiveDate, 'getEffectiveDateBonus did not work correctly');
+    }
+    
 }

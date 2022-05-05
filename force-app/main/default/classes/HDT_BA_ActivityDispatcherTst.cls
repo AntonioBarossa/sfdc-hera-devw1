@@ -14,7 +14,7 @@ public with sharing class HDT_BA_ActivityDispatcherTst {
             WorkGroup__c = Schema.getGlobalDescribe().get('Queue__c').getDescribe().fields.getMap().get('WorkGroup__c').getDescribe().getPicklistValues()[0].getValue(),
             Agency2__c = Schema.getGlobalDescribe().get('Queue__c').getDescribe().fields.getMap().get('Agency2__c').getDescribe().getPicklistValues()[0].getValue(),
             QueueId__c = gr.Id,
-            Priority__c = '1',
+            Priority__c = '1 - Alta',
             Type__c = 'PUSH'
         );
         insert queue;
