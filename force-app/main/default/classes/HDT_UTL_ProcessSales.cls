@@ -31,7 +31,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         contoContrattualeIndex = mapHeaderForWrapper.get('BillingProfileContoContrattuale');
         codicePuntoIndex = mapHeaderForWrapper.get('ServicePointCodicePunto');
         recTypeIndex = mapHeaderForWrapper.get('AccountTipo');
-        //contractIndex = mapHeaderForWrapper.get('Contratto');
 
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
@@ -56,14 +55,15 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             codicePuntoSet.add(processObj.csvSplitted[codicePuntoIndex]);
             contoContrattualeSet.add(processObj.csvSplitted[contoContrattualeIndex]);
-            //sapContractCodeSet.add(processObj.csvSplitted[contractIndex]);
 
             processObjList.add(processObj);
         }
 
-        //if(processName.equalsIgnoreCase('MUC')){
-        //    checkContract();
-        //}
+        if(processName.equalsIgnoreCase('MUC')){
+            checkContract();
+        }
+
+        System.debug(LoggingLevel.DEBUG, '>>> JSON ' + JSON.serialize(processObjList));
 
     }
 
@@ -73,12 +73,19 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         Map<Id, Order> orderMap;
         List<Id> orderIdList = new List<Id>();
         Date todayDay = Date.today();
+        contractIndex = mapHeaderForWrapper.get('Contratto');
+
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+            sapContractCodeSet.add(processObj.csvSplitted[contractIndex]);
+        }
 
         List<Contract> contractList = [
             SELECT Id, SAPContractCode__c, Status, SBQQ__Order__c
             FROM Contract
             WHERE SAPContractCode__c IN :sapContractCodeSet
         ];
+
+        System.debug(LoggingLevel.DEBUG, '>>> contract ' + contractList);
 
         for(Contract contr : contractList){
             contractMap.put(contr.SAPContractCode__c, contr);
@@ -94,6 +101,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             WHERE processType__c LIKE 'Cambio Offerta%'
             AND Id IN :orderIdList
         ];
+
+        System.debug(LoggingLevel.DEBUG, '>>> orderList ' + orderList);
 
         orderMap = new Map<Id, Order>(orderList);
 
@@ -111,8 +120,10 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 System.debug(LoggingLevel.DEBUG, '>>> status ' + currentContract.Status);
 
                 if(currentContract.Status.equalsIgnoreCase('Cessato')){
+                    System.debug(LoggingLevel.DEBUG, '>>> Il contratto è cessato');
                     processObj.requestItem.Status__c = 'Errore';
                     processObj.requestItem.StatusDescription__c = 'Il contratto risulta "Cessato"';
+                    //itemsToUpdate.add(processObj.requestItem);
                     continue;
                 }
 
@@ -122,11 +133,13 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                     Date orderCreatedDate = currentOrder.CreatedDate.date();
                     Integer numberDaysDue = orderCreatedDate.daysBetween(todayDay);
 
-                    System.debug(LoggingLevel.DEBUG, '>>> orderCreatedDate ' + orderCreatedDate);
+                    System.debug(LoggingLevel.DEBUG, '>>> orderCreatedDate ' + orderCreatedDate + ' - numberDaysDue ' + numberDaysDue);
 
-                    if(numberDaysDue <= 100){
+                    if(numberDaysDue >= 100){
+                        System.debug(LoggingLevel.DEBUG, '>>> siamo andati in errore');
                         processObj.requestItem.Status__c = 'Errore';
                         processObj.requestItem.StatusDescription__c = 'E\' presente un cambio offerta';
+                        //itemsToUpdate.add(processObj.requestItem);
                         continue;     
                     }
                 }
@@ -188,7 +201,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         for(HDT_WRP_ProcessObjects processObj : processObjList){
  
             if(processObj.requestItem.Status__c == 'Errore'){
-                itemsToUpdate.add(processObj.requestItem);
+               //itemsToUpdate.add(processObj.requestItem);
                 continue;
             }
 
@@ -268,9 +281,14 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         }
 
-        accountList = HDT_QR_ProcessSales.getAccountList(fiscalCodeSet, vatNumberSet, marcaturaSet, csnSet);
-        clearAllUselessSets();
-        findDuplicateForAccounts();
+        try{
+            accountList = HDT_QR_ProcessSales.getAccountList(fiscalCodeSet, vatNumberSet, marcaturaSet, csnSet);
+            clearAllUselessSets();
+            findDuplicateForAccounts();
+        } catch(Exception e){
+            System.debug(LoggingLevel.DEBUG, '>>> Exception ' + e.getMessage() + ' - ' + String.valueOf(e.getLineNumber()));
+        }
+
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
@@ -312,6 +330,11 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
+            if(processObj.requestItem.Status__c.equalsIgnoreCase('Errore')){
+                System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c ');
+                continue;
+            }
+
             if(saveAccountResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c after save');
                 processObj.requestItem.Status__c = 'Errore';
@@ -344,6 +367,11 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         Id accountId;
         List<Id> accountIdsList = new List<Id>();
         for(HDT_WRP_ProcessObjects processObj : processObjList){
+
+            if(processObj.requestItem.Status__c.equalsIgnoreCase('Errore')){
+                System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c ');
+                continue;
+            }
 
             if(saveAccountResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c error');
@@ -437,21 +465,21 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
             if(processObj.requestItem.Status__c.equalsIgnoreCase('Errore')){
-                itemsToUpdate.add(processObj.requestItem);
+                //itemsToUpdate.add(processObj.requestItem);
                 continue;
             }
 
             if(saveBillProfResponse != null && saveBillProfResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 processObj.requestItem.Status__c = 'Errore';
                 processObj.requestItem.StatusDescription__c = saveBillProfResponse.errorItemMap.get(processObj.requestItem.Id);
-                itemsToUpdate.add(processObj.requestItem);
+                //itemsToUpdate.add(processObj.requestItem);
                 continue;
             }
 
             if(saveServPointResponse != null && saveServPointResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 processObj.requestItem.Status__c = 'Errore';
                 processObj.requestItem.StatusDescription__c = saveServPointResponse.errorItemMap.get(processObj.requestItem.Id);
-                itemsToUpdate.add(processObj.requestItem);
+                //itemsToUpdate.add(processObj.requestItem);
                 continue;
             }
 
@@ -478,8 +506,12 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             processObj.requestItem.NextStepData__c = JSON.serialize(nextDataObj);
             processObj.requestItem.Status__c = 'In Lavorazione';
-            itemsToUpdate.add(processObj.requestItem);
+            //itemsToUpdate.add(processObj.requestItem);
             
+        }
+
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+            itemsToUpdate.add(processObj.requestItem);
         }
 
     }

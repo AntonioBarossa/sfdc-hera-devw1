@@ -392,7 +392,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         
         for (Order childOrder : childOrders) {
             System.debug('PrcessType ' + childOrder.ProcessType__c);
-            if (childOrder.ProcessType__c != null && childOrder.ProcessType__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS')) {
+            if ((childOrder.ProcessType__c != null && childOrder.ProcessType__c.containsIgnoreCase('Aggiunta Sconti o Bonus VAS')) || childOrder.Type.equalsIgnoreCase('Amendment')) {
                 result = true;
             }else {
                 result = false;
