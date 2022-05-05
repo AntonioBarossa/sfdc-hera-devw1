@@ -19,15 +19,44 @@ public with sharing class HDT_UTL_ContractProcessTst {
         List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contract> cttList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].Id);
         List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].Id, 'Bozza');
+        // List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, true);
+        // List<Pricebook2> pricebookList = HDT_UTL_DataFactoryTst.createPricebook(2, true);
+        // List<PricebookEntry> pEList = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, false, pricebookList[1].Id, pricebookList[0].Id);
+
+        List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, true);
+        Id priceBookId = Test.getStandardPriceBookId();
+        List<PricebookEntry> stdpriceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, priceBookId);
+        List<Pricebook2> pbList = HDT_UTL_DataFactoryTst.createPricebook(1, true);
+        List<PricebookEntry> priceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, pbList[0].Id);
         
+        productList[0].Family = 'Offerta commerciale';
+        update productList;
+
         cttList[0].SBQQ__Order__c = orderList[0].Id;
+        cttList[0].ServicePoint__c = spList[0].Id;
+        cttList[0].Status = 'Attivo';
         insert cttList;   
         
         
         orderList[0].BillingProfile__c = bpList[0].Id;
         orderList[0].ServicePoint__c = spList[0].Id;
         orderList[0].ContractReference__c = cttList[0].Id;
+        orderList[0].Pricebook2Id = pbList[0].Id;
         insert orderList;
+
+        SBQQ__Subscription__c sub = new SBQQ__Subscription__c();
+        sub.SBQQ__Contract__c = cttList[0].Id;
+        sub.SBQQ__Quantity__c = 10;
+
+        insert sub;
+
+        OrderItem ordItem = new OrderItem();
+        ordItem.OrderId = orderList[0].Id;
+        ordItem.Product2Id = productList[0].Id;
+        ordItem.UnitPrice = 1000;
+        ordItem.Quantity = 10;
+        ordItem.PricebookEntryId = priceBookEntryList[0].Id;
+        insert ordItem;
         
         
         
@@ -91,6 +120,72 @@ public with sharing class HDT_UTL_ContractProcessTst {
         
         System.assertEquals(cttList[0].Status, 'Cessato','Status non in Cessato');
         System.assertEquals(cttList[0].EndDate, date.Today(), 'Data non aggiornata ad Oggi correttamente');
+        
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testHandleMassiveContractCreationVAS() {
+        
+        Test.startTest();
+        setup1();
+        List<Order> orderList = [SELECT Id, ServicePoint__c FROM Order LIMIT 1];
+        List<ServicePoint__c> servicePointList = [SELECT Id FROM ServicePoint__c LIMIT 1];
+        
+        orderList[0].ProcessType__c = 'VAS';
+        orderList[0].ServicePoint__c = servicePointList[0].Id;
+        orderList[0].RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
+        
+        update orderList;
+        
+        HDT_UTL_ContractProcess.handleMassiveContractCreation( orderList[0].Id);
+        
+        // System.assertEquals(true, 'Cessato','Status non in Cessato');
+        // System.assertEquals(true, date.Today(), 'Data non aggiornata ad Oggi correttamente');
+        
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testHandleMassiveContractCreationScontiBonus() {
+        
+        Test.startTest();
+        setup1();
+        List<Order> orderList = [SELECT Id, ServicePoint__c FROM Order LIMIT 1];
+        List<ServicePoint__c> servicePointList = [SELECT Id FROM ServicePoint__c LIMIT 1];
+        
+        orderList[0].ProcessType__c = 'Aggiunta Sconti o Bonus VAS';
+        orderList[0].ServicePoint__c = servicePointList[0].Id;
+        orderList[0].RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId();
+        
+        update orderList;
+        
+        HDT_UTL_ContractProcess.handleMassiveContractCreation( orderList[0].Id);
+        
+        // System.assertEquals(true, 'Cessato','Status non in Cessato');
+        // System.assertEquals(true, date.Today(), 'Data non aggiornata ad Oggi correttamente');
+        
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testHandleMassiveContractCreationNoVAS() {
+        
+        Test.startTest();
+        setup1();
+        List<Order> orderList = [SELECT Id, ServicePoint__c FROM Order LIMIT 1];
+        List<ServicePoint__c> servicePointList = [SELECT Id FROM ServicePoint__c LIMIT 1];
+        
+        orderList[0].ProcessType__c = 'Voltura';
+        orderList[0].ServicePoint__c = servicePointList[0].Id;
+        orderList[0].RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Voltura').getRecordTypeId();
+        
+        update orderList;
+        
+        HDT_UTL_ContractProcess.handleMassiveContractCreation( orderList[0].Id);
+        
+        // System.assertEquals(true, 'Cessato','Status non in Cessato');
+        // System.assertEquals(true, date.Today(), 'Data non aggiornata ad Oggi correttamente');
         
         Test.stopTest();
     }
