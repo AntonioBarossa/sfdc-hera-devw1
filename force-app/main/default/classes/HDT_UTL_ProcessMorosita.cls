@@ -25,7 +25,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
         mapFieldsObject();
 
         podIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('POD'));
-        accountIdIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
+        //accountIdIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
         contractIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CONTRATTO'));
 
         HDT_WRP_ProcessObjects processObj;
@@ -44,7 +44,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
                 continue;
             }
 
-            accountIdSet.add(processObj.csvSplitted[accountIdIndex]);
+            //accountIdSet.add(processObj.csvSplitted[accountIdIndex]);
             contractCodeSet.add(processObj.csvSplitted[contractIndex]);
             podSet.add(processObj.csvSplitted[podIndex]);
             
@@ -60,9 +60,13 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
         List<Case> caseList;
         List<Contract> contractList;
         //caseList = HDT_QR_ProcessPostSales.getCaseByServicePointCode(caseList, podSet, 'Sospensione Fornitura');
-        accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
+        //accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
 
         contractList = HDT_QR_ProcessPostSales.getContracts(contractList, contractCodeSet);
+        for(Contract contr : contractList){
+            accountIdSet.add(contr.AccountId);
+        }
+        accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
         recordTypeId = HDT_QR_ProcessPostSales.getRecordTypeId('HDT_RT_Morosita');
 
         for(Contract contract : contractList){
@@ -137,6 +141,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
                 processObj.newCase.Contract__c = contract.Id;
                 processObj.newCase.ServicePoint__c = contract.ServicePoint__c;
                 processObj.newCase.BillingProfile__c = contract.BillingProfile__c;
+                processObj.newCase.AccountId = contract.AccountId;
             } else {
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'Contratto non presente'));
                 continue;
@@ -161,8 +166,8 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
             processObj.newCase.Cluster__c = 'Morosità';
             processObj.newCase = setCaseField(processObj.newCase, recordTypeId);
 
-            if(accountContactMap.containsKey(processObj.csvSplitted[accountIdIndex])){
-                processObj.newCase.ContactId = accountContactMap.get(processObj.csvSplitted[accountIdIndex]).ContactId;
+            if(accountContactMap.containsKey(contract.AccountId)){
+                processObj.newCase.ContactId = accountContactMap.get(contract.AccountId).ContactId;
             }
 
             causalCode = causalCodeCalculation.calculateCausalCode(processObj.newCase.Cluster__c, processObj.newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 

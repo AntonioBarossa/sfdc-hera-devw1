@@ -32,7 +32,7 @@ private class HDT_WS_CreditCheckTst {
         ' "companyName" :"companyName",\n' +
         ' "externalCustomerId" :"externalCustomerId",\n' +
         ' "secondaryCustomerId" :"secondaryCustomerId",\n' +
-        ' "bpClass" :"bpClass",\n' +
+        ' "bpClass" :"MArcatura nulla",\n' +
         ' "bpCategory" :"bpCategory",\n' +
         ' "bpType" :"bpType",\n' +
         ' "customerType" :"customerType",\n' +
