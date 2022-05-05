@@ -863,7 +863,7 @@ public with sharing class HDT_SRV_SalesHandler {
     @TestVisible
     private static List<Order> updateOrderServicePoint(String orderId, String parentOrderId, String servicePointCode)
     {
-        List<Order> childOrders = [SELECT ServicePointCode__c FROM Order WHERE ParentOrder__c = :parentOrderId AND Id != :orderId];
+        List<Order> childOrders = [SELECT ServicePointCode__c FROM Order WHERE ParentOrder__c = :parentOrderId AND Id != :orderId WITH SECURITY_ENFORCED];
         for(Order o : childOrders)
         {
             o.ServicePointCode__c = servicePointCode;
