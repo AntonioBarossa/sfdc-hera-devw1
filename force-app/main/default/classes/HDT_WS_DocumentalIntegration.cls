@@ -97,12 +97,13 @@ public with sharing class HDT_WS_DocumentalIntegration {
 
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
             if (responseBodyMap.containsKey('data')) {
-                Map<String, Object> responseData = (Map<String, Object>) responseBodyMap.get('data');
-                List<List<String>> zipBaseSixtyFourResponseList = responseData.containsKey('filesZipBase64') ? convertFilesZipBaseSixtyFour((List<Object>)responseData.get('filesZipBase64')) : new List<List<String>>();
+                List<Object> responseData = (List<Object>) responseBodyMap.get('data');
+                //List<List<String>> zipBaseSixtyFourResponseList = responseData.containsKey('filesZipBase64') ? convertFilesZipBaseSixtyFour((List<Object>)responseData.get('filesZipBase64')) : new List<List<String>>();
                 List<String> zipBaseSixtyFourList = new List<String>();
-                for (List<String> row : zipBaseSixtyFourResponseList){
-                    String status = row[0];
-                    String zipBaseSixtyFour = String.isNotBlank(row[1])? row[1] : '';
+                for (Object row : responseData){
+                    Map<String,Object> rowMap = (Map<String,Object>) row;
+                    String status = (String)rowMap.get('status');
+                    String zipBaseSixtyFour = (String)rowMap.get('zipBase64');//String.isNotBlank(row[1])? row[1] : '';
                     switch on status {
                         when 'ERROR' {
                             if (String.isBlank(zipBaseSixtyFour)) {
