@@ -94,6 +94,8 @@ public with sharing class HDT_UTL_OrderProcessTst {
             orderList[0].DateSentToSII__c = Date.today();
             orderList[0].Name = 'testOrderName0';
             orderList[0].Phase__c = 'Documentazione Gestita';
+            orderList[1].Name = 'testOrderName1';
+            orderList[1].MethodSignedAccepted__c = null;
             insert orderList;
 
             List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, false, accList[0].Id, 'Bozza');
@@ -103,7 +105,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].Id);
             insert contractList;
 
-            List<Order> childOrders = HDT_UTL_DataFactoryTst.createChildOrder(6, false, accList[0].Id, sales, orderList[0].Id, cttList[0].Id);
+            List<Order> childOrders = HDT_UTL_DataFactoryTst.createChildOrder(8, false, accList[0].Id, sales, orderList[0].Id, cttList[0].Id);
             childOrders[0].Name = 'childOrder0';
             childOrders[0].Phase__c = 'Documentazione Validata';
             childOrders[0].CreditCheckDescription__c = 'Saldo debito cattivo pagatore A';
@@ -141,6 +143,14 @@ public with sharing class HDT_UTL_OrderProcessTst {
             childOrders[5].isTransition__c = true;
             childOrders[5].IsMassive__c = true;
             childOrders[5].ParentOrder__c = orderList[0].Id;
+            childOrders[6].Name = 'childOrder5';
+            childOrders[6].ParentOrder__c = orderList[1].Id;
+            childOrders[6].SignedDate__c = Date.today().addDays(-7);
+            childOrders[6].ProcessType__c = 'Subentro Ele';
+            childOrders[7].Name = 'childOrder6';
+            childOrders[7].ParentOrder__c = orderList[1].Id;
+            childOrders[7].SignedDate__c = Date.today().addDays(-7);
+            childOrders[7].ProcessType__c = 'Switch in Ele';
             insert childOrders;
 
             List<AgentMatrix__c> agMatrixList = HDT_UTL_DataFactoryTst.createAgentMatrix(1, false, 'Telefono');
@@ -778,6 +788,46 @@ public with sharing class HDT_UTL_OrderProcessTst {
             Test.stopTest();
 
             System.assertEquals('Documentazione Validata', newOrderList[0].Phase__c, 'Activity Custom created');
+        }
+    }
+
+    @isTest
+    public static void testUpdateChildOrderIvr() {
+ 
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+ 
+        System.runAs(u){
+
+            List<Order> newList = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId, SignedDate__c,
+                                          IncomingCreditCheckResult__c,OutgoingCreditCheckResult__c, OrderReferenceNumber, IsMassive__c, MethodSignedAccepted__c, 
+                                          ContractReference__c, VasSubtype__c, CommodityFormula__c FROM Order WHERE Name = 'testOrderName1' LIMIT 1];
+
+            Map<String,Order> oldMap = new Map<String,Order>();
+            oldMap.put(newList[0].Id, newList[0]);
+            List<Order> oldList = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId, SignedDate__c,
+                                        IncomingCreditCheckResult__c,OutgoingCreditCheckResult__c, OrderReferenceNumber, IsMassive__c, MethodSignedAccepted__c, 
+                                        ContractReference__c, VasSubtype__c, CommodityFormula__c FROM Order WHERE Name = 'childOrder5' LIMIT 1];
+            oldMap.put(oldList[0].Id, oldList[0]);
+            oldList = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId, SignedDate__c,
+                                        IncomingCreditCheckResult__c,OutgoingCreditCheckResult__c, OrderReferenceNumber, IsMassive__c, MethodSignedAccepted__c, 
+                                        ContractReference__c, VasSubtype__c, CommodityFormula__c FROM Order WHERE Name = 'childOrder6' LIMIT 1];
+            oldMap.put(oldList[0].Id, oldList[0]);
+            
+            Map<String,Order> newMap = new Map<String,Order>();
+            Order tmp = new Order();
+            tmp.Id = newList[0].Id;
+            tmp.MethodSignedAccepted__c = 'IVR';
+            tmp.SignedDate__c = Date.Today();
+            newMap.put(tmp.Id, tmp);
+
+            Test.startTest();
+
+            List<Order> returnList = HDT_UTL_OrderProcess.updateChildOrderIvr(oldMap, newMap);
+            
+            Test.stopTest();
+
+            System.assertEquals(returnList[0].phase__c, 'Comunicazione verso Heroku', 'Fase non correttamente aggiornata');
+            System.assertEquals(returnList[1].phase__c, 'Comunicazione verso Heroku', 'Fase non correttamente aggiornata');
         }
     }
 
