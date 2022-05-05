@@ -155,10 +155,16 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
             System.debug('>>>> podValue ' + podValue);
             System.debug('>>>> podToCaseIdMap ' + podToCaseIdMap);
 
-            if(processObj.newCase.Type.equalsIgnoreCase('Riattivazione Fornitura') || processObj.newCase.Type.equalsIgnoreCase('Sospensione Fornitura')){
+            if(String.isNotBlank(processObj.newCase.Type)/*processObj.newCase.Type.equalsIgnoreCase('Riattivazione Fornitura') || processObj.newCase.Type.equalsIgnoreCase('Sospensione Fornitura')*/){
                 if(podToCaseIdMap.containsKey(podValue)){
                     processObj.newCase.ParentId = podToCaseIdMap.get(podValue).ParentId;
                     processObj.newCase.RelatedCase__c = podToCaseIdMap.get(podValue).Id;
+                    if(String.isBlank(processObj.newCase.CompetentOffice__c)){
+                        processObj.newCase.CompetentOffice__c = podToCaseIdMap.get(podValue).CompetentOffice__c;
+                    }
+                    if(String.isBlank(processObj.newCase.PaymentDate__c) && processObj.newCase.Type.equalsIgnoreCase('Riattivazione Fornitura')){
+                        processObj.newCase.PaymentDate__c = Date.today();
+                    }
                 } else {
                     //itemsToSave.add(setErrorItem(processObj.requestItem, 'Case di Sospensione fornitura non presente'));
                     //continue;
@@ -189,6 +195,10 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
 
             if(causalCode != null){
                 processObj.newCase.CausalCode__c = causalCode.CausalCode__c;//'D01' for example
+            }
+            if(String.isBlank(processObj.newCase.Origin)){
+                processObj.newCase.Origin = 'Da PGM';
+                processObj.parentCase.Origin = 'Da PGM';
             }
 
             System.debug(LoggingLevel.DEBUG, '>>> processObj.newCase: ' + String.valueOf(processObj.newCase));

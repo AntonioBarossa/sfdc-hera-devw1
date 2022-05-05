@@ -79,7 +79,7 @@ public with sharing class HDT_QR_ProcessPostSales {
     public static List<Case> getCaseByServicePointCode(List<Case> caseList, Set<String> podSet, String type){
         caseList = new List<Case>();
         caseList = [
-            SELECT Id, ParentId, ServicePoint__r.ServicePointCode__c
+            SELECT Id, ParentId, ServicePoint__r.ServicePointCode__c,CompetentOffice__c
             FROM Case
             WHERE Type = :type
             AND ServicePoint__r.ServicePointCode__c IN :podSet
