@@ -85,7 +85,6 @@ public with sharing class HDT_UTL_RegistryAlignment extends HDT_UTL_ProcessExecu
 
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
-        
         String causalCode;
         
 
@@ -184,14 +183,14 @@ public with sharing class HDT_UTL_RegistryAlignment extends HDT_UTL_ProcessExecu
             }
         }
 
-       if(caseToInsert.size() > 0){
+        if(caseToInsert.size() > 0){
 
            HDT_WRP_SaveResponse saveResponse;
            saveResponse = databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
 
            caseToInsert.clear();
 
-           Map<Id, String> caseNumberMap;
+           Map<Id, String> caseNumberMap = new Map<Id, String>();
            caseNumberMap = setCaseNumberMap(caseNumberMap, saveResponse.itemIdToObjId.values());
 
            getLimitDetails('AFTER CASE CREATION & Enrichment');
@@ -210,8 +209,7 @@ public with sharing class HDT_UTL_RegistryAlignment extends HDT_UTL_ProcessExecu
            if(saveResponse.savedObject.size() > 0){
                runCompatibility(saveResponse.savedObject);
            }
-
-       }
+        }
     }
 
     public override void finalUpdate(){
