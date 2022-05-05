@@ -107,7 +107,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //SETUP
         mySetup();
         
-        OrderItem myItem = [SELECT Id, UnitPrice, PriceNetDiscounted__c, Quantity FROM OrderItem];
+        OrderItem myItem = [SELECT Id, UnitPrice, PriceNetDiscounted__c, Quantity, ListPrice, IVA__c FROM OrderItem];
         List<SObject> itemVasList = new List<SObject>();
         itemVasList.add(myItem);
         
@@ -119,8 +119,13 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         
         //TESTING objectString (ItemVAS not null)
+        myItem.IVA__c = 10;
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
         String result = myObjectToTest.execute('handleAmountVas', inputs, formParams);
+
+        myItem.IVA__c = 0;
+        HDT_UTL_PayloadManagement myObjectToTest2 = new HDT_UTL_PayloadManagement();
+        String result2 = myObjectToTest2.execute('handleAmountVas', inputs, formParams);
         
         //ASSERTS
         System.debug('result: ' + result);
