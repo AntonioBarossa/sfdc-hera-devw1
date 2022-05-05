@@ -13,6 +13,8 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
     private Map<String, BillingProfile__c> contractToBillProfMap = new Map<String, BillingProfile__c>();
     private List<AccountContactRelation> accContRelationList;
     private List<BillingProfile__c> billingProfileList;
+    private List<Account> accountList;
+    private Map<String,Id> accountIdMap;
     private Id recordTypeId;
     private Integer contractIndex;
     private Integer accountIdIndex;
@@ -58,7 +60,13 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
         System.debug(LoggingLevel.DEBUG, 'getRecords');
 
         accountContactMap = new Map<String, AccountContactRelation>();
-
+        accountList = HDT_QR_ProcessPostSales.getAccountByCode(accountList,accountIdSet);
+        accountIdMap = new Map<String,Id>();
+        accountIdSet = new Set<String>();
+        for(Account acc : accountList){
+            accountIdMap.put(acc.CustomerCode__c, acc.Id);
+            accountIdSet.add(acc.Id);
+        }
         billingProfileList = HDT_QR_ProcessPostSales.getBillingProfileByContractAccountCode(billingProfileList, contractCodeSet);
         accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
         recordTypeId = HDT_QR_ProcessPostSales.getRecordTypeId('HDT_RT_VariazioneAnagraficaCliente');
@@ -95,12 +103,13 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
             String convertionError;
             String csvHeader;
             String objField;
+            String accountId;
             emptyCsvField = new List<String>();
 
             System.debug(LoggingLevel.DEBUG, '>>> processObj.csvSplitted ' + processObj.csvSplitted.size());
 
             for (String tempField : processObj.csvSplitted) {
-
+                accountId = accountIdMap.get(processObj.csvSplitted[accountIdIndex]);
                 if ('null'.equalsIgnoreCase(tempField)) {
                    tempField = '';
                 }
@@ -148,7 +157,7 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
 
             if(emptyCsvField.size() > 0){
                 System.debug(LoggingLevel.DEBUG, '>>> we need to set empty fields');
-                convertionError = setEmptyCsvFields(emptyCsvField, newCase, processObj.csvSplitted[accountIdIndex], processObj.csvSplitted[contractIndex], enableBillProfEdit);
+                convertionError = setEmptyCsvFields(emptyCsvField, newCase, accountId, processObj.csvSplitted[contractIndex], enableBillProfEdit);
 
                 if(!String.isEmpty(convertionError)){
                     itemsToSave.add(setErrorItem(processObj.requestItem, convertionError));
@@ -161,12 +170,13 @@ public inherited sharing class HDT_UTL_ProcessModificheAnagrafiche extends HDT_U
                 newCase.BillingProfile__c = contractToBillProfMap.get(processObj.csvSplitted[contractIndex]).Id;
             }
 
-            if(accountContactMap.containsKey(processObj.csvSplitted[accountIdIndex])){
-                newCase.ContactId = accountContactMap.get(processObj.csvSplitted[accountIdIndex]).ContactId;
-                newCase.Category__c = accountContactMap.get(processObj.csvSplitted[accountIdIndex]).Account.Category__c;
+            if(accountContactMap.containsKey(accountId)){
+                newCase.ContactId = accountContactMap.get(accountId).ContactId;
+                newCase.Category__c = accountContactMap.get(accountId).Account.Category__c;
             }
 
-            newCase.AccountId = processObj.csvSplitted[accountIdIndex];
+            //newCase.AccountId = processObj.csvSplitted[accountIdIndex];
+            newCase.AccountId = accountIdMap.get(accountId);
             newCase.Cluster__c = 'Modifiche Anagrafiche';
             newCase = setCaseField(newCase, recordTypeId);
 

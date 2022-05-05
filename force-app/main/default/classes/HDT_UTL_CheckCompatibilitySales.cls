@@ -101,9 +101,9 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
                 orderToCheck = orderOffCommMap.get(processObj.nextDataObj.parentOrderId);
             }
             
-            if(orderAnalisiConsMap.containsKey(processObj.nextDataObj.parentOrderId)){
-                analisiConsumiOrder = orderAnalisiConsMap.get(processObj.nextDataObj.parentOrderId);
-            }
+            //if(orderAnalisiConsMap.containsKey(processObj.nextDataObj.parentOrderId)){
+            //    analisiConsumiOrder = orderAnalisiConsMap.get(processObj.nextDataObj.parentOrderId);
+            //}
 
             servReq = new Map<String, Object>();
             servReq.put('servicePointCode', orderToCheck.ServicePoint__r.ServicePointCode__c);
@@ -124,7 +124,9 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
                 System.debug('>>> compatibility  ok');
                 processObj.nextDataObj.orderCompatible = true;
 
-                if(analisiConsumiOrder != null){
+                //if(analisiConsumiOrder != null){
+                if(orderAnalisiConsMap.containsKey(processObj.nextDataObj.parentOrderId)){
+                    analisiConsumiOrder = orderAnalisiConsMap.get(processObj.nextDataObj.parentOrderId);
                     analisiConsumiOrder.Phase__c = 'Da Inviare';
                     analisiConsumiOrder.Status = 'In Lavorazione';
 
@@ -194,7 +196,7 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
                 orderToSet.Status = 'In Lavorazione';
             }
             when else {
-                orderToSet.Phase__c = 'Comunicazione verso Heroku';
+                //orderToSet.Phase__c = 'Comunicazione verso Heroku';
                 orderToSet.Status = 'In Lavorazione';
             }
 

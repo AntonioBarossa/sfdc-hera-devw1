@@ -43,7 +43,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return handlePromotion(inputs,formParams);
                 }when 'handleAnalisiConsumi'{
                     return handleAnalisiConsumi(inputs,formParams);
-                }when 'hanldeOtpSign'{
+                }when 'handleOtpSign'{
                     return handleOtpSign(inputs,formParams);
                 }
                 when else {
