@@ -97,34 +97,40 @@ public with sharing class HDT_WS_DocumentalIntegration {
 
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
             if (responseBodyMap.containsKey('data')) {
-                Map<String, Object> responseData = (Map<String, Object>) responseBodyMap.get('data');
-                String status = (String) responseData.get('status');
-                switch on status {
-                    when 'ERROR' {
-                        String zipBaseSixtyFour = (String) responseData.get('zipBase64');
-                        if (String.isBlank(zipBaseSixtyFour)) {
-                            throw new HDT_UTL_HeraException('Errore Intesa nel recupero della Busta archiviata.');
-                        } else {
-                            responseWrap.content = zipBaseSixtyFour;
+                List<Object> responseData = (List<Object>) responseBodyMap.get('data');
+                //List<List<String>> zipBaseSixtyFourResponseList = responseData.containsKey('filesZipBase64') ? convertFilesZipBaseSixtyFour((List<Object>)responseData.get('filesZipBase64')) : new List<List<String>>();
+                List<String> zipBaseSixtyFourList = new List<String>();
+                for (Object row : responseData){
+                    Map<String,Object> rowMap = (Map<String,Object>) row;
+                    String status = (String)rowMap.get('status');
+                    String zipBaseSixtyFour = (String)rowMap.get('zipBase64');//String.isNotBlank(row[1])? row[1] : '';
+                    switch on status {
+                        when 'ERROR' {
+                            if (String.isBlank(zipBaseSixtyFour)) {
+                                throw new HDT_UTL_HeraException('Errore Intesa nel recupero della Busta archiviata.');
+                            }else{
+                                zipBaseSixtyFourList.add(zipBaseSixtyFour);
+                            }
                         }
-                    }
-                    when 'PROGRESS' {
-                        String zipBaseSixtyFour = (String) responseData.get('zipBase64');
-                        if (String.isBlank(zipBaseSixtyFour)) {
-                            throw new HDT_UTL_HeraException('Impossibile visualizzare il plico (Busta Docusign non ancora completata)');
-                        } else {
-                            responseWrap.content = zipBaseSixtyFour;
+                        when 'PROGRESS' {
+                            if (String.isBlank(zipBaseSixtyFour)) {
+                                throw new HDT_UTL_HeraException('Impossibile visualizzare il plico (Busta Docusign non ancora completata)');
+                            }else{
+                                zipBaseSixtyFourList.add(zipBaseSixtyFour);
+                            }
                         }
-                    }
-                    when 'TERMINATE' {
-                        String zipBaseSixtyFour = (String) responseData.get('zipBase64');
-                        if (String.isBlank(zipBaseSixtyFour)) {
-                            throw new HDT_UTL_HeraException('Impossibile visualizzare il plico (Busta Docusign non disponibile o non completata)');
-                        } else {
-                            responseWrap.content = zipBaseSixtyFour;
+                        when 'TERMINATE' {
+                            if (String.isBlank(zipBaseSixtyFour)) {
+                                throw new HDT_UTL_HeraException('Impossibile visualizzare il plico (Busta Docusign non disponibile o non completata)');
+                            }else{
+                                zipBaseSixtyFourList.add(zipBaseSixtyFour);
+                            }
                         }
                     }
                 }
+                responseWrap.contentList = zipBaseSixtyFourList.isEmpty() ? null : zipBaseSixtyFourList;
+                responseWrap.content = zipBaseSixtyFourList.isEmpty() ? null : zipBaseSixtyFourList[0];
+                
             }
 
         }catch(Exception ex){
@@ -132,6 +138,26 @@ public with sharing class HDT_WS_DocumentalIntegration {
             throw ex;
         }
         return responseWrap;
+    }
+
+    private static List<List<String>> convertFilesZipBaseSixtyFour(List<Object> filesList){
+        List<List<String>> zipBaseSixtyFourMap = new List<List<String>>();
+        try{
+            for (Object obj : filesList){
+                if (obj != null){
+                    Map<String,Object> singleFileMap = (Map<String,Object>)JSON.deserializeUntyped(JSON.serialize(obj));
+                    String status = singleFileMap.get('status') != null? (String)singleFileMap.get('status') : '';
+                    String zipBaseSixtyFour =  singleFileMap.get('zipBase64') != null ? (String)singleFileMap.get('zipBase64') : '';
+                    if (String.isNotBlank(status) && String.isNotBlank(zipBaseSixtyFour)){
+                        zipBaseSixtyFourMap.add(new List<String>{status,zipBaseSixtyFour});
+                    }
+                } 
+            }
+        }catch (Exception e){
+            System.debug(LoggingLevel.DEBUG, 'convertFilesZipBaseSixtyFour error: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'convertFilesZipBaseSixtyFour line: ' + e.getLineNumber());
+        }
+        return zipBaseSixtyFourMap;
     }
 
     public static HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse submitResendDocusignEnvelopeRequest(String body){

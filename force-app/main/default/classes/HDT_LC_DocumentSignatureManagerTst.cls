@@ -13,6 +13,9 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         List<DocumentalActivity__c> docActList = HDT_UTL_DataFactoryTst.createDocumentalActivity(1,null,caseList[0].Id);
         HDT_UTL_DataFactoryTst.createJsonPayload();
         HDT_UTL_DataFactoryTst.createDriverJson();
+        HDT_UTL_DataFactoryTst.pClickInstance();
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
+        insert new DocusignSettings__c(CustomerEnviromentId__c = 'HERA-TEST');
     }
 
     @isTest
@@ -25,6 +28,21 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         System.assertEquals('OK', (String)mapResult.get('outcome'), 'showOriginalDocumentPdf did not work correctly');
         System.assertEquals('pdf', (String)mapResult.get('type'), 'showOriginalDocumentPdf did not work correctly');
         System.assertEquals('base64', (String)mapResult.get('base64'), 'showOriginalDocumentPdf did not work correctly');
+    }
+
+    @isTest
+    static void showOriginalDocumentZip(){
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_DocumentalIntegrationTstMock());
+        Case c = [SELECT Id FROM Case LIMIT 1];
+        update new Case(Id = c.Id, SignMode__c = 'OTP Remoto');
+        Test.startTest();
+        DocumentalActivity__c docAct = [SELECT Id FROM DocumentalActivity__c LIMIT 1];
+        String result = HDT_LC_DocumentSignatureManager.showOriginalDocument(docAct.Id);
+        Map<String,Object> mapResult = (Map<String,Object>) JSON.deserializeUntyped(result); 
+        System.assertEquals('OK', (String)mapResult.get('outcome'), 'showOriginalDocumentZip did not work correctly');
+        System.assertEquals('zip', (String)mapResult.get('type'), 'showOriginalDocumentZip did not work correctly');
+        System.assertEquals('base64', (String)mapResult.get('base64'), 'showOriginalDocumentZip did not work correctly');
+        System.assertEquals(true, mapResult.get('base64List') != null, 'showOriginalDocumentZip did not work correctly');
     }
     @isTest
     static void showArchivedAttachmentPdf(){

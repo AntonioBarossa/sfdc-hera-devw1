@@ -24,7 +24,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             srRequest.Status__c = 'Bozza';
             srRequest.Order__c = String.valueOf(servReq.get('order'));
             srRequest.CommoditySector__c = String.valueOf(servReq.get('commoditySector'));
-            srRequest.Type__c = String.valueOf(servReq.get('type')); 
+            srRequest.Type__c = String.valueOf(servReq.get('type'));
             if(servReq.get('servicePoint') != null){
                 srRequest.ServicePoint__c = String.valueOf(servReq.get('servicePoint'));
             }else{
@@ -35,6 +35,11 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                 Boolean isBillableVas=Boolean.valueOf(servReq.get('isBillableVas'));
                 String searchVas = isBillableVas? 'Vas Billabile' : 'Vas Non Billabile';
                 servReq.put('processType', searchVas);
+            }
+            if(String.valueOf(servReq.get('processType')).containsIgnoreCase('Aggiunta Sconti o Bonus VAS') || 
+                (String.isNotBlank(srRequest.ServicePointCode__c) && srRequest.ServicePointCode__c.equalsIgnoreCase('PODPROVVISORIO')))
+            {
+                srRequest.Account__c = String.valueOf(servReq.get('account'));
             }
 
 

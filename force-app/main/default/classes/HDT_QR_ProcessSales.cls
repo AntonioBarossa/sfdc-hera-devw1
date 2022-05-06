@@ -29,6 +29,7 @@ public inherited sharing class HDT_QR_ProcessSales {
             SELECT Id, Roles, ContactId, AccountId
             FROM AccountContactRelation
             WHERE AccountId IN :accountIdsList
+            AND (Roles = 'Titolare' OR Roles = '') 
             WITH SECURITY_ENFORCED
         ];
         return acrList;
@@ -37,7 +38,7 @@ public inherited sharing class HDT_QR_ProcessSales {
     public static List<ServicePoint__c> getServicePointList(List<ServicePoint__c> servicePointList, List<Id> servPointIdsList){
         servicePointList = new List<ServicePoint__c>();
         servicePointList = [
-            SELECT Id, MeterStatus__c, Distributor__c, Account__c, ServicePointCode__c, Name
+            SELECT Id, MeterStatus__c, Distributor__c, Account__c, ServicePointCode__c, Name, ExciseGas__c
             FROM ServicePoint__c
             WHERE Id = :servPointIdsList
             WITH SECURITY_ENFORCED

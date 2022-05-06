@@ -26,7 +26,7 @@ public with sharing class HDT_UTL_CaseProcess {
     public static void caseBpcaSieManagement(Map<Id, Sobject> newCasesMap, Map<Id, Sobject> oldCasesMap) {
         Set<Id> accountIdsBpca = new Set<Id>();
         for(Case caseNew : (List<Case>) newCasesMap.values()){
-            if(caseNew.Type.equals('BP/CA - errata categoria') && caseNew.Phase__c.equals('Completata') && caseNew.Phase__c != oldCasesMap.get(caseNew.Id).get('Phase__c')){
+            if(String.isNotBlank(caseNew.Type) && String.isNotBlank(caseNew.Phase__c) && caseNew.Type.equals('BP/CA - errata categoria') && caseNew.Phase__c.equals('Completata') && caseNew.Phase__c != oldCasesMap.get(caseNew.Id).get('Phase__c')){
                 accountIdsBpca.add(caseNew.AccountId);
             }
         }
@@ -92,7 +92,14 @@ public with sharing class HDT_UTL_CaseProcess {
             commSRV.createRecords(commList);
         }
     }
-
+    public static Boolean checkSkipExportSie(List<Case> caseList, Map<Id,SObject> caseOldMap){
+        Case caseNew = caseList[0];
+		Case caseOld = (Case) caseOldMap.get(caseNew.Id);
+		Boolean newCmor = caseNew.IsExportCMOR__c;
+		Boolean oldCmor = caseOld.IsExportCMOR__c;
+        if( !oldCmor && newCmor) return true;
+        return false;
+    }
     public static Boolean manageCancellationProcess(List<Case> caseList, Map<Id,SObject> caseOldMap){
         HDT_QR_Case caseQr = new HDT_QR_Case();
 		Case caseNew = caseList[0];

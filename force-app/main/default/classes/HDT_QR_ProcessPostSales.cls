@@ -10,7 +10,11 @@ public with sharing class HDT_QR_ProcessPostSales {
         //].Id;
         return Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(developerName).getRecordTypeId();
     }
-
+    public static List<Account> getAccountByCode(List<Account> accountList, Set<String> codeSet){ 
+        accountList = new List<Account>();
+        accountList = [SELECT Id,CustomerCode__c FROM Account WHERE CustomerCode__c IN: codeSet WITH SECURITY_ENFORCED];
+        return accountList;
+    }
     public static List<Contract> getContracts(List<Contract> contractList, Set<String> codeSet){
         contractList = new List<Contract>();
         contractList = [
@@ -18,6 +22,18 @@ public with sharing class HDT_QR_ProcessPostSales {
             FROM Contract
             //WHERE ServicePoint__r.ServicePointCode__c IN :podSet
             WHERE SAPContractCode__c IN :codeSet
+            WITH SECURITY_ENFORCED
+        ];
+        return contractList;
+    }
+    public static List<Contract> getContractsByPod(List<Contract> contractList, Set<String> podSet){
+        contractList = new List<Contract>();
+        contractList = [
+            SELECT Id, ServicePoint__c, BillingProfile__c, AccountId, ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c, SAPContractCode__c
+            FROM Contract
+            WHERE ServicePoint__r.ServicePointCode__c IN :podSet
+            AND Status = 'Attivo'
+            //WHERE SAPContractCode__c IN :codeSet
             WITH SECURITY_ENFORCED
         ];
         return contractList;
@@ -38,9 +54,9 @@ public with sharing class HDT_QR_ProcessPostSales {
     public static List<AccountContactRelation> getAccountContactRelationList(List<AccountContactRelation> accContRelationList, Set<String> accountIdSet, String Roles){
         accContRelationList = new List<AccountContactRelation>();
         accContRelationList = [
-            SELECT Id, AccountId, ContactId, Contact.HomePhone, Contact.MobilePhone, Contact.Email, Contact.CertifiedEmail__c, Account.CustomerMarking__c, Contact.Fax, Account.FirstName__c, Account.LastName__c,
+            SELECT Id, AccountId, ContactId, Contact.HomePhone, Contact.MobilePhone, Contact.Phone, Contact.Email, Contact.CertifiedEmail__c, Account.CustomerMarking__c, Contact.Fax, Account.FirstName__c, Account.LastName__c,
                    Account.FiscalCode__c, Account.VATNumber__c, Account.BillingCity, Account.BillingCountry, Account.BillingPlace__c, Account.BillingPostalCode, Account.BillingState, Account.BillingStreetNumber__c,
-                   Account.BillingStreetName__c, Account.BillingAddressFormula__c, Account.VATGroup__c, Account.VATGroupEndDate__c, Account.VATGroupStartDate__c, Account.IsVATGroupJoined__c, Account.Category__c
+                   Account.BillingStreetName__c, Account.BillingAddressFormula__c, Account.BillingCityCode__c, Account.VATGroup__c, Account.VATGroupEndDate__c, Account.VATGroupStartDate__c, Account.IsVATGroupJoined__c, Account.Category__c
             FROM AccountContactRelation
             WHERE AccountId IN: accountIdSet
             AND Roles = :Roles
@@ -63,7 +79,7 @@ public with sharing class HDT_QR_ProcessPostSales {
     public static List<Case> getCaseByServicePointCode(List<Case> caseList, Set<String> podSet, String type){
         caseList = new List<Case>();
         caseList = [
-            SELECT Id, ParentId, ServicePoint__r.ServicePointCode__c
+            SELECT Id, ParentId, ServicePoint__r.ServicePointCode__c,CompetentOffice__c
             FROM Case
             WHERE Type = :type
             AND ServicePoint__r.ServicePointCode__c IN :podSet

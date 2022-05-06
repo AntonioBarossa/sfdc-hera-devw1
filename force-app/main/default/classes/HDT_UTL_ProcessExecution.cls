@@ -15,9 +15,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     public Map<Integer, String> mapRequiredByPosition = new  Map<Integer, String>(); 
     public Id recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
     public Id recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
-
-    public String splitCharacter = HDT_LC_MassiveLoader.getSplitCharacter();//'\\|';
-    //public String splitCharacter = ',';
+    public String splitCharacter = HDT_LC_MassiveLoader.getSplitCharacter();
 
     public void setProcess(String processName){
         this.processName = processName;
@@ -211,6 +209,56 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
 
     }
 
+    public static HDT_WRP_SaveResponse databaseUpsertWithKey(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType,String fieldUpsert){
+        HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
+        saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
+        saveResponse.savedObject = new List<sObject>();
+        saveResponse.itemIdToObjId = new Map<Id, Id>();
+        saveResponse.errorItemMap = new Map<Id, String>();
+
+        SObjectType objtype = Schema.getGlobalDescribe().get(sObjectType);
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+        Schema.SObjectField ftoken;
+        List<Database.UpsertResult> upsertResults;
+        if(objRes.isCreateable()){
+            if(String.isNotBlank(fieldUpsert)){
+                ftoken = objtype.getDescribe().fields.getMap().get(fieldUpsert);
+                //ftoken = objRes.Fields.get(fieldUpsert);
+                upsertResults = Database.upsert(sObjectList, ftoken,false);
+            }else{
+                upsertResults = Database.upsert(sObjectList, false);
+            }
+            
+            for(Integer n=0; n<upsertResults.size(); n++){
+                Database.UpsertResult sr = upsertResults[n];
+
+                if(sr.isSuccess()) {
+                    requetItems[n].Status__c = 'Chiuso';
+                    saveResponse.reponseItemList.add(requetItems[n]);
+                    saveResponse.savedObject.add(sObjectList[n]);
+                    saveResponse.itemIdToObjId.put(requetItems[n].Id, sr.getId());
+
+                } else {
+                    requetItems[n].Status__c = 'Errore';
+
+                    String errorMessage = '';
+                    for(Database.Error err : sr.getErrors()) {
+                        errorMessage += '[' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + '] ';
+                        System.debug(LoggingLevel.DEBUG, '>>> errorMessage ' + errorMessage);
+                    }
+
+                    requetItems[n].StatusDescription__c = errorMessage.abbreviate(250);
+                    saveResponse.errorItemMap.put(requetItems[n].Id, errorMessage.abbreviate(250));
+                    saveResponse.reponseItemList.add(requetItems[n]);
+                    
+                }
+            }
+        }
+
+        return saveResponse;
+
+    }
+
     public static void runCompatibility(List<Case> savedCase){
         Map<Id, String> compatibilityMap = checkCompatibilityPostSales(savedCase);
         System.debug(LoggingLevel.DEBUG, '>>> compatibilityMap ' + String.valueOf(compatibilityMap));
@@ -307,6 +355,21 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
         newCase.Phase__c = 'Bozza';
         newCase.CompanyOwner__c = 'HERA COMM';
         return newCase;
+    }
+
+    public static Map<Id, String> setCaseNumberMap(Map<Id, String> caseNumberMap, List<Id> caseIdList){
+        
+        List<Case> savedCaseList = [
+            SELECT Id, CaseNumber
+            FROM Case
+            WHERE Id IN :caseIdList
+            WITH SECURITY_ENFORCED
+        ];
+
+        for(Case cs : savedCaseList){
+            caseNumberMap.put(cs.Id, cs.CaseNumber);
+        }
+        return caseNumberMap;
     }
 
     public static Boolean errorForPicklistValue(String objType, String fieldType, String valueToCheck){

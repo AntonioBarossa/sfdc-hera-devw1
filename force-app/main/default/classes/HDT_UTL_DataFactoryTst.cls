@@ -220,6 +220,38 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return accList;
 	}
 
+	/*
+		@Author:        Edoardo Zanatta (edoardo.zanatta.st@everis.nttdata.com)
+		CreatedDate:    27/04/2022
+	*/
+
+	public static List<Account> createSimpleAccountDistributore(Integer amount, Boolean doInsert, String companyOwner, String customerMarking, String category){
+
+		List<Account> accList=new List<Account>();
+
+		Id rt=utlConstants.ACCOUNT_RECORDTYPEID_DISTRIBUTORE;
+
+		for (Integer i=0; i<amount; i++){
+
+			Account acc = new Account();
+
+			acc.RecordTypeId=rt;
+			acc.Name='HERA S.P.A.-10R0000000';
+			acc.CompanyOwner__c=companyOwner;
+			acc.CustomerMarking__c=customerMarking;
+			acc.Category__C=category;
+			
+			accList.add(acc);
+		}
+
+		if(doInsert){
+			insert accList;
+		}
+
+		return accList;
+
+	}
+
 	public static List<Account> createAccountResidenziale(Integer amount, Boolean doInsert, String companyOwner, String customerMarking, String category){
 
 		List<Account> accList=new List<Account>();

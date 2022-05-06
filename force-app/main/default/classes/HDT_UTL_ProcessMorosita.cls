@@ -25,7 +25,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
         mapFieldsObject();
 
         podIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('POD'));
-        accountIdIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
+        //accountIdIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
         contractIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CONTRATTO'));
 
         HDT_WRP_ProcessObjects processObj;
@@ -44,7 +44,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
                 continue;
             }
 
-            accountIdSet.add(processObj.csvSplitted[accountIdIndex]);
+            //accountIdSet.add(processObj.csvSplitted[accountIdIndex]);
             contractCodeSet.add(processObj.csvSplitted[contractIndex]);
             podSet.add(processObj.csvSplitted[podIndex]);
             
@@ -54,25 +54,34 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
     }
 
     public override void getRecords(){
+
         System.debug(LoggingLevel.DEBUG, 'getRecords');
+
         List<Case> caseList;
         List<Contract> contractList;
-        caseList = HDT_QR_ProcessPostSales.getCaseByServicePointCode(caseList, podSet, 'Sospensione Fornitura');
-        accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
+        //caseList = HDT_QR_ProcessPostSales.getCaseByServicePointCode(caseList, podSet, 'Sospensione Fornitura');
+        //accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
 
-        contractList = HDT_QR_ProcessPostSales.getContracts(contractList, contractCodeSet);
+        //contractList = HDT_QR_ProcessPostSales.getContracts(contractList, contractCodeSet);
+        contractList = HDT_QR_ProcessPostSales.getContractsByPod(contractList, podSet);
+        for(Contract contr : contractList){
+            accountIdSet.add(contr.AccountId);
+        }
+        accContRelationList = HDT_QR_ProcessPostSales.getAccountContactRelationList(accContRelationList, accountIdSet, 'Titolare');
         recordTypeId = HDT_QR_ProcessPostSales.getRecordTypeId('HDT_RT_Morosita');
 
-        for(Case c : caseList){
-            podToCaseIdMap.put(c.ServicePoint__r.ServicePointCode__c, c);
-        }
-
         for(Contract contract : contractList){
-            contractMap.put(contract.SAPContractCode__c, contract);
+            contractMap.put(contract.ServicePoint__r.ServicePointCode__c, contract);
+            podSet.add(contract.ServicePoint__r.ServicePointCode__c);
         }
 
         for(AccountContactRelation singleRelation : accContRelationList){
             accountContactMap.put(singleRelation.AccountId, singleRelation);
+        }
+
+        caseList = HDT_QR_ProcessPostSales.getCaseByServicePointCode(caseList, podSet, 'Sospensione Fornitura');
+        for(Case c : caseList){
+            podToCaseIdMap.put(c.ServicePoint__r.ServicePointCode__c, c);
         }
 
     }
@@ -85,8 +94,10 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
 
         List<MassiveLoaderRequestItem__c> requestItemForUpsert;
         List<Case> caseToInsert = new List<Case>();
+        List<Case> parentCaseToInsert = new List<Case>();
         requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
-
+        Map<Id, String> caseNumberMap = new Map<Id, String>();
+        Map<String,Case> servicePointContainerMap = new Map<String,Case>();
         //String type = 'Sospensione Fornitura';
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
@@ -124,33 +135,60 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'Valore processo non corretto: ' + processObj.newCase.Type));
                 continue;
             }
-
-            if(processObj.newCase.Type.equalsIgnoreCase('Riattivazione Fornitura')){
-                if(podToCaseIdMap.containsKey(processObj.csvSplitted[podIndex])){
-                    processObj.newCase.ParentId = podToCaseIdMap.get(processObj.csvSplitted[podIndex]).ParentId;
-                    processObj.newCase.RelatedCase__c = podToCaseIdMap.get(processObj.csvSplitted[podIndex]).Id;
-                } else {
-                    itemsToSave.add(setErrorItem(processObj.requestItem, 'Case di Sospensione fornitura non presente'));
-                    continue;
-                }
-            }
             
+            String podValue;
             Contract contract;
-            if(contractMap.containsKey(processObj.csvSplitted[contractIndex])){
-                contract = contractMap.get(processObj.csvSplitted[contractIndex]);
+            if(contractMap.containsKey(processObj.csvSplitted[podIndex])){
+                contract = contractMap.get(processObj.csvSplitted[podIndex]);
                 processObj.newCase.Contract__c = contract.Id;
                 processObj.newCase.ServicePoint__c = contract.ServicePoint__c;
                 processObj.newCase.BillingProfile__c = contract.BillingProfile__c;
+                processObj.newCase.AccountId = contract.AccountId;
             } else {
                 itemsToSave.add(setErrorItem(processObj.requestItem, 'Contratto non presente'));
                 continue;
             }
 
+            podValue = contract.ServicePoint__r.ServicePointCode__c;
+            //podValue = processObj.csvSplitted[podIndex];
+
+            System.debug('>>>> podValue ' + podValue);
+            System.debug('>>>> podToCaseIdMap ' + podToCaseIdMap);
+
+            if(String.isNotBlank(processObj.newCase.Type)/*processObj.newCase.Type.equalsIgnoreCase('Riattivazione Fornitura') || processObj.newCase.Type.equalsIgnoreCase('Sospensione Fornitura')*/){
+                if(podToCaseIdMap.containsKey(podValue)){
+                    processObj.newCase.ParentId = podToCaseIdMap.get(podValue).ParentId;
+                    processObj.newCase.RelatedCase__c = podToCaseIdMap.get(podValue).Id;
+                    if(String.isBlank(processObj.newCase.CompetentOffice__c)){
+                        processObj.newCase.CompetentOffice__c = podToCaseIdMap.get(podValue).CompetentOffice__c;
+                    }
+                    if(String.isBlank(String.valueOf(processObj.newCase.PaymentDate__c)) && processObj.newCase.Type.equalsIgnoreCase('Riattivazione Fornitura')){
+                        processObj.newCase.PaymentDate__c = Date.today();
+                    }
+                } else {
+                    //itemsToSave.add(setErrorItem(processObj.requestItem, 'Case di Sospensione fornitura non presente'));
+                    //continue;
+                    processObj.parentCase = new Case();
+                    processObj.parentCase.Contract__c = contract.Id;
+                    processObj.parentCase.ServicePoint__c = contract.ServicePoint__c;
+                    processObj.parentCase.BillingProfile__c = contract.BillingProfile__c;
+                    processObj.parentCase.AccountId = contract.AccountId;
+                    processObj.parentCase.Cluster__c = 'Morosità';
+                    processObj.parentCase.Type = 'Contenitore Morosità';
+                    processObj.parentCase.RecordTypeId = recordTypeId;
+                    if(accountContactMap.containsKey(contract.AccountId)){
+                        processObj.parentCase.ContactId = accountContactMap.get(contract.AccountId).ContactId;
+                    }
+                    parentCaseToInsert.add(processObj.parentCase);
+                    servicePointContainerMap.put(contract.ServicePoint__c,processObj.parentCase);
+                }
+            }
+
             processObj.newCase.Cluster__c = 'Morosità';
             processObj.newCase = setCaseField(processObj.newCase, recordTypeId);
 
-            if(accountContactMap.containsKey(processObj.csvSplitted[accountIdIndex])){
-                processObj.newCase.ContactId = accountContactMap.get(processObj.csvSplitted[accountIdIndex]).ContactId;
+            if(accountContactMap.containsKey(contract.AccountId)){
+                processObj.newCase.ContactId = accountContactMap.get(contract.AccountId).ContactId;
             }
 
             causalCode = causalCodeCalculation.calculateCausalCode(processObj.newCase.Cluster__c, processObj.newCase.Type, '', contract.ServicePoint__r.CommoditySector__c); 
@@ -158,24 +196,50 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
             if(causalCode != null){
                 processObj.newCase.CausalCode__c = causalCode.CausalCode__c;//'D01' for example
             }
+            if(String.isBlank(processObj.newCase.Origin)){
+                processObj.newCase.Origin = 'Da PGM';
+                processObj.parentCase.Origin = 'Da PGM';
+            }
 
             System.debug(LoggingLevel.DEBUG, '>>> processObj.newCase: ' + String.valueOf(processObj.newCase));
 
-            try{
-                String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(processObj.csvSplitted[podIndex], null);
-                processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, processObj.newCase);
-                caseToInsert.add(processObj.newCase); 
-                requestItemForUpsert.add(processObj.requestItem);
-            } catch(Exception e){
-                itemsToSave.add(setErrorItem(processObj.requestItem, 'Errore arricchimento dati # '));
+            if(String.isNotBlank(contract.ServicePoint__r.ServicePointCode__c)){
+                try{
+                    //String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(processObj.csvSplitted[podIndex], null);
+                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(contract.ServicePoint__r.ServicePointCode__c, null);
+                    processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, processObj.newCase);
+                    caseToInsert.add(processObj.newCase); 
+                    requestItemForUpsert.add(processObj.requestItem);
+                } catch(Exception e){
+                    itemsToSave.add(setErrorItem(processObj.requestItem, 'Errore arricchimento dati # '));
+                }
             }
 
         }
-
+        if(parentCaseToInsert.size()>0){
+            HDT_UTL_DatabaseService.insertSObject(parentCaseToInsert);
+        }
         if(caseToInsert.size() > 0){
-
+            for(Case singleCase : caseToInsert){
+                if(String.isBlank(singleCase.ParentId)){
+                    singleCase.ParentId = servicePointContainerMap.get(singleCase.ServicePoint__c).Id;
+                }
+            }
             HDT_WRP_SaveResponse saveResponse = databaseUpsert(caseToInsert, requestItemForUpsert, 'Case');
             caseToInsert.clear();
+
+            if(saveResponse.savedObject.size() > 0){
+                caseNumberMap = setCaseNumberMap(caseNumberMap, saveResponse.itemIdToObjId.values());
+
+                Id caseId;
+                for(HDT_WRP_ProcessObjects processObj : processObjList){
+                    caseId = saveResponse.itemIdToObjId.get(processObj.requestItem.Id);
+                    if(caseNumberMap.containsKey(caseId)){
+                        processObj.requestItem.Result__c = caseNumberMap.get(caseId);
+                    }
+                }
+
+            }
 
             if(saveResponse.reponseItemList.size() > 0){
                 itemsToSave.addAll(saveResponse.reponseItemList);
@@ -226,6 +290,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
 
     private class HDT_WRP_ProcessObjects {
         private Case newCase;
+        private Case parentCase;
         private MassiveLoaderRequestItem__c requestItem;
         private List<String> csvSplitted;
     }

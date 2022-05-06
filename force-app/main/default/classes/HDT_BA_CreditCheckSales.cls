@@ -45,7 +45,7 @@ public inherited sharing class HDT_BA_CreditCheckSales implements Database.Batch
         List<MassiveLoaderRequestItem__c> listErrorReq = [
             SELECT Id, Name, Data__c, Status__c, StatusDescription__c
             FROM MassiveLoaderRequestItem__c
-            WHERE Status__c = 'Errore' AND MassiveLoaderRequest__c = :idLoaderRequest
+            WHERE Status__c IN ('Errore', 'Chiuso') AND MassiveLoaderRequest__c = :idLoaderRequest
         ];
 
         if (listErrorReq!=null && listErrorReq.size()>0) {

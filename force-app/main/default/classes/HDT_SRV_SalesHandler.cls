@@ -96,7 +96,7 @@ public with sharing class HDT_SRV_SalesHandler {
                             return mrrResponseItem;
                         }
                         
-
+                        String futurePhase = '';
                         String previousPhase = ordRetrieved.Phase__c;
                         String nextPhase = mapRequestFields.get('FASE');
                         String finalCancellationPhase = '';
@@ -192,6 +192,11 @@ public with sharing class HDT_SRV_SalesHandler {
                                         Boolean isDispatcherInMtd= HDT_UTL_QuoteManagement.checkLocalDispatcher(ord.ServicePoint__r.Distributor__r.Name);
                                         Integer validityDateDelay=isDispatcherInMtd ? 90 : 30; //ExtraRete? 30 : InRete? 90 : AAA? 180 : null; Manca caso AAA
                                         ord.QuotationType__c='Predeterminabile';
+                                        if(ordRetrieved.ProcessType__c.containsIgnoreCase('Prima Attivazione con modifica') 
+                                            && !ordRetrieved.PhaseStory__c.containsIgnoreCase('Preventivo Accettato'))
+                                        {
+                                            futurePhase = 'Attesa conferma preventivo cliente';
+                                        }
                                         switch on mapRequestFields.get('TIPO_INTERVENTO') {
                                             when 'Attivazione', 'Lavoro Semplice' {
                                                 ord.ValidityDateEstimate__c=Date.today().addDays(validityDateDelay);
@@ -277,13 +282,23 @@ public with sharing class HDT_SRV_SalesHandler {
                                     Id rtConnectionwithActivation      = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConnessioneConAttivazione').getRecordTypeId();
                                     listRecType.add(rtTemporaryNewActivation);
                                     listRecType.add(rtConnectionwithActivation);
-                                    if (listRecType.contains(ordRetrieved.recordtypeId )   ) {
+                                    if (listRecType.contains(ordRetrieved.recordtypeId )) {
+                                        List<SObject> sobjToUpdate = new List<SObject>();
                                         ord.ServicePointCode__c = mapRequestFields.get('POD');
                                         ServicePoint__c sp = new ServicePoint__c();
                                         sp.Id = ordRetrieved.ServicePoint__c;
                                         sp.Name= mapRequestFields.get('POD');
                                         sp.ServicePointCode__c = mapRequestFields.get('POD');
-                                        HDT_UTL_DatabaseService.updateSObject(sp);
+                                        sobjToUpdate.add(sp);
+                                        List<Order> childOrders = updateOrderServicePoint(ordRetrieved.Id, ordRetrieved.ParentOrder__c, mapRequestFields.get('POD'));
+                                        if(!childOrders.isEmpty())
+                                        {
+                                            for(Order o : childOrders)
+                                            {
+                                                sobjToUpdate.add(o);
+                                            }
+                                        }
+                                        HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
                                     }
                                     //End HRAWRM-657 21/09/2021
                                     switch on mapRequestFields.get('COD_FLUSSO'){
@@ -450,7 +465,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                                 HDT_UTL_ContractProcess.moveOut(ordRetrieved.Id, 'ContractReference__c');
                                             }
                                             ord.Description =writeDescription(mapRequestFields.get('NOTA_HK'), oldDescription);
-                                            ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
+                                            /**@frpanico 2022-05-04
+                                             * Prevenzione dello sbiancamento del codice impianto SAP
+                                             */
+                                            if(!String.isBlank(mapRequestFields.get('ANLAGE')))
+                                            {
+                                                ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
+                                            }
                                             ord.OrderODV__c = mapRequestFields.get('VBELN');
                                             ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
                                             ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
@@ -522,6 +543,12 @@ public with sharing class HDT_SRV_SalesHandler {
                     	responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';
                     	responseField.value = 'OK';
+
+                        if(String.isNotBlank(futurePhase))
+                        {
+                            ord.Phase__c = futurePhase;
+                            updateFuture(JSON.serialize(ord));
+                        }
 
                         //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                         if (String.isNotBlank(finalCancellationPhase)) {
@@ -797,7 +824,7 @@ public with sharing class HDT_SRV_SalesHandler {
                 }
             }
 
-            when 'SIE34_1'{
+            /*when 'SIE34_1'{
               
                 if (request.objects.get(0).fields.get(0) != null ) {
                     List<String> listFieldsReq =new List<String>{'runId','updatedFrom'};
@@ -811,7 +838,7 @@ public with sharing class HDT_SRV_SalesHandler {
 
                     } 
                 }
-            }
+            }*/
             when else {
 
                 responseField.fieldType = 'TEXT';
@@ -832,6 +859,18 @@ public with sharing class HDT_SRV_SalesHandler {
         return mrrResponseItem;
     }
     
+
+    @TestVisible
+    private static List<Order> updateOrderServicePoint(String orderId, String parentOrderId, String servicePointCode)
+    {
+        List<Order> childOrders = [SELECT ServicePointCode__c FROM Order WHERE ParentOrder__c = :parentOrderId AND Id != :orderId WITH SECURITY_ENFORCED];
+        for(Order o : childOrders)
+        {
+            o.ServicePointCode__c = servicePointCode;
+        }
+        return childOrders;
+    }
+
     @Future
     private static void updateFuture(String inputString){
         Order recordOrder = (Order) JSON.deserialize(inputString, Order.class);

@@ -64,9 +64,9 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         if(check){
             //When there is no parent order
             if(listOrderParent.isEmpty()){
-                
+
                 Order parentOrderNew = new Order(
-                    Name = 'Ordine ' + sale.Name,
+                    Name = sale.Name.length() < 80-7 ? 'Ordine '+sale.Name : 'Ordine '+sale.Name.substring(0, 80-7), //max length - size('Ordine ')
                     AccountId = sale.Account__c,
                     // EVERIS_NTTDATA START
                     Contact__c = contactId,

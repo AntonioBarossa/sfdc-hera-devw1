@@ -30,6 +30,7 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
 
     get disabledNext(){
         let result = false;
+        console.log('#Order Parent Step >>> ' + this.orderParentRecord.Step__c)
         if(this.orderParentRecord.Step__c != this.currentStep){
             result = true;
         } else {
@@ -41,6 +42,7 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
 
     get disabledInput(){
         let result = false;
+        console.log('#Order Parent Step >>> ' + this.orderParentRecord.Step__c)
         if(this.orderParentRecord.Step__c != this.currentStep){
             result = true;
         } else {

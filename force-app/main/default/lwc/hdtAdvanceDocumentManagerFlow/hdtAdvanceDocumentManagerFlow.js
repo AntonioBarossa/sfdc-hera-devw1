@@ -94,8 +94,18 @@ export default class HdtAdvanceDocumentManagerFlow extends NavigationMixin(Light
             formParams: JSON.stringify(formParams)
         }).then(result => {
             this.showSpinner = false;
-            const navigateFinish = new FlowNavigationFinishEvent();
-            this.dispatchEvent(navigateFinish);
+            if(this.availableActions.find(action => action === 'NEXT')){
+
+                const navigateNextEvent = new FlowNavigationNextEvent();
+    
+                this.dispatchEvent(navigateNextEvent);
+    
+            } else {
+    
+                const navigateFinish = new FlowNavigationFinishEvent();
+    
+                this.dispatchEvent(navigateFinish);
+            }
         }).catch(error => {
             this.showSpinner = false;
             this.showToast('Errore nell\'invio del documento al cliente.');

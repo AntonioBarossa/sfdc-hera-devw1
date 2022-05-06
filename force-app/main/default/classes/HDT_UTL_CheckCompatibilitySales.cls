@@ -49,7 +49,7 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
         orderAnalisiConsMap = new Map<Id, Order>();
 
         List<Order> orderOffCommList = [
-            SELECT Id, ParentOrder__c, processType__c, Phase__c, CancellationReasonDescription__c,
+            SELECT Id, ParentOrder__c, processType__c, Phase__c, CancellationReasonDescription__c, RecordType.DeveloperName,
                    ServicePoint__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c
             FROM Order
             WHERE ParentOrder__c IN :parentOrderIdList
@@ -61,7 +61,7 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
         System.debug(LoggingLevel.DEBUG, '>>> orderOffCommList ' + orderOffCommList.size());
 
         List<Order> orderAnalisiConsList = [
-            SELECT Id, ParentOrder__c, processType__c, Phase__c, CancellationReasonDescription__c,
+            SELECT Id, ParentOrder__c, processType__c, Phase__c, CancellationReasonDescription__c, RecordType.DeveloperName,
                    ServicePoint__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c
             FROM Order
             WHERE ParentOrder__c IN :parentOrderIdList
@@ -86,12 +86,13 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
 
         List<Order> orderToUpdate = new List<Order>();
         List<ServiceRequest__c> serviceRequestToInsert = new List<ServiceRequest__c>();
-        List<MassiveLoaderRequestItem__c> requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
+        //List<MassiveLoaderRequestItem__c> requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
 
         Order orderToCheck;
         Order analisiConsumiOrder;
         Map<String, Object> servReq;
         Map<String, Object> checkResponse;
+        String compatibilityResponse = '';
         for(HDT_WRP_ProcessObject processObj : processObjectList){
 
             System.debug('>>> parentOrderId ' + processObj.nextDataObj.parentOrderId);
@@ -100,9 +101,9 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
                 orderToCheck = orderOffCommMap.get(processObj.nextDataObj.parentOrderId);
             }
             
-            if(orderAnalisiConsMap.containsKey(processObj.nextDataObj.parentOrderId)){
-                analisiConsumiOrder = orderAnalisiConsMap.get(processObj.nextDataObj.parentOrderId);
-            }
+            //if(orderAnalisiConsMap.containsKey(processObj.nextDataObj.parentOrderId)){
+            //    analisiConsumiOrder = orderAnalisiConsMap.get(processObj.nextDataObj.parentOrderId);
+            //}
 
             servReq = new Map<String, Object>();
             servReq.put('servicePointCode', orderToCheck.ServicePoint__r.ServicePointCode__c);
@@ -121,44 +122,96 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
 
             if(compatibility == null || compatibility == ''){
                 System.debug('>>> compatibility  ok');
-                // Se il risultato del metodo mappa.get('compatibility') è blank allora è necessario chiamare
                 processObj.nextDataObj.orderCompatible = true;
 
-                //ordine analisi consumi -->
-                //analisiConsumiOrder.Phase__c = 'Comunicazione verso Heroku';
+                //if(analisiConsumiOrder != null){
+                if(orderAnalisiConsMap.containsKey(processObj.nextDataObj.parentOrderId)){
+                    analisiConsumiOrder = orderAnalisiConsMap.get(processObj.nextDataObj.parentOrderId);
+                    analisiConsumiOrder.Phase__c = 'Da Inviare';
+                    analisiConsumiOrder.Status = 'In Lavorazione';
+
+                    // per analisi consumi creare solo ServiceRequest
+                    ServiceRequest__c srRequest;
+                    srRequest = setServiceRequest(srRequest, analisiConsumiOrder);
+                    serviceRequestToInsert.add(srRequest);
+                    orderToUpdate.add(analisiConsumiOrder);
+
+                }
+
+                if(orderToCheck != null){
+                    //orderToCheck.Phase__c = 'Comunicazione verso Heroku';
+                    //orderToCheck.Status = 'In Lavorazione';
+                    orderToCheck = setOrderByRecordType(orderToCheck);
+                    orderToUpdate.add(orderToCheck);
+                }
 
             } else {
                 System.debug('>>> compatibility  KO');
-                // Se il risultato del metodo mappa.get('compatibility') != null allora è necessario annullare l'ordine e gli altri order figli
-                processObj.nextDataObj.orderCompatible = false;
-                orderToCheck.Phase__c = 'Annullato';
-                orderToCheck.Status = 'Annullato';
-                orderToCheck.CancellationNote__c = 'Motivazione: ' + String.valueOf(compatibility).abbreviate(250);
 
-                //annullare ordine analisi consumi
-                analisiConsumiOrder.Phase__c = 'Annullato';
-                analisiConsumiOrder.Status = 'Annullato';
-                analisiConsumiOrder.CancellationNote__c = 'Motivazione: ' + String.valueOf(compatibility).abbreviate(250);
-                //analisiConsumiOrder.Phase__c = 'Comunicazione verso Heroku'; //// ??? 
-                orderToUpdate.add(orderToCheck);
+                processObj.nextDataObj.orderCompatible = false;
+                compatibilityResponse = 'Motivazione: ' + String.valueOf(compatibility).abbreviate(250);
+
+                if(orderToCheck != null){
+                    orderToCheck.Phase__c = 'Annullato';
+                    orderToCheck.Status = 'Annullato';
+                    orderToCheck.CancellationNote__c = compatibilityResponse;
+                    orderToUpdate.add(orderToCheck);
+                }
+
+                if(analisiConsumiOrder != null){
+                    //annullare ordine analisi consumi
+                    analisiConsumiOrder.Phase__c = 'Annullato';
+                    analisiConsumiOrder.Status = 'Annullato';
+                    analisiConsumiOrder.CancellationNote__c = compatibilityResponse;
+                    orderToUpdate.add(analisiConsumiOrder);
+                }
+
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = compatibilityResponse;
+                
+                
             }
 
-            orderToUpdate.add(analisiConsumiOrder);
-            requestItemForUpsert.add(processObj.requestItem);
-
-            // per analisi consumi creare solo ServiceRequest
-            ServiceRequest__c srRequest;
-            srRequest = setServiceRequest(srRequest, analisiConsumiOrder);
-            serviceRequestToInsert.add(srRequest);
-
-            //processObj.nextDataObj.orderCompatible = false;
             processObj.requestItem.NextStepData__c = JSON.serialize(processObj.nextDataObj);
+            //requestItemForUpsert.add(processObj.requestItem);
             itemsToUpdate.add(processObj.requestItem);
+            
         }
         
-        update orderToUpdate;
-        insert serviceRequestToInsert;
+        if(orderToUpdate.size() > 0){
+            update orderToUpdate;
+        }
 
+        if(serviceRequestToInsert.size() > 0){
+            insert serviceRequestToInsert;
+        }
+
+    }
+
+    private static Order setOrderByRecordType(Order orderToSet){
+
+        switch on orderToSet.RecordType.DeveloperName {
+            when 'HDT_RT_Voltura' {
+                orderToSet.Phase__c = 'Documentazione Validata';
+                orderToSet.Status = 'In Lavorazione';
+            }
+            when else {
+                //orderToSet.Phase__c = 'Comunicazione verso Heroku';
+                orderToSet.Status = 'In Lavorazione';
+            }
+
+        }
+
+        // 'HDT_RT_SwitchIn'
+        // 'HDT_RT_Subentro'
+        // 'HDT_RT_Attivazione'
+        // 'HDT_RT_Voltura'
+        // 'HDT_RT_VAS'
+        // 'HDT_RT_CambioUso'
+        // 'HDT_RT_CambioOfferta'
+        // 'HDT_RT_ScontiBonus'
+
+        return orderToSet;
     }
 
     private static ServiceRequest__c setServiceRequest(ServiceRequest__c srRequest, Order analisiConsumiOrder){

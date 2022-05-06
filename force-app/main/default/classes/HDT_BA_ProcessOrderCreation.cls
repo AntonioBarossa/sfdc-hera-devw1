@@ -47,28 +47,11 @@ public inherited sharing class HDT_BA_ProcessOrderCreation implements Database.B
     }
 
     public void finish(Database.BatchableContext bc){
-        //System.debug('HDT_BA_ProcessRequestItem finish ');
-        /*
-        MassiveLoaderRequest__c oldReq = new MassiveLoaderRequest__c();
-        oldReq.Id = idLoaderRequest;
-        oldReq.Status__c = constantsUtl.MASSIVLOADER_STATUS_CHIUSO;
-        oldReq.Phase__c = 'File processato';
-        update oldReq;
+        System.debug('HDT_BA_ProcessOrderCreation finish ');
 
-        // Creazione file RequestItem in Errore 
-        List<MassiveLoaderRequestItem__c> listErrorReq = [
-            SELECT Id, Name, Data__c, Status__c, StatusDescription__c
-            FROM MassiveLoaderRequestItem__c
-            WHERE Status__c = 'Errore' AND MassiveLoaderRequest__c = :idLoaderRequest
-        ];
-
-        if (listErrorReq!=null && listErrorReq.size()>0) {
-            HDT_BA_ErrorRequestItem batch = new HDT_BA_ErrorRequestItem(idLoaderRequest);
-            Database.executebatch(batch, 1000);
-        }
-        */
         HDT_BA_CheckCompatibilitySales checkCompatibilitySales = new HDT_BA_CheckCompatibilitySales(idLoaderRequest, 1, process);
         Database.executebatch(checkCompatibilitySales, 1);
+
     }
 
 }

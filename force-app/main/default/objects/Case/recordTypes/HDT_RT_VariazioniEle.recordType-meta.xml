@@ -9,7 +9,7 @@
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
-            <fullName>Aziende TOP</fullName>
+            <fullName>Aziende TOP</fullName>`
             <default>false</default>
         </values>
         <values>
@@ -693,13 +693,13 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Aziende</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Aziende SME</fullName>
             <default>false</default>
         </values> -->
+        <values>
+            <fullName>Aziende</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Aziende Soho</fullName>
             <default>false</default>
@@ -7167,7 +7167,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Recesso su Richesta Cliente</fullName>
+            <fullName>Recesso su Richiesta Cliente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10543,7 +10543,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Recesso su Richesta Cliente</fullName>
+            <fullName>Recesso su Richiesta Cliente</fullName>
             <default>false</default>
         </values>
         <values>
