@@ -17,7 +17,6 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //ACCOUNT - BUSINESS
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountDistributore(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        
         //ACCOUNT - PARTNER
         List<Account> partnerList = HDT_UTL_DataFactoryTst.createAccountPartner(1, false, 'DIRETTO EDISON-10R0000051');
         partnerList[0].CompanyOwner__c = 'HERA COMM';
@@ -92,6 +91,14 @@ public with sharing class HDT_UTL_PayloadManagementTst {
             //caseList[0].IndemnityDueBilllingCorrection__c = 6.25;
         }
         insert caseList;
+
+        HDT_DistributorExceptionHC__mdt myDEHC = HDT_DistributorExceptionHC__mdt.getInstance('DIRETTO_EDISON_10R0000051');
+        //myDEHC.DistributorName__c = 'test account0';
+
+        HDT_HcmCityException__mdt myCityEx = HDT_HcmCityException__mdt.getInstance('Config100');
+        //myCityEx.City__c = 'Roma';
+        //myCityEx.Commodity__c = 'Gas';
+
     }
 
     
@@ -107,7 +114,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //SETUP
         mySetup();
         
-        OrderItem myItem = [SELECT Id, UnitPrice, PriceNetDiscounted__c, Quantity FROM OrderItem];
+        OrderItem myItem = [SELECT Id, UnitPrice, PriceNetDiscounted__c, Quantity, ListPrice, IVA__c FROM OrderItem];
         List<SObject> itemVasList = new List<SObject>();
         itemVasList.add(myItem);
         
@@ -119,8 +126,13 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         
         //TESTING objectString (ItemVAS not null)
+        myItem.IVA__c = 10;
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
         String result = myObjectToTest.execute('handleAmountVas', inputs, formParams);
+
+        myItem.IVA__c = 0;
+        HDT_UTL_PayloadManagement myObjectToTest2 = new HDT_UTL_PayloadManagement();
+        String result2 = myObjectToTest2.execute('handleAmountVas', inputs, formParams);
         
         //ASSERTS
         System.debug('result: ' + result);
@@ -294,7 +306,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         mySetup();
         
         Case myItem = [SELECT Id, SalesCompany__c, SupplyCity__c, DistributorName__c, CommodityFormula__c FROM Case];
-        
+
         List<SObject> itemVasList = new List<SObject>();
         itemVasList.add(myItem);
         
@@ -306,6 +318,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         formParams.put('Contesto', 'Case');
         
         //TESTING Context Case
+        myItem.SupplyCity__c = 'Roma';
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
         String result = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
