@@ -162,7 +162,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
                     if(String.isBlank(processObj.newCase.CompetentOffice__c)){
                         processObj.newCase.CompetentOffice__c = podToCaseIdMap.get(podValue).CompetentOffice__c;
                     }
-                    if(String.isBlank(processObj.newCase.PaymentDate__c) && processObj.newCase.Type.equalsIgnoreCase('Riattivazione Fornitura')){
+                    if(String.isBlank(String.valueOf(processObj.newCase.PaymentDate__c)) && processObj.newCase.Type.equalsIgnoreCase('Riattivazione Fornitura')){
                         processObj.newCase.PaymentDate__c = Date.today();
                     }
                 } else {
