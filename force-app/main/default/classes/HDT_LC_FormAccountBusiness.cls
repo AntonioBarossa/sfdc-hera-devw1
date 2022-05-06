@@ -59,11 +59,11 @@ public with sharing class HDT_LC_FormAccountBusiness {
         //System.debug('ACCOUNT:' + account);
         //HRDTR-00_HRAWRM-720 12/10/2021
       //  System.debug('account.CustomerMarking__c '+account.CustomerMarking__c);
-        if (!account.CustomerMarking__c.containsIgnoreCase('Condomini')&& !account.CustomerMarking__c.containsIgnoreCase('Associazione')) { //HRAWRM-775
+        // if (!account.CustomerMarking__c.containsIgnoreCase('Condomini')&& !account.CustomerMarking__c.containsIgnoreCase('Associazione')) { //HRAWRM-775
 
            
-            Account.FiscalCode__c=Account.VATNumber__c;  
-        }
+        //     Account.FiscalCode__c=Account.VATNumber__c;  
+        // }
         //HRADTR_GV 22/03/2022
         //account.FiscalCode__c = account.FiscalCode__c.toUpperCase();
         //HRDTR-00_HRAWRM-720 12/10/2021

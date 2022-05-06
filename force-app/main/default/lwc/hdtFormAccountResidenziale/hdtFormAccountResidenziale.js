@@ -470,9 +470,9 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         if(!companyOwner.reportValidity()){
             isValidated=false;
         }
-        if(!comNascita.reportValidity()){
-            isValidated=false;
-        }
+        // if(!comNascita.reportValidity()){
+        //     isValidated=false;
+        // }
         
         // if(!settlDistrict.reportValidity()){
         //     isValidated=false;
@@ -597,6 +597,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         }
                         if(!this.birthPlace || this.birthPlace.trim()===''){
                             this.birthPlace=fiscData[keyCode].birthPlace;
+                            birthPlaceToUC = this.birthPlace.toUpperCase();
                             console.log('birthPlace : ' + this.birthPlace);
                             
                             //this.birthPlace= fiscData.birthPlace;
