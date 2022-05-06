@@ -558,10 +558,34 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         else
         {
             if(currentSectionName === 'indirizzodiAttivazione'){
-                this.handleWrapAddressObjectAttivazione();
+                if(this.isCorrectlyFilled()){
+                    this.handleWrapAddressObjectAttivazione();
+                }else{
+                    this.loading = false;                        
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare i campi obbligatori',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
             }
             if(currentSectionName === 'indirizzoSpedizione'){
-                this.handleWrapAddressObjectSpedizione();
+                if(this.isCorrectlyFilled()){
+                    this.handleWrapAddressObjectSpedizione();
+                }else{
+                    this.loading = false;                        
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare i campi obbligatori',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
             }
             if(currentSectionName === 'processVariables'){
             if(this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
@@ -1297,7 +1321,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 recordId: this.order.Id,
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.VasSubtype__c !== 'Analisi Consumi',
                 data: [
-                    
                 ]
             },
             {
@@ -1457,6 +1480,27 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             }
         ];
+    }
+
+    isCorrectlyFilled(){
+        let wrapAddressObject = [];
+        wrapAddressObject = this.template.querySelector(`c-hdt-target-object-address-fields[data-sec="${this.choosenSection}"]`).handleAddressFields();
+        let isCorrectlyFilled;
+        console.log('# Comune >>> ' + wrapAddressObject['Comune'] );
+        console.log('# Via >>> ' + wrapAddressObject['Via']);
+        console.log('# Civico >>> ' + wrapAddressObject['Civico']);
+        console.log('# Stato >>> ' + wrapAddressObject['Stato']);
+        if( wrapAddressObject['Comune'] === undefined || 
+            wrapAddressObject['Via'] === undefined || 
+            wrapAddressObject['Civico'] === undefined || 
+            wrapAddressObject['Stato'] === undefined 
+            || (wrapAddressObject['Flag Verificato'] === undefined || wrapAddressObject['Flag Verificato'] === false)
+            ){
+                isCorrectlyFilled=false;
+        }else{
+            isCorrectlyFilled = true;
+        }
+        return isCorrectlyFilled;
     }
 
     handleWrapAddressObjectAttivazione(){
