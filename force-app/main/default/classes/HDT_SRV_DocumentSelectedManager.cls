@@ -144,6 +144,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     singleDocument.Extension__c = (String) primolivello.get('dilazione');
                     singleDocument.PaymentMode__c = (String) primolivello.get('modalitaPagamento');
                     singleDocument.TvFeeResidual__c = calculateRaiFee(secondoLivelloList);
+                    singleDocument.RaiFeeAmount__c = calculateRaiFeeAmount(secondoLivelloList);
                     singleDocument.IssuingCompany__c = (String) primolivello.get('societa');
                     singleDocument.ContractualAccount__c = (String) primolivello.get('contoContrattuale');
                     singleDocument.TotalCommunicationPayment__c = totaleCopertina != null? totaleCopertina:importo;
@@ -381,7 +382,36 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
         String yyyy = listString[2];
         return Date.valueOf(yyyy+'-'+mm+'-'+gg);
     }
-    
+    /**@frpanico 2022-06-05
+     * Calcola l'importo del canone rai
+     * Indipendentemente se e' stato pareggiato
+     * o meno
+     */
+    @TestVisible
+    private static Double calculateRaiFeeAmount(List<Object> secondoLivelloList)
+    {
+        if(secondoLivelloList==null || secondoLivelloList.size()<=0) {
+            return null;
+        }
+        try
+        {
+            Double raiFee = 0;
+            for(Object singleRecord : secondoLivelloList){
+                Map<String, Object> secondolivello = (Map<String, Object>) singleRecord;
+                Double importo = Double.valueOf(secondolivello.get('importo'));
+                String tipoDocumento = (String) secondolivello.get('tipoDocumento');
+                if(tipoDocumento.equalsIgnoreCase('VR')){
+                    raiFee += importo;
+                }
+            }
+            return raiFee;
+        }
+        catch(Exception ex)
+        {
+            System.debug(LoggingLevel.DEBUG, 'Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage());
+            return null;
+        }
+    }
     @TestVisible
     private static Double calculateRaiFee(List<Object> secondoLivelloList){
         if(secondoLivelloList==null || secondoLivelloList.size()<=0) {
@@ -430,7 +460,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
     
     
     public static List<SObject> getDocumentsSelected(Id caseId){
-        String queryString = 'SELECT Id,TotalCommunicationPayment__c,DocumentNumber__c, TvFeeResidual__c, DocumentResidue__c, Bill__c, Type__c, IssueDate__c,ExpirationDate__c,Amount__c,Residue__c,PaymentMode__c,IssuingCompany__c,ContractualAccount__c FROM DocumentSelected__c WHERE Case__c = \''+caseId+'\'';
+        String queryString = 'SELECT Id,RaiFeeAmount__c,TotalCommunicationPayment__c,DocumentNumber__c, TvFeeResidual__c, DocumentResidue__c, Bill__c, Type__c, IssueDate__c,ExpirationDate__c,Amount__c,Residue__c,PaymentMode__c,IssuingCompany__c,ContractualAccount__c FROM DocumentSelected__c WHERE Case__c = \''+caseId+'\'';
         String objectName = 'DocumentSelected__c';
         List<SObject> documentSelected = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
         return documentSelected;

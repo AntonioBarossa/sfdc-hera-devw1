@@ -9246,6 +9246,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DocumentSelected__c.RaiFeeAmount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DocumentSelected__c.TotalCommunicationPayment__c</field>
         <readable>true</readable>
     </fieldPermissions>
