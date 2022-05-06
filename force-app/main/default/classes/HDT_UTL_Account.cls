@@ -41,10 +41,11 @@ public with sharing class HDT_UTL_Account {
         req.account.telefono         = c.MobilePhone;
         req.account.emailCont        = c.email;
         req.account.marcaturaCliente = a.customerMarking__c;
-        req.account.codiceFiscale    = recordType == 'Organizzazione' 
-                                        ? a.vatnumber__c != null
-                                            ? a.vatnumber__c : a.FiscalCode__c
-                                        : a.FiscalCode__c;
+        req.account.codiceFiscale    = a.FiscalCode__c != null ? a.FiscalCode__c : a.vatNumber__c;
+        // req.account.codiceFiscale    = recordType == 'Organizzazione' 
+        //                                 ? a.vatnumber__c != null
+        //                                     ? a.vatnumber__c : a.FiscalCode__c
+        //                                 : a.FiscalCode__c;
         req.account.partitaIva       = '';
         return req;
     }
@@ -164,7 +165,7 @@ public with sharing class HDT_UTL_Account {
         string accountType = Schema.SObjectType.Account.getRecordTypeInfosById().get(acc.RecordTypeId).getDeveloperName();
         List<SiebelCustomer__x> siebelCustomer = new List<SiebelCustomer__x>();
 
-        if(accountType.contains('Residenziale')){
+        /*if(accountType.contains('Residenziale')){
             siebelCustomer = [SELECT Id, OU_NUM__c, X_MARCATURA_CLIENTE__c 
                               FROM SiebelCustomer__x 
                               WHERE X_ACCT_PH_TYPE__c =: acc.CustomerType__c 
@@ -177,8 +178,25 @@ public with sharing class HDT_UTL_Account {
                               WHERE X_ACCT_PH_TYPE__c =: acc.CustomerType__c 
                               AND OU_TYPE_CD__c =: acc.Category__c 
                               AND VAT_REGN_NUM__c =: acc.VATNumber__c WITH SECURITY_ENFORCED];
-        }
+        }*/
 
+        String category = acc.Category__c;
+        String vatNumber = acc.VATNumber__c;
+        String fiscalCode = acc.FiscalCode__c;
+
+        String query = 'SELECT Id,OU_NUM__c, X_MARCATURA_CLIENTE__c FROM SiebelCustomer__x WHERE OU_TYPE_CD__c = :category';
+        if(acc.FiscalCode__c != null && acc.FiscalCode__c != '')
+        {
+            query += ' AND TAX_IDEN_NUM__c = :fiscalCode';
+        }
+        if(acc.VATNumber__c != null && acc.VATNumber__c != '')
+        {
+            query += ' AND VAT_REGN_NUM__c = :vatNumber';
+        }
+        query += ' WITH SECURITY_ENFORCED';
+
+        siebelCustomer = Database.query(query);
+        
         if(!siebelCustomer.isEmpty()){
             acc.CustomerCode__c = siebelCustomer[0].OU_NUM__c;
             acc.CustomerMarking__c = siebelCustomer[0].X_MARCATURA_CLIENTE__c;
@@ -205,28 +223,24 @@ public with sharing class HDT_UTL_Account {
             }
         }
         else{
-            system.debug('LISTA VUOTA');
             HDT_WS_RicCreBpCaRequest   req = callBpCaSearch(acc,cont);
             HDT_WS_RichCreBpCaResponse res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
             // System.debug('Response SRC : ' + res);
             analizeResponse(res,acc,cont);
-
             if ('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)) {
                 acc.CustomerCode__c = res.data.codiceBP;
                 HDT_UTL_DatabaseService.updateSObject(acc);
             }
-            else{
-                if(acc.Category__c == 'Grandi Condomini'){
-                     //Creazione Condominio su SAP
-                     req = callAmCaCreate(acc,cont);
-                     res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
-                     //Update Contact
-                     if ('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)) {
-                         cont.ContactCode__c = res.data.codiceBP;
-                         HDT_UTL_DatabaseService.updateSObject(cont);
-                     }
-                }
-            }
+            if(acc.Category__c == 'Grandi Condomini'){
+                    //Creazione Condominio su SAP
+                    req = callAmCaCreate(acc,cont);
+                    res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
+                    //Update Contact
+                    if ('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)) {
+                        cont.ContactCode__c = res.data.codiceBP;
+                        HDT_UTL_DatabaseService.updateSObject(cont);
+                    }
+            }        
         }    
     }
     
