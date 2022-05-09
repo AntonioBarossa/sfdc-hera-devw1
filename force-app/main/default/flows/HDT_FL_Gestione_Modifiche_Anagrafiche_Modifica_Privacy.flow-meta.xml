@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Get_Company_And_Version</name>
+        <label>Get Company And Version</label>
+        <locationX>2815</locationX>
+        <locationY>514</locationY>
+        <actionName>HDT_UTL_GestionePrivacy</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Update_Consensi_Individual</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>inputs</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
         <name>Assegna_Variabili</name>
@@ -617,11 +636,11 @@
     <recordLookups>
         <name>Get_Updated_Case</name>
         <label>Get Updated Case</label>
-        <locationX>2791</locationX>
-        <locationY>513</locationY>
+        <locationX>2709</locationX>
+        <locationY>514</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Update_Consensi_Individual</targetReference>
+            <targetReference>Get_Company_And_Version</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -787,6 +806,18 @@
             <field>MarketingPrivacy__c</field>
             <value>
                 <elementReference>Get_Updated_Case.MarketingPrivacy__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ProfilingCompanyConsent__c</field>
+            <value>
+                <elementReference>Get_Company_And_Version.company</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ProfilingPrivacyVersion__c</field>
+            <value>
+                <elementReference>Get_Company_And_Version.version</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
