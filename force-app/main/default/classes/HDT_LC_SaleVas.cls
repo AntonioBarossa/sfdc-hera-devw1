@@ -191,7 +191,7 @@ public inherited sharing class HDT_LC_SaleVas {
     **/
     @AuraEnabled
     public static List<SObject> getFornitura(String searchString, String key){
-        List<SObject> records;
+        List<SObject> records = new List<SObject>();
         system.debug('searchString '+searchString);
         system.debug('key '+key);
 
@@ -224,7 +224,8 @@ public inherited sharing class HDT_LC_SaleVas {
                 records = recordMap.values();
             }
             when 'SUBS_ANALISI_CONSUMI'{ 
-                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Product__r.Name, SBQQ__Contract__r.ContractNumber,
+                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Product__r.Name,SBQQ__Contract__r.SAPContractCode__c,
+                    SBQQ__Contract__r.ContractNumber,
                     SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
                     FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Fatturabili' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
 
@@ -254,12 +255,39 @@ public inherited sharing class HDT_LC_SaleVas {
             when 'CONTRACTS_VAS'{ 
                 Set<Id> contractIds = new Set<Id>();
                 Set<Id> servicePointIds = new Set<Id>();
-                for(Order o : [SELECT ContractReference__c, ServicePoint__c FROM Order WHERE (RecordType.DeveloperName='HDT_RT_VAS' OR RecordType.DeveloperName='HDT_RT_ScontiBonus') AND AccountId=:searchString AND (ContractReference__c!=null OR ServicePoint__c!= null) WITH SECURITY_ENFORCED]){
-                    contractIds.add(o.ContractReference__c);
-                    servicePointIds.add(o.ServicePoint__c);
+                List<SObject> sobjList = new List<SObject>();
+                // for(Order o : [SELECT ContractReference__c, ServicePoint__c FROM Order WHERE (RecordType.DeveloperName='HDT_RT_VAS' OR RecordType.DeveloperName='HDT_RT_ScontiBonus') AND AccountId=:searchString AND (ContractReference__c!=null OR ServicePoint__c!= null) WITH SECURITY_ENFORCED]){
+                //     contractIds.add(o.ContractReference__c);
+                //     servicePointIds.add(o.ServicePoint__c);
+                // }
+                // records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract
+                //     WHERE (Id IN :contractIds OR ServicePoint__c IN :servicePointIds) AND Status!='Cessato' WITH SECURITY_ENFORCED];
+                sobjList.addAll([SELECT Id, SBQQ__Contract__c, SBQQ__Contract__r.ContractNumber, SBQQ__Contract__r.ServicePoint__c, 
+                 SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
+                 FROM SBQQ__Subscription__c WHERE SBQQ__Account__c = :searchString AND VasPracticeCode__c != null AND SBQQ__Contract__r.Status = 'Attivo']);
+                sobjList.addAll([SELECT Id, Contract__c, Contract__r.ContractNumber, Contract__r.ServicePoint__c,
+                Contract__r.ServicePoint__r.ServicePointCode__c, Contract__r.ServicePoint__r.SupplyAddress__c
+                 FROM Asset WHERE AccountId = :searchString AND VasPracticeCode__c != null AND Contract__r.Status = 'Attivo']);
+                for(SObject sobj : sobjList)
+                {
+                    String sobjName = sobj.getSObjectType().getDescribe().getName();
+                    String contractId = '';
+                    if(sobjName.equalsIgnoreCase('SBQQ__Subscription__c'))
+                    {
+                        contractId = (String)sobj.get('SBQQ__Contract__c');
+                    }
+                    if(sobjName.equalsIgnoreCase('Asset'))
+                    {
+                        contractId = (String)sobj.get('Contract__c');
+                    }
+                    if(!contractIds.contains(contractId))
+                    {
+                        contractIds.add(contractId);
+                    }
                 }
-                records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract
-                    WHERE (Id IN :contractIds OR ServicePoint__c IN :servicePointIds) AND Status!='Cessato' WITH SECURITY_ENFORCED];
+                 
+                records = [SELECT Id, SAPContractCode__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract WHERE ID IN :contractIds WITH SECURITY_ENFORCED];
+
             }
             when 'SUBS_FROM_CONTRACT'{ 
                 records = [SELECT Name, SBQQ__ProductName__c
