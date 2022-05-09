@@ -1482,11 +1482,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Asset.RoleProfile__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Asset.SBQQ__AdditionalDiscountAmount__c</field>
         <readable>false</readable>
     </fieldPermissions>
