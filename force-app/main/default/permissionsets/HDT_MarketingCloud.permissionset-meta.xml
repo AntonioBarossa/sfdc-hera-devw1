@@ -10141,11 +10141,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Order.SupplyStreet__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Order.SupplyType__c</field>
         <readable>false</readable>
     </fieldPermissions>
