@@ -3899,11 +3899,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>BillingProfile__c.InvoicingStreetToponym__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>BillingProfile__c.IsInactiveSAPContractAccount__c</field>
         <readable>true</readable>
     </fieldPermissions>

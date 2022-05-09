@@ -2232,11 +2232,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>BillingProfile__c.InvoicingStreetToponym__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>BillingProfile__c.IsMigrated__c</field>
         <readable>false</readable>
     </fieldPermissions>
