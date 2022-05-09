@@ -68,7 +68,6 @@ public with sharing class HDT_QR_VoltureChangeManager {
         DescriptionSAPBonusContributo__c, 
         BillingMode__c, 
         BillingProfile__c, 
-        Campaign__c, 
         CategoryFamily__c, 
         Activity__c, 
         ChannelClient__c, 
