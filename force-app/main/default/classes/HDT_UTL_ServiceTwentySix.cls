@@ -190,7 +190,10 @@ public with sharing class HDT_UTL_ServiceTwentySix {
             }
         }
 
-        
+        /**@frpanico 2022-05-05
+         * Add Percentage to product2
+         */
+        fieldsToQuery.add('Percentage__c');
         //Map<id, Product2> prods = utl.getProduct(productIds, fieldsToQuery);
         //System.debug('productIds: '+productIds);
         //System.debug('fieldsToQuery: '+fieldsToQuery);
@@ -217,10 +220,23 @@ public with sharing class HDT_UTL_ServiceTwentySix {
                     break;
                 } 
                 Service26Config__c operando = familyToOperando.get(family)[index];//operando
-
-                positionsToReturn.add( 
-                    new HDT_WRP_Position(operando.SapCode__c, operando.Field__c)//operando field is just a string
-                );
+                /**@frpanico 2022-05-05
+                 * The GF_BON_* operando
+                 * Need the value of the field Product2.Percentage__c
+                 * It is not just a string
+                 */
+                if(operando.Field__c.equalsIgnoreCase('Percentage__c'))
+                {
+                    positionsToReturn.add(
+                        new HDT_WRP_Position(operando.SapCode__c, utl.dinamicFieldValue(operando.Field__c, relatedProduct))
+                    );
+                }
+                else
+                {
+                    positionsToReturn.add( 
+                        new HDT_WRP_Position(operando.SapCode__c, operando.Field__c)//operando field is just a string
+                    );
+                }
                 for(Service26Config__c position : Operando.Service26Configs__r){//Operando has childs
                     String value = getFieldValue(position.Field__c, relatedProduct, mapOrdItems.get(discountItems[index].Id));
 

@@ -252,6 +252,9 @@
         <searchResultsAdditionalFields>BusinessNameRcuFormula__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>VATNumber__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>BillingAddressFormula__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CustomerMarking__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CustomerCode__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CompanyOwner__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
 </CustomObject>
