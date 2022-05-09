@@ -128,7 +128,7 @@ const DATA_ACCESS_MAP = {
             });
         },
         columns: [
-            {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'Codice Contratto SAP', fieldName: 'SAPContractCode__c', type: 'text'},
             {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]

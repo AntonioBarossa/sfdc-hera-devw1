@@ -4,7 +4,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     private Map<String, MassiveFieldsObjectMap__c> sobjectMap;
     private Map<String, String> mapAllFields;
     private Map<String, String> mapWrapperAccountFields;
-    private List<Account> accountList;
+    public List<Account> accountList;
     private Map<String, Id> codicePuntoMap;
     private Set<String> codicePuntoSet = new Set<String>();
     private Set<String> csnSet = new Set<String>();
@@ -23,6 +23,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     private Map<Id, Id> accountContactMap = new Map<Id, Id>();
     private Map<String, Id> billProfMap;
     Map<Id, Id> duplicateAccountMap;
+    String accountRequiredFieldsError = Label.CarMass_SalesAccountRequiredFieldsError;
 
     public override void checks(){
         System.debug(LoggingLevel.DEBUG, 'checks');
@@ -284,12 +285,12 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         try{
             accountList = HDT_QR_ProcessSales.getAccountList(fiscalCodeSet, vatNumberSet, marcaturaSet, csnSet);
             clearAllUselessSets();
-            findDuplicateForAccounts();
+            //findDuplicateForAccounts();
         } catch(Exception e){
             System.debug(LoggingLevel.DEBUG, '>>> Exception ' + e.getMessage() + ' - ' + String.valueOf(e.getLineNumber()));
         }
 
-
+        String requiredAccountFields;
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
             if(processObj.requestItem.Status__c.equalsIgnoreCase('Errore')){
@@ -300,6 +301,15 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             processObj.account.RecordTypeId = recordTypeMap.get(processObj.csvSplitted[recTypeIndex]);
             processObj.account.Name = String.isBlank(processObj.account.FirstName__c) ? processObj.account.LastName__c : processObj.account.FirstName__c + ' ' + processObj.account.LastName__c;
             processObj.account.BillingIsAddressVerified__c = true;
+
+            requiredAccountFields = checkRequiredAccountFields(processObj.account);
+
+            if(String.isNotEmpty(requiredAccountFields)){
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = requiredAccountFields;
+                continue;
+            }
+
             processObj.account.Id = setAccountIdFromDb(processObj.account);
             
             if(processObj.account.Id == null){
@@ -542,7 +552,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         }
     }
 
-    private void findDuplicateForAccounts() {
+    /*private void findDuplicateForAccounts() {
 
         List<Account> accountToCompare = new List<Account>();
         duplicateAccountMap = new Map<Id, Id>();
@@ -566,6 +576,23 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             
         }
 
+    }*/
+
+    public String checkRequiredAccountFields(Account iterationAccount){
+        Boolean fiscalCodeBool = String.isEmpty(iterationAccount.FiscalCode__c);
+        Boolean vatNumberBool = String.isEmpty(iterationAccount.VATNumber__c);
+        Boolean customerMarkingBool = String.isEmpty(iterationAccount.CustomerMarking__c);
+
+        if(customerMarkingBool){
+            return accountRequiredFieldsError;
+        }
+
+        if(fiscalCodeBool && vatNumberBool){
+            return accountRequiredFieldsError;
+        }
+
+        return null;
+
     }
 
     public Id setAccountIdFromDb(Account iterationAccount){
@@ -579,25 +606,15 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 }
             }
         }
-        
-        //Boolean accountCfBool = 
-        //Boolean acccountPiBool = 
-        //Boolean acccountMarcaturaBool = 
 
-        //search by FiscalCode__c, VATNumber__c and CustomerMarking__c
-        if( String.isNotEmpty(iterationAccount.FiscalCode__c) &&   //  AccountCF
-            String.isNotEmpty(iterationAccount.VATNumber__c) &&    //  AcccountPI
-            String.isNotEmpty(iterationAccount.CustomerMarking__c) //  AcccountMarcatura
-        ) {
-            for(Account a : accountList){
-                if(
-                    a.FiscalCode__c.equalsIgnoreCase(iterationAccount.FiscalCode__c) &&
-                    a.VATNumber__c.equalsIgnoreCase(iterationAccount.VATNumber__c) &&
-                    a.CustomerMarking__c.equalsIgnoreCase(iterationAccount.CustomerMarking__c)
-                ){
-                    System.debug(LoggingLevel.DEBUG, '>>> Account id [' + a.Id + '] found by FiscalCode__c,VATNumber__c,CustomerMarking__c');
-                    return a.Id;
-                }
+        for(Account a : accountList){
+            if(
+                a.CustomerMarking__c.equalsIgnoreCase(iterationAccount.CustomerMarking__c) &&
+                ( a.FiscalCode__c.equalsIgnoreCase(iterationAccount.FiscalCode__c) ||
+                  a.VATNumber__c.equalsIgnoreCase(iterationAccount.VATNumber__c) )
+            ){
+                System.debug(LoggingLevel.DEBUG, '>>> Account id [' + a.Id + '] found by FiscalCode__c,VATNumber__c,CustomerMarking__c');
+                return a.Id;
             }
         }
 
