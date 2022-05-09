@@ -15,8 +15,9 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //DEBUG
         String debugString = TEST_NAME + ' - mySetup';
         
-        //ACCOUNT - BUSINESS
+        //ACCOUNT - Distributore
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountDistributore(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        
         //ACCOUNT - PARTNER
         List<Account> partnerList = HDT_UTL_DataFactoryTst.createAccountPartner(1, false, 'DIRETTO EDISON-10R0000051');
         partnerList[0].CompanyOwner__c = 'HERA COMM';
@@ -93,11 +94,8 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         insert caseList;
 
         HDT_DistributorExceptionHC__mdt myDEHC = HDT_DistributorExceptionHC__mdt.getInstance('DIRETTO_EDISON_10R0000051');
-        //myDEHC.DistributorName__c = 'test account0';
 
         HDT_HcmCityException__mdt myCityEx = HDT_HcmCityException__mdt.getInstance('Config100');
-        //myCityEx.City__c = 'Roma';
-        //myCityEx.Commodity__c = 'Gas';
 
     }
 
@@ -305,7 +303,11 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //SETUP
         mySetup();
         
-        Case myItem = [SELECT Id, SalesCompany__c, SupplyCity__c, DistributorName__c, CommodityFormula__c FROM Case];
+        Case myItem = [SELECT Id, Account.Id, SalesCompany__c, SupplyCity__c, DistributorName__c, CommodityFormula__c FROM Case];
+
+        Account myAcc = [Select Id, Name from Account where Id =: myitem.Account.Id];
+        myAcc.Name = 'DIRETTO_EDISON_10R0000051';
+        myItem.Distributor__c = myAcc.Id;
 
         List<SObject> itemVasList = new List<SObject>();
         itemVasList.add(myItem);
@@ -318,13 +320,14 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         formParams.put('Contesto', 'Case');
         
         //TESTING Context Case
-        myItem.SupplyCity__c = 'Roma';
+        myItem.SupplyCity__c = 'Acciano';
+        myItem.Commodity__c = 'Gas';
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
         String result = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
         //ASSERTS
         System.debug('result: ' + result);
-        System.assert(''.equalsIgnoreCase(result), 'Risultato non è stringa vuota');
+        System.assert(result != '', 'Risultato è stringa vuota');
         
     }
     
@@ -534,6 +537,26 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         System.assert(''.equalsIgnoreCase(result5), 'Risultato non è Stringa vuota');
         */
     }
+
+    @isTest
+    private static void checkQuotationTypeElseTest(){
+        
+        //SETUP
+        mySetup();
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Fake');
+        
+        //TESTING Context Account
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result = myObjectToTest.execute('checkQuotationType', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result: ' + result);
+        System.assert(''.equalsIgnoreCase(result), 'Risultato non è Stringa vuota.');
+        
+    }
     
     
     //calculateQuotationAmount
@@ -589,8 +612,70 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         System.assert(!'|||||'.equalsIgnoreCase(resultCase), 'Risultato è |||||, previsto diverso.');
         
     }
+
+    @isTest
+    private static void calculateQuotationAmountOrderTest(){
+        
+        //SETUP
+        mySetup();
+        
+        Order myItem = [SELECT Id, SalesCompany__c, SupplyCity__c, DistributorFormula__c, CommodityFormula__c FROM Order];
+        myItem.SupplyCity__c = 'COLBORDOLO';
+        
+        List<SObject> itemVasList = new List<SObject>();
+        itemVasList.add(myItem);
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('Order', itemVasList);
+        
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Order');
+        
+        //TESTING Context Order
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result = myObjectToTest.execute('calculateQuotationAmount', inputs, formParams);//'Hera Comm S.p.A.'
+        
+        //RETRIEVING DATA
+        HDT_HeraCompany__mdt myData = [SELECT CompanyCode__c from HDT_HeraCompany__mdt WHERE Label=:'Hera Comm Marche'];
+        
+        //ASSERTS
+        System.assert('|||||'.equalsIgnoreCase(result), 'Risultato è |||||');
+
+        //TESTING Context Case - Preventivi
+        Order myPreventivo = new Order();
+        myPreventivo.EstimateAmount__c = 5.0;
+        myPreventivo.DocumentalVat__c = 'GENERICI 22%-02';
+        myPreventivo.Cluster__c = 'Preventivi';
+        
+        itemVasList = new List<SObject>();
+        itemVasList.add(myPreventivo);
+        inputs.put('Order', itemVasList);
+        
+        String resultOrder = myObjectToTest.execute('calculateQuotationAmount', inputs, formParams);
+        System.assert(!'|||||'.equalsIgnoreCase(resultOrder), 'Risultato è |||||, previsto diverso.');
+
+    }
     
-    
+    @isTest
+    private static void calculateQuotationAmountElseTest(){
+        
+        //SETUP
+        mySetup();
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Fake');
+        
+        //TESTING Context Account
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result = myObjectToTest.execute('calculateQuotationAmount', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result: ' + result);
+        System.assert('|||||'.equalsIgnoreCase(result), 'Risultato è |||||');
+        
+    }
     
     //checkGruppoIva
     @isTest
