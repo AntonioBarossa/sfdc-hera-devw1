@@ -18,7 +18,8 @@ public inherited sharing class HDT_BA_CreateVasOrders implements Database.Batcha
 
    	public Database.QueryLocator start(Database.BatchableContext bc) {
         String query =  '';
-        query += 'SELECT Id, Data__c, NextStepData__c, RelatedRequestItem__c, (SELECT Id, Data__c FROM RelatedRequestItems__r) ';
+        query += 'SELECT Id, Data__c, Status__c, StatusDescription__c, NextStepData__c, RelatedRequestItem__c, ';
+        query += '(SELECT Id, Data__c, Status__c, StatusDescription__c FROM RelatedRequestItems__r) ';
         query += 'FROM MassiveLoaderRequestItem__c ';
         query += 'WHERE MassiveLoaderRequest__c = \'' + this.idLoaderRequest + '\'' ;
         query += 'AND VasOrder__c = true ';

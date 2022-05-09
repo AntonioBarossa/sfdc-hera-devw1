@@ -5,10 +5,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
     private List<HDT_WRP_VasOrder.HDT_WRP_ProcessObjects> processObjList;
     private Map<Id, Account> accountMap;
     private Id childOrderRecordTypeId;
-    private List<String> productNameList = new List<String>();
-    private List<String> productDescrList = new List<String>();
     private Map<String, Product2> productMap;
-    private Map<Id, Map<Id, PriceBookEntry>> pricebookEntryForVasMap;
+    private Map<String, Order> orderMap;
+    private Map<Id, Map<Id, PriceBookEntry>> pricebookEntryMatrix;
     private List<String> contractSapCodeList = new List<String>();
     private Map<String, Contract> contractToPbookIdMap = new Map<String, Contract>();
     private Set<String> orderUniqueKeySet = new Set<String>();
@@ -20,7 +19,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
     private String salesForVasOrderItemStructureError = Label.CarMass_SalesForVasOrderItemStructureError;
     public HDT_WRP_VasOrder.HDT_WRP_ProcessObjects processObj;
     public List<String> tempSplitedFields;
-    public List<MassiveLoaderRequestItem__c> items;
+    public List<MassiveLoaderRequestItem__c> allRequestItems;
     private Map<String, String> mapAllFields;
     private Map<String, MassiveFieldsObjectMap__c> sobjectMap;
 
@@ -39,13 +38,151 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         for(MassiveLoaderRequestItem__c item : requestItemList){
 
             processObj = new HDT_WRP_VasOrder.HDT_WRP_ProcessObjects();
+            processObj.mainRequestItemId = item.Id;
             
-            items = setItem(item);
+            processObj.allRequestItems = setItem(item);
             setOrderStructure();
             processObj = buildWrapperOrderStructure();
 
-            System.debug('>>> ' + JSON.serialize(processObj));
+            System.debug('>>> @ ' + JSON.serialize(processObj));
 
+            for(MassiveLoaderRequestItem__c errorItem : processObj.allRequestItems){
+                System.debug('>>> ' + errorItem.Status__c + ' - ' + errorItem.StatusDescription__c);
+                if(errorItem.Status__c.equalsIgnoreCase('Errore')){
+                    itemsToUpdate.add(errorItem);
+                }
+            }
+
+            if(!processObj.error){
+                processObjList.add(processObj);
+            }
+
+        }
+
+        getLimitDetails('EndConvertVasOrder');
+
+    }
+
+    public override void getRecords(){
+
+        Set<String> orderNumberSet = new Set<String>();
+        Set<String> contractSet = new Set<String>();
+        List<String> offertaProductNameList = new List<String>();
+        List<String> vasProductNameList = new List<String>();
+        List<String> vasProductDescrList = new List<String>();
+        List<String> priceBookIdList = new List<String>();
+        orderMap = new Map<String, Order>();
+        pricebookEntryMatrix = new Map<Id, Map<Id, PriceBookEntry>>();
+
+        for(HDT_WRP_VasOrder.HDT_WRP_ProcessObjects processObject : processObjList){
+            if(String.isNotEmpty(processObject.orderNumber)){
+                orderNumberSet.add(processObject.orderNumber);
+            }
+
+            if(String.isNotEmpty(processObject.contract.SAPContractCode__c)){
+                contractSet.add(processObject.contract.SAPContractCode__c);
+            }
+
+            for(HDT_WRP_VasOrder.HDT_WRP_ChildOrder childOrder : processObject.childOrderList){
+                for(HDT_WRP_VasOrder.HDT_WRP_OrderItem orderItem : childOrder.orderItemList){
+                    switch on orderItem.itemType {
+                        when 'vas' {
+                            if(String.isNotEmpty(orderItem.product.Name)){
+                                vasProductNameList.add(orderItem.product.Name);
+                            }
+                            
+                            if(String.isNotEmpty(orderItem.product.DescriptionSAP__c)){
+                                vasProductDescrList.add(orderItem.product.DescriptionSAP__c);
+                            }
+                        }
+                        when 'offerta' {
+                            if(String.isNotEmpty(orderItem.product.Name)){
+                                offertaProductNameList.add(orderItem.product.Name);
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+        }
+
+        List<Product2> retrieveOffertList = [
+            SELECT Id, Name, ProductCode, DescriptionSAP__c, Version__c
+            FROM Product2
+            WHERE Name IN :offertaProductNameList AND Name != null
+            WITH SECURITY_ENFORCED
+        ];
+
+        if(retrieveOffertList.size() > 0){
+            for(Product2 p : retrieveOffertList){
+                //productMap.put(p.Name + '-' + p.ProductCode + '-' + p.Version__c, P);
+                productMap.put(p.Name + '-' + p.Version__c, p);
+                productIdList.add(p.Id);
+            }
+        }
+
+        List<Product2> retrieveVasList = [
+            SELECT Id, Name, ProductCode, DescriptionSAP__c, Version__c
+            FROM Product2
+            WHERE Name IN :vasProductNameList AND Name != null
+            AND DescriptionSAP__c IN :vasProductDescrList AND DescriptionSAP__c != null
+            WITH SECURITY_ENFORCED
+        ];
+
+        if(retrieveVasList.size() > 0){
+            for(Product2 p : retrieveVasList){
+                productMap.put(p.Name + '-' + p.DescriptionSAP__c + '-' + p.Version__c, p);
+                productIdList.add(p.Id);
+            }
+        }
+        
+        List<Contract> contractList = [
+            SELECT Id, SAPContractCode__c, SBQQ__AmendmentPricebookId__c, AccountId
+            FROM Contract
+            WHERE SAPContractCode__c IN :contractSet
+            WITH SECURITY_ENFORCED
+        ];
+        
+        if(contractList.size() > 0){
+            for(Contract c : contractList){
+                contractToPbookIdMap.put(c.SAPContractCode__c, c);
+                priceBookIdList.add(c.SBQQ__AmendmentPricebookId__c);
+            }
+        }
+
+        List<Order> orderList = [
+            SELECT Id, PriceBook2Id
+            FROM Order
+            WHERE OrderNumber IN :orderNumberSet
+            AND PriceBook2Id != null
+            WITH SECURITY_ENFORCED
+        ];
+
+        if(orderList.size() > 0){
+            for(Order o : orderList){
+                orderMap.put(o.OrderNumber, o);
+                priceBookIdList.add(o.PriceBook2Id);
+            }
+        }
+
+        List<PriceBookEntry> pbeForVasList = [
+            SELECT Id, Pricebook2Id, Product2Id, UnitPrice
+            FROM PricebookEntry
+            WHERE Product2Id IN :productIdList
+            AND Pricebook2Id IN :priceBookIdList
+            WITH SECURITY_ENFORCED
+        ];
+
+        if(pbeForVasList.size() > 0){
+            for(PriceBookEntry pbe : pbeForVasList){
+                if(pricebookEntryMatrix.containsKey(pbe.Pricebook2Id)){
+                    pricebookEntryMatrix.get(pbe.Pricebook2Id).put(pbe.Product2Id, pbe);
+                } else {
+                    pricebookEntryMatrix.put(pbe.Pricebook2Id, new Map<Id, PriceBookEntry>{pbe.Product2Id => pbe});
+                }
+            }
         }
 
     }
@@ -68,14 +205,14 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         Integer standaloneIndex = mapHeaderForWrapper.get('Standalone');
 
         tempSplitedFields = new List<String>();
-        tempSplitedFields = items[0].Data__c.split(splitCharacter, -1);
+        tempSplitedFields = processObj.allRequestItems[0].Data__c.split(splitCharacter, -1);
 
         String contractCsvValue = tempSplitedFields[contrattoIndex];
         processObj.orderNumber = tempSplitedFields[orderNumberIndex];
         String standaloneCsvValue = tempSplitedFields[standaloneIndex];
         processObj.isStandalone = false;
 
-        processObj.wrapperOrdeItemList = new List<HDT_WRP_VasOrder.HDT_WRP_OrderItem>();
+        //processObj.wrapperOrdeItemList = new List<HDT_WRP_VasOrder.HDT_WRP_OrderItem>();
 
         if(String.isNotEmpty(standaloneCsvValue) && standaloneCsvValue.equalsIgnoreCase('TRUE')){
             processObj.vasOrderType = 'standalone';
@@ -110,24 +247,14 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
     public HDT_WRP_VasOrder.HDT_WRP_ProcessObjects buildStandAlone(){
 
-        processObj.parentOrder = new Order();
-        processObj.order = new Order();
-
-        HDT_WRP_VasOrder.HDT_WRP_OrderItem wrpVas = new HDT_WRP_VasOrder.HDT_WRP_OrderItem();
-        wrpVas.product = new Product2();
-        wrpVas.orderItem = new OrderItem();
-
-        HDT_WRP_VasOrder.HDT_WRP_OrderItem wrpOff = new HDT_WRP_VasOrder.HDT_WRP_OrderItem();
-        wrpOff.product = new Product2();
-        wrpOff.orderItem = new OrderItem();
+        HDT_WRP_VasOrder.HDT_WRP_ChildOrder wrpChildOrder = new HDT_WRP_VasOrder.HDT_WRP_ChildOrder();
+        HDT_WRP_VasOrder.HDT_WRP_OrderItem wrpOff = new HDT_WRP_VasOrder.HDT_WRP_OrderItem('offerta');
+        HDT_WRP_VasOrder.HDT_WRP_OrderItem wrpVas = new HDT_WRP_VasOrder.HDT_WRP_OrderItem('vas');
 
         String csvHeader;
         String convertionError;
         String tempValue;
         String objField;
-        System.debug('>>> tempSplitedFields ' + String.valueOf(tempSplitedFields));
-        System.debug('>>> mapHeaderByPosition ' + String.valueOf(mapHeaderByPosition));
-        System.debug('>>> mapAllFields ' + String.valueOf(mapAllFields));
 
         for(Integer count=0; count < tempSplitedFields.size(); count++){
             tempValue = tempSplitedFields[count];
@@ -139,14 +266,14 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
             }
 
             if(sobjectMap.containsKey(csvHeader)){
-                System.debug('>>> objField: ' + objField + ' - tempValue: ' + tempValue + ' - objectType: ' + sobjectMap.get(csvHeader).objectType__c);
+                //System.debug('>>> objField: ' + objField + ' - tempValue: ' + tempValue + ' - objectType: ' + sobjectMap.get(csvHeader).objectType__c);
                 
                 switch on sobjectMap.get(csvHeader).objectType__c {
                     when 'ParentOrder' {
                         convertionError = mapTypeField(processObj.parentOrder, mapAllFields, count, tempValue);
                     }
                     when 'Order' {
-                        convertionError = mapTypeField(processObj.order, mapAllFields, count, tempValue);
+                        convertionError = mapTypeField(wrpChildOrder.childOrder, mapAllFields, count, tempValue);
                     }
                     when 'Contract' {
                         convertionError = mapTypeField(processObj.contract, mapAllFields, count, tempValue);
@@ -176,11 +303,13 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         }
 
         if(String.isNotEmpty(convertionError)){
-            processObj.requestItem.Status__c = 'Errore';
-            processObj.requestItem.StatusDescription__c = convertionError;
+            processObj.allRequestItems[0].Status__c = 'Errore';
+            processObj.allRequestItems[0].StatusDescription__c = convertionError;
+            processObj.error = true;
         } else {
-            processObj.wrapperOrdeItemList.add(wrpVas);
-            processObj.wrapperOrdeItemList.add(wrpOff);
+            wrpChildOrder.orderItemList.add(wrpVas);
+            wrpChildOrder.orderItemList.add(wrpOff);
+            processObj.childOrderList.add(wrpChildOrder);
         }
 
         return processObj;
@@ -189,42 +318,215 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
     public HDT_WRP_VasOrder.HDT_WRP_ProcessObjects buildSingleOrder(){
 
-        processObj.parentOrder = new Order();
+        Set<Id> errorIds = new Set<Id>();
 
-        processObj.order = new Order();
+        HDT_WRP_VasOrder.HDT_WRP_ChildOrder wrpChildOrder = new HDT_WRP_VasOrder.HDT_WRP_ChildOrder();
 
-        HDT_WRP_VasOrder.HDT_WRP_OrderItem offerta = new HDT_WRP_VasOrder.HDT_WRP_OrderItem();
-        offerta.product = new Product2();
-        offerta.orderItem = new OrderItem();
-        offerta.orderItem.Quantity = 1;
-        processObj.wrapperOrdeItemList.add(offerta);
+        HDT_WRP_VasOrder.HDT_WRP_OrderItem wrpOff;
+        HDT_WRP_VasOrder.HDT_WRP_OrderItem wrpVas;
 
-        HDT_WRP_VasOrder.HDT_WRP_OrderItem vas = new HDT_WRP_VasOrder.HDT_WRP_OrderItem();
-        vas.product = new Product2();
-        vas.orderItem = new OrderItem();
-        processObj.wrapperOrdeItemList.add(vas);
+        List<String> tempSplitedFields;
+        String convertionError;
+        for(Integer count=0; count < processObj.allRequestItems.size(); count++){
+
+            tempSplitedFields = processObj.allRequestItems[count].Data__c.split(splitCharacter, -1);
+
+            if(count == 0){
+                wrpOff = new HDT_WRP_VasOrder.HDT_WRP_OrderItem('offerta');
+                wrpOff.orderItem.Quantity = 1;
+                wrpChildOrder.orderItemList.add(wrpOff);
+
+                wrpVas = new HDT_WRP_VasOrder.HDT_WRP_OrderItem('vas');
+
+            } else {
+                wrpVas = new HDT_WRP_VasOrder.HDT_WRP_OrderItem('vas');
+            }
+
+            wrpChildOrder.orderItemList.add(wrpVas);
+
+            String csvHeader;
+            String tempValue;
+            String objField;
+
+            for(Integer n=0; n < tempSplitedFields.size(); n++){
+                tempValue = tempSplitedFields[n];
+                csvHeader = mapHeaderByPosition.get(n);
+                objField = mapAllFields.get(csvHeader);
+
+                if(String.isBlank(objField) || String.isBlank(tempValue)){
+                    continue;
+                }
+
+                if(sobjectMap.containsKey(csvHeader)){
+                    //System.debug('>>> objField: ' + objField + ' - tempValue: ' + tempValue + ' - objectType: ' + sobjectMap.get(csvHeader).objectType__c);
+                    
+                    if(count == 0){
+                        switch on sobjectMap.get(csvHeader).objectType__c {
+                            when 'ParentOrder' {
+                                convertionError = mapTypeField(processObj.parentOrder, mapAllFields, n, tempValue);
+                            }
+                            when 'Order' {
+                                convertionError = mapTypeField(wrpChildOrder.childOrder, mapAllFields, n, tempValue);
+                            }
+                            when 'Contract' {
+                                convertionError = mapTypeField(processObj.contract, mapAllFields, n, tempValue);
+                            }
+                            when 'vasProduct2' {
+                                convertionError = mapTypeField(wrpVas.product, mapAllFields, n, tempValue);
+                            }
+                            when 'offProduct2' {
+                                convertionError = mapTypeField(wrpOff.product, mapAllFields, n, tempValue);
+                            }
+                            when 'vasOrderItem' {
+                                convertionError = mapTypeField(wrpVas.orderItem, mapAllFields, n, tempValue);
+                            }
+                            when 'offOrderItem' {
+                                convertionError = mapTypeField(wrpOff.orderItem, mapAllFields, n, tempValue);
+                            }
+                        }
+                    } else {
+                        switch on sobjectMap.get(csvHeader).objectType__c {
+                            when 'vasProduct2' {
+                                convertionError = mapTypeField(wrpVas.product, mapAllFields, n, tempValue);
+                            }
+                            when 'vasOrderItem' {
+                                convertionError = mapTypeField(wrpVas.orderItem, mapAllFields, n, tempValue);
+                            }
+                        }
+                    }
+                   
+                }
+
+                if(String.isNotEmpty(convertionError)){
+                    // error happened -> exit
+                    System.debug(LoggingLevel.DEBUG, '>>> break for loop...' + csvHeader + ' - ' + tempValue);
+                    break;
+                }
+
+            }
+
+            if(String.isNotEmpty(convertionError)){
+                System.debug(LoggingLevel.DEBUG, '>>> error id ' + processObj.allRequestItems[count].Id + ' - ' + convertionError);
+                processObj.allRequestItems[count].Status__c = 'Errore';
+                processObj.allRequestItems[count].StatusDescription__c = convertionError;
+                errorIds.add(processObj.allRequestItems[count].Id);
+                break;
+            }
+
+        }
+
+        for(MassiveLoaderRequestItem__c item : processObj.allRequestItems){
+
+            System.debug(LoggingLevel.DEBUG, '>>> error ids ' + errorIds + ' - ' + item.Id);
+
+            if(errorIds.size() > 0 && !errorIds.contains(item.Id)){
+                item.Status__c = 'Errore';
+                item.StatusDescription__c = 'Controllare tutte le righe csv';
+            }
+        }
+
+        if(errorIds.size() > 0){
+            processObj.error = true;
+        }
+
+        processObj.childOrderList.add(wrpChildOrder);
 
         return processObj;
 
     }
 
     public HDT_WRP_VasOrder.HDT_WRP_ProcessObjects buildMultipleOrder(){
+        Set<Id> errorIds = new Set<Id>();
 
-        processObj.parentOrder = new Order();
+        HDT_WRP_VasOrder.HDT_WRP_ChildOrder wrpChildOrder;
 
-        processObj.order = new Order();
+        List<String> tempSplitedFields;
+        String convertionError;
+        for(Integer count=0; count < processObj.allRequestItems.size(); count++){
 
-        HDT_WRP_VasOrder.HDT_WRP_OrderItem offerta = new HDT_WRP_VasOrder.HDT_WRP_OrderItem();
-        offerta.product = new Product2();
-        offerta.orderItem = new OrderItem();
-        offerta.orderItem.Quantity = 1;
-        processObj.wrapperOrdeItemList.add(offerta);
+            tempSplitedFields = processObj.allRequestItems[count].Data__c.split(splitCharacter, -1);
 
-        HDT_WRP_VasOrder.HDT_WRP_OrderItem vas = new HDT_WRP_VasOrder.HDT_WRP_OrderItem();
-        vas.product = new Product2();
-        vas.orderItem = new OrderItem();
-        processObj.wrapperOrdeItemList.add(vas);
+            wrpChildOrder = new HDT_WRP_VasOrder.HDT_WRP_ChildOrder();
+            HDT_WRP_VasOrder.HDT_WRP_OrderItem wrpOff = new HDT_WRP_VasOrder.HDT_WRP_OrderItem('offerta');
+            HDT_WRP_VasOrder.HDT_WRP_OrderItem wrpVas = new HDT_WRP_VasOrder.HDT_WRP_OrderItem('vas');
+            wrpChildOrder.orderItemList.add(wrpOff);
+            wrpChildOrder.orderItemList.add(wrpVas);
 
+            String csvHeader;
+            String tempValue;
+            String objField;
+
+            for(Integer n=0; n < tempSplitedFields.size(); n++){
+                tempValue = tempSplitedFields[n];
+                csvHeader = mapHeaderByPosition.get(n);
+                objField = mapAllFields.get(csvHeader);
+
+                if(String.isBlank(objField) || String.isBlank(tempValue)){
+                    continue;
+                }
+
+                if(sobjectMap.containsKey(csvHeader)){
+                    //System.debug('>>> objField: ' + objField + ' - tempValue: ' + tempValue + ' - objectType: ' + sobjectMap.get(csvHeader).objectType__c);
+
+                    switch on sobjectMap.get(csvHeader).objectType__c {
+                        when 'ParentOrder' {
+                            convertionError = mapTypeField(processObj.parentOrder, mapAllFields, n, tempValue);
+                        }
+                        when 'Order' {
+                            convertionError = mapTypeField(wrpChildOrder.childOrder, mapAllFields, n, tempValue);
+                        }
+                        when 'Contract' {
+                            convertionError = mapTypeField(processObj.contract, mapAllFields, n, tempValue);
+                        }
+                        when 'vasProduct2' {
+                            convertionError = mapTypeField(wrpVas.product, mapAllFields, n, tempValue);
+                        }
+                        when 'offProduct2' {
+                            convertionError = mapTypeField(wrpOff.product, mapAllFields, n, tempValue);
+                        }
+                        when 'vasOrderItem' {
+                            convertionError = mapTypeField(wrpVas.orderItem, mapAllFields, n, tempValue);
+                        }
+                        when 'offOrderItem' {
+                            convertionError = mapTypeField(wrpOff.orderItem, mapAllFields, n, tempValue);
+                        }
+                    }
+                   
+                }
+
+                if(String.isNotEmpty(convertionError)){
+                    // error happened -> exit
+                    System.debug(LoggingLevel.DEBUG, '>>> break for loop...' + csvHeader + ' - ' + tempValue);
+                    break;
+                }
+
+            }
+
+            if(String.isNotEmpty(convertionError)){
+                System.debug(LoggingLevel.DEBUG, '>>> error id ' + processObj.allRequestItems[count].Id + ' - ' + convertionError);
+                processObj.allRequestItems[count].Status__c = 'Errore';
+                processObj.allRequestItems[count].StatusDescription__c = convertionError;
+                errorIds.add(processObj.allRequestItems[count].Id);
+                break;
+            }
+
+            processObj.childOrderList.add(wrpChildOrder);
+
+        }
+
+        for(MassiveLoaderRequestItem__c item : processObj.allRequestItems){
+
+            System.debug(LoggingLevel.DEBUG, '>>> error ids ' + errorIds + ' - ' + item.Id);
+
+            if(errorIds.size() > 0 && !errorIds.contains(item.Id)){
+                item.Status__c = 'Errore';
+                item.StatusDescription__c = 'Controllare tutte le righe csv';
+            }
+        }
+
+        if(errorIds.size() > 0){
+            processObj.error = true;
+        }
 
         return processObj;
 
