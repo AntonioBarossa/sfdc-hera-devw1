@@ -39,10 +39,7 @@ public inherited sharing class HDT_LC_SaleVas {
             }
             when 'VAS stand alone'{
                 handleVasStandAloneConfirm(supplyCity, accountId, sale);
-            }
-            // when  'Contratto non migrato'{
-            //     handleNotMigratedContract(order, supplyCity, sale);
-            // }
+            } 
             
         }
     }
