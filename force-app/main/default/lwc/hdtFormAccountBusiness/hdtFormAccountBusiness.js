@@ -634,10 +634,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             }
         }
 
-        if(this.birthPlace == undefined || this.birthPlace == ''){
-            isValidated = false;
-            messageError=" Inserire il comune di nascita!";
-        }
+        // if(this.birthPlace == undefined || this.birthPlace == ''){
+        //     isValidated = false;
+        //     messageError=" Inserire il comune di nascita!";
+        // }
 
         console.log("LOG4");
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
@@ -755,6 +755,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         if(this.birthPlace === undefined || this.birthPlace.trim()===''){
                            // this.birthPlace= fiscData.birthPlace;
                            this.birthPlace=fiscData[keyCode].birthPlace;//HRDTR-00_HRAWRM-761 28/09/2021
+                           birthPlaceToUC = this.birthPlace.toUpperCase();
 
                         }
                         console.log("LOG13:");

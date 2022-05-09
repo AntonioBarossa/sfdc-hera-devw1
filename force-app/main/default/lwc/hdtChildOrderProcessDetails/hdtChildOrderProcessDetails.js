@@ -1492,8 +1492,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('# Stato >>> ' + wrapAddressObject['Stato']);
         if( wrapAddressObject['Comune'] === undefined || 
             wrapAddressObject['Via'] === undefined || 
-            wrapAddressObject['Civico'] === undefined || 
-            wrapAddressObject['Stato'] === undefined 
+            wrapAddressObject['Civico'] === undefined
             || (wrapAddressObject['Flag Verificato'] === undefined || wrapAddressObject['Flag Verificato'] === false)
             ){
                 isCorrectlyFilled=false;
