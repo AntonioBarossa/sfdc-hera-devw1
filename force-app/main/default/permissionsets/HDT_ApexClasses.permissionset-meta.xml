@@ -4537,6 +4537,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_WRP_SIE108OrderEnrichment</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_WRP_SolContractVas</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -4718,6 +4722,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WS_HerokuAddressSearchTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_InboundSIE108</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_InboundSIE34</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

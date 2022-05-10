@@ -36,7 +36,8 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                 String searchVas = isBillableVas? 'Vas Billabile' : 'Vas Non Billabile';
                 servReq.put('processType', searchVas);
             }
-            if(String.valueOf(servReq.get('processType')).containsIgnoreCase('Aggiunta Sconti o Bonus VAS'))
+            if(String.valueOf(servReq.get('processType')).containsIgnoreCase('Aggiunta Sconti o Bonus VAS') || 
+                (String.isNotBlank(srRequest.ServicePointCode__c) && srRequest.ServicePointCode__c.equalsIgnoreCase('PODPROVVISORIO')))
             {
                 srRequest.Account__c = String.valueOf(servReq.get('account'));
             }

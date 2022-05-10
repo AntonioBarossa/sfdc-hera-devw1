@@ -5,6 +5,7 @@ public with sharing class HDT_UTL_DocumentalManagementTst {
 
          List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
          List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
+
          List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
          List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
          List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
@@ -15,6 +16,7 @@ public with sharing class HDT_UTL_DocumentalManagementTst {
          List<DocumentalActivity__c> docActList = HDT_UTL_DataFactoryTst.createDocumentalActivity(1,null,caseList[0].Id);
          HDT_UTL_DataFactoryTst.createJsonPayload();
          HDT_UTL_DataFactoryTst.createDriverJson();
+         HDT_UTL_DataFactoryTst.pClickInstance();
 
 
          HDT_UTL_DataFactoryTst.pClickOrderPhase();
@@ -55,18 +57,22 @@ public with sharing class HDT_UTL_DocumentalManagementTst {
         Test.startTest();
         ContentVersion cv1 = HDT_UTL_DocumentalManagement.createContectVersion('testBase64','filetest');
         Case ca = [SELECT Id FROM Case LIMIT 1];
-        Order ord = [SELECT Id FROM Order LIMIT 1];
+        Order ord = [SELECT Id, OrderNumber FROM Order LIMIT 1];
+        
+        update ord;
         ContentDocumentLink cLink = HDT_UTL_DocumentalManagement.createContentLink(String.valueof(cv1.Id), String.valueof(ca.Id));
         String st1 = HDT_UTL_DocumentalManagement.createContentDistribution(String.valueof(cv1.Id), 'filetest');
         HDT_WRP_DocumentalResponse resp = createResponse();
         HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(resp,'Order');
         System.debug('@@@' + ca.Id);
-
+        SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord(ord.OrderNumber, 'Order');
+        Boolean res = HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, resp, 'Order');
         
         
         Test.stopTest();
     }
-    @isTest
+
+    
     public static HDT_WRP_DocumentalResponse createResponse(){
         
         Order testOrder = [SELECT Id FROM Order LIMIT 1];

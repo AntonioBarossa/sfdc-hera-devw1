@@ -41,10 +41,11 @@ public with sharing class HDT_UTL_Account {
         req.account.telefono         = c.MobilePhone;
         req.account.emailCont        = c.email;
         req.account.marcaturaCliente = a.customerMarking__c;
-        req.account.codiceFiscale    = recordType == 'Organizzazione' 
-                                        ? a.vatnumber__c != null
-                                            ? a.vatnumber__c : a.FiscalCode__c
-                                        : a.FiscalCode__c;
+        req.account.codiceFiscale    = a.FiscalCode__c != null ? a.FiscalCode__c : a.vatNumber__c;
+        // req.account.codiceFiscale    = recordType == 'Organizzazione' 
+        //                                 ? a.vatnumber__c != null
+        //                                     ? a.vatnumber__c : a.FiscalCode__c
+        //                                 : a.FiscalCode__c;
         req.account.partitaIva       = '';
         return req;
     }
@@ -80,7 +81,7 @@ public with sharing class HDT_UTL_Account {
         req.account.partitaIva              = a.vatnumber__c;
         req.account.indirizzo.comune	    = a.BillingCity;
         req.account.indirizzo.nazione	    = getStateIso(a.BillingCountry);
-        req.account.indirizzo.toponimo	    = a.BillingStreetToponym__c;
+        // req.account.indirizzo.toponimo	    = a.BillingStreetToponym__c;
         req.account.indirizzo.civico	    = a.BillingStreetNumber__c;
         req.account.indirizzo.cap	        = a.BillingPostalCode;
         req.account.indirizzo.provincia	    = a.BillingState;
@@ -143,7 +144,7 @@ public with sharing class HDT_UTL_Account {
         req.account.partitaIva	                                = a.VATNumber__c;
         req.account.indirizzo.comune	                        = a.BillingCity;
         req.account.indirizzo.nazione	                        = getStateIso(a.BillingCountry);
-        req.account.indirizzo.toponimo	                        = a.BillingStreetToponym__c;
+        // req.account.indirizzo.toponimo	                        = a.BillingStreetToponym__c;
         req.account.indirizzo.piano	                            = a.BuildingFloor__c;
         req.account.indirizzo.civico	                        = a.BillingStreetNumber__c;
         req.account.indirizzo.cap	                            = a.BillingPostalCode;
@@ -222,28 +223,24 @@ public with sharing class HDT_UTL_Account {
             }
         }
         else{
-            system.debug('LISTA VUOTA');
             HDT_WS_RicCreBpCaRequest   req = callBpCaSearch(acc,cont);
             HDT_WS_RichCreBpCaResponse res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
             // System.debug('Response SRC : ' + res);
             analizeResponse(res,acc,cont);
-
             if ('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)) {
                 acc.CustomerCode__c = res.data.codiceBP;
                 HDT_UTL_DatabaseService.updateSObject(acc);
             }
-            else{
-                if(acc.Category__c == 'Grandi Condomini'){
-                     //Creazione Condominio su SAP
-                     req = callAmCaCreate(acc,cont);
-                     res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
-                     //Update Contact
-                     if ('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)) {
-                         cont.ContactCode__c = res.data.codiceBP;
-                         HDT_UTL_DatabaseService.updateSObject(cont);
-                     }
-                }
-            }
+            if(acc.Category__c == 'Grandi Condomini'){
+                    //Creazione Condominio su SAP
+                    req = callAmCaCreate(acc,cont);
+                    res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
+                    //Update Contact
+                    if ('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)) {
+                        cont.ContactCode__c = res.data.codiceBP;
+                        HDT_UTL_DatabaseService.updateSObject(cont);
+                    }
+            }        
         }    
     }
     
