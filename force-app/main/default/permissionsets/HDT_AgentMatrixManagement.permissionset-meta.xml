@@ -15847,11 +15847,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__ProductOption__c.RoleProfile__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SBQQ__ProductOption__c.Role__c</field>
         <readable>false</readable>
     </fieldPermissions>

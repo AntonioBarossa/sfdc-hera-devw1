@@ -20286,11 +20286,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>SBQQ__ProductOption__c.RoleProfile__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>SBQQ__ProductOption__c.SBQQ__AppliedImmediatelyContext__c</field>
         <readable>true</readable>
     </fieldPermissions>
