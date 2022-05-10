@@ -149,7 +149,7 @@ public with sharing class HDT_UTL_CreditCheck {
     }
 
     public static Boolean managedErrorCode(String errorCode){
-        List<HDT_Managedcreditcheckcode__mdt> codiceErroriGestiti = HDT_QR_GenericQuery.getGenericRecords('Label', 'HDT_Managedcreditcheckcode__mdt', 'ErrorCode__c = \''+errorCode+ '\' AND IsActive__c = true');
+        List<HDT_CreditCheckExcludedCode__mdt> codiceErroriGestiti = HDT_QR_GenericQuery.getGenericRecords('Label', 'HDT_CreditCheckExcludedCode__mdt', 'ErrorCode__c = \''+errorCode+ '\' AND IsActive__c = true');
         return !codiceErroriGestiti.isEmpty();
     }
 
