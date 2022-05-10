@@ -14,6 +14,9 @@ public class HDT_WS_CreditCheck {
         
         //HDT_WS_CreditCheckRequest req = (HDT_WS_CreditCheckRequest)json.deserialize(wrpVals, HDT_WS_CreditCheckRequest.class);
         
+        //req.userId = UserInfo.getName();
+        //req.sistema = 'Standard'.equalsIgnoreCase(UserInfo.getUserType())? 'SFDC' : 'COMMUNITY';
+
         System.debug(LoggingLevel.DEBUG, 'HDT_WS_CreditCheck - HDT_WS_CreditCheckResponse - callService: req ----> ');
         if (String.isNotEmpty(req.bpClass) && req.bpClass.containsIgnoreCase('Marcatura nulla')){
             req.bpClass = '';
