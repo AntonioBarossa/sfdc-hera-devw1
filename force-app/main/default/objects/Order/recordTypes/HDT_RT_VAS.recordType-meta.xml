@@ -2244,6 +2244,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In attesa conferma cliente</fullName>
             <default>false</default>
         </values>
