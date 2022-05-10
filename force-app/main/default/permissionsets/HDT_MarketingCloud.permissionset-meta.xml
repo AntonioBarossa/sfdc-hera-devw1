@@ -14971,11 +14971,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__ProductOption__c.Range__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SBQQ__ProductOption__c.Reading__c</field>
         <readable>false</readable>
     </fieldPermissions>

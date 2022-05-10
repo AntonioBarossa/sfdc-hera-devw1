@@ -17353,11 +17353,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>SBQQ__ProductOption__c.Range__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>SBQQ__ProductOption__c.Reading__c</field>
         <readable>true</readable>
     </fieldPermissions>
