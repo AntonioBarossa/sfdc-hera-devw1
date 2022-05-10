@@ -8,7 +8,7 @@ public inherited sharing class HDT_UTL_ProcessSetOrderForVas extends HDT_UTL_Pro
 
         for(MassiveLoaderRequestItem__c item : requestItemList){
             tempSplitedFields = item.Data__c.split(splitCharacter, -1);
-            item.NextStepData__c = tempSplitedFields[orderUniqueKeyIndex];
+            item.NextStepData__c = requestId + '_' + tempSplitedFields[orderUniqueKeyIndex];
             item.Status__c = 'In Lavorazione';
         }
 

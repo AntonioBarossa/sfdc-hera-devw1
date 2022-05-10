@@ -6,14 +6,15 @@ public inherited sharing class HDT_WRP_VasOrder {
         public String vasOrderType; // Standalone - 1 child order - 2 child order
         public Boolean isStandalone;
         public String orderNumber;
-        public String orderUniqueKey;
         public Order parentOrder;
+        public Account account;
         public Contract contract;
         public List<HDT_WRP_ChildOrder> childOrderList;
 
         public HDT_WRP_ProcessObjects(){
             error = false;
             parentOrder = new Order();
+            account = new Account();
             childOrderList = new List<HDT_WRP_ChildOrder>();
         }
 
