@@ -17106,11 +17106,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>SBQQ__ProductOption__c.PODCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>SBQQ__ProductOption__c.PaymentMode__c</field>
         <readable>true</readable>
     </fieldPermissions>
