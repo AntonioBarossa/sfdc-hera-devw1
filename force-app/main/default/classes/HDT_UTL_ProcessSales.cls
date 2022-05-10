@@ -674,7 +674,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         contact.MailingStreetCode__c = account.BillingStreetCode__c;
         contact.MailingStreetNumber__c = account.BillingStreetNumber__c;
         contact.MailingStreetNumberExtension__c = account.BillingStreetNumberExtension__c;
-        contact.MailingStreetToponym__c = account.BillingStreetToponym__c;
         contact.MailingRegion__c = account.BillingRegion__c;
         contact.MailingPlace__c = account.BillingPlace__c;
         contact.MailingPlaceCode__c = account.BillingPlaceCode__c;

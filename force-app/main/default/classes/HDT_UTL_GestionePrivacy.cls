@@ -1217,4 +1217,44 @@
             return res;
         }
 
+        // Modifica Anagrafica Modifica Privacy
+        private static String extractCompany(String codiceModulo){
+            String response = '';
+            if (String.isNotEmpty(codiceModulo)){
+                try {
+                    response = codiceModulo.split('_').get(1);
+                } catch (Exception e) {
+                    response = '';
+                }
+            }
+            return response;
+        }
+
+        @InvocableMethod(label = 'Get Individual Field Value')
+        public static List<HDT_WRP_SetIndividualFieldOutput> setIndividualField(List<String> inputs){
+            List<HDT_WRP_SetIndividualFieldOutput> output = new List<HDT_WRP_SetIndividualFieldOutput>();
+            try{
+                String caseId = inputs[0];
+                output.add(getOutputData((Id) caseId));
+            }catch(Exception e){
+                output.add(new HDT_WRP_SetIndividualFieldOutput());
+            }
+            return output;
+        }
+
+        private static HDT_WRP_SetIndividualFieldOutput getOutputData(Id caseId){
+            HDT_WRP_SetIndividualFieldOutput data = new HDT_WRP_SetIndividualFieldOutput();
+            DocumentalEnvelopeAttachment__c doc = (DocumentalEnvelopeAttachment__c)HDT_QR_GenericQuery.getGenericRecords('Id, AttachmentCode__c, Version__c', 'DocumentalEnvelopeAttachment__c', 'Case__c = \''+caseId+'\' AND AttachmentCode__c LIKE \'%PRIVACY\'').get(0);
+            data.company = extractCompany(doc.AttachmentCode__c);
+            data.version = doc.Version__c;
+            return data;
+        }
+
+
+        public class HDT_WRP_SetIndividualFieldOutput{
+            @InvocableVariable
+            public String version;
+            @InvocableVariable
+            public String company;
+        }
 }
