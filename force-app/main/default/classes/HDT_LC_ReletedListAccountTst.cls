@@ -14,7 +14,7 @@ public class HDT_LC_ReletedListAccountTst {
     }
     @isTest
     public static void insertContactTst(){
-    Account acc = [SELECT Id,FiscalCode__c, BillingCity, BillingCityCode__c, BillingCountry, BillingPostalCode, BillingState, BillingStreet, BillingStreetName__c, BillingStreetCode__c, BillingStreetNumber__c, BillingStreetNumberExtension__c, BillingStreetToponym__c, BillingRegion__c, BillingPlace__c, BillingPlaceCode__c, BillingIsAddressVerified__c FROM Account LIMIT 1];
+    Account acc = [SELECT Id,FiscalCode__c, BillingCity, BillingCityCode__c, BillingCountry, BillingPostalCode, BillingState, BillingStreet, BillingStreetName__c, BillingStreetCode__c, BillingStreetNumber__c, BillingStreetNumberExtension__c, BillingRegion__c, BillingPlace__c, BillingPlaceCode__c, BillingIsAddressVerified__c FROM Account LIMIT 1];
     Map<String,String> dataContact = new Map<String,String>();
     dataContact.put('birthPlace', 'Roma');
     dataContact.put('birthplace', 'Roma');
@@ -36,7 +36,6 @@ public class HDT_LC_ReletedListAccountTst {
     contactAddress.put('BillingStreetCode__c', acc.BillingStreetCode__c);
     contactAddress.put('BillingStreetNumber__c', acc.BillingStreetNumber__c);
     contactAddress.put('BillingStreetNumberExtension__c', acc.BillingStreetNumberExtension__c);
-    contactAddress.put('BillingStreetToponym__c', acc.BillingStreetToponym__c);
     contactAddress.put('BillingRegion__c', acc.BillingRegion__c);
     contactAddress.put('BillingPlace__c', acc.BillingPlace__c);
     contactAddress.put('BillingPlaceCode__c', acc.BillingPlaceCode__c);
@@ -54,7 +53,7 @@ public class HDT_LC_ReletedListAccountTst {
      @isTest
     public static void insertContactNegativeTst(){
         try{
-    Account acc = [SELECT Id,FiscalCode__c, BillingCity, BillingCityCode__c, BillingCountry, BillingPostalCode, BillingState, BillingStreet, BillingStreetName__c, BillingStreetCode__c, BillingStreetNumber__c, BillingStreetNumberExtension__c, BillingStreetToponym__c, BillingRegion__c, BillingPlace__c, BillingPlaceCode__c, BillingIsAddressVerified__c FROM Account LIMIT 1];
+    Account acc = [SELECT Id,FiscalCode__c, BillingCity, BillingCityCode__c, BillingCountry, BillingPostalCode, BillingState, BillingStreet, BillingStreetName__c, BillingStreetCode__c, BillingStreetNumber__c, BillingStreetNumberExtension__c, BillingRegion__c, BillingPlace__c, BillingPlaceCode__c, BillingIsAddressVerified__c FROM Account LIMIT 1];
     Map<String,String> dataContact = new Map<String,String>();
     dataContact.put('birthPlace', 'Roma');
     dataContact.put('birthplace', 'Roma');
@@ -76,7 +75,6 @@ public class HDT_LC_ReletedListAccountTst {
     contactAddress.put('BillingStreetCode__c', acc.BillingStreetCode__c);
     contactAddress.put('BillingStreetNumber__c', acc.BillingStreetNumber__c);
     contactAddress.put('BillingStreetNumberExtension__c', acc.BillingStreetNumberExtension__c);
-    contactAddress.put('BillingStreetToponym__c', acc.BillingStreetToponym__c);
     contactAddress.put('BillingRegion__c', acc.BillingRegion__c);
     contactAddress.put('BillingPlace__c', acc.BillingPlace__c);
     contactAddress.put('BillingPlaceCode__c', acc.BillingPlaceCode__c);
