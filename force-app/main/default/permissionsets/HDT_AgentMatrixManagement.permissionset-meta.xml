@@ -11827,11 +11827,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.PriceBonusGas__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Product2.PriceDiscounted__c</field>
         <readable>false</readable>
     </fieldPermissions>
