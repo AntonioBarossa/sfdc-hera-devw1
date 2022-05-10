@@ -4427,6 +4427,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.SapContractCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Campaign.Status</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32092,6 +32097,9 @@
     <layoutAssignments>
         <layout>Order-VAS</layout>
         <recordType>Order.HDT_RT_VAS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>OrderItem-SBQQ__CPQ Order Product Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>PaperCampaignParameter__c-Parametri Campagna Cartacea Layout</layout>

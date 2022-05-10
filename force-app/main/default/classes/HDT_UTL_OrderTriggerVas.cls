@@ -50,7 +50,7 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
 
     public static void cancelLinkedOrders(Set<Id> canceledOrderIds, Set<Id> canceledOrderQuotesIds){
         //List<Order> ordersToWork = [SELECT Id, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE  Id IN :canceledOrderIds OR OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
-        List<Order> ordersToWork = [SELECT Id, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
+        List<Order> ordersToWork = [SELECT Id, isBillableVas__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
         if(ordersToWork.isEmpty()){
             return;
         }
@@ -60,6 +60,9 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
             switch on orderToWork.RecordType.DeveloperName {
                 when 'HDT_RT_VAS','HDT_RT_ScontiBonus' {
                     vasOrdersToCancel.add(orderToWork);
+                }
+                when 'HDT_RT_Default'{
+                    verifyDraftVas(orderToWork,vasOrdersToCancel);
                 }
                 /* when else {
                     setCommodityOrderMap(orderToWork, commodityOrderMap,canceledOrderIds);
@@ -81,6 +84,12 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
         }
 
         orderSrv.updateRecords(vasOrdersToCancel);
+    }
+
+    private static void verifyDraftVas(Order orderToWork,List<Order> vasOrdersToCancel){
+        if (orderToWork.isBillableVas__c){
+            vasOrdersToCancel.add(orderToWork);
+        }
     }
 
     /* private static void setCommodityOrderMap(Order ord, Map<Id,Order> commodityOrderMap, Set<Id> canceledOrderIds){
