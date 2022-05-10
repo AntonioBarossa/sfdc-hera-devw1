@@ -59,7 +59,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			test.startTest();
 
-			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c
+			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, FiscalCode__c
 			                    FROM Account
 			                    WHERE Name='test account0'];
 

@@ -822,19 +822,6 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.UserCompany__c</fieldItem>
-                <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>HDT_RT_Scarto</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Chiusa</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

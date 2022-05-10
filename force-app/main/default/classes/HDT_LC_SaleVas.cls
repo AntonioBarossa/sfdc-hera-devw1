@@ -39,7 +39,7 @@ public inherited sharing class HDT_LC_SaleVas {
             }
             when 'VAS stand alone'{
                 handleVasStandAloneConfirm(supplyCity, accountId, sale);
-            }
+            } 
             
         }
     }
@@ -221,7 +221,8 @@ public inherited sharing class HDT_LC_SaleVas {
                 records = recordMap.values();
             }
             when 'SUBS_ANALISI_CONSUMI'{ 
-                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Product__r.Name, SBQQ__Contract__r.ContractNumber,
+                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Product__r.Name,SBQQ__Contract__r.SAPContractCode__c,
+                    SBQQ__Contract__r.ContractNumber,
                     SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
                     FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Fatturabili' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
 
@@ -419,6 +420,148 @@ public inherited sharing class HDT_LC_SaleVas {
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
 
         opportunitySrv.updateRecord(newOpportunity);
+    }
+
+    @AuraEnabled
+    public static String handleNotMigratedContract(String contract, Sale__c sale){
+        system.debug('contract --> '+contract);
+        system.debug('sale --> '+sale);
+        system.debug('PUNTO 1');
+        //REQUEST
+        String result = '';
+        // HDT_WS_ArricchimentoDatiTemp arricchimentoDati = new HDT_WS_ArricchimentoDatiTemp();
+        HDT_SRV_DataEnrichmentPostSales dataEnrichmentPostSales = new HDT_SRV_DataEnrichmentPostSales(); 
+        List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> posizioniList = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
+
+        system.debug('PUNTO 2');
+        String resPosizioni = HDT_WS_ArricchimentoDatiTemp.submitRequest('',contract);
+        String dataCessazioneString = '';
+        String commodity = '';
+        String mercato = '';
+        String venditore = '';
+        String sellerCompany = '';
+        Date dataCessazione = null;
+
+        system.debug('PUNTO 3');
+
+
+        if(resPosizioni != null && resPosizioni != ''){
+
+            system.debug('PUNTO 4');
+
+            posizioniList = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)
+            JSON.deserialize(resPosizioni, List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>.class);
+            // posizioniList = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>) JSON.deserialize(resPosizioni, HDT_WS_ArricchimentoDatiTemp.class);
+            system.debug('PUNTO 5');
+            for(HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni posizione : posizioniList){
+                if(posizione.campo == 'DATACESSAZIONE'){
+                    system.debug('PUNTO 6');
+                    dataCessazioneString = posizione.valore;
+                }
+                if(posizione.campo == 'DESCRCOMM'){
+                    system.debug('PUNTO 6.1');
+                    commodity = posizione.valore;
+                }
+                if(posizione.campo == 'MERCATO'){
+                    system.debug('PUNTO 6.1');
+                    mercato = posizione.valore;
+                    mercato = mercato.substring(0, 1).toUpperCase() + mercato.substring(1).toLowerCase();
+                    system.debug('mercato --> '+mercato);
+
+                }
+                if(posizione.campo == 'VENDITORE'){
+                    system.debug('PUNTO 6.1');
+                    venditore = posizione.valore;
+                }
+            }
+
+            List<HDT_MatriceSocietaVendita__mdt> matriceList = [SELECT SalesCompanyCode__c, SellerCompany__c FROM HDT_MatriceSocietaVendita__mdt WHERE SalesCompanyCode__c =: venditore WITH SECURITY_ENFORCED LIMIT 1];
+            if(!matriceList.isEmpty()){
+                sellerCompany = matriceList[0].SellerCompany__c;
+            }
+            else{
+                sellerCompany = null;
+            }
+            
+            system.debug('PUNTO 7');
+            if(dataCessazioneString != null && dataCessazioneString != ''){
+                system.debug('PUNTO 8');
+                dataCessazione = dataEnrichmentPostSales.getDateFromString(dataCessazioneString);
+            }
+            system.debug('PUNTO 9');
+            if(dataCessazione != null && dataCessazione > System.today()){
+                system.debug('PUNTO 10');
+
+                // if (order.Id == null) {
+                //     system.debug('PUNTO 11');
+                //     throw new AuraHandledException('Devi scegliere un ordine!');
+                // }
+                //system.debug('PUNTO 12');
+                // if (isDuplicated(sale.Id, order.Id, 'order')) {
+                //     system.debug('PUNTO 13');
+                //     throw new AuraHandledException('La quote con il riferimento di questo ordine esiste già!');
+                // }
+                // String pdrCode = order.ServicePoint__r.ServicePointCode__c;
+                String pdrCode = '';
+                pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
+                system.debug('PUNTO 15');
+                //CREAZIONE OPPORTUNITY E QUOTE
+                Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
+                    Sale__c = sale.Id,
+                    Name = opportunitySrv.generateName(sale) + ' VAS'+pdrCode,
+                    CloseDate = Date.today().addDays(30),
+                    StageName = 'Proposal',
+                    // AccountId = order.AccountId
+                    AccountId = sale.Account__c
+                ));
+                SBQQ__Quote__c newQuote = new SBQQ__Quote__c(
+                Sale__c = sale.Id,
+                //OrderReference__c = order.Id,
+                SBQQ__Opportunity2__c = newOpportunity.Id,
+                SBQQ__Account__c = sale.Account__c,
+                SBQQ__Primary__c = true,
+                Agency__c = sale.Agency__c,
+                // Market__c = order.Market__c,
+                Market__c = mercato,
+                Channel__c = sale.Channel__c,
+                FriendCode__c = sale.FriendCode__c,
+                CampaignCode__c = sale.CampaignCode__c,
+                CreatedBy__c = sale.CreatedBy__c,
+                SupplyCity__c = null, //to do (other logic to get SupplyCity)
+                // SalesCompany__c = order.SalesCompany__c,
+                SalesCompany__c = sellerCompany,
+                Campaign__c = sale.Campaign__c,
+                IsVAS__c = true,
+                IsBillableVas__c = false,
+                IsTransition__c = true,
+                SBQQ__PricebookId__c = commodity == 'Energia Elettrica' ? getPricebookId('VAS ELE') : commodity == 'Gas' ? getPricebookId('VAS GAS') : null,
+                AgencyCode__c = sale.AgencyCode__c,
+                CommercialId__c = sale.CommercialId__c,
+                SapContractCode__c = contract
+                );
+                // if(order.ContractReference__c != null)
+                // {
+                //     newQuote.ContractReference__c = order.ContractReference__c;
+                // }
+                newQuote = quoteSrv.createRecord(newQuote);
+                newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
+                opportunitySrv.updateRecord(newOpportunity);
+                sale.isTransition__c = true;
+                HDT_UTL_DatabaseService.updateSObject(sale);
+                result = 'Success';
+                return result;
+            }
+            else{
+                system.debug('PUNTO 23');
+                result = 'Errore Data Cessazione';
+                return result;
+            }
+        }
+        else{
+            system.debug('PUNTO 24');
+            result = 'Errore Contratto Assente';
+            return result;
+        }
     }
 
     /**

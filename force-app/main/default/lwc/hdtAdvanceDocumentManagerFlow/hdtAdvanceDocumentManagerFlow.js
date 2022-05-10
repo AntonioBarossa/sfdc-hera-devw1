@@ -36,6 +36,7 @@ export default class HdtAdvanceDocumentManagerFlow extends NavigationMixin(Light
     context = 'DocumentazioneAnticipata';
 
     @track modalitaInvio = [];
+    @api availableActions = [];
 
     @wire(getRecord,{recordId: '$childRecordId', fields})
     wiredRecord({error, data})
@@ -131,6 +132,7 @@ export default class HdtAdvanceDocumentManagerFlow extends NavigationMixin(Light
                 var resultParsed = JSON.parse(result);
                 this.showSpinner = false;
                 if(resultParsed.code === '200'){
+                    
                     if(resultParsed.result === '000'){
                         this.showPdfFromBase64(resultParsed.base64);
                         this.showSendButton = true;
