@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CategoriaCliente__c</fullName>
+    <fullName>Phase__c</fullName>
     <externalId>false</externalId>
-    <label>Categoria Cliente</label>
+    <label>Fase</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
@@ -11,14 +11,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Famiglie</fullName>
+                <fullName>File non processato</fullName>
                 <default>false</default>
-                <label>Famiglie</label>
+                <label>File non processato</label>
             </value>
             <value>
-                <fullName>Ditta individuale</fullName>
+                <fullName>File in elaborazione</fullName>
                 <default>false</default>
-                <label>Ditta individuale</label>
+                <label>File in elaborazione</label>
+            </value>
+            <value>
+                <fullName>File processato</fullName>
+                <default>false</default>
+                <label>File processato</label>
             </value>
         </valueSetDefinition>
     </valueSet>

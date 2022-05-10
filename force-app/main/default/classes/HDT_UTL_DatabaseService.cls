@@ -103,7 +103,7 @@
         return (Limits.getDMLRows() + recordsNumber) > Limits.getLimitDMLRows();
     }
 
-    private static Boolean checkBeforeDml(List<SObject> sObjectList, DmlOperation operation) {
+    public static Boolean checkBeforeDml(List<SObject> sObjectList, DmlOperation operation) {
         if (sObjectList.isEmpty()) {
             return true;
         }
@@ -165,7 +165,7 @@
         return false;
     }
 
-    enum DmlOperation {
+    public enum DmlOperation {
         DML_INSERT,
         DML_UPDATE,
         DML_UPSERT,
