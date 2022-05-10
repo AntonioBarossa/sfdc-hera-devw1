@@ -26,13 +26,13 @@ public with sharing class HDT_BA_RecurringCampaingCreation implements Database.B
             System.debug(' c.GenerationPeriod__c'+ c.GenerationPeriod__c);
             Campaign campaign= c.clone(false,true,false,true);
             campaign.Status='Pianificata';
-            String startDateMonth = c.StartDate.month() < 9 ? '0'+ String.valueOf(c.StartDate.month()) : String.valueOf(c.StartDate.month());
-            String startDateDay = c.StartDate.day() < 9 ? '0'+ String.valueOf(c.StartDate.day()) : String.valueOf(c.StartDate.day());
-            campaign.Name= c.Name +'_'+c.StartDate.year()+ startDateMonth + startDateDay;
             campaign.StartDate= todayDate.addDays(7);
+            String startDateMonth = campaign.StartDate.month() <= 9 ? '0'+ String.valueOf(campaign.StartDate.month()) : String.valueOf(campaign.StartDate.month());
+            String startDateDay = campaign.StartDate.day() <= 9 ? '0'+ String.valueOf(campaign.StartDate.day()) : String.valueOf(campaign.StartDate.day());
+            campaign.Name= c.Name +'_'+campaign.StartDate.year()+ startDateMonth + startDateDay;
             campaign.GenerationPeriod__c=c.GenerationPeriod__c!=null?c.GenerationPeriod__c:0.0;
             System.debug(' c.GenerationPeriod__c'+ campaign.GenerationPeriod__c);
-           // campaign.enddate = campaign.StartDate.addDays(7 * (Integer.valueOf(campaign.GenerationPeriod__c)));
+            campaign.enddate = campaign.StartDate.addDays(7 * (Integer.valueOf(campaign.GenerationPeriod__c)));
             if ( todayDate.addDays(7 *(Integer.valueOf( campaign.GenerationPeriod__c)))<campaign.enddate) {
                 c.DateNextGeneration__c = todayDate.addDays(7 *(Integer.valueOf( campaign.GenerationPeriod__c)));
             }
@@ -51,15 +51,15 @@ public with sharing class HDT_BA_RecurringCampaingCreation implements Database.B
          
             Campaign campaign= c.clone(false,true,false,true);
             campaign.Status='Pianificata';
-            String startDateMonth = c.StartDate.month() < 9 ? '0'+ String.valueOf(c.StartDate.month()) : String.valueOf(c.StartDate.month());
-            String startDateDay = c.StartDate.day() < 9 ? '0'+ String.valueOf(c.StartDate.day()) : String.valueOf(c.StartDate.day());
+            campaign.StartDate= todayDate.addDays(7);
+            String startDateMonth = campaign.StartDate.month() <= 9 ? '0'+ String.valueOf(campaign.StartDate.month()) : String.valueOf(campaign.StartDate.month());
+            String startDateDay = campaign.StartDate.day() <= 9 ? '0'+ String.valueOf(campaign.StartDate.day()) : String.valueOf(campaign.StartDate.day());
             campaign.Name= c.Name +'_'+todayDate.year()+ startDateMonth +startDateDay;
        
             campaign.IsActive=false;
             campaign.GenerationPeriod__c=null;
             System.debug(' 2 campaign.GenerationPeriod__c'+ campaign.GenerationPeriod__c);
             System.debug(' 2campaign.id'+ c.id);
-            campaign.StartDate= todayDate.addDays(7);
             System.debug('StartDate : '+campaign.StartDate);
             System.debug('somma : '+7*(Integer.valueOf(mapCampaign.get(c.ParentId).GenerationPeriod__c!=null?mapCampaign.get(c.ParentId).GenerationPeriod__c:0.0)));
             
