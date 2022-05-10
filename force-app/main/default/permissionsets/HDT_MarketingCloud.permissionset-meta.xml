@@ -10671,11 +10671,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>OrderItem.RoleProfile__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>OrderItem.SBQQ__Activated__c</field>
         <readable>false</readable>
     </fieldPermissions>
