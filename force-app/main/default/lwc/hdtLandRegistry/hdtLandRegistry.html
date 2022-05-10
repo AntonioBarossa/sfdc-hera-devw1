@@ -12,8 +12,8 @@
             <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
         </div>
     </template>
-    <lightning-card title="Tabella con record recuperati dal ServicePoint">
-        <lightning-datatable data={accountList} columns={cols} key-field="Id">
+    <lightning-card title="Dati Catastali">
+        <lightning-datatable data={accountList} columns={cols} key-field="Id" selected-rows={selectedLandRegistryId}>
         </lightning-datatable>
     </lightning-card>
 
