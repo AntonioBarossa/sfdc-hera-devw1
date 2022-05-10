@@ -4296,6 +4296,11 @@
         <field>SBQQ__Quote__c.CampaignEleggibilityGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.SapContractCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
      <fieldPermissions>
         <editable>true</editable>
         <field>Campaign.SurveyCRM__c</field>
