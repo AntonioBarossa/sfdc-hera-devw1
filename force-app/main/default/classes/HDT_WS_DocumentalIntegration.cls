@@ -98,7 +98,6 @@ public with sharing class HDT_WS_DocumentalIntegration {
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
             if (responseBodyMap.containsKey('data')) {
                 List<Object> responseData = (List<Object>) responseBodyMap.get('data');
-                //List<List<String>> zipBaseSixtyFourResponseList = responseData.containsKey('filesZipBase64') ? convertFilesZipBaseSixtyFour((List<Object>)responseData.get('filesZipBase64')) : new List<List<String>>();
                 List<String> zipBaseSixtyFourList = new List<String>();
                 for (Object row : responseData){
                     Map<String,Object> rowMap = (Map<String,Object>) row;
@@ -138,26 +137,6 @@ public with sharing class HDT_WS_DocumentalIntegration {
             throw ex;
         }
         return responseWrap;
-    }
-
-    private static List<List<String>> convertFilesZipBaseSixtyFour(List<Object> filesList){
-        List<List<String>> zipBaseSixtyFourMap = new List<List<String>>();
-        try{
-            for (Object obj : filesList){
-                if (obj != null){
-                    Map<String,Object> singleFileMap = (Map<String,Object>)JSON.deserializeUntyped(JSON.serialize(obj));
-                    String status = singleFileMap.get('status') != null? (String)singleFileMap.get('status') : '';
-                    String zipBaseSixtyFour =  singleFileMap.get('zipBase64') != null ? (String)singleFileMap.get('zipBase64') : '';
-                    if (String.isNotBlank(status) && String.isNotBlank(zipBaseSixtyFour)){
-                        zipBaseSixtyFourMap.add(new List<String>{status,zipBaseSixtyFour});
-                    }
-                } 
-            }
-        }catch (Exception e){
-            System.debug(LoggingLevel.DEBUG, 'convertFilesZipBaseSixtyFour error: ' + e.getMessage());
-            System.debug(LoggingLevel.DEBUG, 'convertFilesZipBaseSixtyFour line: ' + e.getLineNumber());
-        }
-        return zipBaseSixtyFourMap;
     }
 
     public static HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse submitResendDocusignEnvelopeRequest(String body){
