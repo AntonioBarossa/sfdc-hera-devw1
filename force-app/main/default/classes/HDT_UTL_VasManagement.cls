@@ -103,7 +103,7 @@ public with sharing class HDT_UTL_VasManagement {
     private static Order getOrderData(Id orderId) {
         //TODO: move query in HDT_QR_Order class
         return [SELECT Account.CustomerCode__c, SalesCompany__c, ContractAccountCode__c, CustomerCode__c, CustomerFiscalCode__c, CustomerVATNumber__c,
-            ServicePointCode__c, SalesCompanyCode__c, CustomerName__c, CustomerLastName__c, CommercialProduct__c, CommercialProductVersion__c,
+            ServicePointCode__c, SalesCompanyCode__c, CustomerName__c, CustomerLastName__c, CommercialProduct__c,CommercialProductCode__c, CommercialProductVersion__c,
             OrderNumber, VasServiceActivationDate__c, ShippingStreetToponym__c, ShippingStreetName__c, ShippingStreetNumber__c,
             ShippingCity__c, ShippingPlace__c, ShippingPostalCode__c, ShippingProvince__c, PhoneNumber__c, ShippingMail__c, SignedDate__c,
             ContractReference__r.SAPContractCode__c,OrderReference__c,ContractReference__c,ContractReference__r.ServicePoint__r.ServicePointCode__c,
@@ -231,7 +231,7 @@ public with sharing class HDT_UTL_VasManagement {
             List<String> strValues = new List<String>{currentOrder.CustomerName__c, currentOrder.CustomerName__c};
             intestatario = joinStringValues(strValues);
 
-            servizioIp = currentOrder.CommercialProduct__c?.abbreviate(30);
+            //servizioIp = currentOrder.CommercialProductCode__c?.abbreviate(30);
             versione = currentOrder.CommercialProductVersion__c?.split('\\.\\d+')[0];
             keyServizio = currentOrder.OrderNumber;
 
@@ -274,6 +274,16 @@ public with sharing class HDT_UTL_VasManagement {
             : (String)currentCase.getSObject('Subscription__r')?.get('VasPracticeCode__c') != null
                 ? (String)currentCase.getSObject('Subscription__r')?.get('VasPracticeCode__c')
                 : (String)currentOrder.get('VasPracticeCode__c');
+
+            OrderItem parentOrderItem;
+            for (OrderItem ordItem:currentOrder.OrderItems) {
+                if (String.isBlank(ordItem.SBQQ__RequiredBy__c)) {
+                    parentOrderItem = ordItem;
+                    break;
+                }
+            }
+            servizioIp = parentOrderItem.Product2.DescriptionSAP__c.abbreviate(30);
+            
 
             keyServizio = keyString;
 
@@ -358,7 +368,7 @@ public with sharing class HDT_UTL_VasManagement {
                 items.add(reqItem);
                 childOrderItems.add(ordItem);
             }
-
+            servizioIp = parentOrderItem.Product2.DescriptionSAP__c.abbreviate(30);
             contractAccountSap = currentOrder.ContractAccountCode__c;
             dataAttivazione = String.isNotBlank(currentOrder.VasServiceActivationDate__c?.format())? currentOrder.VasServiceActivationDate__c : Date.today();
             Decimal tempRate = parentOrderItem?.Product2?.NumberRateMonthly__c ;
