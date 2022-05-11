@@ -31,6 +31,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         Order inputOrder = (Order)sobj;        
         /* Add process Type, RecordType,Phase__s, Status,OrderReference to the cloned order and insert*/
         clonedOrder.put('ProcessType__c','Voltura con Switch');
+        clonedOrder.put('ProcessCode__c','VT1');
         clonedOrder.put('RecordTypeId', clonedOrderRecordTypeId);
         clonedOrder.put('Phase__c','Bozza');
         clonedOrder.put('Status','Draft');
