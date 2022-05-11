@@ -16,9 +16,9 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
         Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
         User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
         internalUser.UserPermissionsMarketingUser=true;
-        /*internalUser.LoginChannel__c = 'Back office';
-        internalUser.Station__c = 'ALTOFE_SP_ Goro';
-        internalUser.CreatorGroup__c = 	'HC_Back Office Condomini';*/
+        internalUser.LoginChannel__c = 'Back office';
+        internalUser.Station__c = 'CC_VK_team 17';
+        internalUser.CreatorGroup__c = 'HC_CRM_CC_OUT_VK'; 
 
         insert internalUser;
 
@@ -64,19 +64,60 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
         saleList[0].Agency__c = 'test agency'; 
         saleList[0].AgencyCode__c = 'AgencyCode';
         saleList[0].AreaManager__c = 'Area Manager test';
-        //saleList[0].CreatedBy = internalUser.id;
+        //saleList[0].CreatedById = internalUser.id;
+        saleList[0].CreatedBy__c = 'test';
 
 
         List<BillingProfile__c> billingProList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true,accList[0].id);
 
-        List<ServicePoint__c> servList = HDT_UTL_DataFactoryTst.createServicePoint(1,false);
+        List<ServicePoint__c> servList = HDT_UTL_DataFactoryTst.createServicePoint(2,false);
         servList[0].Vat__c = '';
+
+        servList[1].CommoditySector__c = 'Energia Elettrica';
+        servList[1].ExciseEle__c = 'E_IE_M04';
         insert servList;
 
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(2,false,accList[0].id,'Bozza');
         ordList[0].ServicePoint__c = servList[0].id;
         ordList[0].Vat__c = servList[0].Vat__c;
+
+        ordList[1].ServicePoint__c = servList[1].id;
+        ordList[1].ExciseEle__c = '';
         insert ordList;
+
+        List<BillingProfile__c> billingList = HDT_UTL_DataFactoryTst.createBillingProfile(1,false,accList[0].id);
+        billingList[0].SubjectCode__c = '1234567';
+        billingList[0].InvoiceCertifiedEmailAddress__c = 'test@test.com';
+        billingList[0].ElectronicInvoicingMethod__c = 'XML';
+        billingList[0].XMLType__c = 'Dettaglio';
+        billingList[0].CIG__c = '123456';
+        billingList[0].CUP__c = '123456';
+        billingList[0].IbanIsForeign__c = false;
+        billingList[0].IbanCIN_IBAN__c = '12';
+        billingList[0].IbanCIN__c = 'S';
+        billingList[0].IbanABI__c = '15558';
+        billingList[0].IbanCAB__c = '66589';
+        billingList[0].IbanCodeNumber__c = '1234568975856';
+        billingList[0].BankAccountSignatoryFiscalCode__c = 'RMOFMN80A41H501H';
+        billingList[0].BankAccountSignatoryFirstName__c = 'Flaminia';
+        billingList[0].BankAccountSignatoryLastName__c = 'Roma';
+        billingList[0].BillSendingMethod__c = 'Bolletta per e-mail';
+        billingList[0].PaymentMethod__c = 'RID';
+        billingList[0].InvoiceEmailAddress__c = 'test@test.com';
+        billingList[0].InvoicingCity__c = 'MORINO';
+        billingList[0].InvoicingCountry__c = 'ITALIA';
+        billingList[0].InvoicingProvince__c = 'AQ';
+        billingList[0].InvoicingStreetName__c = 'VIA GRAN SASSO';
+        billingList[0].InvoicingStreetNumber__c = '56';
+        billingList[0].InvoicingStreetNumberExtension__c = '56';
+        billingList[0].InvoicingPostalCode__c = '56';
+        billingList[0].InvoicingCityCode__c = '041069';
+        billingList[0].SendCertifiedEmailConsentDate__c = System.today();
+        billingList[0].CreateContractAccount__c = false;
+        billingList[0].IbanCountry__c = 'IT';
+        billingList[0].ContractAccountCode__c = '';
+
+        insert billingList;
 
         }
 
@@ -117,7 +158,6 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
 
         Test.startTest();
         List<Sale__c> saleListResult = HDT_UTL_MassiveOrderFieldsAlignment.getSaleByIds(idsList);
-        System.debug('EDO: saleListResult' +saleListResult);
         System.assertEquals(false, saleListResult.isEmpty(),'testGetSalesByIds did not work correctly');
         Test.stopTest();
         
@@ -176,20 +216,40 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
 
     }
 
-    /*@isTest 
+    @isTest 
     static void testalignSaleFields(){
 
         Sale__c sale = [SELECT id, SaleBy__c, CommissioningCampaign__c, Campaign__c, SalesContact__c, LowerChannelAgency__c, UpperChannelAgency__c, Channel__c, VendorFirstName__c,
-                        VendorLastName__c, CommercialId__c, Agency__c, AgencyCode__c, AreaManager__c, Campaign__r.Name, CommissioningCampaign__r.Name, SalesContact__r.Individual.MarketingPrivacy__c,
-                        SalesContact__r.Phone, SalesContact__r.Individual.ProfilingPrivacy__c, CreatedBy,  FROM Sale__c WHERE Name = 'testSaleName0'];
+                        VendorLastName__c, CommercialId__c, Agency__c, AgencyCode__c, AreaManager__c, Campaign__r.Name, CommissioningCampaign__r.Name,
+                        SalesContact__r.Phone, SalesContact__r.IndividualId, CreatedById, CreatedBy__c, CreatedBy.LoginChannel__c, CreatedBy.Station__c, CreatedBy.CreatorGroup__c 
+                        FROM Sale__c WHERE Name = 'testSaleName0'];
 
         Order ord = [SELECT Id FROM Order WHERE Name = 'testOrderName0'];
 
         Test.startTest();
-        Order oderResult = HDT_UTL_MassiveOrderFieldsAlignment.alignSaleFields(ord, sale);
-        System.debug('EDO: accResult' +oderResult);
-        System.assertEquals(true, oderResult.SaleBy__c == sale.SaleBy__c, 'testalignSaleFields did not work correctly');
+        Order orderResult = HDT_UTL_MassiveOrderFieldsAlignment.alignSaleFields(ord, sale);
+        System.assertEquals(true, orderResult.SaleBy__c == sale.SaleBy__c, 'testalignSaleFields did not work correctly');
         Test.stopTest();
 
-    }*/
+    }
+
+    @isTest 
+    static void testalignBillingProfileFields(){
+
+        BillingProfile__c billing = [SELECT id, SubjectCode__c,InvoiceCertifiedEmailAddress__c,ElectronicInvoicingMethod__c,XMLType__c,CIG__c,CUP__c,IbanIsForeign__c,IbanCIN_IBAN__c,IbanCIN__c,IbanABI__c,IbanCAB__c,
+        IbanCodeNumber__c,BankAccountSignatoryFiscalCode__c,BankAccountSignatoryFirstName__c,BankAccountSignatoryLastName__c,BillSendingMethod__c,PaymentMethod__c,InvoiceEmailAddress__c,
+        InvoicingCity__c,InvoicingCountry__c,InvoicingProvince__c,InvoicingStreetName__c,InvoicingStreetNumber__c,InvoicingStreetNumberExtension__c,InvoicingPostalCode__c,
+        InvoicingCityCode__c,SignatoryType__c,SendCertifiedEmailConsentDate__c, CreateContractAccount__c, IbanCountry__c, ContractAccountCode__c 
+        FROM BillingProfile__c LIMIT 1];
+
+        Order ord = [SELECT Id FROM Order WHERE Name = 'testOrderName0'];
+
+        Test.startTest();
+        Order orderResult = HDT_UTL_MassiveOrderFieldsAlignment.alignBillingProfileFields(ord, billing);
+        System.assertEquals(true, orderResult.IbanCodeNumber__c == billing.IbanCodeNumber__c, 'testalignBillingProfileFields did not work correctly');
+        Test.stopTest();
+
+    }
+
+
 }

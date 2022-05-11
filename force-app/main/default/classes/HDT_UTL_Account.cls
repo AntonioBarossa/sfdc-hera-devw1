@@ -81,7 +81,7 @@ public with sharing class HDT_UTL_Account {
         req.account.partitaIva              = a.vatnumber__c;
         req.account.indirizzo.comune	    = a.BillingCity;
         req.account.indirizzo.nazione	    = getStateIso(a.BillingCountry);
-        req.account.indirizzo.toponimo	    = a.BillingStreetToponym__c;
+        // req.account.indirizzo.toponimo	    = a.BillingStreetToponym__c;
         req.account.indirizzo.civico	    = a.BillingStreetNumber__c;
         req.account.indirizzo.cap	        = a.BillingPostalCode;
         req.account.indirizzo.provincia	    = a.BillingState;
@@ -144,7 +144,7 @@ public with sharing class HDT_UTL_Account {
         req.account.partitaIva	                                = a.VATNumber__c;
         req.account.indirizzo.comune	                        = a.BillingCity;
         req.account.indirizzo.nazione	                        = getStateIso(a.BillingCountry);
-        req.account.indirizzo.toponimo	                        = a.BillingStreetToponym__c;
+        // req.account.indirizzo.toponimo	                        = a.BillingStreetToponym__c;
         req.account.indirizzo.piano	                            = a.BuildingFloor__c;
         req.account.indirizzo.civico	                        = a.BillingStreetNumber__c;
         req.account.indirizzo.cap	                            = a.BillingPostalCode;

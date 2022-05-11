@@ -448,10 +448,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     */
     public static void recalculateOrderDateAfterKo(List<Order> newOrdersList, List<Order> oldOrdersList){
         Map<String,Order> mapOldOrder = new Map<String,Order>();
+        Map<String,wrts_prcgvr__Activity__c> activityMap = new Map<String,wrts_prcgvr__Activity__c>();
         List<Order> newOrdersListRecalc = new List<Order>();
         List<Order> newOrdersListComfort = new List<Order>();
-        for (Order oldOrder : oldOrdersList) {
+        for(Order oldOrder : oldOrdersList) {
             mapOldOrder.put(oldOrder.id,oldOrder);
+        }
+        /**@frpanico 2022-05-10
+         * Aggiunta query sulle activity di Precheck KO
+         * Nel caso in cui la data di massimo ripensamento
+         * sia maggiore (strettamente) alla data chiusura activity
+         * Non si devono ricalcolare le date
+         */
+        for(wrts_prcgvr__Activity__c a : [SELECT Id,ActivityEndTime__c, Order__c FROM wrts_prcgvr__Activity__c WHERE Order__c IN :mapOldOrder.keySet() AND Type__c LIKE '%Precheck%' AND ActivityEndTime__c != NULL WITH SECURITY_ENFORCED])
+        {
+            activityMap.put(a.Order__c, a);
         }
         for (Order newOrder : newOrdersList) {
             Order oldOrder = mapOldOrder.get(newOrder.id);
@@ -462,6 +473,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura')
                         || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch'))
                 ){
+                    if(!activityMap.isEmpty() && newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
+                        && oldOrder.MaxAfterthoughtDate__c != null && oldOrder.MaxAfterthoughtDate__c > activityMap.get(oldOrder.Id).ActivityEndTime__c)
+                    {
+                        continue;
+                    }
                     if((oldOrder.Phase__c == 'Comunicazione verso Heroku KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         ||(oldOrder.Phase__c == 'Amm. Precheck KO SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         || (oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
@@ -837,8 +853,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
         }
 
-        orderMapNew.put('oldCustomer',orderListOldCustomer);
-        orderMapNew.put('newCustomer',orderListNewCustomer);   
+        if (!orderListOldCustomer.isEmpty() || !orderListNewCustomer.isEmpty()){
+            orderMapNew.put('oldCustomer',orderListOldCustomer);
+            orderMapNew.put('newCustomer',orderListNewCustomer); 
+        }
+          
         
         if(!orderMapNew.isEmpty()){
             HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
@@ -1156,7 +1175,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Boolean enableQueryContracts = false;
         for(Order o : newOrdersList){
             String recordTypeName = rtMap.get(o.RecordTypeId).getDeveloperName();
-            if(checkRecordTypeForCreditCheck(recordTypeName, o) && (o.IncomingCreditCheckResult__c != oldOrdersMap.get(o.Id).IncomingCreditCheckResult__c || o.OutgoingCreditCheckResult__c != oldOrdersMap.get(o.id).OutgoingCreditCheckResult__c)){
+            String oldCreditCheckDescription = String.isNotBlank(oldOrdersMap.get(o.Id).CreditCheckDescription__c) ? oldOrdersMap.get(o.Id).CreditCheckDescription__c : '';
+            if(checkRecordTypeForCreditCheck(recordTypeName, o) && (
+                (o.IncomingCreditCheckResult__c != oldOrdersMap.get(o.Id).IncomingCreditCheckResult__c && !'Saldo debito cattivo pagatore'.equalsIgnoreCase(o.CreditCheckDescription__c))
+                || ('OK'.equalsIgnoreCase(o.IncomingCreditCheckResult__c) && !oldCreditCheckDescription.equalsIgnoreCase(o.CreditCheckDescription__c) && 'Saldo debito cattivo pagatore'.equalsIgnoreCase(oldCreditCheckDescription))
+                || o.OutgoingCreditCheckResult__c != oldOrdersMap.get(o.id).OutgoingCreditCheckResult__c)
+            ){
                 o.CreditCheckInProgress__c = false;
                 if('Attesa Credit Check'.equalsIgnoreCase(o.Phase__c) || 'Credit Check KO'.equalsIgnoreCase(o.Phase__c)){
                     ordersId.add(o.Id);
@@ -1178,7 +1202,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
             for(Order o : newOrdersList){
                 String recordTypeName = rtMap.get(o.RecordTypeId).getDeveloperName();
-                if(checkRecordTypeForCreditCheck(recordTypeName, o) && (o.IncomingCreditCheckResult__c != oldOrdersMap.get(o.Id).IncomingCreditCheckResult__c || o.OutgoingCreditCheckResult__c != oldOrdersMap.get(o.id).OutgoingCreditCheckResult__c)){
+                String oldCreditCheckDescription = String.isNotBlank(oldOrdersMap.get(o.Id).CreditCheckDescription__c) ? oldOrdersMap.get(o.Id).CreditCheckDescription__c : '';
+                if(checkRecordTypeForCreditCheck(recordTypeName, o) 
+                && (
+                    o.IncomingCreditCheckResult__c != oldOrdersMap.get(o.Id).IncomingCreditCheckResult__c
+                    || ('OK'.equalsIgnoreCase(o.IncomingCreditCheckResult__c) && !oldCreditCheckDescription.equalsIgnoreCase(o.CreditCheckDescription__c) && 'Saldo debito cattivo pagatore'.equalsIgnoreCase(oldCreditCheckDescription)) 
+                    || o.OutgoingCreditCheckResult__c != oldOrdersMap.get(o.id).OutgoingCreditCheckResult__c
+                    )
+                ){
                     o.CreditCheckInProgress__c = false;
                     if('Attesa Credit Check'.equalsIgnoreCase(o.Phase__c) || 'Credit Check KO'.equalsIgnoreCase(o.Phase__c)){
                         if((String.isNotBlank(o.IncomingCreditCheckResult__c) && o.IncomingCreditCheckResult__c.containsIgnoreCase('KO')) || (String.isNotBlank(o.OutgoingCreditCheckResult__c) && o.OutgoingCreditCheckResult__c.containsIgnoreCase('KO'))){
