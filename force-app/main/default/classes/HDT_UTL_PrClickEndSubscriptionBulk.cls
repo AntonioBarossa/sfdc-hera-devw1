@@ -40,7 +40,7 @@ global inherited sharing class HDT_UTL_PrClickEndSubscriptionBulk implements wrt
                 bundleSubIds.add(c.Subscription__c);
             }
         }
-        subscriptions.addAll( [SELECT Id, SBQQ__TerminatedDate__c,SBQQ__SubscriptionEndDate__c FROM SBQQ__Subscription__c WHERE SBQQ_RequiredBy__c IN :bundleSubIds WITH SECURITY_ENFORCED]);
+        subscriptions.addAll( [SELECT Id, SBQQ__TerminatedDate__c,SBQQ__SubscriptionEndDate__c FROM SBQQ__Subscription__c WHERE SBQQ__RequiredById__c  IN :bundleSubIds WITH SECURITY_ENFORCED]);
         Date terminationDay = Date.today();
         for(SBQQ__Subscription__c subscription : subscriptions){
             subsToBeTerminated.add(new SBQQ__Subscription__c(Id=subscription.Id, SBQQ__SubscriptionEndDate__c=terminationDay, SBQQ__TerminatedDate__c=terminationDay));
