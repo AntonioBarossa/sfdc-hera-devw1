@@ -294,7 +294,7 @@ public with sharing class HDT_UTL_ServicePoint {
         String accCategory = inputFields.get('accCategory');
 
         if(servizio.equalsIgnoreCase('Energia Elettrica')){
-            tipoFornitura = tipoImpianto.equalsIgnoreCase('13A0-Usi di Abitazione BT') ? 'Domestico' : 'Non Domestico';
+            tipoFornitura = tipoImpianto != null && tipoImpianto.equalsIgnoreCase('13A0-Usi di Abitazione BT') ? 'Domestico' : 'Non Domestico';
         }
         else {
             String fields = 'Id, SupplyType__c';

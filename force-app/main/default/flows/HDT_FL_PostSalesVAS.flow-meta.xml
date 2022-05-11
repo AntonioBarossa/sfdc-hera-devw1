@@ -64,7 +64,7 @@
             <assignToReference>Case.Commodity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Subscription.SBQQ__OrderProduct__r.Order.CommodityFormula__c</elementReference>
+                <elementReference>Get_Subscription.Service__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -72,6 +72,71 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Subscription.SBQQ__Product__r.Family</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.ServicePoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.SBQQ__Contract__r.ServicePoint__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.BillingProfile__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.SBQQ__Contract__r.BillingProfile__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Surface__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.Surface__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.HouseOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.OwnerAC__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.HouseType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.DwellingType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.NumberOfPeople__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.OccupantsNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CausalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignOutput</name>
+        <label>AssignOutput</label>
+        <locationX>704</locationX>
+        <locationY>1238</locationY>
+        <assignmentItems>
+            <assignToReference>Case</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCaseAggiornato</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -186,6 +251,11 @@
         </rules>
     </decisions>
     <formulas>
+        <name>CausalCode</name>
+        <dataType>String</dataType>
+        <expression>IF({!Get_Subscription.Service__c} = &quot;Energia Elettrica&quot;, &quot;VCE&quot;, &quot;VCG&quot;)</expression>
+    </formulas>
+    <formulas>
         <name>TerminationDateFormula</name>
         <dataType>Date</dataType>
         <expression>IF(TODAY() &gt; {!Get_Subscription.SBQQ__StartDate__c}, TODAY(),  {!Get_Subscription.SBQQ__StartDate__c}+1)</expression>
@@ -211,6 +281,16 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_Case</name>
+        <label>Create Case</label>
+        <locationX>704</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>Arricchimento_Dati</targetReference>
+        </connector>
+        <inputReference>Case</inputReference>
+    </recordCreates>
     <recordLookups>
         <name>Get_Subscription</name>
         <label>Get Subscription</label>
@@ -230,6 +310,27 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>SBQQ__Subscription__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetCaseAggiornato</name>
+        <label>GetCaseAggiornato</label>
+        <locationX>704</locationX>
+        <locationY>1118</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssignOutput</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
@@ -285,6 +386,34 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Arricchimento_Dati</name>
+        <label>Arricchimento Dati</label>
+        <locationX>704</locationX>
+        <locationY>998</locationY>
+        <connector>
+            <targetReference>GetCaseAggiornato</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Case.Contract__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>Case.ServicePoint__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>AccountId</name>
         <dataType>String</dataType>
