@@ -2,7 +2,8 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CheckBusinessFields</fullName>
     <active>true</active>
-    <errorConditionFormula>IF(OR
+    <errorConditionFormula>IF(AND(CONTAINS( $User.Username , $CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Account.SkipUsernames__c ), DATETIMEVALUE(NOW()) &lt; DATETIMEVALUE($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Account.SkipDueDateTime__c)),false,
+IF(OR
 (AND(IsMigrated__c = True,RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;)),
 RecordType.DeveloperName = &quot;HDT_RT_Partner&quot;,AND(ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;), IsSOL__c = true)) ,
 false,
@@ -23,6 +24,7 @@ true,false
 )
 )
 
+)
 )
 )</errorConditionFormula>
     <errorMessage>Campi obbligatori: Marcatura , Categoria ,Indirizzo ,Silos.

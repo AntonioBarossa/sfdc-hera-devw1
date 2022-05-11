@@ -1180,8 +1180,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
         String orderId = HDT_UTL_DocumentalManagement.getValue('Order', 'Id', 0, inputs, formParams);
         Order orderData = HDT_QR_DocumentalConfiguration.getOrderPriceBook(orderId);
-        String priceBookName = orderData.SBQQ__Quote__r?.SBQQ__PriceBook__r?.Name;
-
+        String priceBookNameQuote = orderData.SBQQ__Quote__r?.SBQQ__PriceBook__r?.Name;
+        String priceBookNameOrder = orderData.Pricebook2.Name;
+        String priceBookName = String.isNotBlank(priceBookNameOrder)?priceBookNameOrder:priceBookNameQuote;
         if (String.isBlank(priceBookName)) {
             return '';
         }

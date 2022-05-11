@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PartialOutcome__c</fullName>
-    <description>Indica l&apos;esito intermedio ricevuto durante lo scarto</description>
+    <defaultValue>&quot;N&quot;</defaultValue>
+    <description>Campo riutilizzato per la morosita e aggiunto in integrazione. Non usare per altri scopi</description>
     <externalId>false</externalId>
-    <label>Esito intermedio</label>
+    <label>Morosita da Cruscotto</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
