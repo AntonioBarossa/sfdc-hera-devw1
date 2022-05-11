@@ -68,6 +68,7 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         HDT_UTL_OrderProcess.creditCheckManager2(trigger.newMap,trigger.oldMap);
         HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
         HDT_UTL_OrderTriggerVas.cancelLinkedVasOrders(Trigger.newMap, Trigger.oldMap);     
+        HDT_UTL_Scarti.closeActivityOnCompleted(Trigger.new, Trigger.oldMap);
         
         HDT_SRV_VoltureChangeManager vltMgr = new HDT_SRV_VoltureChangeManager();
         vltMgr.orderPrecheckOk(Trigger.new);
