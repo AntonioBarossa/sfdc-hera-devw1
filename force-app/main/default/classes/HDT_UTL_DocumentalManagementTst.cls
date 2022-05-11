@@ -2,25 +2,42 @@
 public with sharing class HDT_UTL_DocumentalManagementTst {
     @TestSetup
     static void setup(){
-        
+        Id pricebookId = Test.getStandardPricebookId();
+
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
-        
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
+        ordList[0].Pricebook2Id=pricebookId;
+        insert ordList;
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
+        List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].id, 'Bozza');
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
+        HDT_UTL_DataFactoryTst.createChildOrder(1, true, accList[0].Id, sales, ordList[0].Id, contactList[0].Id);
         
         List<DocumentalPayloadAdministration__c> documList = HDT_UTL_DataFactoryTst.createDocumentalPayloadAdm();
         List<DocumentalActivity__c> docActList = HDT_UTL_DataFactoryTst.createDocumentalActivity(1,null,caseList[0].Id);
+
+
+        
+        
+        List<Product2> prods = HDT_UTL_DataFactoryTst.createProduct2(1, false);
+        prods[0].Family = 'VAS Fatturabili';
+        prods[0].DescriptionSAP__c = 'descr';
+        insert prods;
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
+        List<PricebookEntry> entries = HDT_UTL_DataFactoryTst.createPricebookEntry(prods, true, pricebookId);
+        HDT_UTL_DataFactoryTst.createOrderItem(1, true, ordList[0].Id, servPointList[0].id, prods[0].id, entries[0].id);
+
+
         HDT_UTL_DataFactoryTst.createJsonPayload();
         HDT_UTL_DataFactoryTst.createDriverJson();
         HDT_UTL_DataFactoryTst.pClickInstance();
         
         HDT_UTL_DataFactoryTst.newPhaseTransition('Attesa conferma preventivo cliente', 'Bozza', caseList[0].Id, 'HDT_RT_Default');
-        HDT_UTL_DataFactoryTst.pClickOrderPhase();
-        HDT_UTL_DataFactoryTst.pClickCasePhase();
+
         
     }
     
@@ -184,21 +201,64 @@ public with sharing class HDT_UTL_DocumentalManagementTst {
 
         SObject processRecordOrder = HDT_UTL_DocumentalManagement.getProcessRecord(ord.OrderNumber, 'Order');
         
-		 HDT_UTL_DocumentalManagement.createDocumentSendTracking('test', ord.Id, 'test', processRecordOrder);
-         DocumentSendTracking__c doct = [SELECT Id, Type__c FROM DocumentSendTracking__c WHERE Order__c =:ord.Id LIMIT 1];
-         System.assertEquals(doct.Type__c, 'Plico Contrattuale','createDocumentSendTracking Order went wrong');
+		 HDT_UTL_DocumentalManagement.createDocumentalActivityForError('testOrder', ord.Id, 'test', processRecordOrder);
+         DocumentalActivity__c doct = [SELECT Id, ErrorDescription__c FROM DocumentalActivity__c WHERE OrderId__c =:ord.Id LIMIT 1];
+         System.assertEquals(doct.ErrorDescription__c, 'testOrder','testCreateDocumentSendTrackingError Order went wrong');
 
+         HDT_UTL_DocumentalManagement.createDocumentalActivityForError('35', ord.Id, 'test', processRecordOrder);
+         wrts_prcgvr__Activity__c act1 = [SELECT DiscardCategory__c FROM  wrts_prcgvr__Activity__c LIMIT 1];
+         System.assertEquals(act1.DiscardCategory__c, 'Scarto complesso','testCreateDocumentSendTrackingError Order went wrong');
+
+
+/*
          SObject processRecordCase = HDT_UTL_DocumentalManagement.getProcessRecord(ca.CaseNumber, 'Case');
         
-		 HDT_UTL_DocumentalManagement.createDocumentSendTracking('test', ca.Id, 'test', processRecordCase);
-         DocumentSendTracking__c doctc = [SELECT Id, Type__c FROM DocumentSendTracking__c WHERE Case__c =: ca.Id LIMIT 1];
-         System.assertEquals(doctc.Type__c, 'Plico','createDocumentSendTracking Case went wrong');
+		 HDT_UTL_DocumentalManagement.createDocumentalActivityForError('testCase', ca.Id, 'test', processRecordCase);
+         DocumentalActivity__c doctc = [SELECT Id, ErrorDescription__c FROM DocumentalActivity__c WHERE CaseId__c =: ca.Id LIMIT 1];
+         System.assertEquals(doctc.ErrorDescription__c, 'testCase','testCreateDocumentSendTrackingError Case went wrong');
 
-         SObject processRecordTest = HDT_UTL_DocumentalManagement.getProcessRecord(acc.Id, 'Account');
-        
-		 HDT_UTL_DocumentalManagement.createDocumentSendTracking('test', acc.Id, 'test', processRecordTest);
-         DocumentSendTracking__c doctt = [SELECT Id, Type__c FROM DocumentSendTracking__c WHERE Type__c ='Estratto Conto' LIMIT 1];
-         System.assertEquals(doctt.Type__c, 'Estratto Conto','createDocumentSendTracking Account went wrong');
+*/
         Test.stopTest();
     }
+
+
+    @isTest
+    static void testCreateRequestOrder() {
+        Test.startTest();
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Order');
+        Order ord = [SELECT Id, OrderNumber FROM Order LIMIT 1];
+        String res = HDT_SRV_DocumentalManagement.generateRequest((String)ord.Id,'Order', JSON.serialize(formParams));
+       
+        Test.stopTest();
+    }
+
+    @isTest
+    static void testCreateRequestCase() {
+        Test.startTest();
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Case');
+        Case ca = [SELECT Id, CaseNumber, Phase__c FROM Case LIMIT 1]; 
+        String res = HDT_SRV_DocumentalManagement.generateRequest((String)ca.Id,'Case', JSON.serialize(formParams));
+       
+        Test.stopTest();
+    }
+
+    static void testgeneratePayloadGestioneCredito() {
+        Test.startTest();
+        Map<String,Object> primolivello = new Map<String,Object>();
+        primolivello.put('societa', 'HERA COMM MARCHE');
+                
+        List<Object> itemVasList = new List<Object>();
+        itemVasList.add(primolivello);
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'EC');
+        formParams.put('EstrattoConto', JSON.serialize(itemVasList));
+        Case ca = [SELECT Id, CaseNumber, Phase__c FROM Case LIMIT 1]; 
+        String res = HDT_SRV_DocumentalManagement.generatePayloadGestioneCredito(formParams);
+       
+        Test.stopTest();
+    }
+
+
 }
