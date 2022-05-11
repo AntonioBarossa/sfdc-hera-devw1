@@ -893,14 +893,14 @@ public class HDT_UTL_ScartiTst {
         activities[0].wrts_prcgvr__Status__c = 'Aperta';
         activities[0].DiscardCategory__c = 'Tracciatura';
         insert activities;  
-        activities = [SELECT id FROM wrts_prcgvr__Activity__c];
+        activities = [SELECT id FROM wrts_prcgvr__Activity__c WHERE Order__c = :ord.Id AND wrts_prcgvr__Status__c = 'Aperta'];
         Integer preOpenActivities = activities.size();
         ord.Phase__c = 'Completata';
         ord.RecordTypeId = constants.ORDER_RECORDTYPEID_VOLTURA;
         Test.startTest();
          update ord;
         Test.stopTest();
-        activities = [SELECT id FROM wrts_prcgvr__Activity__c];
+        activities = [SELECT id FROM wrts_prcgvr__Activity__c WHERE Order__c = :ord.Id AND wrts_prcgvr__Status__c = 'Aperta'];
         System.assertEquals(1, preOpenActivities-activities.size(), debugString + 'Non si è chiusa l\'attività di tracciatura');
     }
     
