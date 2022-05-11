@@ -52,6 +52,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
         List<Order> orderList = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1, false, accList[0].Id, saleList, pricebookId);
         orderList[0].ServicePoint__c = servPoint.Id;
+        orderList[0].Resident__c = false;
         insert orderList;
         
         
@@ -197,6 +198,35 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //ASSERTS
         System.debug('resultFake: ' + resultFake);
         System.assert(''.equalsIgnoreCase(resultFake), 'Risultato non è stringa vuota.');
+        
+    }
+
+    //handleFlagResident
+    @isTest
+    private static void handleFlagResidentTest(){
+        
+        //SETUP
+        mySetup();
+        
+        Order myItem = [SELECT Id, Resident__c FROM Order];
+        List<SObject> itemVasList = new List<SObject>();
+        itemVasList.add(myItem);
+        itemVasList.add(myItem);//INDICE 1 - TODO: AGGIORNARE TEST NEL CASO SI PRESENTINO PROBLEMATICHE O AGGIORNAMENTI AL PUNTAMENTO INDICE HARDCODED
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('Order', itemVasList);
+        
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Order');
+        
+        //TESTING Regular
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result = myObjectToTest.execute('handleFlagResident', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result: ' + result);
+        System.assert('NO'.equalsIgnoreCase(result), 'Risultato è stringa vuota');
         
     }
     
@@ -1057,6 +1087,43 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         System.debug('resultBlank length ' + resultBlank.length());
         System.assert(String.isBlank(resultBlank), 'Risultato non è stringa vuota.');
         
+    }
+
+    @isTest
+    private static void calculateDriverAllegatiTest(){
+        
+        //SETUP
+        mySetup();
+        
+        List<Order> orderList = [SELECT Id, SignatureMethod__c FROM Order];
+        for(Order o: orderList){
+            o.SignatureMethod__c = 'Vocal Order';
+        }
+
+        List<OrderItem> orderItemList = [Select Id, ProductCode__c, ProductName__c, ProductVersion__c from OrderItem];
+
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('Order', orderList);
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Fake');
+        
+        //TESTING - CASO Contesto Not Order
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result = myObjectToTest.execute('calculateDriverAllegati', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result length ' + result.length());
+        System.assert(String.isBlank(result), 'Risultato non è stringa vuota.');        
+        
+        //TESTING - CASO Contesto Order
+        inputs.put('ItemCommercialOffer', orderItemList);
+        formParams.put('Contesto', 'Order');
+        String resultBlank = myObjectToTest.execute('calculateDriverAllegati', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('resultBlank length ' + resultBlank.length());
+        System.assert(String.isBlank(resultBlank), 'Risultato non è stringa vuota.');
         
     }
     
