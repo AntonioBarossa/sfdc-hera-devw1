@@ -9,12 +9,14 @@ public inherited sharing class HDT_WRP_VasOrder {
         public Order parentOrder;
         public Account account;
         public Contract contract;
+        public Sale__c sale;
         public List<HDT_WRP_ChildOrder> childOrderList;
 
         public HDT_WRP_ProcessObjects(){
             error = false;
             parentOrder = new Order();
             account = new Account();
+            sale = new Sale__c();
             childOrderList = new List<HDT_WRP_ChildOrder>();
         }
 
