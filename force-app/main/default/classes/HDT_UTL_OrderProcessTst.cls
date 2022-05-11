@@ -41,7 +41,13 @@ public with sharing class HDT_UTL_OrderProcessTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('Esportazione VS Siebel', 'Documentazione Validata', constants.ORDER_RECORDTYPEID_VOLTURA, 'HDT_RT_Voltura');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita', 'Bozza', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza', 'Documentazione Gestita', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza', 'Documentazione Gestita', constants.ORDER_RECORDTYPEID_ATTIVAZIONE, 'HDT_RT_Attivazione');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Amm. Precheck KO SII', 'Documentazione Gestita', constants.ORDER_RECORDTYPEID_CAMBIO_OFFERTA, 'HDT_RT_CambioOfferta');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Amm. Precheck KO SII', 'Documentazione Gestita', constants.ORDER_RECORDTYPEID_ATTIVAZIONE, 'HDT_RT_Attivazione');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Amm. Precheck KO SII', 'Documentazione Gestita', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku', 'Bozza', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku', 'Bozza', constants.ORDER_RECORDTYPEID_ATTIVAZIONE, 'HDT_RT_Attivazione');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku', 'Bozza', constants.ORDER_RECORDTYPEID_CAMBIO_OFFERTA, 'HDT_RT_CambioOfferta');
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa tempi di ripensamento', 'Documentazione Gestita', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'Documentazione Gestita', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa di quality call', 'Documentazione Gestita', constants.ORDER_RECORDTYPEID_ORDERDOSSIER, 'HDT_RT_OrderDossier');
@@ -77,6 +83,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             insert spList;
 
             List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(3, false, accList[0].Id, 'Bozza');
+            orderList[0].Name = 'testOrderName0';
             orderList[0].PraxidiaOverrallSatisfaction__c = 2.0;
             orderList[0].PraxidiaDateOutcome__c = Date.newInstance(2020, 08, 10);
             orderList[0].isTransition__c = true;
@@ -92,7 +99,6 @@ public with sharing class HDT_UTL_OrderProcessTst {
             orderList[0].SapContractCode__c = '123456';
             orderList[0].TecnicalPhase__c = 'Bozza';
             orderList[0].DateSentToSII__c = Date.today();
-            orderList[0].Name = 'testOrderName0';
             orderList[0].Phase__c = 'Documentazione Gestita';
             orderList[1].Name = 'testOrderName1';
             orderList[1].MethodSignedAccepted__c = null;
@@ -424,7 +430,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
     }
 
     @isTest
-    public static void testOrderCalulateDateUpdate() {
+    public static void testOrderCalculateDateUpdate() {
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -434,17 +440,26 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                            Contact__c, ParentOrder__c, PhaseStory__c, SignedDate__c, IncomingCreditCheckResult__c,
+                                            Contact__c, ParentOrder__c, PhaseStory__c, SignedDate__c, IncomingCreditCheckResult__c,MaxAfterthoughtDate__c,
                                             IsSequanzialized__c
                                      FROM Order WHERE AgencyCode__c = 'AgencyCode'];
 
-            List<Order> ordersNew = ordersOld;
-            ordersNew[0].Status = 'In Lavorazione';
-            ordersNew[0].RecordTypeId = constants.ORDER_RECORDTYPEID_ATTIVAZIONE;
-            ordersNew[0].ProcessType__c = 'Switch in Ele';
-            ordersNew[0].SignedDate__c = Date.today();
-            ordersNew[0].WizardCompletedDate__c = Date.today();
-            ordersNew[0].RecessNotice__c = 1.0;
+            ordersOld[0].SignedDate__c = Date.today().addDays(-2);
+            update ordersOld;
+
+            Order newOrd = new Order();
+            newOrd.Id = ordersOld[0].Id;
+            newOrd.AccountId = ordersOld[0].AccountId;
+            newOrd.MaxAfterthoughtDate__c = ordersOld[0].MaxAfterthoughtDate__c;
+            newOrd.Status = 'In Lavorazione';
+            newOrd.RecordTypeId = constants.ORDER_RECORDTYPEID_ATTIVAZIONE;
+            newOrd.ProcessType__c = 'Switch in Ele';
+            newOrd.Phase__c = 'Comunicazione verso Heroku';
+            newOrd.SignedDate__c = Date.today();
+            newOrd.WizardCompletedDate__c = Date.today();
+            newOrd.RecessNotice__c = 1.0;
+            List<Order> ordersNew = new List<Order>();
+            ordersNew.add(newOrd);
             update ordersNew;
 
             HDT_UTL_OrderProcess.orderCalulateDateUpdate(ordersNew, ordersOld);
@@ -467,24 +482,30 @@ public with sharing class HDT_UTL_OrderProcessTst {
  
             Test.startTest();
 
-            List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+            List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId, ServicePoint__c,SapImplantCode__c,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
                                             Contact__c, ParentOrder__c, PhaseStory__c, SignedDate__c, IncomingCreditCheckResult__c,
                                             IsSequanzialized__c, TecnicalPhase__c
                                      FROM Order WHERE Name = 'testOrderName0'];
-            
-            List<Order> ordersNew = ordersOld;
-            ordersNew[0].Phase__c = 'Completata';
-            update ordersNew;
+            Order newOrd = new Order();
+            newOrd.Id = ordersOld[0].Id;
+            newOrd.Phase__c = 'Completata';
+            newOrd.Status = 'Activated';
+            newOrd.ServicePoint__c = ordersOld[0].ServicePoint__c;
+            newOrd.SapImplantCode__c = ordersOld[0].SapImplantCode__c;
+            newOrd.AccountId = ordersOld[0].AccountId;
+            newOrd.SignedDate__c = ordersOld[0].SignedDate__c;
+            List<Order> ordersNew = new List<Order>();
+            ordersNew.add(newOrd);
 
             HDT_UTL_OrderProcess.overturningFields(ordersOld, ordersNew);
 
-            List<Order> assertList = [SELECT Id FROM Order WHERE Phase__c = 'Completata'];
+            List<ServicePoint__c> spList = [SELECT Id,SAPImplantCode__c,account__c FROM ServicePoint__c WHERE Id = :ordersOld[0].ServicePoint__c];
 
             Test.stopTest();
 
-            System.assertEquals(false, assertList.isEmpty(), 'Order updated');
-            System.assertNotEquals(true, assertList.isEmpty(), 'Order not updated.');
+            System.assertEquals(ordersOld[0].SapImplantCode__c, spList[0].SAPImplantCode__c, 'Service Point not updated');
+            System.assertEquals(ordersOld[0].AccountId, spList[0].account__c, 'Service Point not updated');
         }
     }
 

@@ -231,7 +231,6 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
         a.Vatnumber__c = rel.Account.Vatnumber__c;
         a.BillingCity = rel.Account.BillingCity;
         a.BillingCountry = rel.Account.BillingCountry;
-        a.BillingStreetToponym__c = rel.Account.BillingStreetToponym__c;
         a.BillingStreetNumber__c = rel.Account.BillingStreetNumber__c;
         a.BillingPostalCode = rel.Account.BillingPostalCode;
         a.BillingState = rel.Account.BillingState;
