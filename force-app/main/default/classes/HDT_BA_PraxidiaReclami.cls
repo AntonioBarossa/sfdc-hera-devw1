@@ -68,6 +68,8 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
                 fr.brand = '';
                 fr.segmento = ca.Account.segment__c != null ? ca.Account.segment__c : '';
                 fr.comuneCorretto = ca.ServicePoint__r.SupplyCity__c != null ? ca.ServicePoint__r.SupplyCity__c : '';
+                fr.istatCorretto = ca.SupplyCityCode__c != null ? ca.SupplyCityCode__c : '';
+                fr.provincia = ca.ServicePoint__r.SupplyProvince__c != null ? ca.ServicePoint__r.SupplyProvince__c : '';
                 fr.dirittoRettifica = ca.CorrectionRight__c != null ? ca.CorrectionRight__c : '';
                 fr.flussoPratica = ca.parentId != null ? 'S' : caseParentiIdChild.get(ca.id) != null ? 'M' : 'U';
                 fr.canaleDiUscita = ca.MotivatedResponseSendMode__c != null ? ca.MotivatedResponseSendMode__c : '';
@@ -107,6 +109,8 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
             rowFile = rowFile + fr.brand + ';' ;
             rowFile = rowFile + fr.segmento + ';' ;
             rowFile = rowFile + fr.comuneCorretto + ';' ; 
+            rowFile = rowFile + fr.istatCorretto + ';' ; 
+            rowFile = rowFile + fr.provincia + ';' ; 
             rowFile = rowFile + fr.dirittoRettifica + ';' ;
             rowFile = rowFile + fr.flussoPratica + ';' ;
             rowFile = rowFile + fr.canaleDiUscita + ';' ; 
