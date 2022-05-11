@@ -881,5 +881,27 @@ public class HDT_UTL_ScartiTst {
         System.assertNotEquals(null, mrRequest.requests, 'handleMRRInboundRequest did not work correctly');
         
     }
+
+    @IsTest
+    public static void testCloseActivityOnCompleted(){
+        String debugString = 'method - closeActivityOnCompleted ';
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Completata','Bozza',constants.ORDER_RECORDTYPEID_VOLTURA,constants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
+        Order ord = [SELECT id FROM Order LIMIT 1];
+        Account acc = [SELECT id FROM Account LIMIT 1];
+        List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acc.Id);
+        activities[0].Order__c = ord.id;
+        activities[0].wrts_prcgvr__Status__c = 'Aperta';
+        activities[0].DiscardCategory__c = 'Tracciatura';
+        insert activities;  
+        activities = [SELECT id FROM wrts_prcgvr__Activity__c];
+        Integer preOpenActivities = activities.size();
+        ord.Phase__c = 'Completata';
+        ord.RecordTypeId = constants.ORDER_RECORDTYPEID_VOLTURA;
+        Test.startTest();
+         update ord;
+        Test.stopTest();
+        activities = [SELECT id FROM wrts_prcgvr__Activity__c];
+        System.assertEquals(1, preOpenActivities-activities.size(), debugString + 'Non si è chiusa l\'attività di tracciatura');
+    }
     
 }
