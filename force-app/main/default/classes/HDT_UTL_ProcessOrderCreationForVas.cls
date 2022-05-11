@@ -28,9 +28,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         Map<String, Id> failedMap = new Map<String, Id>();
         itemsToUpdate = new List<MassiveLoaderRequestItem__c>();
         productMap = new Map<String, Product2>();
-
-        //childOrderRecordTypeId = getOrderRecordTypeMap(processName);
-
         processObjList = new List<HDT_WRP_VasOrder.HDT_WRP_ProcessObjects>();
        
         for(MassiveLoaderRequestItem__c item : requestItemList){
@@ -120,19 +117,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
                 accRelMap.put(acr.Account.CustomerCode__c, acr);
             }
         }
-
-        //List<Account> accountList = [
-        //    SELECT Id, Name, CustomerCode__c
-        //    FROM Account
-        //    WHERE CustomerCode__c IN :customerCodeList
-        //    WITH SECURITY_ENFORCED
-        //];
-//
-        //if(accountList.size() > 0){
-        //    for(Account a : accountList){
-        //        accountMap.put(a.CustomerCode__c, a.Id);
-        //    }
-        //}
 
         List<Product2> retrieveOffertList = [
             SELECT Id, Name, ProductCode, DescriptionSAP__c, Version__c
@@ -233,6 +217,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
                 processObject.sale = setSaleObject(processObject.sale, accRelMap.get(processObject.account.CustomerCode__c));
                 requestItemForUpsert.add(processObject.allRequestItems[0]);
                 saleToInsert.add(processObject.sale);
+            } else {
+                processObject = setErrorObj(processObject, 'Account non presente a sistema');
+                continue;
             }
 
         }
@@ -248,9 +235,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
             }
 
             if(saveSaleResponse.errorItemMap.containsKey(processObject.allRequestItems[0].Id)){
-                //processObject.error = true;
-                //processObject.allRequestItems[0].Status__c = 'Errore';
-                //processObject.allRequestItems[0].StatusDescription__c = saveSaleResponse.errorItemMap.get(processObject.allRequestItems[0].Id);
                 processObject = setErrorObj(processObject, saveSaleResponse.errorItemMap.get(processObject.allRequestItems[0].Id));
                 continue;
             }
@@ -262,7 +246,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
             parentOrderToInsert.add(processObject.parentOrder);
         }
         
-        HDT_UTL_DatabaseService.insertSObject(opportunityToinsert);
+        if(opportunityToinsert.size() > 0){
+            HDT_UTL_DatabaseService.insertSObject(opportunityToinsert);
+        }
 
         HDT_WRP_SaveResponse parentOrderResponse;
         parentOrderResponse = databaseUpsert(parentOrderToInsert, requestItemForUpsert, 'Order');
@@ -282,9 +268,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
             }
 
             if(parentOrderResponse.errorItemMap.containsKey(processObject.allRequestItems[0].Id)){
-                //processObject.error = true;
-                //processObject.allRequestItems[0].Status__c = 'Errore';
-                //processObject.allRequestItems[0].StatusDescription__c = parentOrderResponse.errorItemMap.get(processObject.allRequestItems[0].Id);
                 processObject = setErrorObj(processObject, parentOrderResponse.errorItemMap.get(processObject.allRequestItems[0].Id));
                 continue;
             }
@@ -386,9 +369,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
             }
 
             if(childOrderResponse.errorItemMap.containsKey(processObject.allRequestItems[0].Id)){
-                //processObject.error = true;
-                //processObject.allRequestItems[0].Status__c = 'Errore';
-                //processObject.allRequestItems[0].StatusDescription__c = childOrderResponse.errorItemMap.get(processObject.allRequestItems[0].Id);
                 processObject = setErrorObj(processObject, childOrderResponse.errorItemMap.get(processObject.allRequestItems[0].Id));
                 continue;
             }
@@ -412,34 +392,33 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         System.debug('>>> OrderItem errorItemMap: ' + String.valueOf(orderItemResponse.errorItemMap));
 
         for(HDT_WRP_VasOrder.HDT_WRP_ProcessObjects processObject : processObjList){
-            
+
             if(orderItemResponse.errorItemMap.containsKey(processObject.allRequestItems[0].Id)){
-                //processObject.error = true;
-                //processObject.allRequestItems[0].Status__c = 'Errore';
-                //processObject.allRequestItems[0].StatusDescription__c = orderItemResponse.errorItemMap.get(processObject.allRequestItems[0].Id);
                 processObject = setErrorObj(processObject, orderItemResponse.errorItemMap.get(processObject.allRequestItems[0].Id));
             }
 
             if(processObject.error){
                 processObject = setAllRequestForError(processObject);
+            } else {
+                for(HDT_WRP_VasOrder.HDT_WRP_ChildOrder wrpChildOrder : processObject.childOrderList){
+                    wrpChildOrder.orderItemList[1].orderItem.SBQQ__RequiredBy__c = wrpChildOrder.orderItemList[0].orderItem.Id; // offerta
+                    for(HDT_WRP_VasOrder.HDT_WRP_OrderItem wrpOrderItem : wrpChildOrder.orderItemList){
+                        orderItemToUpdate.add(wrpOrderItem.orderItem);
+                    }
+                }
             }
 
             for(MassiveLoaderRequestItem__c item : processObject.allRequestItems){
                 itemsToUpdate.add(item);
             }
 
-            for(HDT_WRP_VasOrder.HDT_WRP_ChildOrder wrpChildOrder : processObject.childOrderList){
-                wrpChildOrder.orderItemList[1].orderItem.SBQQ__RequiredBy__c = wrpChildOrder.orderItemList[0].orderItem.Id; // offerta
-                for(HDT_WRP_VasOrder.HDT_WRP_OrderItem wrpOrderItem : wrpChildOrder.orderItemList){
-                    orderItemToUpdate.add(wrpOrderItem.orderItem);
-                }
-            }
-
             System.debug('>>> @ ' + JSON.serialize(processObj));
 
         }
 
-        HDT_UTL_DatabaseService.updateSObject(orderItemToUpdate);
+        if(orderItemToUpdate.size() > 0){
+            HDT_UTL_DatabaseService.updateSObject(orderItemToUpdate);
+        }
 
         getLimitDetails('EndCreation');
 
@@ -469,8 +448,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         processObj.orderNumber = tempSplitedFields[orderNumberIndex];
         String standaloneCsvValue = tempSplitedFields[standaloneIndex];
         processObj.isStandalone = false;
-
-        //processObj.wrapperOrdeItemList = new List<HDT_WRP_VasOrder.HDT_WRP_OrderItem>();
 
         if(String.isNotEmpty(standaloneCsvValue) && standaloneCsvValue.equalsIgnoreCase('TRUE')){
             processObj.vasOrderType = 'standalone';
