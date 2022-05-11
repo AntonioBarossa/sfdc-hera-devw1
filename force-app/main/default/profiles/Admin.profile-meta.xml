@@ -188,6 +188,10 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_CreditCheckExcludedCode__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_MatrixCompatibilityMap__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
