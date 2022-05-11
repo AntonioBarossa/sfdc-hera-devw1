@@ -25,9 +25,8 @@ export default class HdtLandRegistry extends LightningElement {
     @api selectedLandRegistryId;
     @api required = false;
     @api readonly = false;
-    @track showSpinner = false;
-    columns = columns;
-    data = [];
+    @track data = [];
+    showSpinner = false;
 
     connectedCallback(){
         //this.showSpinner = true;
