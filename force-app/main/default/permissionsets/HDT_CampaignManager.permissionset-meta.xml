@@ -142,11 +142,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.BillingStreetToponym__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.BirthDate__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -1492,11 +1487,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Asset.RoleProfile__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Asset.SBQQ__AdditionalDiscountAmount__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -2238,11 +2228,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>BillingProfile__c.InvoicingStreetNumber__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BillingProfile__c.InvoicingStreetToponym__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5878,11 +5863,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.MailingStreetNumber__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Contact.MailingStreetToponym__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10507,22 +10487,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>OrderItem.Campaign__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>OrderItem.CategoryFamily__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.CategoryTypeClient__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>OrderItem.ChannelClient__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10563,11 +10533,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.ContinuityChangeOffer__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>OrderItem.ContributionsType__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10643,11 +10608,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.EndDate</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>OrderItem.EquipmentType__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10817,36 +10777,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>OrderItem.PriceF0__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>OrderItem.PriceF1__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>OrderItem.PriceF2__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>OrderItem.PriceF3__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>OrderItem.PriceFP__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>OrderItem.PriceFV__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>OrderItem.PriceFedFixed__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -10938,11 +10868,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.ReturnSafeGuardData__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>OrderItem.RoleProfile__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15452,11 +15377,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__ProductOption__c.Campaign__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SBQQ__ProductOption__c.CategoryFamily__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -15772,16 +15692,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__ProductOption__c.PDRCode__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__ProductOption__c.PODCode__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SBQQ__ProductOption__c.PaymentMode__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -15917,11 +15827,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__ProductOption__c.Range__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SBQQ__ProductOption__c.Reading__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -15943,11 +15848,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__ProductOption__c.ReturnSafeGuardData__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__ProductOption__c.RoleProfile__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16188,11 +16088,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__ProductOption__c.TextInPrint__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__ProductOption__c.Typology__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16877,31 +16772,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.PriceF0__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.PriceF1__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.PriceF2__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.PriceF3__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.PriceFP__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SBQQ__QuoteLine__c.PriceFV__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -16933,11 +16803,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteLine__c.PriceNet__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.PricePickOut__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

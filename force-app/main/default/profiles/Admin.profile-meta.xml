@@ -25,38 +25,6 @@
         <default>false</default>
         <visible>true</visible>
     </applicationVisibilities>
-    <classAccesses>
-        <apexClass>HDT_TRH_Case</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_TRH_Order</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_DatabaseService</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_HelperMethods</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_HeraException</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_SecurityAccess</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_SobjectUtils</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_WS_MrrRequest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
     <custom>false</custom>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
@@ -185,6 +153,10 @@
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_Informative_Configuration__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_CreditCheckExcludedCode__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
@@ -1074,11 +1046,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.BillingStreetNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.BillingStreetToponym__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4038,11 +4005,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>BillingProfile__c.InvoicingStreetToponym__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>BillingProfile__c.IsInactiveSAPContractAccount__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4294,6 +4256,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.CampaignEleggibilityGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.SapContractCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
      <fieldPermissions>
@@ -8263,11 +8230,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.MailingStreetToponym__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Contact.MobilePhone</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9466,6 +9428,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>DocumentSelected__c.Residue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentSelected__c.RaiFeeAmount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15580,11 +15547,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>OrderItem.ChannelClient__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>OrderItem.Channel__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -21086,16 +21048,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__ProductOption__c.OwnerAC__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SBQQ__ProductOption__c.PDRCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SBQQ__ProductOption__c.PODCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -34281,7 +34233,7 @@
         <recordType>Case.HDT_RT_ModContrattoPreAtt</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_PostSaleVas</layout>
         <recordType>Case.HDT_RT_PostSalesVAS</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -39105,12 +39057,4 @@
         <enabled>true</enabled>
         <name>ViewUserPII</name>
     </userPermissions>
-    <pageAccesses>
-        <apexPage>HDT_VFP_LeadMessage</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>HDT_VF_OverrideDeleteOperation</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
 </Profile>

@@ -101,7 +101,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         }else if(caseType == 'Proroga Conn Temp')
         {
             Date currentEndDate = currentCase.TemporaryConnectionEndDate__c;
-            result = validateEndDate(fields, currentEndDate);
+            result = validateEndDate(fields, currentEndDate, currentCase);
         }else if(cluster.equalsIgnoreCase('Attivazioni'))
         {
             result = validateAttivazioniPostSales(fields);
@@ -1219,7 +1219,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return result;
     }
 
-    public String validateEndDate(String fields, Date currentEndDate){
+    public String validateEndDate(String fields, Date currentEndDate, Case currentCase){
 
         String endDateString = getFieldValue(fields, 'TemporaryConnectionEndDate__c');
 
@@ -1227,8 +1227,14 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         Date endDate = Date.valueOf(endDateString);
 
+        List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+
         if ( currentEndDate > endDate) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario che la data fine connessione temporanea sia successiva a quella già esistente sul contratto.'));
+        }
+        if(attachedDocument.size() == 0)
+        {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire allegati'));
         }
 
         return result;

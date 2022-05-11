@@ -70,11 +70,11 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         orderSrv.updateRecord(orderUpdate);
 
-        activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
-            Id = activityId,
-            wrts_prcgvr__Status__c = 'Esitata',
-            ContactResult__c	 = causalQuality
-        ));
+        wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
+        act.wrts_prcgvr__Status__c = 'Esitata';
+        act.ContactResult__c = causalQuality;
+
+        activitySrv.updateRecord(act);
     }
 
     @AuraEnabled
@@ -111,7 +111,9 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         if (notCancelPhase.contains(ordToCheck[0].Phase__c) || notCancelNonBillable.contains(ordToCheck[0].Phase__c) || notCancelBillable.contains(ordToCheck[0].Phase__c)) {
             if ('Firma Falsa'.equalsIgnoreCase(causal) || 'Volontà estorta'.equalsIgnoreCase(causal) || causal.equalsIgnoreCase('Contatto Quality Fallito')) {
 
-                wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = activityId, ContactResult__c = 'Annullato');
+                //wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = activityId, ContactResult__c = 'Annullato');
+                wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
+                act.ContactResult__c = 'Annullato';
                 if(causal.equalsIgnoreCase('Contatto Quality Fallito')){
                     act.wrts_prcgvr__Status__c = 'Non Esitata';
                 }    
@@ -137,7 +139,9 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 Status = 'Annullato'
             ));
 
-            wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = activityId, ContactResult__c = 'Annullato');
+            //wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = activityId, ContactResult__c = 'Annullato');
+            wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
+            act.ContactResult__c = 'Annullato';
             if(causal.equalsIgnoreCase('Contatto Quality Fallito')){
                 act.wrts_prcgvr__Status__c = 'Non Esitata';
             }
@@ -179,5 +183,19 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             newPhase =  'Comunicazione Motore VAS';
         }
         return newPhase;
+    }
+
+    private static wrts_prcgvr__Activity__c createActivityToClose(String activityId){
+        wrts_prcgvr__Activity__c actAppo = HDT_UTL_Scarti.closeDiscardActivity(activityId);
+        return new wrts_prcgvr__Activity__c(
+            Id = activityId,
+            EndDate__c = actAppo.EndDate__c, 
+            UserCompany__c = actAppo.UserCompany__c, 
+            ClosedByUsername__c=actAppo.ClosedByUsername__c,
+            ClosingCreatorGroup__c = actAppo.ClosingCreatorGroup__c,
+            ClosingUserChannel__c = actAppo.ClosingUserChannel__c,
+            Place__c = actAppo.Place__c,
+            ActivityEndTime__c = actAppo.ActivityEndTime__c
+        );
     }
 }
