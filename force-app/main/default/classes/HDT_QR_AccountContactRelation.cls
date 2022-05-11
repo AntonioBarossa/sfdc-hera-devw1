@@ -316,7 +316,6 @@ public inherited sharing class HDT_QR_AccountContactRelation {
         Account.VatNumber__c,
         Account.BillingCity,
         Account.BillingCountry,
-        Account.BillingStreetToponym__c,
         Account.BillingPostalCode,
         Account.BillingState,
         Account.BillingStreetNumber__c,
