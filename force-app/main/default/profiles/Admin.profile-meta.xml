@@ -188,6 +188,10 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_CreditCheckExcludedCode__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_MatrixCompatibilityMap__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -1074,11 +1078,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.BillingStreetNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.BillingStreetToponym__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4034,11 +4033,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>BillingProfile__c.InvoicingStreetNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>BillingProfile__c.InvoicingStreetToponym__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8264,11 +8258,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.MailingStreetNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.MailingStreetToponym__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -34291,7 +34280,7 @@
         <recordType>Case.HDT_RT_ModContrattoPreAtt</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_PostSaleVas</layout>
         <recordType>Case.HDT_RT_PostSalesVAS</recordType>
     </layoutAssignments>
     <layoutAssignments>
