@@ -21,7 +21,7 @@ const columns = [
 
 export default class HdtLandRegistry extends LightningElement {
     
-    @api servicePointId;
+    @api servicePointId = 'a281X000000DmNZQA0';
     @api selectedLandRegistryId;
     @api required = false;
     @api readonly = false;
