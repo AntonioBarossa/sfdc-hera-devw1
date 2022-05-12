@@ -448,10 +448,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     */
     public static void recalculateOrderDateAfterKo(List<Order> newOrdersList, List<Order> oldOrdersList){
         Map<String,Order> mapOldOrder = new Map<String,Order>();
+        Map<String,wrts_prcgvr__Activity__c> activityMap = new Map<String,wrts_prcgvr__Activity__c>();
         List<Order> newOrdersListRecalc = new List<Order>();
         List<Order> newOrdersListComfort = new List<Order>();
-        for (Order oldOrder : oldOrdersList) {
+        for(Order oldOrder : oldOrdersList) {
             mapOldOrder.put(oldOrder.id,oldOrder);
+        }
+        /**@frpanico 2022-05-10
+         * Aggiunta query sulle activity di Precheck KO
+         * Nel caso in cui la data di massimo ripensamento
+         * sia maggiore (strettamente) alla data chiusura activity
+         * Non si devono ricalcolare le date
+         */
+        for(wrts_prcgvr__Activity__c a : [SELECT Id,ActivityEndTime__c, Order__c FROM wrts_prcgvr__Activity__c WHERE Order__c IN :mapOldOrder.keySet() AND Type__c LIKE '%Precheck%' AND ActivityEndTime__c != NULL WITH SECURITY_ENFORCED])
+        {
+            activityMap.put(a.Order__c, a);
         }
         for (Order newOrder : newOrdersList) {
             Order oldOrder = mapOldOrder.get(newOrder.id);
@@ -462,6 +473,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura')
                         || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch'))
                 ){
+                    if(!activityMap.isEmpty() && newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
+                        && oldOrder.MaxAfterthoughtDate__c != null && oldOrder.MaxAfterthoughtDate__c > activityMap.get(oldOrder.Id).ActivityEndTime__c)
+                    {
+                        continue;
+                    }
                     if((oldOrder.Phase__c == 'Comunicazione verso Heroku KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         ||(oldOrder.Phase__c == 'Amm. Precheck KO SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         || (oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')

@@ -67,44 +67,54 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
         getTableData({activityId: this.activityId}).then(data =>{
 
             console.log('getTableData: ' + JSON.stringify(data));
+            console.log('Size Data: ' + data.length);
             this.loading = false;
-            
-            this.ordersList = data;
-            this.showTable = true;
-            if (data[0].Order__c != undefined) {
-                this.ordersList.forEach(el => {
-                    el.Id = el.Order__c;
-                    el.CustomerName__c = '/lightning/r/Order/' + el.Order__c + '/view';
-                    el.Status = el.Order__r.Status;
-                    el.Phase__c = el.Order__r.Phase__c;
-                    el.recordtypename = el.Order__r.RecordType.Name;
-                    el.OrderNumber = el.Order__r.OrderNumber;
-                    el.DateComfortCall__c = el.Order__r.DateComfortCall__c;
-                    el.disabledActionButton = el.Order__r.ConfirmCustomerContract__c !== undefined || el.Order__r.CancellationReason__c !== undefined;
-                    el.confirmText = el.Order__r.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Conferma contratto';
-                    el.cancelText = el.Order__r.CancellationReason__c !== undefined ? 'Annullato' : 'Annulla contratto';
-                    el.confirmIcon = el.Order__r.ConfirmCustomerContract__c !== undefined ? 'utility:edit' : 'utility:edit';
-                    el.cancelIcon = el.Order__r.CancellationReason__c !== undefined ? 'utility:edit' : 'utility:edit';
-                    el.StatusEsito =  (el.Order__r.ConfirmCustomerContract__c !== undefined || el.Order__r.CancellationReason__c !== undefined) ? (el.Order__r.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Annullato') : 'In attesa';
-                    el.CommercialProduct__c = (el.Order__r.VasSubtype__c !== undefined && el.Order__r.VasSubtype__c === 'Analisi Consumi')  ?  el.Order__r.VasSubtype__c : el.CommercialProduct__c;
+            if(data.length > 0){
+                this.ordersList = data;
+                this.showTable = true;
+                if (data[0].Order__c != undefined) {
+                    this.ordersList.forEach(el => {
+                        el.Id = el.Order__c;
+                        el.CustomerName__c = '/lightning/r/Order/' + el.Order__c + '/view';
+                        el.Status = el.Order__r.Status;
+                        el.Phase__c = el.Order__r.Phase__c;
+                        el.recordtypename = el.Order__r.RecordType.Name;
+                        el.OrderNumber = el.Order__r.OrderNumber;
+                        el.DateComfortCall__c = el.Order__r.DateComfortCall__c;
+                        el.disabledActionButton = el.Order__r.ConfirmCustomerContract__c !== undefined || el.Order__r.CancellationReason__c !== undefined;
+                        el.confirmText = el.Order__r.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Conferma contratto';
+                        el.cancelText = el.Order__r.CancellationReason__c !== undefined ? 'Annullato' : 'Annulla contratto';
+                        el.confirmIcon = el.Order__r.ConfirmCustomerContract__c !== undefined ? 'utility:edit' : 'utility:edit';
+                        el.cancelIcon = el.Order__r.CancellationReason__c !== undefined ? 'utility:edit' : 'utility:edit';
+                        el.StatusEsito =  (el.Order__r.ConfirmCustomerContract__c !== undefined || el.Order__r.CancellationReason__c !== undefined) ? (el.Order__r.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Annullato') : 'In attesa';
+                        el.CommercialProduct__c = (el.Order__r.VasSubtype__c !== undefined && el.Order__r.VasSubtype__c === 'Analisi Consumi')  ?  el.Order__r.VasSubtype__c : el.CommercialProduct__c;
+                    });
+                } else {
+                    this.ordersList.forEach(el => {
+                        el.Id = el.Id;
+                        el.CustomerName__c = '/lightning/r/Order/' + el.Id + '/view';
+                        el.Status = el.Status;
+                        el.Phase__c = el.Phase__c;
+                        el.recordtypename = el.RecordType.Name;
+                        el.OrderNumber = el.OrderNumber;
+                        el.DateComfortCall__c = el.DateComfortCall__c;
+                        el.disabledActionButton = el.ConfirmCustomerContract__c !== undefined || el.CancellationReason__c !== undefined;
+                        el.confirmText = el.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Conferma contratto';
+                        el.cancelText = el.CancellationReason__c !== undefined ? 'Annullato' : 'Annulla contratto';
+                        el.confirmIcon = el.ConfirmCustomerContract__c !== undefined ? 'utility:edit' : 'utility:edit';
+                        el.cancelIcon = el.CancellationReason__c !== undefined ? 'utility:edit' : 'utility:edit';
+                        el.StatusEsito =  (el.ConfirmCustomerContract__c !== undefined || el.CancellationReason__c !== undefined) ? (el.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Annullato') : 'In attesa';
+                        el.CommercialProduct__c = (el.VasSubtype__c !== undefined && el.VasSubtype__c === 'Analisi Consumi')  ?  el.VasSubtype__c : el.CommercialProduct__c;
+                    });
+                }
+            }
+            else {
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Nessun Ordine da Esitare',
+                    message: 'Non sono presenti Ordini da Esitare.',
+                    variant: 'warning'
                 });
-            } else {
-                this.ordersList.forEach(el => {
-                    el.Id = el.Id;
-                    el.CustomerName__c = '/lightning/r/Order/' + el.Id + '/view';
-                    el.Status = el.Status;
-                    el.Phase__c = el.Phase__c;
-                    el.recordtypename = el.RecordType.Name;
-                    el.OrderNumber = el.OrderNumber;
-                    el.DateComfortCall__c = el.DateComfortCall__c;
-                    el.disabledActionButton = el.ConfirmCustomerContract__c !== undefined || el.CancellationReason__c !== undefined;
-                    el.confirmText = el.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Conferma contratto';
-                    el.cancelText = el.CancellationReason__c !== undefined ? 'Annullato' : 'Annulla contratto';
-                    el.confirmIcon = el.ConfirmCustomerContract__c !== undefined ? 'utility:edit' : 'utility:edit';
-                    el.cancelIcon = el.CancellationReason__c !== undefined ? 'utility:edit' : 'utility:edit';
-                    el.StatusEsito =  (el.ConfirmCustomerContract__c !== undefined || el.CancellationReason__c !== undefined) ? (el.ConfirmCustomerContract__c !== undefined ? 'Confermato' : 'Annullato') : 'In attesa';
-                    el.CommercialProduct__c = (el.VasSubtype__c !== undefined && el.VasSubtype__c === 'Analisi Consumi')  ?  el.VasSubtype__c : el.CommercialProduct__c;
-                });
+                this.dispatchEvent(toastErrorMessage);
             }
         }).catch(error => {
             this.loaded = true;
