@@ -445,6 +445,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
                                      FROM Order WHERE AgencyCode__c = 'AgencyCode'];
 
             ordersOld[0].SignedDate__c = Date.today().addDays(-2);
+            ordersOld[0].IsSequanzialized__c = true;
             update ordersOld;
 
             Order newOrd = new Order();
@@ -455,9 +456,10 @@ public with sharing class HDT_UTL_OrderProcessTst {
             newOrd.RecordTypeId = constants.ORDER_RECORDTYPEID_ATTIVAZIONE;
             newOrd.ProcessType__c = 'Switch in Ele';
             newOrd.Phase__c = 'Comunicazione verso Heroku';
-            newOrd.SignedDate__c = Date.today();
+            newOrd.SignedDate__c = Date.today().addDays(-2);
             newOrd.WizardCompletedDate__c = Date.today();
             newOrd.RecessNotice__c = 1.0;
+            newOrd.IsSequanzialized__c = false;
             List<Order> ordersNew = new List<Order>();
             ordersNew.add(newOrd);
             update ordersNew;
@@ -506,6 +508,39 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             System.assertEquals(ordersOld[0].SapImplantCode__c, spList[0].SAPImplantCode__c, 'Service Point not updated');
             System.assertEquals(ordersOld[0].AccountId, spList[0].account__c, 'Service Point not updated');
+        }
+    }
+
+    @isTest
+    public static void testTransitorySiebelManagement() {
+ 
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+ 
+        System.runAs(u){
+ 
+            Test.startTest();
+
+            List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId, ServicePoint__c,SapImplantCode__c,
+                                            QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
+                                            Contact__c, ParentOrder__c, PhaseStory__c, SignedDate__c, IncomingCreditCheckResult__c,
+                                            IsSequanzialized__c, TecnicalPhase__c
+                                     FROM Order WHERE Name = 'testOrderName0'];
+            ordersOld[0].Phase__c = 'In Corso caricamento Siebel';
+            Map<Id,SObject> ordersOldMap = new Map<Id,SObject>();
+            ordersOldMap.put(ordersOld[0].Id, ordersOld[0]);
+
+            Order newOrd = new Order();
+            newOrd.Id = ordersOld[0].Id;
+            newOrd.Phase__c = 'Caricamento Siebel KO';
+            newOrd.SiebelStatus__c = 'Pratica Gestita';
+            List<SObject> ordersNew = new List<SObject>();
+            ordersNew.add(newOrd);
+
+            Boolean response = HDT_UTL_OrderProcess.transitorySiebelManagement(ordersNew, ordersOldMap);
+
+            Test.stopTest();
+
+            System.assertEquals(true,response, 'Response not correct');
         }
     }
 
