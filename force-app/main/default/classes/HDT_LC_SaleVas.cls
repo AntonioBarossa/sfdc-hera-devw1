@@ -29,7 +29,7 @@ public inherited sharing class HDT_LC_SaleVas {
      */
     @AuraEnabled
     public static void confirmAction(String selectedOption, Order order, Contract contract, String supplyCity, String accountId, Sale__c sale){
-        sale = saleQr.getRecordById(sale.id, 'AgencyCode__c,CommercialId__c ,Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Account__r.CompanyOwner__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
+        sale = saleQr.getRecordById(sale.id, 'AgencyCode__c,CommercialId__c ,Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Account__r.CompanyOwner__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name, Campaign__r.CampaignEligibilityGroup__c');
         switch on selectedOption {
             when  'Ordini in corso'{
                 handleActiveOrderConfirm(order, supplyCity, sale);
@@ -407,7 +407,9 @@ public inherited sharing class HDT_LC_SaleVas {
             IsTransition__c = currentSale[0].IsTransition__c,
             SBQQ__PricebookId__c = checkCommodityOrder(order.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS'),
             AgencyCode__c = sale.AgencyCode__c,
-            CommercialId__c = sale.CommercialId__c
+            CommercialId__c = sale.CommercialId__c,
+            CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null 
+
         );
 
         if(order.ContractReference__c != null)
@@ -427,6 +429,7 @@ public inherited sharing class HDT_LC_SaleVas {
         system.debug('contract --> '+contract);
         system.debug('sale --> '+sale);
         system.debug('PUNTO 1');
+        sale = saleQr.getRecordById(sale.id, 'AgencyCode__c,CommercialId__c ,Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Account__r.CompanyOwner__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name, Campaign__r.CampaignEligibilityGroup__c');
         //REQUEST
         String result = '';
         // HDT_WS_ArricchimentoDatiTemp arricchimentoDati = new HDT_WS_ArricchimentoDatiTemp();
@@ -537,7 +540,8 @@ public inherited sharing class HDT_LC_SaleVas {
                 SBQQ__PricebookId__c = commodity == 'Energia Elettrica' ? getPricebookId('VAS ELE') : commodity == 'Gas' ? getPricebookId('VAS GAS') : null,
                 AgencyCode__c = sale.AgencyCode__c,
                 CommercialId__c = sale.CommercialId__c,
-                SapContractCode__c = contract
+                SapContractCode__c = contract,
+                CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null
                 );
                 // if(order.ContractReference__c != null)
                 // {
@@ -613,7 +617,8 @@ public inherited sharing class HDT_LC_SaleVas {
             IsBillableVas__c = false,
             SBQQ__PricebookId__c = checkCommodityContract(contract.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS'),
             AgencyCode__c = sale.AgencyCode__c,
-            CommercialId__c = sale.CommercialId__c
+            CommercialId__c = sale.CommercialId__c,
+            CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -659,7 +664,8 @@ public inherited sharing class HDT_LC_SaleVas {
             IsBillableVas__c = false,
             SBQQ__PricebookId__c = getPricebookId('VAS Standalone'),
             AgencyCode__c = sale.AgencyCode__c,
-            CommercialId__c = sale.CommercialId__c
+            CommercialId__c = sale.CommercialId__c,
+            CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
