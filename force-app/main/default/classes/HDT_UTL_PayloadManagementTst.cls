@@ -32,7 +32,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         
         //SALE
-        List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Bozza');
+        List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(2, true, accList[0].Id, 'Bozza');
         
         //PRODUCT
         List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, false);
@@ -50,14 +50,21 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //ORDER
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
-        List<Order> orderList = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1, false, accList[0].Id, saleList, pricebookId);
+        List<Order> orderList = HDT_UTL_DataFactoryTst.createOrderWithPricebook(2, true, accList[0].Id, saleList, pricebookId);
         orderList[0].ServicePoint__c = servPoint.Id;
         orderList[0].Resident__c = false;
-        insert orderList;
+        orderList[0].ParentOrder__c = orderList[1].Id;
+        orderList[0].SignatureMethod__c = 'OTP Remoto';
+        update orderList;
         
         
         //ORDER ITEMS
-        List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderList[0].Id, servPointList[0].Id, productList[0].Id, pricebookEntry[0].Id);
+        List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(1, false, orderList[0].Id, servPointList[0].Id, productList[0].Id, pricebookEntry[0].Id);
+        orderItems[0].OccupantsNumber__c = 4;
+        orderItems[0].Surface__c = 100.00;
+        orderItems[0].DwellingType__c = 'Casa Indipendente';
+        orderItems[0].OwnerAC__c = 'Si';
+        insert orderItems;
         System.debug(debugString + ' - orderItems: ' + orderItems);
         
         //CONTACT AND ACCOUNT RELATIONSHIP
@@ -91,6 +98,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
             caseList[0].SendDate__c = date.today().addDays(35);
             //caseList[0].IndemnityDueSendResponse__c = 5.45;
             //caseList[0].IndemnityDueBilllingCorrection__c = 6.25;
+            caseList[0].SignMode__c = 'OTP Remoto';
         }
         insert caseList;
 
@@ -148,6 +156,62 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         
     }
+
+    //handlePromotion
+    @isTest
+    private static void handlePromotionTest(){
+        
+        //SETUP
+        mySetup();
+        Order myItem = [SELECT Id, ParentOrder__c, ServicePoint__c FROM Order where ParentOrder__c != null];
+        
+        List<SObject> orderList = new List<SObject>();
+        orderList.add(myItem);
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('Order', orderList);
+        inputs.put('ParentOrder', orderList);
+
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result = myObjectToTest.execute('handlePromotion', inputs, formParams);
+
+        //ASSERTS
+        //System.assert(''.equalsIgnoreCase(result), 'Result non è valorizzato.');
+        System.assert(myItem != null, 'myItem è null!');
+
+        
+        
+    }
+
+    //handleAnalisiConsumi
+    @isTest
+    private static void handleAnalisiConsumiTest(){
+        
+        //SETUP
+        mySetup();
+        Order myItem = [SELECT Id, ParentOrder__c, ServicePoint__c FROM Order where ParentOrder__c != null];
+        
+        List<SObject> orderList = new List<SObject>();
+        orderList.add(myItem);
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('Order', orderList);
+        inputs.put('ParentOrder', orderList);
+
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result = myObjectToTest.execute('handleAnalisiConsumi', inputs, formParams);
+
+        //ASSERTS
+        //System.assert(''.equalsIgnoreCase(result), 'Result non è valorizzato.');
+        System.assert(myItem != null, 'myItem è null!');
+        
+    }
     
     
     
@@ -158,7 +222,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //SETUP
         mySetup();
         
-        Order myItem = [SELECT Id, ContractId, ResidentialStreetName__c, ShippingStreetName__c, SupplyStreetName__c FROM Order];
+        Order myItem = [SELECT Id, ContractId, ResidentialStreetName__c, ShippingStreetName__c, SupplyStreetName__c FROM Order where ParentOrder__c != null];
         List<SObject> itemVasList = new List<SObject>();
         itemVasList.add(myItem);
         itemVasList.add(myItem);//INDICE 1 - TODO: AGGIORNARE TEST NEL CASO SI PRESENTINO PROBLEMATICHE O AGGIORNAMENTI AL PUNTAMENTO INDICE HARDCODED
@@ -208,7 +272,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //SETUP
         mySetup();
         
-        Order myItem = [SELECT Id, Resident__c FROM Order];
+        Order myItem = [SELECT Id, Resident__c FROM Order where ParentOrder__c != null];
         List<SObject> itemVasList = new List<SObject>();
         itemVasList.add(myItem);
         itemVasList.add(myItem);//INDICE 1 - TODO: AGGIORNARE TEST NEL CASO SI PRESENTINO PROBLEMATICHE O AGGIORNAMENTI AL PUNTAMENTO INDICE HARDCODED
@@ -230,7 +294,50 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
     }
     
-    
+    //handleOtpSign
+    @isTest
+    private static void handleOtpSignTest(){
+        
+        //SETUP
+        mySetup();
+
+        //TESTING signModeForm = ''
+        Order myOrderItem = [SELECT Id, SignatureMethod__c FROM Order where ParentOrder__c != null];
+        Case myCaseItem = [SELECT Id, SignMode__c FROM Case];
+
+        List<SObject> orderList = new List<SObject>();
+        List<SObject> caseList = new List<SObject>();
+        orderList.add(myOrderItem);
+        caseList.add(myCaseItem);
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('Order', orderList);
+        inputs.put('Case', caseList);
+
+        Map<String,Object> formParams = new Map<String,Object>();
+                
+        //TESTING Order
+        formParams.put('Contesto', 'Order');
+
+        HDT_UTL_PayloadManagement myObjectToTest1 = new HDT_UTL_PayloadManagement();
+        String result1 = myObjectToTest1.execute('handleOtpSign', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result: ' + result1);
+        System.assert(myOrderItem != null, 'myOrderItem è null!');
+
+        //TESTING Case
+        formParams.put('Contesto', 'Case');
+
+        HDT_UTL_PayloadManagement myObjectToTest2 = new HDT_UTL_PayloadManagement();
+        String result2 = myObjectToTest2.execute('handleOtpSign', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result: ' + result2);
+        System.assert(myCaseItem != null, 'myCaseItem è null!');
+    }
+
+
     
     //handleFlagPaperless
     @isTest
@@ -260,7 +367,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         
         
-        //TESTING Context Case - Not Paperless
+        //TESTING Context Case - Paperless
         myItem.Type = 'Paperless';
         String resultPaperless = myObjectToTest.execute('handleFlagPaperless', inputs, formParams);
         
@@ -300,7 +407,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //SETUP
         mySetup();
         
-        Order myItem = [SELECT Id, SalesCompany__c, SupplyCity__c, DistributorFormula__c, CommodityFormula__c FROM Order];
+        Order myItem = [SELECT Id, SalesCompany__c, SupplyCity__c, DistributorFormula__c, CommodityFormula__c FROM Order where ParentOrder__c != null];
         myItem.SupplyCity__c = 'COLBORDOLO';
         
         List<SObject> itemVasList = new List<SObject>();
@@ -649,7 +756,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //SETUP
         mySetup();
         
-        Order myItem = [SELECT Id, SalesCompany__c, SupplyCity__c, DistributorFormula__c, CommodityFormula__c FROM Order];
+        Order myItem = [SELECT Id, SalesCompany__c, SupplyCity__c, DistributorFormula__c, CommodityFormula__c FROM Order where ParentOrder__c != null];
         myItem.SupplyCity__c = 'COLBORDOLO';
         
         List<SObject> itemVasList = new List<SObject>();
@@ -757,7 +864,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //SETUP
         mySetup();
         
-        Order myItem = [SELECT Id, ImplantType__c FROM Order];
+        Order myItem = [SELECT Id, ImplantType__c FROM Order  where ParentOrder__c != null];
         myItem.ImplantType__c = 'Cottura cibi';
         List<SObject> itemVasList = new List<SObject>();
         itemVasList.add(myItem);
