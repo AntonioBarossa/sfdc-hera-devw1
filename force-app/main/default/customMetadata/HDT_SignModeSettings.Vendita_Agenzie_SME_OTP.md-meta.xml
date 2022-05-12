@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>SendMode2__c</field>
-        <value xsi:type="xsd:string">Posta Cartacea</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>SendMode3__c</field>
