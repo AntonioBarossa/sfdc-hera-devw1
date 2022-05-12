@@ -38,6 +38,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         clonedOrder.put('Status','Draft');
         clonedOrder.put('OrderReference__c',inputOrder.Id);
         clonedOrder.put('EffectiveDate__c',orderSrv.addBusinessDay(Date.today(), 3));
+        clonedOrder.put('VoltureType__c','Ordinaria');
         HDT_UTL_DatabaseService.insertSObject(clonedOrder);
         /*Retrieve and clone OrderItems from input order*/
         orderItemsToClone = voltureChangeQr.getOrderItemByOrderId(inputOrder.Id);
