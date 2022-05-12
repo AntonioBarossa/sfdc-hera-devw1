@@ -441,9 +441,11 @@ public with sharing class HDT_UTL_Account {
             //HRADTR_GV Modifiche 31/03/2022 - Inizio
             if(searchToUse){
                 req = callBpCaSearch(acc,cont);
+                acc.Description = System.now() + ' : Account ricercato su SAP';
             }
             else{
                 req = callBpCaCreate(acc,cont);
+                acc.Description = System.now() + ' : Account creato';
             }
             //HRADTR_GV Modifiche 31/03/2022 - Fine
             resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert

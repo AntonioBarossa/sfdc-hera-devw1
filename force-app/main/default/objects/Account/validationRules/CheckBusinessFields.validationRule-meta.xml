@@ -9,12 +9,12 @@ RecordType.DeveloperName = &quot;HDT_RT_Partner&quot;,AND(ISPICKVAL(CustomerAcco
 false,
 
 IF(
-AND(RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,
+AND(RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,NOT(IsWrongFiscalData__c),
 OR( AND(Not(BillingIsAddressVerified__c),IsMigrated__c = False), ISPICKVAL(CustomerMarking__c, &quot;&quot;),ISPICKVAL(Category__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),
 true ,
 
 IF(
-AND( ISBLANK(FiscalCode__c),RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,
+AND( ISBLANK(FiscalCode__c),RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,NOT(IsWrongFiscalData__c),
 OR( CONTAINS(TEXT(CustomerMarking__c), &apos;Condominio&apos;) , CONTAINS(TEXT(CustomerMarking__c), &apos;Associazione&apos;))),
 true,
 IF(
