@@ -3837,6 +3837,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_GlobaMigrationKey</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_HandleTechnicalData</apexClass>
         <enabled>true</enabled>
     </classAccesses>
