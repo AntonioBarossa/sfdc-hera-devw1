@@ -14,8 +14,14 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
     List<String> caseIdList = new List<String>();
     String header = 'ID_JOB;RDS_RIGA;ACR;SOCIETA;ASSEGNATARIO;GRUPPO;DATA_RICEVIMENTO;DATA_CHIUSURA;TIPO;SERVIZIO;TIPO_FORNITURA;CATEGORIA_CLIENTE;CODICE_CLIENTE;STATO_PRATICA;CANALE_DI_RICEZIONE;REITERATA;EP_SOTTOTIPO;EP_CAUSALE;EP_CLASSIFICAZIONE;TE_SOL;TE_LAV;FUORI_STD_AEEGSI;CHIAMATA;BRAND;SEGMENTO;COMUNE_CORRETTO;ISTAT_CORRETTO;PROVINCIA;DIRITTO_RETTIFICA;FLUSSO_PRATICA;CANALE_DI_USCITA;EMAIL_USCITA;RICHIESTE_PARERI\n';
     String generateFile = header;
+    public String queryDate='';
     public Iterable<Case> start(Database.BatchableContext context) {
-
+        if(String.isNotBlank(queryDate)){
+            Datetime startDt=Datetime.valueOfGMT(queryDate + ' 00:00:00');
+            Datetime endDt=startDt.addDays(1);
+            dtos = caseQr.getRecordCreatedInRequestedDate('Reclami', startDt, endDt);
+            return this.dtos;
+        }
         dtos = caseQr.getRecordCreatedLastWeekEqualsBy('Reclami');
         return this.dtos;
     }
