@@ -61,6 +61,9 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
             System.debug(LoggingLevel.DEBUG, 'Creazione Case Modifica Alert: parametri di input: ' + inputsMap);
             Case alertCase = caseUtility.createCase(inputsMap);
             if (alertCase != null) {
+                if ( getProfileNameByCase(alertCase.Id).equalsIgnoreCase('Hera M2M Integration User') ){
+                    alertCase.origin='Web';
+                }
                 alertCase.IsAlertActive__c = alert.IsActive__c;
                 alertCase.AlertType__c = transcodeAlertType(alert.AlertType__c);
                 alertCases.add(alertCase);
@@ -75,6 +78,16 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
         }
 
         HDT_UTL_DatabaseService.updateSObject(alertCases);
+    }
+
+
+    public string getProfileNameByCase(String caseId)
+    {
+        return [SELECT name FROM Profile 
+                     WHERE Id = :[SELECT id, profileId FROM user
+                                  WHERE Id = :[SELECT CreatedById FROM case WHERE Id = :caseId][0].CreatedById
+                                 ][0].profileId
+                ][0].name;
     }
 
     /**
