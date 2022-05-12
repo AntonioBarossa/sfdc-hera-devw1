@@ -84,7 +84,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>HDT_LCP_CampaignCreation</componentName>
+                <componentName>hdtCreateCampaign</componentName>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Status}</leftValue>
