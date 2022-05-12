@@ -1182,4 +1182,27 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
         }
     }
+
+    public static void closeActivityOnCompleted(List<SObject> newObjectList, Map<Id,SObject> oldObjectMap){
+        Set<Id> objectIdSet = new Set<Id>();
+        for (SObject newObj : newObjectList){
+            Id recordId = (Id)newObj.get('Id');
+            String newPhase = (String) newObj.get('Phase__c');
+            String oldPhase = (String) oldObjectMap.get(recordId).get('Phase__c');
+            if ('Completata'.equalsIgnoreCase(newPhase) && !newPhase.equalsIgnoreCase(oldPhase)){
+                objectIdSet.add(recordId);
+            }
+        }
+        if (!objectIdSet.isEmpty()){
+            List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
+            String listId = '(\''+String.join((Iterable<String>) objectIdSet, '\',\'') +'\')';
+            List<wrts_prcgvr__Activity__c> activities = HDT_QR_GenericQuery.getGenericRecords('Id','wrts_prcgvr__Activity__c', '(Order__c IN ' + listId + ' OR Case__c IN' + listId + ') AND wrts_prcgvr__IsClosed__c = false AND DiscardCategory__c = \'Tracciatura\'');
+            for (wrts_prcgvr__Activity__c act : activities){
+                activitiesToUpdate.add(closeDiscardActivity(act.Id));
+            }
+            if (!activitiesToUpdate.isEmpty()){
+                HDT_UTL_DatabaseService.updateSObject(activitiesToUpdate);
+            }
+        }
+    }
 }

@@ -112,7 +112,7 @@ public with sharing class HDT_UTL_VasManagement {
             CommercialProductLink__r.FreeVas__c, CommercialProductLink__r.DurationDay__c, CommercialProductLink__r.DurationDayGas__c, VasPracticeCode__c, TotalAmount,
             (SELECT Quantity, UnitPrice, ListPrice, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
                 DurationDay__c, PaymentMode__c, Product2.IVA__c,
-                Product2.Name, Product2.NumberRateMonthly__c, Product2.DescriptionSAP__c,DelayEffectiveDate__c
+                Product2.Name, Product2.NumberRateMonthly__c, Product2.DescriptionSAP__c,DelayEffectiveDate__c, Product2.DurationVas__c, Product2.WaitingPeriod__c
                 FROM OrderItems)
             FROM Order WHERE Id = :orderId WITH SECURITY_ENFORCED];
     }
@@ -420,13 +420,32 @@ public with sharing class HDT_UTL_VasManagement {
             dataDecorrenza = parentOrderItem?.VasActivationDate__c != null ? parentOrderItem?.VasActivationDate__c : parentOrderItem?.DelayEffectiveDate__c;
             dataFirma = currentOrder.SignedDate__c;
             durataServizioGg = parentOrderItem?.DurationDay__c;
-            if(currentOrder.CommercialProductLink__r.DurationDay__c > 0){
-                dataCessazione = dataAttivazione.addDays((Integer)currentOrder.CommercialProductLink__r.DurationDay__c);
-            }else if(currentOrder.CommercialProductLink__r.DurationDayGas__c > 0){
-                dataCessazione = dataAttivazione.addDays((Integer)currentOrder.CommercialProductLink__r.DurationDayGas__c);
-            }else{
-                dataCessazione = Date.newInstance(3999, 12, 31);
+            // if(currentOrder.CommercialProductLink__r.DurationDay__c > 0){
+            //     dataCessazione = dataAttivazione.addDays((Integer)currentOrder.CommercialProductLink__r.DurationDay__c);
+            // }else if(currentOrder.CommercialProductLink__r.DurationDayGas__c > 0){
+            //     dataCessazione = dataAttivazione.addDays((Integer)currentOrder.CommercialProductLink__r.DurationDayGas__c);
+            // }else{
+            //     dataCessazione = Date.newInstance(3999, 12, 31);
+            // }
+            if(parentOrderItem.Product2.DurationVas__c != null){
+                if(parentOrderItem.Product2.DurationVas__c > 0){
+                    dataCessazione = dataAttivazione.addDays((Integer)parentOrderItem.Product2.DurationVas__c);
+                }
+                else{
+                    dataCessazione = Date.newInstance(3999, 12, 31);
+                }
             }
+
+            if(parentOrderItem.Product2.WaitingPeriod__c  != null){
+                if(parentOrderItem.Product2.WaitingPeriod__c  > 0){
+                    dataDecorrenza = dataAttivazione.addDays((Integer)parentOrderItem.Product2.WaitingPeriod__c);
+                }
+                else{
+                    dataDecorrenza = dataAttivazione;
+                }
+            }
+
+
             //modalitaPagamento = parentOrderItem?.PaymentMode__c;
             
             isVasStandAlone = (currentOrder.SBQQ__Quote__r?.SBQQ__PriceBook__r?.Name?.toUpperCase() == VAS_STANDALONE_PRICEBOOK);
