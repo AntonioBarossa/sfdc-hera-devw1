@@ -20,6 +20,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
     private Map<String, String> mapAllFields;
     private Map<String, MassiveFieldsObjectMap__c> sobjectMap;
     private Map<String, AccountContactRelation> accRelMap;
+    Id priceBookIdStandalone;
 
     public override void checks(){
 
@@ -69,6 +70,15 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         accRelMap = new Map<String, AccountContactRelation>();
         orderMap = new Map<String, Order>();
         pricebookEntryMatrix = new Map<Id, Map<Id, PriceBookEntry>>();
+        priceBookIdStandalone = [
+            SELECT Id
+            FROM Pricebook2
+            WHERE Name = 'VAS Standalone'
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ].Id;
+
+        priceBookIdList.add(priceBookIdStandalone);
 
         for(HDT_WRP_VasOrder.HDT_WRP_ProcessObjects processObject : processObjList){
 
@@ -127,7 +137,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
         if(retrieveOffertList.size() > 0){
             for(Product2 p : retrieveOffertList){
-                productMap.put(p.Name + '-' + p.ProductCode + '-' + p.Version__c, p);
+                productMap.put(offProductKey(p), p);
                 productIdList.add(p.Id);
             }
         }
@@ -141,7 +151,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
         if(retrieveVasList.size() > 0){
             for(Product2 p : retrieveVasList){
-                productMap.put(p.Name + '-' + p.DescriptionSAP__c + '-' + p.Version__c, p);
+                productMap.put(vasProductKey(p), p);
                 productIdList.add(p.Id);
             }
         }
@@ -183,7 +193,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
             SELECT Id, Pricebook2Id, Product2Id, UnitPrice
             FROM PricebookEntry
             WHERE Product2Id IN :productIdList
-            AND (Pricebook2Id IN :priceBookIdList OR Name = 'VAS Standalone')
+            AND Pricebook2Id IN :priceBookIdList
             WITH SECURITY_ENFORCED
         ];
 
@@ -201,6 +211,15 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
     }
 
+    public static String vasProductKey(Product2 p){
+        //return p.Name + '-' + p.DescriptionSAP__c + '-' + p.Version__c;
+        return p.Name + '-' + p.DescriptionSAP__c;
+    }
+
+    public static String offProductKey(Product2 p){
+        return p.Name + '-' + p.ProductCode + '-' + p.Version__c;
+    }
+
     public override void registryCreation(){
 
         List<Order> parentOrderToInsert = new List<Order>();
@@ -209,6 +228,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         List<OrderItem> orderItemToUpdate = new List<OrderItem>();
         List<Sale__c> saleToInsert = new List<Sale__c>();
         List<Opportunity> opportunityToinsert = new List<Opportunity>();
+        Map<Id, Order> parentOrderMap;
         List<MassiveLoaderRequestItem__c> requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
 
         for(HDT_WRP_VasOrder.HDT_WRP_ProcessObjects processObject : processObjList){
@@ -258,6 +278,16 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         System.debug('>>> parent Order itemIdToObjId: ' + String.valueOf(parentOrderResponse.itemIdToObjId));
         System.debug('>>> parent Order errorItemMap: ' + String.valueOf(parentOrderResponse.errorItemMap));
 
+        if(parentOrderResponse.savedObject.size() > 0){
+            List<Order> savedParentOrder = [
+                SELECT Id, OrderNumber
+                FROM Order
+                WHERE Id IN :parentOrderResponse.itemIdToObjId.values()
+                WITH SECURITY_ENFORCED
+            ];
+            parentOrderMap = new Map<Id, Order>(savedParentOrder);
+        }
+
         Id priceBook2Id;
         Map<Id, PriceBookEntry> tempPbeMap;
         Id accountId;
@@ -272,13 +302,37 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
                 continue;
             }
 
-            if(orderMap.containsKey(processObject.orderNumber)){
-                priceBook2Id = orderMap.get(processObject.orderNumber).PriceBook2Id;
-                System.debug('>>> priceBook2Id ' + priceBook2Id);
-            } else {
-                processObject = setErrorObj(processObject, 'Ordine non presente a sistema');
-                continue;
+            switch on processObj.vasOrderType {
+                when 'standalone' {
+                    priceBook2Id = priceBookIdStandalone;
+                }
+                when 'singleOrder' {
+                    if(contractToPbookIdMap.containsKey(processObject.contract.SAPContractCode__c)){
+                        priceBook2Id = contractToPbookIdMap.get(processObject.contract.SAPContractCode__c).SBQQ__AmendmentPricebookId__c;
+                        System.debug('>>> priceBook2Id ' + priceBook2Id);
+                    } else {
+                        processObject = setErrorObj(processObject, 'Contratto non presente a sistema');
+                        continue;
+                    }
+                }
+                when 'doubleOrder' {
+                    if(orderMap.containsKey(processObject.orderNumber)){
+                        priceBook2Id = orderMap.get(processObject.orderNumber).PriceBook2Id;
+                        System.debug('>>> priceBook2Id ' + priceBook2Id);
+                    } else {
+                        processObject = setErrorObj(processObject, 'Ordine non presente a sistema');
+                        continue;
+                    }
+                }
             }
+
+            //if(orderMap.containsKey(processObject.orderNumber)){
+            //    priceBook2Id = orderMap.get(processObject.orderNumber).PriceBook2Id;
+            //    System.debug('>>> priceBook2Id ' + priceBook2Id);
+            //} else {
+            //    processObject = setErrorObj(processObject, 'Ordine non presente a sistema');
+            //    continue;
+            //}
 
             if(pricebookEntryMatrix.containsKey(priceBook2Id)){
                 tempPbeMap = pricebookEntryMatrix.get(priceBook2Id);
@@ -313,10 +367,10 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
                     switch on wrpOrderItem.itemType {
                         when 'vas' {
-                            productKey = wrpOrderItem.product.Name + '-' + wrpOrderItem.product.DescriptionSAP__c + '-' + wrpOrderItem.product.Version__c;
+                            productKey = vasProductKey(wrpOrderItem.product);
                         }
                         when 'offerta' {
-                            productKey = wrpOrderItem.product.Name + '-' + wrpOrderItem.product.ProductCode + '-' + wrpOrderItem.product.Version__c;
+                            productKey = offProductKey(wrpOrderItem.product);
                         }
                     }
 
@@ -400,6 +454,16 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
             if(processObject.error){
                 processObject = setAllRequestForError(processObject);
             } else {
+
+                if(parentOrderMap.containsKey(processObject.parentOrder.Id)){
+                    //processObject.allRequestItems[0].Result__c = parentOrderMap.get(processObject.parentOrder.Id).OrderNumber;
+                    String orderNumber = parentOrderMap.get(processObject.parentOrder.Id).OrderNumber;
+                    for(MassiveLoaderRequestItem__c item : processObject.allRequestItems){
+                        item.Result__c = orderNumber;
+                        item.Status__c = 'Chiuso';
+                    }
+                }              
+
                 for(HDT_WRP_VasOrder.HDT_WRP_ChildOrder wrpChildOrder : processObject.childOrderList){
                     wrpChildOrder.orderItemList[1].orderItem.SBQQ__RequiredBy__c = wrpChildOrder.orderItemList[0].orderItem.Id; // offerta
                     for(HDT_WRP_VasOrder.HDT_WRP_OrderItem wrpOrderItem : wrpChildOrder.orderItemList){

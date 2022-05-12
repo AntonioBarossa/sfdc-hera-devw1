@@ -16,6 +16,7 @@ public inherited sharing class HDT_WRP_VasOrder {
         public HDT_WRP_ProcessObjects(){
             error = false;
             parentOrder = new Order();
+            parentOrder.IsMassive__c = true;
             account = new Account();
             sale = new Sale__c();
             opportunity = new Opportunity();
@@ -30,6 +31,7 @@ public inherited sharing class HDT_WRP_VasOrder {
 
         public HDT_WRP_ChildOrder(){
             childOrder = new Order();
+            childOrder.IsMassive__c = true;
             orderItemList = new List<HDT_WRP_OrderItem>();
         }
 
