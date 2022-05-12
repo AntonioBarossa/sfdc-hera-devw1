@@ -24,6 +24,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         Map<String,Object> extraParams = new Map<String,Object>();
         Map<String,Object> accountCheckParams = new Map<String,Object>();
         HDT_WRP_VoltureChangeManager.HDT_WRP_AccountCheck accountCheck = new HDT_WRP_VoltureChangeManager.HDT_WRP_AccountCheck();
+        HDT_SRV_Order orderSrv = new HDT_SRV_Order();
 
         /* Call to the cloneSobject method */
         extraParams.put('sobjName', 'Order');
@@ -36,6 +37,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         clonedOrder.put('Phase__c','Bozza');
         clonedOrder.put('Status','Draft');
         clonedOrder.put('OrderReference__c',inputOrder.Id);
+        clonedOrder.put('EffectiveDate__c',orderSrv.addBusinessDay(Date.today(), 3));
         HDT_UTL_DatabaseService.insertSObject(clonedOrder);
         /*Retrieve and clone OrderItems from input order*/
         orderItemsToClone = voltureChangeQr.getOrderItemByOrderId(inputOrder.Id);
@@ -196,7 +198,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         for(Order singleOrder : myOrderList){
             if(singleOrder.Phase__c.equalsIgnoreCase('Amm. Precheck OK SII') 
             && (singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
-            || singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch'))
+            /*|| singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch')*/)
             && singleOrder.TecnicalPhase__c == null){
                 Order ordToUpdate = new Order();
                 ordToUpdate.Id = singleOrder.Id;        
