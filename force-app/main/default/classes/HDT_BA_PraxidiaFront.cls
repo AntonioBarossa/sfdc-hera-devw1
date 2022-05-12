@@ -14,11 +14,30 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
     List<HDT_WRP_CampaignPraxidia.front> wrapFrontList = new List<HDT_WRP_CampaignPraxidia.front>();
     String header = 'ID_CLIENTE_SBL_SAP;ID_CLIENTE_SAP;ID_CLIENTE_SBL;CODICE_FISCALE;CODICE_FISCALE_SBL;COGNOME;NOME;NOME_SBL;RAGIONE_SOCIALE;RAGIONE_SOCIALE_SBL;NAZIONALITA;CATEGORIA_SBL;ID_CATEGORIA_CLIENTE;SEGMENTO;FLG_PRIVACY_GENERALE;TELEFONO_SBL;TELEFONO_FISSO_2;CELLULARE_2;CELLULARE_SBL;MAIL_SBL;DATA_VALIDITA_A;DATA_VALIDITA_DA;CODICE_RDS;CODICE_SERVIZIO;TIPO_RDS;SOTTOTIPO_RDS;AREA_RDS;ARGOMENTO_RDS;STATO_RDS;CODICE_ACR;POSTAZIONE;GRUPPO_CREATORE;GRUPPO_ASSEGNATARIO;CREAZIONE_DI;CANALE_DI_ACQUISIZIONE;DATA_RICEVIMENTO;STATO_RDO;ID_RDO;ID_ORDINE;TIPO_ORDINE;TIPO_PASSAGGIO;SETTORE_MERCEOLOGICO;TIPO_OPERAZIONE;DF_TIPO_OPERAZIONE_SR;X_CONN_ID;INDIRIZZO_EMAIL_CONTATTO;PROCEDURA\n';
     String generateFile = header;
-    
-    public Iterable<HDT_WRP_CampaignPraxidia.wrapToIterate> start(Database.BatchableContext context) {
+    public String queryDateCase='';
+    public String queryDateOrder='';
 
-        List<Order> listOrder = qrOrder.getOrderCreatedYesterday();
-        List<Case> listCase = caseQr.getRecordCreatedYesterdayDifferentBy('Reclami');
+    public Iterable<HDT_WRP_CampaignPraxidia.wrapToIterate> start(Database.BatchableContext context) {
+        List<Order> listOrder =new List<Order>();
+        List<Case> listCase =new List<Case>();
+
+        if(String.isNotBlank(queryDateCase)){
+            Datetime startDtCase=Datetime.valueOfGMT(queryDateCase + ' 00:00:00');
+            Datetime endDCaset=startDtCase.addDays(1);
+            listCase = caseQr.getRecordCreatedInRequestedDateDifferentBy('Reclami', startDtCase, endDCaset);
+        }
+        else {
+            listCase = caseQr.getRecordCreatedYesterdayDifferentBy('Reclami');
+        }
+        
+        if(String.isNotBlank(queryDateOrder)){
+            Datetime startDtOrd=Datetime.valueOfGMT(queryDateOrder + ' 00:00:00');
+            Datetime endDtOrd=startDtOrd.addDays(1);
+            listOrder = qrOrder.getOrderCreatedInRequestedDate(startDtOrd, endDtOrd);
+        }
+        else {
+            listOrder = qrOrder.getOrderCreatedYesterday();
+        }
 
         for(Order ord : listOrder){
             dtos.add(new HDT_WRP_CampaignPraxidia.wrapToIterate(ord,null));
