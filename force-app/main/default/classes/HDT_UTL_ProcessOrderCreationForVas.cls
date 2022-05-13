@@ -20,6 +20,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
     private Map<String, String> mapAllFields;
     private Map<String, MassiveFieldsObjectMap__c> sobjectMap;
     private Map<String, AccountContactRelation> accRelMap;
+    private List<sObject> recordsToDelete = new List<sObject>();
     Id priceBookIdStandalone;
 
     public override void checks(){
@@ -452,6 +453,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
             }
 
             if(processObject.error){
+                setRecordToDelete(processObject);
                 processObject = setAllRequestForError(processObject);
             } else {
 
@@ -482,6 +484,10 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
 
         if(orderItemToUpdate.size() > 0){
             HDT_UTL_DatabaseService.updateSObject(orderItemToUpdate);
+        }
+
+        if(recordsToDelete.size() > 0){
+            HDT_UTL_DatabaseService.deleteSObject(recordsToDelete);
         }
 
         getLimitDetails('EndCreation');
@@ -928,6 +934,16 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         processObject.allRequestItems[0].Status__c = 'Errore';
         processObject.allRequestItems[0].StatusDescription__c = errorMessage;
         return processObject;
+    }
+
+    private void setRecordToDelete(HDT_WRP_VasOrder.HDT_WRP_ProcessObjects processObject){
+        recordsToDelete.add(processObject.parentOrder);
+        recordsToDelete.add(processObject.sale);
+        recordsToDelete.add(processObject.opportunity);
+        for(HDT_WRP_VasOrder.HDT_WRP_ChildOrder wrpChildOrder : processObject.childOrderList){
+            recordsToDelete.add(wrpChildOrder.childOrder);
+        }
+        System.debug('>>> recordsToDelete ' + String.valueOf(recordsToDelete));
     }
 
     private HDT_WRP_VasOrder.HDT_WRP_ProcessObjects setAllRequestForError(HDT_WRP_VasOrder.HDT_WRP_ProcessObjects processObject){
