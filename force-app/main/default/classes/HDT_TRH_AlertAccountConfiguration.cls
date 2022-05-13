@@ -84,14 +84,14 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
     }
 
 
-    public string getProfileNameByCase(String caseId)
+/*     public string getProfileNameByCase(String caseId)
     {
         return [SELECT name FROM Profile 
                      WHERE Id = :[SELECT id, profileId FROM user
                                   WHERE Id = :[SELECT CreatedById FROM case WHERE Id = :caseId][0].CreatedById
                                  ][0].profileId
                 ][0].name;
-    }
+    } */
 
     /**
      * Transcodifica il tipo di alert. SAP si aspetta solo questi due valori: 'Emissione bolletta' oppure 'Inizio periodo autolettura'
