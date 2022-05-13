@@ -25,6 +25,9 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
         Map<String, String> accountContactsMap = new Map<String, String>();
         Map<String, String> accountCompanyMap = new Map<String, String>();
         Set<Id> accountIds = new Set<Id>();
+
+        String profileName = [select Name from profile where id = :UserInfo.getProfileId()].Name;
+
         for (AlertAccountConfiguration__c alert : (List<AlertAccountConfiguration__c>) Trigger.new) {
             if (alert.Account__c != null) {
                 accountIds.add(alert.Account__c);
@@ -61,7 +64,7 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
             System.debug(LoggingLevel.DEBUG, 'Creazione Case Modifica Alert: parametri di input: ' + inputsMap);
             Case alertCase = caseUtility.createCase(inputsMap);
             if (alertCase != null) {
-                if ( getProfileNameByCase(alertCase.Id).equalsIgnoreCase('Hera M2M Integration User') ){
+                if ( profileName.equalsIgnoreCase('Hera M2M Integration User') ){
                     alertCase.origin='Web';
                 }
                 alertCase.IsAlertActive__c = alert.IsActive__c;
