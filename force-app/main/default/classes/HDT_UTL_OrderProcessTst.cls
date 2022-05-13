@@ -67,7 +67,9 @@ public with sharing class HDT_UTL_OrderProcessTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Validata', 'In attesa validazione', constants.ORDER_RECORDTYPEID_SUBENTRO, 'HDT_RT_Default');
             HDT_UTL_DataFactoryTst.newPhaseTransition('Esportazione VS Siebel', 'Documentazione Validata', constants.ORDER_RECORDTYPEID_SUBENTRO, 'HDT_RT_Default');
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione', 'Sequenzializzato', constants.ORDER_RECORDTYPEID_VAS, 'HDT_RT_VAS');
-            
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku KO', 'Documentazione Gestita', constants.ORDER_RECORDTYPEID_SWITCHIN, 'HDT_RT_SwitchIn');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita','Comunicazione verso Heroku KO', constants.ORDER_RECORDTYPEID_SWITCHIN, 'HDT_RT_SwitchIn');
+             
             List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, false, 'HERA COMM', 'Azienda', 'Aziende SME');
             accList[0].SatisfactionIndexCtrl__c = 1.0;
             accList[0].PraxidiaUpdateDate__c = Date.newInstance(2021, 09, 14);
@@ -283,115 +285,234 @@ public with sharing class HDT_UTL_OrderProcessTst {
         }
     }
             
-        @isTest
-        public static void testSalesProcessManagementBefore2() {
- 
-            User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
-    
-            System.runAs(u){
-    
-                Test.startTest();
+    @isTest
+    public static void testSalesProcessManagementBefore2() {
 
-                List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+
+        System.runAs(u){
+
+            Test.startTest();
+
+            List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+                                        QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
+                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
+                                    FROM Order WHERE AgencyCode__c = 'AgencyCode'];
+
+            ordersOld[0].Phase__c = 'Documentazione validata';
+            update ordersOld;
+
+            List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
                                             Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
-                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
+                                    FROM Order 
+                                    WHERE AgencyCode__c = 'AgencyCode'];
 
-                ordersOld[0].Phase__c = 'Documentazione validata';
-                update ordersOld;
+            ordersNew[0].isTransition__c = false;
+            ordersNew[0].Phase__c = 'Comunicazione Verso Heroku';
+            ordersNew[0].PhaseStory__c = '';
+            update ordersNew;
 
-                List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
-                                                QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                                Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
-                                        FROM Order 
-                                        WHERE AgencyCode__c = 'AgencyCode'];
+            HDT_UTL_OrderProcess.salesProcessManagementBefore(ordersNew, ordersOld);
 
-                ordersNew[0].isTransition__c = false;
-                ordersNew[0].Phase__c = 'Comunicazione Verso Heroku';
-                ordersNew[0].PhaseStory__c = '';
-                update ordersNew;
+            List<Order> assertList = [SELECT Id FROM Order WHERE Phase__c = 'Comunicazione Verso Heroku'];
 
-                HDT_UTL_OrderProcess.salesProcessManagementBefore(ordersNew, ordersOld);
+            System.assertEquals(false, assertList.isEmpty(), 'Phase updated');
+            System.assertNotEquals(true, assertList.isEmpty(), 'Phase not updated.');
 
-                List<Order> assertList = [SELECT Id FROM Order WHERE Phase__c = 'Comunicazione Verso Heroku'];
-
-                System.assertEquals(false, assertList.isEmpty(), 'Phase updated');
-                System.assertNotEquals(true, assertList.isEmpty(), 'Phase not updated.');
-
-                Test.stopTest();
-            }
+            Test.stopTest();
         }
+    }
 
-        @isTest
-        public static void testSalesProcessManagementBefore3() {
- 
-            User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
-    
-            System.runAs(u){
-    
-                Test.startTest();
+    @isTest
+    public static void testSalesProcessManagementBefore3() {
 
-                List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+
+        System.runAs(u){
+
+            Test.startTest();
+
+            List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+                                        QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
+                                        Contact__c, ParentOrder__c, PhaseStory__c 
+                                    FROM Order WHERE AgencyCode__c = 'AgencyCode'];
+
+            ordersOld[0].Phase__c = 'In attesa di quality call';
+            update ordersOld;
+
+            List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
                                             Contact__c, ParentOrder__c, PhaseStory__c 
-                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
+                                    FROM Order 
+                                    WHERE AgencyCode__c = 'AgencyCode'];
 
-                ordersOld[0].Phase__c = 'In attesa di quality call';
-                update ordersOld;
+            ordersNew[0].isTransition__c = false;
+            ordersNew[0].Phase__c = 'Quality Call OK';
+            ordersNew[0].PhaseStory__c = '';
+            update ordersNew;
 
-                List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
-                                                QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                                Contact__c, ParentOrder__c, PhaseStory__c 
-                                        FROM Order 
-                                        WHERE AgencyCode__c = 'AgencyCode'];
+            HDT_UTL_OrderProcess.salesProcessManagementBefore(ordersNew, ordersOld);
 
-                ordersNew[0].isTransition__c = false;
-                ordersNew[0].Phase__c = 'Quality Call OK';
-                ordersNew[0].PhaseStory__c = '';
-                update ordersNew;
+            List<Order> assertList = [SELECT Id FROM Order WHERE Phase__c = 'Comunicazione Verso Heroku'];
 
-                HDT_UTL_OrderProcess.salesProcessManagementBefore(ordersNew, ordersOld);
+            System.assertEquals(false, assertList.isEmpty(), 'Phase updated to Comunicazione Verso Heroku');
+            System.assertNotEquals(true, assertList.isEmpty(), 'Phase not updated.');
 
-                List<Order> assertList = [SELECT Id FROM Order WHERE Phase__c = 'Comunicazione Verso Heroku'];
-
-                System.assertEquals(false, assertList.isEmpty(), 'Phase updated to Comunicazione Verso Heroku');
-                System.assertNotEquals(true, assertList.isEmpty(), 'Phase not updated.');
-
-                Test.stopTest();
-            }
+            Test.stopTest();
         }
+    }
 
-        @isTest
-        public static void testSalesProcessManagementBefore4() {
- 
-            User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
-    
-            System.runAs(u){
-    
-                Test.startTest();
+    @isTest
+    public static void testSalesProcessManagementBefore4() {
 
-                List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+
+        System.runAs(u){
+
+            Test.startTest();
+
+            List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+                                        QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
+                                        Contact__c, ParentOrder__c, PhaseStory__c 
+                                    FROM Order WHERE AgencyCode__c = 'AgencyCode'];
+
+            List<Order> ordersNew = ordersOld;
+
+            ordersNew[0].isTransition__c = false;
+            ordersNew[0].Phase__c = 'Quality Call OK';
+            ordersNew[0].PhaseStory__c = '';
+            update ordersNew;
+
+            HDT_UTL_OrderProcess.salesProcessManagementBefore(ordersNew, ordersOld);
+
+            List<Order> assertList = [SELECT Id FROM Order WHERE Phase__c = 'In attesa validazione'];
+
+            System.assertEquals(false, assertList.isEmpty(), 'Phase updated to Comunicazione Verso Heroku');
+            System.assertNotEquals(true, assertList.isEmpty(), 'Phase not updated.');
+
+            Test.stopTest();
+        }
+    }
+
+    @isTest
+    public static void testSalesProcessManagementBefore5() {
+
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+
+        System.runAs(u){
+
+            Test.startTest();
+
+            List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+                                        QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
+                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
+                                    FROM Order WHERE AgencyCode__c = 'AgencyCode'];
+
+            ordersOld[0].Phase__c = 'In attesa validazione';
+            //update ordersOld;
+
+            List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                            Contact__c, ParentOrder__c, PhaseStory__c 
-                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
+                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
+                                    FROM Order 
+                                    WHERE AgencyCode__c = 'AgencyCode'];
 
-                List<Order> ordersNew = ordersOld;
+            ordersNew[0].isTransition__c = false;
+            ordersNew[0].Phase__c = 'Documentazione Validata';
+            ordersNew[0].PhaseStory__c = '';
+            ordersNew[0].ComfortCallDaysDue__c = null;
+            ordersNew[0].ProcessType__c = 'Voltura';
 
-                ordersNew[0].isTransition__c = false;
-                ordersNew[0].Phase__c = 'Quality Call OK';
-                ordersNew[0].PhaseStory__c = '';
-                update ordersNew;
+            HDT_UTL_OrderProcess.salesProcessManagementBefore(ordersNew, ordersOld);
 
-                HDT_UTL_OrderProcess.salesProcessManagementBefore(ordersNew, ordersOld);
+            System.assertEquals('In attesa di quality call', ordersNew[0].Phase__c, 'Phase updated');
 
-                List<Order> assertList = [SELECT Id FROM Order WHERE Phase__c = 'In attesa validazione'];
-
-                System.assertEquals(false, assertList.isEmpty(), 'Phase updated to Comunicazione Verso Heroku');
-                System.assertNotEquals(true, assertList.isEmpty(), 'Phase not updated.');
-
-                Test.stopTest();
-            }
+            Test.stopTest();
         }
+    }
+
+    @isTest
+    public static void testSalesProcessManagementBefore6() {
+
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+
+        System.runAs(u){
+
+            Test.startTest();
+
+            List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+                                        QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
+                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
+                                    FROM Order WHERE AgencyCode__c = 'AgencyCode'];
+
+            ordersOld[0].Phase__c = 'Documentazione validata';
+            //update ordersOld;
+
+            List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+                                            QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
+                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
+                                    FROM Order 
+                                    WHERE AgencyCode__c = 'AgencyCode'];
+
+            ordersNew[0].isTransition__c = false;
+            ordersNew[0].Phase__c = 'Comunicazione Verso Heroku';
+            ordersNew[0].PhaseStory__c = '';
+            ordersNew[0].ComfortCallDaysDue__c = 10;
+            ordersNew[0].ProcessType__c = 'Voltura';
+            //update ordersNew;
+
+            HDT_UTL_OrderProcess.salesProcessManagementBefore(ordersNew, ordersOld);
+
+            //List<Order> assertList = [SELECT Id FROM Order WHERE Phase__c = 'In attesa di quality call'];
+
+            System.assertEquals('In attesa conferma cliente', ordersNew[0].Phase__c, 'Phase updated');
+            //System.assertNotEquals(true, assertList.isEmpty(), 'Phase not updated.');
+
+            Test.stopTest();
+        }
+    }
+
+    @isTest
+    public static void testSalesProcessManagementBefore7() {
+
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+
+        System.runAs(u){
+
+            Test.startTest();
+
+            List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+                                        QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
+                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
+                                    FROM Order WHERE AgencyCode__c = 'AgencyCode'];
+
+            ordersOld[0].Phase__c = 'In attesa validazione';
+            //update ordersOld;
+
+            List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+                                            QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
+                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c
+                                    FROM Order 
+                                    WHERE AgencyCode__c = 'AgencyCode'];
+
+            ordersNew[0].isTransition__c = false;
+            ordersNew[0].Phase__c = 'Documentazione Validata';
+            ordersNew[0].PhaseStory__c = '';
+            ordersNew[0].ComfortCallDaysDue__c = 10;
+            ordersNew[0].ProcessType__c = 'Voltura';
+            //update ordersNew;
+
+            HDT_UTL_OrderProcess.salesProcessManagementBefore(ordersNew, ordersOld);
+
+            //List<Order> assertList = [SELECT Id FROM Order WHERE Phase__c = 'In attesa di quality call'];
+
+            System.assertEquals('In attesa conferma cliente', ordersNew[0].Phase__c, 'Phase updated');
+            //System.assertNotEquals(true, assertList.isEmpty(), 'Phase not updated.');
+
+            Test.stopTest();
+        }
+    }
 
     @isTest
     public static void testOrderPhaseManagementAfterUpdate() {
@@ -615,7 +736,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
  
             Test.startTest();
 
-            List<Order> orderParent = [SELECT Id, ProcessType__c FROM Order WHERE AgencyCode__c = 'AgencyCode'];
+            List<Order> orderParent = [SELECT Id, ProcessType__c, recordType.Developername FROM Order WHERE AgencyCode__c = 'AgencyCode'];
             List<String> orderIdList = new List<String>{orderParent[0].Id};
 
             HDT_UTL_OrderProcess.updateChildOrdersPhase(orderIdList, 'Documentazione Validata', 'Esportazione VS Siebel');
@@ -827,8 +948,11 @@ public with sharing class HDT_UTL_OrderProcessTst {
  
         System.runAs(u){
 
-            List<Order> newOrderList = [SELECT Id, Phase__c, CreditCheckDescription__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId,
-            IncomingCreditCheckResult__c,OutgoingCreditCheckResult__c, OrderReferenceNumber, IsMassive__c, ContractReference__c, VasSubtype__c, CommodityFormula__c FROM Order WHERE Name = 'childOrder5' LIMIT 1];
+            List<Order> newOrderList = [SELECT Id,CreditCheckDescription__c, Phase__c, SiebelStatus__c, 
+                                        ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId,
+                                        IncomingCreditCheckResult__c,OutgoingCreditCheckResult__c, OrderReferenceNumber,
+                                        IsMassive__c, ContractReference__c, VasSubtype__c, CommodityFormula__c 
+                                        FROM Order WHERE Name = 'childOrder5' LIMIT 1];
         
             Order tmpOrd = new Order();
             tmpOrd.Id  = newOrderList[0].Id;
