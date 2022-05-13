@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Close_This_Activity</name>
         <label>Close This Activity</label>
-        <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationX>710</locationX>
+        <locationY>1094</locationY>
         <actionName>HDT_LC_EditScartiComplessi</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -25,8 +25,8 @@
     <actionCalls>
         <name>Redirect_To_Case</name>
         <label>Redirect To Case</label>
-        <locationX>578</locationX>
-        <locationY>1118</locationY>
+        <locationX>710</locationX>
+        <locationY>1454</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -42,8 +42,8 @@
     <assignments>
         <name>Case_Init</name>
         <label>Case Init</label>
-        <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationX>710</locationX>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>newCase.RecordTypeId</assignToReference>
             <operator>Assign</operator>
@@ -93,22 +93,82 @@
                 <elementReference>accountId</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>newCase.Subscription__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>subscriptionId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>newCase.CommercialProduct__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>familyVas</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Close_This_Activity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Init_Case_From_Asset</name>
+        <label>Set Init Case From Asset</label>
+        <locationX>578</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>accountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Asset.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>familyVas</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Asset.Product2.Family</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Record_Type_Id</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Init_Case_From_Subscription</name>
+        <label>Set Init Case From Subscription</label>
+        <locationX>842</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>accountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.SBQQ__Account__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>familyVas</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.SBQQ__Product__r.Family</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Record_Type_Id</targetReference>
         </connector>
     </assignments>
     <decisions>
         <name>Check_Owner</name>
         <label>Check Owner</label>
-        <locationX>314</locationX>
+        <locationX>380</locationX>
         <locationY>278</locationY>
         <defaultConnector>
-            <targetReference>Get_Asset</targetReference>
+            <targetReference>Check_Vas_Type</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>work</defaultConnectorLabel>
         <rules>
             <name>No_Vas</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>(1 OR 2) AND (3 OR 4)</conditionLogic>
             <conditions>
                 <leftValueReference>assetId</leftValueReference>
                 <operator>IsNull</operator>
@@ -118,6 +178,20 @@
             </conditions>
             <conditions>
                 <leftValueReference>assetId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>subscriptionId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>subscriptionId</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue></stringValue>
@@ -144,6 +218,38 @@
             <label>Not mine</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Check_Vas_Type</name>
+        <label>Check Vas Type</label>
+        <locationX>710</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Get_Subscription</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>From Subscription</defaultConnectorLabel>
+        <rules>
+            <name>From_Asset</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>assetId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>assetId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Asset</targetReference>
+            </connector>
+            <label>From Asset</label>
+        </rules>
+    </decisions>
     <interviewLabel>Gestione KO Fornitore {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione KO Fornitore</label>
     <processMetadataValues>
@@ -168,8 +274,8 @@
     <recordCreates>
         <name>Create_Case</name>
         <label>Create Case</label>
-        <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationX>710</locationX>
+        <locationY>1214</locationY>
         <connector>
             <targetReference>Work_Case</targetReference>
         </connector>
@@ -181,7 +287,7 @@
     <recordLookups>
         <name>Get_Activity</name>
         <label>Get Activity</label>
-        <locationX>314</locationX>
+        <locationX>380</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -201,6 +307,10 @@
             <field>Asset__c</field>
         </outputAssignments>
         <outputAssignments>
+            <assignToReference>subscriptionId</assignToReference>
+            <field>Subscription__c</field>
+        </outputAssignments>
+        <outputAssignments>
             <assignToReference>isMyActivity</assignToReference>
             <field>isUserActivity__c</field>
         </outputAssignments>
@@ -209,10 +319,10 @@
         <name>Get_Asset</name>
         <label>Get Asset</label>
         <locationX>578</locationX>
-        <locationY>398</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Record_Type_Id</targetReference>
+            <targetReference>Set_Init_Case_From_Asset</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -222,17 +332,15 @@
                 <elementReference>assetId</elementReference>
             </value>
         </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Asset</object>
-        <outputAssignments>
-            <assignToReference>accountId</assignToReference>
-            <field>AccountId</field>
-        </outputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <name>Get_Record_Type_Id</name>
         <label>Get Record Type Id</label>
-        <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationX>710</locationX>
+        <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_Init</targetReference>
@@ -258,11 +366,32 @@
             <field>Id</field>
         </outputAssignments>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Subscription</name>
+        <label>Get Subscription</label>
+        <locationX>842</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Init_Case_From_Subscription</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>subscriptionId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>SBQQ__Subscription__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Work_Case</name>
         <label>Work Case</label>
-        <locationX>578</locationX>
-        <locationY>998</locationY>
+        <locationX>710</locationX>
+        <locationY>1334</locationY>
         <connector>
             <targetReference>Redirect_To_Case</targetReference>
         </connector>
@@ -304,8 +433,8 @@
     <screens>
         <name>Errore_Chiusura_Activity</name>
         <label>Errore Chiusura Activity</label>
-        <locationX>1370</locationX>
-        <locationY>878</locationY>
+        <locationX>1634</locationX>
+        <locationY>1214</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -320,8 +449,8 @@
     <screens>
         <name>Errore_Creazione_Case</name>
         <label>Errore Creazione Case</label>
-        <locationX>1106</locationX>
-        <locationY>998</locationY>
+        <locationX>1370</locationX>
+        <locationY>1334</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -336,8 +465,8 @@
     <screens>
         <name>Errore_Creazione_Case_0</name>
         <label>Errore Creazione Case</label>
-        <locationX>842</locationX>
-        <locationY>1118</locationY>
+        <locationX>1106</locationX>
+        <locationY>1454</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -366,7 +495,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>188</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Activity</targetReference>
@@ -385,6 +514,16 @@
     </variables>
     <variables>
         <name>assetId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>familyVas</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -424,6 +563,16 @@
     </variables>
     <variables>
         <name>recordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>subscriptionId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
