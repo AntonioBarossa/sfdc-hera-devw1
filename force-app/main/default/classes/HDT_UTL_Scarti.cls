@@ -1193,6 +1193,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 objectIdSet.add(recordId);
             }
         }
+        closeActivityOnCompletedFromNotify(objectIdSet);
+    }
+
+    public static void closeActivityOnCompletedFromNotify(Set<Id> objectIdSet){
         if (!objectIdSet.isEmpty()){
             List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
             String listId = '(\''+String.join((Iterable<String>) objectIdSet, '\',\'') +'\')';
