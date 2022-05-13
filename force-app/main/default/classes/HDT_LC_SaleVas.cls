@@ -261,7 +261,7 @@ public inherited sharing class HDT_LC_SaleVas {
                 //     WHERE (Id IN :contractIds OR ServicePoint__c IN :servicePointIds) AND Status!='Cessato' WITH SECURITY_ENFORCED];
                 sobjList.addAll([SELECT Id, SBQQ__Contract__c, SBQQ__Contract__r.ContractNumber, SBQQ__Contract__r.ServicePoint__c, 
                  SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
-                 FROM SBQQ__Subscription__c WHERE SBQQ__Account__c = :searchString AND VasPracticeCode__c != null AND SBQQ__Contract__r.Status = 'Attivo']);
+                 FROM SBQQ__Subscription__c WHERE SBQQ__Account__c = :searchString AND (VasPracticeCode__c != null OR SBQQ__Product__r.Family='VAS Fatturabili') AND SBQQ__Contract__r.Status = 'Attivo']);
                 sobjList.addAll([SELECT Id, Contract__c, Contract__r.ContractNumber, Contract__r.ServicePoint__c,
                 Contract__r.ServicePoint__r.ServicePointCode__c, Contract__r.ServicePoint__r.SupplyAddress__c
                  FROM Asset WHERE AccountId = :searchString AND VasPracticeCode__c != null AND Contract__r.Status = 'Attivo']);

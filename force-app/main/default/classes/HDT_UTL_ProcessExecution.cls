@@ -284,6 +284,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
             Formula.recalculateFormulas(csList);
             ServiceRequest__c srvRequest;
             for(Case cs : csList){
+                if(cs.Phase__c == 'Bozza Annullata')continue;
                 srvRequest = new ServiceRequest__c();
                 srvRequest.Case__c = cs.Id;
                 srvRequest.ServicePointCode__c = cs.PODPDRFormula__c;
@@ -337,6 +338,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     private static void updateCaseAfterCompatibility(Map<Id, String> incompatibleCaseIdSet, List<Case> savedCase){
 
         for(Case c : savedCase){
+            if(c.Phase__c == 'Bozza Annullata')continue;
             if(incompatibleCaseIdSet.containsKey(c.Id)){
                 c.Phase__c = 'Bozza Annullata';
                 c.Status = 'Closed';

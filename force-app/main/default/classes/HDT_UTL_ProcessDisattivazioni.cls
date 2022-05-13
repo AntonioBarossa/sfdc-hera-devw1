@@ -205,12 +205,15 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
             }
 
             //if(processObj.newCase.Type.equalsIgnoreCase('Recesso per Rifiuto Voltura')){
+            if(!isVolturaProcess){
+
                 String currentOrderNum = processObj.csvSplitted[orderVolturaIndex];
                 if(orderIdMap.containsKey(currentOrderNum)){
                     processObj.newCase.VulturePracticeReference__c = orderIdMap.get(currentOrderNum);
                 } else {
                     System.debug(LoggingLevel.DEBUG, '>>> NO ORDER FOUND');
                 }
+            }
             //}
 
             try{
