@@ -25,6 +25,9 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
         Map<String, String> accountContactsMap = new Map<String, String>();
         Map<String, String> accountCompanyMap = new Map<String, String>();
         Set<Id> accountIds = new Set<Id>();
+
+        String profileName = [select Name from profile where id = :UserInfo.getProfileId()].Name;
+
         for (AlertAccountConfiguration__c alert : (List<AlertAccountConfiguration__c>) Trigger.new) {
             if (alert.Account__c != null) {
                 accountIds.add(alert.Account__c);
@@ -61,6 +64,9 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
             System.debug(LoggingLevel.DEBUG, 'Creazione Case Modifica Alert: parametri di input: ' + inputsMap);
             Case alertCase = caseUtility.createCase(inputsMap);
             if (alertCase != null) {
+                if ( profileName.equalsIgnoreCase('Hera M2M Integration User') ){
+                    alertCase.origin='Web';
+                }
                 alertCase.IsAlertActive__c = alert.IsActive__c;
                 alertCase.AlertType__c = transcodeAlertType(alert.AlertType__c);
                 alertCases.add(alertCase);
@@ -75,6 +81,16 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
         }
 
         HDT_UTL_DatabaseService.updateSObject(alertCases);
+    }
+
+
+    public string getProfileNameByCase(String caseId)
+    {
+        return [SELECT name FROM Profile 
+                     WHERE Id = :[SELECT id, profileId FROM user
+                                  WHERE Id = :[SELECT CreatedById FROM case WHERE Id = :caseId][0].CreatedById
+                                 ][0].profileId
+                ][0].name;
     }
 
     /**
