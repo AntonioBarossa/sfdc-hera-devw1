@@ -12997,6 +12997,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>MassiveLoaderRequestItem__c.RelatedRequestItem__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>MassiveLoaderRequestItem__c.VasOrder__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NewsNotificationCenter__c.Active__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -17508,6 +17518,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Product2.VersionDescr__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Product2.WaitingPeriod__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

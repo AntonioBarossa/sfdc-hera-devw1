@@ -71,7 +71,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
         //Get sale data start
         saleSrv.checkReadAccess('Account__c,Agency__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
-        Sale__c existingSale = saleQr.getRecordById(sale.id, 'AgencyCode__c,CommercialId__c ,Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Account__r.CompanyOwner__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
+        Sale__c existingSale = saleQr.getRecordById(sale.id, 'AgencyCode__c,CommercialId__c ,Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Account__r.CompanyOwner__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name,Campaign__r.CampaignEligibilityGroup__c');
         sale = existingSale;
         //Get sale data end
         
@@ -219,7 +219,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 SuperUser__c = helperMethods.isSuperUser() ? 'Y' : 'N',
                 SBQQ__PricebookId__c = getPricebookId(servicePoint),
                 AgencyCode__c = sale.AgencyCode__c,
-                CommercialId__c = sale.CommercialId__c
+                CommercialId__c = sale.CommercialId__c,
+                CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null 
             );
             if(contractReference != null && contractReference != ''){
                 newQuote.ContractReference__c = contractReference;
