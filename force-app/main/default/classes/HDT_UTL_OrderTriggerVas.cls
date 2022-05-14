@@ -50,7 +50,14 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
 
     public static void cancelLinkedOrders(Set<Id> canceledOrderIds, Set<Id> canceledOrderQuotesIds){
         //List<Order> ordersToWork = [SELECT Id, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE  Id IN :canceledOrderIds OR OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
-        List<Order> ordersToWork = [SELECT Id, isBillableVas__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
+        List<Order> ordersToWork = new List<Order>();
+        if(!canceledOrderIds.isEmpty()){
+            ordersToWork = [SELECT Id, isBillableVas__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds WITH SECURITY_ENFORCED];
+        }
+        //[SELECT Id, isBillableVas__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
+
+       
+
         if(ordersToWork.isEmpty()){
             return;
         }

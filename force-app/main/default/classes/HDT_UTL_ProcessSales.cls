@@ -236,7 +236,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             processObj.createServicePoint = (String.isNotEmpty(processObj.csvSplitted[codicePuntoIndex]) && codicePuntoMap.containsKey(processObj.csvSplitted[codicePuntoIndex])) ? false : true;
             processObj.createBillingProfile = (String.isNotEmpty(processObj.csvSplitted[contoContrattualeIndex]) && billProfMap.containsKey(processObj.csvSplitted[contoContrattualeIndex])) ? false : true;
-            processObj.createReferente = (String.isNotEmpty(processObj.csvSplitted[recTypeIndex]) && processObj.csvSplitted[recTypeIndex].equalsIgnoreCase('Residenziale'))?false:true;
+            processObj.createReferente = ((String.isNotEmpty(processObj.csvSplitted[recTypeIndex]) && processObj.csvSplitted[recTypeIndex].equalsIgnoreCase('Residenziale')) || String.isEmpty(processObj.csvSplitted[recTypeIndex]))?false:true;
             System.debug(LoggingLevel.DEBUG, '>>> enableCreate: billProf [' + processObj.createBillingProfile + ']; servPoint [' + processObj.createServicePoint + ']');
             
             for (String tempField : processObj.csvSplitted) {
@@ -305,6 +305,15 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 continue;
             }
 
+            if(processObj.createServicePoint){
+                convertionError = checkRequiredServicePointField(processObj.servicePoint);
+                if(String.isNotEmpty(convertionError)){
+                    processObj.requestItem.Status__c = 'Errore';
+                    processObj.requestItem.StatusDescription__c = convertionError;
+                    continue;
+                }
+            }
+
             addInformationToSet(processObj.account);
 
         }
@@ -345,8 +354,18 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                     accountReferenteToInsert.add(processObj.accountReferente);
                 }
             }
-            processObj.account.Id = setAccountIdFromDb(processObj.account);
-            
+
+            processObj.account = setAccountFromDb(processObj.account);
+
+            if(processObj.createBillingProfile){
+                convertionError = checkRequiredBillingProfileField(processObj.billingProfile, processObj.account.Category__c);
+                if(String.isNotEmpty(convertionError)){
+                    processObj.requestItem.Status__c = 'Errore';
+                    processObj.requestItem.StatusDescription__c = convertionError;
+                    continue;
+                }
+            }
+
             if(processObj.account.Id == null){
                 requestItemForUpsert.add(processObj.requestItem);
                 accountToInsert.add(processObj.account);
@@ -728,14 +747,14 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
     }
 
-    public Id setAccountIdFromDb(Account iterationAccount){
+    public Account setAccountFromDb(Account iterationAccount){
 
         //search by CustomerCode__c --> CSN (csv header)
         if(String.isNotEmpty(iterationAccount.CustomerCode__c)){
             for(Account a : accountList){
                 if(a.CustomerCode__c.equalsIgnoreCase(iterationAccount.CustomerCode__c)){
                     System.debug(LoggingLevel.DEBUG, '>>> Account id [' + a.Id + '] found by CustomerCode__c -> ' + iterationAccount.CustomerCode__c);
-                    return a.Id;
+                    return a;
                 }
             }
         }
@@ -747,11 +766,12 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                   a.VATNumber__c.equalsIgnoreCase(iterationAccount.VATNumber__c) )
             ){
                 System.debug(LoggingLevel.DEBUG, '>>> Account id [' + a.Id + '] found by FiscalCode__c,VATNumber__c,CustomerMarking__c');
-                return a.Id;
+                return a;
             }
         }
 
-        return null;
+        System.debug(LoggingLevel.DEBUG, '>>> no account found on db...');
+        return iterationAccount;
 
     }
 
@@ -808,6 +828,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         contact.MailingStreetCode__c = account.BillingStreetCode__c;
         contact.MailingStreetNumber__c = account.BillingStreetNumber__c;
         contact.MailingStreetNumberExtension__c = account.BillingStreetNumberExtension__c;
+        contact.MailingStreetToponym__c = account.BillingStreetToponym__c;
         contact.MailingRegion__c = account.BillingRegion__c;
         contact.MailingPlace__c = account.BillingPlace__c;
         contact.MailingPlaceCode__c = account.BillingPlaceCode__c;
@@ -821,19 +842,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         marcaturaSet.clear();
         csnSet.clear();
     }
-    public String checkRequiredSalesField(Sale__c sale){
-        Boolean canale = String.isEmpty(sale.Channel__c);
-        Boolean codiceAgenzia = String.isEmpty(sale.AgencyCode__c);
-        Boolean agenzia = String.isEmpty(sale.Agency__c);
-        Boolean vendutoDa= String.isEmpty(sale.CommercialId__c);
-        Boolean nomeAgente = String.isEmpty(sale.VendorFirstName__c);
-        Boolean cognomeAgente = String.isEmpty(sale.VendorLastName__c);
-        if(canale || codiceAgenzia || agenzia || vendutoDa || nomeAgente || cognomeAgente){
-            return 'Verificare che i campi Canale, Agenzia, Codice Agenzia, Venduto da, Nome/Cognome Agente siano valorizzati';
-        }
-        return '';
-    }
-    public String checkRequiredBillingProfileField(BillingProfile__c bp,String categoriaCliente){
+
+    public String checkRequiredBillingProfileField(BillingProfile__c bp, String categoriaCliente){
         Boolean contoContrattualeBool = String.isEmpty(bp.ContractAccountCode__c);
         Boolean modPagamentoBool = String.isEmpty(bp.PaymentMethod__c);
         String modPagamentoStr = bp.PaymentMethod__c;
