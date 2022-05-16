@@ -59,7 +59,7 @@ public inherited sharing class HDT_BA_CreateVasOrders implements Database.Batcha
         oldReq.Id = idLoaderRequest;
         oldReq.Status__c = constantsUtl.MASSIVLOADER_STATUS_CHIUSO;
         oldReq.Phase__c = 'File processato';
-        //update oldReq;
+        update oldReq;
 
         // Creazione file RequestItem in Errore 
         List<MassiveLoaderRequestItem__c> listErrorReq = [
@@ -69,8 +69,8 @@ public inherited sharing class HDT_BA_CreateVasOrders implements Database.Batcha
         ];
 
         if (listErrorReq != null && listErrorReq.size() > 0) {
-            //HDT_BA_ErrorRequestItem batch = new HDT_BA_ErrorRequestItem(idLoaderRequest);
-            //Database.executebatch(batch, 1000);
+            HDT_BA_ErrorRequestItem batch = new HDT_BA_ErrorRequestItem(idLoaderRequest);
+            Database.executebatch(batch, 1000);
         }
 
     }
