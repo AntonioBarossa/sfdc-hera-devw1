@@ -424,4 +424,25 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
     }
 
+    public static String buildDefaultRequest(String activityId){
+        System.debug('>>> activityId: ' + activityId);
+
+        List<wrts_prcgvr__Activity__c> activity = HDT_QR_AccountStatement.getActivityById(activityId);
+        JSONGenerator gen = JSON.createGenerator(true);
+
+        if(activity.size() > 0){
+            
+            gen.writeStartObject();
+            gen.writeStringField('servizio: ', String.valueOf(activity[0].Order__r.CommodityFormula__c));
+            gen.writeStringField('contratto: ', String.valueOf(activity[0].Order__r.SapContractCode__c));
+            gen.writeEndObject();
+    
+            System.debug('>>> defaultRequest: ' + gen.getAsString());
+        } else {
+            return '';
+        }
+
+        return gen.getAsString();
+    }
+
 }
