@@ -208,7 +208,7 @@ public with sharing class HDT_UTL_NotifVasTst {
             }
             Test.stopTest();
             Case postSaleVasCase = [Select Phase__c from Case WHERE RecordTypeId = :constants.CASE_RECORDTYPEID_POST_SALES_VAS];
-			system.AssertEquals(postSaleVasCase.Phase__c, 'Accettato Motore VAS', 'Unexpected Case Phase');
+			system.AssertEquals(postSaleVasCase.Phase__c, 'Bozza', 'Unexpected Case Phase');
         }
     }
 }
