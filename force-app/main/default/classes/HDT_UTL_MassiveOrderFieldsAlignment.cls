@@ -41,6 +41,27 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
     
     }
 
+    public static List<Contract> getContractByServicePointIds(List<Id> podSet){
+
+        SObjectType objtype = Schema.getGlobalDescribe().get('Contract');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+        List<Contract> contractList;
+
+        if(objRes.isAccessible()){
+            contractList = [
+                SELECT Id,
+                ServicePoint__r.ServicePointCode__c,
+                Account.FirstName__c, Account.LastName__c, Account.FiscalCode__c, Account.VATNumber__c,Account.BusinessNameRcuFormula__c,AccountId,SAPContractCode__c
+                FROM Contract
+                WHERE ServicePoint__c IN :podSet
+                WITH SECURITY_ENFORCED
+            ];
+        }
+
+        return contractList;
+    
+    }
+
     public static List<BillingProfile__c> getBillingProfileByIds(List<Id> idsList){
 
         SObjectType objtype = Schema.getGlobalDescribe().get('BillingProfile__c');
@@ -205,6 +226,19 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
         return orderToUpdate;
     }
 
+    public static Order alignContractFields(Order orderToUpdate, Contract contract){
+        Boolean isBusiness = String.isNotBlank(contract.Account.BusinessNameRcuFormula__c);
+        orderToUpdate.PreviousHolderFirstName__c = contract.Account.FirstName__c;
+        orderToUpdate.PreviousHolderLastName__c = isBusiness? '':contract.Account.LastName__c;
+        orderToUpdate.PreviousHolderFiscalCode__c=contract.Account.FiscalCode__c;
+        orderToUpdate.PreviousHoldeCompanyName__c= isBusiness? '':contract.Account.BusinessNameRcuFormula__c;
+        orderToUpdate.PreviousHolderVatNumber__c=contract.Account.VATNumber__c;
+        orderToUpdate.ContractReference__c = contract.Id;
+        //orderToUpdate.PreviousCustomer__c = contract.AccountId;
+        orderToUpdate.SapContractCode__c = contract.SAPContractCode__c;
+        return orderToUpdate;
+    }
+
     public static Order alignServicePointFields(Order orderToUpdate, ServicePoint__c servicePoint){
 
         HDT_WRP_Data mixedData = new HDT_WRP_Data();
@@ -297,7 +331,7 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
         orderToUpdate.MeterClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.MeterClass__c : null;
         orderToUpdate.Caliber__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.MeterClass__c : null;
         orderToUpdate.WithdrawalClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? (servicePoint.WithdrawalClass__c != null ? servicePoint.WithdrawalClass__c : '001 - 7 giorni') : null;
-        orderToUpdate.SupplyType__c = servicePoint.SupplyTypeTemp__c;
+        orderToUpdate.SupplyType__c = servicePoint.SupplyType__c;
         //orderToUpdate.EffectiveDate__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_SwitchIn' ? Date.newInstance(2021, 06, 01) : Date.today(); //to do: with switch in calculation logic
         orderToUpdate.DistributorCode__c = servicePoint.Distributor__r.Code__c;
         orderToUpdate.PressureLevel__c = servicePoint.PressureLevel__c;
