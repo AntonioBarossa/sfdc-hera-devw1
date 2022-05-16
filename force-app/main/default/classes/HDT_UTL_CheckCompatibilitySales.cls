@@ -192,7 +192,7 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
 
         switch on orderToSet.RecordType.DeveloperName {
             when 'HDT_RT_Voltura' {
-                orderToSet.Phase__c = 'Documentazione Validata';
+                //orderToSet.Phase__c = 'Documentazione Validata';
                 orderToSet.Status = 'In Lavorazione';
             }
             when else {
