@@ -2,7 +2,7 @@ public inherited sharing class HDT_QR_ProcessSales {
 
     public static List<Account> getAccountList(Set<String> fiscalCodeSet, Set<String> vatNumberSet, Set<String> marcaturaSet, Set<String> csnSet){
         return [
-            SELECT Id, CustomerCode__c, FiscalCode__c, VATNumber__c, CustomerMarking__c
+            SELECT Id, CustomerCode__c, FiscalCode__c, VATNumber__c, CustomerMarking__c, Category__c
             FROM Account
             WHERE CustomerCode__c IN :csnSet
             OR (

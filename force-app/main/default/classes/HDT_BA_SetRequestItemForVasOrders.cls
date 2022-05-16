@@ -53,8 +53,8 @@ public inherited sharing class HDT_BA_SetRequestItemForVasOrders implements Data
 
         System.debug(LoggingLevel.DEBUG, '>>> HDT_BA_ProcessRequestItem finish ');
 
-        HDT_BA_CreateVasOrders vasOrderCreation = new HDT_BA_CreateVasOrders(idLoaderRequest, 1, process);
-        Database.executebatch(vasOrderCreation, 1);
+        //HDT_BA_CreateVasOrders vasOrderCreation = new HDT_BA_CreateVasOrders(idLoaderRequest, 1, process);
+        //Database.executebatch(vasOrderCreation, 1);
 
     }
 
