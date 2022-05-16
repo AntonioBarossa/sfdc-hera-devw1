@@ -54,7 +54,7 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
     public static void executeHandleFirstSearch(){
         String methodName = 'executeHandleFirstSearch: ';
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock('0165',true));
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AppointmentAgendaMock('0165',true));
         Test.startTest();
             agenda.handleFirstSearch(activity.Id, Date.today(), '18:00/19:00');
         Test.stopTest();
@@ -72,7 +72,7 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
         activity.wrts_prcgvr__Status__c = 'Presa appuntamento in corso';
         activity.AppointmentCode__c = '6666';
         update activity;
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock('0165',true));
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AppointmentAgendaMock('0165',true));
         Test.startTest();
             agenda.handleNewSlot(activity.Id, Date.today(), '18:00/19:00');
         Test.stopTest();
@@ -88,7 +88,7 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
         activity.wrts_prcgvr__Status__c = 'Appuntamento confermato';
         activity.AppointmentCode__c = '6666';
         update activity;
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock('0190',true));
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AppointmentAgendaMock('0190',true));
         Test.startTest();
             agenda.handleNewSlotModify(activity.Id, Date.today(), '18:00/19:00');
         Test.stopTest();
@@ -104,7 +104,7 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
         activity.wrts_prcgvr__Status__c = 'Presa appuntamento in corso';
         activity.AppointmentCode__c = '6666';
         update activity;
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock('xxx',true));
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AppointmentAgendaMock('xxx',true));
         Test.startTest();
             agenda.handleCancellation(activity.Id, '6666');
         Test.stopTest();
@@ -119,7 +119,7 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
         activity.wrts_prcgvr__Status__c = 'Presa appuntamento in corso';
         activity.AppointmentCode__c = '6666';
         update activity;
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock('0175',true));
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AppointmentAgendaMock('0175',true));
         Test.startTest();
             agenda.handleConfirm(activity.Id, '{"data" : "31/12/2021","fascia" : "15:00/16:00","codice" : "2222","dataLimite" : "28/12/2021","oraLimite" : "19:00","stima" :"00:30:00"}');
         Test.stopTest();
@@ -256,7 +256,7 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
     public static void executeFirstSearchError(){
         String methodName = 'executeFirstError: ';
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock('0165',false));
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AppointmentAgendaMock('0165',false));
         Test.startTest(); 
             String response = agenda.handleFirstSearch(activity.Id, Date.today(), '18:00/19:00');  
             System.assertEquals('COMPETENZA DISTRIBUTORE', response, methodName + 'Non è stata lanciata l\'eccezione.');
@@ -269,7 +269,7 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
         wrts_prcgvr__Activity__c activity = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c];
         activity.wrts_prcgvr__Status__c = 'Appuntamento confermato';
         update activity;
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock('0190', false));
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AppointmentAgendaMock('0190', false));
         Test.startTest();
             String response = agenda.handleNewSlotModify(activity.Id, Date.today(), '18:00/19:00');
             System.assertEquals('ERRORE MODIFICA', response, methodName + 'Non è stata lanciata l\'eccezione.');
@@ -283,7 +283,7 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
         activity.wrts_prcgvr__Status__c = 'Presa appuntamento in corso';
         activity.AppointmentCode__c = '6666';
         update activity;
-        Test.setMock(HttpCalloutMock.class, new HDT_LC_AppointmentAgendaMock('0175', false));
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AppointmentAgendaMock('0175', false));
         Test.startTest();
             String response = agenda.handleConfirm(activity.Id, '{"data" : "31/12/2021","fascia" : "15:00/16:00","codice" : "2222","dataLimite" : "28/12/2021","oraLimite" : "19:00","stima" :"00:30:00"}');   
             System.assertEquals('ERRORE CONFERMA', response, methodName + 'Non è stata lanciata l\'eccezione.');
@@ -442,20 +442,15 @@ public with sharing class HDT_SRV_AppointmentAgendaTst {
         return newMap;
     }
 
-    public class HDT_LC_AppointmentAgendaMock implements HttpCalloutMock{
+    public class HDT_SRV_AppointmentAgendaMock implements HttpCalloutMock{
         private String bodyString;
         private Boolean throwError;
 
-        public HDT_LC_AppointmentAgendaMock(Boolean errorCall){
-            this.throwError = true;
-            this.bodyString = '{"responseAppuntamento":{"codCaus" : "test" ,"codFlusso" : "x" ,"desEsitoConf" : "x" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "x" ,"appuntamento" : [{"appData" : "2022-12-31","appFasciaOrario" : "15:00/16:00","codiceApp" : "2222","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "16:00/17:00","codiceApp" : "3333","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "17:00/18:00","codiceApp" : "4444","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "18:00/19:00","codiceApp" : "5555","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "19:00/20:00","codiceApp" : "6666","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"}]}}';
-        }
-
-        public HDT_LC_AppointmentAgendaMock(String codiceFlusso, Boolean success){
+        public HDT_SRV_AppointmentAgendaMock(String codiceFlusso, Boolean success){
             this.throwError = false;
             String esito = !success ? '0' : '1';
             String gestApp = !success ? '1' : '0';
-            this.bodyString = '{"responseAppuntamento":{"codCaus" : "test" ,"codFlusso" : "'+ codiceFlusso + '" ,"desEsitoConf" : "'+ esito +'" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "'+ gestApp +'" ,"appuntamento" : [{"appData" : "2022-12-31","appFasciaOrario" : "15:00/16:00","codiceApp" : "2222","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "16:00/17:00","codiceApp" : "3333","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "17:00/18:00","codiceApp" : "4444","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "18:00/19:00","codiceApp" : "5555","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "19:00/20:00","codiceApp" : "6666","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"}]}}';
+            this.bodyString = '{"responseAppuntamento":{"codCaus" : "test" ,"codFlusso" : "'+ codiceFlusso + '" ,"desEsitoConf" : "'+ esito +'" ,"documentkey" : "test" ,"errInvioDis" : "" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "'+ gestApp +'" ,"appuntamento" : [{"appData" : "2022-12-31","appFasciaOrario" : "15:00/16:00","codiceApp" : "2222","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "16:00/17:00","codiceApp" : "3333","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "17:00/18:00","codiceApp" : "4444","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "18:00/19:00","codiceApp" : "5555","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "19:00/20:00","codiceApp" : "6666","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"}]}}';
         }
 
         public HTTPResponse respond(HTTPRequest request) {
