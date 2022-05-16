@@ -47,6 +47,10 @@
                 <behavior>Readonly</behavior>
                 <field>ClientCategoryFormula__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DistributorPracticeCode__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
