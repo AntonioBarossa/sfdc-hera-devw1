@@ -137,7 +137,7 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
     }
 
     public static Order getOrderPriceBook(String orderId){
-        List<Order> orders = [SELECT Id,SBQQ__Quote__r.SBQQ__PriceBook__r.Name FROM Order WHERE Id =:orderId WITH SECURITY_ENFORCED];
+        List<Order> orders = [SELECT Id,SBQQ__Quote__r.SBQQ__PriceBook__r.Name,Pricebook2.Name FROM Order WHERE Id =:orderId WITH SECURITY_ENFORCED];
         if(!orders.isEmpty()){
             return orders[0];
         }else {

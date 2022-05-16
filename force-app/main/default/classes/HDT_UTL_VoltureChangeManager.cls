@@ -32,7 +32,8 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             'CreatedDate',
             'CreatedById',
             'OwnerId',
-            'LastModifiedById'
+            'LastModifiedById',
+            'DateSentToSII__c'
         };
         SObject newSobj = Schema.getGlobalDescribe().get(sobjName).newSObject();
         /*Assign the correct set<string> to be used for field exclusion*/

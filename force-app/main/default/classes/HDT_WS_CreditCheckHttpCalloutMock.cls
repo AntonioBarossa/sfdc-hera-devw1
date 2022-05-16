@@ -39,6 +39,7 @@ public class HDT_WS_CreditCheckHttpCalloutMock implements HttpCalloutMock {
                     new Map<String,Object>{
                         'code'=>'code',
                         'message'=>new Map<String,String>{
+                            'error_code'=>'code',
                             'message1'=>'message1',
                             'message2'=>'message2'
                         },

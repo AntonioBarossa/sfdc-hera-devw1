@@ -40,6 +40,11 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
         accList[0].CustomerType__c = 'Organizzazione';
         insert accList;
 
+        List<Account> simpleAccDistributor = HDT_UTL_DataFactoryTst.createSimpleAccountDistributore(1, false,'MMS','MMS Azienda','Aziende SME');
+        simpleAccDistributor[0].Name = 'testSimplAccDistr0';
+        simpleAccDistributor[0].Code__c = '13D0000082';
+        insert simpleAccDistributor;
+
         List<Campaign> campList = HDT_UTL_DataFactoryTst.createCampaign(1, true);
 
         List<Contact> contList = HDT_UTL_DataFactoryTst.createContact(1, false, accList[0].id);
@@ -64,7 +69,6 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
         saleList[0].Agency__c = 'test agency'; 
         saleList[0].AgencyCode__c = 'AgencyCode';
         saleList[0].AreaManager__c = 'Area Manager test';
-        //saleList[0].CreatedById = internalUser.id;
         saleList[0].CreatedBy__c = 'test';
 
 
@@ -74,7 +78,9 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
         servList[0].Vat__c = '';
 
         servList[1].CommoditySector__c = 'Energia Elettrica';
-        servList[1].ExciseEle__c = 'E_IE_M04';
+        servList[1].Vat__c = '02';
+        servList[1].SupplyTypeTemp__c = 'Non Domestico';
+        servList[1].Distributor__c = simpleAccDistributor[0].id;
         insert servList;
 
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(2,false,accList[0].id,'Bozza');
@@ -82,7 +88,8 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
         ordList[0].Vat__c = servList[0].Vat__c;
 
         ordList[1].ServicePoint__c = servList[1].id;
-        ordList[1].ExciseEle__c = '';
+        ordList[1].ExciseEle__c = null;
+        ordList[1].Vat__c = null;
         insert ordList;
 
         List<BillingProfile__c> billingList = HDT_UTL_DataFactoryTst.createBillingProfile(1,false,accList[0].id);
@@ -138,8 +145,9 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
 
         Test.startTest();
         List<Account> accResult = HDT_UTL_MassiveOrderFieldsAlignment.getAccountByIds(idsList);
-        System.assertEquals(false, accResult.isEmpty(),'testGetAccByIds did not work correctly');
         Test.stopTest();
+
+        System.assertEquals(false, accResult.isEmpty(),'testGetAccByIds did not work correctly');
         
     }
 
@@ -158,8 +166,9 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
 
         Test.startTest();
         List<Sale__c> saleListResult = HDT_UTL_MassiveOrderFieldsAlignment.getSaleByIds(idsList);
-        System.assertEquals(false, saleListResult.isEmpty(),'testGetSalesByIds did not work correctly');
         Test.stopTest();
+
+        System.assertEquals(false, saleListResult.isEmpty(),'testGetSalesByIds did not work correctly');
         
     }
 
@@ -176,8 +185,9 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
 
         Test.startTest();
         List<BillingProfile__c> billingListResult = HDT_UTL_MassiveOrderFieldsAlignment.getBillingProfileByIds(idsList);
-        System.assertEquals(false, billingListResult.isEmpty(),'testGetBillingProfileByIds did not work correctly');
         Test.stopTest();
+
+        System.assertEquals(false, billingListResult.isEmpty(),'testGetBillingProfileByIds did not work correctly');
         
     }
 
@@ -194,8 +204,9 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
 
         Test.startTest();
         List<ServicePoint__c> servPointResult = HDT_UTL_MassiveOrderFieldsAlignment.getServicePointByIds(idsList);
-        System.assertEquals(false, servPointResult.isEmpty(),'testGetBillingProfileByIds did not work correctly');
         Test.stopTest();
+
+        System.assertEquals(false, servPointResult.isEmpty(),'testGetBillingProfileByIds did not work correctly');
         
     }
 
@@ -228,8 +239,9 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
 
         Test.startTest();
         Order orderResult = HDT_UTL_MassiveOrderFieldsAlignment.alignSaleFields(ord, sale);
-        System.assertEquals(true, orderResult.SaleBy__c == sale.SaleBy__c, 'testalignSaleFields did not work correctly');
         Test.stopTest();
+
+        System.assertEquals(true, orderResult.SaleBy__c == sale.SaleBy__c, 'testalignSaleFields did not work correctly');
 
     }
 
@@ -246,8 +258,29 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
 
         Test.startTest();
         Order orderResult = HDT_UTL_MassiveOrderFieldsAlignment.alignBillingProfileFields(ord, billing);
-        System.assertEquals(true, orderResult.IbanCodeNumber__c == billing.IbanCodeNumber__c, 'testalignBillingProfileFields did not work correctly');
         Test.stopTest();
+
+        System.assertEquals(true, orderResult.IbanCodeNumber__c == billing.IbanCodeNumber__c, 'testalignBillingProfileFields did not work correctly');
+
+    }
+
+    @isTest 
+    static void testAlignServicePointFields(){
+
+        List<Order> ord = [SELECT Id, ExciseEle__c, Vat__c FROM Order WHERE Name = 'testOrderName1'];
+
+        List<ServicePoint__c> serv = [SELECT Id, CommoditySector__c, Vat__c, ExciseEle__c, SupplyTypeTemp__c, AnnualConsumption__c, SwitchInWinback__c, SwitchOutDate__c, MarketOrigin__c,
+                                      PowerAvailable__c, VoltageLevel__c, DisconnectibilityPhone__c, UseTypeEnergy__c, UseCategory__c, MeterSN__c, Resident__c, RemiCode__c, VATNumberUdb__c, 
+                                      SupplyCity__c, SupplyStreet__c, SupplyStreetNumber__c, SupplyStreetNumberExtension__c, SupplyPlace__c, SupplyPostalCode__c, SupplyCountry__c, PowerContractual__c,
+                                      ServicePointCode__c, SAPImplantCode__c, ImplantTypeTemp__c, SupplySAPCityCode__c, SupplyProvince__c, Disconnectable__c, DisconnectibilityType__c, MeterClass__c,
+                                      WithdrawalClass__c, PressureLevel__c, RequestPhase__c, PowerRequested__c, MeterType__c, IsRemoteManaged__c, Pressure__c, RecordType.DeveloperName,
+                                      MeterStatus__c, Distributor__r.Code__c FROM ServicePoint__c WHERE Name = 'testServicePoint1'];
+
+        Test.startTest();
+        Order orderResult =  HDT_UTL_MassiveOrderFieldsAlignment.alignServicePointFields(ord[0], serv[0]);
+        Test.stopTest();
+
+        System.assertEquals(true, orderResult!=null, 'testAlignServicePointFields did not work correctly');
 
     }
 
