@@ -44,6 +44,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private Map<String, String> companyCodeMap;
     private Map<String, String> processMatrixMap;
     private Map<Id, List<SBQQ__ProductOption__c>> otherRequiredOption;
+    private List<sObject> sObjectToDelete = new List<sObject>();
     private List<HDT_ExciseTranscode__mdt> exciseList;
     private Map<String,Double> exciseMap = new Map<String,Double>();
     private List<HDT_RegionalAdditional__mdt> regionalAddList = new List<HDT_RegionalAdditional__mdt>();
@@ -297,7 +298,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         Id commOffId;
         Id priceBookId;
-
+        String errorFieldCheck;
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
             if(processObj.requestItem.Status__c == 'Errore'){
@@ -305,6 +306,15 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             }
 
             processObj.sale = setSaleObject(processObj.sale, processObj.nextDataObj.accountId, processObj.nextDataObj.contactId);
+
+
+            errorFieldCheck = checkRequiredSalesField(processObj.sale);
+            if(String.isNotEmpty(errorFieldCheck)){
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = errorFieldCheck;
+                continue;
+            }
+
             requestItemForUpsert.add(processObj.requestItem);
             saleToInsert.add(processObj.sale);
         }
@@ -494,18 +504,21 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                     wrpChildOrder.childOrder = HDT_UTL_MassiveOrderFieldsAlignment.alignContractFields(wrpChildOrder.childOrder, contractMap.get(processObj.nextDataObj.servPointId));
                 }
                 commodity = servicePointMap.get(processObj.nextDataObj.servPointId).CommoditySector__c;
-
-                if(companyCodeMap.containsKey(processObj.sale.SalesCompany__c + '_' +  commodity)){
-                    wrpChildOrder.childOrder.SalesCompanyCode__c = companyCodeMap.get(processObj.sale.SalesCompany__c + '_' +  commodity);
+                if(commodity.equalsIgnoreCase('Gas')){
+                    wrpChildOrder.childOrder.SalesCompany__c = 'Hera Comm Marche';
+                }else {
+                    wrpChildOrder.childOrder.SalesCompany__c = 'Hera Comm S.p.A.';
                 }
-
-                wrpChildOrder.childOrder.SalesCompany__c = processObj.sale.SalesCompany__c;
+                if(companyCodeMap.containsKey(wrpChildOrder.childOrder.SalesCompany__c + '_' +  commodity)){
+                    wrpChildOrder.childOrder.SalesCompanyCode__c = companyCodeMap.get(wrpChildOrder.childOrder.SalesCompany__c + '_' +  commodity);
+                }
+                //wrpChildOrder.childOrder.SalesCompany__c = processObj.sale.SalesCompany__c;
                 //wrpChildOrder.childOrder.Phase__c = 'Comunicazione verso Heroku';
                 if(processMatrixMap.containsKey(wrpChildOrder.childOrder.ProcessType__c)){
                     wrpChildOrder.childOrder.ProcessCode__c = processMatrixMap.get(wrpChildOrder.childOrder.ProcessType__c);
                 }
 
-                handleCustomFieldLogic(wrpChildOrder.childOrder,commodity);  
+                handleCustomFieldLogic(wrpChildOrder.childOrder,commodity); 
             }
         }
 
@@ -582,12 +595,27 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
             if(processObj.requestItem.Status__c == 'Errore'){
+                setObjectToDelete(processObj);
                 continue;
             }
             processObj.requestItem.Status__c = 'In Lavorazione';
         }
         getLimitDetails('processEnd');
 
+    }
+
+    private void setObjectToDelete(HDT_WRP_ProcessObjects processObj){
+        sObjectToDelete.add(processObj.opportunity);
+        sObjectToDelete.add(processObj.sale);
+        sObjectToDelete.add(processObj.saleServiceItem);
+        sObjectToDelete.add(processObj.parentOrder);
+        for(HDT_WRP_ChildOrder wrpChildOrder : processObj.childOrderList){
+            sObjectToDelete.add(wrpChildOrder.childOrder);
+        }
+        
+        if(String.isNotEmpty(processObj.nextDataObj.billProfId)){
+            sObjectToDelete.add(new BillingProfile__c(Id=processObj.nextDataObj.billProfId));
+        }
     }
 
     public override void finalUpdate(){
@@ -876,6 +904,19 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         }
         return wrpChildOrder;
 
+    }
+
+    public String checkRequiredSalesField(Sale__c sale){
+        Boolean canale = String.isEmpty(sale.Channel__c);
+        Boolean codiceAgenzia = String.isEmpty(sale.AgencyCode__c);
+        Boolean agenzia = String.isEmpty(sale.Agency__c);
+        Boolean vendutoDa= String.isEmpty(sale.CommercialId__c);
+        Boolean nomeAgente = String.isEmpty(sale.VendorFirstName__c);
+        Boolean cognomeAgente = String.isEmpty(sale.VendorLastName__c);
+        if(canale || codiceAgenzia || agenzia || vendutoDa || nomeAgente || cognomeAgente){
+            return 'Verificare che i campi Canale, Agenzia, Codice Agenzia, Venduto da, Nome/Cognome Agente siano valorizzati';
+        }
+        return '';
     }
 
     private HDT_WRP_ProcessObjects buildWrapperOrderStructure(HDT_WRP_ProcessObjects processObject, List<String> csvValues, HDT_UTL_ProcessSales.HDT_WRP_NextDataObj nextDataObj){

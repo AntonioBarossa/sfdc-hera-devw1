@@ -198,7 +198,7 @@ public with sharing class HDT_UTL_CampaignMember {
         }
     }
 
-    @SuppressWarnings('PMD.ApexCRUDViolation')
+    @SuppressWarnings('PMD.ApexCRUDViolation, PMD.NcssMethodCount')
     public static void checkTipoEsito(List<CampaignMember> newCampMembList, Map<Id, CampaignMember> campMembOldMap){
 
         Set<String> ordIdSet = new Set<String>();
@@ -339,11 +339,11 @@ public with sharing class HDT_UTL_CampaignMember {
         if(actToCreateList.size() > 0){
             activitySrv.createRecord(actToCreateList);
         }
-        if(ordToCloseList.size() > 0){
-            orderSrv.updateRecords(ordToCloseList);
-        }
         if(actToCloseList.size() > 0){
             activitySrv.updateRecords(actToCloseList);
+        }
+        if(ordToCloseList.size() > 0){
+            orderSrv.updateRecords(ordToCloseList);
         }
     }
 
@@ -378,7 +378,8 @@ public with sharing class HDT_UTL_CampaignMember {
                     member.ResultType__c = status.OutcomeType__c;
                     member.ResultCategory__c = status.OutcomeCategory__c;
                 }
-            } else if(member.StatusCode__c != oldMap.get(member.Id).StatusCode__c) {
+            }
+            else if(member.StatusCode__c != oldMap.get(member.Id).StatusCode__c) {
                 status = statusCodeMap.get(member.StatusCode__c);
                 member.Status = status.StatusName__c;
                 member.ResultType__c = status.OutcomeType__c;
@@ -393,6 +394,10 @@ public with sharing class HDT_UTL_CampaignMember {
 
             status = null;
         }
+
+        /*if(oldMap != null){
+            checkTipoEsito(newList, oldMap);
+        }*/
     }
 
     public static void setValidityStartDate(List<CampaignMember> members) {
