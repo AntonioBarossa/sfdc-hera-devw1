@@ -454,6 +454,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             }
 
             gen.writeStartObject();
+            gen.writeStringField('originLwc', 'activity');
             gen.writeStringField('servizio', serviceValueMap.get(activity[0].Order__r.CommodityFormula__c));
             //gen.writeStringField('contratto', String.valueOf(activity[0].Order__r.Contract.SapContractCode__c));
             gen.writeEndObject();
