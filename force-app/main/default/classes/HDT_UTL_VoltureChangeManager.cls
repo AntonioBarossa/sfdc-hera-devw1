@@ -1,6 +1,7 @@
 public with sharing class HDT_UTL_VoltureChangeManager {
     
     private static HDT_UTL_VoltureChangeUtilities voltureChangeUtils = new HDT_UTL_VoltureChangeUtilities();
+    private static HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
     //private static String lawEightyActivityTemplate = '';
     @TestVisible
     private static String lawEightyPhase = 'In Attesa Legge 80';
@@ -113,6 +114,12 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             orderToUpdate.TecnicalPhase__c = (String)fieldsMap.get('FASE');
             orderToUpdate.CausalCode__c = (String)fieldsMap.get('CODERR');
             orderToUpdate.Description = (String)fieldsMap.get('ANNOTAZIONI');
+
+            /**@frpanico 26/10/2021
+             * Cambio Voltura - RN008 "Voltura con Switch"
+            */
+            voltureChangeSrv.handleAmmissibilityCheck(fieldsMap, currentOrder);
+
             if(! string.isBlank((String)fieldsMap.get('VIA')) ){
                 orderToUpdate.SupplyStreetName__c = (String)fieldsMap.get('VIA');
             }
@@ -210,36 +217,36 @@ public with sharing class HDT_UTL_VoltureChangeManager {
          * Address check is done inside the voltureChangeUtils.addressCheck(addressCheckMap) method
          */
 
+        String message = 'Valori non corrispondenti: ';
+        List<String> errorMessage = new List<String>();
+        returnMap.put('message', '');
+        returnMap.put('result',true);
         /* Tension Check */
         if(String.isNotEmpty(tension) && voltureChangeUtils.getTension(tension) != currentOrder.VoltageLevel__c)
         {
-            returnMap.put('message', 'Valori tensione non corrispondenti');
-            returnMap.put('result', false);
-            return returnMap;
+            errorMessage.add('Tensione');
         }
         /* Power Available Check */
         if(String.isNotEmpty(powerAvailable) && !voltureChangeUtils.powerCheck(powerAvailable, String.valueOf(currentOrder.PowerAvailable__c)))
         {
-            returnMap.put('message', 'Valori Potenza Disponibile non corrispondenti');
-            returnMap.put('result', false);
-            return returnMap;
+            errorMessage.add('Potenza Disponibile');
         }
         /* Power Committed Check */
         if(String.isNotEmpty(powerCommitted) && !voltureChangeUtils.powerCheck(powerCommitted, String.valueOf(currentOrder.PowerCommitted__c)))
         {
-            returnMap.put('message', 'Valori Potenza Impegnata non corrispondenti');
-            returnMap.put('result', false);
-            return returnMap;
+            errorMessage.add('Potenza Impegnata');
         }
         /* Address Check */
         if(!voltureChangeUtils.addressCheck(addressCheckMap))
         {
-            returnMap.put('message', 'Indirizzi non corrispondenti');
-            returnMap.put('result', false);
-            return returnMap;
+            errorMessage.add('Indirizzo');
         }
-        returnMap.put('message', '');
-        returnMap.put('result',true);
+        /* Set the error message */
+        if(!errorMessage.isEmpty())
+        {
+            returnMap.put('message',message + String.join(errorMessage,','));
+            returnMap.put('result',false);
+        }
         return returnMap;
     
     }
@@ -455,6 +462,41 @@ public with sharing class HDT_UTL_VoltureChangeManager {
 
         HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck wrp = new HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck(result,message,(SObject)order);
         return wrp;
+    }
+    /**@frpanico 2022-05-16
+     * Annullamento Voltura Tecnica a Seguito di Annullmento SwitchIn
+     * Defect 3112
+     */
+    public static void cancelTechnicalVolture(List<Order> switchOrders)
+    {
+        Set<String> orderIds = new Set<String>();
+        for(Order switchOrder: switchOrders)
+        {    
+            if(switchOrder.ProcessType__c != null && switchOrder.Phase__c != null && 
+                !((String)switchOrder.get('ProcessType__c')).equalsIgnoreCase('Switch in Gas') && !((String)switchOrder.get('Phase__c')).equalsIgnoreCase('Annullato'))
+            {
+                continue;
+            }
+            orderIds.add(switchOrder.Id);
+        }
+        /* If OrderIds are empty 
+        * exits the methos to prevent
+        * querying unwanted
+        */
+        if(orderIds.isEmpty())
+        {
+            return;
+        }
+        List<Case> techincalVoltures = [SELECT Id, Phase__c,Status FROM Case WHERE Type = 'Voltura Tecnica' AND Order__c IN :orderIds WITH SECURITY_ENFORCED];
+        if(!techincalVoltures.isEmpty())
+        {
+            for(Case c : techincalVoltures)
+            {
+                c.Phase__c = 'Annullato';
+                c.Status = 'Closed';
+            }
+            HDT_UTL_DatabaseService.updateSObject(techincalVoltures);
+        }
     }
 
 }
