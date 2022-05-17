@@ -456,5 +456,26 @@ public with sharing class HDT_UTL_VoltureChangeManager {
         HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck wrp = new HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck(result,message,(SObject)order);
         return wrp;
     }
+    /**@frpanico 2022-05-16
+     * Annullamento Voltura Tecnica a Seguito di Annullmento SwitchIn
+     * Defect 3112
+     */
+    public static void cancelTechnicalVolture(Order switchOrder)
+    {
+        if(!(String)switchOrder.get('ProcessType__c').equalsIgnoreCase('Switch in Gas') && !(String)switchOrder.get('Phase__c').equalsIgnoreCase('Annullato'))
+        {
+            return;
+        }
+        List<Case> techincalVoltures = [SELECT Id, Phase__c,Status FROM Case WHERE Type = 'Voltura Tecnica' AND Order__c = :switchOrder.Id WITH SECURITY_ENFORCED];
+        if(!techincalVoltures.isEmpty())
+        {
+            for(Case c : techincalVoltures)
+            {
+                c.Phase__c = 'Annullato';
+                c.Status = 'Closed';
+            }
+            HDT_UTL_DatabaseService.updateSObject(techincalVoltures);
+        }
+    }
 
 }

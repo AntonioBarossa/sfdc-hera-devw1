@@ -113,6 +113,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
             wrts_prcgvr__Activity__c activity = voltureChangeUtils.createActivity(ammissibilityCheckTemplate);
             if(activity != null)
             {
+                activity.Type__c = (String)ammissibilityCheckMap.get('message');
                 activity.wrts_prcgvr__Description__c = (String)ammissibilityCheckMap.get('message');
                 activity.Order__c = currentOrder.Id;
                 HDT_UTL_DatabaseService.insertSObject(activity);
