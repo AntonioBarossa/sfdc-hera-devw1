@@ -95,8 +95,51 @@ const DATA_ACCESS_MAP = {
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
     },
+    'SUBS_ANALISI_CONSUMI_RENEW':
+    {
+        label : 'Subscriptions Analisi Consumi Rinnovabili',
+        sObjectName: 'SBQQ__Subscription__c',
+        emptyMessage: 'Non ci sono subscriptions, oppure vi è già una richiesta aperta.',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.ProductName = item.SBQQ__Product__r !== undefined ? item.SBQQ__Product__r.Name : '';
+                item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.SAPContractCode__c : '';
+                item.PodPdr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
+                    item.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
+                    item.SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Nome Prodotto', fieldName: 'ProductName', type: 'text'},
+            {label: 'Codice Contratto SAP', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
     'SUBS_VAS_SERVIZIO':{
         label : 'VAS Servizio',
+        sObjectName: 'SBQQ__Subscription__c',
+        emptyMessage: 'Non ci sono subscriptions, oppure vi è già una richiesta aperta.',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.ProductName = item.SBQQ__Product__r !== undefined ? item.SBQQ__Product__r.Name : '';
+                item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.SAPContractCode__c : '';
+                item.PodPdr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
+                    item.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
+                    item.SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Nome Prodotto', fieldName: 'ProductName', type: 'text'},
+            {label: 'Numero Contratto SAP', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
+    'SUBS_VAS_SERVIZIO_RENEW':{
+        label : 'VAS Servizio Rinnovabili',
         sObjectName: 'SBQQ__Subscription__c',
         emptyMessage: 'Non ci sono subscriptions, oppure vi è già una richiesta aperta.',
         dataProcessFunction: (data) => {

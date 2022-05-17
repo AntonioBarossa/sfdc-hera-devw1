@@ -234,10 +234,37 @@ public inherited sharing class HDT_LC_SaleVas {
                 }
                 records = recordMap.values();
             }
+            when 'SUBS_ANALISI_CONSUMI_RENEW'{ 
+                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Product__r.Name,SBQQ__Contract__r.SAPContractCode__c,
+                    SBQQ__Contract__r.ContractNumber,
+                    SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
+                    FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Fatturabili' AND SBQQ__SubscriptionType__c = 'Renewable' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
+
+                //removing subscriptions which already have a deactivation Case
+                List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE Phase__c NOT IN ('Annullato','Bozza Annullata') AND Type='Disattivazione VAS'
+                    AND Subscription__c IN :recordMap.keySet() WITH SECURITY_ENFORCED];
+                for (Case subCase:subsCases) {
+                    recordMap.remove(subCase.Subscription__c);
+                }
+                records = recordMap.values();
+            }
             when 'SUBS_VAS_SERVIZIO'{ 
                 Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Product__r.Name, SBQQ__Contract__r.ContractNumber,
                     SBQQ__Contract__r.SAPContractCode__c, SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
                     FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Servizio' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
+
+                //removing subscriptions which already have a deactivation Case
+                List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE Phase__c NOT IN ('Annullato','Bozza Annullata') AND Type='Disattivazione VAS'
+                    AND Subscription__c IN :recordMap.keySet() WITH SECURITY_ENFORCED];
+                for (Case subCase:subsCases) {
+                    recordMap.remove(subCase.Subscription__c);
+                }
+                records = recordMap.values();
+            }
+            when 'SUBS_VAS_SERVIZIO_RENEW'{ 
+                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Product__r.Name, SBQQ__Contract__r.ContractNumber,
+                    SBQQ__Contract__r.SAPContractCode__c, SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
+                    FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family='VAS Servizio' AND SBQQ__SubscriptionType__c = 'Renewable' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
 
                 //removing subscriptions which already have a deactivation Case
                 List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE Phase__c NOT IN ('Annullato','Bozza Annullata') AND Type='Disattivazione VAS'
