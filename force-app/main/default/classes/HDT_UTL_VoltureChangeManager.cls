@@ -217,36 +217,36 @@ public with sharing class HDT_UTL_VoltureChangeManager {
          * Address check is done inside the voltureChangeUtils.addressCheck(addressCheckMap) method
          */
 
+        String message = 'Valori non corrispondenti: ';
+        List<String> errorMessage = new List<String>();
+        returnMap.put('message', '');
+        returnMap.put('result',true);
         /* Tension Check */
         if(String.isNotEmpty(tension) && voltureChangeUtils.getTension(tension) != currentOrder.VoltageLevel__c)
         {
-            returnMap.put('message', 'Valori tensione non corrispondenti');
-            returnMap.put('result', false);
-            return returnMap;
+            errorMessage.add('Tensione');
         }
         /* Power Available Check */
         if(String.isNotEmpty(powerAvailable) && !voltureChangeUtils.powerCheck(powerAvailable, String.valueOf(currentOrder.PowerAvailable__c)))
         {
-            returnMap.put('message', 'Valori Potenza Disponibile non corrispondenti');
-            returnMap.put('result', false);
-            return returnMap;
+            errorMessage.add('Potenza Disponibile');
         }
         /* Power Committed Check */
         if(String.isNotEmpty(powerCommitted) && !voltureChangeUtils.powerCheck(powerCommitted, String.valueOf(currentOrder.PowerCommitted__c)))
         {
-            returnMap.put('message', 'Valori Potenza Impegnata non corrispondenti');
-            returnMap.put('result', false);
-            return returnMap;
+            errorMessage.add('Potenza Impegnata');
         }
         /* Address Check */
         if(!voltureChangeUtils.addressCheck(addressCheckMap))
         {
-            returnMap.put('message', 'Indirizzi non corrispondenti');
-            returnMap.put('result', false);
-            return returnMap;
+            errorMessage.add('Indirizzo');
         }
-        returnMap.put('message', '');
-        returnMap.put('result',true);
+        /* Set the error message */
+        if(!errorMessage.isEmpty())
+        {
+            returnMap.put('message',message + String.join(errorMessage,','));
+            returnMap.put('result',false);
+        }
         return returnMap;
     
     }

@@ -64,11 +64,12 @@ const DATA_ACCESS_MAP = {
             data.forEach((item) => {
                 item.ContactName = item.Contact !== undefined ? item.Contact.Name : '';
                 item.ProductName = item.Product2 !== undefined ? item.Product2.Name : '';
+                item.ContractNumber = item.Contract__r !== undefined ? item.Contract__r.SAPContractCode__c : ''
             });
         },
         columns: [
             {label: 'Nome', fieldName: 'Name', type: 'text'},
-            {label: 'Numero serial', fieldName: 'SerialNumber', type: 'text'},
+            {label: 'Codice Contratto SAP', fieldName: 'ContractNumber', type: 'text'},
             {label: 'Data installazione', fieldName: 'InstallDate', type: 'date'},
             {label: 'Referente', fieldName: 'ContactName', type: 'text'},
             {label: 'Prodotto', fieldName: 'ProductName', type: 'text'},
