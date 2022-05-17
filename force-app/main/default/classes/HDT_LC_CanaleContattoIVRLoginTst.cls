@@ -22,6 +22,7 @@ public with sharing class HDT_LC_CanaleContattoIVRLoginTst {
         List<Order> childOrderList = HDT_UTL_DataFactoryTst.createChildOrder(1, true, accList[0].Id, saleList, orderList[0].Id, contList[0].Id);
         List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         spList[0].ServicePointCode__c = '04280014064833';
+        spList[0].Account__c = accList[0].Id;
         update spList;
         childOrderList[0].ServicePoint__c = spList[0].Id;
         update childOrderList;
@@ -209,36 +210,37 @@ public with sharing class HDT_LC_CanaleContattoIVRLoginTst {
         //System.assertEquals('Validato', result, 'Non validato.');
     }
 
-    // @isTest
-    // public static void testgenerateUsernameAndPasswordChildParent(){
+    @isTest
+    public static void testgenerateUsernameAndPasswordChildParent(){
 
-    //     setup1();
-    //     // List<Account>  accResidenziale = [SELECT Id, Category__c FROM Account WHERE Category__c = 'Famiglie' WITH SECURITY_ENFORCED];
-    //     List<Account>  accResidenziale = [SELECT Id, Category__c FROM Account WITH SECURITY_ENFORCED];
-    //     accResidenziale[0].Category__c = 'Famiglie';
-    //     // accResidenziale[0].CustomerMarking__c = 'Persona fisica';
-    //     update accResidenziale;
-    //     System.debug('accounts --> '+accResidenziale);
-    //     List<Sale__c> salesList = [SELECT Id, Channel__c FROM Sale__c WITH SECURITY_ENFORCED];
-    //     List<Order> ordList = [SELECT Id, RecordTypeId, MethodSignedAccepted__c, ParentOrder__c FROM Order WITH SECURITY_ENFORCED];
-    //     String childOrdId = '';
-    //     String parentOrdId = '';
-    //     for(Order ord : ordList){
-    //         if(ord.ParentOrder__c != null){
-    //             childOrdId = ord.Id;
-    //         }
-    //         else{
-    //             ord.SignatureMethod__c = 'Vocal Order';
-    //             ord.AccountId = accResidenziale[0].Id;
-    //             ord.Sale__c = salesList[0].Id;
-    //             parentOrdId = ord.Id;
-    //             ord.Username__c = null;
-    //         }
-    //     }
-    //     update ordList;
-    //     Test.startTest();
-    //     HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(childOrdId, parentOrdId);
-    //     Test.stopTest();
-    //     //System.assertEquals('Validato', result, 'Non validato.');
-    // }
+        setup1();
+        // List<Account>  accResidenziale = [SELECT Id, Category__c FROM Account WHERE Category__c = 'Famiglie' WITH SECURITY_ENFORCED];
+        List<Account>  accResidenziale = [SELECT Id, Category__c, BirthDate__c FROM Account WITH SECURITY_ENFORCED];
+        accResidenziale[0].RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
+        accResidenziale[0].Category__c = 'Famiglie';
+        accResidenziale[0].CustomerMarking__c = 'Persona fisica';
+        accResidenziale[0].BirthDate__c = Date.newInstance(1975, 12, 04);
+        update accResidenziale;
+        List<Sale__c> salesList = [SELECT Id, Channel__c FROM Sale__c WITH SECURITY_ENFORCED];
+        List<Order> ordList = [SELECT Id, RecordTypeId, MethodSignedAccepted__c, ParentOrder__c FROM Order WITH SECURITY_ENFORCED];
+        String childOrdId = '';
+        String parentOrdId = '';
+        for(Order ord : ordList){
+            if(ord.ParentOrder__c != null){
+                childOrdId = ord.Id;
+            }
+            else{
+                ord.SignatureMethod__c = 'Vocal Order';
+                ord.AccountId = accResidenziale[0].Id;
+                ord.Sale__c = salesList[0].Id;
+                parentOrdId = ord.Id;
+                ord.Username__c = null;
+            }
+        }
+        update ordList;
+        Test.startTest();
+        HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(childOrdId, parentOrdId);
+        Test.stopTest();
+        //System.assertEquals('Validato', result, 'Non validato.');
+    }
 }

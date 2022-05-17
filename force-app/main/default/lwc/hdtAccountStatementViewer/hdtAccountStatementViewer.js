@@ -18,6 +18,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     @api tabCode;
     @api isLoaded;
     @api statementType;
+    @api defaultRequestObj;
     @track accountData;
     @track columns;//++++ = columns;
     @track joinFilterModal = false;
@@ -160,7 +161,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                     this.openFilters();
                     this.closeMainSpinner();
                 } else {
-                    this.backendCall('home', '');// Chiamata in backend
+                    //this.backendCall('home', '');// Chiamata in backend
+                    this.backendCall('home', this.defaultRequestObj);// Chiamata in backend
                 }
 
                 this.columns.forEach((i) => {
