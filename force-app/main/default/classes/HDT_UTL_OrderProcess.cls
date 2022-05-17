@@ -836,10 +836,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             String recordTypeName = rtMap.get(newOrder.RecordTypeId).getDeveloperName();
             if(checkRecordTypeForCreditCheck(recordTypeName, newOrder)){                             
                 if (newOrder.CreditCheckDescription__c != null && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c) {    
-                    if(newOrder.OutgoingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){                        
+                    /* 
+                    @ealpi: Da analisi non mi risultano casi in cui bisogna creare l'activity se l'ordine cambia la CreditCheckDescription__c ma rimane in KO
+                    è stato quindi cambiato l'if, perchè in conflitto con il KO cvp che viene gestito in sincrono ma che contemporaneamente potrebbe essere inviato 
+                    in asincrono.
+                    if(newOrder.OutgoingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){
+                    */
+                    if('KO'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c) && !newOrder.OutgoingCreditCheckResult__c.equalsIgnoreCase(oldOrder.OutgoingCreditCheckResult__c)){                            
                         orderListOldCustomer.add(newOrder);
                     }
-                    if(newOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){                        
+                    /* 
+                    @ealpi: vedi precedente commento
+                    if(newOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){ */
+                    if('KO'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c) && !newOrder.IncomingCreditCheckResult__c.equalsIgnoreCase(oldOrder.IncomingCreditCheckResult__c)){
                         orderListNewCustomer.add(newOrder);
                     }                                      
                 }
@@ -1171,8 +1180,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Map<Id,Order> oldOrdersMap = (Map<Id,Order>)oldOrdersMapObj;
         Map<Id,Schema.RecordTypeInfo> rtMap = Order.sobjectType.getDescribe().getRecordTypeInfosById();
         Set<Id> ordersId = new Set<Id>();
-        Set<Id> contractReferences = new Set<Id>();
-        Boolean enableQueryContracts = false;
+        //Set<Id> contractReferences = new Set<Id>();
+        //Boolean enableQueryContracts = false;
         for(Order o : newOrdersList){
             String recordTypeName = rtMap.get(o.RecordTypeId).getDeveloperName();
             String oldCreditCheckDescription = String.isNotBlank(oldOrdersMap.get(o.Id).CreditCheckDescription__c) ? oldOrdersMap.get(o.Id).CreditCheckDescription__c : '';
@@ -1184,22 +1193,22 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 o.CreditCheckInProgress__c = false;
                 if('Attesa Credit Check'.equalsIgnoreCase(o.Phase__c) || 'Credit Check KO'.equalsIgnoreCase(o.Phase__c) || o.IsMassive__c){
                     ordersId.add(o.Id);
-                    if('HDT_RT_Voltura'.equalsIgnoreCase(recordTypeName) || 'HDT_RT_VolturaConSwitch'.equalsIgnoreCase(recordTypeName)){
+                    /* if('HDT_RT_Voltura'.equalsIgnoreCase(recordTypeName) || 'HDT_RT_VolturaConSwitch'.equalsIgnoreCase(recordTypeName)){
                         enableQueryContracts = true;
-                    } 
+                    } */ 
                 }                               
             }
         }
         if(!ordersId.isEmpty()){
             Map<Id, Order> currentOrders = new Map<Id, Order>([SELECT Id, RecordTypeId, IncomingCreditCheckResult__c, OutgoingCreditCheckResult__c, CreditCheckInProgress__c, Phase__c, ProcessType__c, CommodityFormula__c, IsCloned__c, SignedDate__c, RecordType.DeveloperName, ContractReference__c FROM Order WHERE Id IN: ordersId ]);
-            Map<Id,Contract> contracts = new Map<Id, Contract>();
+            /* Map<Id,Contract> contracts = new Map<Id, Contract>();
             if(enableQueryContracts){
                 for(Order o : newOrdersList){
                     contractReferences.add(o.ContractReference__c);
                 }
 
                 contracts = new Map<Id, Contract>([SELECT Id, Account.CompanyOwner__c FROM Contract WHERE Id IN :contractReferences]);
-            }
+            } */
             for(Order o : newOrdersList){
                 String recordTypeName = rtMap.get(o.RecordTypeId).getDeveloperName();
                 String oldCreditCheckDescription = String.isNotBlank(oldOrdersMap.get(o.Id).CreditCheckDescription__c) ? oldOrdersMap.get(o.Id).CreditCheckDescription__c : '';
@@ -1234,7 +1243,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                     }
                                 }
                                 when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'{
-                                    if(o.CommodityFormula__c.equalsIgnoreCase('Energia Elettrica') && !String.isEmpty(contracts.get(o.ContractReference__c).Id) && !contracts.get(o.ContractReference__c).Account.CompanyOwner__c.equalsIgnoreCase('HERA COMM')){
+                                    //if(o.CommodityFormula__c.equalsIgnoreCase('Energia Elettrica') && !String.isEmpty(contracts.get(o.ContractReference__c).Id) && !contracts.get(o.ContractReference__c).Account.CompanyOwner__c.equalsIgnoreCase('HERA COMM')){
+                                    if(o.isTransition__c){
                                         o.Phase__c = 'Esportazione VS Siebel';
                                     }
                                 }
