@@ -465,7 +465,8 @@ public with sharing class HDT_UTL_VoltureChangeManager {
         Set<String> orderIds = new Set<String>();
         for(Order switchOrder: switchOrders)
         {    
-            if(!((String)switchOrder.get('ProcessType__c')).equalsIgnoreCase('Switch in Gas') && !((String)switchOrder.get('Phase__c')).equalsIgnoreCase('Annullato'))
+            if(switchOrder.ProcessType__c != null && switchOrder.Phase__c != null && 
+                !((String)switchOrder.get('ProcessType__c')).equalsIgnoreCase('Switch in Gas') && !((String)switchOrder.get('Phase__c')).equalsIgnoreCase('Annullato'))
             {
                 continue;
             }
@@ -473,7 +474,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
         }
         /* If OrderIds are empty 
         * exits the methos to prevent
-        * querying unwanted cases
+        * querying unwanted
         */
         if(orderIds.isEmpty())
         {
