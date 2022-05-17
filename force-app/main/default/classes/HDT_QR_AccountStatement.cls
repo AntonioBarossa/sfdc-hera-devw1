@@ -126,7 +126,7 @@ public inherited sharing class HDT_QR_AccountStatement {
 
     public static List<wrts_prcgvr__Activity__c> getActivityById(String id){
         return [
-            SELECT Id, Order__r.SapContractCode__c, Order__r.CommodityFormula__c
+            SELECT Id, Order__r.SapContractCode__c, Order__r.Contract.SapContractCode__c, Order__r.CommodityFormula__c
             FROM wrts_prcgvr__Activity__c
             WHERE Id = :id
             WITH SECURITY_ENFORCED
