@@ -13,6 +13,9 @@
                 <elementReference>SelezFornitura.recordId</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Create_Case_0</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Aggancia_Order</name>
@@ -132,6 +135,19 @@
         <label>AssignOutput</label>
         <locationX>704</locationX>
         <locationY>1238</locationY>
+        <assignmentItems>
+            <assignToReference>Case</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCaseAggiornato</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>AssignOutput_0</name>
+        <label>AssignOutput</label>
+        <locationX>440</locationX>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>Case</assignToReference>
             <operator>Assign</operator>
@@ -291,6 +307,16 @@
         </connector>
         <inputReference>Case</inputReference>
     </recordCreates>
+    <recordCreates>
+        <name>Create_Case_0</name>
+        <label>Create Case</label>
+        <locationX>440</locationX>
+        <locationY>758</locationY>
+        <connector>
+            <targetReference>GetCaseAggiornato_0</targetReference>
+        </connector>
+        <inputReference>Case</inputReference>
+    </recordCreates>
     <recordLookups>
         <name>Get_Subscription</name>
         <label>Get Subscription</label>
@@ -320,6 +346,27 @@
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssignOutput</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetCaseAggiornato_0</name>
+        <label>GetCaseAggiornato</label>
+        <locationX>440</locationX>
+        <locationY>878</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssignOutput_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>

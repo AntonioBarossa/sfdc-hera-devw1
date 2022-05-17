@@ -1,6 +1,7 @@
 public with sharing class HDT_UTL_VoltureChangeManager {
     
     private static HDT_UTL_VoltureChangeUtilities voltureChangeUtils = new HDT_UTL_VoltureChangeUtilities();
+    private static HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
     //private static String lawEightyActivityTemplate = '';
     @TestVisible
     private static String lawEightyPhase = 'In Attesa Legge 80';
@@ -113,6 +114,12 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             orderToUpdate.TecnicalPhase__c = (String)fieldsMap.get('FASE');
             orderToUpdate.CausalCode__c = (String)fieldsMap.get('CODERR');
             orderToUpdate.Description = (String)fieldsMap.get('ANNOTAZIONI');
+
+            /**@frpanico 26/10/2021
+             * Cambio Voltura - RN008 "Voltura con Switch"
+            */
+            voltureChangeSrv.handleAmmissibilityCheck(fieldsMap, currentOrder);
+
             if(! string.isBlank((String)fieldsMap.get('VIA')) ){
                 orderToUpdate.SupplyStreetName__c = (String)fieldsMap.get('VIA');
             }
