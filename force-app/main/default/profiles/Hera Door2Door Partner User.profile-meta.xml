@@ -31345,15 +31345,15 @@
         <recordType>Account.HDT_RT_Distributore</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-Partner Community</layout>
+        <layout>Account-HDT_D2D_Layout</layout>
         <recordType>Account.HDT_RT_Business</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-Partner Community</layout>
+        <layout>Account-HDT_D2D_Layout</layout>
         <recordType>Account.HDT_RT_Residenziale</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-Partner Community</layout>
+        <layout>Account-HDT_D2D_Layout</layout>
         <recordType>Account.HDT_RT_Partner</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -31676,7 +31676,15 @@
         <layout>ConsumptionSchedule-Layout Pianificazione del consumo</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contact-Contact Layout</layout>
+        <layout>Contact-HDT_D2D_Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contact-HDT_D2D_Layout</layout>
+        <recordType>Contact.HDT_RT_Create</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contact-HDT_D2D_Layout</layout>
+        <recordType>Contact.HDT_RT_AfterCreate</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ContactPointEmail-Layout Email punto di contatto</layout>
@@ -31923,14 +31931,14 @@
         <layout>Knowledge__kav-Knowledge Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Lead-Lead Layout</layout>
+        <layout>Lead-HDT_D2D_Layout</layout>
         <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Lead-Lead Layout</layout>
+        <layout>Lead-HDT_D2D_Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Lead-Lead Layout</layout>
+        <layout>Lead-HDT_D2D_Layout</layout>
         <recordType>Lead.HDT_RT_Main</recordType>
     </layoutAssignments>
     <layoutAssignments>
