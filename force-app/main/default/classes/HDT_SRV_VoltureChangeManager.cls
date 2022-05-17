@@ -10,6 +10,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
     @TestVisible
     private static String volturaTecnicaPhase = 'In attesa Data Decorrenza';
     private static String clonedOrderRecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(voltureChangeRecordTypeName).getRecordTypeId();
+    private static String activityType = 'Valori non corrispondenti';
     /**
      * @frpanico 06/10/2021
      * This method call the cloneSobject method from the HDT_UTL_VoltureChangeManager class
@@ -113,6 +114,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
             wrts_prcgvr__Activity__c activity = voltureChangeUtils.createActivity(ammissibilityCheckTemplate);
             if(activity != null)
             {
+                activity.Type__c = activityType;
                 activity.wrts_prcgvr__Description__c = (String)ammissibilityCheckMap.get('message');
                 activity.Order__c = currentOrder.Id;
                 HDT_UTL_DatabaseService.insertSObject(activity);
@@ -128,6 +130,11 @@ public with sharing class HDT_SRV_VoltureChangeManager{
      */
     public void handlePublishUpdate(Order inputOrder)
     {
+        List<wrts_prcgvr__Activity__c> activities = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE Order__c = :inputOrder.Id AND Type__c = 'Valori non corrispondenti' WITH SECURITY_ENFORCED];
+        if(!activities.isEmpty())
+        {
+            return;
+        }
         HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
         Order orderToUpdate = new Order();
         orderToUpdate.Id = inputOrder.Id;

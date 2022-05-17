@@ -207,7 +207,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             System.debug(LoggingLevel.DEBUG, '# requestObj is NOT null');
             dbr = (HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow)JSON.deserialize(requestObj, HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow.class);
         }
-        
+
         dbr = HDT_LC_AccountStatementCtrlUtility.setHttpDataBodyRow(tObj, dbr);
 
         if(dbr == null){
@@ -422,6 +422,50 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
         return serviceCatalogResponse;
 
+    }
+
+    public static String buildDefaultRequest(String activityId){
+        System.debug('>>> activityId: ' + activityId);
+
+        List<wrts_prcgvr__Activity__c> activity = HDT_QR_AccountStatement.getActivityById(activityId);
+        JSONGenerator gen = JSON.createGenerator(true);
+
+        //System.debug('> SapContractCode__c ' + activity[0].Order__r.Contract.SapContractCode__c);
+        System.debug('> CommodityFormula__c ' + activity[0].Order__r.CommodityFormula__c);
+
+        if(activity.size() > 0
+           //&& String.isNotEmpty(activity[0].Order__r.Contract.SapContractCode__c)
+           && String.isNotEmpty(activity[0].Order__r.CommodityFormula__c)
+           ){
+            Map<String, String> serviceValueMap = new Map<String, String>();
+            try{
+                String commodity = getPicklistValueHelper('', 'ServiceValues');
+          
+                List<Object> serviceValueList = (List<Object>)JSON.deserializeUntyped(commodity);
+                Map<String, Object> temp;
+                for(Integer n=0; n<serviceValueList.size(); n++){
+                    temp = (Map<String, Object>)serviceValueList[n];
+                    serviceValueMap.put(String.valueOf(temp.get('label')), String.valueOf(temp.get('value')));
+                }
+
+                System.debug('>>>' +  serviceValueMap);
+            } catch (Exception e){
+                return '';
+            }
+
+            gen.writeStartObject();
+            gen.writeStringField('originLwc', 'activity');
+            gen.writeStringField('servizio', serviceValueMap.get(activity[0].Order__r.CommodityFormula__c));
+            //gen.writeStringField('contratto', String.valueOf(activity[0].Order__r.Contract.SapContractCode__c));
+            gen.writeEndObject();
+    
+            System.debug('>>> defaultRequest: ' + gen.getAsString());
+
+        } else {
+            return '';
+        }
+
+        return gen.getAsString();
     }
 
 }

@@ -84,7 +84,8 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     AgencyCode__c = sale.AgencyCode__c,
                     Agency__c = sale.Agency__c,
                     AreaManager__c = sale.AreaManager__c,
-                    SalesContact__c = sale.SalesContact__c
+                    SalesContact__c = sale.SalesContact__c,
+                    Interaction__c = sale.Interaction__c
                 );
 
                 orderSrv.createRecord(parentOrderNew);
