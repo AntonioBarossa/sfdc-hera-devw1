@@ -771,6 +771,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             }
                             currentCase.Phase__c = 'Bozza';
                             currentCase.Status = 'New';
+                            //Campo riutilizzato per indicare a SAP che la pratica è stata creata da cruscotto
+                            currentCase.PartialOutcome__c = 'Y';
                         }when 'Volture'{
                             currentCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();
                             currentCase.Cluster__c = 'Voltura';

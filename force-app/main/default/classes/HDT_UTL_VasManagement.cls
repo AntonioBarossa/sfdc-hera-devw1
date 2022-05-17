@@ -427,23 +427,20 @@ public with sharing class HDT_UTL_VasManagement {
             // }else{
             //     dataCessazione = Date.newInstance(3999, 12, 31);
             // }
-            if(parentOrderItem.Product2.DurationVas__c != null){
-                if(parentOrderItem.Product2.DurationVas__c > 0){
-                    dataCessazione = dataAttivazione.addDays((Integer)parentOrderItem.Product2.DurationVas__c);
-                }
-                else{
-                    dataCessazione = Date.newInstance(3999, 12, 31);
-                }
+            if(parentOrderItem.Product2.DurationVas__c != null && parentOrderItem.Product2.DurationVas__c > 0){
+                dataCessazione = dataAttivazione.addDays((Integer)parentOrderItem.Product2.DurationVas__c);
+            }
+            else{
+                dataCessazione = Date.newInstance(3999, 12, 31);
             }
 
-            if(parentOrderItem.Product2.WaitingPeriod__c  != null){
-                if(parentOrderItem.Product2.WaitingPeriod__c  > 0){
-                    dataDecorrenza = dataAttivazione.addDays((Integer)parentOrderItem.Product2.WaitingPeriod__c);
-                }
-                else{
-                    dataDecorrenza = dataAttivazione;
-                }
+            if(parentOrderItem.Product2.WaitingPeriod__c!= null && parentOrderItem.Product2.WaitingPeriod__c  > 0){
+                dataDecorrenza = dataAttivazione.addDays((Integer)parentOrderItem.Product2.WaitingPeriod__c);
             }
+            else{
+                dataDecorrenza = dataAttivazione;
+            }
+            
 
 
             //modalitaPagamento = parentOrderItem?.PaymentMode__c;

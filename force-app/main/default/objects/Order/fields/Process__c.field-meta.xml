@@ -33,7 +33,7 @@
 &apos;Cambio Uso Tecnico&apos;, &apos;Cambio Uso Tecnico&apos;,
 &apos;Ripensamento&apos;, &apos;VAS&apos;,
 &apos;Reso&apos;, &apos;VAS&apos;,
-&apos;Disattivazione&apos;, &apos;VAS&apos;,&apos;&apos; 
+&apos;Disattivazione&apos;, &apos;VAS&apos;,&apos;&apos; &amp; TEXT(ProcessType__c)
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Processo</label>

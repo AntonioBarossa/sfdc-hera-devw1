@@ -158,6 +158,10 @@ public with sharing class HDT_UTL_CreditCheck {
         public String outcome;
         public String outcomeDescription;
         public Boolean outcoming;
+
+        public Boolean isEmpty(){
+            return String.isEmpty(this.orderId);
+        }
     }
     
 }
