@@ -6947,6 +6947,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Verifiche</fullName>
             <default>false</default>
         </values>
@@ -6957,6 +6961,22 @@
     </picklistValues>
     <picklistValues>
         <picklist>InformativeType__c</picklist>
+        <values>
+            <fullName>HVAC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autoelettrica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivazione VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazione VAS</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Aggiunta Sconti o Bonus VAS</fullName>
             <default>false</default>

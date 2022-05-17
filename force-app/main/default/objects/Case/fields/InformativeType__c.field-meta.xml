@@ -610,6 +610,26 @@
                 <default>false</default>
                 <label>Aggiunta Sconti o Bonus VAS Gas</label>
             </value>
+            <value>
+                <fullName>Segnalazione VAS</fullName>
+                <default>false</default>
+                <label>Segnalazione VAS</label>
+            </value>
+            <value>
+                <fullName>Disattivazione VAS</fullName>
+                <default>false</default>
+                <label>Disattivazione VAS</label>
+            </value>
+            <value>
+                <fullName>Autoelettrica</fullName>
+                <default>false</default>
+                <label>Autoelettrica</label>
+            </value>
+            <value>
+                <fullName>HVAC</fullName>
+                <default>false</default>
+                <label>HVAC</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
