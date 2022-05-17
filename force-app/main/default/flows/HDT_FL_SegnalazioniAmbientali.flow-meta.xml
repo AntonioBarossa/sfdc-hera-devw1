@@ -10,18 +10,18 @@
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Segnalazioni Ambientali Global</stringValue>
+                <stringValue>Segnalazioni Ambientali Anonime</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Selezione_Indirizzi_0</targetReference>
+            <targetReference>Selezione_Indirizzi</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_Process_Type_0</name>
         <label>Assign Process Type</label>
-        <locationX>446</locationX>
-        <locationY>974</locationY>
+        <locationX>974</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -34,10 +34,42 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Process_Type_0_0</name>
+        <label>Assign Process Type</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Segnalazioni Ambientali Anonime</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Selezione_Indirizzi</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Process_Type_0_0_0</name>
+        <label>Assign Process Type</label>
+        <locationX>578</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>theCase.Type</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Selezione_Indirizzi</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <description>Inherit just once those fields and blank parentId so this branch is not executed twice</description>
         <name>InheritFieldsfromOldCase</name>
         <label>Inherit Fields from Old Case</label>
-        <locationX>578</locationX>
+        <locationX>974</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>theCase.ParentId</assignToReference>
@@ -99,6 +131,55 @@
                 <elementReference>getOldCase.InvoicingStreetNumber__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.TypeOperation__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.TypeOperation__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.OperationGroup__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.OperationGroup__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Material__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.Material__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.ClientType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.ClientType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.ClientTypology__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.ClientTypology__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.AlternativeAddress__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.AlternativeAddress__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.PhoneNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.PhoneNumber__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Assign_Process_Type_0</targetReference>
         </connector>
@@ -106,7 +187,7 @@
     <assignments>
         <name>populate_case_fields</name>
         <label>populate case fields</label>
-        <locationX>842</locationX>
+        <locationX>1282</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>theCase.InvoicingStreetName__c</assignToReference>
@@ -157,14 +238,38 @@
                 <elementReference>getAccount.BillingStreetNumber__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Segnalazioni</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Assign_Process_Type_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>putIndirizzi</name>
+        <label>putIndirizzi</label>
+        <locationX>666</locationX>
+        <locationY>1550</locationY>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>theCase.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Indirizzi</targetReference>
         </connector>
     </assignments>
     <decisions>
         <name>Context</name>
         <label>Context</label>
-        <locationX>446</locationX>
+        <locationX>666</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>populate_case_fields</targetReference>
@@ -194,24 +299,23 @@
         </rules>
         <rules>
             <name>Riprendi_Processo</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>theCase.Id</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>theCase.Id</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
-                <targetReference>Selezione_Indirizzi</targetReference>
+                <targetReference>Context_0</targetReference>
             </connector>
             <label>Riprendi Processo</label>
         </rules>
@@ -232,10 +336,42 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Context_0</name>
+        <label>Context</label>
+        <locationX>446</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Process_Type_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Account ReadOnly</defaultConnectorLabel>
+        <rules>
+            <name>isAccount_Write</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>theCase.AccountId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>theCase.AccountId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Process_Type_0_0</targetReference>
+            </connector>
+            <label>isAccount Write</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>isCompatible</name>
         <label>isCompatible</label>
-        <locationX>446</locationX>
-        <locationY>1334</locationY>
+        <locationX>974</locationX>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Selezione_Indirizzi</targetReference>
         </defaultConnector>
@@ -258,6 +394,43 @@
                 </rightValue>
             </conditions>
             <label>Non Compatibile</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>NextStep</name>
+        <label>Next Step</label>
+        <locationX>666</locationX>
+        <locationY>1910</locationY>
+        <defaultConnector>
+            <targetReference>DaInviare</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
+        <rules>
+            <name>Annullamento</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>WizardLwc.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Annullamento_Subflow</targetReference>
+            </connector>
+            <label>Annullamento</label>
+        </rules>
+        <rules>
+            <name>Salva_In_Bozza</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>WizardLwc.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Salva In Bozza</label>
         </rules>
     </decisions>
     <interviewLabel>HDT_FL_ {!$Flow.CurrentDateTime}</interviewLabel>
@@ -284,24 +457,17 @@
     <recordCreates>
         <name>Insert_theCase</name>
         <label>Insert theCase</label>
-        <locationX>446</locationX>
-        <locationY>1094</locationY>
+        <locationX>974</locationX>
+        <locationY>758</locationY>
         <connector>
             <targetReference>FlowCompatibility</targetReference>
         </connector>
         <inputReference>theCase</inputReference>
     </recordCreates>
-    <recordCreates>
-        <name>Insert_theCase_0</name>
-        <label>Insert theCase</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
-        <inputReference>theCase</inputReference>
-    </recordCreates>
     <recordLookups>
         <name>getAccount</name>
         <label>getAccount</label>
-        <locationX>446</locationX>
+        <locationX>666</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -322,7 +488,7 @@
     <recordLookups>
         <name>getOldCase</name>
         <label>getOldCase</label>
-        <locationX>578</locationX>
+        <locationX>974</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -340,14 +506,72 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>DaInviare</name>
+        <label>Da Inviare</label>
+        <locationX>930</locationX>
+        <locationY>2030</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>theCase.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Indirizzi</name>
+        <label>Update Indirizzi</label>
+        <locationX>666</locationX>
+        <locationY>1670</locationY>
+        <connector>
+            <targetReference>WizardScreen</targetReference>
+        </connector>
+        <inputReference>theCase</inputReference>
+    </recordUpdates>
     <screens>
         <name>Selezione_Indirizzi</name>
         <label>Selezione Indirizzi</label>
-        <locationX>578</locationX>
-        <locationY>1454</locationY>
+        <locationX>666</locationX>
+        <locationY>1430</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>putIndirizzi</targetReference>
+        </connector>
+        <fields>
+            <name>Indirizzo_non_trovato</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Indirizzo non trovato</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>isFromGlobalAction</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isAccount_Write</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <fields>
             <name>getAddress</name>
             <extensionName>c:hdtTargetObjectAddressForFlow</extensionName>
@@ -367,60 +591,30 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
-                <assignToReference>theCase</assignToReference>
-                <name>theCase</name>
-            </outputParameters>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Selezione_Indirizzi_0</name>
-        <label>Selezione Indirizzi</label>
-        <locationX>50</locationX>
-        <locationY>518</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Insert_theCase_0</targetReference>
-        </connector>
-        <fields>
-            <name>Salta_sezione</name>
-            <dataType>Boolean</dataType>
-            <fieldText>Salta sezione</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>getAddress_0</name>
-            <extensionName>c:hdtTargetObjectAddressForFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>hideNavigationButtons</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>theCase</name>
-                <value>
-                    <elementReference>theCase</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>theCase</assignToReference>
+                <assignToReference>theCaseIndirizzi</assignToReference>
                 <name>theCase</name>
             </outputParameters>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 OR NOT (2 OR 3)</conditionLogic>
                 <conditions>
-                    <leftValueReference>Salta_sezione</leftValueReference>
+                    <leftValueReference>Indirizzo_non_trovato</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isAccount_Write</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isFromGlobalAction</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -428,19 +622,113 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>WizardScreen</name>
+        <label>Wizard Screen</label>
+        <locationX>666</locationX>
+        <locationY>1790</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>NextStep</targetReference>
+        </connector>
+        <fields>
+            <name>WizardLwc</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextStep</name>
+                <value>
+                    <stringValue>NEXT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>ProcessType</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>theCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Segnalazione Ambientale</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
-        <locationX>320</locationX>
+        <locationX>540</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>getAccount</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>FlowCompatibility</name>
         <label>Flow Compatibility</label>
-        <locationX>446</locationX>
-        <locationY>1214</locationY>
+        <locationX>974</locationX>
+        <locationY>878</locationY>
         <connector>
             <targetReference>isCompatible</targetReference>
         </connector>
@@ -452,6 +740,13 @@
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Gestione_Annullamento_Subflow</name>
+        <label>Gestione Annullamento Subflow</label>
+        <locationX>402</locationX>
+        <locationY>2030</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
     </subflows>
     <variables>
         <name>ProcessType</name>
@@ -465,6 +760,14 @@
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>theCaseIndirizzi</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
     </variables>

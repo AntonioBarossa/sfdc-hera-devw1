@@ -4,7 +4,7 @@
     <assignments>
         <name>assign_service_point</name>
         <label>assign service point</label>
-        <locationX>50</locationX>
+        <locationX>72</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>theCase.ServicePointCode__c</assignToReference>
@@ -49,17 +49,31 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>theCase.SubscriberType__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>theCase.Cluster__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Generiche Attivazioni</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>è necessario trasmettere copia delle ricevute per attestare l&apos;errata o mancata imputazione dello sconto</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Tari</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.OperationType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Modifica dati contr.stesso Cli</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -69,8 +83,8 @@
     <decisions>
         <name>isCompatible</name>
         <label>isCompatible</label>
-        <locationX>270</locationX>
-        <locationY>974</locationY>
+        <locationX>72</locationX>
+        <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Wizard_Processo</targetReference>
         </defaultConnector>
@@ -98,8 +112,8 @@
     <decisions>
         <name>Next_Step</name>
         <label>Next Step</label>
-        <locationX>534</locationX>
-        <locationY>1214</locationY>
+        <locationX>314</locationX>
+        <locationY>1430</locationY>
         <defaultConnector>
             <targetReference>In_Lavorazione_Case</targetReference>
         </defaultConnector>
@@ -135,7 +149,7 @@
     <decisions>
         <name>Tipo_Generica</name>
         <label>Tipo Generica</label>
-        <locationX>270</locationX>
+        <locationX>314</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -171,7 +185,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Flow_Compatibility</targetReference>
+                <targetReference>Wizard_Processo</targetReference>
             </connector>
             <label>Riprendi Processo</label>
         </rules>
@@ -205,7 +219,7 @@
     <recordCreates>
         <name>insert_the_case</name>
         <label>insert the case</label>
-        <locationX>50</locationX>
+        <locationX>72</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Flow_Compatibility</targetReference>
@@ -213,9 +227,9 @@
         <inputReference>theCase</inputReference>
     </recordCreates>
     <recordLookups>
-        <name>caseAccount</name>
-        <label>caseAccount</label>
-        <locationX>270</locationX>
+        <name>mandatoryAttachments</name>
+        <label>mandatoryAttachments</label>
+        <locationX>314</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -223,21 +237,21 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Id</field>
+            <field>City__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>theCase.AccountId</elementReference>
+                <elementReference>theCase.BillingCity__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
+        <object>MandatoryAttachments__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
         <name>In_Lavorazione_Case</name>
         <label>In Lavorazione Case</label>
-        <locationX>798</locationX>
-        <locationY>1334</locationY>
+        <locationX>578</locationX>
+        <locationY>1550</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -258,7 +272,7 @@
     <screens>
         <name>Selezione_Fornitura</name>
         <label>Selezione Fornitura</label>
-        <locationX>50</locationX>
+        <locationX>72</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -279,8 +293,8 @@
     <screens>
         <name>Wizard_Processo</name>
         <label>Wizard Processo</label>
-        <locationX>534</locationX>
-        <locationY>1094</locationY>
+        <locationX>314</locationX>
+        <locationY>1310</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -289,7 +303,7 @@
         </connector>
         <fields>
             <name>wizardLwc</name>
-            <extensionName>c:hdtRecordEditFormFlowAdvanced</extensionName>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>cancelButton</name>
@@ -358,9 +372,9 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>account</name>
+                <name>labelInputSection</name>
                 <value>
-                    <elementReference>caseAccount</elementReference>
+                    <stringValue>Wizard Processo</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -368,21 +382,21 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>false</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>144</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>caseAccount</targetReference>
+            <targetReference>mandatoryAttachments</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>Flow_Compatibility</name>
         <label>Flow Compatibility</label>
-        <locationX>270</locationX>
-        <locationY>854</locationY>
+        <locationX>72</locationX>
+        <locationY>758</locationY>
         <connector>
             <targetReference>isCompatible</targetReference>
         </connector>
@@ -398,8 +412,8 @@
     <subflows>
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
-        <locationX>270</locationX>
-        <locationY>1334</locationY>
+        <locationX>50</locationX>
+        <locationY>1550</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

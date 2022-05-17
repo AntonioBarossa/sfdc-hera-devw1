@@ -103,6 +103,13 @@
             <assignToReference>theCase.Id</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.BillingCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Cerca_Legale_Rappresentante_o_Titolare.Account.BillingPlace__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>PROCESS_TREE</targetReference>
         </connector>
