@@ -460,13 +460,26 @@ public with sharing class HDT_UTL_VoltureChangeManager {
      * Annullamento Voltura Tecnica a Seguito di Annullmento SwitchIn
      * Defect 3112
      */
-    public static void cancelTechnicalVolture(Order switchOrder)
+    public static void cancelTechnicalVolture(List<Order> switchOrders)
     {
-        if(!(String)switchOrder.get('ProcessType__c').equalsIgnoreCase('Switch in Gas') && !(String)switchOrder.get('Phase__c').equalsIgnoreCase('Annullato'))
+        Set<String> orderIds = new Set<String>();
+        for(Order switchOrder: switchOrders)
+        {    
+            if(!((String)switchOrder.get('ProcessType__c')).equalsIgnoreCase('Switch in Gas') && !((String)switchOrder.get('Phase__c')).equalsIgnoreCase('Annullato'))
+            {
+                continue;
+            }
+            orderIds.add(switchOrder.Id);
+        }
+        /* If OrderIds are empty 
+        * exits the methos to prevent
+        * querying unwanted cases
+        */
+        if(orderIds.isEmpty())
         {
             return;
         }
-        List<Case> techincalVoltures = [SELECT Id, Phase__c,Status FROM Case WHERE Type = 'Voltura Tecnica' AND Order__c = :switchOrder.Id WITH SECURITY_ENFORCED];
+        List<Case> techincalVoltures = [SELECT Id, Phase__c,Status FROM Case WHERE Type = 'Voltura Tecnica' AND Order__c IN :orderIds WITH SECURITY_ENFORCED];
         if(!techincalVoltures.isEmpty())
         {
             for(Case c : techincalVoltures)
