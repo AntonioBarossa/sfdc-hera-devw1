@@ -600,6 +600,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             }
             processObj.requestItem.Status__c = 'In Lavorazione';
         }
+        if(sObjectToDelete.size() > 0){
+            HDT_UTL_DatabaseService.deleteSObject(sObjectToDelete);
+        }
         getLimitDetails('processEnd');
 
     }
@@ -815,6 +818,11 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         parentOrder.ShippingStreetName__c = childOrder.ShippingStreetName__c;
         parentOrder.ShippingStreetNumber__c	= childOrder.ShippingStreetNumber__c;
         parentOrder.isMassive__c = true;
+        parentOrder.LowerChannelAgency__c = sale.LowerChannelAgency__c;
+        parentOrder.UpperChannelAgency__c = sale.UpperChannelAgency__c;
+        parentOrder.CommercialId__c = sale.CommercialId__c;
+        parentOrder.LoginChannel__c = childOrder.LoginChannel__c;
+        parentOrder.CreatorGroup__c = childOrder.CreatorGroup__c;
         return parentOrder;
     }
 

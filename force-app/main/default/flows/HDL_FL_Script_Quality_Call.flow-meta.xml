@@ -437,6 +437,21 @@
                 </conditions>
             </visibilityRule>
         </fields>
+        <fields>
+            <name>PresaAppuntamento</name>
+            <fieldText>&lt;p&gt;Procedere con la presa appuntamento.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RB_1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>False_1</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>

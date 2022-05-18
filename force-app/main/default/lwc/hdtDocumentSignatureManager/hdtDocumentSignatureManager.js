@@ -159,10 +159,10 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                         const obj = {value: 'Stampa Cartacea', label: 'Stampa Cartacea'};
                         sendMode.push(obj);
                         signSendMode = {
-                            signMode : 'Cartacea',
+                            signMode : 'Contratto già firmato',
                             sendMode : sendMode
                         };
-                        const obj2 = {value: 'Cartacea', label: 'Cartacea'};
+                        const obj2 = {value: 'Contratto già firmato', label: 'Contratto già firmato'};
                         signMode.push(obj2);
                         signSendModeList.push(signSendMode);
                     }

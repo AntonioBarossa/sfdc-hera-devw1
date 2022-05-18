@@ -193,6 +193,14 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                     formParams: JSON.stringify(formParams)
                 }).then(result => {
                     var resultParsed = JSON.parse(result);
+                    if(resultParsed.status === 'sizeLimit')
+                    {
+                        this.showMessage('Attenzione',resultParsed.message,'warning');
+                        this.previewExecuted = true;
+                        this.isPrintButtonDisabled = false;
+                        this.loading = false;
+                        return;
+                    }
                     if(resultParsed.code === '200' || resultParsed.code === '201'){
                         if(resultParsed.result === '000'){
                             var base64 = resultParsed.base64;

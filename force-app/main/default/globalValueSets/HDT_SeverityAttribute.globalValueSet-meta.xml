@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>Segnalato a/da Vertici Aziendali e/o Enti</fullName>
+        <fullName>Cliente Aggressivo</fullName>
         <default>false</default>
-        <label>Segnalato a/da Vertici Aziendali e/o Enti</label>
+        <label>Cliente Aggressivo</label>
     </customValue>
     <customValue>
         <fullName>Minaccia visibilità media/Disdetta</fullName>
@@ -11,10 +11,10 @@
         <label>Minaccia visibilità media/Disdetta</label>
     </customValue>
     <customValue>
-        <fullName>Cliente Aggressivo</fullName>
+        <fullName>Segnalato a/da Vertici Aziendali e/o Enti</fullName>
         <default>false</default>
-        <label>Cliente Aggressivo</label>
+        <label>Segnalato a/da Vertici Aziendali e/o Enti</label>
     </customValue>
     <masterLabel>Attributo Criticità</masterLabel>
-    <sorted>false</sorted>
+    <sorted>true</sorted>
 </GlobalValueSet>
