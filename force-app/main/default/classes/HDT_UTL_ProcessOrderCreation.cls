@@ -955,15 +955,22 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             wrpChildOrder.orderItemList.add(wrpOrderItem);
             commOfferForRetrieve.add(wrpOrderItem.product);
 
-            String itemTypeCsv = csvValues[mapHeaderForWrapper.get('ServicePointServizio')];
+            //String itemTypeCsv = csvValues[mapHeaderForWrapper.get('ServicePointServizio')];
             String codicePuntoCsv = csvValues[mapHeaderForWrapper.get('ServicePointCodicePunto')];
             String itemType = '';
 
-            if(String.isNotEmpty(itemTypeCsv) && itemTypeCsv.equalsIgnoreCase('Energia Elettrica')){
-                itemType = 'POD';
-            } else if(String.isNotEmpty(itemTypeCsv) && itemTypeCsv.equalsIgnoreCase('Gas')){
-                itemType = 'PDR';
-            } else if(String.isNotEmpty(codicePuntoCsv)){
+            //if(String.isNotEmpty(itemTypeCsv) && itemTypeCsv.equalsIgnoreCase('Energia Elettrica')){
+            //    itemType = 'POD';
+            //} else if(String.isNotEmpty(itemTypeCsv) && itemTypeCsv.equalsIgnoreCase('Gas')){
+            //    itemType = 'PDR';
+            //} else if(String.isNotEmpty(codicePuntoCsv)){
+            //    if(codicePuntoCsv.isNumeric()){
+            //        itemType = 'PDR';
+            //    } else {
+            //        itemType = 'POD';
+            //    }
+            //}
+            if(String.isNotEmpty(codicePuntoCsv)){
                 if(codicePuntoCsv.isNumeric()){
                     itemType = 'PDR';
                 } else {
