@@ -117,6 +117,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                 srvRequest.BillingProfile__c= cs.BillingProfile__c;
             }
             srvRequest.ProcessType__c= getProcessType(cs.Type, 'Case', cs.CommodityFormula__c);
+            system.debug('mio test *****'+srvRequest.ProcessType__c);
             ServiceRequest__c sReq = HDT_SRV_ServiceRequest.createRecord(srvRequest);
             wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = checkCompatibility(sReq);
             //list of incompatible records

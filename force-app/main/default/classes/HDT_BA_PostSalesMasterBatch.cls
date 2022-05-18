@@ -20,7 +20,8 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         scope.addAll(postsalesQr.getPostSalesBozzaCase());
         scope.addAll(postsalesQr.getCaseVolturaTecnica());
         scope.addAll(postsalesQr.getExpiredArticle());
-
+        scope.addAll(postsalesQr.getSegnalazioniBozzaCase());
+        scope.addAll(postsalesQr.getRifiutiBozzaCase());
 
         return scope;
 
@@ -75,6 +76,10 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                     myCurrentCaseList.add(currentCase);
                                     continue;
                                 }
+                            } else if(currentCase.Type == 'Segnalazioni Ambientali' || currentCase.Type == 'Gestione Rifiuti'){
+                                currentCase.Phase__c = 'Bozza Annullata';
+                                myCurrentCaseList.add(currentCase);
+                                continue;
                             } else {
                                 //Get data from Days to Expiration Custom Setting
                                 CS_DaysToExpiration__c myCS2 = (CS_DaysToExpiration__c)mySobj3;

@@ -6,16 +6,16 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     
     
-    <apiVersion>50.0</apiVersion>
+    <apiVersion>54.0</apiVersion>
     
     
     <isExposed>true</isExposed>
     
     
-    <masterLabel>Record Edit Form for Screen </masterLabel>
+    <masterLabel>Advanced Record Edit Form for Screen </masterLabel>
     
     
-    <description>This is a component that get in input the process type and show the required input field</description>
+    <description>This is a component extends the FormFlow</description>
     
     
     <targets>
@@ -31,7 +31,6 @@
         
         
         <targetConfig targets="lightning__FlowScreen">
-            
             
             <property name="processType" type="String" label="Process Type" description="process type passed by the flow" role="inputOnly"/>
             
@@ -103,6 +102,8 @@
             
             
             <property name="documentRecordId" type="String" label="Document Record Id" description="Id of the record to upload documents" role="inputOnly"/>
+            
+            <property name="account" type="@salesforce/schema/Account" label="Account" description="case Account" role="inputOnly"/>
             
         </targetConfig>
         

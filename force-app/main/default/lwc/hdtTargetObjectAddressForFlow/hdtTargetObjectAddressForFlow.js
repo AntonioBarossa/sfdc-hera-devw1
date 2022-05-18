@@ -96,11 +96,13 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
         if(lwcIndirizzi==null)  return;
         this.stopRendered=true;
         let wrapperAddress = {};
-        if(this.theCase["InvoicingStreetName__c"] != undefined){
-            wrapperAddress['Via'] = this.theCase["InvoicingStreetName__c"];
-        }
         if(this.theCase["InvoicingCity__c"] != undefined){
             wrapperAddress['Comune'] = this.theCase["InvoicingCity__c"];
+        }else{
+            return;
+        }
+        if(this.theCase["InvoicingStreetName__c"] != undefined){
+            wrapperAddress['Via'] = this.theCase["InvoicingStreetName__c"];
         }
         if(this.theCase["InvoicingPostalCode__c"] != undefined){
             wrapperAddress['CAP'] = this.theCase["InvoicingPostalCode__c"];

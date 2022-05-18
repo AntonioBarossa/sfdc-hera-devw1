@@ -103,6 +103,48 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         ];
     }
 
+    public List<Case> getSegnalazioniBozzaCase(){
+        Id processTypeId = (new Case()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
+        CS_DaysToExpiration__c cs = CS_DaysToExpiration__c.getInstance('Segnalazioni_Ambiente');
+        Integer strNumberOfDays = integer.valueof(STRING.isBlank(cs?.NumberOfDays__c)? '0' : cs.NumberOfDays__c);
+        strNumberOfDays=-strNumberOfDays;
+        Date d = Date.today().addDays(strNumberOfDays);
+        return [SELECT 
+            Id,
+            Type,
+            Phase__c,
+            Cluster__c
+            FROM Case
+            WHERE 
+            RecordTypeId = :processTypeId
+            AND Phase__c = :this.bozzaCase
+            AND Type ='Segnalazioni Ambientali'
+            AND CreatedDate < :d
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Case> getRifiutiBozzaCase(){
+        Id processTypeId = (new Case()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
+        CS_DaysToExpiration__c cs = CS_DaysToExpiration__c.getInstance('Gestione_Rifiuti');
+        Integer strNumberOfDays = integer.valueof(STRING.isBlank(cs?.NumberOfDays__c)? '0' : cs.NumberOfDays__c);
+        strNumberOfDays=-strNumberOfDays;
+        Date d = Date.today().addDays(strNumberOfDays);
+        return [SELECT 
+            Id,
+            Type,
+            Phase__c,
+            Cluster__c
+            FROM Case
+            WHERE 
+            RecordTypeId = :processTypeId
+            AND Phase__c = :this.bozzaCase
+            AND Type ='Gestione Rifiuti'
+            AND CreatedDate < :d
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     public List<Case> getPostSalesBozzaCase(){
         return [SELECT Id,
         Type,
