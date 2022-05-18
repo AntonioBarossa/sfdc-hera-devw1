@@ -29,69 +29,88 @@ export default class HdtLandRegistry extends LightningElement {
     @track tableSelectedRows = [];
     @track tableColumns=columns;
 
+    get disableModifica(){ return !this.selectedLandRegistryId || this.selectedLandRegistryId=='' || this.readonly }
     disableSalva=false;
-    disableModifica=false;
-    disableNuovo=false;
     disableForm=true;
+    
 
     showSpinner=false;
     showSalva=false;
-    showTable=false;
-    showForm=false;
+    //showTable=false;
+    //showForm=false;
     
     connectedCallback(){
         console.log('### connectedCallback');
         console.log('### selectedLandRegistryId= '+this.selectedLandRegistryId);
-        console.log('### tableSelectedRows= '+this.tableSelectedRows);
-        if(this.selectedLandRegistryId) this.tableSelectedRows.push(this.selectedLandRegistryId);
-        console.log('### tableSelectedRows= '+this.tableSelectedRows);
-        this.getRetrieveLandRegistry();
+        this.call_retrieveLandRegistry();
     }
 
-    getRetrieveLandRegistry() {
-        console.log('### getRetrieveLandRegistry');
+    call_retrieveLandRegistry() {
+        console.log('### call_retrieveLandRegistry');
+        if(this.selectedLandRegistryId) this.tableSelectedRows = [this.selectedLandRegistryId];
+        //this.showTable=false;
+        //this.showForm=false;
         this.showSpinner = true;
         retrieveLandRegistry({ servicePointIds : this.servicePointId })
             .then(result => {
-                console.log('### retrieveLandRegistry');
                 console.log('### result', JSON.stringify(result));
                 this.tableData = result;
-                this.showSpinner = false;
-                if(this.tableData.length == 0){
-                    this.disableModifica=true;
-                    this.showTable=false;
-                    this.showForm=false;
-                } 
-                else{
-                    if(this.tableSelectedRows.length == 0 ) this.tableSelectedRows.push(this.tableData[0].Id);
-                    this.showTable=true;
-                    this.showForm=true;
-                }                 
             })
             .catch(error => {
-                 console.log("### retrieveLandRegistry Errore: "+error);
+                console.error("### retrieveLandRegistry Errore: "+error);
+            })
+            .finally(() => {
+                if(this.tableData.length > 0){
+                    if(this.tableSelectedRows.length == 0 ) this.tableSelectedRows = [this.tableData[0].Id];
+                    //this.showTable=true;
+                    //this.showForm=true;
+                    //this.trowSelectionEvent();
+                }
+                this.showSpinner = false;
             });
     }
 
     handleTableSelection(event){
-        this.showForm=false;
+        //this.showForm=false;
         this.selectedLandRegistryId = event.detail.selectedRows[0].Id;
         this.showSalva=false;
         this.disableForm=true;
-        this.showForm=true;
+        //this.showForm=true;
         this.trowSelectionEvent();
     }
 
-    handleModificaClick(event){
+    handleModificaClick(){
+        this.disableSalva=false;
         this.showSalva=true;
         this.disableForm=false;
     }
 
-    handleNuovoClick(event){
-        //TODO: creare nuovo oggetto riga vuota
-        //TODO: assegnare id nuovo oggetto a selectedLandRegistryId
-        //TODO: this.disableForm=false;
-        //TODO: this.showSalva=true;
+    handleNuovoClick(){
+        //this.showForm=false;
+        this.selectedLandRegistryId='';
+        this.disableForm=false;
+        //this.showForm=true;
+        this.disableSalva=false;
+        this.showSalva=true;
+    }
+
+    handleFormSubmit(event){
+        console.log("### handleFormSubmit", event);
+        this.disableSalva=true;
+        this.showSpinner = true;
+    }
+
+    handleFormSuccess(event){
+        console.log("### handleFormSuccess", event);
+        this.selectedLandRegistryId=event.detail.id;
+        this.call_retrieveLandRegistry();
+        // const evt = new ShowToastEvent({ variant: 'success', title: 'Operazione eseguita correttamente!', message: 'Record salvato.' });
+        // this.dispatchEvent(evt);
+    }
+
+    handleFormError(event){
+        console.error("### handleFormError", event);
+        this.showSpinner = false;
     }
 
     trowSelectionEvent(){

@@ -11,7 +11,7 @@
             <div class="slds-grid slds-wrap">
             
                 <div class="slds-size_1-of-1">
-                    <template if:true={showTable}>
+                    <!-- <template if:true={showTable}> -->
                         <lightning-datatable
                             data={tableData}
                             columns={tableColumns}
@@ -20,26 +20,25 @@
                             onrowselection={handleTableSelection}
                             max-row-selection="1">
                         </lightning-datatable>
-                    </template>
-                    <template if:false={showTable}>
-                        NESSUN DATO CATASTALE LEGATO A QUESTO PUNTO DI FORNITURA!
-                    </template>
+                    <!-- </template> -->
                 </div>
 
-                <div class="slds-size_1-of-1 slds-box_x-small slds-text-align_center slds-m-around_x-small">
-                    <!-- Button Nuovo -->
-                    <lightning-button disabled={disableNuovo} variant="brand" label="Nuovo" title="Nuovo" onclick={handleNuovoClick} class="slds-m-left_x-small"></lightning-button>
+                <div class="slds-size_1-of-1 slds-box_x-small slds-text-align_center">
+                    <lightning-button disabled={readonly} variant="brand" label="Nuovo" title="Nuovo" onclick={handleNuovoClick}></lightning-button>
                 </div>
                 
             </div>
 
             <!-- Campi -->
-            <template if:true={showForm}>
-                <lightning-record-edit-form object-api-name="LandRegistry__c" record-id={selectedLandRegistryId}>
+            <!-- <template if:true={showForm}> -->
+                <lightning-record-edit-form object-api-name="LandRegistry__c" 
+                                            record-id={selectedLandRegistryId} 
+                                            onsubmit={handleFormSubmit}
+                                            onsuccess={handleFormSuccess}
+                                            onerror={handleFormError}>
                     <lightning-layout multiple-rows>
-                        <lightning-layout-item size="4" padding="around-medium">
-                            <lightning-input-field variant="standard" disabled={disableForm} field-name="CodeMissingRegistryData__c"></lightning-input-field>
-                        </lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled value={servicePointId} field-name="ServicePoint__c"></lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="CodeMissingRegistryData__c"></lightning-input-field></lightning-layout-item>
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="DestinationUsage__c"> </lightning-input-field></lightning-layout-item>
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="RegistryCity__c"> </lightning-input-field></lightning-layout-item>
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="RegistryCityCode__c"> </lightning-input-field></lightning-layout-item>
@@ -56,22 +55,22 @@
                         
                         <template if:false={showSalva}>
                             <lightning-layout-item size="12" padding="around-medium">
-                                <div class="slds-grid slds-wrap"><div class="slds-size_1-of-1 slds-box_x-small slds-text-align_center slds-m-around_x-small">
-                                        <lightning-button disabled={disableModifica} label="Modifica" title="Modifica" onclick={handleModificaClick} class="slds-m-left_x-small"></lightning-button>
-                                </div></div>
+                                <div class="slds-text-align_center">
+                                    <lightning-button disabled={disableModifica} label="Modifica" title="Modifica" onclick={handleModificaClick}></lightning-button>
+                                </div>
                             </lightning-layout-item>
                         </template>
 
                         <template if:true={showSalva}>
                             <lightning-layout-item size="12" padding="around-medium">
-                                <div class="slds-grid slds-wrap"><div class="slds-size_1-of-1 slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                <div class="slds-text-align_center">
                                     <lightning-button disabled={disableSalva} label="Salva" title="Salva" type="submit" variant="brand"></lightning-button>
-                                </div></div>
+                                </div>
                             </lightning-layout-item>
                         </template>
                     </lightning-layout>
                 </lightning-record-edit-form>
-            </template>
+            <!-- </template> -->
 
         </lightning-card>
     </div>
