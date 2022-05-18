@@ -6512,10 +6512,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Mancata ricezione Plico</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Altre voci in fattura</fullName>
             <default>false</default>
         </values>
