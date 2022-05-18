@@ -796,7 +796,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         parentOrder.Sale__c = sale.Id;
         parentOrder.Contact__c = sale.SalesContact__c;
         parentOrder.Channel__c = sale.Channel__c;
-        parentOrder.LoginChannel__c = sale.Channel__c;
         parentOrder.VendorLastName__c = sale.VendorLastName__c;
         parentOrder.VendorFirstName__c = sale.VendorFirstName__C;
         parentOrder.CommercialId__c = sale.CommercialId__c;
