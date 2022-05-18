@@ -32,7 +32,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
 
         //Get Sale
         saleSrv.checkReadAccess('Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c');
-        Sale__c sale = saleQr.getRecordById(saleId, 'SalesContact__c,CreatedBy.LoginChannel__c,Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c');
+        Sale__c sale = saleQr.getRecordById(saleId, 'UpperChannelAgency__c,LowerChannelAgency__c,SalesContact__c,CreatedBy.LoginChannel__c,Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c');
         check = sale.Status__c == 'Attiva' ? true : false;
         
         //Get Orders
@@ -85,7 +85,9 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     Agency__c = sale.Agency__c,
                     AreaManager__c = sale.AreaManager__c,
                     SalesContact__c = sale.SalesContact__c,
-                    Interaction__c = sale.Interaction__c
+                    Interaction__c = sale.Interaction__c,
+                    LowerChannelAgency__c = sale.LowerChannelAgency__c,
+                    UpperChannelAgency__c = sale.UpperChannelAgency__c
                 );
 
                 orderSrv.createRecord(parentOrderNew);
