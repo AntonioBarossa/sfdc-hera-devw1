@@ -9,6 +9,8 @@ public with sharing class HDT_UTL_OrderTst {
     static void setup(){
 
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
+
 
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountDistributore(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         accList[0].FirstName__c = 'Mario';
@@ -69,12 +71,50 @@ public with sharing class HDT_UTL_OrderTst {
         billingProfileList[0].InvoicingCountry__c = 'ITALIA';*/
         //update billingProfileList;
 
-        String rtParentOrder = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_OrderDossier').getRecordTypeId();        
+        List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, true);
+        productList[0].Family = 'Offerta commerciale';
+        productList[0].Version__c = 'V1.0';
+        productList[0].ProductCode = 'HIZLA_SERV';
+        productList[0].Name = 'HERA LED 1 KIT V2';
+        update productList;
 
-        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(2, true, accList[0].id, 'Bozza');
+        Id priceBookId = Test.getStandardPriceBookId();
+
+        List<PricebookEntry> stdpriceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, priceBookId);
+
+        List<Pricebook2> pbList = HDT_UTL_DataFactoryTst.createPricebook(1, true);
+
+        List<PricebookEntry> priceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, pbList[0].Id);
+
+        String rtOrder = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchIn').getRecordTypeId();        
+        String rtParentOrder = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_OrderDossier').getRecordTypeId();        
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(3, true, accList[0].id, 'Bozza');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Annullamento - Dati discordanti', 'Bozza', rtOrder, 'HDT_RT_VAS','A','','','');
+        ordList[0].RecordTypeId = rtOrder;
         ordList[0].Sale__c = saleList[0].Id;
+        ordList[0].Contact__c = contactList[0].Id;
         ordList[0].SalesContact__c = contactList[1].Id;
-        ordList[0].Username__c = '';
+        ordList[0].ServicePoint__c = servPointList[0].Id;
+        ordList[0].ContractId = contractList[0].Id;
+        ordList[0].BillingProfile__c = billingProfileList[0].Id;
+        ordList[1].RecordTypeId = rtParentOrder;
+        ordList[0].ParentOrder__c = ordList[1].Id;
+        ordList[0].Pricebook2Id = pbList[0].Id;
+        ordList[0].CommercialProduct__c = 'Hera Impronta Zero Casa Luce 24 + AC';
+        ordList[0].SupplyType__c = 'Domestico';
+        ordList[2].RecordTypeId = rtOrder;
+        ordList[2].Sale__c = saleList[0].Id;
+        ordList[2].Contact__c = contactList[0].Id;
+        ordList[2].SalesContact__c = contactList[1].Id;
+        ordList[2].ServicePoint__c = servPointList[0].Id;
+        ordList[2].ContractId = contractList[0].Id;
+        ordList[2].BillingProfile__c = billingProfileList[0].Id;
+        ordList[2].ParentOrder__c = ordList[1].Id;
+        ordList[2].Pricebook2Id = pbList[0].Id;
+        ordList[2].CommercialProduct__c = 'Hera Impronta Zero Casa Luce 24 + AC';
+        ordList[2].SupplyType__c = 'Domestico';
+        ordList[2].Phase__c = 'Annullamento - Dati discordanti';
+        /*ordList[0].Username__c = '';
         ordList[0].SwitchOutDate__c = Date.today();
         ordList[0].Vat__c = 'Iva 22% (Cod. 02)';
         ordList[0].ExciseGas__c = '';
@@ -83,25 +123,23 @@ public with sharing class HDT_UTL_OrderTst {
         ordList[0].SignedDate__c = Date.today();
         ordList[0].SignatureMethod__c = 'Cartacea';
         ordList[0].DocSendingMethod__c = 'Stampa Cartacea';
-        ordList[0].Sale__c = saleList[0].Id;
         ordList[0].Step__c = 2;
-        ordList[0].ServicePoint__c = servPointList[0].Id;
-        ordList[0].ContractId = contractList[0].Id;
         ordList[0].PowerAvailable__c = 251;
         ordList[0].UseTypeEnergy__c = 'Ordinaria (Perm)';
-        ordList[0].BillingProfile__c = billingProfileList[0].Id;
         ordList[0].Deliberation__c = 'In Delibera';
-        ordList[1].RecordTypeId = rtParentOrder;
-        ordList[0].ParentOrder__c = ordList[1].Id;
         ordList[0].RequestOption__c = 'AEEG Op MTA2 >100 <=500-E_MTA2';
         ordList[0].WaiverRightAfterthought__c = 'Si';
         ordList[0].MaxAfterthoughtDate__c = Date.today();
         ordList[0].PreviousTrader__c = '';
-        ordList[0].VolturaThirdTrader__c = false;
-        ordList[0].CommercialProduct__c = 'Hera Impronta Zero Casa Luce 24 + AC';
-        ordList[0].SupplyType__c = 'Domestico';
-
+        ordList[0].VolturaThirdTrader__c = false;*/        
         update ordList;
+
+        List<OrderItem> ordersItems = HDT_UTL_DataFactoryTst.createOrderItem(1, true, ordList[0].id, servPointList[0].id, productList[0].id, priceBookEntryList[0].id);
+        ordersItems[0].BillingProfile__c = billingProfileList[0].Id;
+        ordersItems[0].VASBillingMode__c = 'A-Rate fisse';
+        ordersItems[0].DelayEffectiveDate__c = Date.today();
+
+        update ordersItems;
 
         List<Opportunity> oppList = HDT_UTL_DataFactoryTst.createOpportunity(1, True);
 
@@ -127,31 +165,23 @@ public with sharing class HDT_UTL_OrderTst {
         myCatList[0].operatore__c = 'Uguale';
         update myCatList;
 
+        String rtCase = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();        
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        caseList[0].Order__c = ordList[0].Id;
+        caseList[0].RecordTypeId = rtCase;
+        update caseList;
 
-        /*AccountContactRelation accountContactRel = HDT_UTL_DataFactoryTst.createAccountContactRelation(true, accList[1].Id,contactList[0].Id);
+
+        String rtActivity = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
+        List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1, true, accList[0].Id);
+        actList[0].RecordTypeId = rtActivity;
+        actList[0].Type__c = 'Gestione dati discordanti';
+        actList[0].Order__c = ordList[2].Id;
+        actList[0].Contact__c = contactList[0].Id;
+        actList[0].Distributor__c = accList[0].Id;
+        actList[0].AppointmentDate__c = Date.today();
+        update actList;
         
-
-        List<Contract> contractListTwo = HDT_UTL_DataFactoryTst.createContract(1, true, accList[1].id);
-
-
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(2, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
-        caseList[0].Type = 'Sollecito Emissione Bolletta';
-        caseList[0].EarlyRecess__c = true;
-        caseList[1].Type = 'Unificazione/Separazione BP-CA-Bolletta';
-        caseList[1].EarlyRecess__c = true;
-        insert caseList;
-
-        Case parentCase = [SELECT Id FROM Case WHERE Type = 'Sollecito Emissione Bolletta'];
-        List<Case> caseList2 = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
-        caseList2[0].ParentId = parentCase.Id;
-        caseList2[0].Type = 'Sospensione Fornitura';
-        insert caseList2;
-
-
-        String rtNamePianoRat =  'HDT_RT_PianoRateizzazione';
-        String rtIdPianoRat = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PianoRateizzazione').getRecordTypeId();
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Acconto paperless pagato', 'Bozza', rtIdPianoRat, rtNamePianoRat,'A','','','');
-        */
     }
     
 
@@ -261,7 +291,7 @@ public with sharing class HDT_UTL_OrderTst {
         
     }
 
-    @IsTest
+    /*@IsTest
     static void travasaOrderTest(){
 
         List<Order> myOrderList = [SELECT Id, ExciseGas__c, ExciseEle__c, Vat__c, AnnualConsumption__c, MarketOrigin__c, ConnectionMandate__c,
@@ -286,6 +316,47 @@ public with sharing class HDT_UTL_OrderTst {
         Test.stopTest();
 
         System.assertNotEquals(0, myOrderList.size(), 'la lista non ha record');
+        
+    }*/
+
+    @IsTest
+    static void annullaContrattiTest(){
+
+        Order myOrder = [SELECT Id, Status, Phase__c, CancellationReason__c FROM Order where Name = 'testOrderName0'];
+
+        Test.startTest();
+        Boolean result = HDT_UTL_Order.annullaContratti(myOrder.Id);
+        Test.stopTest();
+
+        System.assertEquals(true, result, 'result è false');
+        
+    }
+
+    @IsTest
+    static void checkToDiscordantiTest(){
+
+        Order myOrder = [SELECT Id, ExciseGas__c, ExciseEle__c, Vat__c, AnnualConsumption__c, MarketOrigin__c, ConnectionMandate__c,
+        RecordTypeId, Market__c, PowerAvailable__c, VoltageLevel__c, recordType.DeveloperName, AllowSwitchInDummy__c, RequestOption__c,
+        DisconnectibilityPhone__c, processType__c, MaxRequiredPotential__c, HerokuPracticeCode__c, UseTypeEnergy__c, SelfCertificationConnection__c,
+        UseCategory__c, MeterSN__c, Resident__c, RemiCode__c, SupplyCity__c, CommercialProductVersion__c, CommercialProductCode__c,
+        CommercialProduct__c, SupplyStreetName__c, SupplyStreetNumber__c, SupplyStreetNumberExtension__c, SupplyPlace__c,
+        SupplyPostalCode__c, SupplyCountry__c, PowerCommitted__c, ServicePointCode__c, SAPImplantCode__c, ImplantType__c,
+        SupplyCityCode__c, SupplyState__c, Disconnectable__c, DisconnectibilityType__c, ConnectionType__c, InstanceSelfCertification__c,
+        MeterClass__c, PrecheckResultSII__c, Step__c, ProcessCode__c, WaiverRightAfterthought__c, HerAteco__c, AtecoCode__c,
+        CommentForDL__c, PhoneNumber__c, RateCategory__c, WithdrawalClass__c, SupplyType__c, DistributorCode__c, PressureLevel__c,
+        RequestPhase__c, PowerRequested__c, EnergyService__c, LiftingPeople__c, MeterType__c, IsRemoteManaged__c, CustomerRequestDate__c,
+        Commodity__c, SubjectCode__c, InvoiceCertifiedEmailAddress__c, ElectronicInvoicingMethod__c, XMLType__c, CIG__c, CUP__c,
+        IbanIsForeign__c, IbanCIN_IBAN__c, IbanCIN__c, IbanABI__c, IbanCAB__c, IbanCodeNumber__c, BankAccountSignatoryFiscalCode__c,
+        BankAccountSignatoryFirstName__c, BankAccountSignatoryLastName__c, BillSendMode__c, PaymentMode__c, InvoiceEmailAddress__c,
+        BillingCity__c, BillingCountry__c, BillingProvince__c, BillingStreetName__c, BillingStreetNumber__c, BillingStreetNumberExtension__c,
+        BillingPostalCode__c, BillingCityCode__c, SignatoryType__c, SendCertifiedEmailConsentDate__c, CreateContractAccount__c,
+        IbanCountry__c, isDatoDiscordante__c, Contact__c, OrderReference__c, AggregateBilling__c FROM Order where Name = 'testOrderName0' LIMIT 1];
+
+        Test.startTest();
+        Boolean result = HDT_UTL_Order.checkToDiscordanti(myOrder.Id);
+        Test.stopTest();
+
+        System.assertEquals(true, result, 'result è false');
         
     }
 
