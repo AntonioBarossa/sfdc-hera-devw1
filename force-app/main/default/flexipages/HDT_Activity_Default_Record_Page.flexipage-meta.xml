@@ -2776,7 +2776,7 @@
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Anomalia processo/sistema</rightValue>
+                        <rightValue>Supporto Anomalia processo/sistema</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
