@@ -11,6 +11,151 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>To define</fullName>
+                <default>false</default>
+                <label>To define</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione Ele</fullName>
+                <default>false</default>
+                <label>Prima Attivazione Ele</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione In delibera</fullName>
+                <default>false</default>
+                <label>Prima Attivazione In delibera</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione Fuori delibera</fullName>
+                <default>false</default>
+                <label>Prima Attivazione Fuori delibera</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione con modifica</fullName>
+                <default>false</default>
+                <label>Prima Attivazione con modifica</label>
+            </value>
+            <value>
+                <fullName>Cambio Offerta</fullName>
+                <default>false</default>
+                <label>Cambio Offerta</label>
+            </value>
+            <value>
+                <fullName>Cambio Uso</fullName>
+                <default>false</default>
+                <label>Cambio Uso</label>
+            </value>
+            <value>
+                <fullName>Connessione con Attivazione</fullName>
+                <default>false</default>
+                <label>Connessione con Attivazione</label>
+            </value>
+            <value>
+                <fullName>Riattivazione Non Morose</fullName>
+                <default>false</default>
+                <label>Riattivazione Non Morose</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Sconti o Bonus VAS</fullName>
+                <default>false</default>
+                <label>Aggiunta Sconti o Bonus VAS</label>
+            </value>
+            <value>
+                <fullName>Subentro Gas</fullName>
+                <default>false</default>
+                <label>Subentro Gas</label>
+            </value>
+            <value>
+                <fullName>Subentro Ele</fullName>
+                <default>false</default>
+                <label>Subentro Ele</label>
+            </value>
+            <value>
+                <fullName>Switch in con voltura tecnica</fullName>
+                <default>false</default>
+                <label>Switch in con voltura tecnica</label>
+            </value>
+            <value>
+                <fullName>Voltura con Switch</fullName>
+                <default>false</default>
+                <label>Voltura con Switch</label>
+            </value>
+            <value>
+                <fullName>Switch in Ripristinatorio</fullName>
+                <default>false</default>
+                <label>Switch in Ripristinatorio</label>
+            </value>
+            <value>
+                <fullName>Switch in Reseller</fullName>
+                <default>false</default>
+                <label>Switch in Reseller</label>
+            </value>
+            <value>
+                <fullName>Switch in Fittizio</fullName>
+                <default>false</default>
+                <label>Switch in Fittizio</label>
+            </value>
+            <value>
+                <fullName>Switch in Winback</fullName>
+                <default>false</default>
+                <label>Switch in Winback</label>
+            </value>
+            <value>
+                <fullName>Switch in Gas</fullName>
+                <default>false</default>
+                <label>Switch in Gas</label>
+            </value>
+            <value>
+                <fullName>Switch in Ele</fullName>
+                <default>false</default>
+                <label>Switch in Ele</label>
+            </value>
+            <value>
+                <fullName>Voltura</fullName>
+                <default>false</default>
+                <label>Voltura</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Sconti o Bonus VAS Ele</fullName>
+                <default>false</default>
+                <label>Aggiunta Sconti o Bonus VAS Ele</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Sconti o Bonus VAS Gas</fullName>
+                <default>false</default>
+                <label>Aggiunta Sconti o Bonus VAS Gas</label>
+            </value>
+            <value>
+                <fullName>VAS</fullName>
+                <default>false</default>
+                <label>VAS</label>
+            </value>
+            <value>
+                <fullName>Temporanea - Nuova Attivazione</fullName>
+                <default>false</default>
+                <label>Temporanea - Nuova Attivazione</label>
+            </value>
+            <value>
+                <fullName>Proroga Temporanea</fullName>
+                <default>false</default>
+                <label>Proroga Temporanea</label>
+            </value>
+            <value>
+                <fullName>Cambio Uso Tecnico</fullName>
+                <default>false</default>
+                <label>Cambio Uso Tecnico</label>
+            </value>
+            <value>
+                <fullName>Cambio Offerta Ele</fullName>
+                <default>false</default>
+                <label>Cambio Offerta Ele</label>
+            </value>
+            <value>
+                <fullName>Cambio Offerta Gas</fullName>
+                <default>false</default>
+                <label>Cambio Offerta Gas</label>
+            </value>
+            <value>
                 <fullName>Allineamento Anagrafica</fullName>
                 <default>false</default>
                 <label>Allineamento Anagrafica</label>
@@ -39,11 +184,6 @@
                 <fullName>Autolettura da cliente</fullName>
                 <default>false</default>
                 <label>Autolettura da cliente</label>
-            </value>
-            <value>
-                <fullName>Autolettura da processoAllineamento Anagrafica</fullName>
-                <default>false</default>
-                <label>Autolettura da processoAllineamento Anagrafica</label>
             </value>
             <value>
                 <fullName>Autolettura da processo</fullName>
@@ -526,16 +666,6 @@
                 <label>Segnalazioni VAS</label>
             </value>
             <value>
-                <fullName>Cambio Uso Tecnico</fullName>
-                <default>false</default>
-                <label>Cambio Uso Tecnico</label>
-            </value>
-            <value>
-                <fullName>Proroga Temporanea</fullName>
-                <default>false</default>
-                <label>Proroga Temporanea</label>
-            </value>
-            <value>
                 <fullName>HVAC</fullName>
                 <default>false</default>
                 <label>HVAC</label>
@@ -616,11 +746,6 @@
                 <label>Contratti/Bonus Commerciale</label>
             </value>
             <value>
-                <fullName>Riattivazione Non Morose</fullName>
-                <default>false</default>
-                <label>Riattivazione Non Morose</label>
-            </value>
-            <value>
                 <fullName>VOTIVE Modena/Intervento Riattivazione luce</fullName>
                 <default>false</default>
                 <label>VOTIVE Modena/Intervento Riattivazione luce</label>
@@ -646,319 +771,262 @@
                 <label>Switch Out per Voltura</label>
             </value>
             <value>
-                <fullName>To define</fullName>
+                <fullName>Documentale/Copia Contratto</fullName>
                 <default>false</default>
-                <label>To define</label>
+                <label>Documentale/Copia Contratto</label>
             </value>
             <value>
-                <fullName>Prima Attivazione Ele</fullName>
+                <fullName>Modifica Contr Preattivazione Pagamento Residenziale</fullName>
                 <default>false</default>
-                <label>Prima Attivazione Ele</label>
+                <label>Modifica Contr Preattivazione Pagamento Residenziale</label>
             </value>
             <value>
-                <fullName>Prima Attivazione In delibera</fullName>
+                <fullName>Modifica Contr Preattivazione Anagr Res</fullName>
                 <default>false</default>
-                <label>Prima Attivazione In delibera</label>
+                <label>Modifica Contr Preattivazione Anagr Res</label>
             </value>
             <value>
-                <fullName>Prima Attivazione Fuori delibera</fullName>
+                <fullName>Recesso per Ripensamento</fullName>
                 <default>false</default>
-                <label>Prima Attivazione Fuori delibera</label>
+                <label>Recesso per Ripensamento</label>
             </value>
             <value>
-                <fullName>Prima Attivazione con modifica</fullName>
+                <fullName>Social Studio</fullName>
                 <default>false</default>
-                <label>Prima Attivazione con modifica</label>
+                <label>Social Studio</label>
             </value>
             <value>
-                <fullName>Cambio Offerta</fullName>
+                <fullName>Associazione Utente Web</fullName>
                 <default>false</default>
-                <label>Cambio Offerta</label>
-            </value>
-            <value>
-                <fullName>Cambio Uso</fullName>
-                <default>false</default>
-                <label>Cambio Uso</label>
-            </value>
-            <value>
-                <fullName>Connessione con Attivazione</fullName>
-                <default>false</default>
-                <label>Connessione con Attivazione</label>
-            </value>
-            <value>
-                <fullName>Aggiunta Sconti o Bonus VAS</fullName>
-                <default>false</default>
-                <label>Aggiunta Sconti o Bonus VAS</label>
-            </value>
-            <value>
-                <fullName>Subentro Gas</fullName>
-                <default>false</default>
-                <label>Subentro Gas</label>
-            </value>
-            <value>
-                <fullName>Subentro Ele</fullName>
-                <default>false</default>
-                <label>Subentro Ele</label>
-            </value>
-            <value>
-                <fullName>Switch in con voltura tecnica</fullName>
-                <default>false</default>
-                <label>Switch in con voltura tecnica</label>
-            </value>
-            <value>
-                <fullName>Voltura con Switch</fullName>
-                <default>false</default>
-                <label>Voltura con Switch</label>
-            </value>
-            <value>
-                <fullName>Switch in Ripristinatorio</fullName>
-                <default>false</default>
-                <label>Switch in Ripristinatorio</label>
-            </value>
-            <value>
-                <fullName>Switch in Reseller</fullName>
-                <default>false</default>
-                <label>Switch in Reseller</label>
-            </value>
-            <value>
-                <fullName>Switch in Fittizio</fullName>
-                <default>false</default>
-                <label>Switch in Fittizio</label>
-            </value>
-            <value>
-                <fullName>Switch in Winback</fullName>
-                <default>false</default>
-                <label>Switch in Winback</label>
-            </value>
-            <value>
-                <fullName>Switch in Gas</fullName>
-                <default>false</default>
-                <label>Switch in Gas</label>
-            </value>
-            <value>
-                <fullName>Switch in Ele</fullName>
-                <default>false</default>
-                <label>Switch in Ele</label>
-            </value>
-            <value>
-                <fullName>Voltura</fullName>
-                <default>false</default>
-                <label>Voltura</label>
-            </value>
-            <value>
-                <fullName>Aggiunta Sconti o Bonus VAS Ele</fullName>
-                <default>false</default>
-                <label>Aggiunta Sconti o Bonus VAS Ele</label>
-            </value>
-            <value>
-                <fullName>Aggiunta Sconti o Bonus VAS Gas</fullName>
-                <default>false</default>
-                <label>Aggiunta Sconti o Bonus VAS Gas</label>
-            </value>
-            <value>
-                <fullName>VAS</fullName>
-                <default>false</default>
-                <label>VAS</label>
-            </value>
-            <value>
-                <fullName>Temporanea - Nuova Attivazione</fullName>
-                <default>false</default>
-                <label>Temporanea - Nuova Attivazione</label>
-            </value>
-            <value>
-                <fullName>Cambio Offerta Ele</fullName>
-                <default>false</default>
-                <label>Cambio Offerta Ele</label>
-            </value>
-            <value>
-                <fullName>Cambio Offerta Gas</fullName>
-                <default>false</default>
-                <label>Cambio Offerta Gas</label>
-            </value>
-            <value>
-                <fullName>Blocco al Sollecito ed Interessi</fullName>
-                <default>false</default>
-                <label>Blocco al Sollecito ed Interessi</label>
-            </value>
-            <value>
-                <fullName>Reclamo scritto</fullName>
-                <default>false</default>
-                <label>Reclamo scritto</label>
-            </value>
-            <value>
-                <fullName>Richieste info</fullName>
-                <default>false</default>
-                <label>Richieste info</label>
-            </value>
-            <value>
-                <fullName>Richiesta lettura c/cliente</fullName>
-                <default>false</default>
-                <label>Richiesta lettura c/cliente</label>
-            </value>
-            <value>
-                <fullName>Attivazione</fullName>
-                <default>false</default>
-                <label>Attivazione</label>
-            </value>
-            <value>
-                <fullName>Prima attivazione</fullName>
-                <default>false</default>
-                <label>Prima attivazione</label>
-            </value>
-            <value>
-                <fullName>Modifica contratto in pre-attivazione</fullName>
-                <default>false</default>
-                <label>Modifica contratto in pre-attivazione</label>
-            </value>
-            <value>
-                <fullName>Modifica Servizio Energia</fullName>
-                <default>false</default>
-                <label>Modifica Servizio Energia</label>
-            </value>
-            <value>
-                <fullName>Switch-out dal SII</fullName>
-                <default>false</default>
-                <label>Switch-out dal SII</label>
-            </value>
-            <value>
-                <fullName>Proroga connessione temporanea</fullName>
-                <default>false</default>
-                <label>Proroga connessione temporanea</label>
-            </value>
-            <value>
-                <fullName>Predeterminabile + EL</fullName>
-                <default>false</default>
-                <label>Predeterminabile + EL</label>
-            </value>
-            <value>
-                <fullName>Gestione disalimentabilita</fullName>
-                <default>false</default>
-                <label>Gestione disalimentabilita</label>
-            </value>
-            <value>
-                <fullName>Switch in</fullName>
-                <default>false</default>
-                <label>Switch in</label>
-            </value>
-            <value>
-                <fullName>Copia contratto firmato e non ricevuto</fullName>
-                <default>false</default>
-                <label>Copia contratto firmato e non ricevuto</label>
-            </value>
-            <value>
-                <fullName>Riattivazione fornitura non morosa</fullName>
-                <default>false</default>
-                <label>Riattivazione fornitura non morosa</label>
-            </value>
-            <value>
-                <fullName>Alert</fullName>
-                <default>false</default>
-                <label>Alert</label>
-            </value>
-            <value>
-                <fullName>Attivazione con Modifica</fullName>
-                <default>false</default>
-                <label>Attivazione con Modifica</label>
-            </value>
-            <value>
-                <fullName>Subentro</fullName>
-                <default>false</default>
-                <label>Subentro</label>
-            </value>
-            <value>
-                <fullName>Sost. Contatore c/cliente</fullName>
-                <default>false</default>
-                <label>Sost. Contatore c/cliente</label>
+                <label>Associazione Utente Web</label>
             </value>
             <value>
                 <fullName>Aggiunta Attacco /Preventivo Analitico + EL</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Aggiunta Attacco /Preventivo Analitico + EL</label>
             </value>
             <value>
-                <fullName>Recesso su Richesta Cliente</fullName>
+                <fullName>Alert</fullName>
                 <default>false</default>
-                <label>Recesso su Richesta Cliente</label>
+                <isActive>false</isActive>
+                <label>Alert</label>
             </value>
             <value>
-                <fullName>Verifica Pressione</fullName>
+                <fullName>Attivazione</fullName>
                 <default>false</default>
-                <label>Verifica Pressione</label>
+                <isActive>false</isActive>
+                <label>Attivazione</label>
+            </value>
+            <value>
+                <fullName>Attivazione con Modifica</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Attivazione con Modifica</label>
+            </value>
+            <value>
+                <fullName>Autolettura da processoAllineamento Anagrafica</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Autolettura da processoAllineamento Anagrafica</label>
+            </value>
+            <value>
+                <fullName>Blocco al Sollecito ed Interessi</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Blocco al Sollecito ed Interessi</label>
+            </value>
+            <value>
+                <fullName>Copia contratto firmato e non ricevuto</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Copia contratto firmato e non ricevuto</label>
             </value>
             <value>
                 <fullName>Emissione Impulsi/Preventivo Analitico + EL</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Emissione Impulsi/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Gestione disalimentabilita</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Gestione disalimentabilita</label>
             </value>
             <value>
                 <fullName>Modifica Impianto/Preventivo Analitico + EL</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Modifica Impianto/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Modifica Servizio Energia</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Modifica Servizio Energia</label>
+            </value>
+            <value>
+                <fullName>Modifica contratto in pre-attivazione</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Modifica contratto in pre-attivazione</label>
             </value>
             <value>
                 <fullName>Nuovo Impianto/Preventivo Analitico + EL</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Nuovo Impianto/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Predeterminabile + EL</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Predeterminabile + EL</label>
+            </value>
+            <value>
+                <fullName>Prima attivazione</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Prima attivazione</label>
+            </value>
+            <value>
+                <fullName>Proroga connessione temporanea</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Proroga connessione temporanea</label>
+            </value>
+            <value>
+                <fullName>Recesso su Richesta Cliente</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Recesso su Richesta Cliente</label>
+            </value>
+            <value>
+                <fullName>Reclamo scritto</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Reclamo scritto</label>
+            </value>
+            <value>
+                <fullName>Riattivazione fornitura non morosa</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Riattivazione fornitura non morosa</label>
+            </value>
+            <value>
+                <fullName>Richiesta lettura c/cliente</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Richiesta lettura c/cliente</label>
+            </value>
+            <value>
+                <fullName>Richieste info</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Richieste info</label>
             </value>
             <value>
                 <fullName>Rimozione Impianto/Preventivo</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Rimozione Impianto/Preventivo</label>
             </value>
             <value>
                 <fullName>Rimozione Impianto/Preventivo Analitico + EL</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Rimozione Impianto/Preventivo Analitico + EL</label>
             </value>
             <value>
                 <fullName>Ripristino Fornitura Interrotta/Preventivo Analitico + EL</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Ripristino Fornitura Interrotta/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Sost. Contatore c/cliente</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Sost. Contatore c/cliente</label>
             </value>
             <value>
                 <fullName>Spostamento Cavi/Preventivo Analitico + EL</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Spostamento Cavi/Preventivo Analitico + EL</label>
             </value>
             <value>
                 <fullName>Spostamento Contatore/Preventivo Analitico + EL</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Spostamento Contatore/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Subentro</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Subentro</label>
+            </value>
+            <value>
+                <fullName>Switch in</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Switch in</label>
+            </value>
+            <value>
+                <fullName>Switch-out dal SII</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Switch-out dal SII</label>
             </value>
             <value>
                 <fullName>Unificazione POD/Preventivo Analitico + EL</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Unificazione POD/Preventivo Analitico + EL</label>
             </value>
             <value>
                 <fullName>Variazione Fase (Pari Potenza)/Preventivo Analitico + EL</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Variazione Fase (Pari Potenza)/Preventivo Analitico + EL</label>
             </value>
             <value>
                 <fullName>Variazione Fase (Pari Potenza)/Preventivo Predeterminabile + EL</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Variazione Fase (Pari Potenza)/Preventivo Predeterminabile + EL</label>
             </value>
             <value>
                 <fullName>Variazione Portata/Preventivo Analitico + EL</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Variazione Portata/Preventivo Analitico + EL</label>
             </value>
             <value>
                 <fullName>Variazione Potenza/Preventivo Analitico + EL</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Variazione Potenza/Preventivo Analitico + EL</label>
             </value>
             <value>
                 <fullName>Variazione Potenza/Preventivo Predeterminabile + EL</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Variazione Potenza/Preventivo Predeterminabile + EL</label>
             </value>
             <value>
                 <fullName>Variazione Tensione/Preventivo Analitico + EL</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Variazione Tensione/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Verifica Pressione</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Verifica Pressione</label>
             </value>
         </valueSetDefinition>
     </valueSet>
