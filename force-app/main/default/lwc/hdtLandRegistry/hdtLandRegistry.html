@@ -8,193 +8,71 @@
     <div>
         <lightning-card title="Dati Catastali">
             <!-- Tabella con Button 'Nuovo' -->
-            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+            <div class="slds-grid slds-wrap">
             
                 <div class="slds-size_1-of-1">
-                    <lightning-datatable 
-                        data={data} 
-                        columns={columns} 
-                        key-field="Id" 
-                        selected-rows={selectedRows}>
-                    </lightning-datatable>
+                    <template if:true={showTable}>
+                        <lightning-datatable
+                            data={tableData}
+                            columns={tableColumns}
+                            key-field="Id"
+                            selected-rows={tableSelectedRows}
+                            onrowselection={handleTableSelection}
+                            max-row-selection="1">
+                        </lightning-datatable>
+                    </template>
+                    <template if:false={showTable}>
+                        NESSUN DATO CATASTALE LEGATO A QUESTO PUNTO DI FORNITURA!
+                    </template>
                 </div>
 
                 <div class="slds-size_1-of-1 slds-box_x-small slds-text-align_center slds-m-around_x-small">
                     <!-- Button Nuovo -->
-                    <lightning-button label="Nuovo" title="Non-primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button disabled={disableNuovo} variant="brand" label="Nuovo" title="Nuovo" onclick={handleNuovoClick} class="slds-m-left_x-small"></lightning-button>
                 </div>
                 
             </div>
-            
-            <!-- <p slot="footer"> -->
-                <!-- Button Nuovo -->
-                <!-- <lightning-button label="Nuovo" title="Non-primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
-            </p> -->
-
-            <!-- <p slot="footer"> -->
-                <!-- Button Modifica/Salva -->
-                <!-- <lightning-button label="Modifica/Salva" title="Non-primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
-            </p> -->
-
-
-
-
 
             <!-- Campi -->
-            <lightning-record-edit-form 
-                object-api-name="LandRegistry__c" 
-                record-id={selectedRows}>
-                
-                <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+            <template if:true={showForm}>
+                <lightning-record-edit-form object-api-name="LandRegistry__c" record-id={selectedLandRegistryId}>
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="4" padding="around-medium">
+                            <lightning-input-field variant="standard" disabled={disableForm} field-name="CodeMissingRegistryData__c"></lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="DestinationUsage__c"> </lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="RegistryCity__c"> </lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="RegistryCityCode__c"> </lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="LegalCity__c"> </lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="Province__c"> </lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="UnitType__c"> </lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="UrbanSection__c"> </lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="Sheet__c"> </lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="ParticleSheet__c"> </lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="Subaltern__c"> </lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="RegistryCategory__c"> </lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="RegistrySurface__c"> </lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="Title__c"> </lightning-input-field></lightning-layout-item>
+                        
+                        <template if:false={showSalva}>
+                            <lightning-layout-item size="12" padding="around-medium">
+                                <div class="slds-grid slds-wrap"><div class="slds-size_1-of-1 slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                        <lightning-button disabled={disableModifica} label="Modifica" title="Modifica" onclick={handleModificaClick} class="slds-m-left_x-small"></lightning-button>
+                                </div></div>
+                            </lightning-layout-item>
+                        </template>
 
-                    <div class="slds-size_1-of-4">
-                        <div class="slds-p-around_medium lgc-bg">
-                            <lightning-input-field field-name="CodeMissingRegistryData__c"></lightning-input-field>
-                        </div>
-                    </div>
+                        <template if:true={showSalva}>
+                            <lightning-layout-item size="12" padding="around-medium">
+                                <div class="slds-grid slds-wrap"><div class="slds-size_1-of-1 slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                    <lightning-button disabled={disableSalva} label="Salva" title="Salva" type="submit" variant="brand"></lightning-button>
+                                </div></div>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                </lightning-record-edit-form>
+            </template>
 
-                    <div class="slds-size_1-of-4"><lightning-input-field field-name="DestinationUsage__c"> </lightning-input-field></div>
-                    <div class="slds-size_1-of-4"><lightning-input-field field-name="RegistryCity__c"> </lightning-input-field></div>
-                    <div class="slds-size_1-of-4"><lightning-input-field field-name="RegistryCityCode__c"> </lightning-input-field></div>
-                    <div class="slds-size_1-of-4"><lightning-input-field field-name="LegalCity__c"> </lightning-input-field></div>
-                    <div class="slds-size_1-of-4"><lightning-input-field field-name="Province__c"> </lightning-input-field></div>
-                    <div class="slds-size_1-of-4"><lightning-input-field field-name="UnitType__c"> </lightning-input-field></div>
-                    <div class="slds-size_1-of-4"><lightning-input-field field-name="UrbanSection__c"> </lightning-input-field></div>
-                    <div class="slds-size_1-of-4"><lightning-input-field field-name="Sheet__c"> </lightning-input-field></div>
-                    <div class="slds-size_1-of-4"><lightning-input-field field-name="ParticleSheet__c"> </lightning-input-field></div>
-                    <div class="slds-size_1-of-4"><lightning-input-field field-name="Subaltern__c"> </lightning-input-field></div>
-                    <div class="slds-size_1-of-4"><lightning-input-field field-name="RegistryCategory__c"> </lightning-input-field></div>
-                    <div class="slds-size_1-of-4"><lightning-input-field field-name="RegistrySurface__c"> </lightning-input-field></div>
-                    <div class="slds-size_1-of-4"><lightning-input-field field-name="Title__c"> </lightning-input-field></div>
-
-                    
-                    <div class="slds-size_1-of-4"><lightning-button label="Modifica" title="Non-primary action" onclick={handleModificaClick} class="slds-m-left_x-small"></lightning-button></div>
-                    <div class="slds-size_1-of-4"><lightning-button label="Salva" title="Non-primary action" onclick={handleSalvaClick} class="slds-m-left_x-small"></lightning-button></div>
-                </div>
-            </lightning-record-edit-form>
-                
-          
-
-
-
-            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
-
-                <!-- Codice assenza dati catastali -->
-                <div class="slds-size_1-of-4">
-                    <div class="slds-p-around_medium lgc-bg">
-                        <lightning-input type="text" label="Codice assenza dati catastali" placeholder="Recupero Dati catastali"></lightning-input>
-                    </div>
-                </div>
-
-                <!-- Destinazione Uso -->
-                <div class="slds-size_1-of-4">
-                    <div class="slds-p-around_medium lgc-bg">
-                        <lightning-input type="text" label="Destinazione Uso" placeholder="Recupero Dati catastali"></lightning-input>
-                    </div>
-                </div>
-
-                <!-- Comune catastale -->
-                <div class="slds-size_1-of-4">
-                    <div class="slds-p-around_medium lgc-bg">
-                        <lightning-input type="text" label="Comune catastale" placeholder="Recupero Dati catastali"></lightning-input>
-                    </div>
-                </div>
-
-                <!-- Codice comune catastale -->
-                <div class="slds-size_1-of-4">
-                    <div class="slds-p-around_medium lgc-bg">
-                        <lightning-input type="text" label="Codice comune catastale" placeholder="Recupero Dati catastali"></lightning-input>
-                    </div>
-                </div>
-
-                <!-- Comune amministrativo -->
-                <div class="slds-size_1-of-4">
-                    <div class="slds-p-around_medium lgc-bg">
-                        <lightning-input type="text" label="Comune amministrativo" placeholder="Recupero Dati catastali"></lightning-input>
-                    </div>
-                </div>
-
-                <!-- Provincia ubicazione -->
-                <div class="slds-size_1-of-4">
-                    <div class="slds-p-around_medium lgc-bg">
-                        <lightning-input type="text" label="Provincia ubicazione" placeholder="Recupero Dati catastali"></lightning-input>
-                    </div>
-                </div>
-
-                <!-- Tipo unita -->
-                <div class="slds-size_1-of-4">
-                    <div class="slds-p-around_medium lgc-bg">
-                        <lightning-input type="text" label="Tipo unita" placeholder="Recupero Dati catastali"></lightning-input>
-                    </div>
-                </div>
-
-                <!-- Sezione urbana -->
-                <div class="slds-size_1-of-4">
-                    <div class="slds-p-around_medium lgc-bg">
-                        <lightning-input type="text" label="Sezione urbana" placeholder="Recupero Dati catastali"></lightning-input>
-                    </div>
-                </div>
-
-                <!-- Foglio -->
-                <div class="slds-size_1-of-4">
-                    <div class="slds-p-around_medium lgc-bg">
-                        <lightning-input type="text" label="Foglio" placeholder="Recupero Dati catastali"></lightning-input>
-                    </div>
-                </div>
-
-                <!-- Particella -->
-                <div class="slds-size_1-of-4">
-                    <div class="slds-p-around_medium lgc-bg">
-                        <lightning-input type="text" label="Particella" placeholder="Recupero Dati catastali"></lightning-input>
-                    </div>
-                </div>
-
-                <!-- Subalterno -->
-                <div class="slds-size_1-of-4">
-                    <div class="slds-p-around_medium lgc-bg">
-                        <lightning-input type="text" label="Subalterno" placeholder="Recupero Dati catastali"></lightning-input>
-                    </div>
-                </div>
-
-                <!-- Categoria Catastale -->
-                <div class="slds-size_1-of-4">
-                    <div class="slds-p-around_medium lgc-bg">
-                        <lightning-input type="text" label="Categoria Catastale" placeholder="Recupero Dati catastali"></lightning-input>
-                    </div>
-                </div>
-
-                <!-- Superficie Catastale -->
-                <div class="slds-size_1-of-4">
-                    <div class="slds-p-around_medium lgc-bg">
-                        <lightning-input type="text" label="Superficie Catastale" placeholder="Recupero Dati catastali"></lightning-input>
-                    </div>
-                </div>
-
-                <!-- Numero componenti nucleo familiare -->
-                <div class="slds-size_1-of-4">
-                    <div class="slds-p-around_medium lgc-bg">
-                        <lightning-input type="text" label="Numero componenti nucleo familiare" placeholder="Recupero Dati catastali"></lightning-input>
-                    </div>
-                </div>
-
-                <!-- Qualifica Titolare -->
-                <div class="slds-size_1-of-4">
-                    <div class="slds-p-around_medium lgc-bg">
-                        <lightning-input type="text" label="Qualifica Titolare" placeholder="Recupero Dati catastali"></lightning-input>
-                    </div>
-                </div>
-
-                <!-- Button Modifica/Salva -->
-                <div class="slds-size_1-of-4">
-                    <div class="slds-box_x-small slds-text-align_center slds-m-around_x-small">
-                        <div class="slds-p-around_medium lgc-bg">
-                           <lightning-button label="Modifica/Salva" title="Non-primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
-                       </div>
-                    </div>
-                    <!-- <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">.slds-size_1-of-4</div> -->
-                </div>
-
-            </div> 
         </lightning-card>
     </div>
 </template>

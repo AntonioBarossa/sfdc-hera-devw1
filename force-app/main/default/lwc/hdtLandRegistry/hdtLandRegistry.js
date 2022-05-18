@@ -20,43 +20,85 @@ const columns = [
 
 export default class HdtLandRegistry extends LightningElement {
     
-    @api servicePointId = 'a281X000000DmNZQA0';
-    @api selectedLandRegistryId = '';
+    @api servicePointId = 'a281X000000DmNZQA0'; //ID MOCKATO PER TEST (da togliere)
+    @api selectedLandRegistryId = 'a3j1w000000VlZDAA0';
     @api required = false;
     @api readonly = false;
-    @track data = [];
-    @track selectedRows = [];
-    showSpinner = false;
+
+    @track tableData = [];
+    @track tableSelectedRows = [];
+    @track tableColumns=columns;
+
+    disableSalva=false;
+    disableModifica=false;
+    disableNuovo=false;
+    disableForm=true;
+
+    showSpinner=false;
+    showSalva=false;
+    showTable=false;
+    showForm=false;
     
     connectedCallback(){
         console.log('### connectedCallback');
-        //this.showSpinner = true;
         console.log('### selectedLandRegistryId= '+this.selectedLandRegistryId);
-        console.log('### selectedRows= '+this.selectedRows);
-        this.selectedRows.push(this.selectedLandRegistryId);
-        //this.selectedRows = [this.selectedLandRegistryId];
-        console.log('### selectedRows= '+this.selectedRows);
+        console.log('### tableSelectedRows= '+this.tableSelectedRows);
+        if(this.selectedLandRegistryId) this.tableSelectedRows.push(this.selectedLandRegistryId);
+        console.log('### tableSelectedRows= '+this.tableSelectedRows);
         this.getRetrieveLandRegistry();
     }
 
     getRetrieveLandRegistry() {
         console.log('### getRetrieveLandRegistry');
         this.showSpinner = true;
-        this.data=[];
         retrieveLandRegistry({ servicePointIds : this.servicePointId })
             .then(result => {
                 console.log('### retrieveLandRegistry');
                 console.log('### result', JSON.stringify(result));
-                this.data = result;
+                this.tableData = result;
                 this.showSpinner = false;
+                if(this.tableData.length == 0){
+                    this.disableModifica=true;
+                    this.showTable=false;
+                    this.showForm=false;
+                } 
+                else{
+                    if(this.tableSelectedRows.length == 0 ) this.tableSelectedRows.push(this.tableData[0].Id);
+                    this.showTable=true;
+                    this.showForm=true;
+                }                 
+            })
+            .catch(error => {
+                 console.log("### retrieveLandRegistry Errore: "+error);
             });
-            // .catch(error => {
-            //     console.log("Errore: "+error);
-            // });
     }
 
-    // handleClick(event) {
+    handleTableSelection(event){
+        this.showForm=false;
+        this.selectedLandRegistryId = event.detail.selectedRows[0].Id;
+        this.showSalva=false;
+        this.disableForm=true;
+        this.showForm=true;
+        this.trowSelectionEvent();
+    }
 
-    // }
+    handleModificaClick(event){
+        this.showSalva=true;
+        this.disableForm=false;
+    }
+
+    handleNuovoClick(event){
+        //TODO: creare nuovo oggetto riga vuota
+        //TODO: assegnare id nuovo oggetto a selectedLandRegistryId
+        //TODO: this.disableForm=false;
+        //TODO: this.showSalva=true;
+    }
+
+    trowSelectionEvent(){
+        const evt = new CustomEvent("onselection", {
+            detail:  {rowId: this.selectedLandRegistryId}
+        });
+        this.dispatchEvent(evt);
+    }
 
 }
