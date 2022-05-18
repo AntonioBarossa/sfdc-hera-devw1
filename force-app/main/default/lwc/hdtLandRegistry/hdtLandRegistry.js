@@ -1,4 +1,4 @@
-import { LightningElement, track, api, wire } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import retrieveLandRegistry from '@salesforce/apex/HDT_UTL_LandRegistry.retrieveLandRegistry';
 
 const columns = [
@@ -15,30 +15,38 @@ const columns = [
     { label: 'Subalterno',                      fieldName: 'Subaltern__c',                  type: 'text' },
     { label: 'Categoria Catastale',             fieldName: 'RegistryCategory__c',           type: 'text' },
     { label: 'Superficie Catastale',            fieldName: 'RegistrySurface__c',            type: 'text' },
-    // { label: 'Numero componenti nucleo familiare', fieldName: '', type: 'text' }, --> AGG campo mancante!
     { label: 'Qualifica Titolare',              fieldName: 'Title__c',                      type: 'text' }   
 ];
 
 export default class HdtLandRegistry extends LightningElement {
     
     @api servicePointId = 'a281X000000DmNZQA0';
-    @api selectedLandRegistryId;
+    @api selectedLandRegistryId = '';
     @api required = false;
     @api readonly = false;
     @track data = [];
+    @track selectedRows = [];
     showSpinner = false;
-
+    
     connectedCallback(){
+        console.log('### connectedCallback');
         //this.showSpinner = true;
+        console.log('### selectedLandRegistryId= '+this.selectedLandRegistryId);
+        console.log('### selectedRows= '+this.selectedRows);
+        this.selectedRows.push(this.selectedLandRegistryId);
+        //this.selectedRows = [this.selectedLandRegistryId];
+        console.log('### selectedRows= '+this.selectedRows);
         this.getRetrieveLandRegistry();
     }
 
     getRetrieveLandRegistry() {
+        console.log('### getRetrieveLandRegistry');
         this.showSpinner = true;
         this.data=[];
         retrieveLandRegistry({ servicePointIds : this.servicePointId })
             .then(result => {
-                console.log('result', JSON.stringify(result));
+                console.log('### retrieveLandRegistry');
+                console.log('### result', JSON.stringify(result));
                 this.data = result;
                 this.showSpinner = false;
             });
@@ -46,5 +54,9 @@ export default class HdtLandRegistry extends LightningElement {
             //     console.log("Errore: "+error);
             // });
     }
+
+    // handleClick(event) {
+
+    // }
 
 }
