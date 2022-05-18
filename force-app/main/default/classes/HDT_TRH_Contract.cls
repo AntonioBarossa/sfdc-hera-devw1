@@ -72,7 +72,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                         * Aggiunta scrittura della EndDate
                         * Nel caso di Temporanea - Nuova Attivazione
                         */ 
-                        if(((String)mapOrder.get(tempContract.SBQQ__Order__c).get('ProcessType__c')).equalsIgnoreCase('Temporanea - Nuova Attivazione')
+                        if( mapOrder.get(tempContract.SBQQ__Order__c) != null && ((String)mapOrder.get(tempContract.SBQQ__Order__c).get('ProcessType__c')).equalsIgnoreCase('Temporanea - Nuova Attivazione')
                             && String.isNotBlank(String.valueOf(mapOrder.get(tempContract.SBQQ__Order__c).get('TemporaryConnectionEndDate__c'))))
                             {
                                 tempContract.EndDate = (Date) mapOrder.get(tempContract.SBQQ__Order__c).get('TemporaryConnectionEndDate__c');
