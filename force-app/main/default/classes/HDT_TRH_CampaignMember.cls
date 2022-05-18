@@ -11,7 +11,6 @@ public inherited sharing class HDT_TRH_CampaignMember extends HDT_TRH_TriggerHan
         HDT_UTL_CampaignMember.setValidityStartDate(trigger.new);
         HDT_UTL_CampaignMember.createCampaignMember(trigger.new);
         HDT_UTL_CampaignMember.setAgency(trigger.new);
-
     }
     
     public override void afterInsert(){
@@ -21,6 +20,9 @@ public inherited sharing class HDT_TRH_CampaignMember extends HDT_TRH_TriggerHan
     
     public override void beforeUpdate(){
         HDT_UTL_CampaignMember.handleStatusChange(trigger.new, (Map<Id,CampaignMember>) trigger.oldMap);
+    }
+    
+    public override void afterUpdate(){
         HDT_UTL_CampaignMember.checkTipoEsito((List<CampaignMember>) trigger.new, (Map<Id,CampaignMember>) trigger.oldMap);
     }
 }

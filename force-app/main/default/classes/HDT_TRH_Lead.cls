@@ -123,12 +123,14 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 for(Account a : accounts){
                     accId.add(a.id);
                     if(mapAccountLead.get(a.id) != null){
+                        Lead leadConverted = mapAccountLead.get(a.id);
+                        a.OriginLeadId__c = leadConverted.Id;
+                        a.ConvertedDate__c = System.Date.today();
+
                         String lastName = (a.LastName__c != null && a.LastName__c != '' ? a.LastName__c : a.Name);
                         if ( a.LastName__c==null) {
                             if(r.id == a.recordtypeid){
-
                                 Lead li = mapAccountLead.get(a.id);
-                               // a.FirstName__c = li.FirstName;
                             
                                 a.LastName__c = li.Company;
                                 a.Name=li.Company;
@@ -136,8 +138,6 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                                 a.Description= li.Description;
                                 Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone=mapAccountLead.get(a.id).Phone, Email=mapAccountLead.get(a.id).email ,MobilePhone= mapAccountLead.get(a.id).MobilePhone, Fax= a.FAX__c);
                                 conList.add(contact);
-                                accToUpdate.add(a);
-
                             }
                             else{       
                                 Lead li = mapAccountLead.get(a.id);
@@ -147,9 +147,9 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                                 a.Description= li.Description;
                                 String expectedNewName = String.isBlank(a.FirstName__c) ? a.LastName__c : a.FirstName__c + ' ' + a.LastName__c;
                                 a.Name=expectedNewName;
-                                accToUpdate.add(a);
                             }
                         }
+                        accToUpdate.add(a);
                     }     
                 }
                 if (accToUpdate.size()>0) {

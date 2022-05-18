@@ -14,7 +14,7 @@
         <field>PicklistValues__c</field>
         <value xsi:type="xsd:string">[
   {
-    &quot;label&quot;: &quot;Energia elettrica&quot;,
+    &quot;label&quot;: &quot;Energia Elettrica&quot;,
     &quot;value&quot;: &quot;13&quot;
   },
   {
