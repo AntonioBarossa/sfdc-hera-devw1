@@ -734,6 +734,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.ConsumptionAnalysis__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Order.DocumentalVat__c</field>
         <readable>true</readable>
@@ -4628,6 +4633,11 @@
         <field>CampaignMember.Agency__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CampaignMember.Agenzia_Lead_Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions><!--UAT Lorenzo 09/09/2021 -->
         <editable>true</editable>
         <field>CampaignMember.isWsBollettaInvoked__c</field>
@@ -5171,6 +5181,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>CampaignMember.OutcomeFub__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CampaignMember.Owner_Lead_Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

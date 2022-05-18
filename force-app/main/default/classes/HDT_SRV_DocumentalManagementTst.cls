@@ -168,7 +168,7 @@ static void testGenerateGetEnvelopeRequest(){
     SObject documentalObject = HDT_QR_DocumentalConfiguration.getDocumentalObjectById(record[0].Id);
     String documentType = HDT_SRV_DocumentalManagement.getDocumentType(documentalObject);
     String body = HDT_SRV_DocumentalManagement.generateGetEnvelopeRequest(documentalObject, documentType);
-    postelResponse = HDT_SRV_DocumentalManagement.executeGetEnvelopeCalloutRequest(body, documentType);
+
 Test.stopTest();
 }
 @isTest

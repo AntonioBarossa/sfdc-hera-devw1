@@ -87,7 +87,9 @@ public with sharing class HDT_QBL_CreateQueuesAndGroups implements Queueable {
         HDT_UTL_DatabaseService.insertSObject(memberships);
         HDT_UTL_DatabaseService.insertSObject(queueSobjList);
 
-        System.enqueueJob(new HDT_QBL_CreateQueuesAndGroups(wrappersToUpdate, true));
+        if(!Test.isRunningTest()){
+            System.enqueueJob(new HDT_QBL_CreateQueuesAndGroups(wrappersToUpdate, true));
+        }
     }
 
     private static String normalize(String name) {

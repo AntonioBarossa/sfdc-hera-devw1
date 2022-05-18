@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>Appuntamento HVAC</fullName>
+        <default>false</default>
+        <label>Appuntamento HVAC</label>
+    </customValue>
+    <customValue>
+        <fullName>Fornisce consenso al ricontatto per il prodotto segnalato</fullName>
+        <default>false</default>
+        <label>Fornisce consenso al ricontatto per il prodotto segnalato</label>
+    </customValue>
+    <customValue>
+        <fullName>Esitazione positiva campagna</fullName>
+        <default>false</default>
+        <label>Esitazione positiva campagna</label>
+    </customValue>
+    <customValue>
         <fullName>Mancata ricezione Plico</fullName>
         <default>false</default>
         <label>Mancata ricezione Plico</label>
