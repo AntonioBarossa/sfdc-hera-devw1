@@ -73,7 +73,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 			}
 		} else {
 			Map<String,String> fieldsMap = fieldMappings.get(sobjectType);
-			SObject sobj = Database.query('SELECT Id,' + fieldsMap.get('account') + ',' + fieldsMap.get('contact') + ' FROM ' + sobjectType + ' WHERE Id =: recordId');
+			SObject sobj = Database.query('SELECT Id,' + String.escapeSingleQuotes(fieldsMap.get('account')) + ',' + String.escapeSingleQuotes(fieldsMap.get('contact')) + ' FROM ' + String.escapeSingleQuotes(sobjectType) + ' WHERE Id =: recordId');
 			result.accountId = (String) sobj.get(fieldsMap.get('account'));
 			result.contactId = (String) sobj.get(fieldsMap.get('contact'));
 		}
@@ -139,7 +139,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 
 	@AuraEnabled
 	public static List<Contact> getContacts(String queryString, String conditionField ) {
-		return Database.query(' SELECT Id, AccountId, Name, Phone, MobilePhone, Email, FiscalCode__c, VATNumber__c FROM Contact WHERE ' + conditionField + ' LIKE :queryString WITH SECURITY_ENFORCED ');
+		return Database.query(' SELECT Id, AccountId, Name, Phone, MobilePhone, Email, FiscalCode__c, VATNumber__c FROM Contact WHERE ' + String.escapeSingleQuotes(conditionField) + ' LIKE :queryString WITH SECURITY_ENFORCED ');
 	}
 
 	@AuraEnabled
@@ -168,7 +168,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 
 	@AuraEnabled
 	public static List<Lead> getLeads(String queryString, String conditionField ) {
-		return Database.query(' SELECT Id,Name,Phone,MobilePhone,Email,FiscalCode__c,VATNumber__c FROM Lead WHERE '+ conditionField +' LIKE :queryString WITH SECURITY_ENFORCED ');
+		return Database.query(' SELECT Id,Name,Phone,MobilePhone,Email,FiscalCode__c,VATNumber__c FROM Lead WHERE '+ String.escapeSingleQuotes(conditionField) +' LIKE :queryString WITH SECURITY_ENFORCED ');
 	}
 
 	@AuraEnabled
