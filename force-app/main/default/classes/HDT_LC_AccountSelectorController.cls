@@ -107,7 +107,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 			} else if( queryString.length() == 16 ){
 				//CF
 				result=getContactsAndLeads(result, queryString,'FiscalCode__c', recordId);
-			} else {
+			} else { //Name
 				result=getContactsAndLeads(result, queryString,'Name', recordId);
 			}
 		}
@@ -139,7 +139,20 @@ public with sharing class HDT_LC_AccountSelectorController {
 
 	@AuraEnabled
 	public static List<Contact> getContacts(String queryString, String conditionField ) {
-		return Database.query(' SELECT Id, AccountId, Name, Phone, MobilePhone, Email, FiscalCode__c, VATNumber__c FROM Contact WHERE ' + String.escapeSingleQuotes(conditionField) + ' LIKE :queryString WITH SECURITY_ENFORCED ');
+		if(sObjectType.Contact.isAccessible()) {
+			return Database.query(' SELECT Id, AccountId, Name, Phone, MobilePhone, Email, FiscalCode__c, VATNumber__c FROM Contact WHERE ' + String.escapeSingleQuotes(conditionField) + ' LIKE :queryString WITH SECURITY_ENFORCED ');
+		} else {
+			return null;
+		}
+	}
+
+	@AuraEnabled
+	public static List<Lead> getLeads(String queryString, String conditionField ) {
+		if(sObjectType.Lead.isAccessible()) {
+			return Database.query(' SELECT Id,Name,Phone,MobilePhone,Email,FiscalCode__c,VATNumber__c FROM Lead WHERE '+ String.escapeSingleQuotes(conditionField) +' LIKE :queryString WITH SECURITY_ENFORCED ');
+		} else {
+			return null;
+		}
 	}
 
 	@AuraEnabled
@@ -164,11 +177,6 @@ public with sharing class HDT_LC_AccountSelectorController {
 				VATNumber__c LIKE: queryString
 			WITH SECURITY_ENFORCED
 		];
-	}
-
-	@AuraEnabled
-	public static List<Lead> getLeads(String queryString, String conditionField ) {
-		return Database.query(' SELECT Id,Name,Phone,MobilePhone,Email,FiscalCode__c,VATNumber__c FROM Lead WHERE '+ String.escapeSingleQuotes(conditionField) +' LIKE :queryString WITH SECURITY_ENFORCED ');
 	}
 
 	@AuraEnabled
