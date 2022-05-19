@@ -89,7 +89,7 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
                 'CalloutClient'
             );
             //MOCK CALLOUT
-            responseMrr = (wrts_prcgvr.MRR_1_0.MultiResponse) client.send(arg);
+            //responseMrr = (wrts_prcgvr.MRR_1_0.MultiResponse) client.send(arg);
             //insert HDT_SRV_BillableVasDeactivation.createLogObj(mrrList, responseMrr, argsMap);
         } catch (Exception ex) {
             //Error Handling
