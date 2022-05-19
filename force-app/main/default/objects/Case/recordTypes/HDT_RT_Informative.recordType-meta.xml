@@ -6500,6 +6500,10 @@
     <picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
+            <fullName>Pagamento Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
             <default>false</default>
         </values>
