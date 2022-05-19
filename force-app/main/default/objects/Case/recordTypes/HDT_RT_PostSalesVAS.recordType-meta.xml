@@ -12413,6 +12413,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>BLOCCO AL RINNOVO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CESS</fullName>
             <default>false</default>
         </values>
