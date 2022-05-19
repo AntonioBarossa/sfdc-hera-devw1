@@ -48,7 +48,7 @@
                 <lightning-button disabled={disableVerifIndiButton} onclick={handleAddressVerification} label="Verifica Indirizzo" variant="brand"></lightning-button>
             </div>
         </div>
-        <template if:true={openmodel} style="height: auto;">  
+        <template if:true={openmodel} style="height: auto; width: auto;">  
             <div>    
                 <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                     <div class="slds-modal__container">
@@ -133,7 +133,7 @@
                             </div>
                         <footer class="slds-modal__footer">
                             <lightning-button label="Cancel" variant="neutral" onclick={closeModal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <lightning-button label="Conferma" variant="success" onclick={handleConfirm}  class="slds-m-left_x-small" ></lightning-button>
+                            <lightning-button label="Conferma" variant="brand" onclick={handleConfirm}  class="slds-m-left_x-small" ></lightning-button>
                         </footer>
                     </div>
                 </section>

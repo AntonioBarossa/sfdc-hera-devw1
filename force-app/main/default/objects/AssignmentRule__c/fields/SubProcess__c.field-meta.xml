@@ -9,22 +9,7 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Standard</fullName>
-                <default>false</default>
-                <label>Standard</label>
-            </value>
-            <value>
-                <fullName>Con Autolettura</fullName>
-                <default>false</default>
-                <label>Con Autolettura</label>
-            </value>
-            <value>
-                <fullName>Retroattiva</fullName>
-                <default>false</default>
-                <label>Retroattiva</label>
-            </value>
+            <sorted>true</sorted>
             <value>
                 <fullName>Accise - Agevolazione cliente</fullName>
                 <default>false</default>
@@ -51,6 +36,11 @@
                 <label>Account e Billing Profile</label>
             </value>
             <value>
+                <fullName>Aggiunta Sconti o Bonus VAS</fullName>
+                <default>false</default>
+                <label>Aggiunta Sconti o Bonus VAS</label>
+            </value>
+            <value>
                 <fullName>Billing Profile</fullName>
                 <default>false</default>
                 <label>Billing Profile</label>
@@ -66,9 +56,29 @@
                 <label>Cambio Intest/Indirizzo Amministratore</label>
             </value>
             <value>
+                <fullName>Con Autolettura</fullName>
+                <default>false</default>
+                <label>Con Autolettura</label>
+            </value>
+            <value>
                 <fullName>Elementi di dettaglio</fullName>
                 <default>false</default>
                 <label>Elementi di dettaglio</label>
+            </value>
+            <value>
+                <fullName>Errore di Lettura</fullName>
+                <default>false</default>
+                <label>Errore di Lettura</label>
+            </value>
+            <value>
+                <fullName>Errore Stima Consumi</fullName>
+                <default>false</default>
+                <label>Errore Stima Consumi</label>
+            </value>
+            <value>
+                <fullName>Incorporazione societaria</fullName>
+                <default>false</default>
+                <label>Incorporazione societaria</label>
             </value>
             <value>
                 <fullName>IVA - Agevolazione cliente</fullName>
@@ -111,24 +121,9 @@
                 <label>Modifica Dati Fiscali</label>
             </value>
             <value>
-                <fullName>Report disaggregato</fullName>
+                <fullName>Mortis Causa</fullName>
                 <default>false</default>
-                <label>Report disaggregato</label>
-            </value>
-            <value>
-                <fullName>Report storno di adeguamento</fullName>
-                <default>false</default>
-                <label>Report storno di adeguamento</label>
-            </value>
-            <value>
-                <fullName>Rettifica per segnalazione cassetto fiscale</fullName>
-                <default>false</default>
-                <label>Rettifica per segnalazione cassetto fiscale</label>
-            </value>
-            <value>
-                <fullName>Variazione Gruppo IVA</fullName>
-                <default>false</default>
-                <label>Variazione Gruppo IVA</label>
+                <label>Mortis Causa</label>
             </value>
             <value>
                 <fullName>Ordinaria</fullName>
@@ -136,24 +131,24 @@
                 <label>Ordinaria</label>
             </value>
             <value>
-                <fullName>Mortis Causa</fullName>
+                <fullName>Prima Attivazione con modifica</fullName>
                 <default>false</default>
-                <label>Mortis Causa</label>
+                <label>Prima Attivazione con modifica</label>
             </value>
             <value>
-                <fullName>Incorporazione societaria</fullName>
+                <fullName>Prima Attivazione Ele</fullName>
                 <default>false</default>
-                <label>Incorporazione societaria</label>
+                <label>Prima Attivazione Ele</label>
             </value>
             <value>
-                <fullName>Errore di Lettura</fullName>
+                <fullName>Prima Attivazione Fuori delibera</fullName>
                 <default>false</default>
-                <label>Errore di Lettura</label>
+                <label>Prima Attivazione Fuori delibera</label>
             </value>
             <value>
-                <fullName>Errore Stima Consumi</fullName>
+                <fullName>Prima Attivazione In delibera</fullName>
                 <default>false</default>
-                <label>Errore Stima Consumi</label>
+                <label>Prima Attivazione In delibera</label>
             </value>
             <value>
                 <fullName>Processo M01</fullName>
@@ -171,44 +166,24 @@
                 <label>Processo M03</label>
             </value>
             <value>
-                <fullName>Aggiunta Sconti o Bonus VAS</fullName>
+                <fullName>Report disaggregato</fullName>
                 <default>false</default>
-                <label>Aggiunta Sconti o Bonus VAS</label>
+                <label>Report disaggregato</label>
             </value>
             <value>
-                <fullName>Voltura retroattiva</fullName>
+                <fullName>Report storno di adeguamento</fullName>
                 <default>false</default>
-                <label>Voltura retroattiva</label>
+                <label>Report storno di adeguamento</label>
             </value>
             <value>
-                <fullName>Prima Attivazione con modifica</fullName>
+                <fullName>Retroattiva</fullName>
                 <default>false</default>
-                <label>Prima Attivazione con modifica</label>
+                <label>Retroattiva</label>
             </value>
             <value>
-                <fullName>Switch in Ripristinatorio</fullName>
+                <fullName>Rettifica per segnalazione cassetto fiscale</fullName>
                 <default>false</default>
-                <label>Switch in Ripristinatorio</label>
-            </value>
-            <value>
-                <fullName>Voltura con Switch</fullName>
-                <default>false</default>
-                <label>Voltura con Switch</label>
-            </value>
-            <value>
-                <fullName>Prima Attivazione Fuori delibera</fullName>
-                <default>false</default>
-                <label>Prima Attivazione Fuori delibera</label>
-            </value>
-            <value>
-                <fullName>Prima Attivazione In delibera</fullName>
-                <default>false</default>
-                <label>Prima Attivazione In delibera</label>
-            </value>
-            <value>
-                <fullName>Subentro Gas</fullName>
-                <default>false</default>
-                <label>Subentro Gas</label>
+                <label>Rettifica per segnalazione cassetto fiscale</label>
             </value>
             <value>
                 <fullName>Riattivazione non morose</fullName>
@@ -216,14 +191,39 @@
                 <label>Riattivazione non morose</label>
             </value>
             <value>
+                <fullName>Standard</fullName>
+                <default>false</default>
+                <label>Standard</label>
+            </value>
+            <value>
+                <fullName>Subentro Gas</fullName>
+                <default>false</default>
+                <label>Subentro Gas</label>
+            </value>
+            <value>
                 <fullName>Switch in Fittizio</fullName>
                 <default>false</default>
                 <label>Switch in Fittizio</label>
             </value>
             <value>
-                <fullName>Prima Attivazione Ele</fullName>
+                <fullName>Switch in Ripristinatorio</fullName>
                 <default>false</default>
-                <label>Prima Attivazione Ele</label>
+                <label>Switch in Ripristinatorio</label>
+            </value>
+            <value>
+                <fullName>Variazione Gruppo IVA</fullName>
+                <default>false</default>
+                <label>Variazione Gruppo IVA</label>
+            </value>
+            <value>
+                <fullName>Voltura con Switch</fullName>
+                <default>false</default>
+                <label>Voltura con Switch</label>
+            </value>
+            <value>
+                <fullName>Voltura retroattiva</fullName>
+                <default>false</default>
+                <label>Voltura retroattiva</label>
             </value>
         </valueSetDefinition>
     </valueSet>

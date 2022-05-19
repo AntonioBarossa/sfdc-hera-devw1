@@ -121,6 +121,11 @@
         <label>HC_CRM_CC_STAFF</label>
     </customValue>
     <customValue>
+        <fullName>HC_CRM_CH_OUT_CD</fullName>
+        <default>false</default>
+        <label>HC_CRM_CH_OUT_CD</label>
+    </customValue>
+    <customValue>
         <fullName>HC_CRM_HD_LTCH</fullName>
         <default>false</default>
         <label>HC_CRM_HD_LTCH</label>
@@ -560,12 +565,7 @@
         <default>false</default>
         <label>HSPA_TESORERIA</label>
     </customValue>
-    <customValue>
-        <fullName>HC_CRM_CH_OUT_CD</fullName>
-        <default>false</default>
-        <label>HC_CRM_CH_OUT_CD</label>
-    </customValue>
     <description>Gruppo creatore dell&apos; utente</description>
     <masterLabel>Gruppo Creatore</masterLabel>
-    <sorted>false</sorted>
+    <sorted>true</sorted>
 </GlobalValueSet>

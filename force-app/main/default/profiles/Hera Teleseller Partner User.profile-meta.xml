@@ -596,6 +596,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ClosingUserChannel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ClosingCreatorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.recordtypeid</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -809,6 +819,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SiebelCommTracking__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.ConsumptionAnalysis__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4524,6 +4539,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>CampaignMember.Agenzia_Lead_Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CampaignMember.Ecid__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5055,6 +5075,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>CampaignMember.OutcomeFub__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CampaignMember.Owner_Lead_Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -31342,15 +31367,15 @@
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-Partner Community</layout>
+        <layout>Account-HDT_Teleselling</layout>
         <recordType>Account.HDT_RT_Business</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-Partner Community</layout>
+        <layout>Account-HDT_Teleselling</layout>
         <recordType>Account.HDT_RT_Residenziale</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-Partner Community</layout>
+        <layout>Account-HDT_Teleselling</layout>
         <recordType>Account.HDT_RT_Partner</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -31673,7 +31698,15 @@
         <layout>ConsumptionSchedule-Layout Pianificazione del consumo</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contact-Contact Layout</layout>
+        <layout>Contact-HDT_Teleseller_Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contact-HDT_Teleseller_Layout</layout>
+        <recordType>Contact.HDT_RT_Create</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contact-HDT_Teleseller_Layout</layout>
+        <recordType>Contact.HDT_RT_AfterCreate</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ContactPointEmail-Layout Email punto di contatto</layout>
@@ -31920,14 +31953,14 @@
         <layout>Knowledge__kav-Knowledge Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Lead-Lead Layout</layout>
+        <layout>Lead-HDT_Teleseller_Layout</layout>
         <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Lead-Lead Layout</layout>
+        <layout>Lead-HDT_Teleseller_Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Lead-Lead Layout</layout>
+        <layout>Lead-HDT_Teleseller_Layout</layout>
         <recordType>Lead.HDT_RT_Main</recordType>
     </layoutAssignments>
     <layoutAssignments>

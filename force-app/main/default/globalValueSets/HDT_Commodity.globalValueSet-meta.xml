@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>Acqua</fullName>
+        <default>false</default>
+        <label>Acqua</label>
+    </customValue>
+    <customValue>
+        <fullName>Ambiente</fullName>
+        <default>false</default>
+        <label>Ambiente</label>
+    </customValue>
+    <customValue>
         <fullName>Energia Elettrica</fullName>
         <default>false</default>
         <label>Energia Elettrica</label>
@@ -20,17 +30,7 @@
         <default>false</default>
         <label>Teleriscaldamento</label>
     </customValue>
-    <customValue>
-        <fullName>Acqua</fullName>
-        <default>false</default>
-        <label>Acqua</label>
-    </customValue>
-    <customValue>
-        <fullName>Ambiente</fullName>
-        <default>false</default>
-        <label>Ambiente</label>
-    </customValue>
     <description>Elenco Servizi gestiti da Hera</description>
     <masterLabel>Commodity</masterLabel>
-    <sorted>false</sorted>
+    <sorted>true</sorted>
 </GlobalValueSet>

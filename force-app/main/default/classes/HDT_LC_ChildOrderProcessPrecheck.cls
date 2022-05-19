@@ -70,6 +70,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             srvReq.Account__c= srRequest.Account__c;
             srvReq.BillingProfile__c= srRequest.BillingProfile__c;
         }
+        if(srvReq.Type__c.containsIgnoreCase('Sconti e bonus') || srvReq.ServicePointCode__c.equalsIgnoreCase('PODPROVVISORIO'))
+        {
+            srvReq.Account__c = srRequest.Account__c;
+        }
         srvReq.ProcessType__c= srRequest.ProcessType__c;
         HDT_SRV_ServiceRequest.createRecord(srvReq);
         wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = HDT_UTL_MatrixCompatibility.checkCompatibility(srvReq);

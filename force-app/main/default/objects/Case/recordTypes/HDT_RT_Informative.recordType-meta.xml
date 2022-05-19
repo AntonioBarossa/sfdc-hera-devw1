@@ -6500,7 +6500,19 @@
     <picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
+            <fullName>Pagamento Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appuntamento HVAC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fornisce consenso al ricontatto per il prodotto segnalato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6947,6 +6959,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Verifiche</fullName>
             <default>false</default>
         </values>
@@ -6957,6 +6973,22 @@
     </picklistValues>
     <picklistValues>
         <picklist>InformativeType__c</picklist>
+        <values>
+            <fullName>HVAC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autoelettrica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivazione VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazione VAS</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Aggiunta Sconti o Bonus VAS</fullName>
             <default>false</default>
@@ -7450,6 +7482,14 @@
     </picklistValues>
     <picklistValues>
         <picklist>MacroTopic__c</picklist>
+        <values>
+            <fullName>Appuntamento agente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consenso ricontatto</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Consulenza offerte</fullName>
             <default>false</default>

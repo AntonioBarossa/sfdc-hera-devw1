@@ -140,7 +140,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
                     System.debug(LoggingLevel.DEBUG, '>>> orderCreatedDate ' + orderCreatedDate + ' - numberDaysDue ' + numberDaysDue);
 
-                    if(numberDaysDue >= 100){
+                    if(numberDaysDue <= 100){
                         System.debug(LoggingLevel.DEBUG, '>>> siamo andati in errore');
                         processObj.requestItem.Status__c = 'Errore';
                         processObj.requestItem.StatusDescription__c = 'E\' presente un cambio offerta';
@@ -759,11 +759,23 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             }
         }
 
+        Boolean vatNumberBool;
+        Boolean fiscalCodeBool;
+        Boolean customerMarkingBool;
+
         for(Account a : accountList){
+
+            vatNumberBool = String.isNotEmpty(a.VATNumber__c) && String.IsNotEmpty(iterationAccount.VATNumber__c) && a.VATNumber__c.equalsIgnoreCase(iterationAccount.VATNumber__c);
+            fiscalCodeBool = String.isNotEmpty(a.FiscalCode__c) && String.IsNotEmpty(iterationAccount.FiscalCode__c) && a.FiscalCode__c.equalsIgnoreCase(iterationAccount.FiscalCode__c);
+            customerMarkingBool = String.isNotEmpty(a.CustomerMarking__c) && String.IsNotEmpty(iterationAccount.CustomerMarking__c) && a.CustomerMarking__c.equalsIgnoreCase(iterationAccount.CustomerMarking__c);
+
+            //if(
+            //    a.CustomerMarking__c.equalsIgnoreCase(iterationAccount.CustomerMarking__c) &&
+            //    ( a.FiscalCode__c.equalsIgnoreCase(iterationAccount.FiscalCode__c) ||
+            //      a.VATNumber__c.equalsIgnoreCase(iterationAccount.VATNumber__c) )
+            //){
             if(
-                a.CustomerMarking__c.equalsIgnoreCase(iterationAccount.CustomerMarking__c) &&
-                ( a.FiscalCode__c.equalsIgnoreCase(iterationAccount.FiscalCode__c) ||
-                  a.VATNumber__c.equalsIgnoreCase(iterationAccount.VATNumber__c) )
+                customerMarkingBool && (fiscalCodeBool || vatNumberBool )
             ){
                 System.debug(LoggingLevel.DEBUG, '>>> Account id [' + a.Id + '] found by FiscalCode__c,VATNumber__c,CustomerMarking__c');
                 return a;

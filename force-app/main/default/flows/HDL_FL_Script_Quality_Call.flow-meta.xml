@@ -334,9 +334,6 @@
         <fields>
             <name>NonConfermo_RB2</name>
             <choiceReferences>NonConfermo_RB2_Choice1</choiceReferences>
-            <choiceReferences>NonConfermo_RB2_Choice2</choiceReferences>
-            <choiceReferences>NonConfermo_RB2_Choice3</choiceReferences>
-            <choiceReferences>NonConfermo_RB2_Choice4</choiceReferences>
             <dataType>String</dataType>
             <fieldType>RadioButtons</fieldType>
             <isRequired>false</isRequired>
@@ -353,6 +350,9 @@
         </fields>
         <fields>
             <name>RB_NonConfermoScreen_2</name>
+            <choiceReferences>NonConfermo_RB2_Choice2</choiceReferences>
+            <choiceReferences>NonConfermo_RB2_Choice3</choiceReferences>
+            <choiceReferences>NonConfermo_RB2_Choice4</choiceReferences>
             <choiceReferences>NonConfermo_RB2_Choice5</choiceReferences>
             <choiceReferences>NonConfermo_RB2_Choice6</choiceReferences>
             <choiceReferences>NonConfermo_RB2_Choice7</choiceReferences>
