@@ -9,22 +9,7 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Email</fullName>
-                <default>false</default>
-                <label>Email</label>
-            </value>
-            <value>
-                <fullName>Phone</fullName>
-                <default>false</default>
-                <label>Phone</label>
-            </value>
-            <value>
-                <fullName>Web</fullName>
-                <default>false</default>
-                <label>Web</label>
-            </value>
+            <sorted>true</sorted>
             <value>
                 <fullName>APP</fullName>
                 <default>false</default>
@@ -76,6 +61,11 @@
                 <label>Da PGM</label>
             </value>
             <value>
+                <fullName>Email</fullName>
+                <default>false</default>
+                <label>Email</label>
+            </value>
+            <value>
                 <fullName>HC_WEB</fullName>
                 <default>false</default>
                 <label>HC_WEB</label>
@@ -94,6 +84,11 @@
                 <fullName>PA</fullName>
                 <default>false</default>
                 <label>PA</label>
+            </value>
+            <value>
+                <fullName>Phone</fullName>
+                <default>false</default>
+                <label>Phone</label>
             </value>
             <value>
                 <fullName>Protocollo</fullName>
@@ -169,6 +164,11 @@
                 <fullName>Vendita TopBusiness</fullName>
                 <default>false</default>
                 <label>Vendita TopBusiness</label>
+            </value>
+            <value>
+                <fullName>Web</fullName>
+                <default>false</default>
+                <label>Web</label>
             </value>
         </valueSetDefinition>
     </valueSet>

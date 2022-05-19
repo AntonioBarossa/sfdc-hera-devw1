@@ -116,6 +116,46 @@
         <label>Condominio</label>
     </customValue>
     <customValue>
+        <fullName>D1 - Persona fisica</fullName>
+        <default>false</default>
+        <label>D1 - Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>D2 - Ditta individuale</fullName>
+        <default>false</default>
+        <label>D2 - Ditta individuale</label>
+    </customValue>
+    <customValue>
+        <fullName>D3 - Azienda</fullName>
+        <default>false</default>
+        <label>D3 - Azienda</label>
+    </customValue>
+    <customValue>
+        <fullName>D4 - Parti comuni</fullName>
+        <default>false</default>
+        <label>D4 - Parti comuni</label>
+    </customValue>
+    <customValue>
+        <fullName>D5 - Condominio</fullName>
+        <default>false</default>
+        <label>D5 - Condominio</label>
+    </customValue>
+    <customValue>
+        <fullName>D6 - Associazione</fullName>
+        <default>false</default>
+        <label>D6 - Associazione</label>
+    </customValue>
+    <customValue>
+        <fullName>D7 - BP Doppio</fullName>
+        <default>false</default>
+        <label>D7 - BP Doppio</label>
+    </customValue>
+    <customValue>
+        <fullName>D8 - Marcatura nulla</fullName>
+        <default>false</default>
+        <label>D8 - Marcatura nulla</label>
+    </customValue>
+    <customValue>
         <fullName>Ditta individuale</fullName>
         <default>false</default>
         <label>Ditta individuale</label>
@@ -291,6 +331,16 @@
         <label>LUCEEG IT SERV-Persona fisica</label>
     </customValue>
     <customValue>
+        <fullName>MIWA ENERGIA-Altro</fullName>
+        <default>false</default>
+        <label>MIWA ENERGIA-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>MIWA ENERGIA-Persona fisica</fullName>
+        <default>false</default>
+        <label>MIWA ENERGIA-Persona fisica</label>
+    </customValue>
+    <customValue>
         <fullName>MMS Associazione</fullName>
         <default>false</default>
         <label>MMS Associazione</label>
@@ -331,6 +381,16 @@
         <label>MOODS-Persona fisica</label>
     </customValue>
     <customValue>
+        <fullName>NEWENRGGEL-Altro</fullName>
+        <default>false</default>
+        <label>NEWENRGGEL-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>NEWENRGGEL-Persona fisica</fullName>
+        <default>false</default>
+        <label>NEWENRGGEL-Persona fisica</label>
+    </customValue>
+    <customValue>
         <fullName>NOIENERGIA-Altro</fullName>
         <default>false</default>
         <label>NOIENERGIA-Altro</label>
@@ -359,6 +419,16 @@
         <fullName>OMNIA EN-Persona fisica</fullName>
         <default>false</default>
         <label>OMNIA EN-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>ONE POWER-Altro</fullName>
+        <default>false</default>
+        <label>ONE POWER-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>ONE POWER-Persona fisica</fullName>
+        <default>false</default>
+        <label>ONE POWER-Persona fisica</label>
     </customValue>
     <customValue>
         <fullName>ONOVA-Altro</fullName>
@@ -391,96 +461,6 @@
         <label>PIUENERGIA SPA-Persona fisica</label>
     </customValue>
     <customValue>
-        <fullName>TOP ENERGY-Altro</fullName>
-        <default>false</default>
-        <label>TOP ENERGY-Altro</label>
-    </customValue>
-    <customValue>
-        <fullName>TOP ENERGY-Persona fisica</fullName>
-        <default>false</default>
-        <label>TOP ENERGY-Persona fisica</label>
-    </customValue>
-    <customValue>
-        <fullName>UNION-Altro</fullName>
-        <default>false</default>
-        <label>UNION-Altro</label>
-    </customValue>
-    <customValue>
-        <fullName>UNION-Persona fisica</fullName>
-        <default>false</default>
-        <label>UNION-Persona fisica</label>
-    </customValue>
-    <customValue>
-        <fullName>D1 - Persona fisica</fullName>
-        <default>false</default>
-        <label>D1 - Persona fisica</label>
-    </customValue>
-    <customValue>
-        <fullName>D2 - Ditta individuale</fullName>
-        <default>false</default>
-        <label>D2 - Ditta individuale</label>
-    </customValue>
-    <customValue>
-        <fullName>D3 - Azienda</fullName>
-        <default>false</default>
-        <label>D3 - Azienda</label>
-    </customValue>
-    <customValue>
-        <fullName>D4 - Parti comuni</fullName>
-        <default>false</default>
-        <label>D4 - Parti comuni</label>
-    </customValue>
-    <customValue>
-        <fullName>D5 - Condominio</fullName>
-        <default>false</default>
-        <label>D5 - Condominio</label>
-    </customValue>
-    <customValue>
-        <fullName>D6 - Associazione</fullName>
-        <default>false</default>
-        <label>D6 - Associazione</label>
-    </customValue>
-    <customValue>
-        <fullName>D7 - BP Doppio</fullName>
-        <default>false</default>
-        <label>D7 - BP Doppio</label>
-    </customValue>
-    <customValue>
-        <fullName>D8 - Marcatura nulla</fullName>
-        <default>false</default>
-        <label>D8 - Marcatura nulla</label>
-    </customValue>
-    <customValue>
-        <fullName>MIWA ENERGIA-Altro</fullName>
-        <default>false</default>
-        <label>MIWA ENERGIA-Altro</label>
-    </customValue>
-    <customValue>
-        <fullName>MIWA ENERGIA-Persona fisica</fullName>
-        <default>false</default>
-        <label>MIWA ENERGIA-Persona fisica</label>
-    </customValue>
-    <customValue>
-        <fullName>NEWENRGGEL-Altro</fullName>
-        <default>false</default>
-        <label>NEWENRGGEL-Altro</label>
-    </customValue>
-    <customValue>
-        <fullName>NEWENRGGEL-Persona fisica</fullName>
-        <default>false</default>
-        <label>NEWENRGGEL-Persona fisica</label>
-    </customValue>
-    <customValue>
-        <fullName>ONE POWER-Altro</fullName>
-        <default>false</default>
-        <label>ONE POWER-Altro</label>
-    </customValue>
-    <customValue>
-        <fullName>ONE POWER-Persona fisica</fullName>
-        <default>false</default>
-        <label>ONE POWER-Persona fisica</label>
-    </customValue>
-    <customValue>
         <fullName>S4 ENERGIA-Altro</fullName>
         <default>false</default>
         <label>S4 ENERGIA-Altro</label>
@@ -500,7 +480,27 @@
         <default>false</default>
         <label>SGR-Persona fisica</label>
     </customValue>
+    <customValue>
+        <fullName>TOP ENERGY-Altro</fullName>
+        <default>false</default>
+        <label>TOP ENERGY-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>TOP ENERGY-Persona fisica</fullName>
+        <default>false</default>
+        <label>TOP ENERGY-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>UNION-Altro</fullName>
+        <default>false</default>
+        <label>UNION-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>UNION-Persona fisica</fullName>
+        <default>false</default>
+        <label>UNION-Persona fisica</label>
+    </customValue>
     <description>Rappresenta una segmentazione del cliente</description>
     <masterLabel>Marcatura Cliente</masterLabel>
-    <sorted>false</sorted>
+    <sorted>true</sorted>
 </GlobalValueSet>

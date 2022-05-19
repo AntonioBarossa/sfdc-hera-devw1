@@ -31,10 +31,12 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
             Order oldOrder = (Order) oldMap.get(newOrder.Id);
             if (newOrder.RecordTypeId!=VAS_RT && newOrder.RecordTypeId!=SCONTIBONUS_RT && (newOrder.Status==STATUS_CANCELLED && oldOrder.Status!=STATUS_CANCELLED)) {
                 canceledOrderIds.add( newOrder.Id );
-                canceledOrderQuotesIds.add(newOrder.SBQQ__Quote__c);
+                if (newOrder.SBQQ__Quote__c != null){
+                    canceledOrderQuotesIds.add(newOrder.SBQQ__Quote__c);
+                }
             }
         }
-        if(canceledOrderIds.isEmpty() && canceledOrderQuotesIds.isEmpty())
+        if(canceledOrderIds.isEmpty() /* && canceledOrderQuotesIds.isEmpty() */)
             return;
 
         Boolean limitQueueablesOk = Limits.getQueueableJobs() < Limits.getLimitQueueableJobs();
@@ -49,12 +51,12 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
     }
 
     public static void cancelLinkedOrders(Set<Id> canceledOrderIds, Set<Id> canceledOrderQuotesIds){
-        //List<Order> ordersToWork = [SELECT Id, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE  Id IN :canceledOrderIds OR OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
         List<Order> ordersToWork = new List<Order>();
-        if(!canceledOrderIds.isEmpty()){
+        if(!canceledOrderIds.isEmpty() && canceledOrderQuotesIds.isEmpty()){
             ordersToWork = [SELECT Id, isBillableVas__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds WITH SECURITY_ENFORCED];
+        }else if (!canceledOrderIds.isEmpty()){
+            ordersToWork = [SELECT Id, isBillableVas__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
         }
-        //[SELECT Id, isBillableVas__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE OrderReference__c IN :canceledOrderIds OR SBQQ__Quote__c IN :canceledOrderQuotesIds WITH SECURITY_ENFORCED];
 
        
 

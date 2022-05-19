@@ -759,10 +759,6 @@
             <valueName>Variazione Domiciliazione</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Post Sales VAS</controllingFieldValue>
-            <valueName>Segnalazioni VAS</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Preventivi</controllingFieldValue>
             <valueName>Aggiunta Attacco</valueName>
         </valueSettings>
@@ -933,6 +929,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <controllingFieldValue>Post Sales VAS</controllingFieldValue>
+            <valueName>Segnalazioni VAS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
             <valueName>Subentro su GdM chiuso</valueName>
         </valueSettings>
         <valueSettings>
@@ -966,10 +967,6 @@
         <valueSettings>
             <controllingFieldValue>Attivazioni</controllingFieldValue>
             <valueName>Cambio uso</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Attivazioni</controllingFieldValue>
-            <valueName>Segnalazioni VAS</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Attivazioni</controllingFieldValue>
@@ -1178,10 +1175,6 @@
         <valueSettings>
             <controllingFieldValue>Modifiche Anagrafiche</controllingFieldValue>
             <valueName>Risoluzione Punto Sospeso</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Modifiche Anagrafiche</controllingFieldValue>
-            <valueName>Sospensione Fornitura</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Modifiche Anagrafiche</controllingFieldValue>

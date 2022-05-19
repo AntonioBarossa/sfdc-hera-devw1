@@ -140,7 +140,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
                     System.debug(LoggingLevel.DEBUG, '>>> orderCreatedDate ' + orderCreatedDate + ' - numberDaysDue ' + numberDaysDue);
 
-                    if(numberDaysDue >= 100){
+                    if(numberDaysDue <= 100){
                         System.debug(LoggingLevel.DEBUG, '>>> siamo andati in errore');
                         processObj.requestItem.Status__c = 'Errore';
                         processObj.requestItem.StatusDescription__c = 'E\' presente un cambio offerta';
