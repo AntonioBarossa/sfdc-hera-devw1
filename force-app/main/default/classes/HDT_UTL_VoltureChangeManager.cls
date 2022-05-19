@@ -208,7 +208,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             via => currentOrder.SupplyStreetName__c,
             civico => currentOrder.SupplyStreetNumber__c,
             cap => currentOrder.SupplyPostalCode__c,
-            istat => currentOrder.SupplyCityCode__c,
+            //istat => currentOrder.SupplyCityCode__c,
             localita => currentOrder.SupplyCity__c,
             provincia => currentOrder.SupplyState__c,
             nazione => currentOrder.SupplyCountry__c
