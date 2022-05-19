@@ -630,6 +630,31 @@
                 <default>false</default>
                 <label>HVAC</label>
             </value>
+            <value>
+                <fullName>Temporanea - Nuova Attivazione</fullName>
+                <default>false</default>
+                <label>HVAC</label>
+            </value>
+            <value>
+                <fullName>Subentro</fullName>
+                <default>false</default>
+                <label>HVAC</label>
+            </value>
+            <value>
+                <fullName>Attivazione</fullName>
+                <default>false</default>
+                <label>HVAC</label>
+            </value>
+            <value>
+                <fullName>Attivazione con Modifica</fullName>
+                <default>false</default>
+                <label>HVAC</label>
+            </value>
+            <value>
+                <fullName>Switch in</fullName>
+                <default>false</default>
+                <label>HVAC</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
