@@ -1,5 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
 import retrieveLandRegistry from '@salesforce/apex/HDT_UTL_LandRegistry.retrieveLandRegistry';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 const columns = [
     { label: 'Codice assenza dati catastali',   fieldName: 'CodeMissingRegistryData__c',    type: 'text' },
@@ -103,8 +104,8 @@ export default class HdtLandRegistry extends LightningElement {
         console.log("### handleFormSuccess", event);
         this.selectedLandRegistryId=event.detail.id;
         this.call_retrieveLandRegistry();
-        // const evt = new ShowToastEvent({ variant: 'success', title: 'Operazione eseguita correttamente!', message: 'Record salvato.' });
-        // this.dispatchEvent(evt);
+        const evt = new ShowToastEvent({ variant: 'success', title: 'Operazione eseguita correttamente!', message: 'Record salvato.' });
+        this.dispatchEvent(evt);
     }
 
     handleFormError(event){
