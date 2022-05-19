@@ -35,7 +35,6 @@ public with sharing class HDT_BA_ActivityDispatcherTst {
     @isTest
     private static void executeBatch() {
 
-        System.debug('EDO dentro la classe di test');
         //TESTING
         Test.startTest();
         System.schedule('testjob', '0 0 1 ? * *', new HDT_SCH_ActivityDispatcherScheduler());
