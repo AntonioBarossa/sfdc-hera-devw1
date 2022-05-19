@@ -22,7 +22,7 @@ const columns = [
 export default class HdtLandRegistry extends LightningElement {
     
     @api servicePointId = 'a281X000000DmNZQA0'; //ID MOCKATO PER TEST (da togliere)
-    @api selectedLandRegistryId = 'a3j1w000000VlZDAA0';
+    @api selectedLandRegistryId = 'a3j1w000000VlZDAA0'; //ID MOCKATO PER TEST (da togliere)
     @api required = false;
     @api readonly = false;
 
@@ -113,7 +113,7 @@ export default class HdtLandRegistry extends LightningElement {
         this.showSpinner = false;
     }
 
-    trowSelectionEvent(){
+    throwSelectionEvent(){
         const evt = new CustomEvent("onselection", { detail:  {rowId: this.selectedLandRegistryId} });
         this.dispatchEvent(evt);
     }
