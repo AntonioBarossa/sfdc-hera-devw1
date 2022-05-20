@@ -52,10 +52,6 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
-        <name>AccountDataEnrichment__mdt</name>
-    </customMetadataTypeAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>true</enabled>
         <name>HDT_AccountDataEnrichment__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -2175,21 +2171,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>AccountDataEnrichment__mdt.Authorization__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>AccountDataEnrichment__mdt.ColumnData__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>AccountDataEnrichment__mdt.Credential__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>AccountStatementFilter__c.IsDigitalMarking__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2926,11 +2907,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Asset.PhoneRecipient__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Asset.PowerFlow__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

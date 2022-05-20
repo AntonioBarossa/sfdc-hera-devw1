@@ -1372,11 +1372,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Asset.PowerFlow__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Asset.PreviousDateSwitch__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -26493,11 +26488,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.Signature__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.Status__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
