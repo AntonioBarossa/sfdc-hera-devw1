@@ -6974,6 +6974,26 @@
     <picklistValues>
         <picklist>InformativeType__c</picklist>
         <values>
+            <fullName>Subentro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attivazione con Modifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporanea - Nuova Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HVAC</fullName>
             <default>false</default>
         </values>
