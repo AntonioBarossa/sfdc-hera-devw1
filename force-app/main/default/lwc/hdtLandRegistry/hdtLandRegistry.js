@@ -64,7 +64,7 @@ export default class HdtLandRegistry extends LightningElement {
                     if(this.tableSelectedRows.length == 0 ) this.tableSelectedRows = [this.tableData[0].Id];
                     this.showTable=true;
                     this.showForm=true;
-                    this.trowSelectionEvent();
+                    this.throwSelectionEvent();
                 }
                 this.showSpinner = false;
             });
@@ -76,7 +76,7 @@ export default class HdtLandRegistry extends LightningElement {
         this.showSalva=false;
         this.disableForm=true;
         this.showForm=true;
-        this.trowSelectionEvent();
+        this.throwSelectionEvent();
     }
 
     handleModificaClick(){
