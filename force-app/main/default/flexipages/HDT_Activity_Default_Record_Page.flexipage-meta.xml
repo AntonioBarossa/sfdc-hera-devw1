@@ -743,110 +743,13 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.ActivityStartTime__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.ActivityDurationFormula__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.OwnerId</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Lead__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-b7a43b56-76dc-4d38-add0-e8688603093e</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.ActivityEndTime__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Type__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.wrts_prcgvr__Status__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Account__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Contact__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-9e70d283-2743-45eb-8210-abd6f93157a4</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-b7a43b56-76dc-4d38-add0-e8688603093e</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-9e70d283-2743-45eb-8210-abd6f93157a4</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-2026fec1-8216-48df-9255-0ca9290f68f9</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
                 <fieldItem>Record.Name</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.wrts_prcgvr__StatusIcon__c</fieldItem>
+                <identifier>Recordwrts_prcgvr_StatusIcon_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2597,26 +2500,46 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.QAdLogin__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.QAdOfficeID__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.QAdTicketBookingTime__c</fieldItem>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.QAdCallID__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.QAdTicketNumber__c</fieldItem>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.QAdWorkstationID__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.BPCode__c</fieldItem>
             </fieldInstance>
         </itemInstances>
@@ -2626,31 +2549,55 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.QAdCallID__c</fieldItem>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.QAdTicketNumber__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.QAdWorkstationID__c</fieldItem>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.QAdTicketBookingTime__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.QAdTicketCallTime__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.QAdCallStatus__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.FiscalCode__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.VATNumber__c</fieldItem>
             </fieldInstance>
         </itemInstances>
@@ -2684,25 +2631,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-2026fec1-8216-48df-9255-0ca9290f68f9</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Principale</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.QAdCallID__c}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
                     <value>Facet-abfead25-7b3b-4e1b-97c8-9efd4dda98a7</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -2711,8 +2639,13 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.ConnectionID__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.QAdCallID__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
