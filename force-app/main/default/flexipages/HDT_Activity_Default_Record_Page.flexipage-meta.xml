@@ -749,7 +749,6 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.wrts_prcgvr__StatusIcon__c</fieldItem>
-                <identifier>Recordwrts_prcgvr_StatusIcon_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
