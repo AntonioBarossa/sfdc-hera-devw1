@@ -101,9 +101,9 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
                 orderToCheck = orderOffCommMap.get(processObj.nextDataObj.parentOrderId);
             }
             
-            //if(orderAnalisiConsMap.containsKey(processObj.nextDataObj.parentOrderId)){
-            //    analisiConsumiOrder = orderAnalisiConsMap.get(processObj.nextDataObj.parentOrderId);
-            //}
+            if(orderAnalisiConsMap.containsKey(processObj.nextDataObj.parentOrderId)){
+                analisiConsumiOrder = orderAnalisiConsMap.get(processObj.nextDataObj.parentOrderId);
+            }
 
             servReq = new Map<String, Object>();
             servReq.put('servicePointCode', orderToCheck.ServicePoint__r.ServicePointCode__c);
