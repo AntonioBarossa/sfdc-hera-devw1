@@ -1,4 +1,5 @@
 public with sharing class HDT_UTL_GenericSolHandler {
+
     public static Sale__c createSale(String accountId, String contactId){
         String recordId;
         Sale__c sale = new Sale__c();
@@ -7,7 +8,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
                 Name = 'Vendita Analisi Consumi da Web ' + Date.today(),
                 CurrentStep__c = 4.0,
                 SalesContactRole__c = 'Titolare',
-                SalesContact__c = contactId,
+                SalesContact__c = getTitolare(accountId),//contactId,
                 Status__c = 'Bozza',
                 IsMonitoring__c = false,
                 Channel__c = 'Web',
@@ -92,7 +93,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
         BillingProfile__c bp = qrBilling.getRecordByContractAccount(contractAccount);
         Order childOrder = new Order();
         String accountId = (String)params.get('accountId');
-        String contactId = (String)params.get('contactId');
+        String contactId = getTitolare(accountId);//(String)params.get('contactId');
         childOrder.RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
         childOrder.AccountId = accountId;
         childOrder.ProcessType__c = 'VAS';
@@ -159,6 +160,11 @@ public with sharing class HDT_UTL_GenericSolHandler {
     public static List<Contract> getContractByNumber(String contractNumber){
         List<Contract> returnList = [SELECT Id,ServicePoint__c,ServicePoint__r.Distributor__r.Code__c,ContractSalesCompany__c,ServicePoint__r.CommoditySector__c from Contract WHERE SAPContractCode__c =: contractNumber WITH SECURITY_ENFORCED];
         return returnList;
+    }
+
+    private static Id getTitolare(Id accountId){
+        HDT_QR_AccountContactRelation  qrAccountRel = new HDT_QR_AccountContactRelation();
+        return qrAccountRel.getPrimaryContactRelation(accountId)?.ContactId;
     }
 
     /*public static Map<String,String> amendContract(String contractNumber){
