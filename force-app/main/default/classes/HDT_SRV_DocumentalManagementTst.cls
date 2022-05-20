@@ -1,11 +1,12 @@
 @isTest
 public with sharing class HDT_SRV_DocumentalManagementTst {
+    private static Order testOrder;
     @TestSetup
     static void setup(){
         Id pricebookId = Test.getStandardPricebookId();
-
+        
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-
+        
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
         ordList[0].Pricebook2Id=pricebookId;
@@ -20,8 +21,8 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         
         List<DocumentalPayloadAdministration__c> documList = HDT_UTL_DataFactoryTst.createDocumentalPayloadAdm();
         
-
-
+        
+        
         
         
         List<Product2> prods = HDT_UTL_DataFactoryTst.createProduct2(1, false);
@@ -39,10 +40,10 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         HDT_UTL_DataFactoryTst.pClickInstance();
         
         HDT_UTL_DataFactoryTst.newPhaseTransition('Attesa conferma preventivo cliente', 'Bozza', caseList[0].Id, 'HDT_RT_Default');
-
+        
         insert new DocusignSettings__c(CustomerEnviromentId__c = 'HERA-TEST');
     }
-
+    
     public static HDT_WRP_DocumentalResponse createResponse(){
         
         Order testOrder = [SELECT Id FROM Order LIMIT 1];
@@ -82,19 +83,19 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         docRes.deliverPackageResponse = docRoot;
         return docRes;
     }
-
     
-@isTest
+    
+    @isTest
     static void testCreateRequestOrder() {
         Test.startTest();
         Map<String,Object> formParams = new Map<String,Object>();
         formParams.put('Contesto', 'Order');
         List<Order> ord = [SELECT Id, OrderNumber FROM Order LIMIT 1];
         String res = HDT_SRV_DocumentalManagement.generateRequest((String)ord[0].Id,'Order', JSON.serialize(formParams));
-       
+        
         Test.stopTest();
     }
-
+    
     @isTest
     static void testCreateRequestCase() {
         Test.startTest();
@@ -102,7 +103,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         formParams.put('Contesto', 'Case');
         Case ca = [SELECT Id, CaseNumber, Phase__c FROM Case LIMIT 1]; 
         String res = HDT_SRV_DocumentalManagement.generateRequest((String)ca.Id,'Case', JSON.serialize(formParams));
-       
+        
         Test.stopTest();
     }
     @isTest
@@ -126,57 +127,219 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         formParams.put('EstrattoConto', JSON.serialize(itemVasList));
         Case ca = [SELECT Id, CaseNumber, Phase__c FROM Case LIMIT 1]; 
         String res = HDT_SRV_DocumentalManagement.generatePayloadGestioneCredito(formParams);
-       
+        
         Test.stopTest();
     }
-
+    
     @isTest
-static void testCreateRequestDocumentazioneAnticipata() {
-    Test.startTest();
-    Map<String,Object> formParams = new Map<String,Object>();
-    formParams.put('Contesto', 'DocumentazioneAnticipata');
-    List<Order> ord = [SELECT Id, OrderNumber FROM Order LIMIT 1];
-    String res = HDT_SRV_DocumentalManagement.generateRequest((String)ord[0].Id,'DocumentazioneAnticipata', JSON.serialize(formParams));
-   
-    Test.stopTest();
-}
-@isTest
-static void testGenerateResendDocusignEnvelopeRequest(){
-    Test.startTest();
+    static void testCreateRequestDocumentazioneAnticipata() {
+        Test.startTest();
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'DocumentazioneAnticipata');
+        List<Order> ord = [SELECT Id, OrderNumber FROM Order LIMIT 1];
+        String res = HDT_SRV_DocumentalManagement.generateRequest((String)ord[0].Id,'DocumentazioneAnticipata', JSON.serialize(formParams));
+        
+        Test.stopTest();
+    }
+    @isTest
+    static void testGenerateResendDocusignEnvelopeRequest(){
+        Test.startTest();
+        
+        List<DocumentSendTracking__c> dst = [SELECT Id FROM DocumentSendTracking__c LIMIT 1];
+        String res = HDT_SRV_DocumentalManagement.generateResendDocusignEnvelopeRequest((String)dst[0].Id);
+        
+        Test.stopTest();
+    }
+    
+    @isTest
+    static void testGenerateGetAttachmentRequest(){
+        Test.startTest();
+        
+        List<DocumentalActivity__c> dact = [SELECT Id FROM DocumentalActivity__c LIMIT 1];
+        String res = HDT_SRV_DocumentalManagement.generateGetAttachmentRequest((String)dact[0].Id);
+        
+        Test.stopTest();
+    }
+    @isTest
+    static void testGenerateGetEnvelopeRequest(){
+        
+        Test.startTest();
+        List<DocumentalActivity__c> record = [SELECT Id FROM DocumentalActivity__c LIMIT 1];
+        HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
+        SObject documentalObject = HDT_QR_DocumentalConfiguration.getDocumentalObjectById(record[0].Id);
+        
+        String documentType = HDT_SRV_DocumentalManagement.getDocumentType(documentalObject);
+        String body = HDT_SRV_DocumentalManagement.generateGetEnvelopeRequest(documentalObject, documentType);
+        
+        
+        Test.stopTest();
+    }
+    @isTest
+    static void testGenerateDiscardDocusignEnvelopeRequest(){
+        
+        Test.startTest();
+        List<DocumentSendTracking__c> dst = [SELECT Id FROM DocumentSendTracking__c LIMIT 1];
+        String res = HDT_SRV_DocumentalManagement.generateDiscardDocusignEnvelopeRequest((String)dst[0].Id);
+        Test.stopTest();
+    }
+    
+    
+    @isTest
+    static void testCreatePublicLinkFuture(){
+        
+        Test.startTest();
+        List<Order> ord = [SELECT Id, OrderNumber,InformationFormLink__c,SendFormLink__c,Decision40Link__c FROM Order LIMIT 1];
+        HDT_SRV_DocumentalManagement.createPublicLinkFuture((String) ord[0].Id,'base64','MODULISTICA_NO_B12');
+        HDT_SRV_DocumentalManagement.createPublicLinkFuture((String) ord[0].Id,'base64','MODULISTICA_B12');
+        HDT_SRV_DocumentalManagement.createPublicLinkFuture((String) ord[0].Id,'base64','DELIBERA_40');
+        Test.stopTest();
+    }
+    
+    
+    @isTest
+    static void testExecuteCalloutRequestFuture(){     
+        
+        //TODO: ESTRARRE E REALIZZARE METODO/UTILITY DI CREAZIONE OGGETTO HDT_WRP_DocumentalStructure AD HOC
+        
+        //docRecord
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord docRecord;
+        docRecord = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord();
+        //fields docRecord
+        
+        //TODO: IMPLEMENT
+        docRecord.field1 = '';
+		docRecord.field2 = '';
+		docRecord.field3 = '';
+		docRecord.field4 = '';
+        
+        //docSection
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection docSection;
+        docSection = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection();
+        
+        //fields docSection
+        docSection.records = new List<HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord>{docRecord};
 
-    List<DocumentSendTracking__c> dst = [SELECT Id FROM DocumentSendTracking__c LIMIT 1];
-    String res = HDT_SRV_DocumentalManagement.generateResendDocusignEnvelopeRequest((String)dst[0].Id);
-   
-    Test.stopTest();
-}
+        
+        //docStructure
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure docStructure;
+        docStructure = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure();
+        
+        //fields docStructure
+        docStructure.sections = new List<HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection>{docSection};
+        
+        
+        
+        
+        //Documento Docstructure
+        Id folderId = [SELECT Id FROM Folder WHERE DeveloperName  = :'DocumentalPayloadAdministration' LIMIT 1].Id;
+        
+        Document myDocByContext = new Document();
+        myDocByContext.name = 'DocumentazioneAnticipata';
+        myDocByContext.FolderId = folderId;
+        myDocByContext.Body = Blob.valueOf(JSON.serialize(docStructure));
+        insert myDocByContext;
+        
+        //Documento Driver3 - NOTA: CONSIGLIABILE CORREGGERE CON docStructure DISTINTA RISPETTO A myDocByContext.
+        Document myDocDriver3 = new Document();
+        myDocDriver3.name = 'Driver3';
+        myDocDriver3.FolderId = folderId;
+        myDocDriver3.Body = Blob.valueOf(JSON.serialize(docStructure));
+        insert myDocDriver3;
+        
+        
+        //PREPARAZIONE ARGOMENTI
+        String context = 'DocumentazioneAnticipata';//se non lo è, cambia codice
+        
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        //TODO: COMPLETARE MAPPA formParams. Struttura è complicata.
+        
+        
+        String formParamsJSON = JSON.serialize(formParams);
+        
+        
+        List<Order> myOrder = [SELECT Id FROM Order LIMIT 1];
+        testOrder = myOrder[0];
+        String orderId = myOrder[0].Id;
+        
+        //WEBSERVICE MOCK
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagement_HTTP_MOCK());
+        
+        //TESTING
+        Test.startTest();
+        HDT_SRV_DocumentalManagementFacade.sendDocument(orderId, context, formParamsJSON);
+        HDT_SRV_DocumentalManagement.executeCalloutRequest('',context);
+        Test.stopTest();
+    }
+    
+    
 
-@isTest
-static void testGenerateGetAttachmentRequest(){
-    Test.startTest();
+    
+    
+       public class HDT_SRV_DocumentalManagement_HTTP_MOCK implements HttpCalloutMock {
+        
+        public HTTPResponse respond(HTTPRequest request) {
+            
+            HttpResponse response = new HttpResponse();
+            
+            //HDT_WRP_DocumentalResponseAttachment
+            //è di fatto 1:1 DocumentalEnvelopeAttachment__c
+            HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment attach;
+            attach = new HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment();
+            attach.code = 'Attachment Code';
+            attach.type = '';
+            attach.version = '1.0';
+            attach.mandatory = '1';
+            attach.signature = '';
+            
+            
+            //HDT_WRP_DocumentalResponseServiceItem
+            HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem servItem;
+            servItem = new HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem();
+            servItem.serviceId = '';//recordId
+            servItem.attachId = '';
+            servItem.attachName = '';
+            servItem.attachVersion = '';
+            servItem.attachmentList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment>{attach};
+            
+            
+            //HDT_WRP_DocumentalResponseRoot
+            HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseRoot docRoot;
+            docRoot = new HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseRoot();
+            docRoot.requestId = testOrder.Id;
+            docRoot.composedDocument = '';
+            docRoot.packageIds = 'ID_Tracking_Envelope_ID';
+            docRoot.archive = 'Y';
+            docRoot.result = '000';
+            docRoot.message = '';//Pare non sia utilizzato.
+            docRoot.serviceList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem>{servItem};
+            
+            //HDT_WRP_PostelResponse
+            HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse posRes;
+            posRes.responseCode = 200;//è IL VERO response.setStatusCode
+            posRes.responseStatus = 'Success';//è IL VERO response.setStatus
 
-    List<DocumentalActivity__c> dact = [SELECT Id FROM DocumentalActivity__c LIMIT 1];
-    String res = HDT_SRV_DocumentalManagement.generateGetAttachmentRequest((String)dact[0].Id);
-   
-    Test.stopTest();
-}
-@isTest
-static void testGenerateGetEnvelopeRequest(){
-
-    Test.startTest();
-    List<DocumentalActivity__c> record = [SELECT Id FROM DocumentalActivity__c LIMIT 1];
-    HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
-    SObject documentalObject = HDT_QR_DocumentalConfiguration.getDocumentalObjectById(record[0].Id);
-    String documentType = HDT_SRV_DocumentalManagement.getDocumentType(documentalObject);
-    String body = HDT_SRV_DocumentalManagement.generateGetEnvelopeRequest(documentalObject, documentType);
-
-Test.stopTest();
-}
-@isTest
-static void testGenerateDiscardDocusignEnvelopeRequest(){
-
-    Test.startTest();
-    List<DocumentSendTracking__c> dst = [SELECT Id FROM DocumentSendTracking__c LIMIT 1];
-    String res = HDT_SRV_DocumentalManagement.generateDiscardDocusignEnvelopeRequest((String)dst[0].Id);
-    Test.stopTest();
-}
+                
+                
+                
+            //HDT_WRP_DocumentalResponse
+            HDT_WRP_DocumentalResponse docRes = new HDT_WRP_DocumentalResponse();
+            docRes.responseCode = 200;//è IL VERO response.setStatusCode
+            docRes.responseStatus = 'Success';//è IL VERO response.setStatus
+            docRes.deliverPackageResponse = docRoot;
+            
+            Map<String, Object> responseBodyMap = new Map<String, Object>();
+            responseBodyMap.put('data', docRes);
+            
+            response.setHeader('Content-Type', 'application/json');
+            response.setBody(JSON.serialize(responseBodyMap));
+            response.setStatusCode(200);
+            response.setStatus('OK');
+            
+            return response;
+            
+            
+        }
+    }
+    
 }

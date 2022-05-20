@@ -475,6 +475,11 @@
         <default>false</default>
         <label>Orari stazione ecologica/segnalazioni</label>
     </customValue>
+    <customValue>
+        <fullName>Pagamento Online</fullName>
+        <default>false</default>
+        <label>Pagamento Online</label>
+    </customValue>
     <masterLabel>Dettaglio Informazioni</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

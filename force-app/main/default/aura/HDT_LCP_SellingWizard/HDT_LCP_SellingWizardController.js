@@ -16,8 +16,9 @@
                 var campaignId;
                 var campaignMemberId;
                 var campaignCommissioningId;
+                var interactionId;
                 component.set('v.isCommunity', res);
-                console.log('*****' + res);
+                console.log('res*****' + res);
                 if (res){
 
                     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -59,6 +60,8 @@
                     accountId = pageReference.state.c__accountId;
                     saleId = pageReference.state.c__saleId ;
 
+                    console.log('pageReference*****' + pageReference);
+
                     if(pageReference.state.c__campaignId !== undefined){
                         component.set("v.campaignId", pageReference.state.c__campaignId);
                         campaignId = pageReference.state.c__campaignId;
@@ -67,6 +70,11 @@
                     if(pageReference.state.c__campaignMemberId !== undefined){
                         component.set("v.campaignMemberId", pageReference.state.c__campaignMemberId);
                         campaignMemberId = pageReference.state.c__campaignMemberId;
+                    }
+
+                    if(pageReference.state.c__interactionId !== undefined){
+                        //component.set("v.campaignMemberId", pageReference.state.c__campaignMemberId);
+                        interactionId = pageReference.state.c__interactionId;
                     }
 
                 }
@@ -83,6 +91,10 @@
                         'CurrentStep__c' : 1
                         
                     };
+
+                    if(interactionId !== undefined && interactionId !== ''){
+                        saleObject.Interaction__c = interactionId;
+                    }
 
                     if(campaignId !== undefined && campaignId !== ''){
                         saleObject.Campaign__c = campaignId;
@@ -104,6 +116,7 @@
                 var saleId;
                 var campaignId;
                 var campaignMemberId;
+                var interactionId;
                 component.set('v.isCommunity', res);
 
                 if (res){
@@ -143,6 +156,8 @@
                     accountId = pageReference.state.c__accountId;
                     saleId = pageReference.state.c__saleId ;
 
+                    console.log('pageReference*****' + pageReference);
+
                     if(pageReference.state.c__campaignId !== undefined){
                         component.set("v.campaignId", pageReference.state.c__campaignId);
                         campaignId = pageReference.state.c__campaignId;
@@ -151,6 +166,13 @@
                         component.set("v.campaignMemberId", pageReference.state.c__campaignMemberId);
                         campaignMemberId = pageReference.state.c__campaignMemberId;
                     }
+                    
+                    console.log('pageReference.state.c__interactionId*****' + pageReference.state.c__interactionId);
+                    if(pageReference.state.c__interactionId !== undefined){
+                        //component.set("v.campaignMemberId", pageReference.state.c__campaignMemberId);
+                        interactionId = pageReference.state.c__interactionId;
+                    }
+                    console.log('interactionId*****' + interactionId);
 
                 }
                 
@@ -164,7 +186,8 @@
                         'Account__c' : accountId,
                         'Status__c' : 'Bozza',
                         'CurrentStep__c' : 1,
-                        'Campaign__c' : campaignId
+                        'Campaign__c' : campaignId,
+                        'Interaction__c': interactionId
                     };
                     helper.createSaleRecord(component, saleObject);
                 } 
