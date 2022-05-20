@@ -8768,21 +8768,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>SignatoryType__c</picklist>
-        <values>
-            <fullName>Legale Rappresentante</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pagatore Alternativo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Stesso Sottoscrittore</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>SplitPayment__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -10498,17 +10483,6 @@
         </values>
         <values>
             <fullName>013-Uso Condizionam%2E%2BRiscald%2E</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>UseChangeCharge__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
