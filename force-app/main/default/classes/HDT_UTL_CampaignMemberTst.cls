@@ -309,4 +309,39 @@ public with sharing class HDT_UTL_CampaignMemberTst {
 
         System.assertEquals(true, finished, 'Test Ended');
     }
+
+
+    @isTest
+    public static void doCallMeBackTest(){
+
+        Lead myLead = [SELECT Id FROM Lead LIMIT 1];
+        myLead.ContactDate__c = Date.today();
+        update myLead;
+
+        MacroActivityEasyCIM__c myMAECIM = new MacroActivityEasyCIM__c();
+        myMAECIM.Name = 'Test MacroActivityEasyCIM__c';
+        insert myMAECIM;
+
+        //Campaign myCampaign = [SELECT Id FROM Campaign LIMIT 1];
+        //campaign.ReitekIntegrationTechnology__c = 'Web Service';
+        //campaign.MacroActivityEasyCIM__c = myMAECIM.Id;     
+        //update myCampaign;
+
+        List<CampaignMember> lstCampaignMember = [SELECT Id, CampaignId, LeadId, PhoneNumber__c FROM CampaignMember LIMIT 1];
+        lstCampaignMember[0].PhoneNumber__c = '0043736452';
+        //lstCampaignMember[0].LeadId = myLead.Id;
+        //lstCampaignMember[0].CampaignId = myCampaign.Id;
+
+
+        Test.startTest();
+
+            HDT_UTL_CampaignMember.doCallMeBack(lstCampaignMember);
+
+        Test.stopTest();
+
+        System.assert(lstCampaignMember != null, 'lstCampaignMember è null');
+
+    }
+
+
 }
