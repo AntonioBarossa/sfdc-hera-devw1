@@ -123,6 +123,10 @@
                 <behavior>Readonly</behavior>
                 <field>ShippingAddress</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RelatedPractice__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

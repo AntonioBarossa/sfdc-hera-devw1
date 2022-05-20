@@ -85,8 +85,8 @@
     <assignments>
         <name>Update_Campi_Consenso_Marketing</name>
         <label>Update Campi Consenso Marketing</label>
-        <locationX>3326</locationX>
-        <locationY>292</locationY>
+        <locationX>3325</locationX>
+        <locationY>293</locationY>
         <assignmentItems>
             <assignToReference>Get_Updated_Individual.PrivacyMarketingChoiceDate__c</assignToReference>
             <operator>Assign</operator>
@@ -109,7 +109,7 @@
         <name>Update_Campi_Consenso_Marketing_Campi_Soft_Spam</name>
         <label>Update Campi Consenso Marketing + Campi Soft Spam</label>
         <locationX>3344</locationX>
-        <locationY>760</locationY>
+        <locationY>761</locationY>
         <assignmentItems>
             <assignToReference>Get_Updated_Individual.PrivacyMarketingChoiceDate__c</assignToReference>
             <operator>Assign</operator>
@@ -121,7 +121,7 @@
             <assignToReference>Get_Updated_Individual.PrivacyMarketingChoiceSource__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>post-sales</stringValue>
+                <elementReference>Get_Updated_Case.Origin</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -224,7 +224,7 @@
         <name>Check_Consenso_Marketing_Aggiornato</name>
         <label>Consenso Marketing Aggiornato?</label>
         <locationX>3232</locationX>
-        <locationY>515</locationY>
+        <locationY>516</locationY>
         <defaultConnector>
             <targetReference>Check_Consenso_Profilazione_Aggiornato</targetReference>
         </defaultConnector>
@@ -800,6 +800,18 @@
             <field>HasOptedOutSoftSpam__c</field>
             <value>
                 <elementReference>Get_Updated_Case.HasOptedOutSoftSpam__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>MarketingCompanyConsent__c</field>
+            <value>
+                <elementReference>Get_Company_And_Version.company</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>MarketingPrivacyVersion__c</field>
+            <value>
+                <elementReference>Get_Company_And_Version.version</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

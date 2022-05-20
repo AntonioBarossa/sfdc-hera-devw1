@@ -120,6 +120,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             */
             voltureChangeSrv.handleAmmissibilityCheck(fieldsMap, currentOrder);
 
+            /*
             if(! string.isBlank((String)fieldsMap.get('VIA')) ){
                 orderToUpdate.SupplyStreetName__c = (String)fieldsMap.get('VIA');
             }
@@ -141,6 +142,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             if(! string.isBlank((String)fieldsMap.get('NAZIONE')) ){
                 orderToUpdate.SupplyCountry__c = (String)fieldsMap.get('NAZIONE');
             }
+            */
             orderToUpdate.DiscardReason__c = HDT_UTL_Accents.removeDiacritics((String)fieldsMap.get('DES_ERR_AEEG'));
             orderToUpdate.HerokuPracticeCode__c = (String)fieldsMap.get('COD_PRAT_UTENTE');
             orderToUpdate.DistributorPracticeCode__c = (String)fieldsMap.get('COD_PRAT_DISTR');
@@ -159,17 +161,19 @@ public with sharing class HDT_UTL_VoltureChangeManager {
                 orderToUpdate.EffectiveDate__c = voltureChangeUtils.convertDdMmYyyy((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV'));
 
             }
-            if( ! string.isBlank((String)fieldsMap.get('POTCONTRIMP')) ){
-                orderToUpdate.PowerCommitted__c = Decimal.valueOf((String)fieldsMap.get('POTCONTRIMP'));
-            }
-            /* Number Fields */
-            if( ! string.isBlank((String)fieldsMap.get('POTDISP'))){
-                orderToUpdate.PowerAvailable__c = Decimal.valueOf((String)fieldsMap.get('POTDISP'));
-            }
-            /* Field "TENSIONE" */
-            if( ! string.isBlank((String)fieldsMap.get('TENSIONE')) ){
-                orderToUpdate.VoltageLevel__c = voltureChangeUtils.getTension((String)fieldsMap.get('TENSIONE'));
-            }
+            
+            // if( ! string.isBlank((String)fieldsMap.get('POTCONTRIMP')) ){
+            //     orderToUpdate.PowerCommitted__c = Decimal.valueOf((String)fieldsMap.get('POTCONTRIMP'));
+            // }
+            // /* Number Fields */
+            // if( ! string.isBlank((String)fieldsMap.get('POTDISP'))){
+            //     orderToUpdate.PowerAvailable__c = Decimal.valueOf((String)fieldsMap.get('POTDISP'));
+            // }
+            // /* Field "TENSIONE" */
+            // if( ! string.isBlank((String)fieldsMap.get('TENSIONE')) ){
+            //     orderToUpdate.VoltageLevel__c = voltureChangeUtils.getTension((String)fieldsMap.get('TENSIONE'));
+            // }
+            
         }
         /* result KO */
         else 
@@ -204,7 +208,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             via => currentOrder.SupplyStreetName__c,
             civico => currentOrder.SupplyStreetNumber__c,
             cap => currentOrder.SupplyPostalCode__c,
-            istat => currentOrder.SupplyCityCode__c,
+            //istat => currentOrder.SupplyCityCode__c,
             localita => currentOrder.SupplyCity__c,
             provincia => currentOrder.SupplyState__c,
             nazione => currentOrder.SupplyCountry__c
@@ -219,32 +223,46 @@ public with sharing class HDT_UTL_VoltureChangeManager {
 
         String message = 'Valori non corrispondenti: ';
         List<String> errorMessage = new List<String>();
+        List<String> noteList = new List<String>();
         returnMap.put('message', '');
         returnMap.put('result',true);
         /* Tension Check */
         if(String.isNotEmpty(tension) && voltureChangeUtils.getTension(tension) != currentOrder.VoltageLevel__c)
         {
             errorMessage.add('Tensione');
+            noteList.add('Tensione: ' + voltureChangeUtils.getTension(tension));
         }
         /* Power Available Check */
         if(String.isNotEmpty(powerAvailable) && !voltureChangeUtils.powerCheck(powerAvailable, String.valueOf(currentOrder.PowerAvailable__c)))
         {
             errorMessage.add('Potenza Disponibile');
+            noteList.add('Potenza Disponibile: ' + powerAvailable);
         }
         /* Power Committed Check */
         if(String.isNotEmpty(powerCommitted) && !voltureChangeUtils.powerCheck(powerCommitted, String.valueOf(currentOrder.PowerCommitted__c)))
         {
             errorMessage.add('Potenza Impegnata');
+            noteList.add('Potenza Impegnata: ' + powerCommitted);
         }
         /* Address Check */
         if(!voltureChangeUtils.addressCheck(addressCheckMap))
         {
             errorMessage.add('Indirizzo');
+            String addressVia = String.isNotBlank(via) ? via + ', ' : '';
+            String addressCivico = String.isNotBlank(civico) ? civico + ', ' : '';
+            String addressCap = String.isNotBlank(cap) ? cap + ', ' : '';
+            String addressIstat = String.isNotBlank(istat) ? istat + ', ' : '';
+            String addressLocalita = String.isNotBlank(localita) ? localita + ', ' : '';
+            String addressProvincia = String.isNotBlank(provincia) ? provincia + ', ' : '';
+            String addressNazione = String.isNotBlank(nazione) ? nazione + ', ' : '';
+            String address = addressVia + addressCivico + addressCap + addressIstat + addressLocalita + addressProvincia + addressNazione;
+            noteList.add('Indirizzo: ' + address);
         }
         /* Set the error message */
         if(!errorMessage.isEmpty())
         {
             returnMap.put('message',message + String.join(errorMessage,','));
+            returnMap.put('note', String.join(noteList,'\n'));
             returnMap.put('result',false);
         }
         return returnMap;
