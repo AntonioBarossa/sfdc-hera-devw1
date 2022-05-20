@@ -102,6 +102,10 @@
                 <field>LastModifiedById</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CampaignID__c</field>
+            </layoutItems>
+            <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
         </layoutColumns>
@@ -156,7 +160,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1j0000020Wi0</masterLabel>
+        <masterLabel>00h3N000002Lgtk</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

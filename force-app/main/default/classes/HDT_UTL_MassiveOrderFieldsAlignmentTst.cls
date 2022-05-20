@@ -269,7 +269,7 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
 
         List<Order> ord = [SELECT Id, ExciseEle__c, Vat__c FROM Order WHERE Name = 'testOrderName1'];
 
-        List<ServicePoint__c> serv = [SELECT Id, CommoditySector__c, Vat__c, ExciseEle__c, SupplyTypeTemp__c, AnnualConsumption__c, SwitchInWinback__c, SwitchOutDate__c, MarketOrigin__c,
+        List<ServicePoint__c> serv = [SELECT Id, CommoditySector__c, Vat__c, ExciseEle__c, SupplyTypeTemp__c,SupplyType__c, AnnualConsumption__c, SwitchInWinback__c, SwitchOutDate__c, MarketOrigin__c,
                                       PowerAvailable__c, VoltageLevel__c, DisconnectibilityPhone__c, UseTypeEnergy__c, UseCategory__c, MeterSN__c, Resident__c, RemiCode__c, VATNumberUdb__c, 
                                       SupplyCity__c, SupplyStreet__c, SupplyStreetNumber__c, SupplyStreetNumberExtension__c, SupplyPlace__c, SupplyPostalCode__c, SupplyCountry__c, PowerContractual__c,
                                       ServicePointCode__c, SAPImplantCode__c, ImplantTypeTemp__c, SupplySAPCityCode__c, SupplyProvince__c, Disconnectable__c, DisconnectibilityType__c, MeterClass__c,

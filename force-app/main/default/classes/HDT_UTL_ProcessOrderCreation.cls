@@ -600,6 +600,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             }
             processObj.requestItem.Status__c = 'In Lavorazione';
         }
+        if(sObjectToDelete.size() > 0){
+            HDT_UTL_DatabaseService.deleteSObject(sObjectToDelete);
+        }
         getLimitDetails('processEnd');
 
     }
@@ -793,7 +796,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         parentOrder.Sale__c = sale.Id;
         parentOrder.Contact__c = sale.SalesContact__c;
         parentOrder.Channel__c = sale.Channel__c;
-        parentOrder.LoginChannel__c = sale.Channel__c;
         parentOrder.VendorLastName__c = sale.VendorLastName__c;
         parentOrder.VendorFirstName__c = sale.VendorFirstName__C;
         parentOrder.CommercialId__c = sale.CommercialId__c;
@@ -815,6 +817,11 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         parentOrder.ShippingStreetName__c = childOrder.ShippingStreetName__c;
         parentOrder.ShippingStreetNumber__c	= childOrder.ShippingStreetNumber__c;
         parentOrder.isMassive__c = true;
+        parentOrder.LowerChannelAgency__c = sale.LowerChannelAgency__c;
+        parentOrder.UpperChannelAgency__c = sale.UpperChannelAgency__c;
+        parentOrder.CommercialId__c = sale.CommercialId__c;
+        parentOrder.LoginChannel__c = childOrder.LoginChannel__c;
+        parentOrder.CreatorGroup__c = childOrder.CreatorGroup__c;
         return parentOrder;
     }
 
@@ -947,15 +954,22 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             wrpChildOrder.orderItemList.add(wrpOrderItem);
             commOfferForRetrieve.add(wrpOrderItem.product);
 
-            String itemTypeCsv = csvValues[mapHeaderForWrapper.get('ServicePointServizio')];
+            //String itemTypeCsv = csvValues[mapHeaderForWrapper.get('ServicePointServizio')];
             String codicePuntoCsv = csvValues[mapHeaderForWrapper.get('ServicePointCodicePunto')];
             String itemType = '';
 
-            if(String.isNotEmpty(itemTypeCsv) && itemTypeCsv.equalsIgnoreCase('Energia Elettrica')){
-                itemType = 'POD';
-            } else if(String.isNotEmpty(itemTypeCsv) && itemTypeCsv.equalsIgnoreCase('Gas')){
-                itemType = 'PDR';
-            } else if(String.isNotEmpty(codicePuntoCsv)){
+            //if(String.isNotEmpty(itemTypeCsv) && itemTypeCsv.equalsIgnoreCase('Energia Elettrica')){
+            //    itemType = 'POD';
+            //} else if(String.isNotEmpty(itemTypeCsv) && itemTypeCsv.equalsIgnoreCase('Gas')){
+            //    itemType = 'PDR';
+            //} else if(String.isNotEmpty(codicePuntoCsv)){
+            //    if(codicePuntoCsv.isNumeric()){
+            //        itemType = 'PDR';
+            //    } else {
+            //        itemType = 'POD';
+            //    }
+            //}
+            if(String.isNotEmpty(codicePuntoCsv)){
                 if(codicePuntoCsv.isNumeric()){
                     itemType = 'PDR';
                 } else {

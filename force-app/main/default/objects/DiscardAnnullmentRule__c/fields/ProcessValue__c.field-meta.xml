@@ -17,11 +17,6 @@
                 <label>Sospensione Fornitura</label>
             </value>
             <value>
-                <fullName>Processo non trovato</fullName>
-                <default>false</default>
-                <label>Processo non trovato</label>
-            </value>
-            <value>
                 <fullName>Riattivazione Fornitura</fullName>
                 <default>false</default>
                 <label>Riattivazione Fornitura</label>
@@ -117,9 +112,9 @@
                 <label>Proroga Temporanea</label>
             </value>
             <value>
-                <fullName>Riattivazione non morose</fullName>
+                <fullName>Riattivazione Fornitura non morosa</fullName>
                 <default>false</default>
-                <label>Riattivazione non morose</label>
+                <label>Riattivazione Fornitura non morosa</label>
             </value>
             <value>
                 <fullName>Subentro Gas</fullName>
