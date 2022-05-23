@@ -15,6 +15,11 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
     String bozzaCase = 'Bozza';
     String autoletturaCase = 'Autolettura';
 
+    List<String> typesCase = new List<String>{'Modifica post accertamento','Cessazione post accertamento'};
+    List<String> statusCase = new List<String>{'',''};
+    List<String> phasesCase = new List<String>{'Chiuso','Completata'};
+
+
     public List<Knowledge__kav> getExpiredArticle(){
 
         return [SELECT Id,
@@ -118,6 +123,23 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         FROM Case
         WHERE Phase__c = :this.bozzaCase
         AND Cluster__c != : this.autoletturaCase
+        WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Case> getPostAccertamentoCase(){
+        return [SELECT Id,
+        Type,
+        Phase__c,
+        Cluster__c,
+        AccountId,
+        SupplyCity__c,
+        SupplyStreetName__c,
+        CreatedDate
+        FROM Case
+        WHERE Phase__c NOT IN ('Chiuso','Annullato')
+        AND Cluster__c != : this.autoletturaCase
+        AND Type IN: this.typesCase
         WITH SECURITY_ENFORCED
         ];
     }
