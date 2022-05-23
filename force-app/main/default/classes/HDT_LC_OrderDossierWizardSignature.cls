@@ -56,6 +56,9 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
                 if (key != 'Id') {
                     childOrderToUpdate.put(key, objMap.get(key));
                 }
+                if(key == 'RelatedPractice__c'){
+                    orderUpdates.RelatedPractice__c = (String)objMap.get(key);
+                }
             }
 
             system.debug('childOrderToUpdate: ' + childOrderToUpdate);
