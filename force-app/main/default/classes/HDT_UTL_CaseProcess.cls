@@ -343,4 +343,34 @@ public with sharing class HDT_UTL_CaseProcess {
         }
         HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
     }
+
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @description metodo per la chiusura delle activity "aprire cessazione" correlate al case al suo completamento
+    * @date 17/05/2022
+    * @param1 List<Case> lista dei cases inseriti
+    * @param1 Map<Id,SObject> Mappa della vecchia versione dei cases inseriti
+    */
+    public static void closeRelatedActivity(List<Case> triggerNew, Map<Id,SObject> oldMap){
+        list<Id> effectiveCase = new List<Id>();
+        for(Case currCase : triggerNew){
+            if('Confermato'.equalsIgnoreCase(currCase.Phase__c) && 
+               'HDT_RT_CessazioniTari'.equalsIgnoreCase(currCase.RecordType.DeveloperName) &&
+               'Cessazione post accertamento'.equalsIgnoreCase(currCase.Type) &&
+               ((Case)oldMap.get(currCase.Id)).Phase__c != currCase.Phase__c){
+                effectiveCase.add(currCase.Id);
+            }
+        }
+        List<wrts_prcgvr__Activity__c> toClose = [SELECT Id, Case__c, wrts_prcgvr__Status__c, Type__c 
+                                                     FROM wrts_prcgvr__Activity__c 
+                                                     WHERE Case__c IN: effectiveCase
+                                                     AND Type__c = 'Aprire cessazione'
+                                                     AND wrts_prcgvr__Status__c != 'Chiusa'
+                                                     AND wrts_prcgvr__Status__c != 'Annullata'];
+        for(wrts_prcgvr__Activity__c currAct : toClose){
+            currAct.wrts_prcgvr__Status__c = 'Chiusa';
+        }
+        Database.update(toClose);
+    }
+
 }
