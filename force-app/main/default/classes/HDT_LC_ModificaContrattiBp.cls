@@ -8,21 +8,18 @@ public inherited sharing class HDT_LC_ModificaContrattiBp {
         system.debug(bpData);
         try {
             //Set<String> caseFields = ((SObject)Type.forName('Schema','Product2').newInstance()).getSObjectType().getDescribe().fields.getMap().keySet();
-            Set<String> caseFields = Schema.SObjectType.Case.fields.getMap().keySet();
+            Map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.BillingProfile__c.fields.getMap();
             Case c = new Case(Id=caseId);
-            List<String> fieldsNotMapped = new List<String>();
-            for(String field : bpData.keyset()){
-                if(caseFields.contains(field.toLowerCase())){
-                    c.put(field, bpData.get(field));
-                }else{
-                    fieldsNotMapped.add(field);
+            Datetime nowDate = Datetime.now();
+            c.Note__c = nowDate.format('dd/MM/yyyy h:mm a') + ' Campi Modificati:';
+            for(String field : bpData.keySet())
+            {
+                if(bpData.get(field) != null && String.isNotBlank(String.valueOf(bpData.get(field))))
+                {
+                    c.Note__c += '\n' + '\"' +fieldMap.get(field).getDescribe().getLabel() + '\"' + ': ' + '\"' + bpData.get(field) + '\"';
                 }
             }
-            //if(fieldsNotMapped.isEmpty()){
-                caseSrv.updateRecord(c);
-            //}else{
-                //throw new HDT_LC_ModificaContrattiBpException('Unmapped fields '+String.join(fieldsNotMapped, ' ,'));
-            //}
+            HDT_UTL_DatabaseService.updateSObject(c);
         } catch (Exception e) {
             system.debug(e.getMessage());
             throw new AuraHandledException(e.getMessage());

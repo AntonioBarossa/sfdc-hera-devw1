@@ -83,7 +83,8 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
     checksAndSave(){
         const targetObjectFlow =this.template.querySelector('c-hdt-target-object-address-for-flow');
         let validity=targetObjectFlow.validate();
-        if(validity.isValid){
+        console.log('AddressValidity >>> ' + JSON.stringify(validity))
+        if(validity.isValid === true){
             //jump address controls on parent lwc, we already done it on targetObjectFlow
             this.isForeignAddress=false;
             this.isVerifiedAddress=true;
@@ -99,9 +100,11 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
                 //Crea metodo in JS che ti converte le api name da BP a Case
                 console.log("isValid");
                 let mapFieldValue = this.convertBpToCase();
+                console.log('#BpData >>> ' + JSON.stringify(mapFieldValue));
                 updateCase({"bpData" : mapFieldValue, "caseId" : this.theCase.Id}).then(data=>{
                     this.loading = false;
-                    this.handleGoNext();
+                    return;
+                    //this.handleGoNext();
                 }).catch(error => {
                     this.loading = false;
         
@@ -175,7 +178,7 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
     convertCaseToBp(){
         let listFields = Object.keys(this.theCase);
         let bp = {...this.theCase};
-        let map = this.invertMap();
+        let map = new Map();
         listFields.forEach(el => {
             if(map.has(el)){
                 bp[map.get(el)] = bp[el];
@@ -188,7 +191,7 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
     convertBpToCase(){
         let listFields = Object.keys(this.dataToSubmit);
         let data = {...this.dataToSubmit};
-        let map = this.getFieldsMapped();
+        let map = new Map();
         listFields.forEach(el => {
             if(map.has(el)){
                 data[map.get(el)] = data[el];

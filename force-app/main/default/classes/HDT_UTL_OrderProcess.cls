@@ -484,6 +484,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         || (oldOrder.Phase__c == 'Esito OK da SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         /**@frpanico 2022-04-28 Aggiunto ricalcolo date per Switch clonato */
                         || (oldOrder.Phase__c == 'Bozza' && newOrder.Phase__c == 'Comunicazione verso Heroku')
+                        /**@frpanico 2022-05-23 Aggiunto caso transitorio */
+                        || (oldOrder.Phase__c == 'Caricamento Siebel KO' && newOrder.Phase__c == 'Esportazione VS Siebel')
                         || (oldOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.IncomingCreditCheckResult__c == 'OK')
                     ){
                         if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
