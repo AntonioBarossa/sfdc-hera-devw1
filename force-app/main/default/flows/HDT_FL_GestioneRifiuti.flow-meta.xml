@@ -4,7 +4,7 @@
         <name>Redirect</name>
         <label>Redirect</label>
         <locationX>908</locationX>
-        <locationY>2342</locationY>
+        <locationY>2798</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -26,7 +26,7 @@
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Segnalazioni Ambientali Anonime</stringValue>
+                <stringValue>Gestione Rifiuti Anonimi</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -34,6 +34,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Segnalazioni</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.OperationGroup__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>CONSULTA IL RIFIUTOLOGO</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -282,6 +289,13 @@
                 <elementReference>phone_NonBlank</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.OperationGroup__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>CONSULTA IL RIFIUTOLOGO</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Assign_Process_Type_0</targetReference>
         </connector>
@@ -302,6 +316,31 @@
             <targetReference>Update_Indirizzi</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>CB_Appuntamenti</name>
+        <label>CB Appuntamenti</label>
+        <locationX>1194</locationX>
+        <locationY>2366</locationY>
+        <defaultConnector>
+            <targetReference>DaInviare</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Gestione DSA</defaultConnectorLabel>
+        <rules>
+            <name>isAppuntamentoDaInnescare</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getTabellaAppuntamento</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>InAttAppuntamento</targetReference>
+            </connector>
+            <label>Gestione Appuntamento</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Context</name>
         <label>Context</label>
@@ -485,7 +524,7 @@
         <locationX>908</locationX>
         <locationY>2006</locationY>
         <defaultConnector>
-            <targetReference>DaInviare</targetReference>
+            <targetReference>getUpdatedFields</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
         <rules>
@@ -524,13 +563,8 @@
         <dataType>String</dataType>
         <expression>BLANKVALUE({!getAccount.Phone}, BLANKVALUE({!getAccount.MobilePhone__c},  BLANKVALUE({!getAccount.OtherPhone__c}, &apos;&apos;) ))</expression>
     </formulas>
-    <formulas>
-        <name>showIndirizziReadOnly</name>
-        <dataType>Boolean</dataType>
-        <expression>NOT(ISBLANK({!theCaseIndirizzi.InvoicingCity__c}))</expression>
-    </formulas>
     <interviewLabel>HDT_FL_ {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>HDT_FL_SegnalazioniAmbientali</label>
+    <label>HDT_FL_GestioneRifiuti</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -612,11 +646,62 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>getTabellaAppuntamento</name>
+        <label>getTabellaAppuntamento</label>
+        <locationX>1194</locationX>
+        <locationY>2246</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CB_Appuntamenti</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>City__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>theCase.InvoicingCity__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>TypeOperation__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>theCase.TypeOperation__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>TariAppointment__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getUpdatedFields</name>
+        <label>getUpdatedFields</label>
+        <locationX>1194</locationX>
+        <locationY>2126</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>getTabellaAppuntamento</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>theCase.Id</elementReference>
+            </value>
+        </filters>
+        <object>Case</object>
+        <outputReference>theCase</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>InvoicingCity__c</queriedFields>
+        <queriedFields>TypeOperation__c</queriedFields>
+    </recordLookups>
     <recordUpdates>
         <name>DaInviare</name>
         <label>Da Inviare</label>
-        <locationX>1128</locationX>
-        <locationY>2126</locationY>
+        <locationX>1326</locationX>
+        <locationY>2486</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>
@@ -632,6 +717,30 @@
             <field>Phase__c</field>
             <value>
                 <stringValue>Da Inviare</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>InAttAppuntamento</name>
+        <label>In Att Appuntamento</label>
+        <locationX>1062</locationX>
+        <locationY>2486</locationY>
+        <connector>
+            <targetReference>Redirect</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>theCase.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>In Attesa Appuntamento</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -818,13 +927,13 @@
             <inputParameters>
                 <name>showReadOnly</name>
                 <value>
-                    <elementReference>showIndirizziReadOnly</elementReference>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>labelInputSection</name>
                 <value>
-                    <stringValue>Segnalazione Ambientale</stringValue>
+                    <stringValue>Gestione Rifiuti</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -862,7 +971,7 @@
     <subflows>
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
-        <locationX>688</locationX>
+        <locationX>622</locationX>
         <locationY>2126</locationY>
         <connector>
             <targetReference>Redirect</targetReference>

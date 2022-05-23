@@ -42,6 +42,11 @@
             <actionType>QuickAction</actionType>
             <sortOrder>7</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>HDT_WasteDisposalAction</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>8</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <quickActionList/>
     <showEmailCheckbox>false</showEmailCheckbox>

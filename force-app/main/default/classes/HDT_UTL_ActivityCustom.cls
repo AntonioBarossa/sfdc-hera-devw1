@@ -4,7 +4,7 @@
 * @description Class that holds util functions for wrts_prcgvr__Activity__c
 * @history Keltin Mesonjesi – 18/06/2021 – Created class
 */
-@SuppressWarnings('PMD.AvoidDebugStatements')
+@SuppressWarnings('PMD.CyclomaticComplexity, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces')
 public inherited sharing class HDT_UTL_ActivityCustom {
     
     private FINAL static string APPOINTMENTDEVELOPERNAME = 'HDT_RT_DistributorAppointment';
@@ -16,13 +16,14 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 18/06/2021
     * @description Create new wrts_prcgvr__Activity__c based on passed params
     * @param Map<String,String> params
-    */
-    
+    */    
     @AuraEnabled
     public static boolean riassegnaComCod(string recordId,String causale){
         try{
@@ -205,6 +206,10 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 }
             }
         }
+    }
+
+    public static void executeOnCloseActions(List<wrts_prcgvr__Activity__c> newTriggerList,  Map<Id,SObject> oldTriggerMap){
+        HDT_UTL_ActivityCloseActions.executeOnCloseActions(newTriggerList, oldTriggerMap);
     }
 
     @AuraEnabled
