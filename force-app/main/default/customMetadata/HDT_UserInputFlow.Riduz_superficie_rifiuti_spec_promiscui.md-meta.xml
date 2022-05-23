@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Riduzione Agevolazione</label>
+    <label>Riduz. superficie rifiuti spec promiscui</label>
     <protected>false</protected>
     <values>
         <field>FieldsJSON__c</field>
@@ -72,7 +72,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Riduzione Agevolazione dopo Accertamento</value>
+        <value xsi:type="xsd:string">Riduzione Superficie rifiuti spec promiscui</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
@@ -111,11 +111,6 @@
 &quot;FieldName&quot;: &quot;ContractCode__c&quot;,
 &quot;required&quot;: false,
 &quot;Column&quot;: 1
-},
-{
-&quot;FieldName&quot;: &quot;Note__c&quot;,
-&quot;required&quot;: false,
-&quot;Column&quot;: 2
 }
 ]</value>
     </values>

@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>RedirectToCase</name>
+        <label>RedirectToCase</label>
+        <locationX>930</locationX>
+        <locationY>1646</locationY>
+        <actionName>c:HDT_LCP_RedirectToRecord</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>theCase.Id</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>55.0</apiVersion>
     <assignments>
         <name>assign_service_point</name>
         <label>assign service point</label>
-        <locationX>314</locationX>
+        <locationX>50</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>theCase.ServicePointCode__c</assignToReference>
@@ -14,28 +30,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>theCase.FirstName__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>theCase.LastName__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.Birthday__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>emptyDate</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>theCase.Birthcity__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue></stringValue>
@@ -59,7 +54,7 @@
             <assignToReference>theCase.Note__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>è necessario trasmettere copia delle ricevute per attestare l&apos;errata o mancata imputazione dello sconto</stringValue>
+                <stringValue>È necessario trasmettere copia delle ricevute per attestare l&apos;errata o mancata imputazione dello sconto</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -80,10 +75,228 @@
             <targetReference>insert_the_case</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>assign_service_point_conferimento</name>
+        <label>assign service point</label>
+        <locationX>1370</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>theCase.ServicePointCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Punto_di_Fornitura_Tari</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.LastName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.AlternativeAddress__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Generiche Attivazioni</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>È necessario trasmettere copia delle ricevute per attestare l&apos;errata o mancata imputazione dello sconto</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Tari</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.OperationType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Modifica dati contr.stesso Cli</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>insert_the_case_conferimento</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assign_service_point_formulari</name>
+        <label>assign service point</label>
+        <locationX>490</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>theCase.ServicePointCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Punto_di_Fornitura_Tari</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.LastName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.AlternativeAddress__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Generiche Attivazioni</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>È necessario trasmettere copia dei formulari di trasporto unitamente al modulo di richiesta firmato dal legale rappresentante</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Tari</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.OperationType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Modifica dati contr.stesso Cli</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>insert_the_case_formulari</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assign_service_point_pap</name>
+        <label>assign service point</label>
+        <locationX>930</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>theCase.ServicePointCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Punto_di_Fornitura_Tari</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.LastName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.AlternativeAddress__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Generiche Attivazioni</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Tari</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.OperationType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Modifica dati contr.stesso Cli</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>insert_the_case_pap</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assign_service_point_superficie</name>
+        <label>assign service point</label>
+        <locationX>1810</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>theCase.ServicePointCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Punto_di_Fornitura_Tari</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.LastName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.AlternativeAddress__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Generiche Attivazioni</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Tari</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.OperationType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Modifica dati contr.stesso Cli</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>insert_the_case_superficie</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>isCompatible</name>
         <label>isCompatible</label>
-        <locationX>314</locationX>
+        <locationX>50</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Wizard_Processo</targetReference>
@@ -110,9 +323,125 @@
         </rules>
     </decisions>
     <decisions>
+        <name>isCompatible_conferimento</name>
+        <label>isCompatible</label>
+        <locationX>1370</locationX>
+        <locationY>758</locationY>
+        <defaultConnector>
+            <targetReference>Wizard_Processo</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Compatibile</defaultConnectorLabel>
+        <rules>
+            <name>Non_Compatibile_conferimento</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Flow_Compatibility.IsCompatible</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Flow_Compatibility.IsCompatible</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <label>Non Compatibile</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isCompatible_formulari</name>
+        <label>isCompatible</label>
+        <locationX>490</locationX>
+        <locationY>758</locationY>
+        <defaultConnector>
+            <targetReference>Wizard_Processo</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Compatibile</defaultConnectorLabel>
+        <rules>
+            <name>Non_Compatibile_formulari</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Flow_Compatibility.IsCompatible</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Flow_Compatibility.IsCompatible</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <label>Non Compatibile</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isCompatible_pap</name>
+        <label>isCompatible</label>
+        <locationX>930</locationX>
+        <locationY>758</locationY>
+        <defaultConnector>
+            <targetReference>Wizard_Processo</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Compatibile</defaultConnectorLabel>
+        <rules>
+            <name>Non_Compatibile_pap</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Flow_Compatibility.IsCompatible</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Flow_Compatibility.IsCompatible</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <label>Non Compatibile</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isCompatible_superficie</name>
+        <label>isCompatible</label>
+        <locationX>1810</locationX>
+        <locationY>758</locationY>
+        <defaultConnector>
+            <targetReference>Wizard_Processo</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Compatibile</defaultConnectorLabel>
+        <rules>
+            <name>Non_Compatibile_superficie</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Flow_Compatibility.IsCompatible</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Flow_Compatibility.IsCompatible</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <label>Non Compatibile</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Next_Step</name>
         <label>Next Step</label>
-        <locationX>314</locationX>
+        <locationX>930</locationX>
         <locationY>1310</locationY>
         <defaultConnector>
             <targetReference>In_Lavorazione_Case</targetReference>
@@ -143,13 +472,16 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>RedirectToCase</targetReference>
+            </connector>
             <label>Salva in Bozza</label>
         </rules>
     </decisions>
     <decisions>
         <name>Tipo_Generica</name>
         <label>Tipo Generica</label>
-        <locationX>314</locationX>
+        <locationX>930</locationX>
         <locationY>158</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -189,12 +521,67 @@
             </connector>
             <label>Riduzione Agevolazione</label>
         </rules>
+        <rules>
+            <name>Formulari_Richiesta_Sconto</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>theCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Formulari Richiesta Sconto</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selezione_Fornitura_Formulari</targetReference>
+            </connector>
+            <label>Formulari Richiesta Sconto</label>
+        </rules>
+        <rules>
+            <name>Sconti_Collettivi_Pap</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>theCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sconti Collettivi Pap</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selezione_Fornitura_Pap</targetReference>
+            </connector>
+            <label>Sconti Collettivi Pap</label>
+        </rules>
+        <rules>
+            <name>Conferimento_Centri_di_Raccolta</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>theCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Conferimento Centri di Raccolta</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selezione_Fornitura_Conferimento</targetReference>
+            </connector>
+            <label>Conferimento Centri di Raccolta</label>
+        </rules>
+        <rules>
+            <name>Riduzione_Superficie_rifiuti_spec_promiscui</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>theCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Riduzione Superficie rifiuti spec promiscui</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selezione_Fornitura_Superficie</targetReference>
+            </connector>
+            <label>Riduzione Superficie rifiuti spec promiscui</label>
+        </rules>
     </decisions>
-    <formulas>
-        <name>emptyDate</name>
-        <dataType>Date</dataType>
-        <expression>DATEVALUE(&quot;&quot;)</expression>
-    </formulas>
     <interviewLabel>HDT_FL_GenericProcessTari {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GenericProcessTari</label>
     <processMetadataValues>
@@ -219,18 +606,61 @@
     <recordCreates>
         <name>insert_the_case</name>
         <label>insert the case</label>
-        <locationX>314</locationX>
+        <locationX>50</locationX>
         <locationY>518</locationY>
         <connector>
             <targetReference>Flow_Compatibility</targetReference>
         </connector>
         <inputReference>theCase</inputReference>
     </recordCreates>
+    <recordCreates>
+        <name>insert_the_case_conferimento</name>
+        <label>insert the case</label>
+        <locationX>1370</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Flow_Compatibility_conferimento</targetReference>
+        </connector>
+        <inputReference>theCase</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <name>insert_the_case_formulari</name>
+        <label>insert the case</label>
+        <locationX>490</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Flow_Compatibility_formulari</targetReference>
+        </connector>
+        <inputReference>theCase</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <name>insert_the_case_pap</name>
+        <label>insert the case</label>
+        <locationX>930</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Flow_Compatibility_pap</targetReference>
+        </connector>
+        <inputReference>theCase</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <name>insert_the_case_superficie</name>
+        <label>insert the case</label>
+        <locationX>1810</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Flow_Compatibility_superficie</targetReference>
+        </connector>
+        <inputReference>theCase</inputReference>
+    </recordCreates>
     <recordUpdates>
         <name>In_Lavorazione_Case</name>
         <label>In Lavorazione Case</label>
-        <locationX>578</locationX>
+        <locationX>1150</locationX>
         <locationY>1430</locationY>
+        <connector>
+            <targetReference>RedirectToCase</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -251,7 +681,7 @@
     <screens>
         <name>Selezione_Fornitura</name>
         <label>Selezione Fornitura</label>
-        <locationX>314</locationX>
+        <locationX>50</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -270,9 +700,93 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Selezione_Fornitura_Conferimento</name>
+        <label>Selezione Fornitura</label>
+        <locationX>1370</locationX>
+        <locationY>278</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>assign_service_point_conferimento</targetReference>
+        </connector>
+        <fields>
+            <name>Punto_di_Fornitura_Tari_0_0_0</name>
+            <dataType>String</dataType>
+            <fieldText>Punto di Fornitura Tari</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Selezione_Fornitura_Formulari</name>
+        <label>Selezione Fornitura</label>
+        <locationX>490</locationX>
+        <locationY>278</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>assign_service_point_formulari</targetReference>
+        </connector>
+        <fields>
+            <name>Punto_di_Fornitura_Tari_0</name>
+            <dataType>String</dataType>
+            <fieldText>Punto di Fornitura Tari</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Selezione_Fornitura_Pap</name>
+        <label>Selezione Fornitura</label>
+        <locationX>930</locationX>
+        <locationY>278</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>assign_service_point_pap</targetReference>
+        </connector>
+        <fields>
+            <name>Punto_di_Fornitura_Tari_0_0</name>
+            <dataType>String</dataType>
+            <fieldText>Punto di Fornitura Tari</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Selezione_Fornitura_Superficie</name>
+        <label>Selezione Fornitura</label>
+        <locationX>1810</locationX>
+        <locationY>278</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>assign_service_point_superficie</targetReference>
+        </connector>
+        <fields>
+            <name>Punto_di_Fornitura_Tari_0_0_0_0</name>
+            <dataType>String</dataType>
+            <fieldText>Punto di Fornitura Tari</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Wizard_Processo</name>
         <label>Wizard Processo</label>
-        <locationX>314</locationX>
+        <locationX>930</locationX>
         <locationY>1190</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -353,28 +867,35 @@
             <inputParameters>
                 <name>labelInputSection</name>
                 <value>
-                    <stringValue>Wizard Generiche</stringValue>
+                    <elementReference>theCase.Type</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>cancelCase</assignToReference>
+                <name>cancelCase</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>caseToDraft</assignToReference>
+                <name>saveInDraft</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>188</locationX>
+        <locationX>804</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Tipo_Generica</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Flow_Compatibility</name>
         <label>Flow Compatibility</label>
-        <locationX>314</locationX>
+        <locationX>50</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>isCompatible</targetReference>
@@ -389,10 +910,81 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
+        <name>Flow_Compatibility_conferimento</name>
+        <label>Flow Compatibility</label>
+        <locationX>1370</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>isCompatible_conferimento</targetReference>
+        </connector>
+        <flowName>HDT_FL_SubFlowCompatibility</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>theCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Flow_Compatibility_formulari</name>
+        <label>Flow Compatibility</label>
+        <locationX>490</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>isCompatible_formulari</targetReference>
+        </connector>
+        <flowName>HDT_FL_SubFlowCompatibility</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>theCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Flow_Compatibility_pap</name>
+        <label>Flow Compatibility</label>
+        <locationX>930</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>isCompatible_pap</targetReference>
+        </connector>
+        <flowName>HDT_FL_SubFlowCompatibility</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>theCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Flow_Compatibility_superficie</name>
+        <label>Flow Compatibility</label>
+        <locationX>1810</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>isCompatible_superficie</targetReference>
+        </connector>
+        <flowName>HDT_FL_SubFlowCompatibility</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>theCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
-        <locationX>50</locationX>
+        <locationX>710</locationX>
         <locationY>1430</locationY>
+        <connector>
+            <targetReference>RedirectToCase</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

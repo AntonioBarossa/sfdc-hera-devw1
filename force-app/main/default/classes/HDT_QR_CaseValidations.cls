@@ -28,16 +28,7 @@ public inherited sharing class HDT_QR_CaseValidations {
         ClientCategory__c,
         ShipmentAddressAssign__c,
         TemporaryConnectionEndDate__c,
-        Campaign__c,
-        ConnId__c,
-        CustomerCodeToMerge__c,
-        BpToMerge__c,
-        AssociatedServiceRequest__c,
-        ComponentVariationsWithBonus__c,
-        Description,
-        OperationType__c,
-        ContractCode__c,
-        Note__c
+        Description
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED
