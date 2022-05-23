@@ -79,15 +79,15 @@ public with sharing class HDT_LC_MassiveLoaderTst {
         String processName = 'VolturaTecnica';
         
         HDT_LC_MassiveLoader.createMassiveLoaderRequest(processName);
-        String data = '1|2|3|4|5|6';
+        String data = '1|2|3|4|5|6|7|8|9';
         data += '\n';
-        data += '1|2|3|4|5|6';
+        data += '1|2|3|4|5|6|7|8|9';
         data += '\n';
-        data += '1|2|3|4|5|6';
+        data += '1|2|3|4|5|6|7|8|9';
         data += '\n';
-        data += '1|2|3|4|5|6';
+        data += '1|2|3|4|5|6|7|8|9';
         data += '\n';
-        data += '1|2|3|4|5|6';
+        data += '1|2|3|4|5|6|7|8|9';
         MassiveLoaderRequest__c req= HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{data})        ;
         
         Blob generateFileBlob   = Blob.valueof(data+'\n'+data);

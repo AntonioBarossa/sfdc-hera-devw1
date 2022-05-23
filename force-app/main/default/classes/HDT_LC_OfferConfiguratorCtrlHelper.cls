@@ -275,7 +275,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         setSingleRow.discountCode.label = tempItem.DiscountCode__c;
         setSingleRow.discountCode.value = tempItem.DiscountCodeValue__c;
 
-        setSingleRow.stringValue.label = tempItem.StringValue__c;
+        setSingleRow.stringValue.value = tempItem.StringValue__c;
         return setSingleRow;
     }
 
@@ -337,6 +337,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         tecOffItem.DiscountCode__c = offerLine.discountCode.label;
         tecOffItem.DiscountCodeValue__c = offerLine.discountCode.value;
         tecOffItem.StringValue__c = offerLine.stringValue.value;
+
         return tecOffItem;
     }
     
