@@ -1367,11 +1367,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Asset.PowerFlow__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Asset.PreviousDateSwitch__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -3982,11 +3977,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.DocumentExpirationDate__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.DocumentNumber__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -5052,11 +5042,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.SignatoryType__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.SocialBonusEndDate__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -5313,11 +5298,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.UseCategory__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.UseChangeCharge__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14537,11 +14517,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__ProductOption__c.ChannelClient__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SBQQ__ProductOption__c.Channel__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -14593,11 +14568,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__ProductOption__c.ContinuityChangeOffer__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__ProductOption__c.ContributionsType__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14708,11 +14678,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__ProductOption__c.EmailRecipientVAS__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__ProductOption__c.EquipmentType__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -21993,11 +21958,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.Signature__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.Status__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
