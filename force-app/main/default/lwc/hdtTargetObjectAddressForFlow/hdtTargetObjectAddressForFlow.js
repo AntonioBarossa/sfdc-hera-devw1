@@ -127,12 +127,21 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
         //targetFields.handleAddressVerification();
     }
 
+    @api
     getAddress() {
         let address = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         if (address['Stato']=='Italy' || address['Stato']=='Italia'){
             address['Stato']=='ITALIA';
         }
         return address;
+    }
+
+
+    @api
+    prepopulateAddress(wrapperAddress)
+    {
+        const targetFields = this.template.querySelector("c-hdt-target-object-address-fields");
+        targetFields.getInstanceWrapObjectBilling(wrapperAddress);
     }
 
     populateCase(address){
