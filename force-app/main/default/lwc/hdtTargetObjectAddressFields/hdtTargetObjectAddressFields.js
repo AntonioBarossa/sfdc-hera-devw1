@@ -1772,7 +1772,9 @@ disabledverifyFieldsAddressDisabled(){
                     this.theRecord['Codice Comune SAP']= data['prestazione'][0].cityCode;
                     this.theRecord['Codice Via Stradario SAP']= data['prestazione'][0].streetCode;
                     this.theRecord['Flag Verificato'] = true;
-                 
+                    
+                    this.disableConfirmButton = false;
+
                     this.dispEvent(true);
                     this.showSpinner = false;
                 }

@@ -658,12 +658,12 @@
             <value>
                 <fullName>Proroga Conn Temp</fullName>
                 <default>false</default>
-                <label>Switch in</label>
+                <label>Proroga Conn Temp</label>
             </value>
             <value>
                 <fullName>Voltura Tecnica</fullName>
                 <default>false</default>
-                <label>Switch in</label>
+                <label>Voltura Tecnica</label>
             </value>
         </valueSetDefinition>
     </valueSet>

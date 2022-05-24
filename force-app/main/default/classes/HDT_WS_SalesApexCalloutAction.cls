@@ -57,7 +57,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                             if(f.name.equalsIgnoreCase('Fam_Prod')){
                                 if(f.value != null && f.value != '' && f.value== 'Offerta commerciale' ){
                                     find = true;
-                                    indexOffieldToRemove.put(count,k);
+                                    //indexOffieldToRemove.put(count,k);
                                     break;
                                 }
                                 else{
@@ -71,9 +71,9 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                     }
                     count++;
                 }
-                for(integer i : indexOffieldToRemove.keyset()){
-                    multirequestObj.requests[0].objects[i].fields.remove(indexOffieldToRemove.get(i));
-                }
+                // for(integer i : indexOffieldToRemove.keyset()){
+                //     multirequestObj.requests[0].objects[i].fields.remove(indexOffieldToRemove.get(i));
+                // }
                 for (integer i = indexOfObjectToRemove.size() - 1 ; i >= 0 ; i--) {
                     multirequestObj.requests[0].objects.remove(indexOfObjectToRemove[i]);
                 }
