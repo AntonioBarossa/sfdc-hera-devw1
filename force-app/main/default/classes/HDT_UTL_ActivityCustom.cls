@@ -4,7 +4,7 @@
 * @description Class that holds util functions for wrts_prcgvr__Activity__c
 * @history Keltin Mesonjesi – 18/06/2021 – Created class
 */
-@SuppressWarnings('PMD.CyclomaticComplexity, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces')
+@SuppressWarnings('PMD.CyclomaticComplexity, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ActivityCustom {
     
     private FINAL static string APPOINTMENTDEVELOPERNAME = 'HDT_RT_DistributorAppointment';
@@ -16,18 +16,6 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
-
-    private inherited sharing class HDT_WRP_Actions{
-
-        String phase;
-        String activityType;
-
-        HDT_WRP_Actions(String phase, String activityType){
-            this.phase = phase;
-            this.activityType = activityType;
-        }
-    }
-
 
 
     /**
@@ -221,80 +209,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     }
 
     public static void executeOnCloseActions(List<wrts_prcgvr__Activity__c> newTriggerList,  Map<Id,SObject> oldTriggerMap){
-        Map<Id, wrts_prcgvr__Activity__c> newTriggerMap = new Map<Id, wrts_prcgvr__Activity__c>(newTriggerList);
-        Map<Id, String> caseToNewActivityType = new Map<Id, String>();
-        List<wrts_prcgvr__Activity__c> activitiesWithCases = getRelatedCases(newTriggerList, oldTriggerMap);
-        List<Case> casesToUpdate = new List<Case>();
-        if(activitiesWithCases.isEmpty())     return;
-        
-        for(wrts_prcgvr__Activity__c actWithCase : activitiesWithCases){
-            Case actualCase = (Case) actWithCase.getSobject('Case__r');
-            wrts_prcgvr__Activity__c currentCaseActivity = newTriggerMap.get(actWithCase.Id);
-            HDT_WRP_Actions newAction = getOnCloseActions(actualCase, currentCaseActivity);
-            if(STRING.isNotBlank(newAction?.phase)){
-                actualCase.Phase__c = newAction.phase;
-                casesToUpdate.add(actualCase);
-            }
-            if(STRING.isNotBlank(newAction?.activityType)){
-                caseToNewActivityType.put(actualCase.Id,newAction.activityType);
-            }
-        } 
-
-        if(!caseToNewActivityType.isEmpty()){
-            handleNewActivityCreation(caseToNewActivityType);
-        }
-        if(!casesToUpdate.isEmpty()){
-            HDT_UTL_DatabaseService.updateSObject(casesToUpdate);
-        }
-
-    }
-
-    private static void handleNewActivityCreation(Map<Id, String> caseToNewActivityType){
-        List<String> casesIds = new List<String>();
-        for(id idCase : caseToNewActivityType.keySet()){
-            casesIds.add(idCase);
-        }
-        String templateName = caseToNewActivityType.values()[0];//prendo un solo template
-
-        List<wrts_prcgvr__Activity__c> activitiesToInsert = 
-            HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(casesIds, templateName);
-            //Da sostituire con il metodo che gestirà anche template differenti
-        for(wrts_prcgvr__Activity__c activity : activitiesToInsert){
-            activity.Type__c=templateName;//più avanti lo prenderà direttamente dalla mappa.
-        }
-        if(activitiesToInsert?.size()>0){
-            HDT_UTL_DatabaseService.insertSObject(activitiesToInsert);
-        }
-    }
-
-
-    private static List<wrts_prcgvr__Activity__c> getRelatedCases(List<wrts_prcgvr__Activity__c> newTriggerList,  Map<Id,SObject> oldTriggerMap){
-        Map<Id,Id> caseToActivity = new Map<Id,Id>();
-        for (wrts_prcgvr__Activity__c activity : newTriggerList){
-            wrts_prcgvr__Activity__c oldActivity = (wrts_prcgvr__Activity__c)oldTriggerMap.get(activity.Id);
-            if ('Chiusa'.equalsIgnoreCase(activity.wrts_prcgvr__Status__c) && !activity.wrts_prcgvr__Status__c.equalsIgnoreCase(oldActivity.wrts_prcgvr__Status__c) && activity.Case__c!= null){
-                caseToActivity.put(activity.Case__c, activity.Id);
-            }
-        }
-
-        if (caseToActivity.isEmpty())    return new List<wrts_prcgvr__Activity__c>();
-        return [SELECT Case__r.Id, Case__r.Type FROM wrts_prcgvr__Activity__c WHERE Id IN :caseToActivity.values() AND  Case__c IN :caseToActivity.keySet()  WITH Security_Enforced];
-    }
-     
-    private static HDT_WRP_Actions getOnCloseActions(Case selectedCase, wrts_prcgvr__Activity__c activity){
-        String approved = activity.Approved__c;
-        String caseType = selectedCase.Type;
-
-        if(caseType == 'Formulari Richiesta Sconto')       return new HDT_WRP_Actions('Completata', null);
-        if(caseType == 'Sconti Collettivi Pap')            return new HDT_WRP_Actions('Completata', null);
-        if(caseType == 'Conferimento Centri di Raccolta')  return new HDT_WRP_Actions('Completata', null);
-        
-        if(caseType == 'Riduzione Superficie rifiuti spec promiscui') {
-            if('Gestione Procedurale'.equalsIgnoreCase(activity.Type__c))   return new HDT_WRP_Actions('Completata', null);
-            if(approved.equalsIgnoreCase('si')) return new HDT_WRP_Actions('', 'Gestione Procedurale');//Se gestione SAP non va in completata subito
-            if(approved.equalsIgnoreCase('no')) return new HDT_WRP_Actions('Annullato', null);   
-        }
-        return null;
+        HDT_UTL_ActivityCloseActions.executeOnCloseActions(newTriggerList, oldTriggerMap);
     }
 
     @AuraEnabled
