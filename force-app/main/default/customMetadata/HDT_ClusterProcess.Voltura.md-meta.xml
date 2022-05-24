@@ -8,6 +8,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">[{&quot;label&quot;:&quot;Voltura&quot;,&quot;value&quot;:&quot;Voltura&quot;}]</value>
+        <value xsi:type="xsd:string">[{&quot;label&quot;:&quot;Voltura&quot;,&quot;value&quot;:&quot;Voltura&quot;},
+{&quot;label&quot;:&quot;Voltura Tecnica&quot;,&quot;value&quot;:&quot;Voltura Tecnica&quot;}]</value>
     </values>
 </CustomMetadata>

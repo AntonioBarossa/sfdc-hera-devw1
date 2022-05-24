@@ -6974,6 +6974,14 @@
     <picklistValues>
         <picklist>InformativeType__c</picklist>
         <values>
+            <fullName>Proroga Conn Temp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura Tecnica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Subentro</fullName>
             <default>false</default>
         </values>

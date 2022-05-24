@@ -52,7 +52,7 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
             }
         } 
         console.log('entra in else ind estero ');
-
+        console.log('### Address >>> ' +JSON.stringify(address));
         if (address['Stato'] === undefined || address['Stato'] === '') {
             concatAddressErrorFields = concatAddressErrorFields.concat('Stato, ');
         }
@@ -127,12 +127,27 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
         //targetFields.handleAddressVerification();
     }
 
+    @api
     getAddress() {
         let address = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
-        if (address['Stato']=='Italy' || address['Stato']=='Italia'){
-            address['Stato']=='ITALIA';
+        if(!address["Stato"])
+        {
+            console.log('### Adding Stato ###')
+            address['Stato']='ITALIA';
         }
+        if (address['Stato']=='Italy' || address['Stato']=='Italia'){
+            address['Stato']='ITALIA';
+        }
+        console.log('### Get Address >>> ' + JSON.stringify(address));
         return address;
+    }
+
+
+    @api
+    prepopulateAddress(wrapperAddress)
+    {
+        const targetFields = this.template.querySelector("c-hdt-target-object-address-fields");
+        targetFields.getInstanceWrapObjectBilling(wrapperAddress);
     }
 
     populateCase(address){
