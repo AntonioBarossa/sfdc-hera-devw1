@@ -628,6 +628,17 @@
                 <elementReference>getAllegatiObbligatori.AttachmentString__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.SubscriberType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.EffectiveDate__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
         <connector>
             <targetReference>updateCessazionePostAccertamento</targetReference>
         </connector>
