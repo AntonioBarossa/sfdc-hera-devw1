@@ -52,10 +52,6 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
-        <name>AccountDataEnrichment__mdt</name>
-    </customMetadataTypeAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>true</enabled>
         <name>HDT_AccountDataEnrichment__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -213,10 +209,6 @@
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_RegionalAdditional__mdt</name>
-    </customMetadataTypeAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>true</enabled>
-        <name>HDT_RequestEstrattoConto__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
@@ -2190,21 +2182,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>AccountDataEnrichment__mdt.Authorization__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>AccountDataEnrichment__mdt.ColumnData__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>AccountDataEnrichment__mdt.Credential__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>AccountStatementFilter__c.IsDigitalMarking__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2941,11 +2918,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Asset.PhoneRecipient__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Asset.PowerFlow__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7322,6 +7294,11 @@
         <editable>true</editable>
         <field>Case.SignalType__c</field>
         <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.SignatoryType__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -7621,11 +7598,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.UseCategory__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.UseChangeCharge__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11402,26 +11374,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>HDT_RequestEstrattoConto__mdt.Aggregazione__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>HDT_RequestEstrattoConto__mdt.LoginId__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>HDT_RequestEstrattoConto__mdt.TipoEstrattoConto__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>HDT_RequestEstrattoConto__mdt.TipoTransazione__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>HDT_SapWsConfiguration__mdt.JSON__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11517,27 +11469,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>HDT_StatementRequest__mdt.Aggregation__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>HDT_StatementRequest__mdt.LoginId__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>HDT_StatementRequest__mdt.PicklistValues__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>HDT_StatementRequest__mdt.StatementType__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>HDT_StatementRequest__mdt.TransactionType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22117,16 +22049,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>SBQQ__QuoteLine__c.PDRCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SBQQ__QuoteLine__c.PODCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>SBQQ__QuoteLine__c.PaymentMode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -24748,11 +24670,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Subscription__c.Quote__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SBQQ__Subscription__c.Range__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -38156,10 +38073,6 @@
     <tabVisibilities>
         <tab>GeneralTermsCondition__c</tab>
         <visibility>DefaultOn</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>MassiveLoader</tab>
-        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>MassiveLoaderRequestItem__c</tab>

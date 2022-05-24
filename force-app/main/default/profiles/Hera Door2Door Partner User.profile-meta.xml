@@ -51,11 +51,6 @@
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
-        <application>standard__Insights</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
         <application>standard__LightningBolt</application>
         <default>false</default>
         <visible>false</visible>
@@ -142,10 +137,6 @@
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_ObjectRecordType__mdt</name>
-    </customMetadataTypeAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>true</enabled>
-        <name>AccountDataEnrichment__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
@@ -298,10 +289,6 @@
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_RegionalAdditional__mdt</name>
-    </customMetadataTypeAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>true</enabled>
-        <name>HDT_RequestEstrattoConto__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
@@ -2202,21 +2189,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>AccountDataEnrichment__mdt.Authorization__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>AccountDataEnrichment__mdt.ColumnData__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>AccountDataEnrichment__mdt.Credential__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>AccountStatementFilter__c.IsDigitalMarking__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2908,11 +2880,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Asset.PhoneRecipient__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Asset.PowerFlow__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7154,6 +7121,11 @@
         <editable>true</editable>
         <field>Case.SignalType__c</field>
         <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.SignatoryType__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -7448,11 +7420,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.UseCategory__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.UseChangeCharge__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11119,26 +11086,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>HDT_RequestEstrattoConto__mdt.Aggregazione__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>HDT_RequestEstrattoConto__mdt.LoginId__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>HDT_RequestEstrattoConto__mdt.TipoEstrattoConto__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>HDT_RequestEstrattoConto__mdt.TipoTransazione__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>HDT_SapWsConfiguration__mdt.JSON__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11234,27 +11181,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>HDT_StatementRequest__mdt.Aggregation__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>HDT_StatementRequest__mdt.LoginId__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>HDT_StatementRequest__mdt.PicklistValues__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>HDT_StatementRequest__mdt.StatementType__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>HDT_StatementRequest__mdt.TransactionType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -19869,11 +19796,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>SBQQ__ProductOption__c.ChannelClient__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>SBQQ__ProductOption__c.Channel__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -19925,11 +19847,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__ProductOption__c.ContinuityChangeOffer__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SBQQ__ProductOption__c.ContributionsType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20045,11 +19962,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__ProductOption__c.EmailRecipientVAS__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SBQQ__ProductOption__c.EquipmentType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20584,22 +20496,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.Campaign__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SBQQ__QuoteLine__c.CategoryFamily__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteLine__c.CategoryTypeClient__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.ChannelClient__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20660,11 +20562,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteLine__c.ContinuityChangeOffer__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.ContributionsType__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20758,21 +20655,6 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.EquipmentType__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.ExternalId__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.GreenCertificateIncluded__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.GreenEnergyOption__c</field>
         <readable>true</readable>
@@ -20863,16 +20745,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.PDRCode__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.PODCode__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.PaymentMode__c</field>
         <readable>true</readable>
@@ -20949,11 +20821,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.Range__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SBQQ__QuoteLine__c.Reading__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -20970,11 +20837,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__QuoteLine__c.ReturnSafeGuardData__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.RoleProfile__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22563,22 +22425,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__Subscription__c.Campaign__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SBQQ__Subscription__c.CategoryFamily__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Subscription__c.CategoryTypeClient__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__Subscription__c.ChannelClient__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22619,11 +22471,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Subscription__c.ContinuityChangeOffer__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__Subscription__c.ContributionsType__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22684,11 +22531,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__Subscription__c.EmailRecipientVAS__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__Subscription__c.EquipmentType__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -31381,9 +31223,6 @@
         <layout>AccountContactRelation-Account Contact Relationship Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>AccountDataEnrichment__mdt-Account data enrichment Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>AccountStatementFilter__c-Filtro Estratto Conto Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -31850,9 +31689,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>HDT_ProcessCancellationReason__mdt-Layout Process Cancellation Reason</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>HDT_RequestEstrattoConto__mdt-Request Estratto Conto Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>HDT_SapWsConfiguration__mdt-HDT Sap WS Configuration Layout</layout>
@@ -35382,10 +35218,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>LoginGroup__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>MassiveLoader</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

@@ -10970,6 +10970,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>SignatoryType__c</picklist>
+        <values>
+            <fullName>Legale Rappresentante</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagatore Alternativo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stesso Sottoscrittore</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>SplitPayment__c</picklist>
         <values>
             <fullName>No</fullName>
