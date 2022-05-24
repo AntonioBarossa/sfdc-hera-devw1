@@ -158,13 +158,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 }
                                 when 'Ammissibilità OK' {
 
-                                    /**@frpanico 26/10/2021
-                                     * Cambio Voltura - RN008 "Voltura con Switch"
-                                     */
-                                    if(ordRetrieved.ProcessType__c.equalsIgnoreCase('Voltura con Switch'))
-                                    {
-                                        voltureChangeSrv.handleAmmissibilityCheck(mapRequestFields, ordRetrieved);
-                                    }
+
 
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                     ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');

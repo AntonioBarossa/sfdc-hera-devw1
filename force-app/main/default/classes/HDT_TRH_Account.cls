@@ -35,6 +35,7 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
     }
  
     protected override void beforeUpdate() {
+        HDT_UTL_GlobaMigrationKey.setGlobalMigrationKey(Trigger.new, Trigger.oldMap);
         checkAccountName();
         createKpiExtension();
         setIndividualsOwnerIds();

@@ -3,11 +3,14 @@ public inherited sharing class HDT_WS_InvioNumerazioni {
     private static final String CALLBACK_LATER = '/campaigns/calls-later'; 
 
     @AuraEnabled
-    public static HDT_WS_Response callService(String macroactivity,String phonenumber, Datetime callDateTime){
+    public static HDT_WS_Response callService(String macroactivity,String phonenumber, Datetime callDateTime, String cmId){
         HDT_WS_InvioNumerazioniRequest request = new HDT_WS_InvioNumerazioniRequest();
         request.macroActivity = macroactivity;
         request.phoneNumber = phonenumber;
-
+        HDT_WS_StructureData structData=new HDT_WS_StructureData();
+        structData.campaignMemberId=cmId;
+        request.structureData=structData;
+        system.debug('Krist: '+ json.serialize(request) );
         HDT_WS_Response response;
         if(callDateTime == null) {
             // do CallMeBackNow
@@ -23,13 +26,18 @@ public inherited sharing class HDT_WS_InvioNumerazioni {
     }
 
     @AuraEnabled
-    public static HDT_WS_Response callService(String macroactivity,String phonenumber) {
-        return callService(macroactivity, phonenumber, null);
+    public static HDT_WS_Response callService(String macroactivity,String phonenumber, String cmId) {
+        return callService(macroactivity, phonenumber, null, cmId);
     }
 
     public class HDT_WS_InvioNumerazioniRequest extends HDT_WS_Request{
         @AuraEnabled public String macroActivity;
         @AuraEnabled public String phoneNumber;
         @AuraEnabled public String callDateTime;
+        @AuraEnabled public HDT_WS_StructureData structureData=new HDT_WS_StructureData();
+    }
+
+    public class HDT_WS_StructureData{
+        @AuraEnabled public String campaignMemberId;
     }
 }

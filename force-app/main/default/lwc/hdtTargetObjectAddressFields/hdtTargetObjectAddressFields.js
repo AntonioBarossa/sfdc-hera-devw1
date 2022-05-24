@@ -809,31 +809,31 @@ handleAddressValuesIfSap(servicepointretrieveddata){
                     console.log('****count searchkey : '+  JSON.stringify(searchkey));
                     dataForTableForn ='';
                     console.log('****element INDIRIZZOFORNITURA: '+  JSON.stringify(element));
-                    if(element.comune != undefined){
+                    if(element.comune !== undefined && element.comune !== null && element.comune !== ''){
                         dataForTableForn += element.comune + ',';
                     }
-                    if(element.via != undefined){
+                    if(element.via !== undefined && element.via !== null && element.via !== ''){
                         dataForTableForn += element.via + ',';
                     }
-                    if(element.civico != undefined){
+                    if(element.civico !== undefined && element.civico !== null && element.civico !== ''){
                         dataForTableForn += element.civico + ',';
                     }
-                    if(element.provincia != undefined){
+                    if(element.provincia !== undefined && element.provincia !== null && element.provincia !== ''){
                         dataForTableForn += element.provincia+ ',';
                     }
-                    if(element.estensCivico != undefined){
+                    if(element.estensCivico !== undefined && element.estensCivico !== null && element.estensCivico !== ''){
                         dataForTableForn += element.estensCivico + ',';
                     }
-                    if(element.stato != undefined){
+                    if(element.stato !== undefined && element.stato !== null && element.stato !== ''){
                         dataForTableForn += element.stato + ',';
                     }
-                    if(element.cap != undefined){
+                    if(element.cap !== undefined && element.cap !== null && element.cap !== ''){
                         dataForTableForn += element.cap + ',';
                     }
-                    if(element.codiceComuneSAP != undefined){
+                    if(element.codiceComuneSAP !== undefined && element.codiceComuneSAP !== null && element.codiceComuneSAP !== ''){
                         dataForTableForn += element.codiceComuneSAP + ',';
                     }
-                    if(element.codiceViaStradarioSAP != undefined){
+                    if(element.codiceViaStradarioSAP !== undefined && element.codiceViaStradarioSAP !== null && element.codiceViaStradarioSAP !== ''){
                         dataForTableForn += element.codiceViaStradarioSAP;
                     }
 

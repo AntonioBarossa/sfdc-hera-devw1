@@ -186,7 +186,23 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
             }
         }        
         if(!myCurrentCaseList.isEmpty()){
-            HDT_UTL_DatabaseService.updateSObject(myCurrentCaseList);
+            updateObjectList(myCurrentCaseList);
+            //HDT_UTL_DatabaseService.updateSObject(myCurrentCaseList);
+        }
+    }
+
+    public void updateObjectList(List<SObject> caseToUpdate){
+        if (HDT_UTL_DatabaseService.checkBeforeDml(caseToUpdate, HDT_UTL_DatabaseService.DmlOperation.DML_UPDATE)){
+            System.debug(LoggingLevel.DEBUG, 'Update not performed for the following records: ' + JSON.serialize(caseToUpdate));
+        }else{
+            Database.SaveResult[] srList = Database.update(caseToUpdate, false);
+            for (Database.SaveResult sr : srList){
+                if (!sr.isSuccess()){
+                    for (Database.Error err : sr.getErrors()){
+                        System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+                    }
+                }
+            }
         }
     }
 

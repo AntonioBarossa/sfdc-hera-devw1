@@ -230,12 +230,14 @@ public inherited sharing class HDT_QR_CampaignMember {
         return [
             SELECT
             Id,
-            ContactId, 
             LeadId, 
             CampaignId, 
             GenericField1__c,
             Campaign.ProcessType__c,
-            Contact.AccountId
+            Campaign.Name,
+            ContactId,
+            Contact.AccountId,
+            Contact.Name
             FROM CampaignMember 
             WHERE Id = :campaignMemberId
             WITH SECURITY_ENFORCED

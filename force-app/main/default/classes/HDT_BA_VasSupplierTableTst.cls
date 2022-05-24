@@ -31,12 +31,15 @@ public class HDT_BA_VasSupplierTableTst {
             Id recordtypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PostSalesVAS').getRecordTypeId();
 			HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Bozza',recordTypeId,'HDT_RT_PostSalesVAS');
             
-            List<VasSupplierTable__c> vsTables = HDT_UTL_DataFactoryTst.createVasSupplierTable(2,false);
+            List<VasSupplierTable__c> vsTables = HDT_UTL_DataFactoryTst.createVasSupplierTable(3,false);
             vsTables[0].Status__c = 'PENDING';
             vsTables[0].VasPracticeCode__c = 'vascode';
             vsTables[0].VasSupplierStatus__c = 'INSTALLAZIONE FALLITA';
             vsTables[1].Status__c = 'PENDING';
             vsTables[1].VasPracticeCode__c = 'vascodex';
+            vsTables[2].Status__c = 'PENDING';
+            vsTables[2].VasPracticeCode__c = 'VasServizio';
+            vsTables[2].VasSupplierStatus__c = 'KO FORNITORE';
             insert vsTables;
             
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
@@ -49,7 +52,9 @@ public class HDT_BA_VasSupplierTableTst {
             List<ServicePoint__c> points = HDT_UTL_DataFactoryTst.createServicePoint(1,true);
             Id pointId = points[0].id;   
             
-            List<Product2> products = HDT_UTL_DataFactoryTst.createProduct2(1,true);
+            List<Product2> products = HDT_UTL_DataFactoryTst.createProduct2(1,false);
+            products[0].family = 'VAS Servizio';
+            insert products;
             Id productId = products[0].id; 
             
             List<PricebookEntry> entries = HDT_UTL_DataFactoryTst.createPricebookEntry(products,true,pricebookId);
@@ -64,11 +69,13 @@ public class HDT_BA_VasSupplierTableTst {
             List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(10,true,orderId,pointId,productId,entryId);
             Id orderItemId = orderItems[0].id;
             
-            List<SBQQ__Subscription__c> subs = HDT_UTL_DataFactoryTst.createSubscription (1,false,accId,contractId,pointId);
+            List<SBQQ__Subscription__c> subs = HDT_UTL_DataFactoryTst.createSubscription (2,false,accId,contractId,pointId);
             for(SBQQ__Subscription__c s : subs){
                 s.VasPracticeCode__c = 'vascode';
                 s.SBQQ__OrderProduct__c = orderItemId;
             }
+            subs[1].VasPracticeCode__c = 'VasServizio';
+            subs[1].SBQQ__Product__c = productId;
             insert subs;
             
             List<Asset> assets = HDT_UTL_DataFactoryTst.createAsset(2,false);
@@ -145,6 +152,18 @@ public class HDT_BA_VasSupplierTableTst {
         
         List<AsyncApexJob> jobsApexBatch = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'BatchApex'];
     	System.assertEquals(1, jobsApexBatch.size(), 'expecting one apex batch job');
+
+        Integer subScriptionAct = 0;
+        Integer assetAct = 0;
+        for (wrts_prcgvr__Activity__c act : [SELECT id, Subscription__c, Asset__c FROM wrts_prcgvr__Activity__c]){
+            if (act.Asset__c != null){
+                assetAct++;
+            }else if (act.Subscription__c != null){
+                subScriptionAct++;
+            }
+        }
+        System.assertNotEquals(1, assetAct, 'Non si è creata l\'attività per l\'asset');
+        System.assertNotEquals(1, subScriptionAct, 'Non si è creata l\'attività per la subscription');
         
     }
 }

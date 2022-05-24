@@ -101,6 +101,11 @@
         <label>Segnalazioni</label>
     </customValue>
     <customValue>
+        <fullName>Social</fullName>
+        <default>false</default>
+        <label>Social</label>
+    </customValue>
+    <customValue>
         <fullName>Variazioni</fullName>
         <default>false</default>
         <label>Variazioni</label>
@@ -115,11 +120,6 @@
         <default>false</default>
         <label>Voltura</label>
     </customValue>
-    <customValue>
-        <fullName>Social</fullName>
-        <default>false</default>
-        <label>Social</label>
-    </customValue>
     <masterLabel>Cluster</masterLabel>
-    <sorted>false</sorted>
+    <sorted>true</sorted>
 </GlobalValueSet>

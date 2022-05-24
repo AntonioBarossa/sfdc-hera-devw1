@@ -10,6 +10,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
     @TestVisible
     private static String volturaTecnicaPhase = 'In attesa Data Decorrenza';
     private static String clonedOrderRecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(voltureChangeRecordTypeName).getRecordTypeId();
+    private static String activityType = 'Valori non corrispondenti';
     /**
      * @frpanico 06/10/2021
      * This method call the cloneSobject method from the HDT_UTL_VoltureChangeManager class
@@ -24,6 +25,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         Map<String,Object> extraParams = new Map<String,Object>();
         Map<String,Object> accountCheckParams = new Map<String,Object>();
         HDT_WRP_VoltureChangeManager.HDT_WRP_AccountCheck accountCheck = new HDT_WRP_VoltureChangeManager.HDT_WRP_AccountCheck();
+        HDT_SRV_Order orderSrv = new HDT_SRV_Order();
 
         /* Call to the cloneSobject method */
         extraParams.put('sobjName', 'Order');
@@ -31,10 +33,13 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         Order inputOrder = (Order)sobj;        
         /* Add process Type, RecordType,Phase__s, Status,OrderReference to the cloned order and insert*/
         clonedOrder.put('ProcessType__c','Voltura con Switch');
+        clonedOrder.put('ProcessCode__c','VT1');
         clonedOrder.put('RecordTypeId', clonedOrderRecordTypeId);
         clonedOrder.put('Phase__c','Bozza');
         clonedOrder.put('Status','Draft');
         clonedOrder.put('OrderReference__c',inputOrder.Id);
+        clonedOrder.put('EffectiveDate__c',orderSrv.addBusinessDay(Date.today(), 3));
+        clonedOrder.put('VoltureType__c','Ordinaria');
         HDT_UTL_DatabaseService.insertSObject(clonedOrder);
         /*Retrieve and clone OrderItems from input order*/
         orderItemsToClone = voltureChangeQr.getOrderItemByOrderId(inputOrder.Id);
@@ -109,6 +114,8 @@ public with sharing class HDT_SRV_VoltureChangeManager{
             wrts_prcgvr__Activity__c activity = voltureChangeUtils.createActivity(ammissibilityCheckTemplate);
             if(activity != null)
             {
+                activity.Type__c = activityType;
+                activity.OpeningNote__c = (String)ammissibilityCheckMap.get('note');
                 activity.wrts_prcgvr__Description__c = (String)ammissibilityCheckMap.get('message');
                 activity.Order__c = currentOrder.Id;
                 HDT_UTL_DatabaseService.insertSObject(activity);
@@ -124,6 +131,11 @@ public with sharing class HDT_SRV_VoltureChangeManager{
      */
     public void handlePublishUpdate(Order inputOrder)
     {
+        List<wrts_prcgvr__Activity__c> activities = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE Order__c = :inputOrder.Id AND Type__c = 'Valori non corrispondenti' WITH SECURITY_ENFORCED];
+        if(!activities.isEmpty())
+        {
+            return;
+        }
         HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
         Order orderToUpdate = new Order();
         orderToUpdate.Id = inputOrder.Id;
@@ -195,7 +207,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         for(Order singleOrder : myOrderList){
             if(singleOrder.Phase__c.equalsIgnoreCase('Amm. Precheck OK SII') 
             && (singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
-            || singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch'))
+            /*|| singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch')*/)
             && singleOrder.TecnicalPhase__c == null){
                 Order ordToUpdate = new Order();
                 ordToUpdate.Id = singleOrder.Id;        

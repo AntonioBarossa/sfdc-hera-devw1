@@ -9,14 +9,8 @@
 &apos;Prima Attivazione In delibera&apos;, &apos;Attivazione&apos;, 
 &apos;Prima Attivazione Fuori delibera&apos;, &apos;Attivazione&apos;, 
 &apos;Prima Attivazione con modifica&apos;, &apos;Attivazione con Modifica&apos;,
-&apos;Connessione con Attivazione&apos;, &apos;Connessione con Attivazione&apos;,
-&apos;Temporanea - Nuova Attivazione&apos;, &apos;Temporanea - Nuova Attivazione&apos;,
-&apos;Cambio Offerta&apos;, &apos;Cambio Offerta&apos;,
 &apos;Cambio Offerta Ele&apos;, &apos;Cambio Offerta&apos;,
 &apos;Cambio Offerta Gas&apos;, &apos;Cambio Offerta&apos;,
-&apos;Cambio Uso&apos;, &apos;Cambio Uso&apos;,
-&apos;Cambio Uso Fittizio&apos;, &apos;Cambio Uso&apos;,
-&apos;Aggiunta Sconti o Bonus VAS&apos;, &apos;Aggiunta Sconti o Bonus VAS&apos;,
 &apos;Aggiunta Sconti o Bonus VAS Ele&apos;, &apos;Aggiunta Sconti o Bonus VAS&apos;,
 &apos;Aggiunta Sconti o Bonus VAS Gas&apos;, &apos;Aggiunta Sconti o Bonus VAS&apos;,
 &apos;Switch in con voltura tecnica&apos;, &apos;Switch in&apos;,
@@ -25,15 +19,7 @@
 &apos;Switch in Fittizio&apos;, &apos;Switch in&apos;,
 &apos;Switch in Winback&apos;, &apos;Switch in&apos;,
 &apos;Switch in Ele&apos;, &apos;Switch in&apos;,
-&apos;Switch in Gas&apos;, &apos;Switch in&apos;,
-&apos;VAS&apos;, &apos;VAS&apos;,
-&apos;Voltura&apos;, &apos;Voltura&apos;,
-&apos;Riattivazione non morose&apos;, &apos;Riattivazione non morose&apos;,
-&apos;Proroga Temporanea&apos;, &apos;Proroga Temporanea&apos;,
-&apos;Cambio Uso Tecnico&apos;, &apos;Cambio Uso Tecnico&apos;,
-&apos;Ripensamento&apos;, &apos;VAS&apos;,
-&apos;Reso&apos;, &apos;VAS&apos;,
-&apos;Disattivazione&apos;, &apos;VAS&apos;,&apos;&apos; 
+&apos;Switch in Gas&apos;, &apos;Switch in&apos;, TEXT(ProcessType__c)
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Processo</label>

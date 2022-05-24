@@ -38,11 +38,16 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private Map<Id, Account> accountMap;
     private Map<Id, BillingProfile__c> billingProfileMap;
     private Map<Id, ServicePoint__c> servicePointMap;
+    private Map<Id, Contract> contractMap;
     private Id childOrderRecordTypeId;
     private OrderItem fakeOrderItem;
     private Map<String, String> companyCodeMap;
     private Map<String, String> processMatrixMap;
     private Map<Id, List<SBQQ__ProductOption__c>> otherRequiredOption;
+    private List<sObject> sObjectToDelete = new List<sObject>();
+    private List<HDT_ExciseTranscode__mdt> exciseList;
+    private Map<String,Double> exciseMap = new Map<String,Double>();
+    private List<HDT_RegionalAdditional__mdt> regionalAddList = new List<HDT_RegionalAdditional__mdt>();
 
     public override void checks(){
 
@@ -54,6 +59,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         accountIdToRetrieve = new List<Id>();
         billProfToRetrieve = new List<Id>();
         servPointToRetrieve = new List<Id>();
+        exciseMap = new Map<String,Double>();
+        regionalAddList = new List<HDT_RegionalAdditional__mdt>();
+        contractMap = new Map<Id, Contract>();
 
         childOrderRecordTypeId = getOrderRecordTypeMap(processName);
 
@@ -200,7 +208,18 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         }
 
         productOptionList = [
-            SELECT SBQQ__ConfiguredSKU__c, SBQQ__OptionalSKU__c, SBQQ__OptionalSKU__r.ProductCode, SBQQ__OptionalSKU__r.Name, SBQQ__Required__c
+            SELECT SBQQ__ConfiguredSKU__c, 
+                SBQQ__OptionalSKU__c,
+                SBQQ__OptionalSKU__r.ProductCode, 
+                SBQQ__OptionalSKU__r.Name, 
+                SBQQ__Required__c,
+                SBQQ__OptionalSKU__r.DurationDay__c,
+                SBQQ__OptionalSKU__r.DurationDayGas__c,
+                SBQQ__OptionalSKU__r.DelayDay__c,
+                SBQQ__OptionalSKU__r.DelayDayGas__c,
+                SBQQ__OptionalSKU__r.Percentage__c,
+                SBQQ__OptionalSKU__r.Price__c,
+                SBQQ__OptionalSKU__r.PriceGas__c
             FROM SBQQ__ProductOption__c
             WHERE SBQQ__ConfiguredSKU__c IN :productIdList
             WITH SECURITY_ENFORCED
@@ -249,10 +268,23 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         List<Account> accList = HDT_UTL_MassiveOrderFieldsAlignment.getAccountByIds(accountIdToRetrieve);
         List<BillingProfile__c> billProfList = HDT_UTL_MassiveOrderFieldsAlignment.getBillingProfileByIds(billProfToRetrieve);
         List<ServicePoint__c> servPointList = HDT_UTL_MassiveOrderFieldsAlignment.getServicePointByIds(servPointToRetrieve);
+        List<Contract> contractList = HDT_UTL_MassiveOrderFieldsAlignment.getContractByServicePointIds(servPointToRetrieve);
 
         accountMap = new Map<Id, Account>(accList);
         billingProfileMap = new Map<Id, BillingProfile__c>(billProfList);
         servicePointMap = new Map<Id, ServicePoint__c>(servPointList);
+        for(Contract singleContract : contractList){
+            contractMap.put(singleContract.ServicePoint__c, singleContract);
+        }
+        exciseList = [SELECT
+            Id,Active__c, ExciseString__c, Excise__c
+            FROM HDT_ExciseTranscode__mdt WHERE Active__c = true
+        ];
+        for(HDT_ExciseTranscode__mdt singleExcise : exciseList){
+            exciseMap.put(singleExcise.ExciseString__c, singleExcise.Excise__c);
+        }
+        
+        regionalAddList = [SELECT Id, Label, AdditionalValue__c, City__c, Region__c, Tax__c FROM HDT_RegionalAdditional__mdt];
         
     }
 
@@ -266,7 +298,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         Id commOffId;
         Id priceBookId;
-
+        String errorFieldCheck;
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
             if(processObj.requestItem.Status__c == 'Errore'){
@@ -274,6 +306,15 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             }
 
             processObj.sale = setSaleObject(processObj.sale, processObj.nextDataObj.accountId, processObj.nextDataObj.contactId);
+
+
+            errorFieldCheck = checkRequiredSalesField(processObj.sale);
+            if(String.isNotEmpty(errorFieldCheck)){
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = errorFieldCheck;
+                continue;
+            }
+
             requestItemForUpsert.add(processObj.requestItem);
             saleToInsert.add(processObj.sale);
         }
@@ -357,6 +398,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                     wrpChildOrder.childOrder.Pricebook2Id = priceBookId;
                     wrpChildOrder.childOrder.EffectiveDate = Date.today();
                     wrpChildOrder.childOrder.Status = 'Draft';
+                    wrpChildOrder.childOrder.WizardCompletedDate__c=Date.today();
 
                     for(HDT_WRP_OrderItem wrpOrderItem : wrpChildOrder.orderItemList){
 
@@ -365,11 +407,21 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                         ){
                             Map<String, SBQQ__ProductOption__c> tempMap = additionalOrderItemMap.get(commOffId);
                             if(tempMap.containsKey(wrpOrderItem.product.ProductCode)){
+                                SBQQ__ProductOption__c prodOption = tempMap.get(wrpOrderItem.product.ProductCode);
                                 wrpOrderItem.product.Id = tempMap.get(wrpOrderItem.product.ProductCode).SBQQ__OptionalSKU__c;
                                 wrpOrderItem.orderItem.Product2Id = wrpOrderItem.product.Id;
                                 wrpOrderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(wrpOrderItem.product.Id).Id;
                                 wrpOrderItem.orderItem.UnitPrice = pbeOptionalMap.get(wrpOrderItem.product.Id).UnitPrice;
                                 wrpOrderItem.orderItem.Quantity = 1;
+                                if(wrpOrderItem.itemType.equalsIgnoreCase('bonus')){
+                                    wrpOrderItem.orderItem.DurationDay__c= prodOption.SBQQ__OptionalSKU__r.DurationDay__c;
+                                    wrpOrderItem.orderItem.DurationDayGas__c=prodOption.SBQQ__OptionalSKU__r.DurationDayGas__c;
+                                    wrpOrderItem.orderItem.DelayDay__c=prodOption.SBQQ__OptionalSKU__r.DelayDay__c;
+                                    wrpOrderItem.orderItem.DelayDayGas__c=prodOption.SBQQ__OptionalSKU__r.DelayDayGas__c;
+                                    wrpOrderItem.orderItem.Percentage__c=prodOption.SBQQ__OptionalSKU__r.Percentage__c;
+                                    wrpOrderItem.orderItem.Price__c=prodOption.SBQQ__OptionalSKU__r.Price__c;
+                                    wrpOrderItem.orderItem.PriceGas__c=prodOption.SBQQ__OptionalSKU__r.PriceGas__c;
+                                }
                                 //system.debug(LoggingLevel.DEBUG, '>>> pbeId pod-pdr ' + wrpOrderItem.orderItem.PriceBookEntryId);
                             } else {
                                 wrpOrderItem = null;
@@ -448,19 +500,25 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 wrpChildOrder.childOrder = HDT_UTL_MassiveOrderFieldsAlignment.alignSaleFields(wrpChildOrder.childOrder, processObj.sale);
                 wrpChildOrder.childOrder = HDT_UTL_MassiveOrderFieldsAlignment.alignBillingProfileFields(wrpChildOrder.childOrder, billingProfileMap.get(processObj.nextDataObj.billProfId));
                 wrpChildOrder.childOrder = HDT_UTL_MassiveOrderFieldsAlignment.alignServicePointFields(wrpChildOrder.childOrder, servicePointMap.get(processObj.nextDataObj.servPointId));
-
-                commodity = servicePointMap.get(processObj.nextDataObj.servPointId).CommoditySector__c;
-
-                if(companyCodeMap.containsKey(processObj.sale.SalesCompany__c + '_' +  commodity)){
-                    wrpChildOrder.childOrder.SalesCompanyCode__c = companyCodeMap.get(processObj.sale.SalesCompany__c + '_' +  commodity);
+                if(contractMap.get(processObj.nextDataObj.servPointId) != null){
+                    wrpChildOrder.childOrder = HDT_UTL_MassiveOrderFieldsAlignment.alignContractFields(wrpChildOrder.childOrder, contractMap.get(processObj.nextDataObj.servPointId));
                 }
-
-                wrpChildOrder.childOrder.SalesCompany__c = processObj.sale.SalesCompany__c;
+                commodity = servicePointMap.get(processObj.nextDataObj.servPointId).CommoditySector__c;
+                if(commodity.equalsIgnoreCase('Gas')){
+                    wrpChildOrder.childOrder.SalesCompany__c = 'Hera Comm Marche';
+                }else {
+                    wrpChildOrder.childOrder.SalesCompany__c = 'Hera Comm S.p.A.';
+                }
+                if(companyCodeMap.containsKey(wrpChildOrder.childOrder.SalesCompany__c + '_' +  commodity)){
+                    wrpChildOrder.childOrder.SalesCompanyCode__c = companyCodeMap.get(wrpChildOrder.childOrder.SalesCompany__c + '_' +  commodity);
+                }
+                //wrpChildOrder.childOrder.SalesCompany__c = processObj.sale.SalesCompany__c;
                 //wrpChildOrder.childOrder.Phase__c = 'Comunicazione verso Heroku';
                 if(processMatrixMap.containsKey(wrpChildOrder.childOrder.ProcessType__c)){
                     wrpChildOrder.childOrder.ProcessCode__c = processMatrixMap.get(wrpChildOrder.childOrder.ProcessType__c);
                 }
-                
+
+                handleCustomFieldLogic(wrpChildOrder.childOrder,commodity); 
             }
         }
 
@@ -537,12 +595,30 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
             if(processObj.requestItem.Status__c == 'Errore'){
+                setObjectToDelete(processObj);
                 continue;
             }
             processObj.requestItem.Status__c = 'In Lavorazione';
         }
+        if(sObjectToDelete.size() > 0){
+            HDT_UTL_DatabaseService.deleteSObject(sObjectToDelete);
+        }
         getLimitDetails('processEnd');
 
+    }
+
+    private void setObjectToDelete(HDT_WRP_ProcessObjects processObj){
+        sObjectToDelete.add(processObj.opportunity);
+        sObjectToDelete.add(processObj.sale);
+        sObjectToDelete.add(processObj.saleServiceItem);
+        sObjectToDelete.add(processObj.parentOrder);
+        for(HDT_WRP_ChildOrder wrpChildOrder : processObj.childOrderList){
+            sObjectToDelete.add(wrpChildOrder.childOrder);
+        }
+        
+        if(String.isNotEmpty(processObj.nextDataObj.billProfId)){
+            sObjectToDelete.add(new BillingProfile__c(Id=processObj.nextDataObj.billProfId));
+        }
     }
 
     public override void finalUpdate(){
@@ -550,6 +626,37 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         if(itemsToUpdate.size() > 0){
             update itemsToUpdate;
+        }
+    }
+
+    private void handleCustomFieldLogic(Order orderToUpdate,String commodity){
+        HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+        String processType = orderToUpdate.ProcessType__c;
+        Date effectiveDate = orderToUpdate.EffectiveDate__c;
+
+        //VOLTURA
+        if(processType.equalsIgnoreCase('Voltura')){
+            HDT_SRV_AnagAlignment srvAnag = new HDT_SRV_AnagAlignment();
+            String tax = commodity == 'Energia Elettrica' ? orderToUpdate.ExciseEle__c : orderToUpdate.ExciseGAS__c;
+            String city = orderToUpdate.SupplyCity__c;
+            String province = orderToUpdate.SupplyState__c;
+            String region = HDT_SRV_AnagAlignment.getRegion(province);
+            if(effectiveDate < orderSrv.addBusinessDay(System.today(),3)){
+                orderToUpdate.RetroactiveDate__c = orderToUpdate.EffectiveDate__c;
+                orderToUpdate.Subprocess__c = 'Retroattiva';
+            }else {
+                orderToUpdate.Subprocess__c = 'Standard';
+            }
+            orderToUpdate.ProcessCode__c = commodity.equalsIgnoreCase('Gas')?'VTG':'VT1';
+            orderToUpdate.ExciseRate__c = exciseMap.get(tax);
+            if(String.isNotBlank(tax) && String.isNotBlank(city) && String.isNotBlank(region)){
+                for(HDT_RegionalAdditional__mdt singleAdd : regionalAddList){
+                    if(singleAdd.Tax__c == tax && (singleAdd.City__c == city || String.isBlank(singleAdd.City__c) && (singleAdd.Region__c == region || String.isBlank(singleAdd.Region__c)))){
+                        orderToUpdate.RegionalAdditional__c = singleAdd.AdditionalValue__c;
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -681,7 +788,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         parentOrder.RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_OrderDossier').getRecordTypeId();
         parentOrder.Name = 'Ordine ' + sale.Name;
         parentOrder.Status = 'In Lavorazione';
-        parentOrder.Phase__c = 'Documentazione Gestita';
+        parentOrder.Phase__c = 'In Lavorazione';
         parentOrder.ContractSigned__c = true;
         parentOrder.EffectiveDate = Date.today();
         parentOrder.Step__c = 2;
@@ -689,7 +796,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         parentOrder.Sale__c = sale.Id;
         parentOrder.Contact__c = sale.SalesContact__c;
         parentOrder.Channel__c = sale.Channel__c;
-        parentOrder.LoginChannel__c = sale.Channel__c;
         parentOrder.VendorLastName__c = sale.VendorLastName__c;
         parentOrder.VendorFirstName__c = sale.VendorFirstName__C;
         parentOrder.CommercialId__c = sale.CommercialId__c;
@@ -710,7 +816,114 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         parentOrder.ShippingProvince__c = childOrder.ShippingProvince__c;
         parentOrder.ShippingStreetName__c = childOrder.ShippingStreetName__c;
         parentOrder.ShippingStreetNumber__c	= childOrder.ShippingStreetNumber__c;
+        parentOrder.isMassive__c = true;
+        parentOrder.LowerChannelAgency__c = sale.LowerChannelAgency__c;
+        parentOrder.UpperChannelAgency__c = sale.UpperChannelAgency__c;
+        parentOrder.CommercialId__c = sale.CommercialId__c;
+        parentOrder.LoginChannel__c = childOrder.LoginChannel__c;
+        parentOrder.CreatorGroup__c = childOrder.CreatorGroup__c;
         return parentOrder;
+    }
+
+    private HDT_WRP_ChildOrder handleBonus(HDT_WRP_ChildOrder wrpChildOrder,List<String> csvValues){
+        HDT_WRP_OrderItem wrpOrderItem;
+        String codiceBonus1 = csvValues[mapHeaderForWrapper.get('BONUS_PERC1')];
+        //String codiceBonus2 = csvValues[mapHeaderForWrapper.get('BONUS_PERC2')];
+        //String codiceBonus3 = csvValues[mapHeaderForWrapper.get('BONUS_PERC3')];
+        //String codiceBonus4 = csvValues[mapHeaderForWrapper.get('BONUS_PERC4')];
+        String codiceBonusEurMese1 = csvValues[mapHeaderForWrapper.get('BONUS_EURMESE1')];
+        //String codiceBonusEurMese2 = csvValues[mapHeaderForWrapper.get('BONUS_EURMESE2')];
+        //String codiceBonusEurMese3 = csvValues[mapHeaderForWrapper.get('BONUS_EURMESE3')];
+        //String codiceBonusEurMese4 = csvValues[mapHeaderForWrapper.get('BONUS_EURMESE4')];
+        String codiceBonusEurGiorno1 = csvValues[mapHeaderForWrapper.get('BONUS_EURGIORNO1')];
+        //String codiceBonusEurGiorno2 = csvValues[mapHeaderForWrapper.get('BONUS_EURGIORNO2')];
+        //String codiceBonusEurGiorno3 = csvValues[mapHeaderForWrapper.get('BONUS_EURGIORNO3')];
+        //String codiceBonusEurGiorno4 = csvValues[mapHeaderForWrapper.get('BONUS_EURGIORNO4')];
+        String codiceBonusEurSmc1 = csvValues[mapHeaderForWrapper.get('BONUS_EURSMC1')];
+        //String codiceBonusEurSmc2 = csvValues[mapHeaderForWrapper.get('BONUS_EURSMC2')];
+        //String codiceBonusEurSmc3 = csvValues[mapHeaderForWrapper.get('BONUS_EURSMC3')];
+        //String codiceBonusEurSmc4 = csvValues[mapHeaderForWrapper.get('BONUS_EURSMC4')];
+            
+        Boolean enableBonusPerc = (String.isNotEmpty(codiceBonus1));
+        Boolean enableBonusMese = (String.isNotEmpty(codiceBonusEurMese1));
+        Boolean enableBonusGiorno = (String.isNotEmpty(codiceBonusEurGiorno1));
+        Boolean enableBonusSmc = (String.isNotEmpty(codiceBonusEurSmc1));
+        String codiceBonus = '';
+        if(enableBonusPerc){
+            for(Integer i=1;i<=4;i++){
+                codiceBonus = csvValues[mapHeaderForWrapper.get('BONUS_PERC'+i)];
+                if( String.isNotBlank(codiceBonus)){
+                    // set wrapper for "bonus"
+                    wrpOrderItem = new HDT_WRP_OrderItem();
+                    wrpOrderItem.itemType = 'bonus';
+                    wrpOrderItem.product = new Product2();
+                    wrpOrderItem.product.ProductCode = codiceBonus;
+                    wrpOrderItem.orderItem = new OrderItem();
+                    wrpChildOrder.orderItemList.add(wrpOrderItem);
+                    additionalProduct2.add(wrpOrderItem.product);
+                }
+            }
+        }
+        if(enableBonusMese){
+            for(Integer j=1;j<=4;j++){
+                codiceBonus = csvValues[mapHeaderForWrapper.get('BONUS_EURMESE'+j)];
+                if( String.isNotBlank(codiceBonus)){
+                    // set wrapper for "bonus"
+                    wrpOrderItem = new HDT_WRP_OrderItem();
+                    wrpOrderItem.itemType = 'bonus';
+                    wrpOrderItem.product = new Product2();
+                    wrpOrderItem.product.ProductCode = codiceBonus;
+                    wrpOrderItem.orderItem = new OrderItem();
+                    wrpChildOrder.orderItemList.add(wrpOrderItem);
+                    additionalProduct2.add(wrpOrderItem.product);
+                }
+            }
+        }
+        if(enableBonusGiorno){
+            for(Integer k=1;k<=4;k++){
+                codiceBonus = csvValues[mapHeaderForWrapper.get('BONUS_EURGIORNO'+k)];
+                if( String.isNotBlank(codiceBonus)){
+                    // set wrapper for "bonus"
+                    wrpOrderItem = new HDT_WRP_OrderItem();
+                    wrpOrderItem.itemType = 'bonus';
+                    wrpOrderItem.product = new Product2();
+                    wrpOrderItem.product.ProductCode = codiceBonus;
+                    wrpOrderItem.orderItem = new OrderItem();
+                    wrpChildOrder.orderItemList.add(wrpOrderItem);
+                    additionalProduct2.add(wrpOrderItem.product);
+                }
+            } 
+        }
+        if(enableBonusSmc){
+            for(Integer z=1;z<=4;z++){
+                codiceBonus = csvValues[mapHeaderForWrapper.get('BONUS_EURSMC'+z)];
+                if( String.isNotBlank(codiceBonus)){
+                    // set wrapper for "bonus"
+                    wrpOrderItem = new HDT_WRP_OrderItem();
+                    wrpOrderItem.itemType = 'bonus';
+                    wrpOrderItem.product = new Product2();
+                    wrpOrderItem.product.ProductCode = codiceBonus;
+                    wrpOrderItem.orderItem = new OrderItem();
+                    wrpChildOrder.orderItemList.add(wrpOrderItem);
+                    additionalProduct2.add(wrpOrderItem.product);
+                }
+            } 
+        }
+        return wrpChildOrder;
+
+    }
+
+    public String checkRequiredSalesField(Sale__c sale){
+        Boolean canale = String.isEmpty(sale.Channel__c);
+        Boolean codiceAgenzia = String.isEmpty(sale.AgencyCode__c);
+        Boolean agenzia = String.isEmpty(sale.Agency__c);
+        Boolean vendutoDa= String.isEmpty(sale.CommercialId__c);
+        Boolean nomeAgente = String.isEmpty(sale.VendorFirstName__c);
+        Boolean cognomeAgente = String.isEmpty(sale.VendorLastName__c);
+        if(canale || codiceAgenzia || agenzia || vendutoDa || nomeAgente || cognomeAgente){
+            return 'Verificare che i campi Canale, Agenzia, Codice Agenzia, Venduto da, Nome/Cognome Agente siano valorizzati';
+        }
+        return '';
     }
 
     private HDT_WRP_ProcessObjects buildWrapperOrderStructure(HDT_WRP_ProcessObjects processObject, List<String> csvValues, HDT_UTL_ProcessSales.HDT_WRP_NextDataObj nextDataObj){
@@ -741,15 +954,22 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             wrpChildOrder.orderItemList.add(wrpOrderItem);
             commOfferForRetrieve.add(wrpOrderItem.product);
 
-            String itemTypeCsv = csvValues[mapHeaderForWrapper.get('ServicePointServizio')];
+            //String itemTypeCsv = csvValues[mapHeaderForWrapper.get('ServicePointServizio')];
             String codicePuntoCsv = csvValues[mapHeaderForWrapper.get('ServicePointCodicePunto')];
             String itemType = '';
 
-            if(String.isNotEmpty(itemTypeCsv) && itemTypeCsv.equalsIgnoreCase('Energia Elettrica')){
-                itemType = 'POD';
-            } else if(String.isNotEmpty(itemTypeCsv) && itemTypeCsv.equalsIgnoreCase('Gas')){
-                itemType = 'PDR';
-            } else if(String.isNotEmpty(codicePuntoCsv)){
+            //if(String.isNotEmpty(itemTypeCsv) && itemTypeCsv.equalsIgnoreCase('Energia Elettrica')){
+            //    itemType = 'POD';
+            //} else if(String.isNotEmpty(itemTypeCsv) && itemTypeCsv.equalsIgnoreCase('Gas')){
+            //    itemType = 'PDR';
+            //} else if(String.isNotEmpty(codicePuntoCsv)){
+            //    if(codicePuntoCsv.isNumeric()){
+            //        itemType = 'PDR';
+            //    } else {
+            //        itemType = 'POD';
+            //    }
+            //}
+            if(String.isNotEmpty(codicePuntoCsv)){
                 if(codicePuntoCsv.isNumeric()){
                     itemType = 'PDR';
                 } else {
@@ -765,7 +985,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             wrpChildOrder.orderItemList.add(wrpOrderItem);
             additionalProduct2.add(wrpOrderItem.product);
 
-            String codiceBonus = csvValues[mapHeaderForWrapper.get('CodiceBonus')];
+            /*String codiceBonus = csvValues[mapHeaderForWrapper.get('CodiceBonus')];
             String codicePromo = csvValues[mapHeaderForWrapper.get('CodicePromo')];
             
             Boolean enableCodiceBonus = (String.isNotEmpty(codiceBonus));
@@ -791,7 +1011,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 wrpOrderItem.orderItem = new OrderItem();
                 wrpChildOrder.orderItemList.add(wrpOrderItem);
                 additionalProduct2.add(wrpOrderItem.product);
-            }
+            }*/
+            wrpChildOrder = handleBonus(wrpChildOrder,csvValues);
 
             processObject.childOrderList.add(wrpChildOrder);
         }

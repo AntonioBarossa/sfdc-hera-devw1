@@ -31,6 +31,10 @@
                 <behavior>Readonly</behavior>
                 <field>SaleBy__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Interaction__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -75,25 +79,29 @@
                 <field>Agency__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>VendorFirstName__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>VendorLastName__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CommercialId__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>LowerChannelAgency__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>UpperChannelAgency__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>CreatedBy__c</field>
             </layoutItems>
         </layoutColumns>
@@ -162,12 +170,12 @@
             <quickActionName>FeedItem.ContentNote</quickActionName>
         </quickActionListItems>
     </quickActionList>
-    <relatedLists><!-- HRDTR-00_HRAWRM-249  27/09/2021   -->
+    <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
         <fields>OPPORTUNITY.STAGE_NAME</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <relatedList>Opportunity.Sale__c</relatedList>
-    </relatedLists><!-- HRDTR-00_HRAWRM-249  27/09/2021   -->
+    </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
@@ -187,21 +195,21 @@
         <fields>TASK.LAST_UPDATE</fields>
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
-    <relatedLists><!-- HRDTR-00_HRAWRM-249  27/09/2021   -->
+    <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>
         <fields>ORDERS.STATUS</fields>
         <fields>Phase__c</fields>
         <fields>ServicePointCodeFormula__c</fields>
         <fields>ProcessType__c</fields>
         <relatedList>Order.Sale__c</relatedList>
-    </relatedLists><!-- HRDTR-00_HRAWRM-249  27/09/2021   -->
+    </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>SBQQ__Status__c</fields>
         <fields>SBQQ__Primary__c</fields>
         <relatedList>SBQQ__Quote__c.Sale__c</relatedList>
     </relatedLists>
-    <relatedLists><!-- HRDTR-00_HRAWRM-249  27/09/2021   -->
+    <relatedLists>
         <fields>NAME</fields>
         <fields>CREATED_DATE</fields>
         <fields>wrts_prcgvr__Status__c</fields>
@@ -209,15 +217,10 @@
         <fields>EndDate__c</fields>
         <fields>OwnedByUser__c</fields>
         <relatedList>wrts_prcgvr__Activity__c.Sale__c</relatedList>
-    </relatedLists><!-- HRDTR-00_HRAWRM-249  27/09/2021   -->
-    <!-- <relatedLists>
-        <relatedList>RelatedNoteList</relatedList>
-    </relatedLists> -->
-    <!--review Richiesta da Hera_OptimizerIssues_Analysis_v1.0-->
+    </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>
-     <!--review Richiesta da Hera_OptimizerIssues_Analysis_v1.0-->
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

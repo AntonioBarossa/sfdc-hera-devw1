@@ -481,8 +481,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         let phonePrefix= this.template.querySelector('[data-id="phonePrefix"]');
         let mobilePhonePrefix= this.template.querySelector('[data-id="mobilePhonePrefix"]');
         // let companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
-        let customerTypeValue=this.template.querySelector('[data-id="customerType"]').value;
+        
+        let customerTypeValue=this.template.querySelector('[data-id="ClienteFinale"]').value===null?this.template.querySelector('[data-id="customerType"]').value:this.template.querySelector('[data-id="ClienteFinale"]').value;
 
+        console.log('customerTypeValue --> '+customerTypeValue);
 
         // let address =this.template.querySelector('[data-id="address"]');
         // let location =this.template.querySelector('[data-id="location"]');
@@ -634,10 +636,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             }
         }
 
-        if(this.birthPlace == undefined || this.birthPlace == ''){
-            isValidated = false;
-            messageError=" Inserire il comune di nascita!";
-        }
+        // if(this.birthPlace == undefined || this.birthPlace == ''){
+        //     isValidated = false;
+        //     messageError=" Inserire il comune di nascita!";
+        // }
 
         console.log("LOG4");
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
@@ -755,12 +757,11 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         if(this.birthPlace === undefined || this.birthPlace.trim()===''){
                            // this.birthPlace= fiscData.birthPlace;
                            this.birthPlace=fiscData[keyCode].birthPlace;//HRDTR-00_HRAWRM-761 28/09/2021
+                           birthPlaceToUC = this.birthPlace.toUpperCase();
 
                         }
                         console.log("LOG13:");
                         console.log("LOG13:" + businessName.value);
-
-                        
                         
                         dataAccount={
                             "businessName" : businessNameToUC,
@@ -797,7 +798,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             // "company":companyValue.value,
                             "phonePrefix" : phonePrefix.value ,
                             "mobilePhonePrefix" : mobilePhonePrefix.value,
-                            "customerTypeValue": customerTypeValue,
+                            "customerTypeValue": customerTypeValue
                         };
                         console.log("LOG14");
                         insertAccount({
@@ -892,9 +893,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         "phonePrefix" : phonePrefix.value ,
                         "mobilePhonePrefix" : mobilePhonePrefix.value,
                         // "company":companyValue.value,
-                        "customerTypeValue": customerTypeValue.value,
-
+                        "customerTypeValue": customerTypeValue
                     };
+                    
+                    console.log('customerTypeValue --> '+customerTypeValue);
                     console.log("*******DOP");
                     console.log("LOG17");
                     insertAccount({

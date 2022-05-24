@@ -2156,6 +2156,14 @@
         <scale>2</scale>
     </formulas>
     <formulas>
+        <name>DistributorCodeSearch</name>
+        <dataType>String</dataType>
+        <expression>IF( TEXT({!Get_Input_Case_0.Type}) = &quot;Rimozione Impianto&quot;,
+    IF({!Get_Input_Case_0.DistributorCode__c} = &quot;10D8060000&quot;,{!Get_Input_Case_0.DistributorCode__c},&quot;RIMOZIONEIMPIANTO&quot;)   
+ 
+     ,{!Get_Input_Case_0.DistributorCode__c})</expression>
+    </formulas>
+    <formulas>
         <name>DistributorNoteFormulaType</name>
         <dataType>String</dataType>
         <expression>IF(ISBLANK({!Get_Input_Case.DistributorNote__c}),
@@ -2417,7 +2425,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
             <field>DistributorCode__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Input_Case_0.DistributorCode__c</elementReference>
+                <elementReference>DistributorCodeSearch</elementReference>
             </value>
         </filters>
         <filters>
