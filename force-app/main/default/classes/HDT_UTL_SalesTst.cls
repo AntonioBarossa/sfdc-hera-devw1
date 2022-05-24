@@ -14,6 +14,8 @@ public class HDT_UTL_SalesTst {
     @TestSetup
     static void makeData(){
 
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
+
         City__c city=HDT_UTL_DataFactoryTst.createCity()[0];
         city.Name = 'PESARO';
         city.Province__c = 'PU';
@@ -36,6 +38,19 @@ public class HDT_UTL_SalesTst {
         sp.GlobalMigrationKey__c = '1123255';
         insert sp;
 
+        List<Contract> myContractList = HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].Id);
+
+        List<Product2> myProdList = HDT_UTL_DataFactoryTst.createProduct2(1, true);
+        myProdList[0].ProductCode = 'myCode';
+        myProdList[0].Version__c = 'myVersion';
+        myProdList[0].Family = 'Offerta Commerciale';
+        update myProdList;
+
+        List<SBQQ__Subscription__c> mySubList = HDT_UTL_DataFactoryTst.createSubscription(1, true, accounts[0].Id, myContractList[0].Id, sp.Id);
+        mySubList[0].SBQQ__Contract__c = myContractList[0].Id;
+        mySubList[0].SBQQ__Product__c = myProdList[0].Id;
+        update mySubList;
+
         List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(2, false, accounts[0].Id, sales);
         orders[0].AccountId = sales[0].Account__c;
         orders[1].AccountId = sales[1].Account__c;
@@ -50,6 +65,34 @@ public class HDT_UTL_SalesTst {
         orders[1].DocumentalPhase__c = 'Plico firmato';
 
         insert orders;
+
+        Id priceBookId = Test.getStandardPriceBookId();
+
+        List<PricebookEntry> stdpriceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(myProdList, true, priceBookId);
+
+        List<Pricebook2> pbList = HDT_UTL_DataFactoryTst.createPricebook(1, true);
+
+        List<PricebookEntry> priceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(myProdList, true, pbList[0].Id);
+
+
+        List<Order> orders2 = HDT_UTL_DataFactoryTst.createOrder(2, false, accounts[0].Id, sales);
+
+        String rtOrder = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId();        
+        String rtParentOrder = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_OrderDossier').getRecordTypeId();        
+        orders2[0].RecordTypeId = rtOrder;
+        orders2[1].RecordTypeId = rtParentOrder;
+        orders2[0].ProcessType__c = 'Aggiunta Sconti o Bonus VAS';
+        orders2[0].ContractReference__c = myContractList[0].Id;
+        orders2[0].ServicePoint__c = sp.Id;
+        insert orders2;
+
+        orders2[0].ParentOrder__c = orders2[1].Id;
+        orders2[0].Pricebook2Id = pbList[0].Id;
+        update orders2;
+
+        List<OrderItem> ordersItems = HDT_UTL_DataFactoryTst.createOrderItem(1, true, orders2[0].Id, sp.Id, myProdList[0].Id, priceBookEntryList[0].Id);
+
+
 
         // Pclick setup
 
@@ -149,7 +192,7 @@ public class HDT_UTL_SalesTst {
         List<String> ordIds = new List<String>();
         List<Sale__c> sales = new List<Sale__c>();
 
-        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name]) {
+        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name LIMIT 1]) {
             ordIds.add(ord.Id);
             sales.add(new Sale__c(Id = ord.Sale__c, Channel__c = 'Teleselling Outbound'));
         }
@@ -175,7 +218,7 @@ public class HDT_UTL_SalesTst {
         List<String> ordIds = new List<String>();
         List<Sale__c> sales = new List<Sale__c>();
 
-        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name]) {
+        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name LIMIT 1]) {
             ordIds.add(ord.Id);
             sales.add(new Sale__c(Id = ord.Sale__c, Channel__c = 'Teleselling Outbound'));
         }
@@ -205,7 +248,7 @@ public class HDT_UTL_SalesTst {
         List<String> ordIds = new List<String>();
         List<Sale__c> sales = new List<Sale__c>();
 
-        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name]) {
+        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name LIMIT 1]) {
             ordIds.add(ord.Id);
             sales.add(new Sale__c(Id = ord.Sale__c, Channel__c = 'Agenzie'));
         }
@@ -235,7 +278,7 @@ public class HDT_UTL_SalesTst {
         List<String> ordIds = new List<String>();
         List<Sale__c> sales = new List<Sale__c>();
 
-        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name]) {
+        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name LIMIT 1]) {
             ordIds.add(ord.Id);
             sales.add(new Sale__c(Id = ord.Sale__c, Channel__c = 'Agenzie'));
         }
@@ -265,7 +308,7 @@ public class HDT_UTL_SalesTst {
         List<String> ordIds = new List<String>();
         List<Sale__c> sales = new List<Sale__c>();
 
-        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name]) {
+        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name LIMIT 1]) {
             ordIds.add(ord.Id);
             sales.add(new Sale__c(Id = ord.Sale__c, Channel__c = 'Telefono'));
         }
@@ -295,7 +338,7 @@ public class HDT_UTL_SalesTst {
         List<String> ordIds = new List<String>();
         List<Sale__c> sales = new List<Sale__c>();
 
-        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name]) {
+        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name LIMIT 1]) {
             ordIds.add(ord.Id);
             sales.add(new Sale__c(Id = ord.Sale__c, Channel__c = 'HC Point'));
         }
@@ -325,7 +368,7 @@ public class HDT_UTL_SalesTst {
         List<String> ordIds = new List<String>();
         List<Sale__c> sales = new List<Sale__c>();
 
-        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name]) {
+        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name  LIMIT 1]) {
             ordIds.add(ord.Id);
             sales.add(new Sale__c(Id = ord.Sale__c, Channel__c = 'HC Point'));
         }
@@ -355,7 +398,7 @@ public class HDT_UTL_SalesTst {
         List<String> ordIds = new List<String>();
         List<Sale__c> sales = new List<Sale__c>();
 
-        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name]) {
+        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name LIMIT 1]) {
             ordIds.add(ord.Id);
             sales.add(new Sale__c(Id = ord.Sale__c, Channel__c = 'Vendita Condomini'));
         }
@@ -385,7 +428,7 @@ public class HDT_UTL_SalesTst {
         List<String> ordIds = new List<String>();
         List<Sale__c> sales = new List<Sale__c>();
 
-        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name]) {
+        for (Order ord : [SELECT Id, Sale__c FROM Order ORDER BY Name LIMIT 1]) {
             ordIds.add(ord.Id);
             sales.add(new Sale__c(Id = ord.Sale__c, Channel__c = 'Back office'));
         }
@@ -451,5 +494,90 @@ public class HDT_UTL_SalesTst {
         Test.stopTest();
         
     }
+
+    @isTest
+    static void isTransitionVasTest(){
+
+        Sale__c mySale = [Select Id from Sale__c LIMIT 1];
+        String city = 'Roma';
+        Test.startTest();
+            Boolean result = HDT_UTL_Sales.isTransitionVas(city, mySale);
+        Test.stopTest();
+        System.assertEquals(true, result, 'Result is false');
+
+    }
+
+    @isTest
+    static void isTransitionTest(){
+
+        Sale__c mySale = [Select Id from Sale__c LIMIT 1];
+        ServicePoint__c myServPoint = [Select Id, SupplyCity__c, CommoditySector__c from ServicePoint__c LIMIT 1];
+        Test.startTest();
+            Boolean result = HDT_UTL_Sales.isTransition(myServPoint, mySale);
+        Test.stopTest();
+        System.assertEquals(true, result, 'Result is false');
+
+    }
+
+    @IsTest
+    static void handleContractVariationTestA(){
+        
+        List<Order> orders = [Select id, ProcessType__c, ContractReference__c, ServicePoint__c, ParentOrder__c, CommercialProduct__c, CommercialProductCode__c, CommercialProductVersion__c from Order WHERE ParentOrder__c != null];        
+        Test.startTest();
+
+            HDT_UTL_Sales.handleContractVariation(orders[0]);
+            
+        Test.stopTest();
+
+        System.assert(orders != null, 'orders è null');
+        
+    }
+
+    @IsTest
+    static void handleContractVariationTestB(){
+        
+        List<Order> orders = [Select id, ProcessType__c, ContractReference__c, ServicePoint__c, ParentOrder__c from Order WHERE ParentOrder__c != null];        
+        Test.startTest();
+
+            orders[0].ContractReference__c = null;
+            update orders;
+            HDT_UTL_Sales.handleContractVariation(orders[0]);
+
+        Test.stopTest();
+
+        System.assert(orders != null, 'orders è null');
+        
+    }
+
+    @IsTest
+    static void handleContractVariationTestC(){
+        
+        List<Order> orders = [Select id, ProcessType__c, ContractReference__c, ServicePoint__c, ParentOrder__c, CommercialProduct__c, CommercialProductCode__c, CommercialProductVersion__c from Order WHERE ParentOrder__c != null];        
+        Test.startTest();
+
+            HDT_UTL_Sales.handleContractVariation(orders[0], orders[0]);
+            
+        Test.stopTest();
+
+        System.assert(orders != null, 'orders è null');
+        
+    }
+
+    @IsTest
+    static void handleContractVariationTestD(){
+        
+        List<Order> orders = [Select id, ProcessType__c, ContractReference__c, ServicePoint__c, ParentOrder__c from Order WHERE ParentOrder__c != null];        
+        Test.startTest();
+
+            orders[0].ContractReference__c = null;
+            update orders;
+            HDT_UTL_Sales.handleContractVariation(orders[0], orders[0]);
+
+        Test.stopTest();
+
+        System.assert(orders != null, 'orders è null');
+        
+    }
+
 
 }
