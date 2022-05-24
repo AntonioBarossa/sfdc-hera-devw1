@@ -59,8 +59,13 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             processObj.csvSplitted = tempSplitedFields;
 
             codicePuntoSet.add(processObj.csvSplitted[codicePuntoIndex]);
-            contoContrattualeSet.add(processObj.csvSplitted[contoContrattualeIndex]);
-            contactFiscalCodeSet.add(processObj.csvSplitted[contactCfIndex]);
+            if(contoContrattualeIndex != null){
+                System.debug('CC ' + processObj.csvSplitted[contoContrattualeIndex]);
+                contoContrattualeSet.add(processObj.csvSplitted[contoContrattualeIndex]);
+            }
+            if(contactCfIndex != null){
+                contactFiscalCodeSet.add(processObj.csvSplitted[contactCfIndex]);
+            }
             processObjList.add(processObj);
         }
 
@@ -171,8 +176,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         for(ServicePoint__c sp : [SELECT Id, ServicePointCode__c FROM ServicePoint__c WHERE ServicePointCode__c IN :codicePuntoSet]){
             codicePuntoMap.put(sp.ServicePointCode__c, sp.Id);
         }
-
-        for(BillingProfile__c bp : [SELECT Id, ContractAccountCode__c FROM BillingProfile__c WHERE ContractAccountCode__c IN :contoContrattualeSet]){
+        System.debug('Set CC' + contoContrattualeSet);
+        for(BillingProfile__c bp : [SELECT Id, ContractAccountCode__c FROM BillingProfile__c WHERE ContractAccountCode__c IN :contoContrattualeSet and ContractAccountCode__c != '']){
             billProfMap.put(bp.ContractAccountCode__c, bp.Id);
         }
         if(!contactFiscalCodeSet.isEmpty()){
@@ -236,7 +241,13 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             processObj.createServicePoint = (String.isNotEmpty(processObj.csvSplitted[codicePuntoIndex]) && codicePuntoMap.containsKey(processObj.csvSplitted[codicePuntoIndex])) ? false : true;
             processObj.createBillingProfile = (String.isNotEmpty(processObj.csvSplitted[contoContrattualeIndex]) && billProfMap.containsKey(processObj.csvSplitted[contoContrattualeIndex])) ? false : true;
-            processObj.createReferente = ((String.isNotEmpty(processObj.csvSplitted[recTypeIndex]) && processObj.csvSplitted[recTypeIndex].equalsIgnoreCase('Residenziale')) || String.isEmpty(processObj.csvSplitted[recTypeIndex]))?false:true;
+            if(recTypeIndex != null){
+                processObj.createReferente = ((String.isNotEmpty(processObj.csvSplitted[recTypeIndex]) && processObj.csvSplitted[recTypeIndex].equalsIgnoreCase('Residenziale')) || String.isEmpty(processObj.csvSplitted[recTypeIndex]))?false:true;
+            }else{
+                processObj.createReferente = false;
+
+            }            
+            //processObj.createReferente = ((String.isNotEmpty(processObj.csvSplitted[recTypeIndex]) && processObj.csvSplitted[recTypeIndex].equalsIgnoreCase('Residenziale')) || String.isEmpty(processObj.csvSplitted[recTypeIndex]))?false:true;
             System.debug(LoggingLevel.DEBUG, '>>> enableCreate: billProf [' + processObj.createBillingProfile + ']; servPoint [' + processObj.createServicePoint + ']');
             
             for (String tempField : processObj.csvSplitted) {
@@ -334,8 +345,9 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c ');
                 continue;
             }
-
-            processObj.account.RecordTypeId = recordTypeMap.get(processObj.csvSplitted[recTypeIndex]);
+            if(recTypeIndex != null){
+                processObj.account.RecordTypeId = recordTypeMap.get(processObj.csvSplitted[recTypeIndex]);
+            }
             processObj.account.Name = String.isBlank(processObj.account.FirstName__c) ? processObj.account.LastName__c : processObj.account.FirstName__c + ' ' + processObj.account.LastName__c;
             processObj.account.BillingIsAddressVerified__c = true;
 

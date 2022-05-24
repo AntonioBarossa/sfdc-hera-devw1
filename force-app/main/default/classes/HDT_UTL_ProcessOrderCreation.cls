@@ -48,6 +48,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private List<HDT_ExciseTranscode__mdt> exciseList;
     private Map<String,Double> exciseMap = new Map<String,Double>();
     private List<HDT_RegionalAdditional__mdt> regionalAddList = new List<HDT_RegionalAdditional__mdt>();
+    private List<RateCategory__c> rateCategoryList;
 
     public override void checks(){
 
@@ -155,6 +156,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         otherRequiredOption = new Map<Id, List<SBQQ__ProductOption__c>>();
         Set<String> defaultProdOption = new Set<String>();
         List<Id> optnionalSkuIdList = new List<Id>();
+        rateCategoryList=HDT_QR_RateCategory.getAllRecords();
 
         processMatrixList = [
             SELECT ProcessName__c, RecordTypeName__c, CasualCode__c
@@ -176,7 +178,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         }
 
         productRetrievedFromDb = [
-            SELECT Id, ProductCode, Version__c
+            SELECT Id, ProductCode, Version__c,Name
             FROM Product2
             WHERE ProductCode IN :productCodeList AND ProductCode != null
             AND Version__c IN :versionList AND Version__c != null
@@ -378,8 +380,10 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                                 wrpOrderItem.orderItem.Quantity = 1;
                                 wrpOrderItem.orderItem.Product2Id = commOffId;
                                 priceBookId = priceBookEntryMap.get(commOffId).Pricebook2Id;
-                            } else {
-
+                                childOrder.childOrder.CommercialProductLink__c = commOffId;
+                                childOrder.childOrder.CommercialProductCode__c = wrpOrderItem.product.ProductCode;
+                                childOrder.childOrder.CommercialProductVersion__c = wrpOrderItem.product.Version__c;
+                                childOrder.childOrder.CommercialProduct__c  =  wrpOrderItem.product.Name;
                             }
                         }
 
@@ -449,7 +453,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                     wrpChildOrder.childOrder.EffectiveDate = Date.today();
                     wrpChildOrder.childOrder.Status = 'Draft';
                     wrpChildOrder.childOrder.processType__c = 'VAS';
-
+                    
                     for(HDT_WRP_OrderItem wrpOrderItem : wrpChildOrder.orderItemList){
                         Map<String, SBQQ__ProductOption__c> tempMap = additionalOrderItemMap.get(commOffId);
 
@@ -658,6 +662,11 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 }
             }
         }
+        if(orderToUpdate.VasSubtype__c != null && orderToUpdate.VasSubtype__c == 'Analisi Consumi'){
+            //no rate
+        }else{
+            calculateRateCategory(orderToUpdate);
+        }
     }
 
     private HDT_WRP_OrderItem setRequiredItem(SBQQ__ProductOption__c requiredOption, Id commOffId, Id priceBookId){
@@ -805,7 +814,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         parentOrder.ServicePoint__c = childOrder.ServicePoint__c;
         parentOrder.SignatureMethod__c = childOrder.SignatureMethod__c;
         parentOrder.DocSendingMethod__c = childOrder.DocSendingMethod__c;
-        parentOrder.SignatureMethod__c = childOrder.SignatureMethod__c;
         parentOrder.DocSendingMethod__c = childOrder.DocSendingMethod__c;
         parentOrder.SignedDate__c = childOrder.SignedDate__c;
         parentOrder.PhoneNumber__c = childOrder.PhoneNumber__c;
@@ -822,6 +830,11 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         parentOrder.CommercialId__c = sale.CommercialId__c;
         parentOrder.LoginChannel__c = childOrder.LoginChannel__c;
         parentOrder.CreatorGroup__c = childOrder.CreatorGroup__c;
+        if(parentOrder.SignatureMethod__c.equalsIgnoreCase('Contratto già firmato')){
+            parentOrder.Status = 'Completed';
+            parentOrder.Phase__c = 'Documentazione Gestita';
+        }
+
         return parentOrder;
     }
 
@@ -1034,6 +1047,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             wrpChildOrder.childOrder.AccountId = nextDataObj.accountId;
             wrpChildOrder.childOrder.ServicePoint__c = nextDataObj.servPointId;
             wrpChildOrder.childOrder.BillingProfile__c = nextDataObj.billProfId;
+            wrpChildOrder.childOrder.CommercialProductCode__c = codiceOfferta;
+            wrpChildOrder.childOrder.CommercialProductVersion__c = versione;
+
             wrpChildOrder.orderItemList = new List<HDT_WRP_OrderItem>();
 
             HDT_WRP_OrderItem wrpOrderItem;
@@ -1091,6 +1107,62 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             childOrderList = new List<HDT_WRP_ChildOrder>();
         }
 
+    }
+
+    private void calculateRateCategory(Order order){
+        Boolean res = false;
+		String pod = order.ServicePointCode__c;
+		String commodity = '';
+        String tipoFornitura = order.SupplyType__c;
+        String productName = order.CommercialProduct__c;
+        String code;
+		if(pod != null && pod.isNumeric()){
+			commodity = 'Gas';
+		}else{
+			commodity = 'Energia Elettrica';
+		}
+		
+        for(RateCategory__c rt : rateCategoryList){
+            if(rt.Commodity__c == commodity && rt.Fornitura__c ==  tipoFornitura && rt.ProductName__c == productName){            
+                if(rt.DistributorCode__c == order.DistributorCode__c && rt.operatore__c == 'Uguale'){
+                    code = rt.CalculatedValue__c;
+                    res = true;
+                    break;
+                }
+                else if(rt.DistributorCode__c != order.DistributorCode__c && rt.operatore__c == 'Diverso'){
+                    code = rt.CalculatedValue__c;
+                    res = true;
+                    break;
+                }
+                else if(rt.operatore__c == 'N/A'){
+                    code = rt.CalculatedValue__c;
+                    res = true;
+                    break;
+                }
+            }
+        }
+        if(!res){
+            for(RateCategory__c r : rateCategoryList){
+                if(r.Commodity__c == commodity && r.Fornitura__c ==  tipoFornitura && r.ProductName__c == 'N/A'){
+                    if(r.DistributorCode__c == order.DistributorCode__c && r.operatore__c == 'Uguale'){
+                        code = r.CalculatedValue__c;
+                        res = true;
+                        break;
+                    }
+                    else if(r.DistributorCode__c != order.DistributorCode__c && r.operatore__c == 'Diverso'){
+                        code = r.CalculatedValue__c;
+                        res = true;
+                        break;
+                    }
+                    else if(r.operatore__c == 'N/A'){
+                        code = r.CalculatedValue__c;
+                        res = true;
+                        break;
+                    }
+                }
+            }
+        }
+        order.RateCategory__c = code;
     }
 
     private class HDT_WRP_ChildOrder {
