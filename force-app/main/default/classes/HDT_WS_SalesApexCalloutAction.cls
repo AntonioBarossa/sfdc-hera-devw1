@@ -54,7 +54,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                         boolean find = false;
                         Integer k = 0;
                         for( wrts_prcgvr.MRR_1_0.Field f : w.fields){
-                            if(f.name == 'Fam_Prod'){
+                            if(f.name.equalsIgnoreCase('Fam_Prod')){
                                 if(f.value != null && f.value != '' && f.value== 'Offerta commerciale' ){
                                     find = true;
                                     indexOffieldToRemove.put(count,k);

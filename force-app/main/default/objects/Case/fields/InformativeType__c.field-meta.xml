@@ -655,6 +655,16 @@
                 <default>false</default>
                 <label>Switch in</label>
             </value>
+            <value>
+                <fullName>Proroga Conn Temp</fullName>
+                <default>false</default>
+                <label>Switch in</label>
+            </value>
+            <value>
+                <fullName>Voltura Tecnica</fullName>
+                <default>false</default>
+                <label>Switch in</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

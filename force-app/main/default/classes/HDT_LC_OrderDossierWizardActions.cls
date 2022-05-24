@@ -16,8 +16,12 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     * @description Handle "stampa" action
     * @param Order orderParent
     */
+
+    /* Il Metodo Save viene chiamato nelle casistiche in cui non si esegue la Stampa Documentale */
     @AuraEnabled
     public static void save(Order orderParent){ 
+
+        updateCommodityWithConsumptionAnalisi(orderParent.Id);
 
         /**@frpanico 2022-04-29
          * Aggiunta gestione del contratto gia firmato
@@ -168,8 +172,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         return JSON.serialize(wrpActivityVo);
     }
 
+    /* Viene chiamato quando si esegue la stampa documentale */
     @AuraEnabled
     public static void save2(Order orderParent,boolean isPlicoSend){ 
+
+        updateCommodityWithConsumptionAnalisi(orderParent.Id);
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
@@ -519,6 +526,68 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             maxCount = maxCount < (integer)count[0].get('expr0')? (integer)count[0].get('expr0') : maxCount;
         }
         return maxCount;
+    }
+
+
+    private static void updateCommodityWithConsumptionAnalisi(String orderParentId)
+    {
+        List<OrderItem> orderItems = [SELECT Id,
+        OwnerAC__c,
+        DwellingType__c,
+        OccupantsNumber__c,
+        Surface__c,
+        Product2.Family,
+        SBQQ__QuoteLine__c,
+        Order.ServicePointCode__c
+        Order.VasSubtype__c
+        FROM OrderItem
+        WHERE Order.ParentOrder__c = :orderParentId
+        WITH SECURITY_ENFORCED];
+
+        List<SObject> sobjToUpdate = new List<SObject>();
+
+        Map<String, Map<String,OrderItem>> podOrderItemMap = new Map<String,List<OrderItem>>();
+        /* Build the map that groups orderItems for ServicePointCode of the related order */
+        for(OrderItem item : orderItems)
+        {
+            if(!podOrderItemMap.containsKey(item.Order.ServicePointCode__c))
+            {
+                podOrderItemMap.put(item.Order.ServicePointCode__c, new Map<String,OrderItem>());
+            }
+            if(item.Product2.Family != null && item.Product2.Family.equalsIgnoreCase('Offerta commerciale'))
+            {
+                podOrderItemMap.get(item.Order.ServicePointCode__c).put('offertaCommerciale',item);
+            }
+            if(item.Product2.Family != null && item.Product2.Family.equalsIgnoreCase('VAS Fatturabili') && item.Order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi'))
+            {
+                podOrderItemMap.get(item.Order.ServicePointCode__c).put('analisiConsumi',item);
+            }
+        }
+        /* Write on the commodity OrderItem/QuoteLine
+        Consumption Analysis fields 
+        */
+        for(String key : podOrderItemMap.keySet())
+        {
+            OrderItem offertaCommerciale = new OrderItem(Id = (String) (podOrderItemMap.get(key).get('offertaCommerciale')).get('Id'));
+            SBQQ__QuoteLine__c offertaCommQl = new SBQQ__QuoteLine__c(Id =(String) (podOrderItemMap.get(key).get('offertaCommerciale')).get('SBQQ__QuoteLine__c'));
+            offertaCommerciale.OwnerAC__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('OwnerAC__c');
+            offertaCommerciale.DwellingType__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('DwellingType__c');
+            offertaCommerciale.OccupantsNumber__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('OccupantsNumber__c');
+            offertaCommerciale.Surface__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('Surface__c');
+            offertaCommQl.OwnerAC__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('OwnerAC__c');
+            offertaCommQl.DwellingType__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('DwellingType__c');
+            offertaCommQl.OccupantsNumber__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('OccupantsNumber__c');
+            offertaCommQl.Surface__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('Surface__c');
+
+            sobjToUpdate.add(offertaCommerciale);
+            sobjToUpdate.add(offertaCommQl);
+        }
+
+        if(!sobjToUpdate.isEmpty())
+        {
+            HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
+        }
+
     }
 
 }
