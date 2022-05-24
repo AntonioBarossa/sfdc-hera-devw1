@@ -16,8 +16,8 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
     String autoletturaCase = 'Autolettura';
 
     List<String> typesCase = new List<String>{'Modifica post accertamento','Cessazione post accertamento'};
-    List<String> statusCase = new List<String>{'',''};
-    List<String> phasesCase = new List<String>{'Chiuso','Completata'};
+    List<String> caseRt = new List<String>{'HDT_RT_DisattivazioniTari','HDT_RT_VariazioniTari'};
+    List<String> phasesCase = new List<String>{'Chiuso','Completata','Annullato'};
 
 
     public List<Knowledge__kav> getExpiredArticle(){
@@ -137,8 +137,8 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         SupplyStreetName__c,
         CreatedDate
         FROM Case
-        WHERE Phase__c NOT IN ('Chiuso','Annullato')
-        AND Cluster__c != : this.autoletturaCase
+        WHERE Phase__c NOT IN :phasesCase
+        AND RecordType.DeveloperName IN :this.caseRt
         AND Type IN: this.typesCase
         WITH SECURITY_ENFORCED
         ];
