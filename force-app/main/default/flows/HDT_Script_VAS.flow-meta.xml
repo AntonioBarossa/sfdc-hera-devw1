@@ -27,7 +27,7 @@
     <assignments>
         <name>assignMonopattinoElettrico_0</name>
         <label>assignMonopattinoElettrico</label>
-        <locationX>13162</locationX>
+        <locationX>15626</locationX>
         <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>collectionHeraMonopattinoElettrico_0</assignToReference>
@@ -45,6 +45,22 @@
         </assignmentItems>
         <connector>
             <targetReference>ForEachOrderProduct_3_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>aumenataContatoreSanificatore_OB</name>
+        <label>aumenataContatoreSanificatore_OB</label>
+        <locationX>16506</locationX>
+        <locationY>1238</locationY>
+        <assignmentItems>
+            <assignToReference>counterSanificatore_0</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_4_0.Quantity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_4_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -119,7 +135,7 @@
     <assignments>
         <name>aumentaContatoreERUN_0</name>
         <label>aumentaContatoreERUN</label>
-        <locationX>12810</locationX>
+        <locationX>15274</locationX>
         <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>ebikeErunCounter_1</assignToReference>
@@ -165,7 +181,7 @@
     <assignments>
         <name>aumentaContatoreESLEEK_0</name>
         <label>aumentaContatoreESLEEK</label>
-        <locationX>13602</locationX>
+        <locationX>16066</locationX>
         <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>ebikeEsleekCounter_1</assignToReference>
@@ -211,7 +227,7 @@
     <assignments>
         <name>aumentaContatoreESPIKE_0</name>
         <label>aumentaContatoreESPIKE</label>
-        <locationX>13338</locationX>
+        <locationX>15802</locationX>
         <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>ebikeEspikeCounter_1</assignToReference>
@@ -257,7 +273,7 @@
     <assignments>
         <name>aumentaContatoreEWAY_0</name>
         <label>aumentaContatoreEWAY</label>
-        <locationX>12546</locationX>
+        <locationX>15010</locationX>
         <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>ebikeEwayCounter_1</assignToReference>
@@ -271,6 +287,29 @@
             <operator>Add</operator>
             <value>
                 <elementReference>ForEachOrderProduct_2_0.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>aumentaContatoreFLIPPER</name>
+        <label>aumentaContatoreFLIPPER</label>
+        <locationX>17386</locationX>
+        <locationY>1238</locationY>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>foldedFlipperCounter_0</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.Quantity</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -326,7 +365,7 @@
     <assignments>
         <name>aumentaContatoreGraziellaGenio_0</name>
         <label>aumentaContatoreGraziellaGenio</label>
-        <locationX>13074</locationX>
+        <locationX>15538</locationX>
         <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>ebikeGraziellaCounter_1</assignToReference>
@@ -344,6 +383,54 @@
         </assignmentItems>
         <connector>
             <targetReference>ForEachOrderProduct_2_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>aumentaContatoreLampada</name>
+        <label>aumentaContatoreLampada</label>
+        <locationX>9026</locationX>
+        <locationY>1238</locationY>
+        <assignmentItems>
+            <assignToReference>counterLampadadiRicarica</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_4.Quantity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_4</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>aumentaContatoreLampada_AZ</name>
+        <label>aumentaContatoreLampada_AZ</label>
+        <locationX>18970</locationX>
+        <locationY>1118</locationY>
+        <assignmentItems>
+            <assignToReference>counterLampadadiRicarica_0_0</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct4_0_0.Quantity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct4_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>aumentaContatoreLampada_OB</name>
+        <label>aumentaContatoreLampada_OB</label>
+        <locationX>16770</locationX>
+        <locationY>1238</locationY>
+        <assignmentItems>
+            <assignToReference>counterLampadadiRicarica_0</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_4_0.Quantity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_4_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -416,6 +503,107 @@
         </connector>
     </assignments>
     <assignments>
+        <name>aumentaContatoreOMEGA</name>
+        <label>aumentaContatoreOMEGA</label>
+        <locationX>17122</locationX>
+        <locationY>1238</locationY>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>cityBikeOmegaCounter_0</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.Quantity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>aumentaContatorePERFORMANCE</name>
+        <label>aumentaContatorePERFORMANCE</label>
+        <locationX>17914</locationX>
+        <locationY>1238</locationY>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>mountainBikePerformanceCounter_0</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.Quantity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>aumentaContatorePrestigeUomo</name>
+        <label>aumentaContatorePrestigeUomo</label>
+        <locationX>16594</locationX>
+        <locationY>1238</locationY>
+        <assignmentItems>
+            <assignToReference>nuvolaUomoCounter_0</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.Quantity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>aumentaContatoreSanificatore_AZ</name>
+        <label>aumentaContatoreSanificatore_AZ</label>
+        <locationX>18706</locationX>
+        <locationY>1118</locationY>
+        <assignmentItems>
+            <assignToReference>counterSanificatore_0_0</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct4_0_0.Quantity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct4_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>aumentaContatoreSanificatori</name>
+        <label>aumentaContatoreSanificatori</label>
+        <locationX>9290</locationX>
+        <locationY>1238</locationY>
+        <assignmentItems>
+            <assignToReference>counterSanificatore</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_4.Quantity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_4</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>aumentaContatoreTrekkingAlpha</name>
         <label>aumentaContatoreTrekkingAlpha</label>
         <locationX>9642</locationX>
@@ -436,6 +624,75 @@
         </assignmentItems>
         <connector>
             <targetReference>ForEachOrderProduct_2</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>aumentaContatoreUNISEXC4</name>
+        <label>aumentaContatoreUNISEXC4</label>
+        <locationX>16858</locationX>
+        <locationY>1238</locationY>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>cityBikeUnisexCounter_0</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.Quantity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>aumentaNuvolaDonna</name>
+        <label>aumentaNuvolaDonna</label>
+        <locationX>16330</locationX>
+        <locationY>1238</locationY>
+        <assignmentItems>
+            <assignToReference>nuvolaDonnaCounter_0</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.Quantity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>aumentaTREKKINGALPHA</name>
+        <label>aumentaTREKKINGALPHA</label>
+        <locationX>17650</locationX>
+        <locationY>1238</locationY>
+        <assignmentItems>
+            <assignToReference>collectionTipoEbike</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.ProductName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>trekkingAlphaCounter_0</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ForEachOrderProduct_2_0.Quantity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ForEachOrderProduct_2_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -473,7 +730,7 @@
     <assignments>
         <name>countTermostatiConInstallazione_1</name>
         <label>countTermostatiConInstallazione</label>
-        <locationX>9554</locationX>
+        <locationX>10170</locationX>
         <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>termostatiConInstallazioneCounter_1</assignToReference>
@@ -505,7 +762,7 @@
     <assignments>
         <name>countTermostatiSenzaInstallazione_1</name>
         <label>countTermostatiSenzaInstallazione</label>
-        <locationX>9818</locationX>
+        <locationX>10434</locationX>
         <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>termostatiSenzaInstallazioneCounter_1</assignToReference>
@@ -537,7 +794,7 @@
     <assignments>
         <name>outputVasTypeAssignment</name>
         <label>outputVasTypeAssignment</label>
-        <locationX>11149</locationX>
+        <locationX>13382</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>outputVasType</assignToReference>
@@ -601,7 +858,7 @@
     <assignments>
         <name>setTermostatoConInstallazioneTrue_1</name>
         <label>setTermostatoConInstallazioneTrue</label>
-        <locationX>9554</locationX>
+        <locationX>10170</locationX>
         <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>termostatoConInstallazione_1</assignToReference>
@@ -617,7 +874,7 @@
     <decisions>
         <name>Canale</name>
         <label>Canale</label>
-        <locationX>7772</locationX>
+        <locationX>8850</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Tipo_VAS_0_0</targetReference>
@@ -642,7 +899,7 @@
     <decisions>
         <name>Categoria</name>
         <label>Categoria</label>
-        <locationX>11149</locationX>
+        <locationX>13382</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Tipo_VAS_0</targetReference>
@@ -770,7 +1027,7 @@
                 <leftValueReference>ForEachOrderProduct_2.ProductCode__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>CITYBIKE NUVOLA UOMO</stringValue>
+                    <stringValue>CITYBIKE PRESTIGE UOMO</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -780,7 +1037,14 @@
         </rules>
         <rules>
             <name>isFOLDED_E_BIKE_FLIPPER</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>FOLDED FLIPPER</stringValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>ForEachOrderProduct_2.ProductCode__c</leftValueReference>
                 <operator>Contains</operator>
@@ -817,12 +1081,19 @@
         </rules>
         <rules>
             <name>isMOUNTAIN_E_BIKE_PERFORMACE</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>ForEachOrderProduct_2.ProductCode__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>MOUNTAIN E-BIKE PERFORMACE</stringValue>
+                    <stringValue>MOUNTAIN PERFORMACE</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>MOUNTAIN E-BIKE PERFORMANCE</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -871,7 +1142,7 @@
     <decisions>
         <name>checkForEbike_0</name>
         <label>checkForEbike</label>
-        <locationX>13206</locationX>
+        <locationX>16594</locationX>
         <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_2_0</targetReference>
@@ -952,6 +1223,139 @@
             </connector>
             <label>isESLEEK</label>
         </rules>
+        <rules>
+            <name>isCITYBIKE_NUVOLA_DONNA_OB</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2_0.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>CITYBIKE NUVOLA DONNA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>aumentaNuvolaDonna</targetReference>
+            </connector>
+            <label>isCITYBIKE_NUVOLA_DONNA_OB</label>
+        </rules>
+        <rules>
+            <name>isCITYBIKE_PRESTIGE_UOMO_OB</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2_0.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>CITYBIKE PRESTIGE UOMO</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>aumentaContatorePrestigeUomo</targetReference>
+            </connector>
+            <label>isCITYBIKE_PRESTIGE_UOMO_OB</label>
+        </rules>
+        <rules>
+            <name>isCITYBIKE_UNISEX_OB</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2_0.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>CITY BIKE UNISEX</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>aumentaContatoreUNISEXC4</targetReference>
+            </connector>
+            <label>isCITYBIKE_UNISEX_OB</label>
+        </rules>
+        <rules>
+            <name>isCITYBIKE_OMEGA_OB</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2_0.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>CITY BIKE OMEGA</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2_0.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>CITY E-BIKE OMEGA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>aumentaContatoreOMEGA</targetReference>
+            </connector>
+            <label>isCITYBIKE_OMEGA_OB</label>
+        </rules>
+        <rules>
+            <name>isFOLDED_EBIKE_FLIPPER_OB</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2_0.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>FOLDED FLIPPER</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2_0.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>FOLDED E-BIKE FLIPPER</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>aumentaContatoreFLIPPER</targetReference>
+            </connector>
+            <label>isFOLDED_EBIKE_FLIPPER_OB</label>
+        </rules>
+        <rules>
+            <name>isTREKKING_ALPHA_OB</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2_0.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>TREKKING ALPHA</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2_0.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>TREKKING E-BIKE ALPHA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>aumentaTREKKINGALPHA</targetReference>
+            </connector>
+            <label>isTREKKING_ALPHA_OB</label>
+        </rules>
+        <rules>
+            <name>isMOUNTAIN_EBIKE_PERFORMANCE_OB</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2_0.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>MOUNTAIN PERFORMANCE</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_2_0.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>MOUNTAIN E-BIKE PERFORMANCE</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>aumentaContatorePERFORMANCE</targetReference>
+            </connector>
+            <label>isMOUNTAIN_EBIKE_PERFORMANCE_OB</label>
+        </rules>
     </decisions>
     <decisions>
         <name>checkForInstallazione</name>
@@ -973,6 +1377,126 @@
                 <targetReference>setInstallazioneWallbox</targetReference>
             </connector>
             <label>hasInstallazione</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>checkLampadaDiRicarica</name>
+        <label>checkLampadaDiRicarica</label>
+        <locationX>9290</locationX>
+        <locationY>1118</locationY>
+        <defaultConnector>
+            <targetReference>ForEachOrderProduct_4</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isLampada</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_4.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>LAMPADA DI RICARICA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>aumentaContatoreLampada</targetReference>
+            </connector>
+            <label>isLampada</label>
+        </rules>
+        <rules>
+            <name>isSanificatore</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_4.ProductName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SANIFICATORE</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>aumentaContatoreSanificatori</targetReference>
+            </connector>
+            <label>isSanificatore</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>checklampadadiRicarica_AZ</name>
+        <label>checklampadadiRicarica_AZ</label>
+        <locationX>18970</locationX>
+        <locationY>998</locationY>
+        <defaultConnector>
+            <targetReference>ForEachOrderProduct4_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isSanificatore_AZ</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct4_0_0.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>SANIFICATORE</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>aumentaContatoreSanificatore_AZ</targetReference>
+            </connector>
+            <label>isSanificatore_AZ</label>
+        </rules>
+        <rules>
+            <name>isLampada_AZ</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct4_0_0.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>LAMPADA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>aumentaContatoreLampada_AZ</targetReference>
+            </connector>
+            <label>isLampada_AZ</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>checkLampadaDiRicarica_OB</name>
+        <label>checkLampadaDiRicarica_OB</label>
+        <locationX>16770</locationX>
+        <locationY>1118</locationY>
+        <defaultConnector>
+            <targetReference>ForEachOrderProduct_4_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isSanificatore_OB</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_4_0.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>SANIFICATORE</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>aumenataContatoreSanificatore_OB</targetReference>
+            </connector>
+            <label>isSanificatore_OB</label>
+        </rules>
+        <rules>
+            <name>isLampada_OB</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForEachOrderProduct_4_0.ProductCode__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>LAMPADA DI RICARICA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>aumentaContatoreLampada_OB</targetReference>
+            </connector>
+            <label>isLampada_OB</label>
         </rules>
     </decisions>
     <decisions>
@@ -1003,7 +1527,7 @@
     <decisions>
         <name>foundMonopattinoElettrico_0</name>
         <label>checkMonopattinoElettrico</label>
-        <locationX>13294</locationX>
+        <locationX>15758</locationX>
         <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_3_0</targetReference>
@@ -1082,7 +1606,7 @@
     <decisions>
         <name>hasInstallazione_0</name>
         <label>hasInstallazione</label>
-        <locationX>9686</locationX>
+        <locationX>10302</locationX>
         <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>countTermostatiSenzaInstallazione_1</targetReference>
@@ -1179,7 +1703,7 @@
     <decisions>
         <name>Tipo_VAS</name>
         <label>Tipo VAS</label>
-        <locationX>4318</locationX>
+        <locationX>4626</locationX>
         <locationY>878</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1354,11 +1878,11 @@
                 <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>HERA SANIFICA ARIA</stringValue>
+                    <stringValue>SANIFICATORE</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Screen_HERA_SANIFICA_ARIA_Famiglie_Inbound_0</targetReference>
+                <targetReference>ForEachOrderProduct_4</targetReference>
             </connector>
             <label>HERA SANIFICA ARIA</label>
         </rules>
@@ -1366,7 +1890,7 @@
     <decisions>
         <name>Tipo_VAS_0</name>
         <label>Tipo VAS</label>
-        <locationX>14526</locationX>
+        <locationX>17914</locationX>
         <locationY>758</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1440,7 +1964,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Screen_HERA_SANIFICA_ARIA_Aziende</targetReference>
+                <targetReference>ForEachOrderProduct4_0_0</targetReference>
             </connector>
             <label>HERA SANIFICA ARIA</label>
         </rules>
@@ -1448,7 +1972,7 @@
     <decisions>
         <name>Tipo_VAS_0_0</name>
         <label>Tipo VAS</label>
-        <locationX>11226</locationX>
+        <locationX>13074</locationX>
         <locationY>878</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1597,7 +2121,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Screen_HERA_SANIFICA_ARIA_Famiglie_Outbound_0</targetReference>
+                <targetReference>ForEachOrderProduct_4_0</targetReference>
             </connector>
             <label>HERA SANIFICA ARIA</label>
         </rules>
@@ -1629,13 +2153,13 @@
     <formulas>
         <name>costoTotaleWallboxNoRfid</name>
         <dataType>Number</dataType>
-        <expression>1299*{!NormalWallboxCounter}+IF({!hasInstallazioneWallbox}, 399*{!NormalWallboxCounter}, 0)</expression>
+        <expression>1399*{!NormalWallboxCounter}+IF({!hasInstallazioneWallbox}, 399*{!NormalWallboxCounter}, 0)</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
         <name>costoTotaleWallboxRfid</name>
         <dataType>Number</dataType>
-        <expression>1499*{!WallboxRfidCounter}+IF({!hasInstallazioneWallbox}, 399*{!WallboxRfidCounter}, 0)</expression>
+        <expression>1599*{!WallboxRfidCounter}+IF({!hasInstallazioneWallbox}, 399*{!WallboxRfidCounter}, 0)</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
@@ -1752,6 +2276,20 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <interviewLabel>HDT Script Gestione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT Script - VAS</label>
     <loops>
+        <name>ForEachOrderProduct4_0_0</name>
+        <label>ForEachOrderProduct4_0_0</label>
+        <locationX>18618</locationX>
+        <locationY>878</locationY>
+        <collectionReference>GetOrderProducts_0</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>checklampadadiRicarica_AZ</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Screen_HERA_SANIFICA_ARIA_Aziende</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
         <name>ForEachOrderProduct_0</name>
         <label>ForEachOrderProduct</label>
         <locationX>930</locationX>
@@ -1768,7 +2306,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_0_0</name>
         <label>ForEachOrderProduct</label>
-        <locationX>9466</locationX>
+        <locationX>10082</locationX>
         <locationY>998</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -1810,7 +2348,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_2_0</name>
         <label>ForEachOrderProduct</label>
-        <locationX>12458</locationX>
+        <locationX>14922</locationX>
         <locationY>998</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -1838,7 +2376,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_3_0</name>
         <label>ForEachOrderProduct</label>
-        <locationX>13074</locationX>
+        <locationX>15538</locationX>
         <locationY>998</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -1847,6 +2385,34 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Screen_HERA_MONOPATTINO_ELETTRICO_Outbound_0</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>ForEachOrderProduct_4</name>
+        <label>ForEachOrderProduct</label>
+        <locationX>8938</locationX>
+        <locationY>998</locationY>
+        <collectionReference>GetOrderProducts_0</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>checkLampadaDiRicarica</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Screen_HERA_SANIFICA_ARIA_Famiglie_Inbound_0</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>ForEachOrderProduct_4_0</name>
+        <label>ForEachOrderProduct_4_0</label>
+        <locationX>16418</locationX>
+        <locationY>998</locationY>
+        <collectionReference>GetOrderProducts_0</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>checkLampadaDiRicarica_OB</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Screen_HERA_SANIFICA_ARIA_Famiglie_Outbound_0</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -1871,7 +2437,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <recordLookups>
         <name>GetOrder</name>
         <label>GetOrder</label>
-        <locationX>11149</locationX>
+        <locationX>13382</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1892,7 +2458,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <recordLookups>
         <name>GetOrderProducts_0</name>
         <label>GetOrderProducts</label>
-        <locationX>11149</locationX>
+        <locationX>13382</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1920,7 +2486,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <recordLookups>
         <name>GetVasOrderItem</name>
         <label>GetVasOrderItem</label>
-        <locationX>11149</locationX>
+        <locationX>13382</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1948,8 +2514,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_Conferma_Adesione_Aziende</name>
         <label>Screen Conferma Adesione Aziende</label>
-        <locationX>14526</locationX>
-        <locationY>1094</locationY>
+        <locationX>17914</locationX>
+        <locationY>1646</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2005,7 +2571,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_CALDAIA_SICURA_1_0_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che aderisce all’offerta &lt;b&gt;Hera Caldaia Sicura&lt;/b&gt;?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2014,6 +2580,21 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>HERA CALDAIA SICURA</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>VAS_HERA_SANIFICA_ARIA_1_0_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Sanifica Aria&lt;/strong&gt;?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>SANIFICATORE</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2084,7 +2665,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_Conferma_Adesione_Famiglie_Inbound</name>
         <label>Screen Conferma Adesione Famiglie Inbound</label>
-        <locationX>4318</locationX>
+        <locationX>4626</locationX>
         <locationY>2318</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2299,7 +2880,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_EBIKE_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che aderisce all&apos;offerta &lt;b&gt;Hera E-Bike&lt;/b&gt;?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera E-Bike&lt;/strong&gt;?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2308,6 +2889,21 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>HERA E-BIKE</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>VAS_HERA_SANIFICA_ARIA_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera Sanifica Aria&lt;/strong&gt;?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>SANIFICATORE</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2502,13 +3098,28 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                 </conditions>
             </visibilityRule>
         </fields>
+        <fields>
+            <name>VAS_HERA_SANIFICA_ARIA_1</name>
+            <fieldText>&lt;p&gt;Per Hera Sanifica Aria, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>SANIFICATORE</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Screen_Conferma_Adesione_Famiglie_Outbound</name>
         <label>Screen Conferma Adesione Famiglie Outbound</label>
-        <locationX>11226</locationX>
+        <locationX>13074</locationX>
         <locationY>1886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2658,7 +3269,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>HERA SANIFICA ARIA</stringValue>
+                        <stringValue>SANIFICATORE</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2914,7 +3525,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_CALDAIA_SICURA_Aziende</name>
         <label>Screen HERA CALDAIA SICURA Aziende</label>
-        <locationX>14658</locationX>
+        <locationX>17738</locationX>
         <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2992,7 +3603,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_CALDAIA_SICURA_Outbound</name>
         <label>Screen HERA CALDAIA SICURA Outbound</label>
-        <locationX>10522</locationX>
+        <locationX>11138</locationX>
         <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3031,7 +3642,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_CONTAWATT_Aziende</name>
         <label>Screen HERA CONTAWATT Aziende</label>
-        <locationX>13866</locationX>
+        <locationX>16946</locationX>
         <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3109,7 +3720,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_CONTAWATT_Outbound</name>
         <label>Screen HERA CONTAWATT Outbound</label>
-        <locationX>9730</locationX>
+        <locationX>10346</locationX>
         <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3234,7 +3845,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_EBIKE_HCNE_CLIENT_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera E-Bike per l’acquisto di biciclette di ultima generazione a pedalata assistita equipaggiate con un motore elettrico. Assieme all’offerta è inoltre inclusa gratuitamente per 12 mesi la Polizza Assistenza E-Bike per assistenza tecnica in caso di guasto oppure assistenza medica in caso di incidente, il cui regolamento è consultabile sul sito heracomm-nordest.gruppohera.it/.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera E-Bike per l’acquisto di biciclette di ultima generazione a pedalata assistita equipaggiate con un motore elettrico. Assieme all’offerta è inoltre inclusa gratuitamente per 12 mesi la Polizza Assistenza E-Bike per assistenza tecnica in caso di guasto oppure assistenza medica in caso di incidente.&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3675,8 +4286,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
-            <name>HERA_EBIKE_CON_POD_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [POD/PDR] del contratto di fornitura al quale è associato il presente contratto e {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <name>HERA_EBIKE_CON_POD_0_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [POD] del contratto di fornitura al quale è associato il presente contratto e {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3685,6 +4296,35 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetOrder.ServicePoint__r.CommoditySector__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Energia Elettrica</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_EBIKE_CON_PDR_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [PDR] del contratto di fornitura al quale è associato il presente contratto e {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.ServicePointCodeFormula__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetOrder.ServicePoint__r.CommoditySector__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3700,7 +4340,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_E_BIKE_Outbound</name>
         <label>Screen HERA E-BIKE Outbound</label>
-        <locationX>12458</locationX>
+        <locationX>14922</locationX>
         <locationY>1550</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3710,8 +4350,105 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_EBIKE_Generico_1_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[HERA E-BIKE]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera E-Bike per l’acquisto di biciclette di ultima generazione a pedalata assistita equipaggiate con un motore elettrico. Assieme all’offerta è inoltre inclusa gratuitamente per 12 mesi la Polizza Assistenza E-Bike per assistenza tecnica in caso di guasto oppure assistenza medica in caso di incidente, il cui regolamento è consultabile sul sito [per clienti HC/HCM] heracomm.gruppohera.it [per clienti HCNE] heracomm-nordest.gruppohera.it/.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;b&gt;[Condizioni economiche e di acquisto Hera E-Bike]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’E-Bike scelta è la &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!collectionTipoEbike}&lt;/span&gt;?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il costo di acquisto della E-Bike è:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[HERA E-BIKE]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera E-Bike per l’acquisto di biciclette di ultima generazione a pedalata assistita equipaggiate con un motore elettrico. Assieme all’offerta è inoltre inclusa gratuitamente per 12 mesi la Polizza Assistenza E-Bike per assistenza tecnica in caso di guasto oppure assistenza medica in caso di incidente. &lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;[Condizioni economiche e di acquisto Hera E-Bike]&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Mi conferma che l’E-Bike scelta è la &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!collectionTipoEbike}&lt;/span&gt;?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il costo di acquisto della E-Bike è:&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>HERA_EBIKE_UNISEX_1_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1349 € IVA inclusa.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>cityBikeUnisexCounter_0</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_EBIKE_OMEGA_1_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1499 € IVA inclusa.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>cityBikeOmegaCounter_0</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_EBIKE_NUVOLA_DONNA_UOMO_1</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1599 € IVA inclusa.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>nuvolaDonnaCounter_0</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>nuvolaUomoCounter_0</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_EBIKE_FOLDED_FLIPPER_1_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1649 € IVA inclusa.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>foldedFlipperCounter_0</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_EBIKE_TREKKING_ALPHA_1_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1799 € IVA inclusa.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>trekkingAlphaCounter_0</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_MOUNTAIN_EBIKE_PERFORMANCE_1_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;1999 € IVA inclusa.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>mountainBikePerformanceCounter_0</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>HERA_EBIKE_EWAY_1_0</name>
@@ -3736,51 +4473,6 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>ebikeErunCounter_1</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_EBIKE_GRAZIELLA_1_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;1.486 € IVA inclusa.&lt;/li&gt;&lt;/ul&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ebikeGraziellaCounter_1</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_EBIKE_ESPIKE_1_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;1.549 € IVA inclusa.&lt;/li&gt;&lt;/ul&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ebikeEspikeCounter_1</leftValueReference>
-                    <operator>GreaterThan</operator>
-                    <rightValue>
-                        <numberValue>0.0</numberValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_EBIKE_ESLEEK_1_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;2.049 € IVA inclusa.&lt;/li&gt;&lt;/ul&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ebikeEsleekCounter_1</leftValueReference>
                     <operator>GreaterThan</operator>
                     <rightValue>
                         <numberValue>0.0</numberValue>
@@ -3832,7 +4524,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_EBIKE_CON_POD_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [POD/PDR] del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [POD] del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3841,6 +4533,35 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetOrder.ServicePoint__r.CommoditySector__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Energia Elettrica</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_EBIKE_CON_PDR_1</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice [PDR] del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.ServicePointCodeFormula__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetOrder.ServicePoint__r.CommoditySector__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4009,7 +4730,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_LED_Outbound</name>
         <label>Screen HERA LED Outbound</label>
-        <locationX>8850</locationX>
+        <locationX>9466</locationX>
         <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4394,7 +5115,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_MONOPATTINO_ELETTRICO_Outbound_0</name>
         <label>Screen HERA MONOPATTINO ELETTRICO Outbound</label>
-        <locationX>13074</locationX>
+        <locationX>15538</locationX>
         <locationY>1550</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4487,7 +5208,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_ACQUA_Outbound</name>
         <label>Screen HERA NO PROBLEM ACQUA Outbound</label>
-        <locationX>10786</locationX>
+        <locationX>11402</locationX>
         <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4526,7 +5247,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_GAS_Aziende</name>
         <label>Screen HERA NO PROBLEM GAS Aziende</label>
-        <locationX>14394</locationX>
+        <locationX>17474</locationX>
         <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4674,7 +5395,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_GAS_Outbound</name>
         <label>Screen HERA NO PROBLEM GAS Outbound</label>
-        <locationX>10258</locationX>
+        <locationX>10874</locationX>
         <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4748,7 +5469,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_LUCE_Aziende</name>
         <label>Screen HERA NO PROBLEM LUCE Aziende</label>
-        <locationX>14130</locationX>
+        <locationX>17210</locationX>
         <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4896,7 +5617,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_LUCE_Outbound</name>
         <label>Screen HERA NO PROBLEM LUCE Outbound</label>
-        <locationX>9994</locationX>
+        <locationX>10610</locationX>
         <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4985,7 +5706,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_RICARICA_PRIVATA_NO_RFID_0</name>
-            <fieldText>&lt;p&gt;Il costo di acquisto di una Wall Bax con una presa da 7,4 kW con Smart charging è 1.449, in promozione a 1.299 €.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il costo di acquisto di una Wall Bax con una presa da 7,4 kW con Smart charging è 1.549, in promozione a 1.399 €.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5000,7 +5721,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_RICARICA_PRIVATA_RFID_0</name>
-            <fieldText>&lt;p&gt;Il costo di acquisto di una Wall Bax con una presa da 7,4 kW con Smart charging e Lettore RFID Card è di 1.649, in promozione a 1.499 €.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il costo di acquisto di una Wall Bax con una presa da 7,4 kW con Smart charging e Lettore RFID Card è di 1.749, in promozione a 1.599 €.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5380,8 +6101,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_SANIFICA_ARIA_Aziende</name>
         <label>Screen HERA SANIFICA ARIA Aziende</label>
-        <locationX>14922</locationX>
-        <locationY>878</locationY>
+        <locationX>18618</locationX>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5389,23 +6110,79 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             <targetReference>Screen_Conferma_Adesione_Aziende</targetReference>
         </connector>
         <fields>
-            <name>HERA_SANIFICA_ARIA_Dispositivo_0</name>
-            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria ed eventuali accessori (Lampada di ricarica).&amp;nbsp;&lt;/p&gt;</fieldText>
+            <name>HERA_SANIFICA_ARIA_Dispositivo_1_0</name>
+            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto del sanificatore è 279 €, comprensivo di spese di spedizione e di IVA, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore_0_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica_0_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_SANIFICA_ARIA_Accessorio_1_0_0</name>
+            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di un accessorio relativo al sanificatore (Lampada di ricarica).&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo della Lampada di ricarica è pari a 49,90€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore_0_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica_0_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_SANIFICA_ARIA_Accessorio_1_0_1</name>
+            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di due accessori relativi al sanificatore (Lampade di ricarica).&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo di due Lampade di ricarica è pari a 99,80€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore_0_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica_0_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>2.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_SANIFICA_ARIA_Body_1_0_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>HERA_SANIFICA_ARIA_Accessorio_0</name>
-            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un accessorio relativo al sanificatore (Lampada di ricarica).&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>HERA_SANIFICA_ARIA_Dispositivo_0_1</name>
-            <fieldText>&lt;p&gt;Il costo di acquisto del sanificatore è 279 €, comprensivo di spese di spedizione e di IVA, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni sanificatore è coperto da garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>HERA_SANIFICA_ARIA_Accessorio_0_1</name>
-            <fieldText>&lt;p&gt;Il costo di acquisto della Lampada di ricarica è pari a 49,90€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni sanificatore è coperto da garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <name>HERA_SANIFICA_ARIA_Garanzia_1_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Ogni sanificatore è coperto da garanzia di 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -5414,8 +6191,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_SANIFICA_ARIA_Famiglie_Inbound_0</name>
         <label>Screen HERA SANIFICA ARIA Famiglie Inbound</label>
-        <locationX>8322</locationX>
-        <locationY>998</locationY>
+        <locationX>8938</locationX>
+        <locationY>1550</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5424,22 +6201,78 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_SANIFICA_ARIA_Dispositivo_0_0</name>
-            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto del sanificatore è 279 €, comprensivo di spese di spedizione e di IVA, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>HERA_SANIFICA_ARIA_Accessorio_0_0</name>
-            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un accessorio relativo al sanificatore (Lampada di ricarica).&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di un accessorio relativo al sanificatore (Lampada di ricarica).&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo della Lampada di ricarica è pari a 49,90€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_SANIFICA_ARIA_Accessorio_1_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di due accessori relativi al sanificatore (Lampade di ricarica).&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo di due Lampade di ricarica è pari a 99,80€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>2.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_SANIFICA_ARIA_Body_1</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>HERA_SANIFICA_ARIA_Dispositivo_0_1_0</name>
-            <fieldText>&lt;p&gt;Il costo di acquisto del sanificatore è 279 €, comprensivo di spese di spedizione e di IVA, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni sanificatore è coperto da garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>HERA_SANIFICA_ARIA_Accessorio_0_1_0</name>
-            <fieldText>&lt;p&gt;Il costo di acquisto della Lampada di ricarica è pari a 49,90€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni sanificatore è coperto da garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <name>HERA_SANIFICA_ARIA_Garanzia_1</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Ogni sanificatore è coperto da garanzia di 24 mesi.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -5448,8 +6281,8 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_SANIFICA_ARIA_Famiglie_Outbound_0</name>
         <label>Screen HERA SANIFICA ARIA Famiglie Outbound</label>
-        <locationX>13338</locationX>
-        <locationY>998</locationY>
+        <locationX>16418</locationX>
+        <locationY>1550</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5458,22 +6291,78 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_SANIFICA_ARIA_Dispositivo_0_0_0</name>
-            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto del sanificatore è 279 €, comprensivo di spese di spedizione e di IVA, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_SANIFICA_ARIA_Accessorio_0_0_1_0</name>
+            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di un accessorio relativo al sanificatore (Lampada di ricarica).&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo della Lampada di ricarica è pari a 49,90€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_SANIFICA_ARIA_Accessorio_0_0_1_1</name>
+            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un dispositivo per la sanificazione dell’aria e di due accessori relativi al sanificatore (Lampade di ricarica).&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il costo di acquisto del sanificatore è pari a 279€ mentre il costo di due Lampade di ricarica è pari a 99,80€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>counterSanificatore_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>counterLampadadiRicarica_0</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>2.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_SANIFICA_ARIA_Body_1_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>HERA_SANIFICA_ARIA_Accessorio_0_0_0</name>
-            <fieldText>&lt;p&gt;•	le proponiamo l’offerta Hera SanificaAria per l’acquisto di un accessorio relativo al sanificatore (Lampada di ricarica).&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>HERA_SANIFICA_ARIA_Dispositivo_0_1_0_0</name>
-            <fieldText>&lt;p&gt;Il costo di acquisto del sanificatore è 279 €, comprensivo di spese di spedizione e di IVA, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni sanificatore è coperto da garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>HERA_SANIFICA_ARIA_Accessorio_0_1_0_0</name>
-            <fieldText>&lt;p&gt;Il costo di acquisto della Lampada di ricarica è pari a 49,90€, a condizione che la fornitura associata rimanga attiva per almeno 24 mesi.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di telefono è {!GetOrder.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prodotto verrà consegnato tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una fattura che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura di energia elettrica associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura. Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni sanificatore è coperto da garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <name>HERA_SANIFICA_ARIA_Garanzia_1_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Ogni sanificatore è coperto da garanzia di 24 mesi.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -5603,7 +6492,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_THERMO_Outbound</name>
         <label>Screen HERA THERMO Outbound</label>
-        <locationX>9466</locationX>
+        <locationX>10082</locationX>
         <locationY>1670</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -5916,7 +6805,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>11023</locationX>
+        <locationX>13256</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetOrder</targetReference>
@@ -5946,12 +6835,34 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </value>
     </variables>
     <variables>
+        <name>cityBikeOmegaCounter_0</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
         <name>cityBikeUnisexCounter</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>cityBikeUnisexCounter_0</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
         <value>
             <numberValue>0.0</numberValue>
         </value>
@@ -5978,6 +6889,39 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>counterLampadadiRicarica</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>counterLampadadiRicarica_0</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>counterLampadadiRicarica_0_0</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
         <name>counterMonopattinoElettrico</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
@@ -5995,6 +6939,39 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>counterSanificatore</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>counterSanificatore_0</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>counterSanificatore_0_0</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
         <value>
             <numberValue>0.0</numberValue>
         </value>
@@ -6121,6 +7098,17 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </value>
     </variables>
     <variables>
+        <name>foldedFlipperCounter_0</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
         <name>getInputCanale</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -6173,6 +7161,17 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </value>
     </variables>
     <variables>
+        <name>mountainBikePerformanceCounter_0</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
         <name>NormalWallboxCounter</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
@@ -6195,12 +7194,34 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </value>
     </variables>
     <variables>
+        <name>nuvolaDonnaCounter_0</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
         <name>nuvolaUomoCounter</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>nuvolaUomoCounter_0</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
         <value>
             <numberValue>0.0</numberValue>
         </value>
@@ -6277,6 +7298,17 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>trekkingAlphaCounter_0</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
         <value>
             <numberValue>0.0</numberValue>
         </value>
