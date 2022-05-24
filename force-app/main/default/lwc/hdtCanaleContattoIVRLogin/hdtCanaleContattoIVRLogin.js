@@ -142,6 +142,13 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
                 }));
             }
         
+        })
+        .catch(error => {
+            this.dispatchEvent(new ShowToastEvent({
+                title: 'Errore',
+                message: 'Si è verificato un errore!',
+                variant: 'error'
+            }));
         });
         //checkContractualEnvelope({
 
