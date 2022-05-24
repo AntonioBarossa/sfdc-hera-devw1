@@ -46,6 +46,9 @@
         <div class="slds-clearfix">
             <div class="slds-float_right">
                 <lightning-button disabled={disableVerifIndiButton} onclick={handleAddressVerification} label="Verifica Indirizzo" variant="brand"></lightning-button>
+            </div>            
+            <div if:true={openFromFlow} class="slds-float_right">
+                <lightning-button disabled={disableConfirmButton} onclick={handleConfirmVerification} label="Conferma" variant="brand"></lightning-button>
             </div>
         </div>
         <template if:true={openmodel} style="height: auto; width: auto;">  

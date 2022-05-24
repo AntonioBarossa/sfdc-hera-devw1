@@ -18,8 +18,8 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
 
 
     //output Properties
-    @api cancelCase;
-    @api saveInDraft;
+    @api cancelCase = false;
+    @api saveInDraft = false;
 
 
     get signatoryTypeOptions() {
@@ -88,6 +88,7 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
 
     handleAnnull(){
         this.cancelCase=true;
+        this.saveInDraft=false;
         this.handleGoNext();
     }
 
@@ -129,8 +130,7 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
                 console.log('#BpData >>> ' + JSON.stringify(mapFieldValue));
                 updateCase({"bpData" : mapFieldValue, "caseId" : this.theCase.Id}).then(data=>{
                     this.loading = false;
-                    return;
-                    //this.handleGoNext();
+                    this.handleGoNext();
                 }).catch(error => {
                     this.loading = false;
         

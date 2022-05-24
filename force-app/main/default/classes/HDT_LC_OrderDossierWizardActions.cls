@@ -529,7 +529,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     }
 
 
-    private static void updateCommodityWithConsumptionAnalisi(String orderParentId)
+    public static void updateCommodityWithConsumptionAnalisi(String orderParentId)
     {
         List<OrderItem> orderItems = [SELECT Id,
         OwnerAC__c,
@@ -538,7 +538,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         Surface__c,
         Product2.Family,
         SBQQ__QuoteLine__c,
-        Order.ServicePointCode__c
+        Order.ServicePointCode__c,
         Order.VasSubtype__c
         FROM OrderItem
         WHERE Order.ParentOrder__c = :orderParentId
@@ -546,7 +546,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         List<SObject> sobjToUpdate = new List<SObject>();
 
-        Map<String, Map<String,OrderItem>> podOrderItemMap = new Map<String,List<OrderItem>>();
+        Map<String, Map<String,OrderItem>> podOrderItemMap = new Map<String, Map<String,OrderItem>>();
         /* Build the map that groups orderItems for ServicePointCode of the related order */
         for(OrderItem item : orderItems)
         {
@@ -568,16 +568,20 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         */
         for(String key : podOrderItemMap.keySet())
         {
+            if(podOrderItemMap.get(key).get('analisiConsumi') == null)
+            {
+                continue;
+            }
             OrderItem offertaCommerciale = new OrderItem(Id = (String) (podOrderItemMap.get(key).get('offertaCommerciale')).get('Id'));
             SBQQ__QuoteLine__c offertaCommQl = new SBQQ__QuoteLine__c(Id =(String) (podOrderItemMap.get(key).get('offertaCommerciale')).get('SBQQ__QuoteLine__c'));
             offertaCommerciale.OwnerAC__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('OwnerAC__c');
             offertaCommerciale.DwellingType__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('DwellingType__c');
-            offertaCommerciale.OccupantsNumber__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('OccupantsNumber__c');
-            offertaCommerciale.Surface__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('Surface__c');
+            offertaCommerciale.OccupantsNumber__c = (Decimal) (podOrderItemMap.get(key).get('analisiConsumi')).get('OccupantsNumber__c');
+            offertaCommerciale.Surface__c = (Decimal) (podOrderItemMap.get(key).get('analisiConsumi')).get('Surface__c');
             offertaCommQl.OwnerAC__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('OwnerAC__c');
             offertaCommQl.DwellingType__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('DwellingType__c');
-            offertaCommQl.OccupantsNumber__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('OccupantsNumber__c');
-            offertaCommQl.Surface__c = (String) (podOrderItemMap.get(key).get('analisiConsumi')).get('Surface__c');
+            offertaCommQl.OccupantsNumber__c = (Decimal) (podOrderItemMap.get(key).get('analisiConsumi')).get('OccupantsNumber__c');
+            offertaCommQl.Surface__c = (Decimal) (podOrderItemMap.get(key).get('analisiConsumi')).get('Surface__c');
 
             sobjToUpdate.add(offertaCommerciale);
             sobjToUpdate.add(offertaCommQl);

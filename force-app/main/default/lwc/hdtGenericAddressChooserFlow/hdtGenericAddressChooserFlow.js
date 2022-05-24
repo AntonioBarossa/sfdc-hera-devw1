@@ -101,6 +101,9 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
     @track address;
     @track isModalOpen=false;
     @api availableActions = [];
+
+    @track openFromFlow;
+
     @api
     get inputAddressLabel(){
         if(this.addressLabel != null && this.addressLabel != "" && this.addressLabel != "undefined"){
@@ -133,6 +136,7 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
 
     connectedCallback(){
         //getRecordNotifyChange([{recordId: this.recordId}]);
+        openFromFlow = true;
     }
     
     handleChangeAddress(event){

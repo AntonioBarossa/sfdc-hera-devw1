@@ -5,7 +5,7 @@ public inherited sharing class HDT_LC_ModificaContrattiBp {
     
     @AuraEnabled
     public static void updateBpDataOnCase (Map<String, Object> bpData, Id caseId){
-        system.debug(bpData);
+        system.debug(JSON.serialize(bpData));
         try {
             //Set<String> caseFields = ((SObject)Type.forName('Schema','Product2').newInstance()).getSObjectType().getDescribe().fields.getMap().keySet();
             Map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.BillingProfile__c.fields.getMap();
@@ -14,7 +14,7 @@ public inherited sharing class HDT_LC_ModificaContrattiBp {
             c.Note__c = nowDate.format('dd/MM/yyyy h:mm a') + ' Campi Modificati:';
             for(String field : bpData.keySet())
             {
-                if(bpData.get(field) != null && String.isNotBlank(String.valueOf(bpData.get(field))))
+                if(bpData.get(field) != null && String.isNotBlank(String.valueOf(bpData.get(field))) && !field.equalsIgnoreCase('undefined'))
                 {
                     c.Note__c += '\n' + '\"' +fieldMap.get(field).getDescribe().getLabel() + '\"' + ': ' + '\"' + bpData.get(field) + '\"';
                 }
