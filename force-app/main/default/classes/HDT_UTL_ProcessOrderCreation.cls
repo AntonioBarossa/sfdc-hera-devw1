@@ -1078,7 +1078,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         rtNameMap.put('VAS', 'HDT_RT_VAS');
         rtNameMap.put('CambioUso', 'HDT_RT_CambioUso');
         rtNameMap.put('CambioOfferta', 'HDT_RT_CambioOfferta');
-        rtNameMap.put('MUC', '');
+        rtNameMap.put('MUC', 'HDT_RT_CambioOfferta');
         rtNameMap.put('TariffeSconti', 'HDT_RT_ScontiBonus');
 
         String devName = rtNameMap.get(processName);

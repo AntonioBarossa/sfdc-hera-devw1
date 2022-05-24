@@ -80,6 +80,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     public void checkContract(){
 
         Map<String, Contract> contractMap = new Map<String, Contract>();
+        Map<String, Order> contractOrderMap = new Map<String, Order>();
         Map<Id, Order> orderMap;
         List<Id> orderIdList = new List<Id>();
         Date todayDay = Date.today();
@@ -106,14 +107,19 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         // Se negli ultimi 100 giorni è presente un Cambio offerta sul contratto.. Se presente va in errore la singola riga
 
         List<Order> orderList = [
-            SELECT Id, processType__c, CreatedDate
+            SELECT Id, processType__c, CreatedDate,ContractReference__r.SAPContractCode__c
             FROM Order
             WHERE processType__c LIKE 'Cambio Offerta%'
-            AND Id IN :orderIdList
+            AND Status IN ('In Lavorazione','Completed')
+            AND (NOT Phase__c IN ('Bozza Annullata','Annullato'))
+            //AND Id IN :orderIdList
+            AND ContractReference__r.SAPContractCode__c IN:contractMap.keySet()
         ];
 
         System.debug(LoggingLevel.DEBUG, '>>> orderList ' + orderList);
-
+        for(Order singleOrder : orderList){
+            contractOrderMap.put(singleOrder.ContractReference__r.SAPContractCode__c, singleOrder);
+        }
         orderMap = new Map<Id, Order>(orderList);
 
         String sapContractCode;
@@ -137,8 +143,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                     continue;
                 }
 
-                if(orderMap.containsKey(currentContract.SBQQ__Order__c)){
-                    currentOrder = orderMap.get(currentContract.SBQQ__Order__c);
+                if(contractOrderMap.containsKey(currentContract.SAPContractCode__c)){
+                    currentOrder = contractOrderMap.get(currentContract.SAPContractCode__c);
 
                     Date orderCreatedDate = currentOrder.CreatedDate.date();
                     Integer numberDaysDue = orderCreatedDate.daysBetween(todayDay);
@@ -148,7 +154,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                     if(numberDaysDue <= 100){
                         System.debug(LoggingLevel.DEBUG, '>>> siamo andati in errore');
                         processObj.requestItem.Status__c = 'Errore';
-                        processObj.requestItem.StatusDescription__c = 'E\' presente un cambio offerta';
+                        processObj.requestItem.StatusDescription__c = 'E\' presente un cambio offerta negli utilimi 100 giorni';
                         //itemsToUpdate.add(processObj.requestItem);
                         continue;     
                     }
@@ -556,6 +562,11 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         HDT_WRP_NextDataObj nextDataObj;
         List<AccountContactRelation> acrListToInsert = new List<AccountContactRelation>();
         for(HDT_WRP_ProcessObjects processObj : processObjList){
+            
+            if(processObj.requestItem.Status__c.equalsIgnoreCase('Errore')){
+                //itemsToUpdate.add(processObj.requestItem);
+                continue;
+            }
             if(processObj.createReferente){
                 AccountContactRelation acr = new AccountContactRelation();
                 String accId = processObj.account.Id;
@@ -566,12 +577,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                     acr.Roles = 'Legale Rappresentante';//processObj.contactRoleWrapper.get('Role');
                     acrListToInsert.add(acr);
                 }
-                
-            }
-            
-            if(processObj.requestItem.Status__c.equalsIgnoreCase('Errore')){
-                //itemsToUpdate.add(processObj.requestItem);
-                continue;
             }
 
             if(saveBillProfResponse != null && saveBillProfResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
