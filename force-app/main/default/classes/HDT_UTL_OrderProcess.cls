@@ -484,6 +484,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         || (oldOrder.Phase__c == 'Esito OK da SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         /**@frpanico 2022-04-28 Aggiunto ricalcolo date per Switch clonato */
                         || (oldOrder.Phase__c == 'Bozza' && newOrder.Phase__c == 'Comunicazione verso Heroku')
+                        /**@frpanico 2022-05-23 Aggiunto caso transitorio */
+                        || (oldOrder.Phase__c == 'Caricamento Siebel KO' && newOrder.Phase__c == 'Esportazione VS Siebel')
                         || (oldOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.IncomingCreditCheckResult__c == 'OK')
                     ){
                         if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
@@ -834,7 +836,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         for (Order newOrder : (List<Order>) newOrdersMap.values()) {
             Order oldOrder = (Order) oldOrdersMap.get(newOrder.id); 
             String recordTypeName = rtMap.get(newOrder.RecordTypeId).getDeveloperName();
-            if(checkRecordTypeForCreditCheck(recordTypeName, newOrder)){                             
+            //Modifica necessaria, perchè delle volte il credit check arriva prima dell'aggiornamento del recordtype dell'order e trovandolo ancora in record type default non crea l'activity
+            if(checkRecordTypeForCreditCheck(recordTypeName, newOrder)
+            || ('HDT_RT_Default'.equalsIgnoreCase(recordTypeName) && 
+                    (('KO'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c) && !newOrder.IncomingCreditCheckResult__c.equalsIgnoreCase(oldOrder.IncomingCreditCheckResult__c))
+                    || (('KO'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c) && !newOrder.OutgoingCreditCheckResult__c.equalsIgnoreCase(oldOrder.OutgoingCreditCheckResult__c))))
+                )
+            ){                             
                 if (newOrder.CreditCheckDescription__c != null && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c) {    
                     /* 
                     @ealpi: Da analisi non mi risultano casi in cui bisogna creare l'activity se l'ordine cambia la CreditCheckDescription__c ma rimane in KO
