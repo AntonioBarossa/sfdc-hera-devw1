@@ -329,8 +329,7 @@ public with sharing class HDT_UTL_CampaignMemberTst {
 
         List<CampaignMember> lstCampaignMember = [SELECT Id, CampaignId, LeadId, PhoneNumber__c FROM CampaignMember LIMIT 1];
         lstCampaignMember[0].PhoneNumber__c = '0043736452';
-        //lstCampaignMember[0].LeadId = myLead.Id;
-        //lstCampaignMember[0].CampaignId = myCampaign.Id;
+        update lstCampaignMember;
 
 
         Test.startTest();
@@ -340,8 +339,35 @@ public with sharing class HDT_UTL_CampaignMemberTst {
         Test.stopTest();
 
         System.assert(lstCampaignMember != null, 'lstCampaignMember è null');
-
     }
 
+    @isTest
+    public static void cancelContractTest(){
+
+        Map<String, List<String>> strMap = new Map<String, List<String>>();
+
+        Test.startTest();
+
+            HDT_UTL_CampaignMember.cancelContract(strMap);
+
+        Test.stopTest();
+
+        System.assert(strMap != null, 'strMap è null');
+    }
+
+    @isTest
+    public static void transcodeProcessForActivityTest(){
+
+        String rt = 'HDT_RT_CambioOfferta';
+
+        Test.startTest();
+
+            HDT_UTL_CampaignMember.transcodeProcessForActivity(rt);
+
+        Test.stopTest();
+
+        System.assert(rt != null, 'rt è null');
+
+    }
 
 }

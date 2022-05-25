@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>MalfunctionsCount__c</fullName>
     <externalId>false</externalId>
-    <label>Numero Malfunzionamenti</label>
+    <label>Numerosità casi rilevata</label>
     <length>255</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
