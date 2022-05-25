@@ -130,6 +130,8 @@ public with sharing class HDT_UTL_GenericSolHandler {
             childOrder.DocSendingMethod__c = 'Posta Cartacea';
             //childOrder.IntegrationId__c = (String) params.get('integrationId') != null?;
             childOrder.Commodity__c = contractList[0].ServicePoint__r.CommoditySector__c;
+            childOrder.ProcessCode__c = 'Gas'.equalsIgnoreCase(childOrder.Commodity__c) ? 'VCG' : 
+                                        'Energia Elettrica'.equalsIgnoreCase(childOrder.Commodity__c) ? 'VCE' : '';
             SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractList[0].Id);
             if(subscription != null){
                 childOrder.CommercialProduct__c = subscription.SBQQ__ProductName__c;
