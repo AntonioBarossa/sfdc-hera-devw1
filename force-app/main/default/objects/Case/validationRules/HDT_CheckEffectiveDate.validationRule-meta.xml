@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_CheckEffectiveDate</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(
+    EffectiveDate__c &gt; TODAY()-1 ,
+			 EffectiveDate__c &gt; DeclarationDate__c-1
+)</errorConditionFormula>
+    <errorDisplayField>EffectiveDate__c</errorDisplayField>
+    <errorMessage>La data decorrenza deve essere minore alla data odierna e alla Data Dichiarazione</errorMessage>
+</ValidationRule>
