@@ -46,3 +46,4 @@ launch.json
 
 # Folder that stores test class results
 .apexTestResults/
+.sf
