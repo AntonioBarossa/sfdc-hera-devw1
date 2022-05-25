@@ -47,6 +47,91 @@
         </connector>
     </assignments>
     <assignments>
+        <name>assignmentPostForm</name>
+        <label>assignmentPostForm</label>
+        <locationX>1768</locationX>
+        <locationY>2546</locationY>
+        <assignmentItems>
+            <assignToReference>getCase.FirstName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCase.Account.FirstName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCase.LastName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCase.Account.LastName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCase.Birthday__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCase.Account.BirthDate__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCase.Birthcity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCase.Account.BirthProvince__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCase.AlternativeAddress__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCase.Account.BillingAddressFormula__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>commitPostForm</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignmentPreForm</name>
+        <label>AssignmentPreForm</label>
+        <locationX>1678</locationX>
+        <locationY>1826</locationY>
+        <assignmentItems>
+            <assignToReference>getCase.SubscriberType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCase.DeclarationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCase.RequestSource__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Da contribuente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCase.SubscriptionPlace__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCase.BillingCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getCase.EffectiveDate__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>updatePreForm</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>assignPhaseDoc</name>
         <label>assignPhaseDoc</label>
         <locationX>842</locationX>
@@ -76,6 +161,22 @@
         </assignmentItems>
     </assignments>
     <assignments>
+        <name>assignProcessType</name>
+        <label>assignProcessType</label>
+        <locationX>1678</locationX>
+        <locationY>1094</locationY>
+        <assignmentItems>
+            <assignToReference>processType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCase.Subprocess__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>WhichType</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>assignStatus</name>
         <label>assignStatus</label>
         <locationX>710</locationX>
@@ -94,8 +195,8 @@
     <assignments>
         <name>assignStringConcatenazione</name>
         <label>assignStringConcatenazione</label>
-        <locationX>2948</locationX>
-        <locationY>2270</locationY>
+        <locationX>2291</locationX>
+        <locationY>3602</locationY>
         <assignmentItems>
             <assignToReference>stringToDocument</assignToReference>
             <operator>Assign</operator>
@@ -110,7 +211,7 @@
     <assignments>
         <name>assignSubProcess_1</name>
         <label>assignSubProcess_1</label>
-        <locationX>1568</locationX>
+        <locationX>1282</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>getCase.Subprocess__c</assignToReference>
@@ -126,7 +227,7 @@
     <assignments>
         <name>assignSubProcess_2</name>
         <label>assignSubProcess_2</label>
-        <locationX>1832</locationX>
+        <locationX>1546</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>getCase.Subprocess__c</assignToReference>
@@ -142,7 +243,7 @@
     <assignments>
         <name>assignSubProcess_3</name>
         <label>assignSubProcess_3</label>
-        <locationX>2096</locationX>
+        <locationX>1810</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>getCase.Subprocess__c</assignToReference>
@@ -158,7 +259,7 @@
     <assignments>
         <name>assignSubProcess_4</name>
         <label>assignSubProcess_4</label>
-        <locationX>2360</locationX>
+        <locationX>2074</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>getCase.Subprocess__c</assignToReference>
@@ -246,7 +347,7 @@
     <decisions>
         <name>Annullamento</name>
         <label>Annullamento</label>
-        <locationX>1535</locationX>
+        <locationX>1392</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>whichPicklist</targetReference>
@@ -269,36 +370,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Annullamento_0</name>
-        <label>Annullamento</label>
-        <locationX>1964</locationX>
-        <locationY>1214</locationY>
-        <defaultConnector>
-            <targetReference>whichSubProcess</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>subFlowAnnullamento_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>hdtFlowNavButtons_1.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <isGoTo>true</isGoTo>
-                <targetReference>flowAnnullamento</targetReference>
-            </connector>
-            <label>subFlowAnnullamento</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Annullamento_0_0</name>
         <label>Annullamento</label>
-        <locationX>2558</locationX>
-        <locationY>1670</locationY>
+        <locationX>1900</locationX>
+        <locationY>3002</locationY>
         <defaultConnector>
             <targetReference>GestioneAllegati</targetReference>
         </defaultConnector>
@@ -307,56 +382,13 @@
             <name>subFlowAnnullamento_0_0</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>SuperficieFormLwc.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ComponentiNonResidentiFormLwc.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>IstatRonchiFormLwc.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>CoabitazioniFormLwc.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ComponentiResidentiFormLwc.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>DatiCatastaliFormLwc.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>AgevolazioneFormLwc.cancelCase</leftValueReference>
+                <leftValueReference>AgevolazioneFormLwc_0_0.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>flowAnnullamento</targetReference>
             </connector>
             <label>subFlowAnnullamento</label>
@@ -365,8 +397,8 @@
     <decisions>
         <name>Annullamento_0_0_0</name>
         <label>Annullamento</label>
-        <locationX>2827</locationX>
-        <locationY>1910</locationY>
+        <locationX>2170</locationX>
+        <locationY>3242</locationY>
         <defaultConnector>
             <targetReference>ConcatenazionePreDocumentale</targetReference>
         </defaultConnector>
@@ -379,7 +411,6 @@
                 <operator>EqualTo</operator>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>flowAnnullamento</targetReference>
             </connector>
             <label>subFlowAnnullamento</label>
@@ -388,8 +419,8 @@
     <decisions>
         <name>Annullamento_0_0_0_0</name>
         <label>Annullamento</label>
-        <locationX>2948</locationX>
-        <locationY>2510</locationY>
+        <locationX>2291</locationX>
+        <locationY>3842</locationY>
         <defaultConnector>
             <targetReference>checkRavvedimentoOperoso</targetReference>
         </defaultConnector>
@@ -405,7 +436,6 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>flowAnnullamento</targetReference>
             </connector>
             <label>subFlowAnnullamento</label>
@@ -414,8 +444,8 @@
     <decisions>
         <name>Annullamento_0_0_0_0_0</name>
         <label>Annullamento</label>
-        <locationX>3102</locationX>
-        <locationY>3002</locationY>
+        <locationX>2445</locationX>
+        <locationY>4334</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>subFlowAnnullamento_0_0_0_0_0</name>
@@ -428,7 +458,63 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
+                <targetReference>flowAnnullamento</targetReference>
+            </connector>
+            <label>subFlowAnnullamento</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Annullamento_0_0_0_0_0_0</name>
+        <label>Annullamento</label>
+        <locationX>1524</locationX>
+        <locationY>1454</locationY>
+        <defaultConnector>
+            <targetReference>AssignmentPreForm</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>subFlowAnnullamento_0_0_0_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtFlowNavButtons_1_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>flowAnnullamento</targetReference>
+            </connector>
+            <label>subFlowAnnullamento</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Annullamento_0_0_0_0_0_0_0</name>
+        <label>Annullamento</label>
+        <locationX>1678</locationX>
+        <locationY>2186</locationY>
+        <defaultConnector>
+            <targetReference>tryGet</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>subFlowAnnullamento_0_0_0_0_0_0_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ScreenFormLwc.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ScreenFormLwcPost.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
                 <targetReference>flowAnnullamento</targetReference>
             </connector>
             <label>subFlowAnnullamento</label>
@@ -454,7 +540,6 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>flowAnnullamento</targetReference>
             </connector>
             <label>Annullamento</label>
@@ -463,7 +548,7 @@
     <decisions>
         <name>caseType</name>
         <label>caseType</label>
-        <locationX>908</locationX>
+        <locationX>836</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>SubprocessChoice</targetReference>
@@ -513,8 +598,8 @@
     <decisions>
         <name>ConcatenazionePreDocumentale</name>
         <label>ConcatenazionePreDocumentale</label>
-        <locationX>3102</locationX>
-        <locationY>2030</locationY>
+        <locationX>2445</locationX>
+        <locationY>3362</locationY>
         <defaultConnector>
             <targetReference>checkRavvedimentoOperoso</targetReference>
         </defaultConnector>
@@ -568,9 +653,34 @@
         </rules>
     </decisions>
     <decisions>
+        <name>QualitaSoggetto</name>
+        <label>Qualità Soggetto Passivo?</label>
+        <locationX>1900</locationX>
+        <locationY>2426</locationY>
+        <defaultConnector>
+            <targetReference>SecondFormDipendenti_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>SoggettoPassivo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>tryGet.SubscriberType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Soggetto passivo</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>assignmentPostForm</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>whichPicklist</name>
         <label>whichPicklist</label>
-        <locationX>1964</locationX>
+        <locationX>1678</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>assignSubProcess_4</targetReference>
@@ -623,118 +733,37 @@
         </rules>
     </decisions>
     <decisions>
-        <name>whichSubProcess</name>
-        <label>whichSubProcess</label>
-        <locationX>2558</locationX>
-        <locationY>1334</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <name>WhichType</name>
+        <label>WhichType</label>
+        <locationX>1678</locationX>
+        <locationY>1214</locationY>
+        <defaultConnector>
+            <targetReference>AssignmentPreForm</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Modifica dati contrattuali</defaultConnectorLabel>
         <rules>
-            <name>SuperficieSub</name>
+            <name>TypeModificaPostAcc</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>getCase.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>getCase.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
                 <rightValue>
-                    <elementReference>Superficie</elementReference>
+                    <stringValue>Modifica post accertamento</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>SuperficieForm</targetReference>
+                <targetReference>verificaAccertamentiTari_0</targetReference>
             </connector>
-            <label>SuperficieSub</label>
-        </rules>
-        <rules>
-            <name>ComponentiNonResidentiSub</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getCase.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>Componentinonresidenti</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>ComponentiNonResidentiForm</targetReference>
-            </connector>
-            <label>ComponentiNonResidentiSub</label>
-        </rules>
-        <rules>
-            <name>IstatRonchiSub</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getCase.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>istatRonchi</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>IstatRonchiForm</targetReference>
-            </connector>
-            <label>IstatRonchiSub</label>
-        </rules>
-        <rules>
-            <name>CoabitazioniSub</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getCase.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>Coabitazioni</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>CoabitazioniForm</targetReference>
-            </connector>
-            <label>CoabitazioniSub</label>
-        </rules>
-        <rules>
-            <name>ComponentiResidentiSub</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getCase.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>Componentiresidenti</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>ComponentiResidentiForm</targetReference>
-            </connector>
-            <label>ComponentiResidentiSub</label>
-        </rules>
-        <rules>
-            <name>DatiCatastaliSub</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getCase.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>Daticatastali</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>DatiCatastaliForm</targetReference>
-            </connector>
-            <label>DatiCatastaliSub</label>
-        </rules>
-        <rules>
-            <name>AgevolazioneSub</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getCase.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>Agevolazione</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>AgevolazioneForm</targetReference>
-            </connector>
-            <label>AgevolazioneSub</label>
+            <label>Modifica post accertamento</label>
         </rules>
     </decisions>
     <description>SubFlow chiamato da HDT_FL_GestioneVariazioni per la gestione dei processi di Variazioni Tari</description>
+    <formulas>
+        <description>generazione process type per prelevare il meta dato corretto per il form di compilazione</description>
+        <name>generationProcessTypeGetForm</name>
+        <dataType>String</dataType>
+        <expression>{!processType}&amp;&apos;Post&apos;</expression>
+    </formulas>
     <interviewLabel>HDT_FL_GestioneVariazioniTari {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GestioneVariazioniTari</label>
     <processMetadataValues>
@@ -759,7 +788,7 @@
     <recordLookups>
         <name>getCase</name>
         <label>getCase</label>
-        <locationX>908</locationX>
+        <locationX>836</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -777,6 +806,37 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>tryGet</name>
+        <label>tryGet</label>
+        <locationX>1900</locationX>
+        <locationY>2306</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>QualitaSoggetto</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>caseId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>commitPostForm</name>
+        <label>commitPostForm</label>
+        <locationX>1768</locationX>
+        <locationY>2666</locationY>
+        <connector>
+            <targetReference>SecondFormDipendenti_0</targetReference>
+        </connector>
+        <inputReference>getCase</inputReference>
+    </recordUpdates>
     <recordUpdates>
         <name>updateFieldsRequest</name>
         <label>updateFieldsRequest</label>
@@ -788,12 +848,22 @@
         <inputReference>getCase</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>updatePreForm</name>
+        <label>updatePreForm</label>
+        <locationX>1678</locationX>
+        <locationY>1946</locationY>
+        <connector>
+            <targetReference>ScreenForm</targetReference>
+        </connector>
+        <inputReference>getCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>updateSubProcess</name>
         <label>updateSubProcess</label>
-        <locationX>1964</locationX>
+        <locationX>1678</locationX>
         <locationY>974</locationY>
         <connector>
-            <targetReference>verificaAccertamentiTari</targetReference>
+            <targetReference>assignProcessType</targetReference>
         </connector>
         <inputReference>getCase</inputReference>
     </recordUpdates>
@@ -808,100 +878,6 @@
         <inputReference>getCase</inputReference>
     </recordUpdates>
     <screens>
-        <name>AgevolazioneForm</name>
-        <label>AgevolazioneForm</label>
-        <locationX>3218</locationX>
-        <locationY>1454</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Annullamento_0_0</targetReference>
-        </connector>
-        <fields>
-            <name>AgevolazioneFormLwc</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <elementReference>Agevolazione</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>density</name>
-                <value>
-                    <stringValue>Comfy</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>caseId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordType</name>
-                <value>
-                    <elementReference>getCase.RecordTypeId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>cancelButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva In Bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Conferma</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>alertChangeCity</name>
         <label>alertChangeCity</label>
         <locationX>50</locationX>
@@ -910,7 +886,6 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>flowAnnullamento</targetReference>
         </connector>
         <fields>
@@ -1038,8 +1013,8 @@
     <screens>
         <name>checkRavvedimentoOperoso</name>
         <label>checkRavvedimentoOperoso</label>
-        <locationX>3102</locationX>
-        <locationY>2882</locationY>
+        <locationX>2445</locationX>
+        <locationY>4214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1099,292 +1074,10 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>CoabitazioniForm</name>
-        <label>CoabitazioniForm</label>
-        <locationX>2426</locationX>
-        <locationY>1454</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Annullamento_0_0</targetReference>
-        </connector>
-        <fields>
-            <name>CoabitazioniFormLwc</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <elementReference>Coabitazioni</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>density</name>
-                <value>
-                    <stringValue>Comfy</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordType</name>
-                <value>
-                    <elementReference>getCase.RecordTypeId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>caseId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>cancelButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva In Bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Conferma</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>ComponentiNonResidentiForm</name>
-        <label>ComponentiNonResidentiForm</label>
-        <locationX>1898</locationX>
-        <locationY>1454</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Annullamento_0_0</targetReference>
-        </connector>
-        <fields>
-            <name>ComponentiNonResidentiFormLwc</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <stringValue>Componenti non residenti</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>density</name>
-                <value>
-                    <stringValue>Comfy</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordType</name>
-                <value>
-                    <elementReference>getCase.RecordTypeId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>caseId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>cancelButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva In Bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Conferma</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>ComponentiResidentiForm</name>
-        <label>ComponentiResidentiForm</label>
-        <locationX>2690</locationX>
-        <locationY>1454</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Annullamento_0_0</targetReference>
-        </connector>
-        <fields>
-            <name>ComponentiResidentiFormLwc</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <elementReference>Componentiresidenti</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>density</name>
-                <value>
-                    <stringValue>Comfy</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordType</name>
-                <value>
-                    <elementReference>getCase.RecordTypeId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>caseId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>cancelButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva In Bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Conferma</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>ConcatenazioneLogic</name>
         <label>ConcatenazioneLogic</label>
-        <locationX>2948</locationX>
-        <locationY>2150</locationY>
+        <locationX>2291</locationX>
+        <locationY>3482</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1465,104 +1158,10 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>DatiCatastaliForm</name>
-        <label>DatiCatastaliForm</label>
-        <locationX>2954</locationX>
-        <locationY>1454</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Annullamento_0_0</targetReference>
-        </connector>
-        <fields>
-            <name>DatiCatastaliFormLwc</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <elementReference>Daticatastali</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>density</name>
-                <value>
-                    <stringValue>Comfy</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordType</name>
-                <value>
-                    <elementReference>getCase.RecordTypeId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>caseId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>cancelButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva In Bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Conferma</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>GestioneAllegati</name>
         <label>GestioneAllegati</label>
-        <locationX>2827</locationX>
-        <locationY>1790</locationY>
+        <locationX>2170</locationX>
+        <locationY>3122</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1622,95 +1221,299 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>IstatRonchiForm</name>
-        <label>IstatRonchiForm</label>
-        <locationX>2162</locationX>
-        <locationY>1454</locationY>
+        <name>ScreenForm</name>
+        <label>ScreenForm</label>
+        <locationX>1678</locationX>
+        <locationY>2066</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Annullamento_0_0</targetReference>
+            <targetReference>Annullamento_0_0_0_0_0_0_0</targetReference>
         </connector>
         <fields>
-            <name>IstatRonchiFormLwc</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <elementReference>istatRonchi</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>density</name>
-                <value>
-                    <stringValue>Comfy</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordType</name>
-                <value>
-                    <elementReference>getCase.RecordTypeId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>caseId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>cancelButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva In Bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Conferma</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <name>headerForm</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 18px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Sotto processo di {!getCase.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>ScreenForm_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>ScreenForm_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>ScreenFormLwc</name>
+                    <extensionName>c:hdtRecordEditFormFlow</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>processType</name>
+                        <value>
+                            <elementReference>getCase.Subprocess__c</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>density</name>
+                        <value>
+                            <stringValue>Comfy</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>showReadOnly</name>
+                        <value>
+                            <booleanValue>false</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>saveButton</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>recordType</name>
+                        <value>
+                            <elementReference>getCase.RecordTypeId</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>recordId</name>
+                        <value>
+                            <elementReference>caseId</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>previousButton</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectName</name>
+                        <value>
+                            <stringValue>Case</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>cancelButton</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>draftButton</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>labelDraftButton</name>
+                        <value>
+                            <stringValue>Salva In Bozza</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>labelSaveButton</name>
+                        <value>
+                            <stringValue>Avanti</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>labelPreviousButton</name>
+                        <value>
+                            <stringValue>Indietro</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <visibilityRule>
+                        <conditionLogic>or</conditionLogic>
+                        <conditions>
+                            <leftValueReference>getCase.Type</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Modifica dati contrattuali</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>getCase.Subprocess__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>Agevolazione</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>getCase.Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Modifica dati contrattuali</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>getCase.Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Modifica post accertamento</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>getCase.Subprocess__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Agevolazione</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ScreenForm_Section2</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>ScreenForm_Section2_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>ScreenFormLwcPost</name>
+                    <extensionName>c:hdtRecordEditFormFlow</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>cancelButton</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>density</name>
+                        <value>
+                            <stringValue>Comfy</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>draftButton</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>labelDraftButton</name>
+                        <value>
+                            <stringValue>Salva In Bozza</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>labelSaveButton</name>
+                        <value>
+                            <stringValue>Avanti</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectName</name>
+                        <value>
+                            <stringValue>Case</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>previousButton</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>processType</name>
+                        <value>
+                            <elementReference>generationProcessTypeGetForm</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>recordType</name>
+                        <value>
+                            <elementReference>getCase.RecordTypeId</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>recordId</name>
+                        <value>
+                            <elementReference>caseId</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>saveButton</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>showReadOnly</name>
+                        <value>
+                            <booleanValue>false</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>labelPreviousButton</name>
+                        <value>
+                            <stringValue>Indietro</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>getCase.Type</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Modifica post accertamento</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>getCase.Subprocess__c</leftValueReference>
+                            <operator>NotEqualTo</operator>
+                            <rightValue>
+                                <elementReference>Agevolazione</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>getCase.Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Modifica post accertamento</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>getCase.Subprocess__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Agevolazione</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -1718,8 +1521,8 @@
     <screens>
         <name>screenReminderDocumentale</name>
         <label>screenReminderDocumentale</label>
-        <locationX>2948</locationX>
-        <locationY>2390</locationY>
+        <locationX>2291</locationX>
+        <locationY>3722</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1793,6 +1596,100 @@
                 <name>standAlone</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>SecondFormDipendenti_0</name>
+        <label>SecondFormDipendenti</label>
+        <locationX>1900</locationX>
+        <locationY>2882</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Annullamento_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>AgevolazioneFormLwc_0_0</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>VariazioniTariModifica2</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>caseId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>getCase.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1912,7 +1809,7 @@
     <screens>
         <name>SubprocessChoice</name>
         <label>SubprocessChoice</label>
-        <locationX>1535</locationX>
+        <locationX>1392</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1928,7 +1825,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Surface</name>
-                    <fieldText>&lt;p&gt;Surface__c&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;Superficie: {!getCase.Surface__c}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
@@ -1954,7 +1851,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>NumberOfPeople</name>
-                    <fieldText>&lt;p&gt;NumberOfPeople__c&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;Numero abitanti: {!getCase.NumberOfPeople__c}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
@@ -2145,117 +2042,23 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>SuperficieForm</name>
-        <label>SuperficieForm</label>
-        <locationX>1634</locationX>
-        <locationY>1454</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Annullamento_0_0</targetReference>
-        </connector>
-        <fields>
-            <name>SuperficieFormLwc</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <elementReference>Superficie</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>density</name>
-                <value>
-                    <stringValue>Comfy</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordType</name>
-                <value>
-                    <elementReference>getCase.RecordTypeId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>caseId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>cancelButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva In Bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Conferma</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>verificaAccertamentiTari</name>
+        <name>verificaAccertamentiTari_0</name>
         <label>verificaAccertamentiTari</label>
-        <locationX>1964</locationX>
-        <locationY>1094</locationY>
+        <locationX>1524</locationX>
+        <locationY>1334</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Annullamento_0</targetReference>
+            <targetReference>Annullamento_0_0_0_0_0_0</targetReference>
         </connector>
         <fields>
-            <name>hdtCheckAssessments</name>
+            <name>hdtCheckAssessments_0</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(235, 236, 240); font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Oxygen, Ubuntu, &amp;quot;Fira Sans&amp;quot;, &amp;quot;Droid Sans&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, sans-serif; color: rgb(23, 43, 77);&quot;&gt;hdtCheckAssessments&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>hdtFlowNavButtons_1</name>
+            <name>hdtFlowNavButtons_1_0</name>
             <extensionName>c:hdtFlowNavigationButton</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -2302,7 +2105,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>782</locationX>
+        <locationX>710</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>getCase</targetReference>
@@ -2312,8 +2115,8 @@
     <subflows>
         <name>flowAnnullamento</name>
         <label>flowAnnullamento</label>
-        <locationX>1106</locationX>
-        <locationY>638</locationY>
+        <locationX>1392</locationX>
+        <locationY>5054</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2345,6 +2148,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>processType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
