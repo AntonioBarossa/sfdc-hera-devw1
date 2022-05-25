@@ -98,10 +98,11 @@ public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
                 mapEmailObj.put(specificEmail.Email__c.toUpperCase(), specificEmail);
             }
 
-            if(mapEmailObj.get(toAddress) != null) {
+            if(mapEmailObj.get(toAddress.toUpperCase()) != null) {
                 HDT_ProtocolSpecificEmail__mdt specificEmail = mapEmailObj.get(toAddress.toUpperCase());
                 activity.Cluster__c = specificEmail.Cluster__c;
                 activity.Process__c = specificEmail.Process__c;
+                activity.Type__c = specificEmail.Type__c;
             }
             new HDT_SRV_ActivityCustom().createRecord(activity);
         } catch (Exception e) {

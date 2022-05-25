@@ -596,42 +596,25 @@ public class HDT_SRV_PostSalesManagerTst {
         
     }
 
-/*     @IsTest
-    static void updateDataFineConnessioneTst(){
+    @IsTest
+    static void updateDataFineContrattoTest(){
+                
+        List<Case> myCaseList = [ SELECT Id, Contract__c, TemporaryConnectionEndDate__c FROM Case ];
         
-        List<Order> myOrderList = [ SELECT Id FROM Order ];
-        Order myOrder = new Order();
-        myOrder.Id = myOrderList[0].Id;
-        myOrder.TemporaryConnectionEndDate__c = date.newInstance(2021, 11, 05);
-        
-        List<Case> myCaseList = [ SELECT Id, Order__c, AccountId FROM Case ];
-        Case myCase = new Case();
-        myCase.Id = myCaseList[0].Id;
-        myCase.TemporaryConnectionEndDate__c = date.newInstance(2021, 11, 06);
-        myCase.Order__c =  myOrder.Id;
-
-        List<SObject> updateList = new List<SObject>();
-        updateList.add(myCase);
-        updateList.add(myOrder);
-        update updateList;
-
-        Map<String,Object> argsMap = new Map<String,Object>();
-        argsMap.put('method','updateDataFineConnessione');
-        argsMap.put('sender', myCase );
+        myCaseList[0].TemporaryConnectionEndDate__c = date.newInstance(2021, 11, 06);
 
         Test.startTest();
         
         HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
-        psm.execute(argsMap);
+        psm.execute(setArgs('updateDataFineContratto', myCaseList[0]));
 
         Test.stopTest();
         
-        List<Case> myCaseListUpdated = [ SELECT TemporaryConnectionEndDate__c, Order__r.TemporaryConnectionEndDate__c FROM Case WHERE Id = :myCase.Id ];
+        List<Case> myCaseListUpdated = [ SELECT Id, TemporaryConnectionEndDate__c, Contract__c, Contract__r.EndDate FROM Case WHERE Id = :myCaseList[0].Id ];
 
-        System.assertEquals( myCaseListUpdated[0].TemporaryConnectionEndDate__c, myCaseListUpdated[0].Order__r.TemporaryConnectionEndDate__c ,
-        'L\'update di TemporaryConnectionEndDate__c nel Order non è andato a buon fine');
+        System.assert(myCaseListUpdated[0].Contract__r.EndDate != null,'Update Data Fine Contratto non andata a buon fine');
         
-    } */
+    } 
 
     //occorre mockare la chiamata al WS
     // @IsTest
