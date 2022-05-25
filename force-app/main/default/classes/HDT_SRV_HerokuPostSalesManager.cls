@@ -74,10 +74,9 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
              * e' necessaria una customizzazione per inviare
              * soltanto la subscription di offerta commerciale
              */
-            if(currentCase.Type.equalsIgnoreCase('Allineamento Anagrafica') || currentCase.Type.equalsIgnoreCase('Voltura Tecnica'))
-            {
-                mrrList = removeNonCommoditySubscriptions(mrrList);
-            }
+            
+            mrrList = removeNonCommoditySubscriptions(mrrList);
+            
 
             arg.put('endpoint', endpoint);
             arg.put('timeout', 12000);
