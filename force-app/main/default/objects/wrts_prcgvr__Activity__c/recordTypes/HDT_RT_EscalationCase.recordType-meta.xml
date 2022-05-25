@@ -2785,6 +2785,10 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
+            <fullName>Supporto Esercizio Sistemi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Assistenza Contact Center</fullName>
             <default>false</default>
         </values>

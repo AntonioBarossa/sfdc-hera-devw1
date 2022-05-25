@@ -659,6 +659,10 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
                 position.valore = item.NumericValue__c;
                 position.stringa = item.StringValue__c;
 
+                if(item.Type__c.equalsIgnoreCase('FLAG') && item.Flag__c){
+                    position.stringa = 'X';
+                }
+
                 obj.header.input.add(position);
             }
 

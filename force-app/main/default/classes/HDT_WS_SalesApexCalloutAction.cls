@@ -41,7 +41,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             Map<String,Object> templateReturn = (Map<String,Object>)templateEngine.applyTemplate(objTemp);
             wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = (wrts_prcgvr.MRR_1_0.MultiRequest)templateReturn.get('multirequest');
             multirequestObj.requests[0].header.fields = headerAttributetoAdd;
-        
+            System.debug(multirequestObj.requests[0]);
             Integer count = 0;
             List<Integer> indexOfObjectToRemove = new List<Integer>();
             Map<Integer,Integer> indexOffieldToRemove = new Map<Integer,Integer>();

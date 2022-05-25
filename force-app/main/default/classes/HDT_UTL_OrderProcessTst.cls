@@ -951,7 +951,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             List<Order> newOrderList = [SELECT Id,CreditCheckDescription__c, Phase__c, SiebelStatus__c, 
                                         ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId,
                                         IncomingCreditCheckResult__c,OutgoingCreditCheckResult__c, OrderReferenceNumber,
-                                        IsMassive__c, ContractReference__c, VasSubtype__c, CommodityFormula__c 
+                                        IsMassive__c, ContractReference__c, VasSubtype__c, CommodityFormula__c, isTransition__c 
                                         FROM Order WHERE Name = 'childOrder5' LIMIT 1];
         
             Order tmpOrd = new Order();
