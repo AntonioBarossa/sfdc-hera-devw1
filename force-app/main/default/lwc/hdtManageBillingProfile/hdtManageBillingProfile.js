@@ -16,7 +16,7 @@ export default class hdtManageBillingProfile extends LightningElement {
         {label: 'Metodo di pagamento', fieldName: 'PaymentMethod__c', type: 'text'},
         {label: 'Billing Profile Name', fieldName: 'Name', type: 'text'},
         {label: 'Indirizzo di Fatturazione', fieldName: 'InvoicingAddressFormula__c', type: 'text'},
-        {label: 'Modalità invio bolletta', fieldName: 'BillSendingMethod__c', type: 'text'},
+        {label: 'Modalita invio bolletta', fieldName: 'BillSendingMethod__c', type: 'text'},
         // {label: 'IBAN', fieldName: 'FormulaIBAN__c', type: 'text'},
         {label: 'IBAN', fieldName: 'IBAN__c', type: 'text'},
         {label: 'E-mail', fieldName: 'InvoiceEmailAddress__c', type: 'text'}

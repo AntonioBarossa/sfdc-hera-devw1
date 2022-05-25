@@ -6500,6 +6500,10 @@
     <picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
+            <fullName>Pagamento Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
             <default>false</default>
         </values>
@@ -6969,6 +6973,34 @@
     </picklistValues>
     <picklistValues>
         <picklist>InformativeType__c</picklist>
+        <values>
+            <fullName>Proroga Conn Temp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura Tecnica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attivazione con Modifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporanea - Nuova Attivazione</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>HVAC</fullName>
             <default>false</default>
@@ -10789,17 +10821,6 @@
         </values>
         <values>
             <fullName>013-Uso Condizionam%2E%2BRiscald%2E</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>UseChangeCharge__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>

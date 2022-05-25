@@ -9,6 +9,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         String responseCode;
         String responseStatus;
         String message;
+        String status;
         Map<String,String> resultMap = new Map<String,String>();
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
         
@@ -20,10 +21,12 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             responseCode = String.valueOf(documentalResponse.responseCode);
             responseStatus = documentalResponse.responseStatus;
             message = documentalResponse.deliverPackageResponse.message;
+            status = documentalResponse.responseStatus;
             resultMap.put('code',responseCode);
             resultMap.put('base64',baseSixtyFour);
             resultMap.put('result',result);
             resultMap.put('message',message);
+            resultMap.put('status',status);
         }catch(Exception ex){
             resultMap.put('code','500');
         }

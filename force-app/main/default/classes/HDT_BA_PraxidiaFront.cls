@@ -99,10 +99,12 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
                 fr.codiceServizio = wr.c.CommodityFormula__c != null ? wr.c.CommodityFormula__c : '';
                 fr.tipoRds = wr.c.Cluster__c != null ? wr.c.Cluster__c : '';
                 fr.sottotipoRds = wr.c.type != null ? wr.c.type : '';
-                fr.areaRds = 'ND';
-                fr.argomentoRds = 'ND';
+               //
+                fr.areaRds = wr.c.MacroTopic__c;
+                fr.argomentoRds = wr.c.Cluster__c;
                 fr.statoRds = wr.c.Phase__c != null ? wr.c.Phase__c : '';
-                fr.codiceAcr = '';//wr.c.Account.ACRSegmentation__c;
+                //
+                fr.codiceAcr = wr.c.SalesCompany__c;//wr.c.Account.ACRSegmentation__c;
                 fr.postazione = wr.c.Station__c != null ? wr.c.Station__c : '';
                 fr.gruppoCreatore = wr.c.CreatorGroup__c != null ? wr.c.CreatorGroup__c : '';
                 fr.gruppoAssegnatario = 'ND';
@@ -153,7 +155,7 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
                 fr2.areaRds = 'ND';
                 fr2.argomentoRds = 'ND';
                 fr2.statoRds = wr.o.Phase__c != null ? wr.o.Phase__c : '';
-                fr2.codiceAcr = '';//wr.o.Account.ACRSegmentation__c;
+                fr2.codiceAcr = wr.o.SalesCompany__c;//wr.o.Account.ACRSegmentation__c;
                 fr2.postazione = wr.o.LoginWorkstation__c;
                 fr2.gruppoCreatore = wr.o.CreatorGroup__c;
                 fr2.gruppoAssegnatario = 'ND';

@@ -115,6 +115,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
             if(activity != null)
             {
                 activity.Type__c = activityType;
+                activity.OpeningNote__c = (String)ammissibilityCheckMap.get('note');
                 activity.wrts_prcgvr__Description__c = (String)ammissibilityCheckMap.get('message');
                 activity.Order__c = currentOrder.Id;
                 HDT_UTL_DatabaseService.insertSObject(activity);

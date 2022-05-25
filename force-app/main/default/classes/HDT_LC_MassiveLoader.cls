@@ -218,7 +218,16 @@ public with sharing class HDT_LC_MassiveLoader {
 
         System.debug(LoggingLevel.DEBUG, '>>> HeapSize at start: ' + String.valueOf(Limits.getHeapSize()) + ' of ' + String.valueOf(Limits.getLimitHeapSize()));
     
-        String fileBody = uploadedFile.VersionData.toString();
+        String fileBody;
+
+        try{
+            fileBody = uploadedFile.VersionData.toString();
+        } catch(exception e){
+            response.put('error', true);
+            response.put('errorMessage', 'Si è verificato un errore con il formato csv');
+            deleteDocument(contentDocumentId, massiveLoaderRequestId);
+            return response;  
+        }
 
         Integer totLinesCounter = fileBody.countMatches('\n');
         System.debug(LoggingLevel.DEBUG, '>>> totLinesCounter: ' + totLinesCounter);

@@ -21,7 +21,21 @@ public with sharing class HDT_WS_DocumentalIntegration {
                 documentalResponse = (HDT_WRP_DocumentalResponse) JSON.deserialize(JSON.serialize(responseBodyMap.get('data')), HDT_WRP_DocumentalResponse.class);
             }
             documentalResponse.responseCode = res.getStatusCode();
-            documentalResponse.responseStatus =  res.getStatus();             
+            documentalResponse.responseStatus =  res.getStatus();
+        } 
+        catch(CalloutException ex)
+        {
+            if(ex.getMessage().containsIgnoreCase('Exceeded max size limit'))
+            {
+                HDT_WRP_DocumentalRequest req = (HDT_WRP_DocumentalRequest) JSON.deserialize(body, HDT_WRP_DocumentalRequest.class);
+                System.debug(LoggingLevel.DEBUG, 'Entered in sizeLimit exception');
+                documentalResponse.responseCode = 502;
+                documentalResponse.responseStatus = 'sizeLimit';
+                documentalResponse.deliverPackageResponse.result = '000';
+                documentalResponse.deliverPackageResponse.message = 'La dimesione del plico è superiore al limite consentito per la preview. Procedere con l\'invio dei documenti al cliente';
+                documentalResponse.deliverPackageResponse.requestId = req.deliverPackageRequest.requestId;
+                documentalResponse.deliverPackageResponse.archive = 'N';
+            }             
         } catch (Exception ex) {
             System.debug(LoggingLevel.DEBUG, 'Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
         }
