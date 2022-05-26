@@ -1,4 +1,7 @@
 public with sharing class HDT_LC_VoltureAcceptance {
+    
+    private static HDT_QR_Order orderQr = new HDT_QR_Order();
+
     @AuraEnabled
     public static string getActivity(String activityId){
         try {
@@ -13,7 +16,7 @@ public with sharing class HDT_LC_VoltureAcceptance {
     public static String updateOrder(String activityId, String orderId, String operation){
         String response = 'OK';
         if (String.isNotEmpty(operation)){
-            String newPhase = 'accepted'.equals(operation) ? 'In Attesa Validazione' : 'Voltura Rifiutata';
+            String newPhase = 'accepted'.equals(operation) ? (HDT_LC_OrderDossierWizardActions.checkRequiredDocs( orderQr.getRecordWithDocByOrderId(orderId)[0] ) ? 'Documentazione Validata': 'In attesa validazione') : 'Voltura Rifiutata';
             Order orderToUpdate = new Order(Id = orderId, Phase__c = newPhase);
             System.Savepoint sp = Database.setSavePoint();
             try {
