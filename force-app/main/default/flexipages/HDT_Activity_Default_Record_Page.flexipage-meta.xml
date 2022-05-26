@@ -1491,7 +1491,6 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.QAdTicketNumber__c</fieldItem>
-                <identifier>RecordQAdTicketNumber_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2a31e1b6-d56d-47e1-9f71-1aeb969f4ac9</name>
@@ -2568,7 +2567,6 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.QAdTicketNumber__c</fieldItem>
-                <identifier>RecordQAdTicketNumber__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
