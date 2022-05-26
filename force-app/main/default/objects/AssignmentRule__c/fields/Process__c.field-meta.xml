@@ -36,11 +36,6 @@
                 <label>Prima Attivazione con modifica</label>
             </value>
             <value>
-                <fullName>Cambio Offerta</fullName>
-                <default>false</default>
-                <label>Cambio Offerta</label>
-            </value>
-            <value>
                 <fullName>Cambio Uso</fullName>
                 <default>false</default>
                 <label>Cambio Uso</label>
@@ -49,16 +44,6 @@
                 <fullName>Connessione con Attivazione</fullName>
                 <default>false</default>
                 <label>Connessione con Attivazione</label>
-            </value>
-            <value>
-                <fullName>Riattivazione Non Morose</fullName>
-                <default>false</default>
-                <label>Riattivazione Non Morose</label>
-            </value>
-            <value>
-                <fullName>Aggiunta Sconti o Bonus VAS</fullName>
-                <default>false</default>
-                <label>Aggiunta Sconti o Bonus VAS</label>
             </value>
             <value>
                 <fullName>Subentro Gas</fullName>
@@ -164,11 +149,6 @@
                 <fullName>Allineamento Canone Rai</fullName>
                 <default>false</default>
                 <label>Allineamento Canone Rai</label>
-            </value>
-            <value>
-                <fullName>Altre Verifiche</fullName>
-                <default>false</default>
-                <label>Altre Verifiche</label>
             </value>
             <value>
                 <fullName>Annullamento Contratti</fullName>
@@ -296,11 +276,6 @@
                 <label>Esercizio Diritti Privacy</label>
             </value>
             <value>
-                <fullName>Feature Request</fullName>
-                <default>false</default>
-                <label>Feature Request</label>
-            </value>
-            <value>
                 <fullName>Fiscale</fullName>
                 <default>false</default>
                 <label>Fiscale</label>
@@ -324,16 +299,6 @@
                 <fullName>Informative</fullName>
                 <default>false</default>
                 <label>Informative</label>
-            </value>
-            <value>
-                <fullName>Informazioni ambientali</fullName>
-                <default>false</default>
-                <label>Informazioni ambientali</label>
-            </value>
-            <value>
-                <fullName>Informazioni servizi Hera</fullName>
-                <default>false</default>
-                <label>Informazioni servizi Hera</label>
             </value>
             <value>
                 <fullName>Interruzione Fornitura</fullName>
@@ -396,11 +361,6 @@
                 <label>Notifica Variazione Stato PDR SII</label>
             </value>
             <value>
-                <fullName>Nuovo Impianto - Aggiunta Attacco</fullName>
-                <default>false</default>
-                <label>Nuovo Impianto - Aggiunta Attacco</label>
-            </value>
-            <value>
                 <fullName>Pagamento ClickPay</fullName>
                 <default>false</default>
                 <label>Pagamento ClickPay</label>
@@ -424,11 +384,6 @@
                 <fullName>Prescrizione Fatture</fullName>
                 <default>false</default>
                 <label>Prescrizione Fatture</label>
-            </value>
-            <value>
-                <fullName>Question</fullName>
-                <default>false</default>
-                <label>Question</label>
             </value>
             <value>
                 <fullName>Recesso per Altri Motivi</fullName>
@@ -501,11 +456,6 @@
                 <label>Risoluzione No Disalimentabile</label>
             </value>
             <value>
-                <fullName>Risoluzione No Punto Sospeso</fullName>
-                <default>false</default>
-                <label>Risoluzione No Punto Sospeso</label>
-            </value>
-            <value>
                 <fullName>Risoluzione No Sospensione</fullName>
                 <default>false</default>
                 <label>Risoluzione No Sospensione</label>
@@ -529,11 +479,6 @@
                 <fullName>Sospensione a seguito di potenziale pericolo</fullName>
                 <default>false</default>
                 <label>Sospensione a seguito di potenziale pericolo</label>
-            </value>
-            <value>
-                <fullName>Sospensione Canone Rai</fullName>
-                <default>false</default>
-                <label>Sospensione Canone Rai</label>
             </value>
             <value>
                 <fullName>Sospensione Fornitura</fullName>
@@ -676,16 +621,6 @@
                 <label>Autoelettrica</label>
             </value>
             <value>
-                <fullName>Recesso</fullName>
-                <default>false</default>
-                <label>Recesso</label>
-            </value>
-            <value>
-                <fullName>Ripensamento</fullName>
-                <default>false</default>
-                <label>Ripensamento</label>
-            </value>
-            <value>
                 <fullName>Disattivazione VAS</fullName>
                 <default>false</default>
                 <label>Disattivazione VAS</label>
@@ -761,11 +696,6 @@
                 <label>VOTIVE Modena/Subentro</label>
             </value>
             <value>
-                <fullName>Indennizzo</fullName>
-                <default>false</default>
-                <label>Indennizzo</label>
-            </value>
-            <value>
                 <fullName>Switch Out per Voltura</fullName>
                 <default>false</default>
                 <label>Switch Out per Voltura</label>
@@ -774,16 +704,6 @@
                 <fullName>Documentale/Copia Contratto</fullName>
                 <default>false</default>
                 <label>Documentale/Copia Contratto</label>
-            </value>
-            <value>
-                <fullName>Modifica Contr Preattivazione Pagamento Residenziale</fullName>
-                <default>false</default>
-                <label>Modifica Contr Preattivazione Pagamento Residenziale</label>
-            </value>
-            <value>
-                <fullName>Modifica Contr Preattivazione Anagr Res</fullName>
-                <default>false</default>
-                <label>Modifica Contr Preattivazione Anagr Res</label>
             </value>
             <value>
                 <fullName>Recesso per Ripensamento</fullName>
@@ -801,16 +721,38 @@
                 <label>Associazione Utente Web</label>
             </value>
             <value>
+                <fullName>Modifica Contratto Preattivazione</fullName>
+                <default>false</default>
+                <label>Modifica Contratto Preattivazione</label>
+            </value>
+            <value>
+                <fullName>Modifica Dati di Contatto</fullName>
+                <default>false</default>
+                <label>Modifica Dati di Contatto</label>
+            </value>
+            <value>
                 <fullName>Aggiunta Attacco /Preventivo Analitico + EL</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Aggiunta Attacco /Preventivo Analitico + EL</label>
             </value>
             <value>
+                <fullName>Aggiunta Sconti o Bonus VAS</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Aggiunta Sconti o Bonus VAS</label>
+            </value>
+            <value>
                 <fullName>Alert</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Alert</label>
+            </value>
+            <value>
+                <fullName>Altre Verifiche</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Altre Verifiche</label>
             </value>
             <value>
                 <fullName>Attivazione</fullName>
@@ -837,6 +779,12 @@
                 <label>Blocco al Sollecito ed Interessi</label>
             </value>
             <value>
+                <fullName>Cambio Offerta</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Cambio Offerta</label>
+            </value>
+            <value>
                 <fullName>Copia contratto firmato e non ricevuto</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -849,10 +797,46 @@
                 <label>Emissione Impulsi/Preventivo Analitico + EL</label>
             </value>
             <value>
+                <fullName>Feature Request</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Feature Request</label>
+            </value>
+            <value>
                 <fullName>Gestione disalimentabilita</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Gestione disalimentabilita</label>
+            </value>
+            <value>
+                <fullName>Indennizzo</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Indennizzo</label>
+            </value>
+            <value>
+                <fullName>Informazioni ambientali</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Informazioni ambientali</label>
+            </value>
+            <value>
+                <fullName>Informazioni servizi Hera</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Informazioni servizi Hera</label>
+            </value>
+            <value>
+                <fullName>Modifica Contr Preattivazione Anagr Res</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Modifica Contr Preattivazione Anagr Res</label>
+            </value>
+            <value>
+                <fullName>Modifica Contr Preattivazione Pagamento Residenziale</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Modifica Contr Preattivazione Pagamento Residenziale</label>
             </value>
             <value>
                 <fullName>Modifica Impianto/Preventivo Analitico + EL</fullName>
@@ -871,6 +855,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Modifica contratto in pre-attivazione</label>
+            </value>
+            <value>
+                <fullName>Nuovo Impianto - Aggiunta Attacco</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Nuovo Impianto - Aggiunta Attacco</label>
             </value>
             <value>
                 <fullName>Nuovo Impianto/Preventivo Analitico + EL</fullName>
@@ -897,6 +887,18 @@
                 <label>Proroga connessione temporanea</label>
             </value>
             <value>
+                <fullName>Question</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Question</label>
+            </value>
+            <value>
+                <fullName>Recesso</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Recesso</label>
+            </value>
+            <value>
                 <fullName>Recesso su Richesta Cliente</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -907,6 +909,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Reclamo scritto</label>
+            </value>
+            <value>
+                <fullName>Riattivazione Non Morose</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Riattivazione Non Morose</label>
             </value>
             <value>
                 <fullName>Riattivazione fornitura non morosa</fullName>
@@ -939,10 +947,28 @@
                 <label>Rimozione Impianto/Preventivo Analitico + EL</label>
             </value>
             <value>
+                <fullName>Ripensamento</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Ripensamento</label>
+            </value>
+            <value>
                 <fullName>Ripristino Fornitura Interrotta/Preventivo Analitico + EL</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Ripristino Fornitura Interrotta/Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Risoluzione No Punto Sospeso</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Risoluzione No Punto Sospeso</label>
+            </value>
+            <value>
+                <fullName>Sospensione Canone Rai</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Sospensione Canone Rai</label>
             </value>
             <value>
                 <fullName>Sost. Contatore c/cliente</fullName>

@@ -28,7 +28,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
         String orderNumber = (String)params.get('serviceRequest');
         List<Order> childOrderList = qrOrder.getRecordByOrderNumber(orderNumber);
         Id saleId = childOrderList[0].Sale__c;
-        Sale__c sale = qrSale.getRecordById(saleId,'Account__c,Id,SalesContact__c,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c,Name');
+        Sale__c sale = qrSale.getRecordById(saleId,'Account__c,Id,SalesContact__c,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c,Name,LowerChannelAgency__c,UpperChannelAgency__c');
         Order childOrder = new Order();
         childOrder.Id = childOrderList[0].Id;
         childOrder = createChildOrderWithItem(childOrder,params);

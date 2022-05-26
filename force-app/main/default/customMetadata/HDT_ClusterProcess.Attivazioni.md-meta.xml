@@ -8,16 +8,17 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">[{&quot;label&quot;:&quot;Attivazione&quot;,&quot;value&quot;:&quot;Attivazione&quot;},
+        <value xsi:type="xsd:string">[{&quot;label&quot;:&quot;Subentro&quot;,&quot;value&quot;:&quot;Subentro&quot;},
+{&quot;label&quot;:&quot;Attivazione&quot;,&quot;value&quot;:&quot;Attivazione&quot;},
 {&quot;label&quot;:&quot;Attivazione con Modifica&quot;,&quot;value&quot;:&quot;Attivazione con Modifica&quot;},
 {&quot;label&quot;:&quot;Cambio Offerta&quot;,&quot;value&quot;:&quot;Cambio Offerta&quot;},
 {&quot;label&quot;:&quot;Cambio Uso&quot;,&quot;value&quot;:&quot;Cambio Uso&quot;},
-{&quot;label&quot;:&quot;Connessione con Attivazione&quot;,&quot;value&quot;:&quot;Connessione con Attivazione&quot;},
 {&quot;label&quot;:&quot;Aggiunta Sconti o Bonus VAS&quot;,&quot;value&quot;:&quot;Aggiunta Sconti o Bonus VAS&quot;},
-{&quot;label&quot;:&quot;Subentro&quot;,&quot;value&quot;:&quot;Subentro&quot;},
 {&quot;label&quot;:&quot;Switch in&quot;,&quot;value&quot;:&quot;Switch in&quot;},
+{&quot;label&quot;:&quot;Connessione con Attivazione&quot;,&quot;value&quot;:&quot;Connessione con Attivazione&quot;},
+{&quot;label&quot;:&quot;Temporanea - Nuova Attivazione&quot;,&quot;value&quot;:&quot;Temporanea - Nuova Attivazione&quot;},
 {&quot;label&quot;:&quot;Voltura&quot;,&quot;value&quot;:&quot;Voltura&quot;},
-{&quot;label&quot;:&quot;Temporanea - Nuova Attivazione	&quot;,&quot;value&quot;:&quot;Temporanea - Nuova Attivazione&quot;}
+{&quot;label&quot;:&quot;Proroga Conn Temp&quot;,&quot;value&quot;:&quot;Proroga Conn Temp&quot;}
 ]</value>
     </values>
 </CustomMetadata>

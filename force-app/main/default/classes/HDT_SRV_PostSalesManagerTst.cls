@@ -11,11 +11,17 @@ public class HDT_SRV_PostSalesManagerTst {
         accList[1].Name = 'TestAccount2';
         insert accList;
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
-        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(2, false, accList[0].id, 'Bozza');
         ordList[0].ServicePoint__c = servPointList[0].Id;
+        String rtParentOrder = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_OrderDossier').getRecordTypeId();        
+        ordList[1].RecordTypeId = rtParentOrder;
         insert ordList;
+        ordList[0].ParentOrder__c = ordList[1].Id;
+        update ordList;
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
-        List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
+        List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,false, accList[0].Id);
+        billingProfileList[0].ContractAccountCode__c = 'myCode';
+        insert billingProfileList;
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
         
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
@@ -28,13 +34,17 @@ public class HDT_SRV_PostSalesManagerTst {
         insert caseList;
 
         Case parentCase = [SELECT Id FROM Case WHERE Amount__c = 20.00 LIMIT 1];
-        List<Case> caseList2 = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList2 = HDT_UTL_DataFactoryTst.createCase(2, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         caseList2[0].ParentId  = parentCase.Id;
         caseList2[0].BillingProfile__c  = billingProfileList[0].Id;
         caseList2[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AllineamentoAnagrafica').getRecordTypeId();
         caseList2[0].Type  = 'Variazione indirizzo di fornitura';
         caseList2[0].ServicePoint__c = servPointList[0].Id;
-    
+        caseList2[1].RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Morosita').getRecordTypeId();
+        caseList2[1].Type = 'Riattivazione Fornitura';
+        caseList2[1].HerokuPracticeCode__c = '';
+        caseList2[1].BillingProfile__c = billingProfileList[0].Id;
+
         insert caseList2;
 
         List<Case> caseList3 = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
@@ -596,72 +606,82 @@ public class HDT_SRV_PostSalesManagerTst {
         
     }
 
-/*     @IsTest
-    static void updateDataFineConnessioneTst(){
+    @IsTest
+    static void updateDataFineContrattoTest(){
+                
+        List<Case> myCaseList = [ SELECT Id, Contract__c, TemporaryConnectionEndDate__c FROM Case ];
         
-        List<Order> myOrderList = [ SELECT Id FROM Order ];
-        Order myOrder = new Order();
-        myOrder.Id = myOrderList[0].Id;
-        myOrder.TemporaryConnectionEndDate__c = date.newInstance(2021, 11, 05);
-        
-        List<Case> myCaseList = [ SELECT Id, Order__c, AccountId FROM Case ];
-        Case myCase = new Case();
-        myCase.Id = myCaseList[0].Id;
-        myCase.TemporaryConnectionEndDate__c = date.newInstance(2021, 11, 06);
-        myCase.Order__c =  myOrder.Id;
-
-        List<SObject> updateList = new List<SObject>();
-        updateList.add(myCase);
-        updateList.add(myOrder);
-        update updateList;
-
-        Map<String,Object> argsMap = new Map<String,Object>();
-        argsMap.put('method','updateDataFineConnessione');
-        argsMap.put('sender', myCase );
+        myCaseList[0].TemporaryConnectionEndDate__c = date.newInstance(2021, 11, 06);
 
         Test.startTest();
         
         HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
-        psm.execute(argsMap);
+        psm.execute(setArgs('updateDataFineContratto', myCaseList[0]));
 
         Test.stopTest();
         
-        List<Case> myCaseListUpdated = [ SELECT TemporaryConnectionEndDate__c, Order__r.TemporaryConnectionEndDate__c FROM Case WHERE Id = :myCase.Id ];
+        List<Case> myCaseListUpdated = [ SELECT Id, TemporaryConnectionEndDate__c, Contract__c, Contract__r.EndDate FROM Case WHERE Id = :myCaseList[0].Id ];
 
-        System.assertEquals( myCaseListUpdated[0].TemporaryConnectionEndDate__c, myCaseListUpdated[0].Order__r.TemporaryConnectionEndDate__c ,
-        'L\'update di TemporaryConnectionEndDate__c nel Order non è andato a buon fine');
+        System.assert(myCaseListUpdated[0].Contract__r.EndDate != null,'Update Data Fine Contratto non andata a buon fine');
         
-    } */
+    } 
 
-    //occorre mockare la chiamata al WS
-    // @IsTest
-    // static void sendDocumentFile(){
+    @IsTest
+    static void sendDocumentFileTest(){
+
+        Order currentOrder = [SELECT Id, ParentOrder__c FROM Order LIMIT 1];
+
+        Test.startTest();
+
+        HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
+        psm.execute(setArgs('sendDocumentFile', currentOrder));
+
+        Test.stopTest();
+        System.assert(currentOrder != null,'currentOrder è null');
         
-    //     Case currentCase = [SELECT Id, ParentId, Type, Phase__c  FROM Case WHERE Type  = 'Variazione indirizzo di fornitura' LIMIT 1];
+    }
 
-    //     Test.startTest();
+    @IsTest
+    static void closeRiattivazioneTest(){
 
-    //     HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
-    //     psm.execute(setArgs('sendDocumentFile', currentCase));
+        Case currentCase = [SELECT Id, Type, Phase__c, Status, HerokuPracticeCode__c  FROM Case WHERE Type  = 'Riattivazione Fornitura' LIMIT 1];
+        Test.startTest();
 
-    //     Test.stopTest();
+        HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
+        psm.execute(setArgs('closeRiattivazione', currentCase));
         
-    // }
+        Test.stopTest();
+        System.assert(currentCase != null,'currentCase è null');
 
-    //occorre mockare la chiamata al WS
-    // @IsTest
-    // static void handleInvioLettureForzato(){
+    }
+
+    @IsTest
+    static void closeAnnullamentoExtraSistemaTest(){
+
+        Case currentCase = [SELECT Id, Phase__c, Status  FROM Case WHERE Type  = 'Riattivazione Fornitura' LIMIT 1];
+        Test.startTest();
+
+        HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
+        psm.execute(setArgs('closeAnnullamentoExtraSistema', currentCase));
         
-    //     Case currentCase = [SELECT Id, ParentId, Type, Phase__c  FROM Case WHERE Type  = 'Variazione indirizzo di fornitura' LIMIT 1];
-
-    //     Test.startTest();
-
-    //     HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
-    //     psm.execute(setArgs('handleInvioLettureForzato', currentCase));
-
-    //     Test.stopTest();
+        Test.stopTest();
+        System.assert(currentCase != null,'currentCase è null');
         
-    // }
+    }
+
+    @IsTest
+    static void setContractAccountCodeTest(){
+
+        Case currentCase = [SELECT Id, ContractAccountCode__c, BillingProfile__c, BillingProfile__r.ContractAccountCode__c  FROM Case WHERE Type  = 'Riattivazione Fornitura' LIMIT 1];
+        Test.startTest();
+
+        HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
+        psm.execute(setArgs('setContractAccountCode', currentCase));
+        
+        Test.stopTest();
+        System.assert(currentCase != null,'currentCase è null');
+        
+    }
 
     public static Map<String, Object> setArgs (String method, SObject sender) {
         

@@ -6974,6 +6974,14 @@
     <picklistValues>
         <picklist>InformativeType__c</picklist>
         <values>
+            <fullName>Proroga Conn Temp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura Tecnica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Subentro</fullName>
             <default>false</default>
         </values>
@@ -8947,6 +8955,21 @@
         </values>
         <values>
             <fullName>Vas Prodotto%2FServizio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SignatoryType__c</picklist>
+        <values>
+            <fullName>Legale Rappresentante</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagatore Alternativo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stesso Sottoscrittore</fullName>
             <default>false</default>
         </values>
     </picklistValues>
