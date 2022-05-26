@@ -5,7 +5,7 @@
         <name>Assegna_Fase</name>
         <label>Assegna Fase</label>
         <locationX>842</locationX>
-        <locationY>878</locationY>
+        <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -59,6 +59,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssgenaNote</name>
+        <label>AssgenaNote</label>
+        <locationX>1106</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato_0.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NoteFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato_0.ServicePointCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ServicePointCode</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCaseNote</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -207,7 +230,7 @@
         <name>Conferma_0</name>
         <label>Conferma?</label>
         <locationX>1106</locationX>
-        <locationY>638</locationY>
+        <locationY>998</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0_0</name>
@@ -355,6 +378,11 @@
             <label>Cambio Uso</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>NoteFormula</name>
+        <dataType>String</dataType>
+        <expression>{!GetCaseAggiornato_0.Note__c} &amp; BR() &amp; &quot;\&quot;Codice Punto\&quot;: &quot; &amp; &quot;\&quot;&quot; &amp; {!ServicePointCode} &amp; &quot;\&quot;&quot;</expression>
+    </formulas>
     <interviewLabel>HDT_FL_CambioUso {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_CambioUso</label>
     <processMetadataValues>
@@ -457,10 +485,31 @@
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
         <locationX>842</locationX>
-        <locationY>758</locationY>
+        <locationY>1118</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Fase</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetCaseAggiornato_0</name>
+        <label>GetCaseAggiornato</label>
+        <locationX>1106</locationX>
+        <locationY>638</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssgenaNote</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -527,8 +576,18 @@
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
         <locationX>842</locationX>
-        <locationY>998</locationY>
+        <locationY>1358</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaCaseNote</name>
+        <label>AggiornaCaseNote</label>
+        <locationX>1106</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>Conferma_0</targetReference>
+        </connector>
+        <inputReference>GetCaseAggiornato_0</inputReference>
     </recordUpdates>
     <screens>
         <name>Edit_Form</name>
@@ -644,12 +703,26 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Conferma_0</targetReference>
+            <targetReference>GetCaseAggiornato_0</targetReference>
         </connector>
         <fields>
             <name>DisplyaHeader</name>
             <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getCaseFromIdIputVariable.Type}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>ServicePointCode</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>getCaseFromIdIputVariable.ServicePointCode__c</elementReference>
+            </defaultValue>
+            <fieldText>Codice Punto</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;La lunghezza del codice punto deve essere di 14 caratteri&lt;/p&gt;</errorMessage>
+                <formulaExpression>LEN({!ServicePointCode}) = 14</formulaExpression>
+            </validationRule>
         </fields>
         <fields>
             <name>ModificaContrattiBillingProfile</name>
@@ -717,7 +790,7 @@
         <name>Annulla_Prestazione_0</name>
         <label>Annulla Prestazione</label>
         <locationX>1106</locationX>
-        <locationY>758</locationY>
+        <locationY>1118</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

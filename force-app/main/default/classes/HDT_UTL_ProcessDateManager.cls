@@ -101,7 +101,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
                         }            
                     //}
                 }else {
-                    break;
+                    continue;
                 }
 				if(dateSentToSii != null){
 					order.DateSentToSII__c = dateSentToSii;

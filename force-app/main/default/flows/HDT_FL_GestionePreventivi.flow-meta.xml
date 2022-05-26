@@ -569,7 +569,7 @@
             <assignToReference>GetCaseNuovoImpianto.BillingProfile__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getContract.BillingProfile__c</elementReference>
+                <elementReference>bpChooserLWC.results</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -2549,6 +2549,58 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
+        <name>ChooseBillingProfile</name>
+        <label>ChooseBillingProfile</label>
+        <locationX>2552</locationX>
+        <locationY>1142</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Avanzamento_1</targetReference>
+        </connector>
+        <fields>
+            <name>bpChooserLWC</name>
+            <extensionName>c:hdtBillingProfileSelectionFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>enableNew</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>searchLabel</name>
+                <value>
+                    <stringValue>Seleziona il Billing Profile del cliente o creane uno nuovo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>searchPlaceholder</name>
+                <value>
+                    <stringValue>Affina la ricerca</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Get_Input_Case.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionType</name>
+                <value>
+                    <stringValue>BillingProfile_VarDom</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>CommodityScreen</name>
         <label>CommodityAddressScreen</label>
         <locationX>1660</locationX>
@@ -2557,7 +2609,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Avanzamento_1</targetReference>
+            <targetReference>ChooseBillingProfile</targetReference>
         </connector>
         <fields>
             <name>CommodityDisplayText</name>

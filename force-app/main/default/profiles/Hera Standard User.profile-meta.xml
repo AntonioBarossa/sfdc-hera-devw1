@@ -565,6 +565,11 @@
     </fieldPermissions>  
     <fieldPermissions>
         <editable>false</editable>
+        <field>OrderItem.ConsumptionAnalysis__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>false</editable>
         <field>OrderItem.VatPercentageFormula__c</field>
         <readable>true</readable>
     </fieldPermissions> 
@@ -806,6 +811,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.CommercialProductLink__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.AnnullaPrestazioneEnabled__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

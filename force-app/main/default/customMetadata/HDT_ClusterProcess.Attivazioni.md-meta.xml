@@ -17,8 +17,16 @@
 {&quot;label&quot;:&quot;Switch in&quot;,&quot;value&quot;:&quot;Switch in&quot;},
 {&quot;label&quot;:&quot;Connessione con Attivazione&quot;,&quot;value&quot;:&quot;Connessione con Attivazione&quot;},
 {&quot;label&quot;:&quot;Temporanea - Nuova Attivazione&quot;,&quot;value&quot;:&quot;Temporanea - Nuova Attivazione&quot;},
+{&quot;label&quot;:&quot;VAS&quot;,&quot;value&quot;:&quot;VAS&quot;},
 {&quot;label&quot;:&quot;Voltura&quot;,&quot;value&quot;:&quot;Voltura&quot;},
-{&quot;label&quot;:&quot;Proroga Conn Temp&quot;,&quot;value&quot;:&quot;Proroga Conn Temp&quot;}
+{&quot;label&quot;:&quot;Voltura con Switch&quot;,&quot;value&quot;:&quot;Voltura con Switch&quot;},
+{&quot;label&quot;:&quot;Proroga Conn Temp&quot;,&quot;value&quot;:&quot;Proroga Conn Temp&quot;},
+{&quot;label&quot;:&quot;Modifica Contratti Preattivazione&quot;,&quot;value&quot;:&quot;Modifica Contratti Preattivazione&quot;},
+{&quot;label&quot;:&quot;Contratti/Bonus Commerciale&quot;,&quot;value&quot;:&quot;Contratti/Bonus Commerciale&quot;},
+{&quot;label&quot;:&quot;VOTIVE Modena/Nuovo contratto&quot;,&quot;value&quot;:&quot;VOTIVE Modena/Nuovo contratto&quot;},
+{&quot;label&quot;:&quot;VOTIVE Modena/Subentro&quot;,&quot;value&quot;:&quot;VOTIVE Modena/Subentro&quot;},
+{&quot;label&quot;:&quot;VOTIVE Modena/Intervento Riattivazione luce&quot;,&quot;value&quot;:&quot;VOTIVE Modena/Intervento Riattivazione luce&quot;},
+{&quot;label&quot;:&quot;Documentale/Copia Contratto&quot;,&quot;value&quot;:&quot;Documentale/Copia Contratto&quot;}
 ]</value>
     </values>
 </CustomMetadata>

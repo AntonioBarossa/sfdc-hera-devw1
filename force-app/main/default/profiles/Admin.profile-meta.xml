@@ -474,7 +474,12 @@
         <editable>true</editable>
         <field>ProcessMatrix__c.RecordTypeName__c</field>
         <readable>true</readable>
-    </fieldPermissions> 
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.ConsumptionAnalysis__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
     <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.VatPercentageFormula__c</field>
@@ -728,6 +733,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.CommercialProductLink__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.AnnullaPrestazioneEnabled__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
