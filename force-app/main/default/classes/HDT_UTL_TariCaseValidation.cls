@@ -18,7 +18,7 @@ public with sharing class HDT_UTL_TariCaseValidation implements HDT_UTL_CaseVali
                 return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Popolare il campo descrizione'));
             }
         }
-        if((currentCase.Type=='Formulari Richiesta Sconto' || currentCase.Type=='Riduz. superficie rifiuti spec promiscui') && countAttachments<1){
+        if((currentCase.Type=='Formulari Richiesta Sconto' || currentCase.Type=='Riduzione Superficie rifiuti spec promiscui') && countAttachments<1){
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Caricare almeno un allegato'));
         }
         return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));

@@ -65,7 +65,7 @@
 },
 {
 &quot;FieldName&quot;: &quot;Description&quot;,
-&quot;required&quot;: true,
+&quot;Required&quot;: true,
 &quot;Column&quot;: 2
 }
 ]</value>

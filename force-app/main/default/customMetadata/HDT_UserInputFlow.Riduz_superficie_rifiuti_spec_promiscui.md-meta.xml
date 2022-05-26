@@ -65,13 +65,14 @@
 },
 {
 &quot;FieldName&quot;: &quot;Description&quot;,
-&quot;required&quot;: false,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 2
 },
 {
 &quot;FieldName&quot;: &quot;BillingCityCode__c&quot;,
-&quot;required&quot;: false,
-&quot;Column&quot;: 1
+&quot;Required&quot;: true,
+&quot;Column&quot;: 1,
+&quot;Label&quot;: &quot;Codice Istat&quot;
 }
 ]</value>
     </values>
@@ -114,7 +115,7 @@
 },
 {
 &quot;FieldName&quot;: &quot;ContractCode__c&quot;,
-&quot;required&quot;: false,
+&quot;required&quot;: true,
 &quot;Column&quot;: 1
 }
 ]</value>
