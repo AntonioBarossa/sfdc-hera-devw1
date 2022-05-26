@@ -563,6 +563,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>OrderItem.ConsumptionAnalysis__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>false</editable>
         <field>OrderItem.VatPercentageFormula__c</field>
         <readable>true</readable>
     </fieldPermissions> 
