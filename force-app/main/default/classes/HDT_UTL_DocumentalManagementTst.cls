@@ -290,7 +290,7 @@ public with sharing class HDT_UTL_DocumentalManagementTst {
         Map<String, String> docusignRadioGroups = new Map<String, String>();
 
         docusignRadioGroups.put('DTC_qualitadi_1','arg1');
-        Order ord = [Select Id, OrderNumber, ServicePoint__c, EffectiveDate__c,SupplyState__c, SurfaceServed__c  From Order Limit 1];
+        Order ord = [Select Id, OrderNumber, ServicePoint__c, EffectiveDate__c,SupplyState__c, SurfaceServed__c,SupplyType__C  From Order Limit 1];
         LandRegistry__c res = HDT_UTL_DocumentalManagement.createLandRegistryRecord(docusignData,docusignRadioGroups,  ord, 1);
         Test.stopTest();
     }

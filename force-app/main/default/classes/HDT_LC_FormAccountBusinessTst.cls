@@ -20,6 +20,7 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 		insert internalUser;
 
 		List<PermissionSetAssignment> permissionSetAssignments=new List<PermissionSetAssignment>{ HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, constants.PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, constants.PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME, false) };
+		permissionSetAssignments.add(HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, 'HDT_Archive', false));
 		insert permissionSetAssignments;
 
 		System.runAs(internalUser){
