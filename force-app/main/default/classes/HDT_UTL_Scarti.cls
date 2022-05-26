@@ -334,6 +334,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                         newAct.put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
                     }
                 }
+                newAct.wrts_prcgvr__Status__c = 'Chiusa';
                 toInsert.add(newAct);
             }
         }
