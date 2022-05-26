@@ -38,10 +38,9 @@
                                             onerror={handleFormError}>
                     <lightning-layout multiple-rows>
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled value={servicePointId} field-name="ServicePoint__c"></lightning-input-field></lightning-layout-item>
+                        
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="CodeMissingRegistryData__c"></lightning-input-field></lightning-layout-item>
-                        
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field required={required} variant="standard" disabled={disableForm} field-name="DestinationUsage__c"> </lightning-input-field></lightning-layout-item>
-                        
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field required={required} variant="standard" disabled={disableForm} field-name="RegistryCity__c"> </lightning-input-field></lightning-layout-item>
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="RegistryCityCode__c"> </lightning-input-field></lightning-layout-item>
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field required={required} variant="standard" disabled={disableForm} field-name="LegalCity__c"> </lightning-input-field></lightning-layout-item>
