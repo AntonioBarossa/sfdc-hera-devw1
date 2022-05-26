@@ -688,8 +688,8 @@ CampaignMember member = new CampaignMember(
 
     Test.startTest();
     Boolean returnedBoolean = HDT_LC_CampaignsController.cancelAssignmentsOrder(ord.Id);
-    //System.assertEquals(true, returnedBoolean, 'Returned False, is ok');
-    //System.assertNotEquals(false, returnedBoolean, 'Returned False, is ok');
+    System.assertEquals(true, returnedBoolean, 'Returned False, is ok');
+    System.assertNotEquals(false, returnedBoolean, 'Returned False, is ok');
     Test.stopTest();
 
 }
