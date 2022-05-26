@@ -74,7 +74,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
              * e' necessaria una customizzazione per inviare
              * soltanto la subscription di offerta commerciale
              */
-            if(currentCase.Type.equalsIgnoreCase('Allineamento Anagrafica'))
+            if(currentCase.Type.equalsIgnoreCase('Allineamento Anagrafica') || currentCase.Type.equalsIgnoreCase('Voltura Tecnica'))
             {
                 mrrList = removeNonCommoditySubscriptions(mrrList);
             }
@@ -317,4 +317,39 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         return mrrList;
     }
     
+    @TestVisible
+    private static wrts_prcgvr.MRR_1_0.MultiRequest removeNonCommodityOrderItems(wrts_prcgvr.MRR_1_0.MultiRequest mrrList)
+    {
+        Set<Id> orderItemsId = new Set<Id>();
+        String commodityOrderItem;
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
+        {
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('OrderItem'))
+            {
+                orderItemsId.add(obj.Id);
+            }
+        }
+        List<OrderItem> orderItems = [SELECT Id FROM OrderItem WHERE Id IN :orderItemsId AND ProductFamily__c = 'Offerta commerciale' WITH SECURITY_ENFORCED];
+        if(!orderItems.isEmpty())
+        {
+            commodityOrderItem = orderItems[0].Id;
+        }
+        for(Integer i = mrrList.requests[0].objects.size() - 1; i >= 0; --i)
+        {
+            wrts_prcgvr.MRR_1_0.WObject obj = mrrList.requests[0].objects[i];
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('OrderItem'))
+            {
+                if(obj.id.equalsIgnoreCase(commodityOrderItem))
+                {
+                    continue;
+                }
+                else
+                {
+                    mrrList.requests[0].objects.remove(i); 
+                }
+            }
+        }
+        return mrrList;
+    }
+
 }

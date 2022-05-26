@@ -117,6 +117,8 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
                     orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
                 }
             }
+            orderToUpdate.AtecoCode__c = 'K74878';
+            orderToUpdate.HerAteco__c = 'K74878';
 
         } else if(account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
 
@@ -178,9 +180,9 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
         orderToUpdate.AgencyCode__c = sale.AgencyCode__c;
         orderToUpdate.Agency__c = sale.Agency__c;
         orderToUpdate.AreaManager__c = sale.AreaManager__c;
-        orderToUpdate.LoginChannel__c = sale.CreatedBy.LoginChannel__c;
+        //orderToUpdate.LoginChannel__c = sale.CreatedBy.LoginChannel__c;
         orderToUpdate.LoginWorkstation__c = sale.CreatedBy.Station__c;
-        orderToUpdate.CreatorGroup__c = sale.CreatedBy.CreatorGroup__c;
+        //orderToUpdate.CreatorGroup__c = sale.CreatedBy.CreatorGroup__c;
 
         return orderToUpdate;
     }
@@ -318,7 +320,7 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
         orderToUpdate.PowerCommitted__c = servicePoint.PowerContractual__c;
         orderToUpdate.ServicePointCode__c = servicePoint.ServicePointCode__c;
         orderToUpdate.SAPImplantCode__c = servicePoint.SAPImplantCode__c;
-        orderToUpdate.ImplantType__c = servicePoint.ImplantTypeTemp__c;
+        orderToUpdate.ImplantType__c = servicePoint.ImplantType__c;
         orderToUpdate.SupplyCityCode__c = servicePoint.SupplySAPCityCode__c;
         orderToUpdate.SupplyState__c = servicePoint.SupplyProvince__c;
         orderToUpdate.Disconnectable__c = servicePoint.Disconnectable__c != null ? servicePoint.Disconnectable__c : 'Si';

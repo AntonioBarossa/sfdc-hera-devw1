@@ -9,7 +9,14 @@ public with sharing class HDT_WS_InboundSolTst {
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
-        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(2, true, accList[0].id);
+        List<AccountContactRelation> accContRelations = new List<AccountContactRelation>();
+        for (AccountContactRelation accContRelation : [SELECT id FROM AccountContactRelation WITH SECURITY_ENFORCED]){
+            accContRelation.Roles = 'Other';
+            accContRelations.add(accContRelation);
+        }
+        accContRelations[1].Roles = 'Titolare';
+        update accContRelations;
         List<Pricebook2> pb = HDT_UTL_DataFactoryTst.createPricebook(1,true);
         List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(2, false);
         productList[0].Name = 'Analisi Consumi';
@@ -250,7 +257,15 @@ public with sharing class HDT_WS_InboundSolTst {
     @IsTest
     static void testAnalisiConsumiFirstCall(){
         Account acc = [SELECT Id from Account limit 1];
-        Contact cont = [SELECT Id from Contact limit 1];
+        Id titolareId;
+        Id contactId;
+        for (AccountContactRelation accContRel : [SELECT ContactId,Roles FROM AccountContactRelation WHERE AccountId = :acc.Id]){
+             if ('Titolare'.equalsIgnoreCase(accContRel.Roles)){
+                titolareId = accContRel.ContactId;
+             }else {
+                contactId = accContRel.ContactId;
+             }
+        }
         BillingProfile__c bill = [SELECT Id,ContractAccountCode__c from BillingProfile__c limit 1];
         Contract contr = [SELECT Id,SAPContractCode__c from Contract LIMIT 1];
 
@@ -268,7 +283,7 @@ public with sharing class HDT_WS_InboundSolTst {
         RestRequest req = new RestRequest(); 
 		RestResponse res = new RestResponse();
 
-        String reqString = '{ "method":"analisiConsumi", "accountId":"'+ acc.Id +'", "contactId":"'+ cont.Id +'", "integrationId":"Integ_1", "source":"Web","contractAccount":"'+ bill.ContractAccountCode__c +'" }';
+        String reqString = '{ "method":"analisiConsumi", "accountId":"'+ acc.Id +'", "contactId":"'+ contactId +'", "integrationId":"Integ_1", "source":"Web","contractAccount":"'+ bill.ContractAccountCode__c +'" }';
         req.requestURI = 'services/apexrest/SolInboundServices';
 		req.httpMethod = 'POST';
 		req.requestBody = Blob.valueOf(reqString);  
@@ -280,10 +295,11 @@ public with sharing class HDT_WS_InboundSolTst {
         res = RestContext.response;
         //assertions
         System.assertNotEquals(null, res, 'res == null');
-        Order ord = [SELECT Id,OrderNumber FROM Order where Sale__c != null limit 1];
+        Order ord = [SELECT Id,OrderNumber,Contact__c FROM Order where Sale__c != null limit 1];
+        System.assert(titolareId != ord.Contact__c,'Contatto settato non corretto');
         Order ord2 = [SELECT Id,OrderNumber FROM Order where Sale__c = null];
         delete ord2;
-        reqString = '{ "numeroOccupanti":"1", "superficie":"40", "tipologiaAbitazione":"Appartamento", "proprietario":"Si","method":"analisiConsumi", "accountId":"'+ acc.Id +'", "contactId":"'+ cont.Id +'", "integrationId":"Integ_1", "serviceRequest":"'+ ord.OrderNumber +'","contractNumber":"'+ contr.SAPContractCode__c +'" }';
+        reqString = '{ "numeroOccupanti":"1", "superficie":"40", "tipologiaAbitazione":"Appartamento", "proprietario":"Si","method":"analisiConsumi", "accountId":"'+ acc.Id +'", "contactId":"'+ contactId +'", "integrationId":"Integ_1", "serviceRequest":"'+ ord.OrderNumber +'","contractNumber":"'+ contr.SAPContractCode__c +'" }';
         req.requestURI = 'services/apexrest/SolInboundServices';
 		req.httpMethod = 'POST';
 		req.requestBody = Blob.valueOf(reqString);  

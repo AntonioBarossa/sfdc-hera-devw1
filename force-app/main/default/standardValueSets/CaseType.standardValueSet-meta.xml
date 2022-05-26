@@ -256,6 +256,11 @@
         <label>Modifica Contr Preattivazione Anagr Res</label>
     </standardValue>
     <standardValue>
+        <fullName>Modifica Contratto Preattivazione</fullName>
+        <default>false</default>
+        <label>Modifica Contratto Preattivazione</label>
+    </standardValue>
+    <standardValue>
         <fullName>Modifica Portale SOL Gestione Energia</fullName>
         <default>false</default>
         <label>Modifica Portale SOL Gestione Energia</label>

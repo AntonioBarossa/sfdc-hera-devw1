@@ -1,12 +1,13 @@
 public class HDT_BA_OrderEstimateExpiration implements Database.Batchable<SObject>, Database.Stateful, Database.AllowsCallouts, Schedulable {
     
     HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    Date today = System.today();
 
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
 
         Set<String> rtNameSet = new Set<String>{'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_TemporaneaNuovaAtt'};
-        return Database.getQueryLocator([SELECT Id, Phase__c FROM Order WHERE Phase__c IN ('Attesa conferma preventivo cliente', 'Ammissibilità OK') AND RecordType.DeveloperName IN :rtNameSet AND ValidityDateEstimate__c < TODAY]);
+        return Database.getQueryLocator([SELECT Id, Phase__c FROM Order WHERE Phase__c IN ('Attesa conferma preventivo cliente', 'Ammissibilità OK') AND RecordType.DeveloperName IN :rtNameSet AND ValidityDateEstimate__c < :today]);
     }
 
 

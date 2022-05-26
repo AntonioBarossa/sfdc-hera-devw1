@@ -1,229 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>Approvazione Offerte</fullName>
+        <fullName>Accettazione voltura</fullName>
         <default>false</default>
-        <label>Approvazione Offerte</label>
+        <label>Accettazione voltura</label>
     </customValue>
     <customValue>
-        <fullName>Gestione dati discordanti</fullName>
+        <fullName>Amm. Precheck KO SII</fullName>
         <default>false</default>
-        <label>Gestione dati discordanti</label>
+        <label>Amm. Precheck KO SII</label>
     </customValue>
     <customValue>
-        <fullName>Modifica Contratti PreAttivazione</fullName>
+        <fullName>Ammissibilità KO</fullName>
         <default>false</default>
-        <label>Modifica Contratti PreAttivazione</label>
-    </customValue>
-    <customValue>
-        <fullName>Contratti/Bonus Commerciale</fullName>
-        <default>false</default>
-        <label>Contratti/Bonus Commerciale</label>
-    </customValue>
-    <customValue>
-        <fullName>Gestione Switch in Ripristinatorio</fullName>
-        <default>false</default>
-        <label>Gestione Switch in Ripristinatorio</label>
-    </customValue>
-    <customValue>
-        <fullName>Documentale/Copia Contratto</fullName>
-        <default>false</default>
-        <label>Documentale/Copia Contratto</label>
-    </customValue>
-    <customValue>
-        <fullName>Gestione Iva e Accise</fullName>
-        <default>false</default>
-        <label>Gestione Iva e Accise</label>
-    </customValue>
-    <customValue>
-        <fullName>Sportello</fullName>
-        <default>false</default>
-        <label>Chiamata Sportello</label>
-    </customValue>
-    <customValue>
-        <fullName>Segnalazioni VAS</fullName>
-        <default>false</default>
-        <label>Segnalazioni VAS</label>
-    </customValue>
-    <customValue>
-        <fullName>Annullamento</fullName>
-        <default>false</default>
-        <label>Annullamento</label>
-    </customValue>
-    <customValue>
-        <fullName>Presa Appuntamento</fullName>
-        <default>false</default>
-        <label>Presa Appuntamento</label>
-    </customValue>
-    <customValue>
-        <fullName>Sollecito Distributore</fullName>
-        <default>false</default>
-        <label>Sollecito Distributore</label>
-    </customValue>
-    <customValue>
-        <fullName>Anticipo Appuntamento</fullName>
-        <default>false</default>
-        <label>Anticipo Appuntamento</label>
-    </customValue>
-    <customValue>
-        <fullName>Riapertura urgenti Errori DL</fullName>
-        <default>false</default>
-        <label>Riapertura urgenti Errori DL</label>
-    </customValue>
-    <customValue>
-        <fullName>Richiesta informazioni appuntamento</fullName>
-        <default>false</default>
-        <label>Richiesta informazioni appuntamento</label>
-    </customValue>
-    <customValue>
-        <fullName>Richiesta appuntamento DL (fermo sistemi)</fullName>
-        <default>false</default>
-        <label>Richiesta appuntamento DL (fermo sistemi)</label>
-    </customValue>
-    <customValue>
-        <fullName>Comunicazione da DL</fullName>
-        <default>false</default>
-        <label>Comunicazione da DL</label>
-    </customValue>
-    <customValue>
-        <fullName>Chiamata Callback</fullName>
-        <default>false</default>
-        <label>Chiamata Callback</label>
-    </customValue>
-    <customValue>
-        <fullName>Chiamata inbound</fullName>
-        <default>false</default>
-        <label>Chiamata inbound</label>
-    </customValue>
-    <customValue>
-        <fullName>Chiamata outbound</fullName>
-        <default>false</default>
-        <label>Chiamata outbound</label>
-    </customValue>
-    <customValue>
-        <fullName>Lavorazione Reclamo Post Survey</fullName>
-        <default>false</default>
-        <label>Lavorazione Reclamo Post Survey</label>
-    </customValue>
-    <customValue>
-        <fullName>Quality Call</fullName>
-        <default>false</default>
-        <label>Quality Call</label>
-    </customValue>
-    <customValue>
-        <fullName>Comfort Call</fullName>
-        <default>false</default>
-        <label>Comfort Call</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo - Da tipizzare</fullName>
-        <default>false</default>
-        <label>Protocollo - Da tipizzare</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo - Attivazioni</fullName>
-        <default>false</default>
-        <label>Protocollo - Attivazioni</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo - Voltura</fullName>
-        <default>false</default>
-        <label>Protocollo - Voltura</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo - VAS</fullName>
-        <default>false</default>
-        <label>Protocollo - VAS</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo - Disattivazioni</fullName>
-        <default>false</default>
-        <label>Protocollo - Disattivazioni</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo - Preventivi</fullName>
-        <default>false</default>
-        <label>Protocollo - Preventivi</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo - Verifiche</fullName>
-        <default>false</default>
-        <label>Protocollo - Verifiche</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo - Reclami</fullName>
-        <default>false</default>
-        <label>Protocollo - Reclami</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo - Pagamenti</fullName>
-        <default>false</default>
-        <label>Protocollo - Pagamenti</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo - Morosità</fullName>
-        <default>false</default>
-        <label>Protocollo - Morosità</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo - Canone Rai</fullName>
-        <default>false</default>
-        <label>Protocollo - Canone Rai</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo - Fatturazione</fullName>
-        <default>false</default>
-        <label>Protocollo - Fatturazione</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo - Autolettura</fullName>
-        <default>false</default>
-        <label>Protocollo - Autolettura</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo - Modifiche Anagrafiche</fullName>
-        <default>false</default>
-        <label>Protocollo - Modifiche Anagrafiche</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo - Variazioni</fullName>
-        <default>false</default>
-        <label>Protocollo - Variazioni</label>
-    </customValue>
-    <customValue>
-        <fullName>Esito Ko da Sap</fullName>
-        <default>false</default>
-        <label>Esito Ko da Sap</label>
-    </customValue>
-    <customValue>
-        <fullName>Contattare il cliente</fullName>
-        <default>false</default>
-        <label>Contattare il cliente</label>
-    </customValue>
-    <customValue>
-        <fullName>Gestione manuale SAP</fullName>
-        <default>false</default>
-        <label>Gestione manuale SAP</label>
-    </customValue>
-    <customValue>
-        <fullName>Blocco non effettuato</fullName>
-        <default>false</default>
-        <label>Blocco non effettuato</label>
-    </customValue>
-    <customValue>
-        <fullName>Gestione manuale</fullName>
-        <default>false</default>
-        <label>Gestione manuale</label>
-    </customValue>
-    <customValue>
-        <fullName>Inviare Comunicazione Disconoscimento</fullName>
-        <default>false</default>
-        <label>Inviare Comunicazione Disconoscimento</label>
-    </customValue>
-    <customValue>
-        <fullName>Conferma Preventivo</fullName>
-        <default>false</default>
-        <label>Conferma Preventivo</label>
+        <label>Ammissibilità KO</label>
     </customValue>
     <customValue>
         <fullName>Ammissibilità KO, Esito KO da DL</fullName>
@@ -231,79 +21,29 @@
         <label>Ammissibilità KO, Esito KO da DL</label>
     </customValue>
     <customValue>
-        <fullName>Richiesta parere</fullName>
+        <fullName>Annullamento</fullName>
         <default>false</default>
-        <label>Richiesta parere</label>
+        <label>Annullamento</label>
     </customValue>
     <customValue>
-        <fullName>Gestione M02</fullName>
+        <fullName>Annullamento SII</fullName>
         <default>false</default>
-        <label>Gestione M02</label>
+        <label>Annullamento SII</label>
     </customValue>
     <customValue>
-        <fullName>Appuntamento Distributore</fullName>
+        <fullName>Anticipo Appuntamento</fullName>
         <default>false</default>
-        <label>Appuntamento Distributore</label>
+        <label>Anticipo Appuntamento</label>
     </customValue>
     <customValue>
-        <fullName>Protocollo - Reclami Contratti</fullName>
+        <fullName>Approvazione Bonus Commerciale</fullName>
         <default>false</default>
-        <label>Protocollo - Reclami Contratti</label>
+        <label>Approvazione Bonus Commerciale</label>
     </customValue>
     <customValue>
-        <fullName>Rapporti con i distributori e SII</fullName>
+        <fullName>Approvazione Offerte</fullName>
         <default>false</default>
-        <label>Rapporti con i distributori e SII</label>
-    </customValue>
-    <customValue>
-        <fullName>Eliminato esito in scarto</fullName>
-        <default>false</default>
-        <label>Eliminato esito in scarto</label>
-    </customValue>
-    <customValue>
-        <fullName>Back Office - Contratti</fullName>
-        <default>false</default>
-        <label>Back Office - Contratti</label>
-    </customValue>
-    <customValue>
-        <fullName>Supporto emissione SD_massiva</fullName>
-        <default>false</default>
-        <label>Supporto emissione SD_massiva</label>
-    </customValue>
-    <customValue>
-        <fullName>Supporto Front</fullName>
-        <default>false</default>
-        <label>Supporto Front</label>
-    </customValue>
-    <customValue>
-        <fullName>Esito lavori</fullName>
-        <default>false</default>
-        <label>Esito lavori</label>
-    </customValue>
-    <customValue>
-        <fullName>Attesa Preventivo DL</fullName>
-        <default>false</default>
-        <label>Attesa Preventivo DL</label>
-    </customValue>
-    <customValue>
-        <fullName>Gestione preventivo</fullName>
-        <default>false</default>
-        <label>Gestione preventivo</label>
-    </customValue>
-    <customValue>
-        <fullName>Bonus Commerciale</fullName>
-        <default>false</default>
-        <label>Bonus Commerciale</label>
-    </customValue>
-    <customValue>
-        <fullName>In gestione</fullName>
-        <default>false</default>
-        <label>In gestione</label>
-    </customValue>
-    <customValue>
-        <fullName>Comunicazioni al DL</fullName>
-        <default>false</default>
-        <label>Comunicazioni al DL</label>
+        <label>Approvazione Offerte</label>
     </customValue>
     <customValue>
         <fullName>Approvazione voltura tecnica</fullName>
@@ -311,14 +51,14 @@
         <label>Approvazione voltura tecnica</label>
     </customValue>
     <customValue>
-        <fullName>Esito KO da DL</fullName>
+        <fullName>Appuntamento Distributore</fullName>
         <default>false</default>
-        <label>Esito KO da DL</label>
+        <label>Appuntamento Distributore</label>
     </customValue>
     <customValue>
-        <fullName>Non inviata a SAP</fullName>
+        <fullName>Assistenza Contact Center</fullName>
         <default>false</default>
-        <label>Non inviata a SAP</label>
+        <label>Assistenza Contact Center</label>
     </customValue>
     <customValue>
         <fullName>Attesa Monitoraggio</fullName>
@@ -326,139 +66,19 @@
         <label>Attesa Monitoraggio</label>
     </customValue>
     <customValue>
-        <fullName>Scarto comunicazione</fullName>
+        <fullName>Attesa Preventivo DL</fullName>
         <default>false</default>
-        <label>Scarto comunicazione</label>
+        <label>Attesa Preventivo DL</label>
     </customValue>
     <customValue>
-        <fullName>Lavorazione Post Survey Reclamo</fullName>
+        <fullName>Avviare processo di prima attivazione</fullName>
         <default>false</default>
-        <label>Lavorazione Post Survey Reclamo</label>
+        <label>Avviare processo di prima attivazione</label>
     </customValue>
     <customValue>
-        <fullName>Inserimento nuova pratica</fullName>
+        <fullName>Avviare processo di ripristino fornitura interrotta</fullName>
         <default>false</default>
-        <label>Inserimento nuova pratica</label>
-    </customValue>
-    <customValue>
-        <fullName>Pratica non gestita per il DL</fullName>
-        <default>false</default>
-        <label>Pratica non gestita per il DL</label>
-    </customValue>
-    <customValue>
-        <fullName>Validazione Vocal Order</fullName>
-        <default>false</default>
-        <label>Validazione Vocal Order</label>
-    </customValue>
-    <customValue>
-        <fullName>Validazione Documentale</fullName>
-        <default>false</default>
-        <label>Validazione Documentale</label>
-    </customValue>
-    <customValue>
-        <fullName>Supporto Agenzia</fullName>
-        <default>false</default>
-        <label>Supporto Agenzia</label>
-    </customValue>
-    <customValue>
-        <fullName>Supporto Anomalia processo/sistema, Supporto Esercizio Sistemi</fullName>
-        <default>false</default>
-        <label>Supporto Anomalia processo/sistema, Supporto Esercizio Sistemi</label>
-    </customValue>
-    <customValue>
-        <fullName>Verifiche Canone Rai</fullName>
-        <default>false</default>
-        <label>Verifiche Canone Rai</label>
-    </customValue>
-    <customValue>
-        <fullName>Verifiche Bonus Sociale</fullName>
-        <default>false</default>
-        <label>Verifiche Bonus Sociale</label>
-    </customValue>
-    <customValue>
-        <fullName>Esito KO da SII</fullName>
-        <default>false</default>
-        <label>Esito KO da SII</label>
-    </customValue>
-    <customValue>
-        <fullName>Errore determinazione variante SAP</fullName>
-        <default>false</default>
-        <label>Errore determinazione variante SAP</label>
-    </customValue>
-    <customValue>
-        <fullName>Verifica Offerta SAP</fullName>
-        <default>false</default>
-        <label>Verifica Offerta SAP</label>
-    </customValue>
-    <customValue>
-        <fullName>Scarto transitorio</fullName>
-        <default>false</default>
-        <label>Scarto transitorio</label>
-    </customValue>
-    <customValue>
-        <fullName>Caricamenti contratti</fullName>
-        <default>false</default>
-        <label>Caricamenti contratti</label>
-    </customValue>
-    <customValue>
-        <fullName>Verifiche contratti</fullName>
-        <default>false</default>
-        <label>Verifiche contratti</label>
-    </customValue>
-    <customValue>
-        <fullName>Check preliminari KO</fullName>
-        <default>false</default>
-        <label>Check preliminari KO</label>
-    </customValue>
-    <customValue>
-        <fullName>In attesa documentazione</fullName>
-        <default>false</default>
-        <label>In attesa documentazione</label>
-    </customValue>
-    <customValue>
-        <fullName>Accettazione voltura</fullName>
-        <default>false</default>
-        <label>Accettazione voltura</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo da gestire</fullName>
-        <default>false</default>
-        <label>Protocollo da gestire</label>
-    </customValue>
-    <customValue>
-        <fullName>Protocollo - Reclami Post Vendita</fullName>
-        <default>false</default>
-        <label>Protocollo - Reclami Post Vendita</label>
-    </customValue>
-    <customValue>
-        <fullName>Scarto Documentale</fullName>
-        <default>false</default>
-        <label>Scarto Documentale</label>
-    </customValue>
-    <customValue>
-        <fullName>E-mail non inviata</fullName>
-        <default>false</default>
-        <label>E-mail non inviata</label>
-    </customValue>
-    <customValue>
-        <fullName>In attesa risposta cliente</fullName>
-        <default>false</default>
-        <label>In attesa risposta cliente</label>
-    </customValue>
-    <customValue>
-        <fullName>Bonifiche Anagrafiche da DAFC</fullName>
-        <default>false</default>
-        <label>Bonifiche Anagrafiche da DAFC</label>
-    </customValue>
-    <customValue>
-        <fullName>Rettifica per segnalazione da cassetto fiscale</fullName>
-        <default>false</default>
-        <label>Rettifica per segnalazione da cassetto fiscale</label>
-    </customValue>
-    <customValue>
-        <fullName>Gestione autoelettrica/noleggio</fullName>
-        <default>false</default>
-        <label>Gestione autoelettrica/noleggio</label>
+        <label>Avviare processo di ripristino fornitura interrotta</label>
     </customValue>
     <customValue>
         <fullName>Back Office - Catalogo Prodotti</fullName>
@@ -466,14 +86,24 @@
         <label>Back Office - Catalogo Prodotti</label>
     </customValue>
     <customValue>
+        <fullName>Back Office - Contratti</fullName>
+        <default>false</default>
+        <label>Back Office - Contratti</label>
+    </customValue>
+    <customValue>
         <fullName>Back Office - Fatturazione</fullName>
         <default>false</default>
         <label>Back Office - Fatturazione</label>
     </customValue>
     <customValue>
-        <fullName>Supporto back office Pagamenti e Morosità</fullName>
+        <fullName>Back Office - Morosità</fullName>
         <default>false</default>
-        <label>Supporto back office Pagamenti e Morosità</label>
+        <label>Back Office - Morosità</label>
+    </customValue>
+    <customValue>
+        <fullName>Back Office - Pagamenti</fullName>
+        <default>false</default>
+        <label>Back Office - Pagamenti</label>
     </customValue>
     <customValue>
         <fullName>Back Office - Preventivi</fullName>
@@ -491,34 +121,94 @@
         <label>Back Office - Vas e HVAC</label>
     </customValue>
     <customValue>
-        <fullName>Risposta inviata - Attesa rettifica</fullName>
+        <fullName>Blocco non effettuato</fullName>
         <default>false</default>
-        <label>Risposta inviata - Attesa rettifica</label>
+        <label>Blocco non effettuato</label>
     </customValue>
     <customValue>
-        <fullName>Supporto TL Front</fullName>
+        <fullName>Bonifiche Anagrafiche da DAFC</fullName>
         <default>false</default>
-        <label>Supporto TL Front</label>
+        <label>Bonifiche Anagrafiche da DAFC</label>
     </customValue>
     <customValue>
-        <fullName>Supporto emissione SD_singola</fullName>
+        <fullName>Bonus Commerciale</fullName>
         <default>false</default>
-        <label>Supporto emissione SD_singola</label>
+        <label>Bonus Commerciale</label>
     </customValue>
     <customValue>
-        <fullName>Esito KO pre-MDM</fullName>
+        <fullName>Caricamenti contratti</fullName>
         <default>false</default>
-        <label>Esito KO pre-MDM</label>
+        <label>Caricamenti contratti</label>
     </customValue>
     <customValue>
-        <fullName>Gestione proroga</fullName>
+        <fullName>Check preliminari KO</fullName>
         <default>false</default>
-        <label>Gestione proroga</label>
+        <label>Check preliminari KO</label>
     </customValue>
     <customValue>
-        <fullName>Istruttoria Creata/Non necessaria</fullName>
+        <fullName>Chiamata Callback</fullName>
         <default>false</default>
-        <label>Istruttoria Creata/Non necessaria</label>
+        <label>Chiamata Callback</label>
+    </customValue>
+    <customValue>
+        <fullName>Chiamata inbound</fullName>
+        <default>false</default>
+        <label>Chiamata inbound</label>
+    </customValue>
+    <customValue>
+        <fullName>Chiamata outbound</fullName>
+        <default>false</default>
+        <label>Chiamata outbound</label>
+    </customValue>
+    <customValue>
+        <fullName>Sportello</fullName>
+        <default>false</default>
+        <label>Chiamata Sportello</label>
+    </customValue>
+    <customValue>
+        <fullName>Comfort Call</fullName>
+        <default>false</default>
+        <label>Comfort Call</label>
+    </customValue>
+    <customValue>
+        <fullName>Comunicazione da DL</fullName>
+        <default>false</default>
+        <label>Comunicazione da DL</label>
+    </customValue>
+    <customValue>
+        <fullName>Comunicazioni al DL</fullName>
+        <default>false</default>
+        <label>Comunicazioni al DL</label>
+    </customValue>
+    <customValue>
+        <fullName>Conferma Preventivo</fullName>
+        <default>false</default>
+        <label>Conferma Preventivo</label>
+    </customValue>
+    <customValue>
+        <fullName>Contattare cliente</fullName>
+        <default>false</default>
+        <label>Contattare cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Contattare il cliente</fullName>
+        <default>false</default>
+        <label>Contattare il cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Contratti/Bonus Commerciale</fullName>
+        <default>false</default>
+        <label>Contratti/Bonus Commerciale</label>
+    </customValue>
+    <customValue>
+        <fullName>Creare Istruttoria</fullName>
+        <default>false</default>
+        <label>Creare Istruttoria</label>
+    </customValue>
+    <customValue>
+        <fullName>Credit check KO</fullName>
+        <default>false</default>
+        <label>Credit check KO</label>
     </customValue>
     <customValue>
         <fullName>Del. 40 gestione doc.invio a DL</fullName>
@@ -526,24 +216,179 @@
         <label>Del. 40 gestione doc.invio a DL</label>
     </customValue>
     <customValue>
+        <fullName>Documentale/Copia Contratto</fullName>
+        <default>false</default>
+        <label>Documentale/Copia Contratto</label>
+    </customValue>
+    <customValue>
+        <fullName>Eliminato esito in scarto</fullName>
+        <default>false</default>
+        <label>Eliminato esito in scarto</label>
+    </customValue>
+    <customValue>
+        <fullName>E-mail non inviata</fullName>
+        <default>false</default>
+        <label>E-mail non inviata</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore determinazione variante SAP</fullName>
+        <default>false</default>
+        <label>Errore determinazione variante SAP</label>
+    </customValue>
+    <customValue>
         <fullName>Errore invio a SAP</fullName>
         <default>false</default>
         <label>Errore invio a SAP</label>
     </customValue>
     <customValue>
-        <fullName>Amm. Precheck KO SII</fullName>
+        <fullName>Esito KO da DL</fullName>
         <default>false</default>
-        <label>Amm. Precheck KO SII</label>
+        <label>Esito KO da DL</label>
     </customValue>
     <customValue>
-        <fullName>Precheck KO precedente intestatario</fullName>
+        <fullName>Esito Ko da Sap</fullName>
         <default>false</default>
-        <label>Precheck KO precedente intestatario</label>
+        <label>Esito Ko da Sap</label>
     </customValue>
     <customValue>
-        <fullName>Creare Istruttoria</fullName>
+        <fullName>Esito KO da SAP simulato</fullName>
         <default>false</default>
-        <label>Creare Istruttoria</label>
+        <label>Esito KO da SAP simulato</label>
+    </customValue>
+    <customValue>
+        <fullName>Esito KO da SII</fullName>
+        <default>false</default>
+        <label>Esito KO da SII</label>
+    </customValue>
+    <customValue>
+        <fullName>Esito KO pre-MDM</fullName>
+        <default>false</default>
+        <label>Esito KO pre-MDM</label>
+    </customValue>
+    <customValue>
+        <fullName>Esito lavori</fullName>
+        <default>false</default>
+        <label>Esito lavori</label>
+    </customValue>
+    <customValue>
+        <fullName>Esito non elaborato da DL/SII</fullName>
+        <default>false</default>
+        <label>Esito non elaborato da DL/SII</label>
+    </customValue>
+    <customValue>
+        <fullName>Esito ricevuto su richiesta chiusa</fullName>
+        <default>false</default>
+        <label>Esito ricevuto su richiesta chiusa</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione autoelettrica/noleggio</fullName>
+        <default>false</default>
+        <label>Gestione autoelettrica/noleggio</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione dati discordanti</fullName>
+        <default>false</default>
+        <label>Gestione dati discordanti</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione esito negativo di annullamento</fullName>
+        <default>false</default>
+        <label>Gestione esito negativo di annullamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione invio contratto</fullName>
+        <default>false</default>
+        <label>Gestione invio contratto</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione invio registrazione</fullName>
+        <default>false</default>
+        <label>Gestione invio registrazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione Iva e Accise</fullName>
+        <default>false</default>
+        <label>Gestione Iva e Accise</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione M02</fullName>
+        <default>false</default>
+        <label>Gestione M02</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione M03</fullName>
+        <default>false</default>
+        <label>Gestione M03</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione manuale</fullName>
+        <default>false</default>
+        <label>Gestione manuale</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione manuale SAP</fullName>
+        <default>false</default>
+        <label>Gestione manuale SAP</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione preventivo</fullName>
+        <default>false</default>
+        <label>Gestione preventivo</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione proroga</fullName>
+        <default>false</default>
+        <label>Gestione proroga</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione richiesta variazione BP/CA</fullName>
+        <default>false</default>
+        <label>Gestione richiesta variazione BP/CA</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione sblocco al calcolo</fullName>
+        <default>false</default>
+        <label>Gestione sblocco al calcolo</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione Segnalazione VAS</fullName>
+        <default>false</default>
+        <label>Gestione Segnalazione VAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione Switch in Ripristinatorio</fullName>
+        <default>false</default>
+        <label>Gestione Switch in Ripristinatorio</label>
+    </customValue>
+    <customValue>
+        <fullName>Giro contatore da gestire</fullName>
+        <default>false</default>
+        <label>Giro contatore da gestire</label>
+    </customValue>
+    <customValue>
+        <fullName>In attesa documentazione</fullName>
+        <default>false</default>
+        <label>In attesa documentazione</label>
+    </customValue>
+    <customValue>
+        <fullName>In attesa risposta cliente</fullName>
+        <default>false</default>
+        <label>In attesa risposta cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>In gestione</fullName>
+        <default>false</default>
+        <label>In gestione</label>
+    </customValue>
+    <customValue>
+        <fullName>Inserimento nuova pratica</fullName>
+        <default>false</default>
+        <label>Inserimento nuova pratica</label>
+    </customValue>
+    <customValue>
+        <fullName>Inviare Comunicazione Disconoscimento</fullName>
+        <default>false</default>
+        <label>Inviare Comunicazione Disconoscimento</label>
     </customValue>
     <customValue>
         <fullName>Inviare Lettera di Legittimità</fullName>
@@ -556,69 +401,9 @@
         <label>Inviare Preventivo</label>
     </customValue>
     <customValue>
-        <fullName>Ammissibilità KO</fullName>
+        <fullName>Istruttoria Creata/Non necessaria</fullName>
         <default>false</default>
-        <label>Ammissibilità KO</label>
-    </customValue>
-    <customValue>
-        <fullName>Riaperture urgenti errori DL</fullName>
-        <default>false</default>
-        <label>Riaperture urgenti errori DL</label>
-    </customValue>
-    <customValue>
-        <fullName>Esito non elaborato da DL/SII</fullName>
-        <default>false</default>
-        <label>Esito non elaborato da DL/SII</label>
-    </customValue>
-    <customValue>
-        <fullName>Back Office - Morosità</fullName>
-        <default>false</default>
-        <label>Back Office - Morosità</label>
-    </customValue>
-    <customValue>
-        <fullName>Verifica emissione fattura ODV</fullName>
-        <default>false</default>
-        <label>Verifica emissione fattura ODV</label>
-    </customValue>
-    <customValue>
-        <fullName>Gestione richiesta variazione BP/CA</fullName>
-        <default>false</default>
-        <label>Gestione richiesta variazione BP/CA</label>
-    </customValue>
-    <customValue>
-        <fullName>Contattare cliente</fullName>
-        <default>false</default>
-        <label>Contattare cliente</label>
-    </customValue>
-    <customValue>
-        <fullName>Gestione M03</fullName>
-        <default>false</default>
-        <label>Gestione M03</label>
-    </customValue>
-    <customValue>
-        <fullName>Credit check KO</fullName>
-        <default>false</default>
-        <label>Credit check KO</label>
-    </customValue>
-    <customValue>
-        <fullName>Avviare processo di prima attivazione</fullName>
-        <default>false</default>
-        <label>Avviare processo di prima attivazione</label>
-    </customValue>
-    <customValue>
-        <fullName>Preavviso Cessazione</fullName>
-        <default>false</default>
-        <label>Preavviso Cessazione</label>
-    </customValue>
-    <customValue>
-        <fullName>Annullamento SII</fullName>
-        <default>false</default>
-        <label>Annullamento SII</label>
-    </customValue>
-    <customValue>
-        <fullName>Esito KO da SAP simulato</fullName>
-        <default>false</default>
-        <label>Esito KO da SAP simulato</label>
+        <label>Istruttoria Creata/Non necessaria</label>
     </customValue>
     <customValue>
         <fullName>Iva e Accise da validare</fullName>
@@ -626,9 +411,44 @@
         <label>Iva e Accise da validare</label>
     </customValue>
     <customValue>
-        <fullName>Gestione sblocco al calcolo</fullName>
+        <fullName>KO Fornitore</fullName>
         <default>false</default>
-        <label>Gestione sblocco al calcolo</label>
+        <label>KO Fornitore</label>
+    </customValue>
+    <customValue>
+        <fullName>KO Motore VAS</fullName>
+        <default>false</default>
+        <label>KO Motore VAS</label>
+    </customValue>
+    <customValue>
+        <fullName>KO Motore VAS da gestire</fullName>
+        <default>false</default>
+        <label>KO Motore VAS da gestire</label>
+    </customValue>
+    <customValue>
+        <fullName>KO precedente cliente</fullName>
+        <default>false</default>
+        <label>KO precedente cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Lavorazione Post Survey Reclamo</fullName>
+        <default>false</default>
+        <label>Lavorazione Post Survey Reclamo</label>
+    </customValue>
+    <customValue>
+        <fullName>Lavorazione Reclamo Post Survey</fullName>
+        <default>false</default>
+        <label>Lavorazione Reclamo Post Survey</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica Contratti PreAttivazione</fullName>
+        <default>false</default>
+        <label>Modifica Contratti PreAttivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Non inviata a SAP</fullName>
+        <default>false</default>
+        <label>Non inviata a SAP</label>
     </customValue>
     <customValue>
         <fullName>Paperless non generato</fullName>
@@ -636,19 +456,164 @@
         <label>Paperless non generato</label>
     </customValue>
     <customValue>
-        <fullName>Avviare processo di ripristino fornitura interrotta</fullName>
+        <fullName>Pratica non gestita per il DL</fullName>
         <default>false</default>
-        <label>Avviare processo di ripristino fornitura interrotta</label>
+        <label>Pratica non gestita per il DL</label>
     </customValue>
     <customValue>
-        <fullName>Segnalazioni Contact Center</fullName>
+        <fullName>Preavviso Cessazione</fullName>
         <default>false</default>
-        <label>Segnalazioni Contact Center</label>
+        <label>Preavviso Cessazione</label>
     </customValue>
     <customValue>
-        <fullName>Assistenza Contact Center</fullName>
+        <fullName>Precheck KO precedente intestatario</fullName>
         <default>false</default>
-        <label>Assistenza Contact Center</label>
+        <label>Precheck KO precedente intestatario</label>
+    </customValue>
+    <customValue>
+        <fullName>Presa Appuntamento</fullName>
+        <default>false</default>
+        <label>Presa Appuntamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Attivazioni</fullName>
+        <default>false</default>
+        <label>Protocollo - Attivazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Autolettura</fullName>
+        <default>false</default>
+        <label>Protocollo - Autolettura</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Canone Rai</fullName>
+        <default>false</default>
+        <label>Protocollo - Canone Rai</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo da gestire</fullName>
+        <default>false</default>
+        <label>Protocollo da gestire</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Da tipizzare</fullName>
+        <default>false</default>
+        <label>Protocollo - Da tipizzare</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Disattivazioni</fullName>
+        <default>false</default>
+        <label>Protocollo - Disattivazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Fatturazione</fullName>
+        <default>false</default>
+        <label>Protocollo - Fatturazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Modifiche Anagrafiche</fullName>
+        <default>false</default>
+        <label>Protocollo - Modifiche Anagrafiche</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Morosità</fullName>
+        <default>false</default>
+        <label>Protocollo - Morosità</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Pagamenti</fullName>
+        <default>false</default>
+        <label>Protocollo - Pagamenti</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Preventivi</fullName>
+        <default>false</default>
+        <label>Protocollo - Preventivi</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Reclami</fullName>
+        <default>false</default>
+        <label>Protocollo - Reclami</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Reclami Contratti</fullName>
+        <default>false</default>
+        <label>Protocollo - Reclami Contratti</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Reclami Post Vendita</fullName>
+        <default>false</default>
+        <label>Protocollo - Reclami Post Vendita</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Variazioni</fullName>
+        <default>false</default>
+        <label>Protocollo - Variazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - VAS</fullName>
+        <default>false</default>
+        <label>Protocollo - VAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Verifiche</fullName>
+        <default>false</default>
+        <label>Protocollo - Verifiche</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Voltura</fullName>
+        <default>false</default>
+        <label>Protocollo - Voltura</label>
+    </customValue>
+    <customValue>
+        <fullName>Quality Call</fullName>
+        <default>false</default>
+        <label>Quality Call</label>
+    </customValue>
+    <customValue>
+        <fullName>Rapporti con i distributori e SII</fullName>
+        <default>false</default>
+        <label>Rapporti con i distributori e SII</label>
+    </customValue>
+    <customValue>
+        <fullName>Recupero contratto da Postel</fullName>
+        <default>false</default>
+        <label>Recupero contratto da Postel</label>
+    </customValue>
+    <customValue>
+        <fullName>Rettifica per segnalazione da cassetto fiscale</fullName>
+        <default>false</default>
+        <label>Rettifica per segnalazione da cassetto fiscale</label>
+    </customValue>
+    <customValue>
+        <fullName>Riapertura urgenti Errori DL</fullName>
+        <default>false</default>
+        <label>Riapertura urgenti Errori DL</label>
+    </customValue>
+    <customValue>
+        <fullName>Riaperture urgenti errori DL</fullName>
+        <default>false</default>
+        <label>Riaperture urgenti errori DL</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta appuntamento DL (fermo sistemi)</fullName>
+        <default>false</default>
+        <label>Richiesta appuntamento DL (fermo sistemi)</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta informazioni appuntamento</fullName>
+        <default>false</default>
+        <label>Richiesta informazioni appuntamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta non identificata/anonima</fullName>
+        <default>false</default>
+        <label>Richiesta non identificata/anonima</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta parere</fullName>
+        <default>false</default>
+        <label>Richiesta parere</label>
     </customValue>
     <customValue>
         <fullName>Ripresa formativa CC</fullName>
@@ -661,84 +626,9 @@
         <label>Ripresa formativa CC cliente da gestire</label>
     </customValue>
     <customValue>
-        <fullName>Esito ricevuto su richiesta chiusa</fullName>
+        <fullName>Risposta inviata - Attesa rettifica</fullName>
         <default>false</default>
-        <label>Esito ricevuto su richiesta chiusa</label>
-    </customValue>
-    <customValue>
-        <fullName>Richiesta non identificata/anonima</fullName>
-        <default>false</default>
-        <label>Richiesta non identificata/anonima</label>
-    </customValue>
-    <customValue>
-        <fullName>Gestione esito negativo di annullamento</fullName>
-        <default>false</default>
-        <label>Gestione esito negativo di annullamento</label>
-    </customValue>
-    <customValue>
-        <fullName>KO precedente cliente</fullName>
-        <default>false</default>
-        <label>KO precedente cliente</label>
-    </customValue>
-    <customValue>
-        <fullName>Back Office - Pagamenti</fullName>
-        <default>false</default>
-        <label>Back Office - Pagamenti</label>
-    </customValue>
-    <customValue>
-        <fullName>Approvazione Bonus Commerciale</fullName>
-        <default>false</default>
-        <label>Approvazione Bonus Commerciale</label>
-    </customValue>
-    <customValue>
-        <fullName>Supporto Anomalia processo/sistema</fullName>
-        <default>false</default>
-        <label>Supporto Anomalia processo/sistema</label>
-    </customValue>
-    <customValue>
-        <fullName>Supporto Esercizio Sistemi</fullName>
-        <default>false</default>
-        <label>Supporto Esercizio Sistemi</label>
-    </customValue>
-    <customValue>
-        <fullName>Giro contatore da gestire</fullName>
-        <default>false</default>
-        <label>Giro contatore da gestire</label>
-    </customValue>
-    <customValue>
-        <fullName>Gestione invio contratto</fullName>
-        <default>false</default>
-        <label>Gestione invio contratto</label>
-    </customValue>
-    <customValue>
-        <fullName>SMS non inviato</fullName>
-        <default>false</default>
-        <label>SMS non inviato</label>
-    </customValue>
-    <customValue>
-        <fullName>Gestione Segnalazione VAS</fullName>
-        <default>false</default>
-        <label>Gestione Segnalazione VAS</label>
-    </customValue>
-    <customValue>
-        <fullName>Supporto Contact Center</fullName>
-        <default>false</default>
-        <label>Supporto Contact Center</label>
-    </customValue>
-    <customValue>
-        <fullName>Gestione invio registrazione</fullName>
-        <default>false</default>
-        <label>Gestione invio registrazione</label>
-    </customValue>
-    <customValue>
-        <fullName>KO Motore VAS</fullName>
-        <default>false</default>
-        <label>KO Motore VAS</label>
-    </customValue>
-    <customValue>
-        <fullName>Recupero contratto da Postel</fullName>
-        <default>false</default>
-        <label>Recupero contratto da Postel</label>
+        <label>Risposta inviata - Attesa rettifica</label>
     </customValue>
     <customValue>
         <fullName>Risposta ricevuta</fullName>
@@ -746,14 +636,124 @@
         <label>Risposta ricevuta</label>
     </customValue>
     <customValue>
-        <fullName>KO Motore VAS da gestire</fullName>
+        <fullName>Scarto comunicazione</fullName>
         <default>false</default>
-        <label>KO Motore VAS da gestire</label>
+        <label>Scarto comunicazione</label>
     </customValue>
     <customValue>
-        <fullName>KO Fornitore</fullName>
+        <fullName>Scarto Documentale</fullName>
         <default>false</default>
-        <label>KO Fornitore</label>
+        <label>Scarto Documentale</label>
+    </customValue>
+    <customValue>
+        <fullName>Scarto transitorio</fullName>
+        <default>false</default>
+        <label>Scarto transitorio</label>
+    </customValue>
+    <customValue>
+        <fullName>Segnalazioni Contact Center</fullName>
+        <default>false</default>
+        <label>Segnalazioni Contact Center</label>
+    </customValue>
+    <customValue>
+        <fullName>Segnalazioni VAS</fullName>
+        <default>false</default>
+        <label>Segnalazioni VAS</label>
+    </customValue>
+    <customValue>
+        <fullName>SMS non inviato</fullName>
+        <default>false</default>
+        <label>SMS non inviato</label>
+    </customValue>
+    <customValue>
+        <fullName>Sollecito Distributore</fullName>
+        <default>false</default>
+        <label>Sollecito Distributore</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto Agenzia</fullName>
+        <default>false</default>
+        <label>Supporto Agenzia</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto Anomalia processo/sistema</fullName>
+        <default>false</default>
+        <label>Supporto Anomalia processo/sistema</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto Anomalia processo/sistema, Supporto Esercizio Sistemi</fullName>
+        <default>false</default>
+        <label>Supporto Anomalia processo/sistema, Supporto Esercizio Sistemi</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto back office Pagamenti e Morosità</fullName>
+        <default>false</default>
+        <label>Supporto back office Pagamenti e Morosità</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto Contact Center</fullName>
+        <default>false</default>
+        <label>Supporto Contact Center</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto emissione SD_massiva</fullName>
+        <default>false</default>
+        <label>Supporto emissione SD_massiva</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto emissione SD_singola</fullName>
+        <default>false</default>
+        <label>Supporto emissione SD_singola</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto Esercizio Sistemi</fullName>
+        <default>false</default>
+        <label>Supporto Esercizio Sistemi</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto Front</fullName>
+        <default>false</default>
+        <label>Supporto Front</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto TL Front</fullName>
+        <default>false</default>
+        <label>Supporto TL Front</label>
+    </customValue>
+    <customValue>
+        <fullName>Validazione Documentale</fullName>
+        <default>false</default>
+        <label>Validazione Documentale</label>
+    </customValue>
+    <customValue>
+        <fullName>Validazione Vocal Order</fullName>
+        <default>false</default>
+        <label>Validazione Vocal Order</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica emissione fattura ODV</fullName>
+        <default>false</default>
+        <label>Verifica emissione fattura ODV</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica Offerta SAP</fullName>
+        <default>false</default>
+        <label>Verifica Offerta SAP</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifiche Bonus Sociale</fullName>
+        <default>false</default>
+        <label>Verifiche Bonus Sociale</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifiche Canone Rai</fullName>
+        <default>false</default>
+        <label>Verifiche Canone Rai</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifiche contratti</fullName>
+        <default>false</default>
+        <label>Verifiche contratti</label>
     </customValue>
     <customValue>
         <fullName>Verifiche Credito Business</fullName>
@@ -943,5 +943,5 @@
     </customValue>
     <description>Tipi Attività.</description>
     <masterLabel>Tipo Attività</masterLabel>
-    <sorted>false</sorted>
+    <sorted>true</sorted>
 </GlobalValueSet>
