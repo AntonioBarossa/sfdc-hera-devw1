@@ -582,6 +582,11 @@
             <label>Riduzione Superficie rifiuti spec promiscui</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>mostraAllegatiFormula</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(ISPICKVAL({!theCase.Type}, &quot;Formulari Richiesta Sconto&quot;), ISPICKVAL({!theCase.Type}, &quot;Riduzione Superficie rifiuti spec promiscui&quot;))</expression>
+    </formulas>
     <interviewLabel>HDT_FL_GenericProcessTari {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GenericProcessTari</label>
     <processMetadataValues>
@@ -870,6 +875,18 @@
                     <elementReference>theCase.Type</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>contentDocumentLabel</name>
+                <value>
+                    <stringValue>Allega File</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addContentDocument</name>
+                <value>
+                    <elementReference>mostraAllegatiFormula</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
@@ -1023,6 +1040,16 @@
     </variables>
     <variables>
         <name>caseToDraft</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>mostraAllegati</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

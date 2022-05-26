@@ -2,8 +2,8 @@
  * @description       : 
  * @author            : federico.defelice@webresults.it
  * @group             : WR
- * @last modified on  : 23-05-2022
- * @last modified by  : federico.defelice@webresults.it
+ * @last modified on  : 26-05-2022
+ * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces')
 public with sharing class HDT_UTL_ActivityCloseActions {
@@ -85,8 +85,8 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         if(caseType == 'Conferimento Centri di Raccolta')  return new HDT_WRP_Actions('Completata');
         
         if(caseType == 'Riduzione Superficie rifiuti spec promiscui') {
-            if('Gestione Procedurale'.equalsIgnoreCase(activityType))   return new HDT_WRP_Actions('Completata');
-            if(approved.equalsIgnoreCase('si')) return new HDT_WRP_Actions(null, 'Gestione Procedurale', true, selectedCase.Phase__c);//Se gestione SAP non va in completata subito
+            if('Gestione Manuale SAP'.equalsIgnoreCase(activityType))   return new HDT_WRP_Actions('Completata');
+            if(approved.equalsIgnoreCase('si')) return new HDT_WRP_Actions(null, 'Gestione Manuale SAP', true, selectedCase.Phase__c);//Se gestione SAP non va in completata subito
         if(approved.equalsIgnoreCase('no')) return new HDT_WRP_Actions('Annullato');   
         }
         return null;

@@ -67,6 +67,11 @@
 &quot;FieldName&quot;: &quot;Description&quot;,
 &quot;required&quot;: false,
 &quot;Column&quot;: 2
+},
+{
+&quot;FieldName&quot;: &quot;BillingCityCode__c&quot;,
+&quot;required&quot;: false,
+&quot;Column&quot;: 1
 }
 ]</value>
     </values>
@@ -116,6 +121,6 @@
     </values>
     <values>
         <field>ValidateClass__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">HDT_UTL_TariCaseValidation</value>
     </values>
 </CustomMetadata>
