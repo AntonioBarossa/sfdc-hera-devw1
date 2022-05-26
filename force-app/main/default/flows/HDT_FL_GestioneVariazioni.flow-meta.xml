@@ -1926,6 +1926,13 @@
                     <stringValue>Variazione indirizzo di fornitura</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_VariazioniTari</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_Valori_0_0_0</targetReference>
             </connector>
@@ -2040,7 +2047,7 @@
                 <leftValueReference>GetInputCase.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>HDT_RT_VaraizoniTari</stringValue>
+                    <stringValue>HDT_RT_VariazioniTari</stringValue>
                 </rightValue>
             </conditions>
             <connector>
