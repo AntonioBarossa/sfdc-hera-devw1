@@ -7824,6 +7824,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>CommunicationLog__c.Causale__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CommunicationLog__c.OrderID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11657,6 +11662,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Interaction__c.SenderEmailAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interaction__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

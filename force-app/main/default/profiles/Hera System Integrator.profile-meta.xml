@@ -906,6 +906,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Interaction__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Interaction__c.IsWrongFiscalData__c</field>
         <readable>true</readable>
@@ -7938,6 +7943,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>CommunicationLog__c.CaseID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CommunicationLog__c.Causale__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
