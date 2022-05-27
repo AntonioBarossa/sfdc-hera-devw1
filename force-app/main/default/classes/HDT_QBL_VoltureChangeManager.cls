@@ -2,6 +2,7 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
     private Order order;
     private HDT_QR_RecordType qrRecordType = new HDT_QR_RecordType();
     private String codiceCausale='';
+    private static String emptyEmailDefault = 'mailnondisponibile@acquirenteunico.it';
 
     class HDT_UTL_CustomException extends Exception{}
 
@@ -97,13 +98,40 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
                 System.debug(LoggingLevel.DEBUG, 'Impossibile arrichire dati: ' + e.getMessage());
             }
 
+
+            if(newCase.PhoneNumber__c == null || String.isBlank(newCase.PhoneNumber__c))
+            {
+                String phone = '123';
+                List<Contact> contacts = [SELECT Id, MobilePhone, Phone FROM Contact WHERE Id = :newCase.ContactId WITH SECURITY_ENFORCED];
+                if(!contacts.isEmpty())
+                {
+                    phone = contacts[0].MobilePhone != null || String.isNotBlank(contacts[0].MobilePhone)
+                        ? contacts[0].MobilePhone
+                        : contacts[0].Phone != null || String.isNotBlank(contacts[0].Phone)
+                            ? contacts[0].Phone
+                            : phone;
+                }
+                newCase.PhoneNumber__c = phone;
+            }
+            if(newCase.Email__c == null || String.isBlank(newCase.Email__c))
+            {
+                newCase.Email__c = emptyEmailDefault;
+            }
+            if(newCase.Excises__c == null)
+            {
+                newCase.Excises__c = 0.0;
+            }
+            if(newCase.Contract__c == null)
+            {
+                newCase.TriggerPoint__c = order.CommercialProductCode__c;
+                newCase.CommercialProductVersion__c = order.CommercialProductVersion__c;
+            }
             //aggiunta Codice Causale
             HDT_CausalCodeCalculation__mdt causalCodeMdt = new HDT_CausalCodeCalculation__mdt();
             causalCodeMdt = qrClass.getCausalCode(newCase.Cluster__c, newCase.Type, order.Commodity__c);
             if(causalCodeMdt != null){
                 newCase.CausalCode__c = causalCodeMdt.CausalCode__c;
             }
-
             //creazione case
             HDT_UTL_DatabaseService.insertSObject(newCase);
 

@@ -3,6 +3,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
     private static HDT_UTL_VoltureChangeManager voltureChangeUtl = new HDT_UTL_VoltureChangeManager();
     private static HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
     private static HDT_UTL_VoltureChangeUtilities voltureChangeUtils = new HDT_UTL_VoltureChangeUtilities();
+    private static HDT_QR_AnagAlignment regionalAdditionalQr = new HDT_QR_AnagAlignment();
     private static String voltureChangeRecordTypeName = 'HDT_RT_VolturaConSwitch';
     private static String ammissibilityCheckTemplate = 'Controlli Ammissibilità';
     @TestVisible
@@ -11,6 +12,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
     private static String volturaTecnicaPhase = 'In attesa Data Decorrenza';
     private static String clonedOrderRecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(voltureChangeRecordTypeName).getRecordTypeId();
     private static String activityType = 'Valori non corrispondenti';
+    private static String emptyEmailDefault = 'mailnondisponibile@acquirenteunico.it';
     /**
      * @frpanico 06/10/2021
      * This method call the cloneSobject method from the HDT_UTL_VoltureChangeManager class
@@ -40,6 +42,33 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         clonedOrder.put('OrderReference__c',inputOrder.Id);
         clonedOrder.put('EffectiveDate__c',orderSrv.addBusinessDay(Date.today(), 3));
         clonedOrder.put('VoltureType__c','Ordinaria');
+        /**@frpanico 2022-07-05
+         * gestione campi mancanti integrazione
+         */
+        if(clonedOrder.get('PhoneNumber__c') == null || String.isBlank((String)clonedOrder.get('PhoneNumber__c')))
+        {
+            String phone = '123';
+            List<Contact> contacts = [SELECT Id, MobilePhone, Phone FROM Contact WHERE Id = :((String)clonedOrder.get('Contact__c')) WITH SECURITY_ENFORCED];
+            if(!contacts.isEmpty())
+            {
+                phone = contacts[0].MobilePhone != null || String.isNotBlank(contacts[0].MobilePhone)
+                    ? contacts[0].MobilePhone
+                    : contacts[0].Phone != null || String.isNotBlank(contacts[0].Phone)
+                        ? contacts[0].Phone
+                        : phone;
+            }
+            clonedOrder.put('PhoneNumber__c', phone);
+        }
+        if(clonedOrder.get('Email__c') == null || String.isBlank((String)clonedOrder.get('Email__c')))
+        {
+            clonedOrder.put('Email__c','emptyEmailDefault');
+        }
+        /* Calcolo Addizionale Regionale + Aliquota accise */
+        String tax = (String) clonedOrder.get('ExciseEle__c');
+        String city = (String) clonedOrder.get('SupplyCity__c');
+        String region = '';
+        clonedOrder.put('RegionalAdditional__c',regionalAdditionalQr.findRegionalAdditional(tax, city, region));
+        clonedOrder.put('ExciseRate__c',voltureChangeQr.getExciseTranscode(tax)[0].Excise__c);
         HDT_UTL_DatabaseService.insertSObject(clonedOrder);
         /*Retrieve and clone OrderItems from input order*/
         orderItemsToClone = voltureChangeQr.getOrderItemByOrderId(inputOrder.Id);
