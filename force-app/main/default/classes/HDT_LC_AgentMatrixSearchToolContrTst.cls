@@ -29,12 +29,50 @@ public with sharing class HDT_LC_AgentMatrixSearchToolContrTst{
 
 		Test.startTest();		
 
-		HDT_LC_AgentMatrixSearchToolController.getCurrentAgent(myRule.Id);
+		AgentMatrix__c myMatrix  = HDT_LC_AgentMatrixSearchToolController.getCurrentAgent(myRule.Id);
 		
-		System.assert(myRule != null, 'La rule non esiste');
-        System.assert(myAgentMatrix != null, 'La AgentMatrix non esiste');
+        System.assert(myMatrix != null, 'La AgentMatrix non esiste');
+
+        Delete myAgentMatrix;
+        myMatrix = HDT_LC_AgentMatrixSearchToolController.getCurrentAgent(myRule.Id);
+        System.assert(myMatrix != null, 'La AgentMatrix non esiste');
+
+        myRule.SalesAgency__c = null;
+        Update myRule;
+		myMatrix  = HDT_LC_AgentMatrixSearchToolController.getCurrentAgent(myRule.Id);		
+        System.assert(myMatrix == null, 'La AgentMatrix esiste');
+
 
 		Test.stopTest();
+
+	}
+
+    @isTest
+	public static void getAgentsTest(){
+
+        String myString = 'Rossi';
+		Test.startTest();		
+
+		List<AgentMatrix__c> myAgentMatrixList  = HDT_LC_AgentMatrixSearchToolController.getAgents(myString);
+		
+        System.assert(myAgentMatrixList != null, 'La AgentMatrixList non esiste');
+
+		Test.stopTest();
+
+	}
+
+    @isTest
+	public static void updateRuleTest(){
+
+        AssignmentRule__c myRule = [Select Id, SalesAgency__c from AssignmentRule__c LIMIT 1];
+
+        Test.startTest();		
+
+		String result = HDT_LC_AgentMatrixSearchToolController.updateRule(myRule.Id, 'AG055');
+        System.assert(result == null, 'Update Rule non riuscito');
+
+		Test.stopTest();
+
 	}
 
 }
