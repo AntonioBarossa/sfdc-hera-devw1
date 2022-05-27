@@ -2,6 +2,7 @@
 public with sharing class HDT_BA_AttributesTest {
     @TestSetup
     static void makeData(){
+
         List<Lead> listLead = new List<Lead>();
         for (Integer i = 0; i < 30; i++) {
             Lead tempLead=new Lead();
@@ -16,7 +17,7 @@ public with sharing class HDT_BA_AttributesTest {
         for (Integer i = 0; i < 20; i++) {
             Lead tempLead=new Lead();
             tempLead.LastName='testLastName2'+String.valueOf(i);
-            tempLead.FirstName='FirstNameName'+String.valueOf(i);
+            tempLead.FirstName='FirstNameName2'+String.valueOf(i);
             tempLead.Email=tempLead.LastName+'@test.it';
             tempLead.CompanyOwner__c='AAA-EBT';
             tempLead.Company='test';
@@ -64,38 +65,43 @@ public with sharing class HDT_BA_AttributesTest {
 
         List<Account> acc=HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
 
-
         List<Contact> listContact = new List<Contact>();
         for (Integer i = 0; i < 10; i++) {
             Contact tempContact=new Contact();
-            tempContact.LastName='testLastName'+String.valueOf(i);
-            tempContact.FirstName='FirstNameName'+String.valueOf(i);
+            tempContact.LastName=String.valueOf(i)+'testLastName'+String.valueOf(i);
+            tempContact.FirstName=String.valueOf(i)+'FirstNameName'+String.valueOf(i);
             tempContact.Email=tempContact.LastName+'@test.it';
             tempContact.AccountId=acc[0].id;
             tempContact.CompanyOwner__c='HERA COMM';
+            tempContact.Company__c='HC+HCM+EENE';
+            System.debug('i='+i+' tempContact: '+tempContact);
             listContact.add(tempContact);
         }
         
-        for (Integer i = 0; i < 30; i++) {
+         for (Integer i = 0; i < 30; i++) {
             Contact tempContact=new Contact();
-            tempContact.LastName='testLastNameCon'+String.valueOf(i);
-            tempContact.FirstName='FirstNameNameCon'+String.valueOf(i);
+            tempContact.LastName=String.valueOf(i)+'testLastNameCon'+String.valueOf(i);
+            tempContact.FirstName=String.valueOf(i)+'FirstNameNameCon'+String.valueOf(i);
             tempContact.Email=tempContact.LastName+'@test.it';
             tempContact.CompanyOwner__c='HERA COMM';
+            tempContact.Company__c='HC+HCM+EENE';
             listContact.add(tempContact);
         }
+
         for (Integer i = 0; i < 20; i++) {
             Contact tempContact=new Contact();
-            tempContact.LastName='testLastNameCon2'+String.valueOf(i);
-            tempContact.FirstName='FirstNameNameCon'+String.valueOf(i);
-            tempContact.Email=tempContact.LastName+'@test2.it';
+            tempContact.LastName=String.valueOf(i)+'testLastNameCon2'+String.valueOf(i);
+            tempContact.FirstName=String.valueOf(i)+'FirstNameNameCon2'+String.valueOf(i);
+            tempContact.Email=tempContact.LastName+'@test.it';
             tempContact.CompanyOwner__c='HERA COMM';
+            tempContact.Company__c='HC+HCM+EENE';
             tempContact.AccountId=acc[0].id;
 
             listContact.add(tempContact);
             
         }
         insert listContact;
+
         Id ordRecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Subentro').getRecordTypeId();
         
         Date myDate2 = Date.newInstance(2022, 1, 1);
