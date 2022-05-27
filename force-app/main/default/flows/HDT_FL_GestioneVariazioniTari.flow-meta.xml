@@ -144,7 +144,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>ScreenReminderDocumentaleVar</targetReference>
+            <targetReference>reminderAllegati</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1221,6 +1221,25 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>reminderAllegati</name>
+        <label>reminderAllegati</label>
+        <locationX>842</locationX>
+        <locationY>1718</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>ScreenReminderDocumentaleVar</targetReference>
+        </connector>
+        <fields>
+            <name>screenAllegati</name>
+            <fieldText>&lt;p&gt;hdtAttachmentManager&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>ScreenForm</name>
         <label>ScreenForm</label>
         <locationX>1678</locationX>
@@ -1541,7 +1560,7 @@
         <name>ScreenReminderDocumentaleVar</name>
         <label>ScreenReminderDocumentale</label>
         <locationX>842</locationX>
-        <locationY>1718</locationY>
+        <locationY>1838</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
