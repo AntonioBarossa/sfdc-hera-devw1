@@ -85,6 +85,11 @@
                 <default>false</default>
                 <label>Protocollo - Voltura</label>
             </value>
+            <value>
+                <fullName>Vendita - Contratti</fullName>
+                <default>false</default>
+                <label>Vendita - Contratti</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
