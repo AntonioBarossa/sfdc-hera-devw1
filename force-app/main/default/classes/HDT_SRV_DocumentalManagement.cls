@@ -627,7 +627,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		if(record != null && record.getSobjectType() == Case.getSobjectType()){
 			return;
 		}
-		List<Order> orderList = (List<Order>)HDT_QR_GenericQuery.getGenericRecords('SELECT Id,OrderNumber,ServicePoint__c,EffectiveDate__c,SupplyState__c,SurfaceServed__c,SupplyType__c FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
+		List<Order> orderList = (List<Order>)HDT_QR_GenericQuery.getGenericRecords('SELECT Id,OrderNumber,ServicePoint__c,EffectiveDate__c,SupplyState__c,SurfaceServed__c FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
 		List<LandRegistry__c> registries = new List<LandRegistry__c>();
 		Map<String, String> docusignData = new Map<String, String>();
 		for (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData singleData : listOfData) {
@@ -1540,12 +1540,21 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 
 	public static String queryContactPoint(String email,String phone,String contactId){
 		List<SObject> cpEmailList = new List<Sobject>();
+		List<Contact> conList = [SELECT Id, IndividualId FROM Contact WHERE Id = :contactId WITH SECURITY_ENFORCED];
 		if(String.isNotBlank(email)){
-			cpEmailList =HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointEmail', 'EmailAddress =\''+String.escapeSingleQuotes(email)+'\' AND Contact__c=\''+contactId+'\'');
+			cpEmailList =HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointEmail', 'EmailAddress =\''+String.escapeSingleQuotes(email)+'\' AND ParentId=\''+conList[0].IndividualId+'\'');
+			if(cpEmailList.isEmpty())
+			{
+				cpEmailList =HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointEmail', 'EmailAddress =\''+String.escapeSingleQuotes(email)+'\' AND Contact__c=\''+contactId+'\'');
+			}
 		}
 		List<SObject> cpPhone = new List<Sobject>();
 		if(String.isNotBlank(phone)){
-			cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND Contact__c=\''+contactId+'\'');
+			cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND ParentId=\''+conList[0].IndividualId+'\'');
+			if(cpPhone.isEmpty())
+			{
+				cpPhone = HDT_QR_GenericQuery.getGenericRecords('Id', 'ContactPointPhone', 'TelephoneNumber =\''+String.escapeSingleQuotes(phone)+'\' AND Contact__c=\''+contactId+'\'');
+			}
 		}	
 		Map<String,String> result = new Map<String,String>();
 		if((!cpEmailList.isEmpty() && !cpPhone.isEmpty()) || (String.isBlank(email) && String.isBlank(phone))
