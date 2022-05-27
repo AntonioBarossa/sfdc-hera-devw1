@@ -63,7 +63,19 @@ public with sharing class HDT_UTL_CampaignMember {
         for (CampaignMember item : newCampaignMember) {
             campaignIds.add(item.CampaignId);
         }
+        Map <Id,Campaign> campMap=new Map<Id, Campaign>([SELECT Id, EndDate FROM Campaign WHERE Id IN: campaignIds]);
 
+        for (Integer i = 0; i < newCampaignMember.size(); i++) {
+            if ( campMap.containsKey(newCampaignMember[i].CampaignId)) {
+                if(campMap.get(newCampaignMember[i].CampaignId).EndDate!=null){
+                    newCampaignMember[i].NumberingValidityEndDate__c=campMap.get(newCampaignMember[i].CampaignId).EndDate;
+                }
+                else{
+                    newCampaignMember[i].NumberingValidityEndDate__c=Date.today().addYears(1);
+                }
+            }
+        }
+        
         List<CampaignMemberAssigmentItem__c> query = [
             SELECT Id, Agency__c, PercentageAllocation__c, CampaingMemberAssigment__c, ProcessingType__c  FROM CampaignMemberAssigmentItem__c WHERE CampaingMemberAssigment__c IN (SELECT CampaignMemberAssigment__c FROM Campaign WHERE Id IN :campaignIds AND AssignmentType__c = 'Peso Percentuale') WITH SECURITY_ENFORCED ORDER BY PercentageAllocation__c DESC
         ];

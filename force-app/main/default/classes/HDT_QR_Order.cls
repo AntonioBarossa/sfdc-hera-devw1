@@ -1123,6 +1123,48 @@ public inherited sharing class HDT_QR_Order {
         WHERE Id = :recordId WITH SECURITY_ENFORCED];
     }
 
+    public List<Order> getRecordWithDocByOrderId(String recordId){
+        return [SELECT id,
+        phase__c,
+        SupplyType__c,
+        Description,
+        PhaseStory__c,
+        Status,
+        PrecheckResultSII__c,
+        ProcessType__c,
+        BillingProfile__c, 
+        Vat__c, 
+        ServicePoint__c,
+        ServicePoint__r.Distributor__r.Name,
+        ServicePoint__r.Name,
+        ServicePoint__r.ServicePointCode__c,
+        CancellationNote__c,
+        SupplyStreetName__c,
+        SupplyStreetNumber__c,
+        SupplyPostalCode__c,
+        SupplyCityCode__c,
+        SupplyCity__c,
+        SupplyState__c,
+        SupplyCountry__c,
+        PowerCommitted__c,
+        PowerAvailable__c,
+        VoltageLevel__c,
+        AccountId,
+        IsTechnicalTransfer__c,
+        RecordTypeId,
+        ParentOrder__c,
+        AutorizationVolturaThirdTrader__c,
+        CILegalRepresentative__c,
+        CIAccoutn__c,
+        QuickQuote__c,
+        ChamberCommerceRegistration__c,
+        Instance326__c,
+        DocumentLow80__c,
+        DocumentPackage__c
+        FROM Order 
+        WHERE Id = :recordId WITH SECURITY_ENFORCED];
+    }
+
     /**
     * @description getRecordsByOrdersIdsBulk
     * @param orderIds - String

@@ -39,9 +39,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         HDT_UTL_DataFactoryTst.createChildOrder(1, true, accList[0].Id, sales, ordList[0].Id, contactList[0].Id);
         
         List<DocumentalPayloadAdministration__c> documList = HDT_UTL_DataFactoryTst.createDocumentalPayloadAdm();
-        
-        
-        
+        //
         
         
         List<Product2> prods = HDT_UTL_DataFactoryTst.createProduct2(1, false);
@@ -126,6 +124,8 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         Test.startTest();
         Map<String,Object> formParams = new Map<String,Object>();
         formParams.put('Contesto', 'Case');
+        formParams.put('mode','Print');
+        formParams.put('signMode','OTP');
         Case ca = [SELECT Id, CaseNumber, Phase__c FROM Case LIMIT 1]; 
         String res = HDT_SRV_DocumentalManagement.generateRequest((String)ca.Id,'Case', JSON.serialize(formParams));
         
@@ -361,7 +361,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
      @isTest
         static void testHandleRadioOrder3(){
         Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagement_HTTP_MOCK());
-        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"DTC_radio1","selected":"true","value":"no"}]}';
+        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"DTC_radio1_1","selected":"true","value":"Pulsante di opzione1"}]}';
         HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody = (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest) JSON.deserialize(body, HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest.class);
         String status = requestBody.status;
         String envelopeId = 'idPlico_0';
@@ -377,7 +377,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
     @isTest
         static void testHandleRadioOrder4(){
         Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagement_HTTP_MOCK());
-        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"L80_radio","selected":"true","value":"no"}]}';
+        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"L80_radio_1","selected":"true","value":"Pulsante di opzione1"}]}';
         HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody = (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest) JSON.deserialize(body, HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest.class);
         String status = requestBody.status;
         String envelopeId = 'idPlico_0';
@@ -389,9 +389,125 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         //HDT_SRV_DocumentalManagement.handleRadioGroup(record,listOfRadio,envelopeId);
 
     }
+/*
+    @isTest
+    static void  testgeneratePayload(){
+
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord docRecord;
+        docRecord = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord();
+        //fields docRecord
+        
+        //TODO: IMPLEMENT
+        docRecord.field1 = '';
+		docRecord.field2 = '';
+		docRecord.field3 = '';
+		docRecord.field4 = '';
+        
+        //docSection
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection docSection;
+        docSection = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection();
+        
+        //fields docSection
+        docSection.records = new List<HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord>{docRecord};
+
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure docStructure;
+        docStructure = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure();
+        
+        //fields docStructure
+        docStructure.sections = new List<HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection>{docSection};
+        
+        //Documento Docstructure
+        Id folderId = [SELECT Id FROM Folder WHERE DeveloperName  = :'DocumentalPayloadAdministration' LIMIT 1].Id;
+        
+        Document myDocByContext = new Document();
+        myDocByContext.name = 'DocumentazioneAnticipata';
+        myDocByContext.FolderId = folderId;
+        myDocByContext.Body = Blob.valueOf(JSON.serialize(docStructure));
+        insert myDocByContext;
+
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Case');
+        formParams.put('mode','Print');
+        formParams.put('signMode','OTP');
+
+
+        Case caseObject = [SELECT Id FROM Case LIMIT 1];
+        Account accountObject = [SELECT Id,Name FROM Account LIMIT 1];
+		Contact contactObject = [SELECT Id,Name FROM Contact LIMIT 1];
+        List<DocumentSelected__c> documentSelectedObjectList = (List<DocumentSelected__c> ) [SELECT Id,Name FROM DocumentSelected__c LIMIT 1];
+		List<sObject> listCase = new List<sObject>();
+		listCase.add(caseObject);
+        List<sObject> listAccount = new List<sObject>();
+		listAccount.add(accountObject);
+		List<sObject> listContact = new List<sObject>();
+		listContact.add(contactObject);
+		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>{
+			'Case' => listCase, 'Account' => listAccount, 'PrimaryContact' => listContact, 'DocumentSelected' => documentSelectedObjectList
+		};
+
+		List<Map<String,List<sObject>>> recordObjectsListMap = new List<Map<String,List<sObject>>>();
+		recordObjectsListMap.add(mapStringObjectRecords);
+
+
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure configuration = (HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure) JSON.deserialize(myDocByContext.Body.toString(), HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure.class);
+       String res =  HDT_SRV_DocumentalManagement.generatePayload( recordObjectsListMap,configuration,formParams);
+
+    }*/
+    
+@isTest
+    static void testgetSignModeConfiguration(){
+        String res = HDT_SRV_DocumentalManagement.getSignModeConfiguration('Rimborso', 'Back office');
+    }
+    
+          
+@isTest
+static void testcreateContactPoint(){
+    List<Contact> cont = [SELECT Id FROM Contact LIMIT 1];
+    String res = HDT_SRV_DocumentalManagement.createContactPoint('test@test.it', '3511111111', cont[0].Id);
+} 
+    
+@isTest
+static void testqueryContactPoint(){
+    List<Contact> cont = [SELECT Id FROM Contact LIMIT 1];
+    String res = HDT_SRV_DocumentalManagement.queryContactPoint('test@test.it', '3511111111', cont[0].Id);
+} 
+@isTest
+static void testgeneratePayloadEstrattoConto(){
+    Map<String,Object> primolivello = new Map<String,Object>();
+    primolivello.put('societa', 'HERA COMM MARCHE');
+    primolivello.put('contoContrattuale' , '200001846232');
+    primolivello.put('rateizzato' , 'NO');
+    primolivello.put('numeroFattura' , '0000411810643841');
+    primolivello.put('residuo' , '0.0');
+    primolivello.put('importo' , '0.0');
+
+    primolivello.put('fatturaPrescrivibile' ,'testString');
+    primolivello.put('fatturaPrescritta', 'testString');
+    List<Object> itemVasList = new List<Object>();
+    itemVasList.add(primolivello);
+
+
+    Map<String, Object> secondoLivelloMap = new Map<String, Object>();
+    secondoLivelloMap.put('settoreMerceologico', 'Gas');
+    secondoLivelloMap.put('motivoDiPareggio', 'STORNO');
     
     
-       public class HDT_SRV_DocumentalManagement_HTTP_MOCK implements HttpCalloutMock {
+    List<Object> secondoLivelloList = new List<Object>();
+    secondoLivelloList.add(secondoLivelloMap);
+    primolivello.put('secondoLivelloInformativo', secondoLivelloList);
+    
+    Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+    
+    Map<String,Object> formParams = new Map<String,Object>();
+    formParams.put('Contesto', 'EC');
+    formParams.put('EstrattoConto', JSON.serialize(itemVasList));
+
+
+
+
+    String res = HDT_SRV_DocumentalManagement.generatePayloadEstrattoConto(formParams);
+} 
+    public class HDT_SRV_DocumentalManagement_HTTP_MOCK implements HttpCalloutMock {
         
         public HTTPResponse respond(HTTPRequest request) {
             

@@ -90,9 +90,33 @@ public with sharing class HDT_SRV_SalesHandler {
                             else if(recordId.containsIgnoreCase('O-')) {
                                 ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
                             }else {
+                                responseField.fieldType = 'TEXT';
+                                responseField.name = 'ESITO';
+                                responseField.value = 'KO';
+
+                                responseFieldError.fieldType = 'TEXT';
+                                responseFieldError.name = 'ERROR_MESSAGE';
+                                responseFieldError.value = 'Codice Processo inesistente o malformato';
+
+                                responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+                                mrrResponseItem.objects.add(responseObject);
+
+                                RestContext.response.statusCode = 400;
                                 return mrrResponseItem;
                             }
                         }else {
+                            responseField.fieldType = 'TEXT';
+                            responseField.name = 'ESITO';
+                            responseField.value = 'KO';
+
+                            responseFieldError.fieldType = 'TEXT';
+                            responseFieldError.name = 'ERROR_MESSAGE';
+                            responseFieldError.value = 'RecordID obbligatorio';
+
+                            responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+                            mrrResponseItem.objects.add(responseObject);
+
+                            RestContext.response.statusCode = 400;
                             return mrrResponseItem;
                         }
                         
