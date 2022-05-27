@@ -1,6 +1,6 @@
 @isTest
 public class HDT_LC_CtToolbar_Test {
-    private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
+    /*private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
 	private static HDT_QR_Order orderQr=new HDT_QR_Order();
 
 
@@ -206,5 +206,5 @@ public class HDT_LC_CtToolbar_Test {
        
     }
     
-    String s1 = HDT_LC_CtToolbar.getCachedUuid();
+    String s1 = HDT_LC_CtToolbar.getCachedUuid();*/
 }

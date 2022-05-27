@@ -348,7 +348,9 @@ public inherited sharing class HDT_QR_Order {
             AggregateBilling__c,
             NumeratorGroup__c,
             VASSubtype__c,
-            isSTG__c
+            isSTG__c,
+            Contact__r.Phone,
+            Contact__r.MobilePhone
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -1381,5 +1383,28 @@ public inherited sharing class HDT_QR_Order {
     public static Order getOrderWithLines(String orderId){
         if(String.isBlank(orderId))return null;
         return [SELECT Id,ServicePoint__c,BillingProfile__c,Market__c,PaymentMode__c,BillSendMode__c,VAT__c ,SapContractCode__c,Pricebook2Id,CommercialProduct__c, ProcessType__c,AccountId,EffectiveDate__c, EndDate,SignedDate__c,SalesCompany__c,RemiCode__c,Contact__c,(select Id,ProductFamily__c,Service__c, Product2Id,CompanyOwner__c,PaymentMode__c,Product2.Version__c,Surface__c, OccupantsNumber__c,SBQQ__RequiredBy__c from OrderItems) FROM Order WHERE Id=:orderId];
+    }
+
+    public static Map<String, List<String>> getOrdersByParent(Set<String> parentOrderSet){
+
+        Map<String, List<String>> parToChildOrderMap = new Map<String, List<String>>();
+        Set<String> ordPhase = new Set<String>{
+            'In attesa conferma cliente',
+            'Completata',
+            'Annullato'
+        };
+
+        List<Order> orderList = [SELECT Id, OrderNumber, ParentOrder__c FROM Order WHERE ParentOrder__c = :parentOrderSet AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND Phase__c != :ordPhase WITH SECURITY_ENFORCED];
+
+        for(Order childOrd : orderList){
+            if(parToChildOrderMap.get(childOrd.ParentOrder__c) != null){
+                parToChildOrderMap.get(childOrd.ParentOrder__c).add(childOrd.OrderNumber);
+            }
+            else {
+                parToChildOrderMap.put(childOrd.ParentOrder__c, new List<String>());
+                parToChildOrderMap.get(childOrd.ParentOrder__c).add(childOrd.OrderNumber);
+            }
+        }
+        return parToChildOrderMap;
     }
 }

@@ -28,7 +28,7 @@ public with sharing class HDT_UTL_ServicePoint {
         }
 
         if(mapRes.get('DEFINIZIONEOFFERTA')!=null && mapRes.get('DEFINIZIONEOFFERTA').containsIgnoreCase('STG_') ){
-            sp.isSTG__c = true;
+            spNew.isSTG__c = true;
         }
         /**@frpanico 2022-03-15
          * Aggiunto campo
