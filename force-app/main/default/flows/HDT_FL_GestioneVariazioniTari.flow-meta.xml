@@ -217,7 +217,7 @@
             <assignToReference>getCase.Subprocess__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>assignPicklist_1</elementReference>
+                <elementReference>SubprocessPicklist_1</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1233,7 +1233,7 @@
         </connector>
         <fields>
             <name>headerForm</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 18px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Sotto processo di {!getCase.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Sotto processo di {!processType}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1249,7 +1249,7 @@
                     <inputParameters>
                         <name>processType</name>
                         <value>
-                            <elementReference>getCase.Subprocess__c</elementReference>
+                            <elementReference>processType</elementReference>
                         </value>
                     </inputParameters>
                     <inputParameters>
@@ -1880,8 +1880,8 @@
             <choiceReferences>Componentinonresidenti</choiceReferences>
             <choiceReferences>Componentiresidenti</choiceReferences>
             <choiceReferences>Daticatastali</choiceReferences>
-            <choiceReferences>Superficie</choiceReferences>
             <choiceReferences>istatRonchi</choiceReferences>
+            <choiceReferences>Superficie</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Sottoprocesso</fieldText>
             <fieldType>DropdownBox</fieldType>
