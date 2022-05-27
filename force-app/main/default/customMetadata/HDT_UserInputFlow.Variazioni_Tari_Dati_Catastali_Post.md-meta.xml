@@ -8,13 +8,24 @@
 
 {
 
-&quot;FieldName&quot;:&quot;DeclarationDate__c&quot;,
+&quot;FieldName&quot;:&quot;RequestSource__c&quot;,
 
 &quot;Required&quot;:true,
 
 &quot;ReadOnly&quot;:false,
 
 &quot;Column&quot;:1
+
+},
+{
+
+&quot;FieldName&quot;:&quot;DeclarationDate__c&quot;,
+
+&quot;Required&quot;:true,
+
+&quot;ReadOnly&quot;:false,
+
+&quot;Column&quot;:2
 
 },
 {
@@ -52,9 +63,20 @@
 },
 {
 
-&quot;FieldName&quot;:&quot;RequestSource__c&quot;,
+&quot;FieldName&quot;:&quot;ShipmentAddressAssign__c&quot;,
 
 &quot;Required&quot;:true,
+
+&quot;ReadOnly&quot;:false,
+
+&quot;Column&quot;:1
+
+},
+{
+
+&quot;FieldName&quot;:&quot;ModuleFromContributor__c&quot;,
+
+&quot;Required&quot;:false,
 
 &quot;ReadOnly&quot;:false,
 
@@ -75,28 +97,6 @@
 {
 
 &quot;FieldName&quot;:&quot;CustomerRepentanceRefusal__c&quot;,
-
-&quot;Required&quot;:false,
-
-&quot;ReadOnly&quot;:false,
-
-&quot;Column&quot;:2
-
-},
-{
-
-&quot;FieldName&quot;:&quot;ShipmentAddressAssign__c&quot;,
-
-&quot;Required&quot;:true,
-
-&quot;ReadOnly&quot;:false,
-
-&quot;Column&quot;:1
-
-},
-{
-
-&quot;FieldName&quot;:&quot;ModuleFromContributor__c&quot;,
 
 &quot;Required&quot;:false,
 

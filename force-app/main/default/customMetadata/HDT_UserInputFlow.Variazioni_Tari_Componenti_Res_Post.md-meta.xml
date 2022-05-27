@@ -8,13 +8,24 @@
 
 {
 
-&quot;FieldName&quot;:&quot;DeclarationDate__c&quot;,
+&quot;FieldName&quot;:&quot;RequestSource__c&quot;,
 
 &quot;Required&quot;:true,
 
 &quot;ReadOnly&quot;:false,
 
 &quot;Column&quot;:1
+
+},
+{
+
+&quot;FieldName&quot;:&quot;DeclarationDate__c&quot;,
+
+&quot;Required&quot;:true,
+
+&quot;ReadOnly&quot;:false,
+
+&quot;Column&quot;:2
 
 },
 {
@@ -52,7 +63,7 @@
 },
 {
 
-&quot;FieldName&quot;:&quot;RequestSource__c&quot;,
+&quot;FieldName&quot;:&quot;ShipmentAddressAssign__c&quot;,
 
 &quot;Required&quot;:true,
 
@@ -63,9 +74,9 @@
 },
 {
 
-&quot;FieldName&quot;:&quot;ResidentMembers__c&quot;,
+&quot;FieldName&quot;:&quot;ModuleFromContributor__c&quot;,
 
-&quot;Required&quot;:true,
+&quot;Required&quot;:false,
 
 &quot;ReadOnly&quot;:false,
 
@@ -91,25 +102,14 @@
 
 &quot;ReadOnly&quot;:false,
 
-&quot;Column&quot;:2
-
-},
-{
-
-&quot;FieldName&quot;:&quot;ShipmentAddressAssign__c&quot;,
-
-&quot;Required&quot;:true,
-
-&quot;ReadOnly&quot;:false,
-
 &quot;Column&quot;:1
 
 },
 {
 
-&quot;FieldName&quot;:&quot;ModuleFromContributor__c&quot;,
+&quot;FieldName&quot;:&quot;ResidentMembers__c&quot;,
 
-&quot;Required&quot;:false,
+&quot;Required&quot;:true,
 
 &quot;ReadOnly&quot;:false,
 
@@ -124,10 +124,9 @@
 
 &quot;ReadOnly&quot;:false,
 
-&quot;Column&quot;:1
+&quot;Column&quot;:2
 
 }
-
 
 ]</value>
     </values>
