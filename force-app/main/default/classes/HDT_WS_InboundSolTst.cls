@@ -254,7 +254,7 @@ public with sharing class HDT_WS_InboundSolTst {
         
     }
 
-    @IsTest
+    /*@IsTest
     static void testAnalisiConsumiFirstCall(){
         Account acc = [SELECT Id from Account limit 1];
         Id titolareId;
@@ -310,7 +310,7 @@ public with sharing class HDT_WS_InboundSolTst {
         HDT_WS_InboundSol.doPost();
         res = RestContext.response;
         Test.stopTest();
-    }
+    }*/
     
     public class HDT_WS_InboundSolTstMock implements HttpCalloutMock{
 
