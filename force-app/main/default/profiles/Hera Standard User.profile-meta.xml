@@ -565,6 +565,11 @@
     </fieldPermissions>  
     <fieldPermissions>
         <editable>false</editable>
+        <field>OrderItem.ConsumptionAnalysis__c</field>
+        <readable>true</readable>
+    </fieldPermissions>  
+    <fieldPermissions>
+        <editable>false</editable>
         <field>OrderItem.VatPercentageFormula__c</field>
         <readable>true</readable>
     </fieldPermissions> 
@@ -641,6 +646,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>MatriceRemiCode__c.VATNumberUdb__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.SalesCompanyCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -804,6 +814,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.CommercialProductLink__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.AnnullaPrestazioneEnabled__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Order.ConsumptionAnalysis__c</field>
         <readable>true</readable>
@@ -951,6 +971,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Interaction__c.SenderEmailAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interaction__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5125,6 +5150,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.InstallmentNumberRequired__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Interaction__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5681,6 +5711,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.CorrectorCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.CreatedByCallCenter__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6616,6 +6651,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.PODPDRFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.PaidAmount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7806,6 +7846,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>CommunicationLog__c.CaseID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CommunicationLog__c.Causale__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9041,8 +9086,18 @@
 		<readable>true</readable>
 	</fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>DiscardAnnullmentRule__c.ActivityType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>DiscardAnnullmentRule__c.ControllingCommodity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DiscardAnnullmentRule__c.ControllingValue__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9058,6 +9113,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DiscardAnnullmentRule__c.IsActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DiscardAnnullmentRule__c.ProcessValue__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15102,6 +15162,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.VasRethinking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.VAT__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -15213,6 +15278,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.WorkableFileNumberDay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.WorkExecutionTime__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15656,7 +15726,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>OrderItem.ProductVersion__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -25457,6 +25527,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ScriptConfig__c.LabelOption3__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ScriptConfig__c.NextSection__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

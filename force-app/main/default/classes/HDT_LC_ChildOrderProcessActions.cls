@@ -224,9 +224,20 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     if(!String.isEmpty(contractReference.Id) && !contractReference.Account.CompanyOwner__c.equalsIgnoreCase('HERA COMM')){
                         orderToUpdate.Phase__c = 'Esportazione VS Siebel';
                     }
-                    if(currentOrder.Email__c != null && String.isEmpty(currentOrder.Email__c)){
-                        orderToUpdate.Email__c = emptyEmailDefault;
-                    }    
+                }
+                /**@frpanico 2022-27-05
+                 * Gestione campi mancanti integrazione
+                 */
+                if(currentOrder.Email__c == null || String.isEmpty(currentOrder.Email__c)){
+                    orderToUpdate.Email__c = emptyEmailDefault;
+                }    
+                if(currentOrder.PhoneNumber__c == null || String.isEmpty(currentOrder.PhoneNumber__c))
+                {
+                    orderToUpdate.PhoneNumber__c = currentOrder.Contact__r.MobilePhone != null ||String.isNotBlank(currentOrder.Contact__r.MobilePhone) 
+                        ? currentOrder.Contact__r.MobilePhone  
+                        : currentOrder.Contact__r.Phone != null || String.isNotBlank(currentOrder.Contact__r.MobilePhone)
+                            ? currentOrder.Contact__r.Phone
+                            : '123';
                 }
                 Map<String,Object> rates = voltureChangeUtils.checkRates(
                     (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(currentOrder)), 
