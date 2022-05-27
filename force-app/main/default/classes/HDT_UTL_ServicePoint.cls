@@ -132,6 +132,19 @@ public with sharing class HDT_UTL_ServicePoint {
             Account a = accountQr.getAccountByDistributorKey(mapRes.get('DISTRIBUTORE'));
             spNew.Distributor__c = a.Id != null ? a.Id : ((sp != null && sp.Distributor__c != null) ? sp.Distributor__c : null);
         }
+        /**@frpanico 2022-05-27
+         * Aggiunta gestione campo VENDITORE
+         */
+        if(mapRes.get('VENDITORE')!=null && !String.isBlank(mapRes.get('VENDITORE')))
+        {
+            String codiceVenditore = (String)mapRes.get('VENDITORE');
+            List<HDT_MatriceSocietaVendita__mdt> salesCompanies = [SELECT SellerCompany__c FROM HDT_MatriceSocietaVendita__mdt WHERE SalesCompanyCode__c = :codiceVenditore WITH SECURITY_ENFORCED];
+            if(!salesCompanies.isEmpty())
+            {
+                spNew.Vendor__c = salesCompanies[0].SellerCompany__c;
+            }
+            spNew.SalesCompanyCode__c = codiceVenditore;
+        }
         if(mapRes.get('POD')!=null && !String.isBlank(mapRes.get('POD'))){
             spNew.ServicePointCode__c   = mapRes.get('POD');
             spNew.Name   = mapRes.get('POD');            
