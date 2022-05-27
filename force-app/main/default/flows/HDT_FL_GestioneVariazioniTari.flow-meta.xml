@@ -953,7 +953,7 @@
         </connector>
         <fields>
             <name>showProcess</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Confermare l&apos;indirizzo di recapito della bolletta di chiusura o selezionarne uno differente.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getCase.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Inserire il nuovo comune per verifica dei criteri di eleggibilità&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1712,7 +1712,7 @@
         </connector>
         <fields>
             <name>attualeIndirizzo</name>
-            <fieldText>&lt;p&gt;L&apos;indirizzo attuale è: {!getCase.ServicePoint__r.SupplyCity__c}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;L&apos;indirizzo attuale è: {!getCase.ServicePoint__r.SupplyAddress__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
