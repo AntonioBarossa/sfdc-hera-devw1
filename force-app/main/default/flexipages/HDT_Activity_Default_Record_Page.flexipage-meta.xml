@@ -1564,6 +1564,15 @@
                 <fieldItem>Record.AppoitmentTimeSlotConfirmed__c</fieldItem>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Distributor__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-e418c964-b2c7-468e-a168-5b8d5eeac285</name>
         <type>Facet</type>
     </flexiPageRegions>
