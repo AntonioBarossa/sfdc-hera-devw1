@@ -4,7 +4,7 @@
         <name>Redirect</name>
         <label>Redirect</label>
         <locationX>908</locationX>
-        <locationY>2342</locationY>
+        <locationY>2558</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -289,8 +289,8 @@
     <assignments>
         <name>putIndirizzi</name>
         <label>putIndirizzi</label>
-        <locationX>908</locationX>
-        <locationY>1646</locationY>
+        <locationX>776</locationX>
+        <locationY>1766</locationY>
         <assignmentItems>
             <assignToReference>theCaseIndirizzi.Id</assignToReference>
             <operator>Assign</operator>
@@ -300,6 +300,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Update_Indirizzi</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>putIndirizzi_0</name>
+        <label>putIndirizzi</label>
+        <locationX>1040</locationX>
+        <locationY>1766</locationY>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.InvoicingCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue> </stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>WizardScreen</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -483,7 +499,7 @@
         <name>NextStep</name>
         <label>Next Step</label>
         <locationX>908</locationX>
-        <locationY>2006</locationY>
+        <locationY>2222</locationY>
         <defaultConnector>
             <targetReference>DaInviare</targetReference>
         </defaultConnector>
@@ -519,10 +535,47 @@
             <label>Salva In Bozza</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Update_Indirizzo</name>
+        <label>Update Indirizzo</label>
+        <locationX>908</locationX>
+        <locationY>1646</locationY>
+        <defaultConnector>
+            <targetReference>putIndirizzi_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>IndirizzoPopolato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>theCaseIndirizzi</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>theCaseIndirizzi.InvoicingCity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>putIndirizzi</targetReference>
+            </connector>
+            <label>Indirizzo Popolato</label>
+        </rules>
+    </decisions>
     <formulas>
         <name>phone_NonBlank</name>
         <dataType>String</dataType>
         <expression>BLANKVALUE({!getAccount.Phone}, BLANKVALUE({!getAccount.MobilePhone__c},  BLANKVALUE({!getAccount.OtherPhone__c}, &apos;&apos;) ))</expression>
+    </formulas>
+    <formulas>
+        <name>showIndirizziReadOnly</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT(ISBLANK({!theCaseIndirizzi.InvoicingCity__c}))</expression>
     </formulas>
     <interviewLabel>HDT_FL_ {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_SegnalazioniAmbientali</label>
@@ -611,7 +664,7 @@
         <name>DaInviare</name>
         <label>Da Inviare</label>
         <locationX>1128</locationX>
-        <locationY>2126</locationY>
+        <locationY>2342</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>
@@ -634,8 +687,8 @@
     <recordUpdates>
         <name>Update_Indirizzi</name>
         <label>Update Indirizzi</label>
-        <locationX>908</locationX>
-        <locationY>1766</locationY>
+        <locationX>776</locationX>
+        <locationY>1886</locationY>
         <connector>
             <targetReference>WizardScreen</targetReference>
         </connector>
@@ -650,7 +703,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>putIndirizzi</targetReference>
+            <targetReference>Update_Indirizzo</targetReference>
         </connector>
         <fields>
             <name>getAddress</name>
@@ -681,13 +734,13 @@
     <screens>
         <name>Selezione_Indirizzi_0</name>
         <label>Selezione Indirizzi</label>
-        <locationX>50</locationX>
+        <locationX>578</locationX>
         <locationY>638</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>putIndirizzi</targetReference>
+            <targetReference>Update_Indirizzo</targetReference>
         </connector>
         <fields>
             <name>Indirizzo_non_trovato</name>
@@ -739,7 +792,7 @@
         <name>WizardScreen</name>
         <label>Wizard Screen</label>
         <locationX>908</locationX>
-        <locationY>1886</locationY>
+        <locationY>2102</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -813,7 +866,7 @@
             <inputParameters>
                 <name>showReadOnly</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>showIndirizziReadOnly</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -858,7 +911,7 @@
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>688</locationX>
-        <locationY>2126</locationY>
+        <locationY>2342</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>
