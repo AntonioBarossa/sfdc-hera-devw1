@@ -34,6 +34,7 @@ public inherited sharing class HDT_THR_CaseChangeEvent {
 
             switch on header.changeType {
                 when 'CREATE' {
+                    objFields.add('Phase__c');
                     objFields.add('CustomerRequestDate__c');
                     objFields.add('CaseNumber');
                 }	
@@ -59,21 +60,11 @@ public inherited sharing class HDT_THR_CaseChangeEvent {
 
             }
 
-            //switch on cce.ChangeEventHeader.changeType {
-            //    when 'INSERT' {
-            //        cceInsertMap.put();
-            //    }	
-            //    when 'UPDATE' {
-            //        cceUpdateMap
-            //    }
-            //}
-
         }
 
         HDT_UTL_SlaManagement management = new HDT_UTL_SlaManagement();
-        management.setRecordIds(wrpObjMap.keySet());
-        management.setChangedObjList(wrpObjMap.values());
-        management.manageInsert();
+        management.setChangedObjList(wrpObjMap);
+        management.execute();
     }
 
 }
