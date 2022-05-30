@@ -1,34 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>createCaseAllineamentoAnagrafica</name>
-        <label>createCaseAllineamentoAnagrafica</label>
-        <locationX>710</locationX>
-        <locationY>1238</locationY>
-        <actionName>HDT_SRV_AnagAlignment</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>assignStatus</targetReference>
-        </connector>
-        <dataTypeMappings>
-            <typeName>T__inputCase</typeName>
-            <typeValue>Case</typeValue>
-        </dataTypeMappings>
-        <flowTransactionModel>Automatic</flowTransactionModel>
-        <inputParameters>
-            <name>context</name>
-            <value>
-                <stringValue>VARIAZIONI_INDIRIZZO_FORNITURA</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>inputCase</name>
-            <value>
-                <elementReference>getCase</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <apiVersion>55.0</apiVersion>
     <assignments>
         <name>Assegna_punto_fornitura</name>
@@ -135,7 +106,7 @@
         <name>assignPhaseDoc</name>
         <label>assignPhaseDoc</label>
         <locationX>842</locationX>
-        <locationY>1598</locationY>
+        <locationY>1478</locationY>
         <assignmentItems>
             <assignToReference>getCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -151,7 +122,7 @@
         <name>assignPhaseLav</name>
         <label>assignPhaseLav</label>
         <locationX>578</locationX>
-        <locationY>1598</locationY>
+        <locationY>1478</locationY>
         <assignmentItems>
             <assignToReference>getCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -180,7 +151,7 @@
         <name>assignStatus</name>
         <label>assignStatus</label>
         <locationX>710</locationX>
-        <locationY>1358</locationY>
+        <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>getCase.Status</assignToReference>
             <operator>Assign</operator>
@@ -631,7 +602,7 @@
         <name>Modulo_prodotto_da_contribuente</name>
         <label>Modulo prodotto da contribuente</label>
         <locationX>710</locationX>
-        <locationY>1478</locationY>
+        <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>assignPhaseDoc</targetReference>
         </defaultConnector>
@@ -843,7 +814,7 @@
         <locationX>710</locationX>
         <locationY>1118</locationY>
         <connector>
-            <targetReference>createCaseAllineamentoAnagrafica</targetReference>
+            <targetReference>assignStatus</targetReference>
         </connector>
         <inputReference>getCase</inputReference>
     </recordUpdates>
@@ -1224,7 +1195,7 @@
         <name>reminderAllegati</name>
         <label>reminderAllegati</label>
         <locationX>842</locationX>
-        <locationY>1718</locationY>
+        <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1560,7 +1531,7 @@
         <name>ScreenReminderDocumentaleVar</name>
         <label>ScreenReminderDocumentale</label>
         <locationX>842</locationX>
-        <locationY>1838</locationY>
+        <locationY>1718</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
