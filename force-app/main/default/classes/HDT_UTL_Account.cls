@@ -183,6 +183,9 @@ public with sharing class HDT_UTL_Account {
         String category = acc.Category__c;
         String vatNumber = acc.VATNumber__c;
         String fiscalCode = acc.FiscalCode__c;
+        Boolean isAmministratoreCondominio = false;
+        Contact contRelation = new Contact();
+
 
         String query = 'SELECT Id,OU_NUM__c, X_MARCATURA_CLIENTE__c FROM SiebelCustomer__x WHERE OU_TYPE_CD__c = :category';
         if(acc.FiscalCode__c != null && acc.FiscalCode__c != '')
@@ -202,7 +205,19 @@ public with sharing class HDT_UTL_Account {
             acc.CustomerMarking__c = siebelCustomer[0].X_MARCATURA_CLIENTE__c;
             HDT_UTL_DatabaseService.updateSObject(acc);
 
-            if(acc.Category__c == 'Grandi Condomini'){
+            List<AccountContactRelation> acrList = [SELECT Id, AccountId, ContactId, Roles 
+                                                    FROM AccountContactRelation 
+                                                    WHERE AccountId = :acc.Id
+                                                    WITH SECURITY_ENFORCED];
+            
+            for(AccountContactRelation acr : acrList){
+                if(acr.Roles == 'Amministratore Condominio'){
+                    isAmministratoreCondominio = true;
+                    contRelation.Id = acr.ContactId;
+                    break;
+                }
+            }
+            if(acc.Category__c == 'Grandi Condomini' && isAmministratoreCondominio){
                 List<SiebelContact__x> siebelContact = new List<SiebelContact__x>();
                 siebelContact = [SELECT Id, INTEGRATION_ID__c 
                                  FROM SiebelContact__x 
@@ -216,8 +231,10 @@ public with sharing class HDT_UTL_Account {
                     resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
                     //Update Contact
                     if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP)) {
-                        cont.ContactCode__c = resCreate.data.codiceBP;
-                        HDT_UTL_DatabaseService.updateSObject(cont);
+                        // cont.ContactCode__c = resCreate.data.codiceBP;
+                        // HDT_UTL_DatabaseService.updateSObject(cont);
+                        contRelation.ContactCode__c = resCreate.data.codiceBP;
+                        HDT_UTL_DatabaseService.updateSObject(contRelation);
                     }
                 }
             }
