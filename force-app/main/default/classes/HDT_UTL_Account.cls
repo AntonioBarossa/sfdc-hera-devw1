@@ -184,7 +184,7 @@ public with sharing class HDT_UTL_Account {
         String vatNumber = acc.VATNumber__c;
         String fiscalCode = acc.FiscalCode__c;
         Boolean isAmministratoreCondominio = false;
-        Contact contACR = new Contact();
+        Contact contRelation = new Contact();
 
 
         String query = 'SELECT Id,OU_NUM__c, X_MARCATURA_CLIENTE__c FROM SiebelCustomer__x WHERE OU_TYPE_CD__c = :category';
@@ -213,7 +213,7 @@ public with sharing class HDT_UTL_Account {
             for(AccountContactRelation acr : acrList){
                 if(acr.Roles == 'Amministratore Condominio'){
                     isAmministratoreCondominio = true;
-                    contACR.Id = acr.ContactId;
+                    contRelation.Id = acr.ContactId;
                     break;
                 }
             }
@@ -233,8 +233,8 @@ public with sharing class HDT_UTL_Account {
                     if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP)) {
                         // cont.ContactCode__c = resCreate.data.codiceBP;
                         // HDT_UTL_DatabaseService.updateSObject(cont);
-                        contACR.ContactCode__c = resCreate.data.codiceBP;
-                        HDT_UTL_DatabaseService.updateSObject(contACR);
+                        contRelation.ContactCode__c = resCreate.data.codiceBP;
+                        HDT_UTL_DatabaseService.updateSObject(contRelation);
                     }
                 }
             }
