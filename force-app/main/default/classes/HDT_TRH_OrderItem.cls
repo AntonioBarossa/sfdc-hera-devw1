@@ -15,7 +15,7 @@ public inherited sharing class HDT_TRH_OrderItem extends HDT_TRH_TriggerHandler 
             }
 
             product2List = [
-                SELECT Id, SpecialDay__c, DefaultSpecialDay__c, StartTimeSlot__c, DefaulStartTime__c
+                SELECT Id, SpecialDay__c, DefaultSpecialDay__c, StartTimeSlot__c, DefaulStartTime__c, VariableOrFixed__c
                 FROM Product2
                 WHERE Id IN :product2Ids
                 WITH SECURITY_ENFORCED
@@ -27,6 +27,10 @@ public inherited sharing class HDT_TRH_OrderItem extends HDT_TRH_TriggerHandler 
             for(OrderItem ordeItem : (OrderItem[])Trigger.new){
                 
                 iterProduct2 = product2Map.get(ordeItem.Product2Id);
+
+                if(String.isNotEmpty(iterProduct2.VariableOrFixed__c)){
+                    ordeItem.VariableOrFixed__c = iterProduct2.VariableOrFixed__c;
+                }
 
                 if(String.isEmpty(iterProduct2.SpecialDay__c)){
                     if(String.isNotEmpty(iterProduct2.DefaultSpecialDay__c)){

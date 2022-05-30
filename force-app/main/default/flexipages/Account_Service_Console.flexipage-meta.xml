@@ -95,9 +95,6 @@
                         <valueListItems>
                             <value>Account.Scheda_Cliente</value>
                         </valueListItems>
-                        <valueListItems>
-                            <value>Account.Escalation</value>
-                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

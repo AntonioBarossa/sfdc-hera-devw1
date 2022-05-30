@@ -6974,6 +6974,38 @@
     <picklistValues>
         <picklist>InformativeType__c</picklist>
         <values>
+            <fullName>Modifica Contratti Preattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratti/Bonus Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena/Nuovo contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena/Subentro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena/Intervento Riattivazione luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentale/Copia Contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proroga Conn Temp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura Tecnica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Subentro</fullName>
             <default>false</default>
         </values>
@@ -8947,6 +8979,21 @@
         </values>
         <values>
             <fullName>Vas Prodotto%2FServizio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SignatoryType__c</picklist>
+        <values>
+            <fullName>Legale Rappresentante</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagatore Alternativo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stesso Sottoscrittore</fullName>
             <default>false</default>
         </values>
     </picklistValues>

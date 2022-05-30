@@ -39,8 +39,8 @@ public with sharing class HDT_BA_ConsentContactTest {
 		List<Contact> listContact = new List<Contact>();
 		for (Integer i = 0; i < 10; i++) {
 			Contact tempContact=new Contact();
-			tempContact.LastName='testLastName'+String.valueOf(i);
-			tempContact.FirstName='FirstNameName'+String.valueOf(i);
+			tempContact.LastName='testLastNameC'+String.valueOf(i);
+			tempContact.FirstName='FirstNameNameC'+String.valueOf(i);
 			tempContact.Email=tempContact.LastName+'@test.it';
 			listContact.add(tempContact);
 		}
@@ -54,8 +54,8 @@ public with sharing class HDT_BA_ConsentContactTest {
 		}
 		for (Integer i = 0; i < 20; i++) {
 			Contact tempContact=new Contact();
-			tempContact.LastName='testLastNameCon2'+String.valueOf(i);
-			tempContact.FirstName='FirstNameNameCon'+String.valueOf(i);
+			tempContact.LastName='testLastNameCo2'+String.valueOf(i);
+			tempContact.FirstName='FirstNameNameCo2'+String.valueOf(i);
 			tempContact.Email=tempContact.LastName+'@test.it';
 			listContact.add(tempContact);
 		}

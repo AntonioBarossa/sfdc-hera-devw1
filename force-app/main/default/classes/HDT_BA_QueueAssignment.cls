@@ -83,9 +83,13 @@ public inherited sharing class HDT_BA_QueueAssignment implements Database.Batcha
 
     public void finish(Database.BatchableContext bc) {
         AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :BC.getJobId()];
-        System.abortJob(a.id);
+        if(a != null){
+            System.abortJob(a.id);
+        }
         List<CronTrigger> objList = [SELECT Id, CronJobDetail.Name, CronJobDetail.Id,State FROM CronTrigger where CronJobDetail.Name like '%PartnerQueues%' ORDER BY CreatedDate DESC];
-        System.abortJob(objList[0].Id);
+        if(objList != null && !objList.isEmpty()){
+            System.abortJob(objList[0].Id);
+        }
     }
 
 }

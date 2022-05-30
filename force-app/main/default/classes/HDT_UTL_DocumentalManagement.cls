@@ -930,13 +930,20 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		if (docusignData == null || childOrder == null) {
 			return r;
 		}
+		String supplyType = childOrder.SupplyType__c;
+		String destinazioneUso = '';
+		if(String.isNotBlank(supplyType) && (supplyType.equalsIgnoreCase('Domestico') || supplyType.equalsIgnoreCase('A-Domestico'))) {
+			destinazioneUso = '1';
+		}else {
+			destinazioneUso = '2';
+		}
 
 		//codice_offerta;
 		r.OfferCode__c = childOrder.OrderNumber;
 		// impianto
 		r.ServicePoint__c = childOrder.ServicePoint__c;
 		// destinazione_uso
-		// r.DestinationUsage__c = ???? TODO: da dove prendere la destinazione d'uso? non sembra esserci nel modulo, nè sull'order nè sul service point.
+		r.DestinationUsage__c = destinazioneUso;
 		// dt_ini_contratto;
 		r.StartDate__c = childOrder.EffectiveDate__c;
 		// codice_assenza_dati_catastali; 
