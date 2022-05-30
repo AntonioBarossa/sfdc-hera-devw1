@@ -459,11 +459,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         Boolean isFraud = false;
         String message = 'Nessuna frode trovata.';
 
-        List<Order> orderList =[SELECT PhoneNumber__c, ShippingMail__c, Contact__r.HomePhone, Contact__r.Phone, Contact__r.Email, ProcessType__c, LoginChannel__c, CustomerCategory__c
+        List<Order> orderList =[SELECT PhoneNumber__c, ShippingMail__c, Contact__r.HomePhone, Contact__r.Phone, Contact__r.Email, ProcessType__c, Channel__c, CustomerCategory__c
                                 FROM Order WHERE Id=:recordId WITH SECURITY_ENFORCED ];
         
         if(!orderList.isEmpty()){
-            List<AmministrazioneFrodi__c> ammFrodiList = [SELECT BpNumber__c FROM AmministrazioneFrodi__c WHERE (Processo__c=: orderList[0].ProcessType__c AND CanaleVendita__c=: orderList[0].LoginChannel__c AND CategoriaCliente__c=: orderList[0].CustomerCategory__c) WITH SECURITY_ENFORCED ];
+            List<AmministrazioneFrodi__c> ammFrodiList = [SELECT BpNumber__c FROM AmministrazioneFrodi__c WHERE (Processo__c=: orderList[0].ProcessType__c AND CanaleVendita__c=: orderList[0].Channel__c AND CategoriaCliente__c=: orderList[0].CustomerCategory__c) WITH SECURITY_ENFORCED ];
             
             if( ammFrodiList != null && !ammFrodiList.isEmpty() ){
                 integer maxCount = maxInFraud(orderList[0]);
