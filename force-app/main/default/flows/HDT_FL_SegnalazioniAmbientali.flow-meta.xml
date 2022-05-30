@@ -310,9 +310,6 @@
         <assignmentItems>
             <assignToReference>theCaseIndirizzi.InvoicingCity__c</assignToReference>
             <operator>Assign</operator>
-            <value>
-                <stringValue> </stringValue>
-            </value>
         </assignmentItems>
         <connector>
             <targetReference>WizardScreen</targetReference>
