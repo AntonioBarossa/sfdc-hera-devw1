@@ -650,6 +650,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.SalesCompanyCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.isSTG__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3806,6 +3811,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>BillingProfile__c.CreateContractAccount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>BillingProfile__c.CreaCaFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

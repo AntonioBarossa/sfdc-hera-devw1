@@ -96,27 +96,23 @@
         <label>Voltura</label>
     </customValue>
     <customValue>
-        <fullName>Ambiente</fullName>
+        <fullName>Generiche VAS</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Ambiente</label>
+        <label>Generiche VAS</label>
     </customValue>
     <customValue>
         <fullName>Generiche Attivazioni</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Generiche Attivazioni</label>
     </customValue>
     <customValue>
-        <fullName>Generiche VAS</fullName>
+        <fullName>Ambiente</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Generiche VAS</label>
+        <label>Ambiente</label>
     </customValue>
     <customValue>
         <fullName>HERA</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>HERA</label>
     </customValue>
     <masterLabel>Cluster</masterLabel>

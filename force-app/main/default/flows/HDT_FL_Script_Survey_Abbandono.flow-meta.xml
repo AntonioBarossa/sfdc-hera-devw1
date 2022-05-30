@@ -253,7 +253,7 @@
         <inputAssignments>
             <field>SurveyCRM__c</field>
             <value>
-                <elementReference>GetSurvey_0.Id</elementReference>
+                <elementReference>GetSurvey.Id</elementReference>
             </value>
         </inputAssignments>
         <object>SurveyResponse__c</object>
@@ -287,7 +287,7 @@
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>GetSurvey_0</targetReference>
+            <targetReference>Screen1</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -302,13 +302,13 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>GetSurvey_0</name>
+        <name>GetSurvey</name>
         <label>GetSurvey</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Screen1</targetReference>
+            <targetReference>GetSurveyResponse</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -350,7 +350,7 @@
             <field>SurveyCRM__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>GetSurvey_0.Id</elementReference>
+                <elementReference>GetSurvey.Id</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -430,16 +430,16 @@
         <name>Screen1</name>
         <label>Screen1</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>GetSurveyResponse</targetReference>
+            <targetReference>GetSurvey</targetReference>
         </connector>
         <fields>
             <name>text1</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: La stiamo contattando in quanto a seguito della richiesta di un altro venditore, il suo contratto Luce con Hera Comm cesserà/è cessato in data {!GetOrder.SwitchOutDate__c}&lt;/p&gt;&lt;p&gt;Poiché in alcuni casi è capitato che il cliente non fosse pienamente cosciente dell’accaduto, ci tenevamo ad informarla e a farle qualche domanda in merito.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Per prima cosa vorrei chiederle se ha consapevolezza di aver sottoscritto un contratto di fornitura con altro venditore:&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: La stiamo contattando in quanto a seguito della richiesta di un altro venditore, il suo contratto Luce con Hera Comm cesserà/è cessato in data {!GetCampaignMember.IBMUnicaDateSwitch__c}&lt;/p&gt;&lt;p&gt;Poiché in alcuni casi è capitato che il cliente non fosse pienamente cosciente dell’accaduto, ci tenevamo ad informarla e a farle qualche domanda in merito.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Per prima cosa vorrei chiederle se ha consapevolezza di aver sottoscritto un contratto di fornitura con altro venditore:&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -452,8 +452,18 @@
         </fields>
         <fields>
             <name>text2_1</name>
-            <fieldText>&lt;p&gt;Operatore: Bene, posso farle alcune domande per capire le motivazioni che la hanno spinta a cambiare fornitore?&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Operatore&lt;/strong&gt;: Bene, posso farle alcune domande per capire le motivazioni che la hanno spinta a cambiare fornitore?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RB1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>RB2_Consapevole</name>
@@ -492,6 +502,30 @@
             <name>text3_1</name>
             <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: In che modo la hanno contattata per la sottoscrizione del contratto?&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RB1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>RB2_Consapevole</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>RB3_Consapevole</name>
@@ -509,10 +543,24 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
+                    <leftValueReference>RB2_Consapevole</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Choice_Si</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>No</stringValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -525,6 +573,20 @@
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>RB2_Consapevole</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Si</stringValue>
@@ -548,6 +610,20 @@
                         <stringValue>Si</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>RB2_Consapevole</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -557,10 +633,17 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
+                    <leftValueReference>RB2_Consapevole</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>No</stringValue>
+                        <stringValue>Si</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -586,16 +669,30 @@
                         <stringValue>Si</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>RB2_Consapevole</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>text3</name>
-            <fieldText>&lt;p&gt;Un’ultima domanda, mi può dire a quale fornitore ha deciso di affidarsi?&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Un’ultima domanda, mi può dire a quale fornitore ha deciso di affidarsi?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>RB2_Consapevole</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Si</stringValue>
@@ -618,6 +715,13 @@
                         <stringValue>Si</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>RB2_Consapevole</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -635,12 +739,36 @@
                         <stringValue>Si</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>RB2_Consapevole</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>text6</name>
             <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: La ringrazio molto per la disponibilità che ha dimostrato nel rispondere alle nostre domande. Proseguire.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RB1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>RB2_Consapevole</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>text7</name>
@@ -653,6 +781,13 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -679,11 +814,18 @@
                         <stringValue>No</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>text4</name>
-            <fieldText>&lt;p&gt;Operatore: Quando le hanno telefonato, conoscevano già i dati della sua fornitura?&lt;/p&gt;&lt;p&gt;(indirizzo di fornitura, codice del contatore, il fornitore …)?&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Quando le hanno telefonato, conoscevano già i dati della sua fornitura?&lt;/p&gt;&lt;p&gt;(indirizzo di fornitura, codice del contatore, il fornitore …)?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -692,6 +834,13 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -712,14 +861,43 @@
                         <stringValue>No</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>text8</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Purtroppo noi non riusciamo ad interrompere il passaggio con il nuovo fornitore. A questo punto ha a disposizione due modalità: può richiedere la procedura di ripristino del contratto con noi, per la quale la invitiamo a contattare il nostro call center che le illustrerà le modalità per farlo oppure, se preferisce, possiamo sottoscrivere ora un nuovo contratto per farla rientrare con noi&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: RIPRISTINO&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Bene grazie. La invitiamo a contattare il nostro numero verde al 800.999.500&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Cliente&lt;/b&gt;: SOTTOSCRIZIONE&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Se è interessato, posso illustrarle le nostri migliori offerte a mercato libero?&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Purtroppo noi non riusciamo ad interrompere il passaggio con il nuovo fornitore. A questo punto ha a disposizione due modalità: può richiedere la procedura di ripristino del contratto con noi, per la quale la invitiamo a contattare il nostro call center che le illustrerà le modalità per farlo oppure, se preferisce, possiamo sottoscrivere ora un nuovo contratto per farla rientrare con noi&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Cliente&lt;/strong&gt;: RIPRISTINO&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Bene grazie. La invitiamo a contattare il nostro numero verde al 800.999.500&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RB1</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text8_1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Cliente&lt;/strong&gt;: SOTTOSCRIZIONE&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Se è interessato, posso illustrarle le nostri migliori offerte a mercato libero?&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
@@ -739,7 +917,7 @@
             <targetReference>GetCampaignMember</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>Collection</name>
         <dataType>String</dataType>
