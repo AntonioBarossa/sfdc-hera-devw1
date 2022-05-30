@@ -334,6 +334,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                         newAct.put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
                     }
                 }
+                newAct.wrts_prcgvr__Status__c = 'Chiusa';
                 toInsert.add(newAct);
             }
         }
@@ -1004,14 +1005,23 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         SObject oldObject = oldObjectMap.get((Id)newObject.get('Id'));
         String newPhase = newObject.get('Phase__c') != null ? (String)newObject.get('Phase__c') : '';
         String oldPhase = oldObject.get('Phase__c') != null ?  (String)oldObject.get('Phase__c') : '';
+        String previousPhase = newObject.get('PreviousPhase__c') != null ? (String)newObject.get('PreviousPhase__c') : '';
+        Boolean response = false;
         if (String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && !newPhase.equalsIgnoreCase(oldPhase)){
             DateTime nowDateTime = DateTime.now();
             String phaseStoryOld = oldObject.get('PhaseStory__c') != null ? (String)oldObject.get('PhaseStory__c') : '';
             String phaseStrory = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+phaseStoryOld;
             newObject.put('PhaseStory__c',phaseStrory);
-            return HDT_UTL_GestioneScartiSap.skipPhaseManager(newPhase);
+            response = HDT_UTL_GestioneScartiSap.skipPhaseManager(newPhase);
         }
-        return false;
+        if (response && String.isNotBlank(oldPhase) && String.isBlank(previousPhase) && oldPhase.indexOf('KO') > -1){
+            newObject.put('PreviousPhase__c',oldPhase);
+        } else if ('Completata'.equalsIgnoreCase(newPhase) && String.isNotBlank(previousPhase) && previousPhase.indexOf('KO') > -1 && HDT_UTL_GestioneScartiSap.skipPhaseManager(oldPhase)){
+            newObject.put('PreviousPhase__c', '');
+            newObject.put('Phase__c', previousPhase);
+            response = true;
+        }
+        return response;
     }
 
     public static void handleHerokuResponse(Id objectId, String activityName, String fase, Map<String,String> mapActivityField){
@@ -1179,6 +1189,33 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
             if (!actsToUpdate.isEmpty()){
                 HDT_UTL_DatabaseService.updateSObject(actsToUpdate);
+            }
+        }
+    }
+
+    public static void closeActivityOnCompleted(List<SObject> newObjectList, Map<Id,SObject> oldObjectMap){
+        Set<Id> objectIdSet = new Set<Id>();
+        for (SObject newObj : newObjectList){
+            Id recordId = (Id)newObj.get('Id');
+            String newPhase = (String) newObj.get('Phase__c');
+            String oldPhase = (String) oldObjectMap.get(recordId).get('Phase__c');
+            if ('Completata'.equalsIgnoreCase(newPhase) && !newPhase.equalsIgnoreCase(oldPhase)){
+                objectIdSet.add(recordId);
+            }
+        }
+        closeActivityOnCompletedFromNotify(objectIdSet);
+    }
+
+    public static void closeActivityOnCompletedFromNotify(Set<Id> objectIdSet){
+        if (!objectIdSet.isEmpty()){
+            List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
+            String listId = '(\''+String.join((Iterable<String>) objectIdSet, '\',\'') +'\')';
+            List<wrts_prcgvr__Activity__c> activities = HDT_QR_GenericQuery.getGenericRecords('Id','wrts_prcgvr__Activity__c', '(Order__c IN ' + listId + ' OR Case__c IN' + listId + ') AND wrts_prcgvr__IsClosed__c = false AND DiscardCategory__c = \'Tracciatura\'');
+            for (wrts_prcgvr__Activity__c act : activities){
+                activitiesToUpdate.add(closeDiscardActivity(act.Id));
+            }
+            if (!activitiesToUpdate.isEmpty()){
+                HDT_UTL_DatabaseService.updateSObject(activitiesToUpdate);
             }
         }
     }

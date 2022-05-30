@@ -6,6 +6,13 @@
  */
 @isTest
 public class HDT_QR_CampaignMemberStatusMetadataTst{
+
+	//TEST SETUP
+    private static void mySetup(){
+		HDT_CampaignMemberStatus__mdt myMdt = HDT_CampaignMemberStatus__mdt.getInstance('ANSWERING_MACHINE_BY_AGENT');
+	}
+
+
 	@isTest
 	static void testgetRecords(){
 
@@ -13,13 +20,13 @@ public class HDT_QR_CampaignMemberStatusMetadataTst{
 
 		HDT_CampaignMemberStatus__mdt campMembStat=[SELECT Id, DeveloperName, MasterLabel, Category__c, Channel__c, HasResponded__c, Default__c
 		                                            FROM HDT_CampaignMemberStatus__mdt
-		                                            WHERE MasterLabel='Nuovo'
+		                                            WHERE MasterLabel='ANSWERING_MACHINE_BY_AGENT'
 		                                            LIMIT 1];
 
 		HDT_QR_CampaignMemberStatusMetadata.getRecords();
 
 
-		System.assertEquals('Nuovo', campMembStat.MasterLabel, 'Campaign Member Status not correct');
+		System.assertEquals('ANSWERING_MACHINE_BY_AGENT', campMembStat.MasterLabel, 'Campaign Member Status not correct');
 
 		System.assertNotEquals('', campMembStat.MasterLabel, 'Campaign Member Status not correct');
 

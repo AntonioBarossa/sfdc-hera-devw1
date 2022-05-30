@@ -118,6 +118,11 @@
                 <default>false</default>
                 <label>Generiche VAS</label>
             </value>
+            <value>
+                <fullName>VAS</fullName>
+                <default>false</default>
+                <label>VAS</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

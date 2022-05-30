@@ -17,7 +17,7 @@ const columns = [
     { label: 'Email', fieldName: 'IsEmailChannelActive__c', type: 'boolean', editable : 'true'},
     { label: 'SMS', fieldName: 'IsSmsChannelActive__c', type: 'boolean', editable : 'true'},
     { label: 'Push', fieldName: 'IsPushChannelActive__c', type: 'boolean', editable : 'true'},
-    { label: 'SOL', fieldName: 'IsSolChannelActive__c', type: 'boolean', editable : 'true'},
+    { label: 'SOL App', fieldName: 'IsSolChannelActive__c', type: 'boolean', editable : 'true'},
     { label: 'Contatto SOL', fieldName: 'ContactName', type: 'text'}
 ];
 

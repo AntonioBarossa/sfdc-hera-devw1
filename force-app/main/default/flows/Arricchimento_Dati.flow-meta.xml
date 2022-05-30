@@ -216,7 +216,7 @@
                 <stringValue>NOW() </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_6_myRule_5_A1_6200519557</name>
+        <name>formula_6_myRule_5_A1_6957504587</name>
         <dataType>DateTime</dataType>
         <expression>NOW()</expression>
     </formulas>
@@ -270,7 +270,7 @@
         <dataType>Boolean</dataType>
         <expression>AND(ISNEW(), {!myVariable_current.RecordType.DeveloperName} == &apos;HDT_RT_Disattivazioni&apos;)</expression>
     </formulas>
-    <interviewLabel>Arricchimento_Dati-8_InterviewLabel</interviewLabel>
+    <interviewLabel>Arricchimento_Dati-17_InterviewLabel</interviewLabel>
     <label>Arricchimento Dati</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -859,7 +859,7 @@
             </processMetadataValues>
             <field>CustomerRequestDate__c</field>
             <value>
-                <elementReference>formula_6_myRule_5_A1_6200519557</elementReference>
+                <elementReference>formula_6_myRule_5_A1_6957504587</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1473,7 +1473,7 @@
             </processMetadataValues>
             <field>BillingStreetNumberExtension__c</field>
             <value>
-                <elementReference>myVariable_current.Account.BillingStreetName__c</elementReference>
+                <elementReference>myVariable_current.Account.BillingStreetNumberExtension__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

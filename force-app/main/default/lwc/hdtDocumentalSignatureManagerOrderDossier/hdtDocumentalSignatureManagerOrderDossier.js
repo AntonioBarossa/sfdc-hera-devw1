@@ -22,6 +22,7 @@ import ShippingProvince from '@salesforce/schema/Order.ShippingProvince__c';
 import ShippingCountry from '@salesforce/schema/Order.ShippingCountry__c';
 import ShippingStreetName from '@salesforce/schema/Order.ShippingStreetName__c';
 import SignedDate from '@salesforce/schema/Order.SignedDate__c';
+import RelatedPractice from '@salesforce/schema/Order.RelatedPractice__c';
 import ContractSigned from '@salesforce/schema/Order.ContractSigned__c';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import updateContactForScartoDocumentale from '@salesforce/apex/HDT_UTL_Scarti.updateContactForScartoDocumentale'; //costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
@@ -33,6 +34,7 @@ const FIELDS = [
     'Order.Status',
     'Order.ContractSigned__c',
     'Order.SignedDate__c',
+    'Order.RelatedPractice__c',
     'Order.SignatureMethod__c',
     'Order.SignMode__c',
     'Order.DocSendingMethod__c',
@@ -91,6 +93,8 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
     choosenAddr = '';
     //EVERIS DOCUMENTALE
     actualSignedDate = '';
+    actualRelatedPractice = '';
+    isRelatedPracticeVisible = false;
     @track inputParams;
     @track orderRecord;
     @track loadData=false;
@@ -287,6 +291,8 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                     console.log('Fuori Signed'); */
                     this.loadData = true;
                 /* } */
+                
+
                 console.log(this.inputParams);
             }else{
                 console.log(data + ' ' + error + ' ' + this.recordId);
@@ -363,6 +369,11 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         if (fieldName === 'SignedDate__c'){
             this.actualSignedDate = fieldValue;
         }
+
+        //HRADTR_GV_Main
+        if (fieldName === 'RelatedPractice__c'){
+            this.actualRelatedPractice = fieldValue;
+        }
     }
     handleConfirmData(event){
         this.loading = true;
@@ -408,6 +419,9 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             this.dataToSubmit['ShippingStreetName__c'] = resultWrapper.addressWrapper.Via;
             fields[SignedDate.fieldApiName] = this.actualSignedDate;
             this.dataToSubmit['SignedDate__c'] = this.actualSignedDate;
+            //HRADTR_GV_Main
+            fields[RelatedPractice.fieldApiName] = this.actualRelatedPractice;
+            this.dataToSubmit['RelatedPractice__c'] = this.actualRelatedPractice;
             fields[ContractSigned.fieldApiName] = resultWrapper.signMode.localeCompare(signModeFirmato) === 0;
             const recordInput = { fields };
            
@@ -641,11 +655,27 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         const isSportello = channel && channel.localeCompare('Sportello') === 0;
         const isCartacea = signModeInit && signModeInit.localeCompare(signModeCartacea) === 0;
         this.isVisibleSignedDate = ((isSportello && isCartacea) || signModeInit && signModeInit.localeCompare(signModeFirmato) === 0);
-
+        if(signModeInit && signModeInit.localeCompare(signModeFirmato) === 0){
+            this.isRelatedPracticeVisible = true;
+        }
+        else{
+            this.isRelatedPracticeVisible = false;
+        }
+        
+        // if(this.orderRecord.fields.SignatureMethod__c.value == 'Contratto già firmato'){
+        //     console.log('ENTRATO IN CONTRATTO GIA FIRMATO');
+        //     this.isRelatedPracticeVisible = true;
+        // }
+        // else{
+        //     console.log('ENTRATO IN DIVERSO DA CONTRATTO GIA FIRMATO');
+        //     console.log('this.orderRecord.fields.SignatureMethod__c.value --> '+this.orderRecord.fields.SignatureMethod__c.value);
+        //     this.isRelatedPracticeVisible = false;
+        // }
         if (!this.isVisibleSignedDate){
             this.actualSignedDate = null;
         }else{
             this.actualSignedDate = signedDateInit;
         }
     }
+
 }

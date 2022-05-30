@@ -385,6 +385,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
                 Order__r.VasSubtype__c
                 FROM wrts_prcgvr__Activity__c
                 WHERE Id = :activityId
+                AND Order__r.VasSubtype__c != 'Analisi Consumi'
                 WITH SECURITY_ENFORCED
             ];
         }

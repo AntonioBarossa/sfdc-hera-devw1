@@ -90,9 +90,33 @@ public with sharing class HDT_SRV_SalesHandler {
                             else if(recordId.containsIgnoreCase('O-')) {
                                 ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
                             }else {
+                                responseField.fieldType = 'TEXT';
+                                responseField.name = 'ESITO';
+                                responseField.value = 'KO';
+
+                                responseFieldError.fieldType = 'TEXT';
+                                responseFieldError.name = 'ERROR_MESSAGE';
+                                responseFieldError.value = 'Codice Processo inesistente o malformato';
+
+                                responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+                                mrrResponseItem.objects.add(responseObject);
+
+                                RestContext.response.statusCode = 400;
                                 return mrrResponseItem;
                             }
                         }else {
+                            responseField.fieldType = 'TEXT';
+                            responseField.name = 'ESITO';
+                            responseField.value = 'KO';
+
+                            responseFieldError.fieldType = 'TEXT';
+                            responseFieldError.name = 'ERROR_MESSAGE';
+                            responseFieldError.value = 'RecordID obbligatorio';
+
+                            responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+                            mrrResponseItem.objects.add(responseObject);
+
+                            RestContext.response.statusCode = 400;
                             return mrrResponseItem;
                         }
                         
@@ -158,13 +182,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 }
                                 when 'Ammissibilità OK' {
 
-                                    /**@frpanico 26/10/2021
-                                     * Cambio Voltura - RN008 "Voltura con Switch"
-                                     */
-                                    if(ordRetrieved.ProcessType__c.equalsIgnoreCase('Voltura con Switch'))
-                                    {
-                                        voltureChangeSrv.handleAmmissibilityCheck(mapRequestFields, ordRetrieved);
-                                    }
+
 
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                     ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
@@ -405,6 +423,46 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.phase__c = mapRequestFields.get('FASE');
                                     ord.DiscardReason__c = discardReasonString;
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                }
+                                /**@frpanico 2022-05-27
+                                 * Aggiunta casistica Dati TIMOE Ricevuti
+                                 */
+                                when 'Dati TIMOE Ricevuti'
+                                {
+                                    String description = '';
+                                    if(mapRequestFields.get('STATO_SOSP') != null && mapRequestFields.get('STATO_SOSP') != '')
+                                    {
+                                        description += '\n' + '\"' + 'STATO_SOSP' + '\": ' + '\"' + mapRequestFields.get('STATO_SOSP') + '\"'; 
+                                    }
+                                    if(mapRequestFields.get('DATE_SOSP') != null && mapRequestFields.get('DATE_SOSP') != '')
+                                    {
+                                        description += '\n' + '\"' + 'DATE_SOSP' + '\": ' + '\"' + mapRequestFields.get('DATE_SOSP') + '\"'; 
+                                    }
+                                    if(mapRequestFields.get('INDENNIZZO') != null && mapRequestFields.get('INDENNIZZO') != '')
+                                    {
+                                        description += '\n' + '\"' + 'INDENNIZZO' + '\": ' + '\"' + mapRequestFields.get('INDENNIZZO') + '\"'; 
+                                    }
+                                    if(mapRequestFields.get('DATE_SOST') != null && mapRequestFields.get('DATE_SOST') != '')
+                                    {
+                                        description += '\n' + '\"' + 'DATE_SOST' + '\": ' + '\"' + mapRequestFields.get('DATE_SOST') + '\"'; 
+                                    }
+                                    if(mapRequestFields.get('DATA_SALVAGUARDIA') != null && mapRequestFields.get('DATA_SALVAGUARDIA') != '')
+                                    {
+                                        description += '\n' + '\"' + 'DATA_SALVAGUARDIA' + '\": ' + '\"' + mapRequestFields.get('DATA_SALVAGUARDIA') + '\"'; 
+                                    }
+                                    if(mapRequestFields.get('DATA_ULT_SOSP') != null && mapRequestFields.get('DATA_ULT_SOSP') != '')
+                                    {
+                                        description += '\n' + '\"' + 'DATA_ULT_SOSP' + '\": ' + '\"' + mapRequestFields.get('DATA_ULT_SOSP') + '\"'; 
+                                    }
+                                    if(mapRequestFields.get('DT_SOSP_ATT') != null && mapRequestFields.get('DT_SOSP_ATT') != '')
+                                    {
+                                        description += '\n' + '\"' + 'DT_SOSP_ATT' + '\": ' + '\"' + mapRequestFields.get('DT_SOSP_ATT') + '\"'; 
+                                    }
+                                    if(mapRequestFields.get('MERCATO_PROV') != null && mapRequestFields.get('MERCATO_PROV') != '')
+                                    {
+                                        description += '\n' + '\"' + 'MERCATO_PROV' + '\": ' + '\"' + mapRequestFields.get('MERCATO_PROV') + '\"'; 
+                                    }
+                                    ord.Description = writeDescription(description, oldDescription);
                                 }
                                 when 'Completata' {
                                     /**@frapnico 01/02/2022

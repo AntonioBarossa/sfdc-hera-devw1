@@ -148,11 +148,20 @@ public with sharing class HDT_UTL_CreditCheck {
         }
     }
 
+    public static Boolean managedErrorCode(String errorCode){
+        List<HDT_CreditCheckExcludedCode__mdt> codiceErroriGestiti = HDT_QR_GenericQuery.getGenericRecords('Label', 'HDT_CreditCheckExcludedCode__mdt', 'ErrorCode__c = \''+errorCode+ '\' AND IsActive__c = true');
+        return !codiceErroriGestiti.isEmpty();
+    }
+
     public class HDT_WRP_DataForUpdate{
         public String orderId;
         public String outcome;
         public String outcomeDescription;
         public Boolean outcoming;
+
+        public Boolean isEmpty(){
+            return String.isEmpty(this.orderId);
+        }
     }
     
 }

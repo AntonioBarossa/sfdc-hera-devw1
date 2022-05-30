@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
+        <apexClass>HDT_TRH_Queue</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QBL_CreateQueuesAndGroups</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_TRH_AssignmentRule</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_AssignmentRule</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_BA_CreditCheckSales</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -284,14 +300,6 @@
         <apexClass>HDT_BA_LeadExpiredTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <!-- <classAccesses>
-        <apexClass>HDT_BA_LeadWebServiceReitekSend</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_BA_LeadWebServiceReitekSendTst</apexClass>
-        <enabled>true</enabled>
-    </classAccesses> -->
     <classAccesses>
         <apexClass>HDT_BA_OldDraftSales</apexClass>
         <enabled>true</enabled>
@@ -961,14 +969,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_LC_DownloadAttachmentAzure</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_LC_DownloadAttachmentAzureTst</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_LC_EditQuote</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1410,14 +1410,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_LC_SoldByTst</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_LC_StoricizzazioneCliente</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_LC_StoricizzazioneClienteTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -3145,10 +3137,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_TRH_AssignmentRuleTst</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_TRH_BillingProfile</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -3834,6 +3822,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_GestioneScartiSap</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_GlobaMigrationKey</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -4537,6 +4529,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_WRP_SIE108OrderEnrichment</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_WRP_SolContractVas</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -4566,10 +4562,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WS_ArrichmentDataEntityInvoker</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_WS_ArrichmentDataEntityInvokerMck</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -4718,6 +4710,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WS_HerokuAddressSearchTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_InboundSIE108</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_InboundSIE34</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -4982,46 +4982,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WS_VoltureChangeManagerTst</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LightningForgotPasswordController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LightningForgotPasswordControllerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LightningLoginFormController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LightningLoginFormControllerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LightningSelfRegisterController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LightningSelfRegisterControllerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>MicrobatchSelfRegController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>MicrobatchSelfRegControllerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>MyProfilePageController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>MyProfilePageControllerTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -11220,6 +11180,50 @@
         <apexClass>wrts_prcgvr__WrtsException</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_ProcessSetOrderForVas</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_BA_SetRequestItemForVasOrders</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_ProcessSetChunkOrderForVas</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_BA_CreateVasOrders</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_CreditCheck</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_ProcessOrderCreationForVas</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WRP_VasOrder</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>HDT Apex Classes</label>
+    <pageAccesses>
+        <apexPage>HDT_VFP_LeadMessage</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>HDT_VF_ActivityReassignToMeMassive</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>HDT_VF_ActivityReassignmentToolMassive</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>HDT_VF_OverrideDeleteOperation</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
 </PermissionSet>

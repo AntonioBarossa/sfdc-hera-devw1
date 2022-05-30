@@ -29,16 +29,21 @@ export default class hdtBillingProfileForm extends LightningElement {
         let options = [
             { label: 'Pagatore Alternativo', value: 'Pagatore Alternativo' }
         ];
-
-        if (this.sale.Account__r.Category__c === 'Famiglie' 
-            || this.sale.Account__r.Category__c === 'Parti comuni'
-            || this.sale.Account__r.Category__c === 'Ditta individuale') {
+        if(this.sale != null){
+            if (this.sale.Account__r.Category__c === 'Famiglie' 
+                || this.sale.Account__r.Category__c === 'Parti comuni'
+                || this.sale.Account__r.Category__c === 'Ditta individuale') {
+                options.push({ label: 'Stesso Sottoscrittore', value: 'Stesso Sottoscrittore' });
+            } else if (this.sale.Account__r.Category__c !== 'Famiglie' 
+                        && this.sale.Account__r.Category__c !== 'Parti comuni'
+                        && this.sale.Account__r.Category__c !== 'Ditta individuale') {
+                options.push({ label: 'Legale Rappresentante', value: 'Legale Rappresentante' });
+            }
+        }else{
             options.push({ label: 'Stesso Sottoscrittore', value: 'Stesso Sottoscrittore' });
-        } else if (this.sale.Account__r.Category__c !== 'Famiglie' 
-                    && this.sale.Account__r.Category__c !== 'Parti comuni'
-                    && this.sale.Account__r.Category__c !== 'Ditta individuale') {
             options.push({ label: 'Legale Rappresentante', value: 'Legale Rappresentante' });
         }
+        
 
         return options;
     }
@@ -945,6 +950,7 @@ export default class hdtBillingProfileForm extends LightningElement {
                 });
                 this.dispatchEvent(toastSuccessMessage);
                 this.dispatchEvent(new CustomEvent('newbillingprofile'));
+                this.dispatchEvent(new CustomEvent('newbillingprofilerecord',{detail:data.Id}));
                 this.handleCancelEvent();
                 
             }).catch(error => {

@@ -16,6 +16,8 @@ public with sharing class HDT_UTL_AccountTst{
 		internalUser.UserRoleId=HDT_UTL_DataFactoryTst.getUserRoleId(constants.USERROLE_DEVELOPERNAME_BACKOFFICE);
 		insert internalUser;
 
+		HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, 'HDT_Archive', true);
+
 		System.runAs(internalUser){
 
 			HDT_UTL_DataFactoryTst.createWebServiceConfiguration('BP_CA', 'test.com', 'post', 'testUser');
@@ -59,7 +61,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			test.startTest();
 
-			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c
+			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, FiscalCode__c
 			                    FROM Account
 			                    WHERE Name='test account0'];
 
@@ -88,7 +90,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			test.startTest();
 
-			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetToponym__c, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c
+			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c
 			                    FROM Account
 			                    WHERE Name='test account0'];
 
@@ -117,7 +119,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			test.startTest();
 
-			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetToponym__c, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
+			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
 			                    FROM Account
 			                    WHERE Name='test account0'];
 
@@ -148,7 +150,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			Test.setMock(HttpCalloutMock.class, mock);
 
-			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, CustomerType__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetToponym__c, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
+			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, CustomerType__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
 			                    FROM Account
 			                    WHERE Name='test account0'];
 
@@ -181,7 +183,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			test.startTest();
 
-			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetToponym__c, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
+			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
 			                    FROM Account
 			                    WHERE Name='test account0'];
 

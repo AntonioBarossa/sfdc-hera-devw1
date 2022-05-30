@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Active__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Commodity__c</field>
@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>DistributorCode__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">RIMOZIONEIMPIANTO</value>
     </values>
     <values>
         <field>ServiceCode__c</field>
