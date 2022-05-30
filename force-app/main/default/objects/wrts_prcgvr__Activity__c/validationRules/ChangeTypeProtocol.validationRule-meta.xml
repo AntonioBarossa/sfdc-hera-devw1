@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ChangeTypeProtocol</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF(AND(ISCHANGED(Type__c),NOT(ISPICKVAL(Type__c,&apos;&apos;)),RecordType.DeveloperName == &apos;HDT_RT_RegisterActivity&apos;, ISPICKVAL(wrts_prcgvr__Status__c , &apos;Aperta&apos;)),false ,true)</errorConditionFormula>
+    <errorMessage>Non è possibile cambiare il Tipo Attività o inserire un valore vuoto</errorMessage>
+</ValidationRule>
