@@ -39,7 +39,7 @@
   },
   {
 &quot;FieldName&quot;: &quot;AccountId&quot;,
-&quot;Required&quot;: true,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 1
 }
 ]</value>
