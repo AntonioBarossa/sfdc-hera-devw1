@@ -242,10 +242,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>UseChangeCharge__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>SupplyType__c</field>
             </layoutItems>
             <layoutItems>
