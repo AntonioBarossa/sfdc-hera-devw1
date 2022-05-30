@@ -796,6 +796,13 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
                         'Se Categoria Disalimentabilità è "01- App. medico terapeutiche" bisogna valorizzare a SI "Autocert. di acq. da cliente cert. ASL"'));
                 }
+                else if(String.isNotBlank(disconnectableCategory) 
+                && !disconnectableCategory.equalsIgnoreCase('01- App. medico terapeutiche')
+                && !disconnectableCategory.equalsIgnoreCase('02- Pubblica utilità'))
+                {
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
+                    'Impossibile selezionare valori differenti da "01- App. medico terapeutiche" o "02- Pubblica utilità" per Categoria Disalimentabilità'));
+                }
                 else {
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
                 }
