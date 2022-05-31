@@ -40,7 +40,6 @@ public inherited sharing class HDT_UTL_SlaManagement {
             List<HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin> wrpAdminList = buildSlaRules('HDT_RT_CaseSLA');
 
             for(HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin wrpAdmin : wrpAdminList){
-                System.debug('>>> WRP_SlaAdmin ' + wrpAdmin);
                 wrpAdminMap.put(wrpAdmin.slaAdminId, wrpAdmin);
             }
 
@@ -53,47 +52,50 @@ public inherited sharing class HDT_UTL_SlaManagement {
                 
                 if(trackingMap.containsKey(eventObj.recordId)){
 
+                    List<SlaTracking__c> trackingList = trackingMap.get(eventObj.recordId);
+                    Set<Id> adminIds = new Set<Id>();
+
                     for(SlaTracking__c track : trackingMap.get(eventObj.recordId)){
-                        if(wrpAdminMap.containsKey(track.SlaAdministration__c)){
-                            wrpAdmin = wrpAdminMap.get(track.SlaAdministration__c);
+                        System.debug('>>> checking trckSla: ' + track.Id);
+                        adminIds.add(track.SlaAdministration__c);
 
-                            endField = String.valueOf(eventObj.fieldMap.get(wrpAdmin.endRule.field));
+                        if(wrpAdminMap.containsKey(track.SlaAdministration__c) && track.Status__c.equalsIgnoreCase('Aperto')){
 
-                            if(endField.equalsIgnoreCase(wrpAdmin.endRule.value)){
-                                System.debug('>>> update...');
-                                Object o = eventObj.fieldMap.get('LastModifiedDate');
-                                track.EndDateTime__c = Datetime.valueOf(o);
+                            System.debug('>>> update existing sla....');
+                            track = updateTrackingRecord(track, wrpAdminMap.get(track.SlaAdministration__c), eventObj);
+                            if(track != null){
+                                System.debug('>>> add new track...');
                                 trackToUpsert.add(track);
+                            }
+
+                        }
+                    }
+
+                    // check for new tracking record to insert
+                    System.debug('>>> check for new tracking record to insert...');
+                    for(Id adminRuleId : wrpAdminMap.keySet()){
+                        if(!adminIds.contains(adminRuleId)){
+                            /// check if this rule have to create new tracking record
+                            System.debug('>>> check if this rule have to create new tracking record...');
+                            currentTrack = createNewTrackingRecord(currentTrack, wrpAdminMap.get(adminRuleId), eventObj);
+                            if(currentTrack != null){
+                                System.debug('>>> add new track...');
+                                trackToUpsert.add(currentTrack);
                             }
                         }
                     }
 
                 } else {
-                    for(HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin singleRule : wrpAdminList){
-
-                        if(eventObj.fieldMap.containsKey(singleRule.startRule.field)){
-
-                            startField = String.valueOf(eventObj.fieldMap.get(singleRule.startRule.field));
-    
-                            if(startField.equalsIgnoreCase(singleRule.startRule.value)){
-                                System.debug('>>> update...');
-                                currentTrack = new SlaTracking__c();
-                                currentTrack.Case__c = eventObj.recordId;
-                                currentTrack.SlaAdministration__c = singleRule.slaAdminId;
-                                Object dt = eventObj.fieldMap.get('LastModifiedDate');
-                                currentTrack.StartDateTime__c = Datetime.valueOf(dt);
-                                trackToUpsert.add(currentTrack);
-                            }
-
-
-                        }
-                    }
-            
+                    System.debug('>>> no record...');
                 }
 
             }
 
-            upsert trackToUpsert;
+            if(trackToUpsert.size() > 0){
+                System.debug('>>> ' + String.valueOf(trackToUpsert));
+                upsert trackToUpsert;
+            }
+            
             sendCustomNotification('ok');
 
         } catch(Exception e){
@@ -120,7 +122,6 @@ public inherited sharing class HDT_UTL_SlaManagement {
                    Description__c, EndCasePhase__c, StartCasePhase__c, Range__c, LastModifiedById, Name, OwnerId, Process__c,
                    RecordTypeId, Commodity__c, SalesCompany__c, CustomerType__c, RangeType__c, Type__c
             FROM SlaAdministration__c
-            //WHERE Id IN :slaAdminId
             WHERE RecordType.DeveloperName = :slaRuleType
             AND IsActive__c = true
         ];
@@ -163,8 +164,8 @@ public inherited sharing class HDT_UTL_SlaManagement {
                 // Data presente sul Case –> Apertura Activity
                 slaMgmt.startRule.isDate = true;
                 slaMgmt.startRule.obj = 'Case';
-                slaMgmt.startRule.field = 'CaseField__c';
-                slaMgmt.startRule.value = slaAdmin.CaseField__c;
+                slaMgmt.startRule.field = slaAdmin.CaseField__c;
+                slaMgmt.startRule.value = '';
 
                 slaMgmt.endRule.isDate = true;
                 slaMgmt.endRule.obj = 'Activity';
@@ -180,6 +181,62 @@ public inherited sharing class HDT_UTL_SlaManagement {
         }
 
         return slaMgmt;
+    }
+
+    public static SlaTracking__c updateTrackingRecord(SlaTracking__c currentTrack, HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin singleRule, HDT_WRP_SlaManagement.HDT_WRP_sObject eventObj){
+
+        if(singleRule.endRule.obj.equalsIgnoreCase('Case')){
+            String endField = String.valueOf(eventObj.fieldMap.get(singleRule.endRule.field));
+
+            if(endField.equalsIgnoreCase(singleRule.endRule.value)){
+                System.debug('>>> update...');
+                Object objField = eventObj.fieldMap.get('LastModifiedDate');
+                currentTrack.EndDateTime__c = Datetime.valueOf(objField);
+                currentTrack.Status__c = 'Chiuso';
+            } else {
+                return null;
+            }
+
+        } else {
+            return null;
+        }
+        return currentTrack;
+    }
+
+    public static SlaTracking__c createNewTrackingRecord(SlaTracking__c currentTrack, HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin singleRule, HDT_WRP_SlaManagement.HDT_WRP_sObject eventObj){
+
+        System.debug('>>> check this rule ' + singleRule.slaAdminId);
+
+        if(eventObj.fieldMap.containsKey(singleRule.startRule.field)){
+
+            System.debug('>>> startRule.field: ' +singleRule.startRule.field);
+            currentTrack = new SlaTracking__c();
+            currentTrack.Status__c = 'Aperto';
+            currentTrack.Case__c = eventObj.recordId;
+            currentTrack.SlaAdministration__c = singleRule.slaAdminId;
+
+            Object dt;
+            if(singleRule.startRule.isDate){
+                System.debug('>>> isDate -> ' + singleRule.startRule.field);
+                if(!eventObj.fieldMap.containsKey(singleRule.startRule.field)){
+                    return null;  
+                }
+                dt = eventObj.fieldMap.get(singleRule.startRule.field);
+            } else {
+                System.debug('>>> isNotDate -> ' + singleRule.startRule.field);
+                String startField = String.valueOf(eventObj.fieldMap.get(singleRule.startRule.field));
+                if(startField.equalsIgnoreCase(singleRule.startRule.value)){
+                    dt = eventObj.fieldMap.get('LastModifiedDate');
+                } else {
+                    return null;
+                }
+            }
+
+            currentTrack.StartDateTime__c = Datetime.valueOf(dt);
+            
+        }
+        return currentTrack;
+
     }
 
     public static void sendCustomNotification(String message){
