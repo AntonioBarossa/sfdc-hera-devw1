@@ -1250,12 +1250,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                         o.Phase__c = 'Comunicazione verso Heroku';
                                     }
                                 }
+                                /* 
                                 when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'{
                                     //if(o.CommodityFormula__c.equalsIgnoreCase('Energia Elettrica') && !String.isEmpty(contracts.get(o.ContractReference__c).Id) && !contracts.get(o.ContractReference__c).Account.CompanyOwner__c.equalsIgnoreCase('HERA COMM')){
                                     if(o.isTransition__c){
                                         o.Phase__c = 'Esportazione VS Siebel';
                                     }
-                                }
+                                } */
                             }
                             if(o.IsMassive__c){
                                 if('HDT_RT_Voltura'.equalsIgnoreCase(currentOrder.RecordType.DeveloperName)){
