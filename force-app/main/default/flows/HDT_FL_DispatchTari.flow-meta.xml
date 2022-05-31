@@ -165,12 +165,19 @@
         </rules>
         <rules>
             <name>Gestione_Rifiuti</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>theCase.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Gestione Rifiuti</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>theCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente annullo richiesta senza appuntamento</stringValue>
                 </rightValue>
             </conditions>
             <connector>

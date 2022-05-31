@@ -2,21 +2,25 @@
  * @description       : 
  * @author            : federico.defelice@webresults.it
  * @group             : WR
- * @last modified on  : 23-05-2022
- * @last modified by  : federico.defelice@webresults.it
+ * @last modified on  : 26-05-2022
+ * @last modified by  : Giacinto Florio
 **/
-@SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces')
+@SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.CyclomaticComplexity')
 public with sharing class HDT_UTL_ActivityCloseActions {
 
     private inherited sharing class HDT_WRP_Actions extends HDT_UTL_ActivityTemplate.HDT_WRP_Infos {
 
         private String phase;
+        private String parentCasePhase;
         HDT_WRP_Actions(String phase, String activityType, Boolean isMandatory, String actualPhase){
             super(activityType, isMandatory, actualPhase);
             this.phase = phase;  
         }
         HDT_WRP_Actions(String phase){
             this.phase = phase;
+        }
+        HDT_WRP_Actions(String phase, String parentCasePhase){
+            this.parentCasePhase = parentCasePhase;
         }
     }
 
@@ -44,8 +48,12 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             wrts_prcgvr__Activity__c currentCaseActivity = newTriggerMap.get(actWithCase.Id);
             HDT_WRP_Actions newAction = getOnCloseActions(actualCase, currentCaseActivity, actWithCase?.wrts_prcgvr__ActivityTemplate__r?.Name);
             if(STRING.isNotBlank(newAction?.phase)){
-                actualCase.Phase__c = newAction.phase;
-                casesToUpdate.add(actualCase);
+                Case caseUpdate = new Case(Id=actualCase.Id, Phase__c=newAction.phase);
+                casesToUpdate.add(caseUpdate);
+            }
+            if(STRING.isNotBlank(newAction?.parentCasePhase)){
+                Case caseUpdate = new Case(Id=actualCase.RelatedCase__c, Phase__c=newAction.parentCasePhase);
+                casesToUpdate.add(caseUpdate);
             }
             if(STRING.isNotBlank(newAction?.activityType)){
                 caseToNewActivityType.put(actualCase.Id,newAction);
@@ -72,7 +80,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         }
 
         if (caseToActivity.isEmpty())    return new List<wrts_prcgvr__Activity__c>();
-        return [SELECT Case__r.Id, Case__r.Type, Case__r.Phase__c, wrts_prcgvr__ActivityTemplate__r.Name FROM wrts_prcgvr__Activity__c WHERE Id IN :caseToActivity.values()  WITH Security_Enforced];
+        return [SELECT Case__r.Id, Case__r.Type, Case__r.Phase__c, Case__r.RelatedCase__c, Case__r.PhaseStory__c, wrts_prcgvr__ActivityTemplate__r.Name FROM wrts_prcgvr__Activity__c WHERE Id IN :caseToActivity.values()  WITH Security_Enforced];
     }
 
     private static HDT_WRP_Actions getOnCloseActions(Case selectedCase, wrts_prcgvr__Activity__c activity, String activityType){
@@ -85,9 +93,19 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         if(caseType == 'Conferimento Centri di Raccolta')  return new HDT_WRP_Actions('Completata');
         
         if(caseType == 'Riduzione Superficie rifiuti spec promiscui') {
-            if('Gestione Procedurale'.equalsIgnoreCase(activityType))   return new HDT_WRP_Actions('Completata');
-            if(approved.equalsIgnoreCase('si')) return new HDT_WRP_Actions(null, 'Gestione Procedurale', true, selectedCase.Phase__c);//Se gestione SAP non va in completata subito
-        if(approved.equalsIgnoreCase('no')) return new HDT_WRP_Actions('Annullato');   
+            if('Gestione Manuale SAP'.equalsIgnoreCase(activityType))   return new HDT_WRP_Actions('Completata');
+            if(approved.equalsIgnoreCase('si')) return new HDT_WRP_Actions(null, 'Gestione Manuale SAP', true, selectedCase.Phase__c);//Se gestione SAP non va in completata subito
+            if(approved.equalsIgnoreCase('no')) return new HDT_WRP_Actions('Annullato');   
+        }
+        if(caseType == 'Gestione Rifiuti' && 'Risposta Ricevuta'.equalsIgnoreCase(activityType)){
+            if(approved.equalsIgnoreCase('si')) return new HDT_WRP_Actions('Annullato');
+
+            Matcher match = Pattern.compile('\\|\\|([a-zA-Z\\xa0\\s]+)@@Richiesto Annullamento').matcher(selectedCase.PhaseStory__c);
+            if(approved.equalsIgnoreCase('no') && match.find())     return new HDT_WRP_Actions(match.group(1));
+        }
+        if(caseType == 'Ambiente annullo richiesta senza appuntamento' && 'Risposta Ricevuta'.equalsIgnoreCase(activityType)){
+            if(approved.equalsIgnoreCase('si'))     return new HDT_WRP_Actions('Completata', 'Annullato');
+            if(approved.equalsIgnoreCase('no'))     return new HDT_WRP_Actions('Annullato');
         }
         return null;
     }
