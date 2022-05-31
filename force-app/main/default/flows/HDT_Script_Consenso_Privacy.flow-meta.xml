@@ -67,12 +67,42 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>Update_Individual</name>
+        <label>Update Individual</label>
+        <locationX>176</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Screen_Exit</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCase.Contact.IndividualId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>MarketingPrivacy__c</field>
+            <value>
+                <elementReference>ConsensoMarketing</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ProfilingPrivacy__c</field>
+            <value>
+                <elementReference>ConsensoProfilazione</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Individual</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>UpdateCase</name>
         <label>UpdateCase</label>
         <locationX>176</locationX>
         <locationY>398</locationY>
         <connector>
-            <targetReference>Screen_Exit</targetReference>
+            <targetReference>Update_Individual</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -146,7 +176,7 @@
         <name>Screen_Exit</name>
         <label>Screen Exit</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>

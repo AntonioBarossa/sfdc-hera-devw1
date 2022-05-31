@@ -248,7 +248,7 @@
         <fields>et4ae5__Opened__c</fields>
         <fields>et4ae5__DateBounced__c</fields>
         <fields>BounceSubCategory__c</fields>
-        <fields>BounceType__c</fields>
+        <!--<fields>BounceType__c</fields>-->
         <relatedList>et4ae5__IndividualEmailResult__c.Activity__c</relatedList>
     </relatedLists>
     <relatedLists>

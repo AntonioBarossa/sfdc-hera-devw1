@@ -459,24 +459,38 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         Boolean isFraud = false;
         String message = 'Nessuna frode trovata.';
 
-        List<Order> orderList =[SELECT PhoneNumber__c, ShippingMail__c, Contact__r.HomePhone, Contact__r.Phone, Contact__r.Email, ProcessType__c, LoginChannel__c, CustomerCategory__c
-                                FROM Order WHERE Id=:recordId WITH SECURITY_ENFORCED ];
+        Order parentOrder = new Order();
+        List<String> processList = new List<String>();
+
+        List<Order> orderList =[SELECT Account.Category__c, ParentOrder__c, PhoneNumber__c, ShippingMail__c, Contact__r.HomePhone, Contact__r.Phone, Contact__r.Email, ProcessType__c, Channel__c, CustomerCategory__c
+                                FROM Order WHERE Id=:recordId OR ParentOrder__c = :recordId WITH SECURITY_ENFORCED];
         
+        for(Order singleOrder : orderList)
+        {
+            if(singleOrder.ParentOrder__c == null)
+            {
+                parentOrder = singleOrder;
+            }
+            else
+            {
+                processList.add(singleOrder.ProcessType__c);
+            }
+        }
+
         if(!orderList.isEmpty()){
-            List<AmministrazioneFrodi__c> ammFrodiList = [SELECT BpNumber__c FROM AmministrazioneFrodi__c WHERE (Processo__c=: orderList[0].ProcessType__c AND CanaleVendita__c=: orderList[0].LoginChannel__c AND CategoriaCliente__c=: orderList[0].CustomerCategory__c) WITH SECURITY_ENFORCED ];
+            List<AmministrazioneFrodi__c> ammFrodiList = [SELECT BpNumber__c FROM AmministrazioneFrodi__c WHERE (Processo__c IN :processList AND CanaleVendita__c=: parentOrder.Channel__c AND CategoriaCliente__c=: parentOrder.Account.Category__c) WITH SECURITY_ENFORCED ];
             
             if( ammFrodiList != null && !ammFrodiList.isEmpty() ){
                 integer maxCount = maxInFraud(orderList[0]);
-                if( /* mmFrodiList[0].BpNumber__c != null && */ maxCount > ammFrodiList[0].BpNumber__c ){
+                if( /* mmFrodiList[0].BpNumber__c != null && */ maxCount >= ammFrodiList[0].BpNumber__c ){
                     //Annullamento con causale: phase annullato + causale .txt + update
                     if(orderParent != null){
-                        List<Order> ordiniDaAnnullare = orderQr.getChildOrdersByParentId(orderParent.Id);
-                        ordiniDaAnnullare.add(orderParent);
-                        for (Order ord : ordiniDaAnnullare) {
+                        for (Order ord : orderList) {
                             ord.phase__c = 'Annullato';
+                            ord.Status = 'Annullato';
                             ord.CancellationReason__c = 'Annullato per possibile frode';
                         }
-                        HDT_UTL_DatabaseService.updateSObject(ordiniDaAnnullare);
+                        HDT_UTL_DatabaseService.updateSObject(orderList);
                     }else{
                         Order ord = new Order();
                         ord.Id = orderList[0].Id;
