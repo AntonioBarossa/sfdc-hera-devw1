@@ -2,15 +2,15 @@
 public inherited sharing class HDT_UTL_SlaManagement {
     
     private Set<Id> recordIdList;
-    private List<HDT_WRP_SlaManagement.HDT_WRP_sObject> wrpCaseList;
+    private List<HDT_WRP_SlaManagement.HDT_WRP_Event> wrpCaseList;
     private List<SlaTracking__c> trackingRecordsList;
-    private Map<Id, HDT_WRP_SlaManagement.HDT_WRP_sObject> wrpEventObjMap;
+    private Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpEventObjMap;
 
     public HDT_UTL_SlaManagement() {
         System.debug('>>> HDT_UTL_SlaManagement...');
     }
 
-    public void setChangedObjList(Map<Id, HDT_WRP_SlaManagement.HDT_WRP_sObject> wrpEventObjMap){
+    public void setChangedObjList(Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpEventObjMap){
         this.wrpCaseList = wrpEventObjMap.values();
         recordIdList = wrpEventObjMap.keySet();
     }
@@ -21,7 +21,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
             List<SlaTracking__c> trackToUpsert = new List<SlaTracking__c>();
             Map<Id, List<SlaTracking__c>> trackingMap = new Map<Id, List<SlaTracking__c>>();
-            Map<Id, HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin> wrpAdminMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin>();
+            Map<Id, HDT_WRP_SlaManagement.HDT_WRP_AdminRule> wrpAdminMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_AdminRule>();
 
             trackingRecordsList = new List<SlaTracking__c>();
             getTrackingRecords();
@@ -37,18 +37,14 @@ public inherited sharing class HDT_UTL_SlaManagement {
                 }
             }
 
-            List<HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin> wrpAdminList = buildSlaRules('HDT_RT_CaseSLA');
+            List<HDT_WRP_SlaManagement.HDT_WRP_AdminRule> wrpAdminList = buildSlaRules('HDT_RT_CaseSLA');
 
-            for(HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin wrpAdmin : wrpAdminList){
-                wrpAdminMap.put(wrpAdmin.slaAdminId, wrpAdmin);
+            for(HDT_WRP_SlaManagement.HDT_WRP_AdminRule wrpAdmin : wrpAdminList){
+                wrpAdminMap.put(wrpAdmin.adminRuleId, wrpAdmin);
             }
 
-            HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin wrpAdmin;
-            String startField;
-            String endField;
-
             SlaTracking__c currentTrack;
-            for(HDT_WRP_SlaManagement.HDT_WRP_sObject eventObj : wrpCaseList){
+            for(HDT_WRP_SlaManagement.HDT_WRP_Event eventObj : wrpCaseList){
                 
                 if(trackingMap.containsKey(eventObj.recordId)){
 
@@ -93,7 +89,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
             if(trackToUpsert.size() > 0){
                 System.debug('>>> ' + String.valueOf(trackToUpsert));
-                upsert trackToUpsert;
+                HDT_UTL_DatabaseService.upsertSObject(trackToUpsert);
             }
             
             sendCustomNotification('ok');
@@ -113,9 +109,9 @@ public inherited sharing class HDT_UTL_SlaManagement {
         ];
     }
 
-    public static List<HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin> buildSlaRules(String slaRuleType){
+    public static List<HDT_WRP_SlaManagement.HDT_WRP_AdminRule> buildSlaRules(String slaRuleType){
         
-        List<HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin> slaAdminRules = new List<HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin>();
+        List<HDT_WRP_SlaManagement.HDT_WRP_AdminRule> slaAdminRules = new List<HDT_WRP_SlaManagement.HDT_WRP_AdminRule>();
 
         List<SlaAdministration__c> slaAdminList = [ 
             SELECT Id, CaseField__c, OrderField__c, Cluster__c, CompanyOwner__c, CreatedById, EndDate__c, StartDate__c,
@@ -130,9 +126,9 @@ public inherited sharing class HDT_UTL_SlaManagement {
             return slaAdminRules;
         }
 
-        HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin slaMgmt;
+        HDT_WRP_SlaManagement.HDT_WRP_AdminRule slaMgmt;
         for(SlaAdministration__c slaAdmin : slaAdminList){
-            slaMgmt = new HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin();
+            slaMgmt = new HDT_WRP_SlaManagement.HDT_WRP_AdminRule();
             slaMgmt = buildSingleRule(slaMgmt, slaAdmin);
             slaAdminRules.add(slaMgmt);
         }
@@ -141,9 +137,9 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
     }
 
-    public static HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin buildSingleRule(HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin slaMgmt, SlaAdministration__c slaAdmin){
+    public static HDT_WRP_SlaManagement.HDT_WRP_AdminRule buildSingleRule(HDT_WRP_SlaManagement.HDT_WRP_AdminRule slaMgmt, SlaAdministration__c slaAdmin){
 
-        slaMgmt.slaAdminId = slaAdmin.Id;
+        slaMgmt.adminRuleId = slaAdmin.Id;
 
         switch on slaAdmin.Type__c {
             when '01' {
@@ -168,8 +164,8 @@ public inherited sharing class HDT_UTL_SlaManagement {
                 slaMgmt.startRule.value = '';
 
                 slaMgmt.endRule.isDate = true;
-                slaMgmt.endRule.obj = 'Activity';
-                slaMgmt.endRule.field = '';
+                slaMgmt.endRule.obj = 'Case';
+                slaMgmt.endRule.field = 'ActivityStartTime__c';
                 slaMgmt.endRule.value = '';
             }
             when '03' {
@@ -183,19 +179,27 @@ public inherited sharing class HDT_UTL_SlaManagement {
         return slaMgmt;
     }
 
-    public static SlaTracking__c updateTrackingRecord(SlaTracking__c currentTrack, HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin singleRule, HDT_WRP_SlaManagement.HDT_WRP_sObject eventObj){
+    public static SlaTracking__c updateTrackingRecord(SlaTracking__c currentTrack, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule, HDT_WRP_SlaManagement.HDT_WRP_Event eventObj){
 
         if(singleRule.endRule.obj.equalsIgnoreCase('Case')){
-            String endField = String.valueOf(eventObj.fieldMap.get(singleRule.endRule.field));
 
-            if(endField.equalsIgnoreCase(singleRule.endRule.value)){
-                System.debug('>>> update...');
-                Object objField = eventObj.fieldMap.get('LastModifiedDate');
-                currentTrack.EndDateTime__c = Datetime.valueOf(objField);
-                currentTrack.Status__c = 'Chiuso';
+            Object dt;
+            if(singleRule.endRule.isDate){
+                System.debug('>>> isDate -> ' + singleRule.endRule.field);
+                if(!eventObj.fieldMap.containsKey(singleRule.endRule.field)){
+                    return null;  
+                }
+                dt = eventObj.fieldMap.get(singleRule.endRule.field);
             } else {
-                return null;
+                String endField = String.valueOf(eventObj.fieldMap.get(singleRule.endRule.field));
+                if(endField.equalsIgnoreCase(singleRule.endRule.value)){
+                    dt = eventObj.fieldMap.get('LastModifiedDate');
+                } else {
+                    return null;
+                }
             }
+            currentTrack.EndDateTime__c = Datetime.valueOf(dt);
+            currentTrack.Status__c = 'Chiuso';
 
         } else {
             return null;
@@ -203,9 +207,9 @@ public inherited sharing class HDT_UTL_SlaManagement {
         return currentTrack;
     }
 
-    public static SlaTracking__c createNewTrackingRecord(SlaTracking__c currentTrack, HDT_WRP_SlaManagement.HDT_WRP_SlaAdmin singleRule, HDT_WRP_SlaManagement.HDT_WRP_sObject eventObj){
+    public static SlaTracking__c createNewTrackingRecord(SlaTracking__c currentTrack, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule, HDT_WRP_SlaManagement.HDT_WRP_Event eventObj){
 
-        System.debug('>>> check this rule ' + singleRule.slaAdminId);
+        System.debug('>>> check this rule ' + singleRule.adminRuleId);
 
         if(eventObj.fieldMap.containsKey(singleRule.startRule.field)){
 
@@ -213,7 +217,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
             currentTrack = new SlaTracking__c();
             currentTrack.Status__c = 'Aperto';
             currentTrack.Case__c = eventObj.recordId;
-            currentTrack.SlaAdministration__c = singleRule.slaAdminId;
+            currentTrack.SlaAdministration__c = singleRule.adminRuleId;
 
             Object dt;
             if(singleRule.startRule.isDate){

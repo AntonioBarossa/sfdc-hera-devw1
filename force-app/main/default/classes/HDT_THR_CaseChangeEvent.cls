@@ -5,9 +5,9 @@ public inherited sharing class HDT_THR_CaseChangeEvent {
 
         System.debug('>>> eventSize: ' + CaseChangeEventList.size());
 
-        Map<Id, HDT_WRP_SlaManagement.HDT_WRP_sObject> wrpObjMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_sObject>();
+        Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpObjMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event>();
 
-        HDT_WRP_SlaManagement.HDT_WRP_sObject wrpObj;
+        HDT_WRP_SlaManagement.HDT_WRP_Event wrpObj;
         for(CaseChangeEvent event : CaseChangeEventList){
             
             System.debug('>>> ' + JSON.serialize(event));
@@ -21,7 +21,7 @@ public inherited sharing class HDT_THR_CaseChangeEvent {
                 if(wrpObjMap.containsKey(i)){
                     wrpObj = wrpObjMap.get(i);
                 } else {
-                    wrpObj = new HDT_WRP_SlaManagement.HDT_WRP_sObject();
+                    wrpObj = new HDT_WRP_SlaManagement.HDT_WRP_Event();
                     wrpObj.recordId = i;
                     wrpObj.sObjType = 'Case';
                     wrpObj.eventType = header.changeType;
