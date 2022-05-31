@@ -38,7 +38,7 @@
   },
   {
     &quot;FieldName&quot;: &quot;ClientTypology__c&quot;,
-    &quot;Required&quot;: false,
+    &quot;Required&quot;: true,
     &quot;Column&quot;: 2
   },
   {

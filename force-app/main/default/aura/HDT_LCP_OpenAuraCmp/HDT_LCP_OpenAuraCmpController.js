@@ -91,6 +91,7 @@
         });
 
         var parentId;
+        var caseTabId;
         workspaceAPI.getAllTabInfo().then(function(response) {
             console.log('----------');
             response.forEach((element) => {
@@ -106,9 +107,12 @@
                     }
                     else if(element.pageReference.attributes.recordId === orderId){
                         parentId = element.tabId;
+                    } else if(element.pageReference.attributes.recordId === parentRecordId){
+                        caseTabId=element.tabId;
                     }
                 }
             });
+            parentId=parentId? parentId : caseTabId;
             console.log('----------');
             console.log('# parentId -> ' + parentId);
 
