@@ -171,7 +171,7 @@ public with sharing class HDT_UTL_CampaignMember {
         Integer count = 0;
         for (CampaignMember member : newCampaignMember){
             Datetime nowDate = Datetime.now().addSeconds(count);
-            String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+            String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a') + ' - ' + Crypto.getRandomInteger();
             newContext.add( new Commercial_Code_Batch_Context__c(Name=nowDateFormat, CampaignId__c=member.CampaignId, CampaignMemberId__c=member.Id));
             ++count;
         }
