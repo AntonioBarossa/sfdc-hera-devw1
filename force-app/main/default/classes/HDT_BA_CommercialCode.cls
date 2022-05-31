@@ -117,7 +117,6 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
     public void finish(Database.BatchableContext bc){
         System.debug('-------- finish batch');
         //START>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
-        //aggiungere controllo su lavorati
         for(Commercial_Code_Batch_Context__c curObj : this.batchCSContext) curObj.CommercialCodeDone__c = true;
         update this.batchCSContext;
         
@@ -126,7 +125,7 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
                                                                     WHERE CommercialCodeDone__c = TRUE AND BollettaDone__c = TRUE];
         delete oldGarbage;
         
-        System.scheduleBatch(new HDT_BA_CampaignBolletta(), 'HDT_BA_CampaignBolletta', 60, 200);
+        if(this.batchCSContext.size() > 0) System.scheduleBatch(new HDT_BA_CampaignBolletta(), 'HDT_BA_CampaignBolletta', 60, 200);
         //HDT_BA_CampaignBolletta cbBatch = new HDT_BA_CampaignBolletta(this.campaignIds);
         //ID batchId = Database.executeBatch(cbBatch, 500);
         //System.debug('batchCampaignBolletta ProcessId - ' + batchId);
