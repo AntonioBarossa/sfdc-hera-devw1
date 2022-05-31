@@ -2,9 +2,10 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 27-05-2022
+ * @last modified on  : 31-05-2022
  * @last modified by  : Giacinto Florio
 **/
+@SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfStmtsMustUseBraces, PMD.IfElseStmtsMustUseBraces, PMD.pmdAvoidDebugStatements, PMD.CyclomaticComplexity')
 public with sharing class HDT_LC_AppointmentTariAgenda {
     
     private static HDT_SRV_AppointmentAgenda srvAgenda = new HDT_SRV_AppointmentAgenda();
@@ -110,6 +111,20 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     }
 
     @AuraEnabled
+    public static String handleView(String caseId) { //questo
+        String response = '';
+        try{
+                //response = srvAgenda.handleFirstSearch(caseId,preferedDate,preferedTimeSlot);
+                // return handleSearc(caseId, preferedDate, preferedTimeSlot, requestType.FIRST_SEARCH);
+                return '{"codCaus" : "test" ,"codFlusso" : "0160" ,"desEsitoConf" : "1" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "0" ,"appuntamento" : [{"appData" : "2022-12-31","appFasciaOrario" : "15:00/16:00","codiceApp" : "2222","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"}]}';
+
+        }catch (exception e){
+            throw new AuraHandledException(e.getMessage());
+        }
+        // return response;
+    }
+
+    @AuraEnabled
     public static String handleSearch(String caseId, String searchType, Date preferedDate, String preferedTimeSlot) { //questo
         String response = '';
         try{
@@ -148,7 +163,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         String codApp = 'test';
         String codFlusso = '0160';
         String esito = 'test';
-        String stato = 'test';
+        //String stato = 'test';
         
         appointment.codFlusso = codFlusso;
         appointment.modApp = modApp;

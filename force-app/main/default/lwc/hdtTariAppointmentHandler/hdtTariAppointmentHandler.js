@@ -1,21 +1,12 @@
 import { LightningElement, api, track,wire } from 'lwc';
 import getCase from '@salesforce/apex/HDT_LC_AppointmentAgenda.getCase';
-import { CurrentPageReference } from 'lightning/navigation';
 import { refreshApex } from '@salesforce/apex';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import getActivityOwner  from '@salesforce/apex/HDT_LC_AppointmentExtraSist.getActivityOwner';
-import SystemModstamp from '@salesforce/schema/Account.SystemModstamp';
 
-const NEW_DATE_VALID_STATE = ['Creata','Invio app.to SELF cliente'];
-const SELF_DATE_VALID_STATE = ['Creata'];
-const DELETE_DATE_VALID_STATE = ['Presa appuntamento in corso'];
-const EDIT_DATE_VALID_STATE = ['Appuntamento confermato','Modifica confermata'];
-const RESUME_DATE_VALID_STATE = ['Presa appuntamento in corso'];
 const OBJECT_FIELDS =[
-    'Id'
-    
+    'Id',
+    'Phase__c',
+    'StartAppointment__c'
 ];
-
 
 export default class HdtTariAppointmentHandler extends LightningElement{
     showAgenda = false;
@@ -28,10 +19,11 @@ export default class HdtTariAppointmentHandler extends LightningElement{
     @api recordId;
     isNotOwner;
     @track params={};
+    @track isViewAppointmentEnabled = false; 
     
     @track tempList = [
-        {label: 'Prendi Appuntamento ', name: 'newDate', iconName: 'utility:retail_execution', desc: 'Prendi un nuovo appuntamento con il DL', enable : true, visible : true},
-        {label: 'Visualizza Appuntamento', name: 'viewDate', iconName: 'utility:record_delete', desc: 'Visualizza il tuo appuntamento', enable : false, visible : false}
+        {label: 'Prendi Appuntamento ', name: 'newDate', iconName: 'utility:retail_execution', desc: 'Prendi un nuovo appuntamento con il DL', enable : false, visible : true},
+        {label: 'Visualizza Appuntamento', name: 'viewDate', iconName: 'utility:record_delete', desc: 'Visualizza il tuo appuntamento', enable : false, visible : true}
     ];
     
     get stmtValue(){
@@ -46,6 +38,7 @@ export default class HdtTariAppointmentHandler extends LightningElement{
         if (data){
             this.case = JSON.parse(data);
             console.log('case ->' + this.case);
+
             if(this.confirmed==false){
                 this.tempList.forEach( item =>{
                     let itemName = item.name;
@@ -54,24 +47,20 @@ export default class HdtTariAppointmentHandler extends LightningElement{
                     if (true){
                         switch (itemName){
                             case 'newDate':
-                                // item.visible = true;
-                                // enable = true;
+                                if(this.case.Phase__c == 'In attesa Appuntamento'){
+                                    item.enable = true;
+                                }
                             break;
                             case 'viewDate':
-                                //     item.visible = !this.isCommunity;
-                                //     let maxDayInMs = this.getMaxDateInMilliseconds(this.activity.MaxDateModificationAppointment__c,this.activity.MaxTimeModificationAppointment__c); 
-                                //     let nowInMs = Date.now();
-                                //     if (EDIT_DATE_VALID_STATE.indexOf(stato) != -1 && maxDayInMs != -1 && nowInMs < maxDayInMs){
-                                //         enable = true;
-                                //     }
+                                if(this.case.StartAppointment__c!= null && this.case.Phase__c != 'Completata' && this.case.Phase__c != 'Annullato'){
+                                    item.visible = true;
+                                    item.enable = true;
+                                }
                             break;
                         }
                     } 
-                    // item.enable = enable; 
                 });
             }
-            // this.showAgenda = false;
-            // this.showForm = false;
         }else if (error){
             console.error('status error: ' + error.status);
             console.error('status body: ' + JSON.stringify(error.body));
@@ -93,9 +82,9 @@ export default class HdtTariAppointmentHandler extends LightningElement{
                     searchType : 'FirstSearch'
                 };
             break;
-            case 'viewDate': //viewDate TODO
+            case 'viewDate':
                 this.params ={
-                    method : 'handleSearch',
+                    method : 'handleView',
                     searchType : 'View'
                 };
         }

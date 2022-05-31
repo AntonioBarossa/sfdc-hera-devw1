@@ -2,7 +2,7 @@
   @description       : 
   @author            : Giacinto Florio
   @group             : 
-  @last modified on  : 27-05-2022
+  @last modified on  : 30-05-2022
   @last modified by  : Giacinto Florio
 -->
 <template>
@@ -25,13 +25,25 @@
               <lightning-accordion active-section-name="appointmentsSection">
                 <lightning-accordion-section name="appointments" label="Fasce orarie appuntamenti">
                   <div style="height: 300px;">
-                    <lightning-datatable
-                      data-id="dtAppointment"
-                      key-field="codice"
-                      data={records}
-                      columns={columns}
-                      max-row-selection = "1">
-                    </lightning-datatable>
+                    <template if:false={isView}>
+                      <lightning-datatable
+                        data-id="dtAppointment"
+                        key-field="codice"
+                        data={records}
+                        columns={columns}
+                        max-row-selection = "1">
+                      </lightning-datatable>
+                    </template>
+                    <template if:true={isView}>
+                      <lightning-datatable
+                        data-id="dtAppointment"
+                        key-field="codice"
+                        data={records}
+                        columns={columns}
+                        max-row-selection = "1"
+                        hide-checkbox-column="true">
+                      </lightning-datatable>
+                    </template>
                   </div>
                 </lightning-accordion-section>
             </lightning-accordion>
@@ -39,8 +51,10 @@
         </div>
         <footer class="slds-modal__footer slds-text-align_center">
           <lightning-button label="Indietro" name="Cancel" onclick={handleClick} ></lightning-button>
-          <lightning-button icon-name="utility:save" variant="brand" label="Conferma Appuntamento" name="Save" onclick={handleClick} class="slds-m-left_x-small" disabled={disableConfirmButton}></lightning-button>
-        </footer>
+          <template if:false={isView}>
+            <lightning-button icon-name="utility:save" variant="brand" label="Conferma Appuntamento" name="Save" onclick={handleClick} class="slds-m-left_x-small" disabled={disableConfirmButton}></lightning-button>
+          </template>
+          </footer>
       </div>
     </section>
     <div class="slds-backdrop slds-backdrop_open"></div>

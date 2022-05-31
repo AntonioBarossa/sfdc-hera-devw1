@@ -1,6 +1,7 @@
 import { LightningElement, api, track,wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import handleSearch from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleSearch';
+import handleView from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleView';
 import handleConfirm from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleConfirm';
 import getCase from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.getCase';
 import handleNewActivityCreationAndCaseUpdate from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleNewActivityCreationAndCaseUpdate';
@@ -46,14 +47,13 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     @track records = [];
     refreshRecord = false;
     disableConfirmButton = false;
-    disableCancelButton = true;
     isCommunity = false;
     searchType;
     newDateLabel;
     selectedCode;
     showSpinner = true;
     @track fieldsToRetrieve;
-
+    @track isView = false;
 
     @wire(getCase,{caseId : '$caseid', fields : '$fieldsToRetrieve'})
     wireRecord({error,data}){
@@ -66,17 +66,23 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         }
         if (data && this.params){
             this.case = JSON.parse(data);
-                //this.disableConfirmButton = true;
                 this.searchType = this.params.searchType;
                 this.showSpinner = false;
                 this.refreshRecord = false;
-                this.getNewDate();
+                if(this.params.searchType == 'View'){
+                    this.getAppointmentDate();
+                }else{
+                    this.getNewDate();
+                }
         }
     }
     
     connectedCallback(){
-        debugger;
+        
         if (this.params){
+            if(this.params.searchType == 'View'){
+                this.isView = true;
+            }
             if (this.params.userCommunity === true || this.params.userCommunity === 'true'){
                 this.isCommunity = true;
             }
@@ -120,8 +126,8 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                 var activityFields = new Objectfields(this.case.AppointmentCode__c,this.case.JobCenterCode__c,this.case.SotCode__c,
                     this.formatData(this.case.StartAppointment__c),this.formatData(this.case.EndAppointment__c),null,null,null);
 
-                this.createNewActivityAndUpdateCase(this.case.Id, caseFields, 'Appuntamento Confermato', activityFields);
-                this.refreshPage(this.isCommunity);
+                this.createNewActivityAndUpdateCase(this.case.Id, caseFields, null, activityFields);
+                this.refreshPage(true);
             }else if (result.localeCompare('ERRORE CONFERMA') === 0){ 
                 this.showAlert('Errore','Impossibile confermare l\'appuntamento selezionato','error');
                 this.showSpinner = false;
@@ -148,6 +154,8 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
 
 
     handleClick(event){
+        console.log('event.target.name ->' + event.target.name);
+
         if (event.target.name === 'Save'){
             if (this.isAppointmentSelected()){
                 this.confirmAppointment();
@@ -155,6 +163,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                 this.showAlert('Attenzione','Selezionare un appuntamento','error');
             }
         }else if (event.target.name === 'Cancel'){
+            this.isView = false;
             this.closeModal();
         }else if (event.target.name === 'newDate'){
             this.getNewDate();
@@ -166,12 +175,56 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         this.dispatchEvent(new CustomEvent('cancelevent',{detail : this.refreshRecord}));
     }
 
+    getAppointmentDate(){
+        this.handleViewMethod();
+    }
+
     getNewDate(){
         let appointment = '2022-12-31';
         console.log('appointment ->' + appointment);
         let preferentialTime = '15:00/16:00';
         console.log('preferentialTime -> ' + preferentialTime);
         this.handleSearchMethod(appointment,preferentialTime);
+    }
+
+    handleViewMethod(){
+        this.showSpinner = true;
+        handleView({
+            caseId : this.caseid
+        }).then(result =>{
+            if (!result){
+                this.showAlert('Attenzione','Nessuna risposta dal server.','error');
+                this.showSpinner = false;
+            }else{
+                let data = JSON.parse(result);
+                let slots = [];
+                try{
+                    slots = data.appuntamento;
+                    this.records = [];
+                    if(slots.length == 0){
+                    }else{
+                        slots.forEach(element => {
+                            this.addRecord({
+                                codice : element.codiceApp, 
+                                data : this.formatData(element.appData), 
+                                fascia : element.appFasciaOrario, 
+                                stima: element.zStimaDurApp, 
+                                dataLimite : this.formatData(element.zLimApp),
+                                oraLimite : element.zLimAppOra 
+                            });
+                        });
+                    }
+                }catch(e){
+                    console.error(e);
+                    this.showAlert('Attenzione','Errore nella chiamata al server. Non è stato ricevuto un appuntamento valido.','error');
+                }
+                this.showSpinner = false;
+                this.refreshRecord = false;
+            } 
+        }).catch(error =>{
+            this.showSpinner = false;
+            this.showAlert('Attenzione',error.body.message,'error');
+        });
     }
 
     handleSearchMethod(appointment,preferentialTime){
@@ -185,9 +238,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
             if (!result){
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
-                this.disableCancelButton = true; 
                 this.disableConfirmButton = true; 
-                //In caso di errore chiamata SAP, creare activity “Contattare Cliente”
                 this.createNewActivityAndUpdateCase(this.caseid, null, 'Contattare Cliente', null);
             }else{
                 let data = JSON.parse(result);
@@ -196,12 +247,10 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                     slots = data.appuntamento;
                     this.records = [];
                     if(slots.length == 0){
-                        //In caso di lista slot vuota, aggiungere in testa al campo Note con ‘l’appuntamento non può essere preso…’
                         this.case.Note__c = 'l’appuntamento non può essere preso perché l’agenda non restituisce alcuna data - ricontattare il cliente';
                         this.case.Outcome__c ='Empty_Slots';
                         var caseFields = new Objectfields(null,null,null,null,null,null,this.case.Note__c,this.case.Outcome__c);
                         this.createNewActivityAndUpdateCase(this.caseid, caseFields, 'Contattare Cliente', null);
-                        this.disableCancelButton = true; 
                         this.disableConfirmButton = true; 
                     }else{
                         slots.forEach(element => {
@@ -214,12 +263,9 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                                 oraLimite : element.zLimAppOra 
                             });
                         });
-                        // Se sap ha inviato degli slot, si abilita anche il pulsante “annulla presa sap”. Outcome__c=”Recived_Slots”. 
-                        if(this.case.Outcome__c=='Recived_Slots'){
-                            this.case.Outcome__c='Recived_Slots';
-                            var caseFields = new Objectfields(null,null,null,null,null,null,null,this.case.Outcome__c);
-                            this.createNewActivityAndUpdateCase(this.caseid, caseFields, null, null);
-                        }
+                        this.case.Outcome__c='Recived_Slots';
+                        var caseFields = new Objectfields(null,null,null,null,null,null,null,this.case.Outcome__c);
+                        this.createNewActivityAndUpdateCase(this.caseid, caseFields, null, null);
                         this.disableCancelButton = false; 
                     }
                 }catch(e){
