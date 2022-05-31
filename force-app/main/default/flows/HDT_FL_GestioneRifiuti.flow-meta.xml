@@ -360,6 +360,17 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.ParentId</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.RelatedCase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.Id</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Insert_theCase_0_0</targetReference>
         </connector>
