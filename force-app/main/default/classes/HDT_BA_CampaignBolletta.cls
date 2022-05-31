@@ -2,8 +2,21 @@ public with sharing class HDT_BA_CampaignBolletta implements Database.Batchable<
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
 
     public List<CampaignMember> campaignMembers;
-    public HDT_BA_CampaignBolletta(List<String> campaignIds) {
-        this.campaignMembers = [SELECT ContractReference__c, PromoCommercialCode__r.fullcode__c, Campaign.Name, Campaign.Description, Campaign.StaticTextMessageBill__c, Campaign.Channel__c FROM CampaignMember WHERE CampaignId IN :campaignIds AND ContractReference__c != null AND isWsBollettaInvoked__c = false AND Campaign.Channel__c INCLUDES ('Bolletta') WITH SECURITY_ENFORCED];
+    public List<Commercial_Code_Batch_Context__c> batchCSContext;//>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
+    
+    //START>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
+    //public HDT_BA_CampaignBolletta(List<String> campaignIds) {
+    public HDT_BA_CampaignBolletta() {
+        List<Commercial_Code_Batch_Context__c> context = [SELECT Id, CampaignId__c, CampaignMemberId__c
+                                                    		FROM Commercial_Code_Batch_Context__c 
+                                                    		WHERE CommercialCodeDone__c = TRUE AND BollettaDone__c = FALSE];
+        this.batchCSContext = context;
+        Set<String> campaignIds = new Set<String>();
+        for(Commercial_Code_Batch_Context__c curObj : context) campaignIds.add(curObj.CampaignId__c);
+        //END>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
+        this.campaignMembers = [SELECT ContractReference__c, PromoCommercialCode__r.fullcode__c, Campaign.Name, Campaign.Description, Campaign.StaticTextMessageBill__c, Campaign.Channel__c 
+                                FROM CampaignMember 
+                                WHERE CampaignId IN :campaignIds AND ContractReference__c != null AND isWsBollettaInvoked__c = false AND Campaign.Channel__c INCLUDES ('Bolletta') WITH SECURITY_ENFORCED];
     }
 
     public Iterable<CampaignMember> start(Database.BatchableContext bc) {
@@ -46,5 +59,7 @@ public with sharing class HDT_BA_CampaignBolletta implements Database.Batchable<
 
     public void finish(Database.BatchableContext bc){
         System.debug('-------- finish batch');
+        for(Commercial_Code_Batch_Context__c curObj : this.batchCSContext) curObj.BollettaDone__c = true;
+        update this.batchCSContext;
     }
 }
