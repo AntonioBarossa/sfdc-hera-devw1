@@ -278,26 +278,6 @@
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>PriceF0__c</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </displayedFields>
-    <displayedFields>
-        <field>PriceF1__c</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </displayedFields>
-    <displayedFields>
-        <field>PriceF2__c</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </displayedFields>
-    <displayedFields>
-        <field>PriceF3__c</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </displayedFields>
-    <displayedFields>
         <field>OwnerAC__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>

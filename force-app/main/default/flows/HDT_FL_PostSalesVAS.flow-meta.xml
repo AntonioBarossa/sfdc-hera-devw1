@@ -324,7 +324,7 @@
     <formulas>
         <name>groupOptionsFormula</name>
         <dataType>String</dataType>
-        <expression>IF({!Causale_Disattivazione} = {!Causal_BLOCCORINNOVO}, &quot;ASSETS_ACTIVATED;SUBS_ANALISI_CONSUMI_RENEW;SUBS_VAS_SERVIZIO_RENEW&quot;,&quot;ASSETS_ACTIVATED;SUBS_ANALISI_CONSUMI;SUBS_VAS_SERVIZIO&quot;)</expression>
+        <expression>IF({!Causale_Disattivazione} = {!Causal_BLOCCORINNOVO}, &quot;SUBS_VAS_SERVIZIO_RENEW&quot;,&quot;ASSETS_ACTIVATED;SUBS_ANALISI_CONSUMI;SUBS_VAS_SERVIZIO&quot;)</expression>
     </formulas>
     <formulas>
         <name>TerminationDateFormula</name>

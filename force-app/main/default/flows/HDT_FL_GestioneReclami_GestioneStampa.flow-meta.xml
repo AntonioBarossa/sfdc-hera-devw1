@@ -810,11 +810,14 @@
     <recordUpdates>
         <name>AggiornaActivityCollection</name>
         <label>AggiornaActivityCollection</label>
-        <locationX>1247</locationX>
-        <locationY>2099</locationY>
+        <locationX>1095</locationX>
+        <locationY>2173</locationY>
         <connector>
             <targetReference>AggiornaCases</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>AggiornaCases</targetReference>
+        </faultConnector>
         <inputReference>ActivityCollection</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -830,8 +833,8 @@
     <recordUpdates>
         <name>AggiornaCases</name>
         <label>AggiornaCases</label>
-        <locationX>1248</locationX>
-        <locationY>2207</locationY>
+        <locationX>1103</locationX>
+        <locationY>2376</locationY>
         <inputReference>CaseCollection</inputReference>
     </recordUpdates>
     <recordUpdates>

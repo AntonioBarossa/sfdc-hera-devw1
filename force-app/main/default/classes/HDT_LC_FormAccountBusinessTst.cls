@@ -20,6 +20,7 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 		insert internalUser;
 
 		List<PermissionSetAssignment> permissionSetAssignments=new List<PermissionSetAssignment>{ HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, constants.PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, constants.PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME, false) };
+		permissionSetAssignments.add(HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, 'HDT_Archive', false));
 		insert permissionSetAssignments;
 
 		System.runAs(internalUser){
@@ -58,7 +59,7 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 			tDataAccount.put('customerTypeValue', 'Gruppo');
 			tDataAccount.put('recordTypeId', rtIdBusiness);
 			tDataAccount.put('email', 'test@test.com');
-			tDataAccount.put('vatNumber', '12345678901');
+			tDataAccount.put('vatNumber', '07988320011');
 			tDataAccount.put('fiscalCode', 'TSTTTC05B47H501Y');
 			tDataAccount.put('legalForm', 'Consorzi di Impresa');
 			tDataAccount.put('firstIndividualName', 'FirstNameTst');
@@ -121,7 +122,7 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 			tDataAccount.put('customerTypeValue', 'Gruppo');
 			tDataAccount.put('recordTypeId', rtIdResidenziale);
 			tDataAccount.put('email', 'test@test.com');
-			tDataAccount.put('vatNumber', '12345678901');
+			tDataAccount.put('vatNumber', '02682500166');
 			tDataAccount.put('fiscalCode', 'TSTTTC05B46H501W');
 			tDataAccount.put('legalForm', 'Consorzi di Impresa');
 			tDataAccount.put('businessName', 'LastNameTst');
@@ -182,7 +183,7 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 			tDataAccount.put('customerTypeValue', 'Gruppo');
 			tDataAccount.put('recordTypeId', rtIdBusiness);
 			tDataAccount.put('email', 'test@test.com');
-			tDataAccount.put('vatNumber', '12345678901');
+			tDataAccount.put('vatNumber', '05724831002');
 			tDataAccount.put('fiscalCode', 'TSTTTC05B47H501Y');
 			tDataAccount.put('legalForm', 'Consorzi di Impresa');
 			tDataAccount.put('businessName', 'LastNameTst');

@@ -3,12 +3,20 @@
     <label>Mailbox Attivazioni</label>
     <protected>false</protected>
     <values>
+        <field>Cluster__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>CompanyOwner__c</field>
         <value xsi:type="xsd:string">HERA COMM</value>
     </values>
     <values>
         <field>Email__c</field>
         <value xsi:type="xsd:string">hera.attivazioni@t-e86um9fj0n2gggf3s9oxkqp7pw9ofa4uwyp2lbvuz2kst6n1a.3n-8mtouaa.cs128.apex.sandbox.s</value>
+    </values>
+    <values>
+        <field>Process__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Type__c</field>

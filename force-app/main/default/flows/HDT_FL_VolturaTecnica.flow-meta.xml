@@ -30,7 +30,7 @@
         <name>Assegna_a_BO</name>
         <label>Assegna a BO</label>
         <locationX>314</locationX>
-        <locationY>2150</locationY>
+        <locationY>3158</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -53,7 +53,7 @@
         <name>Assegna_a_Da_Inviare</name>
         <label>Assegna a Da Inviare</label>
         <locationX>578</locationX>
-        <locationY>2150</locationY>
+        <locationY>3158</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -73,6 +73,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaAliquotaAccise</name>
+        <label>AssegnaAliquotaAccise</label>
+        <locationX>314</locationX>
+        <locationY>2462</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Excises__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCase_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaCaseId</name>
         <label>AssegnaCaseId</label>
         <locationX>380</locationX>
@@ -86,6 +102,38 @@
         </assignmentItems>
         <connector>
             <targetReference>GetInputCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaEmail</name>
+        <label>AssegnaEmail</label>
+        <locationX>314</locationX>
+        <locationY>2126</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Email__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>mailnondisponibile@acquirenteunico.it</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aliquota_Accise_vuot</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaPhone</name>
+        <label>AssegnaPhone</label>
+        <locationX>314</locationX>
+        <locationY>1790</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.PhoneNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>PhoneFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Email_Vuota</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -129,14 +177,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AggiornaCase_0</targetReference>
+            <targetReference>Telefono_Vuoto</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssegnaVariabili</name>
         <label>AssegnaVariabili</label>
         <locationX>446</locationX>
-        <locationY>2486</locationY>
+        <locationY>3494</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -155,6 +203,31 @@
             <targetReference>AggiornaCase</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Aliquota_Accise_vuot</name>
+        <label>Aliquota Accise vuota?</label>
+        <locationX>446</locationX>
+        <locationY>2342</locationY>
+        <defaultConnector>
+            <targetReference>AggiornaCase_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non vuota</defaultConnectorLabel>
+        <rules>
+            <name>Vuota_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.Excises__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaAliquotaAccise</targetReference>
+            </connector>
+            <label>Vuota</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Compatibile</name>
         <label>Compatibile?</label>
@@ -182,6 +255,38 @@
                 </rightValue>
             </conditions>
             <label>Non Compatibile</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Email_Vuota</name>
+        <label>Email Vuota</label>
+        <locationX>446</locationX>
+        <locationY>2006</locationY>
+        <defaultConnector>
+            <targetReference>Aliquota_Accise_vuot</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Vuota</defaultConnectorLabel>
+        <rules>
+            <name>Vuota</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.Email__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.Email__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaEmail</targetReference>
+            </connector>
+            <label>Vuota</label>
         </rules>
     </decisions>
     <decisions>
@@ -213,7 +318,7 @@
         <name>Proflo_front</name>
         <label>Proflo front?</label>
         <locationX>446</locationX>
-        <locationY>2030</locationY>
+        <locationY>3038</locationY>
         <defaultConnector>
             <targetReference>Assegna_a_Da_Inviare</targetReference>
         </defaultConnector>
@@ -245,7 +350,7 @@
         <name>Quale_Azione</name>
         <label>Quale Azione?</label>
         <locationX>446</locationX>
-        <locationY>1910</locationY>
+        <locationY>2918</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annulla</name>
@@ -292,11 +397,48 @@
             <label>Conferma</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Telefono_Vuoto</name>
+        <label>Telefono Vuoto?</label>
+        <locationX>446</locationX>
+        <locationY>1670</locationY>
+        <defaultConnector>
+            <targetReference>Email_Vuota</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Vuoto</defaultConnectorLabel>
+        <rules>
+            <name>Vuoto</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.PhoneNumber__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.PhoneNumber__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaPhone</targetReference>
+            </connector>
+            <label>Vuoto</label>
+        </rules>
+    </decisions>
     <description>Flow per la gestione del processo di Voltura Tecnica</description>
     <formulas>
         <name>EffectiveDateFormula</name>
         <dataType>Date</dataType>
         <expression>{!$Flow.CurrentDate}+3</expression>
+    </formulas>
+    <formulas>
+        <name>PhoneFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!GetInputCase.Contact.MobilePhone}),IF(ISBLANK({!GetInputCase.Contact.Phone}),&quot;123&quot;,{!GetInputCase.Contact.Phone}),{!GetInputCase.Contact.MobilePhone})</expression>
     </formulas>
     <formulas>
         <name>ShipToDifferentAddress</name>
@@ -429,7 +571,7 @@
         <name>CalcolaCodiceCausale</name>
         <label>CalcolaCodiceCausale</label>
         <locationX>446</locationX>
-        <locationY>2366</locationY>
+        <locationY>3374</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaVariabili</targetReference>
@@ -527,14 +669,14 @@
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>446</locationX>
-        <locationY>2606</locationY>
+        <locationY>3614</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase_0</name>
         <label>AggiornaCase</label>
         <locationX>446</locationX>
-        <locationY>1670</locationY>
+        <locationY>2678</locationY>
         <connector>
             <targetReference>Screen_Input_Dati</targetReference>
         </connector>
@@ -544,7 +686,7 @@
         <name>Screen_Input_Dati</name>
         <label>Screen Input Dati</label>
         <locationX>446</locationX>
-        <locationY>1790</locationY>
+        <locationY>2798</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -657,7 +799,7 @@
         <name>Annullamento_Prestazione_SubFlow</name>
         <label>Annullamento Prestazione SubFlow</label>
         <locationX>50</locationX>
-        <locationY>2030</locationY>
+        <locationY>3038</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

@@ -244,14 +244,39 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
+                // else if (element == 'PowerRequested__c') {
+
+                //     fieldsDataObject.push(
+                //         {
+                //             fieldname: element,
+                //             required: mapFieldReq.get(element),
+                //             value: null,
+                //             disabled: false
+                //         }
+                //     )
+                // }
+                else if (this.recordtype.label === 'Punto Elettrico' && element === 'PlugPresence__c') {
+                    console.log('ENTRATO IN PUNTO ELE');
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: mapFieldReq.get(element),
+                            value: this.servicePointRetrievedData[element],
+                            disabled: false
+                        }
+                    )
+                }
+                else if (this.recordtype.label === 'Punto Gas' && element === 'PlugPresence__c') {
+                    console.log('ENTRATO IN PUNTO GAS');
+                }
                 else if (element == 'PowerRequested__c') {
 
                     fieldsDataObject.push(
                         {
                             fieldname: element,
                             required: mapFieldReq.get(element),
-                            value: null,
-                            disabled: false
+                            value: this.servicePointRetrievedData[element],
+                            disabled: this.allSubmitedFields['PlugPresence__c'] == 'No'? true : false
                         }
                     )
                 }
@@ -373,6 +398,31 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             required: mapFieldReq.get(element),
                             value: this.servicePointRetrievedData[element],
                             disabled: true
+                        }
+                    )
+                }
+                else if (this.recordtype.label === 'Punto Elettrico' && element === 'PlugPresence__c') {
+                    console.log('ENTRATO IN PUNTO ELE');
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: mapFieldReq.get(element),
+                            value: this.servicePointRetrievedData[element],
+                            disabled: false
+                        }
+                    )
+                }
+                else if (this.recordtype.label === 'Punto Gas' && element === 'PlugPresence__c') {
+                    console.log('ENTRATO IN PUNTO GAS');
+                }
+                else if (element == 'PowerRequested__c') {
+
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: mapFieldReq.get(element),
+                            value: this.servicePointRetrievedData[element],
+                            disabled: this.allSubmitedFields['PlugPresence__c'] == 'No'? true : false
                         }
                     )
                 }
@@ -730,6 +780,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         }
         if (event.target.fieldName == 'ServicePointCode__c') {
             this.spCodeChanged = true;
+        }
+        if (event.target.fieldName == 'PlugPresence__c') {
+            this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
         }
     }
 

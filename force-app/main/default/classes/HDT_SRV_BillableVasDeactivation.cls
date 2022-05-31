@@ -2,11 +2,11 @@
 global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     
-    private static HDT_QR_HerokuPostSalesManager hpsmQr = new HDT_QR_HerokuPostSalesManager();
-    private static HDT_UTL_HerokuPostSalesManager hpsmUtl = new HDT_UTL_HerokuPostSalesManager();
+    private HDT_QR_HerokuPostSalesManager hpsmQr = new HDT_QR_HerokuPostSalesManager();
+    private HDT_UTL_HerokuPostSalesManager hpsmUtl = new HDT_UTL_HerokuPostSalesManager();
 
-    private final static String PHASE_OK = 'Comunicazione verso Heroku OK';
-    private final static String PHASE_KO = 'Comunicazione verso Heroku KO';
+    private final String PHASE_OK = 'Comunicazione verso Heroku OK';
+    private final String PHASE_KO = 'Comunicazione verso Heroku KO';
 
     private Map<String,String> mapRequestFields = new Map<String,String>();
     

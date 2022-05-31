@@ -532,10 +532,10 @@
             <fullName>Attivazioni</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Attivazioni - Generiche</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Autolettura</fullName>
             <default>false</default>

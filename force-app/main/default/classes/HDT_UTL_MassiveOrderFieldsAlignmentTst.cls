@@ -274,7 +274,7 @@ public class HDT_UTL_MassiveOrderFieldsAlignmentTst {
                                       SupplyCity__c, SupplyStreet__c, SupplyStreetNumber__c, SupplyStreetNumberExtension__c, SupplyPlace__c, SupplyPostalCode__c, SupplyCountry__c, PowerContractual__c,
                                       ServicePointCode__c, SAPImplantCode__c, ImplantTypeTemp__c, SupplySAPCityCode__c, SupplyProvince__c, Disconnectable__c, DisconnectibilityType__c, MeterClass__c,
                                       WithdrawalClass__c, PressureLevel__c, RequestPhase__c, PowerRequested__c, MeterType__c, IsRemoteManaged__c, Pressure__c, RecordType.DeveloperName,
-                                      MeterStatus__c, Distributor__r.Code__c FROM ServicePoint__c WHERE Name = 'testServicePoint1'];
+                                      MeterStatus__c, Distributor__r.Code__c, ImplantType__c FROM ServicePoint__c WHERE Name = 'testServicePoint1'];
 
         Test.startTest();
         Order orderResult =  HDT_UTL_MassiveOrderFieldsAlignment.alignServicePointFields(ord[0], serv[0]);

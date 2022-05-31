@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>PowerFlow__c</fullName>
-    <description>La potenza portata legata al dato record di asset</description>
+    <fullName>CreaCaFormula__c</fullName>
     <externalId>false</externalId>
-    <formula>Range__r.PowerFlow__c</formula>
+    <formula>IF(ISBLANK(ContractAccountCode__c),&apos;Y&apos;,&apos;N&apos;)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Potenza portata</label>
-    <precision>18</precision>
+    <label>Crea Ca Formula</label>
     <required>false</required>
-    <scale>2</scale>
     <trackHistory>false</trackHistory>
-    <type>Number</type>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
     <unique>false</unique>
 </CustomField>

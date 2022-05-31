@@ -439,10 +439,10 @@
     <decisions>
         <name>Next_Step_0</name>
         <label>Next Step?</label>
-        <locationX>2214</locationX>
-        <locationY>327</locationY>
+        <locationX>2247</locationX>
+        <locationY>107</locationY>
         <defaultConnector>
-            <targetReference>Set_Fase_Attesa_Modulo_Firmato</targetReference>
+            <targetReference>Get_Case_for_SignMode</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
         <rules>
@@ -528,6 +528,31 @@
             <label>Stampa</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>SignMode_Vocal_Order</name>
+        <label>SignMode Vocal Order?</label>
+        <locationX>2351</locationX>
+        <locationY>258</locationY>
+        <defaultConnector>
+            <targetReference>Set_Fase_Attesa_Modulo_Firmato</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NO</defaultConnectorLabel>
+        <rules>
+            <name>SignMode_Vocal_Order_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_for_SignMode.SignMode__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Vocal Order</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Completato</targetReference>
+            </connector>
+            <label>SI</label>
+        </rules>
+    </decisions>
     <interviewLabel>Gestione_Modifiche_Anagrafiche_Modifica_Privacy {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione_Modifiche_Anagrafiche_Modifica_Privacy</label>
     <processMetadataValues>
@@ -557,6 +582,27 @@
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Modifica_Privacy_Lead</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Case_for_SignMode</name>
+        <label>Get Case for SignMode</label>
+        <locationX>2439</locationX>
+        <locationY>147</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>SignMode_Vocal_Order</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -756,8 +802,8 @@
     <recordUpdates>
         <name>Set_Fase_Attesa_Modulo_Firmato</name>
         <label>Set Fase Attesa Modulo Firmato</label>
-        <locationX>2487</locationX>
-        <locationY>388</locationY>
+        <locationX>2476</locationX>
+        <locationY>375</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -770,6 +816,27 @@
             <field>Phase__c</field>
             <value>
                 <stringValue>Attesa Modulo Firmato</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Case_Completato</name>
+        <label>Update Case Completato</label>
+        <locationX>2263</locationX>
+        <locationY>385</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Completata</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -1094,8 +1161,8 @@
     <screens>
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
-        <locationX>2105</locationX>
-        <locationY>325</locationY>
+        <locationX>1987</locationX>
+        <locationY>324</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>

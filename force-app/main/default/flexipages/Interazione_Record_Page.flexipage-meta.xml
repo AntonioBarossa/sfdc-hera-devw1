@@ -24,12 +24,7 @@
                         <valueListItems>
                             <value>Interaction__c.CreateActivity</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 7 AND (3 OR 4 OR 5 OR 6)</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Status__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Aperta</rightValue>
-                                </criteria>
+                                <booleanFilter>1 AND (2 OR 3 OR 4 OR 5)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.HDT_CP_ProtocolManualActivities}</leftValue>
                                     <operator>EQUAL</operator>
@@ -54,11 +49,6 @@
                                     <leftValue>{!Record.CompanyOwner__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Reseller</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Cartacea</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -142,6 +132,10 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.SenderEmailAddress__c</fieldItem>
             </fieldInstance>
         </itemInstances>
@@ -149,7 +143,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.SubjectEmail__c</fieldItem>
             </fieldInstance>
@@ -158,7 +152,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.BodyEmail__c</fieldItem>
             </fieldInstance>

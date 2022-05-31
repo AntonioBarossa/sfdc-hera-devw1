@@ -128,7 +128,8 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
     @IsTest
     static void handleResponseTst()
     {
-        List<Order> currentOrder = [SELECT Id FROM Order];
+        List<Order> currentOrder = [SELECT Id, SupplyStreetName__c, SupplyStreetNumber__c, SupplyPostalCode__c, SupplyCity__c,
+        SupplyState__c, SupplyCountry__c, VoltageLevel__c, PowerAvailable__c, PowerCommitted__c FROM Order];
         Map<String,Object> fieldsMap = new Map<String,Object>
         {
             'FASE' => 'Amm. Precheck OK SII',
@@ -205,7 +206,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
     
         Map<String,Object> paramsMap = new Map<String,Object>
         {
-            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.mtLimit,
+            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.btLimit,
             'POTDISP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold,
             'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold,
             'VIA' => 'A',
@@ -243,7 +244,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
     
         Map<String,Object> paramsMap = new Map<String,Object>
         {
-            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.btLimit,
+            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.mtLimit,
             'POTDISP' => HDT_UTL_VoltureChangeUtilities.higherThreshold,
             'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.higherThreshold,
             'VIA' => 'A',
@@ -468,7 +469,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         Object result = voltureChangeUtl.handleDataEnrichmentConfig(config, posizione);
         Test.stopTest();
 
-        System.assertEquals('Imposta Usi Domestici (Cod. G_ICD)', String.valueOf(result),'Arricchimento fallito');
+        System.assertEquals('Imposta usi domestici', String.valueOf(result),'Arricchimento fallito');
     }
 
     
@@ -544,7 +545,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         String result = voltureChangeUtl.methodDispatcher(config, posizione);
         Test.stopTest();
 
-        System.assertEquals('Imposta Usi Domestici (Cod. G_ICD)', result,'Arricchimento fallito');
+        System.assertEquals('Imposta usi domestici', result,'Arricchimento fallito');
     }
 
     @IsTest
