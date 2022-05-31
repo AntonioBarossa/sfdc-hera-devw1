@@ -15,6 +15,9 @@ public class HDT_WS_MotoreVasTst {
 
     @TestSetup
     static void makedata(){
+
+        HDT_UTL_DataFactoryTst.pClickInstance();
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
         
         Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
 		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
@@ -26,8 +29,12 @@ public class HDT_WS_MotoreVasTst {
                         
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'HERA COMM','Azienda','Aziende SME');
             Id accId = accs[0].id;
+
+            Id pricebookId = Test.getStandardPricebookId();
+            List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, true, accs[0].id, 'Bozza');
+
             
-            List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
+            List<Order> orders = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1, false, accs[0].id, sales, pricebookId);
             for(Order o : orders){
                 o.CustomerLastName__c = 'test';
                 o.CommercialProduct__c = 'test';
@@ -40,6 +47,22 @@ public class HDT_WS_MotoreVasTst {
             
             List<ServicePoint__c> servPoints = HDT_UTL_DataFactoryTst.createServicePoint(1,true);
             Id servPointId = servPoints[0].id;
+
+            List<Product2> prods = HDT_UTL_DataFactoryTst.createProduct2(1, false);
+            prods[0].DescriptionSAP__c = 'HERA CALDAIA SICURA FAMIGLIEV3';
+            prods[0].IVA__c = 22.00;
+            insert prods;
+
+            List<PricebookEntry> entries = HDT_UTL_DataFactoryTst.createPricebookEntry(prods, true, pricebookId);
+
+            List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(2, false, orders[0].id, servPoints[0].id, prods[0].id, entries[0].id);
+            orderItems[0].SBQQ__RequiredBy__c = orderItems[1].Id;
+            orderItems[0].Quantity = 1;
+            orderItems[0].ListPrice = 0.00;
+            orderItems[0].UnitPrice = 0.00;
+            insert orderItems;
+            System.debug('************* orderItems: ' + orderItems);
+
             
             List<Contract> contracts = HDT_UTL_DataFactoryTst.createContract(1,true,accId);
             Id contractId = contracts[0].id;

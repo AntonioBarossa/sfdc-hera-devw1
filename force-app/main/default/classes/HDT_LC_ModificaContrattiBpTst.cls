@@ -38,14 +38,21 @@ public class HDT_LC_ModificaContrattiBpTst {
     static void testfilterDataToBp(){
     List<Case> caseList = [SELECT Id, ContactId, AccountId, BillingCityCode__c, BillingCity__c, BillingCountry__c FROM case];
     Map<String, Object> bpData = new Map<string, Object>{
-        'account__c'=>caseList[0],
-        'accountclass__c'=>caseList[1]};  
-        system.debug('bpData '+bpData.keyset());           
+        'Titolare'=>caseList[0],
+        'Titolare'=>caseList[1]};  
+        system.debug('bpData '+bpData.keyset());  
+        String s1  ='\"Titolare\":Account__c' + '\n' + '\"Titolare\":\"' + caseList[0].ContactId +'\"' + '\n' + '\"Titolare\":\"' + caseList[0].ContactId +'\"';
+        System.debug(s1);
+        Map<String, Object> bpDatatoSend = new Map<string, Object>{
+            'Note__c'=>s1};
         Test.startTest();
-            Map<String, Object> response = HDT_LC_ModificaContrattiBp.filterDataToBp (bpData);
+            Map<String, Object> response = HDT_LC_ModificaContrattiBp.filterDataToBp (bpDatatoSend);
         Test.stopTest();
-        System.assertEquals(true, JSON.serialize(response.get('account__c')).Contains(caseList[0].ContactId), 'The Map is well formed');
-        System.assertNotEquals(false, JSON.serialize(response.get('account__c')).Contains(caseList[0].ContactId), 'The response has been well provided with case list contact ids');
+        System.debug(response);
+        System.debug(response.get('Account__c'));
+        
+        System.assertEquals(true, JSON.serialize(response.get('Account__c')).Contains(caseList[0].ContactId), 'The Map is well formed');
+        System.assertNotEquals(false, JSON.serialize(response.get('Account__c')).Contains(caseList[0].ContactId), 'The response has been well provided with case list contact ids');
     
     }
 

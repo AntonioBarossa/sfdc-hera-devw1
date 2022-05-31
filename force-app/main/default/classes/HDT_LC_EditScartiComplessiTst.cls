@@ -422,7 +422,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
             }
         	List<wrts_prcgvr__Activity__c> actList1 = [Select id, UserCompany__c, ClosedByUsername__c from wrts_prcgvr__Activity__c where id =: actList[0].Id];
             System.assertEquals(actList1[0].UserCompany__c,u.UserCompany__c,debugString + 'gestione errore chiusura activity non funzionante');
-            System.assertEquals(actList1[0].ClosedByUsername__c,u.Username,debugString + 'gestione errore chiusura activity non funzionante');
+            System.assertEquals(actList1[0].ClosedByUsername__c,u.Username.toLowerCase(),debugString + 'gestione errore chiusura activity non funzionante');
         Test.stopTest();
     }
 

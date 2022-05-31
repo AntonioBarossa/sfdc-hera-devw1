@@ -69,7 +69,10 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
     public Case populateCase(Map<String, Object> transcodeMap, Case currentCase){
         for(String fieldName : transcodeMap.keySet()){
-            currentCase.put(fieldName, transcodeMap.get(fieldName));
+            if(fieldName != null && String.isNotBlank(fieldName))
+            {
+                currentCase.put(fieldName, transcodeMap.get(fieldName));
+            }
         }
         return currentCase;
     }

@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>OrderStatus__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Annullato</value>
     </values>
     <values>
         <field>VasStatus__c</field>

@@ -448,10 +448,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     */
     public static void recalculateOrderDateAfterKo(List<Order> newOrdersList, List<Order> oldOrdersList){
         Map<String,Order> mapOldOrder = new Map<String,Order>();
+        Map<String,wrts_prcgvr__Activity__c> activityMap = new Map<String,wrts_prcgvr__Activity__c>();
         List<Order> newOrdersListRecalc = new List<Order>();
         List<Order> newOrdersListComfort = new List<Order>();
-        for (Order oldOrder : oldOrdersList) {
+        for(Order oldOrder : oldOrdersList) {
             mapOldOrder.put(oldOrder.id,oldOrder);
+        }
+        /**@frpanico 2022-05-10
+         * Aggiunta query sulle activity di Precheck KO
+         * Nel caso in cui la data di massimo ripensamento
+         * sia maggiore (strettamente) alla data chiusura activity
+         * Non si devono ricalcolare le date
+         */
+        for(wrts_prcgvr__Activity__c a : [SELECT Id,ActivityEndTime__c, Order__c FROM wrts_prcgvr__Activity__c WHERE Order__c IN :mapOldOrder.keySet() AND Type__c LIKE '%Precheck%' AND ActivityEndTime__c != NULL WITH SECURITY_ENFORCED])
+        {
+            activityMap.put(a.Order__c, a);
         }
         for (Order newOrder : newOrdersList) {
             Order oldOrder = mapOldOrder.get(newOrder.id);
@@ -462,12 +473,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura')
                         || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch'))
                 ){
+                    if(!activityMap.isEmpty() && newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
+                        && oldOrder.MaxAfterthoughtDate__c != null && oldOrder.MaxAfterthoughtDate__c > activityMap.get(oldOrder.Id).ActivityEndTime__c)
+                    {
+                        continue;
+                    }
                     if((oldOrder.Phase__c == 'Comunicazione verso Heroku KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         ||(oldOrder.Phase__c == 'Amm. Precheck KO SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         || (oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         || (oldOrder.Phase__c == 'Esito OK da SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         /**@frpanico 2022-04-28 Aggiunto ricalcolo date per Switch clonato */
                         || (oldOrder.Phase__c == 'Bozza' && newOrder.Phase__c == 'Comunicazione verso Heroku')
+                        /**@frpanico 2022-05-23 Aggiunto caso transitorio */
+                        || (oldOrder.Phase__c == 'Caricamento Siebel KO' && newOrder.Phase__c == 'Esportazione VS Siebel')
                         || (oldOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.IncomingCreditCheckResult__c == 'OK')
                     ){
                         if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
@@ -818,12 +836,27 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         for (Order newOrder : (List<Order>) newOrdersMap.values()) {
             Order oldOrder = (Order) oldOrdersMap.get(newOrder.id); 
             String recordTypeName = rtMap.get(newOrder.RecordTypeId).getDeveloperName();
-            if(checkRecordTypeForCreditCheck(recordTypeName, newOrder)){                             
+            //Modifica necessaria, perchè delle volte il credit check arriva prima dell'aggiornamento del recordtype dell'order e trovandolo ancora in record type default non crea l'activity
+            if(checkRecordTypeForCreditCheck(recordTypeName, newOrder)
+            || ('HDT_RT_Default'.equalsIgnoreCase(recordTypeName) && 
+                    (('KO'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c) && !newOrder.IncomingCreditCheckResult__c.equalsIgnoreCase(oldOrder.IncomingCreditCheckResult__c))
+                    || (('KO'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c) && !newOrder.OutgoingCreditCheckResult__c.equalsIgnoreCase(oldOrder.OutgoingCreditCheckResult__c))))
+                )
+            ){                             
                 if (newOrder.CreditCheckDescription__c != null && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c) {    
-                    if(newOrder.OutgoingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){                        
+                    /* 
+                    @ealpi: Da analisi non mi risultano casi in cui bisogna creare l'activity se l'ordine cambia la CreditCheckDescription__c ma rimane in KO
+                    è stato quindi cambiato l'if, perchè in conflitto con il KO cvp che viene gestito in sincrono ma che contemporaneamente potrebbe essere inviato 
+                    in asincrono.
+                    if(newOrder.OutgoingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){
+                    */
+                    if('KO'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c) && !newOrder.OutgoingCreditCheckResult__c.equalsIgnoreCase(oldOrder.OutgoingCreditCheckResult__c)){                            
                         orderListOldCustomer.add(newOrder);
                     }
-                    if(newOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){                        
+                    /* 
+                    @ealpi: vedi precedente commento
+                    if(newOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){ */
+                    if('KO'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c) && !newOrder.IncomingCreditCheckResult__c.equalsIgnoreCase(oldOrder.IncomingCreditCheckResult__c)){
                         orderListNewCustomer.add(newOrder);
                     }                                      
                 }
@@ -837,8 +870,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
         }
 
-        orderMapNew.put('oldCustomer',orderListOldCustomer);
-        orderMapNew.put('newCustomer',orderListNewCustomer);   
+        if (!orderListOldCustomer.isEmpty() || !orderListNewCustomer.isEmpty()){
+            orderMapNew.put('oldCustomer',orderListOldCustomer);
+            orderMapNew.put('newCustomer',orderListNewCustomer); 
+        }
+          
         
         if(!orderMapNew.isEmpty()){
             HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
@@ -1152,35 +1188,47 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Map<Id,Order> oldOrdersMap = (Map<Id,Order>)oldOrdersMapObj;
         Map<Id,Schema.RecordTypeInfo> rtMap = Order.sobjectType.getDescribe().getRecordTypeInfosById();
         Set<Id> ordersId = new Set<Id>();
-        Set<Id> contractReferences = new Set<Id>();
-        Boolean enableQueryContracts = false;
+        //Set<Id> contractReferences = new Set<Id>();
+        //Boolean enableQueryContracts = false;
         for(Order o : newOrdersList){
             String recordTypeName = rtMap.get(o.RecordTypeId).getDeveloperName();
-            if(checkRecordTypeForCreditCheck(recordTypeName, o) && (o.IncomingCreditCheckResult__c != oldOrdersMap.get(o.Id).IncomingCreditCheckResult__c || o.OutgoingCreditCheckResult__c != oldOrdersMap.get(o.id).OutgoingCreditCheckResult__c)){
+            String oldCreditCheckDescription = String.isNotBlank(oldOrdersMap.get(o.Id).CreditCheckDescription__c) ? oldOrdersMap.get(o.Id).CreditCheckDescription__c : '';
+            if(checkRecordTypeForCreditCheck(recordTypeName, o) && (
+                (o.IncomingCreditCheckResult__c != oldOrdersMap.get(o.Id).IncomingCreditCheckResult__c && !'Saldo debito cattivo pagatore'.equalsIgnoreCase(o.CreditCheckDescription__c))
+                || ('OK'.equalsIgnoreCase(o.IncomingCreditCheckResult__c) && !oldCreditCheckDescription.equalsIgnoreCase(o.CreditCheckDescription__c) && 'Saldo debito cattivo pagatore'.equalsIgnoreCase(oldCreditCheckDescription))
+                || o.OutgoingCreditCheckResult__c != oldOrdersMap.get(o.id).OutgoingCreditCheckResult__c)
+            ){
                 o.CreditCheckInProgress__c = false;
-                if('Attesa Credit Check'.equalsIgnoreCase(o.Phase__c) || 'Credit Check KO'.equalsIgnoreCase(o.Phase__c)){
+                if('Attesa Credit Check'.equalsIgnoreCase(o.Phase__c) || 'Credit Check KO'.equalsIgnoreCase(o.Phase__c) || o.IsMassive__c){
                     ordersId.add(o.Id);
-                    if('HDT_RT_Voltura'.equalsIgnoreCase(recordTypeName) || 'HDT_RT_VolturaConSwitch'.equalsIgnoreCase(recordTypeName)){
+                    /* if('HDT_RT_Voltura'.equalsIgnoreCase(recordTypeName) || 'HDT_RT_VolturaConSwitch'.equalsIgnoreCase(recordTypeName)){
                         enableQueryContracts = true;
-                    } 
+                    } */ 
                 }                               
             }
         }
         if(!ordersId.isEmpty()){
             Map<Id, Order> currentOrders = new Map<Id, Order>([SELECT Id, RecordTypeId, IncomingCreditCheckResult__c, OutgoingCreditCheckResult__c, CreditCheckInProgress__c, Phase__c, ProcessType__c, CommodityFormula__c, IsCloned__c, SignedDate__c, RecordType.DeveloperName, ContractReference__c FROM Order WHERE Id IN: ordersId ]);
-            Map<Id,Contract> contracts = new Map<Id, Contract>();
+            /* Map<Id,Contract> contracts = new Map<Id, Contract>();
             if(enableQueryContracts){
                 for(Order o : newOrdersList){
                     contractReferences.add(o.ContractReference__c);
                 }
 
                 contracts = new Map<Id, Contract>([SELECT Id, Account.CompanyOwner__c FROM Contract WHERE Id IN :contractReferences]);
-            }
+            } */
             for(Order o : newOrdersList){
                 String recordTypeName = rtMap.get(o.RecordTypeId).getDeveloperName();
-                if(checkRecordTypeForCreditCheck(recordTypeName, o) && (o.IncomingCreditCheckResult__c != oldOrdersMap.get(o.Id).IncomingCreditCheckResult__c || o.OutgoingCreditCheckResult__c != oldOrdersMap.get(o.id).OutgoingCreditCheckResult__c)){
+                String oldCreditCheckDescription = String.isNotBlank(oldOrdersMap.get(o.Id).CreditCheckDescription__c) ? oldOrdersMap.get(o.Id).CreditCheckDescription__c : '';
+                if(checkRecordTypeForCreditCheck(recordTypeName, o) 
+                && (
+                    o.IncomingCreditCheckResult__c != oldOrdersMap.get(o.Id).IncomingCreditCheckResult__c
+                    || ('OK'.equalsIgnoreCase(o.IncomingCreditCheckResult__c) && !oldCreditCheckDescription.equalsIgnoreCase(o.CreditCheckDescription__c) && 'Saldo debito cattivo pagatore'.equalsIgnoreCase(oldCreditCheckDescription)) 
+                    || o.OutgoingCreditCheckResult__c != oldOrdersMap.get(o.id).OutgoingCreditCheckResult__c
+                    )
+                ){
                     o.CreditCheckInProgress__c = false;
-                    if('Attesa Credit Check'.equalsIgnoreCase(o.Phase__c) || 'Credit Check KO'.equalsIgnoreCase(o.Phase__c)){
+                    if('Attesa Credit Check'.equalsIgnoreCase(o.Phase__c) || 'Credit Check KO'.equalsIgnoreCase(o.Phase__c) || o.IsMassive__c){
                         if((String.isNotBlank(o.IncomingCreditCheckResult__c) && o.IncomingCreditCheckResult__c.containsIgnoreCase('KO')) || (String.isNotBlank(o.OutgoingCreditCheckResult__c) && o.OutgoingCreditCheckResult__c.containsIgnoreCase('KO'))){
                             o.Phase__c = 'Credit Check KO';
                         }
@@ -1203,7 +1251,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                     }
                                 }
                                 when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'{
-                                    if(o.CommodityFormula__c.equalsIgnoreCase('Energia Elettrica') && !String.isEmpty(contracts.get(o.ContractReference__c).Id) && !contracts.get(o.ContractReference__c).Account.CompanyOwner__c.equalsIgnoreCase('HERA COMM')){
+                                    //if(o.CommodityFormula__c.equalsIgnoreCase('Energia Elettrica') && !String.isEmpty(contracts.get(o.ContractReference__c).Id) && !contracts.get(o.ContractReference__c).Account.CompanyOwner__c.equalsIgnoreCase('HERA COMM')){
+                                    if(o.isTransition__c){
                                         o.Phase__c = 'Esportazione VS Siebel';
                                     }
                                 }
