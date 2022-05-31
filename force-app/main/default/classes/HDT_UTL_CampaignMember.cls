@@ -63,7 +63,7 @@ public with sharing class HDT_UTL_CampaignMember {
         for (CampaignMember item : newCampaignMember) {
             campaignIds.add(item.CampaignId);
         }
-
+        
         List<CampaignMemberAssigmentItem__c> query = [
             SELECT Id, Agency__c, PercentageAllocation__c, CampaingMemberAssigment__c, ProcessingType__c  FROM CampaignMemberAssigmentItem__c WHERE CampaingMemberAssigment__c IN (SELECT CampaignMemberAssigment__c FROM Campaign WHERE Id IN :campaignIds AND AssignmentType__c = 'Peso Percentuale') WITH SECURITY_ENFORCED ORDER BY PercentageAllocation__c DESC
         ];
@@ -121,11 +121,13 @@ public with sharing class HDT_UTL_CampaignMember {
 
     public static void createCommercialCode(List<CampaignMember> newCampaignMember) {
 
+    	//START>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
+        /*
         List<String> campaignIdList = new List<String>();
         List<String> campaignMemberIdList = new List<String>();
         Set<String> uniqueCampaignId = new Set<String>();
         Map<String,List<String>> allMembers = new Map<String,List<String>>();
-
+        
         for (CampaignMember member : newCampaignMember) {
             uniqueCampaignId.add(member.CampaignId);
             campaignMemberIdList.add(member.Id);
@@ -150,6 +152,18 @@ public with sharing class HDT_UTL_CampaignMember {
                 Database.executeBatch(ccBatch, 200);
             }
         }
+		*/
+        
+        List<Commercial_Code_Batch_Context__c> newContext = new List<Commercial_Code_Batch_Context__c>();
+        Integer count = 0;
+        for (CampaignMember member : newCampaignMember){
+            Datetime nowDate = Datetime.now().addSeconds(count);
+            String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+            newContext.add( new Commercial_Code_Batch_Context__c(Name=nowDateFormat, CampaignId__c=member.CampaignId, CampaignMemberId__c=member.Id));
+            ++count;
+        }
+        insert newContext;
+        //END>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
     }
 
     public static void campaignSuspension(List<Campaign> newCampaigns, List<Campaign> oldCampaigns) {
