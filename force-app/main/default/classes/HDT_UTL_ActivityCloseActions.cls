@@ -5,7 +5,7 @@
  * @last modified on  : 26-05-2022
  * @last modified by  : Giacinto Florio
 **/
-@SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.CyclomaticComplexity')
+@SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.CyclomaticComplexity, PMD.NcssMethodCount')
 public with sharing class HDT_UTL_ActivityCloseActions {
 
     private inherited sharing class HDT_WRP_Actions extends HDT_UTL_ActivityTemplate.HDT_WRP_Infos {
@@ -20,6 +20,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             this.phase = phase;
         }
         HDT_WRP_Actions(String phase, String parentCasePhase){
+            this(phase);
             this.parentCasePhase = parentCasePhase;
         }
     }
