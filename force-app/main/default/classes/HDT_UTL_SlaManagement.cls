@@ -132,12 +132,6 @@ public inherited sharing class HDT_UTL_SlaManagement {
         List<sObject> sobjList = Database.query(stringQuery);
         trackingRecordsList = (List<SlaTracking__c>)sobjList;
 
-        //trackingRecordsList = [
-        //    SELECT Id, Activity__c, SlaAdministration__c, Case__c, EndDateTime__c, StartDateTime__c, Description__c,
-        //           SlaName__c, Order__c, Status__c, Name
-        //    FROM SlaTracking__c
-        //    WHERE Case__c IN :recordIdList
-        //];
     }
 
     public void getSobjectForCriteriaCheck(){
@@ -146,7 +140,11 @@ public inherited sharing class HDT_UTL_SlaManagement {
         stringQuery += 'FROM ' + executionObject + ' ';
         stringQuery += 'WHERE Id IN : recordIdList';
         List<sObject> sobjList = Database.query(stringQuery);
-        //sObjectCriteriaMap = new Map<Id, Object>(sobjList);
+
+        sObjectCriteriaMap = new Map<Id, Object>();
+        for(sObject sObj : sobjList){
+            sObjectCriteriaMap.put(sObj.Id, sObj);
+        }
 
     }
 
@@ -179,11 +177,38 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
     }
 
-    public Boolean checkObjectCriteria(){
-        return true;
+    public Boolean errorCheckObjectCriteria(Id recordId, Map<String, Object> objectCriteria){
+
+        switch on executionObject {
+            when 'Case' {
+                Case eventCaseToCompare = (Case)sObjectCriteriaMap.get(recordId);
+                for(String field : objectCriteria.keySet()){
+                    if(eventCaseToCompare.get(field) != objectCriteria.get(field)){
+                        return true;
+                    }
+                }
+                return false;
+            }	
+            when 'Order' {
+                Order eventOrderToCompare = (Order)sObjectCriteriaMap.get(recordId);
+                for(String field : objectCriteria.keySet()){
+                    if(eventOrderToCompare.get(field) != objectCriteria.get(field)){
+                        return true;
+                    }
+                }
+                return false;
+            } when else {
+                return true;
+            }
+        }
+
     }
 
     public SlaTracking__c updateTrackingRecord(SlaTracking__c currentTrack, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule, HDT_WRP_SlaManagement.HDT_WRP_Event eventObj){
+
+        if(errorCheckObjectCriteria(eventObj.recordId, singleRule.objectCriteria)){
+            return null;
+        }
 
         if(singleRule.endRule.obj.equalsIgnoreCase(executionObject)){
 
@@ -214,6 +239,10 @@ public inherited sharing class HDT_UTL_SlaManagement {
     public SlaTracking__c createNewTrackingRecord(SlaTracking__c currentTrack, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule, HDT_WRP_SlaManagement.HDT_WRP_Event eventObj){
 
         System.debug('>>> check this rule ' + singleRule.adminRuleId);
+
+        if(errorCheckObjectCriteria(eventObj.recordId, singleRule.objectCriteria)){
+            return null;
+        }
 
         if(eventObj.fieldMap.containsKey(singleRule.startRule.field)){
 
@@ -249,7 +278,9 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
     public static HDT_WRP_SlaManagement.HDT_WRP_AdminRule buildObjectCriteria(HDT_WRP_SlaManagement.HDT_WRP_AdminRule slaMgmt, SlaAdministration__c slaAdmin){
         
-        //objectCriteria.put('Cluster__c', slaAdmin.Cluster__c);
+        if(String.isNotEmpty(slaAdmin.Cluster__c)){
+            slaMgmt.objectCriteria.put('Cluster__c', slaAdmin.Cluster__c);
+        }
 
         switch on slaAdmin.RecordType.DeveloperName {
             when 'HDT_RT_CaseSLA' {
