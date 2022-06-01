@@ -8,6 +8,7 @@ export default class HdtActivityTrace extends NavigationMixin(LightningElement) 
     @api recordId;
     @track show = false;
     @track actId;
+    @track error;
     connectedCallback() {
         getActivity({recordId:this.recordId})
         .then(result => {
@@ -19,6 +20,12 @@ export default class HdtActivityTrace extends NavigationMixin(LightningElement) 
         })
         .catch(error => {
             this.show = false;
+            if (Array.isArray(error.body)) {
+                this.error = error.body.map(e => e.message).join(', ');
+            } else if (typeof error.body.message === 'string') {
+                this.error = error.body.message;
+            }
+            console.log('errore ' +this.error);
         });
     }
 
