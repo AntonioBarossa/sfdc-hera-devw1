@@ -59,6 +59,7 @@ export default class HdtGeneralInfo extends LightningElement {
     @track channelDisabled = false;
     @track channelValue = '';
     isProfileTeleselling = false;
+    @track filterLookup = '';
 
     channelOptionsComm = [
         {label: 'Teleselling Inbound', value: 'Teleselling Inbound'},
@@ -93,32 +94,22 @@ export default class HdtGeneralInfo extends LightningElement {
         this.disabledSelezioneAgenzia = !this.disabledSelezioneAgenzia;
     }
 
+
+    handleContactSelection(event)
+    {
+        console.log('# OnSelectEvent >>> ' + JSON.stringify(event.detail));
+        this.dataToSubmit['SalesContact__c'] = event.detail.code;
+        getSaleContactRole({accountId: this.saleRecord.Account__c, contactId: this.dataToSubmit['SalesContact__c']})
+        .then(data => 
+            {
+                this.dataToSubmit['SalesContactRole__c'] = data[0].Roles;
+                console.log('# Data To Submit >>> ' + JSON.stringify(this.dataToSubmit));
+            })
+    }
+
     handleDataCollection(event) {
         this.dataToSubmit[event.target.fieldName] = event.target.value;
 
-        if (event.target.fieldName === 'SalesContact__c') {
-            this.saleContactRoles = '';
-            getSaleContactRole({ accountId: this.saleRecord.Account__c, contactId: event.target.value }).then(data => {
-                if (data.length>0 && data[0].Roles !== undefined) {
-                    this.saleContactRoles = data[0].Roles;
-                    this.template.querySelector('[data-name="SalesContactRole__c"]').value = this.saleContactRoles;
-                    this.dataToSubmit['SalesContactRole__c'] = this.saleContactRoles;
-                } else {
-                    this.saleContactRoles = '';
-                    this.template.querySelector('[data-name="SalesContactRole__c"]').value = this.saleContactRoles;
-                    this.dataToSubmit['SalesContactRole__c'] = this.saleContactRoles;
-                }
-            }).catch(error => {
-                console.log(error.body.message);
-                const toastErrorMessage = new ShowToastEvent({
-                    title: 'Errore',
-                    message: error.body.message,
-                    variant: 'error',
-                    mode: 'sticky'
-                });
-                this.dispatchEvent(toastErrorMessage);
-            });
-        }
         if (event.target.fieldName === 'Channel__c') {
 
             this.template.querySelector("[data-id='Agency__c']").value = '';
@@ -344,6 +335,7 @@ export default class HdtGeneralInfo extends LightningElement {
 
         console.log('Channel:::::::' + this.saleRecord.Channel__c);
         this.channelValue = this.saleRecord.Channel__c;
+        this.filterLookup = 'AccountId = \'' + this.saleRecord.Account__c + '\'';
        if(this.saleRecord.Channel__c == 'Teleselling Inbound' || this.saleRecord.Channel__c == 'Teleselling Outbound'){
             this.isServiceCommissioning = true;
             console.log('Channel:::::::true');
