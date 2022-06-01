@@ -5,7 +5,6 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<Co
     public Integer numberLength;
     public List<String> campaignIds= new List<String>() ;
     public List<String> campaignMembers= new List<String>();
-    public List<Commercial_Code_Batch_Context__c> batchCSContext=new List<Commercial_Code_Batch_Context__c>();//>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
     
     //START>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
     //public HDT_BA_CommercialCode(Map<String,List<String>> allMembers) {
@@ -18,7 +17,6 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<Co
         List<Commercial_Code_Batch_Context__c> context = [SELECT Id, CampaignId__c, CampaignMemberId__c 
                                                             FROM Commercial_Code_Batch_Context__c 
                                                             WHERE CommercialCodeDone__c = FALSE AND BollettaDone__c = FALSE];
-        this.batchCSContext = context;
         return context;
     }
 
@@ -118,7 +116,7 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<Co
     }
 
     public void finish(Database.BatchableContext bc){
-        System.debug('@@@@ finish batch, total size: ' + this.batchCSContext.size());
-        if(this.batchCSContext.size() > 0) System.scheduleBatch(new HDT_BA_CampaignBolletta(), 'HDT_BA_CampaignBolletta', 1);
+        System.debug('@@@@ finish batch, total size: ');
+        System.scheduleBatch(new HDT_BA_CampaignBolletta(), 'HDT_BA_CampaignBolletta', 1);
     }
 }
