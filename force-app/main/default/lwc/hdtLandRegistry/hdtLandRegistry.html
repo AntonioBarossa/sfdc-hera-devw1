@@ -35,22 +35,50 @@
                                             record-id={selectedLandRegistryId} 
                                             onsubmit={handleFormSubmit}
                                             onsuccess={handleFormSuccess}
-                                            onerror={handleFormError}>
+                                            onerror={handleFormError} 
+                                            >
                     <lightning-layout multiple-rows>
-                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled value={servicePointId} field-name="ServicePoint__c"></lightning-input-field></lightning-layout-item>
-                        
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" readonly value={servicePointId} field-name="ServicePoint__c"></lightning-input-field></lightning-layout-item>
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="CodeMissingRegistryData__c"></lightning-input-field></lightning-layout-item>
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field required={required} variant="standard" disabled={disableForm} field-name="DestinationUsage__c"> </lightning-input-field></lightning-layout-item>
-                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field required={required} variant="standard" disabled={disableForm} field-name="RegistryCity__c"> </lightning-input-field></lightning-layout-item>
+                        
+                        <!-- <lightning-layout-item size="4" padding="around-medium"><lightning-input-field required={required} variant="standard" disabled={disableForm} field-name="RegistryCity__c"> </lightning-input-field></lightning-layout-item> -->
+
+                        <lightning-layout-item size="4" padding="around-medium">
+                            <lightning-combobox required={required} 
+                                                variant="standard"
+                                                disabled={disableForm}
+                                                name="RegistryCity"
+                                                label="Comune catastale"
+                                                value={valueRegistryCity}
+                                                placeholder="Seleziona un Comune"
+                                                options={RegistryCityOptions}
+                                                onchange={handleRegistryCity}>
+                            </lightning-combobox>
+                        </lightning-layout-item>
+
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="RegistryCityCode__c"> </lightning-input-field></lightning-layout-item>
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field required={required} variant="standard" disabled={disableForm} field-name="LegalCity__c"> </lightning-input-field></lightning-layout-item>
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field required={required} variant="standard" disabled={disableForm} field-name="Province__c"> </lightning-input-field></lightning-layout-item>
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field required={required} variant="standard" disabled={disableForm} field-name="UnitType__c"> </lightning-input-field></lightning-layout-item>
-                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field required={required} variant="standard" disabled={disableForm} field-name="UrbanSection__c"> </lightning-input-field></lightning-layout-item>
-                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field required={required} variant="standard" disabled={disableForm} field-name="Sheet__c"> </lightning-input-field></lightning-layout-item>
-                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field required={required} variant="standard" disabled={disableForm} field-name="ParticleSheet__c"> </lightning-input-field></lightning-layout-item>
-                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field required={required} variant="standard" disabled={disableForm} field-name="Subaltern__c"> </lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field onchange={maxLength} required={required} variant="standard" disabled={disableForm} field-name="UrbanSection__c"> </lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field onchange={maxLength} required={required} variant="standard" disabled={disableForm} field-name="Sheet__c"> </lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field onchange={maxLength} required={required} variant="standard" disabled={disableForm} field-name="ParticleSheet__c"> </lightning-input-field></lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-medium"><lightning-input-field onchange={maxLength} required={required} variant="standard" disabled={disableForm} field-name="Subaltern__c"> </lightning-input-field></lightning-layout-item>
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field variant="standard" disabled={disableForm} field-name="RegistryCategory__c"> </lightning-input-field></lightning-layout-item>
+                        
+                        <lightning-layout-item size="4" padding="around-medium">
+                            <lightning-combobox variant="standard"
+                                                disabled={disableForm}
+                                                name="RegistryCategory"
+                                                label="Categoria Catastale"
+                                                value={valueRegistryCategory}
+                                                placeholder="Seleziona un Comune"
+                                                options={RegistryCategoryOptions}
+                                                onchange={handleRegistryCategory}>
+                            </lightning-combobox>
+                        </lightning-layout-item>
+                        
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field required={required} variant="standard" disabled={disableForm} field-name="RegistrySurface__c"> </lightning-input-field></lightning-layout-item>
                         <lightning-layout-item size="4" padding="around-medium"><lightning-input-field required={required} variant="standard" disabled={disableForm} field-name="Title__c"> </lightning-input-field></lightning-layout-item>
                         

@@ -1,5 +1,8 @@
 import { LightningElement, api, track } from 'lwc';
 import retrieveLandRegistry from '@salesforce/apex/HDT_UTL_LandRegistry.retrieveLandRegistry';
+import getCadastralCategories from '@salesforce/apex/HDT_UTL_LandRegistry.getCadastralCategories';
+import getCities from '@salesforce/apex/HDT_UTL_LandRegistry.getCities';
+
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 const columns = [
@@ -28,8 +31,25 @@ export default class HdtLandRegistry extends LightningElement {
     @api readonly = false;
 
     @track tableData = [];
+    @track tableData2 = [];
+    @track tableData3 = [];
+
     @track tableSelectedRows = [];
     @track tableColumns=columns;
+
+    valueRegistryCity = '';
+    valueRegistryCategory = '';
+
+    get RegistryCityOptions() {
+        return [
+            { label: 'Milano',      value: 'Milano' },
+            { label: 'Roma',        value: 'Roma' },
+            { label: 'Rieti',       value: 'Rieti' },
+            { label: 'Rimini',      value: 'Rimini' }
+        ];
+    }
+
+    RegistryCategoryOptions = [];
 
     get disableModifica(){ return !this.selectedLandRegistryId || this.selectedLandRegistryId=='' || this.readonly }
     disableSalva=false;
@@ -44,6 +64,9 @@ export default class HdtLandRegistry extends LightningElement {
         console.log('### connectedCallback');
         console.log('### selectedLandRegistryId= '+this.selectedLandRegistryId);
         this.call_retrieveLandRegistry();
+
+        this.call_getCadastralCategories();
+        this.call_getCities();
     }
 
     call_retrieveLandRegistry() {
@@ -69,6 +92,86 @@ export default class HdtLandRegistry extends LightningElement {
                 }
                 this.showSpinner = false;
             });
+    }
+
+    // Cadastral Categories
+    call_getCadastralCategories() {
+        console.log('### call_getCadastralCategories');
+        //if(this.selectedLandRegistryId) this.tableSelectedRows = [this.selectedLandRegistryId];
+        this.showTable=false;
+        this.showForm=false;
+        this.showSpinner = true;
+        getCadastralCategories({ })
+            .then(result => {
+                console.log('### result -> getCadastralCategories', JSON.stringify(result));
+                //this.tableData2 = result;
+                for (var i = 0; i < result.length; i++) {
+                    this.RegistryCategoryOptions=[...this.RegistryCategoryOptions,{label: result[i].Categoria__c , value: result[i].Categoria__c} ];
+                }
+                console.log('### RegistryCategoryOptions', RegistryCategoryOptions);
+            })
+            .catch(error => {
+                console.error("### getCadastralCategories Errore: "+error);
+            })
+            .finally(() => {
+                if(this.tableData2.length > 0){
+                    if(this.tableSelectedRows.length == 0 ) this.tableSelectedRows = [this.tableData2[0].Id];
+                    this.showTable=true;
+                    this.showForm=true;
+                    this.throwSelectionEvent();
+                }
+                this.showSpinner = false;
+            });
+    }
+
+    // Cities
+    call_getCities() {
+        console.log('### call_getCities');
+        //if(this.selectedLandRegistryId) this.tableSelectedRows = [this.selectedLandRegistryId];
+        this.showTable=false;
+        this.showForm=false;
+        this.showSpinner = true;
+        getCities({ })
+            .then(result => {
+                console.log('### result -> getCities', JSON.stringify(result));
+                this.tableData3 = result;
+            });
+            // .catch(error => {
+            //     console.error("### getCadastralCategories Errore: "+error);
+            // })
+            // .finally(() => {
+            //     if(this.tableData3.length > 0){
+            //         if(this.tableSelectedRows.length == 0 ) this.tableSelectedRows = [this.tableData3[0].Id];
+            //         this.showTable=true;
+            //         this.showForm=true;
+            //         this.throwSelectionEvent();
+            //     }
+            //     this.showSpinner = false;
+            // });
+    }
+
+    // Combobox
+    handleRegistryCity(event) {
+        console.log("### handleRegistryCity", event);
+        console.log("### event.target.Name ", event.target.Name);
+        console.log("### event.target.fieldName ", event.target.fieldName);
+        console.log("### event.detail.value ", event.detail.value);
+        console.log("### event.detail.label ", event.detail.label);
+
+        this.valueRegistryCity = event.detail.value;
+
+        //this.valueRegistryCity = event.detail.RegistryCity__c;
+        if(event.target.Name == 'RegistryCity') {
+            console.log("### event.target.fieldName ", event.target.fieldName);
+            console.log("### event.detail.value ", event.detail.value);
+
+            this.valueRegistryCity = event.detail.value;
+            console.log("### valueRegistryCity ", valueRegistryCity);
+        }
+
+        //var temp = this.template.querySelector("lightning-combobox[name='RegistryCity']").value;
+
+        
     }
 
     handleTableSelection(event){
@@ -119,4 +222,62 @@ export default class HdtLandRegistry extends LightningElement {
         this.dispatchEvent(evt);
     }
 
+    maxLength(event) {
+        console.log('### entered to maxLength');
+        this.disableSalva=true;
+
+        // Controllo Foglio
+        if(event.target.fieldName == "Sheet__c") {
+            console.log('### event.target.fieldName= ', event.target.fieldName);
+            const temp = event.target.value.length;
+            console.log('### temp ', temp);
+            if(temp<=4) {
+                 this.disableSalva=false;
+            } else {
+                const evt = new ShowToastEvent({ variant: 'error', title: 'Attenzione!', message: 'Lunghezza massima Foglio 4 caratteri' });
+                this.dispatchEvent(evt);
+            }
+        }
+
+        // Controllo Particella
+        if(event.target.fieldName == "ParticleSheet__c") {
+            console.log('### event.target.fieldName= ', event.target.fieldName);
+            const temp = event.target.value.length;
+            console.log('### temp ', temp);
+            if(temp<=5) {
+                 this.disableSalva=false;
+            } else {
+                const evt = new ShowToastEvent({ variant: 'error', title: 'Attenzione!', message: 'Lunghezza massima Particella 5 caratteri' });
+                this.dispatchEvent(evt);
+            }
+        }
+
+        // Controllo Sezione Urbana
+        if(event.target.fieldName == "UrbanSection__c") {
+            console.log('### event.target.fieldName= ', event.target.fieldName);
+            const temp = event.target.value.length;
+            console.log('### temp ', temp);
+            if(temp<=3) {
+                 this.disableSalva=false;
+            } else {
+                const evt = new ShowToastEvent({ variant: 'error', title: 'Attenzione!', message: 'Lunghezza massima Sezione Urbana 3 Caratteri' });
+                this.dispatchEvent(evt);
+            }
+        }
+
+        // Controllo Subalterno
+        if(event.target.fieldName == "Subaltern__c") {
+            console.log('### event.target.fieldName= ', event.target.fieldName);
+            const temp = event.target.value.length;
+            console.log('### temp ', temp);
+            if(temp<=4) {
+                 this.disableSalva=false;
+            } else {
+                const evt = new ShowToastEvent({ variant: 'error', title: 'Attenzione!', message: 'Lunghezza massima Subalterno 4 Caratteri' });
+                this.dispatchEvent(evt);
+            }
+        }
+
+    }
+    
 }
