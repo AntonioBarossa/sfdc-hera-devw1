@@ -62,7 +62,6 @@
                     <value>10</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
-                <identifier>force_highlightsPanel</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
@@ -122,7 +121,6 @@
                     <value>8</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
-                <identifier>force_highlightsPanel2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
@@ -135,7 +133,6 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtHighlightsPanel</componentName>
-                <identifier>hdtHighlightsPanel</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
@@ -152,7 +149,6 @@
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
-                <identifier>force_detailPanel</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
@@ -169,7 +165,6 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListQuickLinksContainer</componentName>
-                <identifier>force_relatedListQuickLinksContainer</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
@@ -202,7 +197,6 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>leftsidebar</name>
@@ -212,13 +206,11 @@
         <itemInstances>
             <componentInstance>
                 <componentName>HDT_LCP_CampaignToAccountList</componentName>
-                <identifier>HDT_LCP_CampaignToAccountList</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>hdtReletedListAccount</componentName>
-                <identifier>hdtReletedListAccount</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -244,7 +236,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -270,7 +261,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -296,7 +286,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer4</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -322,7 +311,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer5</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -348,7 +336,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer6</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -374,7 +361,6 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer7</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-cf53005d-089f-4f9e-bc67-449ab69597f4</name>
@@ -404,7 +390,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer8</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -430,7 +415,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer9</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -456,7 +440,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer10</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -482,7 +465,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer11</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -508,7 +490,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer12</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-nt15mjzsth</name>
@@ -538,7 +519,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer13</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -564,7 +544,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer14</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -590,7 +569,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer15</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -616,7 +594,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer16</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -642,7 +619,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer17</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-149771bc-2bc1-4c0c-b0bc-90ec1feb4e3b</name>
@@ -672,7 +648,6 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer18</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-1c761688-0053-475f-94f8-e7a802a1d5db</name>
@@ -682,7 +657,6 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtAccountAlerts</componentName>
-                <identifier>hdtAccountAlerts</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
@@ -703,7 +677,6 @@
                     <value>&lt;p&gt;Per questo cliente gli Alert sono gestiti su Siebel.&lt;/p&gt;</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
@@ -720,7 +693,6 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtHighlightsTab</componentName>
-                <identifier>hdtHighlightsTab</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-676b5a0d-5b1f-466f-a2d8-bacfcee2d032</name>
@@ -730,7 +702,6 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtDisclaimerAccountNoCustomPermissionArchive</componentName>
-                <identifier>hdtDisclaimerAccountNoCustomPermissionArchive</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.HDT_CP_Archive}</leftValue>
@@ -763,7 +734,6 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer19</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.HDT_CP_Archive}</leftValue>
@@ -796,7 +766,6 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer20</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.HDT_CP_Archive}</leftValue>
@@ -829,7 +798,6 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer21</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.HDT_CP_Archive}</leftValue>
@@ -862,7 +830,6 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer22</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.HDT_CP_Archive}</leftValue>
@@ -887,7 +854,6 @@
                     <value>Relazioni Anagrafiche</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>customTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -901,7 +867,6 @@
                     <value>Richieste del cliente</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>customTab2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -915,7 +880,6 @@
                     <value>Comunicazioni</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>customTab3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -929,7 +893,6 @@
                     <value>Attività</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>customTab4</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -943,7 +906,6 @@
                     <value>Abilitazione Alert</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>customTab5</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -957,7 +919,6 @@
                     <value>Indicatori</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>customTab6</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -971,7 +932,6 @@
                     <value>Archivio</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>customTab7</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-c55ab0d3-61d9-4597-ab2f-262306c994c6</name>
@@ -981,7 +941,6 @@
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
-                <identifier>force_detailPanel2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
@@ -998,7 +957,6 @@
                     <value>Facet-c55ab0d3-61d9-4597-ab2f-262306c994c6</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
-                <identifier>flexipage_tabset</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
@@ -1015,7 +973,6 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceKnowledge:articleSearchDesktop</componentName>
-                <identifier>forceKnowledge_articleSearchDesktop</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-f8fe99ff-dbb3-4b6d-9a02-6c7309fac0a7</name>
@@ -1025,7 +982,6 @@
         <itemInstances>
             <componentInstance>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
-                <identifier>runtime_sales_activities_activityPanel</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.HDT_CP_OneShotUser}</leftValue>
@@ -1050,7 +1006,6 @@
                     <value>Standard.Tab.knowledge</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>knowledgeTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1068,7 +1023,6 @@
                     <value>Standard.Tab.activity</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>activityTab</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-ec448755-6754-49f4-bd5a-e4f48249737b</name>
@@ -1078,13 +1032,11 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtAccountTabManagement</componentName>
-                <identifier>hdtAccountTabManagement</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>hdtLastBill</componentName>
-                <identifier>hdtLastBill</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
@@ -1103,7 +1055,6 @@
                     <name>recordId</name>
                 </componentInstanceProperties>
                 <componentName>hdtActivityTrace</componentName>
-                <identifier>c_hdtActivityTrace</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1113,7 +1064,6 @@
                     <value>Facet-ec448755-6754-49f4-bd5a-e4f48249737b</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
-                <identifier>flexipage_tabset2</identifier>
             </componentInstance>
         </itemInstances>
         <name>rightsidebar</name>
