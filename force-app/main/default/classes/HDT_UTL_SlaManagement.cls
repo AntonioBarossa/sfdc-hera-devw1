@@ -8,6 +8,8 @@ public inherited sharing class HDT_UTL_SlaManagement {
     private String executionObject;
     private String trackingFieldKey;
     private String recordTypeDevName;
+    private Map<Id, Object> sObjectCriteriaMap;
+    private List<String> criteriaFields;
 
     public HDT_UTL_SlaManagement(String executionObject) {
         System.debug('>>> HDT_UTL_SlaManagement...');
@@ -23,6 +25,8 @@ public inherited sharing class HDT_UTL_SlaManagement {
                 recordTypeDevName = 'HDT_RT_OrderSLA';
             }
         }
+
+        criteriaFields = new List<String>{'Cluster__c'};
 
     }
 
@@ -41,6 +45,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
             trackingRecordsList = new List<SlaTracking__c>();
             getTrackingRecords();
+            getSobjectForCriteriaCheck();
 
             if(trackingRecordsList.size() > 0){
                 Id keyId;
@@ -135,14 +140,24 @@ public inherited sharing class HDT_UTL_SlaManagement {
         //];
     }
 
+    public void getSobjectForCriteriaCheck(){
+        String stringQuery = '';
+        stringQuery += 'SELECT Id, ' + String.join(criteriaFields, ',') + ' ';
+        stringQuery += 'FROM ' + executionObject + ' ';
+        stringQuery += 'WHERE Id IN : recordIdList';
+        List<sObject> sobjList = Database.query(stringQuery);
+        //sObjectCriteriaMap = new Map<Id, Object>(sobjList);
+
+    }
+
     public static List<HDT_WRP_SlaManagement.HDT_WRP_AdminRule> buildSlaRules(String slaRuleType){
         
         List<HDT_WRP_SlaManagement.HDT_WRP_AdminRule> slaAdminRules = new List<HDT_WRP_SlaManagement.HDT_WRP_AdminRule>();
 
         List<SlaAdministration__c> slaAdminList = [ 
-            SELECT Id, CaseField__c, OrderField__c, Cluster__c, CompanyOwner__c, CreatedById, EndDate__c, StartDate__c,
-                   Description__c, EndCasePhase__c, StartCasePhase__c, Range__c, LastModifiedById, Name, OwnerId, Process__c,
-                   RecordTypeId, Commodity__c, SalesCompany__c, CustomerType__c, RangeType__c, Type__c
+            SELECT Id, CaseField__c, OrderField__c, Cluster__c, CompanyOwner__c, EndDate__c, StartDate__c,
+                   Description__c, EndCasePhase__c, StartCasePhase__c, Range__c, Name, Process__c,
+                   RecordType.DeveloperName, Commodity__c, SalesCompany__c, CustomerType__c, RangeType__c, Type__c
             FROM SlaAdministration__c
             WHERE RecordType.DeveloperName = :slaRuleType
             AND IsActive__c = true
@@ -155,12 +170,17 @@ public inherited sharing class HDT_UTL_SlaManagement {
         HDT_WRP_SlaManagement.HDT_WRP_AdminRule slaMgmt;
         for(SlaAdministration__c slaAdmin : slaAdminList){
             slaMgmt = new HDT_WRP_SlaManagement.HDT_WRP_AdminRule();
+            slaMgmt = buildObjectCriteria(slaMgmt, slaAdmin);
             slaMgmt = buildSingleRule(slaMgmt, slaAdmin);
             slaAdminRules.add(slaMgmt);
         }
 
         return slaAdminRules;
 
+    }
+
+    public Boolean checkObjectCriteria(){
+        return true;
     }
 
     public SlaTracking__c updateTrackingRecord(SlaTracking__c currentTrack, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule, HDT_WRP_SlaManagement.HDT_WRP_Event eventObj){
@@ -191,7 +211,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
         return currentTrack;
     }
 
-    public static SlaTracking__c createNewTrackingRecord(SlaTracking__c currentTrack, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule, HDT_WRP_SlaManagement.HDT_WRP_Event eventObj){
+    public SlaTracking__c createNewTrackingRecord(SlaTracking__c currentTrack, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule, HDT_WRP_SlaManagement.HDT_WRP_Event eventObj){
 
         System.debug('>>> check this rule ' + singleRule.adminRuleId);
 
@@ -225,6 +245,24 @@ public inherited sharing class HDT_UTL_SlaManagement {
         }
         return currentTrack;
 
+    }
+
+    public static HDT_WRP_SlaManagement.HDT_WRP_AdminRule buildObjectCriteria(HDT_WRP_SlaManagement.HDT_WRP_AdminRule slaMgmt, SlaAdministration__c slaAdmin){
+        
+        //objectCriteria.put('Cluster__c', slaAdmin.Cluster__c);
+
+        switch on slaAdmin.RecordType.DeveloperName {
+            when 'HDT_RT_CaseSLA' {
+
+            }
+            when 'HDT_RT_OrderSLA' {
+
+            }
+            when 'HDT_RT_ActivitySLA' {
+
+            }
+        }
+        return slaMgmt;
     }
 
     public static HDT_WRP_SlaManagement.HDT_WRP_AdminRule buildSingleRule(HDT_WRP_SlaManagement.HDT_WRP_AdminRule slaMgmt, SlaAdministration__c slaAdmin){
