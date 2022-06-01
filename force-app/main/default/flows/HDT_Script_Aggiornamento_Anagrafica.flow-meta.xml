@@ -488,6 +488,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <name>CampaignId</name>
+            <value>
+                <elementReference>GetCampaignMember.CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>ProcessType</name>
             <value>
                 <stringValue>Variazione Anagrafica Cliente</stringValue>
