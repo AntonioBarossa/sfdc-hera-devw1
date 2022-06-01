@@ -621,9 +621,9 @@ export default class HdtGeneralInfo extends LightningElement {
                 this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
                 this.template.querySelector("[data-id='VendorFirstName__c']").value = data[0].AgentFirstName__c;
                 this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
-                // if(data.length>1){
-                //     this.disabledAgency = false;
-                // }
+                /*if(data.length>1){
+                    this.disabledAgency = false;
+                }*/
             }).catch(error => {
                 this.loaded = true;
                 this.disabledAgency = false;
