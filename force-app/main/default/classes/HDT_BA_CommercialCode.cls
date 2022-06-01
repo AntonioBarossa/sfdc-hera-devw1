@@ -1,11 +1,28 @@
-public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SObject> {
+public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SObject>, Database.AllowsCallouts {
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
 
     public List<String> campaignIds= new List<String>() ;
     public Integer startNumber;
     public Integer numberLength;
     public List<String> campaignMembers= new List<String>();
-    public HDT_BA_CommercialCode(Map<String,List<String>> allMembers) {
+    public List<Commercial_Code_Batch_Context__c> batchCSContext;//>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
+    
+    //START>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
+    //public HDT_BA_CommercialCode(Map<String,List<String>> allMembers) {
+    public HDT_BA_CommercialCode() {
+        List<Commercial_Code_Batch_Context__c> context = [SELECT Id, CampaignId__c, CampaignMemberId__c
+                                                    		FROM Commercial_Code_Batch_Context__c 
+                                                    		WHERE CommercialCodeDone__c = FALSE AND BollettaDone__c = FALSE];
+        this.batchCSContext = context;
+        Map<String,List<String>> allMembers = new Map<String,List<String>>();
+        for(Commercial_Code_Batch_Context__c curObj : context){
+            List<String> temp = allMembers.get(curObj.CampaignId__c);
+            if(temp != null) temp.add(curObj.CampaignMemberId__c);
+			else temp = new List<String>{curObj.CampaignMemberId__c};
+            allMembers.put(curObj.CampaignId__c, temp);
+        }
+        //END>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
+        
         this.campaignIds.addAll(allMembers.keySet());
         for (List<String> members : allMembers.values()) {
             this.campaignMembers.addAll(members);
@@ -99,8 +116,19 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
 
     public void finish(Database.BatchableContext bc){
         System.debug('-------- finish batch');
-        HDT_BA_CampaignBolletta cbBatch = new HDT_BA_CampaignBolletta(this.campaignIds);
-        ID batchId = Database.executeBatch(cbBatch, 500);
-        System.debug('batchCampaignBolletta ProcessId - ' + batchId);
+        //START>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
+        for(Commercial_Code_Batch_Context__c curObj : this.batchCSContext) curObj.CommercialCodeDone__c = true;
+        update this.batchCSContext;
+        
+        List<Commercial_Code_Batch_Context__c> oldGarbage = [SELECT Id, CampaignId__c, CampaignMemberId__c
+                                                                    FROM Commercial_Code_Batch_Context__c 
+                                                                    WHERE CommercialCodeDone__c = TRUE AND BollettaDone__c = TRUE];
+        delete oldGarbage;
+        
+        if(this.batchCSContext.size() > 0) System.scheduleBatch(new HDT_BA_CampaignBolletta(), 'HDT_BA_CampaignBolletta', 60, 200);
+        //HDT_BA_CampaignBolletta cbBatch = new HDT_BA_CampaignBolletta(this.campaignIds);
+        //ID batchId = Database.executeBatch(cbBatch, 500);
+        //System.debug('batchCampaignBolletta ProcessId - ' + batchId);
+        //END>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
     }
 }

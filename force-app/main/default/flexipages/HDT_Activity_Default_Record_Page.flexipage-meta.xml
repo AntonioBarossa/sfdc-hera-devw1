@@ -1340,6 +1340,15 @@
                 <fieldItem>Record.IwsDemand__c</fieldItem>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.RecordingLink__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-fd1e394f-bd48-4fe1-a302-f7ce1ba0612f</name>
         <type>Facet</type>
     </flexiPageRegions>

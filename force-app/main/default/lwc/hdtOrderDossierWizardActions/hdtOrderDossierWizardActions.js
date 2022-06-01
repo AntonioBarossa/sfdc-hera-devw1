@@ -514,7 +514,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         this.getIsOnlyAmend();
         this.getCancelButtonStatus();
         this.getActivityVocalOrder();
-        this.getFraud();
+        //this.getFraud();
     }
 
     getActivityVocalOrder(){
