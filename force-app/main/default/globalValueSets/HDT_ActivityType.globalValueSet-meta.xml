@@ -491,11 +491,6 @@
         <label>Protocollo - Preventivi</label>
     </customValue>
     <customValue>
-        <fullName>Protocollo - Reclami</fullName>
-        <default>false</default>
-        <label>Protocollo - Reclami</label>
-    </customValue>
-    <customValue>
         <fullName>Protocollo - Reclami Contratti</fullName>
         <default>false</default>
         <label>Protocollo - Reclami Contratti</label>
