@@ -158,14 +158,15 @@ export default class HdtGeneralInfo extends LightningElement {
                     this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
                 }).catch(error => {
                     this.loaded = true;
+                    this.disabledAgency = false;
                     console.log(error.body.message);
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
                         message: error.body.message,
-                        variant: 'error',
+                        variant: 'warning',
                         mode: 'sticky'
                     });
-                    this.dispatchEvent(toastErrorMessage);
+                    //this.dispatchEvent(toastErrorMessage);
                 });
             } else {
                 this.hiddenAgency = false;
@@ -628,16 +629,20 @@ export default class HdtGeneralInfo extends LightningElement {
                 this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
                 this.template.querySelector("[data-id='VendorFirstName__c']").value = data[0].AgentFirstName__c;
                 this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
+                /*if(data.length>1){
+                    this.disabledAgency = false;
+                }*/
             }).catch(error => {
                 this.loaded = true;
+                this.disabledAgency = false;
                 console.log(error.body.message);
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
                     message: error.body.message,
-                    variant: 'error',
+                    variant: 'warning',
                     mode: 'sticky'
                 });
-                this.dispatchEvent(toastErrorMessage);
+                //this.dispatchEvent(toastErrorMessage);
             });
         }
         else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Outbound') {
@@ -654,14 +659,15 @@ export default class HdtGeneralInfo extends LightningElement {
                 this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
             }).catch(error => {
                 this.loaded = true;
+                this.disabledAgency = false;
                 console.log(error.body.message);
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
                     message: error.body.message,
-                    variant: 'error',
+                    variant: 'warning',
                     mode: 'sticky'
                 });
-                this.dispatchEvent(toastErrorMessage);
+                //this.dispatchEvent(toastErrorMessage);
             });
         }
         else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Inbound') {
@@ -679,14 +685,15 @@ export default class HdtGeneralInfo extends LightningElement {
 
             }).catch(error => {
                 this.loaded = true;
+                this.disabledAgency = false;
                 console.log(error.body.message);
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
                     message: error.body.message,
-                    variant: 'error',
+                    variant: 'warning',
                     mode: 'sticky'
                 });
-                this.dispatchEvent(toastErrorMessage);
+                //this.dispatchEvent(toastErrorMessage);
             });
         }
 
@@ -791,14 +798,15 @@ export default class HdtGeneralInfo extends LightningElement {
             this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
         }).catch(error => {
             this.loaded = true;
+            this.disabledAgency = false;
             console.log(error.body.message);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: error.body.message,
-                variant: 'error',
+                variant: 'warning',
                 mode: 'sticky'
             });
-            this.dispatchEvent(toastErrorMessage);
+            //this.dispatchEvent(toastErrorMessage);
         });
     }
 }
