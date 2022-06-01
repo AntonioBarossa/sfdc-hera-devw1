@@ -938,7 +938,6 @@
             <targetReference>AssegnaValori_2</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>AssegnaValori_2</targetReference>
         </faultConnector>
         <inputReference>Get_Activity</inputReference>
