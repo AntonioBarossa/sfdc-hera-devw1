@@ -80,6 +80,8 @@ global with sharing class HDT_WS_MrrRequest {
                     mrrResponseItem.objects.add(responseObject);
                     //FINE SVILUPPI EVERIS
                 }
+            }else if (requestBody.requests[0].header.fields != null && String.isBlank(requestBody.requests[0].header.fields.get(0).value)){
+                throw new HDT_UTL_HeraException('Required Header Field Missing: PROCESS_CATEGORY');
             }
             if (richiestaNonIdentificata && requestBody.requests[0].objects != null && !requestBody.requests[0].objects.isEmpty() 
                 && requestBody.requests[0].objects[0] != null && requestBody.requests[0].objects[0].fields != null ){

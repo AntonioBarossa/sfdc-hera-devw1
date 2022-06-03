@@ -20,9 +20,20 @@
 
                             <lightning-input-field disabled onchange={handleDataCollection} class="slds-size_1-of-3"
                                 field-name="CreatedBy__c" value={currentUserName} variant="label-stacked"></lightning-input-field>
-                            <lightning-input-field required disabled={disabledInput} onchange={handleDataCollection} placeholder=""
-                                class="slds-size_1-of-3" data-id="SalesContact__c" field-name="SalesContact__c" variant="label-stacked"></lightning-input-field>
-                            
+                            <!-- <lightning-input-field required disabled={disabledInput} onchange={handleDataCollection} placeholder=""
+                                class="slds-size_1-of-3" data-id="SalesContact__c" field-name="SalesContact__c" variant="label-stacked"></lightning-input-field> -->
+                            <div class="slds-size_1-of-3">
+                                <label class="slds-form-element__label slds-no-flex"><abbr class="slds-required" title="required">*</abbr>Contatto di Vendita</label>
+                                <c-hdt-custom-lookup 
+                                    obj-name="AccountContactRelation" 
+                                    set-as-key="ContactId"
+                                    search-by="Contact.Name"
+                                    detail-fields="Roles"
+                                    icon-name="standard:contact"
+                                    filter={filterLookup}
+                                    onvalueselect={handleContactSelection}>
+                                </c-hdt-custom-lookup>
+                            </div>
                             <lightning-input-field disabled class="slds-size_1-of-3" field-name="SalesContactRole__c" placeholder=""
                                 data-name="SalesContactRole__c" variant="label-stacked"> </lightning-input-field>
                             <lightning-input-field disabled required placeholder=""

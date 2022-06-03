@@ -101,7 +101,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>710</locationX>
-        <locationY>1454</locationY>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -111,6 +111,22 @@
         </assignmentItems>
         <connector>
             <targetReference>AggiornaCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignProcessType</name>
+        <label>AssignProcessType</label>
+        <locationX>446</locationX>
+        <locationY>1214</locationY>
+        <assignmentItems>
+            <assignToReference>RequestAccomplished</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Accolta - Richiesta Info</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ScreenInput</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -200,7 +216,7 @@
         <name>Fase_Elaborazione_Risposta</name>
         <label>Fase: Elaborazione Risposta?</label>
         <locationX>578</locationX>
-        <locationY>1214</locationY>
+        <locationY>1550</locationY>
         <defaultConnector>
             <targetReference>GetCaseAggiornato</targetReference>
         </defaultConnector>
@@ -241,6 +257,31 @@
                 <targetReference>Popola_risposta_template</targetReference>
             </connector>
             <label>Selezionato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Quale_Processo</name>
+        <label>Quale Processo?</label>
+        <locationX>578</locationX>
+        <locationY>1094</locationY>
+        <defaultConnector>
+            <targetReference>ScreenInput</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Reclamo/Doppia Fatt.</defaultConnectorLabel>
+        <rules>
+            <name>Richieste_Info</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseInvioRisposta.FirstLevelComplaintClassification__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Richiesta di informazioni</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignProcessType</targetReference>
+            </connector>
+            <label>Richieste Info</label>
         </rules>
     </decisions>
     <decisions>
@@ -443,7 +484,7 @@
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
         <locationX>710</locationX>
-        <locationY>1334</locationY>
+        <locationY>1670</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValori</targetReference>
@@ -492,7 +533,7 @@
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>710</locationX>
-        <locationY>1574</locationY>
+        <locationY>1910</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -501,7 +542,7 @@
         <locationX>578</locationX>
         <locationY>974</locationY>
         <connector>
-            <targetReference>ScreenInput</targetReference>
+            <targetReference>Quale_Processo</targetReference>
         </connector>
         <inputReference>GetCaseInvioRisposta</inputReference>
     </recordUpdates>
@@ -587,7 +628,7 @@
         <name>ScreenInput</name>
         <label>ScreenInput</label>
         <locationX>578</locationX>
-        <locationY>1094</locationY>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
