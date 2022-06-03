@@ -205,19 +205,20 @@ public with sharing class HDT_UTL_Account {
             acc.CustomerMarking__c = siebelCustomer[0].X_MARCATURA_CLIENTE__c;
             HDT_UTL_DatabaseService.updateSObject(acc);
 
-            List<AccountContactRelation> acrList = [SELECT Id, AccountId, ContactId, Roles 
+            List<AccountContactRelation> acrList = [SELECT Id, AccountId, Account.Category__c, ContactId, Roles 
                                                     FROM AccountContactRelation 
-                                                    WHERE AccountId = :acc.Id
+                                                    WHERE ContactId = :cont.Id
                                                     WITH SECURITY_ENFORCED];
             
             for(AccountContactRelation acr : acrList){
-                if(acr.Roles == 'Amministratore Condominio'){
+                if(acr.Roles.equalsIgnoreCase('Amministratore condominio')){
                     isAmministratoreCondominio = true;
+                    category = acr.Account.Category__c;
                     contRelation.Id = acr.ContactId;
                     break;
                 }
             }
-            if(acc.Category__c == 'Grandi Condomini' && isAmministratoreCondominio){
+            if((category.equalsIgnoreCase('Grandi Condomini') || category.equalsIgnoreCase('Piccoli Condomini')) && isAmministratoreCondominio){
                 List<SiebelContact__x> siebelContact = new List<SiebelContact__x>();
                 siebelContact = [SELECT Id, INTEGRATION_ID__c 
                                  FROM SiebelContact__x 
@@ -248,7 +249,19 @@ public with sharing class HDT_UTL_Account {
                 acc.CustomerCode__c = res.data.codiceBP;
                 HDT_UTL_DatabaseService.updateSObject(acc);
             }
-            if(acc.Category__c == 'Grandi Condomini'){
+            List<AccountContactRelation> acrList = [SELECT Id, AccountId, Account.Category__c, ContactId, Roles 
+            FROM AccountContactRelation 
+            WHERE ContactId = :cont.Id
+            WITH SECURITY_ENFORCED];
+            for(AccountContactRelation acr : acrList){
+                if(acr.Roles.equalsIgnoreCase('Amministratore condominio')){
+                    isAmministratoreCondominio = true;
+                    category = acr.Account.Category__c;
+                    contRelation.Id = acr.ContactId;
+                    break;
+                }
+            }
+            if((category.equalsIgnoreCase('Grandi Condomini') || category.equalsIgnoreCase('Piccoli Condomini')) && isAmministratoreCondominio){
                     //Creazione Condominio su SAP
                     req = callAmCaCreate(acc,cont);
                     res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
@@ -428,9 +441,9 @@ public with sharing class HDT_UTL_Account {
 
         for(AccountContactRelation accountContactRel : accountContactRelList){
             //AccountContactRelation del Amm. o del Legale se presenti
-            if( accountContactRel.Roles == 'Amministratore condominio' || accountContactRel.Roles == 'Legale rappresentante' ){
+            if( accountContactRel.Roles.equalsIgnoreCase('Amministratore condominio') || accountContactRel.Roles.equalsIgnoreCase('Legale rappresentante')){
                 accountContactMap = generateAccountContact(accountContactRel);
-                if( accountContactRel.Roles == 'Amministratore condominio'){
+                if( accountContactRel.Roles.equalsIgnoreCase('Amministratore condominio')){
                     isAmministratore = true;
                 }
                 break;
@@ -470,7 +483,7 @@ public with sharing class HDT_UTL_Account {
                 acc.CustomerCode__c = resCreate.data.codiceBP;
             } // TODO gestire l'errore 
 
-            if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) && isAmministratore ){
+            if((acc.Category__c.equalsIgnoreCase('Grandi Condomini') || acc.Category__c.equalsIgnoreCase('Piccoli Condomini')) && isAmministratore ){
                 req = callAmCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
                 if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
