@@ -127,8 +127,11 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
     connectedCallback(){
         console.log('Origin: ' + Origin);
         console.log('SignMode: ' + SignMode);
-
-        if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
+        /*if(this.processType && this.processType === 'Modifica Privacy'){
+            this.labelConfirm = 'Conferma pratica';
+            this.showPreviewButton = false;
+            this.previewExecuted = true;
+        }else*/ if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
             this.labelConfirm = 'Conferma pratica';
             this.showPreviewButton = false;
             this.previewExecuted = true;
@@ -144,6 +147,25 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
             this.previousButton = true;
         }*/
 
+    }
+    handleSignModeChange(event){
+        console.log('handleSignModeChange');
+        var signMode = event.detail;
+        console.log('handleSignModeChange signMode ' + signMode);
+        console.log('handleSignModeChange this.processType ' + this.processType);
+        if(signMode && this.processType && (this.processType == 'Richiesta Domiciliazione' || this.processType === 'Modifica Privacy') && signMode === 'Vocal Order'){
+            this.labelConfirm = 'Conferma pratica';
+            this.showPreviewButton = false;
+            this.previewExecuted = true;
+        }else if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
+            this.labelConfirm = 'Conferma pratica';
+            this.showPreviewButton = false;
+            this.previewExecuted = true;
+        }else{
+            this.labelConfirm = 'Invia documenti';
+            this.showPreviewButton = true;
+            this.previewExecuted = false;
+        }
     }
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
         wiredCase({ error, data }) {
@@ -275,6 +297,18 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 this.inputParams = JSON.stringify(inputParams);
                 this.oldSignMode = this.caseRecord.fields.SignMode__c.value;
                 console.log(this.inputParams);
+                var signMode = this.caseRecord.fields.SignMode__c.value;
+                if(signMode && signMode === 'Vocal Order' && this.processType && (this.processType == 'Richiesta Domiciliazione' || this.processType === 'Modifica Privacy')){
+                    this.labelConfirm = 'Conferma pratica';
+                    this.showPreviewButton = false;
+                    this.previewExecuted = true;
+                }else if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
+                    this.labelConfirm = 'Conferma pratica';
+                    this.showPreviewButton = false;
+                    this.previewExecuted = true;
+                }else{
+                    this.labelConfirm = 'Invia documenti';
+                }
             }
         }
     handlePreviewExecuted(event){
@@ -282,6 +316,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
     }
 
     handlePreview(event){
+        console.log('this.processType ' + this.processType);
         let returnValue = this.template.querySelector('c-hdt-document-signature-manager').handlePreview();
     }
 
