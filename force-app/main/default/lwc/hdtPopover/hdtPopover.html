@@ -3,6 +3,12 @@
         <div class="slds-popover__body slds-p-left--none">
             <!-- <c-hdt-popover-settings-menu></c-hdt-popover-settings-menu>
             <c-hdt-refresh-button></c-hdt-refresh-button> -->
+            <template if:true={showHelpButton}>
+                <c-hdt-campaign-member-script-launcher camp-member-id={campaignMemberId} onstatusupdate={statusUpdate}>
+                </c-hdt-campaign-member-script-launcher>
+            </template>
+
+
             <template if:true={showNewCaseButton}>
                 <c-hdt-new-campaign-case account-id={recordId} campaign-id={campaignId} campaign-member-id={campaignMemberId} case-cluster={caseCluster} case-type={caseType}></c-hdt-new-campaign-case>
             </template>
@@ -13,10 +19,7 @@
             </c-hdt-not-proposed>
             <c-hdt-negative-outcome campaign-member-id={campaignMemberId} onstatusupdate={statusUpdate}>
             </c-hdt-negative-outcome>
-            <template if:true={showHelpButton}>
-                <c-hdt-campaign-member-script-launcher campaign-member-id={campaignMemberId} onstatusupdate={statusUpdate}>
-                </c-hdt-campaign-member-script-launcher>
-            </template>
+
 
         </div>
     </section>
