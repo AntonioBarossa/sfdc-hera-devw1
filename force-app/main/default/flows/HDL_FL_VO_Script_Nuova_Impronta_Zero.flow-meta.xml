@@ -1505,6 +1505,42 @@
             <targetReference>Promo_Decision_0_0_0_0_0</targetReference>
         </connector>
         <fields>
+            <name>Bonus_EE_Text_6_0_0_0_0_0_0_0</name>
+            <fieldText>&lt;p&gt;Bonus %&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi e del 30% dal 13° al 24° mese di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa Web Luce</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Bonus_EE_Text_1_0_0_0_0_0_0</name>
             <fieldText>&lt;p&gt;Bonus €/kWh&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta, le sarà riconosciuto un bonus incrementale legato alla durata della fornitura. A partire dal settimo fino al dodicesimo mese di fornitura, il bonus comprensivo delle perdite di rete, sotto forma di sconto sulla componente energia, sarà pari a 0,00550 €/kWh. In bolletta invece sarà esposto al netto delle perdite e pari a: 0,0050 €/kWh; dal tredicesimo al ventiquattresimo mese il bonus sulla componente energia, comprensivo delle perdite di rete, aumenterà a 0,0551 €/kWh. In bolletta invece sarà esposto al netto delle perdite e pari a: 0,0500 €/kWh.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -1538,7 +1574,7 @@
             <fieldText>&lt;p&gt;Bonus €/a&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus Soluzioni Sostenibili&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>4 AND (1 OR 2 OR 3)</conditionLogic>
+                <conditionLogic>4 AND (1 OR 2 OR 3 OR 5)</conditionLogic>
                 <conditions>
                     <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
                     <operator>Contains</operator>
@@ -1565,6 +1601,35 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Bonus Soluzioni Sostenibili</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa Web</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Bonus_EE_Text_5_0_0_0_0_0_0_0</name>
+            <fieldText>&lt;p&gt;Bonus Natura&lt;/p&gt;&lt;p&gt;Il bonus previsto dall’offerta e riservato ai nostri nuovi clienti ammonta a 30 €. Il bonus sarà riconosciuto ripartito in sei quote di uguale importo ed accreditato nei primi 3 mesi di fornitura e nel tredicesimo, quattordicesimo e quindicesimo di fornitura. Il bonus è subordinato ad una durata della fornitura non inferiore a 12 mesi.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa Web</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Bonus Natura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1611,7 +1676,7 @@
             <fieldText>&lt;p&gt;Bonus €/a&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus Soluzioni Sostenibili&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>(1 OR 2 OR 3) AND 4</conditionLogic>
+                <conditionLogic>(1 OR 2 OR 3 OR 5) AND 4</conditionLogic>
                 <conditions>
                     <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
                     <operator>Contains</operator>
@@ -1638,6 +1703,35 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Bonus Soluzioni Sostenibili</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa Web Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Bonus_EE_Text_5_0_0_0_0_0_0_0_0</name>
+            <fieldText>&lt;p&gt;Bonus Natura&lt;/p&gt;&lt;p&gt;Il bonus previsto dall’offerta e riservato ai nostri nuovi clienti ammonta a 30 €. Il bonus sarà riconosciuto ripartito in sei quote di uguale importo ed accreditato nei primi 3 mesi di fornitura e nel tredicesimo, quattordicesimo e quindicesimo di fornitura. Il bonus è subordinato ad una durata della fornitura non inferiore a 12 mesi.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa Web</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Bonus Natura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1706,6 +1800,13 @@
                         <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa Web Luce</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -1740,6 +1841,28 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Bonus Soluzioni Sostenibili</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Bonus_EE_Text_5_0_0_0_0_0_0_0_0_0_0</name>
+            <fieldText>&lt;p&gt;Bonus Natura&lt;/p&gt;&lt;p&gt;Il bonus previsto dall’offerta e riservato ai nostri nuovi clienti ammonta a 30 €. Il bonus sarà riconosciuto ripartito in sei quote di uguale importo ed accreditato nei primi 3 mesi di fornitura e nel tredicesimo, quattordicesimo e quindicesimo di fornitura. Il bonus è subordinato ad una durata della fornitura non inferiore a 12 mesi.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa Web</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Bonus Natura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1786,7 +1909,7 @@
             <fieldText>&lt;p&gt;Bonus €/a&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus Soluzioni Sostenibili&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>(1 OR 2 OR 3) AND 4</conditionLogic>
+                <conditionLogic>(1 OR 2 OR 3 OR 5) AND 4</conditionLogic>
                 <conditions>
                     <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
                     <operator>Contains</operator>
@@ -1813,6 +1936,35 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Bonus Soluzioni Sostenibili</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Bonus_EE_Text_5_0_0_0_0_0_0_0_0_0_0_0</name>
+            <fieldText>&lt;p&gt;Bonus Natura&lt;/p&gt;&lt;p&gt;Il bonus previsto dall’offerta e riservato ai nostri nuovi clienti ammonta a 30 €. Il bonus sarà riconosciuto ripartito in sei quote di uguale importo ed accreditato nei primi 3 mesi di fornitura e nel tredicesimo, quattordicesimo e quindicesimo di fornitura. Il bonus è subordinato ad una durata della fornitura non inferiore a 12 mesi.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa Luce</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Bonus Natura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2105,10 +2257,10 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text2</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa l’89% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 126 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 11% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa l’90% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 10% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
                     <operator>EqualTo</operator>
@@ -2121,6 +2273,13 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa Linear Gas</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa Web Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3164,7 +3323,7 @@
             <targetReference>HDT_FL_Script_Gestione_Ordini</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>HDT_FL_Script_Concatenazione_Ordini_Figli_0</name>
         <label>HDT_FL_Script_Concatenazione Ordini Figli</label>
