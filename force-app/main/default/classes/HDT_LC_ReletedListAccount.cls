@@ -45,6 +45,7 @@ public with sharing class HDT_LC_ReletedListAccount {
             }
             if(dataContact.get('role').equalsIgnoreCase('Amministratore Condominio'))
             {
+                String accountId = listAccCon[0].AccountId;
                 Account acc = [SELECT Id,
                 RecordTypeId,
                 Category__c,
@@ -68,7 +69,7 @@ public with sharing class HDT_LC_ReletedListAccount {
                 VATGroupStartDate__c,
                 VATGroupEndDate__c
                 FROM Account
-                WHERE Id = :listAccCon[0].AccountId
+                WHERE Id = :accountId
                 WITH SECURITY_ENFORCED
                 LIMIT 1
                 ];
