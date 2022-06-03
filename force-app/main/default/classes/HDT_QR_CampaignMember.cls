@@ -85,7 +85,8 @@ public inherited sharing class HDT_QR_CampaignMember {
             Campaign.Required__c,
             Campaign.ProcessType__c,
             Campaign.CaseCategory__c,
-            Campaign.CaseSubCategory__c
+            Campaign.CaseSubCategory__c,
+            Campaign.FlowType__c
             FROM
             CampaignMember
             WHERE ContactId IN :contacts
@@ -120,7 +121,8 @@ public inherited sharing class HDT_QR_CampaignMember {
             Campaign.Required__c,
             Campaign.ProcessType__c,
             Campaign.CaseCategory__c,
-            Campaign.CaseSubCategory__c
+            Campaign.CaseSubCategory__c,
+            Campaign.FlowType__c
             FROM
             CampaignMember
             WHERE ContactId IN :contacts
@@ -157,7 +159,8 @@ public inherited sharing class HDT_QR_CampaignMember {
             Campaign.Required__c,
             Campaign.ProcessType__c,
             Campaign.CaseCategory__c,
-            Campaign.CaseSubCategory__c
+            Campaign.CaseSubCategory__c,
+            Campaign.FlowType__c
             FROM
             CampaignMember
             WHERE ContactId IN :contacts
