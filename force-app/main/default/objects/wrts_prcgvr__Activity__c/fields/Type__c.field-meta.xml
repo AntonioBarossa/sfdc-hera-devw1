@@ -431,6 +431,16 @@
                 <label>Protocollo - Da tipizzare</label>
             </value>
             <value>
+                <fullName>Protocollo - Reclami Contratti</fullName>
+                <default>false</default>
+                <label>Protocollo - Reclami Contratti</label>
+            </value>
+			<value>
+                <fullName>Protocollo - Reclami Post Vendita</fullName>
+                <default>false</default>
+                <label>Protocollo - Reclami Post Vendita</label>
+            </value>
+            <value>
                 <fullName>Protocollo - Disattivazioni</fullName>
                 <default>false</default>
                 <label>Protocollo - Disattivazioni</label>
@@ -631,6 +641,16 @@
                 <label>Validazione Vocal Order</label>
             </value>
             <value>
+                <fullName>Vendita - Contratti</fullName>
+                <default>false</default>
+                <label>Vendita - Contratti</label>
+            </value>
+            <value>
+                <fullName>Venditore Non Definito</fullName>
+                <default>false</default>
+                <label>Venditore Non Definito</label>
+            </value>
+            <value>
                 <fullName>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</fullName>
                 <default>false</default>
                 <label>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</label>
@@ -689,11 +709,6 @@
                 <fullName>Vocal Order non validato</fullName>
                 <default>false</default>
                 <label>Vocal Order non validato</label>
-            </value>
-            <value>
-                <fullName>Venditore Non Definito</fullName>
-                <default>false</default>
-                <label>Venditore Non Definito</label>
             </value>
         </valueSetDefinition>
     </valueSet>

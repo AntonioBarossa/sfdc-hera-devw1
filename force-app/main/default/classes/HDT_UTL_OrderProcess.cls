@@ -487,12 +487,18 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         /**@frpanico 2022-05-23 Aggiunto caso transitorio */
                         || (oldOrder.Phase__c == 'Caricamento Siebel KO' && newOrder.Phase__c == 'Esportazione VS Siebel')
                         || (oldOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.IncomingCreditCheckResult__c == 'OK')
+                        /**@af inserito per ricalcolo al documenti Validati */
+                        || (oldOrder.Phase__c == 'In attesa validazione' && newOrder.Phase__c == 'Documentazione Validata')
                     ){
                         if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
-                            newOrder.DateSentToSII__c = Date.today();
-                            String category = newOrder.CustomerCategory__c;
-                            if(category.equalsIgnoreCase('Famiglie')){
-                                newOrdersListRecalc.add(newOrder);
+                            if(newOrder.Phase__c == 'Documentazione Validata' && Date.today() <= newOrder.DateSentToSII__c){
+                                continue;
+                            }else{
+                                newOrder.DateSentToSII__c = Date.today();
+                                String category = newOrder.CustomerCategory__c;
+                                if(category.equalsIgnoreCase('Famiglie')){
+                                    newOrdersListRecalc.add(newOrder);
+                                }
                             }
                         }else {
                             newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
@@ -1250,12 +1256,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                         o.Phase__c = 'Comunicazione verso Heroku';
                                     }
                                 }
+                                /* 
                                 when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'{
                                     //if(o.CommodityFormula__c.equalsIgnoreCase('Energia Elettrica') && !String.isEmpty(contracts.get(o.ContractReference__c).Id) && !contracts.get(o.ContractReference__c).Account.CompanyOwner__c.equalsIgnoreCase('HERA COMM')){
                                     if(o.isTransition__c){
                                         o.Phase__c = 'Esportazione VS Siebel';
                                     }
-                                }
+                                } */
                             }
                             if(o.IsMassive__c){
                                 if('HDT_RT_Voltura'.equalsIgnoreCase(currentOrder.RecordType.DeveloperName)){

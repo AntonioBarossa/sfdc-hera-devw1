@@ -665,6 +665,36 @@
                 <default>false</default>
                 <label>Voltura Tecnica</label>
             </value>
+            <value>
+                <fullName>Modifica Contratti Preattivazione</fullName>
+                <default>false</default>
+                <label>Modifica Contratti Preattivazione</label>
+            </value>
+            <value>
+                <fullName>Contratti/Bonus Commerciale</fullName>
+                <default>false</default>
+                <label>Contratti/Bonus Commerciale</label>
+            </value>
+            <value>
+                <fullName>VOTIVE Modena/Nuovo contratto</fullName>
+                <default>false</default>
+                <label>VOTIVE Modena/Nuovo contratto</label>
+            </value>
+            <value>
+                <fullName>VOTIVE Modena/Subentro</fullName>
+                <default>false</default>
+                <label>VOTIVE Modena/Subentro</label>
+            </value>
+            <value>
+                <fullName>VOTIVE Modena/Intervento Riattivazione luce</fullName>
+                <default>false</default>
+                <label>VOTIVE Modena/Intervento Riattivazione luce</label>
+            </value>
+            <value>
+                <fullName>Documentale/Copia Contratto</fullName>
+                <default>false</default>
+                <label>Documentale/Copia Contratto</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
