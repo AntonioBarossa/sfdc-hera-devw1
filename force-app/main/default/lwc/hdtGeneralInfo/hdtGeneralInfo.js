@@ -263,7 +263,7 @@ export default class HdtGeneralInfo extends LightningElement {
 
     handleNext() {
 
-        if (this.template.querySelector("[data-id='SalesContact__c']") !== null
+        /*if (this.template.querySelector("[data-id='SalesContact__c']") !== null
             && (this.template.querySelector("[data-id='SalesContact__c']").value === ''
                 || this.template.querySelector("[data-id='SalesContact__c']").value === null)) {
             this.loading = false;
@@ -275,8 +275,23 @@ export default class HdtGeneralInfo extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
             return;
-        }
+        }*/
         
+        /* Controllo sales contact */
+        console.log('# SalesContact >>>' + this.dataToSubmit['SalesContact__c']);
+        if(this.dataToSubmit['SalesContact__c'] == null || this.dataToSubmit['SalesContact__c'] == undefined || this.dataToSubmit['SalesContact__c'] == '')
+        {
+            this.loading = false;
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Popolare il campo Contatto Vendita',
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+            return;
+        }
+
         if (this.template.querySelector("[data-id='Agency__c']") !== null
             && (this.template.querySelector("[data-id='Agency__c']").value === ''
                 || this.template.querySelector("[data-id='Agency__c']").value === null)) {
