@@ -49,7 +49,8 @@ public inherited sharing class HDT_UTL_Dependencies {
                                     WHERE Order__r.ID IN: orders.keySet()
                                     WITH SECURITY_ENFORCED];
                     for(ServiceRequest__c sr : srs){
-                        sr.NextPhase__c = orders.get(sr.Order__c).Phase__c;
+                        Boolean isAnaConsTransition = orders.get(sr.Order__c).VasSubtype__c != null && orders.get(sr.Order__c).VasSubtype__c == 'Analisi Consumi' && orders.get(sr.Order__c).isTransition__c ? true:false;
+                        sr.NextPhase__c = isAnaConsTransition? 'Completata':orders.get(sr.Order__c).Phase__c;
                         incomingProcesses.add(sr);
                     }
                 }catch(Exception ex){

@@ -16,6 +16,8 @@ public with sharing class HDT_UTL_AccountTst{
 		internalUser.UserRoleId=HDT_UTL_DataFactoryTst.getUserRoleId(constants.USERROLE_DEVELOPERNAME_BACKOFFICE);
 		insert internalUser;
 
+		HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, 'HDT_Archive', true);
+
 		System.runAs(internalUser){
 
 			HDT_UTL_DataFactoryTst.createWebServiceConfiguration('BP_CA', 'test.com', 'post', 'testUser');

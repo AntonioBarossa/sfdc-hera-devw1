@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>CasePhase__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Completata</value>
     </values>
     <values>
         <field>CaseStatus__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Closed</value>
     </values>
     <values>
         <field>OrderPhase__c</field>

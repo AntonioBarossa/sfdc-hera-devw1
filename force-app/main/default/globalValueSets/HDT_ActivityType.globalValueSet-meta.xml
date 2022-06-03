@@ -206,11 +206,6 @@
         <label>Creare Istruttoria</label>
     </customValue>
     <customValue>
-        <fullName>Credit check KO</fullName>
-        <default>false</default>
-        <label>Credit check KO</label>
-    </customValue>
-    <customValue>
         <fullName>Del. 40 gestione doc.invio a DL</fullName>
         <default>false</default>
         <label>Del. 40 gestione doc.invio a DL</label>
@@ -409,6 +404,11 @@
         <fullName>Iva e Accise da validare</fullName>
         <default>false</default>
         <label>Iva e Accise da validare</label>
+    </customValue>
+    <customValue>
+        <fullName>KO Credit Check</fullName>
+        <default>false</default>
+        <label>KO Credit Check</label>
     </customValue>
     <customValue>
         <fullName>KO Fornitore</fullName>
@@ -636,14 +636,14 @@
         <label>Risposta ricevuta</label>
     </customValue>
     <customValue>
+        <fullName>Scarti Documentali</fullName>
+        <default>false</default>
+        <label>Scarti Documentali</label>
+    </customValue>
+    <customValue>
         <fullName>Scarto comunicazione</fullName>
         <default>false</default>
         <label>Scarto comunicazione</label>
-    </customValue>
-    <customValue>
-        <fullName>Scarto Documentale</fullName>
-        <default>false</default>
-        <label>Scarto Documentale</label>
     </customValue>
     <customValue>
         <fullName>Scarto transitorio</fullName>
@@ -862,6 +862,18 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Amm. Precheck KO SII, Precheck KO precedente intestatario</label>
+    </customValue>
+    <customValue>
+        <fullName>Scarto Documentale</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Scarto Documentale</label>
+    </customValue>
+    <customValue>
+        <fullName>Credit check KO</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Credit check KO</label>
     </customValue>
     <customValue>
         <fullName>Approvazione Quote</fullName>
