@@ -116,7 +116,7 @@ public with sharing class HDT_LC_EditScartiComplessi {
     }
 
     private static Double setStepCheckAccount(Order ord, ServicePoint__c serv,Double step){
-        if (serv != null && serv.Account__c != null && serv.Account__c != ord.AccountId){
+        if (serv != null && serv.Account__c != ord.AccountId){
             return null;
         }
         return step;
@@ -125,7 +125,7 @@ public with sharing class HDT_LC_EditScartiComplessi {
     @TestVisible
     private static Double setStepForVoltureWithSwitch(ServicePoint__c serv, Id accountId){
         Double step = 4;
-        if (serv != null && serv.Account__c != null && serv.Account__c != accountId){
+        if (serv != null && serv.Account__c != accountId){
             step = null;
         }else if (serv != null && 'Energia Elettrica'.equalsIgnoreCase(serv.CommoditySector__c)){
             step = 3;

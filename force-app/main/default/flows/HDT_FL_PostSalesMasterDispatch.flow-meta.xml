@@ -47,7 +47,7 @@
         <name>getIsCommunityValue</name>
         <label>Valorizzazione variabile isCommunity</label>
         <locationX>7505</locationX>
-        <locationY>4598</locationY>
+        <locationY>4478</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -66,7 +66,7 @@
         <name>getuuid</name>
         <label>getuuid</label>
         <locationX>7296</locationX>
-        <locationY>4838</locationY>
+        <locationY>4718</locationY>
         <actionName>HDT_LC_CtToolbar</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -440,6 +440,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Case_Id_Fatturazione_0_0_0_0</name>
+        <label>Assegna Case Id</label>
+        <locationX>4186</locationX>
+        <locationY>2486</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_Fatturazione_ConFornitura</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Arricchimento_Dati_Fatturazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Case_Id_Fatturazione_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
         <locationX>7090</locationX>
@@ -481,7 +497,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Check_Arricchimento_Dati_Fatturazione</targetReference>
+            <targetReference>Crea_Case_Fatturazione_ConFornitura</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -942,7 +958,7 @@
         <name>Valorizzazione_Status_Campaign_Member</name>
         <label>Valorizzazione Status Campaign Member</label>
         <locationX>7505</locationX>
-        <locationY>5966</locationY>
+        <locationY>5846</locationY>
         <assignmentItems>
             <assignToReference>CampaignMember_Record.Status</assignToReference>
             <operator>Assign</operator>
@@ -1069,7 +1085,7 @@
         <name>Campaign_Member_presente</name>
         <label>Campaign Member presente?</label>
         <locationX>6672</locationX>
-        <locationY>4238</locationY>
+        <locationY>4118</locationY>
         <defaultConnector>
             <targetReference>Record_Case</targetReference>
         </defaultConnector>
@@ -1098,7 +1114,7 @@
         <name>Case_Annullato</name>
         <label>Case Annullato?</label>
         <locationX>7037</locationX>
-        <locationY>4478</locationY>
+        <locationY>4358</locationY>
         <defaultConnector>
             <targetReference>getIsCommunityValue</targetReference>
         </defaultConnector>
@@ -1501,7 +1517,7 @@
         <name>Confermato</name>
         <label>Confermato?</label>
         <locationX>7054</locationX>
-        <locationY>5198</locationY>
+        <locationY>5078</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
             <name>Annulla</name>
@@ -2573,7 +2589,7 @@
         <name>Sono_in_chiamata</name>
         <label>Sono in chiamata?</label>
         <locationX>7296</locationX>
-        <locationY>4958</locationY>
+        <locationY>4838</locationY>
         <defaultConnector>
             <targetReference>CampaignMember_Record</targetReference>
         </defaultConnector>
@@ -2598,7 +2614,7 @@
         <name>Sono_in_Community</name>
         <label>Sono in Community?</label>
         <locationX>7505</locationX>
-        <locationY>4718</locationY>
+        <locationY>4598</locationY>
         <defaultConnector>
             <targetReference>CampaignMember_Record</targetReference>
         </defaultConnector>
@@ -4463,6 +4479,89 @@
             <field>SuppliedPhone</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Crea_Case_Fatturazione_ConFornitura</name>
+        <label>Crea Case</label>
+        <locationX>4186</locationX>
+        <locationY>2366</locationY>
+        <connector>
+            <targetReference>Assegna_Case_Id_Fatturazione_0_0_0_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingProfile__c</field>
+            <value>
+                <elementReference>Get_Contract_Fatturazione.BillingProfile__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Campaign__c</field>
+            <value>
+                <elementReference>CampaignId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Fatturazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract__c</field>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interaction__c</field>
+            <value>
+                <elementReference>InteractionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Fatturazione_0.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServicePoint__c</field>
+            <value>
+                <elementReference>ServicePointId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -7390,7 +7489,7 @@
         <name>CampaignMember_Record</name>
         <label>Record Campaign Member</label>
         <locationX>7505</locationX>
-        <locationY>5846</locationY>
+        <locationY>5726</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Valorizzazione_Status_Campaign_Member</targetReference>
@@ -8198,7 +8297,7 @@
         <name>Record_Case</name>
         <label>Record Case</label>
         <locationX>7037</locationX>
-        <locationY>4358</locationY>
+        <locationY>4238</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_Annullato</targetReference>
@@ -8229,7 +8328,7 @@
         <name>Aggiornamento_record_Campaign_Member</name>
         <label>Aggiornamento record Campaign Member</label>
         <locationX>7505</locationX>
-        <locationY>6086</locationY>
+        <locationY>5966</locationY>
         <inputReference>CampaignMember_Record</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -8282,7 +8381,7 @@
         <name>ScreenEsitoCampaignMember</name>
         <label>ScreenEsitoCampaignMember</label>
         <locationX>7054</locationX>
-        <locationY>5078</locationY>
+        <locationY>4958</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -9085,6 +9184,9 @@
         <label>Gestione Modifiche Anagrafiche</label>
         <locationX>5242</locationX>
         <locationY>3902</locationY>
+        <connector>
+            <targetReference>Campaign_Member_presente</targetReference>
+        </connector>
         <flowName>HDT_FL_GestioneModificheAnagrafiche</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -10003,7 +10105,7 @@
         <name>SubFlow_Annullamento</name>
         <label>SubFlow Annullamento</label>
         <locationX>6834</locationX>
-        <locationY>5318</locationY>
+        <locationY>5198</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

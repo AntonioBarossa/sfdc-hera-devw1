@@ -237,10 +237,12 @@ public with sharing class HDT_UTL_CampaignMemberTst {
 
         Test.stopTest();
 
-        List<CampaignMember> lstCampaignMemberAfter = [SELECT Id, CampaignId, PromoCommercialCode__c FROM CampaignMember WHERE CampaignId =: campaign.Id];
-
-        System.debug('Newly generated code ' + lstCampaignMemberAfter.get(0).PromoCommercialCode__c);
-        System.assertNotEquals(lstCampaignMember.get(0).PromoCommercialCode__c, lstCampaignMemberAfter.get(0).PromoCommercialCode__c, 'testCreateCommercialCode - the code was not updated correctly');
+        List<Commercial_Code_Batch_Context__c> context = [SELECT Id, CampaignId__c, CampaignMemberId__c
+        FROM Commercial_Code_Batch_Context__c 
+        WHERE CampaignId__c =: lstCampaignMember[0].CampaignId];
+        System.debug('Old generated code ' +lstCampaignMember.get(0).CampaignId);
+        System.debug('Newly generated code ' + context.get(0).CampaignId__c);
+        System.assertEquals(context.get(0).CampaignId__c, lstCampaignMember.get(0).CampaignId, 'testCreateCommercialCode - the code was not updated correctly');
 
     }
 

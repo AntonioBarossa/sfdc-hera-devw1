@@ -30,11 +30,6 @@
         <default>false</default>
         <label>Teleriscaldamento</label>
     </customValue>
-    <customValue>
-        <fullName>VAS</fullName>
-        <default>false</default>
-        <label>VAS</label>
-    </customValue>
     <description>Elenco Servizi gestiti da Hera</description>
     <masterLabel>Commodity</masterLabel>
     <sorted>true</sorted>

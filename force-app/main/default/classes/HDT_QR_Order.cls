@@ -1394,7 +1394,7 @@ public inherited sharing class HDT_QR_Order {
             'Annullato'
         };
 
-        List<Order> orderList = [SELECT Id, OrderNumber, ParentOrder__c FROM Order WHERE ParentOrder__c IN :parentOrderSet AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND Phase__c NOT IN :ordPhase WITH SECURITY_ENFORCED];
+        List<Order> orderList = [SELECT Id, OrderNumber, ParentOrder__c FROM Order WHERE ParentOrder__c = :parentOrderSet AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND Phase__c != :ordPhase WITH SECURITY_ENFORCED];
 
         for(Order childOrd : orderList){
             if(parToChildOrderMap.get(childOrd.ParentOrder__c) != null){

@@ -2,26 +2,10 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
     <assignments>
-        <name>categoryAssigment_0</name>
-        <label>categoryAssigment</label>
-        <locationX>182</locationX>
-        <locationY>278</locationY>
-        <assignmentItems>
-            <assignToReference>categoryAssigmentVariable</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>checkIfAzienda</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Offerta</name>
         <label>Offerta</label>
         <locationX>270</locationX>
-        <locationY>1190</locationY>
+        <locationY>734</locationY>
         <assignmentItems>
             <assignToReference>OffertaSingola</assignToReference>
             <operator>Assign</operator>
@@ -40,43 +24,20 @@
             <targetReference>LoopOrdiniOfferta</targetReference>
         </connector>
     </assignments>
-    <assignments>
-        <name>OffertaVas</name>
-        <label>OffertaVas</label>
-        <locationX>270</locationX>
-        <locationY>854</locationY>
-        <assignmentItems>
-            <assignToReference>OfferteVas</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>LoopOrdiniOffertaVas.ProcessType__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>OffertaSingolaVas</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>LoopOrdiniOffertaVas.ProcessType__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>LoopOrdiniOffertaVas</targetReference>
-        </connector>
-    </assignments>
     <decisions>
         <name>checkIfAzienda</name>
         <label>checkIfAzienda</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>278</locationY>
         <defaultConnector>
-            <targetReference>LoopOrdiniOffertaVas</targetReference>
+            <targetReference>LoopOrdiniOfferta</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isAzienda</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>categoryAssigmentVariable</leftValueReference>
+                <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Famiglie</stringValue>
@@ -101,7 +62,7 @@
         <name>LoopOrdiniOfferta</name>
         <label>LoopOrdiniOfferta</label>
         <locationX>182</locationX>
-        <locationY>1070</locationY>
+        <locationY>614</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -109,20 +70,6 @@
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Get_Sales_Contact</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
-        <name>LoopOrdiniOffertaVas</name>
-        <label>LoopOrdiniOffertaVas</label>
-        <locationX>182</locationX>
-        <locationY>734</locationY>
-        <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVasOutput</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>OffertaVas</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>LoopOrdiniOfferta</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -148,7 +95,7 @@
         <name>Get_Sales_Contact</name>
         <label>Get Sales Contact</label>
         <locationX>182</locationX>
-        <locationY>1406</locationY>
+        <locationY>950</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>MinoVO_text1</targetReference>
@@ -169,10 +116,10 @@
         <name>getInfoLegaleRappresentate_0</name>
         <label>getInfoLegaleRappresentate</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>LoopOrdiniOffertaVas</targetReference>
+            <targetReference>LoopOrdiniOfferta</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -197,46 +144,14 @@
         <name>MinoVO_text1</name>
         <label>MinoVO_text1</label>
         <locationX>182</locationX>
-        <locationY>1526</locationY>
+        <locationY>1070</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>MinoVO_text2</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[INIZIO REGISTRAZIONE]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Operatore: Chiamo per conto di {!SalesCompanyFormula}. Nell&apos;ambito di questa telefonata ho raccolto il suo interesse a ricevere una nostra proposta contrattuale personalizzata relativa all&apos;offerta/e {!Offerte} nel rispetto delle disposizione di cui al Codice del Consumo e di cui al Codice di Condotta Commerciale per la vendita di energia elettrica e di gas, di cui può prendere visione sul sito www.autorita.energia.it.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;[INIZIO REGISTRAZIONE]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Operatore: Chiamo per conto di {!SalesCompanyFormula}. Nell&apos;ambito di questa telefonata ho raccolto il suo interesse a ricevere una nostra proposta contrattuale personalizzata relativa all&apos;offerta/e {!Offerte} nel rispetto delle disposizione di cui al Codice del Consumo e di cui al Codice di Condotta Commerciale per la vendita di energia elettrica e di gas, di cui può prendere visione sul sito www.autorita.energia.it.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Offerte</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>MinoVO_text6</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[INIZIO REGISTRAZIONE]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Operatore: Chiamo per conto di {!SalesCompanyFormula}. Nell&apos;ambito di questa telefonata ho raccolto il suo interesse a ricevere una nostra proposta contrattuale personalizzata relativa all&apos;offerta/e {!OfferteVas} nel rispetto delle disposizione di cui al Codice del Consumo e di cui al Codice di Condotta Commerciale per la vendita di energia elettrica e di gas, di cui può prendere visione sul sito www.autorita.energia.it.&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OfferteVas</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Offerte</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>MinoVO_text3</name>
@@ -245,7 +160,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>categoryAssigmentVariable</leftValueReference>
+                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue>Famiglie</stringValue>
@@ -260,7 +175,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>categoryAssigmentVariable</leftValueReference>
+                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue>Famiglie</stringValue>
@@ -270,12 +185,12 @@
         </fields>
         <fields>
             <name>MinoVO_text4</name>
-            <fieldText>&lt;p&gt;Operatore: Mi conferma che Lei è il Sig./ra {!Get_Sales_Contact.Name}&lt;/p&gt;&lt;p&gt;ed il suo codice fiscale è {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;Cliente: Confermo&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Operatore: Mi conferma che Lei è il Sig./ra&lt;/p&gt;&lt;p&gt;{!Get_Sales_Contact.Name}&lt;/p&gt;&lt;p&gt;ed il suo codice fiscale è {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;Cliente: Confermo&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>categoryAssigmentVariable</leftValueReference>
+                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Famiglie</stringValue>
@@ -305,7 +220,7 @@
         <locationX>182</locationX>
         <locationY>158</locationY>
         <connector>
-            <targetReference>categoryAssigment_0</targetReference>
+            <targetReference>checkIfAzienda</targetReference>
         </connector>
         <flowName>HDT_FL_Script_Gestione_Ordini</flowName>
         <inputAssignments>
@@ -322,13 +237,6 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
-    <variables>
-        <name>categoryAssigmentVariable</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
-    </variables>
     <variables>
         <name>idOrdinePadreInput</name>
         <dataType>String</dataType>
@@ -351,21 +259,7 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>OffertaSingolaVas</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>Offerte</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>OfferteVas</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>

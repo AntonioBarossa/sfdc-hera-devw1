@@ -1,18 +1,29 @@
-public with sharing class HDT_BA_CampaignBolletta implements Database.Batchable<Commercial_Code_Batch_Context__c>, Database.AllowsCallouts {
+public with sharing class HDT_BA_CampaignBolletta implements Database.Batchable<CampaignMember>, Database.AllowsCallouts {
+    private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
 
-    public Iterable<Commercial_Code_Batch_Context__c> start(Database.BatchableContext bc) {
+    public List<CampaignMember> campaignMembers;
+    public List<Commercial_Code_Batch_Context__c> batchCSContext;//>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
+    
+    //START>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
+    //public HDT_BA_CampaignBolletta(List<String> campaignIds) {
+    public HDT_BA_CampaignBolletta() {
         List<Commercial_Code_Batch_Context__c> context = [SELECT Id, CampaignId__c, CampaignMemberId__c
                                                     		FROM Commercial_Code_Batch_Context__c 
                                                     		WHERE CommercialCodeDone__c = TRUE AND BollettaDone__c = FALSE];
-        return context;
-    }
-
-    public void execute(Database.BatchableContext BC, List<Commercial_Code_Batch_Context__c> context) {
+        this.batchCSContext = context;
         Set<String> campaignIds = new Set<String>();
         for(Commercial_Code_Batch_Context__c curObj : context) campaignIds.add(curObj.CampaignId__c);
-        List<CampaignMember> scope = [SELECT ContractReference__c, PromoCommercialCode__r.fullcode__c, Campaign.Name, Campaign.Description, Campaign.StaticTextMessageBill__c, Campaign.Channel__c 
-                                        FROM CampaignMember 
-                                        WHERE CampaignId IN :campaignIds AND ContractReference__c != null AND isWsBollettaInvoked__c = false AND Campaign.Channel__c INCLUDES ('Bolletta') WITH SECURITY_ENFORCED LIMIT 100];
+        //END>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
+        this.campaignMembers = [SELECT ContractReference__c, PromoCommercialCode__r.fullcode__c, Campaign.Name, Campaign.Description, Campaign.StaticTextMessageBill__c, Campaign.Channel__c 
+                                FROM CampaignMember 
+                                WHERE CampaignId IN :campaignIds AND ContractReference__c != null AND isWsBollettaInvoked__c = false AND Campaign.Channel__c INCLUDES ('Bolletta') WITH SECURITY_ENFORCED];
+    }
+
+    public Iterable<CampaignMember> start(Database.BatchableContext bc) {
+        return this.campaignMembers;
+    }
+
+    public void execute(Database.BatchableContext BC, List<CampaignMember> scope) {
         List<CampaignMember> membersToUpdate = new List<CampaignMember>();
         List<HDT_WS_CampaignBolletta.HDT_WS_CampaignBollettaRequest> wsReqList = new List<HDT_WS_CampaignBolletta.HDT_WS_CampaignBollettaRequest>();
 
@@ -30,7 +41,6 @@ public with sharing class HDT_BA_CampaignBolletta implements Database.Batchable<
         
         //WS call
         if (wsReqList.size() > 0) {
-            System.debug(wsReqList);
             HDT_WS_Response res = HDT_WS_CampaignBolletta.channelBolletta(wsReqList);
             System.debug(res);
             if (res.status != 'failed') {
@@ -44,17 +54,12 @@ public with sharing class HDT_BA_CampaignBolletta implements Database.Batchable<
                     update membersToUpdate;
                 }
             }
-        }
-        
-        System.debug('@@@ deleting worked context');
-        delete context;
+        }        
     }
 
     public void finish(Database.BatchableContext bc){
         System.debug('-------- finish batch');
-        List<Commercial_Code_Batch_Context__c> remainingContext = [SELECT Id, CampaignId__c, CampaignMemberId__c
-                                                    		        FROM Commercial_Code_Batch_Context__c 
-                                                    		        WHERE CommercialCodeDone__c = TRUE AND BollettaDone__c = FALSE];
-        if(remainingContext.size()>0) System.scheduleBatch(new HDT_BA_CampaignBolletta(), 'HDT_BA_CampaignBolletta', 1);
+        for(Commercial_Code_Batch_Context__c curObj : this.batchCSContext) curObj.BollettaDone__c = true;
+        update this.batchCSContext;
     }
 }

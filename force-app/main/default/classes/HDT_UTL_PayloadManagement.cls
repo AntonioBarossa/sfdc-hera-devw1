@@ -1101,11 +1101,6 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight != 'Si') {
             boxType = '1';
         }
-        // Casistica valore indennizzo 0
-        if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight != 'Si' && indemnityDueSendResponse == 0)
-        {
-            boxType = '';
-        }
         // Emissione rettifica prevista ma non scaduta, indennizzo per solo ritardo nella risposta
         else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && !expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate)) {
             boxType = '1';
