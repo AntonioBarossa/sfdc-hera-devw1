@@ -242,10 +242,27 @@ public with sharing class HDT_LC_AccountSelectorController {
 		if(leadId != null) {
 			sobj.put('Lead__c', leadId);
 		}
+		List<SObject> objList = new List<SObject>();
+		List <SObject> actList = handleInteractionActivity(recordId,contactId,accountId);
+		objList.add(sobj);
+		objList.addAll(actList);
 
-		HDT_UTL_DatabaseService.updateSObject(sobj);
+		HDT_UTL_DatabaseService.updateSObject(objList);
 	}
-
+	private static List<Sobject> handleInteractionActivity(String recordId,String contactId, String accountId){
+		String sobjectType = getSobjectType(recordId);
+		List<wrts_prcgvr__Activity__c> actList = new List<wrts_prcgvr__Activity__c>();
+		if(Schema.SObjectType.wrts_prcgvr__Activity__c.isAccessible()){
+			actList = [SELECT Id,Account__c,Contact__c FROM wrts_prcgvr__Activity__c WHERE Interaction__c = :recordId WITH SECURITY_ENFORCED];
+		}
+		if(actList != null && !actList.isEmpty()){
+			for(wrts_prcgvr__Activity__c act : actList){
+				act.Account__c = accountId;
+				act.Contact__c = contactId;
+			}
+		}
+		return actList;
+	}
 	@AuraEnabled
 	public static String reset(String recordId) {
 		String sobjectType = getSobjectType(recordId);

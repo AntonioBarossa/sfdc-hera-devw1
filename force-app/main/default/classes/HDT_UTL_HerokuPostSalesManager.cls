@@ -414,6 +414,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             //String contractCode = reqWrp.requestMap.get('VERTRAG');
             String paymentDate = reqWrp.requestMap.get('DT_CREA');
             String currentDescription = recordCase.Description != null?recordCase.Description:'';
+            String contractAccount = reqWrp.requestMap.get('VKONT');
             String newDescription = '';
             
             Boolean noActionNeeded = false;
@@ -469,6 +470,16 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 } catch(Exception e) {
                     System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + ' at line: ' + e.getLineNumber());
                 }
+            }
+            /**@frpanico 2022-05-31
+             * Aggiornamento CA
+             */
+            if(contractAccount != null && String.isNotBlank(contractAccount))
+            {
+                BillingProfile__c ca = new BillingProfile__c();
+                ca.Id = recordCase.BillingProfile__c;
+                ca.ContractAccountCode__c = contractAccount;
+                HDT_UTL_DatabaseService.updateSObject(ca);
             }
             
         }else if(method.equalsIgnoreCase('AddAttivita')){

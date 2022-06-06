@@ -475,6 +475,19 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             //@frpanico valorizzazione "Data Lettura"
             if(readingDate != null && (isReading != null && isReading == true))
             {
+                //AF inserito per ribaltare campi da Reading__c a Order
+                if(currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Gas')){
+                    HDT_QR_SelfReadings qrReading = new HDT_QR_SelfReadings();
+                    try {
+                        Reading__c selfRead = qrReading.getReading('Order',order.Id,'Gas','ReadingValueMeter__c,ReadingSerialNumberCorrector__c,ReadingValueCorrector__c');
+                        order.ReadingValueMeter__c = selfRead.ReadingValueMeter__c;
+                        order.ReadingValueCorrector__c = selfRead.ReadingValueCorrector__c;
+                        order.ReadingSerialNumberCorrector__c = selfRead.ReadingSerialNumberCorrector__c;
+                    } catch (Exception ex) {
+                        //no record
+                    }
+                }
+                
                 order.ReadingCustomerDate__c = readingDate;
             }
 

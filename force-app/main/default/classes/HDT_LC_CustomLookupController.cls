@@ -77,8 +77,31 @@ public inherited sharing class HDT_LC_CustomLookupController {
             for(sObject so : lookUpList){
                 obj = new HDT_UTL_ObjDetail();
                 obj.id = (String)so.get('Id');
-                obj.name = (String)so.get(searchBy);
-                obj.code = (String)so.get(setAsKey);
+                try{
+                    obj.name = (String)so.get(searchBy);
+                    obj.code = (String)so.get(setAsKey);
+                }
+                catch(SObjectException ex)
+                {
+                    if(searchBy.contains('.'))
+                    {
+                        List<String> searchByList = searchBy.split('\\.');
+                        obj.name = (String)(so.getSObject(searchByList[0]).get(searchByList[1]));
+                    }
+                    else
+                    {
+                        obj.name = (String)so.get(searchBy);
+                    }
+                    if(setAsKey.contains('.'))
+                    {
+                        List<String> setAsKeyList = setAsKey.split('\\.');
+                        obj.code = (String)(so.getSObject(setAsKeyList[0]).get(setAsKeyList[1]));
+                    }
+                    else
+                    {
+                        obj.code = (String)so.get(setAsKey);
+                    }
+                }
                 obj.bDetail = enableDetails;
                 
                 if(enableDetails){

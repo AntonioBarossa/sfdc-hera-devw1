@@ -112,7 +112,8 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
                     WorkGroup__c = workGroup,
                     Agency__c = agency,
                     ManuallyReassigned__c = true,
-                    Queue__c = null
+                    Queue__c = null,
+                    AssignedToQueueDate__c = Date.today()
                 );
 
                 if(String.isNotBlank(wrapperId)) {
