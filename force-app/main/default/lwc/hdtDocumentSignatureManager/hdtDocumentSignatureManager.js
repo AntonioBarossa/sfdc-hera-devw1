@@ -143,6 +143,10 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     var signSendModeList = [];
                     resultJSON.forEach((element) => {
                         signMode.push(element.signMode);
+                        console.log('#element >>> ' + JSON.stringify(element.signMode));
+                        if(element.signMode.value === 'Contratto già firmato'){
+                            existContrattoFirmato = true;
+                        }
                         element.sendMode.forEach((element2) => {
                             sendMode.push(element2);
                         });
