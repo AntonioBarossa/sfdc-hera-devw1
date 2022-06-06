@@ -440,22 +440,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Case_Id_Fatturazione_0_0_0_0</name>
-        <label>Assegna Case Id</label>
-        <locationX>4186</locationX>
-        <locationY>2486</locationY>
-        <assignmentItems>
-            <assignToReference>CaseId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Crea_Case_Fatturazione_ConFornitura</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Check_Arricchimento_Dati_Fatturazione</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assegna_Case_Id_Fatturazione_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
         <locationX>7090</locationX>
@@ -497,7 +481,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Crea_Case_Fatturazione_ConFornitura</targetReference>
+            <targetReference>Check_Arricchimento_Dati_Fatturazione</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -4479,89 +4463,6 @@
             <field>SuppliedPhone</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type</field>
-            <value>
-                <elementReference>ProcessType</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
-        <name>Crea_Case_Fatturazione_ConFornitura</name>
-        <label>Crea Case</label>
-        <locationX>4186</locationX>
-        <locationY>2366</locationY>
-        <connector>
-            <targetReference>Assegna_Case_Id_Fatturazione_0_0_0_0</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>AccountId</field>
-            <value>
-                <elementReference>AccountId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>BillingProfile__c</field>
-            <value>
-                <elementReference>Get_Contract_Fatturazione.BillingProfile__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Campaign__c</field>
-            <value>
-                <elementReference>CampaignId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Cluster__c</field>
-            <value>
-                <stringValue>Fatturazione</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>CompanyOwner__c</field>
-            <value>
-                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ContactId</field>
-            <value>
-                <elementReference>Cerca_Contatto_Primario.Contact.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Contract__c</field>
-            <value>
-                <elementReference>Contract</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Interaction__c</field>
-            <value>
-                <elementReference>InteractionId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Phase__c</field>
-            <value>
-                <stringValue>Bozza</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>Get_RT_Fatturazione_0.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ServicePoint__c</field>
-            <value>
-                <elementReference>ServicePointId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

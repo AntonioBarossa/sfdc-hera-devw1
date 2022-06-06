@@ -320,6 +320,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     handleChangeSignMode(event){
         try{
             this.sendMode = null;
+            this.dispatchEvent(new CustomEvent('changesignmode', { detail: event.detail.value}));
             var temp = this.signSendMap.find(function(post, index) {
                 if(post.signMode == event.detail.value)
                     return true;
@@ -336,6 +337,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 resetDate = false;
             }
             this.launchSetRequiredFieldEvent(resetDate);
+            
         }catch(error){
             console.error(error);
         }
