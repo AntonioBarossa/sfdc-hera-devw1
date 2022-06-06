@@ -5,9 +5,15 @@
         <label>Redirect</label>
         <locationX>270</locationX>
         <locationY>1670</locationY>
-        <actionName>c:HDT_LCP_RedirectToRecord</actionName>
+        <actionName>c:HDT_LCP_FlowRedirectAdvanced</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>forceWorkspaceTab</name>
+            <value>
+                <elementReference>isAccountPopulated</elementReference>
+            </value>
+        </inputParameters>
         <inputParameters>
             <name>recordId</name>
             <value>
@@ -283,6 +289,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Assign_Process_Type_0</targetReference>
         </connector>
     </assignments>
@@ -493,6 +500,7 @@
                 </rightValue>
             </conditions>
             <connector>
+                <isGoTo>true</isGoTo>
                 <targetReference>Context</targetReference>
             </connector>
             <label>isAnonima</label>
@@ -504,6 +512,7 @@
         <locationX>1678</locationX>
         <locationY>1118</locationY>
         <defaultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Selezione_Indirizzi</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Compatibile</defaultConnectorLabel>
@@ -605,6 +614,11 @@
         <expression>OR({!Riprendi_Processo}, {!isCaseContext}) &amp;&amp; ISBLANK({!theCase.InvoicingCity__c})</expression>
     </formulas>
     <formulas>
+        <name>isAccountPopulated</name>
+        <dataType>Boolean</dataType>
+        <expression>ISBLANK({!theCase.AccountId})</expression>
+    </formulas>
+    <formulas>
         <name>phone_NonBlank</name>
         <dataType>String</dataType>
         <expression>BLANKVALUE({!getAccount.Phone}, BLANKVALUE({!getAccount.MobilePhone__c},  BLANKVALUE({!getAccount.OtherPhone__c}, &apos;&apos;) ))</expression>
@@ -651,6 +665,7 @@
         <locationX>1018</locationX>
         <locationY>518</locationY>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Selezione_Indirizzi_0</targetReference>
         </connector>
         <inputReference>theCase</inputReference>
@@ -740,6 +755,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Update_Indirizzo</targetReference>
         </connector>
         <fields>
