@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Altri servizi-IUAS0001</fullName>
+        <default>false</default>
+        <label>Altri servizi-IUAS0001</label>
+    </customValue>
+    <customValue>
+        <fullName>Altri servizi-IUAS0002</fullName>
+        <default>false</default>
+        <label>Altri servizi-IUAS0002</label>
+    </customValue>
+    <customValue>
+        <fullName>Cimiteriali-IUIN0023</fullName>
+        <default>false</default>
+        <label>Cimiteriali-IUIN0023</label>
+    </customValue>
+    <customValue>
+        <fullName>CONSULTA IL RIFIUTOLOGO</fullName>
+        <default>false</default>
+        <label>CONSULTA IL RIFIUTOLOGO</label>
+    </customValue>
+    <customValue>
+        <fullName>DLGS_116/2020-IUAS0003</fullName>
+        <default>false</default>
+        <label>DLGS_116/2020-IUAS0003</label>
+    </customValue>
+    <customValue>
+        <fullName>Pulizia aree pubblic-IUPS0000</fullName>
+        <default>false</default>
+        <label>Pulizia aree pubblic-IUPS0000</label>
+    </customValue>
+    <customValue>
+        <fullName>Pulizia aree pubblic-IUPS0002</fullName>
+        <default>false</default>
+        <label>Pulizia aree pubblic-IUPS0002</label>
+    </customValue>
+    <customValue>
+        <fullName>Pulizia aree pubblic-IUPS0007</fullName>
+        <default>false</default>
+        <label>Pulizia aree pubblic-IUPS0007</label>
+    </customValue>
+    <customValue>
+        <fullName>Raccolta differenziat-IURD0023</fullName>
+        <default>false</default>
+        <label>Raccolta differenziat-IURD0023</label>
+    </customValue>
+    <customValue>
+        <fullName>Raccolta indifferenz-IUIN0021</fullName>
+        <default>false</default>
+        <label>Raccolta indifferenz-IUIN0021</label>
+    </customValue>
+    <customValue>
+        <fullName>Scarichi abusivi-IUPS0000</fullName>
+        <default>false</default>
+        <label>Scarichi abusivi-IUPS0000</label>
+    </customValue>
+    <customValue>
+        <fullName>Servizi a pag.carcass-IUAS0001</fullName>
+        <default>false</default>
+        <label>Servizi a pag.carcass-IUAS0001</label>
+    </customValue>
+    <customValue>
+        <fullName>Servizi a pagamento-IUAS0002</fullName>
+        <default>false</default>
+        <label>Servizi a pagamento-IUAS0002</label>
+    </customValue>
+    <customValue>
+        <fullName>SOLLEC_Amianto/Etern-IURD0026</fullName>
+        <default>false</default>
+        <label>SOLLEC_Amianto/Etern-IURD0026</label>
+    </customValue>
+    <customValue>
+        <fullName>SOLLEC_Verde-IURD0043</fullName>
+        <default>false</default>
+        <label>SOLLEC_Verde-IURD0043</label>
+    </customValue>
+    <masterLabel>Gruppo Intervento</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>
