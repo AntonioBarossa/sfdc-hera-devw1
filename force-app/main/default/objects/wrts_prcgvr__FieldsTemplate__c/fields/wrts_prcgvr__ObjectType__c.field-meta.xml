@@ -7,7 +7,7 @@
     <inlineHelpText>The main object type on which the template is applied - eg Case, Contract</inlineHelpText>
     <label>Object Type</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -20,33 +20,8 @@
             </value>
             <value>
                 <fullName>Case</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Case</label>
-            </value>
-            <value>
-                <fullName>Contact</fullName>
-                <default>false</default>
-                <label>Contact</label>
-            </value>
-            <value>
-                <fullName>Contract</fullName>
-                <default>false</default>
-                <label>Contract</label>
-            </value>
-            <value>
-                <fullName>Opportunity</fullName>
-                <default>false</default>
-                <label>Opportunity</label>
-            </value>
-            <value>
-                <fullName>Order</fullName>
-                <default>false</default>
-                <label>Order</label>
-            </value>
-            <value>
-                <fullName>Asset</fullName>
-                <default>false</default>
-                <label>Asset</label>
             </value>
         </valueSetDefinition>
     </valueSet>
