@@ -1,26 +1,19 @@
-public with sharing class HDT_BA_CommercialCode implements Database.Batchable<Commercial_Code_Batch_Context__c> {
+public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SObject>, Database.AllowsCallouts {
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
 
+    public List<String> campaignIds= new List<String>() ;
     public Integer startNumber;
     public Integer numberLength;
-    public List<String> campaignIds= new List<String>() ;
     public List<String> campaignMembers= new List<String>();
+    public List<Commercial_Code_Batch_Context__c> batchCSContext;//>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
     
     //START>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
     //public HDT_BA_CommercialCode(Map<String,List<String>> allMembers) {
     public HDT_BA_CommercialCode() {
-        this.numberLength = 4;
-        this.startNumber = 1;
-    }
-
-    public Iterable<Commercial_Code_Batch_Context__c> start(Database.BatchableContext bc) {
-        List<Commercial_Code_Batch_Context__c> context = [SELECT Id, CampaignId__c, CampaignMemberId__c 
-                                                            FROM Commercial_Code_Batch_Context__c 
-                                                            WHERE CommercialCodeDone__c = FALSE AND BollettaDone__c = FALSE];
-        return context;
-    }
-
-    public void execute(Database.BatchableContext bc, List<Commercial_Code_Batch_Context__c> context) {
+        List<Commercial_Code_Batch_Context__c> context = [SELECT Id, CampaignId__c, CampaignMemberId__c
+                                                    		FROM Commercial_Code_Batch_Context__c 
+                                                    		WHERE CommercialCodeDone__c = FALSE AND BollettaDone__c = FALSE];
+        this.batchCSContext = context;
         Map<String,List<String>> allMembers = new Map<String,List<String>>();
         for(Commercial_Code_Batch_Context__c curObj : context){
             List<String> temp = allMembers.get(curObj.CampaignId__c);
@@ -28,13 +21,23 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<Co
 			else temp = new List<String>{curObj.CampaignMemberId__c};
             allMembers.put(curObj.CampaignId__c, temp);
         }
+        //END>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
         
         this.campaignIds.addAll(allMembers.keySet());
         for (List<String> members : allMembers.values()) {
             this.campaignMembers.addAll(members);
         }
-        String queryStr = 'Select Id, FirstName, LastName, CampaignId,Campaign.MaxNumberEECodeUse__c,Campaign.MaxNumberGASCodeUse__c,Campaign.MaxNumberVASCodeUse__c , PromoCommercialCode__c, Campaign.CodeManagementModel__c, Campaign.PrefixCode__c, Campaign.CodeGenerationRule__c, PromoCommercialCode__r.FullCode__c FROM CampaignMember WHERE Id IN :campaignMembers AND Campaign.CodeGenerationRule__c != \'Manuale\' AND Campaign.CodeManagementModel__c IN (\'Per singolo Campaign Member\',\'Porta un amico\')';
-        List<CampaignMember> scope = Database.query(queryStr);
+        this.numberLength = 4;
+        this.startNumber = 1;
+    }
+
+    public Database.QueryLocator start(Database.BatchableContext bc) {
+        //return new campaignMembers
+        String query = 'Select Id, FirstName, LastName, CampaignId,Campaign.MaxNumberEECodeUse__c,Campaign.MaxNumberGASCodeUse__c,Campaign.MaxNumberVASCodeUse__c , PromoCommercialCode__c, Campaign.CodeManagementModel__c, Campaign.PrefixCode__c, Campaign.CodeGenerationRule__c, PromoCommercialCode__r.FullCode__c FROM CampaignMember WHERE Id IN :campaignMembers AND Campaign.CodeGenerationRule__c != \'Manuale\' AND Campaign.CodeManagementModel__c IN (\'Per singolo Campaign Member\',\'Porta un amico\')';
+        return Database.getQueryLocator(query);
+    }
+
+    public void execute(Database.BatchableContext bc, List<CampaignMember> scope) {
         //get existing campaginMembers
         Database.QueryLocator query = Database.getQueryLocator('Select Id, FirstName, LastName, CampaignId, PromoCommercialCode__c, Campaign.CodeManagementModel__c, Campaign.PrefixCode__c, Campaign.CodeGenerationRule__c, PromoCommercialCode__r.FullCode__c FROM CampaignMember WHERE CampaignId IN :campaignIds AND Campaign.CodeGenerationRule__c != \'Manuale\' AND PromoCommercialCode__c  != \'\' AND Campaign.CodeManagementModel__c IN (\'Per singolo Campaign Member\',\'Porta un amico\')');
         Database.QueryLocatorIterator existingMembers =  query.iterator();
@@ -106,17 +109,26 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<Co
         }
 
         if (membersToUpdate.size() > 0) {
-            System.debug('@@@@ updating '+membersToUpdate.size()+' CampaignMembers');
             update membersToUpdate;
         }
 
-        for(Commercial_Code_Batch_Context__c curObj : context) curObj.CommercialCodeDone__c = true;
-        update context;
-        System.debug('@@@@ finish executing context' + context);
     }
 
     public void finish(Database.BatchableContext bc){
-        System.debug('@@@@ finish batch, total size: ');
-        System.scheduleBatch(new HDT_BA_CampaignBolletta(), 'HDT_BA_CampaignBolletta', 1);
+        System.debug('-------- finish batch');
+        //START>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
+        for(Commercial_Code_Batch_Context__c curObj : this.batchCSContext) curObj.CommercialCodeDone__c = true;
+        update this.batchCSContext;
+        
+        List<Commercial_Code_Batch_Context__c> oldGarbage = [SELECT Id, CampaignId__c, CampaignMemberId__c
+                                                                    FROM Commercial_Code_Batch_Context__c 
+                                                                    WHERE CommercialCodeDone__c = TRUE AND BollettaDone__c = TRUE];
+        delete oldGarbage;
+        
+        if(this.batchCSContext.size() > 0) System.scheduleBatch(new HDT_BA_CampaignBolletta(), 'HDT_BA_CampaignBolletta', 60, 200);
+        //HDT_BA_CampaignBolletta cbBatch = new HDT_BA_CampaignBolletta(this.campaignIds);
+        //ID batchId = Database.executeBatch(cbBatch, 500);
+        //System.debug('batchCampaignBolletta ProcessId - ' + batchId);
+        //END>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
     }
 }

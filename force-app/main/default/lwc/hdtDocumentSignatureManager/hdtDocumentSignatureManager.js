@@ -141,12 +141,8 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     var sendMode = [];
                     var signSendMode;
                     var signSendModeList = [];
-                    var existContrattoFirmato = false;
                     resultJSON.forEach((element) => {
                         signMode.push(element.signMode);
-                        if(element.signMode === 'Contratto già firmato'){
-                            existContrattoFirmato = true;
-                        }
                         element.sendMode.forEach((element2) => {
                             sendMode.push(element2);
                         });
@@ -157,7 +153,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                         signSendModeList.push(signSendMode);
                         sendMode = [];
                     });
-                    if(this.loginSource != null && this.loginSource.localeCompare('Back office') === 0 && this.context.localeCompare('Order') === 0 && !existContrattoFirmato){
+                    if(this.loginSource != null && this.loginSource.localeCompare('Back office') === 0 && this.context.localeCompare('Order') === 0){
                         console.log('##inside backoffice');
                         sendMode = [];
                         const obj = {value: 'Stampa Cartacea', label: 'Stampa Cartacea'};
@@ -320,7 +316,6 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     handleChangeSignMode(event){
         try{
             this.sendMode = null;
-            this.dispatchEvent(new CustomEvent('changesignmode', { detail: event.detail.value}));
             var temp = this.signSendMap.find(function(post, index) {
                 if(post.signMode == event.detail.value)
                     return true;
@@ -337,7 +332,6 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 resetDate = false;
             }
             this.launchSetRequiredFieldEvent(resetDate);
-            
         }catch(error){
             console.error(error);
         }
