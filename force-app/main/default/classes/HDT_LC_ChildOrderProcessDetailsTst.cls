@@ -107,9 +107,10 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			childOrders[0].QualityCall__c=true;
 			insert childOrders;
 
-			List<ServicePoint__c> servPoints=HDT_UTL_DataFactoryTst.createServicePoint(1, false);
+			List<ServicePoint__c> servPoints=HDT_UTL_DataFactoryTst.createServicePoint(2, false);
 			servPoints[0].Distributor__c=accDist[0].Id;
 			servPoints[0].CommoditySector__c='Energia Elettrica';
+			servPoints[1].CommoditySector__c='Gas';
 
 			insert servPoints;
 
@@ -118,6 +119,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			quotes[0].AmendmentAllowed__c=false;
 			insert quotes;
 
+			orders[1].ServicePoint__c=servPoints[1].Id;
 			orders[0].ServicePoint__c=servPoints[0].Id;
 			orders[0].SBQQ__Quote__c=quotes[0].id;
 			orders[3].ServicePoint__c=servPoints[0].Id;
