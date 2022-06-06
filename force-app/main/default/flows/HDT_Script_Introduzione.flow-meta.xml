@@ -75,11 +75,19 @@
                         <stringValue>Y</stringValue>
                     </rightValue>
                 </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Introduzione_Inbound_isAxa_1_Text</name>
+            <fieldText>&lt;p&gt;{!Introduzione_Inbound_isAxa_1}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>isVas</leftValueReference>
+                    <leftValueReference>isAxa</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <booleanValue>false</booleanValue>
+                        <stringValue>Y</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -104,51 +112,12 @@
                         <stringValue>Famiglie</stringValue>
                     </rightValue>
                 </conditions>
-                <conditions>
-                    <leftValueReference>isVas</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Introduzione_Inbound_1_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!Introduzione_Inbound_1}&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>isAxa</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Y</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>isVas</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Introduzione_Inbound_2_Text</name>
             <fieldText>&lt;p&gt;{!Introduzione_Inbound_2}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>isVas</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>text1</name>
@@ -161,28 +130,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Famiglie</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>isVas</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Vas_Introduction</name>
-            <fieldText>&lt;p&gt;[*** Inizio registrazione ***]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Chiamo per conto di {!SalesCompanyFormula}, per la vendita di&amp;nbsp;{!offerNameInput} nel rispetto delle disposizione di cui al Codice del Consumo. Se non vuole ricevere chiamate promozionali, può iscriversi al Registro Pubblico degli abbonati.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La informo che questa telefonata proviene dall’Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per dare seguito all’ordine e potranno essere comunicati al fornitore del prodotto/servizio ai fini dell’erogazione dello stesso, di cui riceverà l’informativa dettagliata nel plico contrattuale che le invieremo.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>isVas</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -272,7 +219,7 @@
     <textTemplates>
         <name>Introduzione_isLinear</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;[*** Inizio registrazione ***]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Per conto di &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!SalesCompanyFormula}&lt;/span&gt; le propongo le nostre offerte a mercato libero {!offerNameInput}.&lt;/p&gt;</text>
+        <text>&lt;p&gt;[*** Inizio registrazione ***]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Per conto di &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!SalesCompanyFormula}&lt;/span&gt; le propongo le nostre offerte a mercato libero libero {!offerNameInput}.&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>Introduzione_Outbound_1</name>
@@ -282,7 +229,7 @@
     <textTemplates>
         <name>Introduzione_Outbound_2</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;Se non vuole ricevere chiamate promozionali, può iscriversi al Registro pubblico degli abbonati.&lt;/p&gt;&lt;p&gt;Le ricordo che essere servito sul mercato libero dell’energia significa poter decidere quale fornitore e tipo di contratto scegliere.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La informo che questa telefonata proviene dall’Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da Lei richiesti e potranno essere comunicati al distributore ai fini dell’erogazione del servizio, di cui riceverà l’informativa dettagliata nel plico contrattuale che riceverà per posta.&lt;/p&gt;</text>
+        <text>&lt;p&gt;Se non vuole ricevere chiamate promozionali, può iscriversi al Registro pubblico degli abbonati.&lt;/p&gt;&lt;p&gt;Le ricordo che essere servito sul mercato libero dell’energia significa poter decidere quale fornitore e tipo di contratto scegliere.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La informo che questa telefonata proviene dall’Albania/Romania/Italia.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da Lei richiesti e potranno essere comunicati al distributore ai fini dell’erogazione del servizio, di cui riceverà l’informativa dettagliata nel plico contrattuale che riceverà per posta.&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>Introduzione_Outbound_isAxa_1</name>
@@ -292,7 +239,7 @@
     <textTemplates>
         <name>isLinear_Outbound</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Chiamo per conto di {!SalesCompanyFormula}, per proporle le nostre offerte a mercato libero &lt;/span&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!offerNameInput}, &lt;/span&gt;nel rispetto delle disposizione di cui al Codice del Consumo e di cui al Codice di Condotta Commerciale per la vendita di energia elettrica e di gas, di cui può prendere visione sul sito www.autorita.energia.it. Se non vuole ricevere chiamate promozionali, può iscriversi al Registro Pubblico degli abbonati.&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Chiamo per conto di {!SalesCompanyFormula}, per proporle le nostre offerte a mercato libero &lt;/span&gt;libero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!offerNameInput}&lt;/span&gt;.&lt;/p&gt;</text>
     </textTemplates>
     <variables>
         <name>callType</name>
@@ -314,13 +261,6 @@
     <variables>
         <name>isAxa</name>
         <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>isVas</name>
-        <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>

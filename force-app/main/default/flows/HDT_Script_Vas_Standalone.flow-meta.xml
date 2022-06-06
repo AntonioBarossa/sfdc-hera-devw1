@@ -1,65 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
-    <assignments>
-        <name>Assign_Order_Product_Name</name>
-        <label>Assign Order Product Name</label>
-        <locationX>440</locationX>
-        <locationY>758</locationY>
-        <assignmentItems>
-            <assignToReference>VasProductsName</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop_on_OrderProducts.ProductName__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>VasProductsName</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>, </stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_on_OrderProducts</targetReference>
-        </connector>
-    </assignments>
     <description>VAS Singolo assciato all&apos;offerta o Standalone</description>
     <interviewLabel>HDT Script - Vas Standalone {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT FL Script - Vas</label>
     <loops>
-        <name>Loop_On_Child_Order</name>
-        <label>Loop On Child Order</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
-        <collectionReference>GetOrdersFigli</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Get_VAS_Order_Product</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>HDT_Script_Introduzione</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
-        <name>Loop_on_OrderProducts</name>
-        <label>Loop on OrderProducts</label>
-        <locationX>352</locationX>
-        <locationY>638</locationY>
-        <collectionReference>Get_VAS_Order_Product</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Assign_Order_Product_Name</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Loop_On_Child_Order</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
         <name>LoopOrdiniFigli</name>
         <label>LoopOrdiniFigli</label>
         <locationX>176</locationX>
-        <locationY>1310</locationY>
+        <locationY>638</locationY>
         <collectionReference>GetOrdersFigli</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -89,27 +38,6 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_VAS_Order_Product</name>
-        <label>Get VAS Order Product</label>
-        <locationX>352</locationX>
-        <locationY>518</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Loop_on_OrderProducts</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>OrderId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Loop_On_Child_Order.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>OrderItem</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>GetOrderPadre</name>
         <label>GetOrderPadre</label>
         <locationX>176</locationX>
@@ -137,7 +65,7 @@
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Loop_On_Child_Order</targetReference>
+            <targetReference>HDT_Script_Introduzione</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -162,13 +90,23 @@
         <name>Conferma_Adesione</name>
         <label>Conferma Adesione</label>
         <locationX>176</locationX>
-        <locationY>1646</locationY>
+        <locationY>974</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
+            <name>Vas_Generico_3</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;[6. Conferma Adesione VAS]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Vas_Generico_1</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;La informo che ogni contratto sarà concluso al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&amp;nbsp;&lt;/li&gt;&lt;li&gt;Nei prossimi 10 giorni provvederemo a verificare la ricezione della documentazione contrattuale e la conclusione [del/di ogni] contratto. La verifica potrà avvenire in due modalità:&lt;ul&gt;&lt;li&gt;Attraverso un nostro operatore che la ricontatterà per chiederle conferma;&lt;/li&gt;&lt;li&gt;Con le credenziali personali che troverà indicate all’interno della documentazione contrattuale e con le quali potrà accedere al sito internet per confermare la conclusione [del/di ogni] contratto ed ascoltare la registrazione di questa telefonata.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
             <name>Vas_Generico_2</name>
-            <fieldText>&lt;p&gt;Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale o agli altri canali di contatto indicati nella bolletta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;SI/NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;SI/NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Prima di concludere la registrazione, mi conferma oggi è il {!$Flow.CurrentDateTime}?&amp;nbsp;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, sig. {!GetOrderPadre.Account.LastName__c} abbiamo terminato la registrazione, benvenuto/a in&lt;strong&gt; &lt;/strong&gt;{!GetOrderPadre.SalesCompany__c}!&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;[***FINE REGISTRAZIONE***]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale o agli altri canali di contatto indicati nella bolletta. Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;SI/NO&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;SI/NO&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Prima di concludere la registrazione, mi conferma oggi è il {!$Flow.CurrentDateTime}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, sig. {!GetOrderPadre.Account.LastName__c} abbiamo terminato la registrazione, benvenuto/a in&lt;b&gt; &lt;/b&gt;Hera Comm/Hera Comm Marche / Hera Comm NordEst!&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;[***FINE REGISTRAZIONE***]&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -186,7 +124,7 @@
         <name>HDT_Script_Anagrafica</name>
         <label>HDT Script - Anagrafica</label>
         <locationX>176</locationX>
-        <locationY>1190</locationY>
+        <locationY>518</locationY>
         <connector>
             <targetReference>LoopOrdiniFigli</targetReference>
         </connector>
@@ -194,7 +132,7 @@
         <inputAssignments>
             <name>callType</name>
             <value>
-                <elementReference>GetOrderPadre.Channel__c</elementReference>
+                <stringValue>Famiglie</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -220,27 +158,15 @@
         <name>HDT_Script_Introduzione</name>
         <label>HDT Script - Introduzione</label>
         <locationX>176</locationX>
-        <locationY>1070</locationY>
+        <locationY>398</locationY>
         <connector>
             <targetReference>HDT_Script_Anagrafica</targetReference>
         </connector>
         <flowName>HDT_Script_Introduzione</flowName>
         <inputAssignments>
-            <name>channelInput</name>
+            <name>callType</name>
             <value>
-                <elementReference>GetOrderPadre.Channel__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>isVas</name>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>offerNameInput</name>
-            <value>
-                <elementReference>VasProductsName</elementReference>
+                <stringValue>Inbound</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -254,7 +180,7 @@
         <name>HDT_Script_VAS</name>
         <label>HDT Script - VAS</label>
         <locationX>264</locationX>
-        <locationY>1430</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>LoopOrdiniFigli</targetReference>
         </connector>
@@ -284,13 +210,6 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>VasProductsName</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

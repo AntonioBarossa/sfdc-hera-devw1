@@ -26,14 +26,6 @@
         </value>
     </choices>
     <choices>
-        <name>No_mod_priv</name>
-        <choiceText>No</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>No</stringValue>
-        </value>
-    </choices>
-    <choices>
         <name>No_privacy</name>
         <choiceText>No</choiceText>
         <dataType>String</dataType>
@@ -99,14 +91,6 @@
     </choices>
     <choices>
         <name>Si_Consenso_Notizie</name>
-        <choiceText>Si</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Si</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>Si_mod_Priv</name>
         <choiceText>Si</choiceText>
         <dataType>String</dataType>
         <value>
@@ -420,28 +404,50 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Si_screen2</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Bene Sig./Sig.ra&amp;nbsp;{!GetCampaignMember.FirstName} {!GetCampaignMember.LastName}&amp;nbsp;&amp;nbsp;visto che abbiamo riconfermato/modificato i suoi dati è necessario aggiornare anche i consensi privacy. Procediamo?&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Bene Sig./Sig.ra&amp;nbsp;{!GetCampaignMember.FirstName} {!GetCampaignMember.LastName}&amp;nbsp;&amp;nbsp;visto che abbiamo riconfermato/modificato i suoi dati è necessario aggiornare anche i consensi privacy&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Conferisce il suo consenso a contattarla per ricevere notizie in merito ad offerte riguardanti beni e servizi proposti da Hera Comm o dai suoi fornitori e per indagini di mercato, tramite l’utilizzo del telefono, compresi sistemi automatizzati di chiamata, di comunicazioni elettroniche, quali e-mail, sms e mms e della posta cartacea?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>procedere_mod_priv</name>
-            <choiceReferences>Si_mod_Priv</choiceReferences>
-            <choiceReferences>No_mod_priv</choiceReferences>
+            <name>Cliente_Consenso_Notizie</name>
+            <choiceReferences>Si_Consenso_Notizie</choiceReferences>
+            <choiceReferences>No_Consenso_Notizie</choiceReferences>
             <dataType>String</dataType>
+            <fieldText>Scelta Cliente:</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Si_screen2_1</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Conferisce il suo consenso allo svolgimento di attività volte all&apos;analisi delle sue preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Cliente_Choice_Svolgimento_Att</name>
+            <choiceReferences>Si_Svolgimento_Att</choiceReferences>
+            <choiceReferences>No_Svolgimento_Att</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Scelta Cliente:</fieldText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>false</isRequired>
         </fields>
         <fields>
             <name>Aggiornamento_Dati_Privacy</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: La ringrazio comunque per la disponibilità e la informo che in qualsiasi momento può contattare il nostro servizio cliente per modificare in autonomia i suoi dati di contatto oppure in alternativa può utilizzare la app MyHera&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Grazie mille Sig./Sig.ra {!GetCampaignMember.FirstName} {!GetCampaignMember.LastName} mi conferma che oggi è il {!$Flow.CurrentDate}?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: La ringrazio comunque per la disponibilità e la informo che in qualsiasi momento può contattare il nostro servizio cliente per modificare in autonomia i suoi dati di contatto oppure in alternativa può utilizzare la app MyHera&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>procedere_mod_priv</leftValueReference>
+                    <leftValueReference>Cliente_Consenso_Notizie</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>No</stringValue>
+                        <elementReference>Si_Consenso_Notizie</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Cliente_Choice_Svolgimento_Att</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Si_Svolgimento_Att</elementReference>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -451,12 +457,19 @@
             <fieldText>&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;PROCEDERE CON LA MODIFICA DELLA PRIVACY&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>procedere_mod_priv</leftValueReference>
+                    <leftValueReference>Cliente_Consenso_Notizie</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Si</stringValue>
+                        <elementReference>Si_Consenso_Notizie</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Cliente_Choice_Svolgimento_Att</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Si_Svolgimento_Att</elementReference>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -485,12 +498,6 @@
             <name>AccountId</name>
             <value>
                 <elementReference>GetCampaignMember.Contact.Account.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>CampaignId</name>
-            <value>
-                <elementReference>GetCampaignMember.CampaignId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
