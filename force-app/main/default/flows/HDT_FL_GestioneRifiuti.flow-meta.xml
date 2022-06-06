@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Redirect</name>
         <label>Redirect</label>
-        <locationX>1639</locationX>
-        <locationY>2438</locationY>
+        <locationX>1392</locationX>
+        <locationY>2342</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -20,7 +20,7 @@
     <assignments>
         <name>Assign_Process_Type</name>
         <label>Assign Process Type</label>
-        <locationX>1282</locationX>
+        <locationX>864</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -66,7 +66,7 @@
     <assignments>
         <name>Assign_Process_Type_0_0</name>
         <label>Assign Process Type</label>
-        <locationX>336</locationX>
+        <locationX>50</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -82,7 +82,7 @@
     <assignments>
         <name>Assign_Process_Type_0_0_0</name>
         <label>Assign Process Type</label>
-        <locationX>1018</locationX>
+        <locationX>314</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -457,7 +457,7 @@
     <assignments>
         <name>putIndirizzi</name>
         <label>putIndirizzi</label>
-        <locationX>204</locationX>
+        <locationX>996</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>theCaseIndirizzi.Id</assignToReference>
@@ -473,20 +473,55 @@
     <assignments>
         <name>putIndirizzi_0</name>
         <label>putIndirizzi</label>
-        <locationX>468</locationX>
+        <locationX>732</locationX>
         <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>theCase.Id</elementReference>
+            </value>
+        </assignmentItems>
         <assignmentItems>
             <assignToReference>theCaseIndirizzi.InvoicingCity__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.InvoicingStreetName__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.InvoicingPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.InvoicingCountry__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.InvoicingProvince__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.InvoicingStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.InvoicingStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.InvoicingPlace__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
         <connector>
-            <targetReference>WizardScreen</targetReference>
+            <targetReference>Update_Indirizzi</targetReference>
         </connector>
     </assignments>
     <decisions>
         <name>CB_Appuntamenti</name>
         <label>CB Appuntamenti</label>
-        <locationX>622</locationX>
+        <locationX>1150</locationX>
         <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>DaInviare</targetReference>
@@ -511,7 +546,7 @@
     <decisions>
         <name>Context</name>
         <label>Context</label>
-        <locationX>1639</locationX>
+        <locationX>1392</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>populate_case_fields</targetReference>
@@ -609,7 +644,7 @@
     <decisions>
         <name>Context_0</name>
         <label>Context</label>
-        <locationX>677</locationX>
+        <locationX>182</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Assign_Process_Type_0_0_0</targetReference>
@@ -703,7 +738,7 @@
     <decisions>
         <name>NextStep</name>
         <label>Next Step</label>
-        <locationX>336</locationX>
+        <locationX>864</locationX>
         <locationY>1454</locationY>
         <defaultConnector>
             <targetReference>getUpdatedFields</targetReference>
@@ -743,28 +778,40 @@
     <decisions>
         <name>updateIndirizzo</name>
         <label>updateIndirizzo</label>
-        <locationX>336</locationX>
+        <locationX>864</locationX>
         <locationY>878</locationY>
         <defaultConnector>
-            <targetReference>putIndirizzi_0</targetReference>
+            <targetReference>putIndirizzi</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <defaultConnectorLabel>Indirizzo Popolato</defaultConnectorLabel>
         <rules>
-            <name>isCaseNull</name>
+            <name>IndirizzoSbiancato</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>theCaseIndirizzi</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>Selezione_Indirizzi_0</leftValueReference>
+                <operator>WasVisited</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Indirizzo_non_trovato</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>putIndirizzi</targetReference>
+                <targetReference>putIndirizzi_0</targetReference>
             </connector>
-            <label>isCaseNotNull</label>
+            <label>Indirizzo Sbiancato</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>checkboxIndirizzo</name>
+        <dataType>Boolean</dataType>
+        <expression>OR({!Riprendi_Processo}, {!isCaseContext}) &amp;&amp; ISBLANK({!theCase.InvoicingCity__c})</expression>
+    </formulas>
     <formulas>
         <name>phone_NonBlank</name>
         <dataType>String</dataType>
@@ -809,7 +856,7 @@
     <recordCreates>
         <name>Insert_theCase_0</name>
         <label>Insert theCase</label>
-        <locationX>1282</locationX>
+        <locationX>864</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Selezione_Indirizzi_0</targetReference>
@@ -829,7 +876,7 @@
     <recordLookups>
         <name>getAccount</name>
         <label>getAccount</label>
-        <locationX>1639</locationX>
+        <locationX>1392</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -850,7 +897,7 @@
     <recordLookups>
         <name>getOldCase</name>
         <label>getOldCase</label>
-        <locationX>1639</locationX>
+        <locationX>1392</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -871,7 +918,7 @@
     <recordLookups>
         <name>getTabellaAppuntamento</name>
         <label>getTabellaAppuntamento</label>
-        <locationX>622</locationX>
+        <locationX>1150</locationX>
         <locationY>1694</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -899,7 +946,7 @@
     <recordLookups>
         <name>getUpdatedFields</name>
         <label>getUpdatedFields</label>
-        <locationX>622</locationX>
+        <locationX>1150</locationX>
         <locationY>1574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -922,7 +969,7 @@
     <recordUpdates>
         <name>DaInviare</name>
         <label>Da Inviare</label>
-        <locationX>754</locationX>
+        <locationX>1282</locationX>
         <locationY>1934</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
@@ -946,7 +993,7 @@
     <recordUpdates>
         <name>InAttAppuntamento</name>
         <label>In Att Appuntamento</label>
-        <locationX>490</locationX>
+        <locationX>1018</locationX>
         <locationY>1934</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
@@ -970,8 +1017,8 @@
     <recordUpdates>
         <name>Update_Indirizzi</name>
         <label>Update Indirizzi</label>
-        <locationX>204</locationX>
-        <locationY>1118</locationY>
+        <locationX>864</locationX>
+        <locationY>1214</locationY>
         <connector>
             <targetReference>WizardScreen</targetReference>
         </connector>
@@ -980,8 +1027,8 @@
     <screens>
         <name>Selezione_Indirizzi</name>
         <label>Selezione Indirizzi</label>
-        <locationX>1018</locationX>
-        <locationY>758</locationY>
+        <locationX>2338</locationX>
+        <locationY>1238</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1017,7 +1064,7 @@
     <screens>
         <name>Selezione_Indirizzi_0</name>
         <label>Selezione Indirizzi</label>
-        <locationX>336</locationX>
+        <locationX>864</locationX>
         <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1029,7 +1076,7 @@
             <name>Indirizzo_non_trovato</name>
             <dataType>Boolean</dataType>
             <defaultValue>
-                <booleanValue>false</booleanValue>
+                <elementReference>checkboxIndirizzo</elementReference>
             </defaultValue>
             <fieldText>Indirizzo non trovato</fieldText>
             <fieldType>InputField</fieldType>
@@ -1074,7 +1121,7 @@
     <screens>
         <name>WizardScreen</name>
         <label>Wizard Screen</label>
-        <locationX>336</locationX>
+        <locationX>864</locationX>
         <locationY>1334</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1166,7 +1213,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1513</locationX>
+        <locationX>1266</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>getOldCase</targetReference>
@@ -1193,7 +1240,7 @@
     <subflows>
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
-        <locationX>50</locationX>
+        <locationX>578</locationX>
         <locationY>1574</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
