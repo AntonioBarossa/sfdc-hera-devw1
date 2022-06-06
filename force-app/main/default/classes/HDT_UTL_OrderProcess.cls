@@ -162,7 +162,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && order.QualityCall__c
                 && isMonitoringList.contains(order.AgencyCode__c)
                 && !phaseStory.contains('Quality Call OK')
-                && order.ComfortCallDaysDue__c == null){
+                && order.ComfortCallDaysDue__c == null
+                && !order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi')){
                 String newPhase = 'In attesa di quality call';
                 order.Phase__c = newPhase;
                 DateTime nowDateTime = DateTime.now();
