@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Redirect</name>
         <label>Redirect</label>
-        <locationX>336</locationX>
-        <locationY>2126</locationY>
+        <locationX>1392</locationX>
+        <locationY>2342</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -20,8 +20,8 @@
     <assignments>
         <name>Assign_Process_Type</name>
         <label>Assign Process Type</label>
-        <locationX>1282</locationX>
-        <locationY>398</locationY>
+        <locationX>864</locationX>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -50,7 +50,7 @@
     <assignments>
         <name>Assign_Process_Type_0</name>
         <label>Assign Process Type</label>
-        <locationX>1744</locationX>
+        <locationX>2008</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -66,8 +66,8 @@
     <assignments>
         <name>Assign_Process_Type_0_0</name>
         <label>Assign Process Type</label>
-        <locationX>336</locationX>
-        <locationY>518</locationY>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -82,8 +82,8 @@
     <assignments>
         <name>Assign_Process_Type_0_0_0</name>
         <label>Assign Process Type</label>
-        <locationX>1018</locationX>
-        <locationY>518</locationY>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -99,7 +99,7 @@
         <description>Inherit just once those fields and blank parentId so this branch is not executed twice</description>
         <name>InheritFieldsfromOldCase</name>
         <label>Inherit Fields from Old Case</label>
-        <locationX>1744</locationX>
+        <locationX>2008</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>theCase.ParentId</assignToReference>
@@ -222,10 +222,164 @@
         </connector>
     </assignments>
     <assignments>
+        <description>Inherit just once those fields and blank parentId so this branch is not executed twice</description>
+        <name>InheritFieldsfromOldCase_0</name>
+        <label>Inherit Fields from Old Case</label>
+        <locationX>1546</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>theCase.AlternativeAddress__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.AlternativeAddress__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.InvoicingStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.InvoicingStreetName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.InvoicingCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.InvoicingCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.InvoicingPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.InvoicingPostalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.InvoicingCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.InvoicingCountry__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.InvoicingProvince__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.InvoicingProvince__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.InvoicingStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.InvoicingStreetNumberExtension__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.InvoicingStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.InvoicingStreetNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.TypeOperation__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.TypeOperation__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.OperationGroup__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.OperationGroup__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Material__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.Material__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.ClientType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.ClientType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.ClientTypology__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.ClientTypology__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.AlternativeAddress__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.AlternativeAddress__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.PhoneNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.PhoneNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Segnalazioni</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.MaterialDescription__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.MaterialDescription__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesto Annullamento</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.ParentId</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.RelatedCase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insert_theCase_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>populate_case_fields</name>
         <label>populate case fields</label>
-        <locationX>2338</locationX>
-        <locationY>398</locationY>
+        <locationX>2602</locationX>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>theCase.InvoicingStreetName__c</assignToReference>
             <operator>Assign</operator>
@@ -303,8 +457,8 @@
     <assignments>
         <name>putIndirizzi</name>
         <label>putIndirizzi</label>
-        <locationX>204</locationX>
-        <locationY>878</locationY>
+        <locationX>996</locationX>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>theCaseIndirizzi.Id</assignToReference>
             <operator>Assign</operator>
@@ -319,21 +473,56 @@
     <assignments>
         <name>putIndirizzi_0</name>
         <label>putIndirizzi</label>
-        <locationX>468</locationX>
-        <locationY>878</locationY>
+        <locationX>732</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>theCase.Id</elementReference>
+            </value>
+        </assignmentItems>
         <assignmentItems>
             <assignToReference>theCaseIndirizzi.InvoicingCity__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.InvoicingStreetName__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.InvoicingPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.InvoicingCountry__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.InvoicingProvince__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.InvoicingStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.InvoicingStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.InvoicingPlace__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
         <connector>
-            <targetReference>WizardScreen</targetReference>
+            <targetReference>Update_Indirizzi</targetReference>
         </connector>
     </assignments>
     <decisions>
         <name>CB_Appuntamenti</name>
         <label>CB Appuntamenti</label>
-        <locationX>622</locationX>
-        <locationY>1694</locationY>
+        <locationX>1150</locationX>
+        <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>DaInviare</targetReference>
         </defaultConnector>
@@ -357,8 +546,8 @@
     <decisions>
         <name>Context</name>
         <label>Context</label>
-        <locationX>1507</locationX>
-        <locationY>278</locationY>
+        <locationX>1392</locationX>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>populate_case_fields</targetReference>
         </defaultConnector>
@@ -422,6 +611,21 @@
             <label>GlobalAction</label>
         </rules>
         <rules>
+            <name>Annullo_Appuntamento</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>theCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente annullo richiesta senza appuntamento</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>InheritFieldsfromOldCase_0</targetReference>
+            </connector>
+            <label>Annullo Appuntamento</label>
+        </rules>
+        <rules>
             <name>isCaseContext</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
@@ -432,7 +636,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>getOldCase</targetReference>
+                <targetReference>InheritFieldsfromOldCase</targetReference>
             </connector>
             <label>Case Context</label>
         </rules>
@@ -440,8 +644,8 @@
     <decisions>
         <name>Context_0</name>
         <label>Context</label>
-        <locationX>677</locationX>
-        <locationY>398</locationY>
+        <locationX>182</locationX>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Assign_Process_Type_0_0_0</targetReference>
         </defaultConnector>
@@ -473,7 +677,7 @@
         <description>Se è anonima, dopo aver ereditato i campi dal case, torna alla decision principale per essere redirezionata sul ramo delle global</description>
         <name>Context_0_0</name>
         <label>Context</label>
-        <locationX>1744</locationX>
+        <locationX>2008</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>FlowCompatibility</targetReference>
@@ -505,7 +709,7 @@
     <decisions>
         <name>isCompatible</name>
         <label>isCompatible</label>
-        <locationX>1942</locationX>
+        <locationX>2206</locationX>
         <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>Selezione_Indirizzi</targetReference>
@@ -534,8 +738,8 @@
     <decisions>
         <name>NextStep</name>
         <label>Next Step</label>
-        <locationX>336</locationX>
-        <locationY>1334</locationY>
+        <locationX>864</locationX>
+        <locationY>1454</locationY>
         <defaultConnector>
             <targetReference>getUpdatedFields</targetReference>
         </defaultConnector>
@@ -574,28 +778,40 @@
     <decisions>
         <name>updateIndirizzo</name>
         <label>updateIndirizzo</label>
-        <locationX>336</locationX>
-        <locationY>758</locationY>
+        <locationX>864</locationX>
+        <locationY>878</locationY>
         <defaultConnector>
-            <targetReference>putIndirizzi_0</targetReference>
+            <targetReference>putIndirizzi</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <defaultConnectorLabel>Indirizzo Popolato</defaultConnectorLabel>
         <rules>
-            <name>isCaseNull</name>
+            <name>IndirizzoSbiancato</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>theCaseIndirizzi</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>Selezione_Indirizzi_0</leftValueReference>
+                <operator>WasVisited</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Indirizzo_non_trovato</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>putIndirizzi</targetReference>
+                <targetReference>putIndirizzi_0</targetReference>
             </connector>
-            <label>isCaseNotNull</label>
+            <label>Indirizzo Sbiancato</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>checkboxIndirizzo</name>
+        <dataType>Boolean</dataType>
+        <expression>OR({!Riprendi_Processo}, {!isCaseContext}) &amp;&amp; ISBLANK({!theCase.InvoicingCity__c})</expression>
+    </formulas>
     <formulas>
         <name>phone_NonBlank</name>
         <dataType>String</dataType>
@@ -630,7 +846,7 @@
     <recordCreates>
         <name>Insert_theCase</name>
         <label>Insert theCase</label>
-        <locationX>1744</locationX>
+        <locationX>2008</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>Context_0_0</targetReference>
@@ -640,18 +856,28 @@
     <recordCreates>
         <name>Insert_theCase_0</name>
         <label>Insert theCase</label>
-        <locationX>1282</locationX>
-        <locationY>518</locationY>
+        <locationX>864</locationX>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Selezione_Indirizzi_0</targetReference>
+        </connector>
+        <inputReference>theCase</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <name>Insert_theCase_0_0</name>
+        <label>Insert theCase</label>
+        <locationX>1546</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Redirect</targetReference>
         </connector>
         <inputReference>theCase</inputReference>
     </recordCreates>
     <recordLookups>
         <name>getAccount</name>
         <label>getAccount</label>
-        <locationX>1507</locationX>
-        <locationY>158</locationY>
+        <locationX>1392</locationX>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Context</targetReference>
@@ -671,11 +897,11 @@
     <recordLookups>
         <name>getOldCase</name>
         <label>getOldCase</label>
-        <locationX>1744</locationX>
-        <locationY>398</locationY>
+        <locationX>1392</locationX>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>InheritFieldsfromOldCase</targetReference>
+            <targetReference>getAccount</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -692,8 +918,8 @@
     <recordLookups>
         <name>getTabellaAppuntamento</name>
         <label>getTabellaAppuntamento</label>
-        <locationX>622</locationX>
-        <locationY>1574</locationY>
+        <locationX>1150</locationX>
+        <locationY>1694</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CB_Appuntamenti</targetReference>
@@ -720,8 +946,8 @@
     <recordLookups>
         <name>getUpdatedFields</name>
         <label>getUpdatedFields</label>
-        <locationX>622</locationX>
-        <locationY>1454</locationY>
+        <locationX>1150</locationX>
+        <locationY>1574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getTabellaAppuntamento</targetReference>
@@ -743,8 +969,8 @@
     <recordUpdates>
         <name>DaInviare</name>
         <label>Da Inviare</label>
-        <locationX>754</locationX>
-        <locationY>1814</locationY>
+        <locationX>1282</locationX>
+        <locationY>1934</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>
@@ -767,8 +993,8 @@
     <recordUpdates>
         <name>InAttAppuntamento</name>
         <label>In Att Appuntamento</label>
-        <locationX>490</locationX>
-        <locationY>1814</locationY>
+        <locationX>1018</locationX>
+        <locationY>1934</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>
@@ -791,8 +1017,8 @@
     <recordUpdates>
         <name>Update_Indirizzi</name>
         <label>Update Indirizzi</label>
-        <locationX>204</locationX>
-        <locationY>998</locationY>
+        <locationX>864</locationX>
+        <locationY>1214</locationY>
         <connector>
             <targetReference>WizardScreen</targetReference>
         </connector>
@@ -801,8 +1027,8 @@
     <screens>
         <name>Selezione_Indirizzi</name>
         <label>Selezione Indirizzi</label>
-        <locationX>1018</locationX>
-        <locationY>638</locationY>
+        <locationX>2338</locationX>
+        <locationY>1238</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -838,8 +1064,8 @@
     <screens>
         <name>Selezione_Indirizzi_0</name>
         <label>Selezione Indirizzi</label>
-        <locationX>336</locationX>
-        <locationY>638</locationY>
+        <locationX>864</locationX>
+        <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -850,7 +1076,7 @@
             <name>Indirizzo_non_trovato</name>
             <dataType>Boolean</dataType>
             <defaultValue>
-                <booleanValue>false</booleanValue>
+                <elementReference>checkboxIndirizzo</elementReference>
             </defaultValue>
             <fieldText>Indirizzo non trovato</fieldText>
             <fieldType>InputField</fieldType>
@@ -895,8 +1121,8 @@
     <screens>
         <name>WizardScreen</name>
         <label>Wizard Screen</label>
-        <locationX>336</locationX>
-        <locationY>1214</locationY>
+        <locationX>864</locationX>
+        <locationY>1334</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -987,17 +1213,17 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1381</locationX>
+        <locationX>1266</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>getAccount</targetReference>
+            <targetReference>getOldCase</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>FlowCompatibility</name>
         <label>Flow Compatibility</label>
-        <locationX>1942</locationX>
+        <locationX>2206</locationX>
         <locationY>998</locationY>
         <connector>
             <targetReference>isCompatible</targetReference>
@@ -1014,8 +1240,8 @@
     <subflows>
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
-        <locationX>50</locationX>
-        <locationY>1454</locationY>
+        <locationX>578</locationX>
+        <locationY>1574</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>
