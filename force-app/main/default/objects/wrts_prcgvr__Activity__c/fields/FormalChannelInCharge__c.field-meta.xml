@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>FormalChannelInCharge__c</fullName>
     <externalId>false</externalId>
-    <formula>TEXT(Account__r.FormalChannelInCharge__c)</formula>
+    <formula>TEXT(Distributor__r.FormalChannelInCharge__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Canale formale preposto</label>
     <required>false</required>
