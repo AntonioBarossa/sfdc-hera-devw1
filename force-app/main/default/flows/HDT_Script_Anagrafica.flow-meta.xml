@@ -81,7 +81,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>callType</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Inbound</stringValue>
                 </rightValue>
@@ -232,8 +232,23 @@
             </visibilityRule>
         </fields>
         <fields>
+            <name>textfixanag4</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di telefono fisso è {!OrderData.Account.Phone}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.Account.Phone</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>textfixanag3</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di telefono fisso è {!OrderData.Account.Phone}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Per la normativa vigente il contratto si perfeziona dopo che il fornitore ed il cliente si sono scambiati le conferme in forma scritta. Dette conferme possono essere scambiate, se il consumatore acconsente, anche su un supporto durevole.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Mi conferma che possiamo procedere con lo scambio delle conferme mediante supporto durevole e quindi con la registrazione di questa telefonata anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Per la normativa vigente il contratto si perfeziona dopo che il fornitore ed il cliente si sono scambiati le conferme in forma scritta. Dette conferme possono essere scambiate, se il consumatore acconsente, anche su un supporto durevole.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Mi conferma che possiamo procedere con lo scambio delle conferme mediante supporto durevole e quindi con la registrazione di questa telefonata anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -249,12 +264,12 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Dati_Anagrafica_VAS_0_0</name>
-            <fieldText>&lt;p&gt;[2. Dati Anagrafici]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo Cognome e Nome&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica il Cognome e Nome della persona cui va intestato il contratto [nel caso sia l’interlocutore farselo ripetere]?&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma di essere autorizzato, a concludere il presente contratto e a rilasciare i consensi privacy?&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.CustomerFiscalCode__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.CIAccoutn__c} e la Data di rilascio è DATA_RILASCIO_ID_MANCANTE?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di residenza della persona a cui va intestato il contratto è {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[2. Dati Anagrafici]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo Cognome e Nome&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di residenza della persona a cui va intestato il contratto è {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>textfixanag1_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che la sua mail è {!OrderData.Email__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Mi conferma che la sua mail è {!OrderData.Account.PrimaryEmail__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -283,8 +298,23 @@
             </visibilityRule>
         </fields>
         <fields>
+            <name>textfixanag4_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di telefono fisso è {!OrderData.Account.Phone}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.Account.Phone</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>textfixanag3_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di telefono fisso è {!OrderData.Account.Phone}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Per la normativa vigente il contratto si perfeziona dopo che il fornitore ed il cliente si sono scambiati le conferme in forma scritta. Dette conferme possono essere scambiate, se il consumatore acconsente, anche su un supporto durevole.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Mi conferma che possiamo procedere con lo scambio delle conferme mediante supporto durevole e quindi con la registrazione di questa telefonata anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Per la normativa vigente il contratto si perfeziona dopo che il fornitore ed il cliente si sono scambiati le conferme in forma scritta. Dette conferme possono essere scambiate, se il consumatore acconsente, anche su un supporto durevole.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Mi conferma che possiamo procedere con lo scambio delle conferme mediante supporto durevole e quindi con la registrazione di questa telefonata anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -350,12 +380,12 @@
         </fields>
         <fields>
             <name>text5</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!OrderData.ShippingAddressFormula__c}&lt;/span&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>text5_1</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che vuole ricevere le bollette al suo indirizzo {!OrderData.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole ricevere le bollette al suo indirizzo &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!OrderData.Account.BillingAddressFormula__c}&lt;/span&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -396,7 +426,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>ModalitaPagamento</leftValueReference>
+                    <leftValueReference>ModalitaPagamentoInput</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>RID</stringValue>

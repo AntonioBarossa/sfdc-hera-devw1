@@ -487,12 +487,18 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         /**@frpanico 2022-05-23 Aggiunto caso transitorio */
                         || (oldOrder.Phase__c == 'Caricamento Siebel KO' && newOrder.Phase__c == 'Esportazione VS Siebel')
                         || (oldOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.IncomingCreditCheckResult__c == 'OK')
+                        /**@af inserito per ricalcolo al documenti Validati */
+                        || (oldOrder.Phase__c == 'In attesa validazione' && newOrder.Phase__c == 'Documentazione Validata')
                     ){
                         if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
-                            newOrder.DateSentToSII__c = Date.today();
-                            String category = newOrder.CustomerCategory__c;
-                            if(category.equalsIgnoreCase('Famiglie')){
-                                newOrdersListRecalc.add(newOrder);
+                            if(newOrder.Phase__c == 'Documentazione Validata' && Date.today() <= newOrder.DateSentToSII__c){
+                                continue;
+                            }else{
+                                newOrder.DateSentToSII__c = Date.today();
+                                String category = newOrder.CustomerCategory__c;
+                                if(category.equalsIgnoreCase('Famiglie')){
+                                    newOrdersListRecalc.add(newOrder);
+                                }
                             }
                         }else {
                             newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
@@ -1250,12 +1256,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                         o.Phase__c = 'Comunicazione verso Heroku';
                                     }
                                 }
+                                /* 
                                 when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'{
                                     //if(o.CommodityFormula__c.equalsIgnoreCase('Energia Elettrica') && !String.isEmpty(contracts.get(o.ContractReference__c).Id) && !contracts.get(o.ContractReference__c).Account.CompanyOwner__c.equalsIgnoreCase('HERA COMM')){
                                     if(o.isTransition__c){
                                         o.Phase__c = 'Esportazione VS Siebel';
                                     }
-                                }
+                                } */
                             }
                             if(o.IsMassive__c){
                                 if('HDT_RT_Voltura'.equalsIgnoreCase(currentOrder.RecordType.DeveloperName)){
@@ -1310,11 +1317,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     public static void transitoryPhaseManagement(List<SObject> newOrderList, Map<Id,SObject> oldOrderMap)
     {
         Id bonusScontiRtId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId();
+        List<ServiceRequest__c> serviceRequestToDelete = new List<ServiceRequest__c>();
         Set<Id> orderIds = new Set<Id>();
         Set<Id> parentOrderIds = new Set<Id>();
         Map<Id,String> mapVasPhase = new Map<Id,String>();
         Map<Id,String> mapVasStatus = new Map<Id,String>();
-
+        
         for(Order newOrder : (List<Order>) newOrderList)
         {
             String oldPhase = newOrder.Phase__c;
@@ -1371,23 +1379,45 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
             if(!mapVasPhase.isEmpty())
             {
-                List<Order> vasScontiOrders = [SELECT Phase__c, Status,ParentOrder__c FROM Order
-                WHERE ParentOrder__c IN :parentOrderIds
-                AND Id NOT IN :orderIds
-                AND Phase__c = 'Sequenzializzato'
-                AND IsTransition__c = true
-                WITH SECURITY_ENFORCED];
-                for(Order vasScontiOrder : vasScontiOrders)
+                List<ServiceRequest__c> serviceRequests = [SELECT Id, 
+                    Order__c,
+                    Order__r.ParentOrder__c,
+                    NextPhase__c
+                    FROM ServiceRequest__c 
+                    WHERE Order__r.ParentOrder__c IN :parentOrderIds
+                    AND Order__r.IsTransition__c = true WITH SECURITY_ENFORCED];
+                List<Order> vasScontiOrders = new List<Order>();
+                for(ServiceRequest__c sr : serviceRequests)
                 {
-                    vasScontiOrder.Phase__c = mapVasPhase.get(vasScontiOrder.ParentOrder__c);
-                    vasScontiOrder.Status = mapVasStatus.get(vasScontiOrder.ParentOrder__c);
-                    if(vasScontiOrder.Phase__c.equalsIgnoreCase('Annullato'))
+                    if(orderIds.contains(sr.Order__c))
                     {
-                        orderIds.add(vasScontiOrder.Id);
+                        serviceRequestToDelete.add(sr);
+                        continue;
+                    }
+                    Order orderVas = new Order();
+                    orderVas.Id = sr.Order__c;
+                    if(mapVasPhase.get(sr.Order__r.ParentOrder__c).equalsIgnoreCase('Annullato'))
+                    {
+                        orderVas.Phase__c = mapVasPhase.get(sr.Order__r.ParentOrder__c);
+                        orderVas.Status = mapVasStatus.get(sr.Order__r.ParentOrder__c);
+                        vasScontiOrders.add(orderVas);
+                        serviceRequestToDelete.add(sr);
+                    }
+                    else if(sr.NextPhase__c.equalsIgnoreCase('Completata'))
+                    {
+                        orderVas.Phase__c = sr.NextPhase__c;
+                        orderVas.Status = 'Activated';
+                        vasScontiOrders.add(orderVas);
+                        serviceRequestToDelete.add(sr);
+                    }
+                    else
+                    {
+                        orderVas.Phase__c = sr.NextPhase__c;
+                        orderVas.Status = mapVasStatus.get(sr.Order__r.ParentOrder__c);
+                        vasScontiOrders.add(orderVas);
                     }
                 }
                 /* Delete Service Request */
-                List<ServiceRequest__c> serviceRequestToDelete = [SELECT Id FROM ServiceRequest__c WHERE Order__c IN :orderIds WITH SECURITY_ENFORCED];
                 if(!serviceRequestToDelete.isEmpty())
                 {
                     HDT_SRV_ServiceRequest.deleteRecord(serviceRequestToDelete);

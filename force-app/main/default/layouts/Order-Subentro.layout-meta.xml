@@ -47,6 +47,14 @@
                 <behavior>Readonly</behavior>
                 <field>Priority__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ExciseGAS__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ImplantType__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -88,6 +96,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>DistributorPracticeCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ExciseEle__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -136,10 +148,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>MarketOrigin__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ImplantType__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -314,10 +322,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>FacilitationExcise__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ExciseEle__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

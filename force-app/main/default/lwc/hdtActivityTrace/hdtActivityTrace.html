@@ -1,0 +1,44 @@
+<template>
+    <template if:true={show}>
+        <article class="slds-card">
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate slds-m-bottom_none">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-account" title="account">
+                            <lightning-icon icon-name="standard:address" alternative-text="Address" title="Address">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Activity</span>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                            <span>Attività di tracciatura</span>
+                        </h2>
+                    </div>
+                    <!--<div class="slds-p-around_medium lgc-bg">
+                    <lightning-button-menu alternative-text="Show menu" onselect={handleOnselect} icon-size = "small">
+                        <lightning-menu-item value="wrts_prcgvr__Activity__c" label="Visualizza"></lightning-menu-item>
+                    </lightning-button-menu>
+                </div>-->
+                    <lightning-button label="Visualizza" title="Non-primary action" onclick={handleOnselect}
+                        class="slds-m-left_x-small"></lightning-button>
+                </header>
+            </div>
+            <div class="slds-card__body slds-card__body_inner slds-m-top_none">
+                <lightning-record-view-form object-api-name="wrts_prcgvr__Activity__c" record-id={actId}>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-output-field field-name="Name"> </lightning-output-field>
+                            <lightning-output-field field-name="Type__c"> </lightning-output-field>
+                            <lightning-output-field field-name="ActivityStartTime__c"> </lightning-output-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-output-field field-name="ActivityEndTime__c"> </lightning-output-field>
+                            <lightning-output-field field-name="ActivityDurationFormula__c"> </lightning-output-field>
+                        </div>
+                    </div>
+                </lightning-record-view-form>
+            </div>
+        </article>
+    </template>
+</template>
