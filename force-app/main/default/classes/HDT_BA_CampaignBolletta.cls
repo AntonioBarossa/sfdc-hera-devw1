@@ -9,10 +9,14 @@ public with sharing class HDT_BA_CampaignBolletta implements Database.Batchable<
 
     public void execute(Database.BatchableContext BC, List<Commercial_Code_Batch_Context__c> context) {
         Set<String> campaignIds = new Set<String>();
-        for(Commercial_Code_Batch_Context__c curObj : context) campaignIds.add(curObj.CampaignId__c);
+        Set<String> campaignMemberIds = new Set<String>();
+        for(Commercial_Code_Batch_Context__c curObj : context){
+            campaignIds.add(curObj.CampaignId__c);
+            campaignMemberIds.add(curObj.CampaignMemberId__c);
+        }
         List<CampaignMember> scope = [SELECT ContractReference__c, PromoCommercialCode__r.fullcode__c, Campaign.Name, Campaign.Description, Campaign.StaticTextMessageBill__c, Campaign.Channel__c 
                                         FROM CampaignMember 
-                                        WHERE CampaignId IN :campaignIds AND ContractReference__c != null AND isWsBollettaInvoked__c = false AND Campaign.Channel__c INCLUDES ('Bolletta') WITH SECURITY_ENFORCED LIMIT 100];
+                                        WHERE Id IN :campaignMemberIds AND CampaignId IN :campaignIds AND ContractReference__c != null AND isWsBollettaInvoked__c = false AND Campaign.Channel__c INCLUDES ('Bolletta') WITH SECURITY_ENFORCED];
         List<CampaignMember> membersToUpdate = new List<CampaignMember>();
         List<HDT_WS_CampaignBolletta.HDT_WS_CampaignBollettaRequest> wsReqList = new List<HDT_WS_CampaignBolletta.HDT_WS_CampaignBollettaRequest>();
 
@@ -55,6 +59,6 @@ public with sharing class HDT_BA_CampaignBolletta implements Database.Batchable<
         List<Commercial_Code_Batch_Context__c> remainingContext = [SELECT Id, CampaignId__c, CampaignMemberId__c
                                                     		        FROM Commercial_Code_Batch_Context__c 
                                                     		        WHERE CommercialCodeDone__c = TRUE AND BollettaDone__c = FALSE];
-        if(remainingContext.size()>0) System.scheduleBatch(new HDT_BA_CampaignBolletta(), 'HDT_BA_CampaignBolletta', 1);
+        if(remainingContext.size()>0) System.scheduleBatch(new HDT_BA_CampaignBolletta(), 'HDT_BA_CampaignBolletta', 1, 100);
     }
 }
