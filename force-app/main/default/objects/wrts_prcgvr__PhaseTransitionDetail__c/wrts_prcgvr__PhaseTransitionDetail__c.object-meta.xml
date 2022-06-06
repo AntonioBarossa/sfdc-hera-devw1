@@ -155,7 +155,6 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
     <gender>Feminine</gender>
     <label>Phase Transition Detail</label>
     <nameField>
@@ -169,6 +168,5 @@
         <lookupDialogsAdditionalFields>wrts_prcgvr__PhaseTransition__c</lookupDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>wrts_prcgvr__PhaseTransition__c</lookupPhoneDialogsAdditionalFields>
     </searchLayouts>
-    <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

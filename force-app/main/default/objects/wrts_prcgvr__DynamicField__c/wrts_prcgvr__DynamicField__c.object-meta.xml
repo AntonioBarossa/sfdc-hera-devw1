@@ -154,7 +154,6 @@
     <enableSearch>true</enableSearch>
     <enableSharing>false</enableSharing>
     <enableStreamingApi>false</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
     <gender>Masculine</gender>
     <label>Dynamic Field</label>
     <nameField>
@@ -164,6 +163,5 @@
     </nameField>
     <pluralLabel>Dynamic Fields</pluralLabel>
     <searchLayouts></searchLayouts>
-    <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
