@@ -5,9 +5,15 @@
         <label>Redirect</label>
         <locationX>1392</locationX>
         <locationY>2342</locationY>
-        <actionName>c:HDT_LCP_RedirectToRecord</actionName>
+        <actionName>c:HDT_LCP_FlowRedirectAdvanced</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>forceWorkspaceTab</name>
+            <value>
+                <elementReference>isAccountPopulated</elementReference>
+            </value>
+        </inputParameters>
         <inputParameters>
             <name>recordId</name>
             <value>
@@ -811,6 +817,11 @@
         <name>checkboxIndirizzo</name>
         <dataType>Boolean</dataType>
         <expression>OR({!Riprendi_Processo}, {!isCaseContext}) &amp;&amp; ISBLANK({!theCase.InvoicingCity__c})</expression>
+    </formulas>
+    <formulas>
+        <name>isAccountPopulated</name>
+        <dataType>Boolean</dataType>
+        <expression>ISBLANK({!theCase.AccountId})</expression>
     </formulas>
     <formulas>
         <name>phone_NonBlank</name>
