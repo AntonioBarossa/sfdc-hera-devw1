@@ -5,12 +5,14 @@ import { refreshApex } from '@salesforce/apex';
 const OBJECT_FIELDS =[
     'Id',
     'Phase__c',
-    'StartAppointment__c'
+    'StartAppointment__c',
+    'Outcome__c'
 ];
 
 export default class HdtTariAppointmentHandler extends LightningElement{
     showAgenda = false;
     showForm = false;
+    isRendered = true;
     hasRendered = false;
     variant='offline';
     alertMessage = 'Per prendere l\'appuntamento seleziona Prendi Appuntamento. Una volta confermato l\'appuntamento non sarà possibile modificarlo o annullarlo in autonomia ma sarà necessario contattare il servizio clienti. Ti ricordiamo che hai a disposizione 24 ore per prendere l\'appuntamento.';
@@ -38,18 +40,16 @@ export default class HdtTariAppointmentHandler extends LightningElement{
         if (data){
             this.case = JSON.parse(data);
             console.log('case ->' + this.case);
-
+            if(this.case.Outcome__c == 'Empty_Slots') {
+                this.isRendered = false;
+            }
             if(this.confirmed==false){
                 this.tempList.forEach( item =>{
                     let itemName = item.name;
-                    let enable = false;
                     console.log('item -> ' + item);
-                    if (true){
                         switch (itemName){
                             case 'newDate':
-                                if(this.case.Phase__c == 'In attesa Appuntamento'){
-                                    item.enable = true;
-                                }
+                                if(this.case.Phase__c == 'In attesa Appuntamento') item.enable = true;
                             break;
                             case 'viewDate':
                                 if(this.case.StartAppointment__c!= null && this.case.Phase__c != 'Completata' && this.case.Phase__c != 'Annullato'){
@@ -58,7 +58,6 @@ export default class HdtTariAppointmentHandler extends LightningElement{
                                 }
                             break;
                         }
-                    } 
                 });
             }
         }else if (error){

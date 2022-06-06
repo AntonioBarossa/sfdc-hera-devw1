@@ -2,7 +2,7 @@
   @description       : 
   @author            : Giacinto Florio
   @group             : 
-  @last modified on  : 30-05-2022
+  @last modified on  : 06-06-2022
   @last modified by  : Giacinto Florio
 -->
 <template>
@@ -15,7 +15,7 @@
             <template if:true={showForm}>
                 <c-hdt-appointment-self activityid={recordId} oncancelevent={cancelEvent} ></c-hdt-appointment-self>
             </template>
-            <template if:false={showAgenda}>
+            <template if:true={isRendered}>
                 <lightning-quick-action-panel header="Gestisci Appuntamento">
                     <div class="slds-modal__content" id="welcome-mat-403-content">
                         <template if:true={confirmed}>

@@ -173,6 +173,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     closeModal(){
         this.showSpinner = true;
         this.dispatchEvent(new CustomEvent('cancelevent',{detail : this.refreshRecord}));
+        this.refreshPage(true);
     }
 
     getAppointmentDate(){

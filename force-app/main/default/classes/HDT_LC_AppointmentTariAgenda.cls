@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 31-05-2022
+ * @last modified on  : 06-06-2022
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfStmtsMustUseBraces, PMD.IfElseStmtsMustUseBraces, PMD.pmdAvoidDebugStatements, PMD.CyclomaticComplexity')
@@ -130,6 +130,10 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         try{
                 //response = srvAgenda.handleFirstSearch(caseId,preferedDate,preferedTimeSlot);
                 // return handleSearc(caseId, preferedDate, preferedTimeSlot, requestType.FIRST_SEARCH);
+                
+                // Nessun Appuntamento Restituito
+                //return '{"codCaus" : "test" ,"codFlusso" : "0160" ,"desEsitoConf" : "1" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "0" ,"appuntamento" : []}';
+               
                 return '{"codCaus" : "test" ,"codFlusso" : "0160" ,"desEsitoConf" : "1" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "0" ,"appuntamento" : [{"appData" : "2022-12-31","appFasciaOrario" : "15:00/16:00","codiceApp" : "2222","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "16:00/17:00","codiceApp" : "3333","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "17:00/18:00","codiceApp" : "4444","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "18:00/19:00","codiceApp" : "5555","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "19:00/20:00","codiceApp" : "6666","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"}]}';
 
         }catch (exception e){
