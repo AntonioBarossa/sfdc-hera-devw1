@@ -117,6 +117,6 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<Co
 
     public void finish(Database.BatchableContext bc){
         System.debug('@@@@ finish batch, total size: ');
-        System.scheduleBatch(new HDT_BA_CampaignBolletta(), 'HDT_BA_CampaignBolletta', 1);
+        System.scheduleBatch(new HDT_BA_CampaignBolletta(), 'HDT_BA_CampaignBolletta', 1, 100);
     }
 }
