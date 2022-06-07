@@ -55,17 +55,6 @@ public class HDT_BA_CampaignBollettaTst {
 
             HDT_UTL_DataFactoryTst.createWebServiceConfiguration('campaignBolletta','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
 
-
-            List<Commercial_Code_Batch_Context__c> newContext = new List<Commercial_Code_Batch_Context__c>();
-            Integer count = 0;
-            for (CampaignMember member : campMembers){
-                Datetime nowDate = Datetime.now().addSeconds(count);
-                String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a') + ' - ' + Crypto.getRandomInteger();
-                newContext.add( new Commercial_Code_Batch_Context__c(Name=nowDateFormat, CampaignId__c=member.CampaignId, CampaignMemberId__c=member.Id, CommercialCodeDone__c=TRUE,BollettaDone__c = FALSE));
-                ++count;
-            }
-            insert newContext;
-
         }
     }
     
@@ -78,12 +67,8 @@ public class HDT_BA_CampaignBollettaTst {
             c.isWsBollettaInvoked__c=false;
         update listaCMpreBatch;
         
-
-
-
-
         Test.startTest();
-        HDT_BA_CampaignBolletta cb = new HDT_BA_CampaignBolletta(); //Updated method signature
+        HDT_BA_CampaignBolletta cb = new HDT_BA_CampaignBolletta(new List<String>{campaignId}); //Updated method signature
         Database.executeBatch(cb,200);
         Test.stopTest();
         
