@@ -447,6 +447,7 @@ public with sharing class HDT_UTL_CampaignMember {
             idsToProcess.add(cm.Id);
         }
 
+        /*
         List<CampaignMember> processedMembers = new List<CampaignMember>();
         for(CampaignMember member : [SELECT Id, PhoneNumber__c, LeadId, Lead.ContactDate__c, Campaign.ReitekIntegrationTechnology__c, Campaign.MacroActivityEasyCIM__r.Name FROM CampaignMember WHERE Id IN: idsToProcess WITH SECURITY_ENFORCED]) {
             if(member.LeadId != null && member.Campaign.ReitekIntegrationTechnology__c == 'Web Service') {
@@ -457,8 +458,9 @@ public with sharing class HDT_UTL_CampaignMember {
                 ));
             }
         }
-
-        new HDT_SRV_CampaignMember().updateRecords(processedMembers);
+        */
+        //new HDT_SRV_CampaignMember().updateRecords(processedMembers);
+        System.enqueueJob(new HDT_QBL_InvioNumerazioni(idsToProcess));
     }
 
     public static void setAgency (List<CampaignMember> members) {
