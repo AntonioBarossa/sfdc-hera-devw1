@@ -5,25 +5,31 @@ public with sharing class HDT_LC_ActivityTrace {
     @AuraEnabled(cacheable = true)
     public static string getActivity(Id recordId){
         String result;
+        Map<String,String> resultMap = new Map<String,String>();
+        resultMap.put('Tipo', 'Non definito');
+        String qField;
         try {
             HDT_QR_GenericQuery qrClass = new HDT_QR_GenericQuery();
             String sObjName = recordId.getSObjectType().getDescribe().getName();
-            List<SObject> objRecord =  HDT_QR_GenericQuery.getGenericRecords('Activity__c', sObjName, 'Id =\''+recordId+'\'');
+            if(sObjName.equalsIgnoreCase('Case') || sObjName.equalsIgnoreCase('Order')){
+                qField = 'Activity__c,Interaction__c';
+            }else {
+                qField = 'Activity__c';
+            }
+            List<SObject> objRecord =  HDT_QR_GenericQuery.getGenericRecords(qField, sObjName, 'Id =\''+recordId+'\'');
             if(!objRecord.isEmpty() && objRecord[0].get('Activity__c') != null){
                 result = String.valueOf(objRecord[0].get('Activity__c'));
-                /*List<wrts_prcgvr__Activity__c> actList = (List<wrts_prcgvr__Activity__c>)HDT_QR_GenericQuery.getGenericRecords('Name, Type__c, ActivityStartTime__c, ActivityEndTime__c, ActivityDurationFormula__c,', 'wrts_prcgvr__Activity__c', 'Id =\''+objRecord[0].get('Activity__c')+'\'');
-                if(actList != null && !actList.isEmpty()){
-                    resultMap.put('show', 'true');
-                    resultMap.put('name', String.valueOf(actList[0].get('Name')));
-                    resultMap.put('type', String.valueOf(actList[0].get('Type__c')));
-                    resultMap.put('start', String.valueOf(actList[0].get('ActivityStartTime__c')));
-                    resultMap.put('end', String.valueOf(actList[0].get('ActivityEndTime__c')));
-                    resultMap.put('duration', String.valueOf(actList[0].get('ActivityDurationFormula__c')));
-                }*/
+                resultMap.put('Tipo', 'Activity');
+                resultMap.put('Id', result);
+            }else if (!objRecord.isEmpty() && objRecord[0].get('Interaction__c') != null) {
+                result = String.valueOf(objRecord[0].get('Interaction__c'));
+                resultMap.put('Tipo', 'Interaction');
+                resultMap.put('Id', result);
+                
             }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return result;
+        return JSON.serialize(resultMap);
     }
 }
