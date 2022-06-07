@@ -427,7 +427,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 /**@frpanico 2022-05-27
                                  * Aggiunta casistica Dati TIMOE Ricevuti
                                  */
-                                when 'Dati TIMOE Ricevuti'
+                                when 'Dati TIMOE ricevuti'
                                 {
                                     String description = '';
                                     if(mapRequestFields.get('STATO_SOSP') != null && mapRequestFields.get('STATO_SOSP') != '')

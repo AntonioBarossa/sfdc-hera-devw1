@@ -11,9 +11,6 @@ export default class Popover extends LightningElement {
     @track showNewSaleButton;
     @track showHelpButton;
     
-
-
-    
     statusUpdate() {
         this.dispatchEvent(new CustomEvent('statusupdate'));
     }
@@ -38,9 +35,5 @@ export default class Popover extends LightningElement {
         if(this.flowFound != null && this.flowFound != "" && this.flowFound != "undefined"){
             this.showHelpButton = true;
         }
-
-
-
-
     }
 }

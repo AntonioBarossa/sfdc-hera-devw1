@@ -9,12 +9,14 @@ export default class hdtNewSaleCampaignMemberCommunity extends NavigationMixin(L
     CampaignProcessType = '';
     accountId='';
     isFromLead=false;
-
     connectedCallback() {
         getAccountAndCampaign({ campaignMemberId: this.recordId }).then(data => {
             console.log(JSON.stringify(data));
             this.CampaignProcessType = data.Campaign.ProcessType__c;
             console.log('CampaignProcessType Sale --> '+this.CampaignProcessType);
+            if(data.LeadId != null && data.LeadId != undefined && data.LeadId != ''){
+                this.isFromLead = true;
+            }
         }).catch(error => {
             console.log(error);
             this.dispatchEvent(
