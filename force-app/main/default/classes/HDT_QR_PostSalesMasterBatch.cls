@@ -17,7 +17,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
 
     List<String> typesCase = new List<String>{'Modifica post accertamento','Cessazione post accertamento'};
     List<String> caseRt = new List<String>{'HDT_RT_DisattivazioniTari','HDT_RT_VariazioniTari'};
-    List<String> phasesCase = new List<String>{'Chiuso','Completata','Annullato'};
+    String phaseInLavorazione = 'In Lavorazione';
 
 
     public List<Knowledge__kav> getExpiredArticle(){
@@ -135,11 +135,13 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         AccountId,
         SupplyCity__c,
         SupplyStreetName__c,
+        ServicePoint__c,
         CreatedDate
         FROM Case
-        WHERE Phase__c NOT IN :phasesCase
+        WHERE Phase__c =: this.phaseInLavorazione
         AND RecordType.DeveloperName IN :this.caseRt
         AND Type IN: this.typesCase
+        AND Id Not IN (Select Case__c from wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c = 'Aperta' AND Type__c IN ('Aprire variazione','Aprire Cessazione'))
         WITH SECURITY_ENFORCED
         ];
     }

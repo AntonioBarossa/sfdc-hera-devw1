@@ -346,59 +346,100 @@ public with sharing class HDT_UTL_CaseProcess {
 
     /**
     * @author Marco Arci (marco.arci@webresults.it)
+    * @description metodo per la chiusura delle activity "aprire cessazione" correlate al case al suo completamento
+    * @date 17/05/2022
+    * @param1 List<Case> lista dei cases inseriti
+    * @param1 Map<Id,SObject> Mappa della vecchia versione dei cases inseriti
+    */
+    public static void closeRelatedActivity(List<Case> triggerNew, Map<Id,SObject> oldMap){
+        list<Id> effectiveCase = new List<Id>();
+        for(Case currCase : triggerNew){
+            if('Confermato'.equalsIgnoreCase(currCase.Phase__c) && 
+               'HDT_RT_CessazioniTari'.equalsIgnoreCase(currCase.RecordType.DeveloperName) &&
+               'Cessazione post accertamento'.equalsIgnoreCase(currCase.Type) &&
+               ((Case)oldMap.get(currCase.Id)).Phase__c != currCase.Phase__c){
+                effectiveCase.add(currCase.Id);
+            }
+        }
+        List<wrts_prcgvr__Activity__c> toClose = [SELECT Id, Case__c, wrts_prcgvr__Status__c, Type__c 
+                                                     FROM wrts_prcgvr__Activity__c 
+                                                     WHERE Case__c IN: effectiveCase
+                                                     AND Type__c = 'Aprire cessazione'
+                                                     AND wrts_prcgvr__Status__c != 'Chiusa'
+                                                     AND wrts_prcgvr__Status__c != 'Annullata'];
+        for(wrts_prcgvr__Activity__c currAct : toClose){
+            currAct.wrts_prcgvr__Status__c = 'Chiusa';
+        }
+        Database.update(toClose);
+    }
+
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
     * @description metodo chiamato dal batch HDT_BA_PostSalesMasterBatch per generare activity se sono stati trovati contratti per i processi di post accertamento di variazioni tari e disattivazioni tari
     * @date 18/05/2022
     * @param1 List<Case> lista dei cases inseriti
     */
     public static void createActivityFromContract(List<Case> cases){
-        Map<String, List<String>> fieldsMap = new Map<String,List<String>>{'AccountId' => new List<String>(), 'SupplyCity__c' => new List<String>(), 'SupplyStreetName__c' => new List<String>()};
-        List<Case> toAnnul = new List<Case>();
-        for(Case currCase : cases){
-            //casesMap.put(currCase.Id, new Map<String,String>{'AccountId' => currCase.AccountId, 'SupplyCity__c' => currCase.SupplyCity__c, 'SupplyStreetName__c' => currCase.SupplyStreetName__c});
-            fieldsMap.get('AccountId').add(currCase.AccountId);
-            fieldsMap.get('SupplyCity__c').add(currCase.SupplyCity__c);
-            fieldsMap.get('SupplyStreetName__c').add(currCase.SupplyStreetName__c);
-        }
-        List<Contract> relatedContrats = [SELECT Id, AccountId, BillingCity, BillingStreet
-                                         FROM Contract
-                                         WHERE AccountId IN: fieldsMap.get('AccountId')
-                                         AND BillingCity IN: fieldsMap.get('SupplyCity__c')
-                                         AND BillingStreet IN: fieldsMap.get('SupplyStreetName__c')];
-        List<wrts_prcgvr__Activity__c> notInsertActivity = [SELECT Id, Type__c, Case__c 
-                                                            FROM wrts_prcgvr__Activity__c 
-                                                            WHERE Case__c IN: cases
-                                                            AND (Type__c = 'Aprire variazione' OR Type__c = 'Aprire Cessazione')];
-        List<Id> excludedCases = new List<Id>();
-        for(wrts_prcgvr__Activity__c currAct : notInsertActivity){
-            excludedCases.add(currAct.Case__c);
-        }
-        List<wrts_prcgvr__Activity__c> newActivityToInsert = new List<wrts_prcgvr__Activity__c>();
-        boolean findContract;
-        for(Case caseItem : cases){
-            findContract = false;
-            for(Contract currContract : relatedContrats){
-                if( ((String)caseItem.AccountId).equalsIgnoreCase(currContract.AccountId) && 
-                    caseItem.SupplyCity__c.equalsIgnoreCase(currContract.BillingCity) && 
-                    caseItem.SupplyStreetName__c.equalsIgnoreCase(currContract.BillingStreet) &&
-                    !excludedCases.contains(CaseItem.Id) ){
-                        if('Modifica post accertamento'.equalsIgnoreCase(caseItem.Type)){
-                            findContract = true;
-                            newActivityToInsert.add(new wrts_prcgvr__Activity__c(Account__c=caseItem.AccountId, Case__c=caseItem.Id, ServicePoint__c=caseItem.ServicePoint__c, Type__c='Aprire Variazione'));
-                            continue;
-                        }else if('Cessazione post accertamento'.equalsIgnoreCase(caseItem.Type)){
-                            findContract = true;
-                            newActivityToInsert.add(new wrts_prcgvr__Activity__c(Account__c=caseItem.AccountId, Case__c=caseItem.Id, ServicePoint__c=caseItem.ServicePoint__c, Type__c='Aprire Cessazione'));
-                            continue;
-                        }
+        try{
+            Map<String, List<String>> fieldsMap = new Map<String,List<String>>{'AccountId' => new List<String>(), 'SupplyCity__c' => new List<String>(), 'SupplyStreetName__c' => new List<String>()};
+            List<Case> toAnnul = new List<Case>();
+            for(Case currCase : cases){
+                system.debug('@@@ Case Id:'+currCase.Id);
+                //casesMap.put(currCase.Id, new Map<String,String>{'AccountId' => currCase.AccountId, 'SupplyCity__c' => currCase.SupplyCity__c, 'SupplyStreetName__c' => currCase.SupplyStreetName__c});
+                fieldsMap.get('AccountId').add(currCase.AccountId);
+                fieldsMap.get('SupplyCity__c').add(currCase.SupplyCity__c);
+                fieldsMap.get('SupplyStreetName__c').add(currCase.SupplyStreetName__c);
+                system.debug('@@@ Case AccountId:'+fieldsMap.get('AccountId'));
+                system.debug('@@@ Case SupplyCity__c:'+fieldsMap.get('SupplyCity__c'));
+                system.debug('@@@ Case SupplyStreetName__c:'+fieldsMap.get('SupplyStreetName__c'));
+            }
+            List<Contract> relatedContracts = [SELECT Id, AccountId, BillingCity, BillingStreet
+                                            FROM Contract
+                                            WHERE AccountId IN: fieldsMap.get('AccountId')
+                                            AND BillingCity IN: fieldsMap.get('SupplyCity__c')
+                                            AND BillingStreet IN: fieldsMap.get('SupplyStreetName__c')];
+            system.debug('@@@@ related contract: '+relatedContracts);
+            List<wrts_prcgvr__Activity__c> notInsertActivity = [SELECT Id, Type__c, Case__c 
+                                                                FROM wrts_prcgvr__Activity__c 
+                                                                WHERE Case__c IN: cases
+                                                                AND (Type__c = 'Aprire variazione' OR Type__c = 'Aprire Cessazione')];
+            List<Id> excludedCases = new List<Id>();
+            for(wrts_prcgvr__Activity__c currAct : notInsertActivity){
+                excludedCases.add(currAct.Case__c);
+            }
+            
+            List<wrts_prcgvr__Activity__c> newActivityToInsert = new List<wrts_prcgvr__Activity__c>();
+            boolean findContract;
+            for(Case caseItem : cases){
+                findContract = false;
+                for(Contract currContract : relatedContracts){
+                    system.debug('@@@ serching contract: '+currContract.Id);
+                    if( ((String)caseItem.AccountId)?.equalsIgnoreCase(currContract.AccountId) &&
+                        caseItem.SupplyCity__c?.equalsIgnoreCase(currContract.BillingCity) == true && 
+                        caseItem.SupplyStreetName__c?.equalsIgnoreCase(currContract.BillingStreet) &&
+                        !excludedCases.contains(CaseItem.Id) ){
+                            if('Modifica post accertamento'.equalsIgnoreCase(caseItem.Type)){
+                                findContract = true;
+                                newActivityToInsert.add(new wrts_prcgvr__Activity__c(Account__c=caseItem.AccountId, Case__c=caseItem.Id, ServicePoint__c=caseItem.ServicePoint__c, Type__c='Aprire Variazione'));
+                                break;
+                            }else if('Cessazione post accertamento'.equalsIgnoreCase(caseItem.Type)){
+                                findContract = true;
+                                newActivityToInsert.add(new wrts_prcgvr__Activity__c(Account__c=caseItem.AccountId, Case__c=caseItem.Id, ServicePoint__c=caseItem.ServicePoint__c, Type__c='Aprire Cessazione'));
+                                break;
+                            }
+                    }
+                }
+                if(findContract == false && Date.valueOf(caseItem.CreatedDate).daysBetween(Date.valueOf(system.today()))>=30){
+                    caseitem.Status='Closed';
+                    caseItem.Phase__c='Chiuso';
+                    toAnnul.add(caseitem);
                 }
             }
-            if(findContract == false && Date.valueOf(caseItem.CreatedDate).daysBetween(Date.valueOf(system.today()))>=30){
-                caseitem.Status='Closed';
-                caseItem.Phase__c='Chiuso';
-                toAnnul.add(caseitem);
-            }
+            system.debug('@@@ before dml operation');
+            update toAnnul;
+            insert newActivityToInsert;
+        }catch(exception e){
+            system.debug(e);
         }
-        Database.update(toAnnul);
-        Database.insert(newActivityToInsert);
     }
 }
