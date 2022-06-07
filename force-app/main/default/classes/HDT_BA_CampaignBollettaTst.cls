@@ -53,43 +53,30 @@ public class HDT_BA_CampaignBollettaTst {
             }
             insert campMembers;
 
+
+            Commercial_Code_Batch_Context__c context = new Commercial_Code_Batch_Context__c(Name = 'textContext',
+                                                                                            CampaignId__c = camps[0].id,
+                                                                                            CampaignMemberId__c = campMembers[0].Id,
+                                                                                            CommercialCodeDone__c = TRUE,
+                                                                                            BollettaDone__c = FALSE);
+            insert context;
+
             HDT_UTL_DataFactoryTst.createWebServiceConfiguration('campaignBolletta','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
-
-
-            List<Commercial_Code_Batch_Context__c> newContext = new List<Commercial_Code_Batch_Context__c>();
-            Integer count = 0;
-            for (CampaignMember member : campMembers){
-                Datetime nowDate = Datetime.now().addSeconds(count);
-                String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a') + ' - ' + Crypto.getRandomInteger();
-                newContext.add( new Commercial_Code_Batch_Context__c(Name=nowDateFormat, CampaignId__c=member.CampaignId, CampaignMemberId__c=member.Id, CommercialCodeDone__c=TRUE,BollettaDone__c = FALSE));
-                ++count;
-            }
-            insert newContext;
 
         }
     }
     
     @isTest
     static void test(){
-             
-        String campaignId = [SELECT id from Campaign where Name='Test Campaign' limit 1].id;     
-        List<CampaignMember> listaCMpreBatch = [SELECT id,isWsBollettaInvoked__c from CampaignMember where ContractReference__c = 'testContractReference'];
-        for(CampaignMember c : listaCMpreBatch)
-            c.isWsBollettaInvoked__c=false;
-        update listaCMpreBatch;
+        List<Commercial_Code_Batch_Context__c> context = [SELECT Id, CampaignId__c, CampaignMemberId__c FROM Commercial_Code_Batch_Context__c];
+        CampaignMember cmBefore = [SELECT id,isWsBollettaInvoked__c from CampaignMember where id = :context[0].CampaignMemberId__c];
         
-
-
-
-
         Test.startTest();
         HDT_BA_CampaignBolletta cb = new HDT_BA_CampaignBolletta(); //Updated method signature
-        Database.executeBatch(cb,200);
+        Database.executeBatch(cb);
         Test.stopTest();
         
-        List<CampaignMember> listaCm = [SELECT id,isWsBollettaInvoked__c from CampaignMember where ContractReference__c = 'testContractReference' and isWsBollettaInvoked__c = true];              
-        
-        System.assertEquals(50, listaCM.size(), 'CampaignMembers field isWsBollettaInvoked__c were not set to true by the batch');
-        System.assertNotEquals(listaCMpreBatch[0].isWsBollettaInvoked__c, listaCM[0].isWsBollettaInvoked__c ,'CampaignMember field isWsBollettaInvoked__c was not updated by the batch');
+        CampaignMember cmAfter = [SELECT id,isWsBollettaInvoked__c from CampaignMember where id = :context[0].CampaignMemberId__c];
+        System.assertNotEquals(cmBefore.isWsBollettaInvoked__c,cmAfter.isWsBollettaInvoked__c,'CampaignMember field isWsBollettaInvoked__c not updated by the batch'); 
     }
 }
