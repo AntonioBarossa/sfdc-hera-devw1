@@ -163,10 +163,15 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && isMonitoringList.contains(order.AgencyCode__c)
                 && !phaseStory.contains('Quality Call OK')
                 && order.ComfortCallDaysDue__c == null){
-                String newPhase = 'In attesa di quality call';
-                order.Phase__c = newPhase;
-                DateTime nowDateTime = DateTime.now();
-                order.PhaseStory__c = oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
+                    if(String.isNotBlank(order.VasSubtype__c) && order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi')){
+                        //nothing to update
+                    }else{
+                        String newPhase = 'In attesa di quality call';
+                        order.Phase__c = newPhase;
+                        DateTime nowDateTime = DateTime.now();
+                        order.PhaseStory__c = oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
+                    }
+                
             }
             /**@frpanico 07/03/2022
              * Aggiunta quality monitoraggio per voltura
@@ -1250,12 +1255,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                         o.Phase__c = 'Comunicazione verso Heroku';
                                     }
                                 }
+                                /* 
                                 when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'{
                                     //if(o.CommodityFormula__c.equalsIgnoreCase('Energia Elettrica') && !String.isEmpty(contracts.get(o.ContractReference__c).Id) && !contracts.get(o.ContractReference__c).Account.CompanyOwner__c.equalsIgnoreCase('HERA COMM')){
                                     if(o.isTransition__c){
                                         o.Phase__c = 'Esportazione VS Siebel';
                                     }
-                                }
+                                } */
                             }
                             if(o.IsMassive__c){
                                 if('HDT_RT_Voltura'.equalsIgnoreCase(currentOrder.RecordType.DeveloperName)){

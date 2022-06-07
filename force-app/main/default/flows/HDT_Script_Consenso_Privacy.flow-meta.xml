@@ -74,12 +74,19 @@
         <connector>
             <targetReference>Screen_Exit</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>or</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>GetCase.Contact.IndividualId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCase.Lead__r.IndividualId</elementReference>
             </value>
         </filters>
         <inputAssignments>
