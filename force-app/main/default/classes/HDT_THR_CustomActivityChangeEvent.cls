@@ -7,6 +7,7 @@ public inherited sharing class HDT_THR_CustomActivityChangeEvent {
 
         Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpObjMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event>();
         Map<Id, Id> activityIdsMap = new Map<Id, Id>();
+        Map<Id, wrts_prcgvr__Activity__c> activityMap = new Map<Id, wrts_prcgvr__Activity__c>();
 
         try{
             List<Id> activityIds = new List<Id>();
@@ -16,7 +17,7 @@ public inherited sharing class HDT_THR_CustomActivityChangeEvent {
             }
 
             List<wrts_prcgvr__Activity__c> activityList = [
-                SELECT Id, Case__c, Order__c
+                SELECT Id, Case__c, Order__c, Type__c
                 FROM wrts_prcgvr__Activity__c
                 WHERE Id IN :activityIds
             ];
@@ -26,6 +27,9 @@ public inherited sharing class HDT_THR_CustomActivityChangeEvent {
                     activityIdsMap.put(activity.Id, activity.Case__c);
                 } else if(activity.Order__c != null){
                     activityIdsMap.put(activity.Id, activity.Order__c);
+                }
+                if(activity.Case__c != null || activity.Order__c != null){
+                    activityMap.put(activity.Id, activity);
                 }
             }
 
@@ -52,6 +56,7 @@ public inherited sharing class HDT_THR_CustomActivityChangeEvent {
                         wrpObj.sObjType = String.valueOf(changeId.getSobjectType());
                         wrpObj.eventType = header.changeType;
                         wrpObj.fieldMap = new Map<String, Object>();
+                        wrpObj.activityEvent = activityMap.get(changeId);
                         wrpObjMap.put(changeId, wrpObj);
                     }
                 }
