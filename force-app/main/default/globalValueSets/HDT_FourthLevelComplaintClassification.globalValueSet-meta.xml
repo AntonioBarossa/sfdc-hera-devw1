@@ -491,9 +491,9 @@
         <label>Prelievi fraudolenti</label>
     </customValue>
     <customValue>
-        <fullName>Prelivo abusivo</fullName>
+        <fullName>Prelievo abusivo</fullName>
         <default>false</default>
-        <label>Prelivo abusivo</label>
+        <label>Prelievo abusivo</label>
     </customValue>
     <customValue>
         <fullName>Pressione</fullName>
