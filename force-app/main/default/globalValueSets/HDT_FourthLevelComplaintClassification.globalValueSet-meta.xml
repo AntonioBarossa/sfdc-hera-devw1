@@ -256,9 +256,9 @@
         <label>Emissione prima bolletta</label>
     </customValue>
     <customValue>
-        <fullName>Falso procurato</fullName>
+        <fullName>Falso procuratore</fullName>
         <default>false</default>
-        <label>Falso procurato</label>
+        <label>Falso procuratore</label>
     </customValue>
     <customValue>
         <fullName>Fattura di chiusura</fullName>
