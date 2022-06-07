@@ -95,6 +95,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
     @track showConfirmButton = false;
     @track showPreviewButton = true;
     @track previousButton;
+    @track vocalOrderExecuted = false;
     @api
     get variantButton(){
         if(this.nextVariant != null && this.nextVariant !="" && this.nextVariant != "unedfined")
@@ -449,6 +450,8 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
         let returnValue = this.template.querySelector('c-hdt-document-signature-manager').checkForm();
     }
     handleConfirm(){
+        var resultWrapper = JSON.parse(this.confirmData);
+        console.log('this.confirmData.signMode ' + resultWrapper.signMode);
         if(this.enableNext){
             if((!this.previewExecuted && this.quoteType && this.quoteType.localeCompare('Analitico') != 0)){
                 this.dispatchEvent(
@@ -458,9 +461,21 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                         variant: 'error',
                     }),
                 );
-            }else if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
+            }else if(!this.vocalOrderExecuted && resultWrapper.signMode != null && resultWrapper.signMode === 'Vocal Order'){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Errore',
+                        message:'Attenzione! Devi effettuare la registrazione del Vocal Order prima di procedere con il Conferma pratica',
+                        variant: 'error',
+                    }),
+                );
+            }
+            else if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
                 this.handleGoNext();
-            }else{
+            }else if(resultWrapper.signMode != null && resultWrapper.signMode === 'Vocal Order'){
+                this.handleGoNext();
+            }
+            else{
                 console.log('sendDocumentFile');
                 this.sendDocumentFile();
             }
@@ -582,7 +597,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
     }
 
     launchScript(){
-
+        
         this.openModal = true;
 
         getFlowCase({caseId: this.recordId}).then(flowUrl => {
@@ -608,6 +623,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
 
     closeModal(){
         this.openModal = false;
+        this.vocalOrderExecuted = true;
         this.dispatchEvent(new CustomEvent('close'));
     }
 }

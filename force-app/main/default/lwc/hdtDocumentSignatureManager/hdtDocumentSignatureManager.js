@@ -48,6 +48,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track tipoPlico='';
     @track showModalContact=false;
     @track contactPointInfo;
+    @track requireSendMode=true;
     defautlAgenciesManagement;
 
     //@frpanico 07/09 added EntryChannel__c (Canale di Ingresso) to predefault SendMode
@@ -101,6 +102,10 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.sendMode = inputWrapper.sendMode;
                 this.entryChannel = inputWrapper.entryChannel;
                 this.defautlAgenciesManagement = false;
+
+                if(this.signMode === 'Vocal Order'){
+                    this.requireSendMode = false;
+                }
                 if (inputWrapper.checkAgencies && inputWrapper.checkAgencies.localeCompare('Y') === 0){
                     this.defautlAgenciesManagement = true;
                 }
@@ -144,7 +149,8 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     var existContrattoFirmato = false;
                     resultJSON.forEach((element) => {
                         signMode.push(element.signMode);
-                        if(element.signMode === 'Contratto già firmato'){
+                        console.log('#element >>> ' + JSON.stringify(element.signMode));
+                        if(element.signMode.value === 'Contratto già firmato'){
                             existContrattoFirmato = true;
                         }
                         element.sendMode.forEach((element2) => {
@@ -327,6 +333,10 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
             });
             console.log(JSON.stringify(temp));
             this.modalitaInvio = temp.sendMode;
+            console.log('Mod Invio ' + this.modalitaInvio);
+            if(event.detail.value === 'Vocal Order'){
+                this.requireSendMode = false;
+            }
             console.log('mod invio ' + this.modalitaInvio);
             this.phoneRequired = false;
             this.addressRequired = false;
