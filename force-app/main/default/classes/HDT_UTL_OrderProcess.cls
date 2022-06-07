@@ -162,12 +162,16 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && order.QualityCall__c
                 && isMonitoringList.contains(order.AgencyCode__c)
                 && !phaseStory.contains('Quality Call OK')
-                && order.ComfortCallDaysDue__c == null
-                && !order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi')){
-                String newPhase = 'In attesa di quality call';
-                order.Phase__c = newPhase;
-                DateTime nowDateTime = DateTime.now();
-                order.PhaseStory__c = oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
+                && order.ComfortCallDaysDue__c == null){
+                    if(String.isNotBlank(order.VasSubtype__c) && order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi')){
+                        //nothing to update
+                    }else{
+                        String newPhase = 'In attesa di quality call';
+                        order.Phase__c = newPhase;
+                        DateTime nowDateTime = DateTime.now();
+                        order.PhaseStory__c = oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
+                    }
+                
             }
             /**@frpanico 07/03/2022
              * Aggiunta quality monitoraggio per voltura
