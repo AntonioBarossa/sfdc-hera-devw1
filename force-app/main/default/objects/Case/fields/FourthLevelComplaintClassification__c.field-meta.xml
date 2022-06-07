@@ -90,11 +90,11 @@
             <valueName>Modalità recesso</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Importi per consumi risalenti a più di due anni</controllingFieldValue>
+            <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
             <valueName>Causa Arera</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Importi per consumi risalenti a più di due anni</controllingFieldValue>
+            <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
             <valueName>Causa Cliente</valueName>
         </valueSettings>
         <valueSettings>
