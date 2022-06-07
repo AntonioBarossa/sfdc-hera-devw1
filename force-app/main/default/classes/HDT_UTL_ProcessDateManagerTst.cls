@@ -274,7 +274,7 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
             Date targetDate = matrixDate.FulfillmentDateFrom__c;
             Integer preavviso = orders[0].RecessNotice__c != null? (Integer)orders[0].RecessNotice__c : 0 ;
             Integer month = 1 - preavviso;
-            Date siiDate = targetDate;
+            Date siiDate = targetDate.addMonths(month).toStartofMonth();
 
             System.assertEquals(orders[0].DateSentToSII__c, siiDate, 'DateSentToSII__c not correct');
 
@@ -313,7 +313,7 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
             Date targetDate = matrixDate.FulfillmentDateFrom__c;
             Integer preavviso = orders[0].RecessNotice__c != null? (Integer)orders[0].RecessNotice__c : 0 ;
             Integer month = 1 - preavviso;
-            Date siiDate = targetDate;
+            Date siiDate = targetDate.addMonths(month).toStartofMonth();
 
             System.assertEquals(orders[0].DateSentToSII__c, siiDate, 'DateSentToSII__c not correct');
 
