@@ -154,7 +154,8 @@ public class HDT_LC_CtToolbar_Test {
             update cp;
 
             List<Lead> lead = HDT_UTL_DataFactoryTst.createLead(2, true);
-            List<Account> acc = HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
+            List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'HERA COMM','Azienda','Aziende SME');
+            //List<Account> acc = HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
             acc[0].RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Partner').getRecordTypeId();
             update acc;
             List<Contact> ctt = HDT_UTL_DataFactoryTst.createContact(2, true, acc[0].Id);

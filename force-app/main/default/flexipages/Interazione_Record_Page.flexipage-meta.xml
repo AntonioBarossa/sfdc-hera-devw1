@@ -9,12 +9,6 @@
                         <valueListItems>
                             <value>Interaction__c.Catalogo_Servizi</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Status__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Aperta</rightValue>
-                                </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Account__r.Name}</leftValue>
                                     <operator>NE</operator>

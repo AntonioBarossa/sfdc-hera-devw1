@@ -23,7 +23,7 @@ public inherited sharing class HDT_LC_ModificaContrattiBp {
             {
                 if(bpData.get(field) != null && String.isNotBlank(String.valueOf(bpData.get(field))) && !field.equalsIgnoreCase('undefined'))
                 {
-                    c.Note__c += '\n' + '\"' +fieldMap.get(field).getDescribe().getLabel() + '\"' + ': ' + '\"' + bpData.get(field) + '\"';
+                    //c.Note__c += '\n' + '\"' +fieldMap.get(field).getDescribe().getLabel() + '\"' + ': ' + '\"' + bpData.get(field) + '\"';
                     if(caseFields.contains(field.toLowerCase())){
                         c.put(field, bpData.get(field));
                     }else if(unmappedField.containsKey(field)){
