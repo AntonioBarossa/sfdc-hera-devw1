@@ -289,7 +289,7 @@
     <assignments>
         <name>ChangePhase</name>
         <label>ChangePhase</label>
-        <locationX>2687</locationX>
+        <locationX>2654</locationX>
         <locationY>4814</locationY>
         <assignmentItems>
             <assignToReference>getCase.Phase__c</assignToReference>
@@ -303,15 +303,31 @@
         </connector>
     </assignments>
     <assignments>
-        <name>ChangePhase_0</name>
-        <label>ChangePhase</label>
-        <locationX>2951</locationX>
-        <locationY>4814</locationY>
+        <name>ChangePhaseIntegrati</name>
+        <label>ChangePhaseIntegrati</label>
+        <locationX>3182</locationX>
+        <locationY>4934</locationY>
         <assignmentItems>
             <assignToReference>getCase.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Da Inviare</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>finalUpdate</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>ChangePhaseNonIntegrati</name>
+        <label>ChangePhaseNonIntegrati</label>
+        <locationX>2918</locationX>
+        <locationY>4934</locationY>
+        <assignmentItems>
+            <assignToReference>getCase.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -645,6 +661,52 @@
         </rules>
     </decisions>
     <decisions>
+        <name>ChoiceIntegration</name>
+        <label>ChoiceIntegration</label>
+        <locationX>3050</locationX>
+        <locationY>4814</locationY>
+        <defaultConnector>
+            <targetReference>ChangePhaseIntegrati</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Flussi integrati</defaultConnectorLabel>
+        <rules>
+            <name>FlussiNonIntegrati</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>getCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica post accertamento</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getAfterForm_0.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Coabitazioni</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getAfterForm_0.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Componenti Residenti</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getAfterForm_0.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Dati Catastali</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ChangePhaseNonIntegrati</targetReference>
+            </connector>
+            <label>Flussi non integrati</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>ConcatenazionePreDocumentale</name>
         <label>ConcatenazionePreDocumentale</label>
         <locationX>2621</locationX>
@@ -679,10 +741,10 @@
     <decisions>
         <name>IstruttoriBackOffice</name>
         <label>IstruttoriBackOffice?</label>
-        <locationX>2819</locationX>
+        <locationX>2852</locationX>
         <locationY>4694</locationY>
         <defaultConnector>
-            <targetReference>ChangePhase_0</targetReference>
+            <targetReference>ChoiceIntegration</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -853,9 +915,9 @@
         <defaultConnector>
             <targetReference>AssignmentPreForm</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Modifica dati contrattuali</defaultConnectorLabel>
+        <defaultConnectorLabel>Modifica post accertamento</defaultConnectorLabel>
         <rules>
-            <name>TypeModificaPostAcc</name>
+            <name>TypeModificaDatiContr</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>getCase.Type</leftValueReference>
@@ -867,7 +929,7 @@
             <connector>
                 <targetReference>verificaAccertamentiTari_0</targetReference>
             </connector>
-            <label>Modifica post accertamento</label>
+            <label>Modifica dati contrattuali</label>
         </rules>
     </decisions>
     <description>SubFlow chiamato da HDT_FL_GestioneVariazioni per la gestione dei processi di Variazioni Tari</description>
@@ -2322,12 +2384,12 @@
             <targetReference>getCase</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>flowAnnullamento</name>
         <label>flowAnnullamento</label>
         <locationX>550</locationX>
-        <locationY>5762</locationY>
+        <locationY>5978</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
