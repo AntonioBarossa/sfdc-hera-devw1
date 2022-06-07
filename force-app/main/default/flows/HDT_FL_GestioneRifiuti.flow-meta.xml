@@ -976,6 +976,7 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>InvoicingCity__c</queriedFields>
         <queriedFields>TypeOperation__c</queriedFields>
+        <queriedFields>AccountId</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>DaInviare</name>
