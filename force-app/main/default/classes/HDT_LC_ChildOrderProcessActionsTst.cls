@@ -181,6 +181,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             orders[0].Contact__c = contactId;
             orders[0].IsActivationDeferred__c=true;
 			orders[0].VATfacilitationFlag__c=true;
+            orders[0].SupplyType__c = 'Domestico';
+
             
 			orders[1].RecordTypeId=orderVoltura;
 			orders[1].CreditCheckDescription__c='test2Voltura';
@@ -228,6 +230,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             orders[3].ParentOrder__c = orders[6].Id;
 			orders[3].VATfacilitationFlag__c=true;
             orders[3].Commodity__c = 'Energia Elettrica';
+            orders[3].SupplyType__c = 'Domestico';
+
 
 			orders[4].EffectiveDate__c=date.today().addDays(10);
 			orders[4].PowerCommitted__c=2;
