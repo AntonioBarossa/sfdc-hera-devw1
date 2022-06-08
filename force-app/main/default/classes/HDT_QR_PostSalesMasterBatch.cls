@@ -147,6 +147,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
     }
 
     public List<Case> getPostSalesBozzaCase(){
+        Id segnalazioniRtId = (new Case()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
         return [SELECT Id,
         Type,
         Phase__c,
@@ -161,6 +162,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         FROM Case
         WHERE Phase__c = :this.bozzaCase
         AND Cluster__c != : this.autoletturaCase
+        AND RecordTypeId != :segnalazioniRtId
         WITH SECURITY_ENFORCED
         ];
     }
