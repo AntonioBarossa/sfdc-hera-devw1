@@ -73,7 +73,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 			}
 		} else {
 			Map<String,String> fieldsMap = fieldMappings.get(sobjectType);
-			SObject sobj = Database.query('SELECT Id,' + fieldsMap.get('account') + ',' + fieldsMap.get('contact') + ' FROM ' + sobjectType + ' WHERE Id =: recordId');
+			SObject sobj = Database.query('SELECT Id,' + String.escapeSingleQuotes(fieldsMap.get('account')) + ',' + String.escapeSingleQuotes(fieldsMap.get('contact')) + ' FROM ' + String.escapeSingleQuotes(sobjectType) + ' WHERE Id =: recordId');
 			result.accountId = (String) sobj.get(fieldsMap.get('account'));
 			result.contactId = (String) sobj.get(fieldsMap.get('contact'));
 		}
@@ -83,27 +83,76 @@ public with sharing class HDT_LC_AccountSelectorController {
 	@AuraEnabled
 	public static String search(String queryString, String recordId) {
 		HDT_UTL_Struct result = new HDT_UTL_Struct();
-		if(queryString.startsWith('100') && queryString.isNumeric()) {
-			// return handleBPCodeSearch(queryString);
+		if(queryString.isNumeric()) {
 			queryString = queryString + '%';
-			result.accounts = getAccountByBPCode(queryString);
-			result.contacts = getContactTitolare(result.accounts.get(0).Id);
-		} else {
-			queryString = '%' + queryString + '%';
-			if(((Id) recordId).getSobjectType().getDescribe().getName() == 'wrts_prcgvr__Activity__c') {
-				result.leads = getLeads(queryString);
+			if( queryString.startsWith('100') ){
+				//BP
+				result.accounts = getAccountByBPCode(queryString);
+				result.contacts = getContactTitolare(result.accounts.get(0).Id);
+			} else if( queryString.startsWith('3') && queryString.length() == 10 ){
+				//mobilephone
+				result=getContactsAndLeads(result, queryString,'MobilePhone', recordId);
+			} else if ( queryString.length() == 10 ){
+				//phone
+				result=getContactsAndLeads(result, queryString,'Phone', recordId);
+			} else if ( queryString.length() == 11 ){
+				//P.IVA
+				result=getContactsAndLeads(result, queryString,'VATNumber__c', recordId);
 			}
-			result.contacts = getContacts(queryString);
+		} else { //NO NUMERIC
+			queryString = '%' + queryString + '%';
+			if( queryString.contains('@') ){
+				//mail
+				result=getContactsAndLeads(result, queryString,'Email', recordId);
+			} else if( queryString.length() == 16 ){
+				//CF
+				result=getContactsAndLeads(result, queryString,'FiscalCode__c', recordId);
+			} else { //Name
+				result=getContactsAndLeads(result, queryString,'Name', recordId);
+			}
 		}
 		return JSON.serialize(result);
 	}
 
+	@AuraEnabled
+	public static HDT_UTL_Struct getContactsAndLeads( HDT_UTL_Struct result, String queryString, String conditionField, String recordId ) {
+		if(((Id) recordId).getSobjectType().getDescribe().getName() == 'wrts_prcgvr__Activity__c') {
+			result.leads = getLeads(queryString, conditionField );
+		}
+		result.contacts = getContacts(queryString, conditionField );
+		return result;
+	}
+
 	private static List<Account> getAccountByBpCode(String bpCode) {
-		return [SELECT Id, Name, CustomerCode__c, FiscalCode__c, VATNumber__c, BillingAddressFormula__c FROM Account WHERE CustomerCode__c LIKE :bpCode WITH SECURITY_ENFORCED];
+		return [SELECT Id, Name, CustomerCode__c, FiscalCode__c, VATNumber__c, BillingAddressFormula__c 
+				FROM Account WHERE CustomerCode__c LIKE :bpCode WITH SECURITY_ENFORCED];
 	}
 
 	private static List<Contact> getContactTitolare(String accountId) {
-		return [SELECT Id, Name, Phone, MobilePhone, Email, FiscalCode__c, VATNumber__c FROM Contact WHERE Id IN (SELECT ContactId FROM AccountContactRelation WHERE AccountId = :accountId AND Roles = 'Titolare' AND isActive = true) WITH SECURITY_ENFORCED];
+		return [SELECT Id, Name, Phone, MobilePhone, Email, FiscalCode__c, VATNumber__c 
+				FROM Contact 
+				WHERE Id IN 
+					(SELECT ContactId FROM AccountContactRelation 
+					WHERE AccountId = :accountId AND Roles = 'Titolare' AND isActive = true)
+					WITH SECURITY_ENFORCED];
+	}
+
+	@AuraEnabled
+	public static List<Contact> getContacts(String queryString, String conditionField ) {
+		if(sObjectType.Contact.isAccessible()) {
+			return Database.query(' SELECT Id, AccountId, Name, Phone, MobilePhone, Email, FiscalCode__c, VATNumber__c FROM Contact WHERE ' + String.escapeSingleQuotes(conditionField) + ' LIKE :queryString WITH SECURITY_ENFORCED ');
+		} else {
+			return null;
+		}
+	}
+
+	@AuraEnabled
+	public static List<Lead> getLeads(String queryString, String conditionField ) {
+		if(sObjectType.Lead.isAccessible()) {
+			return Database.query(' SELECT Id,Name,Phone,MobilePhone,Email,FiscalCode__c,VATNumber__c FROM Lead WHERE '+ String.escapeSingleQuotes(conditionField) +' LIKE :queryString WITH SECURITY_ENFORCED ');
+		} else {
+			return null;
+		}
 	}
 
 	@AuraEnabled
@@ -193,10 +242,27 @@ public with sharing class HDT_LC_AccountSelectorController {
 		if(leadId != null) {
 			sobj.put('Lead__c', leadId);
 		}
+		List<SObject> objList = new List<SObject>();
+		List <SObject> actList = handleInteractionActivity(recordId,contactId,accountId);
+		objList.add(sobj);
+		objList.addAll(actList);
 
-		HDT_UTL_DatabaseService.updateSObject(sobj);
+		HDT_UTL_DatabaseService.updateSObject(objList);
 	}
-
+	private static List<Sobject> handleInteractionActivity(String recordId,String contactId, String accountId){
+		String sobjectType = getSobjectType(recordId);
+		List<wrts_prcgvr__Activity__c> actList = new List<wrts_prcgvr__Activity__c>();
+		if(Schema.SObjectType.wrts_prcgvr__Activity__c.isAccessible()){
+			actList = [SELECT Id,Account__c,Contact__c FROM wrts_prcgvr__Activity__c WHERE Interaction__c = :recordId WITH SECURITY_ENFORCED];
+		}
+		if(actList != null && !actList.isEmpty()){
+			for(wrts_prcgvr__Activity__c act : actList){
+				act.Account__c = accountId;
+				act.Contact__c = contactId;
+			}
+		}
+		return actList;
+	}
 	@AuraEnabled
 	public static String reset(String recordId) {
 		String sobjectType = getSobjectType(recordId);

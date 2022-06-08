@@ -63,7 +63,20 @@ public with sharing class HDT_UTL_CampaignMember {
         for (CampaignMember item : newCampaignMember) {
             campaignIds.add(item.CampaignId);
         }
+      
+        Map <Id,Campaign> campMap=new Map<Id, Campaign>([SELECT Id, EndDate FROM Campaign WHERE Id IN: campaignIds]);
 
+        for (Integer i = 0; i < newCampaignMember.size(); i++) {
+            if ( campMap.containsKey(newCampaignMember[i].CampaignId)) {
+                if(campMap.get(newCampaignMember[i].CampaignId).EndDate!=null){
+                    newCampaignMember[i].NumberingValidityEndDate__c=campMap.get(newCampaignMember[i].CampaignId).EndDate;
+                }
+                else{
+                    newCampaignMember[i].NumberingValidityEndDate__c=Date.today().addYears(1);
+                }
+            }
+        }
+        
         List<CampaignMemberAssigmentItem__c> query = [
             SELECT Id, Agency__c, PercentageAllocation__c, CampaingMemberAssigment__c, ProcessingType__c  FROM CampaignMemberAssigmentItem__c WHERE CampaingMemberAssigment__c IN (SELECT CampaignMemberAssigment__c FROM Campaign WHERE Id IN :campaignIds AND AssignmentType__c = 'Peso Percentuale') WITH SECURITY_ENFORCED ORDER BY PercentageAllocation__c DESC
         ];
@@ -121,11 +134,13 @@ public with sharing class HDT_UTL_CampaignMember {
 
     public static void createCommercialCode(List<CampaignMember> newCampaignMember) {
 
+    	//START>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
+        /*
         List<String> campaignIdList = new List<String>();
         List<String> campaignMemberIdList = new List<String>();
         Set<String> uniqueCampaignId = new Set<String>();
         Map<String,List<String>> allMembers = new Map<String,List<String>>();
-
+        
         for (CampaignMember member : newCampaignMember) {
             uniqueCampaignId.add(member.CampaignId);
             campaignMemberIdList.add(member.Id);
@@ -150,6 +165,18 @@ public with sharing class HDT_UTL_CampaignMember {
                 Database.executeBatch(ccBatch, 200);
             }
         }
+		*/
+        
+        List<Commercial_Code_Batch_Context__c> newContext = new List<Commercial_Code_Batch_Context__c>();
+        Integer count = 0;
+        for (CampaignMember member : newCampaignMember){
+            Datetime nowDate = Datetime.now().addSeconds(count);
+            String nowDateFormat = nowDate.format('yyMMddHHmmssZ') + '-' + Crypto.getRandomInteger();
+            newContext.add( new Commercial_Code_Batch_Context__c(Name=nowDateFormat, CampaignId__c=member.CampaignId, CampaignMemberId__c=member.Id));
+            ++count;
+        }
+        insert newContext;
+        //END>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
     }
 
     public static void campaignSuspension(List<Campaign> newCampaigns, List<Campaign> oldCampaigns) {
@@ -198,7 +225,7 @@ public with sharing class HDT_UTL_CampaignMember {
         }
     }
 
-    @SuppressWarnings('PMD.ApexCRUDViolation')
+    @SuppressWarnings('PMD.ApexCRUDViolation, PMD.NcssMethodCount')
     public static void checkTipoEsito(List<CampaignMember> newCampMembList, Map<Id, CampaignMember> campMembOldMap){
 
         Set<String> ordIdSet = new Set<String>();
@@ -339,11 +366,11 @@ public with sharing class HDT_UTL_CampaignMember {
         if(actToCreateList.size() > 0){
             activitySrv.createRecord(actToCreateList);
         }
-        if(ordToCloseList.size() > 0){
-            orderSrv.updateRecords(ordToCloseList);
-        }
         if(actToCloseList.size() > 0){
             activitySrv.updateRecords(actToCloseList);
+        }
+        if(ordToCloseList.size() > 0){
+            orderSrv.updateRecords(ordToCloseList);
         }
     }
 
@@ -378,7 +405,8 @@ public with sharing class HDT_UTL_CampaignMember {
                     member.ResultType__c = status.OutcomeType__c;
                     member.ResultCategory__c = status.OutcomeCategory__c;
                 }
-            } else if(member.StatusCode__c != oldMap.get(member.Id).StatusCode__c) {
+            }
+            else if(member.StatusCode__c != oldMap.get(member.Id).StatusCode__c) {
                 status = statusCodeMap.get(member.StatusCode__c);
                 member.Status = status.StatusName__c;
                 member.ResultType__c = status.OutcomeType__c;
@@ -393,6 +421,10 @@ public with sharing class HDT_UTL_CampaignMember {
 
             status = null;
         }
+
+        /*if(oldMap != null){
+            checkTipoEsito(newList, oldMap);
+        }*/
     }
 
     public static void setValidityStartDate(List<CampaignMember> members) {
@@ -418,7 +450,7 @@ public with sharing class HDT_UTL_CampaignMember {
         List<CampaignMember> processedMembers = new List<CampaignMember>();
         for(CampaignMember member : [SELECT Id, PhoneNumber__c, LeadId, Lead.ContactDate__c, Campaign.ReitekIntegrationTechnology__c, Campaign.MacroActivityEasyCIM__r.Name FROM CampaignMember WHERE Id IN: idsToProcess WITH SECURITY_ENFORCED]) {
             if(member.LeadId != null && member.Campaign.ReitekIntegrationTechnology__c == 'Web Service') {
-                System.enqueueJob(new HDT_QBL_InvioNumerazioni(member.Campaign.MacroActivityEasyCIM__r.Name, member.PhoneNumber__c, member.Lead.ContactDate__c));
+                System.enqueueJob(new HDT_QBL_InvioNumerazioni(member.Campaign.MacroActivityEasyCIM__r.Name, member.PhoneNumber__c, member.Lead.ContactDate__c, member.Id));
                 processedMembers.add(new CampaignMember(
                     Id = member.Id,
                     ReitekSendDate__c = Date.today()

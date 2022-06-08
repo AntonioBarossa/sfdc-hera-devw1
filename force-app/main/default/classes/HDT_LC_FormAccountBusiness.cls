@@ -56,14 +56,29 @@ public with sharing class HDT_LC_FormAccountBusiness {
                 account.put(s, accountAddress.get(s));
             }
         }
+
+        if( !String.isBlank(account.VATNumber__c) && !account.CustomerMarking__c.equalsIgnoreCase('Condominio') ){
+            if( !checkVatNumber(account.VATNumber__c) ){
+                throw new AuraHandledException('Partita Iva non corretta.');
+            }
+            if(!String.isBlank(account.FiscalCode__c) &&  account.FiscalCode__c.isNumeric() && !checkVatNumber(account.FiscalCode__c)){
+                throw new AuraHandledException('Partita Iva non corretta.');
+            }
+        } else if( account.FiscalCode__c.isNumeric() ){
+            if( !checkVatNumber(account.FiscalCode__c) ){
+                throw new AuraHandledException('Partita Iva non corretta.');
+            }
+        }
+
+
         //System.debug('ACCOUNT:' + account);
         //HRDTR-00_HRAWRM-720 12/10/2021
       //  System.debug('account.CustomerMarking__c '+account.CustomerMarking__c);
-        if (!account.CustomerMarking__c.containsIgnoreCase('Condomini')&& !account.CustomerMarking__c.containsIgnoreCase('Associazione')) { //HRAWRM-775
+        // if (!account.CustomerMarking__c.containsIgnoreCase('Condomini')&& !account.CustomerMarking__c.containsIgnoreCase('Associazione')) { //HRAWRM-775
 
            
-            Account.FiscalCode__c=Account.VATNumber__c;  
-        }
+        //     Account.FiscalCode__c=Account.VATNumber__c;  
+        // }
         //HRADTR_GV 22/03/2022
         //account.FiscalCode__c = account.FiscalCode__c.toUpperCase();
         //HRDTR-00_HRAWRM-720 12/10/2021
@@ -71,7 +86,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
         Account acct= accountSrv.createRecord(account);
         
         String lastName = (acct.LastName__c != null && acct.LastName__c != '' ? acct.LastName__c : acct.Name);
-        Contact contact= new Contact(Company__c=dataAccount.get('company'),AccountId= acct.Id, LastName= lastName, FiscalCode__c= acct.FiscalCode__c, VATNumber__c= acct.VATNumber__c,mobilephone=dataAccount.get('mobilephoneNumber') , MobilePhonePrefix__c=dataAccount.get('prefixMobilePhoneNumber'), phonePrefix__c = dataAccount.get('prefixPhoneNumber'),Phone= dataAccount.get('phoneNumber'), Email= acct.PrimaryEmail__c, Fax= acct.FAX__c, CertifiedEmail__c= dataAccount.get('electronicMail'), MailingCity= acct.BillingCity, MailingCityCode__c= acct.BillingCityCode__c, MailingCountry= acct.BillingCountry,  MailingPostalCode= acct.BillingPostalCode, MailingState= acct.BillingState, MailingStreet= acct.BillingStreet,MailingStreetName__c= acct.BillingStreetName__c, MailingStreetCode__c= acct.BillingStreetCode__c, MailingStreetNumber__c= acct.BillingStreetNumber__c, MailingStreetNumberExtension__c= acct.BillingStreetNumberExtension__c, MailingStreetToponym__c= acct.BillingStreetToponym__c, MailingRegion__c= acct.BillingRegion__c,MailingPlace__c = acct.BillingPlace__c ,MailingPlaceCode__c = acct.BillingPlaceCode__c , MailingIsAddressVerified__c = acct.BillingIsAddressVerified__c);
+        Contact contact= new Contact(Company__c=dataAccount.get('company'),AccountId= acct.Id, LastName= lastName, FiscalCode__c= acct.FiscalCode__c, VATNumber__c= acct.VATNumber__c,mobilephone=dataAccount.get('mobilephoneNumber') , MobilePhonePrefix__c=dataAccount.get('prefixMobilePhoneNumber'), phonePrefix__c = dataAccount.get('prefixPhoneNumber'),Phone= dataAccount.get('phoneNumber'), Email= acct.PrimaryEmail__c, Fax= acct.FAX__c, CertifiedEmail__c= dataAccount.get('electronicMail'), MailingCity= acct.BillingCity, MailingCityCode__c= acct.BillingCityCode__c, MailingCountry= acct.BillingCountry,  MailingPostalCode= acct.BillingPostalCode, MailingState= acct.BillingState, MailingStreet= acct.BillingStreet,MailingStreetName__c= acct.BillingStreetName__c, MailingStreetCode__c= acct.BillingStreetCode__c, MailingStreetNumber__c= acct.BillingStreetNumber__c, MailingStreetNumberExtension__c= acct.BillingStreetNumberExtension__c, MailingRegion__c= acct.BillingRegion__c,MailingPlace__c = acct.BillingPlace__c ,MailingPlaceCode__c = acct.BillingPlaceCode__c , MailingIsAddressVerified__c = acct.BillingIsAddressVerified__c);
         contactSrv.checkCreateAccess(contact);
         Contact cont= contactSrv.createRecord(contact);
 
@@ -261,4 +276,29 @@ public with sharing class HDT_LC_FormAccountBusiness {
     
         return acct;
     }
+
+    public static Boolean checkVatNumber(String vatString){
+
+        Boolean result = false;
+        Integer evenSum = 0;
+        Integer oddSum = 0;
+
+        if( vatString.length() == 11 ){
+            for( Integer i = 0; i < 11; i++ ){
+                if ( math.mod(i+1, 2) == 0 ){ //even position
+                    // i even, if vatNumber[i]*2>9 then vatNumber[i]*2 - 9, else vatNumber[i]*2
+                    evenSum +=  2*Integer.ValueOf(vatString.substring(i,i+1)) > 9? 2*Integer.ValueOf(vatString.substring(i,i+1))-9:2*Integer.ValueOf(vatString.substring(i,i+1));
+                } else {
+                    oddSum += Integer.ValueOf(vatString.substring(i,i+1));
+                }
+            }
+
+            if( math.mod(evenSum+oddSum, 10) == 0 ){
+                result = true;
+            }
+
+        }
+        return result;
+    }
+
 }

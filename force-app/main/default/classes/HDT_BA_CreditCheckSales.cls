@@ -14,7 +14,7 @@ public inherited sharing class HDT_BA_CreditCheckSales implements Database.Batch
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         String query = '';
-        query += 'SELECT Id, NextStepData__c ';
+        query += 'SELECT Id, NextStepData__c,MassiveLoaderRequest__r.ProcessType__c ';
         query += 'FROM MassiveLoaderRequestItem__c ';
         query += 'WHERE MassiveLoaderRequest__c =\'' + this.idLoaderRequest + '\' ';
         query += 'AND Status__c = \'In Lavorazione\' ';

@@ -1049,6 +1049,17 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>activityId</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>recordId</name>
+                </componentInstanceProperties>
+                <componentName>hdtActivityTrace</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-ec448755-6754-49f4-bd5a-e4f48249737b</value>
                 </componentInstanceProperties>

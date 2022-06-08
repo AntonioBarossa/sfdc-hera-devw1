@@ -31,6 +31,9 @@
         <property name="results" type="String" label="results" description="results" role="outputOnly"/>
 
         <property name="cancelCase" type="Boolean" label="cancellation" description="Cancel Case" role="outputOnly" />
+        <property name="enableNew" type="Boolean" label="Abilita Nuovo BP" description="Allow to create new BP" role="inputOnly"/>
+
+        
             
         </targetConfig>
         

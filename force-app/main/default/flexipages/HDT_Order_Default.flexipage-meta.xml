@@ -49,6 +49,28 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>activityId</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>recordId</name>
+                </componentInstanceProperties>
+                <componentName>hdtActivityTrace</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>activityId</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>recordId</name>
+                </componentInstanceProperties>
+                <componentName>hdtActivityTrace</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>parentFieldApiName</name>
                     <value>Order.Id</value>
                 </componentInstanceProperties>
@@ -466,41 +488,10 @@
                         <valueListItems>
                             <value>CustomButton.Order.HDT_AnnullamentoPrestazione</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Ammissibilità KO</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Esito KO da DL</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Esito KO da SII</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Amm. Precheck KO SII</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.NotCancellable__c}</leftValue>
+                                    <leftValue>{!Record.AnnullaPrestazioneEnabled__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>false</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Status}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Activated</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Status}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Annullato</rightValue>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -724,6 +715,14 @@
                     <value>--None--</value>
                 </componentInstanceProperties>
                 <componentName>wrts_prcgvr:PhaseChevronPathLtgCmp_1_0</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>recordId</name>
+                </componentInstanceProperties>
+                <componentName>hdtAlertPrivacy</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>

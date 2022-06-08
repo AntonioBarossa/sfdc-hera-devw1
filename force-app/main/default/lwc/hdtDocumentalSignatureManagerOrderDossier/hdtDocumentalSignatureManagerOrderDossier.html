@@ -13,6 +13,9 @@
                     <lightning-record-edit-form record-id={orderParentRecord.Id} object-api-name="Order">
                         <div class="slds-grid slds-wrap slds-m-top_small">
                             <lightning-input-field disabled={disabledInput} data-id="SignedDate__c" if:true={isVisibleSignedDate} required={isVisibleSignedDate} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SignedDate__c" variant="label-stacked" value={actualSignedDate}></lightning-input-field>
+                            <div class="slds-col slds-size_1-of-8 slds-grow-none">
+                            </div>
+                            <lightning-input-field disabled={disabledInput} data-id="RelatedPractice__c" if:true={isRelatedPracticeVisible} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="RelatedPractice__c" variant="label-stacked" value={actualRelatedPractice}></lightning-input-field>
                         </div>
                     </lightning-record-edit-form>
                 </lightning-layout-item>

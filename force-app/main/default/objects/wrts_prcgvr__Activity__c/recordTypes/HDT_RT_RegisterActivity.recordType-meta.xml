@@ -520,10 +520,10 @@
             <fullName>Attivazioni</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Attivazioni - Generiche</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Autolettura</fullName>
             <default>false</default>
@@ -2800,6 +2800,14 @@
         <values>
             <fullName>Protocollo - Da tipizzare</fullName>
             <default>true</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Reclami Contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Reclami Post Vendita</fullName>
+            <default>false</default>
         </values>
         <values>
             <fullName>Protocollo - Disattivazioni</fullName>

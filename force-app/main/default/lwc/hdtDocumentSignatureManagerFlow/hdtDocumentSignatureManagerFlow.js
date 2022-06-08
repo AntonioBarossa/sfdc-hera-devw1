@@ -268,7 +268,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                     contactId:this.caseRecord.fields.ContactId.value 
                 }
                 canale = this.caseRecord.fields.Origin.value;
-                if( canale === 'Telefono Inbound' || canale === 'Telefono Outbound'){
+                if( canale === 'Telefono Inbound' || canale === 'Telefono Outbound' || canale === 'Teleselling' ){ 
                     this.scriptAvailable = true;
                 }
 

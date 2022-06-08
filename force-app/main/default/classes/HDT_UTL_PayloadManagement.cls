@@ -1101,6 +1101,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight != 'Si') {
             boxType = '1';
         }
+        // Casistica valore indennizzo 0
+        if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight != 'Si' && indemnityDueSendResponse == 0)
+        {
+            boxType = '';
+        }
         // Emissione rettifica prevista ma non scaduta, indennizzo per solo ritardo nella risposta
         else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && !expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate)) {
             boxType = '1';
@@ -1180,8 +1185,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
         String orderId = HDT_UTL_DocumentalManagement.getValue('Order', 'Id', 0, inputs, formParams);
         Order orderData = HDT_QR_DocumentalConfiguration.getOrderPriceBook(orderId);
-        String priceBookName = orderData.SBQQ__Quote__r?.SBQQ__PriceBook__r?.Name;
-
+        String priceBookNameQuote = orderData.SBQQ__Quote__r?.SBQQ__PriceBook__r?.Name;
+        String priceBookNameOrder = orderData.Pricebook2.Name;
+        String priceBookName = String.isNotBlank(priceBookNameOrder)?priceBookNameOrder:priceBookNameQuote;
         if (String.isBlank(priceBookName)) {
             return '';
         }

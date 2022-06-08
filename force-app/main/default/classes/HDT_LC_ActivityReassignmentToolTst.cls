@@ -52,7 +52,7 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
 
         }
 
-        // HDT_UTL_DataFactoryTst.assignPermissionSet(currentUser, 'HDT_OmniSupervisorPermissionSet', true);
+        HDT_UTL_DataFactoryTst.assignPermissionSet(currentUser, 'HDT_OmniSupervisor', true);
 
         Id profileId = HDT_UTL_DataFactoryTst.getProfileId(constantsUtl.HERA_STANDARD_USER_NAME);
         User user = HDT_UTL_DataFactoryTst.createInternalUser(profileId, false);

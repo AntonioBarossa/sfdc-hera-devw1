@@ -141,8 +141,12 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     var sendMode = [];
                     var signSendMode;
                     var signSendModeList = [];
+                    var existContrattoFirmato = false;
                     resultJSON.forEach((element) => {
                         signMode.push(element.signMode);
+                        if(element.signMode === 'Contratto già firmato'){
+                            existContrattoFirmato = true;
+                        }
                         element.sendMode.forEach((element2) => {
                             sendMode.push(element2);
                         });
@@ -153,16 +157,16 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                         signSendModeList.push(signSendMode);
                         sendMode = [];
                     });
-                    if(this.loginSource != null && this.loginSource.localeCompare('Back office') === 0 && this.context.localeCompare('Order') === 0){
+                    if(this.loginSource != null && this.loginSource.localeCompare('Back office') === 0 && this.context.localeCompare('Order') === 0 && !existContrattoFirmato){
                         console.log('##inside backoffice');
                         sendMode = [];
                         const obj = {value: 'Stampa Cartacea', label: 'Stampa Cartacea'};
                         sendMode.push(obj);
                         signSendMode = {
-                            signMode : 'Cartacea',
+                            signMode : 'Contratto già firmato',
                             sendMode : sendMode
                         };
-                        const obj2 = {value: 'Cartacea', label: 'Cartacea'};
+                        const obj2 = {value: 'Contratto già firmato', label: 'Contratto già firmato'};
                         signMode.push(obj2);
                         signSendModeList.push(signSendMode);
                     }

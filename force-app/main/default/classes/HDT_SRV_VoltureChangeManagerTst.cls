@@ -63,6 +63,12 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         update childOrderList;
         orderItemList = HDT_UTL_DataFactoryTst.createOrderItem(2, true, childOrderList[0].Id, spList[0].Id,productList[0].Id,pbEntry.Id);
         
+
+        List<wrts_prcgvr__ActivityTemplate__c> myActTemp = HDT_UTL_DataFactoryTst.createActivityTemplate(1, false);
+        myActTemp[0].Name = 'Controlli Ammissibilità';
+        insert myActTemp;
+
+
         String recordTypeNameVolturaConSwitch = 'HDT_RT_VolturaConSwitch';
         String recordTypeIdVolturaConSwitch = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(recordTypeNameVolturaConSwitch).getRecordTypeId();
 
@@ -149,7 +155,13 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         DocSendingMethod__c,
         Sale__c,
         Pricebook2Id,
-        Contact__c 
+        Contact__c,
+        SupplyStreetName__c,
+        SupplyStreetNumber__c,
+        SupplyPostalCode__c,
+        SupplyCity__c,
+        SupplyState__c,
+        SupplyCountry__c
         FROM Order WHERE ParentOrder__c != null];
 
         wrts_prcgvr.MRR_1_0.MultiResponse responseMrr= new wrts_prcgvr.MRR_1_0.MultiResponse();
@@ -279,7 +291,7 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
 
         List<wrts_prcgvr__Activity__c> activities = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE Order__c = :orderList[0].Id];
 
-        System.assertEquals(0, activities.size(),'Activity create incorrettamente');
+        System.assertEquals(1, activities.size(),'Activity non creata');
     }
 
     @IsTest
