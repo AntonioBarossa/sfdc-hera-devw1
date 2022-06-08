@@ -4296,6 +4296,31 @@
         <field>SBQQ__Quote__c.CampaignEleggibilityGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>CadastralCategories__c.Category__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>CadastralCategories__c.Description__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>CadastralCategories__c.Destination__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>CadastralCategories__c.Group__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>CadastralCategories__c.Informations__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
      <fieldPermissions>
         <editable>true</editable>
         <field>Campaign.SurveyCRM__c</field>
@@ -8056,6 +8081,56 @@
         <field>City__c.SDV__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>CityReimbursmentType__c.BeneficiaryType__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>CityReimbursmentType__c.City__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>CityReimbursmentType__c.ReimbursmentType__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>CityTechnicalData__c.AdministrativeCity__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>CityTechnicalData__c.AttachmentString__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>CityTechnicalData__c.CadastralCity__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>CityTechnicalData__c.CityCode__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>CityTechnicalData__c.Province__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>CityTechnicalData__c.TARIManaged__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>CityTechnicalData__c.UnicPaymentLimitDate__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>ComfortQualityCall__c.Channel__c</field>
@@ -30353,6 +30428,51 @@
         <field>TechnicalOffer__c.Version__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.City__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.CriteriaX__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.CriteriaY__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.DayX__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.DayY__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.EffectiveDate__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.PopupY__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.PopupZ__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>TermTable__c.Subtype__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <!--SFDC-OIG/OIM 17/09/2021-->
     <fieldPermissions>
         <editable>true</editable>
@@ -32755,6 +32875,26 @@
         <field>trailheadapp__User_Trailmix__c.trailheadapp__User__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>wrts_prcgvr__Activity__c.EndAppointment__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>wrts_prcgvr__Activity__c.JobCenterCode__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>wrts_prcgvr__Activity__c.SotCode__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>wrts_prcgvr__Activity__c.StartAppointment__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.AnnulmentManagement__c</field>
