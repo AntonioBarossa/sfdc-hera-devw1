@@ -17,6 +17,8 @@ export default class HdtActivityTrace extends NavigationMixin(LightningElement) 
         getActivity({recordId:this.recordId})
         .then(result => {
             var mappa = JSON.parse(result);
+            console.log('mappa ' + mappa);
+            console.log('result ' + result);
             var tipo = mappa.Tipo;
             if(tipo === 'Interaction'){
                 this.intId = mappa.Id;
