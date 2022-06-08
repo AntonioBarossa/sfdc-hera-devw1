@@ -697,7 +697,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>textCA</name>
-            <fieldText>&lt;p&gt;[9. Conferma adesione]&lt;/p&gt;&lt;p&gt;La informo che il contratto di fornitura [ed il contratto [Hera &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.InterestProduct__c} &amp;nbsp;si [concluderà/ concluderanno] al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[9. Conferma adesione]&lt;/p&gt;&lt;p&gt;La informo che il contratto di fornitura [ed il contratto [Hera &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.InterestProduct__c}&amp;nbsp;si [concluderà/ concluderanno] al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -707,7 +707,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.LoginChannel__c</leftValueReference>
+                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Channel__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Outbound</stringValue>
@@ -722,7 +722,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.LoginChannel__c</leftValueReference>
+                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Channel__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Inbound</stringValue>
