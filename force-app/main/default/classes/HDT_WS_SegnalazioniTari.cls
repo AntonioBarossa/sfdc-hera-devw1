@@ -126,7 +126,11 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
         system.debug('FINAL PRE UPDATE '+caseToUpdate.TecnicalPhase__c+ ' '+caseToUpdate.Phase__c);
 
         //OK PREDEFINITO DA SMOCKARE
-        caseToUpdate.TecnicalPhase__c=PHASE_OK;
+        if(caseToUpdate.StartAppointment__c==null){
+            caseToUpdate.TecnicalPhase__c= PHASE_OK;
+        }else if(currentCase.Type.equalsIgnoreCase('Gestione rifiuti')){
+            caseToUpdate.TecnicalPhase__c= 'Inviata a SAP';
+        }
 
         if(!Test.isRunningTest()){
             HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
