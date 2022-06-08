@@ -150,15 +150,24 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
 
     }
     handleSignModeChange(event){
-        console.log('handleSignModeChange');
         var signMode = event.detail;
-        console.log('handleSignModeChange signMode ' + signMode);
-        console.log('handleSignModeChange this.processType ' + this.processType);
+        
+        if(signMode != null && signMode === 'Vocal Order' && (this.source === 'Telefono Inbound' || this.source === 'Telefono Outbound' || this.source === 'Teleselling') && this.processType === 'Modifica Privacy'){ 
+            this.scriptAvailable = true;
+        }else{
+            this.scriptAvailable = false;
+        }
+
         if(signMode && this.processType && (this.processType == 'Richiesta Domiciliazione' || this.processType === 'Modifica Privacy') && signMode === 'Vocal Order'){
             this.labelConfirm = 'Conferma pratica';
             this.showPreviewButton = false;
             this.previewExecuted = true;
-        }else if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
+        }else if(signMode && this.source && this.processType && this.processType === 'Modifica Privacy' && signMode === 'Cartacea' && this.source === 'Chat'){
+            this.labelConfirm = 'Conferma pratica';
+            this.showPreviewButton = false;
+            this.previewExecuted = true;
+        }
+        else if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
             this.labelConfirm = 'Conferma pratica';
             this.showPreviewButton = false;
             this.previewExecuted = true;
@@ -291,19 +300,26 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                     contactId:this.caseRecord.fields.ContactId.value 
                 }
                 canale = this.caseRecord.fields.Origin.value;
-                if( canale === 'Telefono Inbound' || canale === 'Telefono Outbound' || canale === 'Teleselling' ){ 
+                var signMode = this.caseRecord.fields.SignMode__c.value;
+                if(signMode != null && signMode === 'Vocal Order' && (canale === 'Telefono Inbound' || canale === 'Telefono Outbound' || canale === 'Teleselling') && this.processType === 'Modifica Privacy'){ 
                     this.scriptAvailable = true;
                 }
 
                 this.inputParams = JSON.stringify(inputParams);
                 this.oldSignMode = this.caseRecord.fields.SignMode__c.value;
                 console.log(this.inputParams);
-                var signMode = this.caseRecord.fields.SignMode__c.value;
+                
                 if(signMode && signMode === 'Vocal Order' && this.processType && (this.processType == 'Richiesta Domiciliazione' || this.processType === 'Modifica Privacy')){
                     this.labelConfirm = 'Conferma pratica';
                     this.showPreviewButton = false;
                     this.previewExecuted = true;
-                }else if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
+                }
+                else if(signMode && this.source && this.processType && this.processType === 'Modifica Privacy' && signMode === 'Cartacea' && this.source === 'Chat'){
+                    this.labelConfirm = 'Conferma pratica';
+                    this.showPreviewButton = false;
+                    this.previewExecuted = true;
+                }
+                else if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
                     this.labelConfirm = 'Conferma pratica';
                     this.showPreviewButton = false;
                     this.previewExecuted = true;
@@ -473,6 +489,8 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
             else if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
                 this.handleGoNext();
             }else if(resultWrapper.signMode != null && resultWrapper.signMode === 'Vocal Order'){
+                this.handleGoNext();
+            }else if(resultWrapper.signMode != null && this.source && this.processType && this.processType === 'Modifica Privacy' && resultWrapper.signMode === 'Cartacea' && this.source === 'Chat'){
                 this.handleGoNext();
             }
             else{

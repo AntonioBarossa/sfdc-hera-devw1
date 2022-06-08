@@ -171,7 +171,7 @@ public with sharing class HDT_UTL_CampaignMember {
         Integer count = 0;
         for (CampaignMember member : newCampaignMember){
             Datetime nowDate = Datetime.now().addSeconds(count);
-            String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a') + ' - ' + Crypto.getRandomInteger();
+            String nowDateFormat = nowDate.format('yyMMddHHmmssZ') + '-' + Crypto.getRandomInteger();
             newContext.add( new Commercial_Code_Batch_Context__c(Name=nowDateFormat, CampaignId__c=member.CampaignId, CampaignMemberId__c=member.Id));
             ++count;
         }
@@ -447,6 +447,7 @@ public with sharing class HDT_UTL_CampaignMember {
             idsToProcess.add(cm.Id);
         }
 
+        /*
         List<CampaignMember> processedMembers = new List<CampaignMember>();
         for(CampaignMember member : [SELECT Id, PhoneNumber__c, LeadId, Lead.ContactDate__c, Campaign.ReitekIntegrationTechnology__c, Campaign.MacroActivityEasyCIM__r.Name FROM CampaignMember WHERE Id IN: idsToProcess WITH SECURITY_ENFORCED]) {
             if(member.LeadId != null && member.Campaign.ReitekIntegrationTechnology__c == 'Web Service') {
@@ -457,8 +458,9 @@ public with sharing class HDT_UTL_CampaignMember {
                 ));
             }
         }
-
-        new HDT_SRV_CampaignMember().updateRecords(processedMembers);
+        */
+        //new HDT_SRV_CampaignMember().updateRecords(processedMembers);
+        System.enqueueJob(new HDT_QBL_InvioNumerazioni(idsToProcess));
     }
 
     public static void setAgency (List<CampaignMember> members) {
