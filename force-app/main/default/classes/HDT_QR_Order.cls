@@ -109,8 +109,10 @@ public inherited sharing class HDT_QR_Order {
             Account.FirstName__c,
             Account.LastName__c,
             Account.CompanyOwner__c,
+            Account.RecordTypeName__c,
             Sale__r.SalesContact__c,
             Sale__r.Ecid__c,
+            Sale__r.CreatedDate,
             Sale__r.SalesContact__r.FiscalCode__c,
             Sale__r.SalesContact__r.VATNumber__c,
             Username__c,
@@ -350,7 +352,8 @@ public inherited sharing class HDT_QR_Order {
             VASSubtype__c,
             isSTG__c,
             Contact__r.Phone,
-            Contact__r.MobilePhone
+            Contact__r.MobilePhone,
+            Qualita__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
