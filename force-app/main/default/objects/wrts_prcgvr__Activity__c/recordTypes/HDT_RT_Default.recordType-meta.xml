@@ -2810,6 +2810,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Caricamento Manuale Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Check preliminari KO</fullName>
             <default>false</default>
         </values>
