@@ -27,7 +27,7 @@ public with sharing class HDT_QBL_InvioNumerazioni implements Queueable, Databas
     
     public void execute(QueueableContext context) {
         HDT_WS_Response response = HDT_WS_InvioNumerazioni.callService(this.macroactivity, this.phonenumber, this.callDateTime, this.cmId);
-        System.debug(response);
+        System.debug('@@@ reitek response ' + JSON.serializePretty(response));
         new HDT_SRV_CampaignMember().updateRecords(new List<CampaignMember>{new CampaignMember( Id = cmId, ReitekSendDate__c = Date.today() )});
         if(remainingIds.size() > 0) System.enqueueJob(new HDT_QBL_InvioNumerazioni(this.remainingIds));
     }
