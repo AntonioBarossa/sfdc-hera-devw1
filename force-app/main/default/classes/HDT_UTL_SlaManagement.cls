@@ -12,7 +12,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
     private List<String> criteriaFields;
 
     public HDT_UTL_SlaManagement(String executionObject) {
-        System.debug('>>> HDT_UTL_SlaManagement...');
+        System.debug(logginglevel.DEBUG, '>>> HDT_UTL_SlaManagement...');
         this.executionObject = executionObject;
 
         switch on executionObject {
@@ -74,51 +74,56 @@ public inherited sharing class HDT_UTL_SlaManagement {
                     Set<Id> adminIds = new Set<Id>();
 
                     for(SlaTracking__c track : trackingMap.get(eventObj.recordId)){
-                        System.debug('>>> checking trckSla: ' + track.Id);
+                        System.debug(logginglevel.DEBUG, '>>> checking trckSla: ' + track.Id);
                         adminIds.add(track.SlaAdministration__c);
 
                         if(wrpAdminMap.containsKey(track.SlaAdministration__c) && track.Status__c.equalsIgnoreCase('Aperto')){
 
-                            System.debug('>>> update existing sla....');
+                            System.debug(logginglevel.DEBUG, '>>> update existing sla....');
                             track = updateTrackingRecord(track, wrpAdminMap.get(track.SlaAdministration__c), eventObj);
                             if(track != null){
-                                System.debug('>>> add new track...');
+                                System.debug(logginglevel.DEBUG, '>>> update track...');
                                 trackToUpsert.add(track);
+                            } else {
+                                System.debug(logginglevel.DEBUG, '>>> no track to update');
                             }
 
                         }
                     }
 
                     // check for new tracking record to insert
-                    System.debug('>>> check for new tracking record to insert...');
+                    System.debug(logginglevel.DEBUG, '>>> check for new tracking record to insert...');
                     for(Id adminRuleId : wrpAdminMap.keySet()){
+
                         if(!adminIds.contains(adminRuleId)){
                             /// check if this rule have to create new tracking record
-                            System.debug('>>> check if this rule have to create new tracking record...');
+                            System.debug(logginglevel.DEBUG, '>>> check if this rule have to create new tracking record...');
                             currentTrack = createNewTrackingRecord(currentTrack, wrpAdminMap.get(adminRuleId), eventObj);
                             if(currentTrack != null){
-                                System.debug('>>> add new track...');
+                                System.debug(logginglevel.DEBUG, '>>> add new track...');
                                 trackToUpsert.add(currentTrack);
+                            } else {
+                                System.debug(logginglevel.DEBUG, '>>> no track to insert');
                             }
                         }
                     }
 
                 } else {
-                    System.debug('>>> no record...');
+                    System.debug(logginglevel.DEBUG, '>>> no record...');
                 }
 
             }
 
             if(trackToUpsert.size() > 0){
-                System.debug('>>> ' + String.valueOf(trackToUpsert));
+                System.debug(logginglevel.DEBUG, '>>> ' + String.valueOf(trackToUpsert));
                 HDT_UTL_DatabaseService.upsertSObject(trackToUpsert);
             }
             
-            sendCustomNotification('ok');
+            //sendCustomNotification('ok');
 
         } catch(Exception e){
-            System.debug('>>> Exception ' + e.getMessage() + ' at line ' + String.valueOf(e.getLineNumber()));
-            sendCustomNotification(e.getMessage());
+            System.debug(logginglevel.DEBUG, '>>> Exception ' + e.getMessage() + ' at line ' + String.valueOf(e.getLineNumber()));
+            //sendCustomNotification(e.getMessage());
         }
     }
 
@@ -179,16 +184,24 @@ public inherited sharing class HDT_UTL_SlaManagement {
     }
 
     public Boolean errorCheckActivity(HDT_WRP_SlaManagement.HDT_WRP_Event eventObj, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule){
-        Boolean activityType = String.isNotEmpty(singleRule.activityType);
-        Boolean isNotSameActivity = !eventObj.activityEvent.Type__c.equalsIgnoreCase(singleRule.activityType);
-        if(activityType && isNotSameActivity){
-            return true;
+
+        Boolean ruleActivityType = String.isNotEmpty(singleRule.activityType);
+        Boolean eventActivityType = String.isNotEmpty(eventObj.activityEvent.Type__c);
+
+        if(ruleActivityType && eventActivityType){
+            System.debug(logginglevel.DEBUG, '>>> check activity: ' + eventObj.activityEvent.Type__c.equalsIgnoreCase(singleRule.activityType));
+            return !eventObj.activityEvent.Type__c.equalsIgnoreCase(singleRule.activityType);
         } else {
             return false;
         }
+
     }
 
     public Boolean errorCheckObjectCriteria(Id recordId, Map<String, Object> objectCriteria){
+
+        if(objectCriteria.size() == 0){
+            return false;
+        }
 
         switch on executionObject {
             when 'Case' {
@@ -218,10 +231,12 @@ public inherited sharing class HDT_UTL_SlaManagement {
     public SlaTracking__c updateTrackingRecord(SlaTracking__c currentTrack, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule, HDT_WRP_SlaManagement.HDT_WRP_Event eventObj){
 
         if(errorCheckActivity(eventObj, singleRule)){
+            System.debug(logginglevel.DEBUG, '>>> errorCheckActivity');
             return null;
         }
 
         if(errorCheckObjectCriteria(eventObj.recordId, singleRule.objectCriteria)){
+            System.debug(logginglevel.DEBUG, '>>> errorCheckObjectCriteria');
             return null;
         }
 
@@ -229,7 +244,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
             Object dt;
             if(singleRule.endRule.isDate){
-                System.debug('>>> isDate -> ' + singleRule.endRule.field);
+                System.debug(logginglevel.DEBUG, '>>> isDate -> ' + singleRule.endRule.field);
                 if(!eventObj.fieldMap.containsKey(singleRule.endRule.field)){
                     return null;  
                 }
@@ -253,19 +268,21 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
     public SlaTracking__c createNewTrackingRecord(SlaTracking__c currentTrack, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule, HDT_WRP_SlaManagement.HDT_WRP_Event eventObj){
 
-        System.debug('>>> check this rule ' + singleRule.adminRuleId);
+        System.debug(logginglevel.DEBUG, '>>> check this rule ' + singleRule.adminRuleId);
 
         if(errorCheckActivity(eventObj, singleRule)){
+            System.debug(logginglevel.DEBUG, '>>> errorCheckActivity');
             return null;
         }
 
         if(errorCheckObjectCriteria(eventObj.recordId, singleRule.objectCriteria)){
+            System.debug(logginglevel.DEBUG, '>>> errorCheckObjectCriteria');
             return null;
         }
 
         if(eventObj.fieldMap.containsKey(singleRule.startRule.field)){
 
-            System.debug('>>> startRule.field: ' +singleRule.startRule.field);
+            System.debug(logginglevel.DEBUG, '>>> startRule.field: ' +singleRule.startRule.field);
             currentTrack = new SlaTracking__c();
             currentTrack.Status__c = 'Aperto';
             //currentTrack.Case__c = eventObj.recordId;
@@ -274,13 +291,13 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
             Object dt;
             if(singleRule.startRule.isDate){
-                System.debug('>>> isDate -> ' + singleRule.startRule.field);
+                System.debug(logginglevel.DEBUG, '>>> isDate -> ' + singleRule.startRule.field);
                 if(!eventObj.fieldMap.containsKey(singleRule.startRule.field)){
                     return null;  
                 }
                 dt = eventObj.fieldMap.get(singleRule.startRule.field);
             } else {
-                System.debug('>>> isNotDate -> ' + singleRule.startRule.field);
+                System.debug(logginglevel.DEBUG, '>>> isNotDate -> ' + singleRule.startRule.field);
                 String startField = String.valueOf(eventObj.fieldMap.get(singleRule.startRule.field));
                 if(startField.equalsIgnoreCase(singleRule.startRule.value)){
                     dt = eventObj.fieldMap.get('LastModifiedDate');
@@ -309,9 +326,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
             when 'HDT_RT_Sales' {
 
             }
-            when 'HDT_RT_ActivitySLA' {
 
-            }
         }
         return slaMgmt;
     }
@@ -319,27 +334,23 @@ public inherited sharing class HDT_UTL_SlaManagement {
     public static HDT_WRP_SlaManagement.HDT_WRP_AdminRule buildSingleRule(HDT_WRP_SlaManagement.HDT_WRP_AdminRule slaMgmt, SlaAdministration__c slaAdmin){
 
         slaMgmt.adminRuleId = slaAdmin.Id;
+        slaMgmt.activityType = slaAdmin.ActivityType__c;
 
         switch on slaAdmin.Type__c {
             when '01' {
                 // Transizione Fasi Case
                 slaMgmt.startRule.isDate = false;
                 slaMgmt.startRule.obj = 'Case';
-                //slaMgmt.startRule.field = 'Phase__c';
-                slaMgmt.startRule.field = 'Status';
+                slaMgmt.startRule.field = 'Phase__c';
                 slaMgmt.startRule.value = slaAdmin.StartCasePhase__c;
 
                 slaMgmt.endRule.isDate = false;
                 slaMgmt.endRule.obj = 'Case';
-                //slaMgmt.endRule.field = 'Phase__c';
-                slaMgmt.endRule.field = 'Status';
+                slaMgmt.endRule.field = 'Phase__c';
                 slaMgmt.endRule.value = slaAdmin.EndCasePhase__c;
             }	
             when '02' {
                 // Data presente sul Case –> Apertura Activity
-
-                slaMgmt.activityType = slaAdmin.ActivityType__c;
-
                 slaMgmt.startRule.isDate = true;
                 slaMgmt.startRule.obj = 'Case';
                 slaMgmt.startRule.field = slaAdmin.CaseField__c;
@@ -352,9 +363,6 @@ public inherited sharing class HDT_UTL_SlaManagement {
             }
             when '03' {
                 // Data presente sul Case –> Chiusura Activity
-
-                slaMgmt.activityType = slaAdmin.ActivityType__c;
-
                 slaMgmt.startRule.isDate = true;
                 slaMgmt.startRule.obj = 'Case';
                 slaMgmt.startRule.field = slaAdmin.CaseField__c;
@@ -374,22 +382,18 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
                 slaMgmt.endRule.isDate = false;
                 slaMgmt.endRule.obj = 'Case';
-                //slaMgmt.endRule.field = 'Phase__c';
-                slaMgmt.endRule.field = 'Status';
+                slaMgmt.endRule.field = 'Phase__c';
                 slaMgmt.endRule.value = slaAdmin.EndCasePhase__c;
             }
             when '05' {
                 // Apertura Activity –> Chiusura Activity
-
-                slaMgmt.activityType = slaAdmin.ActivityType__c;
-
                 slaMgmt.startRule.isDate = true;
-                slaMgmt.startRule.obj = 'Activity';
+                slaMgmt.startRule.obj = 'Case';
                 slaMgmt.startRule.field = 'ActivityStartTime__c';
                 slaMgmt.startRule.value = '';
 
                 slaMgmt.endRule.isDate = true;
-                slaMgmt.endRule.obj = 'Activity';
+                slaMgmt.endRule.obj = 'Case';
                 slaMgmt.endRule.field = 'ActivityEndTime__c';
                 slaMgmt.endRule.value = '';
             }
@@ -397,37 +401,60 @@ public inherited sharing class HDT_UTL_SlaManagement {
                 // Transizione Fasi Order
                 slaMgmt.startRule.isDate = false;
                 slaMgmt.startRule.obj = 'Order';
-                //slaMgmt.startRule.field = 'Phase__c';
-                slaMgmt.startRule.field = 'Status';
+                slaMgmt.startRule.field = 'Phase__c';
                 slaMgmt.startRule.value = slaAdmin.StartOrderPhase__c;
 
                 slaMgmt.endRule.isDate = false;
                 slaMgmt.endRule.obj = 'Order';
-                //slaMgmt.endRule.field = 'Phase__c';
-                slaMgmt.endRule.field = 'Status';
+                slaMgmt.endRule.field = 'Phase__c';
                 slaMgmt.endRule.value = slaAdmin.EndOrderPhase__c;
             }
             when '07' {
                 // Data presente sull'Order –> Apertura Activity
+
+                slaMgmt.startRule.isDate = false;
+                slaMgmt.startRule.obj = 'Order';
+                slaMgmt.startRule.field = slaAdmin.OrderField__c;
+                slaMgmt.startRule.value = '';
+
+                slaMgmt.endRule.isDate = false;
+                slaMgmt.endRule.obj = 'Order';
+                slaMgmt.endRule.field = 'ActivityStartTime__c';
+                slaMgmt.endRule.value = '';
             }
             when '08' {
                 // Data presente sull'Order –> Chiusura Activity
+                slaMgmt.startRule.isDate = false;
+                slaMgmt.startRule.obj = 'Order';
+                slaMgmt.startRule.field = slaAdmin.OrderField__c;
+                slaMgmt.startRule.value = '';
+
+                slaMgmt.endRule.isDate = false;
+                slaMgmt.endRule.obj = 'Order';
+                slaMgmt.endRule.field = 'ActivityEndTime__c';
+                slaMgmt.endRule.value = '';
             }
             when '09' {
                 // Data presente sull'Order –> Fase Order
+                slaMgmt.startRule.isDate = true;
+                slaMgmt.startRule.obj = 'Order';
+                slaMgmt.startRule.field = slaAdmin.OrderField__c;
+                slaMgmt.startRule.value = '';
+
+                slaMgmt.endRule.isDate = false;
+                slaMgmt.endRule.obj = 'Order';
+                slaMgmt.endRule.field = 'Phase__c';
+                slaMgmt.endRule.value = slaAdmin.EndOrderPhase__c;
             }
             when '10' {
                 // Data apertura activity –> Data chiusura activity
-
-                slaMgmt.activityType = slaAdmin.ActivityType__c;
-
                 slaMgmt.startRule.isDate = true;
-                slaMgmt.startRule.obj = 'Activity';
+                slaMgmt.startRule.obj = 'Order';
                 slaMgmt.startRule.field = 'ActivityStartTime__c';
                 slaMgmt.startRule.value = '';
 
                 slaMgmt.endRule.isDate = true;
-                slaMgmt.endRule.obj = 'Activity';
+                slaMgmt.endRule.obj = 'Order';
                 slaMgmt.endRule.field = 'ActivityEndTime__c';
                 slaMgmt.endRule.value = '';
             }

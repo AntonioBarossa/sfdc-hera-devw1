@@ -3,7 +3,7 @@ public inherited sharing class HDT_THR_CaseChangeEvent {
 
     public static void afterInsert(List<CaseChangeEvent> CaseChangeEventList) {
 
-        System.debug('>>> eventSize: ' + CaseChangeEventList.size());
+        System.debug(logginglevel.DEBUG, '>>> eventSize: ' + CaseChangeEventList.size());
 
         Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpObjMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event>();
 
@@ -11,12 +11,12 @@ public inherited sharing class HDT_THR_CaseChangeEvent {
             HDT_WRP_SlaManagement.HDT_WRP_Event wrpObj;
             for(CaseChangeEvent event : CaseChangeEventList){
                 
-                System.debug('>>> ' + JSON.serialize(event));
+                System.debug(logginglevel.DEBUG, '>>> ' + JSON.serialize(event));
 
                 EventBus.ChangeEventHeader header = event.ChangeEventHeader;
 
                 List<Id> eventIds = header.getRecordIds();
-                System.debug('>>> eventIds ' + eventIds);
+                System.debug(logginglevel.DEBUG, '>>> eventIds ' + eventIds);
 
                 for(Id i : eventIds){
                     if(wrpObjMap.containsKey(i)){
@@ -48,7 +48,7 @@ public inherited sharing class HDT_THR_CaseChangeEvent {
                     
                     if(event.get(field) != null) {
                         Object fieldValue = event.get(field);
-                        //System.debug('>>> field: ' + field + ' - value: ' + fieldValue);
+                        //System.debug(logginglevel.DEBUG, '>>> field: ' + field + ' - value: ' + fieldValue);
 
                         for(Id i : eventIds){
                             if(wrpObjMap.containsKey(i)){
@@ -64,7 +64,7 @@ public inherited sharing class HDT_THR_CaseChangeEvent {
             }
 
         } catch(Exception e){
-            System.debug('>>> Exception ' + e.getMessage() + ' - at line [' + String.valueOf(e.getLineNumber()));
+            System.debug(logginglevel.DEBUG, '>>> Exception ' + e.getMessage() + ' - at line [' + String.valueOf(e.getLineNumber()));
         }
 
         HDT_UTL_SlaManagement management = new HDT_UTL_SlaManagement('Case');

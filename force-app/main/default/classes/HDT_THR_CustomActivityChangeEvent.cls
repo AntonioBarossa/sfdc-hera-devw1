@@ -3,7 +3,7 @@ public inherited sharing class HDT_THR_CustomActivityChangeEvent {
 
     public static void afterInsert(List<wrts_prcgvr__Activity__ChangeEvent> activityChangeEventList) {
 
-        System.debug('>>> eventSize: ' + activityChangeEventList.size());
+        System.debug(logginglevel.DEBUG, '>>> eventSize: ' + activityChangeEventList.size());
 
         Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpObjMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event>();
         Map<Id, Id> activityIdsMap = new Map<Id, Id>();
@@ -36,12 +36,12 @@ public inherited sharing class HDT_THR_CustomActivityChangeEvent {
             HDT_WRP_SlaManagement.HDT_WRP_Event wrpObj;
             for(wrts_prcgvr__Activity__ChangeEvent event : activityChangeEventList){
                 
-                System.debug('>>> ' + JSON.serialize(event));
+                System.debug(logginglevel.DEBUG, '>>> ' + JSON.serialize(event));
 
                 EventBus.ChangeEventHeader header = event.ChangeEventHeader;
 
                 List<Id> eventIds = header.getRecordIds();
-                System.debug('>>> eventIds ' + eventIds);
+                System.debug(logginglevel.DEBUG, '>>> eventIds ' + eventIds);
 
                 Id changeId;
                 for(Id i : eventIds){
@@ -87,7 +87,7 @@ public inherited sharing class HDT_THR_CustomActivityChangeEvent {
 
             }
         } catch(Exception e){
-            System.debug('>>> Exception ' + e.getMessage() + ' - at line [' + String.valueOf(e.getLineNumber()));
+            System.debug(logginglevel.DEBUG, '>>> Exception ' + e.getMessage() + ' - at line [' + String.valueOf(e.getLineNumber()));
         }
 
         Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpObjCaseMap;

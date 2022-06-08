@@ -2,7 +2,7 @@ public with sharing class HDT_THR_OrderChangeEvent {
 
     public static void afterInsert(List<OrderChangeEvent> orderChangeEventList) {
 
-        System.debug('>>> eventSize: ' + orderChangeEventList.size());
+        System.debug(logginglevel.DEBUG, '>>> eventSize: ' + orderChangeEventList.size());
 
         Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpObjMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event>();
 
@@ -10,12 +10,12 @@ public with sharing class HDT_THR_OrderChangeEvent {
             HDT_WRP_SlaManagement.HDT_WRP_Event wrpObj;
             for(OrderChangeEvent event : orderChangeEventList){
                 
-                System.debug('>>> ' + JSON.serialize(event));
+                System.debug(logginglevel.DEBUG, '>>> ' + JSON.serialize(event));
 
                 EventBus.ChangeEventHeader header = event.ChangeEventHeader;
 
                 List<Id> eventIds = header.getRecordIds();
-                System.debug('>>> eventIds ' + eventIds);
+                System.debug(logginglevel.DEBUG, '>>> eventIds ' + eventIds);
 
                 for(Id i : eventIds){
                     if(wrpObjMap.containsKey(i)){
@@ -45,7 +45,7 @@ public with sharing class HDT_THR_OrderChangeEvent {
                     
                     if(event.get(field) != null) {
                         Object fieldValue = event.get(field);
-                        //System.debug('>>> field: ' + field + ' - value: ' + fieldValue);
+                        //System.debug(logginglevel.DEBUG, '>>> field: ' + field + ' - value: ' + fieldValue);
 
                         for(Id i : eventIds){
                             if(wrpObjMap.containsKey(i)){
@@ -61,7 +61,7 @@ public with sharing class HDT_THR_OrderChangeEvent {
             }
 
         } catch(Exception e){
-            System.debug('>>> Exception ' + e.getMessage() + ' - at line [' + String.valueOf(e.getLineNumber()));
+            System.debug(logginglevel.DEBUG, '>>> Exception ' + e.getMessage() + ' - at line [' + String.valueOf(e.getLineNumber()));
         }
 
         HDT_UTL_SlaManagement management = new HDT_UTL_SlaManagement('Order');
