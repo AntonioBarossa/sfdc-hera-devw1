@@ -496,7 +496,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         || (oldOrder.Phase__c == 'In attesa validazione' && newOrder.Phase__c == 'Documentazione Validata')
                     ){
                         if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
-                            if(newOrder.Phase__c == 'Documentazione Validata' && Date.today() <= newOrder.DateSentToSII__c){
+                            if((newOrder.Phase__c == 'Documentazione Validata' || newOrder.Phase__c == 'Esportazione VS Siebel') && Date.today() <= newOrder.DateSentToSII__c){
                                 continue;
                             }else{
                                 newOrder.DateSentToSII__c = Date.today();

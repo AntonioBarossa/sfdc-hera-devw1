@@ -21,7 +21,9 @@ public class HDT_LC_ActivityTraceTst {
     static void getActivityTest(){
         List<Account> accList = [SELECT Id,Activity__c FROM Account WITH SECURITY_ENFORCED LIMIT 1] ;
         String res = HDT_LC_ActivityTrace.getActivity(accList[0].Id);
-        system.assertEquals(String.valueOf(accList[0].Activity__c), res,'The result is not what expected' );
+        Map<String, Object> m = (Map<String, Object>) JSON.deserializeUntyped(res);
+        String resultId = (String) m.get('Id');
+        system.assertEquals(String.valueOf(accList[0].Activity__c), resultId,'The result is not what expected' );
     }
     
     
