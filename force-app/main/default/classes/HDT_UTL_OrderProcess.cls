@@ -506,7 +506,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                 }
                             }
                         }else {
-                            newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                            if((newOrder.Phase__c == 'Documentazione Validata' || newOrder.Phase__c == 'Esportazione VS Siebel') && Date.today() <= newOrder.EffectiveDate__c){
+                                continue;
+                            }else{
+                                newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                            }
+                            
                         }
                     }else if(
                             (oldOrder.ConfirmCustomerContract__c == null || (oldOrder.ConfirmCustomerContract__c != null && oldOrder.ConfirmCustomerContract__c != newOrder.ConfirmCustomerContract__c)) 
