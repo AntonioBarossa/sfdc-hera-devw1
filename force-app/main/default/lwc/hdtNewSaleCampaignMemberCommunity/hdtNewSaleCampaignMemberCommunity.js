@@ -14,7 +14,9 @@ export default class hdtNewSaleCampaignMemberCommunity extends NavigationMixin(L
             console.log(JSON.stringify(data));
             this.CampaignProcessType = data.Campaign.ProcessType__c;
             console.log('CampaignProcessType Sale --> '+this.CampaignProcessType);
-            if(data.LeadId != null && data.LeadId != undefined && data.LeadId != ''){
+            if(data.ContactId != null && data.ContactId != undefined && data.ContactId != ''){
+                this.isFromLead = false;
+            }else if(data.LeadId != null && data.LeadId != undefined && data.LeadId != ''){
                 this.isFromLead = true;
             }
         }).catch(error => {

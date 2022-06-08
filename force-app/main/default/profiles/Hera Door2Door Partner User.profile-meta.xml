@@ -4481,7 +4481,7 @@
         <editable>true</editable>
         <field>CampaignMember.Ecid__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions> 
     <fieldPermissions>
         <editable>true</editable>
         <field>CampaignMember.isToSendStatusReitek__c</field>
