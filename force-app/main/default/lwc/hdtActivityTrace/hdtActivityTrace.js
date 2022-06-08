@@ -27,7 +27,7 @@ export default class HdtActivityTrace extends NavigationMixin(LightningElement) 
                 this.show = true;
             }else if(tipo === 'Activity'){
                 this.showActivity = true;
-                this.actId = result;
+                this.actId = mappa.Id;
                 this.show = true;
             }
         })
