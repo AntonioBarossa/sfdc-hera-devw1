@@ -1,3 +1,3 @@
 trigger HDT_CaseChangeEvent on CaseChangeEvent (after insert) {
-    HDT_THR_CaseChangeEvent.afterInsert(Trigger.New);
+    HDT_TRH_CaseChangeEvent.afterInsert(Trigger.New);
 }

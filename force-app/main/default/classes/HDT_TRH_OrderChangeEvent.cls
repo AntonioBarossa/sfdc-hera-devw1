@@ -1,15 +1,14 @@
-@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveParameterList')
-public inherited sharing class HDT_THR_CaseChangeEvent {
+public with sharing class HDT_TRH_OrderChangeEvent {
 
-    public static void afterInsert(List<CaseChangeEvent> CaseChangeEventList) {
+    public static void afterInsert(List<OrderChangeEvent> orderChangeEventList) {
 
-        System.debug(logginglevel.DEBUG, '>>> eventSize: ' + CaseChangeEventList.size());
+        System.debug(logginglevel.DEBUG, '>>> eventSize: ' + orderChangeEventList.size());
 
         Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpObjMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event>();
 
         try{
             HDT_WRP_SlaManagement.HDT_WRP_Event wrpObj;
-            for(CaseChangeEvent event : CaseChangeEventList){
+            for(OrderChangeEvent event : orderChangeEventList){
                 
                 System.debug(logginglevel.DEBUG, '>>> ' + JSON.serialize(event));
 
@@ -24,7 +23,7 @@ public inherited sharing class HDT_THR_CaseChangeEvent {
                     } else {
                         wrpObj = new HDT_WRP_SlaManagement.HDT_WRP_Event();
                         wrpObj.recordId = i;
-                        wrpObj.sObjType = 'Case';
+                        wrpObj.sObjType = 'Order';
                         wrpObj.eventType = header.changeType;
                         wrpObj.fieldMap = new Map<String, Object>();
                         wrpObjMap.put(i, wrpObj);
@@ -35,9 +34,7 @@ public inherited sharing class HDT_THR_CaseChangeEvent {
 
                 switch on header.changeType {
                     when 'CREATE' {
-                        objFields.add('Phase__c');
-                        objFields.add('CustomerRequestDate__c');
-                        objFields.add('CaseNumber');
+                        objFields.add('');
                     }	
                     when 'UPDATE' {
                         objFields = header.changedFields;
@@ -67,7 +64,7 @@ public inherited sharing class HDT_THR_CaseChangeEvent {
             System.debug(logginglevel.DEBUG, '>>> Exception ' + e.getMessage() + ' - at line [' + String.valueOf(e.getLineNumber()));
         }
 
-        HDT_UTL_SlaManagement management = new HDT_UTL_SlaManagement('Case');
+        HDT_UTL_SlaManagement management = new HDT_UTL_SlaManagement('Order');
         management.setChangedObjList(wrpObjMap);
         management.execute();
     }
