@@ -2192,6 +2192,11 @@
                 <fieldItem>Record.OwnerId</fieldItem>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.AssignedToQueueDate__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-a122172c-02bb-4921-884e-6c5aa9b666da</name>
         <type>Facet</type>
     </flexiPageRegions>

@@ -260,7 +260,18 @@ export default class hdtSaleVas extends LightningElement {
     //Pagination end
 
     handleInputText(event){
-        this.inputText = event.detail.value;
+        if ( this.labelSelectedOptions === 'Comune' && event.detail.value === null ){
+
+            const toastWarning = new ShowToastEvent({
+                title: 'Warning',
+                message: 'Necessario inserire un comune!',
+                variant: 'warning'
+            });
+            this.dispatchEvent(toastWarning);
+
+        } else {
+            this.inputText = event.detail.value;
+        }
     }
 
     handleConfirmEvent(){

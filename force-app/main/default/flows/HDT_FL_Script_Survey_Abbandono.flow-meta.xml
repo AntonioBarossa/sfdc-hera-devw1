@@ -66,6 +66,14 @@
         </value>
     </choices>
     <choices>
+        <name>Altro</name>
+        <choiceText>Altro</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Altro</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>Choice_No</name>
         <choiceText>No</choiceText>
         <dataType>String</dataType>
@@ -123,10 +131,10 @@
     </choices>
     <choices>
         <name>E_3VG_POWER_GAS</name>
-        <choiceText>3VG POWER &amp;amp; GAS</choiceText>
+        <choiceText>3VG POWER e GAS</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>3VG POWER &amp; GAS</stringValue>
+            <stringValue>3VG POWER e GAS</stringValue>
         </value>
     </choices>
     <choices>
@@ -779,7 +787,7 @@
             <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: In che modo la hanno contattata per la sottoscrizione del contratto?&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
@@ -792,6 +800,13 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -817,7 +832,7 @@
             <fieldType>RadioButtons</fieldType>
             <isRequired>false</isRequired>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
                 <conditions>
                     <leftValueReference>RB2_Consapevole</leftValueReference>
                     <operator>EqualTo</operator>
@@ -836,6 +851,13 @@
                     <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
+                        <stringValue>SI</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
                         <stringValue>Si</stringValue>
                     </rightValue>
                 </conditions>
@@ -846,7 +868,7 @@
             <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Quando le hanno telefonato, conoscevano già i dati della sua fornitura?&lt;/p&gt;&lt;p&gt;(indirizzo di fornitura, codice del contatore, il fornitore …)?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
@@ -859,6 +881,13 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -878,7 +907,7 @@
             <fieldType>RadioButtons</fieldType>
             <isRequired>false</isRequired>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
@@ -891,6 +920,13 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -999,6 +1035,7 @@
             <choiceReferences>A_S_M_VOGHERA</choiceReferences>
             <choiceReferences>GREEN_NETWORK_SPA</choiceReferences>
             <choiceReferences>DOMESTIKA_ENERGIA</choiceReferences>
+            <choiceReferences>Altro</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Energia Elettrica</fieldText>
             <fieldType>DropdownBox</fieldType>
@@ -1044,6 +1081,7 @@
             <choiceReferences>AEG_ENERGIA_GAS</choiceReferences>
             <choiceReferences>ACAM_Gas</choiceReferences>
             <choiceReferences>ESTRA_ENERGIE_SRL</choiceReferences>
+            <choiceReferences>Altro</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Gas</fieldText>
             <fieldType>DropdownBox</fieldType>
@@ -1118,12 +1156,19 @@
             <fieldText>&lt;p&gt;&lt;b&gt;Operatore&lt;/b&gt;: Per caso ricorda in che modo la hanno contattata per la sottoscrizione del contratto?&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND  (2 OR 3)</conditionLogic>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -1149,12 +1194,19 @@
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND  (2 OR 3)</conditionLogic>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -1171,12 +1223,19 @@
             <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Quando le hanno telefonato, conoscevano già i dati della sua fornitura?&lt;/p&gt;&lt;p&gt;(indirizzo di fornitura, codice del contatore, il fornitore …)?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND  (2 OR 3)</conditionLogic>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -1196,12 +1255,19 @@
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND  (2 OR 3)</conditionLogic>
                 <conditions>
                     <leftValueReference>RB1</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -1233,12 +1299,12 @@
             <fieldText>&lt;p&gt;&lt;strong&gt;Cliente&lt;/strong&gt;: SOTTOSCRIZIONE&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Se è interessato, posso illustrarle le nostri migliori offerte a mercato libero?&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>2 AND  (1 OR 3)</conditionLogic>
                 <conditions>
                     <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Si</stringValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -1246,6 +1312,13 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1258,12 +1331,12 @@
             <fieldType>RadioButtons</fieldType>
             <isRequired>false</isRequired>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>2 AND  (1 OR 3)</conditionLogic>
                 <conditions>
                     <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Si</stringValue>
+                        <stringValue>SI</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -1271,6 +1344,13 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetCampaignMember.IBMUnicaCommercialConsent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>

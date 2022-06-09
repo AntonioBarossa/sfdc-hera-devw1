@@ -447,6 +447,7 @@ public with sharing class HDT_UTL_CampaignMember {
             idsToProcess.add(cm.Id);
         }
 
+        /*
         List<CampaignMember> processedMembers = new List<CampaignMember>();
         for(CampaignMember member : [SELECT Id, PhoneNumber__c, LeadId, Lead.ContactDate__c, Campaign.ReitekIntegrationTechnology__c, Campaign.MacroActivityEasyCIM__r.Name FROM CampaignMember WHERE Id IN: idsToProcess WITH SECURITY_ENFORCED]) {
             if(member.LeadId != null && member.Campaign.ReitekIntegrationTechnology__c == 'Web Service') {
@@ -457,8 +458,9 @@ public with sharing class HDT_UTL_CampaignMember {
                 ));
             }
         }
-
-        new HDT_SRV_CampaignMember().updateRecords(processedMembers);
+        */
+        //new HDT_SRV_CampaignMember().updateRecords(processedMembers);
+        System.enqueueJob(new HDT_QBL_InvioNumerazioni(idsToProcess));
     }
 
     public static void setAgency (List<CampaignMember> members) {
@@ -514,6 +516,34 @@ public with sharing class HDT_UTL_CampaignMember {
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    public static void assignCmAgency (List<CampaignMember> members){
+        set <String> agencyNames=new set <String>();
+        List <Account> agencies=new list <Account>();
+        map <String, String> agencyNameIdMap=new Map <String, String>();
+
+        for(CampaignMember cm : members){
+            if(String.isNotBlank(cm.Ext_Agency_Name__c)){
+                agencyNames.add(cm.Ext_Agency_Name__c);
+            }
+        }
+        if(agencyNames!=null && agencyNames.size()>0){
+            agencies=[SELECT id, Name FROM Account WHERE Name IN:agencyNames];
+
+            if(agencies!=null && agencies.size()>0){
+                for (Account ag : agencies) {
+                    agencyNameIdMap.put(ag.Name, ag.Id);
+                }
+
+                for(CampaignMember cm : members){
+                    if(String.isNotBlank(cm.Ext_Agency_Name__c) && agencyNameIdMap.containsKey(cm.Ext_Agency_Name__c)){
+                        cm.Agency__c=agencyNameIdMap.get(cm.Ext_Agency_Name__c);
+                        cm.Ext_Agency_Name__c='';
                     }
                 }
             }

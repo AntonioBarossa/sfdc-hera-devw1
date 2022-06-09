@@ -7,7 +7,7 @@
             <div class="flex">
                 <template if:false={searchingWorkGroup}>
                     <div class="grow" onkeyup={handleAssigneeSearch}>
-                        <lightning-input type="search" variant="label-hidden" placeholder="Cercare per nome assegnatario"></lightning-input>
+                        <lightning-input type="search" variant="label-hidden" placeholder="Cercare per nome coda o nome operatore"></lightning-input>
                     </div>
                 </template>
                 <template if:true={searchingWorkGroup}>
