@@ -511,12 +511,6 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             }
             isValidated=false;
         }
-        if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
-            if(mobilePhone.value.length<9 || mobilePhone.value.length > 10){
-                isValidated=false;
-                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre!";
-            }
-        }
         console.log('LENGTH:'+ this.fiscalcode + '-:' + this.fiscalCode.value.length);
         if(!(this.fiscalCode.value=== undefined || this.fiscalCode.value.trim()==='')){
             if(this.fiscalCode.value.length != 16){
@@ -529,6 +523,10 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             if(mobilePhone.value.length<9 || mobilePhone.value.length > 10){
                 isValidated=false;
                 messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre!";
+            }
+            if( String(mobilePhone.value).charAt(0)!='3' ){
+                isValidated=false;
+                messageError=" Il numero di cellulare deve iniziare con il numero 3!";
             }
         }
         if(!(phoneNumber.value=== undefined || phoneNumber.value.trim()==='')){
