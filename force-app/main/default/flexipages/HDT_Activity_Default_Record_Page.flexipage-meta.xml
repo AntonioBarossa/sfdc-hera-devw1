@@ -233,7 +233,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_EditScartiComplessi</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3 AND 4 AND (5 OR ((6 OR 7 OR 8) AND 9))</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.DiscardCategory__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -253,6 +253,31 @@
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Esito KO da DL</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Case__r.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>HDT_RT_Morosita</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Case__r.Type}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Votive Modena Pagamenti Morosità</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Case__r.Type}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Gestione Disalimentabilità</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Case__r.Type}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Riattivazione Fornitura</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Case__r.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_Morosita</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

@@ -93,10 +93,9 @@
         var parentId;
         workspaceAPI.getAllTabInfo().then(function(response) {
             console.log('----------');
-            response.forEach((element) => {
-                //console.log('# id_' + element.tabId + ' - title: ' + element.title + ' - ' + element.pageReference.type);
+            console.log('@@@eaComment close tab id on response: ' + tabToClose);
+                response.forEach((element) => {
                 if(element.pageReference.type === 'standard__recordPage'){
-                    //console.log(' PR_> ' + element.pageReference.attributes.recordId);
                     if(element.pageReference.attributes.recordId=== accId){
                         parentId = element.tabId;
                     } else if(element.pageReference.attributes.recordId === leadId){
@@ -105,6 +104,8 @@
                         parentId = element.tabId;
                     }
                     else if(element.pageReference.attributes.recordId === orderId){
+                        parentId = element.tabId;
+                    }else if(element.pageReference.attributes.recordId === caseId && tabToClose && tabToClose.indexOf('_') === -1){
                         parentId = element.tabId;
                     }
                 }
@@ -152,7 +153,8 @@
                 console.log('# wizard tab id: ' + newTabId);
                 workspaceAPI.setTabLabel({ tabId: newTabId, label: 'Wizard' });
                 workspaceAPI.setTabIcon({ tabId: newTabId, icon: 'custom:custom83' });
-
+                console.log('@@@eaComment new tab id: ' + newTabId);
+                console.log('@@@eaComment close tab id: ' + tabToClose);
                 workspaceAPI.closeTab({ tabId: tabToClose }).then(function(success) {
                     if (success) {
                         workspaceAPI.focusTab({tabId: newTabId});
