@@ -1,0 +1,35 @@
+public with sharing class HDT_UTL_ManageTARI {
+
+    @InvocableMethod
+    public static List<Boolean> checkTariProcess(List<String> serviceCatalogId) {
+        List<Boolean> checkTari = new List<Boolean>();
+        checkTari.add(false);
+
+        List<AccountStatementFilter__c> accountStmList = [
+            SELECT Id, DocumentSelected__c
+            FROM AccountStatementFilter__c 
+            WHERE Id =: serviceCatalogId[0]
+        ];
+        
+        if(accountStmList.isEmpty())	return checkTari;
+        
+        AccountStatementFilter__c astm = accountStmList[0];
+        
+        List<Object> resultList = (List<Object>) JSON.deserializeUntyped(astm.DocumentSelected__c);
+        
+        if(resultList.isEmpty()) 	return checkTari;
+        
+        Map<String, Object> resultMap = (Map<String, Object>) resultList[0];
+        List<Object> indentedList = (List<Object>) resultMap.get('secondoLivelloInformativo');
+        
+        for(Object secondLevelObj : indentedList){
+            Map<String, Object> secondLevelMap = (Map<String, Object>) secondLevelObj;
+            String resulString = (String)secondLevelMap.get('settoreMerceologico');
+        	checkTari[0] = 'Tari'.equalsIgnoreCase(resulString);
+            //system.debug(resulString);
+            if(!checkTari[0])	break; // Devono essere tutti TARI ??? se si OK(Controllo !) Altrimenti Leva !!!
+        }
+        return checkTari;
+    }
+
+}

@@ -27,6 +27,25 @@
         </outputParameters>
     </actionCalls>
     <actionCalls>
+        <name>checkTari</name>
+        <label>checkTari</label>
+        <locationX>7420</locationX>
+        <locationY>1310</locationY>
+        <actionName>HDT_UTL_ManageTARI</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Validazione_Check_Tari</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>serviceCatalogId</name>
+            <value>
+                <elementReference>serviceCatalogId</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>ManageDocuments</name>
         <label>ManageDocuments</label>
         <locationX>50</locationX>
@@ -606,7 +625,7 @@
         <name>AssegnaValori_0_0</name>
         <label>AssegnaValori</label>
         <locationX>7156</locationX>
-        <locationY>1670</locationY>
+        <locationY>2126</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato_0_0_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -659,6 +678,22 @@
         </assignmentItems>
         <connector>
             <targetReference>AggiornaCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Cambio_JSON_Campi_Tari</name>
+        <label>Cambio JSON Campi Tari</label>
+        <locationX>7376</locationX>
+        <locationY>1550</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Storno Rateizzazione TARI</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Inserimento_Dati_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -1849,7 +1884,7 @@
         <name>Salva_in_bozza_o_Conferma_0_0_0_0_0</name>
         <label>Salva in bozza o Conferma?</label>
         <locationX>7420</locationX>
-        <locationY>1430</locationY>
+        <locationY>1886</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0_0_0_0_0</name>
@@ -1894,6 +1929,43 @@
                 <targetReference>Annulla_Prestazione_0_0_0</targetReference>
             </connector>
             <label>Annulla</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Validazione_Check_Tari</name>
+        <label>Validazione Check Tari</label>
+        <locationX>7420</locationX>
+        <locationY>1430</locationY>
+        <defaultConnectorLabel>KO Merc Tari</defaultConnectorLabel>
+        <rules>
+            <name>Vecchio_Processo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_StornoRateizzazione_TARI</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Inserimento_Dati_0_0_0_0_0</targetReference>
+            </connector>
+            <label>Vecchio Processo</label>
+        </rules>
+        <rules>
+            <name>Controllo_Merceologico_Tari_OK</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>checkTari</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cambio_JSON_Campi_Tari</targetReference>
+            </connector>
+            <label>OK Merc Tari</label>
         </rules>
     </decisions>
     <description>Flow per la gestione dei pagamenti</description>
@@ -2020,7 +2092,7 @@
         <name>GetCaseAggiornato_0_0_0</name>
         <label>GetCaseAggiornato</label>
         <locationX>7156</locationX>
-        <locationY>1550</locationY>
+        <locationY>2006</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValori_0_0</targetReference>
@@ -2396,7 +2468,7 @@
         <name>AggiornaCase_00</name>
         <label>AggiornaCase</label>
         <locationX>7156</locationX>
-        <locationY>1790</locationY>
+        <locationY>2246</locationY>
         <inputReference>GetCaseAggiornato_0_0_0</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -2578,11 +2650,11 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Screen_Inserimento_Dati_0_0_0_0_0</targetReference>
+            <targetReference>checkTari</targetReference>
         </connector>
         <fields>
             <name>DisplayDocumentSelected_0</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Input_Case.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Input_Case.Type}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -3293,7 +3365,7 @@
         <name>Screen_Inserimento_Dati_0_0_0_0_0</name>
         <label>Screen Inserimento Dati</label>
         <locationX>7420</locationX>
-        <locationY>1310</locationY>
+        <locationY>1766</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3858,7 +3930,7 @@
         <name>Annulla_Prestazione_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>7420</locationX>
-        <locationY>1550</locationY>
+        <locationY>2006</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
