@@ -64,9 +64,11 @@ public with sharing class HDT_TRH_OrderChangeEvent {
             System.debug(logginglevel.DEBUG, '>>> Exception ' + e.getMessage() + ' - at line [' + String.valueOf(e.getLineNumber()));
         }
 
-        HDT_UTL_SlaManagement management = new HDT_UTL_SlaManagement('Order');
-        management.setChangedObjList(wrpObjMap);
-        management.execute();
+        if(wrpObjMap.size() > 0){
+            HDT_UTL_SlaManagement management = new HDT_UTL_SlaManagement('Order');
+            management.setChangedObjList(wrpObjMap);
+            management.execute();
+        }
     }
 
 }

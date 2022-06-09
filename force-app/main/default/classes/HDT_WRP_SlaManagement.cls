@@ -10,6 +10,8 @@ public inherited sharing class HDT_WRP_SlaManagement {
 
     public class HDT_WRP_AdminRule {
         public Id adminRuleId;
+        public Date startValidDate;
+        public Date endValidDate;
         public Map<String, Object> objectCriteria;
         public HDT_WRP_RuleDetail startRule;
         public HDT_WRP_RuleDetail endRule;

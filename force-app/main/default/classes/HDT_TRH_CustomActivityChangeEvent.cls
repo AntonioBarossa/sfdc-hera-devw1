@@ -20,6 +20,7 @@ public inherited sharing class HDT_TRH_CustomActivityChangeEvent {
                 SELECT Id, Case__c, Order__c, Type__c
                 FROM wrts_prcgvr__Activity__c
                 WHERE Id IN :activityIds
+                WITH SECURITY_ENFORCED
             ];
 
             for(wrts_prcgvr__Activity__c activity : activityList){

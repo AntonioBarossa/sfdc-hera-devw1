@@ -132,7 +132,8 @@ public inherited sharing class HDT_UTL_SlaManagement {
         String stringQuery = '';
         stringQuery += 'SELECT Id, Activity__c, SlaAdministration__c, Case__c, EndDateTime__c, StartDateTime__c, Description__c, SlaName__c, Order__c, Status__c, Name ';
         stringQuery += 'FROM SlaTracking__c ';
-        stringQuery += 'WHERE ' + trackingFieldKey + ' IN : recordIdList';
+        stringQuery += 'WHERE ' + trackingFieldKey + ' IN : recordIdList ';
+        stringQuery += 'WITH SECURITY_ENFORCED';
 
         List<sObject> sobjList = Database.query(stringQuery);
         trackingRecordsList = (List<SlaTracking__c>)sobjList;
@@ -143,7 +144,8 @@ public inherited sharing class HDT_UTL_SlaManagement {
         String stringQuery = '';
         stringQuery += 'SELECT Id, ' + String.join(criteriaFields, ',') + ' ';
         stringQuery += 'FROM ' + executionObject + ' ';
-        stringQuery += 'WHERE Id IN : recordIdList';
+        stringQuery += 'WHERE Id IN : recordIdList ';
+        stringQuery += 'WITH SECURITY_ENFORCED';
         List<sObject> sobjList = Database.query(stringQuery);
 
         sObjectCriteriaMap = new Map<Id, Object>();
@@ -226,6 +228,10 @@ public inherited sharing class HDT_UTL_SlaManagement {
             }
         }
 
+    }
+
+    public static Boolean isDateRuleValid(Date dateToValidate, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule){
+        return (dateToValidate >= singleRule.startValidDate && dateToValidate <= singleRule.endValidDate);
     }
 
     public SlaTracking__c updateTrackingRecord(SlaTracking__c currentTrack, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule, HDT_WRP_SlaManagement.HDT_WRP_Event eventObj){
@@ -315,16 +321,30 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
     public static HDT_WRP_SlaManagement.HDT_WRP_AdminRule buildObjectCriteria(HDT_WRP_SlaManagement.HDT_WRP_AdminRule slaMgmt, SlaAdministration__c slaAdmin){
         
+        if(slaAdmin.StartDate__c != null){
+            slaMgmt.startValidDate = slaAdmin.StartDate__c;
+        }
+
+        if(slaAdmin.EndDate__c != null){
+            slaMgmt.endValidDate = slaAdmin.EndDate__c;
+        }
+
         if(String.isNotEmpty(slaAdmin.Cluster__c)){
             slaMgmt.objectCriteria.put('Cluster__c', slaAdmin.Cluster__c);
         }
 
+        //CompanyOwner__c
+        //Commodity__c
+        //SalesCompany__c
+
         switch on slaAdmin.RecordType.DeveloperName {
             when 'HDT_RT_PostSales' {
-
+                //FirstLevelComplaintClassification__c
+                //SecondLevelComplaintClassification__c
+                //Process__c ???
             }
             when 'HDT_RT_Sales' {
-
+                //Process__c
             }
 
         }
@@ -467,7 +487,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
     public static void sendCustomNotification(String message){
 
         try{
-            Id typeId = [SELECT Id FROM CUstomNotificationType LIMIT 1].Id;
+            Id typeId = [SELECT Id FROM CUstomNotificationType WITH SECURITY_ENFORCED LIMIT 1].Id;
             Id userId = '0051X0000055rbNQAQ';
             Messaging.CustomNotification notification = new Messaging.CustomNotification();
             notification.setTitle('Event notification');
