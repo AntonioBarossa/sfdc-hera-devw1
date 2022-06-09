@@ -184,6 +184,37 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
         System.assertEquals(HDT_SRV_VoltureChangeManager.volturaTecnicaPhase, caseListUpdated[0].Phase__c,'Fase non correttamente aggiornata');
     }
 
+    @IsTest
+    static void executebloccoVolturaTst()
+    {
+        List<Order> orderList = [SELECT Id, Phase__c, AccountId, CompanyOwner__c, Contact__c, BillingProfile__c, ContractReference__c, CreatorGroup__c, 
+                                 PhoneNumber__c, Channel__c, ServicePoint__c, LoginWorkstation__c, Email__c, ServicePointCode__c, SapContractCode__c, 
+                                 Commodity__c, EffectiveDate__c, FlagServizio26__c, SupplyCity__c, SupplyCityCode__c,SupplyState__c, SupplyCountry__c, SupplyPostalCode__c,
+                                 SupplyStreetName__c,SupplyStreetNumber__c, BillingCity__c,BillingCityCode__c,BillingCountry__c, BillingPostalCode__c, BillingProvince__c,
+                                 BillingStreetName__c, ResidentialCity__c, ResidentialCityCode__c, ResidentialCountry__c, ResidentialPostalCode__c,ResidentialState__c,
+                                 ResidentialStreet__c, ResidentialStreetName__c, SalesCompany__c, SalesCompanyCode__c, DistributorCode__c, ExciseGAS__c, VAT__c,
+                                 Resident__c, Market__c, SupplyType__c, AnnualConsumption__c, Caliber__c, HerokuPracticeCode__c
+                                 FROM Order 
+                                 WHERE ParentOrder__c != null
+                                 AND ProcessType__c = 'Switch in Ele'];
+                                 
+        system.debug('orderList --> '+orderList);
+        String recordTypeNameVolturaConSwitch = 'HDT_RT_VolturaConSwitch';
+        String recordTypeIdVolturaConSwitch = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(recordTypeNameVolturaConSwitch).getRecordTypeId();
+        orderList[0].RecordTypeId = recordTypeIdVolturaConSwitch;
+        update orderList; 
+        Map<String,Object> argsMap = new Map<String,Object>{'method' => 'bloccoVoltura', 'sender' => orderList[0]};
+        Object obj;
+        
+        Test.setMock(HttpCalloutMock.class, new HDT_UTL_TestMockVolturaTecnica());
+
+        Test.startTest();
+        obj = voltureManager.execute(argsMap);
+        Test.stopTest();
+
+        System.assert(orderList != null,'La lista è vuota');
+    }
+
     public class HDT_UTL_TestMockVolturaTecnica implements HTTPCalloutMock{
 
         public HTTPResponse respond(HTTPRequest request){
@@ -192,7 +223,7 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
             String bodyResponse;
             Integer statusCode;
 
-            bodyResponse = '{"status": "success","correlationId": "2a0c1340-f6b5-11eb-bb88-068530f44c42","timestamp": "2021-08-06T14:52:33",'
+            bodyResponse = '{"status": "success","prestazione": {"tipoAttivita": "TIPOATTIVITA","note": "NOTE"},"correlationId": "2a0c1340-f6b5-11eb-bb88-068530f44c42","timestamp": "2021-08-06T14:52:33",'
             +'"data": {"testata": {"esito": "OK"},"posizioni": ['
             +'{"campo": "DATACESSAZIONE","valore": "99991231"},'
             +'{"campo": "ALIQUOTAIVA","valore": "01"},'
