@@ -96,8 +96,8 @@
             response.forEach((element) => {
                 //console.log('# id_' + element.tabId + ' - title: ' + element.title + ' - ' + element.pageReference.type);
                 if(element.pageReference.type === 'standard__recordPage'){
+                    //console.log(' PR_> ' + element.pageReference.attributes.recordId);
                     if(element.pageReference.attributes.recordId=== accId){
-                        //console.log(' PR_> ' + element.pageReference.attributes.recordId);
                         parentId = element.tabId;
                     } else if(element.pageReference.attributes.recordId === leadId){
                         parentId = element.tabId;
@@ -154,6 +154,7 @@
                 console.log('# wizard tab id: ' + newTabId);
                 workspaceAPI.setTabLabel({ tabId: newTabId, label: 'Wizard' });
                 workspaceAPI.setTabIcon({ tabId: newTabId, icon: 'custom:custom83' });
+                
                 workspaceAPI.closeTab({ tabId: tabToClose }).then(function(success) {
                     if (success) {
                         workspaceAPI.focusTab({tabId: newTabId});
