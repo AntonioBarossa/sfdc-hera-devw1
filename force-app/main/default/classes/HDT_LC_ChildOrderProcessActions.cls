@@ -257,6 +257,18 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 );
                 for(String field : rates.keySet()){
                     orderToUpdate.put(field, rates.get(field));
+                }
+                //AF inserito per ribaltare campi da Reading__c a Order
+                if(currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Gas') && currentOrder.Subprocess__c != null && currentOrder.Subprocess__c.equalsIgnoreCase('Con Autolettura')){
+                    HDT_QR_SelfReadings qrReading = new HDT_QR_SelfReadings();
+                    try {
+                        Reading__c selfRead = qrReading.getReading('Order',currentOrder.Id,'Gas','ReadingValueMeter__c,ReadingSerialNumberCorrector__c,ReadingValueCorrector__c');
+                        orderToUpdate.ReadingValueMeter__c = selfRead.ReadingValueMeter__c;
+                        orderToUpdate.ReadingValueCorrector__c = selfRead.ReadingValueCorrector__c;
+                        orderToUpdate.ReadingSerialNumberCorrector__c = selfRead.ReadingSerialNumberCorrector__c;
+                    } catch (Exception ex) {
+                        //no record
+                    }
                 }                
             }
             when 'HDT_RT_ConnessioneConAttivazione' {

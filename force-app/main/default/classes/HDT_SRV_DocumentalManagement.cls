@@ -521,10 +521,12 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 							individualRecord.MarketingPrivacy__c = value;
 							individualRecord.PrivacyMarketingChoiceDate__c = Date.today();
 							individualRecord.MarketingPrivacyVersion__c = privacyVersion;
+							individualRecord.PrivacyMarketingChoiceSource__c = 'CONTRATTO';
 						}else if (singleRadio.groupName.indexOf('radio2') > -1) {
 							individualRecord.ProfilingPrivacy__c = value;
 							individualRecord.PrivacyProfilingChoiceDate__c = Date.today(); 
 							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
+							individualRecord.PrivacyMarketingChoiceSource__c = 'CONTRATTO';
 						}
 						// Verifica radiobutton nei moduli opzionali (dati catastali, legge 80, istanza 326)
 						// I nomi dei radiobutton sono presenti nel JSON che manda Docusign
