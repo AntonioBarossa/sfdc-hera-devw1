@@ -521,4 +521,32 @@ public with sharing class HDT_UTL_CampaignMember {
             }
         }
     }
+
+    public static void assignCmAgency (List<CampaignMember> members){
+        set <String> agencyNames=new set <String>();
+        List <Account> agencies=new list <Account>();
+        map <String, String> agencyNameIdMap=new Map <String, String>();
+
+        for(CampaignMember cm : members){
+            if(String.isNotBlank(cm.Ext_Agency_Name__c)){
+                agencyNames.add(cm.Ext_Agency_Name__c);
+            }
+        }
+        if(agencyNames!=null && agencyNames.size()>0){
+            agencies=[SELECT id, Name FROM Account WHERE Name IN:agencyNames];
+
+            if(agencies!=null && agencies.size()>0){
+                for (Account ag : agencies) {
+                    agencyNameIdMap.put(ag.Name, ag.Id);
+                }
+
+                for(CampaignMember cm : members){
+                    if(String.isNotBlank(cm.Ext_Agency_Name__c) && agencyNameIdMap.containsKey(cm.Ext_Agency_Name__c)){
+                        cm.Agency__c=agencyNameIdMap.get(cm.Ext_Agency_Name__c);
+                        cm.Ext_Agency_Name__c='';
+                    }
+                }
+            }
+        }
+    }
 }

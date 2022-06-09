@@ -549,18 +549,18 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         }
         
         if(isValidated){
-            this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
+            this.accountAddressRes =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
             console.log('accountAddressRes : '+ JSON.stringify(this.accountAddressRes));
-            this.getAccountAdress();
+            this.getAccountAdressRes();
             if (!this.disableCopyRes) {
-                this.accountAddressRes=this.accountAddress;    
+                this.accountAddress=this.accountAddressRes;    
               }
               else{
-                  this.accountAddressRes=[];
-                  this.accountAddressRes =this.template.querySelector("c-hdt-target-object-address-fields-res").handleAddressFields();
+                  this.accountAddress=[];
+                  this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields-res").handleAddressFields();
                   
               }
-            this.getAccountAdressRes();
+            this.getAccountAdress();
             if(this.isVerified && this.isVerifiedShipping ){
                 var isEmpty=false;
                 if(this.gender === undefined || this.gender.trim()===''){
