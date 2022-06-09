@@ -2,19 +2,19 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>55.0</apiVersion>
     <assignments>
-        <name>Assegna_punto_fornitura</name>
+        <name>Assegna_punto_fornitura_0</name>
         <label>Assegna punto fornitura</label>
         <locationX>512</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
-            <assignToReference>getCase.SupplyType__c</assignToReference>
+            <assignToReference>getAfterForm_0.SupplyType__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>getCase.ServicePoint__r.SupplyType__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateSupplyType</targetReference>
+            <targetReference>AssignNewAddress</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -23,35 +23,35 @@
         <locationX>1750</locationX>
         <locationY>2786</locationY>
         <assignmentItems>
-            <assignToReference>getCase.FirstName__c</assignToReference>
+            <assignToReference>tryGet.FirstName__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>getCase.Account.FirstName__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.LastName__c</assignToReference>
+            <assignToReference>tryGet.LastName__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>getCase.Account.LastName__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.Birthday__c</assignToReference>
+            <assignToReference>tryGet.Birthday__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>getCase.Account.BirthDate__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.Birthcity__c</assignToReference>
+            <assignToReference>tryGet.Birthcity__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>getCase.Account.BirthProvince__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.AlternativeAddress__c</assignToReference>
+            <assignToReference>tryGet.AlternativeAddress__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>getCase.Account.BillingAddressFormula__c</elementReference>
@@ -106,58 +106,55 @@
         <name>AssignNewAddress</name>
         <label>AssignNewAddress</label>
         <locationX>512</locationX>
-        <locationY>1118</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
-            <assignToReference>getCase.SupplyCity__c</assignToReference>
+            <assignToReference>getAfterForm_0.SupplyCity__c</assignToReference>
             <operator>Assign</operator>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingCity__c</elementReference>
-            </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.SupplyPostalCode__c</assignToReference>
+            <assignToReference>getAfterForm_0.SupplyPostalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingPostalCode__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.SupplyCountry__c</assignToReference>
+            <assignToReference>getAfterForm_0.SupplyCountry__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingCountry__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.SupplyProvince__c</assignToReference>
+            <assignToReference>getAfterForm_0.SupplyProvince__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingProvince__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.SupplyStreetName__c</assignToReference>
+            <assignToReference>getAfterForm_0.SupplyStreetName__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingStreetName__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.SupplyStreetNumber__c</assignToReference>
+            <assignToReference>getAfterForm_0.SupplyStreetNumber__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingStreetNumber__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.SupplyStreetNumberExtension__c</assignToReference>
+            <assignToReference>getAfterForm_0.SupplyStreetNumberExtension__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingStreetNumberExtension__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.SupplyPlace__c</assignToReference>
+            <assignToReference>getAfterForm_0.SupplyPlace__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newAddressLwc_0.theCase.InvoicingPlace__c</elementReference>
@@ -171,16 +168,16 @@
         <name>assignPhaseStatus</name>
         <label>assignPhaseStatus</label>
         <locationX>842</locationX>
-        <locationY>1838</locationY>
+        <locationY>1598</locationY>
         <assignmentItems>
-            <assignToReference>getCase.Status</assignToReference>
+            <assignToReference>getAfterForm_0.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getCase.Phase__c</assignToReference>
+            <assignToReference>getAfterForm_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
@@ -191,10 +188,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>assignProcessType</name>
+        <name>assignProcessType_0</name>
         <label>assignProcessType</label>
         <locationX>1678</locationX>
-        <locationY>1334</locationY>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>processType</assignToReference>
             <operator>Assign</operator>
@@ -203,7 +200,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>WhichType</targetReference>
+            <targetReference>updateSubProcess</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -212,7 +209,7 @@
         <locationX>2342</locationX>
         <locationY>3962</locationY>
         <assignmentItems>
-            <assignToReference>stringToDocument</assignToReference>
+            <assignToReference>tryGet.Note__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>concatenazioneLwc_0.resultString</elementReference>
@@ -235,7 +232,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateSubProcess</targetReference>
+            <targetReference>assignProcessType_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -251,7 +248,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateSubProcess</targetReference>
+            <targetReference>assignProcessType_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -267,7 +264,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateSubProcess</targetReference>
+            <targetReference>assignProcessType_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -283,7 +280,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateSubProcess</targetReference>
+            <targetReference>assignProcessType_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -292,14 +289,14 @@
         <locationX>2353</locationX>
         <locationY>4970</locationY>
         <assignmentItems>
-            <assignToReference>getCase.Phase__c</assignToReference>
+            <assignToReference>tryGet.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In attesa validazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>finalUpdate</targetReference>
+            <targetReference>updateTryGet</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -308,14 +305,14 @@
         <locationX>2881</locationX>
         <locationY>5090</locationY>
         <assignmentItems>
-            <assignToReference>getCase.Phase__c</assignToReference>
+            <assignToReference>tryGet.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Da Inviare</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>finalUpdate</targetReference>
+            <targetReference>updateTryGet</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -324,14 +321,14 @@
         <locationX>2617</locationX>
         <locationY>5090</locationY>
         <assignmentItems>
-            <assignToReference>getCase.Phase__c</assignToReference>
+            <assignToReference>tryGet.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>finalUpdate</targetReference>
+            <targetReference>updateTryGet</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -583,7 +580,7 @@
         <name>AnnullamentoSreenIndirizzo</name>
         <label>Annullamento</label>
         <locationX>512</locationX>
-        <locationY>1358</locationY>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>changeCity_0</targetReference>
         </defaultConnector>
@@ -624,7 +621,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_punto_fornitura</targetReference>
+                <targetReference>Selezione_Indirizzo</targetReference>
             </connector>
             <label>Variazione indirizzo fornitura tari</label>
         </rules>
@@ -633,9 +630,9 @@
         <name>changeCity_0</name>
         <label>cambio comune</label>
         <locationX>710</locationX>
-        <locationY>1478</locationY>
+        <locationY>1358</locationY>
         <defaultConnector>
-            <targetReference>updateFieldsRequest</targetReference>
+            <targetReference>reminderAllegati_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -667,7 +664,7 @@
             <name>FlussiNonIntegrati</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>getCase.Type</leftValueReference>
+                <leftValueReference>tryGet.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Modifica post accertamento</stringValue>
@@ -997,10 +994,10 @@
         <name>getAfterForm_0</name>
         <label>getAfterForm</label>
         <locationX>512</locationX>
-        <locationY>998</locationY>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AssignNewAddress</targetReference>
+            <targetReference>Assegna_punto_fornitura_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1085,34 +1082,24 @@
         <connector>
             <targetReference>SecondFormDipendenti_0</targetReference>
         </connector>
-        <inputReference>getCase</inputReference>
+        <inputReference>tryGet</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>finalUpdate</name>
         <label>finalUpdate</label>
         <locationX>842</locationX>
-        <locationY>1958</locationY>
-        <inputReference>getCase</inputReference>
+        <locationY>1718</locationY>
+        <inputReference>getAfterForm_0</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>updateAddress</name>
         <label>updateAddress</label>
         <locationX>512</locationX>
-        <locationY>1238</locationY>
+        <locationY>1118</locationY>
         <connector>
             <targetReference>AnnullamentoSreenIndirizzo</targetReference>
         </connector>
-        <inputReference>getCase</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>updateFieldsRequest</name>
-        <label>updateFieldsRequest</label>
-        <locationX>842</locationX>
-        <locationY>1598</locationY>
-        <connector>
-            <targetReference>reminderAllegati_0</targetReference>
-        </connector>
-        <inputReference>getCase</inputReference>
+        <inputReference>getAfterForm_0</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>updatePreForm</name>
@@ -1128,27 +1115,24 @@
         <name>updateSubProcess</name>
         <label>updateSubProcess</label>
         <locationX>1678</locationX>
-        <locationY>1214</locationY>
+        <locationY>1334</locationY>
         <connector>
-            <targetReference>assignProcessType</targetReference>
+            <targetReference>WhichType</targetReference>
         </connector>
         <inputReference>getCase</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>updateSupplyType</name>
-        <label>updateSupplyType</label>
-        <locationX>512</locationX>
-        <locationY>758</locationY>
-        <connector>
-            <targetReference>Selezione_Indirizzo</targetReference>
-        </connector>
-        <inputReference>getCase</inputReference>
+        <name>updateTryGet</name>
+        <label>updateTryGet</label>
+        <locationX>2551</locationX>
+        <locationY>5402</locationY>
+        <inputReference>tryGet</inputReference>
     </recordUpdates>
     <screens>
         <name>alertChangeCity_0</name>
         <label>alertChangeCity</label>
         <locationX>578</locationX>
-        <locationY>1598</locationY>
+        <locationY>1478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1294,13 +1278,13 @@
             <inputParameters>
                 <name>caseProcess</name>
                 <value>
-                    <elementReference>getCase.Type</elementReference>
+                    <elementReference>tryGet.Type</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>caseSubProcess</name>
                 <value>
-                    <elementReference>getCase.Subprocess__c</elementReference>
+                    <elementReference>tryGet.Subprocess__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1427,7 +1411,7 @@
         <name>reminderAllegati_0</name>
         <label>reminderAllegati</label>
         <locationX>842</locationX>
-        <locationY>1718</locationY>
+        <locationY>1478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1901,7 +1885,7 @@
         <name>Selezione_Indirizzo</name>
         <label>Selezione Indirizzo</label>
         <locationX>512</locationX>
-        <locationY>878</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2332,7 +2316,7 @@
         <name>flowAnnullamento</name>
         <label>flowAnnullamento</label>
         <locationX>501</locationX>
-        <locationY>6134</locationY>
+        <locationY>6314</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
