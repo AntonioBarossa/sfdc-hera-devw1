@@ -629,7 +629,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		if(record != null && record.getSobjectType() == Case.getSobjectType()){
 			return;
 		}
-		List<Order> orderList = (List<Order>)HDT_QR_GenericQuery.getGenericRecords('SELECT Id,OrderNumber,ServicePoint__c,EffectiveDate__c,SupplyState__c,SurfaceServed__c FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
+		List<Order> orderList = (List<Order>)HDT_QR_GenericQuery.getGenericRecords('SELECT Id,OrderNumber,ServicePoint__c,EffectiveDate__c,SupplyState__c,SurfaceServed__c,SupplyType__c FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
 		List<LandRegistry__c> registries = new List<LandRegistry__c>();
 		Map<String, String> docusignData = new Map<String, String>();
 		for (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData singleData : listOfData) {
