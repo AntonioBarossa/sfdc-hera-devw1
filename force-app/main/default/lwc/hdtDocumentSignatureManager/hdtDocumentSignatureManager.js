@@ -105,6 +105,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
 
                 if(this.signMode === 'Vocal Order'){
                     this.requireSendMode = false;
+                    this.emailRequired = false;
                 }
                 if (inputWrapper.checkAgencies && inputWrapper.checkAgencies.localeCompare('Y') === 0){
                     this.defautlAgenciesManagement = true;
@@ -294,7 +295,11 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
             if (modSpedizione == null){
                 modSpedizione = '';
             }
-            if(modFirma.localeCompare('OTP Coopresenza')===0 || modFirma.localeCompare('OTP Remoto')===0){
+            if(modFirma.localeCompare('Vocal Order')===0){
+                this.emailRequired = false;
+                this.phoneRequired = false;
+                this.addressRequired = false;
+            }else if(modFirma.localeCompare('OTP Coopresenza')===0 || modFirma.localeCompare('OTP Remoto')===0){
                 this.emailRequired = true;
                 this.phoneRequired = true;
                 this.addressRequired = false;
@@ -336,6 +341,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
             console.log('Mod Invio ' + this.modalitaInvio);
             if(event.detail.value === 'Vocal Order'){
                 this.requireSendMode = false;
+                this.emailRequired = false;
             }
             console.log('mod invio ' + this.modalitaInvio);
             this.phoneRequired = false;

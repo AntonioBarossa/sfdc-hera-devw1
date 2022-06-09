@@ -475,7 +475,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 if( newOrder.DocumentalProcessType__c != null
                     && newOrder.SignedDate__c != null
                     && (newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
-                        || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura')
+                        || newOrder.DocumentalProcessType__c.containsIgnoreCase('Voltura')
                         || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch'))
                 ){
                     if(!activityMap.isEmpty() && newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
