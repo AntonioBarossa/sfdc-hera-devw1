@@ -42,7 +42,7 @@ public inherited sharing class HDT_LC_CodiceAteco {
             AtecoCode__c = params.get('atecoCode'),
             HerAteco__c = params.get('istatCode'),
             RonchiCode__c = params.get('ronchiCode'),
-            RonchiSubcategory__c = params.get('ronchiSubcategory')
+            RonchiSubcat__c = params.get('ronchiSubcategory')
         ));
     }
 }

@@ -15,7 +15,7 @@ export default class HdtActiveRepentant extends LightningElement {
         console.log('order ->' + this.order.ServicePoint__r.SupplyCity__c);
         console.log('Richiesta Subentro ');
 
-        getPeriods({comune: this.order.ServicePoint__r.SupplyCity__c, sottotipo:'Subentro'}) //TODO
+        getPeriods({comune: this.order.ServicePoint__r.SupplyCity__c, sottotipo:'Subentro'})
         .then(data => {
                 if(data && data.lenght != 0){
                     console.log('data ' + data[0].Id);
@@ -25,26 +25,26 @@ export default class HdtActiveRepentant extends LightningElement {
         }).catch(error => {
             console.log('#ErrorGetPeriods -> '+JSON.stringify(error));
         })
-        checkMissedDue();
+        this.checkMissedDue();
     } 
 
     getLimitDateX(data){
-        if(data.PeriodXCriteria__c == 'Data'){
+        if(data.CriteriaX__c == 'Data'){
             var anno = data.EffectiveDate__c.substring(0,4);
             anno = anno ++;
             this.limitDateX = new Date(anno += '-06-30');
          }else {
             this.limitDateX = new Date(data.EffectiveDate__c);
-            this.limitDateX.setDate(this.limitDateX.getDate() + data.DaysX__c);
+            this.limitDateX.setDate(this.limitDateX.getDate() + data.DayX__c);
         }
         console.log('this.limitDateX -> ' + this.limitDateX);
     }
 
-    getLimitDateY(periodYCriteria, daysY){
+    getLimitDateY(CriteriaY, daysY){
         this.limitDateY = new Date();
-        if(periodYCriteria == 'Mesi fissi'){
+        if(CriteriaY == 'Mesi fissi'){
             this.limitDateY.setMonth(this.limitDateX.getMonth() + daysY);
-        }else { //if(periodYCriteria == 'Giorni fissi')
+        }else {
             this.limitDateY.setDate(this.limitDateX.getDate() + daysY);
         }
         console.log('getLimitDateY -> ' + this.limitDateY);
@@ -81,22 +81,22 @@ export default class HdtActiveRepentant extends LightningElement {
 
         if(declarationDate < this.limitDateX){
             console.log('periodo ravvedibile');
-            this.getLimitDateY(data.PeriodYCriteria__c, data.DaysY__c); //END
+            this.getLimitDateY(data.CriteriaY__c, data.DayY__c);
             return;
-        }else{ //periodo non ravvedibile
+        }else{
             console.log('periodo non ravvedibile');
-            this.getLimitDateY(data.PeriodYCriteria__c, data.DaysY__c);
+            this.getLimitDateY(data.CriteriaY__c, data.DayY__c);
         }
 
         if(declarationDate > this.limitDateY){
             console.log('non sussiste mancato dovuto');
-            this.showMessage('Attenzione!', this.period.PopupZText__c ,' error');
+            this.showMessage('Attenzione!', this.period.PopupZ__c ,' error');
             return;
 
         }else{
             console.log('mancato dovuto');
             this.calculateMissedDue(declarationDate);
-            this.showMessage('Attenzione!', this.period.PopupYText__c ,' error');
+            this.showMessage('Attenzione!', this.period.PopupY__c ,' error');
         }
     }
 
@@ -114,12 +114,13 @@ export default class HdtActiveRepentant extends LightningElement {
     checkMissedDue() {
 
        if(!this.resultsFound){
-        this.dispatchEvent(CustomEvent("check_missed_due", {detail:{}}));
+        this.dispatchEvent(CustomEvent("check_missed_due", {detail:{isEmpty: true}}));
        }else{
         this.dispatchEvent(CustomEvent("check_missed_due", {detail:{
             dateX: this.limitDateX, 
             dateY: this.limitDateY, 
-            missedDue: this.missedDueDate
+            missedDue: this.missedDueDate,
+            isEmpty : false
         }}));
        }
       }

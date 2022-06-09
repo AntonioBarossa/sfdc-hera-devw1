@@ -1150,9 +1150,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     handleCheckMissedDue(event) {
         this.isActiveRepentantPressed = true;
         console.log('###Missed Due Event >>> ');
-        if(event.detail.lenght != 0){
-            this.template.querySelector("[data-id='RepentantPeriodStart__c']").value = this.getFormattedDate(event.detail.dateX);
-            this.template.querySelector("[data-id='NonRepentantPeriodStart__c']").value = this.getFormattedDate(event.detail.dateY);
+        if(!event.detail.isEmpty){
+            this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = this.getFormattedDate(event.detail.dateX);
+            this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = this.getFormattedDate(event.detail.dateY);
             this.missedDueDate = this.getFormattedDate(event.detail.missedDue);
             this.template.querySelector("[data-id='MissingDueAmount__c']").required = true;
            
