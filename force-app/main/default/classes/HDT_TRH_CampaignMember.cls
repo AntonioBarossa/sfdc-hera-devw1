@@ -11,6 +11,7 @@ public inherited sharing class HDT_TRH_CampaignMember extends HDT_TRH_TriggerHan
         HDT_UTL_CampaignMember.setValidityStartDate(trigger.new);
         HDT_UTL_CampaignMember.createCampaignMember(trigger.new);
         HDT_UTL_CampaignMember.setAgency(trigger.new);
+        HDT_UTL_CampaignMember.assignCmAgency(trigger.new);
     }
     
     public override void afterInsert(){
