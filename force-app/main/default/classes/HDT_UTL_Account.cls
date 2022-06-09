@@ -254,7 +254,7 @@ public with sharing class HDT_UTL_Account {
             WHERE ContactId = :cont.Id
             WITH SECURITY_ENFORCED];
             for(AccountContactRelation acr : acrList){
-                if(acr.Roles.equalsIgnoreCase('Amministratore condominio')){
+                if(String.isNotBlank(acr.Roles) && acr.Roles.equalsIgnoreCase('Amministratore condominio')){
                     isAmministratoreCondominio = true;
                     category = acr.Account.Category__c;
                     contRelation.Id = acr.ContactId;
