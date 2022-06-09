@@ -159,7 +159,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ServicePointCode__c</field>
+                <field>ServicePoint__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

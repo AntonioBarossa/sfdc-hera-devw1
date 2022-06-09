@@ -85,12 +85,14 @@ global with sharing class ConnectorEntityController {
 		System.debug('#attachdata JSON ' + json.serialize(attachdata));
 		System.debug('#attachdata ' + attachdata);
 		try {
+			Decimal callDuration = (Decimal) message.get('Duration');
+			callDuration = callDuration != null? callDuration/60:0;
 			wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
 				Id = (String) attachdata.get('sf_activity_id'),
 				wrts_prcgvr__Status__c = 'Chiusa',
 				ActivityEndTime__c = Datetime.now(),
 				CallEndTime__c = Datetime.now(),
-				CallDuration__c = (Decimal) message.get('Duration'),
+				CallDuration__c = callDuration,
 				RecordingLink__c = (String) attachdata.get('URLREC'),
 				WaitingTime__c = 0 // WIP
 			);

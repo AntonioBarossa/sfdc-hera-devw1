@@ -103,7 +103,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.entryChannel = inputWrapper.entryChannel;
                 this.defautlAgenciesManagement = false;
 
-                if(this.signMode === 'Vocal Order'){
+                if(this.signMode === 'Vocal Order' && this.processType === 'Modifica Privacy'){
                     this.requireSendMode = false;
                     this.emailRequired = false;
                 }
@@ -295,7 +295,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
             if (modSpedizione == null){
                 modSpedizione = '';
             }
-            if(modFirma.localeCompare('Vocal Order')===0){
+            if(modFirma.localeCompare('Vocal Order')===0 && this.processType != null && this.processType === 'Modifica Privacy'){
                 this.emailRequired = false;
                 this.phoneRequired = false;
                 this.addressRequired = false;
@@ -339,7 +339,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
             console.log(JSON.stringify(temp));
             this.modalitaInvio = temp.sendMode;
             console.log('Mod Invio ' + this.modalitaInvio);
-            if(event.detail.value === 'Vocal Order'){
+            if(event.detail.value === 'Vocal Order' && this.processType != null && this.processType === 'Modifica Privacy'){
                 this.requireSendMode = false;
                 this.emailRequired = false;
             }
