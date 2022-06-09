@@ -16,9 +16,10 @@ public inherited sharing class HDT_WS_InvioNumerazioni {
             // do CallMeBackNow
             response = HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath', CALLBACK_NOW, 'POST', request, HDT_WS_Response.class);
         } else {
-            // convert date to format: DD/MM/YYYY HH:mm
-            request.callDateTime = String.valueOf(callDateTime).replaceAll('-', '/').left(16);
+            // convert date to format: YYYY/MM/DD HH:mm
+            request.callDateTime = String.valueOf(callDateTime.format('yyyy/MM/dd hh:mm'));
             // do CallMeBackLater
+            System.debug('request pre CallMeBackLater: '+request);
             response = HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath', CALLBACK_LATER, 'POST', request, HDT_WS_Response.class);
         }
         
