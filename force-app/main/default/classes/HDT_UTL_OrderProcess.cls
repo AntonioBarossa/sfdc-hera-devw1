@@ -486,7 +486,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     if((oldOrder.Phase__c == 'Comunicazione verso Heroku KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         ||(oldOrder.Phase__c == 'Amm. Precheck KO SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         || (oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
-                        ||(oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Documentazione Validata')
+                        || (oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Documentazione Validata')
+                        || (oldOrder.Phase__c == 'Accettazione Voltura' && newOrder.Phase__c == 'Documentazione Validata')
                         || (oldOrder.Phase__c == 'Esito OK da SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         /**@frpanico 2022-04-28 Aggiunto ricalcolo date per Switch clonato */
                         || (oldOrder.Phase__c == 'Bozza' && newOrder.Phase__c == 'Comunicazione verso Heroku')
