@@ -14,7 +14,7 @@ public with sharing class HDT_BA_InvioNumerazioni implements Database.Batchable<
             String macroactivity = curCm.Campaign.MacroActivityEasyCIM__r.Name;
             String phonenumber = curCm.PhoneNumber__c;
             Datetime callDateTime = curCm.Lead.ContactDate__c;
-            HDT_WS_Response response = HDT_WS_InvioNumerazioni.callService(macroactivity, phonenumber, callDateTime, curCm.Id);
+            HDT_WS_Response response = HDT_WS_InvioNumerazioni.callService(macroactivity, phonenumber, callDateTime, curCm.Id, null);
             System.debug('@@ HDT_BA_InvioNumerazioni reitek resp: '+curCm.Id+' '+response);
         }
         for(CampaignMember curCm : context) curCm.ReitekSendDate__c = Date.today();
