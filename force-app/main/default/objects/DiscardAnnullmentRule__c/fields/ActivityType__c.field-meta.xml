@@ -27,11 +27,11 @@
                 <default>false</default>
                 <label>Esito KO pre-MDM</label>
             </value>
-            <value>
+            <!-- <value>
                 <fullName>Annullamento SII</fullName>
                 <default>false</default>
                 <label>Annullamento SII</label>
-            </value>
+            </value> -->
             <value>
                 <fullName>Ammissibilità KO</fullName>
                 <default>false</default>
@@ -51,6 +51,7 @@
             <controllingFieldValue>Verifica GDM</controllingFieldValue>
             <controllingFieldValue>Rimozione Impianto</controllingFieldValue>
             <controllingFieldValue>Cambio Offerta Gas</controllingFieldValue>
+            <controllingFieldValue>Cambio Offerta Ele</controllingFieldValue>
             <controllingFieldValue>Consegna copia chiave GdM</controllingFieldValue>
             <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
             <controllingFieldValue>Richiesta lettura cliente</controllingFieldValue>
@@ -92,6 +93,7 @@
             <controllingFieldValue>Verifica GDM</controllingFieldValue>
             <controllingFieldValue>Rimozione Impianto</controllingFieldValue>
             <controllingFieldValue>Cambio Offerta Gas</controllingFieldValue>
+            <controllingFieldValue>Cambio Offerta Ele</controllingFieldValue>
             <controllingFieldValue>Consegna copia chiave GdM</controllingFieldValue>
             <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
             <controllingFieldValue>Richiesta lettura cliente</controllingFieldValue>

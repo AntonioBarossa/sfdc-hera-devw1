@@ -17,11 +17,14 @@ public with sharing class HDT_TRH_DiscardAnnullmentRule extends HDT_TRH_TriggerH
             if (String.isNotBlank(rule.ControllingValue__c)){
                 DiscardAnnullmentRule__c oldRule = isUpdate? (DiscardAnnullmentRule__c)Trigger.oldMap.get(rule.Id) : null;
                 String key = setKey(rule.ControllingValue__c,oldRule?.ControllingValue__c);
+                /* 
+                ea: elimata dopo richiesta del business
                 if (!key.contains(' ') && !'Alta'.equalsIgnoreCase(rule.DiscardNoteReliability__c)){
                     rule.addError('Il campo Valore Controllante può essere formato da una sola parola, soltanto se l\'Affidabilità Nota Scarto è Alta.');
                 }else{
                     rule.ControllingValue__c = key;
-                }
+                } */
+                rule.ControllingValue__c = key;
             }
         }
 
