@@ -16,15 +16,15 @@
                 <label>Ditta individuale</label>
             </value>
             <value>
-                <fullName>Persona fisica</fullName>
-                <default>false</default>
-                <label>Persona fisica</label>
-            </value>
-            <value>
                 <fullName>Famiglie</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Famiglie</label>
+            </value>
+            <value>
+                <fullName>Persona fisica</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Persona fisica</label>
             </value>
         </valueSetDefinition>
     </valueSet>

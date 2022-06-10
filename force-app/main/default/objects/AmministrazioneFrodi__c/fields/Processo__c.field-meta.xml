@@ -43,6 +43,7 @@
             <value>
                 <fullName>Switch in con voltura tecnica</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Switch in con voltura tecnica</label>
             </value>
             <value>
@@ -53,6 +54,7 @@
             <value>
                 <fullName>Switch in Fittizio</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Switch in Fittizio</label>
             </value>
             <value>
@@ -63,11 +65,13 @@
             <value>
                 <fullName>Switch in Ripristinatorio</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Switch in Ripristinatorio</label>
             </value>
             <value>
                 <fullName>Switch in Winback</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Switch in Winback</label>
             </value>
             <value>
@@ -78,6 +82,7 @@
             <value>
                 <fullName>Voltura con autolettura</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Voltura con autolettura</label>
             </value>
             <value>
