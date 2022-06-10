@@ -90,6 +90,7 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
         activity.Account__c = accountId;
         activity.ActivityStartTime__c = System.now();
         activity.Type__c = 'Caricamento Manuale Siebel';
+        activity.DiscardCategory__c = 'Manuale';
         if(objectType.equalsIgnoreCase('Order'))
         {
             activity.Order__c = recordId;
