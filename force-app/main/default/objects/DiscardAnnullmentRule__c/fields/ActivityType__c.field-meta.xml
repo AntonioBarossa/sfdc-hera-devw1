@@ -61,6 +61,7 @@
             <controllingFieldValue>Proroga Temporanea</controllingFieldValue>
             <controllingFieldValue>Riattivazione Fornitura non morosa</controllingFieldValue>
             <controllingFieldValue>Subentro Gas</controllingFieldValue>
+            <controllingFieldValue>Prima Attivazione con modifica</controllingFieldValue>
             <controllingFieldValue>Prima Attivazione Ele</controllingFieldValue>
             <controllingFieldValue>Temporanea - Nuova Attivazione</controllingFieldValue>
             <controllingFieldValue>Risoluzione Punto Sospeso</controllingFieldValue>
@@ -71,6 +72,7 @@
             <controllingFieldValue>Prima Attivazione Fuori delibera</controllingFieldValue>
             <controllingFieldValue>Switch in Ele</controllingFieldValue>
             <controllingFieldValue>Risoluzione NO Contatore</controllingFieldValue>
+            <controllingFieldValue>Voltura con Autolettura</controllingFieldValue>
             <valueName>Ammissibilità KO</valueName>
         </valueSettings>
         <!--valueSettings>
@@ -103,6 +105,7 @@
             <controllingFieldValue>Proroga Temporanea</controllingFieldValue>
             <controllingFieldValue>Riattivazione Fornitura non morosa</controllingFieldValue>
             <controllingFieldValue>Subentro Gas</controllingFieldValue>
+            <controllingFieldValue>Prima Attivazione con modifica</controllingFieldValue>
             <controllingFieldValue>Prima Attivazione Ele</controllingFieldValue>
             <controllingFieldValue>Temporanea - Nuova Attivazione</controllingFieldValue>
             <controllingFieldValue>Risoluzione Punto Sospeso</controllingFieldValue>
@@ -113,6 +116,7 @@
             <controllingFieldValue>Prima Attivazione Fuori delibera</controllingFieldValue>
             <controllingFieldValue>Switch in Ele</controllingFieldValue>
             <controllingFieldValue>Risoluzione NO Contatore</controllingFieldValue>
+            <controllingFieldValue>Voltura con Autolettura</controllingFieldValue>
             <valueName>Esito KO da DL</valueName>
         </valueSettings>
         <valueSettings>
