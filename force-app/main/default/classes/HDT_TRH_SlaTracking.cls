@@ -53,27 +53,34 @@ public inherited sharing  class HDT_TRH_SlaTracking extends HDT_TRH_TriggerHandl
     public static Integer calculateWorkingDays(DateTime startDateTime, Integer diff){
 
         Set<String> dayToAvoid = new Set<String>{'Saturday', 'Sunday', 'Sabato', 'Domenica'};
-        Set<Date> holidays = new Set<Date>();
+        Set<String> holidays = new Set<String>();
         List<Holiday> holidayList = [
-            SELECT Name, ActivityDate, EndTimeInMinutes, IsAllDay, IsRecurrence, RecurrenceDayOfMonth,
-                   RecurrenceDayOfWeekMask, RecurrenceEndDateOnly, RecurrenceInstance, RecurrenceInterval,
-                   RecurrenceMonthOfYear, RecurrenceStartDate, RecurrenceType, StartTimeInMinutes
+            SELECT Name, ActivityDate
+                   //,EndTimeInMinutes, IsAllDay, IsRecurrence, RecurrenceDayOfMonth,
+                   //RecurrenceDayOfWeekMask, RecurrenceEndDateOnly, RecurrenceInstance, RecurrenceInterval,
+                   //RecurrenceMonthOfYear, RecurrenceStartDate, RecurrenceType, StartTimeInMinutes
             FROM Holiday
             WITH SECURITY_ENFORCED
         ];
 
         for(Holiday hDay : holidayList){
-            holidays.add(hDay.ActivityDate);
+            holidays.add(String.valueOf(hDay.ActivityDate.day()) + '-' + String.valueOf(hDay.ActivityDate.month()));//01-01
         }
 
         String dayOfWeek;
         Integer slaValue = 0;
         DateTime dt;
+        Boolean isWeekEnd;
+        Boolean isHoliday;
         for(Integer day=0; day<diff; day++){
             dt = startDateTime.addDays(day);
             dayOfWeek = dt.format('EEEE');
 
-            if(!dayToAvoid.contains(dayOfWeek) && !holidays.contains(Date.valueOf(dt))){
+            isWeekEnd = dayToAvoid.contains(dayOfWeek);
+            isHoliday = holidays.contains(String.valueOf(dt.day()) + '-' + String.valueOf(dt.month()));
+            
+
+            if(!isWeekEnd && !isHoliday){
                 System.debug('>>> count');
                 slaValue++;
             }

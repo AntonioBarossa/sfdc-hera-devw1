@@ -230,7 +230,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
     }
 
-    public static Boolean isDateRuleValid(Date dateToValidate, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule){
+    public static Boolean ruleDateIsValid(Date dateToValidate, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule){
         return (dateToValidate >= singleRule.startValidDate && dateToValidate <= singleRule.endValidDate);
     }
 
