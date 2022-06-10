@@ -18,6 +18,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>categoryAssign</name>
+        <label>categoryAssign</label>
+        <locationX>598</locationX>
+        <locationY>4070</locationY>
+        <assignmentItems>
+            <assignToReference>categoryVariableAssign</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Servizi_Bundle_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>VASPresenti</name>
         <label>VASPresentiAssign</label>
         <locationX>862</locationX>
@@ -312,7 +328,7 @@
         <name>Categoria_Cliente_Decision_0</name>
         <label>Categoria Cliente Decision</label>
         <locationX>598</locationX>
-        <locationY>4070</locationY>
+        <locationY>4310</locationY>
         <defaultConnector>
             <targetReference>Durata_Contratto_0</targetReference>
         </defaultConnector>
@@ -337,7 +353,7 @@
         <name>Categoria_Cliente_Decision_0_0</name>
         <label>Categoria Cliente Decision</label>
         <locationX>796</locationX>
-        <locationY>4526</locationY>
+        <locationY>4766</locationY>
         <defaultConnector>
             <targetReference>Conferma_Adesione_Screen</targetReference>
         </defaultConnector>
@@ -387,7 +403,7 @@
         <name>isVASDecisional</name>
         <label>isVASDecisional</label>
         <locationX>598</locationX>
-        <locationY>4406</locationY>
+        <locationY>4646</locationY>
         <defaultConnector>
             <targetReference>Categoria_Cliente_Decision_0_0</targetReference>
         </defaultConnector>
@@ -646,7 +662,7 @@
             <targetReference>HDT_Script_VAS</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Servizi_Bundle_Screen</targetReference>
+            <targetReference>GetOrderItems_1</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -707,6 +723,27 @@
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>OrderItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetOrderItems_1</name>
+        <label>GetOrderItems_1</label>
+        <locationX>598</locationX>
+        <locationY>3950</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>categoryAssign</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OrderId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>OrderItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
@@ -1115,8 +1152,23 @@
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text7_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;[3. Condizioni economiche Energia elettrica per: &lt;/span&gt;&lt;span style=&quot;font-size: 11pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;{{!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}]&lt;/span&gt;&lt;/p&gt;&lt;p&gt;•	Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo in bolletta, denominato Prezzo netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese precedente quello di consumo, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	La fornitura prevede un contributo mensile a carico del cliente di 4 €, nei casi di consumo annuo effettivo non superiore ai 2.700 kWh. In caso contrario il contributo mensile sarà di 6 €.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt;&quot;&gt;[3. Condizioni economiche Energia elettrica per: &lt;/span&gt;&lt;span style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 11pt;&quot;&gt;{{!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}]&lt;/span&gt;&lt;/p&gt;&lt;p&gt;•	Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo in bolletta, denominato Prezzo netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese precedente quello di consumo, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_EE_Text2_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	La fornitura prevede un contributo mensile a carico del cliente di 4 €, nei casi di consumo annuo effettivo non superiore ai 2.700 kWh. In caso contrario il contributo mensile sarà di 6 €.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prezzo Netto Special Web Luce</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text8_0</name>
@@ -1187,7 +1239,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_1</name>
-            <fieldText>&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 61% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,002 €/kWh, corrispettivo di commercializzazione, pari a 90 €/punto di fornitura/anno e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 39% circa della spesa annua&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La fornitura prevede un contributo mensile onnicomprensivo a carico del cliente di pari a 9,5 €/mese, pari a 114 €/anno. Il prezzo netto ed il contributo rappresentano circa il 91% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Rimangono a carico del cliente il corrispettivo di dispacciamento compreso nella spesa per la materia energia, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, quelli compresi nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 9% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1376,8 +1428,33 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text7</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} Gas che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia è il prezzo medio mensile del mercato olandese TTF, incrementato di un corrispettivo di trasporto pari a 0,05 € al metro cubo, e in bolletta sarà denominato prezzo netto. Varierà mensilmente e sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia è il prezzo medio mensile del mercato olandese TTF, incrementato di un corrispettivo di trasporto pari a 0,05 € al metro cubo, e in bolletta sarà denominato prezzo netto. Varierà mensilmente e sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prezzo Netto Special Web Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_GAS_Text8</name>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia è il prezzo medio mensile del mercato olandese TTF, incrementato di un corrispettivo di trasporto pari a 0,08 € al metro cubo, e in bolletta sarà denominato prezzo netto. Varierà mensilmente e sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prezzo Netto Special Web Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text2</name>
@@ -1396,7 +1473,7 @@
         </fields>
         <fields>
             <name>text_3</name>
-            <fieldText>&lt;p&gt;La fornitura prevede un contributo mensile a carico del cliente di 4,00 €.&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 72% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 90 €/punto di fornitura/anno e 0,02 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 28% circa della spesa annua.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;La fornitura prevede un contributo mensile onnicomprensivo a carico del cliente di pari a 9,5 €/mese, pari a 114 €/anno. Il prezzo netto ed il contributo rappresentano circa il 97% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente gli oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 3% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1524,7 +1601,7 @@
         <name>Conferma_Adesione_Screen</name>
         <label>Conferma Adesione Screen</label>
         <locationX>928</locationX>
-        <locationY>4646</locationY>
+        <locationY>4886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1540,13 +1617,13 @@
         <name>Conferma_Adesione_Screen_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>664</locationX>
-        <locationY>4646</locationY>
+        <locationY>4886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>textfix2_0</name>
-            <fieldText>&lt;p&gt;[9. Conferma adesione]&lt;/p&gt;&lt;p&gt;La informo che il contratto di fornitura [ed il contratto [Hera &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.InterestProduct__c}&amp;nbsp;si [concluderà/ concluderanno] al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[9. Conferma adesione]&lt;/p&gt;&lt;p&gt;La informo che il contratto di fornitura [ed il contratto [Hera &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!NomeOffertaCalcolato_Introduzione} si [concluderà/ concluderanno] al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2299,7 +2376,21 @@
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>oltura</stringValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Ele</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2409,7 +2500,7 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text3</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che usa il gas per il riscaldamento?&lt;/p&gt;&lt;p&gt;CONFERMO [cottura e acqua calda].&lt;/p&gt;&lt;p&gt;NO [solo cottura e/o acqua calda].&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che pdr e matricola del contatore GAS sono {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c} , {!LoopOrdiniFigliOfferta.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che usa il gas per {!LoopOrdiniFigliOfferta.ImplantType__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice pdr è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c} , {!LoopOrdiniFigliOfferta.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2537,7 +2628,7 @@
         <name>Durata_Contratto</name>
         <label>Durata Contratto</label>
         <locationX>466</locationX>
-        <locationY>4190</locationY>
+        <locationY>4430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2556,7 +2647,7 @@
         <name>Durata_Contratto_0</name>
         <label>Durata Contratto</label>
         <locationX>730</locationX>
-        <locationY>4190</locationY>
+        <locationY>4430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2575,7 +2666,7 @@
         <name>Servizi_Bundle_Screen</name>
         <label>Servizi Bundle Screen</label>
         <locationX>598</locationX>
-        <locationY>3950</locationY>
+        <locationY>4190</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2583,21 +2674,105 @@
             <targetReference>Categoria_Cliente_Decision_0</targetReference>
         </connector>
         <fields>
-            <name>sb_text3</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[SERVIZI BUNDLE]&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
             <name>SB_Text1</name>
             <fieldText>&lt;p style=&quot;text-align: justify;&quot;&gt;&lt;strong style=&quot;font-size: 10pt; font-family: Tahoma, sans-serif;&quot;&gt;&lt;u&gt;[“DIARIO DEI CONSUMI” E “HERA FAST CHECK UP” (HC, EST e HCM)]&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, il servizio DIARIO DEI CONSUMI. A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;•	il numero di addetti che lavorano nella sua attività è  XXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	la superficie dello stabile è XXXX metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il report di DIARIO DEI CONSUMI le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio non sarà più disponibile.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>categoryVariableAssign</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Aziende</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>SB_Text3</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[“DIARIO DEI CONSUMI” E “HERA FAST CHECK UP” (HC, EST e HCM)]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi Diario dei consumi e Hera Fast check up. A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di abitanti della sua abitazione è {!GetOrderItems_1.OccupantsNumber__c} e la superficie è {!GetOrderItems_1.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.PrimaryEmail__c</leftValueReference>
-                    <operator>IsNull</operator>
+                    <leftValueReference>categoryVariableAssign</leftValueReference>
+                    <operator>Contains</operator>
                     <rightValue>
-                        <booleanValue>false</booleanValue>
+                        <stringValue>Famiglie</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>SB_Text4</name>
+            <fieldText>&lt;p&gt;•	 la sua abitazione è {!GetOrderItems_1.DwellingType__c}&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>categoryVariableAssign</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Famiglie</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>SB_Text5</name>
+            <fieldText>&lt;p&gt;• È proprietario dell’abitazione?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrderItems_1.OwnerAC__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Si</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>categoryVariableAssign</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Famiglie</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>SB_Text6</name>
+            <fieldText>&lt;p&gt;• Non è proprietario dell’abitazione?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrderItems_1.OwnerAC__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>categoryVariableAssign</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Famiglie</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>SB_Text7</name>
+            <fieldText>&lt;p&gt;Il report di Diario dei consumi le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, i servizi, di cui riceverà il dettaglio nel plico contrattuale, non saranno più disponibili.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>categoryVariableAssign</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Famiglie</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2615,12 +2790,29 @@
                         <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>categoryVariableAssign</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Famiglie</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>SB_Text2</name>
             <fieldText>&lt;p&gt;Il servizio citato è descritto in dettaglio nel plico contrattuale che riceverà.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Aziende</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -2771,6 +2963,13 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <name>categoryVariableAssign</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <name>CheckForVas</name>
         <dataType>Boolean</dataType>

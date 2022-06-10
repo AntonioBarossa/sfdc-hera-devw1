@@ -175,7 +175,8 @@ public with sharing class HDT_UTL_CampaignMember {
             newContext.add( new Commercial_Code_Batch_Context__c(Name=nowDateFormat, CampaignId__c=member.CampaignId, CampaignMemberId__c=member.Id));
             ++count;
         }
-        insert newContext;
+        
+        HDT_UTL_DatabaseService.insertSObject(newContext);
         //END>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
     }
 
@@ -440,29 +441,7 @@ public with sharing class HDT_UTL_CampaignMember {
             }
         }
     }
-
-    public static void doCallMeBack(List<CampaignMember> members) {
-        List<Id> idsToProcess = new List<Id>();
-        for(CampaignMember cm : members) {
-            idsToProcess.add(cm.Id);
-        }
-
-        /*
-        List<CampaignMember> processedMembers = new List<CampaignMember>();
-        for(CampaignMember member : [SELECT Id, PhoneNumber__c, LeadId, Lead.ContactDate__c, Campaign.ReitekIntegrationTechnology__c, Campaign.MacroActivityEasyCIM__r.Name FROM CampaignMember WHERE Id IN: idsToProcess WITH SECURITY_ENFORCED]) {
-            if(member.LeadId != null && member.Campaign.ReitekIntegrationTechnology__c == 'Web Service') {
-                System.enqueueJob(new HDT_QBL_InvioNumerazioni(member.Campaign.MacroActivityEasyCIM__r.Name, member.PhoneNumber__c, member.Lead.ContactDate__c, member.Id));
-                processedMembers.add(new CampaignMember(
-                    Id = member.Id,
-                    ReitekSendDate__c = Date.today()
-                ));
-            }
-        }
-        */
-        //new HDT_SRV_CampaignMember().updateRecords(processedMembers);
-        System.enqueueJob(new HDT_QBL_InvioNumerazioni(idsToProcess));
-    }
-
+    
     public static void setAgency (List<CampaignMember> members) {
         List <CampaignMemberLeadAssigment__c> cmlaList=[SELECT Id, Active__c FROM CampaignMemberLeadAssigment__c WHERE Active__c=true WITH SECURITY_ENFORCED limit 1];
         List <CampaignMemberLeadAssigmentItem__c> cmlaItemList=new List <CampaignMemberLeadAssigmentItem__c>();

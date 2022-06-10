@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
-    <assignments>
-        <name>AsignChannel</name>
-        <label>AsignChannel</label>
-        <locationX>809</locationX>
-        <locationY>158</locationY>
-        <assignmentItems>
-            <assignToReference>Channel</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>OrderData.Channel__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>VasDecision</targetReference>
-        </connector>
-    </assignments>
     <choices>
         <name>Confermo_RB</name>
         <choiceText>Confermo</choiceText>
@@ -204,6 +188,27 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>getChild_0</name>
+        <label>getChild</label>
+        <locationX>809</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>VasDecision</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentOrder__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OrderData.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <screens>
         <name>Dati_Anagrafica_VAS_Screen_0</name>
         <label>Dati Anagrafica VAS</label>
@@ -437,7 +442,7 @@
         </fields>
         <fields>
             <name>text6</name>
-            <fieldText>&lt;p&gt;•	Mi conferma quindi che per la domiciliazione bancaria posso utilizzare il codice IBAN già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!OrderData.IbanCountry__c}{!OrderData.IbanCIN_IBAN__c}{!OrderData.IbanCIN__c}&lt;/span&gt;{!OrderData.IbanABI__c}{!OrderData.IbanCAB__c}{!OrderData.IbanCodeNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma quindi che per la domiciliazione bancaria posso utilizzare il codice IBAN già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è &lt;/p&gt;&lt;p&gt;{!getChild_0.IbanCountry__c}{!getChild_0.IbanCIN_IBAN__c}{!getChild_0.IbanCIN__c}{!getChild_0.IbanABI__c}{!getChild_0.IbanCAB__c}{!getChild_0.IbanCodeNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -533,7 +538,7 @@
         </fields>
         <fields>
             <name>text6_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma quindi che per la domiciliazione bancaria posso utilizzare il codice IBAN già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!OrderData.IbanCountry__c}{!OrderData.IbanCIN_IBAN__c}{!OrderData.IbanCIN__c}&lt;/span&gt;{!OrderData.IbanABI__c}{!OrderData.IbanCAB__c}{!OrderData.IbanCodeNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	[se il Cliente è già domiciliato con Hera/Amga Energia &amp;amp; Servizi] Mi conferma quindi che per la domiciliazione bancaria posso utilizzare il codice IBAN già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!getChild_0.IbanCountry__c}{!getChild_0.IbanCIN_IBAN__c}{!getChild_0.IbanCIN__c}{!getChild_0.IbanABI__c}{!getChild_0.IbanCAB__c}{!getChild_0.IbanCodeNumber__c}&lt;/span&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -710,7 +715,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_5_0_1</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in {!OrderData.DeliveryAddress__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in {!OrderData.DeliveryAddress__c}?&lt;/p&gt;&lt;p&gt;{!OrderData.ShippingAddressFormula__c}&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -785,6 +790,16 @@
             <name>Anagrafica_Aziende_7_0_0</name>
             <fieldText>&lt;p&gt;•	Mi conferma che siete iscritti all’Associazione di Categoria {!OrderData.ConventionAssociation__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.ConventionAssociation__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -1072,7 +1087,7 @@
         <locationX>683</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>AsignChannel</targetReference>
+            <targetReference>getChild_0</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -1097,8 +1112,8 @@
         <name>Channel</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
         <value>
             <stringValue>Inbound</stringValue>
         </value>
