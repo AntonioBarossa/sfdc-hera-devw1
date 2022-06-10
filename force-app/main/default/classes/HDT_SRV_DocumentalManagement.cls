@@ -619,7 +619,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 								}
 							}
 							if(!voltOrdSet.isEmpty()){
-								voltureActList = [SELECT Id,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Order__c IN:voltOrdSet AND wrts_prcgvr__Status__c = 'Aperta' WITH SECURITY_ENFORCED];
+								voltureActList = [SELECT Id,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Order__c IN:voltOrdSet AND wrts_prcgvr__Status__c = 'Aperta' AND Type__c = 'Accettazione Voltura'  WITH SECURITY_ENFORCED];
 								for(wrts_prcgvr__Activity__c singleAct : voltureActList){
 									singleAct.wrts_prcgvr__Status__c = 'Chiusa';
 								}
