@@ -521,10 +521,12 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 							individualRecord.MarketingPrivacy__c = value;
 							individualRecord.PrivacyMarketingChoiceDate__c = Date.today();
 							individualRecord.MarketingPrivacyVersion__c = privacyVersion;
+							individualRecord.PrivacyMarketingChoiceSource__c = 'CONTRATTO';
 						}else if (singleRadio.groupName.indexOf('radio2') > -1) {
 							individualRecord.ProfilingPrivacy__c = value;
 							individualRecord.PrivacyProfilingChoiceDate__c = Date.today(); 
 							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
+							individualRecord.PrivacyMarketingChoiceSource__c = 'CONTRATTO';
 						}
 						// Verifica radiobutton nei moduli opzionali (dati catastali, legge 80, istanza 326)
 						// I nomi dei radiobutton sono presenti nel JSON che manda Docusign
@@ -627,7 +629,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		if(record != null && record.getSobjectType() == Case.getSobjectType()){
 			return;
 		}
-		List<Order> orderList = (List<Order>)HDT_QR_GenericQuery.getGenericRecords('SELECT Id,OrderNumber,ServicePoint__c,EffectiveDate__c,SupplyState__c,SurfaceServed__c FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
+		List<Order> orderList = (List<Order>)HDT_QR_GenericQuery.getGenericRecords('SELECT Id,OrderNumber,ServicePoint__c,EffectiveDate__c,SupplyState__c,SurfaceServed__c,SupplyType__c FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
 		List<LandRegistry__c> registries = new List<LandRegistry__c>();
 		Map<String, String> docusignData = new Map<String, String>();
 		for (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData singleData : listOfData) {
