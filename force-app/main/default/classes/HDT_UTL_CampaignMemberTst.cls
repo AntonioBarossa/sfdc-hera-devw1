@@ -306,7 +306,7 @@ public with sharing class HDT_UTL_CampaignMemberTst {
         System.assertEquals(true, finished, 'Test Ended');
     }
 
-
+/*
     @isTest
     public static void doCallMeBackTest(){
 
@@ -336,7 +336,7 @@ public with sharing class HDT_UTL_CampaignMemberTst {
 
         System.assert(lstCampaignMember != null, 'lstCampaignMember è null');
     }
-
+*/
     @isTest
     public static void cancelContractTest(){
 
