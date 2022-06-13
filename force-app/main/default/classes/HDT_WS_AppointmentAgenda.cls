@@ -26,7 +26,9 @@ public with sharing class HDT_WS_AppointmentAgenda {
             }
             if (response == null){
                 errorResponse = 'Nessuno slot è stato ricevuto dal server';
-            }else if (res.getStatusCode() < 200 || res.getStatusCode() > 300){
+            }else if ((res.getStatusCode() < 200 || res.getStatusCode() > 300) && String.isBlank(response.errInvioDis)){
+                errorResponse = 'Messaggio ricevuto dal server: '+res.getStatus() +'[Status code: '+res.getStatusCode()+']';
+            }else if (String.isNotBlank(response.errInvioDis)){
                 //verificare se il campo response.errInvioDis ritorna la descrizione dell'errore;
                 errorResponse = 'Messaggio ricevuto dal server: '+response.errInvioDis+' [Status code: '+res.getStatusCode()+']';
             }        

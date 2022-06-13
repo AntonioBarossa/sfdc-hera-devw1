@@ -52,7 +52,8 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
         //TESTING
         Test.startTest();
         HDT_BA_ExpiredOrders myBatchToTest = new HDT_BA_ExpiredOrders();
-        Database.executeBatch(myBatchToTest);
+        //Database.executeBatch(myBatchToTest);
+        myBatchToTest.execute(null);
         Test.stopTest();
         
         //RETRIEVING DATA

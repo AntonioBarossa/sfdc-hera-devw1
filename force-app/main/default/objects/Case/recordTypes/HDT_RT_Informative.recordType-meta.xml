@@ -977,6 +977,10 @@
             <fullName>Multi</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>VAS</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CompanyOwner__c</picklist>
@@ -6063,7 +6067,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Falso procurato</fullName>
+            <fullName>Falso procuratore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6251,7 +6255,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Prelivo abusivo</fullName>
+            <fullName>Prelievo abusivo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6500,7 +6504,19 @@
     <picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
+            <fullName>Pagamento Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appuntamento HVAC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fornisce consenso al ricontatto per il prodotto segnalato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6947,6 +6963,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Verifiche</fullName>
             <default>false</default>
         </values>
@@ -6957,6 +6977,74 @@
     </picklistValues>
     <picklistValues>
         <picklist>InformativeType__c</picklist>
+        <values>
+            <fullName>Modifica Contratti Preattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratti/Bonus Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena/Nuovo contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena/Subentro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena/Intervento Riattivazione luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentale/Copia Contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proroga Conn Temp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura Tecnica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attivazione con Modifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporanea - Nuova Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HVAC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autoelettrica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivazione VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazione VAS</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Aggiunta Sconti o Bonus VAS</fullName>
             <default>false</default>
@@ -7450,6 +7538,14 @@
     </picklistValues>
     <picklistValues>
         <picklist>MacroTopic__c</picklist>
+        <values>
+            <fullName>Appuntamento agente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consenso ricontatto</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Consulenza offerte</fullName>
             <default>false</default>
@@ -8531,7 +8627,7 @@
     <picklistValues>
         <picklist>SendMode__c</picklist>
         <values>
-            <fullName>E-mail</fullName>
+            <fullName>E-Mail</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10191,7 +10287,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Importi per consumi risalenti a più di due anni</fullName>
+            <fullName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10753,17 +10849,6 @@
         </values>
         <values>
             <fullName>013-Uso Condizionam%2E%2BRiscald%2E</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>UseChangeCharge__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>

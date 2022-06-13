@@ -146,8 +146,8 @@
     <assignments>
         <name>AssegnaValori_2</name>
         <label>AssegnaValori</label>
-        <locationX>960</locationX>
-        <locationY>4046</locationY>
+        <locationX>828</locationX>
+        <locationY>4406</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -164,6 +164,78 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriActivity</name>
+        <label>AssegnaValoriActivity</label>
+        <locationX>828</locationX>
+        <locationY>4166</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Activity.ActivityEndTime__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.ClosedByUsername__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Username</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.wrts_prcgvr__IsClosed__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.UserCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.UserCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.ClosingCreatorGroup__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.CreatorGroup__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.ClosingUserChannel__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.LoginChannel__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.Place__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Station__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Chiusa</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Attivi</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -236,7 +308,7 @@
     <decisions>
         <name>Avanzamento</name>
         <label>Avanzamento</label>
-        <locationX>1378</locationX>
+        <locationX>1389</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione</targetReference>
@@ -332,10 +404,10 @@
     <decisions>
         <name>Blocco_Sollecito_0</name>
         <label>Blocco Sollecito? (Fixare al completamento della build DM)</label>
-        <locationX>960</locationX>
+        <locationX>828</locationX>
         <locationY>3590</locationY>
         <defaultConnector>
-            <targetReference>AssegnaValori_2</targetReference>
+            <targetReference>Get_Activity</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Blocco</defaultConnectorLabel>
         <rules>
@@ -596,10 +668,10 @@
     <recordCreates>
         <name>Crea_Activity_Blocco_Sollecito</name>
         <label>Crea Activity Blocco Sollecito</label>
-        <locationX>828</locationX>
+        <locationX>696</locationX>
         <locationY>3830</locationY>
         <connector>
-            <targetReference>AssegnaValori_2</targetReference>
+            <targetReference>Get_Activity</targetReference>
         </connector>
         <inputAssignments>
             <field>Case__c</field>
@@ -718,9 +790,37 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
+        <name>Get_Activity</name>
+        <label>Get Activity</label>
+        <locationX>828</locationX>
+        <locationY>4046</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssegnaValoriActivity</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>In gestione</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>1378</locationX>
+        <locationX>1389</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -741,7 +841,7 @@
     <recordLookups>
         <name>GetActivityBloccoSollecito</name>
         <label>Get Activity Blocco Sollecito</label>
-        <locationX>828</locationX>
+        <locationX>696</locationX>
         <locationY>3710</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -769,7 +869,7 @@
     <recordLookups>
         <name>GetCaseAggiornatoSecondaClassificazione</name>
         <label>GetCaseAggiornatoSecondaClassificazione</label>
-        <locationX>960</locationX>
+        <locationX>828</locationX>
         <locationY>3470</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -830,10 +930,23 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>Aggiorna_Attivi</name>
+        <label>Aggiorna Attivita</label>
+        <locationX>828</locationX>
+        <locationY>4286</locationY>
+        <connector>
+            <targetReference>AssegnaValori_2</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>AssegnaValori_2</targetReference>
+        </faultConnector>
+        <inputReference>Get_Activity</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>960</locationX>
-        <locationY>4166</locationY>
+        <locationX>828</locationX>
+        <locationY>4526</locationY>
         <inputReference>GetCaseAggiornatoSecondaClassificazione</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -879,7 +992,7 @@
     <screens>
         <name>Controllo_Classificazione</name>
         <label>Controllo Classificazione</label>
-        <locationX>1378</locationX>
+        <locationX>1389</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1275,7 +1388,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1252</locationX>
+        <locationX>1263</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
@@ -1285,7 +1398,7 @@
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>1642</locationX>
+        <locationX>1664</locationX>
         <locationY>518</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -1360,7 +1473,7 @@
     <subflows>
         <name>Annulla_Prestazione_0_0_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>1268</locationX>
+        <locationX>1400</locationX>
         <locationY>3470</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>

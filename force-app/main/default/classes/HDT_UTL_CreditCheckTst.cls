@@ -94,4 +94,14 @@ public with sharing class HDT_UTL_CreditCheckTst {
         o = [SELECT Id, Phase__c FROM Order WHERE RecordType.DeveloperName = 'HDT_RT_Subentro'];
         System.assertEquals('Credit Check KO', o.Phase__c, 'testUpdateOrderOutcoming - Fase non Aggiornata');
     }
+
+    @IsTest
+    public static void testManagedErrorCode(){
+        Boolean isManaged;
+        Test.startTest();
+            isManaged = HDT_UTL_CreditCheck.managedErrorCode('NO_CODE');
+        Test.stopTest();
+        System.assertEquals(false, isManaged, 'La risposta non è quella attesa');
+    }
+
 }

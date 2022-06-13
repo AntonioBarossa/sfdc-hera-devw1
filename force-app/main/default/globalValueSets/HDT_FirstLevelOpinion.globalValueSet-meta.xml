@@ -11,19 +11,9 @@
         <label>Anomalia letture e contatori</label>
     </customValue>
     <customValue>
-        <fullName>Supporto credito Hera Comm</fullName>
+        <fullName>Canone RAI e bonus sociale</fullName>
         <default>false</default>
-        <label>Supporto credito Hera Comm</label>
-    </customValue>
-    <customValue>
-        <fullName>Supporto HC</fullName>
-        <default>false</default>
-        <label>Supporto HC</label>
-    </customValue>
-    <customValue>
-        <fullName>Supporto responsabile HC</fullName>
-        <default>false</default>
-        <label>Supporto responsabile HC</label>
+        <label>Canone RAI e bonus sociale</label>
     </customValue>
     <customValue>
         <fullName>Costing e Forecasting</fullName>
@@ -31,9 +21,9 @@
         <label>Costing e Forecasting</label>
     </customValue>
     <customValue>
-        <fullName>Supporto credito Hera SPA</fullName>
+        <fullName>Fatturazione e pagamenti</fullName>
         <default>false</default>
-        <label>Supporto credito Hera SPA</label>
+        <label>Fatturazione e pagamenti</label>
     </customValue>
     <customValue>
         <fullName>Rapporto con i distributori e SII</fullName>
@@ -41,14 +31,14 @@
         <label>Rapporto con i distributori e SII</label>
     </customValue>
     <customValue>
-        <fullName>Canone RAI e bonus sociale</fullName>
+        <fullName>Supporto credito Hera Comm</fullName>
         <default>false</default>
-        <label>Canone RAI e bonus sociale</label>
+        <label>Supporto credito Hera Comm</label>
     </customValue>
     <customValue>
-        <fullName>Fatturazione e pagamenti</fullName>
+        <fullName>Supporto credito Hera SPA</fullName>
         <default>false</default>
-        <label>Fatturazione e pagamenti</label>
+        <label>Supporto credito Hera SPA</label>
     </customValue>
     <customValue>
         <fullName>Supporto Fiscale</fullName>
@@ -56,9 +46,19 @@
         <label>Supporto Fiscale</label>
     </customValue>
     <customValue>
+        <fullName>Supporto HC</fullName>
+        <default>false</default>
+        <label>Supporto HC</label>
+    </customValue>
+    <customValue>
         <fullName>Supporto Normativo</fullName>
         <default>false</default>
         <label>Supporto Normativo</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto responsabile HC</fullName>
+        <default>false</default>
+        <label>Supporto responsabile HC</label>
     </customValue>
     <customValue>
         <fullName>Supporto Vendita</fullName>
@@ -71,5 +71,5 @@
         <label>Verifica Gestione Front</label>
     </customValue>
     <masterLabel>Pareri 1° Livello</masterLabel>
-    <sorted>false</sorted>
+    <sorted>true</sorted>
 </GlobalValueSet>

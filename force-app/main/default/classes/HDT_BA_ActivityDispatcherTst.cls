@@ -3,11 +3,8 @@ public with sharing class HDT_BA_ActivityDispatcherTst {
     @TestSetup
     private static void makeData() {
         HDT_UTL_DataFactoryTst.pClickInstance();
-        insert new Group(Name = 'testnamegroup1');
-    }
+        insert new Group(Name = 'testnamegroup2');
 
-    @isTest
-    private static void executeBatch() {
         Group gr = [SELECT Id FROM Group LIMIT 1];
         Queue__c queue = new Queue__c(
             Name = 'coda1',
@@ -33,7 +30,11 @@ public with sharing class HDT_BA_ActivityDispatcherTst {
             MediumPriorityQueue__c = queue.Id
         );
         insert rule;
-        
+    }
+
+    @isTest
+    private static void executeBatch() {
+
         //TESTING
         Test.startTest();
         System.schedule('testjob', '0 0 1 ? * *', new HDT_SCH_ActivityDispatcherScheduler());

@@ -27,7 +27,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SBQQ__ContractNumber__c</field>
+                <field>SAPContractCode__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
