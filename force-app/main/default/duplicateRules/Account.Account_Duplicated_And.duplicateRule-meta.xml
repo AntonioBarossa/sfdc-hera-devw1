@@ -7,11 +7,11 @@
     <duplicateRuleFilter xsi:nil="true"/>
     <duplicateRuleMatchRules>
         <matchRuleSObjectType>Account</matchRuleSObjectType>
-        <matchingRule>Account_Matching</matchingRule>
+        <matchingRule>Account_Matching_And</matchingRule>
         <objectMapping xsi:nil="true"/>
     </duplicateRuleMatchRules>
-    <isActive>false</isActive>
-    <masterLabel>Account Duplicated</masterLabel>
+    <isActive>true</isActive>
+    <masterLabel>Account Duplicated And</masterLabel>
     <securityOption>BypassSharingRules</securityOption>
-    <sortOrder>1</sortOrder>
+    <sortOrder>3</sortOrder>
 </DuplicateRule>
