@@ -277,7 +277,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             
             HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail iwd = new HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail();
             if(act.Order__r.ServicePoint__c != null && act.Order__r.ServicePoint__r.AnnualConsumption__c != null){
-                iwd.annualConsumption = String.valueOf(act.Order__r.ServicePoint__r.AnnualConsumption__c.format());
+                iwd.annualConsumption = String.valueOf(act.Order__r.ServicePoint__r.AnnualConsumption__c);
             }            
             iwd.commodity = typeOfCommodity;
             

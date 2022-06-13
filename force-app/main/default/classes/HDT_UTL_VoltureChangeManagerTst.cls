@@ -469,7 +469,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         Object result = voltureChangeUtl.handleDataEnrichmentConfig(config, posizione);
         Test.stopTest();
 
-        System.assertEquals('Imposta usi domestici', String.valueOf(result),'Arricchimento fallito');
+        System.assertEquals('Imposta Usi Domestici (Cod. G_ICD)', String.valueOf(result),'Arricchimento fallito');
     }
 
     
@@ -545,7 +545,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         String result = voltureChangeUtl.methodDispatcher(config, posizione);
         Test.stopTest();
 
-        System.assertEquals('Imposta usi domestici', result,'Arricchimento fallito');
+        System.assertEquals('Imposta Usi Domestici (Cod. G_ICD)', result,'Arricchimento fallito');
     }
 
     @IsTest

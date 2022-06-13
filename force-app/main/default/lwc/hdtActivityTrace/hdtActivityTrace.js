@@ -8,14 +8,27 @@ export default class HdtActivityTrace extends NavigationMixin(LightningElement) 
     @api recordId;
     @track show = false;
     @track actId;
+    @track intId;
     @track error;
+    @track showActivity = false;
+    @track showInteraction = false;
+    @track label = 'Attività Tracciatura';
     connectedCallback() {
         getActivity({recordId:this.recordId})
         .then(result => {
-            console.log(JSON.stringify('result '+result));
-            if(result){
+            var mappa = JSON.parse(result);
+            console.log('mappa ' + mappa);
+            console.log('result ' + result);
+            var tipo = mappa.Tipo;
+            if(tipo === 'Interaction'){
+                this.intId = mappa.Id;
+                this.showInteraction = true;
+                this.label = 'Interaction';
                 this.show = true;
-                this.actId = result;
+            }else if(tipo === 'Activity'){
+                this.showActivity = true;
+                this.actId = mappa.Id;
+                this.show = true;
             }
         })
         .catch(error => {
@@ -33,11 +46,16 @@ export default class HdtActivityTrace extends NavigationMixin(LightningElement) 
 
         var selectedVal = event.detail.value;
         console.log( 'Selected button is ' + selectedVal );
-
+        var recordId = '';
+        if(this.actId != null){
+            recordId = this.actId;
+        }else{
+            recordId = this.intId;
+        }
         this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',
             attributes: {
-                recordId: this.actId,
+                recordId: recordId,
                 actionName: 'view',
             }
         });

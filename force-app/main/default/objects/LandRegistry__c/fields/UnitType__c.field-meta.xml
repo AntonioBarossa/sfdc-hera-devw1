@@ -4,22 +4,9 @@
     <description>Tipo unita</description>
     <externalId>false</externalId>
     <label>Tipo unita</label>
+    <length>50</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Picklist</type>
-    <valueSet>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>1</fullName>
-                <default>false</default>
-                <label>Fabbricato</label>
-            </value>
-            <value>
-                <fullName>2</fullName>
-                <default>false</default>
-                <label>Terreno</label>
-            </value>
-        </valueSetDefinition>
-    </valueSet>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>
