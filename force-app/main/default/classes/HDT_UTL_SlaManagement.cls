@@ -70,12 +70,14 @@ public inherited sharing class HDT_UTL_SlaManagement {
                 
                 if(trackingMap.containsKey(eventObj.recordId)){
 
+                    System.debug(logginglevel.DEBUG, '>>> update tracking context');
+
                     List<SlaTracking__c> trackingList = trackingMap.get(eventObj.recordId);
-                    Set<Id> adminIds = new Set<Id>();
+                    //Set<Id> adminIds = new Set<Id>();
 
                     for(SlaTracking__c track : trackingMap.get(eventObj.recordId)){
                         System.debug(logginglevel.DEBUG, '>>> checking trckSla: ' + track.Id);
-                        adminIds.add(track.SlaAdministration__c);
+                        //adminIds.add(track.SlaAdministration__c);
 
                         if(wrpAdminMap.containsKey(track.SlaAdministration__c) && track.Status__c.equalsIgnoreCase('Aperto')){
 
@@ -91,11 +93,13 @@ public inherited sharing class HDT_UTL_SlaManagement {
                         }
                     }
 
+                } else {
+                    System.debug(logginglevel.DEBUG, '>>> insert tracking context');
                     // check for new tracking record to insert
                     System.debug(logginglevel.DEBUG, '>>> check for new tracking record to insert...');
                     for(Id adminRuleId : wrpAdminMap.keySet()){
 
-                        if(!adminIds.contains(adminRuleId)){
+                        //if(!adminIds.contains(adminRuleId)){
                             /// check if this rule have to create new tracking record
                             System.debug(logginglevel.DEBUG, '>>> check if this rule have to create new tracking record...');
                             currentTrack = createNewTrackingRecord(currentTrack, wrpAdminMap.get(adminRuleId), eventObj);
@@ -105,11 +109,8 @@ public inherited sharing class HDT_UTL_SlaManagement {
                             } else {
                                 System.debug(logginglevel.DEBUG, '>>> no track to insert');
                             }
-                        }
+                        //}
                     }
-
-                } else {
-                    System.debug(logginglevel.DEBUG, '>>> no record...');
                 }
 
             }
@@ -230,7 +231,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
     }
 
-    public static Boolean ruleDateIsValid(Date dateToValidate, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule){
+    public static Boolean ruleDateIsValid(DateTime dateToValidate, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule){
         return (dateToValidate >= singleRule.startValidDate && dateToValidate <= singleRule.endValidDate);
     }
 
@@ -266,10 +267,16 @@ public inherited sharing class HDT_UTL_SlaManagement {
             currentTrack.EndDateTime__c = Datetime.valueOf(dt);
             currentTrack.Status__c = 'Chiuso';
 
+            if(ruleDateIsValid(currentTrack.EndDateTime__c, singleRule)){
+                return currentTrack;
+            } else {
+                return null;
+            }
+
         } else {
             return null;
         }
-        return currentTrack;
+
     }
 
     public SlaTracking__c createNewTrackingRecord(SlaTracking__c currentTrack, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule, HDT_WRP_SlaManagement.HDT_WRP_Event eventObj){
@@ -314,6 +321,10 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
             currentTrack.StartDateTime__c = Datetime.valueOf(dt);
             
+            if(!ruleDateIsValid(currentTrack.StartDateTime__c, singleRule)){
+                return null;
+            }
+
         }
         return currentTrack;
 
