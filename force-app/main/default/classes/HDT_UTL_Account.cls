@@ -164,7 +164,7 @@ public with sharing class HDT_UTL_Account {
         //Nuova Versione
         string accountType = Schema.SObjectType.Account.getRecordTypeInfosById().get(acc.RecordTypeId).getDeveloperName();
         List<SiebelCustomer__x> siebelCustomer = new List<SiebelCustomer__x>();
-
+        List<SObject> sobjToUpdate = new List<SObject>();
         /*if(accountType.contains('Residenziale')){
             siebelCustomer = [SELECT Id, OU_NUM__c, X_MARCATURA_CLIENTE__c 
                               FROM SiebelCustomer__x 
@@ -183,6 +183,9 @@ public with sharing class HDT_UTL_Account {
         String category = acc.Category__c;
         String vatNumber = acc.VATNumber__c;
         String fiscalCode = acc.FiscalCode__c;
+        Boolean isAmministratoreCondominio = false;
+        Contact contRelation = new Contact();
+
 
         String query = 'SELECT Id,OU_NUM__c, X_MARCATURA_CLIENTE__c FROM SiebelCustomer__x WHERE OU_TYPE_CD__c = :category';
         if(acc.FiscalCode__c != null && acc.FiscalCode__c != '')
@@ -200,9 +203,22 @@ public with sharing class HDT_UTL_Account {
         if(!siebelCustomer.isEmpty()){
             acc.CustomerCode__c = siebelCustomer[0].OU_NUM__c;
             acc.CustomerMarking__c = siebelCustomer[0].X_MARCATURA_CLIENTE__c;
-            HDT_UTL_DatabaseService.updateSObject(acc);
+            sobjToUpdate.add(acc);
 
-            if(acc.Category__c == 'Grandi Condomini'){
+            List<AccountContactRelation> acrList = [SELECT Id, AccountId, Account.Category__c, ContactId, Roles 
+                                                    FROM AccountContactRelation 
+                                                    WHERE ContactId = :cont.Id
+                                                    WITH SECURITY_ENFORCED];
+            
+            for(AccountContactRelation acr : acrList){
+                if(acr.Roles.equalsIgnoreCase('Amministratore condominio')){
+                    isAmministratoreCondominio = true;
+                    category = acr.Account.Category__c;
+                    contRelation.Id = acr.ContactId;
+                    break;
+                }
+            }
+            if((category.equalsIgnoreCase('Grandi Condomini') || category.equalsIgnoreCase('Piccoli Condomini')) && isAmministratoreCondominio){
                 List<SiebelContact__x> siebelContact = new List<SiebelContact__x>();
                 siebelContact = [SELECT Id, INTEGRATION_ID__c 
                                  FROM SiebelContact__x 
@@ -216,9 +232,16 @@ public with sharing class HDT_UTL_Account {
                     resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
                     //Update Contact
                     if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP)) {
-                        cont.ContactCode__c = resCreate.data.codiceBP;
-                        HDT_UTL_DatabaseService.updateSObject(cont);
+                        // cont.ContactCode__c = resCreate.data.codiceBP;
+                        // HDT_UTL_DatabaseService.updateSObject(cont);
+                        contRelation.ContactCode__c = resCreate.data.codiceBP;
+                        sobjToUpdate.add(contRelation);
                     }
+                }
+                else
+                {
+                    contRelation.ContactCode__c = siebelContact[0].INTEGRATION_ID__c;
+                    sobjToUpdate.add(contRelation);
                 }
             }
         }
@@ -226,21 +249,37 @@ public with sharing class HDT_UTL_Account {
             HDT_WS_RicCreBpCaRequest   req = callBpCaSearch(acc,cont);
             HDT_WS_RichCreBpCaResponse res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
             // System.debug('Response SRC : ' + res);
-            analizeResponse(res,acc,cont);
+            //analizeResponse(res,acc,cont);
             if ('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)) {
                 acc.CustomerCode__c = res.data.codiceBP;
-                HDT_UTL_DatabaseService.updateSObject(acc);
+                sobjToUpdate.add(acc);
             }
-            if(acc.Category__c == 'Grandi Condomini'){
+            List<AccountContactRelation> acrList = [SELECT Id, AccountId, Account.Category__c, ContactId, Roles 
+            FROM AccountContactRelation 
+            WHERE ContactId = :cont.Id
+            WITH SECURITY_ENFORCED];
+            for(AccountContactRelation acr : acrList){
+                if(String.isNotBlank(acr.Roles) && acr.Roles.equalsIgnoreCase('Amministratore condominio')){
+                    isAmministratoreCondominio = true;
+                    category = acr.Account.Category__c;
+                    contRelation.Id = acr.ContactId;
+                    break;
+                }
+            }
+            if((category.equalsIgnoreCase('Grandi Condomini') || category.equalsIgnoreCase('Piccoli Condomini')) && isAmministratoreCondominio){
                     //Creazione Condominio su SAP
                     req = callAmCaCreate(acc,cont);
                     res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
                     //Update Contact
                     if ('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)) {
                         cont.ContactCode__c = res.data.codiceBP;
-                        HDT_UTL_DatabaseService.updateSObject(cont);
+                        sobjToUpdate.add(cont);
                     }
             }        
+        }
+        if(!sobjToUpdate.isEmpty())
+        {
+            HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
         }    
     }
     
@@ -411,9 +450,9 @@ public with sharing class HDT_UTL_Account {
 
         for(AccountContactRelation accountContactRel : accountContactRelList){
             //AccountContactRelation del Amm. o del Legale se presenti
-            if( accountContactRel.Roles == 'Amministratore condominio' || accountContactRel.Roles == 'Legale rappresentante' ){
+            if( accountContactRel.Roles.equalsIgnoreCase('Amministratore condominio') || accountContactRel.Roles.equalsIgnoreCase('Legale rappresentante')){
                 accountContactMap = generateAccountContact(accountContactRel);
-                if( accountContactRel.Roles == 'Amministratore condominio'){
+                if( accountContactRel.Roles.equalsIgnoreCase('Amministratore condominio')){
                     isAmministratore = true;
                 }
                 break;
@@ -453,7 +492,7 @@ public with sharing class HDT_UTL_Account {
                 acc.CustomerCode__c = resCreate.data.codiceBP;
             } // TODO gestire l'errore 
 
-            if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) && isAmministratore ){
+            if((acc.Category__c.equalsIgnoreCase('Grandi Condomini') || acc.Category__c.equalsIgnoreCase('Piccoli Condomini')) && isAmministratore ){
                 req = callAmCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
                 if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {

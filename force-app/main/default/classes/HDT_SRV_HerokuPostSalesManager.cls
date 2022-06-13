@@ -74,11 +74,16 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
              * e' necessaria una customizzazione per inviare
              * soltanto la subscription di offerta commerciale
              */
-            if(currentCase.Type.equalsIgnoreCase('Allineamento Anagrafica') || currentCase.Type.equalsIgnoreCase('Voltura Tecnica'))
+            
+            mrrList = removeNonCommoditySubscriptions(mrrList);
+            String processType = obj.get('Type') != null ? (String)obj.get('Type') : '';
+            if(String.isNotBlank(processType) && 
+            (processType.equalsIgnoreCase('Richiesta Domiciliazione')
+            || processType.equalsIgnoreCase('Variazione Domiciliazione')
+            || processType.equalsIgnoreCase('Rimborso')))
             {
-                mrrList = removeNonCommoditySubscriptions(mrrList);
+                mrrList = addIbanCountry(mrrList); 
             }
-
             arg.put('endpoint', endpoint);
             arg.put('timeout', 12000);
             arg.put('payload',mrrList);
@@ -347,6 +352,36 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                 {
                     mrrList.requests[0].objects.remove(i); 
                 }
+            }
+        }
+        return mrrList;
+    }
+
+    @TestVisible
+    private static wrts_prcgvr.MRR_1_0.MultiRequest addIbanCountry(wrts_prcgvr.MRR_1_0.MultiRequest mrrList)
+    {
+        Boolean ibanCountry = false;
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
+        {
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('BillingProfile__c'))
+            {
+                for(wrts_prcgvr.MRR_1_0.Field f : obj.fields)
+                {
+                    if(f.name.equalsIgnoreCase('PAESE_IBAN'))
+                    {
+                        ibanCountry = true;
+                        break;
+                    }
+                }
+                if(!ibanCountry)
+                {
+                    wrts_prcgvr.MRR_1_0.Field ibanField = new wrts_prcgvr.MRR_1_0.Field();
+                    ibanField.name = 'PAESE_IBAN';
+                    ibanField.fieldType = 'STRING';
+                    ibanField.value = 'IT';
+                    obj.fields.add(ibanField);
+                }
+                break;
             }
         }
         return mrrList;

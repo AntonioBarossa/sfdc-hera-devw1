@@ -63,7 +63,20 @@ public with sharing class HDT_UTL_CampaignMember {
         for (CampaignMember item : newCampaignMember) {
             campaignIds.add(item.CampaignId);
         }
+      
+        Map <Id,Campaign> campMap=new Map<Id, Campaign>([SELECT Id, EndDate FROM Campaign WHERE Id IN: campaignIds]);
 
+        for (Integer i = 0; i < newCampaignMember.size(); i++) {
+            if ( campMap.containsKey(newCampaignMember[i].CampaignId)) {
+                if(campMap.get(newCampaignMember[i].CampaignId).EndDate!=null){
+                    newCampaignMember[i].NumberingValidityEndDate__c=campMap.get(newCampaignMember[i].CampaignId).EndDate;
+                }
+                else{
+                    newCampaignMember[i].NumberingValidityEndDate__c=Date.today().addYears(1);
+                }
+            }
+        }
+        
         List<CampaignMemberAssigmentItem__c> query = [
             SELECT Id, Agency__c, PercentageAllocation__c, CampaingMemberAssigment__c, ProcessingType__c  FROM CampaignMemberAssigmentItem__c WHERE CampaingMemberAssigment__c IN (SELECT CampaignMemberAssigment__c FROM Campaign WHERE Id IN :campaignIds AND AssignmentType__c = 'Peso Percentuale') WITH SECURITY_ENFORCED ORDER BY PercentageAllocation__c DESC
         ];
@@ -120,36 +133,11 @@ public with sharing class HDT_UTL_CampaignMember {
     }
 
     public static void createCommercialCode(List<CampaignMember> newCampaignMember) {
-
-        List<String> campaignIdList = new List<String>();
-        List<String> campaignMemberIdList = new List<String>();
-        Set<String> uniqueCampaignId = new Set<String>();
-        Map<String,List<String>> allMembers = new Map<String,List<String>>();
-
-        for (CampaignMember member : newCampaignMember) {
-            uniqueCampaignId.add(member.CampaignId);
-            campaignMemberIdList.add(member.Id);
-        }
-
-        campaignIdList.addAll(uniqueCampaignId);
-
-        for (String cmpId : campaignIdList) {
-            List<String> newCmList = new List<String>();
-            for (CampaignMember newCm : newCampaignMember) {
-                if (newCm.CampaignId == cmpId) {
-                    newCmList.add(newCm.Id);
-                }
-            }
-            allMembers.put(cmpId, newCmList);            
+        List<Commercial_Code_Batch_Context__c> newContext = new List<Commercial_Code_Batch_Context__c>();
+        for (CampaignMember member : newCampaignMember){
+            newContext.add( new Commercial_Code_Batch_Context__c(Name=(''+member.CampaignId+member.Id).right(28), CampaignId__c=member.CampaignId, CampaignMemberId__c=member.Id));
         }        
-        
-        if (!system.isBatch()) { // Keltin - added this because it cases error 'Database.executeBatch cannot be called from a batch start, batch execute, or future method' when called from HDT_BA_QualityCall
-            //execute batch for each campaign
-            if (allMembers.size() > 0) {
-                HDT_BA_CommercialCode ccBatch = new HDT_BA_CommercialCode(allMembers);
-                Database.executeBatch(ccBatch, 200);
-            }
-        }
+        HDT_UTL_DatabaseService.insertSObject(newContext);
     }
 
     public static void campaignSuspension(List<Campaign> newCampaigns, List<Campaign> oldCampaigns) {
@@ -413,27 +401,7 @@ public with sharing class HDT_UTL_CampaignMember {
             }
         }
     }
-
-    public static void doCallMeBack(List<CampaignMember> members) {
-        List<Id> idsToProcess = new List<Id>();
-        for(CampaignMember cm : members) {
-            idsToProcess.add(cm.Id);
-        }
-
-        List<CampaignMember> processedMembers = new List<CampaignMember>();
-        for(CampaignMember member : [SELECT Id, PhoneNumber__c, LeadId, Lead.ContactDate__c, Campaign.ReitekIntegrationTechnology__c, Campaign.MacroActivityEasyCIM__r.Name FROM CampaignMember WHERE Id IN: idsToProcess WITH SECURITY_ENFORCED]) {
-            if(member.LeadId != null && member.Campaign.ReitekIntegrationTechnology__c == 'Web Service') {
-                System.enqueueJob(new HDT_QBL_InvioNumerazioni(member.Campaign.MacroActivityEasyCIM__r.Name, member.PhoneNumber__c, member.Lead.ContactDate__c, member.Id));
-                processedMembers.add(new CampaignMember(
-                    Id = member.Id,
-                    ReitekSendDate__c = Date.today()
-                ));
-            }
-        }
-
-        new HDT_SRV_CampaignMember().updateRecords(processedMembers);
-    }
-
+    
     public static void setAgency (List<CampaignMember> members) {
         List <CampaignMemberLeadAssigment__c> cmlaList=[SELECT Id, Active__c FROM CampaignMemberLeadAssigment__c WHERE Active__c=true WITH SECURITY_ENFORCED limit 1];
         List <CampaignMemberLeadAssigmentItem__c> cmlaItemList=new List <CampaignMemberLeadAssigmentItem__c>();
@@ -487,6 +455,34 @@ public with sharing class HDT_UTL_CampaignMember {
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    public static void assignCmAgency (List<CampaignMember> members){
+        set <String> agencyNames=new set <String>();
+        List <Account> agencies=new list <Account>();
+        map <String, String> agencyNameIdMap=new Map <String, String>();
+
+        for(CampaignMember cm : members){
+            if(String.isNotBlank(cm.Ext_Agency_Name__c)){
+                agencyNames.add(cm.Ext_Agency_Name__c);
+            }
+        }
+        if(agencyNames!=null && agencyNames.size()>0){
+            agencies=[SELECT id, Name FROM Account WHERE Name IN:agencyNames];
+
+            if(agencies!=null && agencies.size()>0){
+                for (Account ag : agencies) {
+                    agencyNameIdMap.put(ag.Name, ag.Id);
+                }
+
+                for(CampaignMember cm : members){
+                    if(String.isNotBlank(cm.Ext_Agency_Name__c) && agencyNameIdMap.containsKey(cm.Ext_Agency_Name__c)){
+                        cm.Agency__c=agencyNameIdMap.get(cm.Ext_Agency_Name__c);
+                        cm.Ext_Agency_Name__c='';
                     }
                 }
             }

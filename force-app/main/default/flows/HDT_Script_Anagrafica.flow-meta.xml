@@ -21,7 +21,7 @@
         <name>CallTypeDecision</name>
         <label>CallTypeDecision</label>
         <locationX>1502</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici_Inbound_Aziende_0_0_0</targetReference>
         </defaultConnector>
@@ -46,7 +46,7 @@
         <name>CallTypeDecision_0</name>
         <label>CallTypeDecision</label>
         <locationX>974</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici</targetReference>
         </defaultConnector>
@@ -71,7 +71,7 @@
         <name>CallTypeDecision_0_0</name>
         <label>CallTypeDecision</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafica_VAS_Screen_0</targetReference>
         </defaultConnector>
@@ -81,7 +81,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>callType</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Inbound</stringValue>
                 </rightValue>
@@ -96,7 +96,7 @@
         <name>CategoriaDecision</name>
         <label>CategoriaDecision</label>
         <locationX>1238</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>CallTypeDecision</targetReference>
         </defaultConnector>
@@ -121,7 +121,7 @@
         <name>CategoriaDecision_0</name>
         <label>CategoriaDecision</label>
         <locationX>380</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici_Inbound_Aziende_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -146,7 +146,7 @@
         <name>VasDecision</name>
         <label>VasDecision</label>
         <locationX>809</locationX>
-        <locationY>158</locationY>
+        <locationY>278</locationY>
         <defaultConnector>
             <targetReference>CategoriaDecision</targetReference>
         </defaultConnector>
@@ -188,27 +188,63 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>getChild_0</name>
+        <label>getChild</label>
+        <locationX>809</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>VasDecision</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentOrder__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OrderData.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <screens>
         <name>Dati_Anagrafica_VAS_Screen_0</name>
         <label>Dati Anagrafica VAS</label>
         <locationX>314</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Dati_Anagrafica_VAS_0</name>
-            <fieldText>&lt;p&gt;[2. Dati Anagrafici]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo Cognome e Nome&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica il Cognome e Nome della persona cui va intestato il contratto [nel caso sia l’interlocutore farselo ripetere]?&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma di essere autorizzato, a concludere il presente contratto e a rilasciare i consensi privacy?&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.CustomerFiscalCode__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.CIAccoutn__c} e la Data di rilascio è DATA_RILASCIO_ID_MANCANTE?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di residenza della persona a cui va intestato il contratto è {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[2. Dati Anagrafici]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo Cognome e Nome {!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica il Cognome e Nome della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma di essere autorizzato, a concludere il presente contratto e a rilasciare i consensi privacy?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.CustomerFiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.CIAccoutn__c} e la Data di rilascio è DATA_RILASCIO_ID_MANCANTE?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>textfixanag1</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che la sua mail è {!OrderData.Account.PrimaryEmail__c}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Mi conferma che la sua mail è {!OrderData.ShippingMail__c}?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>OrderData.Account.PrimaryEmail__c</leftValueReference>
+                    <leftValueReference>OrderData.ShippingMail__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>textfixanag4</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di telefono fisso è {!OrderData.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.Account.Phone</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
@@ -218,7 +254,7 @@
         </fields>
         <fields>
             <name>textfixanag2</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di cellulare è {!OrderData.Account.MobilePhone__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di cellulare è {!OrderData.Account.MobilePhone__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -233,7 +269,7 @@
         </fields>
         <fields>
             <name>textfixanag3</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di telefono fisso è {!OrderData.Account.Phone}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Per la normativa vigente il contratto si perfeziona dopo che il fornitore ed il cliente si sono scambiati le conferme in forma scritta. Dette conferme possono essere scambiate, se il consumatore acconsente, anche su un supporto durevole.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Mi conferma che possiamo procedere con lo scambio delle conferme mediante supporto durevole e quindi con la registrazione di questa telefonata anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Per la normativa vigente il contratto si perfeziona dopo che il fornitore ed il cliente si sono scambiati le conferme in forma scritta. Dette conferme possono essere scambiate, se il consumatore acconsente, anche su un supporto durevole.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che possiamo procedere con lo scambio delle conferme mediante supporto durevole e quindi con la registrazione di questa telefonata anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -243,18 +279,18 @@
         <name>Dati_Anagrafica_VAS_Screen_0_0</name>
         <label>Dati Anagrafica VAS</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Dati_Anagrafica_VAS_0_0</name>
-            <fieldText>&lt;p&gt;[2. Dati Anagrafici]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo Cognome e Nome&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica il Cognome e Nome della persona cui va intestato il contratto [nel caso sia l’interlocutore farselo ripetere]?&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma di essere autorizzato, a concludere il presente contratto e a rilasciare i consensi privacy?&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.CustomerFiscalCode__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.CIAccoutn__c} e la Data di rilascio è DATA_RILASCIO_ID_MANCANTE?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di residenza della persona a cui va intestato il contratto è {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[2. Dati Anagrafici]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo Cognome e Nome {!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di residenza della persona a cui va intestato il contratto è {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>textfixanag1_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che la sua mail è {!OrderData.Email__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che la sua mail è {!OrderData.ShippingMail__c} ?&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -268,8 +304,23 @@
             </visibilityRule>
         </fields>
         <fields>
+            <name>textfixanag4_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di telefono fisso è {!OrderData.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.Account.Phone</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>textfixanag2_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di cellulare è {!OrderData.Account.MobilePhone__c}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di cellulare è {!OrderData.Account.MobilePhone__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -284,7 +335,7 @@
         </fields>
         <fields>
             <name>textfixanag3_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di telefono fisso è {!OrderData.Account.Phone}?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Per la normativa vigente il contratto si perfeziona dopo che il fornitore ed il cliente si sono scambiati le conferme in forma scritta. Dette conferme possono essere scambiate, se il consumatore acconsente, anche su un supporto durevole.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Mi conferma che possiamo procedere con lo scambio delle conferme mediante supporto durevole e quindi con la registrazione di questa telefonata anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Per la normativa vigente il contratto si perfeziona dopo che il fornitore ed il cliente si sono scambiati le conferme in forma scritta. Dette conferme possono essere scambiate, se il consumatore acconsente, anche su un supporto durevole.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Mi conferma che possiamo procedere con lo scambio delle conferme mediante supporto durevole e quindi con la registrazione di questa telefonata anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -294,23 +345,38 @@
         <name>Dati_Anagrafici</name>
         <label>Dati Anagrafici</label>
         <locationX>1106</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>text1</name>
-            <fieldText>&lt;p&gt;Le chiedo di indicarmi il suo Cognome e Nome&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Mi indica il Cognome e Nome della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma di essere autorizzato, a concludere il presente contratto e a rilasciare i consensi privacy?&amp;nbsp;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di residenza della persona a cui va intestato il contratto è {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le chiedo di indicarmi il suo Cognome e Nome&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Mi indica il Cognome e Nome della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma di essere autorizzato, a concludere il presente contratto e a rilasciare i consensi privacy?&amp;nbsp;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è XXXXXXXXX e la Data di rilascio è XXXXXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di residenza della persona a cui va intestato il contratto è {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>text2</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che la sua mail è {!OrderData.Account.PrimaryEmail__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che la sua mail è {!OrderData.Account.PrimaryEmail__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>OrderData.Account.PrimaryEmail__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text12</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che la sua mail è {!OrderData.ShippingMail__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.ShippingMail__c</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
@@ -350,12 +416,12 @@
         </fields>
         <fields>
             <name>text5</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!OrderData.ShippingAddressFormula__c}&lt;/span&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>text5_1</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che vuole ricevere le bollette al suo indirizzo {!OrderData.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole ricevere le bollette al suo indirizzo &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!OrderData.Account.BillingAddressFormula__c}&lt;/span&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -391,12 +457,12 @@
         </fields>
         <fields>
             <name>text6</name>
-            <fieldText>&lt;p&gt;•	[se il Cliente è già domiciliato con Hera/Amga Energia &amp;amp; Servizi] Mi conferma quindi che per la domiciliazione bancaria posso utilizzare il codice IBAN già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!OrderData.IbanCountry__c}{!OrderData.IbanCIN_IBAN__c}{!OrderData.IbanCIN__c}&lt;/span&gt;{!OrderData.IbanABI__c}{!OrderData.IbanCAB__c}{!OrderData.IbanCodeNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma quindi che per la domiciliazione bancaria posso utilizzare il codice IBAN già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è &lt;/p&gt;&lt;p&gt;{!getChild_0.IbanCountry__c}{!getChild_0.IbanCIN_IBAN__c}{!getChild_0.IbanCIN__c}{!getChild_0.IbanABI__c}{!getChild_0.IbanCAB__c}{!getChild_0.IbanCodeNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>ModalitaPagamento</leftValueReference>
+                    <leftValueReference>ModalitaPagamentoInput</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>RID</stringValue>
@@ -406,7 +472,7 @@
         </fields>
         <fields>
             <name>text7</name>
-            <fieldText>&lt;p&gt;•	Le verrà addebitato un deposito cauzionale, che varia, a seconda dei consumi annui stimati, nella misura di € 30,00 - 90,00 € - 150,00 € - 300 € o di una mensilità media di consumo.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le verrà addebitato un deposito cauzionale pari a 11,5 € per ogni kW di potenza impegnata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Le verrà addebitato un deposito cauzionale, che varia, a seconda dei consumi annui stimati, nella misura di € 30,00 - 90,00 € - 150,00 € - 300 € o di una mensilità media di consumo.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le verrà addebitato un deposito cauzionale pari a 11,5 € per ogni kW di potenza impegnata.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -426,7 +492,7 @@
         <name>Dati_Anagrafici_0</name>
         <label>Dati Anagrafici</label>
         <locationX>842</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -437,7 +503,7 @@
         </fields>
         <fields>
             <name>text2_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che la sua mail è {!OrderData.Account.PrimaryEmail__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che la sua mail è {!OrderData.ShippingMail__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -482,12 +548,61 @@
         </fields>
         <fields>
             <name>text5_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che vuole ricevere le bollette al suo indirizzo {!OrderData.ShippingMail__c}/ {!OrderData.ShippingAddressFormula__c}[mail/postale]?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che vuole pagare le bollette con {!ModalitaPagamentoInput}[domiciliazione bancaria/bollettino postale]?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>text10_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole ricevere le bollette al suo indirizzo mail {!OrderData.ShippingMail__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.ShippingMail__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.ShippingAddressFormula__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text11_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole ricevere le bollette al suo indirizzo postale {!OrderData.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.ShippingAddressFormula__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.ShippingMail__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text12_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole pagare le bollette con {!ModalitaPagamentoInput}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>text6_0</name>
-            <fieldText>&lt;p&gt;•	[se il Cliente è già domiciliato con Hera/Amga Energia &amp;amp; Servizi] Mi conferma quindi che per la domiciliazione bancaria posso utilizzare il codice IBAN già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!OrderData.IbanCountry__c}{!OrderData.IbanCIN_IBAN__c}{!OrderData.IbanCIN__c}&lt;/span&gt;{!OrderData.IbanABI__c}{!OrderData.IbanCAB__c}{!OrderData.IbanCodeNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma quindi che per la domiciliazione bancaria posso utilizzare il codice IBAN già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!getChild_0.IbanCountry__c}{!getChild_0.IbanCIN_IBAN__c}{!getChild_0.IbanCIN__c}{!getChild_0.IbanABI__c}{!getChild_0.IbanCAB__c}{!getChild_0.IbanCodeNumber__c}&lt;/span&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -502,7 +617,7 @@
         </fields>
         <fields>
             <name>text7_0</name>
-            <fieldText>&lt;p&gt;•	Le verrà addebitato un deposito cauzionale, che varia, a seconda dei consumi annui stimati, nella misura di € 30,00 - 90,00 € - 150,00 € - 300 € o di una mensilità media di consumo.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le verrà addebitato un deposito cauzionale pari a 11,5 € per ogni kW di potenza impegnata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Le verrà addebitato un deposito cauzionale, che varia, a seconda dei consumi annui stimati, nella misura di € 30,00 - 90,00 € - 150,00 € - 300 € o di una mensilità media di consumo.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le verrà addebitato un deposito cauzionale pari a 11,5 € per ogni kW di potenza impegnata.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -517,7 +632,7 @@
         </fields>
         <fields>
             <name>text8_0</name>
-            <fieldText>&lt;p&gt;•	Per la normativa vigente il contratto si perfeziona dopo che il fornitore ed il cliente si sono scambiati le conferme in forma scritta. Dette conferme possono essere scambiate, se il consumatore acconsente, anche su un supporto durevole.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Mi conferma che possiamo procedere con lo scambio delle conferme mediante supporto durevole e quindi con la registrazione di questa telefonata anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Per la normativa vigente il contratto si perfeziona dopo che il fornitore ed il cliente si sono scambiati le conferme in forma scritta. Dette conferme possono essere scambiate, se il consumatore acconsente, anche su un supporto durevole.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Mi conferma che possiamo procedere con lo scambio delle conferme mediante supporto durevole e quindi con la registrazione di questa telefonata anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -527,7 +642,7 @@
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
         <locationX>1634</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -627,7 +742,22 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_4_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il suo indirizzo Mail PEC fattura elettronica è {!OrderData.InvoiceCertifiedEmailAddress__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice destinatario è {!OrderData.SubjectCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il suo indirizzo Mail PEC fattura elettronica è {!OrderData.InvoiceCertifiedEmailAddress__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.BillingProfile__r.XMLType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Anagrafica_Aziende_8_0_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il suo codice destinatario è {!OrderData.SubjectCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -650,7 +780,7 @@
                     <leftValueReference>OrderData.InvoiceCertifiedEmailAddress__c</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
-                        <booleanValue>false</booleanValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -664,12 +794,19 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_5_0_1</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in {!OrderData.DeliveryAddress__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in&lt;/p&gt;&lt;p&gt;{!OrderData.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>OrderData.InvoiceCertifiedEmailAddress__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.SubjectCode__c</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -681,6 +818,23 @@
             <name>text9</name>
             <fieldText>&lt;p&gt;•	Mi conferma che vuole pagare le bollette con {!ModalitaPagamentoInput} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.InvoiceCertifiedEmailAddress__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.SubjectCode__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Anagrafica_Aziende_6_0_0</name>
@@ -703,7 +857,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_6_0_1</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è {!OrderData.IbanCountry__c}{!OrderData.IbanCIN_IBAN__c} {!OrderData.IbanCIN__c} {!OrderData.IbanABI__c} {!OrderData.IbanCAB__c} {!OrderData.IbanCodeNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è {!getChild_0.IbanCountry__c}{!getChild_0.IbanCIN_IBAN__c}{!getChild_0.IbanCIN__c}{!getChild_0.IbanABI__c}{!getChild_0.IbanCAB__c}{!getChild_0.IbanCodeNumber__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -721,24 +875,19 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>text10</name>
-            <fieldText>&lt;p&gt;•	Le verrà addebitato in bolletta un deposito cauzionale, che varia, a seconda dei consumi annui stimati, nella misura di € 30,00 - 90,00 € - 150,00 € - 300 € o di una mensilità media di consumo.&lt;/p&gt;</fieldText>
+            <name>Anagrafica_Aziende_7_0_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che siete iscritti all’Associazione di Categoria {!OrderData.ConventionAssociation__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>ModalitaPagamentoInput</leftValueReference>
-                    <operator>EqualTo</operator>
+                    <leftValueReference>OrderData.ConventionAssociation__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
-                        <stringValue>Bollettino postale</stringValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
-        </fields>
-        <fields>
-            <name>Anagrafica_Aziende_7_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che siete iscritti all’Associazione di Categoria {!OrderData.ConventionAssociation__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -747,13 +896,13 @@
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
         <locationX>1370</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Anagrafica_Aziende_1_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che la Ragione sociale cui va intestato il contratto è {!OrderData.Account.LastName__c}, la Partita Iva è {!OrderData.Account.VATNumber__c}e il Codice fiscale aziendale è {!OrderData.Account.FiscalCode__c} [se diverso dalla P.IVA]?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo cognome e nome [di chi procede alla registrazione]&lt;/p&gt;&lt;p&gt;{!OrderData.Contact__r.LastName}&lt;/p&gt;&lt;p&gt;{!OrderData.Contact__r.FirstName}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che la Ragione sociale cui va intestato il contratto è {!OrderData.Account.LastName__c}, la Partita Iva è {!OrderData.Account.VATNumber__c}e il Codice fiscale aziendale è {!OrderData.Account.FiscalCode__c} [se diverso dalla P.IVA]?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo cognome e nome [di chi procede alla registrazione]&lt;/p&gt;&lt;p&gt;{!OrderData.Contact__r.LastName}&lt;/p&gt;&lt;p&gt;{!OrderData.Contact__r.FirstName}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -787,7 +936,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_2_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma di essere autorizzato dal legale rappresentante a concludere il presente contratto e a rilasciare i consensi privacy?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che nome, cognome e codice fiscale del legale rappresentante sono {!OrderData.Contact__r.FirstName}, {!OrderData.Contact__r.LastName}, {!OrderData.Contact__r.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della CARTA D’IDENTITA’ del legale rappresentante è DATO_ID_MANCANTE e la data di rilascio è DATA_RILASCIO_ID_MANCANTE?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma di essere autorizzato dal legale rappresentante a concludere il presente contratto e a rilasciare i consensi privacy?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che nome, cognome e codice fiscale del legale rappresentante sono {!OrderData.Contact__r.FirstName}, {!OrderData.Contact__r.LastName}, {!OrderData.Contact__r.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della CARTA D’IDENTITA’ del legale rappresentante è DATO_ID_MANCANTE e la data di rilascio è DATA_RILASCIO_ID_MANCANTE?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -837,7 +986,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_4_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il suo indirizzo Mail PEC fattura elettronica è {!OrderData.InvoiceCertifiedEmailAddress__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice destinatario è {!OrderData.SubjectCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il suo indirizzo Mail PEC fattura elettronica è {!OrderData.InvoiceCertifiedEmailAddress__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice destinatario è {!OrderData.SubjectCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -852,7 +1001,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_5_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che il suo indirizzo PEC è {!OrderData.InvoiceCertifiedEmailAddress__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in {!OrderData.DeliveryAddress__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che il suo indirizzo PEC è {!OrderData.InvoiceCertifiedEmailAddress__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in {!OrderData.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -879,7 +1028,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_6_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Utilizzo il codice Iban già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è {!OrderData.IbanCountry__c}{!OrderData.IbanCIN_IBAN__c} {!OrderData.IbanCIN__c} {!OrderData.IbanABI__c} {!OrderData.IbanCAB__c} {!OrderData.IbanCodeNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Utilizzo il codice Iban già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è {!getChild_0.IbanCountry__c}{!getChild_0.IbanCIN_IBAN__c}{!getChild_0.IbanCIN__c}{!getChild_0.IbanABI__c}{!getChild_0.IbanCAB__c}{!getChild_0.IbanCodeNumber__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -900,28 +1049,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>text10_0</name>
-            <fieldText>&lt;p&gt;•	Le verrà addebitato in bolletta un deposito cauzionale, che varia, a seconda dei consumi annui stimati, nella misura di € 30,00 - 90,00 € - 150,00 € - 300 € o di una mensilità media di consumo.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ModalitaPagamentoInput</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Bollettino postale</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>Anagrafica_Aziende_7_0_0_0</name>
             <fieldText>&lt;p&gt;•	Mi conferma che siete iscritti all’Associazione di Categoria {!OrderData.ConventionAssociation__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>text11</name>
-            <fieldText>&lt;p&gt;•	Per la normativa vigente il contratto si perfeziona dopo che il fornitore ed il cliente si sono scambiati le conferme in forma scritta. Dette conferme possono essere scambiate, se il consumatore acconsente, anche su un supporto durevole.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Mi conferma che possiamo procedere con lo scambio delle conferme mediante supporto durevole e quindi con la registrazione di questa telefonata anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -931,13 +1060,13 @@
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
         <locationX>578</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Anagrafica_Aziende_1_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che la Ragione sociale cui va intestato il contratto è {!OrderData.Account.LastName__c}, la Partita Iva è {!OrderData.Account.VATNumber__c}e il Codice fiscale aziendale è {!OrderData.Account.FiscalCode__c} [se diverso dalla P.IVA]?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo cognome e nome [di chi procede alla registrazione]&lt;/p&gt;&lt;p&gt;{!OrderData.Contact__r.LastName}&lt;/p&gt;&lt;p&gt;{!OrderData.Contact__r.FirstName}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;[2. Dati Anagrafici]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la Ragione sociale cui va intestato il contratto è {!OrderData.Account.LastName__c}, la Partita Iva è {!OrderData.Account.VATNumber__c}e il Codice fiscale aziendale è {!OrderData.Account.FiscalCode__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Le chiedo di indicarmi il suo cognome e nome&lt;/p&gt;&lt;p&gt;{!OrderData.Contact__r.LastName}&lt;/p&gt;&lt;p&gt;{!OrderData.Contact__r.FirstName}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -990,6 +1119,11 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
+            <name>Anagrafica_Aziende_3_0_0_3_0_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in {!OrderData.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
             <name>Anagrafica_Aziende_3_0_0_1_0_0</name>
             <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo mail è {!OrderData.Account.PrimaryEmail__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -1026,7 +1160,7 @@
         <locationX>683</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>VasDecision</targetReference>
+            <targetReference>getChild_0</targetReference>
         </connector>
     </start>
     <status>Active</status>

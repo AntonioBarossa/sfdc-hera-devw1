@@ -313,6 +313,62 @@
                 <stringValue>Chiusa</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.ActivityEndTime__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.ClosedByUsername__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Username</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.wrts_prcgvr__IsClosed__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.UserCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.UserCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.ClosingCreatorGroup__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.CreatorGroup__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.ClosingUserChannel__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.LoginChannel__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.Place__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Station__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Assegna_a_Collection</targetReference>
         </connector>
@@ -532,6 +588,21 @@
             </connector>
             <label>Completata - Indennizzo</label>
         </rules>
+        <rules>
+            <name>Completata_Rich_Info</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CaseToLoop.FirstLevelComplaintClassification__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Richiesta di informazioni</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaFase_0</targetReference>
+            </connector>
+            <label>Completata - Rich Info.</label>
+        </rules>
     </decisions>
     <decisions>
         <name>ToLoop_0</name>
@@ -661,10 +732,10 @@
             </value>
         </filters>
         <filters>
-            <field>wrts_prcgvr__Description__c</field>
-            <operator>Contains</operator>
+            <field>wrts_prcgvr__Status__c</field>
+            <operator>EqualTo</operator>
             <value>
-                <stringValue>Pratica in gestione</stringValue>
+                <stringValue>Aperta</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

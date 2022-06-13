@@ -181,6 +181,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             orders[0].Contact__c = contactId;
             orders[0].IsActivationDeferred__c=true;
 			orders[0].VATfacilitationFlag__c=true;
+            orders[0].SupplyType__c = 'Domestico';
+
             
 			orders[1].RecordTypeId=orderVoltura;
 			orders[1].CreditCheckDescription__c='test2Voltura';
@@ -228,6 +230,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             orders[3].ParentOrder__c = orders[6].Id;
 			orders[3].VATfacilitationFlag__c=true;
             orders[3].Commodity__c = 'Energia Elettrica';
+            orders[3].SupplyType__c = 'Domestico';
+
 
 			orders[4].EffectiveDate__c=date.today().addDays(10);
 			orders[4].PowerCommitted__c=2;
@@ -290,6 +294,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             ordersResidenziale[0].ServicePoint__c = servPoints[0].Id;
             ordersResidenziale[0].Contact__c = contactId;
             ordersResidenziale[0].ParentOrder__c = orders[6].Id;
+            ordersResidenziale[0].BillingProfile__c = billing[0].Id;
             insert ordersResidenziale;
 
 			List<SBQQ__Quote__c> quotes=HDT_UTL_DataFactoryTst.createQuote(1, false, orders[0].Id, opps[0].Id, sales[0].Id, 'Amendment');
@@ -1160,6 +1165,32 @@ public class HDT_LC_ChildOrderProcessActionsTst {
     }
 
     @isTest
+    static void testSaveDraftBillingProfile(){
+        
+        Test.startTest();
+        
+            //Test ServicePoint
+            List<Order> tOrderRetrieved =[SELECT Id, Name, BillingProfile__c
+                                FROM Order
+                                WHERE Name='orderResidenziale'
+                                LIMIT 1];
+            List<BillingProfile__c> tBilling=[SELECT Id, BankAgency__c
+                                FROM BillingProfile__c
+                                WHERE Id=:tOrderRetrieved[0].BillingProfile__c
+                                LIMIT 1];
+
+            tBilling[0].BankAgency__c = 'MAROTTA';
+            HDT_LC_ChildOrderProcessActions.saveDraft('BillingProfile__c',tBilling[0]);
+
+            String updatedName = [SELECT BankAgency__c FROM BillingProfile__c WHERE Id =: tBilling[0].Id].BankAgency__c;
+
+            System.assertEquals(tBilling[0].BankAgency__c, updatedName, 'Update fallito');
+
+        Test.stopTest();
+        
+    }
+
+    @isTest
     static void testSaveDraft2(){
         Test.startTest();
 
@@ -1238,6 +1269,32 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
         System.assertEquals(tService[0].AnnualConsumption__c, updatedConsumption, 'The Service Point draft was not saved properly');
 
+
+        Test.stopTest();
+        
+    }
+
+    @isTest
+    static void testSaveDraft2BillingProfile(){
+        
+        Test.startTest();
+        
+            //Test ServicePoint
+            List<Order> tOrderRetrieved =[SELECT Id, Name, BillingProfile__c
+                                FROM Order
+                                WHERE Name='orderResidenziale'
+                                LIMIT 1];
+            List<BillingProfile__c> tBilling=[SELECT Id, BankAgency__c
+                                FROM BillingProfile__c
+                                WHERE Id=:tOrderRetrieved[0].BillingProfile__c
+                                LIMIT 1];
+
+            tBilling[0].BankAgency__c = 'MAROTTA';
+            HDT_LC_ChildOrderProcessActions.saveDraft('BillingProfile__c',tBilling[0], 'BillingProfile__c',tBilling[0]);
+
+            String updatedName = [SELECT BankAgency__c FROM BillingProfile__c WHERE Id =: tBilling[0].Id].BankAgency__c;
+
+            System.assertEquals(tBilling[0].BankAgency__c, updatedName, 'Update fallito');
 
         Test.stopTest();
         

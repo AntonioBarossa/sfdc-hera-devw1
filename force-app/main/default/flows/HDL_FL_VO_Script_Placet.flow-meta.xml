@@ -326,6 +326,13 @@
             <label>isEE</label>
         </rules>
     </decisions>
+    <formulas>
+        <description>Contiene la mail per la restituzione del modulo. Mail diversa a seconda del canale di vendita</description>
+        <name>emailRestituzioneModuloFormula</name>
+        <dataType>String</dataType>
+        <expression>if(AND(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c}), &quot;Hera Comm&quot;), 
+NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c}), &quot;Hera Comm Marche&quot;))), &quot;contratti@gruppohera.it&quot;, &quot;clienti@heracomm-marche.it&quot;)</expression>
+    </formulas>
     <interviewLabel>HDL FL VO Script - Placet {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDL FL VO Script - Placet</label>
     <loops>
@@ -444,12 +451,12 @@
         </connector>
         <fields>
             <name>text_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;[3. Condizioni economiche Energia elettrica per: &lt;/span&gt;&lt;span style=&quot;font-size: 11pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;HERA PLACET LUCE LAVORO]&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[3. Condizioni economiche Energia elettrica per: HERA PLACET LUCE LAVORO]&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0_0</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche Hera Comm PLacet Fissa Luce Lavoro sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è pari a 0,1857 €/kWh nella fascia F1, 0,1769 €/kWh nella fascia F2 e 0,1659 €/kWh nella fascia F3, definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Nel caso di contatore monorario, il prezzo sarà pari a 0,1758 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 71% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 6% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 23% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche [HERA COMM PLACET FISSA LUCE LAVORO] sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è pari a 0,4145 €/kWh nella fascia F1, 0,4056 €/kWh nella fascia F2 e 0,3946 €/kWh nella fascia F3, definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Nel caso di contatore monorario, il prezzo sarà pari a 0,4046 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il l’86% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 2% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento e di capacità, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 12% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -464,7 +471,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_0</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche Hera Comm Placet Variabile Luce sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,0119 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 66% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 7% della spesa annua.Sono a carico del cliente i corrispettivi di dispacciamento, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 27% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche [HERA COMM PLACET VARIABILE LUCE] sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	&lt;/span&gt;Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,0229 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il l’84% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 3% della spesa annua. Sono a carico del cliente i corrispettivi di dispacciamento e di capacità, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 13% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -542,57 +549,64 @@
         </connector>
         <fields>
             <name>text_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;[3. Condizioni economiche Energia elettrica per: &lt;/span&gt;&lt;span style=&quot;font-size: 11pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;HERA PLACET LUCE LAVORO]&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt;&quot;&gt;[3. Condizioni economiche Energia elettrica per: &lt;/strong&gt;&lt;strong style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 11pt;&quot;&gt;HERA PLACET LUCE LAVORO]&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche Hera Comm PLacet Fissa Luce Lavoro sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è pari a 0,1857 €/kWh nella fascia F1, 0,1769 €/kWh nella fascia F2 e 0,1659 €/kWh nella fascia F3, definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Nel caso di contatore monorario, il prezzo sarà pari a 0,1758 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 71% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 6% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 23% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche Hera Comm Placet Fissa Luce Lavoro sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è pari a 0,4145 €/kWh nella fascia F1, 0,4056 €/kWh nella fascia F2 e 0,3946 €/kWh nella fascia F3, definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Nel caso di contatore monorario, il prezzo sarà pari a 0,4046 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il l’86% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 2% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento e di capacità, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 12% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProduct__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Hera Placet Luce Lavoro</stringValue>
+                        <stringValue>Hera Comm Placet Fissa Luce Lavoro</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche Hera Comm Placet Variabile Luce sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,0119 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 66% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 7% della spesa annua.Sono a carico del cliente i corrispettivi di dispacciamento, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 27% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche Hera Comm Placet Variabile Luce sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,0229 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il l’84% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 3% della spesa annua. Sono a carico del cliente i corrispettivi di dispacciamento e di capacità, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 13% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProduct__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Placet Variabile Luce Casa</stringValue>
+                        <stringValue>Hera Comm Placet Variabile Luce</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/Estenergy pari ad € 23,00.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 23,00.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue>Mortis Causa</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -640,12 +654,12 @@
         </connector>
         <fields>
             <name>text_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt;&quot;&gt;[3. Condizioni economiche Energia elettrica per: &lt;/span&gt;&lt;span style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 11pt;&quot;&gt;HERA PLACET LUCE CASA]&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[4. Condizioni economiche Gas naturale]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0_0_0</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche Hera Comm PLacet Fissa Luce Lavoro sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 0,774 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 82% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 3% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 15% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche [HERA COMM PLACET FISSA GAS LAVORO/ HERA COMM MARCHE PLACET FISSA GAS LAVORO] sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 1,404 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 96% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 2% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 2% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -653,14 +667,14 @@
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Hera Placet Luce Casa</stringValue>
+                        <stringValue>Placet Fissa Gas Lavoro</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_0_0</name>
-            <fieldText>&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,19 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 81% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 3% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 16% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche [HERA COMM PLACET VARIABILE GAS LAVORO / HERA COMM MARCHE PLACET VARIABILE GAS LAVORO] sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,26 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 95% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 2% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 3% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -668,7 +682,7 @@
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Placet Variabile Luce Casa</stringValue>
+                        <stringValue>Placet Variabile Gas Lavoro</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -738,65 +752,47 @@
         </connector>
         <fields>
             <name>text_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt;&quot;&gt;[3. Condizioni economiche Energia elettrica per: &lt;/span&gt;&lt;span style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 11pt;&quot;&gt;HERA PLACET LUCE CASA]&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt;&quot;&gt;[4. Condizioni economiche Gas naturale&lt;/strong&gt;&lt;strong style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 11pt;&quot;&gt;]&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche Hera Comm PLacet Fissa Luce Lavoro sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 0,774 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 82% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 3% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 15% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 1,404 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 96% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 2% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 2% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Hera Placet Luce Casa</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
-            <name>Condizioni_Economiche_Famiglie_EE_Text2_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,19 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 81% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 3% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 16% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <name>Condizioni_Economiche_Famiglie_EE_Text1_0_0_0_0_2</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,26 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 95% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 2% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 3% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Placet Variabile Luce Casa</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti&amp;nbsp;da Hera Comm/ Hera Comm Marche/ EstEnergy pari ad € 25,00&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti&amp;nbsp;da {!HDT_Script_Introduzione.salesCompany} pari ad € 25,00&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Sono inoltre a suo carico tasse, IVA ed imposte previste dalla legge.&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue>Mortis Causa</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
-        </fields>
-        <fields>
-            <name>Condizioni_Economiche_Famiglie_EE_Text4_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Sono inoltre a suo carico tasse, IVA ed imposte previste dalla legge.&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text5_0_0_0_0_0</name>
@@ -836,12 +832,12 @@
         </connector>
         <fields>
             <name>text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt;&quot;&gt;[3. Condizioni economiche Energia elettrica per: &lt;/span&gt;&lt;span style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 11pt;&quot;&gt;HERA PLACET LUCE CASA]&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[3. Condizioni economiche Energia elettrica per: HERA PLACET LUCE CASA]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche Hera Comm PLacet Fissa Luce Lavoro sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è pari a 0,1857 €/kWh nella fascia F1, 0,1769 €/kWh nella fascia F2 e 0,1659 €/kWh nella fascia F3, definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Nel caso di contatore monorario, il prezzo sarà pari a 0,1758 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 71% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 6% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 23% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche [HERA COMM/ESTENERGY PLACET FISSA LUCE CASA] sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è pari a 0,4064 €/kWh nella fascia F1 e 0,3954 €/kWh nella fascia F23. La fascia “F1”, è quella dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali; quella “F23” è invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Nel caso di contatore monorario, il prezzo sarà pari a 0,3991 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’80% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa l’11% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento e di capacità, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 9% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -849,14 +845,14 @@
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Hera Placet Luce Casa</stringValue>
+                        <stringValue>Placet Fissa Luce Casa</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche Hera Comm Placet Variabile Luce sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,0119 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 66% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 7% della spesa annua.Sono a carico del cliente i corrispettivi di dispacciamento, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 27% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche [HERA COMM/ESTENERGY PLACET VARIABILE LUCE CASA] sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,022 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’78% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 12% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 10% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -939,7 +935,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è pari a 0,1817 €/kWh nella fascia F1 e 0,1718 €/kWh nella fascia F23. La fascia “F1”, è quella dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali; quella “F23” è invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Nel caso di contatore monorario, il prezzo sarà pari a 0,1751 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 69% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 90 €/POD/anno ed incide per circa il 13% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 18% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche [HERA COMM/ESTENERGY PLACET FISSA LUCE CASA] sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è pari a 0,4064 €/kWh nella fascia F1 e 0,3954 €/kWh nella fascia F23. La fascia “F1”, è quella dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali; quella “F23” è invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Nel caso di contatore monorario, il prezzo sarà pari a 0,3991 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’80% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa l’11% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento e di capacità, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 9% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -954,7 +950,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche [HERA COMM/ESTENERGY PLACET VARIABILE LUCE CASA] sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,012 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 63% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 90 €/POD/anno ed incide per circa il 16% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 21% circa della spesa annua.&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche [HERA COMM/ESTENERGY PLACET VARIABILE LUCE CASA] sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,022 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’78% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 12% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 10% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1032,15 +1028,15 @@
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text1</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[4. Condizioni economiche Gas naturale per: PLACET GAS CASA]&amp;nbsp;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;[4. Condizioni economiche Gas naturale per: HERA PLACET GAS CASA/ AMGA PLACET GAS CASA]&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text2</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche Placet Fissa Gas Casa sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 0,775 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 77% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Il corrispettivo di commercializzazione è pari a 90 €/PdR/anno ed incide per circa il 7% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 16% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche [HERA COMM PLACET FISSA GAS CASA/ AMGA ENERGIA &amp;amp; SERVIZI PLACET GAS CASA / HERA COMM MARCHE PLACET FISSA GAS CASA] sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 1,405 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 90% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 7% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 3% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductCode__c</leftValueReference>
                     <operator>Contains</operator>
@@ -1048,11 +1044,18 @@
                         <stringValue>Placet Fissa Gas Casa</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductCode__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Placet Gas Casa</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text3</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche PLacet Variabile Gas Casa sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,16 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 75% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 90 €/PdR/anno ed incide per circa il 7% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 18% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche [HERA COMM PLACET VARIABILE GAS CASA/ AMGA ENERGIA &amp;amp; SERVIZI PLACET VARIABILE GAS CASA / HERA COMM MARCHE PLACET VARIABILE GAS CASA] sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,23 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’89% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 7% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 4% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1130,15 +1133,15 @@
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text1_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[4. Condizioni economiche Gas naturale per: PLACET GAS CASA]&amp;nbsp;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;[4. Condizioni economiche Gas naturale per: PLACET GAS CASA]&amp;nbsp;﻿&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text2_0</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche Placet Fissa Gas Casa sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 0,774 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 82% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 3% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 15% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche [HERA COMM PLACET FISSA GAS CASA/ AMGA ENERGIA &amp;amp; SERVIZI PLACET GAS CASA / HERA COMM MARCHE PLACET FISSA GAS CASA] sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 1,405 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 90% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 7% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 3% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductCode__c</leftValueReference>
                     <operator>Contains</operator>
@@ -1146,11 +1149,18 @@
                         <stringValue>Placet Fissa Gas Casa</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductCode__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Placet Gas Casa</stringValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text3_0</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche PLacet Variabile Gas Casa sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,19 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 81% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 3% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 16% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche [HERA COMM PLACET VARIABILE GAS CASA/ AMGA ENERGIA &amp;amp; SERVIZI PLACET VARIABILE GAS CASA / HERA COMM MARCHE PLACET VARIABILE GAS CASA] sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,23 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’89% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 7% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 4% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1187,7 +1197,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text6_0</name>
-            <fieldText>&lt;p&gt;Inoltre, avendo scelto il pagamento tramite domiciliazione bancaria e l’invio elettronico della bolletta riceverà uno sconto di 6 €/anno.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Inoltre, avendo scelto il pagamento tramite domiciliazione bancaria e l’invio elettronico della bolletta riceverà uno sconto di 5,40 €/anno.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1216,6 +1226,52 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Conferma_Adesione</name>
+        <label>Conferma Adesione</label>
+        <locationX>598</locationX>
+        <locationY>2630</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Conferma_Adesione_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[9. Conferma adesione]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Conferma_Adesione_Aziende</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi Luce&amp;nbsp;e/o Gas&amp;nbsp;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se deve inviare un reclamo o richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	La informo che, qualora lei abbia i requisiti previsti per legge e voglia l’applicazione dell’aliquota IVA ridotta al 10%, ci dovrà restituire, debitamente compilata, la modulistica predisposta a tale scopo che troverà all’interno del plico contrattuale che riceverà per posta.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;[SI/NO]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;[SI/NO]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Contact__r.LastName} abbiamo terminato la registrazione, benvenuto/a in {!HDT_Script_Introduzione.salesCompany}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;[***FINE REGISTRAZIONE***]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.ClientCategoryFormula__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Aziende</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Conferma_Adesione_Famiglie</name>
+            <fieldText>&lt;p&gt;•	La informo che il contratto di fornitura si concluderà al momento della conferma dell’avvenuta ricezione della documentazione contrattuale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi Luce&amp;nbsp;e Gas&amp;nbsp;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le invieremo tramite posta il plico contrattuale con le specifiche che le ho elencato per la sua fornitura, e comprensivo della scheda di confrontabilità dell’offerta rispetto al regime di tutela.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Entro 14 giorni dalla conferma del ricevimento della documentazione contrattuale, Lei potrà esercitare il diritto di ripensamento, inviando un fax al numero verde 800.999.600, oppure una e-mail all’indirizzo contratti@gruppohera.it oppure una raccomandata con ricevuta di ritorno presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	 Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente, può ricorrere al Servizio di Conciliazione ARERA oppure attraverso le modalità indicate sul sito www.gruppohera.it&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;[SI/NO]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;[SI/NO]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Contact__r.LastName} abbiamo terminato la registrazione, benvenuto in {!HDT_Script_Introduzione.salesCompany}.&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;[***FINE REGISTRAZIONE***]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.ClientCategoryFormula__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Famiglie</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Dati_Tecnici_Aziende_EE_0_0</name>
         <label>Dati Tecnici Aziende EE</label>
         <locationX>1498</locationX>
@@ -1228,20 +1284,68 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text1_0_0</name>
-            <fieldText>&lt;p&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è DATO_MANCANTE?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta della luce [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura] ?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[3.3 Dati Tecnici Energia Elettrica]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Dati_Tecnici_Famiglie_EE_Text8_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta della luce ?&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text2_0_0</name>
-            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/p&gt;&lt;p&gt;•	[Se esiste per il precedente venditore (facoltativo)] Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>(1 OR 2) AND 3</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Mortis Causa</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Dati_Tecnici_Famiglie_EE_Text4_0_0</name>
+            <fieldText>&lt;p&gt;•   Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1306,20 +1410,70 @@
         </connector>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text1_0_0</name>
-            <fieldText>&lt;p&gt;[Dati Tecnici Gas]&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è DATO_MANCANTE?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas [nel caso sia il sottoscrittore procedere; in caso contrario chiedere autorizzazione a voltura]?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;[Dati Tecnici Gas]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta del gas?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text2_0_0</name>
-            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/p&gt;&lt;p&gt;•	[Se esiste per il precedente venditore (facoltativo)] Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Volture__c</leftValueReference>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.Volture__c</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text_7</name>
+            <fieldText>&lt;p&gt;•	 Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Mortis Causa</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1331,8 +1485,18 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text8_0_0</name>
-            <fieldText>&lt;p&gt;[Se il cliente ha un’attività per cui ha diritto ad agevolazioni fiscali]&lt;/p&gt;&lt;p&gt;•	Le ricordo che in alcuni casi le forniture di gas naturale sono soggette all’imposta di consumo statale ed alle addizionali regionali agevolate. Mi conferma che la sua attività è XXXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Bene, allora la informo che troverà la modulistica di richiesta all’interno del plico contrattuale da restituire debitamente compilata.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Le ricordo che in alcuni casi le forniture di gas naturale sono soggette all’imposta di consumo statale ed alle addizionali regionali agevolate. Mi conferma che la sua attività è {!LoopOrdiniFigliOfferta_0.Account.LastName__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Bene, allora la informo che troverà la modulistica di richiesta all’interno del plico contrattuale da restituire debitamente compilata.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.FacilitationExcise__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -1419,7 +1583,7 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_EE_Text4</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Se prima attivazione o subentro su GDM:&amp;nbsp;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Operatore: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità. Può restituire il modulo tramite sportello o inviandolo all&apos;indirizzo e-mail [per HC] Heracomm: contratti@gruppohera.it / [per HCM] clienti@heracomm-marche.it&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;Se prima attivazione o subentro su GDM:&amp;nbsp;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Operatore: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità. Può restituire il modulo tramite sportello o inviandolo all&apos;indirizzo e-mail {!emailRestituzioneModuloFormula}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -1602,7 +1766,7 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text4</name>
-            <fieldText>&lt;p&gt;Se prima attivazione o subentro su GDM&amp;nbsp;&lt;/p&gt;&lt;p&gt;Operatore: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità. Può restituire il modulo tramite sportello o inviandolo all&apos;indirizzo e-mail [per HC] Heracomm: contratti@gruppohera.it / [per HCM] clienti@heracomm-marche.it.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Se prima attivazione o subentro su GDM&amp;nbsp;&lt;/p&gt;&lt;p&gt;Operatore: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità. Può restituire il modulo tramite sportello o inviandolo all&apos;indirizzo e-mail &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!emailRestituzioneModuloFormula}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -1707,10 +1871,38 @@
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Conferma_Adesione</targetReference>
+        </connector>
         <fields>
-            <name>Durata_Contratto_Text1</name>
+            <name>Durata_Contratto_Placet_Famiglie</name>
             <fieldText>&lt;p&gt;In riferimento all’offerta Luce e/o Gas le ricordo le seguenti condizioni contrattuali:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordiamo che le condizioni economiche durano 12 mesi e che almeno 3 mesi prima della scadenza riceverà una comunicazione scritta con la proposizione delle nuove condizioni economiche che saranno applicate.&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta bimestrale per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 5000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 5000 smc/anno.&lt;/p&gt;&lt;p&gt;•	In mancanza di consumi reali, questi saranno stimati, con successivo conguaglio.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.ClientCategoryFormula__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Famiglie</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Durata_Contratto_Placet_Aziende</name>
+            <fieldText>&lt;p&gt;•	La informo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 9 mesi presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Qualora il punto di fornitura di energia elettrica sia connesso in bassa tensione e/o&amp;nbsp;i consumi di gas non siano superiori a 200.000 Smc/anno può recedere in qualsiasi momento entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Per la luce, riceverà una bolletta bimestrale, se la sua potenza è inferiore a 16,5 kW, altrimenti mensile. La bolletta sarà basata su consumi reali, ma se ciò non fosse possibile i suoi consumi saranno stimati, con successivo conguaglio.&lt;/p&gt;&lt;p&gt;•	Per il gas, la frequenza sarà almeno trimestrale per consumi compresi fra 500 e 5000 Smc/anno, almeno quadrimestrale per consumi inferiori a 500 Smc/anno, mensile per consumi superiori a 5000 Smc/anno. Le fatture saranno sempre salvo conguaglio.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.ClientCategoryFormula__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Aziende</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -1807,6 +1999,10 @@
                 <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>salesCompanyToDisplay</name>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
         <name>HDT_Script_VAS</name>

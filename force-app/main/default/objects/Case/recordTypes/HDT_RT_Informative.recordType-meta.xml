@@ -977,6 +977,10 @@
             <fullName>Multi</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>VAS</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CompanyOwner__c</picklist>
@@ -6063,7 +6067,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Falso procurato</fullName>
+            <fullName>Falso procuratore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6251,7 +6255,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Prelivo abusivo</fullName>
+            <fullName>Prelievo abusivo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6973,6 +6977,38 @@
     </picklistValues>
     <picklistValues>
         <picklist>InformativeType__c</picklist>
+        <values>
+            <fullName>Modifica Contratti Preattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratti/Bonus Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena/Nuovo contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena/Subentro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena/Intervento Riattivazione luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentale/Copia Contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proroga Conn Temp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura Tecnica</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Subentro</fullName>
             <default>false</default>
@@ -8951,6 +8987,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>SignatoryType__c</picklist>
+        <values>
+            <fullName>Legale Rappresentante</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagatore Alternativo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stesso Sottoscrittore</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>SplitPayment__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -10236,7 +10287,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Importi per consumi risalenti a più di due anni</fullName>
+            <fullName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</fullName>
             <default>false</default>
         </values>
         <values>

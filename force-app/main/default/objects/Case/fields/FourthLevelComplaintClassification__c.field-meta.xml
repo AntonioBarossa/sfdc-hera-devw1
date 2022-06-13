@@ -90,19 +90,19 @@
             <valueName>Modalità recesso</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Importi per consumi risalenti a più di due anni</controllingFieldValue>
+            <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
             <valueName>Causa Arera</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Importi per consumi risalenti a più di due anni</controllingFieldValue>
+            <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
             <valueName>Causa Cliente</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Importi per consumi risalenti a più di due anni</controllingFieldValue>
+            <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
             <valueName>Causa Distributore</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Importi per consumi risalenti a più di due anni</controllingFieldValue>
+            <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
             <valueName>Causa Venditore</valueName>
         </valueSettings>
         <valueSettings>
@@ -343,7 +343,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Verifica e ricostruzioni</controllingFieldValue>
-            <valueName>Prelivo abusivo</valueName>
+            <valueName>Prelievo abusivo</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Verifica e ricostruzioni</controllingFieldValue>
@@ -489,7 +489,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
-            <valueName>Falso procurato</valueName>
+            <valueName>Falso procuratore</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
@@ -530,10 +530,6 @@
         <valueSettings>
             <controllingFieldValue>Doppia Fatturazione</controllingFieldValue>
             <valueName>Doppia Fatturazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Doppia Fatturazione</controllingFieldValue>
-            <valueName>Venditore ha titolarità</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Periodicità e fattura di chiusura</controllingFieldValue>

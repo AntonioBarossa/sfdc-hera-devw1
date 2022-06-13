@@ -1,28 +1,45 @@
 @isTest
 public with sharing class HDT_SRV_DocumentalManagementTst {
+    private static HDT_UTL_Constants utlConstants=new HDT_UTL_Constants();
     private static Order testOrder;
     @TestSetup
     static void setup(){
         Id pricebookId = Test.getStandardPricebookId();
         
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+                    List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, false, 'HERA COMM', 'Azienda', 'Aziende SME');
+            accList[0].SatisfactionIndexCtrl__c = 1.0;
+            accList[0].PraxidiaUpdateDate__c = Date.newInstance(2021, 09, 14);
+            insert accList;
         
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
-        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(2, false, accList[0].Id, 'Bozza');
+
+        ordList[0].isTransition__c = true;
+        ordList[0].RecordTypeId = utlconstants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+
+        ordList[0].Phase__c = 'Documentazione Gestita';
+
         ordList[0].Pricebook2Id=pricebookId;
         ordList[0].ServicePoint__c = servPointList[0].Id;
+                ordList[1].isTransition__c = true;
+        ordList[1].RecordTypeId = utlconstants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+
+        ordList[1].Phase__c = 'Documentazione Gestita';
+
+        ordList[1].Pricebook2Id=pricebookId;
+        ordList[1].ServicePoint__c = servPointList[0].Id;
         insert ordList;
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
         List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].id, 'Bozza');
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        caseList[0].Phase__c='Completata';
+        insert caseList;
         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
         HDT_UTL_DataFactoryTst.createChildOrder(1, true, accList[0].Id, sales, ordList[0].Id, contactList[0].Id);
         
         List<DocumentalPayloadAdministration__c> documList = HDT_UTL_DataFactoryTst.createDocumentalPayloadAdm();
-        
-        
-        
+        //
         
         
         List<Product2> prods = HDT_UTL_DataFactoryTst.createProduct2(1, false);
@@ -33,6 +50,8 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         HDT_UTL_DataFactoryTst.pClickCasePhase();
         List<PricebookEntry> entries = HDT_UTL_DataFactoryTst.createPricebookEntry(prods, true, pricebookId);
         HDT_UTL_DataFactoryTst.createOrderItem(1, true, ordList[0].Id, servPointList[0].id, prods[0].id, entries[0].id);
+
+        
         list<DocumentSendTracking__c> testDocSendTr =  HDT_UTL_DataFactoryTst.createDocumentSendTracking(2, ordList[0].Id, caseList[0].Id);
         List<DocumentalActivity__c> docActTest = HDT_UTL_DataFactoryTst.createDocumentalActivity(2,true, ordList[0].Id, caseList[0].Id);
         HDT_UTL_DataFactoryTst.createJsonPayload();
@@ -40,6 +59,10 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         HDT_UTL_DataFactoryTst.pClickInstance();
         
         HDT_UTL_DataFactoryTst.newPhaseTransition('Attesa conferma preventivo cliente', 'Bozza', caseList[0].Id, 'HDT_RT_Default');
+
+        
+        
+        
         
         insert new DocusignSettings__c(CustomerEnviromentId__c = 'HERA-TEST');
     }
@@ -101,6 +124,8 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
         Test.startTest();
         Map<String,Object> formParams = new Map<String,Object>();
         formParams.put('Contesto', 'Case');
+        formParams.put('mode','Print');
+        formParams.put('signMode','OTP');
         Case ca = [SELECT Id, CaseNumber, Phase__c FROM Case LIMIT 1]; 
         String res = HDT_SRV_DocumentalManagement.generateRequest((String)ca.Id,'Case', JSON.serialize(formParams));
         
@@ -273,10 +298,216 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
     }
     
     
+    @isTest
+    static void testHandleRadio1(){
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagement_HTTP_MOCK());
+        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"radio1","selected":"true","value":"no"}]}';
+        HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody = (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest) JSON.deserialize(body, HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest.class);
+        String status = requestBody.status;
+        String envelopeId = 'idPlico_0';
+        String outcome = requestBody.outcome;
+        String transactionId = 'idPlico_0';
+        SObject recordToUpdate = HDT_SRV_DocumentalManagement.getSobjectFromTransactionId(transactionId);
+        HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate,requestBody, transactionId);
+        //HDT_SRV_DocumentalManagement.handleRadioGroup(record,listOfRadio,envelopeId);
 
+    }
+      @isTest
+    static void testHandleRadio2(){
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagement_HTTP_MOCK());
+        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"radio2","selected":"true","value":"no"}]}';
+        HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody = (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest) JSON.deserialize(body, HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest.class);
+        String status = requestBody.status;
+        String envelopeId = 'idPlico_0';
+        String outcome = requestBody.outcome;
+        String transactionId = 'idPlico_0';
+        SObject recordToUpdate = HDT_SRV_DocumentalManagement.getSobjectFromTransactionId(transactionId);
+        HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate,requestBody, transactionId);
+        //HDT_SRV_DocumentalManagement.handleRadioGroup(record,listOfRadio,envelopeId);
+
+    }
+    
+          @isTest
+    static void testHandleRadioOrder1(){
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagement_HTTP_MOCK());
+        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"radio1","selected":"true","value":"no"}]}';
+        HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody = (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest) JSON.deserialize(body, HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest.class);
+        String status = requestBody.status;
+        String envelopeId = 'idPlico_0';
+        String outcome = requestBody.outcome;
+        String transactionId = 'idPlico_0';
+        SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
+        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId,SupplyType__c  FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+        HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate[0],requestBody, transactionId);
+        //HDT_SRV_DocumentalManagement.handleRadioGroup(record,listOfRadio,envelopeId);
+
+    }
+    @isTest
+        static void testHandleRadioOrder2(){
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagement_HTTP_MOCK());
+        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"radio2","selected":"true","value":"no"}]}';
+        HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody = (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest) JSON.deserialize(body, HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest.class);
+        String status = requestBody.status;
+        String envelopeId = 'idPlico_0';
+        String outcome = requestBody.outcome;
+        String transactionId = 'idPlico_0';
+        SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
+        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId,SupplyType__c  FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+        HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate[0],requestBody, transactionId);
+        //HDT_SRV_DocumentalManagement.handleRadioGroup(record,listOfRadio,envelopeId);
+
+    }
+    
+     @isTest
+        static void testHandleRadioOrder3(){
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagement_HTTP_MOCK());
+        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"DTC_radio1_1","selected":"true","value":"Pulsante di opzione1"}]}';
+        HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody = (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest) JSON.deserialize(body, HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest.class);
+        String status = requestBody.status;
+        String envelopeId = 'idPlico_0';
+        String outcome = requestBody.outcome;
+        String transactionId = 'idPlico_0';
+        SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
+        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId,SupplyType__c  FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+        HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate[0],requestBody, transactionId);
+        //HDT_SRV_DocumentalManagement.handleRadioGroup(record,listOfRadio,envelopeId);
+
+    }
+    
+    @isTest
+        static void testHandleRadioOrder4(){
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagement_HTTP_MOCK());
+        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"L80_radio_1","selected":"true","value":"Pulsante di opzione1"}]}';
+        HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody = (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest) JSON.deserialize(body, HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest.class);
+        String status = requestBody.status;
+        String envelopeId = 'idPlico_0';
+        String outcome = requestBody.outcome;
+        String transactionId = 'idPlico_0';
+        SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
+        List<SObject> recordToUpdate = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId,SupplyType__c FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+        HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate[0],requestBody, transactionId);
+        //HDT_SRV_DocumentalManagement.handleRadioGroup(record,listOfRadio,envelopeId);
+
+    }
+/*
+    @isTest
+    static void  testgeneratePayload(){
+
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord docRecord;
+        docRecord = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord();
+        //fields docRecord
+        
+        //TODO: IMPLEMENT
+        docRecord.field1 = '';
+		docRecord.field2 = '';
+		docRecord.field3 = '';
+		docRecord.field4 = '';
+        
+        //docSection
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection docSection;
+        docSection = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection();
+        
+        //fields docSection
+        docSection.records = new List<HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord>{docRecord};
+
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure docStructure;
+        docStructure = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure();
+        
+        //fields docStructure
+        docStructure.sections = new List<HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection>{docSection};
+        
+        //Documento Docstructure
+        Id folderId = [SELECT Id FROM Folder WHERE DeveloperName  = :'DocumentalPayloadAdministration' LIMIT 1].Id;
+        
+        Document myDocByContext = new Document();
+        myDocByContext.name = 'DocumentazioneAnticipata';
+        myDocByContext.FolderId = folderId;
+        myDocByContext.Body = Blob.valueOf(JSON.serialize(docStructure));
+        insert myDocByContext;
+
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Case');
+        formParams.put('mode','Print');
+        formParams.put('signMode','OTP');
+
+
+        Case caseObject = [SELECT Id FROM Case LIMIT 1];
+        Account accountObject = [SELECT Id,Name FROM Account LIMIT 1];
+		Contact contactObject = [SELECT Id,Name FROM Contact LIMIT 1];
+        List<DocumentSelected__c> documentSelectedObjectList = (List<DocumentSelected__c> ) [SELECT Id,Name FROM DocumentSelected__c LIMIT 1];
+		List<sObject> listCase = new List<sObject>();
+		listCase.add(caseObject);
+        List<sObject> listAccount = new List<sObject>();
+		listAccount.add(accountObject);
+		List<sObject> listContact = new List<sObject>();
+		listContact.add(contactObject);
+		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>{
+			'Case' => listCase, 'Account' => listAccount, 'PrimaryContact' => listContact, 'DocumentSelected' => documentSelectedObjectList
+		};
+
+		List<Map<String,List<sObject>>> recordObjectsListMap = new List<Map<String,List<sObject>>>();
+		recordObjectsListMap.add(mapStringObjectRecords);
+
+
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure configuration = (HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure) JSON.deserialize(myDocByContext.Body.toString(), HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure.class);
+       String res =  HDT_SRV_DocumentalManagement.generatePayload( recordObjectsListMap,configuration,formParams);
+
+    }*/
+    
+@isTest
+    static void testgetSignModeConfiguration(){
+        String res = HDT_SRV_DocumentalManagement.getSignModeConfiguration('Rimborso', 'Back office');
+    }
+    
+          
+@isTest
+static void testcreateContactPoint(){
+    List<Contact> cont = [SELECT Id FROM Contact LIMIT 1];
+    String res = HDT_SRV_DocumentalManagement.createContactPoint('test@test.it', '3511111111', cont[0].Id);
+} 
+    
+@isTest
+static void testqueryContactPoint(){
+    List<Contact> cont = [SELECT Id FROM Contact LIMIT 1];
+    String res = HDT_SRV_DocumentalManagement.queryContactPoint('test@test.it', '3511111111', cont[0].Id);
+} 
+@isTest
+static void testgeneratePayloadEstrattoConto(){
+    Map<String,Object> primolivello = new Map<String,Object>();
+    primolivello.put('societa', 'HERA COMM MARCHE');
+    primolivello.put('contoContrattuale' , '200001846232');
+    primolivello.put('rateizzato' , 'NO');
+    primolivello.put('numeroFattura' , '0000411810643841');
+    primolivello.put('residuo' , '0.0');
+    primolivello.put('importo' , '0.0');
+
+    primolivello.put('fatturaPrescrivibile' ,'testString');
+    primolivello.put('fatturaPrescritta', 'testString');
+    List<Object> itemVasList = new List<Object>();
+    itemVasList.add(primolivello);
+
+
+    Map<String, Object> secondoLivelloMap = new Map<String, Object>();
+    secondoLivelloMap.put('settoreMerceologico', 'Gas');
+    secondoLivelloMap.put('motivoDiPareggio', 'STORNO');
     
     
-       public class HDT_SRV_DocumentalManagement_HTTP_MOCK implements HttpCalloutMock {
+    List<Object> secondoLivelloList = new List<Object>();
+    secondoLivelloList.add(secondoLivelloMap);
+    primolivello.put('secondoLivelloInformativo', secondoLivelloList);
+    
+    Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+    
+    Map<String,Object> formParams = new Map<String,Object>();
+    formParams.put('Contesto', 'EC');
+    formParams.put('EstrattoConto', JSON.serialize(itemVasList));
+
+
+
+
+    String res = HDT_SRV_DocumentalManagement.generatePayloadEstrattoConto(formParams);
+} 
+    public class HDT_SRV_DocumentalManagement_HTTP_MOCK implements HttpCalloutMock {
         
         public HTTPResponse respond(HTTPRequest request) {
             

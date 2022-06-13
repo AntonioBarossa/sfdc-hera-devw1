@@ -83,7 +83,7 @@ public with sharing class HDT_LC_CambioUso {
             c.id = caseId;
             System.debug('*****3:');
             c.SupplyType__c = tipoFornitura;
-            c.UseChangeCharge__c = addebito;
+            //c.UseChangeCharge__c = addebito;
             c.PhoneNumber__c = recapito;
             c.ServicePointType__c = tipoImpianto;
             c.SalesCompanyCode__c = agc.get('codiceAgente');
