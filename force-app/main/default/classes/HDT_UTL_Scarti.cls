@@ -488,11 +488,12 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
             if(Schema.Order.SObjectType == recordId.getSobjectType()){
                 //Gestione Scarti SAP il processField per l'order è sempre il type ed il controlField è sempre il DiscardReason
-                List<Order> parentOrder = [SELECT Id,ProcessType__c,DiscardReason__c, ServicePoint__r.CommoditySector__c FROM Order WHERE Id =:recordId WITH SECURITY_ENFORCED];
+                List<Order> parentOrder = [SELECT Id,ProcessType__c,DiscardReason__c,Subprocess__c, ServicePoint__r.CommoditySector__c FROM Order WHERE Id =:recordId WITH SECURITY_ENFORCED];
                 if(!parentOrder.isEmpty()){
-                    processField = parentOrder.get(0).ProcessType__c;
-                    ctrField = String.isNotBlank(discardMessage) ? discardMessage : parentOrder.get(0).DiscardReason__c;
-                    commodity = (parentOrder.get(0).ServicePoint__r == null) ? '' : parentOrder.get(0).ServicePoint__r.CommoditySector__c;
+                    Order ord = parentOrder.get(0);
+                    processField = ('Voltura'.equalsIgnoreCase(ord.ProcessType__c) && 'Con Autolettura'.equalsIgnoreCase(ord.Subprocess__c)) ? 'Voltura con Autolettura' : ord.ProcessType__c;
+                    ctrField = String.isNotBlank(discardMessage) ? discardMessage : ord.DiscardReason__c;
+                    commodity = (ord.ServicePoint__r == null) ? '' : ord.ServicePoint__r.CommoditySector__c;
                 }
             }
             if (String.isNotEmpty(processField) && String.isNotEmpty(ctrField)){
