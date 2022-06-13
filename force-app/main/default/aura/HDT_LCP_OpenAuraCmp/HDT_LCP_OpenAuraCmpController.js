@@ -106,8 +106,6 @@
                     }
                     else if(element.pageReference.attributes.recordId === orderId){
                         parentId = element.tabId;
-                    }else if(element.pageReference.attributes.recordId === caseId && tabToClose && tabToClose.indexOf('_') === -1){
-                        parentId = element.tabId;
                     }
                 }
             });

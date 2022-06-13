@@ -133,51 +133,11 @@ public with sharing class HDT_UTL_CampaignMember {
     }
 
     public static void createCommercialCode(List<CampaignMember> newCampaignMember) {
-
-    	//START>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
-        /*
-        List<String> campaignIdList = new List<String>();
-        List<String> campaignMemberIdList = new List<String>();
-        Set<String> uniqueCampaignId = new Set<String>();
-        Map<String,List<String>> allMembers = new Map<String,List<String>>();
-        
-        for (CampaignMember member : newCampaignMember) {
-            uniqueCampaignId.add(member.CampaignId);
-            campaignMemberIdList.add(member.Id);
-        }
-
-        campaignIdList.addAll(uniqueCampaignId);
-
-        for (String cmpId : campaignIdList) {
-            List<String> newCmList = new List<String>();
-            for (CampaignMember newCm : newCampaignMember) {
-                if (newCm.CampaignId == cmpId) {
-                    newCmList.add(newCm.Id);
-                }
-            }
-            allMembers.put(cmpId, newCmList);            
-        }        
-        
-        if (!system.isBatch()) { // Keltin - added this because it cases error 'Database.executeBatch cannot be called from a batch start, batch execute, or future method' when called from HDT_BA_QualityCall
-            //execute batch for each campaign
-            if (allMembers.size() > 0) {
-                HDT_BA_CommercialCode ccBatch = new HDT_BA_CommercialCode(allMembers);
-                Database.executeBatch(ccBatch, 200);
-            }
-        }
-		*/
-        
         List<Commercial_Code_Batch_Context__c> newContext = new List<Commercial_Code_Batch_Context__c>();
-        Integer count = 0;
         for (CampaignMember member : newCampaignMember){
-            Datetime nowDate = Datetime.now().addSeconds(count);
-            String nowDateFormat = nowDate.format('yyMMddHHmmssZ') + '-' + Crypto.getRandomInteger();
-            newContext.add( new Commercial_Code_Batch_Context__c(Name=nowDateFormat, CampaignId__c=member.CampaignId, CampaignMemberId__c=member.Id));
-            ++count;
-        }
-        
+            newContext.add( new Commercial_Code_Batch_Context__c(Name=(''+member.CampaignId+member.Id).right(28), CampaignId__c=member.CampaignId, CampaignMemberId__c=member.Id));
+        }        
         HDT_UTL_DatabaseService.insertSObject(newContext);
-        //END>> 30/05/22 costanzo.lomele@webresults.it #fix for campagne performance tests
     }
 
     public static void campaignSuspension(List<Campaign> newCampaigns, List<Campaign> oldCampaigns) {
