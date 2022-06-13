@@ -1,5 +1,5 @@
 public with sharing class HDT_WS_CampagenDmDmp {
-    private static final String REQUEST_PATH = '/data-management/exports';
+    private static final String REQUEST_PATH = '/jobs/data-management/exports'; //08/06/2022 Test Prestazionali DMP
     public static HDT_WS_CampagenDmDmpDataResponse callService(String runId,String status,String fileType,String errorMessage,List<String> contentVersionIds){
         
         HDT_WS_CampagenDmDmpDataRequest req = new HDT_WS_CampagenDmDmpDataRequest(runId,status,fileType,errorMessage,contentVersionIds);

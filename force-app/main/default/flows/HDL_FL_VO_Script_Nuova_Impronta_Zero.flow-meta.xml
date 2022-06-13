@@ -1774,42 +1774,6 @@
             <targetReference>Promo_Decision_0_0_0_0_0_0_0_0</targetReference>
         </connector>
         <fields>
-            <name>Bonus_EE_Text_5_0_0_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Bonus €/kWh&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta, le sarà riconosciuto un bonus incrementale legato alla durata della fornitura. A partire dal settimo fino al dodicesimo mese di fornitura, il bonus comprensivo delle perdite di rete, sotto forma di sconto sulla componente energia, sarà pari a 0,00550 €/kWh. In bolletta invece sarà esposto al netto delle perdite e pari a: 0,0050 €/kWh; dal tredicesimo al ventiquattresimo mese il bonus sulla componente energia, comprensivo delle perdite di rete, aumenterà a 0,0551 €/kWh fino alla durata del prezzo fisso. In bolletta invece sarà esposto al netto delle perdite e pari a: 0,0500 €/kWh.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Web Luce</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>Bonus_EE_Text_3_0_0_0_0_0_0_0_0_0_0</name>
             <fieldText>&lt;p&gt;Bonus €/a&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus Soluzioni Sostenibili&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -2012,7 +1976,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text8</name>
-            <fieldText>&lt;p&gt;Il profilo Sole- Luna prevede un prezzo applicato alla componente energia biorario, differenziato cioè tra ore piene ed ore vuote.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Le ore piene, sono quelle dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali. Le ore vuote sono invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Il prezzo della componente energia per il periodo da lei scelto assumerà il valore di {!PrezzoLordoOrePieneFormula}€/kWh nelle ore piene e {!PrezzoLordoOreVuoteFormula}€/kWh nelle ore vuote.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: Ore Piene: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePick__c}€/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Ore Vuote: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePickOut__c} €/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo Sole- Luna prevede un &lt;strong&gt;prezzo &lt;/strong&gt;applicato alla &lt;strong&gt;componente energia &lt;/strong&gt;biorario, differenziato cioè tra &lt;strong&gt;ore piene&lt;/strong&gt; ed &lt;strong&gt;ore vuote&lt;/strong&gt;.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Le &lt;strong&gt;ore piene&lt;/strong&gt;, sono quelle dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali. Le &lt;strong&gt;ore vuote&lt;/strong&gt; sono invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Il prezzo della componente energia per il periodo da lei scelto assumerà il valore di {!PrezzoLordoOrePieneFormula}€/kWh nelle ore piene e {!PrezzoLordoOreVuoteFormula}€/kWh nelle ore vuote.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: Ore Piene: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePick__c}€/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Ore Vuote: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePickOut__c} €/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -2034,7 +1998,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text9</name>
-            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di {!PrezzoLordoFormula} €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c} €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo 24 prevede un &lt;strong&gt;prezzo &lt;/strong&gt;applicato alla &lt;strong&gt;componente energia&lt;/strong&gt; uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di {!PrezzoLordoFormula} €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c} €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>

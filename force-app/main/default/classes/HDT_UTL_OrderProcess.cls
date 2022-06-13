@@ -163,10 +163,15 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && isMonitoringList.contains(order.AgencyCode__c)
                 && !phaseStory.contains('Quality Call OK')
                 && order.ComfortCallDaysDue__c == null){
-                String newPhase = 'In attesa di quality call';
-                order.Phase__c = newPhase;
-                DateTime nowDateTime = DateTime.now();
-                order.PhaseStory__c = oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
+                    if(String.isNotBlank(order.VasSubtype__c) && order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi')){
+                        //nothing to update
+                    }else{
+                        String newPhase = 'In attesa di quality call';
+                        order.Phase__c = newPhase;
+                        DateTime nowDateTime = DateTime.now();
+                        order.PhaseStory__c = oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
+                    }
+                
             }
             /**@frpanico 07/03/2022
              * Aggiunta quality monitoraggio per voltura
@@ -470,7 +475,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 if( newOrder.DocumentalProcessType__c != null
                     && newOrder.SignedDate__c != null
                     && (newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
-                        || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura')
+                        || newOrder.DocumentalProcessType__c.containsIgnoreCase('Voltura')
                         || newOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch'))
                 ){
                     if(!activityMap.isEmpty() && newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
@@ -481,6 +486,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     if((oldOrder.Phase__c == 'Comunicazione verso Heroku KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         ||(oldOrder.Phase__c == 'Amm. Precheck KO SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         || (oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Comunicazione verso Heroku')
+                        || (oldOrder.Phase__c == 'Ammissibilità KO' && newOrder.Phase__c == 'Documentazione Validata')
+                        || (oldOrder.Phase__c == 'Accettazione Voltura' && newOrder.Phase__c == 'Documentazione Validata')
                         || (oldOrder.Phase__c == 'Esito OK da SII' && newOrder.Phase__c == 'Comunicazione verso Heroku')
                         /**@frpanico 2022-04-28 Aggiunto ricalcolo date per Switch clonato */
                         || (oldOrder.Phase__c == 'Bozza' && newOrder.Phase__c == 'Comunicazione verso Heroku')
@@ -491,7 +498,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         || (oldOrder.Phase__c == 'In attesa validazione' && newOrder.Phase__c == 'Documentazione Validata')
                     ){
                         if(newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
-                            if(newOrder.Phase__c == 'Documentazione Validata' && Date.today() <= newOrder.DateSentToSII__c){
+                            if((newOrder.Phase__c == 'Documentazione Validata' || newOrder.Phase__c == 'Esportazione VS Siebel') && Date.today() <= newOrder.DateSentToSII__c){
                                 continue;
                             }else{
                                 newOrder.DateSentToSII__c = Date.today();
