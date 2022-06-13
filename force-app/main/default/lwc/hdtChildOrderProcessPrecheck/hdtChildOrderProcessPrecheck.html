@@ -1,3 +1,10 @@
+<!--
+  @description       : 
+  @author            : Giacinto Florio
+  @group             : 
+  @last modified on  : 13-06-2022
+  @last modified by  : Giacinto Florio
+-->
 <template>
     <template if:true={order}>
     <lightning-card title='Selezione Processo'>
@@ -85,6 +92,10 @@
                     </lightning-record-edit-form>
 
             </lightning-layout-item>
+        </lightning-layout>
+
+        <lightning-layout if:true={isCheckAssessmentsVisible}>
+            <c-hdt-check-assessments></c-hdt-check-assessments>
         </lightning-layout>
 
         <div class="slds-clearfix slds-p-around_small">

@@ -59,6 +59,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         );
     }
 
+    get isCheckAssessmentsVisible(){
+        return this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente' ? true : false;
+    }
+
     get disabledNext(){
         let result = true;
         if(this.order.RecordType.DeveloperName !== 'HDT_RT_Default' || (this.selectedProcessObject === '') || this.compatibilita === false){
