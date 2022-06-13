@@ -48,6 +48,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track tipoPlico='';
     @track showModalContact=false;
     @track contactPointInfo;
+    @track requireSendMode=true;
     defautlAgenciesManagement;
 
     //@frpanico 07/09 added EntryChannel__c (Canale di Ingresso) to predefault SendMode
@@ -101,6 +102,11 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.sendMode = inputWrapper.sendMode;
                 this.entryChannel = inputWrapper.entryChannel;
                 this.defautlAgenciesManagement = false;
+
+                if(this.signMode === 'Vocal Order' && this.processType === 'Modifica Privacy'){
+                    this.requireSendMode = false;
+                    this.emailRequired = false;
+                }
                 if (inputWrapper.checkAgencies && inputWrapper.checkAgencies.localeCompare('Y') === 0){
                     this.defautlAgenciesManagement = true;
                 }
@@ -144,7 +150,8 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     var existContrattoFirmato = false;
                     resultJSON.forEach((element) => {
                         signMode.push(element.signMode);
-                        if(element.signMode === 'Contratto già firmato'){
+                        console.log('#element >>> ' + JSON.stringify(element.signMode));
+                        if(element.signMode.value === 'Contratto già firmato'){
                             existContrattoFirmato = true;
                         }
                         element.sendMode.forEach((element2) => {
@@ -288,7 +295,11 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
             if (modSpedizione == null){
                 modSpedizione = '';
             }
-            if(modFirma.localeCompare('OTP Coopresenza')===0 || modFirma.localeCompare('OTP Remoto')===0){
+            if(modFirma.localeCompare('Vocal Order')===0 && this.processType != null && this.processType === 'Modifica Privacy'){
+                this.emailRequired = false;
+                this.phoneRequired = false;
+                this.addressRequired = false;
+            }else if(modFirma.localeCompare('OTP Coopresenza')===0 || modFirma.localeCompare('OTP Remoto')===0){
                 this.emailRequired = true;
                 this.phoneRequired = true;
                 this.addressRequired = false;
@@ -320,12 +331,18 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     handleChangeSignMode(event){
         try{
             this.sendMode = null;
+            this.dispatchEvent(new CustomEvent('changesignmode', { detail: event.detail.value}));
             var temp = this.signSendMap.find(function(post, index) {
                 if(post.signMode == event.detail.value)
                     return true;
             });
             console.log(JSON.stringify(temp));
             this.modalitaInvio = temp.sendMode;
+            console.log('Mod Invio ' + this.modalitaInvio);
+            if(event.detail.value === 'Vocal Order' && this.processType != null && this.processType === 'Modifica Privacy'){
+                this.requireSendMode = false;
+                this.emailRequired = false;
+            }
             console.log('mod invio ' + this.modalitaInvio);
             this.phoneRequired = false;
             this.addressRequired = false;
@@ -336,6 +353,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 resetDate = false;
             }
             this.launchSetRequiredFieldEvent(resetDate);
+            
         }catch(error){
             console.error(error);
         }

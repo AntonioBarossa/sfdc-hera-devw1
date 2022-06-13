@@ -101,6 +101,10 @@
                 <behavior>Readonly</behavior>
                 <field>ExciseEle__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>VAT__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -312,10 +316,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>VATfacilitationFlag__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>VAT__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

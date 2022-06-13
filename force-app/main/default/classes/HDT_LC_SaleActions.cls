@@ -123,9 +123,20 @@ public inherited sharing class HDT_LC_SaleActions {
         quoteSrv.checkReadAccess('SBQQ__Status__c,SBQQ__Ordered__c,SBQQ__LineItemsGrouped__c,SBQQ__OrderByQuoteLineGroup__c');
         List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsForSaleSaveEvent(sale.Id); //quotes that have a status of not rejected
 
+        /**@frpanico check for activities
+         * Caricamento Manuale Siebel
+        */
+        Boolean ordered = true;
+        Integer currentStep = 4;
+        List<wrts_prcgvr__Activity__c> manualLoadingSiebelAct = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE Sale__c = :sale.Id AND Type__c = 'Caricamento Manuale Siebel' WITH SECURITY_ENFORCED];
+        if(!manualLoadingSiebelAct.isEmpty())
+        {
+            ordered = false;
+            currentStep = 50;
+        }
         for (SBQQ__Quote__c quote : quoteList) {
             quote.SBQQ__Status__c = 'Chiusa';
-            quote.SBQQ__Ordered__c = true;
+            quote.SBQQ__Ordered__c = ordered;
             quote.SBQQ__LineItemsGrouped__c = true;
             quote.SBQQ__OrderByQuoteLineGroup__c = true;
             quote.CancellationReason__c = null;
@@ -135,7 +146,7 @@ public inherited sharing class HDT_LC_SaleActions {
         system.debug('quoteList: ' + quoteList);
 
         //4 - Update Sale
-        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Attiva', CampaignEleggibilityGroup__c = campaignElegibilityGroup, isTransition__c = sale.isTransition__c);
+        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Attiva', CampaignEleggibilityGroup__c = campaignElegibilityGroup, isTransition__c = sale.isTransition__c, CurrentStep__c = currentStep);
 
         //5 - SBQQ__QuoteLineGroup__c
         //Creazione di un QuoteLineGroup per ogni QuoteLine principale.

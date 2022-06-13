@@ -63,10 +63,10 @@ public inherited sharing class HDT_UTL_VasPractices extends HDT_UTL_PracticesSup
             for(Order singleOrder : orderList){
                 orderMap.put(singleOrder.OrderNumber, singleOrder.Id);
             }
-
+            String fullUrl = URL.getSalesforceBaseUrl().toExternalForm();
             for(HDT_WRP_DetailObj obj : dataTable.details){
                 if(orderMap.containsKey(obj.rds)){
-                    obj.id = orderMap.get(obj.rds);
+                    obj.id = fullUrl+'/'+orderMap.get(obj.rds);
                 } else {
                     obj.id = 'javascript:void(0)';
                 }

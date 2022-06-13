@@ -164,7 +164,7 @@ public with sharing class HDT_UTL_Account {
         //Nuova Versione
         string accountType = Schema.SObjectType.Account.getRecordTypeInfosById().get(acc.RecordTypeId).getDeveloperName();
         List<SiebelCustomer__x> siebelCustomer = new List<SiebelCustomer__x>();
-
+        List<SObject> sobjToUpdate = new List<SObject>();
         /*if(accountType.contains('Residenziale')){
             siebelCustomer = [SELECT Id, OU_NUM__c, X_MARCATURA_CLIENTE__c 
                               FROM SiebelCustomer__x 
@@ -203,7 +203,7 @@ public with sharing class HDT_UTL_Account {
         if(!siebelCustomer.isEmpty()){
             acc.CustomerCode__c = siebelCustomer[0].OU_NUM__c;
             acc.CustomerMarking__c = siebelCustomer[0].X_MARCATURA_CLIENTE__c;
-            HDT_UTL_DatabaseService.updateSObject(acc);
+            sobjToUpdate.add(acc);
 
             List<AccountContactRelation> acrList = [SELECT Id, AccountId, Account.Category__c, ContactId, Roles 
                                                     FROM AccountContactRelation 
@@ -235,8 +235,13 @@ public with sharing class HDT_UTL_Account {
                         // cont.ContactCode__c = resCreate.data.codiceBP;
                         // HDT_UTL_DatabaseService.updateSObject(cont);
                         contRelation.ContactCode__c = resCreate.data.codiceBP;
-                        HDT_UTL_DatabaseService.updateSObject(contRelation);
+                        sobjToUpdate.add(contRelation);
                     }
+                }
+                else
+                {
+                    contRelation.ContactCode__c = siebelContact[0].INTEGRATION_ID__c;
+                    sobjToUpdate.add(contRelation);
                 }
             }
         }
@@ -244,17 +249,17 @@ public with sharing class HDT_UTL_Account {
             HDT_WS_RicCreBpCaRequest   req = callBpCaSearch(acc,cont);
             HDT_WS_RichCreBpCaResponse res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
             // System.debug('Response SRC : ' + res);
-            analizeResponse(res,acc,cont);
+            //analizeResponse(res,acc,cont);
             if ('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)) {
                 acc.CustomerCode__c = res.data.codiceBP;
-                HDT_UTL_DatabaseService.updateSObject(acc);
+                sobjToUpdate.add(acc);
             }
             List<AccountContactRelation> acrList = [SELECT Id, AccountId, Account.Category__c, ContactId, Roles 
             FROM AccountContactRelation 
             WHERE ContactId = :cont.Id
             WITH SECURITY_ENFORCED];
             for(AccountContactRelation acr : acrList){
-                if(acr.Roles.equalsIgnoreCase('Amministratore condominio')){
+                if(String.isNotBlank(acr.Roles) && acr.Roles.equalsIgnoreCase('Amministratore condominio')){
                     isAmministratoreCondominio = true;
                     category = acr.Account.Category__c;
                     contRelation.Id = acr.ContactId;
@@ -268,9 +273,13 @@ public with sharing class HDT_UTL_Account {
                     //Update Contact
                     if ('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)) {
                         cont.ContactCode__c = res.data.codiceBP;
-                        HDT_UTL_DatabaseService.updateSObject(cont);
+                        sobjToUpdate.add(cont);
                     }
             }        
+        }
+        if(!sobjToUpdate.isEmpty())
+        {
+            HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
         }    
     }
     

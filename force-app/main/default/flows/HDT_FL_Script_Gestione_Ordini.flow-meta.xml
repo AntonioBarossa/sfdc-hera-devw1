@@ -5,7 +5,7 @@
         <name>addSalesCompany</name>
         <label>addSalesCompany</label>
         <locationX>440</locationX>
-        <locationY>1118</locationY>
+        <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>salesCompanyOutput</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>addSalesCompanyForVas</name>
         <label>addSalesCompanyForVas</label>
         <locationX>440</locationX>
-        <locationY>2030</locationY>
+        <locationY>2270</locationY>
         <assignmentItems>
             <assignToReference>salesCompanyOutput</assignToReference>
             <operator>Add</operator>
@@ -31,6 +31,38 @@
         </assignmentItems>
         <connector>
             <targetReference>LoopOrdiniFigliOffertaVas</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignForNotVas</name>
+        <label>assignForNotVas</label>
+        <locationX>352</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>containsSalesCompanyNotVas</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LoopOrdiniFigliOfferta.SalesCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>salesCompanyDecision</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignVariableVas</name>
+        <label>assignVariableVas</label>
+        <locationX>352</locationX>
+        <locationY>2030</locationY>
+        <assignmentItems>
+            <assignToReference>containsSalesCompanyVas</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LoopOrdiniFigliOffertaVas.SalesCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>salesCompanyVasDecision</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -85,7 +117,7 @@
         <name>OrdiniFigliVASBonusAssign</name>
         <label>OrdiniFigliVASBonusAssign</label>
         <locationX>352</locationX>
-        <locationY>1574</locationY>
+        <locationY>1694</locationY>
         <assignmentItems>
             <assignToReference>AssignOrdiniFigliVASBonusOutput</assignToReference>
             <operator>Add</operator>
@@ -101,7 +133,7 @@
         <name>ValoriFigli_Assign</name>
         <label>ValoriFigli Assign</label>
         <locationX>352</locationX>
-        <locationY>1334</locationY>
+        <locationY>1454</locationY>
         <assignmentItems>
             <assignToReference>NomeOffertaOutput</assignToReference>
             <operator>Assign</operator>
@@ -131,7 +163,7 @@
         <name>salesCompanyDecision</name>
         <label>salesCompanyDecision</label>
         <locationX>352</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>addSalesCompany</targetReference>
         </defaultConnector>
@@ -143,7 +175,7 @@
                 <leftValueReference>salesCompanyOutput</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>LoopOrdiniFigliOfferta.SalesCompany__c</elementReference>
+                    <elementReference>containsSalesCompanyNotVas</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -156,7 +188,7 @@
         <name>salesCompanyVasDecision</name>
         <label>salesCompanyVasDecision</label>
         <locationX>352</locationX>
-        <locationY>1910</locationY>
+        <locationY>2150</locationY>
         <defaultConnector>
             <targetReference>addSalesCompanyForVas</targetReference>
         </defaultConnector>
@@ -168,7 +200,7 @@
                 <leftValueReference>salesCompanyOutput</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>LoopOrdiniFigliOffertaVas.SalesCompany__c</elementReference>
+                    <elementReference>containsSalesCompanyVas</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -194,7 +226,7 @@
         <collectionReference>GetOrdiniFigliOfferta</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>salesCompanyDecision</targetReference>
+            <targetReference>assignForNotVas</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>LoopOrdiniFigliOffertaVas</targetReference>
@@ -204,11 +236,11 @@
         <name>LoopOrdiniFigliOffertaVas</name>
         <label>LoopOrdiniFigliOffertaVas</label>
         <locationX>176</locationX>
-        <locationY>1790</locationY>
+        <locationY>1910</locationY>
         <collectionReference>GetOrdiniFigliOffertaVas_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>salesCompanyVasDecision</targetReference>
+            <targetReference>assignVariableVas</targetReference>
         </nextValueConnector>
     </loops>
     <processMetadataValues>
@@ -234,7 +266,7 @@
         <name>GetOrderFiglioVASBonus</name>
         <label>GetOrderFiglioVASBonus</label>
         <locationX>352</locationX>
-        <locationY>1454</locationY>
+        <locationY>1574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>OrdiniFigliVASBonusAssign</targetReference>
@@ -476,6 +508,20 @@
         <value>
             <stringValue>Inbound</stringValue>
         </value>
+    </variables>
+    <variables>
+        <name>containsSalesCompanyNotVas</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>containsSalesCompanyVas</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>famigliaProdottoOffertaInput</name>
