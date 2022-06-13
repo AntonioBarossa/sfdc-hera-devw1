@@ -1,10 +1,7 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
-public with sharing class HDT_BA_ExpiredCases implements Database.Batchable<sObject>, Schedulable {
-
-    public void execute(SchedulableContext ctx){
-        Database.executebatch(this,100);
-    }
-
+public with sharing class HDT_BA_ExpiredCases implements Database.Batchable<sObject> {
+    
+    
     //BATCH START
     public Database.QueryLocator start(Database.BatchableContext bc){
         Date todayDate = Date.today();

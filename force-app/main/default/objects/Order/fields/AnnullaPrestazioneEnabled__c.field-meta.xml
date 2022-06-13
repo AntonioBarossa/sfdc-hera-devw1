@@ -21,9 +21,10 @@
 		NOT(isTransition__c),
 		AND(
 			isTransition__c,
-			NOT(ISPICKVAL(Phase__c, &apos;Esportazione VS Siebel&apos;)),
-			NOT(ISPICKVAL(Phase__c, &apos;Caricamento Siebel OK&apos;)),
-			NOT(ISPICKVAL(Phase__c, &apos;In Corso Caricamento Siebel&apos;))
+			OR(
+				ISPICKVAL(Phase__c, &apos;Esportazione VS Siebel&apos;),
+				ISPICKVAL(Phase__c, &apos;Caricamento Siebel KO&apos;)
+			)
 		)
 	)
 )</formula>

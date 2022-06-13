@@ -1572,7 +1572,7 @@ disabledverifyFieldsAddressDisabled(){
 
         console.log('connectedCallback indirizzo estero : ' + JSON.stringify(this.IndEstero));
         this.disableFieldByIndEstero();
-        if(this.processtype !== undefined && this.processtype!= null && this.processtype!='' && this.processtype!='Reclamo Scritto/Rich. Info' && this.processType != 'Comportamento Venditori HC' && this.processType != 'Comportamento Altri Venditori'){
+        if(this.processtype !== undefined && this.processtype!= null && this.processtype!=''){
             this.disableAll=true;
             this.disableCodComuneSap=true;
             this.disableCap=true;

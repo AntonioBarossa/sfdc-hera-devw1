@@ -8,7 +8,8 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">[
+        <value xsi:type="xsd:string">[{&quot;label&quot;:&quot;Vas non billabile&quot;,&quot;value&quot;:&quot;Vas non billabile&quot;},
+{&quot;label&quot;:&quot;Vas billabile&quot;,&quot;value&quot;:&quot;Vas billabile&quot;},
 {&quot;label&quot;:&quot;Disattivazione VAS&quot;,&quot;value&quot;:&quot;Disattivazione VAS&quot;},
 {&quot;label&quot;:&quot;Segnalazione VAS&quot;,&quot;value&quot;:&quot;Segnalazione VAS&quot;},
 {&quot;label&quot;:&quot;Autoelettrica&quot;,&quot;value&quot;:&quot;Autoelettrica&quot;},

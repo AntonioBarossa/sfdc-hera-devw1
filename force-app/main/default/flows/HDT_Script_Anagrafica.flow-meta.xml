@@ -21,7 +21,7 @@
         <name>CallTypeDecision</name>
         <label>CallTypeDecision</label>
         <locationX>1502</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici_Inbound_Aziende_0_0_0</targetReference>
         </defaultConnector>
@@ -46,7 +46,7 @@
         <name>CallTypeDecision_0</name>
         <label>CallTypeDecision</label>
         <locationX>974</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici</targetReference>
         </defaultConnector>
@@ -71,7 +71,7 @@
         <name>CallTypeDecision_0_0</name>
         <label>CallTypeDecision</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafica_VAS_Screen_0</targetReference>
         </defaultConnector>
@@ -96,7 +96,7 @@
         <name>CategoriaDecision</name>
         <label>CategoriaDecision</label>
         <locationX>1238</locationX>
-        <locationY>398</locationY>
+        <locationY>278</locationY>
         <defaultConnector>
             <targetReference>CallTypeDecision</targetReference>
         </defaultConnector>
@@ -121,7 +121,7 @@
         <name>CategoriaDecision_0</name>
         <label>CategoriaDecision</label>
         <locationX>380</locationX>
-        <locationY>398</locationY>
+        <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici_Inbound_Aziende_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -146,7 +146,7 @@
         <name>VasDecision</name>
         <label>VasDecision</label>
         <locationX>809</locationX>
-        <locationY>278</locationY>
+        <locationY>158</locationY>
         <defaultConnector>
             <targetReference>CategoriaDecision</targetReference>
         </defaultConnector>
@@ -188,32 +188,11 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordLookups>
-        <name>getChild_0</name>
-        <label>getChild</label>
-        <locationX>809</locationX>
-        <locationY>158</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>VasDecision</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>ParentOrder__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>OrderData.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Order</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <screens>
         <name>Dati_Anagrafica_VAS_Screen_0</name>
         <label>Dati Anagrafica VAS</label>
         <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -279,7 +258,7 @@
         <name>Dati_Anagrafica_VAS_Screen_0_0</name>
         <label>Dati Anagrafica VAS</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -345,7 +324,7 @@
         <name>Dati_Anagrafici</name>
         <label>Dati Anagrafici</label>
         <locationX>1106</locationX>
-        <locationY>638</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -442,7 +421,7 @@
         </fields>
         <fields>
             <name>text6</name>
-            <fieldText>&lt;p&gt;•	Mi conferma quindi che per la domiciliazione bancaria posso utilizzare il codice IBAN già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è &lt;/p&gt;&lt;p&gt;{!getChild_0.IbanCountry__c}{!getChild_0.IbanCIN_IBAN__c}{!getChild_0.IbanCIN__c}{!getChild_0.IbanABI__c}{!getChild_0.IbanCAB__c}{!getChild_0.IbanCodeNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	[se il Cliente è già domiciliato con Hera/Amga Energia &amp;amp; Servizi] Mi conferma quindi che per la domiciliazione bancaria posso utilizzare il codice IBAN già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!OrderData.IbanCountry__c}{!OrderData.IbanCIN_IBAN__c}{!OrderData.IbanCIN__c}&lt;/span&gt;{!OrderData.IbanABI__c}{!OrderData.IbanCAB__c}{!OrderData.IbanCodeNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -477,7 +456,7 @@
         <name>Dati_Anagrafici_0</name>
         <label>Dati Anagrafici</label>
         <locationX>842</locationX>
-        <locationY>638</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -538,7 +517,7 @@
         </fields>
         <fields>
             <name>text6_0</name>
-            <fieldText>&lt;p&gt;•	[se il Cliente è già domiciliato con Hera/Amga Energia &amp;amp; Servizi] Mi conferma quindi che per la domiciliazione bancaria posso utilizzare il codice IBAN già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!getChild_0.IbanCountry__c}{!getChild_0.IbanCIN_IBAN__c}{!getChild_0.IbanCIN__c}{!getChild_0.IbanABI__c}{!getChild_0.IbanCAB__c}{!getChild_0.IbanCodeNumber__c}&lt;/span&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	[se il Cliente è già domiciliato con Hera/Amga Energia &amp;amp; Servizi] Mi conferma quindi che per la domiciliazione bancaria posso utilizzare il codice IBAN già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!OrderData.IbanCountry__c}{!OrderData.IbanCIN_IBAN__c}{!OrderData.IbanCIN__c}&lt;/span&gt;{!OrderData.IbanABI__c}{!OrderData.IbanCAB__c}{!OrderData.IbanCodeNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -578,7 +557,7 @@
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
         <locationX>1634</locationX>
-        <locationY>638</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -715,7 +694,7 @@
         </fields>
         <fields>
             <name>Anagrafica_Aziende_5_0_1</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in {!OrderData.DeliveryAddress__c}?&lt;/p&gt;&lt;p&gt;{!OrderData.ShippingAddressFormula__c}&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in {!OrderData.DeliveryAddress__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -790,16 +769,6 @@
             <name>Anagrafica_Aziende_7_0_0</name>
             <fieldText>&lt;p&gt;•	Mi conferma che siete iscritti all’Associazione di Categoria {!OrderData.ConventionAssociation__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OrderData.ConventionAssociation__c</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -808,7 +777,7 @@
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
         <locationX>1370</locationX>
-        <locationY>638</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -992,7 +961,7 @@
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
         <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1087,7 +1056,7 @@
         <locationX>683</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>getChild_0</targetReference>
+            <targetReference>VasDecision</targetReference>
         </connector>
     </start>
     <status>Active</status>

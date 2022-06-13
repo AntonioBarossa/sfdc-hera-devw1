@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>SendMode1__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">E-Mail</value>
     </values>
     <values>
         <field>SendMode2__c</field>

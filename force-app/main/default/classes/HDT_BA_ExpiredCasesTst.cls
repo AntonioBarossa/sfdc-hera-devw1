@@ -55,8 +55,7 @@ public with sharing class HDT_BA_ExpiredCasesTst {
         //TESTING
         Test.startTest();
         HDT_BA_ExpiredCases myBatchToTest = new HDT_BA_ExpiredCases();
-        //Database.executeBatch(myBatchToTest);
-        myBatchToTest.execute(null);
+        Database.executeBatch(myBatchToTest);
         Test.stopTest();
         
         //RETRIEVING DATA

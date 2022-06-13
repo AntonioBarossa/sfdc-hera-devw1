@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>StatusName__c</field>
-        <value xsi:type="xsd:string">Non interessato all offerta</value>
+        <value xsi:type="xsd:string">Non interessato all&apos;offerta</value>
     </values>
 </CustomMetadata>

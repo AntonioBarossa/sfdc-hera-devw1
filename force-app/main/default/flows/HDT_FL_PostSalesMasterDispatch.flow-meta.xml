@@ -47,7 +47,7 @@
         <name>getIsCommunityValue</name>
         <label>Valorizzazione variabile isCommunity</label>
         <locationX>7505</locationX>
-        <locationY>4478</locationY>
+        <locationY>4598</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -66,7 +66,7 @@
         <name>getuuid</name>
         <label>getuuid</label>
         <locationX>7296</locationX>
-        <locationY>4718</locationY>
+        <locationY>4838</locationY>
         <actionName>HDT_LC_CtToolbar</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -942,7 +942,7 @@
         <name>Valorizzazione_Status_Campaign_Member</name>
         <label>Valorizzazione Status Campaign Member</label>
         <locationX>7505</locationX>
-        <locationY>5846</locationY>
+        <locationY>5966</locationY>
         <assignmentItems>
             <assignToReference>CampaignMember_Record.Status</assignToReference>
             <operator>Assign</operator>
@@ -1069,7 +1069,7 @@
         <name>Campaign_Member_presente</name>
         <label>Campaign Member presente?</label>
         <locationX>6672</locationX>
-        <locationY>4118</locationY>
+        <locationY>4238</locationY>
         <defaultConnector>
             <targetReference>Record_Case</targetReference>
         </defaultConnector>
@@ -1091,13 +1091,6 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>RecordTypeName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>HDT_RT_VariazioneAnagraficaCliente</stringValue>
-                </rightValue>
-            </conditions>
             <label>NO</label>
         </rules>
     </decisions>
@@ -1105,7 +1098,7 @@
         <name>Case_Annullato</name>
         <label>Case Annullato?</label>
         <locationX>7037</locationX>
-        <locationY>4358</locationY>
+        <locationY>4478</locationY>
         <defaultConnector>
             <targetReference>getIsCommunityValue</targetReference>
         </defaultConnector>
@@ -1508,7 +1501,7 @@
         <name>Confermato</name>
         <label>Confermato?</label>
         <locationX>7054</locationX>
-        <locationY>5078</locationY>
+        <locationY>5198</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
             <name>Annulla</name>
@@ -2580,7 +2573,7 @@
         <name>Sono_in_chiamata</name>
         <label>Sono in chiamata?</label>
         <locationX>7296</locationX>
-        <locationY>4838</locationY>
+        <locationY>4958</locationY>
         <defaultConnector>
             <targetReference>CampaignMember_Record</targetReference>
         </defaultConnector>
@@ -2605,7 +2598,7 @@
         <name>Sono_in_Community</name>
         <label>Sono in Community?</label>
         <locationX>7505</locationX>
-        <locationY>4598</locationY>
+        <locationY>4718</locationY>
         <defaultConnector>
             <targetReference>CampaignMember_Record</targetReference>
         </defaultConnector>
@@ -7397,7 +7390,7 @@
         <name>CampaignMember_Record</name>
         <label>Record Campaign Member</label>
         <locationX>7505</locationX>
-        <locationY>5726</locationY>
+        <locationY>5846</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Valorizzazione_Status_Campaign_Member</targetReference>
@@ -8205,7 +8198,7 @@
         <name>Record_Case</name>
         <label>Record Case</label>
         <locationX>7037</locationX>
-        <locationY>4238</locationY>
+        <locationY>4358</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_Annullato</targetReference>
@@ -8236,7 +8229,7 @@
         <name>Aggiornamento_record_Campaign_Member</name>
         <label>Aggiornamento record Campaign Member</label>
         <locationX>7505</locationX>
-        <locationY>5966</locationY>
+        <locationY>6086</locationY>
         <inputReference>CampaignMember_Record</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -8289,7 +8282,7 @@
         <name>ScreenEsitoCampaignMember</name>
         <label>ScreenEsitoCampaignMember</label>
         <locationX>7054</locationX>
-        <locationY>4958</locationY>
+        <locationY>5078</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -9092,9 +9085,6 @@
         <label>Gestione Modifiche Anagrafiche</label>
         <locationX>5242</locationX>
         <locationY>3902</locationY>
-        <connector>
-            <targetReference>Campaign_Member_presente</targetReference>
-        </connector>
         <flowName>HDT_FL_GestioneModificheAnagrafiche</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -10013,7 +10003,7 @@
         <name>SubFlow_Annullamento</name>
         <label>SubFlow Annullamento</label>
         <locationX>6834</locationX>
-        <locationY>5198</locationY>
+        <locationY>5318</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

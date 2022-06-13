@@ -149,9 +149,9 @@
                 <label>Recesso</label>
             </value>
             <value>
-                <fullName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</fullName>
+                <fullName>Importi per consumi risalenti a più di due anni</fullName>
                 <default>false</default>
-                <label>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</label>
+                <label>Importi per consumi risalenti a più di due anni</label>
             </value>
             <value>
                 <fullName>Autolettura (uso della)</fullName>
@@ -237,7 +237,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione</controllingFieldValue>
-            <valueName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</valueName>
+            <valueName>Importi per consumi risalenti a più di due anni</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione</controllingFieldValue>

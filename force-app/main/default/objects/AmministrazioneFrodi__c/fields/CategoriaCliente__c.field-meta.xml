@@ -11,20 +11,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Ditta individuale</fullName>
-                <default>false</default>
-                <label>Ditta individuale</label>
-            </value>
-            <value>
                 <fullName>Famiglie</fullName>
                 <default>false</default>
                 <label>Famiglie</label>
             </value>
             <value>
-                <fullName>Persona fisica</fullName>
+                <fullName>Ditta individuale</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Persona fisica</label>
+                <label>Ditta individuale</label>
             </value>
         </valueSetDefinition>
     </valueSet>

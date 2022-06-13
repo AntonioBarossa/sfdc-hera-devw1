@@ -13,7 +13,7 @@ export default class HdtCampaignMemberNegativeOutcome extends LightningElement {
         { value: 'Già Cliente', label: 'Già Cliente' },
         { value: 'Da poco con altro Gestore', label: 'Da poco con altro Gestore' },
         { value: 'Cliente non coperto rete gas', label: 'Cliente non coperto rete gas' },
-        { value: 'Non interessato all offerta', label: 'Non interessato all offerta' },
+        { value: 'Non interessato all\'offerta', label: 'Non interessato all\'offerta' },
         { value: 'Prima attivazione', label: 'Prima attivazione' },
         { value: 'Script completato', label: 'Script completato' },
         { value: 'Riaggancia e rifiuta il contatto', label: 'Riaggancia e rifiuta il contatto' },

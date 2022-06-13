@@ -14,7 +14,7 @@
         <div class="slds-col slds-size_1-of-3">
             <lightning-combobox name="modalitaInvio" label="Modalità di invio documentazione" value={sendMode}
                 placeholder="Seleziona una Modalità" options={modalitaInvio} onchange={handleChange}
-                disabled={disableinput} data-id="modalitaSpedizione" required={requireSendMode}></lightning-combobox>
+                disabled={disableinput} data-id="modalitaSpedizione" required></lightning-combobox>
             <lightning-input type="tel" disabled={disableinput} required={phoneRequired} label="Cellulare invio OTP" data-id="telefono" name="phone3" value={phone} pattern="[0-9]{9,10}" message-when-pattern-mismatch="Il cellulare deve contenere 9 o 10 cifre.">
             </lightning-input>
 

@@ -1,30 +1,28 @@
 <template>
     <template if:true={inputParams}>
-        <c-hdt-document-signature-manager params={inputParams} onchangesignmode={handleSignModeChange} disable-sign-mode={disableSignMode} onconfirmdata={handleConfirmData} onpreviewexecuted={handlePreviewExecuted}></c-hdt-document-signature-manager>
+        <c-hdt-document-signature-manager params={inputParams} disable-sign-mode={disableSignMode} onconfirmdata={handleConfirmData} onpreviewexecuted={handlePreviewExecuted}></c-hdt-document-signature-manager>
     </template>
     <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
         <div class="actionsLeft">
         </div>
         <div class="actionsRight">
-            
+            <template if:true={scriptAvailable}>
+                <lightning-button
+                class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                variant="brand" type="button" name="Avvia Script" label="Avvia Script" onclick={launchScript}>
+                </lightning-button>
+            </template>
             <template if:true={previewExecuted}>
                 <lightning-button
                 class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
                 variant="brand" type="button" name="next" label={labelConfirm} onclick={handleConfirmButton}>
             </lightning-button>
             </template>
-            
             <template if:true={showPreviewButton}>
                 <lightning-button
                 class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
                 variant={variantButton} type="button" name="save" label='Preview' onclick={handlePreview}>
             </lightning-button>
-            </template>
-            <template if:true={scriptAvailable}>
-                <lightning-button
-                class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                variant="brand" type="button" name="Avvia Script" label="Avvia Script" onclick={launchScript}>
-                </lightning-button>
             </template>
         <lightning-button
             class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
