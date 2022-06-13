@@ -668,17 +668,17 @@
             <name>ComponentiNonResidentiContrattuali_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>getCase.Type</leftValueReference>
+                <leftValueReference>tryGet.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Modifica dati contrattuali</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>getCase.Subprocess__c</leftValueReference>
+                <leftValueReference>tryGet.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Componentinonresidenti</elementReference>
+                    <stringValue>Componenti non residenti</stringValue>
                 </rightValue>
             </conditions>
             <connector>
