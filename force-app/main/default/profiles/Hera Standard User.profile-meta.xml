@@ -32283,6 +32283,10 @@
         <recordType>Case.HDT_RT_Informative</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-HDT_Indennizzo</layout>
+        <recordType>Case.HDT_RT_Indennizzo</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-HDT_InversioneContatore</layout>
         <recordType>Case.HDT_RT_InversioneContatore</recordType>
     </layoutAssignments>

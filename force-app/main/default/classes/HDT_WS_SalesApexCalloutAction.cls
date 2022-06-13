@@ -261,6 +261,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                             if(fieldValueResponse.get('errorMessage').contains('Venditore')){
                                 wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c();
                                 act.Type__c = 'Caricamento Manuale Siebel';
+                                act.DiscardCategory__c = 'Manuale';
                                 act.RecordTypeId = Schema.getGlobalDescribe().get('wrts_prcgvr__Activity__c').getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
                                 act.Order__c = ord.Id;
                                 act.Account__c = ord.AccountId;

@@ -59,7 +59,6 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
          * Caricamento manuale in Siebel
          */
         if ( isTransition && regexPattern.matcher(acc[0].CustomerMarking__c).matches() ){
-            siebelLoadingActivity(sale.Id, sale.Account__c, 'Sale__c');
             message = true;
         }
         
@@ -91,6 +90,7 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
         activity.Account__c = accountId;
         activity.ActivityStartTime__c = System.now();
         activity.Type__c = 'Caricamento Manuale Siebel';
+        activity.DiscardCategory__c = 'Manuale';
         if(objectType.equalsIgnoreCase('Order'))
         {
             activity.Order__c = recordId;

@@ -16,7 +16,7 @@ public with sharing class HDT_BA_CampaignBolletta implements Database.Batchable<
         }
         List<CampaignMember> scope = [SELECT ContractReference__c, PromoCommercialCode__r.fullcode__c, Campaign.Name, Campaign.Description, Campaign.StaticTextMessageBill__c, Campaign.Channel__c 
                                         FROM CampaignMember 
-                                        WHERE Id IN :campaignMemberIds AND CampaignId IN :campaignIds AND ContractReference__c != null AND isWsBollettaInvoked__c = false AND Campaign.Channel__c INCLUDES ('Bolletta') WITH SECURITY_ENFORCED];
+                                        WHERE Id IN :campaignMemberIds AND CampaignId IN :campaignIds AND ContractReference__c != null AND isWsBollettaInvoked__c = false AND Campaign.Channel__c = 'Bolletta' WITH SECURITY_ENFORCED];
         List<CampaignMember> membersToUpdate = new List<CampaignMember>();
         List<HDT_WS_CampaignBolletta.HDT_WS_CampaignBollettaRequest> wsReqList = new List<HDT_WS_CampaignBolletta.HDT_WS_CampaignBollettaRequest>();
 

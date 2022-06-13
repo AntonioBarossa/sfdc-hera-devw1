@@ -34580,6 +34580,10 @@
         <recordType>Case.HDT_RT_CambioUsoTec</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-HDT_Indennizzo</layout>
+        <recordType>Case.HDT_RT_Indennizzo</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-HDT_ComportamentoVenditori</layout>
         <recordType>Case.HDT_RT_ComportamentoVenditori</recordType>
     </layoutAssignments>
