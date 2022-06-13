@@ -65,7 +65,7 @@
 
 &quot;FieldName&quot;:&quot;ModuleFromContributor__c&quot;,
 
-&quot;Required&quot;:true,
+&quot;Required&quot;:false,
 
 &quot;ReadOnly&quot;:false,
 
