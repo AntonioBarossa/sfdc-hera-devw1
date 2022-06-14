@@ -73,7 +73,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 srvReq.BillingProfile__c= srRequest.BillingProfile__c;
             }
         }
-        if(srvReq.Type__c != null && (srvReq.Type__c.containsIgnoreCase('Sconti e bonus') || srvReq.ServicePointCode__c.equalsIgnoreCase('PODPROVVISORIO')))
+        if(srvReq.Type__c != null && srvReq.ServicePointCode__c != null && (srvReq.Type__c.containsIgnoreCase('Sconti e bonus') || srvReq.ServicePointCode__c.equalsIgnoreCase('PODPROVVISORIO')))
         {
             srvReq.Account__c = srRequest.Account__c;
         }
