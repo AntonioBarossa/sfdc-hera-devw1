@@ -87,6 +87,21 @@ public inherited sharing class HDT_TRH_CustomActivityChangeEvent {
                 }
 
             }
+
+            for(String key : wrpObjMap.keySet()){
+                Integer conter = 0;
+                
+                for(String field : wrpObjMap.get(key).fieldMap.keySet()){
+                    if(!field.equalsIgnoreCase('LastModifiedDate')){
+                        conter++;
+                    }
+                }
+
+                if(conter == 0){
+                    wrpObjMap.remove(key);
+                }
+            }
+
         } catch(Exception e){
             System.debug(logginglevel.DEBUG, '>>> Exception ' + e.getMessage() + ' - at line [' + String.valueOf(e.getLineNumber()));
         }

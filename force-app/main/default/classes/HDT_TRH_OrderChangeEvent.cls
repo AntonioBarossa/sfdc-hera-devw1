@@ -30,16 +30,18 @@ public with sharing class HDT_TRH_OrderChangeEvent {
                     }
                 }
 
-                List<String> objFields = new List<String>();
+                List<String> objFields;
+                objFields = HDT_UTL_SlaManagement.getFieldsForChangeEvent('Case', 'ChangeEventFields');
 
-                switch on header.changeType {
-                    when 'CREATE' {
-                        objFields.add('');
-                    }	
-                    when 'UPDATE' {
-                        objFields = header.changedFields;
-                    }
-                }
+                //switch on header.changeType {
+                //    when 'CREATE' {
+                //        objFields = HDT_UTL_SlaManagement.getFieldsForChangeEvent('Case', 'ChangeEventFields');
+                //    }	
+                //    when 'UPDATE' {
+                //        objFields = new List<String>();
+                //        objFields = header.changedFields;
+                //    }
+                //}
 
                 for(String field : objFields) {
                     
@@ -60,14 +62,30 @@ public with sharing class HDT_TRH_OrderChangeEvent {
 
             }
 
+            for(String key : wrpObjMap.keySet()){
+                Integer conter = 0;
+                
+                for(String field : wrpObjMap.get(key).fieldMap.keySet()){
+                    if(!field.equalsIgnoreCase('LastModifiedDate')){
+                        conter++;
+                    }
+                }
+
+                if(conter == 0){
+                    wrpObjMap.remove(key);
+                }
+            }
+
         } catch(Exception e){
             System.debug(logginglevel.DEBUG, '>>> Exception ' + e.getMessage() + ' - at line [' + String.valueOf(e.getLineNumber()));
         }
 
+        System.debug(logginglevel.DEBUG, '>>> wrpObjMap: ' + String.valueOf(wrpObjMap));
+
         if(wrpObjMap.size() > 0){
-            HDT_UTL_SlaManagement management = new HDT_UTL_SlaManagement('Order');
-            management.setChangedObjList(wrpObjMap);
-            management.execute();
+            //HDT_UTL_SlaManagement management = new HDT_UTL_SlaManagement('Order');
+            //management.setChangedObjList(wrpObjMap);
+            //management.execute();
         }
     }
 

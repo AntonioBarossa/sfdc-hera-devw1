@@ -31,18 +31,18 @@ public inherited sharing class HDT_TRH_CaseChangeEvent {
                     }
                 }
 
-                List<String> objFields = new List<String>();
+                List<String> objFields;
+                objFields = HDT_UTL_SlaManagement.getFieldsForChangeEvent('Order', 'ChangeEventFields');
 
-                switch on header.changeType {
-                    when 'CREATE' {
-                        objFields.add('Phase__c');
-                        objFields.add('CustomerRequestDate__c');
-                        objFields.add('CaseNumber');
-                    }	
-                    when 'UPDATE' {
-                        objFields = header.changedFields;
-                    }
-                }
+                //switch on header.changeType {
+                //    when 'CREATE' {
+                //        objFields = HDT_UTL_SlaManagement.getFieldsForChangeEvent('Order', 'ChangeEventFields');
+                //    }	
+                //    when 'UPDATE' {
+                //        objFields = new List<String>();
+                //        objFields = header.changedFields;
+                //    }
+                //}
 
                 for(String field : objFields) {
                     
@@ -61,6 +61,20 @@ public inherited sharing class HDT_TRH_CaseChangeEvent {
 
                 }
 
+            }
+
+            for(String key : wrpObjMap.keySet()){
+                Integer conter = 0;
+                
+                for(String field : wrpObjMap.get(key).fieldMap.keySet()){
+                    if(!field.equalsIgnoreCase('LastModifiedDate')){
+                        conter++;
+                    }
+                }
+
+                if(conter == 0){
+                    wrpObjMap.remove(key);
+                }
             }
 
         } catch(Exception e){

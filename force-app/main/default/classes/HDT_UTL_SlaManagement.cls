@@ -232,6 +232,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
     }
 
     public static Boolean ruleDateIsValid(DateTime dateToValidate, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule){
+        System.debug(logginglevel.DEBUG, '>>> dateToValidate: ' + String.valueOf(dateToValidate) + ' - startDate: ' + String.valueOf(singleRule.startValidDate) + ' - endDate: ' + String.valueOf(singleRule.endValidDate));
         return (dateToValidate >= singleRule.startValidDate && dateToValidate <= singleRule.endValidDate);
     }
 
@@ -268,6 +269,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
             currentTrack.Status__c = 'Chiuso';
 
             if(ruleDateIsValid(currentTrack.EndDateTime__c, singleRule)){
+                System.debug(logginglevel.DEBUG, '>>> admin rule date is not valid');
                 return currentTrack;
             } else {
                 return null;
@@ -321,7 +323,10 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
             currentTrack.StartDateTime__c = Datetime.valueOf(dt);
             
+
+
             if(!ruleDateIsValid(currentTrack.StartDateTime__c, singleRule)){
+                System.debug(logginglevel.DEBUG, '>>> admin rule date is not valid');
                 return null;
             }
 
@@ -511,6 +516,22 @@ public inherited sharing class HDT_UTL_SlaManagement {
             System.debug(logginglevel.DEBUG, '>>> somethig goes wrong with comunication: ' + ex.getMessage() + ' [' + String.valueOf(ex.getLineNumber()) + ']');
         }
 
+    }
+
+    public static List<String> getFieldsForChangeEvent(String objApiName, String fieldSetName){
+        List<String> fieldSetList = new List<String>();
+        try{
+            List<Schema.FieldSetMember> fieldSetMembers;
+            fieldSetMembers = ((SObject)Type.forName(objApiName).newInstance()).getSObjectType().getDescribe().FieldSets.getMap().get(fieldSetName).getFields();
+            for(Schema.FieldSetMember s : fieldSetMembers) {
+                fieldSetList.add(String.valueOf(s.getFieldPath()));
+            }
+
+        } catch(Exception ex){
+            System.debug(logginglevel.DEBUG, '>>> ERROR: ' + ex.getMessage() + ' [' + ex.getLineNumber() + ']');
+        }
+
+        return fieldSetList;
     }
 
 }
