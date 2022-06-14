@@ -161,6 +161,11 @@ public with sharing class HDT_UTL_OrderProcessTst {
             childOrders[7].ProcessType__c = 'Switch in Ele';
             insert childOrders;
 
+            List<ServiceRequest__c> mySRList = HDT_UTL_DataFactoryTst.createServiceRequest(1, false);
+            mySRList[0].Order__c = childOrders[4].Id;
+            insert mySRList;
+
+
             List<AgentMatrix__c> agMatrixList = HDT_UTL_DataFactoryTst.createAgentMatrix(1, false, 'Telefono');
             agMatrixList[0].AgencyCode__c = 'AgencyCode';
             agMatrixList[0].IsMonitoring__c = true;
