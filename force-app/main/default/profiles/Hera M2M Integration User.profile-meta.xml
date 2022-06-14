@@ -706,6 +706,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.CategoryFamilyFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Order.AnnullaPrestazioneEnabled__c</field>
         <readable>true</readable>
@@ -36109,6 +36114,14 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <userLicense>Salesforce</userLicense>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>CreateCustomizeFilters</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EditPublicFilters</name>
+    </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>ActivateContract</name>
