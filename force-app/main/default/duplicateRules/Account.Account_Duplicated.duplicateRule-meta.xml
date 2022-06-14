@@ -13,5 +13,5 @@
     <isActive>false</isActive>
     <masterLabel>Account Duplicated</masterLabel>
     <securityOption>BypassSharingRules</securityOption>
-    <sortOrder>1</sortOrder>
+    <sortOrder>2</sortOrder>
 </DuplicateRule>
