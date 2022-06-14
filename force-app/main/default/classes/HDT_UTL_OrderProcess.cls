@@ -178,7 +178,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              */
             if(order.Phase__c != oldOrder.Phase__c 
                 && order.ProcessType__c == 'Voltura' 
-                && oldOrder.Phase__c == 'In attesa validazione' 
+                && (oldOrder.Phase__c == 'In attesa validazione' || oldOrder.Phase__c == 'Accettazione Voltura')
                 && (order.Phase__c == 'Documentazione Validata') 
                 && isMonitoringList.contains(order.AgencyCode__c) 
                 && !phaseStory.contains('Quality Call OK')
@@ -1389,6 +1389,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 List<ServiceRequest__c> serviceRequests = [SELECT Id, 
                     Order__c,
                     Order__r.ParentOrder__c,
+                    Order__r.Process__c,
                     NextPhase__c
                     FROM ServiceRequest__c 
                     WHERE Order__r.ParentOrder__c IN :parentOrderIds
@@ -1396,9 +1397,17 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 List<Order> vasScontiOrders = new List<Order>();
                 for(ServiceRequest__c sr : serviceRequests)
                 {
+                    /* Check if the sr.Order__c is contained in "Pratica Gestita"/"Annullato" Order */
                     if(orderIds.contains(sr.Order__c))
                     {
                         serviceRequestToDelete.add(sr);
+                        continue;
+                    }
+                    /* If sr.NextPhase__c == null and sr.Order__c is not contained in orderIds
+                    * No action needed
+                    */
+                    if(sr.NextPhase__c == null)
+                    {
                         continue;
                     }
                     Order orderVas = new Order();
