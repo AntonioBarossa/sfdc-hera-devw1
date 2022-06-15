@@ -1658,11 +1658,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>TotalForInstallments__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>TotalPaidCustomer__c</field>
             <table>Case</table>
         </columns>

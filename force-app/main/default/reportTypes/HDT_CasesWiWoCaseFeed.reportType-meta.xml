@@ -287,11 +287,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Cemetery__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IbanCIN__c</field>
             <table>Case</table>
         </columns>
@@ -1347,11 +1342,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Priority__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Priority</field>
             <table>Case</table>
         </columns>
@@ -1678,11 +1668,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>TotalToPay__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>TotalForInstallments__c</field>
             <table>Case</table>
         </columns>
         <columns>

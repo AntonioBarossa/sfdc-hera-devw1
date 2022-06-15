@@ -1560,11 +1560,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Priority__c</field>
-            <table>Campaign.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Priority</field>
             <table>Campaign.Cases__r</table>
         </columns>
@@ -1831,11 +1826,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>TotalToPay__c</field>
-            <table>Campaign.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>TotalForInstallments__c</field>
             <table>Campaign.Cases__r</table>
         </columns>
         <columns>
