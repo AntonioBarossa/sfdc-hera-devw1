@@ -62,6 +62,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>UseChangeCharge__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>RegionalAdditional__c</field>
             <table>Case</table>
         </columns>
@@ -158,6 +163,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>BusinessHours</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CO__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -278,6 +288,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>PraxidiaClarityandUnderstanding__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Cemetery__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1362,6 +1377,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Priority__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Priority</field>
             <table>Case</table>
         </columns>
@@ -1478,6 +1498,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CommodityFormula__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>EnergyService__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1810,6 +1835,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>UseChangeCharge__c</field>
+            <table>Case.Cases__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>RegionalAdditional__c</field>
             <table>Case.Cases__r</table>
         </columns>
@@ -1906,6 +1936,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>BusinessHours</field>
+            <table>Case.Cases__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CO__c</field>
             <table>Case.Cases__r</table>
         </columns>
         <columns>
@@ -2026,6 +2061,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>PraxidiaClarityandUnderstanding__c</field>
+            <table>Case.Cases__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Cemetery__c</field>
             <table>Case.Cases__r</table>
         </columns>
         <columns>
@@ -3110,6 +3150,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Priority__c</field>
+            <table>Case.Cases__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Priority</field>
             <table>Case.Cases__r</table>
         </columns>
@@ -3226,6 +3271,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CommodityFormula__c</field>
+            <table>Case.Cases__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>EnergyService__c</field>
             <table>Case.Cases__r</table>
         </columns>
         <columns>
