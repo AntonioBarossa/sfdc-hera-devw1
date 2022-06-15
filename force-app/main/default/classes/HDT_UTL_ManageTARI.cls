@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.ClassNamingConventions, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces')
 public with sharing class HDT_UTL_ManageTARI {
 
     @InvocableMethod
@@ -9,15 +10,16 @@ public with sharing class HDT_UTL_ManageTARI {
             SELECT Id, DocumentSelected__c
             FROM AccountStatementFilter__c 
             WHERE Id =: serviceCatalogId[0]
+            WITH Security_Enforced
         ];
         
-        if(accountStmList.isEmpty())	return checkTari;
+        if(accountStmList.isEmpty()) return checkTari;//Empty list return false
         
         AccountStatementFilter__c astm = accountStmList[0];
         
         List<Object> resultList = (List<Object>) JSON.deserializeUntyped(astm.DocumentSelected__c);
         
-        if(resultList.isEmpty()) 	return checkTari;
+        if(resultList.isEmpty()) 	return checkTari;//Empty list return false
         
         Map<String, Object> resultMap = (Map<String, Object>) resultList[0];
         List<Object> indentedList = (List<Object>) resultMap.get('secondoLivelloInformativo');
