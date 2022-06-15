@@ -1066,7 +1066,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             Decimal indemnityDueBillingCorrectionDecimal = String.isNotBlank(indemnityDueBillingCorrection) ? Decimal.valueOf(indemnityDueBillingCorrection) : 0;
             String correctionRight = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionRight__c', 0, inputs, formParams);
             String correctionDocumentEmissionDate = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionDocumentEmissionDay__c', 0, inputs, formParams);
-            Boolean expiredCorrection = indemnityDueBillingCorrection != null;
+            Boolean expiredCorrection = indemnityDueBillingCorrection != null && indemnityDueBillingCorrectionDecimal > 0;
 
             String[] record = new List<String>();
             record.add('00310');
@@ -1100,6 +1100,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         // Emissione rettifica non prevista, indennizzo per solo ritardo nella risposta
         if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight != 'Si') {
             boxType = '1';
+        }
+        // Casistica valore indennizzo 0
+        if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight != 'Si' && indemnityDueSendResponse == 0)
+        {
+            boxType = '';
         }
         // Emissione rettifica prevista ma non scaduta, indennizzo per solo ritardo nella risposta
         else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && !expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate)) {

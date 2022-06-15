@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>Ambiente</fullName>
-        <default>false</default>
-        <label>Ambiente</label>
-    </customValue>
-    <customValue>
         <fullName>Annullamento</fullName>
         <default>false</default>
         <label>Annullamento</label>
@@ -34,21 +29,6 @@
         <fullName>Fatturazione</fullName>
         <default>false</default>
         <label>Fatturazione</label>
-    </customValue>
-    <customValue>
-        <fullName>Generiche Attivazioni</fullName>
-        <default>false</default>
-        <label>Generiche Attivazioni</label>
-    </customValue>
-    <customValue>
-        <fullName>Generiche VAS</fullName>
-        <default>false</default>
-        <label>Generiche VAS</label>
-    </customValue>
-    <customValue>
-        <fullName>HERA</fullName>
-        <default>false</default>
-        <label>HERA</label>
     </customValue>
     <customValue>
         <fullName>Indennizzi</fullName>
@@ -119,6 +99,26 @@
         <fullName>Voltura</fullName>
         <default>false</default>
         <label>Voltura</label>
+    </customValue>
+    <customValue>
+        <fullName>Generiche VAS</fullName>
+        <default>false</default>
+        <label>Generiche VAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Generiche Attivazioni</fullName>
+        <default>false</default>
+        <label>Generiche Attivazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>Ambiente</fullName>
+        <default>false</default>
+        <label>Ambiente</label>
+    </customValue>
+    <customValue>
+        <fullName>HERA</fullName>
+        <default>false</default>
+        <label>HERA</label>
     </customValue>
     <masterLabel>Cluster</masterLabel>
     <sorted>true</sorted>

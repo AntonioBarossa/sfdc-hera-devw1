@@ -223,7 +223,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                          */
                         dataForAttivitaTracciaturaCreation.add(newData);
                     }
-                    if('FASE'.equalsIgnoreCase(curField.name) && String.isNotBlank(curField.value)/*&& new List<String>{'Completata', 'Ammissibilità OK'}.contains(curField.value)*/){
+                    if(('FASE'.equalsIgnoreCase(curField.name) && String.isNotBlank(curField.value)) 
+                        || ('ATTIVITA'.equalsIgnoreCase(curField.name) && 'Eliminato esito in scarto'.equalsIgnoreCase(curField.value))){
                     	system.debug(LoggingLevel.DEBUG, 'handleMRRInboundRequest curField: ' + curField.name + ' ' + curField.value);
                         for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
                             if('RECORD_ID'.equalsIgnoreCase(curField2.name)){
@@ -334,6 +335,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                         newAct.put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
                     }
                 }
+                newAct.wrts_prcgvr__Status__c = 'Chiusa';
                 toInsert.add(newAct);
             }
         }
@@ -486,11 +488,12 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
             if(Schema.Order.SObjectType == recordId.getSobjectType()){
                 //Gestione Scarti SAP il processField per l'order è sempre il type ed il controlField è sempre il DiscardReason
-                List<Order> parentOrder = [SELECT Id,ProcessType__c,DiscardReason__c, ServicePoint__r.CommoditySector__c FROM Order WHERE Id =:recordId WITH SECURITY_ENFORCED];
+                List<Order> parentOrder = [SELECT Id,ProcessType__c,DiscardReason__c,Subprocess__c, ServicePoint__r.CommoditySector__c FROM Order WHERE Id =:recordId WITH SECURITY_ENFORCED];
                 if(!parentOrder.isEmpty()){
-                    processField = parentOrder.get(0).ProcessType__c;
-                    ctrField = String.isNotBlank(discardMessage) ? discardMessage : parentOrder.get(0).DiscardReason__c;
-                    commodity = (parentOrder.get(0).ServicePoint__r == null) ? '' : parentOrder.get(0).ServicePoint__r.CommoditySector__c;
+                    Order ord = parentOrder.get(0);
+                    processField = ('Voltura'.equalsIgnoreCase(ord.ProcessType__c) && 'Con Autolettura'.equalsIgnoreCase(ord.Subprocess__c)) ? 'Voltura con Autolettura' : ord.ProcessType__c;
+                    ctrField = String.isNotBlank(discardMessage) ? discardMessage : ord.DiscardReason__c;
+                    commodity = (ord.ServicePoint__r == null) ? '' : ord.ServicePoint__r.CommoditySector__c;
                 }
             }
             if (String.isNotEmpty(processField) && String.isNotEmpty(ctrField)){

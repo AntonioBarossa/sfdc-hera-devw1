@@ -519,10 +519,10 @@
             <fullName>Attivazioni</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Attivazioni - Generiche</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Autolettura</fullName>
             <default>false</default>
@@ -2560,6 +2560,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>Type__c</picklist>
+        <values>
+            <fullName>Supporto Esercizio Sistemi</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Assistenza Contact Center</fullName>
             <default>false</default>

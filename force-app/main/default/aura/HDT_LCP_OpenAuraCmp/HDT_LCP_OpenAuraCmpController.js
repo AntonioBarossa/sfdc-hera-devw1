@@ -156,7 +156,7 @@
                 console.log('# wizard tab id: ' + newTabId);
                 workspaceAPI.setTabLabel({ tabId: newTabId, label: 'Wizard' });
                 workspaceAPI.setTabIcon({ tabId: newTabId, icon: 'custom:custom83' });
-
+                
                 workspaceAPI.closeTab({ tabId: tabToClose }).then(function(success) {
                     if (success) {
                         workspaceAPI.focusTab({tabId: newTabId});

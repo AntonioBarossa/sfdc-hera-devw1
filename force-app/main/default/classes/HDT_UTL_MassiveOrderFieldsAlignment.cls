@@ -117,6 +117,8 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
                     orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
                 }
             }
+            orderToUpdate.AtecoCode__c = 'K74878';
+            orderToUpdate.HerAteco__c = 'K74878';
 
         } else if(account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
 

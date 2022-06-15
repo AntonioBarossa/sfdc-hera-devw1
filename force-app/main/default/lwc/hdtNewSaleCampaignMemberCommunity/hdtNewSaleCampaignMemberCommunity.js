@@ -8,12 +8,17 @@ export default class hdtNewSaleCampaignMemberCommunity extends NavigationMixin(L
     @api recordId;
     CampaignProcessType = '';
     accountId='';
-
+    isFromLead=false;
     connectedCallback() {
         getAccountAndCampaign({ campaignMemberId: this.recordId }).then(data => {
             console.log(JSON.stringify(data));
             this.CampaignProcessType = data.Campaign.ProcessType__c;
             console.log('CampaignProcessType Sale --> '+this.CampaignProcessType);
+            if(data.ContactId != null && data.ContactId != undefined && data.ContactId != ''){
+                this.isFromLead = false;
+            }else if(data.LeadId != null && data.LeadId != undefined && data.LeadId != ''){
+                this.isFromLead = true;
+            }
         }).catch(error => {
             console.log(error);
             this.dispatchEvent(
@@ -28,6 +33,11 @@ export default class hdtNewSaleCampaignMemberCommunity extends NavigationMixin(L
     navigateToNewSale() {
         getAccountAndCampaign({ campaignMemberId: this.recordId }).then(data => {
             console.log(JSON.stringify(data));
+            if(data.ContactId != null && data.ContactId != undefined && data.ContactId != ''){
+                this.isFromLead = false;
+            }else if(data.LeadId != null && data.LeadId != undefined && data.LeadId != ''){
+                this.isFromLead = true;
+            }
             if (!data.Contact.AccountId) {
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -100,6 +110,6 @@ export default class hdtNewSaleCampaignMemberCommunity extends NavigationMixin(L
     }
 
     get manageDisable(){
-        return this.CampaignProcessType == 'Nuovo Caso' || this.CampaignProcessType == '';
+        return this.CampaignProcessType == 'Nuovo Caso' || this.CampaignProcessType == '' || this.isFromLead;
     }
 }

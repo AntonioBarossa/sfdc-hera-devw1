@@ -65,7 +65,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
         //Get servicePoint data start
         servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
-        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SwitchInWinback__c,ServicePointCode__c,SupplyType__c,SupplyTypeTemp__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c, isReseller__c');
+        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SalesCompanyCode__c,Vendor__c,SwitchInWinback__c,ServicePointCode__c,SupplyType__c,SupplyTypeTemp__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c, isReseller__c');
         servicePoint = existingServicePoint[0];
         //Get servicePoint data end
 
@@ -187,8 +187,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 SBQQ__Account__c = sale.Account__c,
                 SBQQ__Primary__c = true,
                 Agency__c = sale.agency__c,
-                salesCompany__c = agc.get('nomeAgente'),
-                salesCompanyCode__c = agc.get('codiceAgente'),
+                salesCompany__c = servicePoint.Vendor__c != null && String.isNotBlank(servicePoint.Vendor__c) ? servicePoint.Vendor__c : agc.get('nomeAgente'),
+                salesCompanyCode__c = servicePoint.SalesCompanyCode__c != null && String.isNotBlank(servicePoint.SalesCompanyCode__c) ? servicePoint.SalesCompanyCode__c : agc.get('codiceAgente'),
                 //Market__c = servicePoint.MarketOrigin__c, // TODO WAVE 3: gestire altri tipi di mercato.
                 Market__c = 'Libero',
                 Channel__c = sale.Channel__c,

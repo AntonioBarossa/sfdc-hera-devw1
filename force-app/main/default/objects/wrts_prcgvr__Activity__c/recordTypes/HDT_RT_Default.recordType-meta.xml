@@ -520,10 +520,10 @@
             <fullName>Attivazioni</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Attivazioni - Generiche</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Autolettura</fullName>
             <default>false</default>
@@ -2807,6 +2807,10 @@
         </values>
         <values>
             <fullName>Caricamenti contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Manuale Siebel</fullName>
             <default>false</default>
         </values>
         <values>
