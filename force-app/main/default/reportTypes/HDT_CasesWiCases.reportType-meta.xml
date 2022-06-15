@@ -1082,11 +1082,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NameBankOrPostOffice__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>DeceasedName__c</field>
             <table>Case</table>
         </columns>
@@ -2801,11 +2796,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>FirstName__c</field>
-            <table>Case.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>NameBankOrPostOffice__c</field>
             <table>Case.Cases__r</table>
         </columns>
         <columns>

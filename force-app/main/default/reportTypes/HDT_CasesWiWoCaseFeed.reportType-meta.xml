@@ -1087,11 +1087,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NameBankOrPostOffice__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>CemeteryName__c</field>
             <table>Case</table>
         </columns>

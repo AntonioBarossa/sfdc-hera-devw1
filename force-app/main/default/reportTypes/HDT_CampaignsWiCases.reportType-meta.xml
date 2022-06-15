@@ -1325,11 +1325,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>NameBankOrPostOffice__c</field>
-            <table>Campaign.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>CemeteryName__c</field>
             <table>Campaign.Cases__r</table>
         </columns>
