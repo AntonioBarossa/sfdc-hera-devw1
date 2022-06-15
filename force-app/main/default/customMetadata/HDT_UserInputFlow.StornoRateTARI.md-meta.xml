@@ -8,27 +8,32 @@
 {
 &quot;FieldName&quot; : &quot;AccountId &quot;,
 &quot;Required&quot; : false,
-&quot;Column&quot; : 1
+&quot;Column&quot; : 1,
+&quot;ReadOnly&quot;:true
 },
 {
 &quot;FieldName&quot; : &quot;PhoneNumber__c&quot;,
 &quot;Required&quot; : false,
-&quot;Column&quot; : 1
+&quot;Column&quot; : 1,
+&quot;ReadOnly&quot;:false
 },
 {
 &quot;FieldName&quot; : &quot;BillingProfile__c&quot;,
 &quot;Required&quot; : false,
-&quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;ReasonStornoRate__c &quot;,
-&quot;Required&quot; : false,
-&quot;Column&quot; : 1
+&quot;Column&quot; : 1,
+&quot;ReadOnly&quot;:true
 },
 {
 &quot;FieldName&quot; : &quot;InstallmentPlanNumber__c &quot;,
 &quot;Required&quot; : false,
-&quot;Column&quot; : 1
+&quot;Column&quot; : 1,
+&quot;ReadOnly&quot;:true
+},
+{
+&quot;FieldName&quot; : &quot;ReasonStornoRate__c &quot;,
+&quot;Required&quot; : false,
+&quot;Column&quot; : 1,
+&quot;ReadOnly&quot;:false
 }
 ]</value>
     </values>
