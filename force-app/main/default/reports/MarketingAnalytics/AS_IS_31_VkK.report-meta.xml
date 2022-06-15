@@ -289,6 +289,9 @@
         <field>Account.Cases$BusinessHours</field>
     </columns>
     <columns>
+        <field>Account.Cases$CO__c</field>
+    </columns>
+    <columns>
         <field>Account.Cases$IbanCAB__c</field>
     </columns>
     <columns>

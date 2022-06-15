@@ -735,11 +735,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Cemetery__c</field>
-            <table>Account.Cases</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IbanCIN__c</field>
             <table>Account.Cases</table>
         </columns>
@@ -1801,11 +1796,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CommodityFormula__c</field>
-            <table>Account.Cases</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>EnergyService__c</field>
             <table>Account.Cases</table>
         </columns>
         <columns>
