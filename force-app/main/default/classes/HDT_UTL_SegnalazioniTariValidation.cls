@@ -15,12 +15,19 @@ public inherited sharing class HDT_UTL_SegnalazioniTariValidation implements HDT
         String result;
         system.debug('ivaste'+caseType);
         if(caseType=='Segnalazioni Ambientali')   result = segnalazioniAmbienteValidate(currentCase, fields);
+        if(caseType=='Gestione Rifiuti')   result = gestioneRifiutiValidate(currentCase, fields);
         system.debug('ivaste'+result);
         if(STRING.isBlank(result))  {result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));}
         return result;
     }
 
     private String segnalazioniAmbienteValidate(Case currCase, String fields){
+        if(STRING.isBlank(currCase.InvoicingCity__c) && STRING.isBlank(getFieldValue(fields, 'AlternativeAddress__c'))) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Indirizzo!'));
+        if(getFieldValue(fields, 'OperationGroup__c').equalsIgnoreCase('CONSULTA IL RIFIUTOLOGO')) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Valore Non Valido per Gruppo Operazione!'));
+        return null;
+    }
+
+    private String gestioneRifiutiValidate(Case currCase, String fields){
         if(STRING.isBlank(currCase.InvoicingCity__c) && STRING.isBlank(getFieldValue(fields, 'AlternativeAddress__c'))) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Indirizzo!'));
         return null;
     }
