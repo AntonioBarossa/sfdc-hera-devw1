@@ -7,66 +7,63 @@
         <value xsi:type="xsd:string">[
 {
 &quot;FieldName&quot;: &quot;SurveyNotAccepted__c&quot;,
-&quot;required&quot;: false,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 1
 },
 {
 &quot;FieldName&quot;:&quot;OwnerId&quot;,
-&quot;required&quot;:false,
+&quot;Required&quot;:false,
 &quot;Column&quot;:2
 },
 {
 &quot;FieldName&quot;:&quot;DifferentNameFromTheApplicant__c&quot;,
-&quot;required&quot;:false,
+&quot;Required&quot;:false,
 &quot;Column&quot;:1
 },
 {
 &quot;FieldName&quot;:&quot;LastName__c&quot;,
-&quot;required&quot;:false,
+&quot;Required&quot;:false,
+&quot;ReadOnly&quot;:true,
 &quot;Column&quot;:2
 },
 {
 &quot;FieldName&quot;: &quot;Campaign__c&quot;,
-&quot;required&quot;: false,
+&quot;Required&quot;: false,
+&quot;ReadOnly&quot;: true,
 &quot;Column&quot;: 1
 },
 {
 &quot;FieldName&quot;: &quot;ConnId__c&quot;,
-&quot;required&quot;: false,
+&quot;Required&quot;: false,
+&quot;ReadOnly&quot;: true,
 &quot;Column&quot;: 2
+},
+{
+&quot;FieldName&quot;: &quot;BpToBeMerged__c&quot;,
+&quot;Required&quot;: false,
+&quot;Column&quot;: 1
 },
 {
 &quot;FieldName&quot;: &quot;CustomerCodeToMerge__c&quot;,
-&quot;required&quot;: false,
-&quot;Column&quot;: 1
-},
-{
-&quot;FieldName&quot;: &quot;AlternativeAddress__c&quot;,
-&quot;Label&quot; : &quot;Indirizzo&quot;,
-&quot;required&quot;: false,
-&quot;Column&quot;: 2
-},
-{
-&quot;FieldName&quot;: &quot;BpToMerge__c&quot;,
-&quot;required&quot;: false,
-&quot;Column&quot;: 1
-},
-{
-&quot;FieldName&quot;:
-&quot;AssociatedServiceRequest__c&quot;,
-&quot;required&quot;: false,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 2
 },
 {
 &quot;FieldName&quot;:
 &quot;ComponentVariationsWithBonus__c&quot;,
-&quot;required&quot;: false,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 1
+},
+{
+&quot;FieldName&quot;: &quot;ReliefToApply__c&quot;,
+&quot;Required&quot;: false,
+&quot;Column&quot;: 2
 },
 {
 &quot;FieldName&quot;: &quot;Description&quot;,
 &quot;Required&quot;: true,
-&quot;Column&quot;: 2
+&quot;Label&quot; : &quot;Dettagli Richiesta&quot;,
+&quot;Column&quot;: 1
 }
 ]</value>
     </values>
@@ -78,44 +75,44 @@
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[
 {
-&quot;FieldName&quot;: &quot;Cluster__c&quot;,
-&quot;required&quot;: false,
+&quot;FieldName&quot;: &quot;Commodity__c&quot;,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 1
 },
 {
 &quot;FieldName&quot;: &quot;AccountId&quot;,
-&quot;required&quot;: false,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 2
 },
 {
-&quot;FieldName&quot;: &quot;OperationType__c&quot;,
-&quot;required&quot;: false,
+&quot;FieldName&quot;: &quot;Cluster__c&quot;,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 1
 },
 {
-&quot;FieldName&quot;: &quot;Type&quot;,
-&quot;required&quot;: false,
+&quot;FieldName&quot;: &quot;ContractCode__c&quot;,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 2
 },
 {
-&quot;FieldName&quot;: &quot;Commodity__c&quot;,
-&quot;required&quot;: false,
+&quot;FieldName&quot;: &quot;Type&quot;,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 1
 },
 {
 &quot;FieldName&quot;: &quot;BillingProfile__c&quot;,
-&quot;required&quot;: false,
+&quot;Required&quot;: false,
 &quot;Column&quot;: 2
 },
 {
-&quot;FieldName&quot;: &quot;ContractCode__c&quot;,
-&quot;required&quot;: false,
-&quot;Column&quot;: 1
+&quot;FieldName&quot;: &quot;Note__c&quot;,
+&quot;Required&quot;: false,
+&quot;Column&quot;: 2
 }
 ]</value>
     </values>
     <values>
         <field>ValidateClass__c</field>
-        <value xsi:type="xsd:string">HDT_UTL_TariCaseValidation</value>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>
