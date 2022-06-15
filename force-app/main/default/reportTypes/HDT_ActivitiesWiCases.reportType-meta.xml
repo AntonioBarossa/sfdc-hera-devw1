@@ -1705,11 +1705,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Priority__c</field>
-            <table>wrts_prcgvr__Activity__c.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Priority</field>
             <table>wrts_prcgvr__Activity__c.Cases__r</table>
         </columns>

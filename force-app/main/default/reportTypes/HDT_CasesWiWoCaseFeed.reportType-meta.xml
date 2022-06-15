@@ -162,11 +162,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CO__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IbanCAB__c</field>
             <table>Case</table>
         </columns>
@@ -1368,11 +1363,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Pressure__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Priority__c</field>
             <table>Case</table>
         </columns>
         <columns>

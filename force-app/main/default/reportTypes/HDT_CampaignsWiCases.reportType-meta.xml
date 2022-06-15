@@ -515,11 +515,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CO__c</field>
-            <table>Campaign.Cases__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IbanCAB__c</field>
             <table>Campaign.Cases__r</table>
         </columns>
