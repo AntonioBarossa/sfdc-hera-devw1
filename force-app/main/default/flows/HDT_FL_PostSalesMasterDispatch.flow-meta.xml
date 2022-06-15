@@ -2669,13 +2669,6 @@
                     <stringValue>HDT_RT_AltriProcessiPagamenti</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>RecordTypeName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>HDT_RT_StornoRateizzazione_TARI</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Get_RT_Pagamenti</targetReference>
             </connector>
@@ -9111,6 +9104,12 @@
             <name>TipoDocumento</name>
             <value>
                 <elementReference>ManageDocumentsFatturazione_0.tipoDocumento</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>serviceCatalogId</name>
+            <value>
+                <elementReference>serviceCatalogId</elementReference>
             </value>
         </inputAssignments>
     </subflows>

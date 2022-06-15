@@ -625,7 +625,7 @@
         <name>AssegnaValori_0_0</name>
         <label>AssegnaValori</label>
         <locationX>7156</locationX>
-        <locationY>2126</locationY>
+        <locationY>2186</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato_0_0_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -678,22 +678,6 @@
         </assignmentItems>
         <connector>
             <targetReference>AggiornaCase</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Cambio_JSON_Campi_Tari</name>
-        <label>Cambio JSON Campi Tari</label>
-        <locationX>7376</locationX>
-        <locationY>1550</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Input_Case.Type</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Storno Rateizzazione TARI</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Screen_Inserimento_Dati_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -1884,7 +1868,7 @@
         <name>Salva_in_bozza_o_Conferma_0_0_0_0_0</name>
         <label>Salva in bozza o Conferma?</label>
         <locationX>7420</locationX>
-        <locationY>1886</locationY>
+        <locationY>1946</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0_0_0_0_0</name>
@@ -1936,24 +1920,12 @@
         <label>Validazione Check Tari</label>
         <locationX>7420</locationX>
         <locationY>1430</locationY>
-        <defaultConnectorLabel>KO Merc Tari</defaultConnectorLabel>
+        <defaultConnector>
+            <targetReference>Screen_Inserimento_Dati_0_0_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Vecchio Processo</defaultConnectorLabel>
         <rules>
-            <name>Vecchio_Processo</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Input_Case.RecordType.DeveloperName</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>HDT_RT_StornoRateizzazione_TARI</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Screen_Inserimento_Dati_0_0_0_0_0</targetReference>
-            </connector>
-            <label>Vecchio Processo</label>
-        </rules>
-        <rules>
-            <name>Controllo_Merceologico_Tari_OK</name>
+            <name>OK_Merc_Tari</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>checkTari</leftValueReference>
@@ -1963,9 +1935,31 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Cambio_JSON_Campi_Tari</targetReference>
+                <targetReference>Get_RT_Tari</targetReference>
             </connector>
             <label>OK Merc Tari</label>
+        </rules>
+        <rules>
+            <name>Riprendi_Processo_Tari</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Nuovo_0_0_0_0_0_0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_StornoRateizzazione_TARI</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Inserimento_Dati_0_0_0_0_0_0</targetReference>
+            </connector>
+            <label>Riprendi Processo Tari</label>
         </rules>
     </decisions>
     <description>Flow per la gestione dei pagamenti</description>
@@ -2023,6 +2017,27 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_RT_Tari</name>
+        <label>Get RT Tari</label>
+        <locationX>7156</locationX>
+        <locationY>1550</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AggiornaCase_00_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_StornoRateizzazione_TARI</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -2092,7 +2107,7 @@
         <name>GetCaseAggiornato_0_0_0</name>
         <label>GetCaseAggiornato</label>
         <locationX>7156</locationX>
-        <locationY>2006</locationY>
+        <locationY>2066</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValori_0_0</targetReference>
@@ -2468,8 +2483,32 @@
         <name>AggiornaCase_00</name>
         <label>AggiornaCase</label>
         <locationX>7156</locationX>
-        <locationY>2246</locationY>
+        <locationY>2306</locationY>
         <inputReference>GetCaseAggiornato_0_0_0</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaCase_00_0</name>
+        <label>AggiornaCase</label>
+        <locationX>7156</locationX>
+        <locationY>1670</locationY>
+        <connector>
+            <targetReference>Screen_Inserimento_Dati_0_0_0_0_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Tari.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase_3</name>
@@ -3364,8 +3403,8 @@
     <screens>
         <name>Screen_Inserimento_Dati_0_0_0_0_0</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>7420</locationX>
-        <locationY>1766</locationY>
+        <locationX>7684</locationX>
+        <locationY>1550</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3421,6 +3460,117 @@
                 <name>processType</name>
                 <value>
                     <elementReference>Get_Input_Case.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Input_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelPreviousButton</name>
+                <value>
+                    <stringValue>Indietro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Inserimento_Dati_0_0_0_0_0_0</name>
+        <label>Screen Inserimento Dati</label>
+        <locationX>7420</locationX>
+        <locationY>1550</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Salva_in_bozza_o_Conferma_0_0_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader_2_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Input_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtRecordEditForm_2_0</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextStep</name>
+                <value>
+                    <stringValue>NEXT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Storno Rateizzazione TARI</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -3930,7 +4080,7 @@
         <name>Annulla_Prestazione_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>7420</locationX>
-        <locationY>2006</locationY>
+        <locationY>2066</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
