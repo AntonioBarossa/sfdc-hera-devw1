@@ -155,6 +155,13 @@
                     <stringValue>Prezzo Netto Natura Casa</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>VAS</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Condizioni_Economiche_Bonus</targetReference>
             </connector>
@@ -2574,19 +2581,61 @@
             <fieldText>&lt;p&gt;Operatore: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>or</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>EqualTo</operator>
+                    <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue>Subentro Ele</stringValue>
+                        <stringValue>Switch in con voltura tecnica</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue>Prima Attivazione</stringValue>
+                        <stringValue>Switch in Ripristinatorio</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Reseller</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Fittizio</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Winback</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Ele</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Cambio Offerta</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Cambio Offerta Ele</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2598,10 +2647,10 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.QuotationType__c</leftValueReference>
-                    <operator>IsNull</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <booleanValue>false</booleanValue>
+                        <stringValue>Prima Attivazione con modifica</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2711,7 +2760,7 @@
         </fields>
         <fields>
             <name>Dati_Tecnici_Famiglie_GAS_Text3</name>
-            <fieldText>&lt;p&gt;•	Mi conferma che usa il gas per il riscaldamento?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NON CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice pdr e matricola contatore sono {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c} , {!LoopOrdiniFigliOfferta.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Mi conferma che usa il gas per il riscaldamento? [Tipologia {!LoopOrdiniFigliOfferta.UseCategory__c}]&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;NON CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice pdr è {!LoopOrdiniFigliOfferta.ServicePointCodeFormula__c} , {!LoopOrdiniFigliOfferta.MeterSN__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2722,9 +2771,65 @@
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
-                    <operator>Contains</operator>
+                    <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue>Prima Attivazione</stringValue>
+                        <stringValue>Switch in con voltura tecnica</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Ripristinatorio</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Reseller</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Fittizio</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Winback</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Gas</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Switch in Ele</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Cambio Offerta</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Cambio Offerta Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2736,10 +2841,17 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.VoltureType__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue></stringValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.Subprocess__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Con Autolettura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
